@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SearchController {
 
-	@RequestMapping({ "/search.html", "/brief-doc.html" })
+	@RequestMapping({"/search.html", "/brief-doc.html"})
 	public ModelAndView searchHtml(
 		@RequestParam(value = "query", required = false) String query,
 		@RequestParam(value = "embedded", required = false) String embedded,
@@ -28,8 +28,8 @@ public class SearchController {
 		HttpServletRequest request, HttpServletResponse response,
 		Locale locale
 	) throws Exception {
-		ModelAndView page = null;
-		
+
+		ModelAndView page = new ModelAndView("search", "name", "Peter");
 		return page;
 	}
 }

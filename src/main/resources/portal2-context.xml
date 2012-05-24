@@ -6,14 +6,10 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
 
-	<!-- CORELIB -->
-	<import resource="corelib-db-context.xml" />
-	<import resource="corelib-solr-context.xml" />
 
-	<!-- INTERNAL -->
-	<import resource="internal/portal2-mvc-interceptors.xml" />
-
-	<!-- DEVELOPMENT -->
-	<import resource="internal/portal2-development.xml" />
-
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
 </beans>
