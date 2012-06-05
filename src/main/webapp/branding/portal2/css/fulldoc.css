@@ -1,0 +1,187 @@
+/* img */
+
+img.trigger{
+	display:	block;
+	max-width: 200px;
+}
+
+/* query */
+
+	#query {
+		height: 112px;
+		border-bottom: none;
+	}
+	
+/* addthis */
+
+	.addthis {
+		position: absolute;
+		z-index: 200;
+		top: 242px;
+		right: 21px;
+		min-width: 207px;
+	}
+	
+	.at300b { float: right; margin-left: 3px; }
+	.at300m { float: right; margin: 0 5px 0 5px; }
+	.addthis_button_compact { margin-top: 44px; }
+	
+	
+/* navigation */
+
+	#navigation {
+		overflow: auto;
+		width: 910px;
+		margin: 0 0 20px 0;
+		padding: 0 0 10px 0;
+		list-style: none;
+		border-bottom: 1px solid #a0a0a0;
+	}
+	
+	#navigation li, .navigation li {
+		display: inline;
+	}
+	
+	#nav-return {
+		float: left;
+	}
+	
+	#navigation a:link, #navigation a:visited,
+	.navigation a:link, .navigation a:visited {
+		color: #666;
+		text-decoration: underline;
+	}
+	
+	#navigation a:hover, .navigation a:hover {
+		color: #ff00c2;
+	}
+	
+	#actions .navigation {
+		margin: 0 0 10px 0;
+		overflow: auto;
+	}
+	
+/* pagination */
+
+	.pagination-previous, .pagination-next {
+		float: right;
+	}
+	
+	.pagination-next {
+		padding-right: 14px;
+		margin-left: 20px;
+	}
+	
+	.pagination-previous {
+		padding-left: 14px;
+	}
+	
+	a.pagination-next {
+		background-position: right -617px;
+	}
+	
+	a.pagination-next:hover {
+		background-position: right -633px;
+	}
+	
+	
+/* additional-info (sidebar-left) */
+
+	.sidebar {
+		padding-right: 0;
+		width: 200px;
+	}
+	
+	#additional-info {
+		position: relative;
+		padding-top: 0;
+		padding-left: 0;
+		margin-right: 20px;
+		background-color: #fff;
+	}
+	
+	.item-metadata {
+		line-height: 1.6;
+		margin-bottom: 7px;
+	}
+	
+	.item-ugc {
+		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-position: 180px -1681px;
+    	background-repeat: no-repeat;
+    	height:			24px;
+	}
+	
+	.external.item-metadata {
+		display : block;
+	}
+	
+	a.item-metadata.image {
+		width: 200px;
+		display: block;
+	}
+	
+
+/* full excerpt */
+
+	h1 {
+		font-size: 180%;
+	}
+
+	.item-metadata h2 {
+		display: inline;
+		font-size: 100%;
+		color: #333;
+		font-weight: normal;
+	}
+	
+	
+/* item-collection */
+
+	#item-collection {
+		list-style: none;
+	}
+	
+	#item-collection li {
+		float: left;
+		margin-right: 20px;
+	}
+	
+	#item-collection .selected {
+		border: 1px solid black;
+	}
+	
+	
+/* object-type */
+
+	.object-type {
+		float: right;
+		width: 25px;
+		height: 25px;
+		color: #333;
+		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-repeat: no-repeat;
+	}
+	
+	.object-type.image {
+		background-position: 5px -1058px;
+	}
+	
+	.object-type.video {
+		background-position: 5px -1005px
+	}
+	
+	.object-type.text {
+		background-position: 8px -1109px
+	}
+	
+	.object-type.sound {
+		background-position: 5px -1138px
+	}
+	
+	.object-type.threeD {
+		background-position: 5px -973px;
+	}	
+	
+	
+	

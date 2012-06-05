@@ -22,43 +22,6 @@
 
 	<display-name>Europeana Portal2</display-name>
 	
-	<!-- SPRING SECURITY (OAUTH2) -->
-	<filter>
-		<filter-name>api2_oauth2_clientCredentialsTokenEndpointFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>api2_oauth2_clientCredentialsTokenEndpointFilter</filter-name>
-		<url-pattern>/oauth/token</url-pattern>
-	</filter-mapping>
-	
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
- 	</filter>
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-	<!-- JSON P WRAPPER -->
-  	<filter>
-		<filter-name>jsonPFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>jsonPFilter</filter-name>
-		<url-pattern>*.json</url-pattern>
-	</filter-mapping>
-	
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/portal2-context.xml</param-value>
-	</context-param>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
 	<servlet>
 		<servlet-name>portal2</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

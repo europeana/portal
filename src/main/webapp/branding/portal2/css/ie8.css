@@ -1,0 +1,10 @@
+/* meta-data */
+
+	.meta-data {
+		display: none;
+		border: 1px solid #a0a0a0;
+	}
+	
+	#items li:hover .meta-data {
+		display: block;
+	}

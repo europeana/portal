@@ -1,0 +1,663 @@
+body {
+	font-family: sans-serif;
+}
+
+/*
+  settings for slider object
+*/
+.dynamic-slider-control {
+	width: 20px;
+	position: relative;
+}
+
+.vertical {
+	height:	80px;
+}
+
+.horizontal {
+	width:	60px;
+}
+
+.dynamic-slider-control input {
+	display:	none;
+}
+
+.dynamic-slider-control .handle {
+	position:			absolute;
+	font-size:			1px;
+	overflow:			hidden;
+}
+
+.dynamic-slider-control.vertical .handle {
+	width:				20px;
+	height:				30px;
+	background-image:	url("images/sliderDot.png");
+}
+
+.dynamic-slider-control.horizontal .handle {
+	width:				30px;
+	height:				20px;
+	background-image:	url("images/sliderDot-horizontal.png");
+}
+
+.dynamic-slider-control .line {
+	position:			absolute;
+	font-size:			0.01mm;
+	overflow:			hidden;
+	border:				1px solid rgb(90,97,90);
+	background:			rgb(189,190,189);
+}
+
+.dynamic-slider-control.vertical .line {
+	width:				3px;
+}
+
+.dynamic-slider-control .line div {
+	width:		1px;
+	height:		1px;
+	
+	border:		1px solid;
+	border-color:	rgb(230,230,230) rgb(189,190,189)
+			rgb(189,190,189) rgb(230,230,230);
+}
+
+/*
+  settings for timeplot widget (some are overwritten timeplot css classes)
+*/
+#plotWindow {
+	position: absolute;
+	border-bottom: 1px solid #ADADAD;
+}
+
+#plotContainer {
+	position: absolute;
+	padding: 0px;
+	border: none;
+	top: 12px;
+	left: 0px;
+	z-index: 1;
+	overflow: hidden;
+}
+
+.plotCanvas {
+	position: absolute;
+}
+
+.timeplot-background {
+    display: none;
+    z-index: -2;
+}
+
+.timeplot-container {
+	position: absolute;
+	left: 16px;
+	padding: 0px;
+	border: none;
+	z-index: 1;
+	top: 0px;
+	overflow: visible;
+}
+
+.timeplot-copyright {
+    visibility: hidden;
+}
+
+.timeplot-timeflag {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.timeplot-valueflag {
+    font-size: 0.8em;
+}
+
+.timeplot-dayflag-pole {
+    display: none;
+    border-left: 1px solid #2a4056;
+    z-index: 999;
+}
+
+.timeplot-dayflag {
+    display: none;
+    border: 1px solid #FF0000;
+    padding: 1px;
+    text-align: center;
+    background-color: #FFCCCC;
+    z-index: 1000;
+}
+
+.range-box {
+    display: none;
+    background-color: #5f88b2;
+    background-repeat: repeat;
+    opacity: 0.6;
+    z-index: -1;
+}
+
+.popup-click-div {
+    display: none;
+    z-index: 1010;
+    cursor: pointer;    
+}
+
+.left-feather {
+    display: none;
+    z-index: -1;
+}
+
+.right-feather {
+    display: none;
+    z-index: -1;
+}
+
+.plotHandle {
+	position: absolute;
+	background-color: #5f88b2;
+	border: 1px solid #2a4056;
+	visibility: hidden;
+	cursor: pointer;
+    z-index: 1002;
+    padding: 2px 5px;
+    font-size: 0.8em;
+}
+
+.plotToolbar {
+	position: absolute;
+	background-color: #5f88b2;
+	border: 1px solid #2a4056;
+	visibility: hidden;
+	z-index: 1;
+}
+
+.absoluteToolbar {
+	position: relative;
+	width: 124px;
+	height: 20px; 		
+}
+
+.featherSlider {
+    position: absolute;
+    top: 9px;
+    right: 64px;		
+}
+
+.timeOverview {
+	position: absolute;
+	top: 0px;
+	height: 12px;
+	z-index: 0;
+	visibility: hidden;
+	opacity: 0.5;
+	overflow: hidden; 
+	border-bottom: 1px solid rgb(100,100,100);
+}
+
+.plotLabels {
+	position: absolute;
+	overflow: hidden; 
+	top: 0px;
+	left: 0px;
+	height: 12px;
+	z-index: 0;
+}
+
+.plotLabel {
+	position: absolute;
+	font-size: 9px;
+	height: 10px;
+	padding: 1px 2px;
+	border-left: solid 1px rgb(214,214,214);	
+}
+
+.overviewRange {
+	position: absolute;
+	top: 0px;
+	height: 12px;
+	background: white;
+}
+
+.overviewLabel {
+	position: absolute;
+	font-size: 9px;
+	height: 10px;
+	padding: 1px 2px;
+	border-left: solid 1px black;	
+}
+
+.shiftLeft {
+	position: absolute;
+	left: 4px;
+	top: 0px;
+	height: 12px;
+	width: 12px;
+	opacity: 0.8;
+	background-image: url(images/shiftLeft.png);
+	visibility: hidden;
+}	
+
+.shiftLeft:hover {
+	cursor: pointer;
+	background-image: url(images/shiftLeftOver.png);
+}	
+
+.shiftRight {
+	position: absolute;
+	right: 4px;
+	top: 0px;
+	height: 12px;
+	width: 12px;
+	opacity: 0.8;
+    background-image: url(images/shiftRight.png);
+	visibility: hidden;
+}
+
+.shiftRight:hover {
+	cursor: pointer;
+	background-image: url(images/shiftRightOver.png);
+}
+
+/*
+  settings for map widget
+*/
+.mapCanvas {
+	position: absolute;
+	z-index: 2;
+}
+
+/* Andy - removed this for IE 7 */
+/*
+.mapsMenu {
+	position: absolute;
+	background: #C9C9CB;
+	z-index: 1000;
+  	border: 1px solid #BBBBBB;
+}
+
+.mapsMenu dl {
+	margin: 0px;
+}
+
+.mapsMenu dt {
+  	padding: 2px 0px;
+	cursor: pointer;
+}
+
+.mapsMenu dt:hover {
+	background: #ededed;
+}
+*/
+/*
+		.mapsMenuBubble{
+			position:			absolute;
+			background-color:	white;
+			border-color:		#666;
+			border-style:		solid;
+			border-width:		1px;
+			padding-left:		5px;
+			padding-top:		5px;
+			padding-right:		5px;
+			padding-bottom:		5px;
+			border-radius:		10px 10px 10px 10px;
+			z-index:			20000;
+			right:				auto;
+		}
+		
+		.mapsMenuBubbleTail{
+			position: absolute;
+			z-index: 20001;
+			background-repeat: no-repeat;
+			height: 31px;
+			width: 18px;
+			background-image: url(/portal/branding/portal2/js/sti/e4D-javascript/images/bubble-arrow-point-right.png);
+			background-position: -12px 0px;
+			left: 230px;
+		}
+		.mapsMenuBubble{
+			position:			absolute;
+			background-color:	white;
+			border-color:		#666;
+			border-style:		solid;
+			border-width:		1px;
+			padding-left:		5px;
+			padding-top:		5px;
+			padding-right:		5px;
+			padding-bottom:		5px;
+			border-radius:		10px 10px 10px 10px;
+			z-index:			20000;
+			right:				auto;
+		}
+		
+		.mapsMenuBubbleTail{
+			position: absolute;
+			z-index: 20001;
+			background-repeat: no-repeat;
+			height: 31px;
+			width: 18px;
+			background-image: url(/portal/branding/portal2/js/sti/e4D-javascript/images/bubble-arrow-point-right.png);
+			background-position: -12px 0px; left: 230px;
+		}
+*/
+
+
+
+.pointClickDiv {
+	position: absolute;
+	border: 1px solid #2a4056;
+	visibility: hidden;
+	z-index: 4;
+}
+
+.pointClickDivBackground {
+	width: 100%;
+	height: 100%;
+	background-color: #5f88b2;
+	opacity: 0.5;
+	z-index: 4;
+}
+
+/* Andy - removed these for IE 7 */
+/*
+.tagCloudDiv {
+    position: absolute;
+    visibility: hidden;
+}
+*/
+
+/* Andy - removed these for IE 7 */
+/*
+.mapToolbar {
+	position: absolute;
+	width: 69px;
+	height: 20px; 		
+	background-color: #5f88b2;
+	border: 1px solid #2a4056;
+	visibility: hidden;
+	z-index: 1009;
+	opacity: 0.8;
+}
+*/
+/* Andy - removed these for IE 7 */
+/*
+.tagCloudItem {
+	position: absolute;
+	z-index: 1009;
+	cursor: pointer;
+}
+*/
+
+.controlLock {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1008;
+	visibility: hidden; 	
+}
+
+/*
+  sti toolbar settings
+*/
+/* Andy - removed these for IE 7 */
+/*
+.toolbarTop {
+	top: 0px;	
+}
+
+.toolbarBottom {
+	bottom: 0px;	
+}
+
+.toolbarLeft {
+	left: 0px;	
+}
+
+.toolbarRight {
+	right: 0px;	
+}
+*/
+
+.toolbarLeftLight {
+	background-image: url(images/light/bg-left.png);
+	background-repeat: repeat-y;
+	border-right: 1px solid white;
+}
+
+/*
+.toolbarRightLight {
+	background-image: url(images/light/bg-right.png);
+	background-repeat: repeat-y;
+	background-color: black;
+}
+*/
+
+.toolbarLeftDark {
+	background: none repeat scroll 0 0 #888888;
+	border-right: 1px solid #444444;
+}
+
+.toolbarRightDark {
+	background: none repeat scroll 0 0 #888888;
+	border-left: 1px solid #444444;
+}
+
+/*
+  settings for zoom slider
+*/
+/*
+.sliderStyle {
+	position: relative;
+	width: 20px;
+	height: 100px;
+	border:	1px solid rgb(68,68,68);
+	margin: 3px;
+}
+
+.zoomSliderContainer {
+	position: absolute;
+	top: 10px;
+	left: 0px;	
+}
+
+.zoomSliderIn {
+	position: absolute;
+	top: 0px;
+	left: 2px;	
+}
+
+.zoomSliderOut {
+	position: absolute;
+	top: 84px;
+	left: 2px;	
+}
+*/
+
+/*
+  settings for widgets integrated toolbars
+*/
+.dragRange {
+	position: absolute;
+	height: 11px;
+    width: 17px;
+    top: 4px;
+    right: 47px;
+    background-image: url(images/dragger.png);
+    background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.dragRangeClick {
+	position: absolute;
+	height: 11px;
+    width: 17px;
+    top: 4px;
+    right: 47px;
+    background-image: url(images/dragger-click.png);
+    background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.zoomRange {
+    position: absolute;
+	height: 16px;
+    width: 16px;
+    top: 2px;
+    right: 26px;
+    background-image: url(images/zoom.png);
+    background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+
+/* attribution */
+/*
+#linkAttribution1, #linkAttribution2, #linkAttribution1:hover, #linkAttribution2:hover, #linkAttribution1:visited, #linkAttribution2:visited{
+	color:	#989696 !important;
+}
+*/
+
+
+/* Andy - removed this for IE 7 */
+/*
+.cancelRange {
+    position: absolute;
+	height: 16px;
+    width: 16px;
+    top: 2px;
+    right: 5px;
+    background-image: url(images/close-button.png);
+    background-repeat: no-repeat;
+	cursor: pointer;
+}
+*/
+
+/*
+  settings for widgets popup window
+*/
+/* Andy - removed this for IE 7 */
+/*
+.popupDiv {
+	position: absolute;
+	background-color: white;
+	border: 1px solid #666666;
+	padding: 25px 5px 20px 5px;
+	visibility: hidden;
+	border-radius: 10px;
+	z-index:100;
+}
+*/
+
+/* Andy - removed this for IE 7 */
+/*
+.back {
+    position: absolute;
+	height: 16px;
+    width: 16px;
+    top: 2px;
+    left: 5px;
+    background-image: url(images/back.png);
+    background-repeat: no-repeat;
+	cursor: pointer;		
+}
+*/
+
+/* Andy - removed this for IE 7 */
+/*
+.next {
+    position: absolute;
+	height: 16px;
+    width: 16px;
+    bottom: 5px;
+    right: 5px;
+    background-image: url(images/next.png);
+    background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.previous {
+    position: absolute;
+	height: 16px;
+    width: 16px;
+    bottom: 5px;
+    left: 5px;
+    background-image: url(images/prev.png);
+    background-repeat: no-repeat;
+	cursor: pointer;
+}
+*/
+
+/* Andy - removed this for IE 7 */
+/*
+.popupTriangleDown {
+	position: absolute;
+	height: 18px;
+    width: 31px;
+    background-image: url(images/bubble-arrow-point-down.png);
+    background-repeat: no-repeat;
+    background-position:	-8px -13px;
+    z-index: 1000;
+}
+
+.popupTriangleUp {
+	position:				absolute;
+	height:					18px;
+    width:					31px;
+    background-image:		url(images/bubble-arrow-point-up.png);
+    background-repeat:		no-repeat;
+    background-position:	0px -67px;
+    z-index:				1000;
+}
+
+.popupTriangleLeft {
+	position:				absolute;
+	height:					31px;
+    width:					18px;
+    background-image:		url(images/bubble-arrow-point-left.png);
+    background-repeat:		no-repeat;
+    background-position:	-68px -8px;
+    z-index:				1000;
+}
+
+.popupTriangleRight {
+	position:				absolute;
+	height:					31px;
+    width:					18px;
+    background-image:		url(images/bubble-arrow-point-right.png);
+    background-position:	-12px 0px;
+    background-repeat:		no-repeat;
+    z-index:				1000;
+}
+*/
+
+/* Andy - removed this for IE 7 */
+/*
+.popupResultsLabel {
+	position: absolute;
+	bottom: 5px;
+	color:#999999;
+}
+
+.popupDescription {
+}
+*/
+/*
+.popupDiv ul {
+	list-style-type: none;
+	margin:0;
+	padding:0;
+}
+
+.popupDiv ol li:hover {
+	text-decoration:underline;
+}
+
+.popupDiv li {
+	padding: 5px;
+	cursor: pointer;
+}
+*/
+
+/* Andy - removed this for IE 7 */
+/*
+.popupContent {
+	font-weight: bold;
+}
+*/

@@ -1,0 +1,67 @@
+/* user-panels */
+
+	#content {
+		width: 910px;
+	}
+	
+	#user-panels {
+		margin-top: 15px; 
+	}
+	
+	#user-panels h3 {
+   		display: inline;
+   		font-size: 110%;
+   		font-weight: normal;
+   		margin-right: 10px;
+   	}
+   	
+   	#user-information,
+   	#saved-items,
+   	#saved-searches,
+   	#saved-tags,
+   	#remote-search-widget {
+   		margin: 10px 0 0 0;
+   		display: none;
+   	}
+   	
+	#user-panels a.active {
+   		text-decoration: none;
+   		color: #666;
+   		font-weight: bold;
+   	}
+   	
+   	#saved-items img,
+   	#saved-tags img {
+   		float: left;
+   		margin-right: 10px;
+   	}
+   	
+   	#saved-tags li {
+   		list-style: none;
+   		margin-bottom: 15px;
+   		overflow: auto;
+   	}
+   	
+   	.saved-item,
+   	.saved-search,
+   	.saved-tag {
+   		border-bottom: 1px solid #a0a0a0;
+   		padding-bottom: 10px;
+   		margin-bottom: 15px;
+   		overflow: auto;
+   	}
+   	
+   	.saved-item button,
+   	.saved-search button,
+   	.saved-tag button {
+   		margin-top: 7px;
+   	}
+   	
+   	
+/* add-this */
+
+	.add-this {
+		height: 21px;
+	}
+	
+   	
