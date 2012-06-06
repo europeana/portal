@@ -4,6 +4,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
  	xmlns:context="http://www.springframework.org/schema/context"
  	xmlns:util="http://www.springframework.org/schema/util"
+ 	xmlns:p="http://www.springframework.org/schema/p"
  	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -21,8 +22,35 @@
 
 	<mvc:annotation-driven/>
 
+	<!-- INTERCEPTORS -->
+	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
+
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers" />
 
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" 
+	p:interceptors-ref="corelib_web_configInterceptor" />
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="corelib_web_configInterceptor" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/search.html">searchController</prop>
+			</props>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref bean="corelib_web_configInterceptor" />
+			</list>
+		</property>
+	</bean>
+	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
 		<property name="prefix" value="/WEB-INF/jsp/"></property>
@@ -33,6 +61,7 @@
 		<property name="basename" value="message_keys/messages" />
 	</bean>
 
+	<bean id="searchController" class="eu.europeana.portal2.web.controllers.SearchController" />
 	<import resource="../portal2-context.xml"/>
 
 </beans>

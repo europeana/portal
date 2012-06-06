@@ -30,7 +30,7 @@
 		<!-- cell.dataProvider -->
 		<c:set var="dataProvider" value="${cell.dataProvider}" />
 		<c:if test="${fn:length(dataProvider) > providerMaxLength}">
-			<c:set var="dataProvider" value="${fn:substring(cell.dataProvider, 0, providerMaxLength) + '...'}" />
+			<c:set var="dataProvider" value="${fn:substring(cell.dataProvider, 0, providerMaxLength)}..." />
 		</c:if>
 		<span title="${cell.dataProvider}">${dataProvider}</span><br/>
 	</c:if>
@@ -40,7 +40,7 @@
 		<c:forEach var="cell_provider" items="${cell.provider}">
 			<c:set var="provider" value="${cell_provider}" />
 			<c:if test="${fn:length(provider) > providerMaxLength}">
-				<c:set var="provider" value="${fn:substring(cell_provider, 0, providerMaxLength) + '...'}" />
+				<c:set var="provider" value="${fn:substring(cell_provider, 0, providerMaxLength)}..." />
 			</c:if>
 			<span title="${cell_provider}">${provider}</span>
 		</c:forEach>

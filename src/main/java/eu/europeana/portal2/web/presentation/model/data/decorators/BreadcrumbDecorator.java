@@ -58,13 +58,9 @@ public class BreadcrumbDecorator extends BreadCrumb {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getBreadCrumbUrl() throws UnsupportedEncodingException {
-
 		StringBuilder url = new StringBuilder();
-
 		url.append(model.getCurrentSearch().getPageName()).append("?").append(getHref());
-
 		return model.getPortalFormattedUrl(new UrlBuilder(url.toString())).toString();
-
 	}
 
 }

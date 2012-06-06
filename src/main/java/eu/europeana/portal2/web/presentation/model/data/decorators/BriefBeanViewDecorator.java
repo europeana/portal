@@ -17,8 +17,11 @@
 
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.ArrayUtils;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
@@ -30,70 +33,72 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBe
 
 public class BriefBeanViewDecorator implements BriefBeanView {
 
-    private SearchData model;
-    private BriefBeanView view;
-    
-    private List<FacetQueryLinks> facets = null;
+	private SearchData model;
+	private BriefBeanView view;
 
-    public BriefBeanViewDecorator(SearchData model, BriefBeanView view) {
-        this.model = model;
-        this.view = view;
-    }
+	private List<FacetQueryLinks> facets = null;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<? extends BriefBean> getBriefDocs() {
-        return new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) view.getBriefDocs());
-    }
+	public BriefBeanViewDecorator(SearchData model, BriefBeanView view) {
+		this.model = model;
+		this.view = view;
+	}
 
-    /*
-    @Override
-    public List<FacetQueryLinks> getFacetQueryLinks() throws UnsupportedEncodingException {
-        if (facets == null) {
-            // setting the order and facet types we want
-            String[] order = new String[]{"TYPE","LANGUAGE","YEAR","COUNTRY","RIGHTS","PROVIDER"};
-            FacetQueryLinks[] oFacets = new FacetQueryLinks[order.length];
-            List<FacetQueryLinks> list = view.getFacetQueryLinks();
-            for (FacetQueryLinks facet : list) {
-                if ( (facet.getLinks() != null) && (facet.getLinks().size() > 0)) {
-                    int index = ArrayUtils.indexOf(order, facet.getType());
-                    if (index != -1) {
-                        oFacets[index] = facet; 
-                    }
-                }
-            }
-            facets = new ArrayList<FacetQueryLinks>();
-            for (FacetQueryLinks facet : oFacets) {
-                if (facet != null) {
-                    facets.add(new FacetQueryLinksDecorator(facet));
-                }
-            }
-        }
-        return facets;
-    }
-    */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<? extends BriefBean> getBriefDocs() {
+		return new BriefBeanListDecorator<BriefBean>(model,
+				(List<BriefBean>) view.getBriefDocs());
+	}
 
-    /**
-     * return decorated class instead
-     */
-    @Override
-    public ResultPagination getPagination() {
-        return new PaginationDecorator(model, view.getPagination());
-    }
+	/*
+	@Override
+	public List<FacetQueryLinks> getFacetQueryLinks() {//throws UnsupportedEncodingException {
+		if (facets == null) {
+			// setting the order and facet types we want
+			String[] order = new String[] { "TYPE", "LANGUAGE", "YEAR",
+					"COUNTRY", "RIGHTS", "PROVIDER" };
+			FacetQueryLinks[] oFacets = new FacetQueryLinks[order.length];
+			List<FacetQueryLinks> list = view.getFacetQueryLinks();
+			for (FacetQueryLinks facet : list) {
+				if ((facet.getLinks() != null) && (facet.getLinks().size() > 0)) {
+					int index = ArrayUtils.indexOf(order, facet.getType());
+					if (index != -1) {
+						oFacets[index] = facet;
+					}
+				}
+			}
+			facets = new ArrayList<FacetQueryLinks>();
+			for (FacetQueryLinks facet : oFacets) {
+				if (facet != null) {
+					facets.add(new FacetQueryLinksDecorator(facet));
+				}
+			}
+		}
+		return facets;
+	}
+	*/
 
-    @Override
-    public Map<String, String> getFacetLogs() {
-        return view.getFacetLogs();
-    }
+	/**
+	 * return decorated class instead
+	 */
+	@Override
+	public ResultPagination getPagination() {
+		return new PaginationDecorator(model, view.getPagination());
+	}
 
-    @Override
-    public BriefBean getMatchDoc() {
-        return new BriefBeanDecorator(model, view.getMatchDoc());
-    }
+	@Override
+	public Map<String, String> getFacetLogs() {
+		return view.getFacetLogs();
+	}
 
-    @Override
-    public SpellCheck getSpellCheck() {
-        return view.getSpellCheck();
-    }
+	@Override
+	public BriefBean getMatchDoc() {
+		return new BriefBeanDecorator(model, view.getMatchDoc());
+	}
+
+	@Override
+	public SpellCheck getSpellCheck() {
+		return view.getSpellCheck();
+	}
 
 }

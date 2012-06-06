@@ -60,7 +60,8 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 
 	public List<BreadCrumb> getBreadcrumbs() {
 		if (breadcrumbs != null) {
-			return new BreadcrumbListDecorator(this, breadcrumbs);
+			BreadcrumbListDecorator breadcrumbListDecorator = new BreadcrumbListDecorator(this, breadcrumbs);
+			return breadcrumbListDecorator;
 		}
 		return null;
 	}

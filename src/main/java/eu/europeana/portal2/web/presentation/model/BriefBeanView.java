@@ -22,6 +22,7 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 
 import java.util.List;
@@ -29,21 +30,21 @@ import java.util.Map;
 
 /**
  * todo: javadoc
- *
+ * 
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  * @author Gerald de Jong <geralddejong@gmail.com>
  */
 
 public interface BriefBeanView {
-    List<? extends BriefBean> getBriefDocs();
+	List<? extends BriefBean> getBriefDocs();
 
-    // List<FacetQueryLinks> getFacetQueryLinks() throws UnsupportedEncodingException;
+	// List<FacetQueryLinks> getFacetQueryLinks(); // throws UnsupportedEncodingException;
 
-    ResultPagination getPagination();
+	ResultPagination getPagination();
 
-    Map<String, String> getFacetLogs();
+	Map<String, String> getFacetLogs();
 
-    BriefBean getMatchDoc();
+	BriefBean getMatchDoc();
 
-    SpellCheck getSpellCheck();
+	SpellCheck getSpellCheck();
 }

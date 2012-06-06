@@ -7,16 +7,19 @@
 			<c:when test="${!empty !model.euroeanaUri}">
 				<li><span class="bold black"><spring:message code="MatchesFor_t" />:</span></li>
 				<c:forEach items="${model.breadcrumbs}" var="crumb">
+					<li><a href="${crumb.href}" rel="nofollow">${crumb.display}</a>&#160;&gt;&#160;</li>
+<%--
 					<c:if test="${!empty crumb.showBreadCrumb}">
 						<c:choose>
 							<c:when test="${!empty crumb_has_next}">
-								<li><a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display?html}</a>&#160;&gt;&#160;</li>
+								<li><a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display}</a>&#160;&gt;&#160;</li>
 							</c:when>
 							<c:otherwise>
-								<li><b>${crumb.display?html}</b></li>
+								<li><b>${crumb.display}</b></li>
 							</c:otherwise>
 						</c:choose>
 					</c:if>
+--%>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>

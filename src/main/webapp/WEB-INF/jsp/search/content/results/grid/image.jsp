@@ -5,7 +5,7 @@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"
 	Determine whether or not the search widget is active and set target as appropriate
 --%>
 <c:set var="targetArg" value="" />
-<c:if test="${model.embedded > 4}">
+<c:if test="${model.embedded}">
 	<c:set var="targetArg" value='target="_blank"' />
 </c:if>
 <c:set var="imgBaseUrl" value="http://europeanastatic.eu/api/image?type=TEXT&size=BRIEF_DOC&uri=" />

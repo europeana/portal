@@ -5,7 +5,7 @@
 	<ul class="navigation-pagination">
 		<%-- total nr of results --%>
 		<li class="page-nr">
-			<spring:message code="Results_t" /> ${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord} <spring:message code="Of_t" /> ${model.briefBeanView.pagination.numFound}
+			<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;${model.briefBeanView.pagination.numFound}
 		</li>
 
 		<%-- current page nr --%>

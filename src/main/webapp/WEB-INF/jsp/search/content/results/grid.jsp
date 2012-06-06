@@ -1,10 +1,10 @@
-<!-- grid: ${model.results.items} -->
+<!-- grid: ${model.results} -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <ul id="items">
 	<c:set var="row_counter" value="1" />
 	<c:set var="cell_counter" value="1" />
-	<c:forEach var="cell" items="${model.results.items}">
+	<c:forEach var="cell" items="${model.results}">
 		<c:set var="row_counter" value="1" />
 		<%-- c:set var="title" value="${fn:substring(cell.title[0], 0, titleMaxLength)}" /--%>
 		<c:set var="title" value="${cell.title[0]}" />

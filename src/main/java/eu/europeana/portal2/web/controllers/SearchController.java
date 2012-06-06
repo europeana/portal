@@ -22,6 +22,7 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.portal2.web.model.ApiError;
 import eu.europeana.portal2.web.model.ModelUtils;
@@ -42,6 +43,9 @@ public class SearchController {
 
 	@Resource
 	private SearchService searchService;
+
+	@Resource
+	private ConfigInterceptor corelib_web_configInterceptor;
 
 	@RequestMapping({"/search.html", "/brief-doc.html"})
 	public ModelAndView searchHtml(
@@ -97,20 +101,12 @@ public class SearchController {
 		// TODO:
 		// BriefBeanView briefBeanView = beanQueryModelFactory.getBriefResultView(solrQuery, request.getQueryString());
 		model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
-
-		/*
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("name", String.valueOf(searchResult.itemsCount));
-		model.put("query", q);
-		model.put("portalName", "http://europeana.eu/portal");
-		model.put("imageLocale", locale.getLanguage());
-		model.put("hasResults", (searchResult.itemsCount > 0) ? 1 : 0);
-		model.put("results", searchResult);
-		
-		ModelAndView page = new ModelAndView("search/search", "model", model);
-		page.addObject("locale", locale.getLanguage());
-		page.addObject("branding", "portal2/branding/portal2");
-		*/
+		try {
+			corelib_web_configInterceptor.postHandle(request, response, this, page);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return page;
 	}
 
@@ -143,4 +139,12 @@ public class SearchController {
 		return briefBeanView;
 	}
 
+	public ConfigInterceptor getCorelib_web_configInterceptor() {
+		return corelib_web_configInterceptor;
+	}
+
+	public void setCorelib_web_configInterceptor(
+			ConfigInterceptor corelib_web_configInterceptor) {
+		this.corelib_web_configInterceptor = corelib_web_configInterceptor;
+	}
 }

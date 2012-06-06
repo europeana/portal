@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="search-results">
 	<c:choose>
-		<c:when test="${model.hasResults == 1}">
+		<c:when test="${model.hasResults}">
 			<!-- model.hasResults: 1 -->
 			<%@ include file="/WEB-INF/jsp/_common/html/navigation/search-results-navigation.jsp" %>
 			<%@ include file="/WEB-INF/jsp/search/content/results/grid.jsp" %>
