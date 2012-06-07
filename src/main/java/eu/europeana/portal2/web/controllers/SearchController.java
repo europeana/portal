@@ -80,7 +80,11 @@ public class SearchController {
 				: PortalPageInfo.SEARCH_HTML
 		);
 
-		Query query = new Query(q).setRefinements(qf).setPageSize(rows).setStart(start-1); // Solr starts from 0
+		Query query = new Query(q)
+						.setRefinements(qf)
+						.setPageSize(rows)
+						.setStart(start-1) // Solr starts from 0
+						.setParameter("f.YEAR.facet.mincount", "1");
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
 		BriefBeanView briefBeanView = null;

@@ -4,8 +4,15 @@
 <a href="${cell.fullDocUrl}" title="${StringUtils.join(cell.title, ", ")}" ${targetArg} class="result-additional-info" rel="nofollow">
 	<c:if test="${!empty cell.dcCreator}">
 		<%-- TODO: find out what is the original cell.creatorXML --%>
-		<!-- cell.dcCreator -->
-		<c:out value="${fn:substring(cell.dcCreator, 0, providerNameMaxLength)}" /><br/>
+		<!-- cell.dcCreator ${cell} ${cell.dcCreator} providerNameMaxLength: ${providerNameMaxLength} -->
+		<c:set var="dc_creators">
+			<c:set var="sep" value="" />
+			<c:forEach var="dc_creator" items="${cell.dcCreator}">
+				<c:out value="${sep}" /><c:out value="${dc_creator}" />
+				<c:set var="sep" value=", " />
+			</c:forEach>
+		</c:set>
+		<c:out value="${fn:substring(dc_creators, 0, providerNameMaxLength)}" /><br/>
 	</c:if>
 
 	<c:if test="${!empty cell.year}">
