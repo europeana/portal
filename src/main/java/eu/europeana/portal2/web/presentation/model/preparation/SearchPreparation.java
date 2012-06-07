@@ -44,7 +44,6 @@ public abstract class SearchPreparation extends SearchEmbeddedData {
 	@SuppressWarnings("unchecked")
 	public void setBriefBeanView(BriefBeanView view)
 			throws UnsupportedEncodingException {
-		System.err.println("setBriefBeanView");
 		briefBeanView = new BriefBeanViewDecorator(this, view);
 		setResults((List<BriefBean>) briefBeanView.getBriefDocs());
 		setBreadcrumbs();
