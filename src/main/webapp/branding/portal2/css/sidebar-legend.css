@@ -17,11 +17,10 @@
 		display: block;
 		float: left;
 		width: 60px;
-		
 		height: 20px;
 		padding: 7px 0 7px 30px;
 		color: #333;
-		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image: url(../images/icons/sprite.png);
 		background-repeat: no-repeat;
 	}
 	

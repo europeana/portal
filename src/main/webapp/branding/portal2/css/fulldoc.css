@@ -106,7 +106,7 @@ img.trigger{
 	}
 	
 	.item-ugc {
-		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image: url(../images/icons/sprite.png);
 		background-position: 180px -1681px;
     	background-repeat: no-repeat;
     	height:			24px;
@@ -159,7 +159,7 @@ img.trigger{
 		width: 25px;
 		height: 25px;
 		color: #333;
-		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image: url(../images/icons/sprite.png);
 		background-repeat: no-repeat;
 	}
 	

@@ -17,14 +17,14 @@
 	a.block-link { display: block; line-height: 1.5; }
 	
 	.external {
-		background-image: url(/portal/branding/portal2/images/icons/external.png);
+		background-image: url(../images/icons/external.png);
 		background-repeat: no-repeat;
 		background-position: right -486px;
 		padding-right: 20px;
 	}
 	
 	a.external:hover {
-		background-image: url(/portal/branding/portal2/images/icons/external.png);
+		background-image: url(../images/icons/external.png);
 		background-repeat: no-repeat;
 		background-position: right 2px;
 	}
@@ -120,7 +120,7 @@
 	/* toggle-menu-icon */
 	a.toggle-menu-icon {
 		display: inline-block;
-		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image: url(../images/icons/sprite.png);
 		background-repeat: no-repeat;
 		background-position: right -1561px;
 		padding-right: 12px;
@@ -138,7 +138,7 @@
 	.pagination-next, .pagination-previous {
 		min-width: 14px;
 		min-height: 14px;
-		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image: url(../images/icons/sprite.png);
 		background-repeat: no-repeat;
 	}
 	

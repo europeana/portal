@@ -41,18 +41,18 @@
 	
 	a.facet-section {
 		padding-left:			17px;
-		background-image: 		url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image: 		url(../images/icons/sprite.png);
 		background-position:	left -1180px;
 	}
 	
 	
 
 	h3 a.ugc-checked{
-		background-image:		url(/portal/branding/portal2/images/icons/checked.png);
+		background-image:		url(../images/icons/checked.png);
 	}
 	
 	h3 a.ugc-unchecked{
-		background-image:		url(/portal/branding/portal2/images/icons/unchecked.png);	
+		background-image:		url(../images/icons/unchecked.png);	
 	}
 	
 	h3 a.ugc-checked,  a.ugc-unchecked{
@@ -76,7 +76,7 @@
 		
 		#filter-search h4 a {
 			display: block;
-			background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+			background-image: url(../images/icons/sprite.png);
 			background-repeat: no-repeat;
 			background-position: -35px -1327px;
 			padding-left: 30px;
@@ -94,7 +94,7 @@
 		padding: 4px 4px 4px 25px;
 		
 		background-color: #ccc;
-		background-image: url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image: url(../images/icons/sprite.png);
 		background-repeat: no-repeat;
 		background-position: 5px -650px;
 		

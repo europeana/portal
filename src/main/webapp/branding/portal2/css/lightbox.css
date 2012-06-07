@@ -18,7 +18,7 @@
 
 	/* lightbox control buttons */
 	.simple_overlay .close, #zoomClose, #enlittle {
-		background-image:	url(/portal/branding/portal2/images/icons/close-lightbox.png);
+		background-image:	url(../images/icons/close-lightbox.png);
 		position:			absolute;
 		right:				-20px;
 		top:				-20px;
@@ -29,14 +29,14 @@
 	}
 	
 	#enlittle {
-		background-image:	url(/portal/branding/portal2/images/icons/lightbox-enlittle.png);
+		background-image:	url(../images/icons/lightbox-enlittle.png);
 		top:				5px;
 		right:				5px;
 		z-index:			2; /* close button has to appear above player */
 	}
 	
 	#zoomBtn{
-		background-image:	url(/portal/branding/portal2/images/icons/lightbox-enlarge.png);
+		background-image:	url(../images/icons/lightbox-enlarge.png);
 		position:			absolute;
 		right:				7px;
 		top:				3px;
@@ -232,7 +232,7 @@
 		width:					20px;
 		height:					23px;
 	
-		background-image:		url(/portal/branding/portal2/images/icons/sprite.png);
+		background-image:		url(../images/icons/sprite.png);
 		background-repeat:		no-repeat;
 	}
 	

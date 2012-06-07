@@ -99,7 +99,7 @@
 		}
 		
 		.transparent {
-			background-image: url('/portal/branding/portal2/images/icons/transparent-grid.png');
+			background-image: url(../images/icons/transparent-grid.png);
 		}
 		
 		.transparent td {

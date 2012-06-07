@@ -74,7 +74,7 @@
 		font-size: 120%;
 		font-weight: bold;
 		padding-left: 20px;
-		background-image: url(/portal/branding/portal2/js/simile-widgets/timeplot-1.1/images/progress-running.gif);
+		background-image: url(../js/simile-widgets/timeplot-1.1/images/progress-running.gif);
 		background-repeat: no-repeat;
 		background-position: 0 0;
 	}
