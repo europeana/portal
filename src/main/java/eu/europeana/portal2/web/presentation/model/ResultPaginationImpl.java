@@ -42,7 +42,7 @@ public class ResultPaginationImpl implements ResultPagination {
 		}
 		this.start = 1;
 		if (start != 0) {
-			this.start = start + 1; // solr is zero based so + 1
+			this.start = start;
 		}
 		pageNumber = start / rows + 1;
 		int fromPage = 1;

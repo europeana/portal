@@ -22,7 +22,6 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 
 import java.util.List;

@@ -21,15 +21,10 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.ArrayUtils;
-
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 
 /**

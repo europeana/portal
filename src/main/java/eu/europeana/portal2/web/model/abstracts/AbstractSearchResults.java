@@ -30,7 +30,7 @@ public class AbstractSearchResults extends ApiResponse {
 
 	public long totalResults;
 	
-	public List<BriefBean> items;
+	public List<? extends BriefBean> items;
 	
 	public AbstractSearchResults(String action) {
 		super(action);
@@ -40,7 +40,7 @@ public class AbstractSearchResults extends ApiResponse {
 		super();
 	}
 	
-	public List<BriefBean> getItems() {
+	public List<? extends BriefBean> getItems() {
 		return items;
 	}
 }

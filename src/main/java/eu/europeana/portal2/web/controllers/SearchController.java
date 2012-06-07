@@ -1,9 +1,8 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.db.service.ThumbnailService;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.corelib.definitions.solr.beans.IdBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.utils.NavigationUtils;
-import eu.europeana.portal2.web.model.ApiError;
 import eu.europeana.portal2.web.model.ModelUtils;
 import eu.europeana.portal2.web.model.SearchResults;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -38,8 +34,10 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class SearchController {
 	
-	@Resource
-	private ThumbnailService thumbnailService;
+	// @Resource
+	// private ThumbnailService thumbnailService;
+	
+	private static final Logger log = Logger.getLogger(SearchController.class.getName());
 
 	@Resource
 	private SearchService searchService;
@@ -64,7 +62,7 @@ public class SearchController {
 		HttpServletRequest request, HttpServletResponse response,
 		Locale locale
 	) {
-
+		log.info("============== START SEARCHING ==============");
 		SearchPage model = new SearchPage();
 		model.setEmbeddedBgColor(embeddedBgColor);
 		model.setEmbeddedForeColor(embeddedForeColor);
@@ -82,15 +80,14 @@ public class SearchController {
 				: PortalPageInfo.SEARCH_HTML
 		);
 
-		Query query = new Query(q).setRefinements(qf).setPageSize(12).setStart(start);
-		Class<? extends IdBean> clazz = BriefBean.class;
-//		if (StringUtils.containsIgnoreCase(profile, "minimal")) {
-//			clazz = BriefBean.class;
-//		}
+		Query query = new Query(q).setRefinements(qf).setPageSize(rows).setStart(start-1); // Solr starts from 0
+		Class<? extends BriefBean> clazz = BriefBean.class;
+
 		BriefBeanView briefBeanView = null;
 		try {
-			briefBeanView = createResults(profile, query, start);
+			briefBeanView = createResults(clazz, profile, query, start, rows);
 			model.setBriefBeanView(briefBeanView);
+			log.info("results (briefBeanView): " + briefBeanView.getBriefDocs().size());
 		} catch (SolrTypeException e) {
 			// return new ApiError("search.json", e.getMessage());
 		} catch (UnsupportedEncodingException e) {
@@ -107,18 +104,30 @@ public class SearchController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			log.info("results (model)" + model.getResults().size());
+			log.info("NextPage (model): " + model.getNextPageUrl());
+			log.info("PreviousPage (model): " + model.getPreviousPageUrl());
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return page;
 	}
 
-	private BriefBeanView createResults(String profile, Query q, int start) 
+	private BriefBeanView createResults(Class<? extends BriefBean> clazz, String profile, Query q, int start, int rows) 
 			throws SolrTypeException {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		SearchResults response = new SearchResults("search.json");
-		ResultSet<BriefBean> resultSet = searchService.search(BriefBean.class, q);
+		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, q);
 		resultSet.getQuery();
 		response.totalResults = resultSet.getResultSize();
 		response.itemsCount = resultSet.getResults().size();
+		log.info("start param: " + start);
+		log.info("total result: " + resultSet.getResultSize());
+		log.info("nr of items: " + resultSet.getResults().size());
 		response.items = resultSet.getResults();
 		briefBeanView.setBriefDocs(resultSet.getResults());
 		if (StringUtils.containsIgnoreCase(profile, "facets") || StringUtils.containsIgnoreCase(profile, "portal")) {
@@ -133,8 +142,14 @@ public class SearchController {
 //		if (StringUtils.containsIgnoreCase(profile, "suggestions") || StringUtils.containsIgnoreCase(profile, "portal")) {
 //		}
 		
-		ResultPagination pagination = new ResultPaginationImpl(start, (int)resultSet.getResultSize(), 
-				resultSet.getResults().size(), q.getQuery(), q.getQuery(), response.breadCrumbs);
+		ResultPagination pagination = new ResultPaginationImpl(start, rows,
+				(int)resultSet.getResultSize(), 
+				q.getQuery(), q.getQuery(), response.breadCrumbs);
+		log.info("total result (pagination): " + pagination.getNumFound());
+		log.info("rows (pagination): " + pagination.getRows());
+		log.info("start (pagination): " + pagination.getStart());
+		log.info("NextPage (pagination): " + pagination.getNextPage());
+		log.info("PreviousPage (pagination): " + pagination.getPreviousPage());
 		briefBeanView.setPagination(pagination);
 		return briefBeanView;
 	}
