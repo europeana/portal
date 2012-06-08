@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
+import eu.europeana.portal2.querymodel.query.FacetQueryLinksImpl;
+import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 
 /**
@@ -37,7 +41,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 
 	private ResultPagination pagination;
 	private List<? extends BriefBean> briefDocs;
-	// private List<FacetQueryLinks> queryLinks;
+	private List<FacetQueryLinks> queryLinks;
 	private Map<String, String> facetLogs;
 	private BriefBean matchDoc;
 	private SpellCheck spellcheck;
@@ -133,12 +137,10 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		return briefDocs;
 	}
 
-	/*
 	@Override
 	public List<FacetQueryLinks> getFacetQueryLinks() {
 		return queryLinks;
 	}
-	*/
 
 	@Override
 	public ResultPagination getPagination() {
@@ -171,4 +173,13 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	public void setPagination(ResultPagination pagination) {
 		this.pagination = pagination;
 	}
+	
+	public void setQueryLinks(List<FacetQueryLinks> queryLinks) {
+		this.queryLinks = queryLinks;
+	}
+	
+	public void makeQueryLinks(List<Facet> facets, Query query) {
+		this.queryLinks = FacetQueryLinksImpl.createDecoratedFacets(facets, query);
+	}
+
 }

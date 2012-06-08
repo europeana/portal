@@ -21,12 +21,13 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
-import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
-
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
+
+import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 
 /**
  * todo: javadoc
@@ -35,16 +36,18 @@ import java.util.Map;
  * @author Gerald de Jong <geralddejong@gmail.com>
  */
 
-public interface BriefBeanView {
-	List<? extends BriefBean> getBriefDocs();
+public interface FullBeanView extends Serializable {
 
-	List<FacetQueryLinks> getFacetQueryLinks(); // throws UnsupportedEncodingException;
+	DocIdWindowPager getDocIdWindowPager() throws Exception, UnsupportedEncodingException;
 
-	ResultPagination getPagination();
+	List<? extends BriefBean> getRelatedItems();
 
-	Map<String, String> getFacetLogs();
+	List<? extends BriefBean> getChildren();
 
-	BriefBean getMatchDoc();
+	BriefBean getParent();
 
-	SpellCheck getSpellCheck();
+	List<? extends BriefBean> getParents();
+
+	FullBean getFullDoc() throws EuropeanaQueryException;
+
 }

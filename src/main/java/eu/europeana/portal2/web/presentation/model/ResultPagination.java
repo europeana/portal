@@ -6,31 +6,30 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 
 /**
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
- * @since Jan 8, 2010 10:51:42 AM
- *        todo: documentation
+ * @since Jan 8, 2010 10:51:42 AM todo: documentation
  */
 public interface ResultPagination {
-    boolean isPrevious();
+	boolean isPrevious();
 
-    boolean isNext();
+	boolean isNext();
 
-    int getPreviousPage();
+	int getPreviousPage();
 
-    int getNextPage();
+	int getNextPage();
 
-    int getLastViewableRecord();
+	int getLastViewableRecord();
 
-    int getNumFound();
+	int getNumFound();
 
-    int getRows();
+	int getRows();
 
-    int getStart();
+	int getStart();
 
-    List<PageLink> getPageLinks();
+	List<PageLink> getPageLinks();
 
-    List<BreadCrumb> getBreadcrumbs();
+	List<BreadCrumb> getBreadcrumbs();
 
-    PresentationQuery getPresentationQuery();
+	PresentationQuery getPresentationQuery();
 
-    int getPageNumber();
+	int getPageNumber();
 }

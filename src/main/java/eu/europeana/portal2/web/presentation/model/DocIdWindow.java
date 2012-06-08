@@ -1,7 +1,7 @@
 /*
  * Copyright 2007 EDL FOUNDATION
  *
- * Licensed under the EUPL, Version 1.1 or - as soon they
+ * Licensed under the EUPL, Version 1.0 or - as soon they
  * will be approved by the European Commission - subsequent
  * versions of the EUPL (the "Licence");
  * you may not use this work except in compliance with the
@@ -21,30 +21,15 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
-import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
-
 import java.util.List;
-import java.util.Map;
+
+import eu.europeana.corelib.definitions.solr.beans.IdBean;
 
 /**
- * todo: javadoc
- * 
- * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  * @author Gerald de Jong <geralddejong@gmail.com>
+ * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  */
 
-public interface BriefBeanView {
-	List<? extends BriefBean> getBriefDocs();
-
-	List<FacetQueryLinks> getFacetQueryLinks(); // throws UnsupportedEncodingException;
-
-	ResultPagination getPagination();
-
-	Map<String, String> getFacetLogs();
-
-	BriefBean getMatchDoc();
-
-	SpellCheck getSpellCheck();
+public interface DocIdWindow extends PagingWindow {
+	List<? extends IdBean> getIds();
 }

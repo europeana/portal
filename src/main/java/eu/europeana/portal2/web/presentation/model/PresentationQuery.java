@@ -6,8 +6,11 @@ package eu.europeana.portal2.web.presentation.model;
  */
 
 public interface PresentationQuery {
-    String getUserSubmittedQuery();
-    String getQueryForPresentation();
-    String getQueryToSave();
-    String getTypeQuery();
+	String getUserSubmittedQuery();
+
+	String getQueryForPresentation();
+
+	String getQueryToSave();
+
+	String getTypeQuery();
 }

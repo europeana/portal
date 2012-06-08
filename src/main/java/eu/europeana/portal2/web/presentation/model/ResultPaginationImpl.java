@@ -96,8 +96,7 @@ public class ResultPaginationImpl implements ResultPagination {
 
 	private static String createQueryForPresentation(SolrQuery solrQuery) {
 		StringBuilder queryString = new StringBuilder();
-		queryString.append("query").append("=")
-				.append(encode(solrQuery.getQuery()));
+		queryString.append("query").append("=").append(encode(solrQuery.getQuery()));
 		String[] facetQueries = null; //SolrQueryUtil.getFilterQueriesWithoutPhrases(solrQuery);
 		if (facetQueries != null) {
 			for (String facetTerm : facetQueries) {

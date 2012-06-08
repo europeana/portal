@@ -91,7 +91,6 @@ public class SearchController {
 		try {
 			briefBeanView = createResults(clazz, profile, query, start, rows);
 			model.setBriefBeanView(briefBeanView);
-			log.info("results (briefBeanView): " + briefBeanView.getBriefDocs().size());
 		} catch (SolrTypeException e) {
 			// return new ApiError("search.json", e.getMessage());
 		} catch (UnsupportedEncodingException e) {
@@ -108,37 +107,26 @@ public class SearchController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			log.info("results (model)" + model.getResults().size());
-			log.info("NextPage (model): " + model.getNextPageUrl());
-			log.info("PreviousPage (model): " + model.getPreviousPageUrl());
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		return page;
 	}
 
-	private BriefBeanView createResults(Class<? extends BriefBean> clazz, String profile, Query q, int start, int rows) 
+	private BriefBeanView createResults(Class<? extends BriefBean> clazz, String profile, Query query, int start, int rows) 
 			throws SolrTypeException {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		SearchResults response = new SearchResults("search.json");
-		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, q);
+		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
 		resultSet.getQuery();
 		response.totalResults = resultSet.getResultSize();
 		response.itemsCount = resultSet.getResults().size();
-		log.info("start param: " + start);
-		log.info("total result: " + resultSet.getResultSize());
-		log.info("nr of items: " + resultSet.getResults().size());
 		response.items = resultSet.getResults();
 		briefBeanView.setBriefDocs(resultSet.getResults());
 		if (StringUtils.containsIgnoreCase(profile, "facets") || StringUtils.containsIgnoreCase(profile, "portal")) {
-			response.facets = ModelUtils.conventFacetList(resultSet.getFacetFields());
+			briefBeanView.makeQueryLinks(ModelUtils.conventFacetList(resultSet.getFacetFields()), query);
 		}
 		if (StringUtils.containsIgnoreCase(profile, "breadcrumb") || StringUtils.containsIgnoreCase(profile, "portal")) {
-			response.breadCrumbs = NavigationUtils.createBreadCrumbList(q);
+			response.breadCrumbs = NavigationUtils.createBreadCrumbList(query);
 		}
 		if (StringUtils.containsIgnoreCase(profile, "spelling") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.setSpellcheck(ModelUtils.convertSpellCheck(resultSet.getSpellcheck()));
@@ -148,12 +136,7 @@ public class SearchController {
 		
 		ResultPagination pagination = new ResultPaginationImpl(start, rows,
 				(int)resultSet.getResultSize(), 
-				q.getQuery(), q.getQuery(), response.breadCrumbs);
-		log.info("total result (pagination): " + pagination.getNumFound());
-		log.info("rows (pagination): " + pagination.getRows());
-		log.info("start (pagination): " + pagination.getStart());
-		log.info("NextPage (pagination): " + pagination.getNextPage());
-		log.info("PreviousPage (pagination): " + pagination.getPreviousPage());
+				query.getQuery(), query.getQuery(), response.breadCrumbs);
 		briefBeanView.setPagination(pagination);
 		return briefBeanView;
 	}
