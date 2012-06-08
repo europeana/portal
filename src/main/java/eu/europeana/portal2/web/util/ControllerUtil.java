@@ -102,4 +102,12 @@ public class ControllerUtil {
 		return output.toString();
 	}
 
+	public static String getFullServletUrl(HttpServletRequest request) {
+		String url = request.getRequestURL().toString();
+		int index = url.indexOf(request.getServerName());
+		url = url.substring(0, index) + request.getServerName() + ":"
+				+ request.getServerPort() + request.getRequestURI();
+		return url;
+	}
+
 }

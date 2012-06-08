@@ -50,9 +50,8 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 				(List<BriefBean>) view.getBriefDocs());
 	}
 
-	/*
 	@Override
-	public List<FacetQueryLinks> getFacetQueryLinks() {//throws UnsupportedEncodingException {
+	public List<FacetQueryLinks> getFacetQueryLinks() {
 		if (facets == null) {
 			// setting the order and facet types we want
 			String[] order = new String[] { "TYPE", "LANGUAGE", "YEAR",
@@ -76,7 +75,6 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 		}
 		return facets;
 	}
-	*/
 
 	/**
 	 * return decorated class instead
