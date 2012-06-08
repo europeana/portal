@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="facettype" value="${fn:toLowerCase(facet.name)}"/>
+<c:set var="facettype" value="${fn:toLowerCase(facet.type)}"/>
 <c:choose>
 	<c:when test="${facettype == 'type'}">
 		<c:set var="classAttr" value="facet-section facet-media active"/>
