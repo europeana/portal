@@ -53,7 +53,7 @@
 
 	<c:when test="${model.pageName == 'search.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/search.min.css"/>
-		<c:if test="${!empty model.embedded}">
+		<c:if test="${model.embedded}">
 			<link rel="stylesheet" href="/${branding}/css/min/search-embed.min.css"/>
 		</c:if>
 	</c:when>

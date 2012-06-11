@@ -1,12 +1,17 @@
 package eu.europeana.portal2.web.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
 
 public class QueryUtil {
+
+	private static final Logger log = Logger.getLogger(QueryUtil.class.getName());
 
     public static String[] getFilterQueriesWithoutPhrases(Query solrQuery) {
         String[] filterQueries = solrQuery.getRefinements();
@@ -30,5 +35,30 @@ public class QueryUtil {
         }
         return nonPhraseFilterQueries.toArray(new String[nonPhraseFilterQueries.size()]);
     }
+
+	/**
+	 * Creates a phrase part of facet query.
+	 * 
+	 * @param fieldName 
+	 *   The field name
+	 * @param value
+	 *   The field value
+	 * @return
+	 *   The URL encoded phrase
+	 */
+	public static String createPhraseValue(String fieldName, String value) {
+		if (fieldName.equals("TYPE") || !value.contains(" ")) {
+			return value;
+		}
+		else {
+			String encoded = '"' + value + '"';
+			try {
+				encoded = URLEncoder.encode(encoded, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				log.severe(e.getMessage());
+			}
+			return encoded;
+		}
+	}
 
 }

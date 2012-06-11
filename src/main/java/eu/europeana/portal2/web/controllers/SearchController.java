@@ -87,27 +87,18 @@ public class SearchController {
 						.setParameter("f.YEAR.facet.mincount", "1");
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
-		BriefBeanView briefBeanView = null;
 		try {
-			briefBeanView = createResults(clazz, profile, query, start, rows);
+			BriefBeanView briefBeanView = createResults(clazz, profile, query, start, rows);
 			model.setBriefBeanView(briefBeanView);
+			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
+			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (SolrTypeException e) {
 			// return new ApiError("search.json", e.getMessage());
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		// TODO:
-		// BriefBeanView briefBeanView = beanQueryModelFactory.getBriefResultView(solrQuery, request.getQueryString());
-		model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		return page;
 	}
 

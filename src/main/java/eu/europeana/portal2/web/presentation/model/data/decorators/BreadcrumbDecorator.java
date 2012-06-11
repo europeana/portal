@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -27,12 +28,16 @@ import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class BreadcrumbDecorator extends BreadCrumb {
-	private static final long serialVersionUID = -6622508852832135969L;
+
+	private static final Logger log = Logger.getLogger(BreadcrumbDecorator.class.getName());
 
 	private SearchData model;
 
 	public BreadcrumbDecorator(SearchData model, BreadCrumb breadcrumb) {
-		super(breadcrumb.getHref(), breadcrumb.getDisplay());
+		super(breadcrumb.getDisplay(), breadcrumb.getHref());
+		if (breadcrumb.isLast()) {
+			markAsLast();
+		}
 		this.model = model;
 	}
 
@@ -59,8 +64,13 @@ public class BreadcrumbDecorator extends BreadCrumb {
 	 */
 	public String getBreadCrumbUrl() throws UnsupportedEncodingException {
 		StringBuilder url = new StringBuilder();
-		url.append(model.getCurrentSearch().getPageName()).append("?").append(getHref());
+		url.append(model.getPageName()).append("?").append(getHref());
 		return model.getPortalFormattedUrl(new UrlBuilder(url.toString())).toString();
+	}
+	
+	public boolean getIsLast() {
+		log.info("getIsLast: " + isLast());
+		return isLast();
 	}
 
 }

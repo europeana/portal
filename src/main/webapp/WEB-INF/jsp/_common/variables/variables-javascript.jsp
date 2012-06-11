@@ -110,7 +110,7 @@ window.js = {
 if ( !window.console ) { window.console = js.empty_console; }
 js.console = js.empty_console;
 
-<c:if test="${!empty model.debug}">
+<c:if test="${model.debug}">
 	js.debug = true;
 	js.cache_helper = '?' + new Date().getTime();
 	js.console = window.console;

@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
@@ -28,6 +29,8 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.lists.Breadcr
 
 public abstract class SearchData extends UrlAwareData<BriefBean> {
 
+	private static final Logger log = Logger.getLogger(SearchData.class.getName());
+	
 	protected List<BreadCrumb> breadcrumbs;
 
 	protected BriefBeanViewDecorator briefBeanView;
@@ -58,10 +61,10 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 		return briefBeanView;
 	}
 
-	public List<BreadCrumb> getBreadcrumbs() {
+	public List<? extends BreadCrumb> getBreadcrumbs() {
 		if (breadcrumbs != null) {
 			BreadcrumbListDecorator breadcrumbListDecorator = new BreadcrumbListDecorator(this, breadcrumbs);
-			return breadcrumbListDecorator;
+			return breadcrumbListDecorator.asDecoList();
 		}
 		return null;
 	}

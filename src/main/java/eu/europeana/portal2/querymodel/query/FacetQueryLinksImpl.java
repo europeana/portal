@@ -70,15 +70,15 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 								remove = true;
 								facetSelected = true;
 							} else {
-								url.append(FACET_PROMPT).append(facetTerm);
+								url.append(FACET_PROMPT).append(facetName).append(':').append(QueryUtil.createPhraseValue(facetName, facetValue));
 							}
 						} else {
-							url.append(FACET_PROMPT).append(facetTerm);
+							url.append(FACET_PROMPT).append(facetName).append(':').append(QueryUtil.createPhraseValue(facetName, facetValue));
 						}
 					}
-					
 				}
 			}
+
 			if (!remove) {
 				url.append(FACET_PROMPT);
 				url.append(facetField.getName());
@@ -91,9 +91,10 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 						url.append(license.getOriginalURI());
 					}
 				} else {
-					url.append(item.getLabel());
+					url.append(QueryUtil.createPhraseValue(facetField.getName(), item.getLabel()));
 				}
 			}
+
 			if (RIGHTS_FACET.equals(type)) {
 				EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel());
 				item.setLabel(license.getOriginalURI());

@@ -5,7 +5,7 @@
 <form id="query-search" method="get" action="${query_action}">
 	<fieldset>
 		<c:choose>
-			<c:when test="${!empty model.debug && model.pageName == 'map.html'}">
+			<c:when test="${model.debug && model.pageName == 'map.html'}">
 				<c:set var="className" value="map-query"/>
 			</c:when>
 			<c:otherwise>
@@ -19,12 +19,12 @@
 		<input type="submit" class="submit-button" value="<spring:message code="Search_t" />"/>
 
 		<%-- save search link --%>
-		<c:if test="${!empty model.debug && model.pageName == 'map.html'}">
+		<c:if test="${model.debug && model.pageName == 'map.html'}">
 			<input type="checkbox" id="box_search"/>
 			<label for="box_search"><spring:message code="MapBoxedSearch_t" /></label>
 		</c:if>
 
-		<c:if test="${!empty model.embedded}">
+		<c:if test="${model.embedded}">
 			<input type="hidden" name="embedded" 			value="${model.embeddedString}" />
 			<input type="hidden" name="embeddedBgColor" 	value="${model.embeddedBgColor}" />
 			<input type="hidden" name="embeddedForeColor" 	value="${model.embeddedForeColor}" />
@@ -36,11 +36,11 @@
 	</fieldset>
 
 	<%-- additional feature links for the search box --%>
-	<c:if test="${empty model.embedded}">
+	<c:if test="${!model.embedded}">
 		<%-- refine search link --%>
 		<c:set var="refinedEnabled" value=" disabled" />
-		<c:if test="${!empty model.enableRefinedSearch}">
-			<c:set var="refinedEnabled" value=" disabled" />
+		<c:if test="${!empty model.enableRefinedSearch && model.enableRefinedSearch}">
+			<c:set var="refinedEnabled" value="" />
 		</c:if>
 		<a href="" id="refine-search" class="nofollow${refinedEnabled}"><spring:message code="RefineYourSearch_t"/></a>
 

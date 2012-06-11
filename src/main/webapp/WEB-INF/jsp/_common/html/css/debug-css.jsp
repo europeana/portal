@@ -75,7 +75,7 @@
 		<link rel="stylesheet" href="/${branding}/css/search-pagination.css"/>
 		<link rel="stylesheet" href="/${branding}/css/sidebar-facets.css"/>
 		<link rel="stylesheet" href="/${branding}/css/sidebar-legend.css"/>
-		<c:if test="${!empty model.embedded}">
+		<c:if test="${model.embedded}">
 			<link rel="stylesheet" href="/${branding}/css/search-embed.css"/>
 		</c:if>
 	</c:when>

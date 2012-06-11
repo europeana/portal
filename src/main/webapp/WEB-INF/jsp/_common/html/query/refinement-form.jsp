@@ -4,7 +4,7 @@
 <form id="refine-search-form" method="get" action="${query_action}">
 	<fieldset>
 		<c:set var="className" value="" />
-		<c:if test="${!empty model.debug && model.pageName == 'map.html'}">
+		<c:if test="${model.debug && model.pageName == 'map.html'}">
 			<c:set var="className" value=" map-query" />
 		</c:if>
 
@@ -12,7 +12,7 @@
 		<input type="hidden" name="query" <c:if test="${!empty model.query}">value="${model.query}"</c:if>/>
 		<input type="submit" class="submit-button" value="<spring:message code="RefineYourSearch_t" />" />
 
-		<c:if test="${!empty model.debug && model.pageName == 'map.html'}">
+		<c:if test="${model.debug && model.pageName == 'map.html'}">
 			<input type="checkbox" id="box_search_refine"/>
 			<label for="box_search_refine"><spring:message code="MapBoxedSearch_t"/></label>
 		</c:if>
@@ -41,7 +41,7 @@
 				<input type="hidden" name="qf" value="${facetsForInclusion}" />
 			</c:forEach>
 		</c:if --%>
-		<c:if test="${!empty model.embedded}">
+		<c:if test="${model.embedded}">
 			<input type="hidden" name="embedded" 			value="${model.embeddedString}" />
 			<input type="hidden" name="embeddedBgColor" 	value="${model.embeddedBgColor}" />
 			<input type="hidden" name="embeddedForeColor" 	value="${model.embeddedForeColor}" />

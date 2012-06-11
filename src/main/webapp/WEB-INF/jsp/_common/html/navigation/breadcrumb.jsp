@@ -6,20 +6,19 @@
 		<c:choose>
 			<c:when test="${!empty !model.euroeanaUri}">
 				<li><span class="bold black"><spring:message code="MatchesFor_t" />:</span></li>
-				<c:forEach items="${model.breadcrumbs}" var="crumb">
-					<li><a href="${crumb.href}" rel="nofollow">${crumb.display}</a>&#160;&gt;&#160;</li>
-<%--
-					<c:if test="${!empty crumb.showBreadCrumb}">
+				<c:set var="breadcrumbs" value="${model.breadcrumbs}" />
+				<c:forEach items="${breadcrumbs}" var="crumb">
+					<!-- isLast: ${crumb.isLast} -->
+					<c:if test="${crumb.showBreadCrumb}">
 						<c:choose>
-							<c:when test="${!empty crumb_has_next}">
-								<li><a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display}</a>&#160;&gt;&#160;</li>
+							<c:when test="${crumb.isLast}">
+								<li><b>${crumb.display}</b></li>
 							</c:when>
 							<c:otherwise>
-								<li><b>${crumb.display}</b></li>
+								<li><a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display}</a>&#160;&gt;&#160;</li>
 							</c:otherwise>
 						</c:choose>
 					</c:if>
---%>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
