@@ -4,7 +4,9 @@
 <ul id="items">
 	<c:set var="row_counter" value="1" />
 	<c:set var="cell_counter" value="1" />
-	<c:forEach var="cell" items="${model.results}">
+	<c:set var="results" value="${model.briefBeanView.briefDocs}" />
+	<c:forEach var="cell" items="${results}">
+		<!-- ${cell} -->
 		<c:set var="row_counter" value="1" />
 		<%-- c:set var="title" value="${fn:substring(cell.title[0], 0, titleMaxLength)}" /--%>
 		<c:set var="title" value="${cell.title[0]}" />
@@ -21,12 +23,13 @@
 		<c:if test="${row_counter == 4}">
 			<c:set var="li_class" value="${li_class + ' bottom'}" />
 		</c:if>
-
+		<!-- item in grid -->
 		<li class="item${li_class}${icon_class}">
 			<%@ include file="/WEB-INF/jsp/search/content/results/grid/image.jsp" %>
 			<%@ include file="/WEB-INF/jsp/search/content/results/grid/title.jsp" %>
 			<%@ include file="/WEB-INF/jsp/search/content/results/grid/additional-info.jsp" %>
 		</li>
+		<!-- /item in grid -->
 
 		<c:set var="cell_counter" value="${cell_counter + 1}" />
 		<c:if test="${cell_counter > 4}">

@@ -1,6 +1,5 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +30,7 @@ import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.QueryUtil;
 
 @Controller
 public class SearchController {
@@ -39,6 +40,12 @@ public class SearchController {
 	
 	private static final Logger log = Logger.getLogger(SearchController.class.getName());
 
+	@Value("#{europeanaProperties['solr.url']}")
+	private String solrUrl;
+
+	@Value("#{europeanaProperties['mongodb.host']}")
+	private String mongodbHost;
+	
 	@Resource
 	private SearchService searchService;
 
@@ -63,6 +70,8 @@ public class SearchController {
 		Locale locale
 	) {
 		log.info("============== START SEARCHING ==============");
+		log.info(String.format("solrUrl: %s, mongodbHost: %s", solrUrl, mongodbHost));
+
 		SearchPage model = new SearchPage();
 		model.setEmbeddedBgColor(embeddedBgColor);
 		model.setEmbeddedForeColor(embeddedForeColor);
@@ -98,6 +107,8 @@ public class SearchController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		model.getBriefBeanView().getBriefDocs();
+		model.getBreadcrumbs();
 		
 		return page;
 	}
@@ -107,6 +118,7 @@ public class SearchController {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		SearchResults response = new SearchResults("search.json");
+		
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
 		resultSet.getQuery();
 		response.totalResults = resultSet.getResultSize();
@@ -117,7 +129,7 @@ public class SearchController {
 			briefBeanView.makeQueryLinks(ModelUtils.conventFacetList(resultSet.getFacetFields()), query);
 		}
 		if (StringUtils.containsIgnoreCase(profile, "breadcrumb") || StringUtils.containsIgnoreCase(profile, "portal")) {
-			response.breadCrumbs = NavigationUtils.createBreadCrumbList(query);
+			response.breadCrumbs = NavigationUtils.createBreadCrumbList(QueryUtil.escapeQuery(query));
 		}
 		if (StringUtils.containsIgnoreCase(profile, "spelling") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.setSpellcheck(ModelUtils.convertSpellCheck(resultSet.getSpellcheck()));

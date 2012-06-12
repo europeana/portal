@@ -22,12 +22,15 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 
 public class BriefBeanListDecorator<E extends BriefBean> implements List<E> {
+
+	private static final Logger log = Logger.getLogger(BriefBeanListDecorator.class.getName());
 
 	private UrlAwareData<?> model;
 	private List<E> list;
@@ -37,9 +40,10 @@ public class BriefBeanListDecorator<E extends BriefBean> implements List<E> {
 		this.list = list;
 	}
 
-	private List<BriefBeanDecorator> asDecoList() {
+	public List<BriefBeanDecorator> asDecoList() {
 		List<BriefBeanDecorator> newList = new ArrayList<BriefBeanDecorator>();
 		for (BriefBean briefDoc : list) {
+			// log.info("original FullDoc: " + briefDoc.getId());
 			newList.add(new BriefBeanDecorator(model, briefDoc));
 		}
 		return newList;

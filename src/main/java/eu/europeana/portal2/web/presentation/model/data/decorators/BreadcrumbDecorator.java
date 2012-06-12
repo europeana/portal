@@ -26,6 +26,7 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.portal2.web.presentation.Configuration;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
+import eu.europeana.portal2.web.util.QueryUtil;
 
 public class BreadcrumbDecorator extends BreadCrumb {
 
@@ -34,15 +35,26 @@ public class BreadcrumbDecorator extends BreadCrumb {
 	private SearchData model;
 
 	public BreadcrumbDecorator(SearchData model, BreadCrumb breadcrumb) {
-		super(breadcrumb.getDisplay(), breadcrumb.getHref());
+		super(breadcrumb.getDisplay(), breadcrumb.getParam(), breadcrumb.getValue(), breadcrumb.getHref());
 		if (breadcrumb.isLast()) {
 			markAsLast();
 		}
 		this.model = model;
 	}
+	
+	@Override
+	public String getDisplay() {
+		String display = super.getDisplay();
+		if (getParam().equals("qf")) {
+			return QueryUtil.removeQuotes(display);
+		}
+		else {
+			return display;
+		}
+	}
 
 	/**
-	 * Determnies whether or not to show a navigation breadcrumb. In the case of
+	 * Determines whether or not to show a navigation breadcrumb. In the case of
 	 * embedded we only want to show the search terms and not the facets.
 	 * 
 	 * @param crumbName
@@ -69,7 +81,6 @@ public class BreadcrumbDecorator extends BreadCrumb {
 	}
 	
 	public boolean getIsLast() {
-		log.info("getIsLast: " + isLast());
 		return isLast();
 	}
 

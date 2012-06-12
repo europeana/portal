@@ -21,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -30,9 +31,12 @@ import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
+import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBeanListDecorator;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class BriefBeanDecorator implements BriefBean {
+
+	private static final Logger log = Logger.getLogger(BriefBeanDecorator.class.getName());
 
 	protected BriefBean briefDoc;
 	private UrlAwareData<?> model;
@@ -66,7 +70,11 @@ public class BriefBeanDecorator implements BriefBean {
 
 	@Override
 	public String getFullDocUrl() {
-		UrlBuilder builder = new UrlBuilder(briefDoc.getFullDocUrl());
+		// log.info("1: " + briefDoc.getId());
+		String url = "record/" + briefDoc.getId().replace("#", "") + ".html";
+		UrlBuilder builder = new UrlBuilder(url);
+		// log.info("1: " + briefDoc.getId());
+		// log.info("2: " + url);
 
 		// builder.addParam("start", Integer.toString(getIndex()), true);
 
@@ -75,6 +83,7 @@ public class BriefBeanDecorator implements BriefBean {
 		} catch (UnsupportedEncodingException e) {
 			// will never happen, do ignore...
 		}
+		// log.info("3: " + builder.toString());
 		return builder.toString();
 	}
 

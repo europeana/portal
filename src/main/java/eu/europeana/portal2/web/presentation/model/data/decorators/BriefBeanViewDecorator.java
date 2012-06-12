@@ -29,6 +29,7 @@ import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
+import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BreadcrumbListDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBeanListDecorator;
 
 public class BriefBeanViewDecorator implements BriefBeanView {
@@ -46,8 +47,14 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getBriefDocs() {
-		return new BriefBeanListDecorator<BriefBean>(model,
-				(List<BriefBean>) view.getBriefDocs());
+		//if (breadcrumbs != null) {
+			BriefBeanListDecorator<BriefBean> decorator = new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) view.getBriefDocs());
+			// BreadcrumbListDecorator breadcrumbListDecorator = new BreadcrumbListDecorator(this, breadcrumbs);
+			return decorator.asDecoList();
+		//}
+		//return null;
+
+		// return new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) view.getBriefDocs());
 	}
 
 	@Override

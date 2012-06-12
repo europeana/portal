@@ -8,7 +8,6 @@
 				<li><span class="bold black"><spring:message code="MatchesFor_t" />:</span></li>
 				<c:set var="breadcrumbs" value="${model.breadcrumbs}" />
 				<c:forEach items="${breadcrumbs}" var="crumb">
-					<!-- isLast: ${crumb.isLast} -->
 					<c:if test="${crumb.showBreadCrumb}">
 						<c:choose>
 							<c:when test="${crumb.isLast}">
