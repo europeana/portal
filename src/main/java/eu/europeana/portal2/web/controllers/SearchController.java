@@ -1,5 +1,9 @@
 package eu.europeana.portal2.web.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -10,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,9 +31,13 @@ import eu.europeana.portal2.web.model.SearchResults;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
+import eu.europeana.portal2.web.presentation.model.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.FullDocPage;
+import eu.europeana.portal2.web.presentation.model.FullRecordPage;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
+import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentation;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.QueryUtil;
 
@@ -142,6 +151,91 @@ public class SearchController {
 				query.getQuery(), query.getQuery(), response.breadCrumbs);
 		briefBeanView.setPagination(pagination);
 		return briefBeanView;
+	}
+
+	@RequestMapping("/record/{collection}/{recordId}.html")
+	public ModelAndView fullDocRest(@PathVariable String collection,
+			@PathVariable String recordId,
+			@RequestParam(value = "field", required = true) String field,
+			@RequestParam(value = "value", required = true) String value,
+			HttpServletRequest request, Locale locale) throws Exception {
+		FullRecordPage model = new FullRecordPage();
+		model.setCollectionId(collection);
+		model.setRecordId(recordId);
+		FullBeanView fullResultView = beanQueryModelFactory.getFullResultView(
+				model.getResolveUri(), new HashMap<String, String[]>());
+		FullDocPage fullViewWrapper = new FullDocPage();
+		List<FieldPresentation> allFields = new ArrayList<FieldPresentation>();
+
+		/*
+		clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SHOW_SIWA_MENU,
+				model.getResolveUri() + " " + field);
+		*/
+
+		fullViewWrapper.setFullBeanView(fullResultView);
+
+		/**
+		 * The field we want the options for could be a standard field or one of
+		 * the addition fields. We therefore place all of them in one collection
+		 * ready to perform a search.
+		 */
+		allFields.addAll(fullViewWrapper.getFields());
+		allFields.addAll(fullViewWrapper.getFieldsAdditional());
+
+		/**
+		 * Locate the field we want the associated ESS services and translations
+		 * for.
+		 */
+		Iterator<FieldPresentation> fieldsItr = allFields.iterator();
+
+		FieldPresentation fieldPresentation = null;
+
+		while (fieldsItr.hasNext()) {
+
+			FieldPresentation currentField = fieldsItr.next();
+
+			if (currentField.getFieldName().equals(field)) {
+				fieldPresentation = currentField;
+				break;
+			}
+
+		}
+
+		/**
+		 * Determine which components of the ESS popup should be displayed and
+		 * set these options to the page.
+		 */
+		boolean showEssOptions = false;
+
+		if (fieldPresentation != null
+				&& (fieldPresentation.isShowTranslationServices() || fieldPresentation
+						.isShowExternalServices())) {
+			showEssOptions = true;
+		}
+
+		if (field.equals("ALL")) {
+			model.setShowEssOptions(true);
+			model.setShowEssTranslationServices(true);
+			model.setShowEssServices(false);
+			model.setServices(ExternalService.none());
+		} else {
+			model.setShowEssOptions(showEssOptions);
+			model.setShowEssTranslationServices(false);
+			if (showEssOptions) {
+				model.setShowEssServices(fieldPresentation
+						.isShowExternalServices());
+				model.setServices(fieldPresentation.getExternalServices());
+			} else {
+				model.setShowEssServices(false);
+				model.setServices(ExternalService.none());
+			}
+		}
+
+		model.setField(field);
+		model.setValue(value);
+
+		return ControllerUtil.createModelAndViewPage(model, locale,
+				PortalPageInfo.SIWAMENU);
 	}
 
 	public ConfigInterceptor getCorelib_web_configInterceptor() {
