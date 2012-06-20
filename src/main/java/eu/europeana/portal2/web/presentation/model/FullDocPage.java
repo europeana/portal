@@ -32,8 +32,9 @@ import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
-public class FullDocPage extends FullDocPreparation {
+public class FullDocPage {// extends FullDocPreparation {
 
+	/*
     private RightsValue rightsOption = null;
 
     @Override
@@ -57,6 +58,7 @@ public class FullDocPage extends FullDocPreparation {
      * @return - Whether or not to show the extended fields link
      * @throws Exception
      */
+	/*
     public String getEnrichedFieldsLinkStyle() throws Exception {
         return this.getFieldsEnrichment().isEmpty() ? "display:none" : "display:block";
     }
@@ -70,6 +72,7 @@ public class FullDocPage extends FullDocPreparation {
      * 
      * @return image reference
      */
+	/*
     public String getImageRef() {
         return StringArrayUtils.isNotBlank(document.getEuropeanaIsShownBy()) ? document.getEuropeanaIsShownBy()[0]
                 : document.getEuropeanaIsShownAt()[0];
@@ -86,6 +89,7 @@ public class FullDocPage extends FullDocPreparation {
      * In this case (and others where this is no "isShownBy") we need to check the value of "isShownAt", and if it passes the
      * mime type test show that instead.
      * */
+	/*
     public String getLightboxRef() {
     	if (!lightboxRefChecked) {
 	    	if (StringArrayUtils.isBlank(document.getEuropeanaIsShownBy()) && StringArrayUtils.isBlank(document.getEuropeanaIsShownAt())) {
@@ -132,6 +136,7 @@ public class FullDocPage extends FullDocPreparation {
      * @return collection of meta data fields
      * @throws EuropeanaQueryException
      */
+	/*
     public List<MetaDataFieldPresentation> getMetaDataFields() {
         List<MetaDataFieldPresentation> fields = new ArrayList<MetaDataFieldPresentation>();
 
@@ -229,6 +234,7 @@ public class FullDocPage extends FullDocPreparation {
      * @return - Whether or not to show the more fields link
      * @throws Exception
      */
+	/*
     public String getMoreLinkStyle() throws Exception {
 
         if (getFieldsAdditional().isEmpty() && getFieldsEnrichment().isEmpty()) {
@@ -243,6 +249,7 @@ public class FullDocPage extends FullDocPreparation {
      * 
      * @return
      */
+	/*
     public RightsValue getRightsOption() {
         if (rightsOption == null) {
             rightsOption = RightsValue.safeValueByUrl( document.getEuropeanaRights()[0] );
@@ -307,6 +314,7 @@ public class FullDocPage extends FullDocPreparation {
      * 
      * @return page title
      */
+	/*
     public String getPageTitle() {
     	
         StringBuilder title = new StringBuilder(StringUtils.defaultIfBlank(
@@ -332,6 +340,7 @@ public class FullDocPage extends FullDocPreparation {
      * 
      * @return reference url
      */
+	/*
     public String getUrlRef() {
         return StringUtils.defaultIfBlank(document.getEuropeanaIsShownAt()[0],
                 StringUtils.defaultIfBlank(document.getEuropeanaIsShownBy()[0], "#"));
@@ -354,6 +363,7 @@ public class FullDocPage extends FullDocPreparation {
      * 
      * @return
      */
+	/*
     public String getShownAtProvider() {
     	if(isHasDataProvider() && !ArrayUtils.contains(shownAtProviderOverride, getCollectionId() )){
     		return getDocument().getEuropeanaDataProvider()[0];
@@ -370,6 +380,7 @@ public class FullDocPage extends FullDocPreparation {
      * 
      * @return - list of available citation types
      */
+	/*
     public CiteValue[] getCiteStyles() {
         return CiteStyle.values(this);
     }
@@ -379,6 +390,7 @@ public class FullDocPage extends FullDocPreparation {
      * 
      * @return Return true if more than 1 option is available else false
      */
+    /*
     public boolean isCiteStyleBox() {
         return CiteStyle.values().length > 1;
     }
@@ -391,6 +403,7 @@ public class FullDocPage extends FullDocPreparation {
      *             Must be at least 1 cite style of functionality makes no sense so throw error if less that 1 cite
      *             style is available
      */
+    /*
     public CiteValue getDefaultCiteStyle() throws Exception {
         if (CiteStyle.values().length >= 1) {
             return getCiteStyles()[0];
@@ -415,6 +428,7 @@ public class FullDocPage extends FullDocPreparation {
      *            - Any values associated with the field
      * @return
      */
+    /*
     private void addMetaField(List<MetaDataFieldPresentation> metaDataFields, Field field, String... values) {
         if ((values != null) && (field.getFieldName() != null)) {
             MetaDataFieldPresentation metaDataField = new MetaDataFieldPresentation(this, field, values);
@@ -433,6 +447,7 @@ public class FullDocPage extends FullDocPreparation {
      * @return
      * @throws UnsupportedEncodingException
      */
+    /*
     @Override
     public UrlBuilder getPortalFormattedUrl(UrlBuilder url) throws UnsupportedEncodingException {
         
@@ -469,5 +484,6 @@ public class FullDocPage extends FullDocPreparation {
     public String getReturnTo() {
     	return returnTo.toString();
     }
+    */
 
 }

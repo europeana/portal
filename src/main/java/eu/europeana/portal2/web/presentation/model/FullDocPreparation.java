@@ -31,8 +31,9 @@ import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentation;
 
-public abstract class FullDocPreparation extends FullDocData {
+public abstract class FullDocPreparation {//extends FullDocData {
 
+	/*
 	private static final Logger log = Logger.getLogger(FullDocData.class
 			.getName());
 
@@ -48,6 +49,7 @@ public abstract class FullDocPreparation extends FullDocData {
 	 * 
 	 * @return Fields for lightbox section
 	 */
+	/*
 	public List<FieldPresentation> getFieldsLightbox() throws Exception {
 		if (fieldsLightbox == null) {
 			fieldsLightbox = new ArrayList<FieldPresentation>();
@@ -68,6 +70,7 @@ public abstract class FullDocPreparation extends FullDocData {
 	 * 
 	 * @return Fields for more section
 	 */
+	/*
 	public List<FieldPresentation> getFieldsAdditional() throws Exception {
 		if (fieldsAdditional == null) {
 			fieldsAdditional = new ArrayList<FieldPresentation>();
@@ -107,6 +110,7 @@ public abstract class FullDocPreparation extends FullDocData {
 	 * @return list of enrichment fields
 	 * @throws Exception
 	 */
+	/*
 	private void prepareFieldsEnrichment() throws Exception {
 		fieldsEnrichment = new HashMap<String, List<FieldPresentation>>();
 
@@ -186,6 +190,7 @@ public abstract class FullDocPreparation extends FullDocData {
 	 * 
 	 * @return collection of fields
 	 */
+	/*
 	public List<FieldPresentation> getFields() throws Exception {
 		if (fields == null) {
 
@@ -258,4 +263,5 @@ public abstract class FullDocPreparation extends FullDocData {
 			}
 		}
 	}
+	*/
 }

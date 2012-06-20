@@ -153,6 +153,7 @@ public class SearchController {
 		return briefBeanView;
 	}
 
+	/*
 	@RequestMapping("/record/{collection}/{recordId}.html")
 	public ModelAndView fullDocRest(@PathVariable String collection,
 			@PathVariable String recordId,
@@ -170,7 +171,6 @@ public class SearchController {
 		/*
 		clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SHOW_SIWA_MENU,
 				model.getResolveUri() + " " + field);
-		*/
 
 		fullViewWrapper.setFullBeanView(fullResultView);
 
@@ -179,6 +179,7 @@ public class SearchController {
 		 * the addition fields. We therefore place all of them in one collection
 		 * ready to perform a search.
 		 */
+	/*
 		allFields.addAll(fullViewWrapper.getFields());
 		allFields.addAll(fullViewWrapper.getFieldsAdditional());
 
@@ -186,6 +187,7 @@ public class SearchController {
 		 * Locate the field we want the associated ESS services and translations
 		 * for.
 		 */
+	/*
 		Iterator<FieldPresentation> fieldsItr = allFields.iterator();
 
 		FieldPresentation fieldPresentation = null;
@@ -205,6 +207,7 @@ public class SearchController {
 		 * Determine which components of the ESS popup should be displayed and
 		 * set these options to the page.
 		 */
+	/*
 		boolean showEssOptions = false;
 
 		if (fieldPresentation != null
@@ -237,6 +240,7 @@ public class SearchController {
 		return ControllerUtil.createModelAndViewPage(model, locale,
 				PortalPageInfo.SIWAMENU);
 	}
+	*/
 
 	public ConfigInterceptor getCorelib_web_configInterceptor() {
 		return corelib_web_configInterceptor;
