@@ -300,33 +300,27 @@ public class FullBeanDecorator implements FullBean {
     public String[] getEuropeanaSource() {
         return fulldoc.getEuropeanaSource();
     }
+    */
 
-    @Override
-    public String[] getEuropeanaLanguage() {
-        return fulldoc.getEuropeanaLanguage();
+    public String getEdmLanguage() {
+        return fulldoc.getEuropeanaAggregation().getEdmLanguage();
     }
 
+    /*
     @Override
     public String[] getEuropeanaYear() {
         return fulldoc.getEuropeanaYear();
     }
-
-    @Override
-    public String[] getEuropeanaDataProvider() {
-        return fulldoc.getEuropeanaDataProvider();
-    }
-
-    @Override
-    public String[] getEuropeanaRights() {
-        return fulldoc.getEuropeanaRights();
-    }
-    
-    @Override
-    public String[] getEuropeanaUGC() {
-    	return fulldoc.getEuropeanaUGC();
-    }
     */
-    
+
+    public String[] getEdmDataProvider() {
+		List<String> items = new ArrayList<String>();
+		for (Aggregation aggregation : fulldoc.getAggregations()) {
+			items.add(aggregation.getEdmDataProvider());
+		}
+		return StringArrayUtils.toArray(items);
+    }
+
     public boolean isUserGeneratedContent() {
     	if (StringArrayUtils.isNotBlank(fulldoc.getEdmUGC())) {
     		return StringUtils.equalsIgnoreCase(fulldoc.getEdmUGC()[0], "true");
@@ -467,24 +461,18 @@ public class FullBeanDecorator implements FullBean {
 
     public String[] getDcDate() {
 		List<String> items = new ArrayList<String>();
-		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
-		for (ProxyImpl proxy : proxies) {
-			for (String item : proxy.getDcDate()) {
-				items.add(item);
-			}
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcDate());
 		}
-		return (String[]) items.toArray();
+		return StringArrayUtils.toArray(items);
     }
 
     public String[] getDcDescription() {
 		List<String> items = new ArrayList<String>();
-		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
-		for (ProxyImpl proxy : proxies) {
-			for (String item : proxy.getDcDescription()) {
-				items.add(item);
-			}
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcDescription());
 		}
-		return (String[]) items.toArray();
+		return StringArrayUtils.toArray(items);
     }
 
     public String getDcDescriptionCombined() {
@@ -493,13 +481,10 @@ public class FullBeanDecorator implements FullBean {
 
 	public String[] getDcFormat() {
 		List<String> items = new ArrayList<String>();
-		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
-		for (ProxyImpl proxy : proxies) {
-			for (String item : proxy.getDcFormat()) {
-				items.add(item);
-			}
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcFormat());
 		}
-		return (String[]) items.toArray();
+		return StringArrayUtils.toArray(items);
 	}
 
 	@Override
@@ -509,13 +494,10 @@ public class FullBeanDecorator implements FullBean {
 
 	public String[] getDcLanguage() {
 		List<String> items = new ArrayList<String>();
-		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
-		for (ProxyImpl proxy : proxies) {
-			for (String item : proxy.getDcLanguage()) {
-				items.add(item);
-			}
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcLanguage());
 		}
-		return (String[]) items.toArray();
+		return StringArrayUtils.toArray(items);
 	}
 
 	@Override
@@ -530,13 +512,10 @@ public class FullBeanDecorator implements FullBean {
 
 	public String[] getDcRights() {
 		List<String> items = new ArrayList<String>();
-		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
-		for (ProxyImpl proxy : proxies) {
-			for (String item : proxy.getDcRights()) {
-				items.add(item);
-			}
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcRights());
 		}
-		return (String[]) items.toArray();
+		return StringArrayUtils.toArray(items);
 	}
 
 	@Override
