@@ -111,5 +111,4 @@ public enum RightsOption {
 		}
 		return null;
 	}
-
 }

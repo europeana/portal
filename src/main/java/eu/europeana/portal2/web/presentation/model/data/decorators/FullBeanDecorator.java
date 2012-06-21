@@ -18,10 +18,12 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
@@ -35,6 +37,7 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.solr.entity.ProxyImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class FullBeanDecorator implements FullBean {
@@ -361,19 +364,21 @@ public class FullBeanDecorator implements FullBean {
         return fulldoc.getDctermsHasPart();
     }
 
-    /*
-    @Override
     public String[] getDctermsHasVersion() {
-        return fulldoc.getDctermsHasVersion();
+		List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDctermsHasVersion());
+		}
+		return StringArrayUtils.toArray(items);
     }
-    */
 
-    /*
-    @Override
     public String[] getDctermsIsFormatOf() {
-        return fulldoc.getDctermsIsFormatOf();
+		List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDctermsIsFormatOf());
+		}
+		return StringArrayUtils.toArray(items);
     }
-    */
 
     @Override
     public String[] getDctermsIsPartOf() {
@@ -460,91 +465,112 @@ public class FullBeanDecorator implements FullBean {
         return fulldoc.getDcCreator();
     }
 
-    /*
-    @Override
     public String[] getDcDate() {
-        return fulldoc.getDcDate();
+		List<String> items = new ArrayList<String>();
+		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
+		for (ProxyImpl proxy : proxies) {
+			for (String item : proxy.getDcDate()) {
+				items.add(item);
+			}
+		}
+		return (String[]) items.toArray();
     }
-    */
 
-    /*
-    @Override
     public String[] getDcDescription() {
-        return fulldoc.getDcDescription();
+		List<String> items = new ArrayList<String>();
+		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
+		for (ProxyImpl proxy : proxies) {
+			for (String item : proxy.getDcDescription()) {
+				items.add(item);
+			}
+		}
+		return (String[]) items.toArray();
     }
-    */
 
-    /*
     public String getDcDescriptionCombined() {
         return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(), ";"));
     }
-    */
 
-    /*
-    @Override
-    public String[] getDcFormat() {
-        return fulldoc.getDcFormat();
-    }
-    */
+	public String[] getDcFormat() {
+		List<String> items = new ArrayList<String>();
+		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
+		for (ProxyImpl proxy : proxies) {
+			for (String item : proxy.getDcFormat()) {
+				items.add(item);
+			}
+		}
+		return (String[]) items.toArray();
+	}
 
-    @Override
-    public String[] getDcIdentifier() {
-        return fulldoc.getDcIdentifier();
-    }
+	@Override
+	public String[] getDcIdentifier() {
+		return fulldoc.getDcIdentifier();
+	}
 
-    /*
-    @Override
-    public String[] getDcLanguage() {
-        return fulldoc.getDcLanguage();
-    }
-    */
+	public String[] getDcLanguage() {
+		List<String> items = new ArrayList<String>();
+		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
+		for (ProxyImpl proxy : proxies) {
+			for (String item : proxy.getDcLanguage()) {
+				items.add(item);
+			}
+		}
+		return (String[]) items.toArray();
+	}
 
-    @Override
-    public String[] getDcPublisher() {
-        return fulldoc.getDcPublisher();
-    }
+	@Override
+	public String[] getDcPublisher() {
+		return fulldoc.getDcPublisher();
+	}
 
-    @Override
-    public String[] getDcRelation() {
-        return fulldoc.getDcRelation();
-    }
+	@Override
+	public String[] getDcRelation() {
+		return fulldoc.getDcRelation();
+	}
 
-    /*
-    @Override
-    public String[] getDcRights() {
-        return fulldoc.getDcRights();
-    }
-    */
+	public String[] getDcRights() {
+		List<String> items = new ArrayList<String>();
+		List<ProxyImpl> proxies = (List<ProxyImpl>) fulldoc.getProxies();
+		for (ProxyImpl proxy : proxies) {
+			for (String item : proxy.getDcRights()) {
+				items.add(item);
+			}
+		}
+		return (String[]) items.toArray();
+	}
 
-    @Override
-    public String[] getDcSource() {
-        return fulldoc.getDcSource();
-    }
+	@Override
+	public String[] getDcSource() {
+		return fulldoc.getDcSource();
+	}
 
-    /*
-    @Override
     public String[] getDcSubject() {
-        return fulldoc.getDcSubject();
+		List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcSubject());
+		}
+		return StringArrayUtils.toArray(items);
     }
 
-    @Override
     public String[] getDcTitle() {
-        return fulldoc.getDcTitle();
+		List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcTitle());
+		}
+		return StringArrayUtils.toArray(items);
     }
-    */
 
-    /*
     public String getDcTitleCombined() {
         return StringEscapeUtils.escapeXml(StringUtils.join(getDcTitle(), ";"));
     }
-    */
 
-    /*
-    @Override
     public String[] getDcType() {
-        return fulldoc.getDcType();
+		List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fulldoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDcType());
+		}
+		return StringArrayUtils.toArray(items);
     }
-    */
 
     @Override
     public String[] getEuropeanaCollectionName() {
