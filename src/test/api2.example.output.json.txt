@@ -1,0 +1,279 @@
+{
+    "apikey": "x00",
+    "action": "record.json",
+    "success": true,
+    "statsDuration": 0,
+    "object": {
+        "about": "/91627/5AFC3A4FEA55882B8678FBAB09EAD397124D535A",
+        "title": null,
+        "year": null,
+        "provider": null,
+        "language": null,
+        "timestamp": null,
+        "type": null,
+        "europeanaCompleteness": 10,
+        "relatedItems": [
+            {
+                "id": "/91627/5AFC3A4FEA55882B8678FBAB09EAD397124D535A",
+                "fullDocUrl": null,
+                "timestamp": 1338884155834,
+                "provider": [
+                    "Swedish Open Cultural Heritage",
+                    "Swedish Open Cultural Heritage"
+                ],
+                "edmObject": [
+                    "http://media1.vgregion.se/vastarvet/VGM/Fotobilder/K-bilder 2/22/1M16_A29407.JPG"
+                ],
+                "europeanaCompleteness": 0,
+                "language": [
+                    "sv"
+                ],
+                "year": null,
+                "rights": null,
+                "title": null,
+                "dcCreator": null,
+                "dcContributor": null,
+                "edmPlace": null,
+                "edmPlaceLatitude": null,
+                "edmPlaceLongitude": null,
+                "edmTimespan": null,
+                "edmTimespanLabel": null,
+                "edmTimespanBegin": null,
+                "edmTimespanEnd": null,
+                "edmAgentLabel": null,
+                "dctermsHasPart": null,
+                "dctermsSpatial": null,
+                "type": "IMAGE",
+                "dataProvider": [
+                    "Västergötlands museum"
+                ],
+                "edmPlaceLabel": null,
+                "edmAgent": null
+            }
+        ],
+        "places": null,
+        "agents": null,
+        "timespans": null,
+        "concepts": null,
+        "aggregations": [
+            {
+                "id": null,
+                "edmDataProvider": "Västergötlands museum",
+                "edmIsShownBy": null,
+                "edmIsShownAt": "http://www9.vgregion.se/vastarvet/objekt.aspx?ID=VGM_A29407",
+                "edmObject": "http://media1.vgregion.se/vastarvet/VGM/Fotobilder/K-bilder 2/22/1M16_A29407.JPG",
+                "edmProvider": "Swedish Open Cultural Heritage",
+                "edmRights": null,
+                "edmUgc": null,
+                "dcRights": null,
+                "hasView": null,
+                "aggregatedCHO": null,
+                "aggregates": null,
+                "edmUnstored": null,
+                "webResources": null,
+                "about": "/91627/5AFC3A4FEA55882B8678FBAB09EAD397124D535A",
+                "edmPreviewNoDistribute": null
+            }
+        ],
+        "providedCHOs": [
+            {
+                "id": null,
+                "about": "/91627/5AFC3A4FEA55882B8678FBAB09EAD397124D535A",
+                "owlSameAs": null
+            }
+        ],
+        "europeanaAggregation": null,
+        "who": null,
+        "what": [
+            "Kulturhistoria"
+        ],
+        "where": [
+            "Kulturhistoria"
+        ],
+        "when": [
+            "Kulturhistoria"
+        ],
+        "proxies": [
+            {
+                "about": "/91627/5AFC3A4FEA55882B8678FBAB09EAD397124D535A",
+                "id": null,
+                "dcContributor": null,
+                "dcCoverage": null,
+                "dcCreator": null,
+                "dcDate": null,
+                "dcDescription": null,
+                "dcFormat": null,
+                "dcIdentifier": [
+                    "http://kulturarvsdata.se/VGM/media/VGM_A29407"
+                ],
+                "dcLanguage": null,
+                "dcPublisher": null,
+                "dcRelation": null,
+                "dcRights": [
+                    "Okänd"
+                ],
+                "dcSource": [
+                    "Västergötlands museum"
+                ],
+                "dcSubject": [
+                    "Kulturhistoria"
+                ],
+                "dcTitle": null,
+                "dcType": [
+                    "Foto"
+                ],
+                "dctermsAlternative": null,
+                "dctermsConformsTo": null,
+                "dctermsCreated": null,
+                "dctermsExtent": null,
+                "dctermsHasFormat": null,
+                "dctermsHasPart": null,
+                "dctermsHasVersion": null,
+                "dctermsIsFormatOf": null,
+                "dctermsIsPartOf": null,
+                "dctermsIsReferencedBy": null,
+                "dctermsIsReplacedBy": null,
+                "dctermsIsRequiredBy": null,
+                "dctermsIssued": [
+                    "1900-01-01"
+                ],
+                "dctermsIsVersionOf": null,
+                "dctermsMedium": null,
+                "dctermsProvenance": null,
+                "dctermsReferences": null,
+                "dctermsReplaces": null,
+                "dctermsRequires": null,
+                "dctermsSpatial": null,
+                "dctermsTOC": null,
+                "dctermsTemporal": null,
+                "rdfType": null,
+                "edmHasMet": null,
+                "edmHasType": null,
+                "edmIncorporates": null,
+                "edmIsDerivativeOf": null,
+                "edmIsRelatedTo": null,
+                "edmIsRepresentationOf": null,
+                "edmIsSimilarTo": null,
+                "edmIsSuccessorOf": null,
+                "edmRealizes": null,
+                "edmWasPresentAt": null,
+                "edmCurrentLocation": null,
+                "edmIsNextInSequence": null,
+                "edmRights": null,
+                "proxyIn": null,
+                "proxyFor": null,
+                "edmType": "IMAGE",
+                "edmUnstored": null
+            }
+        ],
+        "id": "4fcdc03dccda6d72281d70fd",
+        "country": null,
+        "dcPublisher": [ ],
+        "edmObject": [
+            "http://media1.vgregion.se/vastarvet/VGM/Fotobilder/K-bilder 2/22/1M16_A29407.JPG"
+        ],
+        "edmPlaceLongitude": null,
+        "edmPlaceLatitude": null,
+        "edmIsShownBy": [
+            null
+        ],
+        "edmIsShownAt": [
+            "http://www9.vgregion.se/vastarvet/objekt.aspx?ID=VGM_A29407"
+        ],
+        "edmProvider": [
+            "Swedish Open Cultural Heritage"
+        ],
+        "aggregationDcRights": [ ],
+        "oreProxy": [ ],
+        "owlSameAs": [ ],
+        "dcCoverage": [ ],
+        "dcIdentifier": [
+            "http://kulturarvsdata.se/VGM/media/VGM_A29407"
+        ],
+        "dcRelation": [ ],
+        "proxyDcRights": [
+            "Okänd"
+        ],
+        "dcSource": [
+            "Västergötlands museum"
+        ],
+        "dctermsAlternative": [ ],
+        "dctermsConformsTo": [ ],
+        "dctermsCreated": [ ],
+        "dctermsExtent": [ ],
+        "dctermsHasFormat": [ ],
+        "dctermsIsPartOf": [ ],
+        "dctermsIsReferencedBy": [ ],
+        "dctermsIsReplacedBy": [ ],
+        "dctermsIsRequiredBy": [ ],
+        "dctermsIsVersionOf": [ ],
+        "dctermsIssued": [
+            "1900-01-01"
+        ],
+        "dctermsMedium": [ ],
+        "dctermsProvenance": [ ],
+        "dctermsReferences": [ ],
+        "dctermsReplaces": [ ],
+        "dctermsRequires": [ ],
+        "dctermsTableOfContents": [ ],
+        "dctermsTemporal": [ ],
+        "edmUGC": [
+            null
+        ],
+        "edmCurrentLocation": [
+            null
+        ],
+        "edmIsNextInSequence": [
+            null
+        ],
+        "userTags": null,
+        "edmAgentAltLabels": null,
+        "edmAgentSkosNote": null,
+        "edmAgentBegin": null,
+        "edmAgentEnd": null,
+        "edmTimeSpanSkosNote": null,
+        "edmPlaceSkosNote": null,
+        "edmConceptNote": null,
+        "edmPlaceAltLabels": null,
+        "edmTimespanAltLabels": null,
+        "skosConceptAltLabels": null,
+        "edmPreviewNoDistribute": [
+            null
+        ],
+        "edmPlaceIsPartOf": null,
+        "edmTimespanIsPartOf": null,
+        "edmWebResource": [ ],
+        "edmWebResourceDcRights": [ ],
+        "edmWebResourceEdmRights": [ ],
+        "aggregationEdmRights": [
+            null
+        ],
+        "edmConcept": null,
+        "edmConceptLabel": null,
+        "edmConceptBroaderTerm": null,
+        "edmPlaceAltLabel": null,
+        "edmConceptBroaderLabel": null,
+        "edmTimespanBroaderTerm": null,
+        "edmTimespanBroaderLabel": null,
+        "edmPlaceBroaderTerm": null,
+        "ugc": null,
+        "edmRights": null,
+        "europeanaCollectionName": null,
+        "dataProvider": [
+            "Västergötlands museum"
+        ],
+        "dctermsSpatial": [ ],
+        "edmPlace": null,
+        "edmPlaceLabel": null,
+        "edmTimespan": null,
+        "edmTimespanLabel": null,
+        "edmTimespanBegin": null,
+        "edmTimespanEnd": null,
+        "edmAgent": null,
+        "edmAgentLabel": null,
+        "fullDocUrl": null,
+        "dctermsHasPart": null,
+        "dcCreator": [ ],
+        "dcContributor": [ ]
+    }
+}
