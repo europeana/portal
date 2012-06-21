@@ -28,6 +28,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +40,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.querymodel.query.QueryModelFactory;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
+import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
@@ -53,11 +56,18 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @RequestMapping(value = "/record")
 public class ObjectController {
 
+	private static final Logger log = Logger.getLogger(ObjectController.class.getName());
+
+    @Autowired
+    private QueryModelFactory beanQueryModelFactory;
+
 	@Resource
 	private SearchService searchService;
 
-	private static final Logger log = Logger.getLogger(ObjectController.class
-			.getName());
+	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
+    private String[] shownAtProviderOverride;
+
+	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
 	@RequestMapping(value = "/{collectionId}/{recordId}.json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ModelAndView record(
@@ -68,7 +78,7 @@ public class ObjectController {
 			@RequestParam(value = "query", required = false) String query,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
-			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPage returnTo,
+			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPageEnum returnTo,
 			HttpServletRequest request, Locale locale) {
 		log.info("=========== /record/{collectionId}/{recordId}.json ============");
 		Map<String, String[]> parameters = sanitizeParameters(request);
@@ -84,32 +94,12 @@ public class ObjectController {
 		model.setReturnTo(returnTo);
 		model.setShownAtProviderOverride(shownAtProviderOverride);
 
-		final FullBeanView fullBeanView = beanQueryModelFactory
-				.getFullResultView(model.getResolveUri(), parameters);
+		FullBeanView fullBeanView = new FullBeanView
+		final FullBeanView fullBeanView = beanQueryModelFactory.getFullResultView(model.getResolveUri(), parameters);
 		model.setFullBeanView(fullBeanView);
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model,
-				locale, PortalPageInfo.FULLDOC_HTML);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		return page;
-
-		ObjectResult response = new ObjectResult(principal.getName(),
-				"record.json");
-		log.info("response: " + response.toString());
-		try {
-			log.info("collectionId: " + collectionId);
-			log.info("recordId: " + recordId);
-			response.object = searchService.findById(collectionId, recordId);
-			log.info("response obj: " + response.object.toString());
-		} catch (SolrTypeException e) {
-			log.info("error: " + e.getMessage());
-			return new ApiError(principal.getName(), "record.json",
-					e.getMessage());
-		} catch (Exception e) {
-			log.info("error: " + e.getMessage());
-		}
-		// return response;
-		return ControllerUtil.createModelAndViewPage(model, locale,
-				PortalPageInfo.FULLDOC_HTML);
 	}
 
 	private Map<String, String[]> sanitizeParameters(HttpServletRequest request) {

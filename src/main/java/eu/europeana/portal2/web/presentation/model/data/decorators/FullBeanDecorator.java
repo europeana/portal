@@ -33,11 +33,11 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
+import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
-import eu.europeana.corelib.solr.entity.ProxyImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class FullBeanDecorator implements FullBean {
@@ -272,25 +272,16 @@ public class FullBeanDecorator implements FullBean {
 
     /*
     @Override
-    public String[] getEuropeanaIsShownAt() {
-        return fulldoc.getEuropeanaIsShownAt();
-    }
-
-    @Override
-    public String[] getEuropeanaIsShownBy() {
-        return fulldoc.getEuropeanaIsShownBy();
-    }
-
-    @Override
     public String[] getEuropeanaUserTag() {
         return fulldoc.getEuropeanaUserTag();
     }
+    */
 
-    @Override
-    public String[] getEuropeanaCountry() {
-        return fulldoc.getEuropeanaCountry();
+    public String getEdmCountry() {
+        return fulldoc.getEuropeanaAggregation().getEdmCountry();
     }
 
+    /*
     @Override
     public String[] getEuropeanaProvider() {
         return fulldoc.getEuropeanaProvider();
@@ -1037,5 +1028,10 @@ public class FullBeanDecorator implements FullBean {
 	public void setUgc(String[] ugc) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public EuropeanaAggregation getEuropeanaAggregation() {
+		return fulldoc.getEuropeanaAggregation();
 	}
 }

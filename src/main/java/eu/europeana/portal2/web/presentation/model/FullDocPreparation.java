@@ -27,6 +27,11 @@ import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.definitions.solr.entity.Agent;
+import eu.europeana.corelib.definitions.solr.entity.Concept;
+import eu.europeana.corelib.definitions.solr.entity.Place;
+import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentation;
@@ -78,10 +83,10 @@ public abstract class FullDocPreparation extends FullDocData {
 			//addField(fieldsAdditional, Field.DC_LANGUAGE, document.getDcLanguage());
 			addField(fieldsAdditional, Field.DC_LANGUAGE, document.getLanguage());
 			addField(fieldsAdditional, Field.DC_SOURCE, document.getDcSource());
-			addField(fieldsAdditional, Field.DCTERMS_PROVENANCE, document.getDcTermsProvenance());
+			addField(fieldsAdditional, Field.DCTERMS_PROVENANCE, document.getDctermsProvenance());
 			addField(fieldsAdditional, Field.DC_PUBLISHER, document.getDcPublisher());
-			addField(fieldsAdditional, Field.DCTERMS_ISSUED, document.getDcTermsIssued());
-			addField(fieldsAdditional, Field.EUROPEANA_COLLECTIONNAME, new String[]{document.getEuropeanaCollectionName()});
+			addField(fieldsAdditional, Field.DCTERMS_ISSUED, document.getDctermsIssued());
+			addField(fieldsAdditional, Field.EUROPEANA_COLLECTIONNAME, document.getEuropeanaCollectionName());
 		}
 		return fieldsAdditional;
 	}
@@ -106,6 +111,7 @@ public abstract class FullDocPreparation extends FullDocData {
 
 		// WHERE
 		List<FieldPresentation> where = new ArrayList<FieldPresentation>();
+		/*
 		addField(where, Field.ENRICHMENT_PLACE_LABEL, document.getEnrichmentPlaceLabel());
 		addField(where, Field.ENRICHMENT_PLACE_TERM, document.getEnrichmentPlaceTerm());
 		if (getDocument().isPositionAvailable()) {
@@ -119,27 +125,65 @@ public abstract class FullDocPreparation extends FullDocData {
 		if (where.size() > 0) {
 			fieldsEnrichment.put("enrichment_category_where_t", where);
 		}
+		*/
+
+		for (Place place : document.getPlaces()) {
+			addField(where, Field.ENRICHMENT_PLACE_TERM, new String[]{place.getAbout()});
+			ArrayList<String> labels = new ArrayList<String>();
+			for (String key : place.getPrefLabel().keySet()) {
+				labels.add(place.getPrefLabel().get(key) + " (" + key + ")");
+			}
+			addField(where, Field.ENRICHMENT_PLACE_LABEL, StringArrayUtils.toArray(labels));
+			
+			if (getDocument().isPositionAvailable()) {
+				addField(where, Field.ENRICHMENT_PLACE_LAT_LONG,
+					new String[]{String.valueOf(place.getLatitude())},
+					new String[]{String.valueOf(place.getLongitude())},
+					new String[]{getDocument().getUrlKml()});
+			}
+		}
+		if (where.size() > 0) {
+			fieldsEnrichment.put("enrichment_category_where_t", where);
+		}
 
 		// WHO
 		List<FieldPresentation> who = new ArrayList<FieldPresentation>();
-		addField(who, Field.ENRICHMENT_AGENT_LABEL, document.getEnrichmentAgentLabel());
-		addField(who, Field.ENRICHMENT_AGENT_TERM, document.getEnrichmentAgentTerm());
+		// addField(who, Field.ENRICHMENT_AGENT_LABEL, document.getEnrichmentAgentLabel());
+		// addField(who, Field.ENRICHMENT_AGENT_TERM, document.getEnrichmentAgentTerm());
+		for (Agent agent : document.getAgents()) {
+			addField(who, Field.ENRICHMENT_AGENT_TERM, new String[]{agent.getAbout()});
+			ArrayList<String> labels = new ArrayList<String>();
+			for (String key : agent.getPrefLabel().keySet()) {
+				labels.add(agent.getPrefLabel().get(key) + " (" + key + ")");
+			}
+			addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
+		}
 		if (who.size() > 0) {
 			fieldsEnrichment.put("enrichment_category_who_t", who);
 		}
 
 		// WHAT
 		List<FieldPresentation> what = new ArrayList<FieldPresentation>();
-		addField(what, Field.ENRICHMENT_CONCEPT_LABEL, document.getEnrichmentConceptLabel());
-		addField(what, Field.ENRICHMENT_CONCEPT_TERM, document.getEnrichmentConceptTerm());
-		addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, document.getEnrichmentConceptBroaderLabel());
-		addField(what, Field.ENRICHMENT_CONCEPT_BROADER_TERM, document.getEnrichmentConceptBroaderTerm());
+		// addField(what, Field.ENRICHMENT_CONCEPT_LABEL, document.getEnrichmentConceptLabel());
+		// addField(what, Field.ENRICHMENT_CONCEPT_TERM, document.getEnrichmentConceptTerm());
+		// addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, document.getEnrichmentConceptBroaderLabel());
+		// addField(what, Field.ENRICHMENT_CONCEPT_BROADER_TERM, document.getEnrichmentConceptBroaderTerm());
+		for (Concept concept : document.getConcepts()) {
+			addField(what, Field.ENRICHMENT_CONCEPT_TERM, new String[]{concept.getAbout()});
+			ArrayList<String> labels = new ArrayList<String>();
+			for (String key : concept.getPrefLabel().keySet()) {
+				labels.add(concept.getPrefLabel().get(key) + " (" + key + ")");
+			}
+			addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
+			addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, concept.getBroader());
+		}
 		if (what.size() > 0) {
 			fieldsEnrichment.put("enrichment_category_what_t", what);
 		}
 
 		// WHEN
 		List<FieldPresentation> when = new ArrayList<FieldPresentation>();
+		/*
 		addField(when, Field.ENRICHMENT_PERIOD_LABEL, document.getEnrichmentPeriodLabel());
 		addField(when, Field.ENRICHMENT_PERIOD_TERM, document.getEnrichmentPeriodTerm());
 		if (document.getEnrichmentPeriodBegin() != null) {
@@ -150,6 +194,21 @@ public abstract class FullDocPreparation extends FullDocData {
 		}
 		addField(when, Field.ENRICHMENT_PERIOD_BROADER_LABEL, document.getEnrichmentPeriodBroaderLabel());
 		addField(when, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());
+		*/
+		for (Timespan timespan : document.getTimespans()) {
+			addField(when, Field.ENRICHMENT_PERIOD_TERM, new String[]{timespan.getAbout()});
+			ArrayList<String> labels = new ArrayList<String>();
+			for (String key : timespan.getPrefLabel().keySet()) {
+				labels.add(timespan.getPrefLabel().get(key) + " (" + key + ")");
+			}
+			addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
+			if (timespan.getBegin() != null) {
+				addField(when, Field.ENRICHMENT_PERIOD_BEGIN, new String[]{timespan.getBegin()});
+			}
+			if (timespan.getEnd() != null) {
+				addField(when, Field.ENRICHMENT_PERIOD_END, new String[]{timespan.getEnd()});
+			}
+		}
 		if (when.size() > 0) {
 			fieldsEnrichment.put("enrichment_category_when_t", when);
 		}
@@ -169,11 +228,11 @@ public abstract class FullDocPreparation extends FullDocData {
 			addField(fields, Field.DC_CREATOR, document.getDcCreator());
 			addField(fields, Field.DC_CONTRIBUTOR, document.getDcContributor());
 			addField(fields, Field.DC_COVERAGE, document.getDcCoverage());
-			addField(fields, Field.DC_DATE, document.getDcDate(), document.getDctermsCreated());
+			addField(fields, Field.DC_DATE, getDocument().getDcDate(), document.getDctermsCreated());
 			addField(fields, Field.DCTERMS_TEMPORAL, document.getDctermsTemporal());
 			addField(fields, Field.DCTERMS_SPATIAL, document.getDctermsSpatial());
-			addField(fields, Field.DC_TYPE, document.getDcType());
-			addField(fields, Field.DC_SUBJECT, document.getDcSubject());
+			addField(fields, Field.DC_TYPE, getDocument().getDcType());
+			addField(fields, Field.DC_SUBJECT, getDocument().getDcSubject());
 			addField(fields, Field.DC_RELATION, document.getDcRelation(),
 					document.getDctermsReferences(),
 					document.getDctermsIsReferencedBy(),
@@ -184,17 +243,16 @@ public abstract class FullDocPreparation extends FullDocData {
 					document.getDctermsReplaces(),
 					document.getDctermsRequires(),
 					document.getDctermsIsVersionOf(),
-					document.getDctermsHasVersion(),
+					getDocument().getDctermsHasVersion(),
 					document.getDctermsConformsTo(),
 					document.getDctermsHasFormat(),
-					document.getDctermsIsFormatOf());
-			addField(fields, Field.DC_DESCRIPTION, document.getDcDescription(),
+					getDocument().getDctermsIsFormatOf());
+			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription(),
 					document.getDctermsTableOfContents());
-			addField(fields, Field.EUROPEANA_DATAPROVIDER,
-					document.getEuropeanaDataProvider());
-			addField(fields, Field.EUROPEANA_PROVIDER,
-					document.getEuropeanaProvider(),
-					Field.EUROPEANA_COUNTRY.getValues(document.getEuropeanaCountry()));
+			// addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEuropeanaDataProvider());
+			addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEdmDataProvider());
+			addField(fields, Field.EUROPEANA_PROVIDER, document.getEdmProvider(),
+					Field.EUROPEANA_COUNTRY.getValues(new String[]{getDocument().getEdmCountry()}));
 		}
 		return fields;
 	}

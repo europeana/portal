@@ -94,6 +94,10 @@ public class StaticPageController {
 			Locale locale) throws Exception {
 		pageName = "/" + pageName + ".html";
 
+		log.info("pageName: " + pageName);
+		log.info("portalName: " + portalName);
+		log.info("portalServer: " + portalServer);
+		log.info("staticPagePath: " + staticPagePath);
 		// test for possible redirects first!
 		Redirect redirect = Redirect.safeValueOf(pageName);
 		if (redirect != null) {
@@ -245,6 +249,7 @@ public class StaticPageController {
 	private void fetchVerbatimPage(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 
+		log.info("staticPagePath: " + staticPagePath);
 		staticPageCache.setStaticPagePath(staticPagePath);
 		OutputStream out = response.getOutputStream();
 		try {
