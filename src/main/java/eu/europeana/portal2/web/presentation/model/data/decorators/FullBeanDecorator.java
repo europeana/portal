@@ -42,433 +42,383 @@ import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class FullBeanDecorator implements FullBean {
 
-    private FullBean fulldoc;
+	private FullBean fulldoc;
 
-    public FullBeanDecorator(FullBean fulldoc) {
-        this.fulldoc = fulldoc;
-    }
+	public FullBeanDecorator(FullBean fulldoc) {
+		this.fulldoc = fulldoc;
+	}
 
-    /**
-     * Returns the title of the post
-     *
-     * @return post title
-     * @throws UnsupportedEncodingException
-     */
-    public String getPostTitle() throws UnsupportedEncodingException {
-        final int POST_TITLE_MAX_LENGTH = 110;
-        StringBuilder postTitle = new StringBuilder();
-        if (getTitle().length > POST_TITLE_MAX_LENGTH) {
-            postTitle.append(getTitle()[0].substring(0, POST_TITLE_MAX_LENGTH));
-            postTitle.append("...");
-        } else {
-            postTitle.append(getTitle()[0]);
-        }
-        return postTitle.toString();
-    }
+	/**
+	 * Returns the title of the post
+	 * 
+	 * @return post title
+	 * @throws UnsupportedEncodingException
+	 */
+	public String getPostTitle() throws UnsupportedEncodingException {
+		final int POST_TITLE_MAX_LENGTH = 110;
+		StringBuilder postTitle = new StringBuilder();
+		if (getTitle().length > POST_TITLE_MAX_LENGTH) {
+			postTitle.append(getTitle()[0].substring(0, POST_TITLE_MAX_LENGTH));
+			postTitle.append("...");
+		} else {
+			postTitle.append(getTitle()[0]);
+		}
+		return postTitle.toString();
+	}
 
-    /**
-     * Returns the posts author
-     *
-     * @return posts author
-     */
-    public String getPostAuthor() {
-        if (StringUtils.isBlank(getDcCreator()[0])) {
-            return "none";
-        } else {
-            return getDcCreator()[0];
-        }
-    }
-    
-    public String getUrlKml() {
-        if (isPositionAvailable()) {
-            String fullDocUrl = getId();
-            
-            if (fullDocUrl.indexOf("?") > -1) {
-                fullDocUrl = fullDocUrl.substring(0, fullDocUrl.indexOf(".html"));
-            }
-    
-            fullDocUrl = fullDocUrl.replace("/resolve/", "/portal/");
-            fullDocUrl = fullDocUrl + ".kml";
-            return fullDocUrl;
-        }
-        return null;
-    }
-    
-    public boolean isPositionAvailable() {
-        return (getEdmPlaceLatitude() != 0) || (getEdmPlaceLongitude() != 0);
-    }
+	/**
+	 * Returns the posts author
+	 * 
+	 * @return posts author
+	 */
+	public String getPostAuthor() {
+		if (StringUtils.isBlank(getDcCreator()[0])) {
+			return "none";
+		} else {
+			return getDcCreator()[0];
+		}
+	}
 
-    @Override
-    public String getFullDocUrl() {
-        return fulldoc.getFullDocUrl();
-    }
+	public String getUrlKml() {
+		if (isPositionAvailable()) {
+			String fullDocUrl = getId();
 
-    @Override
-    public String[] getTitle() {
-        return fulldoc.getTitle();
-    }
+			if (fullDocUrl.indexOf("?") > -1) {
+				fullDocUrl = fullDocUrl.substring(0, fullDocUrl.indexOf(".html"));
+			}
 
-    /*
-    @Override
-    public String getThumbnail() {
-        return fulldoc.getThumbnail();
-    }
-    */
+			fullDocUrl = fullDocUrl.replace("/resolve/", "/portal/");
+			fullDocUrl = fullDocUrl + ".kml";
+			return fullDocUrl;
+		}
+		return null;
+	}
 
-    /*
-    @Override
-    public String getCreator() {
-        return fulldoc.getCreator();
-    }
-    */
+	public boolean isPositionAvailable() {
+		return (getEdmPlaceLatitude() != 0) || (getEdmPlaceLongitude() != 0);
+	}
 
-    @Override
-    public String[] getYear() {
-        return fulldoc.getYear();
-    }
+	@Override
+	public String getFullDocUrl() {
+		return fulldoc.getFullDocUrl();
+	}
 
-    @Override
-    public String[] getProvider() {
-        return fulldoc.getProvider();
-    }
+	@Override
+	public String[] getTitle() {
+		return fulldoc.getTitle();
+	}
 
-    @Override
-    public String[] getDataProvider() {
-        return fulldoc.getDataProvider();
-    }
+	/*
+	 * @Override public String getThumbnail() { return fulldoc.getThumbnail(); }
+	 */
 
-    @Override
-    public String[] getLanguage() {
-        return fulldoc.getLanguage();
-    }
+	/*
+	 * @Override public String getCreator() { return fulldoc.getCreator(); }
+	 */
 
-    @Override
-    public DocType getType() {
-        return fulldoc.getType();
-    }
+	@Override
+	public String[] getYear() {
+		return fulldoc.getYear();
+	}
 
-    /*
-    @Override
-    public void setId(String id) {
-        // left empty on purpose
-    }
-    */
+	@Override
+	public String[] getProvider() {
+		return fulldoc.getProvider();
+	}
 
-    /*
-    @Override
-    public void setFullDocUrl(String fullDocUrl) {
-        // left empty on purpose
-    }
-    */
+	@Override
+	public String[] getDataProvider() {
+		return fulldoc.getDataProvider();
+	}
 
-    @Override
-    public int getEuropeanaCompleteness() {
-        return fulldoc.getEuropeanaCompleteness();
-    }
+	@Override
+	public String[] getLanguage() {
+		return fulldoc.getLanguage();
+	}
 
-    /*
-    @Override
-    public String[] getEdmnrichmentPlaceTerm() {
-        return fulldoc.getEnrichmentPlaceTerm();
-    }
+	@Override
+	public DocType getType() {
+		return fulldoc.getType();
+	}
 
-    @Override
-    public String[] getEnrichmentPlaceLabel() {
-        return fulldoc.getEnrichmentPlaceLabel();
-    }
+	/*
+	 * @Override public void setId(String id) { // left empty on purpose }
+	 */
 
-    @Override
-    public String[] getEnrichmentPlaceBroaderTerm() {
-        return fulldoc.getEnrichmentPlaceBroaderTerm();
-    }
+	/*
+	 * @Override public void setFullDocUrl(String fullDocUrl) { // left empty on
+	 * purpose }
+	 */
 
-    @Override
-    public String[] getEnrichmentPlaceBroaderLabel() {
-        return fulldoc.getEnrichmentPlaceBroaderLabel();
-    }
+	@Override
+	public int getEuropeanaCompleteness() {
+		return fulldoc.getEuropeanaCompleteness();
+	}
 
-    @Override
-    public float getEnrichmentPlaceLatitude() {
-        return fulldoc.getEnrichmentPlaceLatitude();
-    }
+	/*
+	 * @Override public String[] getEdmnrichmentPlaceTerm() { return
+	 * fulldoc.getEnrichmentPlaceTerm(); }
+	 * 
+	 * @Override public String[] getEnrichmentPlaceLabel() { return
+	 * fulldoc.getEnrichmentPlaceLabel(); }
+	 * 
+	 * @Override public String[] getEnrichmentPlaceBroaderTerm() { return
+	 * fulldoc.getEnrichmentPlaceBroaderTerm(); }
+	 * 
+	 * @Override public String[] getEnrichmentPlaceBroaderLabel() { return
+	 * fulldoc.getEnrichmentPlaceBroaderLabel(); }
+	 * 
+	 * @Override public float getEnrichmentPlaceLatitude() { return
+	 * fulldoc.getEnrichmentPlaceLatitude(); }
+	 * 
+	 * @Override public float getEnrichmentPlaceLongitude() { return
+	 * fulldoc.getEnrichmentPlaceLongitude(); }
+	 * 
+	 * @Override public String[] getEnrichmentPeriodTerm() { return
+	 * fulldoc.getEnrichmentPeriodTerm(); }
+	 * 
+	 * @Override public String[] getEnrichmentPeriodLabel() { return
+	 * fulldoc.getEnrichmentPeriodLabel(); }
+	 * 
+	 * @Override public String[] getEnrichmentPeriodBroaderTerm() { return
+	 * fulldoc.getEnrichmentPeriodBroaderTerm(); }
+	 * 
+	 * @Override public String[] getEnrichmentPeriodBroaderLabel() { return
+	 * fulldoc.getEnrichmentPeriodBroaderLabel(); }
+	 * 
+	 * @Override public Date getEnrichmentPeriodBegin() { return
+	 * fulldoc.getEnrichmentPeriodBegin(); }
+	 * 
+	 * @Override public Date getEnrichmentPeriodEnd() { return
+	 * fulldoc.getEnrichmentPeriodEnd(); }
+	 * 
+	 * @Override public String[] getEnrichmentConceptTerm() { return
+	 * fulldoc.getEnrichmentConceptTerm(); }
+	 * 
+	 * @Override public String[] getEnrichmentConceptLabel() { return
+	 * fulldoc.getEnrichmentConceptLabel(); }
+	 * 
+	 * @Override public String[] getEnrichmentConceptBroaderTerm() { return
+	 * fulldoc.getEnrichmentConceptBroaderTerm(); }
+	 * 
+	 * @Override public String[] getEnrichmentConceptBroaderLabel() { return
+	 * fulldoc.getEnrichmentConceptBroaderLabel(); }
+	 * 
+	 * @Override public String[] getEnrichmentAgentTerm() { return
+	 * fulldoc.getEnrichmentAgentTerm(); }
+	 * 
+	 * @Override public String[] getEnrichmentAgentLabel() { return
+	 * fulldoc.getEnrichmentAgentLabel(); }
+	 */
 
-    @Override
-    public float getEnrichmentPlaceLongitude() {
-        return fulldoc.getEnrichmentPlaceLongitude();
-    }
+	@Override
+	public String getId() {
+		return fulldoc.getId();
+	}
 
-    @Override
-    public String[] getEnrichmentPeriodTerm() {
-        return fulldoc.getEnrichmentPeriodTerm();
-    }
+	/*
+	 * @Override public String[] getThumbnails() { return
+	 * fulldoc.getThumbnails(); }
+	 */
 
-    @Override
-    public String[] getEnrichmentPeriodLabel() {
-        return fulldoc.getEnrichmentPeriodLabel();
-    }
+	/*
+	 * @Override public String[] getEuropeanaUserTag() { return
+	 * fulldoc.getEuropeanaUserTag(); }
+	 */
 
-    @Override
-    public String[] getEnrichmentPeriodBroaderTerm() {
-        return fulldoc.getEnrichmentPeriodBroaderTerm();
-    }
+	public String getEdmCountry() {
+		if (getEuropeanaAggregation() != null) {
+			return getEuropeanaAggregation().getEdmCountry();
+		}
+		return null;
+	}
 
-    @Override
-    public String[] getEnrichmentPeriodBroaderLabel() {
-        return fulldoc.getEnrichmentPeriodBroaderLabel();
-    }
+	/*
+	 * @Override public String[] getEuropeanaProvider() { return
+	 * fulldoc.getEuropeanaProvider(); }
+	 * 
+	 * @Override public String[] getEuropeanaSource() { return
+	 * fulldoc.getEuropeanaSource(); }
+	 */
 
-    @Override
-    public Date getEnrichmentPeriodBegin() {
-        return fulldoc.getEnrichmentPeriodBegin();
-    }
+	public String getEdmLanguage() {
+		if (getEuropeanaAggregation() != null) {
+			return getEuropeanaAggregation().getEdmLanguage();
+		}
+		return null;
+	}
 
-    @Override
-    public Date getEnrichmentPeriodEnd() {
-        return fulldoc.getEnrichmentPeriodEnd();
-    }
+	/*
+	 * @Override public String[] getEuropeanaYear() { return
+	 * fulldoc.getEuropeanaYear(); }
+	 */
 
-    @Override
-    public String[] getEnrichmentConceptTerm() {
-        return fulldoc.getEnrichmentConceptTerm();
-    }
-
-    @Override
-    public String[] getEnrichmentConceptLabel() {
-        return fulldoc.getEnrichmentConceptLabel();
-    }
-
-    @Override
-    public String[] getEnrichmentConceptBroaderTerm() {
-        return fulldoc.getEnrichmentConceptBroaderTerm();
-    }
-
-    @Override
-    public String[] getEnrichmentConceptBroaderLabel() {
-        return fulldoc.getEnrichmentConceptBroaderLabel();
-    }
-
-    @Override
-    public String[] getEnrichmentAgentTerm() {
-        return fulldoc.getEnrichmentAgentTerm();
-    }
-
-    @Override
-    public String[] getEnrichmentAgentLabel() {
-        return fulldoc.getEnrichmentAgentLabel();
-    }
-    */
-
-    @Override
-    public String getId() {
-        return fulldoc.getId();
-    }
-
-    /*
-    @Override
-    public String[] getThumbnails() {
-        return fulldoc.getThumbnails();
-    }
-    */
-
-    /*
-    @Override
-    public String[] getEuropeanaUserTag() {
-        return fulldoc.getEuropeanaUserTag();
-    }
-    */
-
-    public String getEdmCountry() {
-        return fulldoc.getEuropeanaAggregation().getEdmCountry();
-    }
-
-    /*
-    @Override
-    public String[] getEuropeanaProvider() {
-        return fulldoc.getEuropeanaProvider();
-    }
-
-    @Override
-    public String[] getEuropeanaSource() {
-        return fulldoc.getEuropeanaSource();
-    }
-    */
-
-    public String getEdmLanguage() {
-        return fulldoc.getEuropeanaAggregation().getEdmLanguage();
-    }
-
-    /*
-    @Override
-    public String[] getEuropeanaYear() {
-        return fulldoc.getEuropeanaYear();
-    }
-    */
-
-    public String[] getEdmDataProvider() {
+	public String[] getEdmDataProvider() {
 		List<String> items = new ArrayList<String>();
 		for (Aggregation aggregation : fulldoc.getAggregations()) {
 			items.add(aggregation.getEdmDataProvider());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    public boolean isUserGeneratedContent() {
-    	if (StringArrayUtils.isNotBlank(fulldoc.getEdmUGC())) {
-    		return StringUtils.equalsIgnoreCase(fulldoc.getEdmUGC()[0], "true");
-    	}
-    	return false;
-    }
+	public boolean isUserGeneratedContent() {
+		if (StringArrayUtils.isNotBlank(fulldoc.getEdmUGC())) {
+			return StringUtils.equalsIgnoreCase(fulldoc.getEdmUGC()[0], "true");
+		}
+		return false;
+	}
 
-    @Override
-    public String[] getDctermsAlternative() {
-        return fulldoc.getDctermsAlternative();
-    }
+	@Override
+	public String[] getDctermsAlternative() {
+		return fulldoc.getDctermsAlternative();
+	}
 
-    @Override
-    public String[] getDctermsConformsTo() {
-        return fulldoc.getDctermsConformsTo();
-    }
+	@Override
+	public String[] getDctermsConformsTo() {
+		return fulldoc.getDctermsConformsTo();
+	}
 
-    @Override
-    public String[] getDctermsCreated() {
-        return fulldoc.getDctermsCreated();
-    }
+	@Override
+	public String[] getDctermsCreated() {
+		return fulldoc.getDctermsCreated();
+	}
 
-    @Override
-    public String[] getDctermsExtent() {
-        return fulldoc.getDctermsExtent();
-    }
+	@Override
+	public String[] getDctermsExtent() {
+		return fulldoc.getDctermsExtent();
+	}
 
-    @Override
-    public String[] getDctermsHasFormat() {
-        return fulldoc.getDctermsHasFormat();
-    }
+	@Override
+	public String[] getDctermsHasFormat() {
+		return fulldoc.getDctermsHasFormat();
+	}
 
-    @Override
-    public String[] getDctermsHasPart() {
-        return fulldoc.getDctermsHasPart();
-    }
+	@Override
+	public String[] getDctermsHasPart() {
+		return fulldoc.getDctermsHasPart();
+	}
 
-    public String[] getDctermsHasVersion() {
+	public String[] getDctermsHasVersion() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			StringArrayUtils.addToList(items, proxy.getDctermsHasVersion());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    public String[] getDctermsIsFormatOf() {
+	public String[] getDctermsIsFormatOf() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			StringArrayUtils.addToList(items, proxy.getDctermsIsFormatOf());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    @Override
-    public String[] getDctermsIsPartOf() {
-        return fulldoc.getDctermsIsPartOf();
-    }
+	@Override
+	public String[] getDctermsIsPartOf() {
+		return fulldoc.getDctermsIsPartOf();
+	}
 
-    @Override
-    public String[] getDctermsIsReferencedBy() {
-        return fulldoc.getDctermsIsReferencedBy();
-    }
+	@Override
+	public String[] getDctermsIsReferencedBy() {
+		return fulldoc.getDctermsIsReferencedBy();
+	}
 
-    @Override
-    public String[] getDctermsIsReplacedBy() {
-        return fulldoc.getDctermsIsReplacedBy();
-    }
+	@Override
+	public String[] getDctermsIsReplacedBy() {
+		return fulldoc.getDctermsIsReplacedBy();
+	}
 
-    @Override
-    public String[] getDctermsIsRequiredBy() {
-        return fulldoc.getDctermsIsRequiredBy();
-    }
+	@Override
+	public String[] getDctermsIsRequiredBy() {
+		return fulldoc.getDctermsIsRequiredBy();
+	}
 
-    @Override
-    public String[] getDctermsIssued() {
-        return fulldoc.getDctermsIssued();
-    }
+	@Override
+	public String[] getDctermsIssued() {
+		return fulldoc.getDctermsIssued();
+	}
 
-    @Override
-    public String[] getDctermsIsVersionOf() {
-        return fulldoc.getDctermsIsVersionOf();
-    }
+	@Override
+	public String[] getDctermsIsVersionOf() {
+		return fulldoc.getDctermsIsVersionOf();
+	}
 
-    @Override
-    public String[] getDctermsMedium() {
-        return fulldoc.getDctermsMedium();
-    }
+	@Override
+	public String[] getDctermsMedium() {
+		return fulldoc.getDctermsMedium();
+	}
 
-    @Override
-    public String[] getDctermsProvenance() {
-        return fulldoc.getDctermsProvenance();
-    }
+	@Override
+	public String[] getDctermsProvenance() {
+		return fulldoc.getDctermsProvenance();
+	}
 
-    @Override
-    public String[] getDctermsReferences() {
-        return fulldoc.getDctermsReferences();
-    }
+	@Override
+	public String[] getDctermsReferences() {
+		return fulldoc.getDctermsReferences();
+	}
 
-    @Override
-    public String[] getDctermsReplaces() {
-        return fulldoc.getDctermsReplaces();
-    }
+	@Override
+	public String[] getDctermsReplaces() {
+		return fulldoc.getDctermsReplaces();
+	}
 
-    @Override
-    public String[] getDctermsRequires() {
-        return fulldoc.getDctermsRequires();
-    }
+	@Override
+	public String[] getDctermsRequires() {
+		return fulldoc.getDctermsRequires();
+	}
 
-    @Override
-    public String[] getDctermsSpatial() {
-        return fulldoc.getDctermsSpatial();
-    }
+	@Override
+	public String[] getDctermsSpatial() {
+		return fulldoc.getDctermsSpatial();
+	}
 
-    @Override
-    public String[] getDctermsTableOfContents() {
-        return fulldoc.getDctermsTableOfContents();
-    }
+	@Override
+	public String[] getDctermsTableOfContents() {
+		return fulldoc.getDctermsTableOfContents();
+	}
 
-    @Override
-    public String[] getDctermsTemporal() {
-        return fulldoc.getDctermsTemporal();
-    }
+	@Override
+	public String[] getDctermsTemporal() {
+		return fulldoc.getDctermsTemporal();
+	}
 
-    @Override
-    public String[] getDcContributor() {
-        return fulldoc.getDcContributor();
-    }
+	@Override
+	public String[] getDcContributor() {
+		return fulldoc.getDcContributor();
+	}
 
-    @Override
-    public String[] getDcCoverage() {
-        return fulldoc.getDcCoverage();
-    }
+	@Override
+	public String[] getDcCoverage() {
+		return fulldoc.getDcCoverage();
+	}
 
-    @Override
-    public String[] getDcCreator() {
-        return fulldoc.getDcCreator();
-    }
+	@Override
+	public String[] getDcCreator() {
+		return fulldoc.getDcCreator();
+	}
 
-    public String[] getDcDate() {
+	public String[] getDcDate() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			StringArrayUtils.addToList(items, proxy.getDcDate());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    public String[] getDcDescription() {
+	public String[] getDcDescription() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			StringArrayUtils.addToList(items, proxy.getDcDescription());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    public String getDcDescriptionCombined() {
-        return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(), ";"));
-    }
+	public String getDcDescriptionCombined() {
+		return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(),
+				";"));
+	}
 
 	public String[] getDcFormat() {
 		List<String> items = new ArrayList<String>();
@@ -514,57 +464,53 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getDcSource();
 	}
 
-    public String[] getDcSubject() {
+	public String[] getDcSubject() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			StringArrayUtils.addToList(items, proxy.getDcSubject());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    public String[] getDcTitle() {
+	public String[] getDcTitle() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			StringArrayUtils.addToList(items, proxy.getDcTitle());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    public String getDcTitleCombined() {
-        return StringEscapeUtils.escapeXml(StringUtils.join(getDcTitle(), ";"));
-    }
+	public String getDcTitleCombined() {
+		return StringEscapeUtils.escapeXml(StringUtils.join(getDcTitle(), ";"));
+	}
 
-    public String[] getDcType() {
+	public String[] getDcType() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			StringArrayUtils.addToList(items, proxy.getDcType());
 		}
 		return StringArrayUtils.toArray(items);
-    }
+	}
 
-    @Override
-    public String[] getEuropeanaCollectionName() {
-        return fulldoc.getEuropeanaCollectionName();
-    }
+	@Override
+	public String[] getEuropeanaCollectionName() {
+		return fulldoc.getEuropeanaCollectionName();
+	}
 
-    /*
-    @Override
-    public String getEuropeanaUri() {
-        return fulldoc.getEuropeanaUri();
-    }
-    */
+	/*
+	 * @Override public String getEuropeanaUri() { return
+	 * fulldoc.getEuropeanaUri(); }
+	 */
 
-    @Override
-    public Date getTimestamp() {
-        return fulldoc.getTimestamp();
-    }
-    
-    /*
-    @Override
-    public String getEuropeanaType() {
-        return fulldoc.getEuropeanaType();
-    }
-    */
+	@Override
+	public Date getTimestamp() {
+		return fulldoc.getTimestamp();
+	}
+
+	/*
+	 * @Override public String getEuropeanaType() { return
+	 * fulldoc.getEuropeanaType(); }
+	 */
 
 	@Override
 	public String[] getAggregationEdmRights() {
@@ -844,7 +790,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setPlaces(List<? extends Place> places) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -855,7 +801,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setAgents(List<? extends Agent> agents) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -871,13 +817,13 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setConcepts(List<? extends Concept> concepts) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setAggregations(List<? extends Aggregation> aggregations) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -888,55 +834,55 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setProxies(List<? extends Proxy> proxies) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setEuropeanaId(ObjectId europeanaId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setTitle(String[] title) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setYear(String[] year) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setProvider(String[] provider) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setLanguage(String[] language) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setType(DocType type) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setEuropeanaCompleteness(int europeanaCompleteness) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setTimespans(List<? extends Timespan> timespans) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -952,7 +898,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setRelatedItems(List<? extends BriefBean> relatedItems) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -963,7 +909,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setProvidedCHOs(List<? extends ProvidedCHO> providedCHOs) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -974,13 +920,13 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setAbout(String about) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setWhen(String[] when) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -992,7 +938,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setWhere(String[] where) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1004,7 +950,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setWhat(String[] what) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1016,7 +962,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setWho(String[] who) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1027,7 +973,7 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setUgc(String[] ugc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

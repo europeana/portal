@@ -113,8 +113,12 @@ public class FullDocPage extends FullDocPreparation {
 					&& StringArrayUtils.isBlank(document.getEdmIsShownAt())) {
 				lightboxRef = null;
 			}
-			String shownBy = StringUtils.substringBefore(document.getEdmIsShownBy()[0], "?");
-			String shownAt = StringUtils.substringBefore(document.getEdmIsShownAt()[0], "?");
+			String shownBy = document.getEdmIsShownBy()[0] != null
+					? StringUtils.substringBefore(document.getEdmIsShownBy()[0], "?")
+					: null;
+			String shownAt = document.getEdmIsShownAt()[0] != null
+					? StringUtils.substringBefore(document.getEdmIsShownAt()[0], "?")
+					: "";
 			if (StringUtils.startsWith(shownBy, "mms")
 					&& StringUtils.startsWith(shownAt, "mms")) {
 				lightboxRef = null;
@@ -163,7 +167,7 @@ public class FullDocPage extends FullDocPreparation {
 		// addMetaField(fields, Field.EUROPEANA_OBJECT, document.getThumbnails());
 		addMetaField(fields, Field.EUROPEANA_OBJECT, document.getEdmObject());
 		addMetaField(fields, Field.EUROPEANA_LANGUAGE, getDocument().getEdmLanguage());
-		addMetaField(fields, Field.EUROPEANA_TYPE, document.getType().toString());
+		// addMetaField(fields, Field.EUROPEANA_TYPE, document.getType().toString());
 		// addMetaField(fields, Field.EUROPEANA_USERTAG, document.getEdmUserTag());
 		// addMetaField(fields, Field.EUROPEANA_YEAR, getDocument().getEdmYear());
 		addMetaField(fields, Field.EUROPEANA_RIGHTS, document.getEdmRights());
@@ -222,47 +226,55 @@ public class FullDocPage extends FullDocPreparation {
 		addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_TERM, document.getEnrichmentPlaceBroaderTerm());
 		addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_LABEL, document.getEnrichmentPlaceBroaderLabel());
 		*/
-		for (Place place : document.getPlaces()) {
-			addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, place.getAbout());
-			for (String key : place.getPrefLabel().keySet()) {
-				addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, place.getPrefLabel().get(key) + " (" + key + ")");
+		if (document.getPlaces() != null) {
+			for (Place place : document.getPlaces()) {
+				addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, place.getAbout());
+				for (String key : place.getPrefLabel().keySet()) {
+					addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, place.getPrefLabel().get(key) + " (" + key + ")");
+				}
+				if ((place.getLatitude() != 0) || (place.getLongitude() != 0)) {
+					addMetaField(fields, Field.ENRICHMENT_PLACE_LATITUDE, Float.toString(place.getLatitude()));
+					addMetaField(fields, Field.ENRICHMENT_PLACE_LONGITUDE, Float.toString(place.getLongitude()));
+				}
+				// addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_TERM, document.getEnrichmentPlaceBroaderTerm());
+				// addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_LABEL, document.getEnrichmentPlaceBroaderLabel());
 			}
-			if ((place.getLatitude() != 0) || (place.getLongitude() != 0)) {
-				addMetaField(fields, Field.ENRICHMENT_PLACE_LATITUDE, Float.toString(place.getLatitude()));
-				addMetaField(fields, Field.ENRICHMENT_PLACE_LONGITUDE, Float.toString(place.getLongitude()));
-			}
-			// addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_TERM, document.getEnrichmentPlaceBroaderTerm());
-			// addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_LABEL, document.getEnrichmentPlaceBroaderLabel());
 		}
 
-		for (Timespan timespan : document.getTimespans()) {
-			addMetaField(fields, Field.ENRICHMENT_PERIOD_TERM, timespan.getAbout());
-			for (String key : timespan.getPrefLabel().keySet()) {
-				addMetaField(fields, Field.ENRICHMENT_PERIOD_LABEL, timespan.getPrefLabel().get(key) + " (" + key + ")");
+		if (document.getTimespans() != null) {
+			for (Timespan timespan : document.getTimespans()) {
+				addMetaField(fields, Field.ENRICHMENT_PERIOD_TERM, timespan.getAbout());
+				for (String key : timespan.getPrefLabel().keySet()) {
+					addMetaField(fields, Field.ENRICHMENT_PERIOD_LABEL, timespan.getPrefLabel().get(key) + " (" + key + ")");
+				}
+				if (timespan.getBegin() != null) {
+					addMetaField(fields, Field.ENRICHMENT_PERIOD_BEGIN, timespan.getBegin());
+				}
+				if (timespan.getEnd() != null) {
+					addMetaField(fields, Field.ENRICHMENT_PERIOD_END, timespan.getEnd());
+				}
+				// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());
+				// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_LABEL, document.getEnrichmentPeriodBroaderLabel());
 			}
-			if (timespan.getBegin() != null) {
-				addMetaField(fields, Field.ENRICHMENT_PERIOD_BEGIN, timespan.getBegin());
-			}
-			if (timespan.getEnd() != null) {
-				addMetaField(fields, Field.ENRICHMENT_PERIOD_END, timespan.getEnd());
-			}
-			// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());
-			// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_LABEL, document.getEnrichmentPeriodBroaderLabel());
 		}
 
-		for (Concept concept : document.getConcepts()) {
-			addMetaField(fields, Field.ENRICHMENT_CONCEPT_TERM, concept.getAbout());
-			for (String key : concept.getPrefLabel().keySet()) {
-				addMetaField(fields, Field.ENRICHMENT_CONCEPT_LABEL, concept.getPrefLabel().get(key) + " (" + key + ")");
+		if (document.getConcepts() != null) {
+			for (Concept concept : document.getConcepts()) {
+				addMetaField(fields, Field.ENRICHMENT_CONCEPT_TERM, concept.getAbout());
+				for (String key : concept.getPrefLabel().keySet()) {
+					addMetaField(fields, Field.ENRICHMENT_CONCEPT_LABEL, concept.getPrefLabel().get(key) + " (" + key + ")");
+				}
+				addMetaField(fields, Field.ENRICHMENT_CONCEPT_BROADER_TERM, concept.getBroader());
+				// addMetaField(fields, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, document.getEnrichmentConceptBroaderLabel());
 			}
-			addMetaField(fields, Field.ENRICHMENT_CONCEPT_BROADER_TERM, concept.getBroader());
-			// addMetaField(fields, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, document.getEnrichmentConceptBroaderLabel());
 		}
 
-		for (Agent agent : document.getAgents()) {
-			addMetaField(fields, Field.ENRICHMENT_AGENT_TERM, agent.getAbout());
-			for (String key : agent.getPrefLabel().keySet()) {
-				addMetaField(fields, Field.ENRICHMENT_AGENT_LABEL, agent.getPrefLabel().get(key) + " (" + key + ")");
+		if (document.getAgents() != null) {
+			for (Agent agent : document.getAgents()) {
+				addMetaField(fields, Field.ENRICHMENT_AGENT_TERM, agent.getAbout());
+				for (String key : agent.getPrefLabel().keySet()) {
+					addMetaField(fields, Field.ENRICHMENT_AGENT_LABEL, agent.getPrefLabel().get(key) + " (" + key + ")");
+				}
 			}
 		}
 
@@ -291,8 +303,7 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	public RightsValue getRightsOption() {
 		if (rightsOption == null) {
-			rightsOption = RightsValue.safeValueByUrl(document
-					.getEdmRights()[0]);
+			rightsOption = RightsValue.safeValueByUrl(document.getEdmRights()[0]);
 		}
 		return rightsOption;
 	}
@@ -345,25 +356,6 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public String getObjectTitle() {
-		StringBuilder title = new StringBuilder(StringUtils.defaultIfBlank(
-				getDocument().getDcTitle()[0], StringUtils.defaultIfBlank(
-						document.getDctermsAlternative()[0],
-						StringUtils.left(getDocument().getDcDescription()[0], 50))));
-		return StringUtils.left(title.toString(), 250);
-	}
-
-	/**
-	 * Returns the title of the page
-	 * 
-	 * @return page title
-	 */
-	public String getPageTitle() {
-
-		// String[] dcTitles = getDocument().getDcTitle();
-		// String dcTitle = (dcTitles.length > 0) ? dcTitles[0] : "unknown";
-		log.info("dctitle: "  + getDocument().getDcTitle().length + ") " + StringUtils.join(getDocument().getDcTitle(), ","));
-		log.info("alter: " + document.getDctermsAlternative().length + ") " + StringUtils.join(document.getDctermsAlternative(), ","));
-		log.info("desc: " + getDocument().getDcDescription().length + ") " + StringUtils.join(getDocument().getDcDescription(), ","));
 		String dcTitle;
 		if (!getDocument().getDcTitle()[0].isEmpty()) {
 			dcTitle = getDocument().getDcTitle()[0];
@@ -375,6 +367,33 @@ public class FullDocPage extends FullDocPreparation {
 			dcTitle = document.getTitle()[0];
 		}
 		
+		StringBuilder title = new StringBuilder(dcTitle);
+
+		/*
+		StringBuilder title = new StringBuilder(
+			StringUtils.defaultIfBlank(getDocument().getDcTitle()[0], 
+				StringUtils.defaultIfBlank(document.getDctermsAlternative()[0],
+					StringUtils.left(getDocument().getDcDescription()[0], 50))));
+		*/
+		return StringUtils.left(title.toString(), 250);
+	}
+
+	/**
+	 * Returns the title of the page
+	 * 
+	 * @return page title
+	 */
+	public String getPageTitle() {
+		String dcTitle;
+		if (!getDocument().getDcTitle()[0].isEmpty()) {
+			dcTitle = getDocument().getDcTitle()[0];
+		} else if (!document.getDctermsAlternative()[0].isEmpty()) {
+			dcTitle = document.getDctermsAlternative()[0];
+		} else if (!getDocument().getDcDescription()[0].isEmpty()) {
+			dcTitle = StringUtils.left(getDocument().getDcDescription()[0], 50);
+		} else {
+			dcTitle = document.getTitle()[0];
+		}
 		
 		StringBuilder title = new StringBuilder(dcTitle);
 		if (StringArrayUtils.isNotBlank(document.getDcCreator())) {

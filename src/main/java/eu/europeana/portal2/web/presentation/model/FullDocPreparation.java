@@ -265,6 +265,9 @@ public abstract class FullDocPreparation extends FullDocData {
 
 		List<String> fieldValues = new LinkedList<String>();
 		for (String[] fieldValueArray : fieldValuesArrays) {
+			if (fieldValueArray == null) {
+				continue;
+			}
 			for (String value : fieldValueArray) {
 				if (StringUtils.isNotBlank(value) && !value.equals("0000")) {
 					if (fieldInfo.getMaxLength() == -1) {
