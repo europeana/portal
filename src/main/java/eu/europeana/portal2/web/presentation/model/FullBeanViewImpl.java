@@ -21,6 +21,8 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,7 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.portal2.web.presentation.model.data.decorators.DocIdWindowPagerDecorator;
 
 /**
  * Do not ever touch this class! It is persisted to XML and serves as document
@@ -56,9 +59,62 @@ public class FullBeanViewImpl implements FullBeanView {
 	private List<? extends BriefBean> relatedItems;
 
 	// hierarchical view
-	private List<BriefBean> parents;
+	private List<? extends BriefBean> parents;
 	private List<? extends BriefBean> children;
 
+	public FullBeanViewImpl(FullBean fullDoc) {
+		this.fullDoc = fullDoc;
+		this.relatedItems = fullDoc.getRelatedItems();
+		this.parents = findParents(fullDoc.getDctermsIsPartOf());
+		this.children = findChildren(fullDoc.getDctermsHasPart());
+		this.docIdWindowPager = createPager();
+	}
+
+	private List<? extends BriefBean> findParents(String[] isPartOf) {
+		return new ArrayList();
+	}
+
+	private List<? extends BriefBean> findChildren(String[] hasPart) {
+		return new ArrayList();
+	}
+	
+	private DocIdWindowPager createPager() {
+		return new DocIdWindowPagerDecorator(this, null);
+	}
+
+	@Override
+	public DocIdWindowPager getDocIdWindowPager() throws Exception,
+			UnsupportedEncodingException {
+		return docIdWindowPager;
+	}
+
+	@Override
+	public List<? extends BriefBean> getRelatedItems() {
+		return relatedItems;
+	}
+
+	@Override
+	public List<? extends BriefBean> getChildren() {
+		return children;
+	}
+
+	@Override
+	public BriefBean getParent() {
+		// TODO: one or more parents?
+		return parents.get(0);
+	}
+
+	@Override
+	public List<? extends BriefBean> getParents() {
+		return parents;
+	}
+
+	@Override
+	public FullBean getFullDoc() throws EuropeanaQueryException {
+		return fullDoc;
+	}
+
+	/*
 	public FullBeanViewImpl(BeanQueryModelFactory factory, SolrQuery solrQuery,
 			QueryResponse solrResponse, Map<String, String[]> params)
 			throws EuropeanaQueryException, SolrServerException {
@@ -193,4 +249,5 @@ public class FullBeanViewImpl implements FullBeanView {
 		}
 		return briefDocList;
 	}
+	*/
 }

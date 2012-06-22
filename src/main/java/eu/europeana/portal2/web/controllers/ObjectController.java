@@ -40,11 +40,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.portal2.querymodel.query.QueryModelFactory;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.util.ControllerUtil;
@@ -93,10 +97,19 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setShownAtProviderOverride(shownAtProviderOverride);
-
-		FullBeanView fullBeanView = new FullBeanView
-		final FullBeanView fullBeanView = beanQueryModelFactory.getFullResultView(model.getResolveUri(), parameters);
-		model.setFullBeanView(fullBeanView);
+		
+		FullBean fullBean;
+		try {
+			fullBean = searchService.findById(collectionId, recordId);
+			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
+			model.setFullBeanView(fullBeanView);
+		} catch (SolrTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EuropeanaQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		return page;
