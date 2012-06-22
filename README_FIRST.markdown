@@ -36,16 +36,16 @@ Configuration
 -------------
 ### europeana.properties
 1. you can register the europeana.properties file in tomcat as mentioned above in step 5 or in /etc/profile:
-export EUROPEANA_PROPERTIES=[path to project]/europeana.properties.new
-(The name of the file can be anything, but I use new to distinguish it from the old portal's europeana.properties file.)
+   export EUROPEANA_PROPERTIES=[path to project]/europeana.properties.new
+   (The name of the file can be anything, but I use new to distinguish it from the old portal's europeana.properties file.)
 2. make sure the static.page.path = is set to your static directroy
-nb: make sure you use an absolute path here, e.g., don't use ~/
-e.g. static.page.path = /Users/[your username]/workspace/europeana-portal/portal2/src/test/staticpages/
+   nb: make sure you use an absolute path here, e.g., don't use ~/
+   e.g. static.page.path = /Users/[your username]/workspace/europeana-portal/portal2/src/test/staticpages/
 
 ### redeploy.sh
 1. adjust the path to tomcat in the redeploy.sh file so that the path points to your Tomcat server
-edit &lt;path to project&gt;/trunk/portal2/redeploy.sh
-e.g., TOMCAT_DIR=~/tomcat/apache-tomcat-7.0.27
+   edit &lt;path to project&gt;/trunk/portal2/redeploy.sh
+   e.g., TOMCAT_DIR=~/tomcat/apache-tomcat-7.0.27
 
 ### corelib build
 If you don't have fresh corelib build, run the following line, which builds the corelib; a requirement in order for the portal2 to work properly:
