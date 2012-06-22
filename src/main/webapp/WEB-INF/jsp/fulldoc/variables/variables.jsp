@@ -10,7 +10,7 @@
 	</c:otherwise>
 </c:choose>
 
-<#assign ess_id_count = 0/>
+<c:set var="ess_id_count" value="0" />
 
 <c:if test="${!empty model.lightboxRef}">
 	<c:set var="lightboxRef">${model.lightboxRef}</c:set>

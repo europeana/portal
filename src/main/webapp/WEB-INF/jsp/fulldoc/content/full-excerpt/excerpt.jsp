@@ -15,12 +15,17 @@
 		model.model.enrichmentFields = a subset collection of meta data pre-formated for html presentation
 		
 	--%>
-	<c:if test="{model.formatLabels && model.metaDataFields}">
+	<!-- ${model.formatLabels} -->
+	<!-- ${!empty model.metaDataFields} -->
+	<!-- ${!empty model.fields} -->
+	<!-- ${fn:length(model.fields) > 0} -->
+	<c:if test="${model.formatLabels && !empty model.metaDataFields}">
 		<!-- @displayEseDataAsMeta model.metaDataFields true / -->
 		<%@ include file="/WEB-INF/jsp/fulldoc/macros/display-ese-data-as-meta.jsp" %>
 	</c:if>
-	<c:if test="{model.fields && (fn:length(model.fields) > 0 )}">
+	<c:if test="${!empty model.fields && fn:length(model.fields) > 0}">
 		<!-- @displayEseDataAsHtml model.fields 'div' false true / -->
+		<!-- go display-ese-data-as-html -->
 		<%@ include file="/WEB-INF/jsp/fulldoc/macros/display-ese-data-as-html.jsp" %>
 	</c:if>
 </div>
