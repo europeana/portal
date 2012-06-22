@@ -31,6 +31,11 @@ public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 	DocIdWindowPager pager;
 	FullDocData model;
 
+	public DocIdWindowPagerDecorator(FullDocData model) {
+		this.model = model;
+		this.pager = null;
+	}
+
 	public DocIdWindowPagerDecorator(FullDocData model, DocIdWindowPager pager) {
 		this.model = model;
 		this.pager = pager;

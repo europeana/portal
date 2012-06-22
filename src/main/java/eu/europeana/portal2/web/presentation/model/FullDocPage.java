@@ -23,6 +23,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -47,6 +48,8 @@ import eu.europeana.portal2.web.util.SearchUtils;
 import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
+
+	private static final Logger log = Logger.getLogger(ObjectController.class.getName());
 
 	private RightsValue rightsOption = null;
 
@@ -356,10 +359,24 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	public String getPageTitle() {
 
-		StringBuilder title = new StringBuilder(StringUtils.defaultIfBlank(
-			getDocument().getDcTitle()[0], StringUtils.defaultIfBlank(
-				document.getDctermsAlternative()[0],
-				StringUtils.left(getDocument().getDcDescription()[0], 50))));
+		// String[] dcTitles = getDocument().getDcTitle();
+		// String dcTitle = (dcTitles.length > 0) ? dcTitles[0] : "unknown";
+		log.info("dctitle: "  + getDocument().getDcTitle().length + ") " + StringUtils.join(getDocument().getDcTitle(), ","));
+		log.info("alter: " + document.getDctermsAlternative().length + ") " + StringUtils.join(document.getDctermsAlternative(), ","));
+		log.info("desc: " + getDocument().getDcDescription().length + ") " + StringUtils.join(getDocument().getDcDescription(), ","));
+		String dcTitle;
+		if (!getDocument().getDcTitle()[0].isEmpty()) {
+			dcTitle = getDocument().getDcTitle()[0];
+		} else if (!document.getDctermsAlternative()[0].isEmpty()) {
+			dcTitle = document.getDctermsAlternative()[0];
+		} else if (!getDocument().getDcDescription()[0].isEmpty()) {
+			dcTitle = StringUtils.left(getDocument().getDcDescription()[0], 50);
+		} else {
+			dcTitle = document.getTitle()[0];
+		}
+		
+		
+		StringBuilder title = new StringBuilder(dcTitle);
 		if (StringArrayUtils.isNotBlank(document.getDcCreator())) {
 			String creator = document.getDcCreator()[0];
 			// clean up creator first
@@ -402,14 +419,8 @@ public class FullDocPage extends FullDocPreparation {
 		return StringArrayUtils.isNotBlank(getDocument().getEdmDataProvider());
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String getShownAtProvider() {
-		if (isHasDataProvider()
-				&& !ArrayUtils.contains(shownAtProviderOverride,
-						getCollectionId())) {
+		if (isHasDataProvider() && !ArrayUtils.contains(shownAtProviderOverride, getCollectionId())) {
 			return getDocument().getEdmDataProvider()[0];
 		} else {
 			return getDocument().getEdmProvider()[0];

@@ -17,7 +17,6 @@
 
 package eu.europeana.portal2.web.controllers;
 
-import java.security.Principal;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,23 +27,19 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.portal2.querymodel.query.QueryModelFactory;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
@@ -57,13 +52,12 @@ import eu.europeana.portal2.web.util.ControllerUtil;
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  */
 @Controller
-@RequestMapping(value = "/record")
 public class ObjectController {
 
 	private static final Logger log = Logger.getLogger(ObjectController.class.getName());
 
-    @Autowired
-    private QueryModelFactory beanQueryModelFactory;
+    // @Autowired
+	// private QueryModelFactory beanQueryModelFactory;
 
 	@Resource
 	private SearchService searchService;
@@ -73,7 +67,7 @@ public class ObjectController {
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
-	@RequestMapping(value = "/{collectionId}/{recordId}.json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ModelAndView record(
 			@PathVariable String collectionId,
 			@PathVariable String recordId,
@@ -84,7 +78,7 @@ public class ObjectController {
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPageEnum returnTo,
 			HttpServletRequest request, Locale locale) {
-		log.info("=========== /record/{collectionId}/{recordId}.json ============");
+		log.info("=========== /record/{collectionId}/{recordId}.html ============");
 		Map<String, String[]> parameters = sanitizeParameters(request);
 
 		FullDocData model = new FullDocPage();
@@ -97,7 +91,7 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setShownAtProviderOverride(shownAtProviderOverride);
-		
+
 		FullBean fullBean;
 		try {
 			fullBean = searchService.findById(collectionId, recordId);
@@ -112,6 +106,8 @@ public class ObjectController {
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
+		log.info("page");
+
 		return page;
 	}
 

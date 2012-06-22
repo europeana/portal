@@ -47,7 +47,7 @@ public enum PortalPageInfo implements PageInfo {
 
 	CONTACT("contact.html", "Europeana - Contact/Feedback", "contact/contact"),
 
-	FULLDOC_HTML("full-doc.html", "Europeana - Search results", "fulldoc/full-doc"),
+	FULLDOC_HTML("full-doc.html", "Europeana - Search results", "fulldoc/full-doc-html"),
 	FULLDOC_EMBED_HTML("embed", "Embed Europeana object", "embed-item/embed-item"),
 	FULLDOC_JSON(null, "fulldoc/full-doc-json"),
 	FULLDOC_KML(null, "fulldoc/full-doc-kml"),

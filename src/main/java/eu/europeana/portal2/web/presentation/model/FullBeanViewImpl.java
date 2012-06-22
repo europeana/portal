@@ -79,7 +79,9 @@ public class FullBeanViewImpl implements FullBeanView {
 	}
 	
 	private DocIdWindowPager createPager() {
-		return new DocIdWindowPagerDecorator(this, null);
+		// TODO: implement later
+		return null;
+		//return new DocIdWindowPagerDecorator(this, null);
 	}
 
 	@Override

@@ -60,6 +60,7 @@ public class ControllerUtil {
 		model.setLocale(locale);
 		// model.setUser(ControllerUtil.getUser());
 		model.setPageInfo(view);
+		model.setPageTitle(view.getPageTitle());
 		ModelAndView page = new ModelAndView(view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;

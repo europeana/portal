@@ -1,6 +1,7 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -48,6 +50,9 @@ public class SearchController {
 	
 	@Resource
 	private SearchService searchService;
+	
+	// @Resource
+	// private InternalResourceViewResolver viewResolver;
 
 	@Resource
 	private ConfigInterceptor corelib_web_configInterceptor;
@@ -66,6 +71,7 @@ public class SearchController {
 		@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 		@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
+		@RequestParam(value = "theme", required = false, defaultValue="dev") String theme,
 		HttpServletRequest request, HttpServletResponse response,
 		Locale locale
 	) {
@@ -89,6 +95,13 @@ public class SearchController {
 				: PortalPageInfo.SEARCH_HTML
 		);
 
+		/*
+		Map<String, Object> properties = viewResolver.getAttributesMap();
+		String prefix = (String)properties.remove("prefix");
+		properties.put("prefix", prefix.replace("/jsp/$", "/jsp2/"));
+		viewResolver.setAttributesMap(properties);
+		*/
+
 		Query query = new Query(q)
 						.setRefinements(qf)
 						.setPageSize(rows)
@@ -96,9 +109,12 @@ public class SearchController {
 						.setParameter("f.YEAR.facet.mincount", "1");
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
+		log.info("query: " + query);
 		try {
 			BriefBeanView briefBeanView = createResults(clazz, profile, query, start, rows);
+			log.info("/createResults");
 			model.setBriefBeanView(briefBeanView);
+			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
 			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (SolrTypeException e) {
@@ -107,19 +123,21 @@ public class SearchController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.getBriefBeanView().getBriefDocs();
-		model.getBreadcrumbs();
+		// model.getBriefBeanView().getBriefDocs();
+		// model.getBreadcrumbs();
 		
 		return page;
 	}
 
 	private BriefBeanView createResults(Class<? extends BriefBean> clazz, String profile, Query query, int start, int rows) 
 			throws SolrTypeException {
+		log.info("createResults");
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		SearchResults response = new SearchResults("search.json");
 		
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
+		log.info("resultSet: " + resultSet);
 		resultSet.getQuery();
 		response.totalResults = resultSet.getResultSize();
 		response.itemsCount = resultSet.getResults().size();
@@ -137,10 +155,10 @@ public class SearchController {
 //		if (StringUtils.containsIgnoreCase(profile, "suggestions") || StringUtils.containsIgnoreCase(profile, "portal")) {
 //		}
 		
-		ResultPagination pagination = new ResultPaginationImpl(start, rows,
-				(int)resultSet.getResultSize(), 
+		ResultPagination pagination = new ResultPaginationImpl(start, rows, (int)resultSet.getResultSize(), 
 				query.getQuery(), query.getQuery(), response.breadCrumbs);
 		briefBeanView.setPagination(pagination);
+		log.info("end of createResults");
 		return briefBeanView;
 	}
 
