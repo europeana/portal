@@ -3,9 +3,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!-- query ${model.query} -->
 <div id="query"${menu_user_exists}>
-	<h3><spring:message code="query_heading_t"/></h3>
-	<%@ include file="/WEB-INF/jsp/_common/html/query/query-form.jsp" %>
-	<%@ include file="/WEB-INF/jsp/_common/html/query/refinement-form.jsp" %>
+	<h3><spring:message code="query_heading_t" /></h3>
+	<%@ include file="/WEB-INF/jsp/devel/_common/html/query/query-form.jsp" %>
+	<%@ include file="/WEB-INF/jsp/devel/_common/html/query/refinement-form.jsp" %>
 
 	<%--
 		did you mean suggestion

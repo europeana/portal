@@ -25,7 +25,7 @@
 					<spring:message code="ViewingRelatedItems_t" />
 					<c:set var="match" value="${model.briefBeanView.matchDoc}" />
 					<a id="relatedContentSourceDocLink" href="${match.id}" rel="nofollow">
-						<img src="${match.thumbnail}" alt="${match.title}" height="25"/>
+						<img src="${match.thumbnail}" alt="${match.title}" height="25" />
 					</a>
 				</li>
 			</c:otherwise>

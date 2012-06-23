@@ -8,13 +8,13 @@
 			<c:set var="className" value=" map-query" />
 		</c:if>
 
-		<input type="text" name="rq" id="rq" value="" class="${className}" title="<spring:message code="RefineYourSearch_t"/>">
+		<input type="text" name="rq" id="rq" value="" class="${className}" title="<spring:message code="RefineYourSearch_t" />">
 		<input type="hidden" name="query" <c:if test="${!empty model.query}">value="${model.query}"</c:if>/>
 		<input type="submit" class="submit-button" value="<spring:message code="RefineYourSearch_t" />" />
 
 		<c:if test="${model.debug && model.pageName == 'map.html'}">
-			<input type="checkbox" id="box_search_refine"/>
-			<label for="box_search_refine"><spring:message code="MapBoxedSearch_t"/></label>
+			<input type="checkbox" id="box_search_refine" />
+			<label for="box_search_refine"><spring:message code="MapBoxedSearch_t" /></label>
 		</c:if>
 
 		<a href="" id="close-refine-search" rel="nofollow">Hide Refine Search</a>
@@ -28,7 +28,7 @@
 		 --%>
 		<c:if test="${!empty model.refinements}">
 			<c:forEach var="refinement" items="${model.refinements}">
-				<input type="hidden" name="qf" value="${refinement}"/>
+				<input type="hidden" name="qf" value="${refinement}" />
 			</c:forEach>
 		</c:if>
 		<c:if test="${!empty model.providersForInclusion}">
@@ -48,7 +48,7 @@
 			<input type="hidden" name="embeddedLogo"	 	value="${model.embeddedLogo}" />
 			<input type="hidden" name="rswUserId"	 		value="${model.rswUserId}" />
 			<input type="hidden" name="rswDefqry"			value="${model.rswDefqry}" />
-			<input type="hidden" name="lang"				value="${model.locale}"/>
+			<input type="hidden" name="lang"				value="${model.locale}" />
 		</c:if>
 	</fieldset>
 </form>

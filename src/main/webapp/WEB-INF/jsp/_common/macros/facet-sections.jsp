@@ -2,16 +2,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="facettype" value="${fn:toLowerCase(facet.type)}"/>
+<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 <c:choose>
 	<c:when test="${facettype == 'type'}">
-		<c:set var="classAttr" value="facet-section facet-media active"/>
+		<c:set var="classAttr" value="facet-section facet-media active" />
 	</c:when>
 	<c:when test="${facet.selected == 'type'}">
-		<c:set var="classAttr" value="facet-section active"/>
+		<c:set var="classAttr" value="facet-section active" />
 	</c:when>
 	<c:otherwise>
-		<c:set var="classAttr" value="facet-section"/>
+		<c:set var="classAttr" value="facet-section" />
 	</c:otherwise>
 </c:choose>
 
@@ -34,6 +34,6 @@
 		<c:if test="${facettype == 'rights'}">
 			<li id="rights-info"><spring:message code="rightsNotice_t" /></li>
 		</c:if>
-		<%@ include file="/WEB-INF/jsp/_common/macros/facet-items.jsp" %>
+		<%@ include file="/WEB-INF/jsp/devel/_common/macros/facet-items.jsp" %>
 	</ul>
 </li>

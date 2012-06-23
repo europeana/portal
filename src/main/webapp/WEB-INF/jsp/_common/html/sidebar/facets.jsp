@@ -7,7 +7,7 @@
 	
 	<ul id="filter-search">
 		<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
-			<%@ include file="/WEB-INF/jsp/_common/macros/facet-sections.jsp" %>
+			<%@ include file="/WEB-INF/jsp/devel/_common/macros/facet-sections.jsp" %>
 		</c:forEach>
 
 		<li class="ugc-li">
@@ -19,7 +19,7 @@
 					</c:choose>
 				</c:set>
 				<a class="facet-ugc ${ugcClassName}" rel="nofollow" href="${model.UGCUrl}">
-					<spring:message code="IncludeUGC_t"/>
+					<spring:message code="IncludeUGC_t" />
 				</a>
 			</h3>
 		</li>

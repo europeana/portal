@@ -1,6 +1,6 @@
 <div class="search-results-navigation notranslate">
-	<%@ include file="/WEB-INF/jsp/_common/html/navigation/icons.jsp" %>
-	<%@ include file="/WEB-INF/jsp/_common/html/navigation/pagination.jsp" %>
+	<%@ include file="/WEB-INF/jsp/devel/_common/html/navigation/icons.jsp" %>
+	<%@ include file="/WEB-INF/jsp/devel/_common/html/navigation/pagination.jsp" %>
 	<script type="text/javascript">
 		/* hide the link to the map if we're browsing with Internet Explorer */
 		if( navigator.userAgent.indexOf("MSIE") > -1 ){

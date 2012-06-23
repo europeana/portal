@@ -15,7 +15,7 @@
 	<c:set var="initial_rows" value="${RequestParameters.initial_rows}" />
 </c:if>
 <c:set var="item_not_removed"><spring:message code="ItemNotRemoved_t" /></c:set>
-<c:set var="mapview_noresults"><spring:message code="MapViewNoResults_t"/></c:set>
+<c:set var="mapview_noresults"><spring:message code="MapViewNoResults_t" /></c:set>
 <c:set var="matches"><spring:message code='MatchesFor_t' /></c:set>
 <c:set var="no_saved_items"><spring:message code='NoSavedItems_t' /></c:set>
 <c:set var="no_saved_searches"><spring:message code='NoSavedSearches_t' /></c:set>
@@ -31,40 +31,40 @@
 <c:if test="${RequestParameters.sample_map_data}">
 	<c:set var="sample_map_data" value='${RequestParameters.sample_map_data}' />
 </c:if>
-<c:set var="save_item_failed"><spring:message code="ItemSaveFailed_t"/></c:set>
-<c:set var="save_tag_failed"><spring:message code="TagAdditionFailed_t"/></c:set>
-<c:set var="saved_item"><spring:message code="ItemSaved_t"/></c:set>
-<c:set var="saved_item_removed"><spring:message code="SavedItemRemoved_t"/></c:set>
-<c:set var="saved_search_removed"><spring:message code="SavedSearchRemoved_t"/></c:set>
-<c:set var="saved_tag"><spring:message code="SavedTags_t"/></c:set>
-<c:set var="saved_tag_removed"><spring:message code="SavedTagRemoved_t"/></c:set>
-<c:set var="search_error"><spring:message code="ErrorTryAnotherSearch_t"/></c:set>
+<c:set var="save_item_failed"><spring:message code="ItemSaveFailed_t" /></c:set>
+<c:set var="save_tag_failed"><spring:message code="TagAdditionFailed_t" /></c:set>
+<c:set var="saved_item"><spring:message code="ItemSaved_t" /></c:set>
+<c:set var="saved_item_removed"><spring:message code="SavedItemRemoved_t" /></c:set>
+<c:set var="saved_search_removed"><spring:message code="SavedSearchRemoved_t" /></c:set>
+<c:set var="saved_tag"><spring:message code="SavedTags_t" /></c:set>
+<c:set var="saved_tag_removed"><spring:message code="SavedTagRemoved_t" /></c:set>
+<c:set var="search_error"><spring:message code="ErrorTryAnotherSearch_t" /></c:set>
 <c:set var="search_saved"><spring:message code='SearchSaved_t' /></c:set>
 <c:set var="search_save_failed"><spring:message code='SearchSavedFailed_t' /></c:set>
-<c:set var="see_less"><spring:message code="SeeLess_t"/></c:set>
-<c:set var="see_more"><spring:message code="SeeMore_t"/></c:set>
-<c:set var="select_language"><spring:message code="SelectLanguage_t"/></c:set>
+<c:set var="see_less"><spring:message code="SeeLess_t" /></c:set>
+<c:set var="see_more"><spring:message code="SeeMore_t" /></c:set>
+<c:set var="select_language"><spring:message code="SelectLanguage_t" /></c:set>
 <c:set var="startFrom" value="" />
 <c:if test="${!empty RequestParameters.startFrom}">
 	<c:set var="startFrom" value="${RequestParameters.startFrom}" />
 </c:if>
-<c:set var="translate_with"><spring:message code="essTranslateWith_t"/></c:set>
-<c:set var="timeline_result_limit_exceeded"><spring:message code="timelineDisclaimer_t"/></c:set>
+<c:set var="translate_with"><spring:message code="essTranslateWith_t" /></c:set>
+<c:set var="timeline_result_limit_exceeded"><spring:message code="timelineDisclaimer_t" /></c:set>
 
 <%-- Citation (fulldoc) --%>
-<c:set var="citation_tab_citation"><spring:message code="Cite_Tab_Title_Citation_t"/></c:set>
-<c:set var="citation_tab_footnote"><spring:message code="Cite_Tab_Title_Footnote_t"/></c:set>
+<c:set var="citation_tab_citation"><spring:message code="Cite_Tab_Title_Citation_t" /></c:set>
+<c:set var="citation_tab_footnote"><spring:message code="Cite_Tab_Title_Footnote_t" /></c:set>
 
 <%-- Map Controls --%>
-<c:set var="mapview_zoom"><spring:message code="mapview_zoom_t"/></c:set>
-<c:set var="mapview_zoomIn"><spring:message code="mapview_zoomIn_t"/></c:set>
-<c:set var="mapview_zoomOut"><spring:message code="mapview_zoomOut_t"/></c:set>
-<c:set var="mapview_zoomToSel"><spring:message code="mapview_zoomIntoSelection_t"/></c:set>
-<c:set var="mapview_chooseMapType"><spring:message code="mapview_chooseMapType_t"/></c:set>
-<c:set var="mapview_navigateMap"><spring:message code="mapview_navigateMap_t"/></c:set>
-<c:set var="mapview_freeForm"><spring:message code="mapview_freeForm_t"/></c:set>
-<c:set var="mapview_noresult_1"><spring:message code="NoMapItemsFound1_t"/></c:set>
-<c:set var="mapview_noresult_2"><spring:message code="NoMapItemsFound2_t"/></c:set>
+<c:set var="mapview_zoom"><spring:message code="mapview_zoom_t" /></c:set>
+<c:set var="mapview_zoomIn"><spring:message code="mapview_zoomIn_t" /></c:set>
+<c:set var="mapview_zoomOut"><spring:message code="mapview_zoomOut_t" /></c:set>
+<c:set var="mapview_zoomToSel"><spring:message code="mapview_zoomIntoSelection_t" /></c:set>
+<c:set var="mapview_chooseMapType"><spring:message code="mapview_chooseMapType_t" /></c:set>
+<c:set var="mapview_navigateMap"><spring:message code="mapview_navigateMap_t" /></c:set>
+<c:set var="mapview_freeForm"><spring:message code="mapview_freeForm_t" /></c:set>
+<c:set var="mapview_noresult_1"><spring:message code="NoMapItemsFound1_t" /></c:set>
+<c:set var="mapview_noresult_2"><spring:message code="NoMapItemsFound2_t" /></c:set>
 
 
 <c:if test="${!empty model.maxMapResults}">
@@ -73,15 +73,15 @@
 	<c:set var="mapview_result_limit_exceeded"><@spring.messageArgs "MapDisclaimer_t" map_limit_array/></c:set>
 </c:if>
 
-<c:set var="mapview_no_place_available"><spring:message code="MapNoPlaceAvailable_t"/></c:set>
-<c:set var="mapview_layers_tiles_attribution"><spring:message code="mapview_tiles_attribution_t"/></c:set>
+<c:set var="mapview_no_place_available"><spring:message code="MapNoPlaceAvailable_t" /></c:set>
+<c:set var="mapview_layers_tiles_attribution"><spring:message code="mapview_tiles_attribution_t" /></c:set>
 
 <%-- Map Layers --%>
-<c:set var="mapview_layers_google_satellite"><spring:message code="mapview_layer_google_satellite_t"/></c:set>
-<c:set var="mapview_layers_google_hybrid"><spring:message code="mapview_layer_google_hybrid_t"/></c:set>
-<c:set var="mapview_layers_google_street"><spring:message code="mapview_layer_google_street_t"/></c:set>
-<c:set var="mapview_layers_google_physical"><spring:message code="mapview_layer_google_physical_t"/></c:set>
-<c:set var="mapview_layers_osm_tiles"><spring:message code="mapview_layer_osm_tiles_t"/></c:set>
+<c:set var="mapview_layers_google_satellite"><spring:message code="mapview_layer_google_satellite_t" /></c:set>
+<c:set var="mapview_layers_google_hybrid"><spring:message code="mapview_layer_google_hybrid_t" /></c:set>
+<c:set var="mapview_layers_google_street"><spring:message code="mapview_layer_google_street_t" /></c:set>
+<c:set var="mapview_layers_google_physical"><spring:message code="mapview_layer_google_physical_t" /></c:set>
+<c:set var="mapview_layers_osm_tiles"><spring:message code="mapview_layer_osm_tiles_t" /></c:set>
 
 <c:set var="search_query">
 	<c:choose><c:when test="${model.query}">true</c:when><c:otherwise>false</c:otherwise></c:choose>

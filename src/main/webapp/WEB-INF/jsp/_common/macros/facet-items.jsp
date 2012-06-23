@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:forEach var="facet_item" items="${facet.links}">
-	<c:set var="classAttr" value=''/>
+	<c:set var="classAttr" value="" />
 	<c:if test="${!empty facet_item.remove}" >
-		<c:set var="classAttr" value=' class="active"'/>
+		<c:set var="classAttr" value=' class="active"' />
 	</c:if>
 
 	<c:set var="label">

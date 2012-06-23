@@ -32,17 +32,17 @@
  --%>
 <c:choose>
 	<c:when test='${ord2 == "0"}'>
-		<c:set var="ordinal" value="${ord1}"/>
-		<c:set var="htag" value="h1"/>
+		<c:set var="ordinal" value="${ord1}" />
+		<c:set var="htag" value="h1" />
 	</c:when>
 	<c:otherwise>
-		<c:set var="ordinal" value="${ord1}-${ord2}"/>
-		<c:set var="htag" value="h2"/>
+		<c:set var="ordinal" value="${ord1}-${ord2}" />
+		<c:set var="htag" value="h2" />
 	</c:otherwise>
 </c:choose>
-<c:set var="msg_notranslate"><spring:message code="notranslate_${menu}-${ordinal}_a_target_t"/></c:set>
-<c:set var="msg_title"><spring:message code="${menu}-${ordinal}_a_title_t"/></c:set>
-<c:set var="msg_text"><spring:message code="${menu}-${ordinal}_a_text_t"/></c:set>
+<c:set var="msg_notranslate"><spring:message code="notranslate_${menu}-${ordinal}_a_target_t" /></c:set>
+<c:set var="msg_title"><spring:message code="${menu}-${ordinal}_a_title_t" /></c:set>
+<c:set var="msg_text"><spring:message code="${menu}-${ordinal}_a_text_t" /></c:set>
 
 <c:set var="url"><spring:message code="notranslate_${menu}-${ordinal}_a_url_t" /></c:set>
 contains
