@@ -1,0 +1,36 @@
+/* menu-footer */
+
+	#menu-footer {
+        float: right;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        list-style: none;
+    }
+    
+	#menu-footer li {
+	    float: left;
+	    margin-right: 10px;
+	}
+	
+	#menu-footer .separator {
+	    margin-left: 77px;
+	}
+	
+	
+	
+	.locale-bg #menu-footer .separator {
+		margin-left: 38px;
+	}
+	
+	.locale-el #menu-footer .separator {
+		margin-left: 57px;
+	}
+	
+	.locale-fr #menu-footer .separator {
+		margin-left: -2px;
+	}
+	
+	.locale-ru #menu-footer .separator {
+		margin-left: 44px;
+	}

@@ -1,0 +1,45 @@
+/* menu-right */
+
+    #menu-right {
+        position: absolute;
+        right: -239px;
+        top: 461px;
+        width: 500px;
+        
+        -webkit-transform:rotate(90deg);
+        -moz-transform:rotate(90deg);
+        -o-transform: rotate(90deg);
+        
+        list-style: none;
+        margin: 0; padding: 0;
+        z-index: 1000;
+    }
+    
+    #menu-right li {
+        float: left;
+        margin-right: 20px;
+    }
+    
+    #menu-right a {
+        display: block;
+    }
+    
+    
+    
+    .locale-bg #menu-right {
+    	top: 509px;
+    	right: -288px;
+    	width: 598px;
+    }
+    
+    .locale-el #menu-right {
+    	top: 507px;
+    	right: -285px;
+    	width: 591px;
+    }
+    
+    .locale-ru #menu-right {
+    	top: 520px;
+    	right: -298px;
+    	width: 617px;
+    }

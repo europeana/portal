@@ -1,0 +1,45 @@
+/* contributors */
+	
+	
+	#contributors {
+		margin: 20px 0 20px 0;
+	}
+
+	#content-main.with-sidebar #contributors {
+		margin: 0 0 20px 0;
+	}
+
+	table {
+		width: 10px;
+	}
+	
+	
+	#contributors ul {
+		margin: 0;
+		padding: 0;
+	}
+	
+	
+	#contributors li {
+		list-style: none;
+		line-height: 1.5;
+	}
+	
+	
+	#contributors .data-providers {
+		margin-bottom: 20px;
+	}
+	
+	#contributors .data-providers li {
+		list-style: disc;
+		margin-left: 25px;
+	}
+	
+	.data-providers {
+		display: none;
+	}
+	
+	a.toggle-menu-icon {
+		color: #666;
+	}
+	

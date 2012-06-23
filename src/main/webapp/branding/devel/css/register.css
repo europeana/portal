@@ -1,0 +1,13 @@
+/* register form */
+
+	h1 {
+		margin: 0 0 15px 0;
+	}
+	
+	fieldset {
+		margin: 0 0 15px 0;
+	}
+	
+	input[disabled] {
+		background-color:#eaeaea;
+	}
