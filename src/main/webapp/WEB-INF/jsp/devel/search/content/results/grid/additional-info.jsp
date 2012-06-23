@@ -1,10 +1,10 @@
 <!-- additional-info -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<a href="${cell.fullDocUrl}" title="${StringUtils.join(cell.title, ", ")}" ${targetArg} class="result-additional-info" rel="nofollow">
+<a href="${cell.fullDocUrl}?theme=${model.theme}" title='${StringUtils.join(cell.title, ", ")}' ${targetArg} class="result-additional-info" rel="nofollow">
 	<c:if test="${!empty cell.dcCreator}">
 		<%-- TODO: find out what is the original cell.creatorXML --%>
-		<!-- cell.dcCreator ${cell} ${cell.dcCreator} providerNameMaxLength: ${providerNameMaxLength} -->
+		<!-- cell.dcCreator -->
 		<c:set var="dc_creators">
 			<c:set var="sep" value="" />
 			<c:forEach var="dc_creator" items="${cell.dcCreator}">
@@ -35,11 +35,14 @@
 
 	<c:if test="${!empty cell.dataProvider}">
 		<!-- cell.dataProvider -->
-		<c:set var="dataProvider" value="${cell.dataProvider}" />
-		<c:if test="${fn:length(dataProvider) > providerMaxLength}">
-			<c:set var="dataProvider" value="${fn:substring(cell.dataProvider, 0, providerMaxLength)}..." />
-		</c:if>
-		<span title="${cell.dataProvider}">${dataProvider}</span><br />
+		<c:forEach var="dataProviderFull" items="${cell.dataProvider}">
+			<c:set var="dataProviderShort" value="${dataProviderFull}" />
+			<c:if test="${fn:length(dataProviderShort) > providerMaxLength}">
+				<c:set var="dataProviderShort" value="${fn:substring(dataProviderShort, 0, providerMaxLength)}..." />
+			</c:if>
+			<span title="${dataProviderFull}">${dataProviderShort}</span>
+		</c:forEach>
+		<br />
 	</c:if>
 	
 	<c:if test="${!empty cell.provider}">

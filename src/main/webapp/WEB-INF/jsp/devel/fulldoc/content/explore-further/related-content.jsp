@@ -12,7 +12,7 @@
 			${model.document.title}
 			<#-- END OF EXAMPLE CODE FOR PARENT BREADCRUMB -->
 			
-			<a href="${model.fullBeanView.parent.fullDocUrl}" title="${model.fullBeanView.parent.title}" class="parent" rel="nofollow">
+			<a href="${model.fullBeanView.parent.fullDocUrl}?theme=${model.theme}" title="${model.fullBeanView.parent.title}" class="parent" rel="nofollow">
 				<c:choose>
 					<c:when test="${model.useCache}">
 						<img class="thumb"
