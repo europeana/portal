@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,7 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
@@ -56,8 +58,11 @@ public class ObjectController {
 
 	private static final Logger log = Logger.getLogger(ObjectController.class.getName());
 
-    // @Autowired
+	// @Autowired
 	// private QueryModelFactory beanQueryModelFactory;
+	
+	@Resource
+	private ConfigInterceptor corelib_web_configInterceptor;
 
 	@Resource
 	private SearchService searchService;
@@ -77,9 +82,10 @@ public class ObjectController {
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPageEnum returnTo,
-			HttpServletRequest request, Locale locale) {
+			@RequestParam(value = "theme", required = false, defaultValue="default") String theme,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		log.info("=========== /record/{collectionId}/{recordId}.html ============");
-		Map<String, String[]> parameters = sanitizeParameters(request);
+		// Map<String, String[]> parameters = sanitizeParameters(request);
 
 		FullDocData model = new FullDocPage();
 		model.setCollectionId(collectionId);
@@ -91,10 +97,10 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setShownAtProviderOverride(shownAtProviderOverride);
+		model.setTheme(theme);
 
-		FullBean fullBean;
 		try {
-			fullBean = searchService.findById(collectionId, recordId);
+			FullBean fullBean = searchService.findById(collectionId, recordId);
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
 			model.setFullBeanView(fullBeanView);
 		} catch (SolrTypeException e) {
@@ -106,7 +112,12 @@ public class ObjectController {
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
-		log.info("page");
+		try {
+			corelib_web_configInterceptor.postHandle(request, response, this, page);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return page;
 	}
