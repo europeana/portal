@@ -25,9 +25,9 @@
 		</c:if>
 		<!-- item in grid -->
 		<li class="item${li_class}${icon_class}">
-			<%@ include file="/WEB-INF/jsp/search/content/results/grid/image.jsp" %>
-			<%@ include file="/WEB-INF/jsp/search/content/results/grid/title.jsp" %>
-			<%@ include file="/WEB-INF/jsp/search/content/results/grid/additional-info.jsp" %>
+			<%@ include file="/WEB-INF/jsp/devel/search/content/results/grid/image.jsp" %>
+			<%@ include file="/WEB-INF/jsp/devel/search/content/results/grid/title.jsp" %>
+			<%@ include file="/WEB-INF/jsp/devel/search/content/results/grid/additional-info.jsp" %>
 		</li>
 		<!-- /item in grid -->
 

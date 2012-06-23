@@ -1,42 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="meta-data${li_class}">
-	
-	
-	<#if cell.title?? & cell.title != "">	
-		
+	<c:if test="${!empty cell.title}">	
 		<h4>${title}</h4>
-		
-	</#if>
+	</c:if>
 	
+	<a href="${cell.fullDocUrl}" title="${cell.title}" style="float: left; margin-right: 10px;"><img src="${cell.thumbnail}" /></a>
 	
-	<a href="${cell.fullDocUrl}" title="${cell.title}" style="float: left; margin-right: 10px;"><img src="${cell.thumbnail}"/></a>
+	<c:if test="${!empty cell.creator}">
+		<span class="creator">${fn:substring(cell.creatorXML, 0, providerNameMaxLength)}</span><br />
+	</c:if>
 	
+	<c:if test="${!empty cell.dataProvider}">
+		<span class="data-provider">${fn:substring(cell.dataProvider, 0, providerMaxLength)}</span><br />
+	</c:if>
 	
-	<#if cell.creator?? & cell.creator != "">
+	<c:if test="${!empty cell.provider}">
+		<span class="provider">${fn:substring(cell.provider, 0, providerMaxLength)}</span><br />
+	</c:if>
 	
-		<span class="creator"><@stringLimiter "${cell.creatorXML}" providerNameMaxLength/></span><br/>
-		
-	</#if>
-	
-	
-	<#if cell.dataProvider?? & cell.dataProvider != "">
-						
-		<span class="data-provider"><@stringLimiter "${cell.dataProvider}" providerMaxLength /></span><br/>
-		
-	</#if>
-	
-	
-	<#if cell.provider?? & cell.provider != "">
-						
-		<span class="provider"><@stringLimiter "${cell.provider}" providerMaxLength /></span><br/>
-			
-	</#if>
-	
-	
-	<#if cell.year != "" & cell.year != "0000">
-						
+	<c:if test='${cell.year != "" && cell.year != "0000"}'>
 		<span class="year">${cell.year}</span>
-			
-	</#if>
-	
-	
+	</c:if>
 </div>

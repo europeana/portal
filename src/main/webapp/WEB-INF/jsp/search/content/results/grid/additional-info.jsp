@@ -12,7 +12,7 @@
 				<c:set var="sep" value=", " />
 			</c:forEach>
 		</c:set>
-		<c:out value="${fn:substring(dc_creators, 0, providerNameMaxLength)}" /><br/>
+		<c:out value="${fn:substring(dc_creators, 0, providerNameMaxLength)}" /><br />
 	</c:if>
 
 	<c:if test="${!empty cell.year}">
@@ -25,7 +25,7 @@
 			</c:if>
 		</c:forEach>
 		<!-- /cell.year -->
-		<br/>
+		<br />
 	</c:if>
 
 	<c:set var="providerMaxLength" value="25" />
@@ -39,7 +39,7 @@
 		<c:if test="${fn:length(dataProvider) > providerMaxLength}">
 			<c:set var="dataProvider" value="${fn:substring(cell.dataProvider, 0, providerMaxLength)}..." />
 		</c:if>
-		<span title="${cell.dataProvider}">${dataProvider}</span><br/>
+		<span title="${cell.dataProvider}">${dataProvider}</span><br />
 	</c:if>
 	
 	<c:if test="${!empty cell.provider}">
@@ -51,7 +51,7 @@
 			</c:if>
 			<span title="${cell_provider}">${provider}</span>
 		</c:forEach>
-		<br/>
+		<br />
 	</c:if>
 </a>
 <!-- /additional-info -->
