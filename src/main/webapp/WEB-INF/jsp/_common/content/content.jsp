@@ -1,1 +1,0 @@
-<p>Hello <strong><c:out value="${model.name}"/></strong></p>
