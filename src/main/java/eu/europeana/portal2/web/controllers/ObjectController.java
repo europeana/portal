@@ -44,6 +44,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
+import eu.europeana.portal2.web.presentation.ThemeChecker;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
@@ -97,7 +98,7 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setShownAtProviderOverride(shownAtProviderOverride);
-		model.setTheme(theme);
+		model.setTheme(ThemeChecker.check(theme));
 
 		try {
 			FullBean fullBean = searchService.findById(collectionId, recordId);

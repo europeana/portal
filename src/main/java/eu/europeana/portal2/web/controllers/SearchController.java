@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -26,6 +25,7 @@ import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.portal2.web.model.ModelUtils;
 import eu.europeana.portal2.web.model.SearchResults;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
+import eu.europeana.portal2.web.presentation.ThemeChecker;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
@@ -89,7 +89,7 @@ public class SearchController {
 		model.setRefinements(qf);
 		model.setStart(start);
 		model.setQuery(q);
-		model.setTheme(theme);
+		model.setTheme(ThemeChecker.check(theme));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, 
 			model.isEmbedded() 
 				? PortalPageInfo.SEARCH_EMBED_HTML
