@@ -51,8 +51,8 @@ public class SearchController {
 	@Resource
 	private SearchService searchService;
 	
-	// @Resource
-	// private InternalResourceViewResolver viewResolver;
+	@Resource
+	private InternalResourceViewResolver viewResolver;
 
 	@Resource
 	private ConfigInterceptor corelib_web_configInterceptor;
@@ -71,7 +71,7 @@ public class SearchController {
 		@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 		@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
-		@RequestParam(value = "theme", required = false, defaultValue="dev") String theme,
+		@RequestParam(value = "theme", required = false, defaultValue="default") String theme,
 		HttpServletRequest request, HttpServletResponse response,
 		Locale locale
 	) {
@@ -89,18 +89,26 @@ public class SearchController {
 		model.setRefinements(qf);
 		model.setStart(start);
 		model.setQuery(q);
+		model.setTheme(theme);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, 
 			model.isEmbedded() 
 				? PortalPageInfo.SEARCH_EMBED_HTML
 				: PortalPageInfo.SEARCH_HTML
 		);
 
+		if (theme != "jsp" && theme != "default") {
+			theme = "default";
+		}
 		/*
 		Map<String, Object> properties = viewResolver.getAttributesMap();
+		log.info("properties: " + properties.keySet());
 		String prefix = (String)properties.remove("prefix");
-		properties.put("prefix", prefix.replace("/jsp/$", "/jsp2/"));
+		log.info("prefix: " + prefix);
+		properties.put("prefix", "/WEB-INF/" + theme + "/");
 		viewResolver.setAttributesMap(properties);
+		log.info("new prefix: " + viewResolver.getAttributesMap().get("prefix"));
 		*/
+		log.info("theme: " + model.getTheme());
 
 		Query query = new Query(q)
 						.setRefinements(qf)
@@ -169,5 +177,13 @@ public class SearchController {
 	public void setCorelib_web_configInterceptor(
 			ConfigInterceptor corelib_web_configInterceptor) {
 		this.corelib_web_configInterceptor = corelib_web_configInterceptor;
+	}
+
+	public InternalResourceViewResolver getViewResolver() {
+		return viewResolver;
+	}
+
+	public void setViewResolver(InternalResourceViewResolver viewResolver) {
+		this.viewResolver = viewResolver;
 	}
 }

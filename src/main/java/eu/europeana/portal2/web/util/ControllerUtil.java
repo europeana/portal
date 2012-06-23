@@ -61,7 +61,7 @@ public class ControllerUtil {
 		// model.setUser(ControllerUtil.getUser());
 		model.setPageInfo(view);
 		model.setPageTitle(view.getPageTitle());
-		ModelAndView page = new ModelAndView(view.getTemplate());
+		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;
 	}
