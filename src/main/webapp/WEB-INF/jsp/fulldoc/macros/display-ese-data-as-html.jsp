@@ -41,7 +41,7 @@
 <c:forEach items="${model.fields}" var="data">
 	<c:set var="item_id" value="" />
 	<c:set var="item_class" value="" />
-	<c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id" value='id="item-description" '/></c:if>
+	<c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id" value='id="item-description" ' /></c:if>
 	<c:if test='${"dc:subject"     == data.fieldName}'><c:set var="item_id" value='id="item-subject" ' /></c:if>
 	<c:if test='${"dc:rights"      == data.fieldName}'><c:set var="item_class" value=' item-moreless' /></c:if>
 	<%-- If the content is UGC we skip the dc:source display --%>
@@ -55,7 +55,7 @@
 			<%-- determine if value is translatable or not --%>
 			<c:set var="translatable" value=' class="notranslate"' />
 			<c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
-				<c:set var="translatable" value=' class="translate"'/>
+				<c:set var="translatable" value=' class="translate"' />
 			</c:if>
 			<%-- display the field's value
 			     value.searchOn = the value has an href value that when clicked on will issue a search in the portal based on other metadata criteria available to the item
@@ -91,7 +91,7 @@
 			<c:if test="${value_has_next}">
 				<c:choose>
 					<c:when test="{!empty data.seperateLines && data.seperateLines}">
-						<br/><br/>
+						<br /><br />
 					</c:when>
 					<c:otherwise>
 						<c:choose>

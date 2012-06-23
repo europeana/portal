@@ -21,12 +21,12 @@
 	<!-- ${fn:length(model.fields) > 0} -->
 	<c:if test="${model.formatLabels && !empty model.metaDataFields}">
 		<!-- @displayEseDataAsMeta model.metaDataFields true / -->
-		<%@ include file="/WEB-INF/jsp/fulldoc/macros/display-ese-data-as-meta.jsp" %>
+		<%@ include file="/WEB-INF/jsp/devel/fulldoc/macros/display-ese-data-as-meta.jsp" %>
 	</c:if>
 	<c:if test="${!empty model.fields && fn:length(model.fields) > 0}">
 		<!-- @displayEseDataAsHtml model.fields 'div' false true / -->
 		<!-- go display-ese-data-as-html -->
-		<%@ include file="/WEB-INF/jsp/fulldoc/macros/display-ese-data-as-html.jsp" %>
+		<%@ include file="/WEB-INF/jsp/devel/fulldoc/macros/display-ese-data-as-html.jsp" %>
 	</c:if>
 </div>
 <!-- /excerpt -->

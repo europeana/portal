@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <#--
  * display-ese-data-as-meta.ftl
  *
@@ -16,29 +19,18 @@
  * @author Dan Entous
  * @modified 2011-06-08 08.25 GMT+1
  -->
-
-<#macro displayEseDataAsMeta metaDataFields showFieldName>
-	
-	<#list metaDataFields as metaDataField>
-	
-		<#list metaDataField.fieldValues as value>
-		
-       		<#if showFieldName>
-	    		
-		    	<p class="notranslate">
-		    	
-		    		<b>${metaDataField.fieldName}</b> = ${value.valueXML}
-		    		
-		    	</p>
-       		
-       		<#else>
-       		
-            	<meta about="${model.document.id}" property="${metaDataField.property}" content="${value.valueXML}"/> 
-	        	
-	        </#if>
-	        
-    	</#list>
-    	
-    </#list>
-    
-</#macro>
+<%-- #macro displayEseDataAsMeta metaDataFields showFieldName --%>
+<c:forEach items="${metaDataFields}" var="metaDataField">
+	<c:forEach items="${metaDataField.fieldValues}" var="value">
+		<c:choose>
+			<c:when test="${showFieldName}">
+				<p class="notranslate">
+					<b>${metaDataField.fieldName}</b> = ${value.valueXML}
+				</p>
+			</c:when>
+			<c:otherwise>
+				<meta about="${model.document.id}" property="${metaDataField.property}" content="${value.valueXML}" />
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+</c:forEach>

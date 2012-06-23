@@ -3,9 +3,9 @@
 <ul id="navigation" class="navigation notranslate">
 <c:choose>
 	<c:when test="${!empty model.fullBeanView.docIdWindowPager}">
-		<%@ include file="/WEB-INF/jsp/fulldoc/content/navigation/return.jsp" %>
-		<%@ include file="/WEB-INF/jsp/fulldoc/content/navigation/next.jsp" %>
-		<%@ include file="/WEB-INF/jsp/fulldoc/content/navigation/previous.jsp" %>
+		<%@ include file="/WEB-INF/jsp/devel/fulldoc/content/navigation/return.jsp" %>
+		<%@ include file="/WEB-INF/jsp/devel/fulldoc/content/navigation/next.jsp" %>
+		<%@ include file="/WEB-INF/jsp/devel/fulldoc/content/navigation/previous.jsp" %>
 	</c:when>
 	<c:otherwise>
 		<li>&nbsp;</li>

@@ -21,10 +21,10 @@
 			<a id="relatedContentSourceDocLink" href="${model.document.id}" rel="nofollow">
 				<c:choose>
 					<c:when test="${model.useCache}">
-						<img src="${model.cacheUrl}uri=${model.thumbnailUrl}&amp;size=BRIEF_DOC&amp;type=${model.document.type}" alt="${model.document.title}" height="25"/>
+						<img src="${model.cacheUrl}uri=${model.thumbnailUrl}&amp;size=BRIEF_DOC&amp;type=${model.document.type}" alt="${model.document.title}" height="25" />
 					</c:when>
 					<c:otherwise>
-						<img src="${model.thumbnailUrl}" alt="${model.document.title}" height="25"/>
+						<img src="${model.thumbnailUrl}" alt="${model.document.title}" height="25" />
 					</c:otherwise>
 				</c:choose>
 			</a>
