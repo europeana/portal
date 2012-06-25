@@ -229,8 +229,10 @@ public class FullDocPage extends FullDocPreparation {
 		if (document.getPlaces() != null) {
 			for (Place place : document.getPlaces()) {
 				addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, place.getAbout());
-				for (String key : place.getPrefLabel().keySet()) {
-					addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, place.getPrefLabel().get(key) + " (" + key + ")");
+				if (place.getPrefLabel() != null) {
+					for (String key : place.getPrefLabel().keySet()) {
+						addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, place.getPrefLabel().get(key) + " (" + key + ")");
+					}
 				}
 				if ((place.getLatitude() != 0) || (place.getLongitude() != 0)) {
 					addMetaField(fields, Field.ENRICHMENT_PLACE_LATITUDE, Float.toString(place.getLatitude()));
