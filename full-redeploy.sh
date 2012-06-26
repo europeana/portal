@@ -1,1 +1,1 @@
-cd ../corelib/ && mvn clean install && cd ../portal2 && ./redeploy.sh
+cd ../corelib/ && mvn clean install -DskipTests && cd ../portal2 && ./redeploy.sh
