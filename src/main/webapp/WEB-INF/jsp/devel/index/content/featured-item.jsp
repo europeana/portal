@@ -9,12 +9,10 @@
 		<p><%-- @msgPropertyLimiter '${model.featuredItem.p}' '${featured_item_snipet_limit}' / --%></p>
 		<!-- ${model.featuredItem.p} -->
 		<!-- ${featured_item_snipet_limit} -->
-		<p>
-			<jsp:include page="/WEB-INF/jsp/devel/_common/macros/msg-property-limiter.jsp">
+		<p><jsp:include page="/WEB-INF/jsp/devel/_common/macros/msg-property-limiter.jsp">
 				<jsp:param name="msg_property_tag" value="${model.featuredItem.p}" />
 				<jsp:param name="length_limit" value="${featured_item_snipet_limit}" />
-			</jsp:include>
-		</p>
+			</jsp:include></p>
 	</c:if>
 </div>
 <!-- featured-item -->

@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.model.data.IndexData;
 
 public class IndexPage extends IndexData {
@@ -43,4 +44,7 @@ public class IndexPage extends IndexData {
 		return providersForInclusion;
 	}
 
+	public List<PortalLanguage> getPortalLanguages() {
+		return PortalLanguage.getSupported();
+	}
 }

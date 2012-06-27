@@ -1,3 +1,4 @@
+<%@ page session="false" language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -17,15 +18,15 @@
  * @version 2011-06-17 12.33 GMT+1
  --%>
 <%-- #macro msgPropertyLimiter msg_property_tag length_limit --%>
-<%-- TODO: it is the best ethod to receive parameters? --%>
-<c:set var="msg_property_tag"><%=request.getParameter("msg_property_tag")%></c:set>
-<c:set var="length_limit"><%=request.getParameter("length_limit")%></c:set>
+<%-- PARAMETERS - TODO: it is the best ethod to receive parameters? --%>
+<c:set var="msg_property_tag"><%= request.getParameter("msg_property_tag") %></c:set>
+<c:set var="length_limit"><%= request.getParameter("length_limit") %></c:set>
+<%-- /PARAMETERS --%>
 
 <c:set var="msg_property_string"><spring:message code="${msg_property_tag}" /></c:set>
-<!-- $msg_property_string -->
 <c:choose>
 	<c:when test="${fn:length(msg_property_string) > length_limit}">
-		<c:set var="new_string" value='${fn:substring(msg_property_string, 0, length_limit) + "..." }'/>
+		<c:set var="new_string" value="${fn:substring(msg_property_string, 0, length_limit)}..." />
 	</c:when>
 	<c:otherwise>
 		<c:set var="new_string" value="${msg_property_string}" />
