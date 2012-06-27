@@ -1,4 +1,3 @@
-<h1>footer menu</h1>
 <ul>
   
   <li><@menulinks "menu-footer" "1" "0" ""/></li>
