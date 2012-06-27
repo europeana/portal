@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
-	escape all localized messages from the message.properties file
+	escape all localizedages from the message.properties file
 	in order to make sure they do not break the javascript strings
-	first need convert spring.messages into freemarker variables
+	first need convert springages into freemarker variables
 	as the ?js_string won't apply to returned macro strings
 --%>
 <c:set var="ajax_date_retrieval_error"><spring:message code="AjaxDataRetrievalError_t" /></c:set>
@@ -66,11 +66,10 @@
 <c:set var="mapview_noresult_1"><spring:message code="NoMapItemsFound1_t" /></c:set>
 <c:set var="mapview_noresult_2"><spring:message code="NoMapItemsFound2_t" /></c:set>
 
-
-<c:if test="${!empty model.maxMapResults}">
+<c:if test="${model[maxMapResults] != null}">
 	<c:set var="map_limit">${model.maxMapResults}</c:set>
 	<c:set var="map_limit_array" value="${map_limit}" />
-	<c:set var="mapview_result_limit_exceeded"><@spring.messageArgs "MapDisclaimer_t" map_limit_array/></c:set>
+	<c:set var="mapview_result_limit_exceeded"><spring:message code="MapDisclaimer_t" arguments="${map_limit_array}" /></c:set>
 </c:if>
 
 <c:set var="mapview_no_place_available"><spring:message code="MapNoPlaceAvailable_t" /></c:set>
@@ -132,10 +131,10 @@ eu.europeana.vars.query = ${search_query};
 
 // url variables to check for timeline / map content 
 eu.europeana.vars.timeline = {};
-<c:if test="${model.mapJsonUrl}">
+<c:if test="${model[mapJsonUrl]}">
 	eu.europeana.vars.mapview.json_url = '${model.mapJsonUrl}';
 </c:if>
-<c:if test="${model.jsonUrlTimeline}">
+<c:if test="${model[jsonUrlTimeline]}">
 	eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 </c:if>
 
@@ -144,7 +143,7 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.pinterest = {};
 		eu.europeana.vars.pinterest.item = {};
 		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
-		<c:if test="${model.pinterestItem}">
+		<c:if test="${!empty model.pinterestItem}">
 			eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
 			eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
 			eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';

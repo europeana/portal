@@ -24,6 +24,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.web.model.PageData;
+import eu.europeana.portal2.web.presentation.PortalLanguage;
 
 /**
  * Abstract model for all pages containing a searchform...
@@ -76,5 +77,12 @@ public abstract class SearchPageData extends PageData {
 	public int getStart() {
 		return start;
 	}
-
+	
+	public String getImageLocale() {
+		PortalLanguage current = PortalLanguage.safeValueOf(getLocale());
+		if (!current.hasImageSupport()) {
+			current = PortalLanguage.EN;
+		}
+		return current.getLanguageCode();
+	}
 }

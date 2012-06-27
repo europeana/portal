@@ -16,10 +16,10 @@
 <%-- @ include file="/WEB-INF/jsp/devel/fulldoc/macros/rights.jsp" --%>
 
 <%@ include file="/WEB-INF/jsp/devel/_common/html/open-html.jsp" %>
-	<%--@ include file="/WEB-INF/jsp/devel/_common/html/header.jsp" --%>
+	<%@ include file="/WEB-INF/jsp/devel/_common/html/header.jsp" %>
 	<%-- new! --%>
 	<%@ include file="/WEB-INF/jsp/devel/fulldoc/content/content.jsp" %>
-	<%--@ include file="/WEB-INF/jsp/devel/_common/html/footer.jsp" --%>
+	<%@ include file="/WEB-INF/jsp/devel/_common/html/footer.jsp" %>
 	<%--@ include file="/WEB-INF/jsp/devel/_common/html/javascripts.jsp" --%>
 	<%-- new! --%>
 	<%--

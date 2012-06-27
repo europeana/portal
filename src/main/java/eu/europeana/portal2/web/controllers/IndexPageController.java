@@ -23,7 +23,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
@@ -32,12 +34,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
+import eu.europeana.portal2.web.presentation.ThemeChecker;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedItem;
@@ -67,8 +73,12 @@ public class IndexPageController {
 	// @Autowired
 	// private ClickStreamLogger clickStreamLogger;
 
-	@Autowired
-	private ReloadableResourceBundleMessageSource messageSource;
+	@Resource
+	// private ReloadableResourceBundleMessageSource messageSource;
+	private ResourceBundleMessageSource messageSource;
+
+	@Resource
+	private ConfigInterceptor corelib_web_configInterceptor;
 
 	@Value("#{europeanaProperties['portal.blog.url']}")
 	private String blogUrl;
@@ -89,7 +99,9 @@ public class IndexPageController {
 	private Integer pintItemLimit;
 
 	@RequestMapping("/index.html")
-	public ModelAndView indexHandler(HttpServletRequest request, Locale locale)
+	public ModelAndView indexHandler(
+			@RequestParam(value = "theme", required = false, defaultValue="default") String theme,
+			HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws Exception {
 		IndexPage model = new IndexPage();
 		// update dynamic items
@@ -97,12 +109,19 @@ public class IndexPageController {
 		updateCarousel(model, locale);
 		updateFeaturedItem(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
+		model.setTheme(ThemeChecker.check(theme));
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model,
 				locale, PortalPageInfo.INDEX);
 		// clickStreamLogger.logUserAction(request,
 		// ClickStreamLogger.UserAction.INDEXPAGE, page);
+		try {
+			corelib_web_configInterceptor.postHandle(request, response, this, page);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return page;
 	}
 
@@ -124,11 +143,9 @@ public class IndexPageController {
 		int i = 1;
 		while (keepFetching) {
 			try {
-				String label = String.format(
-						"notranslate_featured-item-%d_a_url_t", i);
+				String label = String.format("notranslate_featured-item-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
-				if (StringUtils.isNotEmpty(url)
-						&& !StringUtils.equals(label, url)) {
+				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 					i++;
 				} else {
 					keepFetching = false;

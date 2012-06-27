@@ -1,5 +1,5 @@
 <div id="touts">
-	<#include '/index/content/blog-feed.ftl'/>
-	<#include '/index/content/featured-item.ftl'/>
-	<#include '/index/content/pinterest.ftl'/>
+	<%@ include file="/WEB-INF/jsp/devel/index/content/blog-feed.jsp" %>
+	<%@ include file="/WEB-INF/jsp/devel/index/content/featured-item.jsp" %>
+	<%@ include file="/WEB-INF/jsp/devel/index/content/pinterest.jsp" %>
 </div>

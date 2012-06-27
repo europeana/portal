@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="citation">
-	<c:forEach item="${model.citeStyles} var="citeStyle">
+	<c:forEach items="${model.citeStyles}" var="citeStyle">
 		<div class="header">
 			<div class="heading"><spring:message code="Cite_Header_t" />
 				<%-- 

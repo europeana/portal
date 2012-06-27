@@ -17,6 +17,9 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.model.data.IndexData;
@@ -26,6 +29,18 @@ public class IndexPage extends IndexData {
 	@Override
 	public String getMetaCanonicalUrl() {
 		return StringUtils.remove(super.getMetaCanonicalUrl(), "index.html");
+	}
+
+	public List<String> getProvidersForInclusion() {
+		List<String> providersForInclusion = new ArrayList<String>();
+		if (getRefinements() != null) {
+			for (String provider : getRefinements()) {
+				if (provider.contains("PROVIDER:")) {
+					providersForInclusion.add(provider);
+				}
+			}
+		}
+		return providersForInclusion;
 	}
 
 }
