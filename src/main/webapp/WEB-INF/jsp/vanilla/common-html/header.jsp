@@ -1,5 +1,6 @@
 <div>
 
+  <h1>header</h1>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   <c:set var="logo_tag" value='h1' />
   <c:if test="${'full-doc.html' == model.pageName}"><c:set var="logo_tag" value="div" /></c:if>
@@ -8,9 +9,9 @@
       <img src="/${model.portalName}/sp/img/europeana-logo-${model.imageLocale}.png" alt="<spring:message code='AltLogoEuropeana_t' />" width="206" height="123"/>
     </a>
   </${logo_tag}>
-
-  <%-- @ include file="/WEB-INF/jsp/default/_common/html/menus/main.jsp" --%>
-	<%-- @ include file="/WEB-INF/jsp/default/_common/html/menus/user.jsp" --%>
-	<%-- @ include file="/WEB-INF/jsp/default/_common/html/query/query.jsp" --%>
+  
+  <%@ include file="/WEB-INF/jsp/vanilla/menus/main.jsp" %>
+	<%@ include file="/WEB-INF/jsp/vanilla/menus/user.jsp" %>
+	<%@ include file="/WEB-INF/jsp/vanilla/query/query.jsp" %>
   
 </div>
