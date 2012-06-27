@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 
 	<%-- @ include file="/WEB-INF/jsp/default/_common/html/navigation/breadcrumb.jsp" --%>
