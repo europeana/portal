@@ -44,7 +44,7 @@ Configuration
 
 ### redeploy.sh
 1. adjust the path to tomcat in the redeploy.sh file so that the path points to your Tomcat server
-   edit &lt;path to project&gt;/trunk/portal2/redeploy.sh
+   edit [path to project]/trunk/portal2/redeploy.sh
    e.g., TOMCAT_DIR=~/tomcat/apache-tomcat-7.0.27
 
 ### corelib build
