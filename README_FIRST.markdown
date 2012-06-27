@@ -61,3 +61,69 @@ If you don't have fresh corelib build, run the following line, which builds the 
 
 ### browse the portal
 Now can use portal2 which is available at http://localhost:8080/portal2/search.html?query=*:*
+
+
+
+Indexig locally
+---------------
+Corelib contains a utility called ContentLoader for creating a local index. You have to make some changes before running it.
+
+### Install latest Mongo and Solr 3.5.0
+	Just follow the instructions of those tools.
+
+### Start Mongo
+
+### Start Solr
+1. have to use the embedded Solr configuration, which is avalaible at 
+   corelib/corelib-solr/src/test/java/resources/solr. It contains the configuration files, the extra 
+   libraries, and the placeholder for the Solr index. Do not confuse it with the Solr server's directory.
+2. Copy the solr directory to a convenient place (I use ~/Development/solr)
+3. Start Solr with the above established directory:
+
+   java -Dsolr.solr.home=[your absolute path to]/Development/solr -jar start.jar
+
+4. Note if you want to reindex it, first stop Solr and delete the index directory (~/Development/solr/data/index) 
+   and start Solr again.
+
+### Use embedded Solr
+1. open portal2/src/main/resources/internal/portal2-develpment.xml
+2. comment out this lines:
+	<bean name="corelib_solr_searchService" class="eu.europeana.corelib.solr.service.impl.SearchServiceImpl"
+		p:solrServer-ref="corelib_solr_solrServer"
+	/>
+	(use <!-- and --> strings before and after)
+3. insert these lines:
+	<bean name="corelib_solr_searchService" class="eu.europeana.corelib.solr.service.impl.SearchServiceImpl"
+		p:solrServer-ref="corelib_solr_solrEmbedded"
+	/>
+
+### Modify the europeana.properties file
+1.  Comment out the existing solr.url line, and add this line:
+    solr.url = http://localhost:8983/solr
+2.  Comment out existing mongodb.host line and add this line:
+    mongodb.host = 127.0.0.1
+
+Warning: if you skip this step the server index will be overwriten.
+
+### ContentLoader.java
+The full qualified path of the class is eu.europeana.corelib.solr.ContentLoader.
+It's location is corelib/corelib-solr/src/test/java/eu/europeana/corelib/solr/ContentLoader.java
+
+There are two record sets available for content loader. One contains 200 records, the other contains 
+30 000+ records. It is advisable to start with the first one. To change between the two you have to 
+modify content loader class, but the change is minimal:
+
+you have to find this line:
+	private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
+	
+If you want to index the 200 records, leave it as it is:
+	private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
+
+If you want to index the full record set, just remove the "-test" from the file name, such like this:
+	private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
+
+Run inside Eclipse:
+1. Run > Run configuration ... > New launch configuration (icon)
+2. Fill the form: Name: ContentLoader, Project: corelib-solr, Class: ContentLoader (you can search it)
+3. Arguments tab: Working directory: Other: ${workspace_loc}/trunk
+4. Environment tab: create new variable: key: EUROPEANA_PROPERTIES, value: <your europeana.properties file>
