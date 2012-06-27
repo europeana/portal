@@ -1,7 +1,7 @@
 <div>
 
-	<%-- @ include file="/WEB-INF/jsp/default/_common/html/navigation/breadcrumb.jsp" --%>
-	<%-- @ include file="/WEB-INF/jsp/default/_common/html/sidebar/sidebar.jsp" --%>
+	<%@ include file="/WEB-INF/jsp/vanilla/navigation/breadcrumb.jsp" %>
+	<%@ include file="/WEB-INF/jsp/vanilla/sidebar/sidebar.jsp" %>
 	
 	<c:choose>
 		<c:when test="${view == 'tlv'}">
