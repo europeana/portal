@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/jsp/vanilla/search/tag-libraries.jsp" %>
+<%@ include file="/WEB-INF/jsp/_common/tag-libraries.jsp" %>
 <%@ include file="/WEB-INF/jsp/vanilla/common-html/html-open.jsp" %>
 
   <%@ include file="/WEB-INF/jsp/vanilla/common-html/header.jsp" %>

@@ -1,13 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <ul>
-	<c:set var="menu" value="menu-footer" />
-	<c:set var="ord2" value="0" />
-	<c:set var="className" value="" />
-	<li><c:set var="ord1" value="1" /><%@ include file="/WEB-INF/jsp/_common/macros/menulinks.jsp" %></li>
-	<li><c:set var="ord1" value="2" /><%@ include file="/WEB-INF/jsp/_common/macros/menulinks.jsp" %></li>
-	<li><c:set var="ord1" value="3" /><%@ include file="/WEB-INF/jsp/_common/macros/menulinks.jsp" %></li>
-	<li><c:set var="ord1" value="4" /><%@ include file="/WEB-INF/jsp/_common/macros/menulinks.jsp" %></li>
-	<li><c:set var="ord1" value="5" /><%@ include file="/WEB-INF/jsp/_common/macros/menulinks.jsp" %></li>
-	<li><c:set var="ord1" value="6" /><%@ include file="/WEB-INF/jsp/_common/macros/menulinks.jsp" %></li>
+	<li><a href="<spring:message code="notranslate_menu-footer-1_a_url_t"/>" target="<spring:message code="notranslate_menu-footer-1_a_target_t"/>" title="<spring:message code="menu-footer-1_a_title_t"/>"><spring:message code="menu-footer-1_a_text_t"/></a></li>
+	<li><a href="<spring:message code="notranslate_menu-footer-2_a_url_t"/>" target="<spring:message code="notranslate_menu-footer-2_a_target_t"/>" title="<spring:message code="menu-footer-2_a_title_t"/>"><spring:message code="menu-footer-2_a_text_t"/></a></li>
+	<li><a href="<spring:message code="notranslate_menu-footer-3_a_url_t"/>" target="<spring:message code="notranslate_menu-footer-3_a_target_t"/>" title="<spring:message code="menu-footer-3_a_title_t"/>"><spring:message code="menu-footer-3_a_text_t"/></a></li>
+	<li><a href="<spring:message code="notranslate_menu-footer-4_a_url_t"/>" target="<spring:message code="notranslate_menu-footer-4_a_target_t"/>" title="<spring:message code="menu-footer-4_a_title_t"/>"><spring:message code="menu-footer-4_a_text_t"/></a></li>
+	<li><a href="<spring:message code="notranslate_menu-footer-5_a_url_t"/>" target="<spring:message code="notranslate_menu-footer-5_a_target_t"/>" title="<spring:message code="menu-footer-5_a_title_t"/>"><spring:message code="menu-footer-5_a_text_t"/></a></li>
+	<li><a href="<spring:message code="notranslate_menu-footer-6_a_url_t"/>" target="<spring:message code="notranslate_menu-footer-6_a_target_t"/>" title="<spring:message code="menu-footer-6_a_title_t"/>"><spring:message code="menu-footer-6_a_text_t"/></a></li>
  	<li>co-funded by the European Union</li>
 </ul>
