@@ -9,7 +9,11 @@
 		<!-- ${cell} -->
 		<c:set var="row_counter" value="1" />
 		<%-- c:set var="title" value="${fn:substring(cell.title[0], 0, titleMaxLength)}" /--%>
-		<c:set var="title" value="${cell.title[0]}" />
+		<c:set var="title">
+			<c:set var="theStr" value="${cell.title[0]}" />
+			<c:set var="size" value="${titleMaxLength}" />
+			<%@ include file="/WEB-INF/jsp/devel/_common/macros/string-limiter.jsp" %>
+		</c:set>
 		<c:set var="icon_class" value=" type-${fn:toLowerCase(cell.type)}" />
 <%--
 			<c:if test="${!empty cell.parent && cell.parent > 4}">
