@@ -7,7 +7,6 @@
 --%>
 <%@ include file="/WEB-INF/jsp/devel/_common/html/doctype.jsp" %>
 <%@ include file="/WEB-INF/jsp/devel/_common/variables/variables.jsp" %>
-<%@ include file="/WEB-INF/jsp/devel/_common/macros/string-limiter.jsp" %>
 
 <%-- next 4 are new ones! --%>
 <%@ include file="/WEB-INF/jsp/devel/fulldoc/variables/variables.jsp" %>
@@ -20,7 +19,7 @@
 	<%-- new! --%>
 	<%@ include file="/WEB-INF/jsp/devel/fulldoc/content/content.jsp" %>
 	<%@ include file="/WEB-INF/jsp/devel/_common/html/footer.jsp" %>
-	<%--@ include file="/WEB-INF/jsp/devel/_common/html/javascripts.jsp" --%>
+	<%@ include file="/WEB-INF/jsp/devel/_common/html/javascripts.jsp" %>
 	<%-- new! --%>
 	<%--
 	<%@ include file="/WEB-INF/jsp/devel/fulldoc/content/full-excerpt/lightbox.jsp" %>

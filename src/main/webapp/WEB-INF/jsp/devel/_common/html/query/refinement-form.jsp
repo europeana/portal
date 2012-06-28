@@ -31,7 +31,7 @@
 				<input type="hidden" name="qf" value="${refinement}" />
 			</c:forEach>
 		</c:if>
-		<c:if test="${!empty model.providersForInclusion}">
+		<c:if test="${model[providersForInclusion]}">
 			<c:forEach var="providerForInclusion" items="${model.providersForInclusion}">
 				<input type="hidden" name="qf" value="${providerForInclusion}" />
 			</c:forEach>
