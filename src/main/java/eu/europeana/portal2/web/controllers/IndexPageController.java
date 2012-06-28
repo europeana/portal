@@ -26,6 +26,7 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
@@ -100,7 +101,7 @@ public class IndexPageController {
 
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
-			@RequestParam(value = "theme", required = false, defaultValue="default") String theme,
+			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws Exception {
 		IndexPage model = new IndexPage();
@@ -109,7 +110,7 @@ public class IndexPageController {
 		updateCarousel(model, locale);
 		updateFeaturedItem(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
-		model.setTheme(ThemeChecker.check(theme));
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model,

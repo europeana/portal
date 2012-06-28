@@ -20,6 +20,8 @@
  */
 package eu.europeana.portal2.web.presentation.model.abstracts;
 
+import java.util.List;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -84,5 +86,12 @@ public abstract class SearchPageData extends PageData {
 			current = PortalLanguage.EN;
 		}
 		return current.getLanguageCode();
+	}
+
+	/**
+	 * Get the list of available languages
+	 */
+	public List<PortalLanguage> getPortalLanguages() {
+		return PortalLanguage.getSupported();
 	}
 }

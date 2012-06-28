@@ -27,6 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.portal2.web.presentation.ThemeChecker;
 
 /**
  * Utility methods for controllers
@@ -111,4 +113,22 @@ public class ControllerUtil {
 		return url;
 	}
 
+	
+	public static String getSessionManagedTheme(HttpServletRequest request, String theme) {
+		HttpSession session = request.getSession(true);
+		if (!theme.equals("")) {
+			theme = ThemeChecker.check(theme);
+			session.setAttribute("theme", theme);
+		}
+		else {
+			String storedTheme = (String)session.getAttribute("theme");
+			if (storedTheme != null && !storedTheme.equals("")) {
+				theme = ThemeChecker.check(storedTheme);
+			}
+		}
+		if (theme.equals("")) {
+			theme = "default";
+		}
+		return theme;
+	}
 }

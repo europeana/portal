@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -21,11 +22,11 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
+import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.portal2.web.model.ModelUtils;
 import eu.europeana.portal2.web.model.SearchResults;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
-import eu.europeana.portal2.web.presentation.ThemeChecker;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
@@ -48,6 +49,9 @@ public class SearchController {
 	@Value("#{europeanaProperties['mongodb.host']}")
 	private String mongodbHost;
 	
+	@Value("#{europeanaProperties['static.page.path']}")
+	private String staticPagePath;
+
 	@Resource
 	private SearchService searchService;
 	
@@ -77,6 +81,10 @@ public class SearchController {
 	) {
 		log.info("============== START SEARCHING ==============");
 		log.info(String.format("solrUrl: %s, mongodbHost: %s", solrUrl, mongodbHost));
+		log.info(String.format("staticPagePath: %s", staticPagePath));
+		File staticPageDir = new File(staticPagePath);
+		log.info(String.format("staticPagePath exists: %b", staticPageDir.exists()));
+		log.info(String.format("staticPagePath is directory: %b", staticPageDir.isDirectory()));
 
 		SearchPage model = new SearchPage();
 		model.setEmbeddedBgColor(embeddedBgColor);
@@ -89,25 +97,9 @@ public class SearchController {
 		model.setRefinements(qf);
 		model.setStart(start);
 		model.setQuery(q);
-		model.setTheme(ThemeChecker.check(theme));
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, 
-			model.isEmbedded() 
-				? PortalPageInfo.SEARCH_EMBED_HTML
-				: PortalPageInfo.SEARCH_HTML
-		);
-
-		if (theme != "jsp" && theme != "default") {
-			theme = "default";
-		}
-		/*
-		Map<String, Object> properties = viewResolver.getAttributesMap();
-		log.info("properties: " + properties.keySet());
-		String prefix = (String)properties.remove("prefix");
-		log.info("prefix: " + prefix);
-		properties.put("prefix", "/WEB-INF/" + theme + "/");
-		viewResolver.setAttributesMap(properties);
-		log.info("new prefix: " + viewResolver.getAttributesMap().get("prefix"));
-		*/
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
+		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 		log.info("theme: " + model.getTheme());
 
 		Query query = new Query(q)
