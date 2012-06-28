@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="${model.locale}">
+<html lang="${model.imageLocale}">
 <head>
 <meta charset="utf-8"/>
 <%@ include file="/WEB-INF/jsp/vanilla/common-html/links.jsp" %>
