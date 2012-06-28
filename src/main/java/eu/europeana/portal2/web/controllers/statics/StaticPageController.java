@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,8 +31,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.web.model.CorePageInfo;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
@@ -67,6 +70,8 @@ public class StaticPageController {
 	
 	private Logger log = Logger.getLogger(StaticPageController.class.getName());
 
+	@Resource
+	private ConfigInterceptor corelib_web_configInterceptor;
 
 	@Value("#{europeanaProperties['portal.name']}")
 	private String portalName;
@@ -89,15 +94,20 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 	@RequestMapping("/{pageName}.html")
-	public ModelAndView fetchStaticPage(@PathVariable String pageName,
+	public ModelAndView fetchStaticPage(
+			@PathVariable String pageName,
+			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, HttpServletResponse response,
 			Locale locale) throws Exception {
 		pageName = "/" + pageName + ".html";
 
+		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		log.info("portalName: " + portalName);
 		log.info("portalServer: " + portalServer);
 		log.info("staticPagePath: " + staticPagePath);
+		staticPageCache.setStaticPagePath(staticPagePath);
+
 		// test for possible redirects first!
 		Redirect redirect = Redirect.safeValueOf(pageName);
 		if (redirect != null) {
@@ -117,29 +127,27 @@ public class StaticPageController {
 
 		// generate static page
 		StaticPage model = new StaticPage();
-		model.setBodyContent(getStaticPagePart(pageName,
-				AFFIX_TEMPLATE_VAR_FOR_CONTENT, locale));
-		model.setHeaderContent(getStaticPagePart(pageName,
-				AFFIX_TEMPLATE_VAR_FOR_HEADER, locale));
-		model.setLeftContent(getStaticPagePart(pageName,
-				AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
-		model.setTitleContent(getStaticPagePart(pageName,
-				AFFIX_TEMPLATE_VAR_FOR_TITLE, locale));
-		model.setDefaultContent(getStaticPagePart(pageName, "", locale));
+		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, locale));
+		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, locale));
+		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
+		model.setTitleContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_TITLE, locale));
+		// TODO: check it!
+		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
+		model.setDefaultContent(model.getBodyContent());
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 
-		clickStreamLogger.logCustomUserAction(request,
-				ClickStreamLogger.UserAction.STATICPAGE,
-				"view=" + request.getPathInfo());
-		return ControllerUtil.createModelAndViewPage(model, locale,
-				PortalPageInfo.STATICPAGE);
+		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
+
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.STATICPAGE);
+		corelib_web_configInterceptor.postHandle(request, response, this, page);
+
+		return page;
 	}
 
-	private String getStaticPagePart(String fileName, String partName,
-			Locale language) {
+	private String getStaticPagePart(String fileName, String partName, Locale language) {
 
 		if (!StringUtils.isEmpty(partName)) {
-			fileName = StringUtils.replaceOnce(fileName, ".", "_" + partName
-					+ ".");
+			fileName = StringUtils.replaceOnce(fileName, ".", "_" + partName + ".");
 		}
 
 		return staticPageCache.getPage(fileName, language);

@@ -17,9 +17,9 @@
 
 package eu.europeana.portal2.web.presentation.model.data;
 
-import eu.europeana.corelib.web.model.PageData;
+import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 
-public abstract class StaticData extends PageData {
+public abstract class StaticData extends SearchPageData {
 
 	private String defaultContent;
 	private String headerContent;
@@ -36,6 +36,10 @@ public abstract class StaticData extends PageData {
 
 	public void setTitleContent(String content) {
 		setPageTitle(content);
+	}
+
+	public String getTitleContent() {
+		return getPageTitle();
 	}
 
 	public void setLeftContent(String content) {

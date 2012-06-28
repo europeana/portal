@@ -82,7 +82,7 @@ public class ObjectController {
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPageEnum returnTo,
-			@RequestParam(value = "theme", required = false, defaultValue="default") String theme,
+			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		log.info("=========== /record/{collectionId}/{recordId}.html ============");
 		// Map<String, String[]> parameters = sanitizeParameters(request);

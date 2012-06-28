@@ -83,8 +83,7 @@ public class StaticPageCache {
 			if (checkForDot(fileName)) {
 				String lingualFileName = fileName;
 				if (language != null) {
-					lingualFileName = fileName.replace(DOT,
-							"_" + language.getLanguage() + DOT);
+					lingualFileName = fileName.replace(DOT, "_" + language.getLanguage() + DOT);
 				}
 				Page page = pageMap().get(lingualFileName);
 				if (page == null) {
@@ -110,8 +109,12 @@ public class StaticPageCache {
 
 	private Map<String, Page> pageMap() {
 		if (pageMapCache.isEmpty()) {
+			if (staticPagePath == null) {
+				throw new RuntimeException(staticPagePath + " is not set!");
+			}
 			File root = new File(staticPagePath);
 			if (!root.isDirectory()) {
+				log.severe("staticPagePath: " + staticPagePath + " is not a directory!");
 				throw new RuntimeException(staticPagePath + " is not a directory!");
 			}
 			addToPageMap(root, root);
@@ -124,8 +127,7 @@ public class StaticPageCache {
 			if (file.isDirectory()) {
 				addToPageMap(root, file);
 			} else {
-				String baseFileName = file.getPath()
-						.substring(root.getPath().length()).replace('\\', '/');
+				String baseFileName = file.getPath().substring(root.getPath().length()).replace('\\', '/');
 				if (checkForDot(baseFileName)) {
 					pageMapCache.put(baseFileName, new Page(file));
 				}
@@ -157,8 +159,7 @@ public class StaticPageCache {
 
 		private synchronized void writeBinaryContent(OutputStream out)
 				throws IOException {
-			IOUtils.copy(new AutoCloseInputStream(new FileInputStream(file)),
-					out);
+			IOUtils.copy(new AutoCloseInputStream(new FileInputStream(file)), out);
 		}
 	}
 }

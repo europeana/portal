@@ -29,13 +29,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.web.presentation.ThemeChecker;
@@ -48,9 +46,11 @@ import eu.europeana.portal2.web.presentation.ThemeChecker;
 
 public class ControllerUtil {
 
+	@Value("#{europeanaProperties['portal.theme']}")
+	private static String defaultTheme;
+
 	public static Locale getLocale(HttpServletRequest request) {
-		LocaleResolver localeResolver = RequestContextUtils
-				.getLocaleResolver(request);
+		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		return localeResolver.resolveLocale(request);
 	}
 
@@ -127,7 +127,7 @@ public class ControllerUtil {
 			}
 		}
 		if (theme.equals("")) {
-			theme = "default";
+			theme = ThemeChecker.check(defaultTheme);
 		}
 		return theme;
 	}
