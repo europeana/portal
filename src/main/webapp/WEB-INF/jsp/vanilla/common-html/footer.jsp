@@ -1,1 +1,0 @@
-<%@ include file="/WEB-INF/jsp/vanilla/menus/footer.jsp" %>
