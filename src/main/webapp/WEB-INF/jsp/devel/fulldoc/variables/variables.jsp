@@ -12,6 +12,6 @@
 
 <c:set var="ess_id_count" value="0" />
 
-<c:if test="${!empty model.lightboxRef}">
+<c:if test="${model[lightboxRef]}">
 	<c:set var="lightboxRef">${model.lightboxRef}</c:set>
 </c:if>
