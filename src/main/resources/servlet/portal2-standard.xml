@@ -24,6 +24,8 @@
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers.statics" />
 	<context:component-scan base-package="eu.europeana.portal2.web.util" />
 
+	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
+
 	<bean id="staticPageController"
 		class="eu.europeana.portal2.web.controllers.statics.StaticPageController" />
 	<bean name="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />

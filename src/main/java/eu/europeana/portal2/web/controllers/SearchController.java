@@ -116,16 +116,24 @@ public class SearchController {
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (SolrTypeException e) {
+			log.severe("SolrTypeException: " + e.getMessage());
 			// return new ApiError("search.json", e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
+			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
 		// model.getBriefBeanView().getBriefDocs();
 		// model.getBreadcrumbs();
-		
+
+		try {
+			corelib_web_configInterceptor.postHandle(request, response, this, page);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return page;
 	}
 
@@ -135,7 +143,6 @@ public class SearchController {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		SearchResults response = new SearchResults("search.json");
-		
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
 		log.info("resultSet: " + resultSet);
 		resultSet.getQuery();
