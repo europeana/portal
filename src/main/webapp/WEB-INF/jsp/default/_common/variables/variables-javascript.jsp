@@ -157,7 +157,9 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.msg.more = '${see_more}';
 		eu.europeana.vars.msg.less = '${see_less}';
 		eu.europeana.vars.msg.select_language = '${select_language}';
+		<c:if test="${model[googleTranslateId]}">
 		eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
+		</c:if>
 		eu.europeana.vars.bing_translate_key = '${model.bingTranslateId}';
 
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
@@ -175,7 +177,7 @@ eu.europeana.vars.timeline = {};
 			eu.europeana.vars.item.uri = '${model.document.id}';
 		</c:if>
 
-		<c:if test="${model.lightboxRef}">
+		<c:if test="${model[lightboxRef]}">
 			eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
 			eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
 		</c:if>
