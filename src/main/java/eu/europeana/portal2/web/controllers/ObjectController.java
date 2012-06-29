@@ -99,25 +99,33 @@ public class ObjectController {
 		model.setShownAtProviderOverride(shownAtProviderOverride);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 
+		log.info("so far good #1");
 		try {
 			FullBean fullBean = searchService.findById(collectionId, recordId);
+			log.info("fullBean: " + fullBean);
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
 			model.setFullBeanView(fullBeanView);
 		} catch (SolrTypeException e) {
-			// TODO Auto-generated catch block
+			log.severe("SolrTypeException: " + e.getMessage());
 			e.printStackTrace();
 		} catch (EuropeanaQueryException e) {
-			// TODO Auto-generated catch block
+			log.severe("EuropeanaQueryException: " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
+		log.info("so far good #2");
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
+		log.info("so far good #3");
 		try {
 			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
+		log.info("so far good #4");
 
 		return page;
 	}
