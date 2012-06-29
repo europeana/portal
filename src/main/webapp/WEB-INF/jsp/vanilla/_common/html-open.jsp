@@ -8,6 +8,4 @@
 <title>${model.pageTitle}</title>
 </head>
 <body>
-<c:choose>
-  <c:when test="${not empty model.announceMsg}">${model.announceMsg}</c:when>
-</c:choose>
+<c:if test="${not empty model.announceMsg}">${model.announceMsg}</c:if>
