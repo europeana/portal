@@ -64,7 +64,33 @@ Now can use portal2 which is available at http://localhost:8080/portal2/search.h
 
 
 
-Indexig locally
+Eclipse Setup
+-------------
+### Install Maven Support for Eclipse via the Maven Plugin
+the maven plugin is at http://eclipse.org/m2e/download/
+Latest m2e release (recommended) is http://download.eclipse.org/technology/m2e/releases
+To install it
+
+1. Help > Install New Software
+2. Work with: http://download.eclipse.org/technology/m2e/releases
+3. Click on Add...
+4. Check the box next to Maven Integration for Eclipse
+5. Follow the rest of the process to install the plugin.
+
+### Import the project(s)
+Depending on the Maven Projects you need to work on, import them by choosing:
+1. File > Import
+2. In the wizard select Maven > Existing Maven Projects
+3. Browse to the checkout directory for the Maven Project(s)
+4. Select Open
+5. After some evaluating eclipse will show the Maven Projects that exist in the directory and a checkbox next to the ones it will import
+6. Modify the checkboxes if you don't want to import all of the ones listed.
+7. Click Finish
+
+
+
+
+Indexing locally
 ---------------
 Corelib contains a utility called ContentLoader for creating a local index. You have to make some changes before running it.
 
