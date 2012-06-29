@@ -1,6 +1,5 @@
-<html<c:choose>
-<c:when test='${model.pageName == "fulldoc.html"}'>
-lang="${model.imageLocale}"
+<html <c:choose>
+<c:when test='${model.pageName == "fulldoc.html"}'>lang="${model.imageLocale}"
 xmlns="http://www.w3.org/1999/xhtml"
 xmlns:og="http://ogp.me/ns#"
 xmlns:fb="http://www.facebook.com/2008/fbml"
@@ -13,10 +12,26 @@ xmlns:foaf="http://xmlns.com/foaf/0.1/"
 xmlns:enrichment="http://www.europeana.eu/schemas/ese/enrichment/"
 xmlns:dc="http://purl.org/dc/elements/1.1/">
 </c:when>
-<c:otherwise>
-lang="${model.imageLocale}"
+<c:when test='${model.pageName == "index.html"}'>lang="${model.imageLocale}"
 xmlns="http://www.w3.org/1999/xhtml"
 xmlns:og="http://ogp.me/ns#"
 xmlns:fb="http://www.facebook.com/2008/fbml">
+</c:when>
+<c:when test='${model.pageName == "map.html"}'>lang="${model.imageLocale}"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:og="http://ogp.me/ns#"
+xmlns:fb="http://www.facebook.com/2008/fbml">
+</c:when>
+<c:when test='${model.pageName == "search.html"}'>lang="${model.imageLocale}"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:og="http://ogp.me/ns#"
+xmlns:fb="http://www.facebook.com/2008/fbml">
+</c:when>
+<c:when test='${model.pageName == "timeline.html"}'>lang="${model.imageLocale}"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:og="http://ogp.me/ns#"
+xmlns:fb="http://www.facebook.com/2008/fbml">
+</c:when>
+<c:otherwise>lang="${model.imageLocale}">
 </c:otherwise>
 </c:choose>

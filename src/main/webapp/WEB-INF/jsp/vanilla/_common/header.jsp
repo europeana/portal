@@ -5,6 +5,6 @@
     <img src="/${model.portalName}/sp/img/europeana-logo-${model.imageLocale}.png" alt="<spring:message code='AltLogoEuropeana_t' />" width="206" height="123"/>
   </a>
 </${logo_tag}>
-<%@ include file="/WEB-INF/jsp/vanilla/menus/main.jsp" %>
-<%@ include file="/WEB-INF/jsp/vanilla/menus/user.jsp" %>
-<%@ include file="/WEB-INF/jsp/vanilla/query/query.jsp" %>
+<%-- <%@ include file="/WEB-INF/jsp/vanilla/menus/main.jsp" %> --%>
+<%-- <%@ include file="/WEB-INF/jsp/vanilla/menus/user.jsp" %> --%>
+<%-- <%@ include file="/WEB-INF/jsp/vanilla/query/query.jsp" %> --%>

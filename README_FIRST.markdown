@@ -87,6 +87,8 @@ Depending on the Maven Projects you need to work on, import them by choosing:
 6. Modify the checkboxes if you don't want to import all of the ones listed.
 7. Click Finish
 
+### Install Subclipse
+find the appropriate eclipse update site for your version of svn, http://subclipse.tigris.org/servlets/ProjectProcess?pageID=p4wYuA, and install it similarly to the maven plugin
 
 
 
