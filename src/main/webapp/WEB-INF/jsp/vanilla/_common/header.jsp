@@ -7,4 +7,4 @@
 </${logo_tag}>
 <%@ include file="/WEB-INF/jsp/vanilla/menus/main.jsp" %>
 <%-- <%@ include file="/WEB-INF/jsp/vanilla/menus/user.jsp" %> --%>
-<%-- <%@ include file="/WEB-INF/jsp/vanilla/query/query.jsp" %> --%>
+<%@ include file="/WEB-INF/jsp/vanilla/query/query.jsp" %>
