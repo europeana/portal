@@ -1,11 +1,19 @@
+<c:choose>
+  <c:when test="${not empty model.currentUrl}">
+    <c:set var="language_menu_action" value="${model.currentUrl}"/>
+  </c:when>
+  <c:otherwise>
+    <c:set var="language_menu_action" value="${model.portalName}/search.html"/>
+  </c:otherwise>
+</c:choose>
 <li>
-  <form method="post" action="${language_menu_action}">
-    <select title="<spring:message code='ChooseLanguage_t' />">
-      <option value="Choose language" selected="selected"><spring:message code='ChooseLanguage_t' /></option>
+  <form action="${language_menu_action}" method="post">
+    <select name="embeddedlang" title="<spring:message code='ChooseLanguage_t' />">
+      <option value="<spring:message code='ChooseLanguage_t'/>" selected><spring:message code='ChooseLanguage_t'/></option>
       <c:forEach items="${model.portalLanguages}" var="language">
         <option value="${language.getLanguageCode()}">${language.getLanguageName()}</option>
       </c:forEach>
     </select>
-    <noscript><input type="submit" /></noscript>
+    <input type="submit"/>
   </form>
 </li>

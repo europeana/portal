@@ -12,6 +12,7 @@
 <c:if test='${model.pageName == "fulldoc.html"}'>
   <%@ include file="/WEB-INF/jsp/_common/meta-facebook.jsp" %>
   <%@ include file="/WEB-INF/jsp/_common/meta-open-graph.jsp" %>
+  <%-- @todo make sure model.formatLabels exists and that esemeta fields are displayed --%>
   <c:if test="${not model.formatLabels}">
   format
   <!-- <@displayEseDataAsMeta model.metaDataFields false/> -->
