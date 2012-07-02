@@ -1,7 +1,23 @@
+<%--
+  query action
+--%>
+<c:set var="query_action" value="/${model.portalName}/search.html"/>
+<c:if test="'map.html' == ${model.pageName}">
+  <c:set var="query_value" value="/${model.portalName}/map.html"/>
+</c:if>
+<c:if test="'timeline.html' == ${model.pageName}">
+  <c:set var="query_value" value="/${model.portalName}/timeline.html"/>
+</c:if>
+<%--
+  query value
+--%>
 <c:set var="query_value" value=""/>
 <c:if test="${not empty model.query}">
   <c:set var="query_value" value="${model.query}"/>
 </c:if>
+<%--
+  form
+--%>
 <form action="${query_action}" method="get">
 	<fieldset>
 		<input type="text" name="query" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175"/>
