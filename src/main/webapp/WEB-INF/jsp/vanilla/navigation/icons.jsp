@@ -2,20 +2,20 @@
 	<%-- grid view --%>
 	<c:if test="${!empty model.viewUrlTable}">
 		<li>
-			<a href="${model.viewUrlTable}" title="<spring:message code="AltGridView_t" />" rel="nofollow" class="${gridview_active}grid-view"></a>
+			<a href="${model.viewUrlTable}" title="<spring:message code="AltGridView_t" />" rel="nofollow"></a>
 		</li>
 	</c:if>
 
 	<%-- timeline --%>
 	<c:if test="${!empty model.viewUrlTimeline}">
-		<li class="timeline_icon" style="display:none">
-			<a href="${model.viewUrlTimeline}" title="<spring:message code="AltTimelineView_t" />" rel="nofollow" class="${timeline_active}timeline"></a>
+		<li style="display:none">
+			<a href="${model.viewUrlTimeline}" title="<spring:message code="AltTimelineView_t" />" rel="nofollow"></a>
 		</li>
 	</c:if>
 
 	<%-- map --%>
-	<li class="mapview_icon" style="display:none">
-		<a href="${model.viewUrlMap}" title="<spring:message code="AltMapView_t" />" rel="nofollow" class="${map_active}mapview"></a>
+	<li style="display:none">
+		<a href="${model.viewUrlMap}" title="<spring:message code="AltMapView_t" />" rel="nofollow"></a>
 	</li>
 
 	<%-- 

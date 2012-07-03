@@ -10,7 +10,7 @@
 			<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 		</c:forEach>
 
-		<li class="ugc-li">
+		<li>
 			<h3>
 				<c:set var="ugcClassName">
 					<c:choose>
@@ -18,7 +18,7 @@
 						<c:otherwise>ugc-checked</c:otherwise>
 					</c:choose>
 				</c:set>
-				<a class="facet-ugc ${ugcClassName}" rel="nofollow" href="${model.UGCUrl}">
+				<a rel="nofollow" href="${model.UGCUrl}">
 					<spring:message code="IncludeUGC_t" />
 				</a>
 			</h3>

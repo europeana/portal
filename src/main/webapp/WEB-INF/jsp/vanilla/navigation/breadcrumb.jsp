@@ -2,7 +2,7 @@
 	<c:if test="${!empty model.breadcrumbs}">
 		<c:choose>
 			<c:when test="${!empty !model.euroeanaUri}">
-				<li><span class="bold black"><spring:message code="MatchesFor_t" />:</span></li>
+				<li><span><spring:message code="MatchesFor_t" />:</span></li>
 				<c:set var="breadcrumbs" value="${model.breadcrumbs}" />
 				<c:forEach items="${breadcrumbs}" var="crumb">
 					<c:if test="${crumb.showBreadCrumb}">
