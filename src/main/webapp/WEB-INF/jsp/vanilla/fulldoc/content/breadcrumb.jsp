@@ -28,4 +28,3 @@
     </li>
   </c:otherwise>
 </c:choose>
-<!-- /breadcrumb -->
