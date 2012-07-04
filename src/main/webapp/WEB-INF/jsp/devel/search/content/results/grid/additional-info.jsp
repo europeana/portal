@@ -1,7 +1,8 @@
 <!-- additional-info -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<a href="${cell.fullDocUrl}?theme=${model.theme}" title='${StringUtils.join(cell.title, ", ")}' ${targetArg} class="result-additional-info" rel="nofollow">
+
+<a href="${cell.fullDocUrl}?theme=${model.theme}" title="${fn:join(cell.title, ', ')}" ${targetArg} class="result-additional-info" rel="nofollow">
 	<c:if test="${!empty cell.dcCreator}">
 		<%-- TODO: find out what is the original cell.creatorXML --%>
 		<!-- cell.dcCreator -->
