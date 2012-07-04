@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <c:choose>
   <c:when test="${not empty model.currentUrl}">
     <c:set var="language_menu_action" value="${model.currentUrl}"/>
