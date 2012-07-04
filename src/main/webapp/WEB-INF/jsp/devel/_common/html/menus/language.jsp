@@ -4,7 +4,7 @@
 	<select id="embeddedlang" name="embeddedlang" title="<spring:message code="ChooseLanguage_t" />">
 		<option value="Choose language" selected="selected"><spring:message code="ChooseLanguage_t" /></option>
 		<c:forEach items="${model.portalLanguages}" var="language">
-			<option value="${language.getLanguageCode()}">${language.getLanguageName()}</option>
+			<option value="${language.languageCode}">${language.languageName}</option>
 		</c:forEach>
 	</select>
 	<noscript><input type="submit" /></noscript>
