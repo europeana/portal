@@ -29,22 +29,23 @@ Installation
 #### Mac OSX
 
 An alternative to Tomcat, running portal2 on the Jetty server allows developers to quickly see the results of their updates to css, js, and jsps without redeployment.
-You'll need a run configuration, so select "Run Configurations..." / "Java" / "New", and fill in the fields as follows:
+You'll need a run configuration, so select "Run Configurations..." / "Java Application" / "New", and fill in the fields as follows:
 
 [Tab Main]
-	Name: Portal 2 Jetty Starter (or whatever)
-	Project: portal 2
-	Main Class: eu.europeana.Portal2Starter
-	Working Directory:	${workspace_loc:portal2}
+  Name: Portal 2 Jetty Starter (or whatever)
+  Project: portal 2
+  Main Class: eu.europeana.Portal2Starter
+  Working Directory:  ${workspace_loc:portal2}
 
 [Tab Arguments]
-	Arguments: -Xms1024m -Xmx2048m
+  VM Arguments: -Xms1024m -Xmx2048m
 
 [Tab Classpath]
-	Add the corelib stuff, if not already present.
+  Add all of the corelib projects, if not already present.
 
 [Tab Environment]
-	name = EUROPEANA_PROPERTIES, value = europeana.properties (append to native environment)
+  New ... > name = EUROPEANA_PROPERTIES, value = europeana.properties
+  append to native environment
 
 
 
@@ -120,7 +121,7 @@ Indexing locally
 Corelib contains a utility called ContentLoader for creating a local index. You have to make some changes before running it.
 
 ### Install latest Mongo and Solr 3.5.0
-	Just follow the instructions of those tools.
+  Just follow the instructions of those tools.
 
 ### Start Mongo
 
@@ -139,14 +140,14 @@ Corelib contains a utility called ContentLoader for creating a local index. You 
 ### Use embedded Solr
 1. open portal2/src/main/resources/internal/portal2-develpment.xml
 2. comment out this lines:
-	<bean name="corelib_solr_searchService" class="eu.europeana.corelib.solr.service.impl.SearchServiceImpl"
-		p:solrServer-ref="corelib_solr_solrServer"
-	/>
-	(use <!-- and --> strings before and after)
+  <bean name="corelib_solr_searchService" class="eu.europeana.corelib.solr.service.impl.SearchServiceImpl"
+    p:solrServer-ref="corelib_solr_solrServer"
+  />
+  (use <!-- and --> strings before and after)
 3. insert these lines:
-	<bean name="corelib_solr_searchService" class="eu.europeana.corelib.solr.service.impl.SearchServiceImpl"
-		p:solrServer-ref="corelib_solr_solrEmbedded"
-	/>
+  <bean name="corelib_solr_searchService" class="eu.europeana.corelib.solr.service.impl.SearchServiceImpl"
+    p:solrServer-ref="corelib_solr_solrEmbedded"
+  />
 
 ### Modify the europeana.properties file
 1.  Comment out the existing solr.url line, and add this line:
@@ -165,13 +166,13 @@ There are two record sets available for content loader. One contains 200 records
 modify content loader class, but the change is minimal:
 
 you have to find this line:
-	private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
-	
+  private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
+  
 If you want to index the 200 records, leave it as it is:
-	private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
+  private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
 
 If you want to index the full record set, just remove the "-test" from the file name, such like this:
-	private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
+  private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
 
 Run inside Eclipse:
 1. Run > Run configuration ... > New launch configuration (icon)
