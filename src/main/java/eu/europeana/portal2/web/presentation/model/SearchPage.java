@@ -21,10 +21,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.portal2.web.controllers.statics.StaticPageController;
 import eu.europeana.portal2.web.presentation.Configuration;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -34,6 +36,8 @@ import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class SearchPage extends SearchPreparation {
 
+	private Logger log = Logger.getLogger(SearchPage.class.getName());
+	
 	@Override
 	public boolean isIndexable() {
 		return false;
