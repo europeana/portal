@@ -4,7 +4,3 @@
 <%@ include file="/WEB-INF/jsp/vanilla/fulldoc/content.jsp" %>
 <%@ include file="/WEB-INF/jsp/vanilla/_common/footer.jsp" %>
 <%@ include file="/WEB-INF/jsp/vanilla/_common/html-close.jsp" %>
-
-
-
-
