@@ -25,6 +25,29 @@ Installation
 8. you can stop tomcat with the terminal command sh /Applications/tomcat/bin/shutdown.sh
 
 
+### Jetty
+#### Mac OSX
+
+An alternative to Tomcat, running portal2 on the Jetty server allows developers to quickly see the results of their updates to css, js, and jsps without redeployment.
+You'll need a run configuration, so select "Run Configurations..." / "Java" / "New", and fill in the fields as follows:
+
+[Tab Main]
+	Name: Portal 2 Jetty Starter (or whatever)
+	Project: portal 2
+	Main Class: eu.europeana.Portal2Starter
+	Working Directory:	${workspace_loc:portal2}
+
+[Tab Arguments]
+	Arguments: -Xms1024m -Xmx2048m
+
+[Tab Classpath]
+	Add the corelib stuff, if not already present.
+
+[Tab Environment]
+	name = EUROPEANA_PROPERTIES, value = europeana.properties (append to native environment)
+
+
+
 ### maven
 the .m2 repository may not be able to source the following repositories. both of these are available as zip files in http://dropbox.com/home/EuropeanaShared/tmp/ if that folder has been shared with your dropbox account:
 1. .m2/commons-logging/commons-logging-api/99.0-does-not-exist/
