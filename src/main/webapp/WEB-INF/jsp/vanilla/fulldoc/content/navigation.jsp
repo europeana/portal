@@ -1,3 +1,4 @@
+<!-- navigation -->
 <ul>
 <c:choose>
   <c:when test="${!empty model.fullBeanView.docIdWindowPager}">
@@ -16,3 +17,4 @@
   </c:otherwise>
 </c:choose>
 </ul>
+<!-- /navigation -->

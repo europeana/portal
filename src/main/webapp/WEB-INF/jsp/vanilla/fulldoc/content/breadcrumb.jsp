@@ -1,16 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<h2>breadcrum</h2>
 <c:choose>
-  <c:when test='${!query?starts_with("europeana_uri:")}'>
+  <c:when test='${not fn:startsWith( query, "europeana_uri:")}'>
     <li><spring:message code='MatchesFor_t' />:</li>
     <c:forEach items="{model.fullBeanView.docIdWindowPager.breadcrumbs}" var="crumb">
       <c:choose>
-        <c:when test="${!crumb.last}">
-          <li><a href="/${model.portalName}/search.html?${crumb.href}">${crumb.display?html}</a></li>
+        <c:when test="${crumb.last}">
+          <li><a href="/${model.portalName}/search.html?${crumb.href}">${crumb.display}</a></li>
         </c:when>
         <c:otherwise>
-          <li>${crumb.display?html}</li>
+          <li>${crumb.display}</li>
         </c:otherwise>
       </c:choose>
     </c:forEach>
@@ -31,3 +29,4 @@
     </li>
   </c:otherwise>
 </c:choose>
+<!-- /breadcrumb -->
