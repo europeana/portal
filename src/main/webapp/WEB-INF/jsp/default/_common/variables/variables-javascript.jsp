@@ -67,11 +67,13 @@
 <c:set var="mapview_noresult_2"><spring:message code="NoMapItemsFound2_t" /></c:set>
 
 
-<c:if test="${!empty model.maxMapResults}">
-	<c:set var="map_limit">${model.maxMapResults}</c:set>
+<c:if test="${model[maxMapResults] != null}">
+	<c:set var="map_limit">${model[maxMapResults]}</c:set>
 	<c:set var="map_limit_array" value="${map_limit}" />
 	<c:set var="mapview_result_limit_exceeded"><@spring.messageArgs "MapDisclaimer_t" map_limit_array/></c:set>
 </c:if>
+
+
 
 <c:set var="mapview_no_place_available"><spring:message code="MapNoPlaceAvailable_t" /></c:set>
 <c:set var="mapview_layers_tiles_attribution"><spring:message code="mapview_tiles_attribution_t" /></c:set>
@@ -132,19 +134,21 @@ eu.europeana.vars.query = ${search_query};
 
 // url variables to check for timeline / map content 
 eu.europeana.vars.timeline = {};
-<c:if test="${model.mapJsonUrl}">
+
+<c:if test="${model[mapJsonUrl]}">
 	eu.europeana.vars.mapview.json_url = '${model.mapJsonUrl}';
 </c:if>
-<c:if test="${model.jsonUrlTimeline}">
+<c:if test="${model[jsonUrlTimeline]}">
 	eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 </c:if>
+
 
 <c:choose>
 	<c:when test="${model.pageName == 'index.html'}">
 		eu.europeana.vars.pinterest = {};
 		eu.europeana.vars.pinterest.item = {};
 		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
-		<c:if test="${model.pinterestItem}">
+		<c:if test="${!empty model[pinterestItem]}">
 			eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
 			eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
 			eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
@@ -164,7 +168,10 @@ eu.europeana.vars.timeline = {};
 
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
-		<c:if test="${model.document.positionAvailable}">
+		
+		
+		
+		<c:if test="${model[document.positionAvailable]}">
 			eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
 		</c:if>
 
@@ -182,7 +189,6 @@ eu.europeana.vars.timeline = {};
 			eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
 		</c:if>
 	</c:when>
-
 	<c:when test="${model.pageName == 'myeuropeana.html'}">
 		<c:if test="${model.user}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';

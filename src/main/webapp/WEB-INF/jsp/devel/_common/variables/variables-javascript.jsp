@@ -163,11 +163,11 @@ eu.europeana.vars.timeline = {};
 
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
-		<c:if test="${model.document.positionAvailable}">
+		<c:if test="${model[document.positionAvailable]}">
 			eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
 		</c:if>
 
-		<c:if test="${model.user}">
+		<c:if test="${model[user]}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.saved_item = '${saved_item}';
 			eu.europeana.vars.msg.save_item_failed = '${save_item_failed}';
