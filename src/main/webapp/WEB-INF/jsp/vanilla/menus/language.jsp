@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:choose>
   <c:when test="${not empty model.currentUrl}">
     <c:set var="language_menu_action" value="${model.currentUrl}"/>
@@ -11,7 +12,7 @@
     <select name="embeddedlang" title="<spring:message code='ChooseLanguage_t' />">
       <option value="<spring:message code='ChooseLanguage_t'/>" selected><spring:message code='ChooseLanguage_t'/></option>
       <c:forEach items="${model.portalLanguages}" var="language">
-        <option value="${language.getLanguageCode()}">${language.getLanguageName()}</option>
+        <option value="${language.languageCode}">${language.languageName}</option>
       </c:forEach>
     </select>
     <input type="submit"/>
