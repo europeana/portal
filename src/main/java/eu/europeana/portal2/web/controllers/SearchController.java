@@ -22,6 +22,7 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
+import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.portal2.web.model.ModelUtils;
@@ -60,6 +61,9 @@ public class SearchController {
 
 	@Resource
 	private ConfigInterceptor corelib_web_configInterceptor;
+	
+	@Resource
+	private  LocaleInterceptor localeChangeInterceptor;
 
 	@RequestMapping({"/search.html", "/brief-doc.html"})
 	public ModelAndView searchHtml(
@@ -79,6 +83,8 @@ public class SearchController {
 		HttpServletRequest request, HttpServletResponse response,
 		Locale locale
 	) {
+		localeChangeInterceptor.preHandle(request, response, this);
+		
 		log.info("============== START SEARCHING ==============");
 		log.info(String.format("solrUrl: %s, mongodbHost: %s", solrUrl, mongodbHost));
 		log.info(String.format("staticPagePath: %s", staticPagePath));
@@ -91,6 +97,9 @@ public class SearchController {
 		model.setEmbeddedForeColor(embeddedForeColor);
 		model.setEmbedded(embedded);
 		model.setEmbeddedLang(embeddedLang);
+		
+		log.info("set embedded land to " + embeddedLang);
+		
 		model.setEmbeddedLogo(embeddedLogo);
 		model.setRswUserId(rswUserId);
 		model.setRswDefqry(rswDefqry);

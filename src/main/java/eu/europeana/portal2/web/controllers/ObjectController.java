@@ -42,6 +42,7 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
+import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
@@ -67,6 +68,9 @@ public class ObjectController {
 	@Resource
 	private SearchService searchService;
 
+	@Resource
+	private  LocaleInterceptor localeChangeInterceptor;
+
 	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
     private String[] shownAtProviderOverride;
 
@@ -84,10 +88,25 @@ public class ObjectController {
 			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPageEnum returnTo,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) {
+		
+		localeChangeInterceptor.preHandle(request, response, this);
+
+		
 		log.info("=========== /record/{collectionId}/{recordId}.html ============");
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 
+		
+		
+		log.info("Inside the ObjectController....." + locale.getLanguage().toString());
+		
+
+		
+		
 		FullDocData model = new FullDocPage();
+		
+		
+//		model.setLocale(locale)
+		
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 		model.setFormat(format);

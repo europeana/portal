@@ -22,19 +22,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,9 +40,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
+import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
-import eu.europeana.portal2.web.presentation.ThemeChecker;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedItem;
@@ -60,6 +58,8 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
 public class IndexPageController {
+
+	private static Logger log = Logger.getLogger(IndexPageController.class.getName());
 
 	private static List<FeedEntry> feedEntries;
 	private static Calendar feedAge;
@@ -80,6 +80,9 @@ public class IndexPageController {
 
 	@Resource
 	private ConfigInterceptor corelib_web_configInterceptor;
+	
+	@Resource
+	private  LocaleInterceptor localeChangeInterceptor;
 
 	@Value("#{europeanaProperties['portal.blog.url']}")
 	private String blogUrl;
@@ -102,6 +105,9 @@ public class IndexPageController {
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
+			@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
+
+			
 			HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws Exception {
 		IndexPage model = new IndexPage();
@@ -110,6 +116,10 @@ public class IndexPageController {
 		updateCarousel(model, locale);
 		updateFeaturedItem(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
+		
+		localeChangeInterceptor.preHandle(request, response, this);
+
+		
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
