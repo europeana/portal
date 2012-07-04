@@ -1,8 +1,7 @@
-<h2>breadcrum</h2>
 <c:choose>
   <c:when test='${not fn:startsWith( query, "europeana_uri:")}'>
     <li><spring:message code='MatchesFor_t' />:</li>
-    <c:forEach items="{model.fullBeanView.docIdWindowPager.breadcrumbs}" var="crumb">
+    <c:forEach items="${model.fullBeanView.docIdWindowPager.breadcrumbs}" var="crumb">
       <c:choose>
         <c:when test="${crumb.last}">
           <li><a href="/${model.portalName}/search.html?${crumb.href}">${crumb.display}</a></li>
