@@ -25,6 +25,7 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,6 +37,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.portal2.web.controllers.statics.StaticPageController;
 import eu.europeana.portal2.web.presentation.ThemeChecker;
 
 /**
@@ -49,6 +51,8 @@ public class ControllerUtil {
 	@Value("#{europeanaProperties['portal.theme']}")
 	private static String defaultTheme;
 
+	private static Logger log = Logger.getLogger(ControllerUtil.class.getName());
+	
 	public static Locale getLocale(HttpServletRequest request) {
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		return localeResolver.resolveLocale(request);
