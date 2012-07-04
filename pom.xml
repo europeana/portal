@@ -14,144 +14,130 @@
   any kind, either express or implied.
   See the Licence for the specific language governing permissions and limitations under 
   the Licence.
- --><project 
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>eu.europeana</groupId>
-	<artifactId>portal2</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>war</packaging>
-	<name>portal2</name>
-    <description>The new portal engine for Europeana</description>
-    <inceptionYear>2012</inceptionYear>
-	<url>http://www.europeanalabs.eu</url>
-	<parent>
-		<artifactId>corelib</artifactId>
-		<groupId>eu.europeana</groupId>
-		<version>2.0-SNAPSHOT</version>
-		<relativePath>../corelib/pom.xml</relativePath>
-	</parent>
+ -->
+ <project 
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>portal2</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>portal2</name>
+  <description>The new portal engine for Europeana</description>
+  <inceptionYear>2012</inceptionYear>
+  <url>http://www.europeanalabs.eu</url>
+  
+  <parent>
+    <artifactId>corelib</artifactId>
+    <groupId>eu.europeana</groupId>
+    <version>2.0-SNAPSHOT</version>
+    <relativePath>../corelib/pom.xml</relativePath>
+  </parent>
 
-	<organization>
-		<url>http://www.europeanalabs.eu</url>
-		<name>Europeana Foundation</name>
-	</organization>
-	
-	
+  <organization>
+    <url>http://www.europeanalabs.eu</url>
+    <name>Europeana Foundation</name>
+  </organization>
 
-
-	<dependencies>
-		<dependency>
-			<!-- will also include SOLR, DEF, UTILS -->
-			<groupId>eu.europeana.corelib</groupId>
-			<artifactId>corelib-db</artifactId>
-			<version>${version.europeanaCorelib}</version>
-		</dependency>
-		<dependency>
-			<groupId>eu.europeana.corelib</groupId>
-			<artifactId>corelib-web</artifactId>
-			<version>${version.europeanaCorelib}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${version.springCore}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${version.springCore}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		
-		
-		<dependency>
-	        <groupId>org.eclipse.jetty</groupId>
-	        <artifactId>jetty-server</artifactId>
-	        <version>7.2.2.v20101205</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>org.eclipse.jetty</groupId>
-	        <artifactId>jetty-webapp</artifactId>
-	        <version>7.2.2.v20101205</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>org.eclipse.jetty</groupId>
-	        <artifactId>jetty-jsp-2.1</artifactId>
-	        <version>7.2.2.v20101205</version>
-	    </dependency>
-		<dependency>
-	        <groupId>org.mortbay.jetty</groupId>
-	        <artifactId>jsp-2.1-glassfish</artifactId>
-	        <version>2.1.v20100127</version>
-	    </dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
-	
-		<!-- Added logging for jetty in Portal2Starter -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-	
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		     
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jsp-api-2.1</artifactId>
-			<version>6.1.14</version>
-		</dependency>
-        
-	</dependencies>
-	
-	 
-	<build>
-		<plugins>
-			<plugin>
+  <dependencies>
+    <dependency>
+      <!-- will also include SOLR, DEF, UTILS -->
+      <groupId>eu.europeana.corelib</groupId>
+      <artifactId>corelib-db</artifactId>
+      <version>${version.europeanaCorelib}</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.europeana.corelib</groupId>
+      <artifactId>corelib-web</artifactId>
+      <version>${version.europeanaCorelib}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${version.springCore}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-oxm</artifactId>
+      <version>${version.springCore}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <!-- Added for jetty-server -->
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>7.2.2.v20101205</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>7.2.2.v20101205</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-jsp-2.1</artifactId>
+      <version>7.2.2.v20101205</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jsp-2.1-glassfish</artifactId>
+      <version>2.1.v20100127</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency> 
+    <!-- Added logging for jetty in Portal2Starter -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.1</version>
+    </dependency> 
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+  </dependencies>
+  <!-- Added for jetty -->
+  <build>
+    <plugins>
+      <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.1</version>
-				
-				
 				<executions>
-					<execution>
-						<goals>
-							<goal>java</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<mainClass>eu.europeana.Portal2Starter</mainClass>
-					<classpathScope>test</classpathScope>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>eu.europeana.Portal2Starter</mainClass>
+				  <classpathScope>test</classpathScope>
 				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	
+        </plugin>
+      </plugins>
+  </build>
 </project>
