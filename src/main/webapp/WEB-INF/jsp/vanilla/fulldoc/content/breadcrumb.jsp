@@ -1,5 +1,6 @@
+<!-- breadcrumb -->
 <c:choose>
-  <c:when test='${not fn:startsWith( query, "europeana_uri:")}'>
+  <c:when test='${not fn:startsWith(query, "europeana_uri:")}'>
     <li><spring:message code='MatchesFor_t' />:</li>
     <c:forEach items="${model.fullBeanView.docIdWindowPager.breadcrumbs}" var="crumb">
       <c:choose>
@@ -28,3 +29,5 @@
     </li>
   </c:otherwise>
 </c:choose>
+<!-- /breadcrumb -->
+
