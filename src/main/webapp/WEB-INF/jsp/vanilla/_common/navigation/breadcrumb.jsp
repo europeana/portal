@@ -1,5 +1,5 @@
 <ul>
-	<c:if test="${!empty model.breadcrumbs}">
+	<c:if test="${not empty model.breadcrumbs}">
 		<c:choose>
 			<c:when test="${!empty !model.euroeanaUri}">
 				<li><span><spring:message code="MatchesFor_t" />:</span></li>
