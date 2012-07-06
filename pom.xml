@@ -42,9 +42,6 @@
   </organization>
   
    
-   <build>
-     <finalName>portal2</finalName>
-   </build>
 
   <dependencies>
     <dependency>
@@ -126,6 +123,8 @@
   </dependencies>
   <!-- Added for jetty -->
   <build>
+     <finalName>portal2</finalName>
+
     <plugins>
       <plugin>
 				<groupId>org.codehaus.mojo</groupId>
