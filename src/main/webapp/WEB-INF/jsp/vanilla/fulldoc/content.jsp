@@ -1,5 +1,5 @@
-<%@ include file="/WEB-INF/jsp/vanilla/fulldoc/content/navigation.jsp" %>
-<%@ include file="/WEB-INF/jsp/vanilla/fulldoc/content/breadcrumb.jsp" %>
+<%@ include file="/WEB-INF/jsp/vanilla/_common/navigation/navigation.jsp" %>
+<%@ include file="/WEB-INF/jsp/vanilla/_common/navigation/breadcrumb.jsp" %>
 <div about="${model.document.id}">
 <%-- <%@ include file="/WEB-INF/jsp/vanilla/fulldoc/content/image.jsp" %> --%>
 <%-- <%@ include file="/WEB-INF/jsp/vanilla/fulldoc/content/original-context.jsp" %> --%>

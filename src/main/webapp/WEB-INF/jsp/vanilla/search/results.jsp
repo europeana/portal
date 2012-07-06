@@ -3,7 +3,7 @@
 	<c:choose>
 		<c:when test="${model.hasResults}">
 			<%-- model.hasResults: 1 --%>
-			<%@ include file="/WEB-INF/jsp/vanilla/navigation/search-results-navigation.jsp" %>
+			<%@ include file="/WEB-INF/jsp/vanilla/_common/navigation/search-results-navigation.jsp" %>
 			<%@ include file="/WEB-INF/jsp/vanilla/search/grid.jsp" %>
 			<%-- @ include file="/WEB-INF/jsp/default/_common/html/navigation/search-results-navigation.jsp" --%>
 		</c:when>
