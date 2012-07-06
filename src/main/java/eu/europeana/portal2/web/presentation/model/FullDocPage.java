@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
@@ -560,5 +561,12 @@ public class FullDocPage extends FullDocPreparation {
 
 	public String getReturnTo() {
 		return returnTo.toString();
+	}
+	
+	/*
+	 * Null-returning getter to satisfy EL 
+	 * */
+	public List<BreadCrumb> getBreadcrumbs() {
+		return null;
 	}
 }
