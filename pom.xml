@@ -41,8 +41,29 @@
     <name>Europeana Foundation</name>
   </organization>
   
-   
-
+  <!-- Added for jetty -->
+  <build>
+    <!-- <finalName>portal2</finalName> -->
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>eu.europeana.Portal2Starter</mainClass>
+          <classpathScope>test</classpathScope>
+        </configuration>
+        </plugin>
+      </plugins>
+  </build>
+  
   <dependencies>
     <dependency>
       <!-- will also include SOLR, DEF, UTILS -->
@@ -121,27 +142,4 @@
       <version>1.6.1</version>
     </dependency>
   </dependencies>
-  <!-- Added for jetty -->
-  <build>
-     <finalName>portal2</finalName>
-
-    <plugins>
-      <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.1</version>
-				<executions>
-          <execution>
-            <goals>
-              <goal>java</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <mainClass>eu.europeana.Portal2Starter</mainClass>
-				  <classpathScope>test</classpathScope>
-				</configuration>
-        </plugin>
-      </plugins>
-  </build>
 </project>
