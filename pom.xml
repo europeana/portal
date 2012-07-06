@@ -40,6 +40,11 @@
     <url>http://www.europeanalabs.eu</url>
     <name>Europeana Foundation</name>
   </organization>
+  
+   
+   <build>
+     <finalName>portal2</finalName>
+   </build>
 
   <dependencies>
     <dependency>
