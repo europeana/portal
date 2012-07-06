@@ -1,5 +1,5 @@
 <div about="${model.document.id}">
-  <h1>${model.objectTitle}</h1>
+  <h1>${model[objectTitle]}</h1>
   <%--
     
     model.metaDataFileds = a collection of all metadata on the object pre-formated for <meta> element output in the <head>
