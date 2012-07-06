@@ -47,5 +47,5 @@
   <%-- My Europeana --%>
   <li><a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a></li>
   <%-- Choose a language --%>
-  <%@ include file="/WEB-INF/jsp/vanilla/menus/language.jsp" %>
+  <%@ include file="/WEB-INF/jsp/vanilla/_common/menus/language.jsp" %>
 </ul>
