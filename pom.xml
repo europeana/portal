@@ -43,7 +43,7 @@
   
   <!-- Added for jetty -->
   <build>
-    <!-- <finalName>portal2</finalName> -->
+    <finalName>portal2</finalName>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
