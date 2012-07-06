@@ -36,16 +36,11 @@
 <!-- @displayEseDataAsHtml model.fields 'div' false true / -->
 <%-- #list listCollection as data --%>
 
-<br/>
-Vanilla: display-ese-data-as-html
-<br/>
-
 
 <c:set var="wrapper" value="div" />
 <c:set var="ugc" value="false" />
 <c:set var="ess" value="true" />
 <c:forEach items="${model.fields}" var="data">
-	
 	<%-- If the content is UGC we skip the dc:source display --%>
 	<c:if test="${!('dc:source' == data.fieldName && ugc)}">
 		<${wrapper}>
@@ -103,4 +98,5 @@ Vanilla: display-ese-data-as-html
 		</${wrapper}>
 	</c:if>
 </c:forEach>
+
 <!-- /display-ese-data-as-html -->
