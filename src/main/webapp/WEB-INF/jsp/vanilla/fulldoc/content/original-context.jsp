@@ -1,18 +1,10 @@
-<#-- <#if model.urlRefMms> -->
-<#assign href_attributes>class="underline external item-metadata" target="_blank" rel="nofollow rdfs:seeAlso cc:attributionURL cc:morePermissions" resource="${model.urlRef}"</#assign>
-
-<div class="clear"><@spring.message 'ViewItemAt_t'/></div>
-
-<#assign urlRefId = "urlRefIsShownAt"/>
-
-<#if model.urlRefIsShownBy>
-
-  <#assign urlRefId = "urlRefIsShownBy"/>
-
-</#if>
-
-<a id="${urlRefId}" href="/${model.portalName}/redirect.html?shownAt=${model.urlRef?url('utf-8')}&amp;provider=${model.document.europeanaDataProvider[0]?url('utf-8')}&amp;id=${model.document.id}" ${href_attributes}> 
-
-     ${model.shownAtProvider}
-  
-</a>
+<!-- original-context -->
+<%-- <c:if test="${model.urlRefMms}"> --%>
+<c:set value="href_attributes" value="target='_blank' rel='nofollow rdfs:seeAlso cc:attributionURL cc:morePermissions' resource='${model.urlRef}'"/>
+<c:set var="urlRefId" value="urlRefIsShownAt"/>
+<spring:message code='ViewItemAt_t'/>
+<c:if test="${model.urlRefIsShownBy}">
+  <c:set var="urlRefId" value="urlRefIsShownBy"/>
+</c:if>
+<a href="/${model.portalName}/redirect.html?shownAt=${model.urlRef}&amp;provider=${model.document.europeanaDataProvider[0]}&amp;id=${model.document.id}" ${href_attributes}>${model.shownAtProvider}</a>
+<!-- /original-context -->
