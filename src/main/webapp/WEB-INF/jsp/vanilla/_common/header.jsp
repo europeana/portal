@@ -1,6 +1,5 @@
 <c:set var="logo_tag" value="h1"/>
-<%-- TODO: Peter, why do we need the square brackets here? --%>
-<c:if test="${'full-doc.html' == model[pageName]}">
+<c:if test="${'full-doc.html' == model.pageName}">
   <c:set var="logo_tag" value="div" />
 </c:if>
 <${logo_tag}>
