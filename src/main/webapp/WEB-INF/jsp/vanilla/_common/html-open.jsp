@@ -5,6 +5,8 @@
 <%@ include file="/WEB-INF/jsp/_common/meta.jsp" %>
 <%@ include file="/WEB-INF/jsp/vanilla/_common/links.jsp" %>
 <%@ include file="/WEB-INF/jsp/vanilla/_common/scripts-head.jsp" %>
+
+<!-- TODO: Peter, why do we need the square brackets here? -->
 <title>${model[pageTitle]}</title>
 </head>
 <body>
