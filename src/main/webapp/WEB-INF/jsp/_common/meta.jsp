@@ -1,4 +1,7 @@
-<meta name="description" content="${model.pageTitle}"/>
+
+<!-- TODO: Peter, why do we have to use square bracket syntax here? -->
+<meta name="description" content="${model[pageTitle]}"/>
+
 <c:if test="${not model.indexable}">
 <c:choose>
 <c:when test="${model.indexingBlocked}">
