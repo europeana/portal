@@ -11,7 +11,7 @@ Requirements
 ==================
 Odd things you need to know, to get a portal running
 ----------------------------------------------------
-You need to setup postgres, details is in the location
+You need to setup postgres, details is in
 trunk/README_FIRST.markdown
 
 When doing queries, you must add  &theme=vanilla
