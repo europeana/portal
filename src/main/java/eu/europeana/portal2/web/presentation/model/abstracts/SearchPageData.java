@@ -22,8 +22,8 @@ import java.util.List;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
-import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
+import eu.europeana.portal2.web.presentation.model.PortalPageData;
 
 /**
  * Abstract model for all pages containing a searchform...
@@ -31,7 +31,7 @@ import eu.europeana.portal2.web.presentation.PortalLanguage;
  * @author GJW Boogerd
  * 
  */
-public abstract class SearchPageData extends PageData {
+public abstract class SearchPageData extends PortalPageData {
 
 	private String query;
 

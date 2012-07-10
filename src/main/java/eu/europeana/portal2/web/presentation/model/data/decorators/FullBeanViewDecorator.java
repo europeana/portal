@@ -43,8 +43,7 @@ public class FullBeanViewDecorator implements FullBeanView {
 	public DocIdWindowPager getDocIdWindowPager() throws Exception,
 			UnsupportedEncodingException {
 		if (fullBeanView.getDocIdWindowPager() != null) {
-			return new DocIdWindowPagerDecorator(model,
-					fullBeanView.getDocIdWindowPager());
+			return new DocIdWindowPagerDecorator(model, fullBeanView.getDocIdWindowPager());
 		}
 		return null;
 	}

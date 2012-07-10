@@ -69,10 +69,10 @@ public class ObjectController {
 	private SearchService searchService;
 
 	@Resource
-	private  LocaleInterceptor localeChangeInterceptor;
+	private LocaleInterceptor localeChangeInterceptor;
 
 	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
-    private String[] shownAtProviderOverride;
+	private String[] shownAtProviderOverride;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -90,23 +90,12 @@ public class ObjectController {
 			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		
 		localeChangeInterceptor.preHandle(request, response, this);
-
-		
 		log.info("=========== /record/{collectionId}/{recordId}.html ============");
 		// Map<String, String[]> parameters = sanitizeParameters(request);
-
-		
-		
 		log.info("Inside the ObjectController....." + locale.getLanguage().toString());
-		
 
-		
-		
-		FullDocData model = new FullDocPage();
-		
-		
+		FullDocPage model = new FullDocPage();
 //		model.setLocale(locale)
-		
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 		model.setFormat(format);
@@ -118,10 +107,8 @@ public class ObjectController {
 		model.setShownAtProviderOverride(shownAtProviderOverride);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 
-		log.info("so far good #1");
 		try {
 			FullBean fullBean = searchService.findById(collectionId, recordId);
-			log.info("fullBean: " + fullBean);
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
 			model.setFullBeanView(fullBeanView);
 		} catch (SolrTypeException e) {
@@ -134,17 +121,14 @@ public class ObjectController {
 			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-		log.info("so far good #2");
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
-		log.info("so far good #3");
 		try {
 			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (Exception e) {
 			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-		log.info("so far good #4");
 
 		return page;
 	}

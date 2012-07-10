@@ -76,8 +76,7 @@ public class FullDocPage extends FullDocPreparation {
 	 * @throws Exception
 	 */
 	public String getEnrichedFieldsLinkStyle() throws Exception {
-		return this.getFieldsEnrichment().isEmpty() ? "display:none"
-				: "display:block";
+		return this.getFieldsEnrichment().isEmpty() ? "display:none" : "display:block";
 	}
 
 	public ExternalService[] getExternalSearchServices() {
@@ -90,9 +89,9 @@ public class FullDocPage extends FullDocPreparation {
 	 * @return image reference
 	 */
 	public String getImageRef() {
-		return StringArrayUtils.isNotBlank(document.getEdmIsShownBy()) ? document
-				.getEdmIsShownBy()[0]
-				: document.getEdmIsShownAt()[0];
+		return StringArrayUtils.isNotBlank(document.getEdmIsShownBy()) 
+			? document.getEdmIsShownBy()[0]
+			: document.getEdmIsShownAt()[0];
 	}
 
 	private String lightboxRef = null;
@@ -320,7 +319,7 @@ public class FullDocPage extends FullDocPreparation {
 			UrlBuilder url = new UrlBuilder(getCacheUrl());
 			url.addParam("uri", thumbnail, true);
 			url.addParam("size", "FULL_DOC", true);
-			url.addParam("type", document.getType().toString(), true);
+			url.addParam("type", getDocument().getEdmType(), true);
 			return prepareFullDocUrl(url).toString();
 		}
 		return thumbnail;
@@ -563,9 +562,9 @@ public class FullDocPage extends FullDocPreparation {
 		return returnTo.toString();
 	}
 	
-	/*
-	 * Null-returning getter to satisfy EL 
-	 * */
+	/**
+	 * Null-returning getter to satisfy EL
+	 */
 	public List<BreadCrumb> getBreadcrumbs() {
 		return null;
 	}

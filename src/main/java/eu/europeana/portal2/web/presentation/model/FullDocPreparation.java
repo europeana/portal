@@ -91,8 +91,7 @@ public abstract class FullDocPreparation extends FullDocData {
 		return fieldsAdditional;
 	}
 
-	public Map<String, List<FieldPresentation>> getFieldsEnrichment()
-			throws Exception {
+	public Map<String, List<FieldPresentation>> getFieldsEnrichment() throws Exception {
 		if (fieldsEnrichment == null) {
 			prepareFieldsEnrichment();
 		}

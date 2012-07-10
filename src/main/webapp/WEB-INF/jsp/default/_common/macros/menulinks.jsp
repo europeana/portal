@@ -45,7 +45,6 @@
 <c:set var="msg_text"><spring:message code="${menu}-${ordinal}_a_text_t" /></c:set>
 
 <c:set var="url"><spring:message code="notranslate_${menu}-${ordinal}_a_url_t" /></c:set>
-contains
 <c:if test='${!fn:contains(url, "http://")}'>
 	<c:set var="url">/${model.portalName}/${url}</c:set>
 </c:if>

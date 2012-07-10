@@ -23,75 +23,76 @@ import eu.europeana.portal2.web.presentation.Configuration;
 
 public abstract class SearchEmbeddedData extends SearchData {
 
-	private static Logger log = Logger.getLogger(SearchEmbeddedData.class.getName());
+	private static Logger log = Logger.getLogger(SearchEmbeddedData.class
+			.getName());
 
-    private String embeddedLogo = "poweredbyeuropeanaBlack.png";
-    private String embeddedLang = null;
-    protected String embeddedBgColor = Configuration.EMBEDDED_BGCOLOR;
-    protected String embeddedForeColor = Configuration.EMBEDDED_FORECOLOR;
-    private String[] tabsToBeShown = null;
-    private String rswDefqry = "*:*";
-    private String rswUserId = "unknown";
-    
-    public void setEmbedded(String embedded) {
-        setEmbedded( StringUtils.equalsIgnoreCase(embedded, "true") );
-    }
+	private String embeddedLogo = "poweredbyeuropeanaBlack.png";
+	private String embeddedLang = null;
+	protected String embeddedBgColor = Configuration.EMBEDDED_BGCOLOR;
+	protected String embeddedForeColor = Configuration.EMBEDDED_FORECOLOR;
+	private String[] tabsToBeShown = null;
+	private String rswDefqry = "*:*";
+	private String rswUserId = "unknown";
 
-    public void setEmbeddedLogo(String embeddedLogo) {
-        if (StringUtils.isNotBlank(embeddedLogo)) {
-            this.embeddedLogo = embeddedLogo;
-        }
-    }
+	public void setEmbedded(String embedded) {
+		setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
+	}
 
-    public String getEmbeddedLogo() {
-        return embeddedLogo;
-    }
+	public void setEmbeddedLogo(String embeddedLogo) {
+		if (StringUtils.isNotBlank(embeddedLogo)) {
+			this.embeddedLogo = embeddedLogo;
+		}
+	}
 
-    public String getEmbeddedBgColor() {
-        return embeddedBgColor;
-    }
+	public String getEmbeddedLogo() {
+		return embeddedLogo;
+	}
 
-    public String getEmbeddedForeColor() {
-        return embeddedForeColor;
-    }
+	public String getEmbeddedBgColor() {
+		return embeddedBgColor;
+	}
 
-    public void setTabsToBeShown(String[] tabsToBeShown) {
-        this.tabsToBeShown = tabsToBeShown;
-    }
+	public String getEmbeddedForeColor() {
+		return embeddedForeColor;
+	}
 
-    public String[] getTabsToBeShown() {
-        return tabsToBeShown;
-    }
+	public void setTabsToBeShown(String[] tabsToBeShown) {
+		this.tabsToBeShown = tabsToBeShown;
+	}
 
-    public void setEmbeddedLang(String embeddedLang) {
-        this.embeddedLang = embeddedLang;
-    }
+	public String[] getTabsToBeShown() {
+		return tabsToBeShown;
+	}
 
-    public String getEmbeddedLang() {
-        if (StringUtils.isBlank(embeddedLang)) {
-            return getLocale().toString();
-        }
-        return embeddedLang;
-    }
+	public void setEmbeddedLang(String embeddedLang) {
+		this.embeddedLang = embeddedLang;
+	}
 
-    public void setRswUserId(String rswUserId) {
-        if (StringUtils.isNotBlank(rswUserId)) {
-            this.rswUserId = rswUserId;
-        }
-    }
+	public String getEmbeddedLang() {
+		if (StringUtils.isBlank(embeddedLang)) {
+			return getLocale().toString();
+		}
+		return embeddedLang;
+	}
 
-    public String getRswUserId() {
-        return rswUserId;
-    }
+	public void setRswUserId(String rswUserId) {
+		if (StringUtils.isNotBlank(rswUserId)) {
+			this.rswUserId = rswUserId;
+		}
+	}
 
-    public void setRswDefqry(String rswDefqry) {
-        if (StringUtils.isNotBlank(rswDefqry)) {
-            this.rswDefqry = rswDefqry;
-        }
-    }
+	public String getRswUserId() {
+		return rswUserId;
+	}
 
-    public String getRswDefqry() {
-        return rswDefqry;
-    }
+	public void setRswDefqry(String rswDefqry) {
+		if (StringUtils.isNotBlank(rswDefqry)) {
+			this.rswDefqry = rswDefqry;
+		}
+	}
+
+	public String getRswDefqry() {
+		return rswDefqry;
+	}
 
 }

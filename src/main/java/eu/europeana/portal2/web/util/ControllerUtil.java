@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,8 +34,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
-import eu.europeana.portal2.web.controllers.statics.StaticPageController;
 import eu.europeana.portal2.web.presentation.ThemeChecker;
+import eu.europeana.portal2.web.presentation.model.PortalPageData;
 
 /**
  * Utility methods for controllers
@@ -43,6 +44,9 @@ import eu.europeana.portal2.web.presentation.ThemeChecker;
  */
 
 public class ControllerUtil {
+
+	@Value("#{europeanaProperties['portal.google.plus.publisher.id']}")
+	private static String portalGooglePlusPublisherId;
 
 	@Value("#{europeanaProperties['portal.theme']}")
 	private static String defaultTheme;
@@ -58,17 +62,18 @@ public class ControllerUtil {
 	 * This creates the default ModelAndView for the portal applications. It
 	 * should be used in every Controller.
 	 */
-	public static ModelAndView createModelAndViewPage(PageData model, Locale locale, PageInfo view) {
+	public static ModelAndView createModelAndViewPage(PortalPageData model, Locale locale, PageInfo view) {
 		model.setLocale(locale);
 		// model.setUser(ControllerUtil.getUser());
 		model.setPageInfo(view);
 		model.setPageTitle(view.getPageTitle());
+		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(portalGooglePlusPublisherId));
 		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;
 	}
 
-	public static ModelAndView createModelAndViewPage(PageData model, PageInfo view) {
+	public static ModelAndView createModelAndViewPage(PortalPageData model, PageInfo view) {
 		return createModelAndViewPage(model, null, view);
 	}
 

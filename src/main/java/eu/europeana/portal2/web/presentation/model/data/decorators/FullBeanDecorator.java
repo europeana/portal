@@ -140,6 +140,17 @@ public class FullBeanDecorator implements FullBean {
 	public DocType getType() {
 		return fulldoc.getType();
 	}
+	
+	public String getEdmType() {
+		// List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fulldoc.getProxies()) {
+			return proxy.getEdmType().toString();
+			//items.add(proxy.getEdmType().toString());
+		}
+		// return StringArrayUtils.toArray(items);
+		return null;
+	}
+
 
 	/*
 	 * @Override public void setId(String id) { // left empty on purpose }
@@ -507,10 +518,11 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getTimestamp();
 	}
 
-	/*
-	 * @Override public String getEuropeanaType() { return
-	 * fulldoc.getEuropeanaType(); }
-	 */
+	//@Override
+	//public String getEuropeanaType() {
+	//	return fulldoc.getEuropeanaType();
+	//}
+
 
 	@Override
 	public String[] getAggregationEdmRights() {

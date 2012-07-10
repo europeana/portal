@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
-import eu.europeana.portal2.web.controllers.statics.StaticPageController;
 import eu.europeana.portal2.web.presentation.Configuration;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -65,10 +64,8 @@ public class SearchPage extends SearchPreparation {
 			url.addParam("lang", getEmbeddedLang(), true);
 			url.addParam("bt", "sw", false);
 			url.addParam("rswDefqry", getRswDefqry(), false);
-			url.addParam("embeddedBgColor",
-					getEmbeddedBgColor().replace("#", "%23"), false);
-			url.addParam("embeddedForeColor",
-					getEmbeddedForeColor().replace("#", "%23"), false);
+			url.addParam("embeddedBgColor", getEmbeddedBgColor().replace("#", "%23"), false);
+			url.addParam("embeddedForeColor", getEmbeddedForeColor().replace("#", "%23"), false);
 			url.addParam("embeddedLogo", getEmbeddedLogo(), false);
 			url.addParam("rswUserId", getRswUserId(), false);
 		}
@@ -159,8 +156,7 @@ public class SearchPage extends SearchPreparation {
 		}
 		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
 				Integer.toString(briefBeanView.getPagination().getNextPage()));
-		builder.addParamsFromURL(briefBeanView.getPagination()
-				.getPresentationQuery().getQueryForPresentation(), "query",
+		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
 				"qf", "start");
 		return getPortalFormattedUrl(builder).toString();
 	}
@@ -178,10 +174,8 @@ public class SearchPage extends SearchPreparation {
 			return null;
 		}
 		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
-				Integer.toString(briefBeanView.getPagination()
-						.getPreviousPage()));
-		builder.addParamsFromURL(briefBeanView.getPagination()
-				.getPresentationQuery().getQueryForPresentation(), "query",
+				Integer.toString(briefBeanView.getPagination().getPreviousPage()));
+		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
 				"qf", "start");
 		return getPortalFormattedUrl(builder).toString();
 	}
