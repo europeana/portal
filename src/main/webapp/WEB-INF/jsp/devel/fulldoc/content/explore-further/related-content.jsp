@@ -5,12 +5,12 @@
 	<h3><a href="#related-content"><spring:message code="RelatedContent_t" /></a></h3>
 	<div id="related-content" class="carousel">
 		<c:if test="${model.fullBeanView.parent}">
-			<#-- EXAMPLE CODE FOR PARENT BREADCRUMB -->
+			<%-- EXAMPLE CODE FOR PARENT BREADCRUMB --%>
 			<c:forEach items="${model.fullBeanView.parents}" var="parent">
 				${parent.title}&nbsp;&gt;
 			</c:forEach>
 			${model.document.title}
-			<#-- END OF EXAMPLE CODE FOR PARENT BREADCRUMB -->
+			<%-- END OF EXAMPLE CODE FOR PARENT BREADCRUMB --%>
 			
 			<a href="${model.fullBeanView.parent.fullDocUrl}" title="${model.fullBeanView.parent.title}" class="parent" rel="nofollow">
 				<c:choose>
