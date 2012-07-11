@@ -9,7 +9,7 @@
 				<c:forEach items="${model.fullBeanView.relatedItems}" var="doc">
 					<li>
 						<c:set var="relItemQuery" value='europeana_uri:"${model.document.id}"' />
-						<a href="${doc.fullDocUrl}?theme=${model.theme}" rel="rdfs:seeAlso" resource="${doc.id}" title="${doc.title}">
+						<a href="${doc.fullDocUrl}" rel="rdfs:seeAlso" resource="${doc.id}" title="${doc.title}">
 							<img src="${doc.thumbnail}" alt="${doc.title}" width="70" data-type="${fn:toLowerCase(doc.type)}" />
 						</a>
 					</li>

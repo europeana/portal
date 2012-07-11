@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
-<a href="${cell.fullDocUrl}?theme=${model.theme}" title="${fn:join(cell.title, ', ')}" ${targetArg} class="result-additional-info" rel="nofollow">
+<a href="${cell.fullDocUrl}" title="${fn:join(cell.title, ', ')}" ${targetArg} class="result-additional-info" rel="nofollow">
 
 
 	<c:if test="${!empty cell.dcCreator}">
