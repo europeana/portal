@@ -33,7 +33,7 @@ import eu.europeana.portal2.web.presentation.model.FullBeanView;
 
 /**
  * Build Solr queries.
- *
+ * 
  * @author Borys Omelayenko
  * @author Gerald de Jong <geralddejong@gmail.com>
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
@@ -42,31 +42,43 @@ import eu.europeana.portal2.web.presentation.model.FullBeanView;
 
 public interface QueryModelFactory {
 
-    SolrQuery createFromQueryParams(Map<String, String[]> params) throws EuropeanaQueryException;
+	SolrQuery createFromQueryParams(Map<String, String[]> params)
+			throws EuropeanaQueryException;
 
-    /**
-     * Create the brief view from the solr query.
-     *
-     * @param solrQuery          The Solr query.
-     * @param requestQueryString The HTTP query string.
-     *
-     * @return The constructed brief view.
-     *
-     * @throws EuropeanaQueryException      Something went wrong while talking to Solr.
-     * @throws UnsupportedEncodingException Thrown when encoding is not supported.
-     */
-    BriefBeanView getBriefResultView(SolrQuery solrQuery, String requestQueryString) throws EuropeanaQueryException, UnsupportedEncodingException;
+	/**
+	 * Create the brief view from the solr query.
+	 * 
+	 * @param solrQuery
+	 *            The Solr query.
+	 * @param requestQueryString
+	 *            The HTTP query string.
+	 * 
+	 * @return The constructed brief view.
+	 * 
+	 * @throws EuropeanaQueryException
+	 *             Something went wrong while talking to Solr.
+	 * @throws UnsupportedEncodingException
+	 *             Thrown when encoding is not supported.
+	 */
+	BriefBeanView getBriefResultView(SolrQuery solrQuery, String requestQueryString) 
+			throws EuropeanaQueryException, UnsupportedEncodingException;
 
-    BriefBeanView getBriefResultView(SolrQuery solrQuery, String requestQueryString, String[] removeFilters)
-            throws EuropeanaQueryException, UnsupportedEncodingException;
-    
-    List<? extends BriefBean> getBriefDocs(SolrQuery solrQuery) throws EuropeanaQueryException, UnsupportedEncodingException;
+	BriefBeanView getBriefResultView(SolrQuery solrQuery,
+			String requestQueryString, String[] removeFilters)
+			throws EuropeanaQueryException, UnsupportedEncodingException;
 
-    FullBeanView getFullResultView(String europeanaUri, Map<String, String[]> params) throws EuropeanaQueryException, SolrServerException;
+	List<? extends BriefBean> getBriefDocs(SolrQuery solrQuery)
+			throws EuropeanaQueryException, UnsupportedEncodingException;
 
-    // TermBeanView getTermBeanView(SolrQuery solrQuery, String requestQueryString) throws EuropeanaQueryException, UnsupportedEncodingException;
-    
-    QueryResponse getSolrResponse(SolrQuery solrQuery) throws EuropeanaQueryException;
-    
-    DocumentObjectBinder getBinder();
+	FullBeanView getFullResultView(String europeanaUri, Map<String, String[]> params) 
+			throws EuropeanaQueryException, SolrServerException;
+
+	// TermBeanView getTermBeanView(SolrQuery solrQuery, String
+	// requestQueryString) throws EuropeanaQueryException,
+	// UnsupportedEncodingException;
+
+	QueryResponse getSolrResponse(SolrQuery solrQuery)
+			throws EuropeanaQueryException;
+
+	DocumentObjectBinder getBinder();
 }

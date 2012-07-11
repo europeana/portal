@@ -53,5 +53,4 @@ public enum CorePageInfo implements PageInfo {
 	public String getPageTitle() {
 		return pageTitle;
 	}
-
 }

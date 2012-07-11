@@ -106,7 +106,7 @@ public interface ClickStreamLogger {
 	}
 
 	public enum LogTypeId {
-		PHD_JS("Juliane Stiller's custom log format"), 
+		PHD_JS("Juliane Stiller's custom log format"),
 		PHD_MG("Maria Gade's custom log format");
 
 		private String description;
@@ -119,5 +119,4 @@ public interface ClickStreamLogger {
 			return description;
 		}
 	}
-
 }

@@ -53,6 +53,9 @@ public class SearchController {
 	@Value("#{europeanaProperties['static.page.path']}")
 	private String staticPagePath;
 
+	@Value("#{europeanaProperties['portal.theme']}")
+	private String defaultTheme;
+
 	@Resource
 	private SearchService searchService;
 	
@@ -106,7 +109,7 @@ public class SearchController {
 		model.setRefinements(qf);
 		model.setStart(start);
 		model.setQuery(q);
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 

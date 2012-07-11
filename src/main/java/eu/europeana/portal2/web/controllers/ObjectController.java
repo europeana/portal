@@ -73,6 +73,9 @@ public class ObjectController {
 
 	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
 	private String[] shownAtProviderOverride;
+	
+	@Value("#{europeanaProperties['portal.theme']}")
+	private String defaultTheme;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -105,7 +108,7 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setShownAtProviderOverride(shownAtProviderOverride);
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 
 		try {
 			FullBean fullBean = searchService.findById(collectionId, recordId);

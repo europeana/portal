@@ -86,6 +86,9 @@ public class StaticPageController {
 	@Value("#{europeanaProperties['static.page.path']}")
 	private String staticPagePath;
 
+	@Value("#{europeanaProperties['portal.theme']}")
+	private String defaultTheme;
+
 	/**
 	 * All of the pages are served up from here
 	 * 
@@ -138,7 +141,7 @@ public class StaticPageController {
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 
 		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
 

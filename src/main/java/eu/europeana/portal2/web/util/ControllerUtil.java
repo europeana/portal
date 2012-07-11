@@ -48,8 +48,8 @@ public class ControllerUtil {
 	@Value("#{europeanaProperties['portal.google.plus.publisher.id']}")
 	private static String portalGooglePlusPublisherId;
 
-	@Value("#{europeanaProperties['portal.theme']}")
-	private static String defaultTheme;
+	// @Value("#{europeanaProperties['portal.theme']}")
+	// private static String defaultTheme;
 
 	private static Logger log = Logger.getLogger(ControllerUtil.class.getName());
 	
@@ -121,8 +121,7 @@ public class ControllerUtil {
 		return url;
 	}
 
-	
-	public static String getSessionManagedTheme(HttpServletRequest request, String theme) {
+	public static String getSessionManagedTheme(HttpServletRequest request, String theme, String defaultTheme) {
 		HttpSession session = request.getSession(true);
 		if (!theme.equals("")) {
 			theme = ThemeChecker.check(theme);
@@ -130,8 +129,9 @@ public class ControllerUtil {
 		}
 		else {
 			String storedTheme = (String)session.getAttribute("theme");
-			if (storedTheme != null && !storedTheme.equals("")) {
+			if (!storedTheme.equals("")) {
 				theme = ThemeChecker.check(storedTheme);
+				log.info("theme2: " + theme);
 			}
 		}
 		if (theme.equals("")) {

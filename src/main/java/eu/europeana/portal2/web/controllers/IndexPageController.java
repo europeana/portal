@@ -101,6 +101,9 @@ public class IndexPageController {
 
 	@Value("#{europeanaProperties['portal.pinterest.itemslimit']}")
 	private Integer pintItemLimit;
+	
+	@Value("#{europeanaProperties['portal.theme']}")
+	private String defaultTheme;
 
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
@@ -116,7 +119,7 @@ public class IndexPageController {
 		updateCarousel(model, locale);
 		updateFeaturedItem(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		
 		localeChangeInterceptor.preHandle(request, response, this);
 		
