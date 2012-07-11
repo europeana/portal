@@ -106,9 +106,9 @@ public class IndexPageController {
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
-
-			
-			HttpServletRequest request, HttpServletResponse response, Locale locale)
+			HttpServletRequest request, 
+			HttpServletResponse response, 
+			Locale locale)
 			throws Exception {
 		IndexPage model = new IndexPage();
 		// update dynamic items
@@ -116,11 +116,10 @@ public class IndexPageController {
 		updateCarousel(model, locale);
 		updateFeaturedItem(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 		
 		localeChangeInterceptor.preHandle(request, response, this);
-
 		
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model,
@@ -133,14 +132,15 @@ public class IndexPageController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addMessage("theme: " + model.getTheme());
+
 		return page;
 	}
 
 	private String getAnnounceMessage(Locale locale) {
 		String message = null;
 		try {
-			message = messageSource.getMessage("announce_message_t", null,
-					locale);
+			message = messageSource.getMessage("announce_message_t", null, locale);
 		} catch (NoSuchMessageException e) {
 			if (locale != Locale.ENGLISH) {
 				return getAnnounceMessage(Locale.ENGLISH);

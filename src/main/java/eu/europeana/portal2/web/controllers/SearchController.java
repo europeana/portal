@@ -109,7 +109,6 @@ public class SearchController {
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme));
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
-		log.info("theme: " + model.getTheme());
 
 		Query query = new Query(q)
 						.setRefinements(qf)
@@ -142,6 +141,7 @@ public class SearchController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addMessage("theme: " + model.getTheme());
 
 		return page;
 	}

@@ -63,11 +63,14 @@ public class ControllerUtil {
 	 * should be used in every Controller.
 	 */
 	public static ModelAndView createModelAndViewPage(PortalPageData model, Locale locale, PageInfo view) {
+		// adjust model
 		model.setLocale(locale);
 		// model.setUser(ControllerUtil.getUser());
 		model.setPageInfo(view);
 		model.setPageTitle(view.getPageTitle());
 		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(portalGooglePlusPublisherId));
+
+		// create page
 		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;

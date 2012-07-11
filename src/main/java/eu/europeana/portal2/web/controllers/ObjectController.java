@@ -129,6 +129,7 @@ public class ObjectController {
 			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
+		model.addMessage("theme: " + model.getTheme());
 
 		return page;
 	}

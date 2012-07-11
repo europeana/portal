@@ -144,6 +144,7 @@ public class StaticPageController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.STATICPAGE);
 		corelib_web_configInterceptor.postHandle(request, response, this, page);
+		model.addMessage("theme: " + model.getTheme());
 
 		return page;
 	}
