@@ -129,7 +129,7 @@ public class ControllerUtil {
 		}
 		else {
 			String storedTheme = (String)session.getAttribute("theme");
-			if (!storedTheme.equals("")) {
+			if (storedTheme != null && !storedTheme.equals("")) {
 				theme = ThemeChecker.check(storedTheme);
 				log.info("theme2: " + theme);
 			}
