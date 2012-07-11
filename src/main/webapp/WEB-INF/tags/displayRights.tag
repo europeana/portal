@@ -1,6 +1,7 @@
+<%@ tag trimDirectiveWhitespaces="true" %>
+<%@ attribute name="inLightbox" required="true" rtexprvalue="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%--#macro displayRights inLightbox --%>
-<c:if test="${!empty model.rightsOption}">
+<c:if test="${model[rightsOption]}">
   <a href="${model.rightsOption.rightsUrl}"
     title="${model.rightsOption.rightsText}"
     class="item-metadata rights-badge" target="_blank"

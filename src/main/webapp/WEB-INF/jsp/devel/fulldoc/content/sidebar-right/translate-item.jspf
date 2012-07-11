@@ -1,0 +1,2 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<a href="" id="translate-item" class="toggle-menu-icon bold"><spring:message code="TranslateDetails_t" /></a>

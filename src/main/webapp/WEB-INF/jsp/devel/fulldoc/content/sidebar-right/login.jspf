@@ -1,0 +1,6 @@
+<#if !model.user??>
+
+	<a href="/${model.portalName}/login.html?pageId=fd" class="underline" rel="nofollow"><@spring.message 'LogIn_t'/></a> |
+	<a href="/${model.portalName}/login.html?pageId=fd" class="underline" rel="nofollow"><@spring.message 'Register_t'/></a>
+
+</#if>	

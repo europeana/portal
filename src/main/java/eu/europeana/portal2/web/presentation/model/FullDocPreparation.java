@@ -125,20 +125,22 @@ public abstract class FullDocPreparation extends FullDocData {
 			fieldsEnrichment.put("enrichment_category_where_t", where);
 		}
 		*/
+		
+		if (document.getPlaces() != null) {
+			for (Place place : document.getPlaces()) {
+				addField(where, Field.ENRICHMENT_PLACE_TERM, new String[]{place.getAbout()});
+				ArrayList<String> labels = new ArrayList<String>();
+				for (String key : place.getPrefLabel().keySet()) {
+					labels.add(place.getPrefLabel().get(key) + " (" + key + ")");
+				}
+				addField(where, Field.ENRICHMENT_PLACE_LABEL, StringArrayUtils.toArray(labels));
 
-		for (Place place : document.getPlaces()) {
-			addField(where, Field.ENRICHMENT_PLACE_TERM, new String[]{place.getAbout()});
-			ArrayList<String> labels = new ArrayList<String>();
-			for (String key : place.getPrefLabel().keySet()) {
-				labels.add(place.getPrefLabel().get(key) + " (" + key + ")");
-			}
-			addField(where, Field.ENRICHMENT_PLACE_LABEL, StringArrayUtils.toArray(labels));
-			
-			if (getDocument().isPositionAvailable()) {
-				addField(where, Field.ENRICHMENT_PLACE_LAT_LONG,
-					new String[]{String.valueOf(place.getLatitude())},
-					new String[]{String.valueOf(place.getLongitude())},
-					new String[]{getDocument().getUrlKml()});
+				if (getDocument().isPositionAvailable()) {
+					addField(where, Field.ENRICHMENT_PLACE_LAT_LONG,
+							new String[]{String.valueOf(place.getLatitude())},
+							new String[]{String.valueOf(place.getLongitude())},
+							new String[]{getDocument().getUrlKml()});
+				}
 			}
 		}
 		if (where.size() > 0) {
@@ -149,13 +151,15 @@ public abstract class FullDocPreparation extends FullDocData {
 		List<FieldPresentation> who = new ArrayList<FieldPresentation>();
 		// addField(who, Field.ENRICHMENT_AGENT_LABEL, document.getEnrichmentAgentLabel());
 		// addField(who, Field.ENRICHMENT_AGENT_TERM, document.getEnrichmentAgentTerm());
-		for (Agent agent : document.getAgents()) {
-			addField(who, Field.ENRICHMENT_AGENT_TERM, new String[]{agent.getAbout()});
-			ArrayList<String> labels = new ArrayList<String>();
-			for (String key : agent.getPrefLabel().keySet()) {
-				labels.add(agent.getPrefLabel().get(key) + " (" + key + ")");
+		if (document.getAgents() != null) {
+			for (Agent agent : document.getAgents()) {
+				addField(who, Field.ENRICHMENT_AGENT_TERM, new String[]{agent.getAbout()});
+				ArrayList<String> labels = new ArrayList<String>();
+				for (String key : agent.getPrefLabel().keySet()) {
+					labels.add(agent.getPrefLabel().get(key) + " (" + key + ")");
+				}
+				addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
 			}
-			addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
 		}
 		if (who.size() > 0) {
 			fieldsEnrichment.put("enrichment_category_who_t", who);
@@ -167,14 +171,16 @@ public abstract class FullDocPreparation extends FullDocData {
 		// addField(what, Field.ENRICHMENT_CONCEPT_TERM, document.getEnrichmentConceptTerm());
 		// addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, document.getEnrichmentConceptBroaderLabel());
 		// addField(what, Field.ENRICHMENT_CONCEPT_BROADER_TERM, document.getEnrichmentConceptBroaderTerm());
-		for (Concept concept : document.getConcepts()) {
-			addField(what, Field.ENRICHMENT_CONCEPT_TERM, new String[]{concept.getAbout()});
-			ArrayList<String> labels = new ArrayList<String>();
-			for (String key : concept.getPrefLabel().keySet()) {
-				labels.add(concept.getPrefLabel().get(key) + " (" + key + ")");
+		if (document.getConcepts() != null) {
+			for (Concept concept : document.getConcepts()) {
+				addField(what, Field.ENRICHMENT_CONCEPT_TERM, new String[]{concept.getAbout()});
+				ArrayList<String> labels = new ArrayList<String>();
+				for (String key : concept.getPrefLabel().keySet()) {
+					labels.add(concept.getPrefLabel().get(key) + " (" + key + ")");
+				}
+				addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
+				addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, concept.getBroader());
 			}
-			addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
-			addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, concept.getBroader());
 		}
 		if (what.size() > 0) {
 			fieldsEnrichment.put("enrichment_category_what_t", what);
@@ -194,18 +200,20 @@ public abstract class FullDocPreparation extends FullDocData {
 		addField(when, Field.ENRICHMENT_PERIOD_BROADER_LABEL, document.getEnrichmentPeriodBroaderLabel());
 		addField(when, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());
 		*/
-		for (Timespan timespan : document.getTimespans()) {
-			addField(when, Field.ENRICHMENT_PERIOD_TERM, new String[]{timespan.getAbout()});
-			ArrayList<String> labels = new ArrayList<String>();
-			for (String key : timespan.getPrefLabel().keySet()) {
-				labels.add(timespan.getPrefLabel().get(key) + " (" + key + ")");
-			}
-			addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
-			if (timespan.getBegin() != null) {
-				addField(when, Field.ENRICHMENT_PERIOD_BEGIN, new String[]{timespan.getBegin()});
-			}
-			if (timespan.getEnd() != null) {
-				addField(when, Field.ENRICHMENT_PERIOD_END, new String[]{timespan.getEnd()});
+		if (document.getTimespans() != null) {
+			for (Timespan timespan : document.getTimespans()) {
+				addField(when, Field.ENRICHMENT_PERIOD_TERM, new String[]{timespan.getAbout()});
+				ArrayList<String> labels = new ArrayList<String>();
+				for (String key : timespan.getPrefLabel().keySet()) {
+					labels.add(timespan.getPrefLabel().get(key) + " (" + key + ")");
+				}
+				addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
+				if (timespan.getBegin() != null) {
+					addField(when, Field.ENRICHMENT_PERIOD_BEGIN, new String[]{timespan.getBegin()});
+				}
+				if (timespan.getEnd() != null) {
+					addField(when, Field.ENRICHMENT_PERIOD_END, new String[]{timespan.getEnd()});
+				}
 			}
 		}
 		if (when.size() > 0) {

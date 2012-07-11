@@ -1,10 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ tag trimDirectiveWhitespaces="true" %>
 <%@ attribute name="menu" required="true" rtexprvalue="true" %>
 <%@ attribute name="ord1" required="true" rtexprvalue="true" %>
 <%@ attribute name="ord2" required="true" rtexprvalue="true" %>
 <%@ attribute name="className" required="true" rtexprvalue="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
  * menu-links.ftl
  *
@@ -47,10 +48,8 @@
 <c:set var="msg_notranslate"><spring:message code="notranslate_${menu}-${ordinal}_a_target_t" /></c:set>
 <c:set var="msg_title"><spring:message code="${menu}-${ordinal}_a_title_t" /></c:set>
 <c:set var="msg_text"><spring:message code="${menu}-${ordinal}_a_text_t" /></c:set>
-
 <c:set var="url"><spring:message code="notranslate_${menu}-${ordinal}_a_url_t" /></c:set>
 <c:if test='${!fn:contains(url, "http://")}'>
   <c:set var="url">/${model.portalName}/${url}</c:set>
 </c:if>
-
 <a href="${url}" target="${msg_notranslate}" title="${msg_title}" <c:if test="${fn:length(className) > 0}">class="${className}"</c:if>>${msg_text}</a>

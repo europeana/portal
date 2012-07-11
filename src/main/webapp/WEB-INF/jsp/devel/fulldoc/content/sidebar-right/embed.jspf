@@ -1,0 +1,4 @@
+<%--
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<a href="${model.embedRecordUrl}" id="item-embed" class="block-link bold" target="_blank" rel="nofollow"><spring:message code="embed_t" /></a>
+ --%>
