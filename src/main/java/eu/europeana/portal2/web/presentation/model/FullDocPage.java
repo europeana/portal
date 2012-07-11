@@ -50,7 +50,7 @@ import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
 
-	private static final Logger log = Logger.getLogger(ObjectController.class.getName());
+	private static final Logger log = Logger.getLogger(FullDocPage.class.getName());
 
 	private RightsValue rightsOption = null;
 
@@ -358,26 +358,7 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public String getObjectTitle() {
-		String dcTitle;
-		if (!getDocument().getDcTitle()[0].isEmpty()) {
-			dcTitle = getDocument().getDcTitle()[0];
-		} else if (!document.getDctermsAlternative()[0].isEmpty()) {
-			dcTitle = document.getDctermsAlternative()[0];
-		} else if (!getDocument().getDcDescription()[0].isEmpty()) {
-			dcTitle = StringUtils.left(getDocument().getDcDescription()[0], 50);
-		} else {
-			dcTitle = document.getTitle()[0];
-		}
-		
-		StringBuilder title = new StringBuilder(dcTitle);
-
-		/*
-		StringBuilder title = new StringBuilder(
-			StringUtils.defaultIfBlank(getDocument().getDcTitle()[0], 
-				StringUtils.defaultIfBlank(document.getDctermsAlternative()[0],
-					StringUtils.left(getDocument().getDcDescription()[0], 50))));
-		*/
-		return StringUtils.left(title.toString(), 250);
+		return StringUtils.left(getBaseTitle(), 250);
 	}
 
 	/**
@@ -386,18 +367,7 @@ public class FullDocPage extends FullDocPreparation {
 	 * @return page title
 	 */
 	public String getPageTitle() {
-		String dcTitle;
-		if (!getDocument().getDcTitle()[0].isEmpty()) {
-			dcTitle = getDocument().getDcTitle()[0];
-		} else if (!document.getDctermsAlternative()[0].isEmpty()) {
-			dcTitle = document.getDctermsAlternative()[0];
-		} else if (!getDocument().getDcDescription()[0].isEmpty()) {
-			dcTitle = StringUtils.left(getDocument().getDcDescription()[0], 50);
-		} else {
-			dcTitle = document.getTitle()[0];
-		}
-		
-		StringBuilder title = new StringBuilder(dcTitle);
+		StringBuilder title = new StringBuilder(getBaseTitle());
 		if (StringArrayUtils.isNotBlank(document.getDcCreator())) {
 			String creator = document.getDcCreator()[0];
 			// clean up creator first
@@ -411,9 +381,25 @@ public class FullDocPage extends FullDocPreparation {
 			if (StringUtils.isNotBlank(creator)) {
 				title.append(" | ").append(creator);
 			}
-
 		}
+
 		return StringUtils.left(title.toString(), 250);
+	}
+	
+	private String getBaseTitle() {
+		String dcTitle = "";
+
+		if (StringArrayUtils.isNotBlank(getDocument().getDcTitle())) {
+			dcTitle = getDocument().getDcTitle()[0];
+		} else if (StringArrayUtils.isNotBlank(document.getDctermsAlternative())) {
+			dcTitle = document.getDctermsAlternative()[0];
+		} else if (StringArrayUtils.isNotBlank(getDocument().getDcDescription())) {
+			dcTitle = StringUtils.left(getDocument().getDcDescription()[0], 50);
+		} else if (StringArrayUtils.isNotBlank(document.getTitle())) {
+			dcTitle = document.getTitle()[0];
+		}
+
+		return dcTitle;
 	}
 
 	/**
@@ -423,8 +409,7 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	public String getUrlRef() {
 		return StringUtils.defaultIfBlank(document.getEdmIsShownAt()[0],
-				StringUtils.defaultIfBlank(document.getEdmIsShownBy()[0],
-						"#"));
+				StringUtils.defaultIfBlank(document.getEdmIsShownBy()[0], "#"));
 	}
 
 	public boolean isUrlRefIsShownBy() {

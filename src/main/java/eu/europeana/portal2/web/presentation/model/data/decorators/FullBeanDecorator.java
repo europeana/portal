@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +42,8 @@ import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class FullBeanDecorator implements FullBean {
+
+	private static final Logger log = Logger.getLogger(FullBeanDecorator.class.getName());
 
 	private FullBean fulldoc;
 
@@ -419,8 +422,10 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String[] getDcDescription() {
+		log.info("getDcDescription()");
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
+			log.info("description: " + proxy.getDcDescription());
 			StringArrayUtils.addToList(items, proxy.getDcDescription());
 		}
 		return StringArrayUtils.toArray(items);

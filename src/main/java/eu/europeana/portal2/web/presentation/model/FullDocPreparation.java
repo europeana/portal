@@ -254,6 +254,7 @@ public abstract class FullDocPreparation extends FullDocData {
 					document.getDctermsConformsTo(),
 					document.getDctermsHasFormat(),
 					getDocument().getDctermsIsFormatOf());
+			log.info("add field " + Field.DC_DESCRIPTION);
 			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription(),
 					document.getDctermsTableOfContents());
 			// addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEuropeanaDataProvider());
