@@ -80,7 +80,7 @@ public class SearchController {
 		@RequestParam(value = "rswUserId", required = false) String rswUserId,
 		@RequestParam(value = "rswDefqry", required = false) String rswDefqry,
 		@RequestParam(value = "start", required = false, defaultValue = "1") int start,
-		@RequestParam(value = "rows", required = false, defaultValue="1") int rows,
+		@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
 		@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 		HttpServletRequest request, HttpServletResponse response,
@@ -100,18 +100,14 @@ public class SearchController {
 		model.setEmbeddedForeColor(embeddedForeColor);
 		model.setEmbedded(embedded);
 		model.setEmbeddedLang(embeddedLang);
-		
 		log.info("set embedded land to " + embeddedLang);
-		
+
 		model.setEmbeddedLogo(embeddedLogo);
 		model.setRswUserId(rswUserId);
 		model.setRswDefqry(rswDefqry);
-		
 		model.setRefinements(qf);
-		
 		log.info("setRefinements on model to " + qf);
-		
-		
+
 		model.setStart(start);
 		model.setQuery(q);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
@@ -128,7 +124,6 @@ public class SearchController {
 		log.info("query: " + query);
 		try {
 			BriefBeanView briefBeanView = createResults(clazz, profile, query, start, rows);
-			log.info("/createResults");
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
@@ -140,16 +135,13 @@ public class SearchController {
 			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-		// model.getBriefBeanView().getBriefDocs();
-		// model.getBreadcrumbs();
 
 		try {
 			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addMessage("theme: " + model.getTheme());
+		// model.addMessage("theme: " + model.getTheme());
 
 		return page;
 	}
@@ -183,12 +175,6 @@ public class SearchController {
 				query.getQuery(), query.getQuery(), response.breadCrumbs);
 		briefBeanView.setPagination(pagination);
 		log.info("end of createResults");
-		
-		
-//		for(int i=0; i<response.breadCrumbs.size(); i++){
-	//		briefBeanView.addMessage("theme: " + response.breadCrumbs.get(i).getDisplay() );
-		//}
-		
 		return briefBeanView;
 	}
 
