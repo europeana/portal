@@ -394,7 +394,13 @@ public class FullDocPage extends FullDocPreparation {
 		} else if (StringArrayUtils.isNotBlank(document.getDctermsAlternative())) {
 			dcTitle = document.getDctermsAlternative()[0];
 		} else if (StringArrayUtils.isNotBlank(getDocument().getDcDescription())) {
-			dcTitle = StringUtils.left(getDocument().getDcDescription()[0].replace("<br/>\n", "").replace("\n", " "), 50);
+			dcTitle = getDocument().getDcDescription()[0];
+			if (dcTitle.indexOf("<br/>\n") > 0) {
+				dcTitle = dcTitle.substring(0, dcTitle.indexOf("<br/>\n"));
+			}
+			if (dcTitle.length() > 50) {
+				dcTitle = StringUtils.left(dcTitle, 50) + "...";
+			}
 		} else if (StringArrayUtils.isNotBlank(document.getTitle())) {
 			dcTitle = document.getTitle()[0];
 		}

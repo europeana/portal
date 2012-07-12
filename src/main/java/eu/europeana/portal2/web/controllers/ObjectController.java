@@ -49,6 +49,7 @@ import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
+import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 /**
@@ -132,7 +133,8 @@ public class ObjectController {
 			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-		// model.addMessage("theme: " + model.getTheme());
+		CiteValue[] citeValues = model.getCiteStyles();
+		model.addMessage("citeValues: " + citeValues.length);
 
 		return page;
 	}

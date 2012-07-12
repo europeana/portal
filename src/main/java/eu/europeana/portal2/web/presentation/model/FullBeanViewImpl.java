@@ -103,7 +103,10 @@ public class FullBeanViewImpl implements FullBeanView {
 	@Override
 	public BriefBean getParent() {
 		// TODO: one or more parents?
-		return parents.get(0);
+		if (parents != null && parents.size() > 0) {
+			return parents.get(0);
+		}
+		return null;
 	}
 
 	@Override

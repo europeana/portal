@@ -51,7 +51,7 @@ public class ObjectControllerTest {
 			assertEquals(proxy.getDctermsIssued()[0], "1900-01-01");
 			assertEquals(proxy.getEdmType().name(), "IMAGE");
 
-			// System.out.println(BeanUtil.toString(fullBean));
+			System.out.println(BeanUtil.toString(fullBean));
 			assertEquals("The text representation size should be 3199", 3199, BeanUtil.toString(fullBean).length());
 		} catch (SolrTypeException e) {
 			// TODO Auto-generated catch block

@@ -19,6 +19,7 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -27,6 +28,8 @@ import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 public class CiteValue {
+
+	private static final Logger log = Logger.getLogger(CiteValue.class.getName());
 
 	private FullDocData model;
 
@@ -58,7 +61,9 @@ public class CiteValue {
 	public String getCiteText() {
 		String authorNames = StringArrayUtils.formatList(model.getDocument().getDcCreator());
 		StringBuilder citeStyleText = new StringBuilder();
-		
+		log.info("cite style: " + value.toString());
+		log.info("authorNames: " + authorNames);
+
 		switch (value) {
 			case WIKIPEDIA:
 				citeStyleText.append("{{cite web | url=");
@@ -82,14 +87,20 @@ public class CiteValue {
 				break;
 			case HARVARD:
 				String availableAtMsg = "Webpage available at:";
-				citeStyleText.append(authorNames).append(" (")
-						//.append(model.getDocument().getEuropeanaYear()[0])
-						.append(model.getDocument().getYear()[0])
-						.append(") ").append(model.getPageTitle()).append(" ")
-						.append(availableAtMsg).append(" ")
-						.append(model.getDocument().getId()).append(" [Accessed: ")
-						.append(new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a").format(Calendar.getInstance().getTime()))
-						.append("]");
+				if (authorNames != null) {
+					citeStyleText.append(authorNames).append(" (");
+				} else {
+					citeStyleText.append("(");
+				}
+				// citeStyleText.append(model.getDocument().getEuropeanaYear()[0])
+				if (model.getDocument().getYear() != null) {
+					citeStyleText.append(model.getDocument().getYear()[0]);
+				}
+				citeStyleText.append(") ").append(model.getPageTitle()).append(" ");
+				citeStyleText.append(availableAtMsg).append(" ");
+				citeStyleText.append(model.getDocument().getId()).append(" [Accessed: ");
+				citeStyleText.append(new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a").format(Calendar.getInstance().getTime()));
+				citeStyleText.append("]");
 				break;
 		}
 		return citeStyleText.toString();
