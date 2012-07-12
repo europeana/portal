@@ -17,18 +17,18 @@
 		--%>
 		
 		<c:if test="${!empty model.refinements}">
-			<list model.refinements as refinement>					
+		  <c:forEach items="${model.refinements}" var="refinement">
 				<input type="hidden" name="qf" value="${refinement}"/>					
-			</list>
+			</c:forEach>
 		</c:if>
 		
 
 		
 		
-		<c:if test="${!empty model.providersForInclusion}">			
-			<list model.providersForInclusion as providerForInclusion>								
+		<c:if test="${!empty model[providersForInclusion]}">
+		  <c:forEach items="${model.providersForInclusion}" var="providerForInclusion">				
 				<input type="hidden" name="qf" value="${providerForInclusion}" />
-			</list>				
+			</c:forEach>
 		</c:if>
 		
 		<%--
