@@ -35,6 +35,7 @@ import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
+import eu.europeana.corelib.definitions.solr.entity.EuropeanaProxy;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
@@ -42,6 +43,42 @@ import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class FullBeanDecorator implements FullBean {
+
+	@Override
+	public EuropeanaProxy getEuropeanaProxy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setEdmConceptBroaderLabel(List<Map<String, String>> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEdmPlaceBroaderTerm(String[] arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEdmTimespanBroaderLabel(List<Map<String, String>> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEdmTimespanBroaderTerm(String[] arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEuropeanaProxy(EuropeanaProxy arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private static final Logger log = Logger.getLogger(FullBeanDecorator.class.getName());
 
