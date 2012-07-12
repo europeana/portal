@@ -20,7 +20,7 @@
 --%>
 <form id="query-search" action="${query_action}" method="get">
 	<fieldset>
-		<input type="text" name="query" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175"/>
+		<input type="text" name="query" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175"/>
 		<input type="submit" class="submit-button" value="<spring:message code='Search_t'/>"/>
 		<%--
 		  map search link
