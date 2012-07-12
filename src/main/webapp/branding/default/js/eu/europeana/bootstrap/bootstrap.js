@@ -118,7 +118,14 @@
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'utils' ]
 			});
-			
+
+			scripts.push({
+				name : 'result-size',
+				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+				dependencies : [ 'jquery-1.4.4.min.js' ]
+			});
+
 			break;
 		
 			
@@ -131,6 +138,13 @@
 				dependencies : [ 'utils' ]
 			});
 			
+			scripts.push({
+				name : 'result-size',
+				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+				dependencies : [ 'jquery-1.4.4.min.js' ]
+			});
+
 			break;
 			
 			
@@ -208,6 +222,13 @@
 				dependencies : [ 'utils' ]
 			});
 			
+			scripts.push({
+				name : 'result-size',
+				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+				dependencies : [ 'jquery-1.4.4.min.js' ]
+			});
+
 			break;
 			
 			
