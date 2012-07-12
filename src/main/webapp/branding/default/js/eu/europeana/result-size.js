@@ -25,7 +25,7 @@ jQuery(document).ready(function(){
 		else{
 			jQuery("#resultSize").val(12);
 		}
-		console.log("set result size to " + jQuery("#resultSize").val() + " for screen width " + screenWidth);
+		//console.log("set result size to " + jQuery("#resultSize").val() + " for screen width " + screenWidth);
 	};
 	
 	jQuery(window).resize(function(){
