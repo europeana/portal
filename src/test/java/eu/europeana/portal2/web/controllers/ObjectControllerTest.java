@@ -46,10 +46,7 @@ public class ObjectControllerTest {
 
 			Proxy proxy = fullBean.getProxies().get(0);
 			assertEquals(proxy.getAbout(), "/91627/B056315A5C6D63CF55A8735DBAA45884EC3F1ADE");
-			assertEquals(proxy.getDcDescription()[0], "EXTERIÖR AV BOSTADSHUS\n \n \n Tillv.tid: \n Övriga nr: 44\n Repro nr: \n Registrator: TR\n \n RealNr: 342 Motiv_spec: BOSTADSHUS\n \n Proviens\n Kod: 10\n Yrke: FOTOGRAFNamn: KARLSSON ANDERS\n Land: \n Län: 16\n Kommun: \n Stad: GÖTLUNDA\n By: \n Gård: \n Fastighet: HAGEN\n Adress: \n \n \n Proviens\n Kod: 81\n Yrke: Namn: SKÖVDE MUSEUM\n Land: \n Län: 16\n Kommun: \n Stad: SKÖVDE\n By: \n Gård: \n Fastighet: \n Adress:Proviens\n Kod: 74\n Yrke: Namn: FÄGER\n Land: \n Län: 16\n Kommun: \n Stad: GÖTLUNDA\n By: \n Gård: \n Fastighet: \n Adress: FAGERLUND\n \n \n Proviens\n Kod: 21\n Yrke: Namn: \n Land: \n Län: 16\n Kommun: \n Stad: GÖTLUNDA\n By: \n Gård: \n Fastighet: \n Adress: FAGERLUND");
 			assertEquals(proxy.getDcIdentifier()[0], "http://kulturarvsdata.se/VGM/media/VGM_A29408");
-			assertEquals(proxy.getDcRights()[0], "Okänd");
-			assertEquals(proxy.getDcSource()[0], "Västergötlands museum");
 			assertEquals(proxy.getDcSubject()[0], "Kulturhistoria");
 			assertEquals(proxy.getDcType()[0], "Foto");
 			assertEquals(proxy.getDctermsIssued()[0], "1900-01-01");
