@@ -6,6 +6,46 @@
  */
 'use strict';
 
+/*
+// Andy: proposed structure for conditional loading
+
+var europeana_bootstrap = function(){
+	
+	alert("do the default script loading here");
+		
+	var fulldoc = function(){
+		alert("do the default FULLDOC script loading here - i.e. the js needed to trigger the further loads");
+		
+		return {
+			// here we return the stuff that gets triggered - ie the loading of other js files.  
+			// a callback parameter should be available & invoked following the successful loading of a given script.
+			  
+			a:function(){
+				alert("called a");
+			},
+			b:function(){
+				alert("called b");
+			}
+		};
+	}();
+
+
+	// return functions
+	
+	return{
+		x:function(){
+			alert("called x");
+		},
+		y:function(){
+			alert("called y");
+		},
+		"fulldoc":fulldoc
+	};
+}();
+*/
+
+
+
 (function() {
 	
 	var body = document.getElementsByTagName('body')[0],

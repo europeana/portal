@@ -19,8 +19,11 @@ jQuery(document).ready(function(){
 		else if(screenWidth<541){
 			jQuery("#resultSize").val(4);
 		}
-		else if(screenWidth<941){
+		else if(screenWidth<921){
 			jQuery("#resultSize").val(6);
+		}
+		else if(screenWidth<1001){
+			jQuery("#resultSize").val(8);
 		}
 		else{
 			jQuery("#resultSize").val(12);
@@ -32,6 +35,13 @@ jQuery(document).ready(function(){
 		setResultSize(document.documentElement.clientWidth);
 	});
 
+	/* Andy: test the new js loading 
+	 * 
+	europeana_bootstrap.x();
+	europeana_bootstrap.fulldoc.a();
+	 * 
+	 * */
+	
 	setResultSize(document.documentElement.clientWidth);
 	
 });
