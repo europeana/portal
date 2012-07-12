@@ -394,7 +394,7 @@ public class FullDocPage extends FullDocPreparation {
 		} else if (StringArrayUtils.isNotBlank(document.getDctermsAlternative())) {
 			dcTitle = document.getDctermsAlternative()[0];
 		} else if (StringArrayUtils.isNotBlank(getDocument().getDcDescription())) {
-			dcTitle = StringUtils.left(getDocument().getDcDescription()[0], 50);
+			dcTitle = StringUtils.left(getDocument().getDcDescription()[0].replace("<br/>", ""), 50);
 		} else if (StringArrayUtils.isNotBlank(document.getTitle())) {
 			dcTitle = document.getTitle()[0];
 		}
