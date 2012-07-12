@@ -135,7 +135,7 @@ public class IndexPageController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addMessage("theme: " + model.getTheme());
+		// model.addMessage("theme: " + model.getTheme());
 
 		return page;
 	}

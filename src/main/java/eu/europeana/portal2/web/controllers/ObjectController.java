@@ -111,11 +111,8 @@ public class ObjectController {
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 
 		try {
-			log.info("->findById");
 			FullBean fullBean = searchService.findById(collectionId, recordId);
-			log.info("->new FullBeanViewImpl");
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
-			log.info("->setFullBeanView");
 			model.setFullBeanView(fullBeanView);
 		} catch (SolrTypeException e) {
 			log.severe("SolrTypeException: " + e.getMessage());
@@ -135,7 +132,7 @@ public class ObjectController {
 			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-		model.addMessage("theme: " + model.getTheme());
+		// model.addMessage("theme: " + model.getTheme());
 
 		return page;
 	}
