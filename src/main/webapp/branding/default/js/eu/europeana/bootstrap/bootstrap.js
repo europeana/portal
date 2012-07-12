@@ -2,29 +2,64 @@
  *	bootstrap.js
  *
  *	@author		dan entous <contact@gmtpluosone.com>
- *	@version	2011-10-20 08:26 GMT +1
+ *	@author		andy maclean <andyjmaclean@gmail.com>
+ *	@version	2012-07-12
  */
 'use strict';
 
-/*
+
 // Andy: proposed structure for conditional loading
 
 var europeana_bootstrap = function(){
 	
-	alert("do the default script loading here");
-		
-	var fulldoc = function(){
-		alert("do the default FULLDOC script loading here - i.e. the js needed to trigger the further loads");
-		
+	// loads the loader which then loads the scripts
+	function loadScripts(scripts){
+		var script = document.createElement('script');
+		script.src = eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
+		if ( 'onload' in document || 'addEventListener' in window ) {
+			script.onload = function() { js.loader.loadScripts( scripts ); };
+			
+		}
+		else if ( 'onreadystatechange' in document ) {	
+			script.onreadystatechange = function () {
+				if ( script.readyState == 'loaded' || script.readyState == 'complete' ) {
+					js.loader.loadScripts( scripts );
+				}
+			};
+		}	
+		document.getElementsByTagName('body')[0].appendChild( script );		
+	}
+
+	
+	function loadResultSizer(callback){
+		loadScripts(
+			[{
+				name : 'result-size',
+				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+				//,dependencies : [ 'jquery-1.4.4.min.js' ]
+				,callback : callback
+			}]
+		);
+	}
+	
+
+	var index = function(){
 		return {
-			// here we return the stuff that gets triggered - ie the loading of other js files.  
-			// a callback parameter should be available & invoked following the successful loading of a given script.
-			  
-			a:function(){
-				alert("called a");
+			loadResultSizer:function(callback){
+				loadResultSizer(callback);
 			},
 			b:function(){
 				alert("called b");
+			}
+		};
+	}();
+	var fulldoc = function(){
+		return {
+			loadResultSizer:function(){
+				loadResultSizer();
+			},
+			b:function(){
 			}
 		};
 	}();
@@ -34,16 +69,15 @@ var europeana_bootstrap = function(){
 	
 	return{
 		x:function(){
-			alert("called x");
+		//	alert("called x");
 		},
 		y:function(){
-			alert("called y");
+		//	alert("called y");
 		},
-		"fulldoc":fulldoc
+		"fulldoc":fulldoc,
+		"index":index
 	};
 }();
-*/
-
 
 
 (function() {
@@ -159,32 +193,33 @@ var europeana_bootstrap = function(){
 				dependencies : [ 'utils' ]
 			});
 
+			/*
 			scripts.push({
 				name : 'result-size',
 				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'jquery-1.4.4.min.js' ]
 			});
-
+			*/
 			break;
 		
 			
 		case 'index.html' :
-			
+			//alert("bootstrap to load index.js");
 			scripts.push({
 				name : 'index',
 				file : 'index' + js.min_suffix + '.js' + js.cache_helper,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'utils' ]
 			});
-			
+			/*
 			scripts.push({
 				name : 'result-size',
 				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'jquery-1.4.4.min.js' ]
 			});
-
+			*/
 			break;
 			
 			
