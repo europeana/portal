@@ -2,9 +2,13 @@
 	
 	
 	function init() {
-		
 		loadDependencies();
-		
+
+		// Andy: conditional load test
+		var testCallback = function(){ console.log("in testCallback!"); };
+		jQuery("#query-input").focus(function(){
+			europeana_bootstrap.index.loadResultSizer(testCallback);
+		});
 	}
 	
 	
@@ -24,7 +28,7 @@
 			callback : function() { addThis( function() { addFacebookActivities(); } ); }
 		}]);
 		
-		rssFeed(jQuery('#pinterest'), eu.europeana.vars.pinterest.feedUrl);
+		//rssFeed(jQuery('#pinterest'), eu.europeana.vars.pinterest.feedUrl);
 	}
 	
 	
