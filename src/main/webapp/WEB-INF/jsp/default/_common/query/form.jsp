@@ -18,7 +18,7 @@
 <%--
   form
 --%>
-<form action="${query_action}" method="get">
+<form id="query-search" action="${query_action}" method="get">
 	<fieldset>
 		<input type="text" name="query" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175"/>
 		<input type="submit" class="submit-button" value="<spring:message code='Search_t'/>"/>
@@ -49,7 +49,7 @@
     <%--
       refine search link
     --%>
-    <spring:message code='RefineYourSearch_t'/>
+    <a href="" id="refine-search" class="nofollow${refinedEnabled}"><spring:message code="RefineYourSearch_t" /></a>
     <%--
       save search link
     --%>
