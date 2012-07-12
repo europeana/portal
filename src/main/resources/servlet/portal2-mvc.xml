@@ -16,14 +16,11 @@
 		http://www.springframework.org/schema/util/spring-util.xsd
 	">
 
-
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
 	</bean>
- 
- 
- 
+
 	<util:properties id="europeanaProperties" location="file:${EUROPEANA_PROPERTIES}" />
 
 	<mvc:default-servlet-handler />
@@ -31,8 +28,8 @@
 	<mvc:annotation-driven/>
 
 	<!-- INTERCEPTORS -->
-	<bean id="corelib_web_configInterceptor"	class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
-	<!--bean id="locale_interceptor"				class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" /-->
+	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
+	<!--bean id="locale_interceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" /-->
 
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers" />
 
@@ -41,28 +38,22 @@
 	<!-- bean id="handlerMapping2" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" p:interceptors-ref="locale_interceptor" /-->
 	
 	<!-- 
-	
 	<bean id="localeChangeInterceptor" class="eu.europeana.core.util.web.LocaleChangeInterceptor">
         <property name="paramName" value="lang"/>
         <property name="clickStreamLogger" ref="clickStreamLogger"/>
     </bean>
-	
 	 -->
-	<bean id="localeChangeInterceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor">
-        <property name="paramName" value="embeddedlang"/>
-    </bean>
 
+  <bean id="localeChangeInterceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor">
+    <property name="paramName" value="embeddedlang"/>
+  </bean>
 
-	
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
 				<ref bean="corelib_web_configInterceptor" />
-				
 				<!--ref bean="locale_interceptor" /-->
 				<ref bean="localeChangeInterceptor" />
-				
-				
 			</list>
 		</property>
 	</bean>
@@ -76,10 +67,7 @@
 		<property name="interceptors">
 			<list>
 				<ref bean="corelib_web_configInterceptor" />
-				
-				
 				<ref bean="localeChangeInterceptor" />
-				
 			</list>
 		</property>
 	</bean>
