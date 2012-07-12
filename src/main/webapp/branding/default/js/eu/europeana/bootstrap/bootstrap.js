@@ -18,7 +18,6 @@ var europeana_bootstrap = function(){
 		script.src = eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
 		if ( 'onload' in document || 'addEventListener' in window ) {
 			script.onload = function() { js.loader.loadScripts( scripts ); };
-			
 		}
 		else if ( 'onreadystatechange' in document ) {	
 			script.onreadystatechange = function () {
@@ -30,7 +29,7 @@ var europeana_bootstrap = function(){
 		document.getElementsByTagName('body')[0].appendChild( script );		
 	}
 
-	
+	// function common to index, search and fulldoc
 	function loadResultSizer(callback){
 		loadScripts(
 			[{
@@ -43,7 +42,7 @@ var europeana_bootstrap = function(){
 		);
 	}
 	
-
+	// functionality for index.jsp
 	var index = function(){
 		return {
 			loadResultSizer:function(callback){
@@ -54,6 +53,8 @@ var europeana_bootstrap = function(){
 			}
 		};
 	}();
+
+	// functionality for fulldoc.jsp 
 	var fulldoc = function(){
 		return {
 			loadResultSizer:function(){
@@ -64,20 +65,30 @@ var europeana_bootstrap = function(){
 		};
 	}();
 
+	// functionality for search.jsp 
+	var search = function(){
+		return {
+			loadResultSizer:function(){
+				loadResultSizer();
+			}
+		};
+	}();
+
 
 	// return functions
 	
 	return{
-		x:function(){
-		//	alert("called x");
-		},
-		y:function(){
-		//	alert("called y");
-		},
+		x:function(){},
+		y:function(){},
 		"fulldoc":fulldoc,
-		"index":index
+		"index":index,
+		"search":search
 	};
 }();
+
+// end conditional load object
+
+
 
 
 (function() {
@@ -192,15 +203,7 @@ var europeana_bootstrap = function(){
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'utils' ]
 			});
-
-			/*
-			scripts.push({
-				name : 'result-size',
-				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
-				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-				dependencies : [ 'jquery-1.4.4.min.js' ]
-			});
-			*/
+			
 			break;
 		
 			
@@ -212,14 +215,7 @@ var europeana_bootstrap = function(){
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'utils' ]
 			});
-			/*
-			scripts.push({
-				name : 'result-size',
-				file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
-				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-				dependencies : [ 'jquery-1.4.4.min.js' ]
-			});
-			*/
+			
 			break;
 			
 			
@@ -262,7 +258,6 @@ var europeana_bootstrap = function(){
 					dependencies : [ 'utils' ]
 				});
 			}
-
 			
 			break;
 			
