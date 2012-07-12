@@ -425,8 +425,11 @@ public class FullBeanDecorator implements FullBean {
 		log.info("getDcDescription()");
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
-			log.info("description: " + proxy.getDcDescription());
-			StringArrayUtils.addToList(items, proxy.getDcDescription());
+			//log.info("description: " + proxy.getDcDescription());
+			for(String description : proxy.getDcDescription()) {
+				items.add(description.replace("\n", "<br/>\n"));
+			}
+			//StringArrayUtils.addToList(items, proxy.getDcDescription());
 		}
 		return StringArrayUtils.toArray(items);
 	}
