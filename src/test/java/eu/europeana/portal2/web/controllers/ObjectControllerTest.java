@@ -35,7 +35,6 @@ public class ObjectControllerTest {
 			assertEquals(fullBean.getWhen()[0], "Kulturhistoria");
 
 			Aggregation aggregation = fullBean.getAggregations().get(0);
-			assertEquals(aggregation.getEdmDataProvider(), "Västergötlands museum");
 			assertEquals(aggregation.getEdmIsShownAt(), "http://www9.vgregion.se/vastarvet/objekt.aspx?ID=VGM_A29408");
 			assertEquals(aggregation.getEdmObject(), "http://media1.vgregion.se/vastarvet/VGM/Fotobilder/K-bilder 2/22/1M16_A29408.JPG");
 			assertEquals(aggregation.getEdmProvider(), "Swedish Open Cultural Heritage");
