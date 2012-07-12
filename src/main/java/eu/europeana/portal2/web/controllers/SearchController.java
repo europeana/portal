@@ -80,7 +80,7 @@ public class SearchController {
 		@RequestParam(value = "rswUserId", required = false) String rswUserId,
 		@RequestParam(value = "rswDefqry", required = false) String rswDefqry,
 		@RequestParam(value = "start", required = false, defaultValue = "1") int start,
-		@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
+		@RequestParam(value = "rows", required = false, defaultValue="1") int rows,
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
 		@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 		HttpServletRequest request, HttpServletResponse response,
@@ -106,7 +106,12 @@ public class SearchController {
 		model.setEmbeddedLogo(embeddedLogo);
 		model.setRswUserId(rswUserId);
 		model.setRswDefqry(rswDefqry);
+		
 		model.setRefinements(qf);
+		
+		log.info("setRefinements on model to " + qf);
+		
+		
 		model.setStart(start);
 		model.setQuery(q);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
@@ -178,6 +183,12 @@ public class SearchController {
 				query.getQuery(), query.getQuery(), response.breadCrumbs);
 		briefBeanView.setPagination(pagination);
 		log.info("end of createResults");
+		
+		
+//		for(int i=0; i<response.breadCrumbs.size(); i++){
+	//		briefBeanView.addMessage("theme: " + response.breadCrumbs.get(i).getDisplay() );
+		//}
+		
 		return briefBeanView;
 	}
 
