@@ -43,6 +43,7 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
+import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
@@ -78,6 +79,15 @@ public class ObjectController {
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
 
+	@Value("#{europeanaProperties['api2.url']}")
+	private String api2url;
+
+	@Value("#{europeanaProperties['api2.key']}")
+	private String api2key;
+
+	@Value("#{europeanaProperties['api2.secret']}")
+	private String api2secret;
+
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,6 +101,7 @@ public class ObjectController {
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPageEnum returnTo,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
+			@RequestParam(value = "source", required = false, defaultValue="corelib") String source,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		
 		localeChangeInterceptor.preHandle(request, response, this);
@@ -111,20 +122,9 @@ public class ObjectController {
 		model.setShownAtProviderOverride(shownAtProviderOverride);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 
-		try {
-			FullBean fullBean = searchService.findById(collectionId, recordId);
-			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
-			model.setFullBeanView(fullBeanView);
-		} catch (SolrTypeException e) {
-			log.severe("SolrTypeException: " + e.getMessage());
-			e.printStackTrace();
-		} catch (EuropeanaQueryException e) {
-			log.severe("EuropeanaQueryException: " + e.getMessage());
-			e.printStackTrace();
-		} catch (Exception e) {
-			log.severe("Exception: " + e.getMessage());
-			e.printStackTrace();
-		}
+		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
+		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
+		model.setFullBeanView(fullBeanView);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		try {
@@ -137,6 +137,31 @@ public class ObjectController {
 		model.addMessage("citeValues: " + citeValues.length);
 
 		return page;
+	}
+
+	private FullBean getFullBean(String collectionId, String recordId, String source, HttpServletRequest request) {
+		FullBean fullBean = null;
+		if (source.equals("api2")) {
+			log.info("get from api2");
+			log.info("->new ApiFulldocParser");
+			ApiFulldocParser parser = new ApiFulldocParser(api2url, api2key, api2secret, request.getSession());
+			log.info("->parser.getFullBean");
+			fullBean = parser.getFullBean(collectionId, recordId);
+			log.info("fullBean: " + fullBean);
+		} else {
+			log.info("else get from " + source);
+			try {
+				fullBean = searchService.findById(collectionId, recordId);
+			} catch (SolrTypeException e) {
+				log.severe("SolrTypeException: " + e.getMessage());
+				e.printStackTrace();
+			} catch (Exception e) {
+				log.severe("Exception: " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		log.info("fullBean: " + fullBean);
+		return fullBean;
 	}
 
 	private Map<String, String[]> sanitizeParameters(HttpServletRequest request) {

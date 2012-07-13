@@ -33,7 +33,7 @@ public class AbstractSearchResults extends ApiResponse {
 	public List<? extends BriefBean> items;
 	
 	public AbstractSearchResults(String action) {
-		super(action);
+		super(null, action);
 	}
 
 	public AbstractSearchResults() {

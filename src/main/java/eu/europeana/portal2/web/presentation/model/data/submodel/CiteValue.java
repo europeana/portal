@@ -61,8 +61,6 @@ public class CiteValue {
 	public String getCiteText() {
 		String authorNames = StringArrayUtils.formatList(model.getDocument().getDcCreator());
 		StringBuilder citeStyleText = new StringBuilder();
-		log.info("cite style: " + value.toString());
-		log.info("authorNames: " + authorNames);
 
 		switch (value) {
 			case WIKIPEDIA:
@@ -105,5 +103,4 @@ public class CiteValue {
 		}
 		return citeStyleText.toString();
 	}
-
 }

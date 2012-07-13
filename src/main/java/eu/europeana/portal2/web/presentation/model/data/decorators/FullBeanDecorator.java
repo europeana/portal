@@ -423,7 +423,6 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String[] getDcDescription() {
-		log.info("getDcDescription()");
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			//log.info("description: " + proxy.getDcDescription());
@@ -436,8 +435,7 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String getDcDescriptionCombined() {
-		return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(),
-				";"));
+		return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(), ";"));
 	}
 
 	public String[] getDcFormat() {

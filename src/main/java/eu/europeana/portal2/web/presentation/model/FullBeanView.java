@@ -27,7 +27,6 @@ import java.util.List;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 
 /**
  * todo: javadoc

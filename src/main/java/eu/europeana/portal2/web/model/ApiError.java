@@ -27,7 +27,7 @@ public class ApiError extends ApiResponse {
 	public boolean success = false;
 	
 	public ApiError(String action, String error) {
-		super(action);
+		super(null, action);
 		this.error = error;
 	}
 
