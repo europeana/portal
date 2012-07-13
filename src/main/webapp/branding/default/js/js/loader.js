@@ -40,14 +40,14 @@ js.loader = {
 			
 			scripts[i].name = scripts[i].name || scripts[i].file;
 			
-			this.loader_status[ scripts[i].name ] = {
-				
-				load_attempts : 0,
-				placed_in_dom : false,
-				script_loaded : false,
-				interval : null
-				
-			};
+			if( !this.loader_status[scripts[i].name] || ! this.loader_status[scripts[i].name].placed_in_dom ){
+				this.loader_status[ scripts[i].name ] = {
+					load_attempts : 0,
+					placed_in_dom : false,
+					script_loaded : false,
+					interval : null
+				};
+			}
 			
 			this.checkScriptDependencies( scripts[i] );
 			
