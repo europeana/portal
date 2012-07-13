@@ -1,38 +1,3 @@
-
-(function(){
-	
-	if(!jQuery("#resultSize")){
-		jQuery("#query-search").append('<input type="hidden" id="resultSize" name="rows" value="1"/>');		
-	}
-
-	var setResultSize = function(screenWidth){		
-		if(screenWidth<321){
-			jQuery("#resultSize").val(1);
-		}
-		else if(screenWidth<541){
-			jQuery("#resultSize").val(4);
-		}
-		else if(screenWidth<921){
-			jQuery("#resultSize").val(6);
-		}
-		else if(screenWidth<1001){
-			jQuery("#resultSize").val(8);
-		}
-		else{
-			jQuery("#resultSize").val(12);
-		}
-		console.log("set result size to " + jQuery("#resultSize").val() + " for screen width " + screenWidth);
-	};
-	
-	jQuery(window).resize(function(){
-		setResultSize(document.documentElement.clientWidth);
-	});
-
-	setResultSize(document.documentElement.clientWidth);
-
-})();
-
-
 /**
  * Andy MacLean:
  *  
@@ -43,36 +8,37 @@
  * 
  * */
 
-/*
-jQuery(document).ready(function(){
-
-	jQuery("#query-search").append('<input type="hidden" id="resultSize" name="rows" value="1"/>');
+(function(){
 	
 	var setResultSize = function(screenWidth){
 		
+		if(!document.getElementById('resultSize')){
+			var hiddenField = document.createElement('input');
+			hiddenField.setAttribute("id",		"resultSize");
+			hiddenField.setAttribute("type",	"hidden");
+			hiddenField.setAttribute("name",	"rows");
+			hiddenField.setAttribute("value",	"1");
+			document.getElementById('query-search').appendChild(hiddenField);
+		}
+
 		if(screenWidth<321){
-			jQuery("#resultSize").val(1);
+			document.getElementById('resultSize').setAttribute("value", "1");
 		}
 		else if(screenWidth<541){
-			jQuery("#resultSize").val(4);
+			document.getElementById('resultSize').setAttribute("value", "4");
 		}
 		else if(screenWidth<921){
-			jQuery("#resultSize").val(6);
+			document.getElementById('resultSize').setAttribute("value", "6");
 		}
 		else if(screenWidth<1001){
-			jQuery("#resultSize").val(8);
+			document.getElementById('resultSize').setAttribute("value", "8");
 		}
 		else{
-			jQuery("#resultSize").val(12);
+			document.getElementById('resultSize').setAttribute("value", "12");
 		}
-		console.log("set result size to " + jQuery("#resultSize").val() + " for screen width " + screenWidth);
-	};
-	
-	jQuery(window).resize(function(){
-		setResultSize(document.documentElement.clientWidth);
-	});
-	
+		//console.log("set result size to " + jQuery("#resultSize").val() + " for screen width " + screenWidth);
+	};	
+	window.onresize = setResultSize(document.documentElement.clientWidth);
 	setResultSize(document.documentElement.clientWidth);
-	
-});
-*/
+
+})();

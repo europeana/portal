@@ -5,9 +5,10 @@
 		loadDependencies();
 
 		// Andy: conditional load test
-		var testCallback = function(){ console.log("in testCallback!"); };
 		jQuery("#query-input").focus(function(){
-			europeana_bootstrap.index.loadResultSizer(testCallback);
+			europeana_bootstrap.common.loadResultSizer(
+				function(){ console.log("in callback for index.js loadResultSizer"); }
+			);
 		});
 	}
 	
