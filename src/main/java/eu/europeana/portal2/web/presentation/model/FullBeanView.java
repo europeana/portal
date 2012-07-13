@@ -48,6 +48,6 @@ public interface FullBeanView extends Serializable {
 
 	List<? extends BriefBean> getParents();
 
-	FullBean getFullDoc() throws EuropeanaQueryException;
+	FullBean getFullDoc();
 
 }

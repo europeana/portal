@@ -115,7 +115,7 @@ public class FullBeanViewImpl implements FullBeanView {
 	}
 
 	@Override
-	public FullBean getFullDoc() throws EuropeanaQueryException {
+	public FullBean getFullDoc() {
 		return fullDoc;
 	}
 

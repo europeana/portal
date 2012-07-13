@@ -52,8 +52,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 		return format;
 	}
 
-	public void setFullBeanView(FullBeanView fullBeanView)
-			throws EuropeanaQueryException {
+	public void setFullBeanView(FullBeanView fullBeanView) {
 		this.fullBeanView = fullBeanView;
 		this.document = fullBeanView.getFullDoc();
 	}
