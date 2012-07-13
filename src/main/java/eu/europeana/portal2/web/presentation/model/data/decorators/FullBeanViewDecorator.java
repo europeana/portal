@@ -59,7 +59,7 @@ public class FullBeanViewDecorator implements FullBeanView {
 	}
 
 	@Override
-	public FullBean getFullDoc() throws EuropeanaQueryException {
+	public FullBean getFullDoc() {
 		if (fullBeanView != null) {
 			return new FullBeanDecorator(fullBeanView.getFullDoc());
 		}

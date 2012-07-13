@@ -44,46 +44,10 @@ import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class FullBeanDecorator implements FullBean {
 
-	@Override
-	public EuropeanaProxy getEuropeanaProxy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setEdmConceptBroaderLabel(List<Map<String, String>> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setEdmPlaceBroaderTerm(String[] arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setEdmTimespanBroaderLabel(List<Map<String, String>> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setEdmTimespanBroaderTerm(String[] arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setEuropeanaProxy(EuropeanaProxy arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private static final Logger log = Logger.getLogger(FullBeanDecorator.class.getName());
 
 	private FullBean fulldoc;
-
+	
 	public FullBeanDecorator(FullBean fulldoc) {
 		this.fulldoc = fulldoc;
 	}
@@ -1036,5 +1000,35 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public EuropeanaAggregation getEuropeanaAggregation() {
 		return fulldoc.getEuropeanaAggregation();
+	}
+
+	@Override
+	public void setEuropeanaProxy(EuropeanaProxy europeanaProxy) {
+		fulldoc.setEuropeanaProxy(europeanaProxy);
+	}
+
+	@Override
+	public EuropeanaProxy getEuropeanaProxy() {
+		return fulldoc.getEuropeanaProxy();
+	}
+
+	@Override
+	public void setEdmTimespanBroaderTerm(String[] edmTimespanBroaderTerm) {
+		fulldoc.setEdmTimespanBroaderTerm(edmTimespanBroaderTerm);
+	}
+
+	@Override
+	public void setEdmTimespanBroaderLabel(List<Map<String, String>> edmTimespanBroaderLabel) {
+		fulldoc.setEdmTimespanBroaderLabel(edmTimespanBroaderLabel);
+	}
+
+	@Override
+	public void setEdmConceptBroaderLabel(List<Map<String, String>> edmConceptBroaderLabel) {
+		fulldoc.setEdmConceptBroaderLabel(edmConceptBroaderLabel);
+	}
+
+	@Override
+	public void setEdmPlaceBroaderTerm(String[] edmPlaceBroaderTerm) {
+		fulldoc.setEdmPlaceBroaderTerm(edmPlaceBroaderTerm);
 	}
 }
