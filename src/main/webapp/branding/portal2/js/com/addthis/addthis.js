@@ -557,7 +557,7 @@ com.addthis = {
 			*	Regardless of the number of times it's specified, only one language is
 			*	supported per page.
 			*
-			*	default : user’s browser
+			*	default : user's browser
 			*/
 		   ui_language : undefined,
 		   

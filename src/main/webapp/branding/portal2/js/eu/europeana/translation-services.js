@@ -197,7 +197,7 @@ eu.europeana.translation_services = {
 	
 	
 	/**
-	 *	make sure the translator’s translations array exists for the selected locale
+	 *	make sure the translator's translations array exists for the selected locale
 	 * 
 	 * @param translator
 	 */
@@ -210,7 +210,7 @@ eu.europeana.translation_services = {
 	
 	
 	/**
-	 *	make sure the translator’s translations arrays have default values for each source text node
+	 *	make sure the translator's translations arrays have default values for each source text node
 	 *
 	 * @param translator
 	 * @param i
