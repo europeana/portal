@@ -16,7 +16,7 @@
 <%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
-	<%--@ include file="/WEB-INF/jsp/default/_common/html/header.jsp" --%>
+	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 	<%-- new! --%>
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/content.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/html/footer.jsp" %>
