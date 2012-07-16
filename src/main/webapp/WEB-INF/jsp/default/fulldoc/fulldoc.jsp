@@ -11,7 +11,7 @@
 
 <%-- next 4 are new ones! --%>
 <%@ include file="/WEB-INF/jsp/default/fulldoc/variables/variables.jsp" %>
-<%-- @ include file="/WEB-INF/jsp/default/fulldoc/macros/display-ese-data-as-meta.jsp" --%>
+<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/display-ese-data-as-meta.jsp" %>
 <%-- @ include file="/WEB-INF/jsp/default/fulldoc/macros/display-ese-data-as-html.jsp" --%>
 <%-- @ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" --%>
 
