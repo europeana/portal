@@ -164,7 +164,7 @@ eu.europeana.translation_services = {
 			i,
 			ii = self.text_nodes.length;
 		
-		// set the translator’s to locale value
+		// set the translator's to locale value
 		self.to_locale = jQuery(this).val();
 		if ( self.to_locale.length < 1 ) { return; }
 		
