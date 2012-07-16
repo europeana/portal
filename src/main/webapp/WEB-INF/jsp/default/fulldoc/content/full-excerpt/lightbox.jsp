@@ -16,10 +16,18 @@
 			</div>
 
 			<img id="lightbox_image" class="content-image" style="display:none"
-				<c:if test='${lightboxRef?lower_case?ends_with(".jpg") || lightboxRef?lower_case?ends_with(".jpeg") || lightboxRef?lower_case?ends_with(".png")}'>  
+			
+				<c:set var="lightboxLower"	scope="page" value="${fn:toLowerCase(lightboxRef)}"/>
+				
+				<c:set var="lightbox_jpg"	scope="page" value="${fn:endsWith(lightboxLower, '.jpg')}"/>
+				<c:set var="lightbox_jpeg"	scope="page" value="${fn:endsWith(lightboxLower, '.jpeg')}"/>
+				<c:set var="lightbox_png"	scope="page" value="${fn:endsWith(lightboxLower, '.png')}"/>
+			
+				<c:if test='${true || lightbox_jpg || lightbox_jpeg || lightbox_png }'>
 					src="${lightboxRef}"
 				</c:if>
 			/>
+			
 			<div class="lightbox-rights" id="rights-collapsed">
 				<@displayRights true/>
 			</div>
@@ -35,7 +43,7 @@
 						</div>
 					</#if>
 					<c:if test="${!empty model.fieldsLightbox && fn:length(model.fieldsLightbox) > 0}">
-						<%-- @displayEseDataAsHtml model.fieldsLightbox 'div' false false/ --%>
+						<@displayEseDataAsHtml model.fieldsAdditional 'div'  false false/>
 					</c:if>
 					<div class="original-context">
 						<%-- <#include '/fulldoc/content/sidebar-left/original-context.ftl'/> --%>
