@@ -140,16 +140,12 @@ public class ObjectController {
 	}
 
 	private FullBean getFullBean(String collectionId, String recordId, String source, HttpServletRequest request) {
+		log.info("using source: " + source);
 		FullBean fullBean = null;
 		if (source.equals("api2")) {
-			log.info("get from api2");
-			log.info("->new ApiFulldocParser");
 			ApiFulldocParser parser = new ApiFulldocParser(api2url, api2key, api2secret, request.getSession());
-			log.info("->parser.getFullBean");
 			fullBean = parser.getFullBean(collectionId, recordId);
-			log.info("fullBean: " + fullBean);
 		} else {
-			log.info("else get from " + source);
 			try {
 				fullBean = searchService.findById(collectionId, recordId);
 			} catch (SolrTypeException e) {

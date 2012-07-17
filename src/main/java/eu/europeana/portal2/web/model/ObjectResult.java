@@ -1,11 +1,14 @@
 package eu.europeana.portal2.web.model;
 
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.portal2.web.model.abstracts.ApiResponse;
 
 public class ObjectResult extends ApiResponse {
 	
-	public FullBean object;
+	public FullBean4Json object;
+	
+	public ObjectResult(){
+		// used by Jackson
+	};
 	
 	public ObjectResult(String apikey, String action) {
 		super(apikey, action);

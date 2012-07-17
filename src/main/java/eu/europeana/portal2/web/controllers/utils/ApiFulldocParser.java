@@ -47,6 +47,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.portal2.web.model.ObjectResult;
+import eu.europeana.portal2.web.model.json.Json2FullBean;
 
 public class ApiFulldocParser {
 	
@@ -75,17 +76,15 @@ public class ApiFulldocParser {
 
 	private FullBean transformJsonToBean(String json) {
 		FullBean fullBean = null;
-		ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
+		log.info(json);
 		try {
-			ObjectResult user = mapper.readValue(json, ObjectResult.class);
+			Json2FullBean parser = new Json2FullBean(json);
+			fullBean = parser.extractFullBean();
 		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return fullBean;
@@ -109,6 +108,7 @@ public class ApiFulldocParser {
 			
 			HttpClient client = new HttpClient();
 			GetMethod method = new GetMethod(apiUrl + "/record/" + collectionId + "/" + recordId + ".json");
+			log.info(method.getURI().toString());
 			method.setRequestHeader("Cookie", apiSession);
 			
 			int statusCode = client.executeMethod(method);
