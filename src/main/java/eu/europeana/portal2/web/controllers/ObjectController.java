@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
@@ -49,7 +48,6 @@ import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
-import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
@@ -140,23 +138,51 @@ public class ObjectController {
 	}
 
 	private FullBean getFullBean(String collectionId, String recordId, String source, HttpServletRequest request) {
-		log.info("using source: " + source);
+		log.info("Get full bean using source: " + source);
 		FullBean fullBean = null;
 		if (source.equals("api2")) {
-			ApiFulldocParser parser = new ApiFulldocParser(api2url, api2key, api2secret, request.getSession());
-			fullBean = parser.getFullBean(collectionId, recordId);
+			fullBean = getFullBeanFromApi(collectionId, recordId, request);
 		} else {
-			try {
-				fullBean = searchService.findById(collectionId, recordId);
-			} catch (SolrTypeException e) {
-				log.severe("SolrTypeException: " + e.getMessage());
-				e.printStackTrace();
-			} catch (Exception e) {
-				log.severe("Exception: " + e.getMessage());
-				e.printStackTrace();
-			}
+			fullBean = getFullBeanFromCorelib(collectionId, recordId);
 		}
-		log.info("fullBean: " + fullBean);
+		return fullBean;
+	}
+	
+	/**
+	 * Get FullBean through API2 calls
+	 * @param collectionId
+	 * @param recordId
+	 * @param request
+	 * @return
+	 */
+	private FullBean getFullBeanFromApi(String collectionId, String recordId, HttpServletRequest request) {
+		FullBean fullBean = null;
+		ApiFulldocParser parser = new ApiFulldocParser(api2url, api2key, api2secret, request.getSession());
+		fullBean = parser.getFullBean(collectionId, recordId);
+		if (fullBean == null) {
+			log.severe("It is not possible to retrieve FullBean though API2 calls so now the controller tries it with corelib calls");
+			fullBean = getFullBeanFromCorelib(collectionId, recordId);
+		}
+		return fullBean;
+	}
+
+	/**
+	 * Get FullBean through corelib calls
+	 * @param collectionId
+	 * @param recordId
+	 * @return
+	 */
+	private FullBean getFullBeanFromCorelib(String collectionId, String recordId) {
+		FullBean fullBean = null;
+		try {
+			fullBean = searchService.findById(collectionId, recordId);
+		} catch (SolrTypeException e) {
+			log.severe("SolrTypeException: " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			log.severe("Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
 		return fullBean;
 	}
 

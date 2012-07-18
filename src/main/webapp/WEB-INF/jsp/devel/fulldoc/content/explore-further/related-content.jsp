@@ -11,10 +11,10 @@
     <c:if test="${!empty model.fullBeanView.parent}">
       <%-- EXAMPLE CODE FOR PARENT BREADCRUMB --%>
       <c:forEach items="${model.fullBeanView.parents}" var="parent">
-				${parent.title}&nbsp;&gt;
-			</c:forEach>
-			${model.document.title}
-			<%-- END OF EXAMPLE CODE FOR PARENT BREADCRUMB --%>
+        ${parent.title}&nbsp;&gt;
+      </c:forEach>
+      ${model.document.title}
+      <%-- END OF EXAMPLE CODE FOR PARENT BREADCRUMB --%>
 
       <a href="${model.fullBeanView.parent.fullDocUrl}"
         title="${model.fullBeanView.parent.title}" class="parent"

@@ -17,20 +17,8 @@
 
 package eu.europeana.portal2.web.controllers.utils;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
@@ -43,22 +31,19 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.portal2.web.model.ObjectResult;
 import eu.europeana.portal2.web.model.json.Json2FullBean;
 
 public class ApiFulldocParser {
 	
+	private static final String SESSION_KEY = "apisession";
 	private static final Logger log = Logger.getLogger(ApiFulldocParser.class.getName());
 
 	private String apiUrl;
 	private String api2key;
 	private String api2secret;
 	private HttpSession session;
-
-	private int itemLimit;
 
 	public ApiFulldocParser(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		this.apiUrl = apiUrl;
@@ -70,21 +55,27 @@ public class ApiFulldocParser {
 	public FullBean getFullBean(String collectionId, String recordId) {
 		FullBean fullBean = null;
 		String json = getFullBeanAsJson(collectionId, recordId);
+		if (json == null) {
+			return fullBean;
+		}
 		fullBean = transformJsonToBean(json);
+		json = null;
 		return fullBean;
 	}
 
 	private FullBean transformJsonToBean(String json) {
 		FullBean fullBean = null;
-		log.info(json);
 		try {
 			Json2FullBean parser = new Json2FullBean(json);
 			fullBean = parser.extractFullBean();
 		} catch (JsonParseException e) {
+			log.severe(e.getMessage());
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
+			log.severe(e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
+			log.severe(e.getMessage());
 			e.printStackTrace();
 		}
 		return fullBean;
@@ -95,20 +86,21 @@ public class ApiFulldocParser {
 		try {
 			String apiSession = null;
 			if (session != null) {
-				apiSession = (String) session.getAttribute("apisession");
+				apiSession = (String) session.getAttribute(SESSION_KEY);
 			}
 			if (apiSession == null || apiSession.equals("null")) {
 				apiSession = requestApiSession();
 				if (apiSession != null && session != null) {
-					session.setAttribute("apisession", apiSession);
+					session.setAttribute(SESSION_KEY, apiSession);
+				} else {
+					log.severe("It was unsuccessfull to get apiSession");
+					return jsonResponse;
 				}
-			} else {
-				log.info("using apiSession: " + apiSession);
 			}
 			
 			HttpClient client = new HttpClient();
 			GetMethod method = new GetMethod(apiUrl + "/record/" + collectionId + "/" + recordId + ".json");
-			log.info(method.getURI().toString());
+			log.info("get URL: " + method.getURI().toString());
 			method.setRequestHeader("Cookie", apiSession);
 			
 			int statusCode = client.executeMethod(method);
@@ -121,7 +113,7 @@ public class ApiFulldocParser {
 			IOUtils.copy(method.getResponseBodyAsStream(), writer, "UTF-8");
 			jsonResponse = writer.toString();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log.severe(e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -140,11 +132,15 @@ public class ApiFulldocParser {
 			apiSession = method.getResponseHeader("Set-Cookie").getValue();
 			if (apiSession != null) {
 				apiSession = apiSession.substring(0, apiSession.indexOf(";"));
+			} else {
+				log.severe("No cookie information in API2 login response");
 			}
-		} catch (HttpException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (HttpException e) {
+			log.severe(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			log.severe(e.getMessage());
+			e.printStackTrace();
 		}
 		log.info("resulted apiSession: " + apiSession);
 		return apiSession;

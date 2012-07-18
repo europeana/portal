@@ -16,17 +16,10 @@
  */
 package eu.europeana.portal2.web.model;
 
-import java.util.List;
-
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.corelib.solr.bean.impl.BriefBeanImpl;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 
 /**
  * @see eu.europeana.corelib.definitions.solr.beans.FullBean
- * 
- * @author Yorgos.Mamakis@ kb.nl
- * 
  */
 public class FullBean4Json extends FullBeanImpl {
 

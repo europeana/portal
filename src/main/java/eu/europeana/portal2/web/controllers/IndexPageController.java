@@ -177,8 +177,7 @@ public class IndexPageController {
 		int i = 1;
 		while (keepFetching) {
 			try {
-				String label = String.format(
-						"notranslate_carousel-item-%d_a_url_t", i);
+				String label = String.format("notranslate_carousel-item-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url)
 						&& !StringUtils.equals(label, url)) {

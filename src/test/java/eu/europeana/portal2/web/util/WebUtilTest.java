@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
+import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
 import eu.europeana.portal2.web.model.ObjectResult;
@@ -32,11 +33,8 @@ public class WebUtilTest {
 		ObjectMapper mapper = new ObjectMapper();
 		// Json2FullBean parser = new Json2FullBean();
 		String json = Json2FullBean.fileToString(baseDir + "/src/test/api2.results/91627.7E8AAB01E1C2AD825615C3153CF82C1B2D39B224.json.js");
-		System.out.println(json.length());
 		json = json.replaceAll(",\"[^\"]+\":null", "");
 		assertNotNull(json);
-		System.out.println(json.length());
-		System.out.println(json);
 
 		try {
 			ObjectResult result = mapper.readValue(json, ObjectResult.class);
@@ -61,12 +59,14 @@ public class WebUtilTest {
 			fullBean.getAggregations().get(0).getEdmDataProvider();
 			assertEquals(1, fullBean.getRelatedItems().size());
 			assertEquals("BriefBeanImpl", fullBean.getRelatedItems().get(0).getClass().getSimpleName());
+			assertNotNull(fullBean.getRelatedItems().get(0));
+			BriefBean relatedItem = fullBean.getRelatedItems().get(0);
+			assertEquals("DocType", relatedItem.getType().getClass().getSimpleName());
+			assertEquals("DocType", fullBean.getProxies().get(0).getEdmType().getClass().getSimpleName());
 			assertEquals("ProvidedCHOImpl", fullBean.getProvidedCHOs().get(0).getClass().getSimpleName());
 			assertEquals("AggregationImpl", fullBean.getAggregations().get(0).getClass().getSimpleName());
 			assertEquals(6, fullBean.getEuropeanaCompleteness());
 			assertEquals("Kulturhistoria", fullBean.getWhat()[0]);
-			System.out.println("DocType: " + fullBean.getProxies().get(0).getEdmType());
-			assertEquals("DocType", fullBean.getProxies().get(0).getEdmType().getClass().getSimpleName());
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
