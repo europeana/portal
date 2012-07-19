@@ -85,6 +85,9 @@ public class ObjectController {
 
 	@Value("#{europeanaProperties['api2.secret']}")
 	private String api2secret;
+	
+	// whether the source is API2
+	private boolean isSoureApi2 = false;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -106,7 +109,8 @@ public class ObjectController {
 		log.info("=========== /record/{collectionId}/{recordId}.html ============");
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 		log.info("Inside the ObjectController....." + locale.getLanguage().toString());
-
+		isSoureApi2 = false;
+		
 		FullDocPage model = new FullDocPage();
 //		model.setLocale(locale)
 		model.setCollectionId(collectionId);
@@ -132,7 +136,6 @@ public class ObjectController {
 			e.printStackTrace();
 		}
 		CiteValue[] citeValues = model.getCiteStyles();
-		model.addMessage("citeValues: " + citeValues.length);
 
 		return page;
 	}
@@ -162,6 +165,8 @@ public class ObjectController {
 		if (fullBean == null) {
 			log.severe("It is not possible to retrieve FullBean though API2 calls so now the controller tries it with corelib calls");
 			fullBean = getFullBeanFromCorelib(collectionId, recordId);
+		} else {
+			isSoureApi2 = true;
 		}
 		return fullBean;
 	}
