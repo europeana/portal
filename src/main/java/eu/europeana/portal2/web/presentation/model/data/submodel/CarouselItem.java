@@ -78,4 +78,8 @@ public class CarouselItem {
 	public String getImgHeight() {
 		return String.format("notranslate_carousel-item-%d_img_height_t", i);
 	}
+	
+	public int getId() {
+		return i;
+	}
 }

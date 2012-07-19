@@ -1,0 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" 
+%>{"id":${item.id},"url":"${item.url}","anchorUrl":"<spring:message code="${item.anchorUrl}" />","anchorTitle":"<spring:message code="${item.anchorTitle}" />","anchorTarget":"<spring:message code="${item.anchorTarget}" />","imgUrl":"<spring:message code="${item.imgUrl}" />","imgAlt":"<spring:message code="${item.imgAlt}" />","imgWidth":"<spring:message code="${item.imgWidth}" />","imgHeight":"<spring:message code="${item.imgHeight}" />"}
