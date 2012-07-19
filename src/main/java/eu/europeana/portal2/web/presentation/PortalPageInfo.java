@@ -54,6 +54,7 @@ public enum PortalPageInfo implements PageInfo {
 	FULLDOC_SRW(null, "fulldoc/full-doc-srw"),
 
 	INDEX("index.html", "Europeana - Homepage", "index/index"),
+	CAROUSEL("carousel.html", "Europeana - Carousel", "carousel/carousels"),
 
 	MAP("map.html", "Europeana - Map", "map/map"),
 	MAP_JSON("map.json", "map/map-json"),
