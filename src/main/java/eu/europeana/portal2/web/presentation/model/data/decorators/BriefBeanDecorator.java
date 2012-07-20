@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -112,34 +113,50 @@ public class BriefBeanDecorator implements BriefBean {
 		return StringEscapeUtils.escapeXml(StringUtils.join(briefDoc.getTitle(), ' '));
 	}
 
-	/*
-	 * @Override public String getThumbnail() { return
-	 * getThumbnail("BRIEF_DOC"); }
-	 */
+	public String getThumbnail() {
+		return getThumbnail("BRIEF_DOC"); 
+	}
 
-	/*
-	 * private String getThumbnail(String size) { try { String tn =
-	 * StringUtils.defaultIfBlank(briefDoc.getThumbnail(), ""); UrlBuilder url =
-	 * null; if (model.isUseCache()) { url = new
-	 * UrlBuilder(model.getCacheUrl()); url.addParam("uri",
-	 * URLEncoder.encode(tn, "UTF-8"), true); url.addParam("size", size, true);
-	 * url.addParam("type", getType().toString(), true); } else { url = new
-	 * UrlBuilder(tn); } return model.getPortalFormattedUrl(url).toString(); }
-	 * catch (UnsupportedEncodingException e) { return e.getMessage(); } }
-	 */
+	private String getThumbnail(String size) {
+		try {
+			String tn = StringUtils.defaultIfBlank(briefDoc.getEdmObject()[0], "");
+			log.info("tn: " + tn);
+			UrlBuilder url = null;
+			// TODO: check this!!!!
+			/*
+			if (model.isUseCache()) {
+				log.info("isUseCache");
+				url = new UrlBuilder(model.getCacheUrl());
+				log.info("url: " + url.toString());
+				url.addParam("uri", URLEncoder.encode(tn, "UTF-8"), true);
+				log.info("url: " + url.toString());
+				url.addParam("size", size, true);
+				log.info("url: " + url.toString());
+				url.addParam("type", getType().toString(), true);
+				log.info("url: " + url.toString());
+			} else {
+				log.info("!isUseCache");
+				*/
+				url = new UrlBuilder(tn);
+			//}
+			log.info("url: " + url.toString());
+			return model.getPortalFormattedUrl(url).toString();
+		} catch (UnsupportedEncodingException e) {
+			return e.getMessage();
+		}
+	}
 
-	/*
-	 * public String getThumbnailJSON() { return
-	 * StringUtils.replace(getThumbnail(), "&amp;", "&"); }
-	 */
-	/*
-	 * public String getIcon() { return getThumbnail("TINY"); }
-	 */
+	public String getThumbnailJSON() {
+		return StringUtils.replace(getThumbnail(), "&amp;", "&");
+	}
 
-	/*
-	 * public String getIconJSON() { return StringUtils.replace(getIcon(),
-	 * "&amp;", "&"); }
-	 */
+	public String getIcon() {
+		return getThumbnail("TINY"); 
+	}
+	
+	public String getIconJSON() { 
+		return StringUtils.replace(getIcon(), "&amp;", "&");
+	}
 
 	/*
 	 * @Override public String[] getThumbnails() { return null;

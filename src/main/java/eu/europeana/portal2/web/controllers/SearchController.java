@@ -1,6 +1,5 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.io.File;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -8,7 +7,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,22 +17,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.corelib.web.model.PageInfo;
-import eu.europeana.corelib.web.utils.NavigationUtils;
-import eu.europeana.portal2.web.model.ModelUtils;
-import eu.europeana.portal2.web.model.SearchResults;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
-import eu.europeana.portal2.web.presentation.model.ResultPagination;
-import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.QueryUtil;
+import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
 public class SearchController {
@@ -43,15 +34,6 @@ public class SearchController {
 	// private ThumbnailService thumbnailService;
 	
 	private static final Logger log = Logger.getLogger(SearchController.class.getName());
-
-	@Value("#{europeanaProperties['solr.url']}")
-	private String solrUrl;
-
-	@Value("#{europeanaProperties['mongodb.host']}")
-	private String mongodbHost;
-	
-	@Value("#{europeanaProperties['static.page.path']}")
-	private String staticPagePath;
 
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
@@ -89,11 +71,6 @@ public class SearchController {
 		localeChangeInterceptor.preHandle(request, response, this);
 		
 		log.info("============== START SEARCHING ==============");
-		log.info(String.format("solrUrl: %s, mongodbHost: %s", solrUrl, mongodbHost));
-		log.info(String.format("staticPagePath: %s", staticPagePath));
-		File staticPageDir = new File(staticPagePath);
-		log.info(String.format("staticPagePath exists: %b", staticPageDir.exists()));
-		log.info(String.format("staticPagePath is directory: %b", staticPageDir.isDirectory()));
 
 		SearchPage model = new SearchPage();
 		model.setEmbeddedBgColor(embeddedBgColor);
@@ -123,7 +100,7 @@ public class SearchController {
 
 		log.info("query: " + query);
 		try {
-			BriefBeanView briefBeanView = createResults(clazz, profile, query, start, rows);
+			BriefBeanView briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows);
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
@@ -139,6 +116,7 @@ public class SearchController {
 		try {
 			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (Exception e) {
+			log.severe(e.getMessage());
 			e.printStackTrace();
 		}
 		// model.addMessage("theme: " + model.getTheme());
@@ -146,6 +124,7 @@ public class SearchController {
 		return page;
 	}
 
+	/*
 	private BriefBeanView createResults(Class<? extends BriefBean> clazz, String profile, Query query, int start, int rows) 
 			throws SolrTypeException {
 		log.info("createResults");
@@ -177,6 +156,7 @@ public class SearchController {
 		log.info("end of createResults");
 		return briefBeanView;
 	}
+	*/
 
 	public ConfigInterceptor getCorelib_web_configInterceptor() {
 		return corelib_web_configInterceptor;

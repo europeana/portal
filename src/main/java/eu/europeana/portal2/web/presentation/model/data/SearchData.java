@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
@@ -35,7 +36,7 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 
 	protected BriefBeanViewDecorator briefBeanView;
 
-	private SearchPage currentSearch; // = SearchPage.getDefault();
+	private SearchPageEnum currentSearch; // = SearchPage.getDefault();
 
 	private int startPage;
 
@@ -85,11 +86,11 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 		this.refineKeyword = refineKeyword;
 	}
 
-	public SearchPage getCurrentSearch() {
+	public SearchPageEnum getCurrentSearch() {
 		return currentSearch;
 	}
 
-	public void setCurrentSearch(SearchPage currentSearch) {
+	public void setCurrentSearch(SearchPageEnum currentSearch) {
 		this.currentSearch = currentSearch;
 	}
 

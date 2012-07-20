@@ -109,13 +109,14 @@ public class IndexPageController {
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
-			HttpServletRequest request, 
-			HttpServletResponse response, 
+			HttpServletRequest request,
+			HttpServletResponse response,
 			Locale locale)
 			throws Exception {
 		IndexPage model = new IndexPage();
 		// update dynamic items
 		updateFeedIfNeeded(model);
+		updatePinterest(model);
 		updateCarousel(model, locale);
 		updateFeaturedItem(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
@@ -206,8 +207,10 @@ public class IndexPageController {
 			}
 		}
 		model.setFeedEntries(feedEntries);
-
-		timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -pintTimeout.intValue()));
+	}
+	
+	private void updatePinterest(IndexPage model) {
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -pintTimeout.intValue()));
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
 			RSSFeedParser parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue());
 			List<FeedEntry> newEntries = parser.readFeed();

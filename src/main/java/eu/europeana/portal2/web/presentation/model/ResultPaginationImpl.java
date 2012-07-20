@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
+import org.eclipse.jetty.util.log.Log;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 
@@ -63,7 +64,8 @@ public class ResultPaginationImpl implements ResultPagination {
 					pageNumber != page));
 		}
 		this.breadcrumbs = breadcrumbs; //BreadCrumb.createList(requestQueryString);
-		presentationQuery.queryForPresentation = requestQueryString; //createQueryForPresentation(solrQuery);
+		Log.info("requestQueryString: " + requestQueryString);
+		presentationQuery.queryForPresentation = createQueryForPresentation(requestQueryString);
 		presentationQuery.queryToSave = requestQueryString;
 		presentationQuery.userSubmittedQuery = requestQueryString; // solrQuery.getQuery();
 		presentationQuery.typeQuery = removePresentationFilters(requestQueryString);
@@ -94,9 +96,9 @@ public class ResultPaginationImpl implements ResultPagination {
 		return urlString;
 	}
 
-	private static String createQueryForPresentation(SolrQuery solrQuery) {
+	private static String createQueryForPresentation(String query) {
 		StringBuilder queryString = new StringBuilder();
-		queryString.append("query").append("=").append(encode(solrQuery.getQuery()));
+		queryString.append("query").append("=").append(encode(query));
 		String[] facetQueries = null; //SolrQueryUtil.getFilterQueriesWithoutPhrases(solrQuery);
 		if (facetQueries != null) {
 			for (String facetTerm : facetQueries) {
