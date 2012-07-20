@@ -2,6 +2,8 @@ package eu.europeana.portal2.web.controllers;
 
 import static org.junit.Assert.*;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -18,7 +20,8 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.portal2.web.util.BeanUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:/servlet/portal2-mvc.xml"})
+// @ContextConfiguration({"classpath:/servlet/portal2-mvc.xml"})
+@ContextConfiguration({"/servlet/portal2-mvc.xml"})
 public class ObjectControllerTest {
 
 	@Resource
@@ -26,6 +29,10 @@ public class ObjectControllerTest {
 
 	@Test
 	public void testRecord() {
+		Map<String, String> env = System.getenv();
+		for (String envName : env.keySet()) {
+			System.out.format("%s=%s%n", envName, env.get(envName));
+		}
 		try {
 			FullBean fullBean = searchService.findById("91627", "B056315A5C6D63CF55A8735DBAA45884EC3F1ADE");
 			assertEquals(fullBean.getAbout(), "/91627/B056315A5C6D63CF55A8735DBAA45884EC3F1ADE");
