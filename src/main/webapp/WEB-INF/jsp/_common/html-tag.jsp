@@ -1,5 +1,5 @@
 <html <c:choose>
-<c:when test='${model.pageName == "fulldoc.html"}'>lang="${model.imageLocale}"
+<c:when test='${model.pageName == "fulldoc.html"}'>lang="${model.locale}"
 xmlns="http://www.w3.org/1999/xhtml"
 xmlns:og="http://ogp.me/ns#"
 xmlns:fb="http://www.facebook.com/2008/fbml"
