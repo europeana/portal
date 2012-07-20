@@ -20,6 +20,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
 <ul>
 <c:if test='${not empty model.carouselItems}'>
-	<c:forEach items="${model.carouselItems}" var="item"><li><a href="${item.url}" title="<spring:message code='${item.anchorTitle}'/>" target="<spring:message code='${item.anchorTarget}'/>"><img src="/${model.portalName}<spring:message code='${item.imgUrl}'/>" alt="<spring:message code='${item.imgAlt}'/>" width="<spring:message code='${item.imgWidth}'/>" height="<spring:message code='${item.imgHeight}'/>"/></a></li></c:forEach>
+  <c:set var="item" value="${model.carouselItems[0]}"/>
+	<li><a href="${item.url}" title="<spring:message code='${item.anchorTitle}'/>" target="<spring:message code='${item.anchorTarget}'/>"><img src="/${model.portalName}<spring:message code='${item.imgUrl}'/>" alt="<spring:message code='${item.imgAlt}'/>" width="<spring:message code='${item.imgWidth}'/>" height="<spring:message code='${item.imgHeight}'/>"/></a></li>
 </ul>
 </c:if>
