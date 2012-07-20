@@ -1,0 +1,44 @@
+/* static pages */
+    
+    #content {
+    	padding-top: 20px;
+    }
+    
+    #staticmenu h3, #staticmenu li {
+    	border-bottom: solid 1px #c0c0c0;
+    }
+    
+    #staticmenu ul {
+    	margin: 0;
+    	padding: 0 0 10px 0;
+    	list-style: none;
+    }
+    
+    #staticmenu li a {
+    	display: block;
+    	padding: 4px 0;
+    	color: #333;
+    }
+    
+    #content-main {
+    	overflow: auto;
+    	width: 910px;
+    }
+    
+    #content-main.with-sidebar {
+    	margin-left: 230px;
+    	width: 680px;
+    }
+    
+    #column-left {
+    	float: left;
+    	width: 324px;
+    	padding-right: 15px;
+    	border-right: 1px solid #ccc;
+    }
+    
+    #column-right {
+    	float: left;
+    	width: 324px;
+    	padding-left: 15px;
+    }

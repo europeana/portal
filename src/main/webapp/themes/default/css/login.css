@@ -1,0 +1,55 @@
+/* my europeana login */
+	
+	#content #explanation {
+		text-align: center;
+		font-size: 110%;
+	}
+
+    #login-boxes {
+    	height: 260px;
+    	margin-top: 20px;
+    }
+    
+    .login-box {
+        width: 333px;
+        margin: auto;
+    }
+    
+    .login-box h2 {
+    	padding-left: 10px;
+        border-bottom: 1px solid #ccc;
+        line-height: 140%;
+    }
+    
+    .login-box fieldset {
+        height: 156px;
+        background-color: #f3f3f3;
+        padding: 10px;
+    }
+    
+    .login-box label {
+        font-weight: bold;
+        color: #000;
+    }
+    
+    .login-box input[type=text] {
+        width: 250px;
+    }
+    
+    .login-box input {
+        margin-bottom: 10px;
+    }
+    
+    #login,
+    #register,
+    #request-password,
+    #login-response {
+    	display: none;
+    }
+    
+    #login-response {
+    	width: 318px;
+    	padding-left: 10px; 
+    	margin: 0 auto 0 auto;
+    }
+    

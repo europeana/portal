@@ -1,0 +1,39 @@
+
+	.navigation-icons {
+		position: relative;
+		z-index: 201;
+	}
+	
+	.navigation-pagination {
+		position: relative;
+		z-index: 201;
+	}
+
+	#menu-right {
+		top: 221px;
+		right: -19px;
+	}
+	
+		.locale-bg #menu-right,
+		.locale-el #menu-right,
+		.locale-ru #menu-right {
+	    	right: -18px;
+	    }
+	
+	
+	#query input[type=submit] {
+		padding: 3px 1px 3px 1px;
+		line-height: 1.1;
+	}
+	
+	.carousel .hover-box {
+		background-color: #000;
+	}
+	
+	#refine-search-form {
+		top: -63px;
+	}
+	
+	.item-metadata {
+		margin-bottom: 0;
+	}
