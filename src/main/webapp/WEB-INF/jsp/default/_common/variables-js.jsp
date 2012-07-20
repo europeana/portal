@@ -12,7 +12,7 @@
 <c:set var="error_occurred"><spring:message code="AnErrorOccurred_t" /></c:set>
 <c:set var="initial_rows" value='' />
 <c:if test="${!empty RequestParameters.initial_rows}">
-  <c:set var="initial_rows" value="${RequestParameters.initial_rows}" />
+<c:set var="initial_rows" value="${RequestParameters.initial_rows}" />
 </c:if>
 <c:set var="item_not_removed"><spring:message code="ItemNotRemoved_t" /></c:set>
 <c:set var="mapview_noresults"><spring:message code="MapViewNoResults_t" /></c:set>
@@ -25,11 +25,11 @@
 <c:set var="return_to_language"><spring:message code="ReturnToOriginalLanguage_t" /></c:set>
 <c:set var="rows" value='' />
 <c:if test="${!empty RequestParameters.rows}">
-  <c:set var="rows" value='${RequestParameters.rows}' />
+<c:set var="rows" value='${RequestParameters.rows}' />
 </c:if>
 <c:set var="sample_map_data" value='false' />
 <c:if test="${RequestParameters.sample_map_data}">
-  <c:set var="sample_map_data" value='${RequestParameters.sample_map_data}' />
+<c:set var="sample_map_data" value='${RequestParameters.sample_map_data}' />
 </c:if>
 <c:set var="save_item_failed"><spring:message code="ItemSaveFailed_t" /></c:set>
 <c:set var="save_tag_failed"><spring:message code="TagAdditionFailed_t" /></c:set>
@@ -46,7 +46,7 @@
 <c:set var="select_language"><spring:message code="SelectLanguage_t" /></c:set>
 <c:set var="startFrom" value="" />
 <c:if test="${!empty RequestParameters.startFrom}">
-  <c:set var="startFrom" value="${RequestParameters.startFrom}" />
+<c:set var="startFrom" value="${RequestParameters.startFrom}" />
 </c:if>
 <c:set var="translate_with"><spring:message code="essTranslateWith_t" /></c:set>
 <c:set var="timeline_result_limit_exceeded"><spring:message code="timelineDisclaimer_t" /></c:set>
@@ -66,14 +66,11 @@
 <c:set var="mapview_noresult_1"><spring:message code="NoMapItemsFound1_t" /></c:set>
 <c:set var="mapview_noresult_2"><spring:message code="NoMapItemsFound2_t" /></c:set>
 
-
 <c:if test="${model[maxMapResults] != null}">
-  <c:set var="map_limit">${model[maxMapResults]}</c:set>
-  <c:set var="map_limit_array" value="${map_limit}" />
-  <c:set var="mapview_result_limit_exceeded"><@spring.messageArgs "MapDisclaimer_t" map_limit_array/></c:set>
+<c:set var="map_limit">${model[maxMapResults]}</c:set>
+<c:set var="map_limit_array" value="${map_limit}" />
+<c:set var="mapview_result_limit_exceeded"><@spring.messageArgs "MapDisclaimer_t" map_limit_array/></c:set>
 </c:if>
-
-
 
 <c:set var="mapview_no_place_available"><spring:message code="MapNoPlaceAvailable_t" /></c:set>
 <c:set var="mapview_layers_tiles_attribution"><spring:message code="mapview_tiles_attribution_t" /></c:set>
@@ -86,13 +83,13 @@
 <c:set var="mapview_layers_osm_tiles"><spring:message code="mapview_layer_osm_tiles_t" /></c:set>
 
 <c:set var="search_query">
-  <c:choose><c:when test="${model.query}">true</c:when><c:otherwise>false</c:otherwise></c:choose>
+<c:choose><c:when test="${model.query}">true</c:when><c:otherwise>false</c:otherwise></c:choose>
 </c:set>
 <c:set var="search_addthis_pubid">
-  <c:choose>
-    <c:when test="${!empty model.addThisId}">${model.addThisId}</c:when>
-    <c:otherwise></c:otherwise>
-  </c:choose>
+<c:choose>
+<c:when test="${!empty model.addThisId}">${model.addThisId}</c:when>
+<c:otherwise></c:otherwise>
+</c:choose>
 </c:set>
 
 <script>
@@ -143,16 +140,15 @@ eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 </c:if>
 
 <c:choose>
-
 <c:when test="${model.pageName == 'index.html'}">
-  eu.europeana.vars.pinterest = {};
-  eu.europeana.vars.pinterest.item = {};
-  eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
-  <c:if test="${!empty model[pinterestItem]}">
-    eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
-    eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
-    eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
-  </c:if>
+eu.europeana.vars.pinterest = {};
+eu.europeana.vars.pinterest.item = {};
+eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
+<c:if test="${!empty model[pinterestItem]}">
+eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
+eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
+eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
+</c:if>
 </c:when>
 
 <c:when test="${model.pageName == 'full-doc.html'}">
@@ -184,10 +180,9 @@ eu.europeana.vars.item.uri = '${model.document.id}';
 </c:if>
 
 <c:if test="${model[lightboxRef]}">
-  eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
-  eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
+eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
+eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
 </c:if>
-
 </c:when>
 
 <c:when test="${model.pageName == 'myeuropeana.html'}">
@@ -214,38 +209,37 @@ eu.europeana.vars.msg.search_save_failed = '${search_save_failed}';
 <%-- localisation of results and map controls --%>
 eu.europeana.vars.msg.results = '${results}';
 
-eu.europeana.vars.mapview.noresults1        = '${mapview_noresult_1}';
-eu.europeana.vars.mapview.noresults2        = '${mapview_noresult_2}';
-eu.europeana.vars.google_maps_key         = '${model.googleMapsId}';
-eu.europeana.vars.msg.zoom              = '${mapview_zoom}';
-eu.europeana.vars.msg.zoomIn            = '${mapview_zoomIn}';
-eu.europeana.vars.msg.zoomOut           = '${mapview_zoomOut}';
-eu.europeana.vars.msg.zoomToSel           = '${mapview_zoomToSel}';
-eu.europeana.vars.msg.chooseMapType         = '${mapview_chooseMapType}';
-eu.europeana.vars.msg.navigateMap         = '${mapview_navigateMap}';
-eu.europeana.vars.msg.freeForm            = '${mapview_freeForm}';
-eu.europeana.vars.msg.matches           = '${matches}';
+eu.europeana.vars.mapview.noresults1 = '${mapview_noresult_1}';
+eu.europeana.vars.mapview.noresults2 = '${mapview_noresult_2}';
+eu.europeana.vars.google_maps_key = '${model.googleMapsId}';
+eu.europeana.vars.msg.zoom = '${mapview_zoom}';
+eu.europeana.vars.msg.zoomIn = '${mapview_zoomIn}';
+eu.europeana.vars.msg.zoomOut = '${mapview_zoomOut}';
+eu.europeana.vars.msg.zoomToSel = '${mapview_zoomToSel}';
+eu.europeana.vars.msg.chooseMapType = '${mapview_chooseMapType}';
+eu.europeana.vars.msg.navigateMap = '${mapview_navigateMap}';
+eu.europeana.vars.msg.freeForm = '${mapview_freeForm}';
+eu.europeana.vars.msg.matches = '${matches}';
 
-eu.europeana.vars.mapview.limit           = parseInt("${map_limit}".replace(",", ""));
-eu.europeana.vars.mapview.limit_exceeded      = '${mapview_result_limit_exceeded}';
-eu.europeana.vars.mapview.no_place          = '${mapview_no_place_available}';
-eu.europeana.vars.mapview.tiles_attribution     = '${mapview_layers_tiles_attribution}';
+eu.europeana.vars.mapview.limit = parseInt("${map_limit}".replace(",", ""));
+eu.europeana.vars.mapview.limit_exceeded = '${mapview_result_limit_exceeded}';
+eu.europeana.vars.mapview.no_place = '${mapview_no_place_available}';
+eu.europeana.vars.mapview.tiles_attribution = '${mapview_layers_tiles_attribution}';
 
-var labels                      = {};
-var mapping                     = {};
-labels.googleSatellite                = 'Google Satellite'; 
-labels.googleHybrid                 = 'Google Hybrid';
-labels.googleStreet                 = 'Google Streets';
-labels.googlePhysical               = 'Google Physical';
-labels.openStreetMapTiles             = 'OSM Tiles@Home';
+var labels = {}, mapping = {};
+labels.googleSatellite = 'Google Satellite'; 
+labels.googleHybrid = 'Google Hybrid';
+labels.googleStreet = 'Google Streets';
+labels.googlePhysical = 'Google Physical';
+labels.openStreetMapTiles = 'OSM Tiles@Home';
 
-mapping[labels.googleSatellite]           = '${mapview_layers_google_satellite}';
-mapping[labels.googleHybrid]            = '${mapview_layers_google_hybrid}';
-mapping[labels.googleStreet]            = '${mapview_layers_google_street}';
-mapping[labels.googlePhysical]            = '${mapview_layers_google_physical}';
-mapping[labels.openStreetMapTiles]          = '${mapview_layers_osm_tiles}';
+mapping[labels.googleSatellite] = '${mapview_layers_google_satellite}';
+mapping[labels.googleHybrid] = '${mapview_layers_google_hybrid}';
+mapping[labels.googleStreet] = '${mapview_layers_google_street}';
+mapping[labels.googlePhysical] = '${mapview_layers_google_physical}';
+mapping[labels.openStreetMapTiles] = '${mapview_layers_osm_tiles}';
 
-eu.europeana.vars.mapview.layers          = {'mapping':mapping, 'labels':labels};
+eu.europeana.vars.mapview.layers = {'mapping':mapping, 'labels':labels};
 
 <c:choose>
 <c:when test="${!empty model.mapJsonUrl && 'true' != sample_map_data}">
@@ -255,16 +249,14 @@ eu.europeana.vars.mapview.json_noresult2 = '${mapview_noresult_2}';
 </c:when>
 
 <c:otherwise>
-eu.europeana.vars.mapview.json_url  = '/${branding}/js/sti/e4D-javascript/krucifix.json';
+eu.europeana.vars.mapview.json_url = '/${branding}/js/sti/e4D-javascript/krucifix.json';
 </c:otherwise>
-
 </c:choose>
-
 </c:when>
 
 <c:when test="${model.pageName == 'timeline.html'}">
 eu.europeana.vars.msg.ajax_data_retrieval_error = '${ajax_date_retrieval_error}';
-eu.europeana.vars.limit_exceeded      = '${timeline_result_limit_exceeded}';
+eu.europeana.vars.limit_exceeded = '${timeline_result_limit_exceeded}';
 eu.europeana.vars.event_source_url = '${model.jsonUrlTimeline}';
 eu.europeana.vars.msg.results = '${results}';
 eu.europeana.vars.msg.matches = '${matches}';
@@ -273,6 +265,5 @@ eu.europeana.vars.startFrom = '${startFrom}';
 eu.europeana.vars.rows = '${rows}';
 eu.europeana.vars.initial_rows = '${initial_rows}';
 </c:when>
-
 </c:choose>
 </script>
