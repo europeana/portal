@@ -7,7 +7,9 @@
 <c:set var="PartnersCurrent" value="" />
 <c:set var="AboutUsCurrent" value="" />
 <c:set var="ThoughtLabCurrent" value="" />
-<c:set var="branding" value="${model.portalName}/branding/${model.theme}" />
+
+<c:set var="branding" value="${model.portalName}/themes/${model.theme}" />
+
 <c:if test="${!empty model.locale}"><c:set var="locale" value="${model.locale}" /></c:if>
 
 <c:if test="${!empty RequestParameters.view}"><c:set var="view" value="${RequestParameters.view}" /></c:if>
