@@ -40,11 +40,13 @@
     <url>http://www.europeanalabs.eu</url>
     <name>Europeana Foundation</name>
   </organization>
-  
+
   <properties>
-  	<version.codehausJackson>1.9.7</version.codehausJackson>
+    <version.codehausJackson>1.9.7</version.codehausJackson>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
- 
+
   <!-- Added for jetty -->
   <build>
     <finalName>portal2</finalName>
@@ -64,8 +66,8 @@
           <mainClass>eu.europeana.Portal2Starter</mainClass>
           <classpathScope>test</classpathScope>
         </configuration>
-        </plugin>
-      </plugins>
+      </plugin>
+    </plugins>
   </build>
 
   <dependencies>
