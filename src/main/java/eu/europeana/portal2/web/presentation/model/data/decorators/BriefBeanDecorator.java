@@ -120,26 +120,17 @@ public class BriefBeanDecorator implements BriefBean {
 	private String getThumbnail(String size) {
 		try {
 			String tn = StringUtils.defaultIfBlank(briefDoc.getEdmObject()[0], "");
-			log.info("tn: " + tn);
 			UrlBuilder url = null;
-			// TODO: check this!!!!
-			/*
-			if (model.isUseCache()) {
-				log.info("isUseCache");
-				url = new UrlBuilder(model.getCacheUrl());
-				log.info("url: " + url.toString());
+			// TODO: redo this
+			// if (isUseCache()) {
+				// url = new UrlBuilder(model.getCacheUrl());
+				url = new UrlBuilder("http://europeanastatic.eu/api/image");
 				url.addParam("uri", URLEncoder.encode(tn, "UTF-8"), true);
-				log.info("url: " + url.toString());
 				url.addParam("size", size, true);
-				log.info("url: " + url.toString());
 				url.addParam("type", getType().toString(), true);
-				log.info("url: " + url.toString());
-			} else {
-				log.info("!isUseCache");
-				*/
-				url = new UrlBuilder(tn);
-			//}
-			log.info("url: " + url.toString());
+				// } else {
+				// url = new UrlBuilder(tn.replace(" ", "%20"));
+				// 			}
 			return model.getPortalFormattedUrl(url).toString();
 		} catch (UnsupportedEncodingException e) {
 			return e.getMessage();

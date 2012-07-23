@@ -2,7 +2,7 @@
 
 <%@ include file="/WEB-INF/jsp/devel/_common/html/doctype.jsp"%>
 <%@ include file="/WEB-INF/jsp/devel/_common/variables/variables.jsp"%>
-<%@ include file="/WEB-INF/jsp/devel/_common/macros/string-limiter.jsp"%>
+<%-- @ include file="/WEB-INF/jsp/devel/_common/macros/string-limiter.jsp" --%>
 <%-- @ include file="/WEB-INF/jsp/devel/_common/macros/facet-sections.jsp" --%>
 <%-- @ include file="/WEB-INF/jsp/devel/_common/macros/facet-items.jsp" --%>
 

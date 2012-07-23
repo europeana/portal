@@ -5,10 +5,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags" %>
 {
-  "dateTimeFormat" : "iso8601", 
-  <#include "/_common/json/navigation.ftl"/>
-  <#include "/_common/json/breadcrumb.ftl"/>
-  <#include "/_common/json/facets.ftl"/>
+  "dateTimeFormat" : "iso8601",
+  <%@ include file="/WEB-INF/jsp/devel/_common/json/navigation.jspf" %>
+  <%@ include file="/WEB-INF/jsp/devel/_common/json/breadcrumb.jspf" %>
+  <%@ include file="/WEB-INF/jsp/devel/_common/json/facets.jspf" %>
   "events": [
     <c:forEach items="${model.results}" var="cell" varStatus="itemStatus">
       <c:set var="year" value="${cell.year}" /><%-- cell.year?date('yyyy') --%>
@@ -18,11 +18,11 @@
       --%>
       <c:set var="trimmed"><europeana:stringLimiter theStr="${cell.titleJSON}" size="70" /></c:set>
       {
-        "start" : "${year}",
-        "title" : "${trimmed}",
-<%--        "icon" : "${cell.iconJSON}",  --%>
-        "link" : "${cell.fullDocUrlJSON}&returnTo=TL",
-        "image" : "${cell.thumbnailJSON}",
+        "start" : "<europeana:json text="${year[0]}" />",
+        "title" : "<europeana:json text="${trimmed}" />",
+        "icon" : "<europeana:json text="${cell.iconJSON}" />",
+        "link" : "<europeana:json text="${cell.fullDocUrlJSON}&amp;returnTo=TL" />",
+        "image" : "<europeana:json text="${cell.thumbnailJSON}" />",
         "description" : ""
       }<c:if test="${!itemStatus.last}">,</c:if>
     </c:forEach>
