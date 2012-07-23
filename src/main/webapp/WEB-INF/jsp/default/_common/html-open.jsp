@@ -4,7 +4,6 @@
 <meta charset="utf-8"/>
 <%@ include file="/WEB-INF/jsp/_common/meta.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/links.jsp" %>
-<%@ include file="/WEB-INF/jsp/default/_common/scripts-head.jsp" %>
 <title>${model.pageTitle}</title>
 </head>
 <body>
