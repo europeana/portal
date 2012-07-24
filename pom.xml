@@ -51,6 +51,15 @@
   <build>
     <finalName>portal2</finalName>
     <plugins>
+    <plugin>
+	                <artifactId>maven-surefire-plugin</artifactId>
+               <configuration>
+                    <systemPropertyVariables>
+	                        <EUROPEANA_PROPERTIES>../corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
+                        </EUROPEANA_PROPERTIES>
+                   </systemPropertyVariables>
+	                </configuration>
+	            </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
