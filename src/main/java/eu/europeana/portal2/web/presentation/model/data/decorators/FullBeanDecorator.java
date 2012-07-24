@@ -1001,16 +1001,6 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	@Override
-	public void setEuropeanaProxy(EuropeanaProxy europeanaProxy) {
-		fulldoc.setEuropeanaProxy(europeanaProxy);
-	}
-
-	@Override
-	public EuropeanaProxy getEuropeanaProxy() {
-		return fulldoc.getEuropeanaProxy();
-	}
-
-	@Override
 	public void setEdmTimespanBroaderTerm(String[] edmTimespanBroaderTerm) {
 		fulldoc.setEdmTimespanBroaderTerm(edmTimespanBroaderTerm);
 	}
@@ -1028,5 +1018,12 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setEdmPlaceBroaderTerm(String[] edmPlaceBroaderTerm) {
 		fulldoc.setEdmPlaceBroaderTerm(edmPlaceBroaderTerm);
+	}
+
+	@Override
+	public void setEuropeanaAggregation(
+			EuropeanaAggregation europeanaAggregation) {
+		// TODO Auto-generated method stub
+		
 	}
 }
