@@ -1,4 +1,13 @@
 <!-- query-form -->
+
+
+<br />
+	<b>jsp/default/_common/html/query/query-form.jsp</b> 
+<br />
+
+<%--
+Andy: Comment out all stuff not being used
+
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -18,7 +27,7 @@
 		<c:if test="${!empty model.query}">value="${model.query}"</c:if> maxlength="175" />
 		<input type="submit" class="submit-button" value="<spring:message code="Search_t" />" />
 
-		<%-- save search link --%>
+	
 		<c:if test="${model.debug && model.pageName == 'map.html'}">
 			<input type="checkbox" id="box_search" />
 			<label for="box_search"><spring:message code="MapBoxedSearch_t" /></label>
@@ -35,16 +44,13 @@
 		</c:if>
 	</fieldset>
 
-	<%-- additional feature links for the search box --%>
 	<c:if test="${!model.embedded}">
-		<%-- refine search link --%>
 		<c:set var="refinedEnabled" value=" disabled" />
 		<c:if test="${!empty model.enableRefinedSearch && model.enableRefinedSearch}">
 			<c:set var="refinedEnabled" value="" />
 		</c:if>
 		<a href="" id="refine-search" class="nofollow${refinedEnabled}"><spring:message code="RefineYourSearch_t" /></a>
 
-		<%-- save search link --%>
 		<c:if test="${!empty model.user && model.pageName == 'search.html'}">
 			<a href="" id="save-search" rel="nofollow"><spring:message code="SaveToMyEuropeana_t" /></a>
 			<c:if test="${!empty model.briefBeanView}">
@@ -55,8 +61,9 @@
 			</c:if>
 		</c:if>
 
-		<%-- help link --%>
 		<a href="/${model.portalName}/usingeuropeana.html" id="search-help" class="${className}"><spring:message code="rswHelp_t" /></a>
 	</c:if>
 </form>
-<!-- /query-form -->
+
+
+--%>
