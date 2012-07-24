@@ -8,8 +8,7 @@
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
 
-	<%@ include file="/WEB-INF/jsp/default/_common/html/header.jsp" %>
-	DEFAULT
+	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/search/content/content.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/html/footer.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
