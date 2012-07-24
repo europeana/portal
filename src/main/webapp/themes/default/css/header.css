@@ -59,7 +59,7 @@
 			height: 44px;
 		}
 
-		#query input[type=text] {
+		#query-search input[type=text] {
 			float: left;
 			margin-right: 15px;
 			
@@ -74,11 +74,11 @@
 			border-radius: 5px;
 		}
 
-		#query  input[type=text].map-query {
+		#query-search input[type=text].map-query {
 			width:	296px;
 		}
 
-		#query #rq{
+		#query-search #rq{
 			width:	225px !important;
 		}
 
@@ -86,7 +86,7 @@
 			margin-left: 14px;
 		}
 
-		#query .submit-button {
+		#query-search .submit-button {
 			float: left;
 		}
 		
@@ -251,7 +251,7 @@
 		}
 	}
 	
-	#query input[type="text"]:focus {
+	#query-search input[type="text"]:focus {
 	   -webkit-box-shadow: 0 0 4px rgba(153,0,255,0.3);
 	   -moz-box-shadow: 0 0 4px rgba(153,0,255,0.3);
 	   box-shadow: 0 0 4px rgba(153,0,255,0.3);
