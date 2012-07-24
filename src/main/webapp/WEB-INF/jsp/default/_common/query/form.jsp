@@ -65,6 +65,6 @@
     <%--
       help link
     --%>
-    <a href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+    <a id="search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
   </c:if>
 </form>
