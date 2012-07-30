@@ -52,18 +52,18 @@
     <finalName>portal2</finalName>
     <plugins>
     <plugin>
-	                <artifactId>maven-surefire-plugin</artifactId>
+    <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-surefire-plugin</artifactId>
                <configuration>
-                    <systemPropertyVariables>
-	                        <EUROPEANA_PROPERTIES>../corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
-                        </EUROPEANA_PROPERTIES>
-                   </systemPropertyVariables>
+                    <argLine>
+	                    -DEUROPEANA_PROPERTIES=../corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
+                   </argLine>
 	                </configuration>
 	            </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
+       <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
         <executions>
           <execution>
             <goals>
@@ -166,5 +166,10 @@
     	<artifactId>jackson-xc</artifactId>
     	<version>${version.codehausJackson}</version>
     </dependency>
+    <dependency>
+	<groupId>hsqldb</groupId>
+	<artifactId>hsqldb</artifactId>
+	<version>1.8.0.7</version>
+</dependency>
   </dependencies>
 </project>
