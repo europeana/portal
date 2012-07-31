@@ -1,3 +1,3 @@
-<%@ include file="/WEB-INF/jsp/default/_common/scripts-body.jsp" %>
+<%@ include file="/WEB-INF/jsp/diy/_common/scripts-body.jsp" %>
 </body>
 </html>
