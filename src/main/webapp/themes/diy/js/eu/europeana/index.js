@@ -7,7 +7,7 @@
 	carouselInit : function() {
 	  
 	  jQuery('#index-carousel').imagesLoaded(function() {
-		this.rCarousel();
+		this.rCarousel({ item_width_is_container_width : false });
 	  });
 	  
 	},
