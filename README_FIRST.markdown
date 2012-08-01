@@ -30,9 +30,13 @@ Installation
    add the following lines after the EXECUTABLE=catalina.sh line
    export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
    export EUROPEANA_PROPERTIES=~/workspace/europeana-portal/portal2/europeana.properties
+   export CATALINA_OPTS="-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled -XX:MaxPermSize=1024M"
+   
 6. start tomcat in the terminal with the command sh /Applications/tomcat/bin/startup.sh
 7. browse to http://localhost:8080/ to verify that tomcat is running
 8. you can stop tomcat with the terminal command sh /Applications/tomcat/bin/shutdown.sh
+
+
 
 
 ### Jetty
