@@ -10,8 +10,6 @@
 
 <%-- next 4 are new ones! --%>
 <%@ include file="/WEB-INF/jsp/devel/fulldoc/variables/variables.jsp" %>
-<%-- @ include file="/WEB-INF/jsp/devel/fulldoc/macros/display-ese-data-as-meta.jsp" --%>
-<%-- @ include file="/WEB-INF/jsp/devel/fulldoc/macros/display-ese-data-as-html.jsp" --%>
 <%-- @ include file="/WEB-INF/jsp/devel/fulldoc/macros/rights.jsp" --%>
 
 <%@ include file="/WEB-INF/jsp/devel/_common/html/open-html.jsp" %>

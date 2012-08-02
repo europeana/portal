@@ -35,7 +35,6 @@ import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
-import eu.europeana.corelib.definitions.solr.entity.EuropeanaProxy;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
@@ -425,9 +424,14 @@ public class FullBeanDecorator implements FullBean {
 	public String[] getDcDescription() {
 		List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
+			if (proxy.getDcDescription() == null ) {
+				continue;
+			}
 			//log.info("description: " + proxy.getDcDescription());
-			for(String description : proxy.getDcDescription()) {
-				items.add(description.replace("\n", "<br/>\n"));
+			for (String description : proxy.getDcDescription()) {
+				if (description != null) {
+					items.add(description.replace("\n", "<br/>\n"));
+				}
 			}
 			//StringArrayUtils.addToList(items, proxy.getDcDescription());
 		}
@@ -808,8 +812,7 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setPlaces(List<? extends Place> places) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setPlaces(places);
 	}
 
 	@Override
@@ -819,8 +822,7 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setAgents(List<? extends Agent> agents) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setAgents(agents);
 	}
 
 	@Override
@@ -835,14 +837,12 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setConcepts(List<? extends Concept> concepts) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setConcepts(concepts);
 	}
 
 	@Override
 	public void setAggregations(List<? extends Aggregation> aggregations) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setAggregations(aggregations);
 	}
 
 	@Override
@@ -852,56 +852,47 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setProxies(List<? extends Proxy> proxies) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setProxies(proxies);
 	}
 
 	@Override
 	public void setEuropeanaId(ObjectId europeanaId) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setEuropeanaId(europeanaId);
 	}
 
 	@Override
 	public void setTitle(String[] title) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setTitle(title);
 	}
 
 	@Override
 	public void setYear(String[] year) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setYear(year);
 	}
 
 	@Override
 	public void setProvider(String[] provider) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setProvider(provider);
 	}
 
 	@Override
 	public void setLanguage(String[] language) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setLanguage(language);
 	}
 
 	@Override
 	public void setType(DocType type) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setType(type);
 	}
 
 	@Override
 	public void setEuropeanaCompleteness(int europeanaCompleteness) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setEuropeanaCompleteness(europeanaCompleteness);
 	}
 
 	@Override
 	public void setTimespans(List<? extends Timespan> timespans) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setTimespans(timespans);
 	}
 
 	@Override
@@ -916,8 +907,7 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setRelatedItems(List<? extends BriefBean> relatedItems) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setRelatedItems(relatedItems);
 	}
 
 	@Override
@@ -927,8 +917,7 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setProvidedCHOs(List<? extends ProvidedCHO> providedCHOs) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setProvidedCHOs(providedCHOs);
 	}
 
 	@Override
@@ -938,50 +927,42 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setAbout(String about) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setAbout(about);
 	}
 
 	@Override
 	public void setWhen(String[] when) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setWhen(when);
 	}
 
 	@Override
 	public String[] getWhen() {
-		// TODO Auto-generated method stub
 		return fulldoc.getWhen();
 	}
 
 	@Override
 	public void setWhere(String[] where) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setWhere(where);
 	}
 
 	@Override
 	public String[] getWhere() {
-		// TODO Auto-generated method stub
 		return fulldoc.getWhere();
 	}
 
 	@Override
 	public void setWhat(String[] what) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setWhat(what);
 	}
 
 	@Override
 	public String[] getWhat() {
-		// TODO Auto-generated method stub
 		return fulldoc.getWhat();
 	}
 
 	@Override
 	public void setWho(String[] who) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setWho(who);
 	}
 
 	@Override
@@ -991,8 +972,7 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public void setUgc(String[] ugc) {
-		// TODO Auto-generated method stub
-
+		fulldoc.setUgc(ugc);
 	}
 
 	@Override
@@ -1021,9 +1001,17 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	@Override
-	public void setEuropeanaAggregation(
-			EuropeanaAggregation europeanaAggregation) {
-		// TODO Auto-generated method stub
-		
+	public void setEuropeanaAggregation(EuropeanaAggregation europeanaAggregation) {
+		fulldoc.setEuropeanaAggregation(europeanaAggregation);
+	}
+
+	@Override
+	public String getPreviewNoDistribute() {
+		return fulldoc.getPreviewNoDistribute();
+	}
+
+	@Override
+	public void setPreviewNoDistribute(String previewNoDistribute) {
+		fulldoc.setPreviewNoDistribute(previewNoDistribute);
 	}
 }

@@ -19,6 +19,7 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
@@ -31,6 +32,8 @@ import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
  * 
  */
 public class FieldPresentation {
+
+	private static final Logger log = Logger.getLogger(FieldPresentation.class.getName());
 
 	public static final String FIELD_ID_PREFIX = "fpfn_";
 
@@ -89,7 +92,7 @@ public class FieldPresentation {
 	}
 
 	/**
-	 * Getter for fielName
+	 * Getter for fieldLabel
 	 * 
 	 * @return - Tag to retrieve name for field
 	 */
@@ -138,4 +141,22 @@ public class FieldPresentation {
 		return isShowExternalServices();
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("FieldPresentation[name: ").append(getFieldName());
+		sb.append(", label: ").append(getFieldLabel());
+		sb.append(", values: ");
+		boolean isFirst = true;
+		for (FieldValue fieldValue : fieldValues) {
+			if (isFirst) {
+				isFirst = false;
+			} else {
+				sb.append(", ");
+			}
+			sb.append(fieldValue.getValue());
+		}
+		sb.append("]");
+		log.info(sb.toString());
+		return sb.toString();
+	}
 }

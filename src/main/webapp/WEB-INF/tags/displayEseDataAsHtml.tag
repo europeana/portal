@@ -1,10 +1,13 @@
-<!-- display-ese-data-as-html -->
+<!-- displayEseDataAsHtml -->
 <%@ tag trimDirectiveWhitespaces="true" %>
-<%-- macro displayEseDataAsHtml listCollection wrapper ugc ess --%>
-<%@ attribute name="listCollection" required="true" rtexprvalue="true" %>
-<%@ attribute name="wrapper" required="true" rtexprvalue="true" %>
-<%@ attribute name="ugc" required="true" rtexprvalue="true" %>
-<%@ attribute name="ess" required="true" rtexprvalue="true" %>
+
+<%-- parameters --%>
+<%@ attribute name="listCollection" required="true" type="java.lang.Object" %>
+<%@ attribute name="wrapper" required="true" %>
+<%@ attribute name="ugc" required="true" %>
+<%@ attribute name="ess" required="true" %>
+
+<%-- tag libs --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -25,23 +28,18 @@
  * @var data.fieldUniqueId string - unique id for the field
  * @var data.fieldValues array - collection of values associated with field
  * @var data.seperateLines bool - whether or not to put each value on a new line
- 
  * @var data.showTranslationServices bool - whether or not translation of the field is appropriate
  * @var data.externalServices array - a collection of External Services associated with the field
  * @var data.ESSEnabled bool - whether or not the field has external services associated with it,
  *    e.g., the object can be searched for on wikipedia or imdb
  *
- *
- * @author unknown
  * @author Dan Entous <contact@pennlinepublishing.com>
  * @modified 2011-06-08 15:25 GMT+1
  
  model.fields 'div' false true
 --%>
 <%-- macro displayEseDataAsHtml listCollection wrapper ugc ess --%>
-<!-- @displayEseDataAsHtml model.fields 'div' false true / -->
-<%-- #list listCollection as data --%>
-<c:forEach items="${listCollection}" var="data">
+<c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
   <c:set var="item_id" value="" />
   <c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id" value=' id="item-description" ' /></c:if>
   <c:if test='${"dc:subject"     == data.fieldName}'><c:set var="item_id" value=' id="item-subject" ' /></c:if>
@@ -85,12 +83,11 @@
           </c:otherwise>
         </c:choose>
         <c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
-          <%-- link to external services if field has them --%>
+        <%-- link to external services if field has them --%>
         <c:if test="${!empty data.ESSEnabled && data.ESSEnabled && ess}">
          | <a href="${model.essUrl}?field=${data.fieldName}&amp;value=${value.valueURL}" 
            title="<spring:message code="essHelpIconAltText_t" />"
-           target="_blank"
-           class="external-services toggle-menu-icon">${value.value}</a>
+           target="_blank" class="external-services toggle-menu-icon">${value.value}</a>
         </c:if>
         <%-- handle inline or separate lines for multiple values --%>
         <c:if test="${value_has_next}">
@@ -110,4 +107,4 @@
     </${wrapper}>
   </c:if>
 </c:forEach>
-<!-- /display-ese-data-as-html -->
+<!-- /displayEseDataAsHtml -->
