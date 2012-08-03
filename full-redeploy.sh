@@ -10,4 +10,4 @@ cd ../corelib/ && mvn clean install -DskipTests && cd ../portal2
 cd ../api2 && mvn clean install -DskipTests && cd ../portal2
 
 # building portal2 and deploy API2 and portal2
-./redeploy.sh
+./redeploy.sh $@
