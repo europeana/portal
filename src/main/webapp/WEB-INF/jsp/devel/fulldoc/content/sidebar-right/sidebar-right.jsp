@@ -6,5 +6,6 @@
     <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/sidebar-right/citation-link.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/sidebar-right/add-tag.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/sidebar-right/fields-enrichment.jspf" %>
+    <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/sidebar-right/format-link.jspf" %>
   </div>
 </div>

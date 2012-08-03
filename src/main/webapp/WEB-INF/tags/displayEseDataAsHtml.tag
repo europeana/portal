@@ -35,10 +35,7 @@
  *
  * @author Dan Entous <contact@pennlinepublishing.com>
  * @modified 2011-06-08 15:25 GMT+1
- 
- model.fields 'div' false true
 --%>
-<%-- macro displayEseDataAsHtml listCollection wrapper ugc ess --%>
 <c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
   <c:set var="item_id" value="" />
   <c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id" value=' id="item-description" ' /></c:if>
