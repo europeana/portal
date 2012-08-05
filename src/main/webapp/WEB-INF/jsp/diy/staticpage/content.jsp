@@ -1,4 +1,3 @@
-<%--@ include file="/WEB-INF/jsp/devel/_common/html/menus/sidebar.jsp" --%>
 <c:choose>
 <c:when test="${!empty model.bodyContent}">
 ${model.bodyContent}
