@@ -1,4 +1,4 @@
-(function() {
+(function( $ ) {
 
   'use strict';
   
@@ -91,4 +91,4 @@
   index.init();
   
   
-}());
+}( jQuery ));
