@@ -5,7 +5,6 @@
 <link rel="shortcut icon" href="/${model.portalName}/favicon.ico"/>
 <link rel="author" href="/humans.txt"/>
 <%-- @todo make sure model.envAcceptance is available --%>
-
 <c:if test='${model.pageName == "index.html"} && ${not model[envAcceptance]}'>
-  <link href="${model.googlePlusPublisherId}" rel="publisher"/>
+<link href="${model.googlePlusPublisherId}" rel="publisher"/>
 </c:if>
