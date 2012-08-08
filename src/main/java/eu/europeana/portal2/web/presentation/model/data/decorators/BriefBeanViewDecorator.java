@@ -20,6 +20,7 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -29,11 +30,12 @@ import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
-import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BreadcrumbListDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBeanListDecorator;
 
 public class BriefBeanViewDecorator implements BriefBeanView {
 
+	private static final Logger log = Logger.getLogger(BriefBeanViewDecorator.class.getName());
+	
 	private SearchData model;
 	private BriefBeanView view;
 

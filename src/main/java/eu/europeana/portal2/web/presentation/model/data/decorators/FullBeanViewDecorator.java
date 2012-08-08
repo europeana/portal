@@ -19,6 +19,7 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -29,6 +30,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBe
 
 public class FullBeanViewDecorator implements FullBeanView {
 	private static final long serialVersionUID = -5504231572868214828L;
+	private static final Logger log = Logger.getLogger(FullBeanViewDecorator.class.getName());
 
 	private FullDocData model;
 	private FullBeanView fullBeanView;
@@ -53,8 +55,7 @@ public class FullBeanViewDecorator implements FullBeanView {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getRelatedItems() {
-		return new BriefBeanListDecorator<BriefBean>(model,
-				(List<BriefBean>) fullBeanView.getRelatedItems());
+		return new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) fullBeanView.getRelatedItems());
 	}
 
 	@Override

@@ -3,5 +3,5 @@
 <div id="explore-further">
   <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/explore-further/similar-content.jsp" %>
   <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/explore-further/related-content.jsp" %>
-  <%-- include file="/WEB-INF/jsp/devel/fulldoc/content/explore-further/map.jsp" --%>
+  <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/explore-further/map.jsp" %>
 </div>

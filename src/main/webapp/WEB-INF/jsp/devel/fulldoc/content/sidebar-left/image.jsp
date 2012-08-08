@@ -1,14 +1,8 @@
-<!-- image: type: ${model.document.edmType} - ${model.imageRef} -->
+<!-- image -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:choose>
-  <c:when test="${!empty model.imageRef}"><!-- has imageRef --></c:when>
-  <c:otherwise><!-- has no imageRef --></c:otherwise>
-</c:choose>
-
 <c:if test="${!empty model.imageRef}">
-<!-- yes, it has imageRef -->
 <!--[if lte IE 7]>
 <style type="text/css"></style>
 <![endif]-->

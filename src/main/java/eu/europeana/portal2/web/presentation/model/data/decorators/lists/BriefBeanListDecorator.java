@@ -38,6 +38,7 @@ public class BriefBeanListDecorator<E extends BriefBean> implements List<E> {
 	public BriefBeanListDecorator(UrlAwareData<?> model, List<E> list) {
 		this.model = model;
 		this.list = list;
+		this.list = (List<E>) asDecoList();
 	}
 
 	public List<BriefBeanDecorator> asDecoList() {
@@ -165,8 +166,7 @@ public class BriefBeanListDecorator<E extends BriefBean> implements List<E> {
 
 	@Override
 	public List<E> subList(int fromIndex, int toIndex) {
-		return new BriefBeanListDecorator<E>(model, list.subList(fromIndex,
-				toIndex));
+		return new BriefBeanListDecorator<E>(model, list.subList(fromIndex, toIndex));
 	}
 
 }

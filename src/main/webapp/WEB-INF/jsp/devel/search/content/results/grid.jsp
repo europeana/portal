@@ -1,4 +1,4 @@
-<!-- grid: ${model.results} -->
+<!-- grid -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <ul id="items">
@@ -6,7 +6,6 @@
 	<c:set var="cell_counter" value="1" />
 	<c:set var="results" value="${model.briefBeanView.briefDocs}" />
 	<c:forEach var="cell" items="${results}">
-		<!-- ${cell} -->
 		<c:set var="row_counter" value="1" />
 		<%-- c:set var="title" value="${fn:substring(cell.title[0], 0, titleMaxLength)}" /--%>
 		<c:set var="title">
