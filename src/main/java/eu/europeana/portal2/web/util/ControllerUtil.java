@@ -124,13 +124,13 @@ public class ControllerUtil {
 	public static String getSessionManagedTheme(HttpServletRequest request, String theme, String defaultTheme) {
 		HttpSession session = request.getSession(true);
 		if (!theme.equals("")) {
-			theme = ThemeChecker.check(theme);
+			theme = ThemeChecker.check(theme, defaultTheme);
 			session.setAttribute("theme", theme);
 		}
 		else {
 			String storedTheme = (String)session.getAttribute("theme");
 			if (storedTheme != null && !storedTheme.equals("")) {
-				theme = ThemeChecker.check(storedTheme);
+				theme = ThemeChecker.check(storedTheme, defaultTheme);
 				log.info("theme2: " + theme);
 			}
 		}

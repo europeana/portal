@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ThemeChecker {
 
-	private static final String DEFAULT = "default";
+	private static final String DEFAULT_THEME = "default";
 
 	private static List<String> registeredThemes = new ArrayList<String>();
 	
@@ -24,9 +24,18 @@ public class ThemeChecker {
 	}
 
 	public static String check(String theme) {
+		return check(theme, DEFAULT_THEME);
+	}
+
+	public static String check(String theme, String defaultTheme) {
 		if (registeredThemes.contains(theme)) {
 			return theme;
 		}
-		return DEFAULT;
+		
+		if (defaultTheme != null) {
+			return defaultTheme;
+		} else {
+			return DEFAULT_THEME;
+		}
 	}
 }
