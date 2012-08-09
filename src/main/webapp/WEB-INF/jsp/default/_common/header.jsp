@@ -8,6 +8,12 @@
 <img src="/${model.portalName}/sp/img/europeana-logo-${model.imageLocale}.png" alt="<spring:message code='AltLogoEuropeana_t' />" width="206" height="123"/>
 </a>
 </${logo_tag}>
-<%@ include file="/WEB-INF/jsp/default/_common/menus/main.jsp" %>
+
+<%-- Choose a language --%>
+<%@ include file="/WEB-INF/jsp/vanilla/_common/menus/language.jsp" %>
+
+
 <%-- <%@ include file="/WEB-INF/jsp/default/_common/menus/user.jsp" %> --%>
+
+
 <%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>

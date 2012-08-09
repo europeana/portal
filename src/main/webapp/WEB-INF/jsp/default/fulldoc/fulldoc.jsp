@@ -19,7 +19,7 @@
 	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 	<%-- new! --%>
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/content.jsp" %>
-	<%@ include file="/WEB-INF/jsp/default/_common/html/footer.jsp" %>
+	<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
 	<%-- new! --%>
 
