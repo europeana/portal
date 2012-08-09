@@ -2,18 +2,17 @@
   
   'use strict';
 
-  
-  function init() {
+  var init = function() {
 	
     loadDependencies();
     
-    // Andy: conditional load test
+    // conditional load test
     jQuery("#query-input").focus(function(){
-      europeana_bootstrap.common.loadResultSizer(
-        function(){ console.log("in callback for index.js loadResultSizer"); }
-      );
-    });
-    
-  }();
+		europeana_bootstrap.common.loadResultSizer(
+				function(){ console.log("in callback for index.js loadResultSizer"); }
+		);
+		
+    }); 
+  };
   
 }());
