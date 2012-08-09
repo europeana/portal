@@ -1,42 +1,95 @@
-/* menu-main */
-/* inspired by http://csswizardry.com/2011/02/creating-a-pure-css-dropdown-menu/ */
 
-    #menu-main {
-        position: absolute;
-		top: 0;
-		right: 25px;
-        list-style: none;
-        margin: 0;
-		padding: 0;
-        z-index: 1000;
-    }
-    
-    #menu-main li {
-        float: left;
-        margin-left: 10px;
-    }
-    
-    #menu-main a {
-        display: block;
-    }
-    
-    
-/* menu-sub level 1 */
 
-    #menu-main ul {
-        position: absolute;
-        margin: 0; padding: 0;
-        margin-top: -499px; /* at least the height of the drop-down, countered below  */
-        list-style: none;
-    }
-    
-    #menu-main ul li {
-        float: none;
-        margin-left: 0;
-    }
-    
-    #menu-main li:hover ul {
-        margin-top: 0; /* counters -margin-top in order to reveal drop-down menu */
-    }
-    
+	/** GLOBAL **/
+
+	.menu-wrapper{
+		width:				100%;
+		background-color:	#CCC;
+	}
+
+	ul.menu, ul.menu ul{
+		margin-left:			0;
+		padding-left:			0;
+	}
+		
+	ul.menu li, ul.menu, ul.menu ul{
+		list-style-type:		none;
+		list-style-position:	outside;
+	}
+		
+	ul.menu a{
+		text-decoration:		none;
+		color:					inherit;
+	}
+
+
+	/** DESKTOP **/
+	/** This breakpoint not wrapped in media selector for the sake of IE8 **/
+
+	ul.menu{							/* centering */
+		width:				90%;
+		margin-left:		auto;
+		margin-right:		auto;
+	}
+
+	ul.menu li, ul.menu ul{
+		font-size:		14px;
+	}
+
+	ul.menu>li{
+		width:			25%;
+		float:			left;
+		font-size:		18px;
+		margin-bottom:	0.5em;
+		margin-top:		0.5em;
+	}
+		
+	ul.menu>li>a{
+		display:		block;
+		margin-bottom:	0.3em;		
+	}
+		
+	ul.menu{
+		padding-top:	0;
+		padding-bottom:	0;
+	}
+	
+	/* IE8 fix: equivalent to li:nth-child(5) */
+	ul.menu li:first-child + li + li + li + li{
+		clear:left;
+	}
+
+	/** TABLET **/
+	@media all and (max-width: 980px) {
+	
+		ul.menu>li{
+			width:			50%;
+			float:			left;
+		}
+		
+	}
+
+	/** MOBILE **/
+	@media all and (max-width: 480px) {
+	
+		ul.menu li, ul.menu ul{
+			font-size:		16px;
+		}
+
+		ul.menu>li{
+			width:			100%;
+			float:			none;
+			font-size:		21px;
+			margin-bottom:	1em;
+			margin-top:		0em;
+		}
+		
+		ul.menu{
+			padding-top:	0.5em;
+			padding-bottom:	0.5em;
+		}
+	}
+
+
+
         
