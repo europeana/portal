@@ -305,7 +305,11 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	public RightsValue getRightsOption() {
 		if (rightsOption == null) {
-			rightsOption = RightsValue.safeValueByUrl(document.getEdmRights()[0]);
+			// ANDY: avoid null pointer here but edm rights aren't being mapped properly. 
+			if(document.getEdmRights() != null){
+				rightsOption = RightsValue.safeValueByUrl(document.getEdmRights()[0]);				
+			}
+			
 		}
 		return rightsOption;
 	}
