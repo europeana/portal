@@ -125,10 +125,12 @@
 /* menu-language */
 
 	#language-selector select {
+		position:	absolute;
+		right:		1em;
 		margin-left: 50px;
 	}
 	
 	.locale-el #language-selector select {
-		margin-left: 32px;
+		xxxmargin-left: 32px;
 	}
 	
