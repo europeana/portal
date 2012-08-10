@@ -3,15 +3,18 @@
 	#header-strip{
 		background-color:	black;
 		width:				100%;
-		height:				18px;
+		display:			table;
 	}
-
+	
+	#header-strip span{		/* structural fix for vertical align */
+		display:			table-cell;
+		vertical-align:		middle;
+	}
+	
 	#header-strip a{
 		font-size:			13px;
 		color:				white;
-		float:				left;
 		margin-left:		25px;
-		margin-top:			2px;
 	}
 	
 	#header {

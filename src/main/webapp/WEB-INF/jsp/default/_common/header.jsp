@@ -5,15 +5,15 @@
 
 
 <div id="header-strip">
+	<span>
+		<a href="<spring:message code="notranslate_menu-main-1_a_url_t"/>" target="<spring:message code="notranslate_menu-main-1_a_target_t"/>" title="<spring:message code="menu-main-1_a_title_t"/>"><spring:message code="menu-main-1_a_text_t"/></a>
+		
+		<a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a>
+	</span>
 
-	<a href="<spring:message code="notranslate_menu-main-1_a_url_t"/>" target="<spring:message code="notranslate_menu-main-1_a_target_t"/>" title="<spring:message code="menu-main-1_a_title_t"/>"><spring:message code="menu-main-1_a_text_t"/></a>
-	
-	<a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a>
-	
-	<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>
-	
+	<%-- Choose a language --%>
+	<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>	
 </div>
-	<div style="clear:both"></div>
 
 
 <${logo_tag} id="logo">
@@ -22,8 +22,6 @@
 </a>
 </${logo_tag}>
 
-<%-- Choose a language --%>
-<%--@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" --%>
 <%-- <%@ include file="/WEB-INF/jsp/default/_common/menus/user.jsp" %> --%>
 
 <%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>
