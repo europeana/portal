@@ -46,7 +46,7 @@
 	<c:if test='${"dc:rights"      == data.fieldName}'><c:set var="item_class" value=' item-moreless' /></c:if>
 	<%-- If the content is UGC we skip the dc:source display --%>
 	<c:if test="${!('dc:source' == data.fieldName && ugc)}">
-		<${wrapper} ${item_id}class="item-metadata${item_class}">
+		<${wrapper} ${item_id} class="item-metadata${item_class}">
 		<%-- field's label --%>
 		<span class="bold notranslate"><spring:message code="${data.fieldLabel}" />:</span>
 
