@@ -5,11 +5,18 @@
 
 
 <div id="header-strip">
+
+	<a href="<spring:message code="notranslate_menu-main-1_a_url_t"/>" target="<spring:message code="notranslate_menu-main-1_a_target_t"/>" title="<spring:message code="menu-main-1_a_title_t"/>"><spring:message code="menu-main-1_a_text_t"/></a>
+	
+	<a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a>
+	
 	<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>
+	
 </div>
+	<div style="clear:both"></div>
 
 
-<${logo_tag}>
+<${logo_tag} id="logo">
 <a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
 <img src="/${model.portalName}/sp/img/europeana-logo-${model.imageLocale}.png" alt="<spring:message code='AltLogoEuropeana_t' />" width="206" height="123"/>
 </a>

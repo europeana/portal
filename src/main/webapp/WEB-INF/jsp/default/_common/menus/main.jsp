@@ -1,7 +1,10 @@
 <div class="menu-wrapper">
 	<ul class="menu">
   		<%-- Home --%>
+  		
+  		<%-- moved to header  		
   		<li><a href="<spring:message code="notranslate_menu-main-1_a_url_t"/>" target="<spring:message code="notranslate_menu-main-1_a_target_t"/>" title="<spring:message code="menu-main-1_a_title_t"/>"><spring:message code="menu-main-1_a_text_t"/></a></li>
+  		 --%>
   		<%-- Explore --%>
 		<li>
 			<a href="<spring:message code="notranslate_menu-main-2_a_url_t"/>" target="<spring:message code="notranslate_menu-main-2_a_target_t"/>" title="<spring:message code="menu-main-2_a_title_t"/>"><spring:message code="menu-main-2_a_text_t"/></a>
@@ -46,7 +49,9 @@
 			</ul>
 		</li>
 		<%-- My Europeana --%>
+		<%-- Moved to header
 		<li><a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a></li>
+		--%>
 	</ul>
 	<div style="clear:both;"></div>
 </div>
