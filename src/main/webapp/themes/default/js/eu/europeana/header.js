@@ -16,6 +16,13 @@ js.utils.registerNamespace( 'eu.europeana.header' );
 eu.europeana.header = {
 	
 	init : function() {
+		
+		var langSelect=  jQuery("select[name=embeddedlang]");
+		langSelect.change(function(){
+			jQuery(this).parent().submit();
+		});
+		
+		
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
 		this.addAutocompleteHandler();
@@ -200,7 +207,7 @@ eu.europeana.header = {
 		
 		if ( js.debug ) {
 			
-			jQuery('#query-input, #rq')
+			jQuery('#query-input, #qf')
 				.autocomplete({
 					
 					//minLength : 2,
@@ -240,7 +247,7 @@ eu.europeana.header = {
 				        		break;
 				        		
 				        		
-				        	case 'rq' :
+				        	case 'qf' :
 				        		
 				        		setTimeout( function() { jQuery('#refine-search-form').submit(); }, 10 );
 				        		break;
@@ -298,12 +305,10 @@ eu.europeana.header = {
 	
 	
 	addRefineSearchClickHandler : function() {
-		
 		jQuery('#refine-search').click(function(e) {
-			
 			e.preventDefault();
 			jQuery('#refine-search-form').fadeIn();
-			jQuery('#rq').focus();
+			jQuery('#qf').focus();
 			
 		});
 		
@@ -389,7 +394,6 @@ eu.europeana.header = {
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 		
 	}
-		
 };
-	
+
 eu.europeana.header.init();
