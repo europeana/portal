@@ -12,8 +12,6 @@
 <%-- Choose a language --%>
 <%@ include file="/WEB-INF/jsp/vanilla/_common/menus/language.jsp" %>
 
-
 <%-- <%@ include file="/WEB-INF/jsp/default/_common/menus/user.jsp" %> --%>
-
 
 <%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>
