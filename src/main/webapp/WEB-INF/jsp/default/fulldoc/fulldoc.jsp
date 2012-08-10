@@ -9,10 +9,11 @@
 <%@ include file="/WEB-INF/jsp/default/_common/variables/variables.jsp" %>
 <%-- @ include file="/WEB-INF/jsp/default/_common/macros/string-limiter.jsp" --%>
 
-<%-- next 4 are new ones! --%>
+<%-- the next 3 are new ones! --%>
+<%-- (Andy: removed display-ese-data-as-html) --%>
+
 <%@ include file="/WEB-INF/jsp/default/fulldoc/variables/variables.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/fulldoc/macros/display-ese-data-as-meta.jsp" %>
-<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/display-ese-data-as-html.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
