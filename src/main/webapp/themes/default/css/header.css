@@ -6,6 +6,14 @@
 		height:				18px;
 	}
 
+	#header-strip a{
+		font-size:			13px;
+		color:				white;
+		float:				left;
+		margin-left:		25px;
+		margin-top:			2px;
+	}
+	
 	#header {
 		position: relative;
 		z-index: 110;
