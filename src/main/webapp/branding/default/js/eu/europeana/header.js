@@ -18,7 +18,9 @@ eu.europeana.header = {
 	init : function() {
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
-		this.addAutocompleteHandler();
+		
+		// Andy: TODO: enable this
+		//this.addAutocompleteHandler();
 		this.addRefineSearchClickHandler();		
 		this.addAjaxMethods();
 		this.addMenuFocusTriggers();
@@ -197,7 +199,6 @@ eu.europeana.header = {
 	
 	
 	addAutocompleteHandler : function() {
-		
 		if ( js.debug ) {
 			
 			jQuery('#query-input, #rq')
