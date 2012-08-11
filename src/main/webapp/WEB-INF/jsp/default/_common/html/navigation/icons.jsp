@@ -1,6 +1,7 @@
 <!-- icons -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <ul class="navigation-icons">
 	<%-- grid view --%>
 	<c:if test="${!empty model.viewUrlTable}">
@@ -11,13 +12,13 @@
 
 	<%-- timeline --%>
 	<c:if test="${!empty model.viewUrlTimeline}">
-		<li class="timeline_icon" style="display:none">
+		<li class="timeline_icon">
 			<a href="${model.viewUrlTimeline}" title="<spring:message code="AltTimelineView_t" />" rel="nofollow" class="${timeline_active}timeline"></a>
 		</li>
 	</c:if>
 
 	<%-- map --%>
-	<li class="mapview_icon" style="display:none">
+	<li class="mapview_icon">
 		<a href="${model.viewUrlMap}" title="<spring:message code="AltMapView_t" />" rel="nofollow" class="${map_active}mapview"></a>
 	</li>
 
