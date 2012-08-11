@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
+
+
+<%-- Andy hack --%>
+<c:set var="lightboxRef" value="http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg" />
+<%-- Andy hack end --%>
+
 <c:if test="${!empty lightboxRef}">
 	<!--Include div for lightbox -->
 	<div class="simple_overlay" id="lightbox">
@@ -37,16 +44,16 @@
 					<a class="hideMeta" style="display:none;"><spring:message code="hide_details_t"/></a>
 				</div>
 				<div class="info-open" style="display:none;">
-					<#if model.objectTitle??>
+					<c:if test="${!empty model.objectTitle}">
 						<div class="item-metadata">
 							<strong><spring:message code="dc_title_t"/>:</strong> ${model.objectTitle}
 						</div>
-					</#if>
+					</c:if>
 					<c:if test="${!empty model.fieldsLightbox && fn:length(model.fieldsLightbox) > 0}">
-						<@displayEseDataAsHtml model.fieldsAdditional 'div'  false false/>
+						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false" />
 					</c:if>
 					<div class="original-context">
-						<%-- <#include '/fulldoc/content/sidebar-left/original-context.ftl'/> --%>
+						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
 					</div>
 				</div>
 				<div class="spacer"></div>
@@ -58,4 +65,3 @@
 		</div>
 	</div>
 </c:if>
-	
