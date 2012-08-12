@@ -1,11 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:if test="${model.fullBeanView.parent || model.fullBeanView.children}">
-	<h3><a href="#related-content"><spring:message code="RelatedContent_t" /></a></h3>
+<c:if test="${!empty model.fullBeanView.parent || !empty model.fullBeanView.children}">
+	<h3>
+		<a href="#related-content"><spring:message code="RelatedContent_t" /></a>
+	</h3>
 	<div id="related-content" class="carousel">
-		<c:if test="${model.fullBeanView.parent}">
-			<#-- EXAMPLE CODE FOR PARENT BREADCRUMB -->
+		<c:if test="${!empty model.fullBeanView.parent}">
+			<%-- EXAMPLE CODE FOR PARENT BREADCRUMB --%>
 			<c:forEach items="${model.fullBeanView.parents}" var="parent">
 				${parent.title}&nbsp;&gt;
 			</c:forEach>
@@ -31,6 +33,7 @@
 			</a>
 		</c:if>
 			
+
 		<div class="carousel-container" about="${model.document.id}">
 			<c:if test="${model.fullBeanView.children}">
 				<ul>
@@ -40,12 +43,16 @@
 							<a  href='/${model.portalName}/${fn:replace(child.id, "http://www.europeana.eu/resolve/", "")}.html?query=${relItemQuery}&amp;startPage=1&amp;pageId=brd'
 								rel="rdfs:seeAlso" resource="${child.id}"
 								title="${child.title}">
-								<img src="${child.thumbnail}" alt="${child.title}" width="70" data-type="${child.type?lower_case}"/>
+								<img src="${child.thumbnail}"
+								alt="${child.title}"
+								width="70"
+								data-type="${fn:toLowerCase(child.type)}"/>							
 							</a>
 						</li>
 					</c:forEach>
 				</ul>
 			</c:if>
 		</div>
+		
 	</div>
 </c:if>

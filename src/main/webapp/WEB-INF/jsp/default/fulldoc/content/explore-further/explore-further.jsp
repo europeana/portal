@@ -2,8 +2,8 @@
 
 <div id="explore-further">
 	
-	<#include '/fulldoc/content/explore-further/similar-content.ftl' />
-	<#include '/fulldoc/content/explore-further/related-content.ftl' />
-	<#--<#include '/fulldoc/content/explore-further/map.ftl' />-->
+	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/explore-further/similar-content.jsp" %>
+	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/explore-further/related-content.jsp" %>
+	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/explore-further/map.jsp" %>
 	
 </div>
