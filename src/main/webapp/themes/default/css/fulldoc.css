@@ -15,11 +15,10 @@ img.trigger{
 /* addthis */
 
 	.addthis {
-		position: absolute;
-		z-index: 200;
-		top: 242px;
-		right: 21px;
-		min-width: 207px;
+		position:	absolute;
+		z-index:	200;
+		top:		4px;
+		right:		0px;
 	}
 	
 	.at300b { float: right; margin-left: 3px; }

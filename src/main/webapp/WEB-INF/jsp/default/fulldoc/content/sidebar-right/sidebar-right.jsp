@@ -1,14 +1,13 @@
 <div id="actions" class="sidebar notranslate">
-	<div id="additional-actions">
-		SIDEBAR RIGHT
-		<%--
-		<#include '/fulldoc/content/sidebar-right/translate-item.ftl'/>
-		<#include '/fulldoc/content/sidebar-right/item-save.ftl'/>
-		<#include '/fulldoc/content/sidebar-right/embed.ftl'/>
-		<#include "/fulldoc/content/sidebar-right/citation-link.ftl"/>
-		<#-- <#include '/fulldoc/content/sidebar-right/login.ftl'/> -->
-		<#include '/fulldoc/content/sidebar-right/add-tag.ftl'/>
-		<#include '/fulldoc/content/sidebar-right/fields-enrichment.ftl'/>
-		 --%>
-	</div>
+  <div id="additional-actions">
+    <div id="additional-actions-addthis"></div>
+  
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/translate-item.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/item-save.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/embed.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/citation-link.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/add-tag.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/fields-enrichment.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/format-link.jspf" %>
+  </div>
 </div>

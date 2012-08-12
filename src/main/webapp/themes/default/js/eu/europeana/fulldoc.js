@@ -526,8 +526,9 @@ eu.europeana.fulldoc = {
 		
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes		
-		jQuery('#header').append(
-			com.addthis.getToolboxHtml({
+		//jQuery('#header-strip').append(
+		jQuery('#additional-actions-addthis').append(
+				com.addthis.getToolboxHtml({
 				html_class : 'addthis',
 				url : url,
 				title : title,
