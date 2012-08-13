@@ -1,5 +1,9 @@
 /* header */
 
+	.container{
+		position:relative;
+	}
+	
 	#header-strip{
 		background-color:	black;
 		width:				100%;
