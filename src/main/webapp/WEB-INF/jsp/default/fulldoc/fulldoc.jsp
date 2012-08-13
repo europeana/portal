@@ -16,14 +16,34 @@
 <%@ include file="/WEB-INF/jsp/default/fulldoc/macros/display-ese-data-as-meta.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 
+<%-- begin page proper --%>
+
 <%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
+
+
+<%-- for now the header is outside the grid --%>
+<div id="header-strip">
+	<span>
+		<a href="/${model.portalName}/" target="<spring:message code="notranslate_menu-main-1_a_target_t"/>" title="<spring:message code="menu-main-1_a_title_t"/>"><spring:message code="menu-main-1_a_text_t"/></a>
+		
+		<a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a>
+	</span>
+
+	<%-- Choose a language --%>
+	<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>	
+</div>
+
+<%-- begin responsive grid --%>
+<div class="container" style="position:relative">
+
 	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
-	<%-- new! --%>
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/content.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
-	<%-- new! --%>
-
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/lightbox.jsp" %>
+	
+</div>
+<%-- end responsive grid --%>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/close-html.jsp" %>
+

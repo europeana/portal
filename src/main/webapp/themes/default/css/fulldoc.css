@@ -8,8 +8,9 @@ img.trigger{
 /* query */
 
 	#query {
-		height: 112px;
-		border-bottom: none;
+		/* Andy: see header.css */
+		xxheight: 112px;
+		xxborder-bottom: none;
 	}
 	
 /* addthis */

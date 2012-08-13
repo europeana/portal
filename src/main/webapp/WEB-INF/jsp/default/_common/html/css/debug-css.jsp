@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/${branding}/css/menu-footer.css" />
 <link rel="stylesheet" href="/${branding}/css/menu-styling.css" />
 <link rel="stylesheet" href="/${branding}/css/footer.css" />
+<link rel="stylesheet" href="/${branding}/css/responsive-grid.css" />
 
 <c:if test="${!empty model.announceMsg}">
 	<link rel="stylesheet" href="/${branding}/css/announce.css" />
