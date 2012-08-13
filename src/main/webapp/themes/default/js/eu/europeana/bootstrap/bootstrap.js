@@ -118,8 +118,15 @@ var europeana_bootstrap = function(){
 				lightbox:function(callback){
 					
 				},
-				translate:function(callback){
-					
+				translate:function(callback){					
+					js.loader.loadScripts([{
+						name : 'microsoft-translator',
+						file: 'translator' + js.min_suffix + '.js' + js.cache_helper,
+						path: eu.europeana.vars.branding + '/js/com/microsoft/' + js.min_directory,
+						callback: function(){
+							callback();
+						} 
+					}]);
 				}
 			};
 		}();

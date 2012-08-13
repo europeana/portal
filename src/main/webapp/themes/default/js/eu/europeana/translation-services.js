@@ -1,5 +1,6 @@
 js.utils.registerNamespace( 'eu.europeana.translation_services' );
 
+
 eu.europeana.translation_services = {
 	
 	links : {
@@ -14,6 +15,15 @@ eu.europeana.translation_services = {
 		$translation_services : jQuery( '<div id="translation-services"></div>' )
 		
 	},
+	
+	translator_selector_html : 
+		'<div id="microsoft-translate-element">' +
+			'<select>' +
+				'<option value="">' + eu.europeana.vars.msg.select_language + '</option>' +
+			'</select>' +
+			'<span class="small">Powered by <span class="bold">Microsoft<sup>&reg;</sup></span> Translator</span>' +
+		'</div>',
+
 	
 	translators : {
 		
@@ -31,7 +41,7 @@ eu.europeana.translation_services = {
 	to_locale : undefined,
 	
 	
-	init : function() {
+	init : function(callback) {
 		
 		this.links.$show_services.bind( 'click', { self : this }, this.toggleShowServices );
 		this.links.$show_services.after( this.containers.$translation_services );
@@ -39,8 +49,22 @@ eu.europeana.translation_services = {
 		this.captureOriginalTextNodes();
 		this.setUpCallbacks('microsoft');
 		
-		this.addTranslatorMicrosoft();
+		// Andy: we now dynamically load the ms translate javascript se we can't initialise it here. 
+		//this.addTranslatorMicrosoft();
+		//this.containers.$translation_services.append(this.translator_selector_html);
 		
+		var self = this;
+		
+	   	jQuery("#translate-item").click(function(){
+			europeana_bootstrap.fulldoc.translate(
+					function(){
+						self.addTranslatorMicrosoft();			
+					});
+	    });
+
+	   	if(typeof callback != "undefined"){
+	   		callback();
+	   	}
 	},
 	
 	
@@ -126,13 +150,7 @@ eu.europeana.translation_services = {
 			browser_locale : eu.europeana.vars.locale,
 			
 			$container_for_selector : this.containers.$translation_services,
-			translator_selector_html :
-				'<div id="microsoft-translate-element">' +
-					'<select>' +
-						'<option value="">' + eu.europeana.vars.msg.select_language + '</option>' +
-					'</select>' +
-					'<span class="small">Powered by <span class="bold">Microsoft<sup>&reg;</sup></span> Translator</span>' +
-				'</div>'
+			"translator_selector_html" : this.translator_selector_html 
 			
 		});
 		
@@ -148,7 +166,8 @@ eu.europeana.translation_services = {
 					
 				);
 				
-				self.links.$show_services.trigger('click');
+				// Andy: we can't simulate the click here anymore due to the dynamically-loading refactor
+				//self.links.$show_services.trigger('click');
 				
 			}
 			

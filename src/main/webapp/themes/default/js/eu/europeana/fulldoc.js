@@ -212,21 +212,23 @@ eu.europeana.fulldoc = {
 		}]);
 	
 
-		// dependency group - translation functionality
-		
-		js.loader.loadScripts([{
-			name : 'microsoft-translator',
-			file: 'translator' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/com/microsoft/' + js.min_directory
-		}]);
-		
+
 		js.loader.loadScripts([{
 			name : 'translation-services',
 			file: 'translation-services' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'microsoft-translator' ],
-			callback : function() {eu.europeana.translation_services.init();}
+			callback : function() {eu.europeana.translation_services.init(
+			
+					// Andy: this callback within a callback expands the link to the service and triggers the loading of the microsoft translate scripts
+					// comment out this line to save 300 - 385 milliseconds of initial load time
+					// leave this line in place to have the translator automatically opened 
+					
+					// function(){jQuery("#translate-item").trigger('click');}
+					
+			);}
 		}]);
+		
+		
 	},
 
 	
