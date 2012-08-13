@@ -1,0 +1,324 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Grid</title>
+
+	<link rel="stylesheet" href="ef_mobile_first.css">
+	<script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+
+	<style type="text/css">
+		div{
+
+		}
+		.blue{
+			background-color:blue;
+		}
+		.red{
+			background-color:red;
+		}
+		.green{
+			background-color:green;
+		}
+		.yellow{
+			background-color:yellow;
+		}
+	</style>
+</head>
+<body>
+
+<h1>Grid</h1>
+
+<div class="container">
+	<div class="row">
+		<div class="one column blue">
+			one
+		</div>
+		<div class="eleven columns red">
+			eleven
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="two columns green">
+			two
+		</div>
+		<div class="ten columns blue">
+			ten
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="three columns blue">
+			three
+		</div>
+		<div class="nine columns green">
+			nine
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="four columns yellow">
+			four
+		</div>
+		<div class="eight columns green">
+			eight
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="five columns blue">
+			five
+		</div>
+		<div class="seven columns red">
+			seven
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="six columns green">
+			six
+		</div>
+		<div class="six columns blue">
+			six
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="seven columns yellow">
+			seven
+		</div>
+		<div class="five columns green">
+			five
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="eight columns blue">
+			eight
+		</div>
+		<div class="four columns red">
+			four
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="nine columns green">
+			nine
+		</div>
+		<div class="three columns blue">
+			three
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="ten columns yellow">
+			ten
+		</div>
+		<div class="two columns green">
+			two
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="eleven columns blue">
+			eleven
+		</div>
+		<div class="one column red">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="twelve columns green">
+			twelve
+		</div>
+	</div>
+
+</div>
+
+
+<h1>Offsets</h1>
+
+<div class="container">
+	<div class="row">
+		<div class="one column blue">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-one">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-two">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-three">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-four">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-five">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-six">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-seven">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-eight">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-nine">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-ten">
+			one
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="one column blue offset-by-eleven">
+			one
+		</div>
+	</div>
+</div>
+
+<h1>Push/Pull</h1>
+
+<div class="container">
+	<div class="row">
+		<div class="one column blue push-eleven">
+			one
+		</div>
+		<div class="eleven columns red pull-one">
+			eleven
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="two columns green push-ten">
+			two
+		</div>
+		<div class="ten columns blue pull-two">
+			ten
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="three columns blue push-nine">
+			three
+		</div>
+		<div class="nine columns green pull-three">
+			nine
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="four columns yellow push-eight">
+			four
+		</div>
+		<div class="eight columns green pull-four">
+			eight
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="five columns blue push-seven">
+			five
+		</div>
+		<div class="seven columns red pull-five">
+			seven
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="six columns green push-six">
+			six
+		</div>
+		<div class="six columns blue pull-six">
+			six
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="seven columns yellow push-five">
+			seven
+		</div>
+		<div class="five columns green pull-seven">
+			five
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="eight columns blue push-four">
+			eight
+		</div>
+		<div class="four columns red pull-eight">
+			four
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="nine columns green push-three">
+			nine
+		</div>
+		<div class="three columns blue pull-nine">
+			three
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="ten columns yellow push-two">
+			ten
+		</div>
+		<div class="two columns green pull-ten">
+			two
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="eleven columns blue push-one">
+			eleven
+		</div>
+		<div class="one column red pull-eleven">
+			one
+		</div>
+	</div>
+
+
+
+</div>
+
+</body>
+</html>
