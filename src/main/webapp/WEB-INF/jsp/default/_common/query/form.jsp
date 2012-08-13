@@ -42,17 +42,19 @@
 			<input type="hidden" name="lang" value="${model.locale}"/>
 		</c:if>
 	</fieldset>
-  <%--
-    additional feature links for the search box
-  --%>
+  <%-- additional feature links for the search box --%>
   <c:if test="${not model.embedded}">
-    <%--
-      refine search link
-    --%>
-    <a href="" id="refine-search" class="nofollow${refinedEnabled}"><spring:message code="RefineYourSearch_t" /></a>
-    <%--
-      save search link
-    --%>
+  
+    <%-- refine search link --%>
+    <c:set var="refinedEnabled" value=" disabled" />
+	<c:if test="${!empty model.enableRefinedSearch && model.enableRefinedSearch}">
+		<c:set var="refinedEnabled" value="" />
+	</c:if>
+
+   <a href="" id="refine-search" class="nofollow${refinedEnabled}"><spring:message code="RefineYourSearch_t" /></a>
+
+    <%-- save search link --%>
+    
     <c:if test="${model.user} && 'search.html' == ${model.pageName}">
       <spring:message code='SaveToMyEuropeana_t'/>
       <c:if test="${model.briefBeanView}">
