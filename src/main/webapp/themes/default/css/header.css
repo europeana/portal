@@ -1,128 +1,99 @@
 /* header */
 
-	.container{
-		position:relative;
-	}
+	/* mobile 1st */
 	
 	#header-strip{
-		background-color:	black;
-		width:				100%;
-		display:			table;
+		background-color:	transparent;
 	}
 	
-	#header-strip span{		/* structural fix for vertical align */
-		display:			table-cell;
-		vertical-align:		middle;
+	#language-selector select {
+		float:		right;
+		margin:		2px 1em 2px 0px;
 	}
 	
-	#header-strip a{
-		font-size:			13px;
-		color:				white;
-		margin-left:		25px;
+	#logo {		
+		position:	absolute;
+		top:		5px;
+		width:		110px;
 	}
 	
-	
-/* user-bar */
-
-	#user-bar {
-		position: absolute;
-		top: 20px;
-		right: 20px;
-		padding: 5px;
-		width: 927px;
-		text-align: right;
-		z-index: 100;
+	#query{
+		width:		100%;
+		text-align:	right;
+		position:	relative;
+		margin-top:	35px;
+		height:		44px;
 	}
-	
-
-/* logo */
-
-	#logo {
-		position: absolute;
-		top: 10px;
-		z-index: 100;
-	}
-	
-	#logo a {
-		display: block;
-		width: 206px;
-   		height: 123px;
-	}
-	
-
-/* query */
-
-	#query {
-		position:		relative;
-		margin:			0 auto;
-        xxborder-bottom:	1px solid #a0a0a0;
+		
+	#query .row {
+		float:		right;
 	}
 	
 	#query h3 {
-		font-size:	180%;
-		color:		#666;
-		display:	inline;
+		font-size:		140%;
+		font-weight:	normal;
+		margin:			12px 0px;
 	}
 
-	@media only screen and ( max-width:320px ){
-		#query{
-			width:	100%;
-		}
-		
-		#query-input{
-			width:	auto;
-		}	
+	#query-input{
+		width:					100%;
+		padding:				2px 0px;
+		color:					#333;
+		font-size:				120%;
+		border:					1px solid #a0a0a0;
+		-moz-border-radius:		5px;
+		-webkit-border-radius:	5px;
+		border-radius:			5px;
+	}
+
+	#query-input::-webkit-input-placeholder {
+		color: #999;
 	}
 	
-	@media only screen and ( max-width:767px ){
-		#query{
-			width:	100%;
-		}
-		
-		#query-input{
-			width:	auto;
-		}	
+	#query-input:-moz-placeholder{
+		color: #999;
 	}
 	
-	@media only screen and ( min-width:767px ){	/* anything bigger than portrait tablet */
-		#query{
-			width:	468px;
-		}
+	#query-input:-ms-input-placeholder {
+		color: #999;
 	}
 
-	#query-search {
-		margin: 13px 0 0 0;
-		height: 44px;
+	#submit-query{
+		width:	90%;
+		margin:	12px auto 0px;
+	}
+	
+	.container{
+		position:relative;
 	}
 
-	#query-search input[type=text] {
-		float: left;
-		margin-right: 15px;
-		width: 385px;
-		padding: 2px 4px;
-		color: #333;
-		font-size: 120%;
-		border: 1px solid #a0a0a0;
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		border-radius: 5px;
+	#header-strip .menu{
+		width:					24px;
+		height:					24px;
+		background-color:		white;
+		float:					right;
+		background-image:		url(../images/icons/sprite.png);
+		background-position:	0px -318px;
+		margin:					1px 5px 1px 5px;
 	}
+	
+	/* user-bar */
 
-	#query-search input[type=text].map-query {
-		width:	296px;
+	#user-bar {
+		position:	absolute;
+		top:		20px;
+		right:		20px;
+		padding:	5px;
+		width:		927px;
+		text-align:	right;
+		z-index:	100;
 	}
-
-	#query-search #rq{
-		width:	225px !important;
-	}
-
+	
+	
 	#box_search, #box_search_refine{
 		margin-left: 14px;
 	}
 
-	#query-search .submit-button {
-		float: left;
-	}
 		
 	#refine-search,
 	#save-search,
@@ -287,4 +258,83 @@
 	   box-shadow: 0 0 4px rgba(153,0,255,0.3);
 	   -webkit-animation: pulse 1.5s infinite ease-in-out;
 	}
+	
+	
+
+
+	/* MEDIA QUERIES */
+	
+
+	@media only screen and ( min-width:767px ){
+	
+		/* logo */
+
+		#logo {
+			top:		12px;
+			width:		100%;
+		}
+		
+		#logo a {
+			display:	block;
+	   		max-width:	15%;
+		}
+		
+		/* strip */
+		
+		#header-strip{
+			background-color:	black;
+			width:				100%;
+			display:			table;
+		}
+				
+		#header-strip span{		/* structural fix for vertical align */
+			display:			table-cell !important;
+			vertical-align:		middle;
+		}
+		
+		#header-strip a{
+			font-size:			13px;
+			color:				white;
+			margin-left:		25px;
+			float:				left;
+		}
+		
+		
+		/* menu-language */
+	
+		#language-selector select {
+			font-size:		100%;
+			font-weight:	normal;
+			margin-right:	12px;
+		}
+		
+		
+		/* form */
+		#query{
+			width:		470px;
+			text-align:	center;
+			margin-top:	45px;
+		}
+
+		#query h3 {
+			font-size:	180%;
+			color:		#666;
+			display:	inline;
+		}
+
+		#query-search #rq{
+			width:	225px !important;
+		}
+		
+		#query-search input[type=text].map-query {
+			width:	296px;
+		}
+		
+		#submit-query{
+			width:	90%;
+			margin:	0px 0px 0px 6px;
+		}
+	}
+
+
 	

@@ -95,22 +95,14 @@
 
 	/* Mobile Visibility Affordances */
 		
-	.hide-on-phones		{display:block  !important;}
-	.hide-on-tablets	{display:none !important;}
-	.hide-on-desktops	{display:none !important;}
+	.hide-on-phones		{display:none  !important;}
 		
-	.show-on-phones		{display:none !important;}
-	.show-on-tablets	{display:block !important;}
-	.show-on-desktops	{display:block !important;}
+	.show-on-phones		{display:block !important;}
 	
 	@media only screen and ( min-width:767px ){
-		.hide-on-phones		{display:none !important;}	
-		.hide-on-tablets	{display:none !important;}
-		.hide-on-desktops	{display:block !important;}
+		.hide-on-phones		{display:block !important;}	
 
-		.show-on-phones		{display:block !important;}	
-		.show-on-tablets	{display:block !important;}
-		.show-on-desktops	{display:none !important;}
+		.show-on-phones		{display:none !important;}	
 	}
 	
 	/* Specific overrides for elements that require something other than display:block */
