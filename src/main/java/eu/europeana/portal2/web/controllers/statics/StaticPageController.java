@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +68,7 @@ public class StaticPageController {
 
 	private ClickStreamLogger clickStreamLogger = new ClickStreamLoggerImpl();
 	
-	private Logger log = Logger.getLogger(StaticPageController.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	// @Resource
 	// private ResourceBundleMessageSource messageSource;

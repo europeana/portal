@@ -38,7 +38,7 @@ import eu.europeana.portal2.web.model.json.Json2FullBean;
 public class ApiFulldocParser {
 	
 	private static final String SESSION_KEY = "apisession";
-	private static final Logger log = Logger.getLogger(ApiFulldocParser.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private String apiUrl;
 	private String api2key;

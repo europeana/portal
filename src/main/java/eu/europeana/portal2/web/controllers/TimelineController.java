@@ -30,8 +30,8 @@ import eu.europeana.portal2.web.util.SearchUtils;
 @Controller
 public class TimelineController {
 
-	private static final Logger log = Logger.getLogger(TimelineController.class.getName());
-
+	private final Logger log = Logger.getLogger(getClass().getName());
+	
 	@Resource
 	private SearchService searchService;
 

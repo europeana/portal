@@ -50,7 +50,7 @@ import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
 
-	private static final Logger log = Logger.getLogger(FullDocPage.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private RightsValue rightsOption = null;
 

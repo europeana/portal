@@ -25,7 +25,6 @@ public abstract class PortalPageData extends PageData {
 
 	public void setGooglePlusPublisherId(String googlePlusPublisherId) {
 		this.googlePlusPublisherId = googlePlusPublisherId;
-
 	}
 
 	public String getGooglePlusPublisherId() {

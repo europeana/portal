@@ -35,7 +35,7 @@ import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class SearchPage extends SearchPreparation {
 
-	private Logger log = Logger.getLogger(SearchPage.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 	
 	@Override
 	public boolean isIndexable() {

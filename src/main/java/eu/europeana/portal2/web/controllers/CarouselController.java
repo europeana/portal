@@ -28,7 +28,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class CarouselController {
 
-	private static Logger log = Logger.getLogger(CarouselController.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 	
 	@Resource
 	private ConfigInterceptor corelib_web_configInterceptor;

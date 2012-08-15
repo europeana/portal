@@ -52,7 +52,7 @@ public class Json2FullBean {
 	private static final String TIMESPANS = "timespans";
 	private static final String CONCEPTS = "concepts";
 	
-	private static final Logger log = Logger.getLogger(Json2FullBean.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	// setters.get(prefix).get(field) -> Method

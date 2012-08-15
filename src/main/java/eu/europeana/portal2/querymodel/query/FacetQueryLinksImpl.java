@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.portal2.web.controllers.SearchController;
 import eu.europeana.portal2.web.model.common.LabelFrequency;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class FacetQueryLinksImpl implements FacetQueryLinks {
 
-	private static final Logger log = Logger.getLogger(SearchController.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static final String FACET_PROMPT = "&qf=";
 	private static final String RIGHTS_FACET = "RIGHTS";

@@ -57,7 +57,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class ObjectController {
 
-	private static final Logger log = Logger.getLogger(ObjectController.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	// @Autowired
 	// private QueryModelFactory beanQueryModelFactory;

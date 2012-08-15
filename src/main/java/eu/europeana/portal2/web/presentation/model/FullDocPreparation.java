@@ -38,7 +38,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentati
 
 public abstract class FullDocPreparation extends FullDocData {
 
-	private static final Logger log = Logger.getLogger(FullDocData.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	// caching fields
 	private List<FieldPresentation> fields;
