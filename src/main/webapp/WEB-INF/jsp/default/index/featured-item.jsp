@@ -9,7 +9,7 @@
 					thumb:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
 					title:			"<spring:message code='${item.anchorTitle}'/>",
 					description:	"<spring:message code='${item.p}'/>",
-					link:			"${item.anchorUrl}"
+					link:			"/${model.portalName}<spring:message code='${item.anchorUrl}'/>"
 				};
 			</c:forEach>
 		</script>
