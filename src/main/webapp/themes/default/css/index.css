@@ -1,5 +1,47 @@
+
+
+
+
+#carousel-1-wrapper{
+	margin-top:	20px;
+}
+
+#carousel-1{
+   	width:		100%;
+   	height:		260px;
+   	background:	#000;
+}
+
+#carousel-blurb{
+	padding-left:	0px;
+}
+
+#carousel-blurb .heading{
+	font-weight:	normal;
+	font-style:		italic;
+	font-size:		180%;
+	display:		block;
+	margin:			1em 0;
+}
+
+@media only screen and ( min-width:767px ){
+
+	#carousel-1-wrapper{
+		margin-top:	30px;
+	}
+	
+	#carousel-blurb{
+		padding-left:	12px;		
+	}
+
+	#carousel-blurb .heading{
+		margin:			0;
+	}
+}
+
 /* addthis */
 
+/*
 	.addthis {
 		position: absolute;
 		z-index: 200;
@@ -11,15 +53,17 @@
 	.at300b { float: right; margin-left: 3px; }
 	.at300m { float: right; margin: 0 5px 0 5px; }
 	.addthis_counter { float: right; }
+*/
 
 /* content */
-
+/*
 	#content {
 		width: 960px;
 		margin-bottom: 0;
 	}
-
+*/
 /* blog-feed */
+
 
 	#blog-feed {
 		float: right;
@@ -88,6 +132,5 @@ li.rssRow p{
 .rssRow img{
 	padding-top:	8px;
 	padding-bottom:	10px;
-	display:		block;
-    
+	display:		block;    
 }

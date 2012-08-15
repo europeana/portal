@@ -18,9 +18,46 @@ ${item.imgAlt} = carousel-item-x_img_alt
 ${item.imgWidth} = notranslate_carousel-item-x_img_width
 ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
-<ul>
-<c:if test='${not empty model.carouselItems}'>
-  <c:set var="item" value="${model.carouselItems[0]}"/>
-  <li><a href="${item.url}" title="<spring:message code='${item.anchorTitle}'/>" target="<spring:message code='${item.anchorTarget}'/>"><img src="/${model.portalName}<spring:message code='${item.imgUrl}'/>" alt="<spring:message code='${item.imgAlt}'/>" width="<spring:message code='${item.imgWidth}'/>" height="<spring:message code='${item.imgHeight}'/>"/></a></li>
-</ul>
-</c:if>
+
+
+<div id="carousel-1-wrapper" class="row europeana-carousel">
+
+	<c:if test='${not empty model.carouselItems}'>
+	
+	    <script type="text/javascript">
+	            var carouselData = [];   
+	
+			<c:forEach var="item" items="${model.carouselItems}">
+			
+				carouselData[carouselData.length] = {
+					thumb:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
+					title:			"<spring:message code='${item.anchorTitle}'/>",
+					description:	"<spring:message code='${item.imgAlt}'/>",
+					link:			"${item.url}"
+				};
+				<%-- NOT USED 
+					${item.anchorTarget}
+					${item.imgWidth}
+					${item.imgHeight}
+					
+				--%>
+			</c:forEach>
+		</script>
+		<div id="carousel-1" class="six columns">
+		</div>
+		
+		<div class="six columns">
+			<div id="carousel-blurb">
+				<span class="heading">Europe's Digital Library</span>
+				<p>
+					In Europeana you can search more than 24 million records of paintings, artifacts, books, music, films and more made available by Europe's libraries, archives and museums.
+				</p>			
+				<p>
+					You can also explore online exhibitions and follow the latest......
+				</p>		
+			</div>
+		</div>
+		
+	</c:if>	
+</div>
+

@@ -1,5 +1,7 @@
 /* carousel */
 
+            
+/*
     .carousel {    
         position: relative;
         z-index: 100;
@@ -11,7 +13,9 @@
     }
     
     .carousel-container {
+    */
     	/* width: 938px; /* 4 = 938, 2 = 469 */
+    	/*
     	position: relative;
     	width: 908px;
     	height: 186px;
@@ -93,3 +97,4 @@
         overflow: hidden;
         min-height:	28px;
     }
+*/

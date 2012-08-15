@@ -39,21 +39,21 @@
 			</c:when>
 			<c:otherwise>
 				<%-- li><@carouselitem "1" /></li --%>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="1" /></jsp:include></li>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="2" /></jsp:include></li>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="3" /></jsp:include></li>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="4" /></jsp:include></li>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="5" /></jsp:include></li>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="6" /></jsp:include></li>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="7" /></jsp:include></li>
-				<li><jsp:include page="/WEB-INF/jsp/devel/index/macros/carousel-items.jsp">
+				<li><jsp:include page="/WEB-INF/jsp/default/index/macros/carousel-items.jsp">
 						<jsp:param name="ord1" value="8" /></jsp:include></li>
 			</c:otherwise>
 			</c:choose>
