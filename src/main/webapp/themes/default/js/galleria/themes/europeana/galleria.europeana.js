@@ -141,7 +141,7 @@ Galleria.addTheme({
 
     var setThumbStyle = function(thumb, thumbOb){
     	var tParent	= thumb.parent();
-		var margin = 20;
+		var margin = 0;
 		var imgBox = containerHeight-margin;
 		
 		tParent.css("width",	imgBox + "px");
@@ -152,7 +152,7 @@ Galleria.addTheme({
 		thumb.css("max-width",	imgBox + "px");
 		thumb.css("max-height",	imgBox + "px");
 		
-		thumbOb.outerWidth = imgBox+8; // this '8' compensates a margin(?) that causes the last element to wrap (with 16 items)
+		thumbOb.outerWidth = imgBox+7; // this '8' compensates a margin(?) that causes the last element to wrap (with 16 items)
 		
 		// vertical centering
 		if(imgBox > parseInt(thumb.css("height"))){

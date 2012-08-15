@@ -39,7 +39,7 @@
 	height: 100%;
 }
 .europeana-carousel .galleria-thumbnails{
-	margin-top:	10px;
+	XXmargin-top:	10px;
 }
 
 .galleria-carousel .galleria-thumbnails-list {
@@ -59,6 +59,7 @@
 
 .galleria-thumbnails{
 	margin:	auto;	
+	left:130;
 }
 
 .europeana-carousel .galleria-thumbnails .galleria-image img{
@@ -82,6 +83,17 @@
 	display:none;
 	visibility:hidden;
 	width:0px!important;
+}
+
+/***
+stage.w	- ( box.w /2) = 
+
+381 - (262/2) = 
+	381 - 131 = 
+		250
+*/
+.europeana-carousel .galleria-carousel .galleria-thumbnails-list{
+	margin-left:60px;
 }
 
 .galleria-loader {
