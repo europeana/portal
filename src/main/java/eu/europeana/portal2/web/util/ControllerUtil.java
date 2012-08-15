@@ -48,6 +48,12 @@ public class ControllerUtil {
 	@Value("#{europeanaProperties['portal.google.plus.publisher.id']}")
 	private static String portalGooglePlusPublisherId;
 
+	private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[_A-Za-z0-9-]+)";
+
+	public static boolean validEmailAddress(String emailAddress) {
+		return emailAddress.matches(EMAIL_REGEXP);
+	}
+
 	// @Value("#{europeanaProperties['portal.theme']}")
 	// private static String defaultTheme;
 
