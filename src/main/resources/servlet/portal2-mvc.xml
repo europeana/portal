@@ -33,7 +33,9 @@
 
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers" />
 
-	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" p:interceptors-ref="corelib_web_configInterceptor" />
+	<bean id="handlerMapping" 
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" 
+		p:interceptors-ref="corelib_web_configInterceptor" />
 	
 	<!-- bean id="handlerMapping2" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" p:interceptors-ref="locale_interceptor" /-->
 	
