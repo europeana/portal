@@ -20,7 +20,7 @@ Galleria.addTheme({
         thumbCrop:  'height',
 
         // set this to false if you want to show the caption all the time:
-        _toggleInfo: true
+        _toggleInfo: false
     },
     init: function(options) {
         Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
@@ -91,8 +91,15 @@ Galleria.addTheme({
             this.$('loader').fadeOut(200);
         });
 
+        
+        
+        
+        
 	/**/
 
+        
+        
+        
 	var carouselMode = false;
 	var parent = this.get('stage');
 	while(parent != null ){
@@ -104,14 +111,19 @@ Galleria.addTheme({
 	if(!carouselMode){
 		return;
 	}
+	var thisGallery = this;
 
     this.$('loader').hide();
+    
+    
+
 	var containerHeight = parseInt( this.$( 'container' ).css("height") );
+	//alert(containerHeight)
 	
 	var dataSource = this._options.dataSource;
 	
+	/* Action */
 	this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
-		// action
 		$(ob).unbind('click');
 		$(ob).click(function(e, a){
 			alert(dataSource[i].link);
@@ -119,28 +131,58 @@ Galleria.addTheme({
 			window.open(dataSource[i].link, "_new");
 		});
 
-		// styling
-		$(ob).css("height", containerHeight - 2 + "px");
 	});
+	
+	/* Style */
+	var navRight	= 	$(".galleria-thumbnails-container .galleria-thumb-nav-right");
+	var navLeft		= 	$(".galleria-thumbnails-container .galleria-thumb-nav-left");
+	navRight.css	("top", (containerHeight - 124)/2 + "px");
+	navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
 
-	// centre align nav caontrols
-	var navRight	= 	$(".galleria-thumb-nav-right");
-	var navLeft		= 	$(".galleria-thumb-nav-left");
-	
-	navRight.css	("top", (containerHeight - parseInt(navRight.css("height")))/2 + "px");
-	navLeft.css		("top", (containerHeight - parseInt(navLeft.css("height")))/2 + "px");
-	
-	var thisGallery = this;
+    var setThumbStyle = function(thumb, thumbOb){
+    	var tParent	= thumb.parent();
+		var margin = 20;
+		var imgBox = containerHeight-margin;
+		
+		tParent.css("width",	imgBox + "px");
+		tParent.css("height",	imgBox + "px");
+		
+		thumb.css("width",		"auto");
+		thumb.css("height",		"auto");
+		thumb.css("max-width",	imgBox + "px");
+		thumb.css("max-height",	imgBox + "px");
+		
+		thumbOb.outerWidth = imgBox+8; // this '8' compensates a margin(?) that causes the last element to wrap (with 16 items)
+		
+		// vertical centering
+		if(imgBox > parseInt(thumb.css("height"))){
+			var top = (imgBox - parseInt(thumb.css("height")) ) / 2;
+			thumb.css("top", top + "px");
+		}
+		thisGallery.updateCarousel();
+    };
+
+    $(this._thumbnails).each(function( i, thumb ) {
+    	if(thumb.ready){
+    	}
+    	else{
+    		thisGallery.bind("thumbnail", function(e) {
+    			if(e.index == i){
+        	        setThumbStyle($(e.thumbTarget), thumb);
+    			}
+    	    });
+    	}
+    });
+    
+	/*
+	 * TODO
+	 * 
 	$(window).resize( function() {
-	
 		var x = $(".galleria-container").parent().css("height");
 		thisGallery.$( 'container' ).css("height", x);
 		thisGallery.rescale();
-//      	console.log("resize..." + thisGallery.$( 'container' ).css("height") + "  " + x);
-      	
-      	// 
-     } );
-            
+     });
+     */      
 	
     }
 });

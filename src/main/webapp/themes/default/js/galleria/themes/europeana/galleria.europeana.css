@@ -2,7 +2,11 @@
 
 #galleria-loader{height:1px!important}
 
-galleria-image{overflow:visible !important;} /* ineffectual */
+.europeana-carousel .galleria-thumbnails,
+.europeana-carousel .galleria-image{
+	overflow:visible !important;
+}
+
 .galleria-container {
     position: relative;
     overflow: hidden;
@@ -31,11 +35,11 @@ galleria-image{overflow:visible !important;} /* ineffectual */
     z-index: 2;
 }
 
-.europeana-carousel .galleria-thumbnails-container {	/*           */
+.europeana-carousel .galleria-thumbnails-container {
 	height: 100%;
-	max-height:100%;
-	padding-top:10px;
-
+}
+.europeana-carousel .galleria-thumbnails{
+	margin-top:	10px;
 }
 
 .galleria-carousel .galleria-thumbnails-list {
@@ -53,9 +57,13 @@ galleria-image{overflow:visible !important;} /* ineffectual */
     cursor: pointer;
 }
 
-.europeana-carousel .galleria-thumbnails .galleria-image{	/*           */
-	height: auto;
-	max-height:100%;
+.galleria-thumbnails{
+	margin:	auto;	
+}
+
+.europeana-carousel .galleria-thumbnails .galleria-image img{
+	position:	relative !important;
+	margin:		auto !important;
 }
 
 
@@ -69,8 +77,11 @@ galleria-image{overflow:visible !important;} /* ineffectual */
     z-index: 1;
 }
 
+.galleria-counter,
 .europeana-carousel .galleria-counter {
 	display:none;
+	visibility:hidden;
+	width:0px!important;
 }
 
 .galleria-loader {
@@ -85,17 +96,28 @@ galleria-image{overflow:visible !important;} /* ineffectual */
     background: url(classic-loader.gif) no-repeat 2px 2px;
 }
 .galleria-info {
-    width: 50%;
-    top: 15px;
-    left: 15px;
-    z-index: 2;
-    position: absolute;
+    width:		90%;
+    top:		50%;
+    z-index:	2;
+    position:	relative;
+    margin:		auto;   
+    text-align:	center;
 }
+
+
+.europeana-carousel .galleria-info,
+.europeana-carousel .galleria-info-text {
+    width:		0px;
+    padding:	0px;
+}
+
+
 .galleria-info-text {
-    background-color: #000;
     padding: 12px;
     display: none;
     /* IE7 */ zoom:1;
+    
+    background-color: rgba(0, 0, 0, 0.698);
 }
 .galleria-info-title {
     font: bold 12px/1.1 arial,sans-serif;
