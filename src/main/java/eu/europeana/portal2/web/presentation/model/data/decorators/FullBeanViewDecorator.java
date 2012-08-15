@@ -30,7 +30,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBe
 
 public class FullBeanViewDecorator implements FullBeanView {
 	private static final long serialVersionUID = -5504231572868214828L;
-	private static final Logger log = Logger.getLogger(FullBeanViewDecorator.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private FullDocData model;
 	private FullBeanView fullBeanView;

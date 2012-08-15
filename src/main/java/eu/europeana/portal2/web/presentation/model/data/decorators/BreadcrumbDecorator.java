@@ -30,7 +30,7 @@ import eu.europeana.portal2.web.util.QueryUtil;
 
 public class BreadcrumbDecorator extends BreadCrumb {
 
-	private static final Logger log = Logger.getLogger(BreadcrumbDecorator.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private SearchData model;
 

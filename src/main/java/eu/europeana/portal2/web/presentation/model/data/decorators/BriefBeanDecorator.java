@@ -36,7 +36,7 @@ import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class BriefBeanDecorator implements BriefBean {
 
-	private static final Logger log = Logger.getLogger(BriefBeanDecorator.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	protected BriefBean briefDoc;
 	private UrlAwareData<?> model;

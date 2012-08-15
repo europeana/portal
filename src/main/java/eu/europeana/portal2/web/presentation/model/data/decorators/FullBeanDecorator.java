@@ -43,7 +43,7 @@ import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class FullBeanDecorator implements FullBean {
 
-	private static final Logger log = Logger.getLogger(FullBeanDecorator.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private FullBean fulldoc;
 	

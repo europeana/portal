@@ -34,7 +34,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBe
 
 public class BriefBeanViewDecorator implements BriefBeanView {
 
-	private static final Logger log = Logger.getLogger(BriefBeanViewDecorator.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 	
 	private SearchData model;
 	private BriefBeanView view;

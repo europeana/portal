@@ -30,7 +30,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDeco
 
 public class BriefBeanListDecorator<E extends BriefBean> implements List<E> {
 
-	private static final Logger log = Logger.getLogger(BriefBeanListDecorator.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private UrlAwareData<?> model;
 	private List<E> list;

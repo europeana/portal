@@ -23,8 +23,7 @@ import eu.europeana.portal2.web.presentation.Configuration;
 
 public abstract class SearchEmbeddedData extends SearchData {
 
-	private static Logger log = Logger.getLogger(SearchEmbeddedData.class
-			.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private String embeddedLogo = "poweredbyeuropeanaBlack.png";
 	private String embeddedLang = null;
