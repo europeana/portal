@@ -20,7 +20,6 @@
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
 
-<%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 
 <%-- begin responsive grid --%>
 <div class="container">

@@ -1,22 +1,35 @@
 
-
-
-
 #carousel-1-wrapper{
 	margin-top:	20px;
+   	max-height:	100%;
 }
 
 #carousel-1{
    	width:		100%;
    	height:		260px;
+   	max-height:	100%;
    	background:	#000;
 }
 
-#carousel-blurb{
+#carousel-2{
+   	width:		100%;
+   	height:		260px;
+   	max-height:	100%;
+   	background:	#000;
+}
+
+#carousel-3{
+   	width:		100%;
+   	height:		260px;
+   	max-height:	100%;
+   	background:	#000;
+}
+
+#carousel-1-blurb{
 	padding-left:	0px;
 }
 
-#carousel-blurb .heading{
+#carousel-1-blurb .heading{
 	font-weight:	normal;
 	font-style:		italic;
 	font-size:		180%;
@@ -26,16 +39,19 @@
 
 @media only screen and ( min-width:767px ){
 
+	
 	#carousel-1-wrapper{
-		margin-top:	30px;
+		margin-top:	45px;
 	}
 	
-	#carousel-blurb{
+	#carousel-1-blurb{
 		padding-left:	12px;		
 	}
 
-	#carousel-blurb .heading{
+	#carousel-1-blurb .heading{
 		margin:			0;
+		margin-bottom:	1em;
+		
 	}
 }
 

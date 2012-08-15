@@ -20,7 +20,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
 
 
-<div id="carousel-1-wrapper" class="row europeana-carousel">
+<div id="carousel-1-wrapper" class="row">
 
 	<c:if test='${not empty model.carouselItems}'>
 	
@@ -30,7 +30,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			<c:forEach var="item" items="${model.carouselItems}">
 			
 				carouselData[carouselData.length] = {
-					thumb:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
+					image:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
 					title:			"<spring:message code='${item.anchorTitle}'/>",
 					description:	"<spring:message code='${item.imgAlt}'/>",
 					link:			"${item.url}"
@@ -47,7 +47,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		</div>
 		
 		<div class="six columns">
-			<div id="carousel-blurb">
+			<div id="carousel-1-blurb">
 				<span class="heading">Europe's Digital Library</span>
 				<p>
 					In Europeana you can search more than 24 million records of paintings, artifacts, books, music, films and more made available by Europe's libraries, archives and museums.
