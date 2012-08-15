@@ -1,8 +1,7 @@
 <div id="header-strip">
 	<span class="hide-on-phones">
-		<a href="/${model.portalName}/" target="<spring:message code="notranslate_menu-main-1_a_target_t"/>" title="<spring:message code="menu-main-1_a_title_t"/>"><spring:message code="menu-main-1_a_text_t"/></a>
-		
-		<a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a>
+		<a href="/${model.portalName}/" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" title="<spring:message code="main_menu_home_a_title_t"/>"><spring:message code="main_menu_home_a_text_t"/></a>		
+		<a href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" title="<spring:message code="main_menu_myeuropeana_a_title_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
 	</span>
 
 	<%-- mobile menu links --%>
