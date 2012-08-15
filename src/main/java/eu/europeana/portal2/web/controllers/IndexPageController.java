@@ -224,6 +224,7 @@ public class IndexPageController {
 			}
 		}
 		if ((pinterestEntries != null) && !pinterestEntries.isEmpty()) {
+			model.setPinterestItems(pinterestEntries);
 			model.setPinterestItem(pinterestEntries.get(RandomUtils.nextInt(pinterestEntries.size() - 1)));
 		} else {
 			model.setPinterestItem(null);
