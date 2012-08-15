@@ -316,21 +316,14 @@ public class SearchPage extends SearchPreparation {
 			throws UnsupportedEncodingException {
 		String queryForPresentation = null;
 		if (briefBeanView != null) {
-			log.info("briefBeanView is not null");
-			queryForPresentation = briefBeanView.getPagination()
-					.getPresentationQuery().getQueryForPresentation();
-			log.info("pagination: " + briefBeanView.getPagination());
-			log.info("queryForPresentation: " + queryForPresentation);
+			queryForPresentation = briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation();
 		} else {
-			log.info("briefBeanView is null. Query is " + getQuery());
 			if (StringUtils.isNotBlank(getQuery())) {
-				queryForPresentation = "query="
-						+ URLEncoder.encode(getQuery(), "utf8");
+				queryForPresentation = "query=" + URLEncoder.encode(getQuery(), "utf8");
 			}
 		}
 		StringBuilder url = new StringBuilder();
-		url.append("/").append(getPortalName()).append("/").append(pageName)
-				.append("?").append(queryForPresentation);
+		url.append("/").append(getPortalName()).append("/").append(pageName).append("?").append(queryForPresentation);
 
 		UrlBuilder builder = new UrlBuilder(url.toString());
 		builder.addParam("start", Integer.toString(getStart()), true);
@@ -339,7 +332,6 @@ public class SearchPage extends SearchPreparation {
 			// add refinements back if there is no BriefBeanView available.
 			builder.addParam("qf", getRefinements(), true);
 		}
-		log.info("getViewUrl: " + builder.toString());
 		return builder;
 	}
 

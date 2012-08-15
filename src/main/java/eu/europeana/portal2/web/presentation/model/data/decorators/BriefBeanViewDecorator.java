@@ -64,7 +64,7 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 		if (facets == null) {
 			// setting the order and facet types we want
 			String[] order = new String[] { "TYPE", "LANGUAGE", "YEAR",
-					"COUNTRY", "RIGHTS", "PROVIDER" };
+					"COUNTRY", "RIGHTS", "PROVIDER", "DATA_PROVIDER" };
 			FacetQueryLinks[] oFacets = new FacetQueryLinks[order.length];
 			List<FacetQueryLinks> list = view.getFacetQueryLinks();
 			for (FacetQueryLinks facet : list) {

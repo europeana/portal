@@ -24,7 +24,6 @@ import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
-import eu.europeana.portal2.web.util.BeanUtil;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 
@@ -105,9 +104,6 @@ public class SearchController {
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
-			for (BriefBean briefDoc : briefBeanView.getBriefDocs()) {
-				log.info(BeanUtil.toString(briefDoc));
-			}
 		} catch (SolrTypeException e) {
 			log.severe("SolrTypeException: " + e.getMessage());
 			// return new ApiError("search.json", e.getMessage());
