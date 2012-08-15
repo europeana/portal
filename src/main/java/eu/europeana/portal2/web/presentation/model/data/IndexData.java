@@ -41,6 +41,9 @@ public abstract class IndexData extends SearchPageData {
 
 	private FeedEntry pinterestItem;
 
+	/** List of all Pinterest items */
+	private List<FeedEntry> pinterestItems;
+
 	private String pinterestUrl;
 
 	public void setRandomTerms(List<SearchTerm> randomTerms) {
@@ -97,5 +100,13 @@ public abstract class IndexData extends SearchPageData {
 
 	public void setFeaturedItems(List<FeaturedItem> featuredItems) {
 		this.featuredItems = featuredItems;
+	}
+
+	public List<FeedEntry> getPinterestItems() {
+		return pinterestItems;
+	}
+
+	public void setPinterestItems(List<FeedEntry> pinterestItems) {
+		this.pinterestItems = pinterestItems;
 	}
 }
