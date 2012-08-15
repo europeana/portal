@@ -14,8 +14,7 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 
 public class QueryUtil {
 
-	private static final Logger log = Logger.getLogger(QueryUtil.class
-			.getName());
+	private static final Logger log = Logger.getLogger(QueryUtil.class.getName());
 
 	public static String[] getFilterQueriesWithoutPhrases(Query solrQuery) {
 		String[] filterQueries = solrQuery.getRefinements();

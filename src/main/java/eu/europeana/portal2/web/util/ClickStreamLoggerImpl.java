@@ -41,7 +41,8 @@ import eu.europeana.portal2.web.presentation.model.FullBeanView;
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  */
 public class ClickStreamLoggerImpl implements ClickStreamLogger {
-	private Logger log = Logger.getLogger(ClickStreamLoggerImpl.class.getName());
+
+	private final Logger log = Logger.getLogger(getClass().getName());
 	private static String VERSION = "1.0";
 
 	@Override

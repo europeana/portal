@@ -33,7 +33,7 @@ import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
  */
 public class FieldPresentation {
 
-	private static final Logger log = Logger.getLogger(FieldPresentation.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	public static final String FIELD_ID_PREFIX = "fpfn_";
 

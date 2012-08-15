@@ -43,7 +43,8 @@ import org.springframework.beans.factory.annotation.Value;
 public class StaticPageCache {
 
 	private static final String DOT = ".";
-	private Logger log = Logger.getLogger(StaticPageCache.class.getName());
+
+	private final Logger log = Logger.getLogger(getClass().getName());
 	private Map<String, Page> pageMapCache = new ConcurrentHashMap<String, Page>();
 	private String staticPagePath;
 

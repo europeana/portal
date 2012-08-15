@@ -29,7 +29,7 @@ import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 public class CiteValue {
 
-	private static final Logger log = Logger.getLogger(CiteValue.class.getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private FullDocData model;
 
