@@ -59,8 +59,8 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class IndexPageController {
 
-	private static Logger log = Logger.getLogger(IndexPageController.class.getName());
-
+	private final Logger log = Logger.getLogger(getClass().getName());
+	
 	private static List<FeedEntry> feedEntries;
 	private static Calendar feedAge;
 	private List<CarouselItem> carouselItems;
@@ -154,6 +154,7 @@ public class IndexPageController {
 	}
 
 	private void updateFeaturedItem(IndexPage model, Locale locale) {
+		ArrayList<FeaturedItem> featuredItems = new ArrayList<FeaturedItem>();
 		boolean keepFetching = true;
 		int i = 1;
 		while (keepFetching) {
@@ -161,6 +162,7 @@ public class IndexPageController {
 				String label = String.format("notranslate_featured-item-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
+					featuredItems.add(new FeaturedItem(i));
 					i++;
 				} else {
 					keepFetching = false;
@@ -169,6 +171,7 @@ public class IndexPageController {
 				keepFetching = false;
 			}
 		}
+		model.setFeaturedItems(featuredItems);
 		model.setFeaturedItem(new FeaturedItem(RandomUtils.nextInt(i - 1) + 1));
 	}
 
