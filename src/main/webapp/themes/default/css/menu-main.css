@@ -67,10 +67,20 @@
 			float:			left;
 		}
 		
+		/* IE8 fix: equivalent to li:nth-child(3) */
+		ul.menu li:first-child + li + li{
+			clear:left;
+		}
+		
 	}
 
 	/** MOBILE **/
 	@media all and (max-width: 480px) {
+	
+		/* IE8 fix: equivalent to li:nth-child(5) */
+		ul.menu li:first-child + li + li + li + li{
+			clear:none;
+		}		
 	
 		ul.menu li, ul.menu ul{
 			font-size:		16px;
