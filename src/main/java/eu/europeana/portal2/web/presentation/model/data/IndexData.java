@@ -34,6 +34,9 @@ public abstract class IndexData extends SearchPageData {
 
 	private List<CarouselItem> carouselItems;
 
+	/** List of all featured items */
+	private List<FeaturedItem> featuredItems;
+
 	protected FeaturedItem featuredItem;
 
 	private FeedEntry pinterestItem;
@@ -86,5 +89,13 @@ public abstract class IndexData extends SearchPageData {
 
 	public String getPinterestUrl() {
 		return pinterestUrl;
+	}
+
+	public List<FeaturedItem> getFeaturedItems() {
+		return featuredItems;
+	}
+
+	public void setFeaturedItems(List<FeaturedItem> featuredItems) {
+		this.featuredItems = featuredItems;
 	}
 }
