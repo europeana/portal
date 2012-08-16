@@ -152,7 +152,6 @@ Galleria.addTheme({
 		thumb.css("max-height",	 "100%");
 		
 		
-//		tParent.append('<div class="europeana-carousel-info">Andy Fucking MacLean (' + index + '), Andy Fucking MacLean, Andy Fucking MacLean, Andy Fucking MacLean</div>');
 		tParent.append('<div class="europeana-carousel-info"><div class="title">' + dataSource[index].title + "</div><div>" + dataSource[index].description + '</div></div>');
 		
 		/* Gallery.updateCarousel() looks 1st for property "outerWidth" when calculating the total width of the thumbnail list.
