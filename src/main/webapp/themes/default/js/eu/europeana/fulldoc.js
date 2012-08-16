@@ -15,12 +15,13 @@ eu.europeana.fulldoc = {
 		        window.setTimeout(initCarousels, 100);
 		    }
 		    else{
-				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
+//				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
+				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
 				Galleria.configure({
 						transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
 						carousel:		true,
 						carouselSpeed:	1200,				/* transition speed */
-						carouselSteps:	2,
+						carouselSteps:	1,
 						easing:			'galleriaOut',
 						imageCrop:		false,				/* if true, make pan true */
 						imagePan:		false,
