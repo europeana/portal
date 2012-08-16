@@ -8,13 +8,42 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Image extractor does simple job: extract images from a HTML text.
+ * 
+ * @author peter.kiraly@kb.nl
+ */
 public class RSSImageExtractor {
 
+	/**
+	 * List of supported parameters
+	 */
 	static enum Param {SRC, TITLE};
+
+	/**
+	 * Regex pattern for images
+	 */
 	static final Pattern IMG_PATTERN = Pattern.compile("<img [^<>]+/>");
+	
+	/**
+	 * Regex pattern for the src attribute of an image
+	 */
 	static final Pattern SRC_PATTERN = Pattern.compile("src=\"([^\"]+)\"");
+
+	/**
+	 * Regex pattern for the title attribute of an image
+	 */
 	static final Pattern TITLE_PATTERN = Pattern.compile("title=\"([^\"]+)\"");
 
+	/**
+	 * Extracts images from a HTML source
+	 *
+	 * @param text
+	 *   The HTML text which might contain image elements.
+	 *
+	 * @return
+	 *   The list of images
+	 */
 	public static List<RSSImage> extractImages(String text) {
 		List<RSSImage> images = new ArrayList<RSSImage>();
 

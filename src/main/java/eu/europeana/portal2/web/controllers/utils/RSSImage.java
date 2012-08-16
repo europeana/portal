@@ -1,5 +1,13 @@
 package eu.europeana.portal2.web.controllers.utils;
 
+/**
+ * Container of images extracted from blog posts.
+ * Now it contains the following fields:
+ * - src: the URL of the image
+ * - title: the caption of the image (if any)
+ * 
+ * @author peter.kiraly@kb.nl
+ */
 public class RSSImage {
 
 	private String src;
