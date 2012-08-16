@@ -111,11 +111,13 @@ Galleria.addTheme({
 	if(!carouselMode){
 		return;
 	}
+	
 	var thisGallery = this;
 
     this.$('loader').hide();
     
 	var containerHeight = parseInt( this.$( 'container' ).css("height") );
+	var containerWidth = parseInt( this.$( 'container' ).css("width") );
 	var dataSource = this._options.dataSource;
 	
 	/* Action */
@@ -132,12 +134,12 @@ Galleria.addTheme({
 	
 	
 	/* Styling & info */
-	
+	/*
 	var navRight	= 	$(".galleria-thumbnails-container .galleria-thumb-nav-right");
 	var navLeft		= 	$(".galleria-thumbnails-container .galleria-thumb-nav-left");
 	navRight.css	("top", (containerHeight - 124)/2 + "px");
 	navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
-
+	 */
     var setThumbStyle = function(thumb, thumbOb, index){
     	var tParent	= thumb.parent();
 		var margin = 0;
@@ -151,7 +153,7 @@ Galleria.addTheme({
 		thumb.css("max-width",	 "100%");
 		thumb.css("max-height",	 "100%");
 		
-		
+		// Add info box here
 		tParent.append('<div class="europeana-carousel-info"><div class="title">' + dataSource[index].title + "</div><div>" + dataSource[index].description + '</div></div>');
 		
 		/* Gallery.updateCarousel() looks 1st for property "outerWidth" when calculating the total width of the thumbnail list.
@@ -176,14 +178,22 @@ Galleria.addTheme({
 			/* Do this once only: horizontal positioning of the full image strip to centre an image within the viewer  */
 			// this works perfectly at gallery height 260 */
 			
-			var galleryWidth	= $(".galleria-container").width();
+			var galleryWidth	= containerWidth;
 			var offsetLeft		= (galleryWidth / 2) - (imgBox / 2);
 			
-			offsetLeft -= parseInt($(".galleria-carousel").css("left"));
-			offsetLeft -= parseInt($(".galleria-carousel .galleria-thumbnails-list").css("margin-left"));
-
-			$(".galleria-thumbnails").css("margin-left", offsetLeft + "px");
+			offsetLeft -= parseInt(tParent.closest(".galleria-carousel").css("left"));
+			offsetLeft -= parseInt(tParent.closest(".galleria-carousel .galleria-thumbnails-list").css("margin-left"));
+			
+			tParent.closest(".galleria-thumbnails").css("margin-left", offsetLeft + "px");
 			thisGallery.updateCarousel();
+
+			/* And since we have access to the dom, fix the navigation icons */
+			
+			var navRight	= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-right");
+			var navLeft		= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-left");
+			navRight.css	("top", (containerHeight - 124)/2 + "px");
+			navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
+
 		}
     };
     

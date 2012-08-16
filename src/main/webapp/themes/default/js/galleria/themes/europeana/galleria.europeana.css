@@ -69,9 +69,11 @@
     cursor: pointer;
 }
 
+
+/*  ANDY */
 .galleria-thumbnails{
-	margin:	auto;	
-	left:130;
+xxxxmargin:	auto;
+	xxxxleft:130;
 }
 
 .europeana-carousel .galleria-thumbnails .galleria-image img{
@@ -97,16 +99,6 @@
 	width:0px!important;
 }
 
-/***
-stage.w	- ( box.w /2) = 
-
-381 - (262/2) = 
-	381 - 131 = 
-		250
-*/
-.europeana-carousel .galleria-carousel .galleria-thumbnails-list{
-	xmargin-left:60px;
-}
 
 .galleria-loader {
     background: #000;
@@ -255,19 +247,10 @@ stage.w	- ( box.w /2) =
 
 .europeana-carousel .galleria-thumb-nav-left,
 .europeana-carousel .galleria-thumb-nav-right {
-    cursor: pointer;
-    display: none;
+    width:	62px;
+    height:	124px;
     background-position: 0 46px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 62px;				/***/
-    height: 124px;
-    z-index: 3;
-    opacity: .8;
-    filter: alpha(opacity=80);
 }
-
 
 .galleria-thumb-nav-right {
     background-position: -578px 5px;
@@ -277,10 +260,12 @@ stage.w	- ( box.w /2) =
 }
 
 .europeana-carousel .galleria-thumb-nav-right {
+	/*
     background-position: -578px 5px;
     border-right: none;
     right: 0;
     left: auto;
+    */
     background-position: -254px 46px;
 }
 
