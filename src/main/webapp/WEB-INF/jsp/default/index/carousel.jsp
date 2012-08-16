@@ -46,7 +46,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		<div id="carousel-1" class="six columns">
 		</div>
 		
-		<div class="six columns">
+		<div class="six columns hide-on-phones">
 			<div id="carousel-1-blurb">
 				<span class="heading">Europe's Digital Library</span>
 				<p>
