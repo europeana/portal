@@ -1,2 +1,0 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<a href="" id="citation-link" class="block-link bold" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow"><spring:message code="Cite_Button_t" /></a>
