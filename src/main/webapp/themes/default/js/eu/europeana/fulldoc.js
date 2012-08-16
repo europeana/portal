@@ -25,7 +25,13 @@ eu.europeana.fulldoc = {
 						imageCrop:		false,				/* if true, make pan true */
 						imagePan:		false,
 						lightbox:		true,
-						responsive:		true
+						responsive:		true,
+						thumbnails: false
+				});
+				
+				Galleria.ready(function(options) {					
+					this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
+
 				});
 				jQuery('#carousel-1').galleria({dataSource:carouselData});
 		    }		

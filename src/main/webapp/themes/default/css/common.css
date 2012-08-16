@@ -64,16 +64,12 @@
 		*/
 		padding: 10px;
 		background-color: #dfdfdf;
-		
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		border-radius: 5px;
 	}
 
 @media only screen and ( min-width:767px ){
 
 	.sidebar {
-		margin: 0 20px 0 0;
+		xmargin: 0 20px 0 0;
 	}
 	
 }

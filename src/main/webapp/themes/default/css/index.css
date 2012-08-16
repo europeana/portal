@@ -6,7 +6,7 @@
 
 #carousel-1{
    xwidth:		100%;
-   	height:		180px;
+   	height:		260px;
    	max-height:	100%;
    	background:	#000;
 }
@@ -19,7 +19,7 @@
 }
 
 #carousel-3{
-   	width:		100%;
+   xwidth:		100%;
    	height:		260px;
    	max-height:	100%;
    	background:	#000;
