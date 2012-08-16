@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div id="item-details" about="${model.document.id}">
-	<h1>${model.objectTitle}</h1>
+	<h1 class="hide-on-phones">${model.objectTitle}</h1>
 	<%--
 		
 		model.metaDataFileds = a collection of all metadata on the object pre-formated for <meta> element output in the <head>

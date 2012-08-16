@@ -113,6 +113,13 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'utils' ]
 		});
 
+		scripts.push({
+			name : 'galleria',
+			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/galleria/',
+			dependencies : [ 'jquery-1.4.4.min.js' ]
+		});
+
 		var fulldoc = function(){
 			return {
 				lightbox:function(callback){

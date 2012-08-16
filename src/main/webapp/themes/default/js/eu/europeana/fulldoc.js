@@ -2,11 +2,36 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
 	
+
 	// provides priority order for which tab to open when no hash is given
 	// provides a list of accepted hash values for validation
 	tab_priority : [ '#related-items','#similar-content','#map-view' ],
 
 	init : function() {
+
+		// this is a copy/paste from index.js: TODO: make this a common script
+		var initCarousels = function(){
+			if(typeof Galleria == "undefined") {
+		        window.setTimeout(initCarousels, 100);
+		    }
+		    else{
+				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
+				Galleria.configure({
+						transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+						carousel:		true,
+						carouselSpeed:	1200,				/* transition speed */
+						carouselSteps:	2,
+						easing:			'galleriaOut',
+						imageCrop:		false,				/* if true, make pan true */
+						imagePan:		false,
+						lightbox:		true,
+						responsive:		true
+				});
+				jQuery('#carousel-1').galleria({dataSource:carouselData});
+		    }		
+		};
+		// end of paste
+		
 		
 		this.loadComponents();
 		this.addAutoTagHandler();
@@ -34,6 +59,9 @@ eu.europeana.fulldoc = {
 				function(){ console.log("in callback for fulldoc.js loadResultSizer"); }
 			);
 		});
+		
+		initCarousels();
+
 	},
 
 	
