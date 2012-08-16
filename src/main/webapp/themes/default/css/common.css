@@ -1,5 +1,6 @@
 /* content */
-	
+
+/*
     #content {
         position: relative;
         z-index: 100;
@@ -7,7 +8,7 @@
         margin: 0 auto 20px auto;
         padding: 0;
     }
-    
+*/    
 
 /* common classes */
 
@@ -56,8 +57,10 @@
     .sidebar {
     	position: relative;
 		overflow: hidden;
+		/*
 		float: left;
 		width: 190px;
+		*/
 		padding: 10px;
 		margin: 0 20px 0 0;
 		background-color: #dfdfdf;
@@ -100,11 +103,13 @@
 /* search-results */
 
 	#search-results {
+	/*
 		position: relative;
 		float: left;
 		width: 680px;
 		margin: 0;
 		padding: 0;
+		*/
 		/*
 		-moz-box-shadow: 0 0 5px #333;
         -webkit-box-shadow: 0 0 5px #333;
