@@ -187,8 +187,8 @@ Galleria.addTheme({
 	
     var setThumbStyle = function(thumb, thumbOb, index){
     	var tParent	= thumb.parent();
-		var margin = 0;
-		var imgBox = containerHeight-margin;
+		var imgBox = containerHeight;
+		
 		
 		tParent.css("width",	imgBox + "px");
 		tParent.css("height",	imgBox + "px");
@@ -221,20 +221,23 @@ Galleria.addTheme({
 		// position info
 		var info = tParent.find(".europeana-carousel-info");
 		info.css("top",
-				(
-					parseInt(thumb.css("top"))
-				+
-					parseInt(thumb.css("height"))
-				)
-				-
-				parseInt(info.css("height"))
-				+ "px"
+			(	parseInt(thumb.css("top"))	+ parseInt(thumb.css("height")) )
+			-	parseInt(info.css("height"))
+			+	"px"
 		);
 		completedCallBackCount ++;	// bump callback counter
 		
 		if(completedCallBackCount == expectedCallBackCount){
 			/* Do this once only: horizontal positioning of the full image strip to centre an image within the viewer  */
 			// this works perfectly at gallery height 260 */
+			
+			
+			/*
+			 * containerWidth
+			 * imgBox (= CONTAINER WIDTH)
+			 * tParent
+			 * thisGallery
+			 */
 			
 			var galleryWidth	= containerWidth;
 			var offsetLeft		= (galleryWidth / 2) - (imgBox / 2);
@@ -243,8 +246,16 @@ Galleria.addTheme({
 			offsetLeft -= parseInt(tParent.closest(".galleria-carousel .galleria-thumbnails-list").css("margin-left"));
 			
 			tParent.closest(".galleria-thumbnails").css("margin-left", offsetLeft + "px");
+			tParent.closest(".galleria-thumbnails").css("width",
+					parseInt(tParent.closest(".galleria-thumbnails").css("width"))
+					+ offsetLeft + "px");
+
 			thisGallery.updateCarousel();
 
+			var stageWidth = parseInt(thisGallery.$('container').find(".galleria-stage").css("width"));
+			
+			thisGallery._carousel.max += offsetLeft;//stageWidth/4;
+//			Galleria.log("Added stageWidth " + stageWidth/4	);
 			/* And since we have access to the dom, fix the navigation icons */
 			
 			var navRight	= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-right");
@@ -270,13 +281,50 @@ Galleria.addTheme({
     
 	/*
 	 * TODO
-	 * 
+	 */
 	$(window).resize( function() {
-		var x = $(".galleria-container").parent().css("height");
-		thisGallery.$( 'container' ).css("height", x);
-		thisGallery.rescale();
+		//var x = $(".galleria-container").parent().css("height");
+		//thisGallery.$( 'container' ).css("height", x);
+		//Galleria.log("trimmed height to " + x);
+		//thisGallery.rescale();
+		
+		/*
+		Galleria.log(
+
+				thisGallery.$( 'container' ).css("height")
+					+ "  " + 
+				thisGallery.$( 'container' ).parent().css("height")
+				 + " " + 
+				 thisGallery.$( 'container' ).parent().attr("id")
+		);
+		
+		var hC = parseInt(thisGallery.$( 'container' ).css("height"))
+		var hP = parseInt(thisGallery.$( 'container' ).parent().css("height"));
+		
+		if(hC > hP){
+			thisGallery.$( 'container' ).css("height", 
+					parseInt(	thisGallery.$( 'container' ).parent().css("height") )
+					+ 20
+				);
+		}
+		else{
+			thisGallery.$( 'container' ).parent().css("height", 
+					parseInt(	thisGallery.$( 'container' ).css("height") )
+					+ 20 
+					+ "px"
+				);
+		}
+		
+	*/
+		
+		
+		//var id = thisGallery.$( 'container' ).parent().attr("id");
+		//thisGallery.destroy();
+		//Galleria.run('#' + id);
+		//jQuery('#' + id).galleria({dataSource:dataSource});
+
      });
-     */      
+           
 	
     }
 });
