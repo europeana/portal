@@ -47,7 +47,7 @@ public class RSSFeedParser {
 	static final String ITEM = "item";
 	static final String PUB_DATE = "pubDate";
 	static final String GUID = "guid";
-
+	
 	private final URL url;
 
 	private int itemLimit;
@@ -74,7 +74,10 @@ public class RSSFeedParser {
 				if (element.getElementsByTagName(AUTHOR).getLength() > 0) {
 					message.setAuthor(getElementValue(element, "dc:creator"));
 				}
-				message.setDescription(getElementValue(element, DESCRIPTION));
+				
+				String description = getElementValue(element, DESCRIPTION);
+				message.setDescription(description);
+				message.setImages(RSSImageExtractor.extractImages(description));
 				message.setGuid(getElementValue(element, GUID));
 				message.setLink(getElementValue(element, LINK));
 				message.setTitle(getElementValue(element, TITLE));
@@ -116,4 +119,6 @@ public class RSSFeedParser {
 	protected String getElementValue(Element parent, String label) {
 		return getCharacterDataFromElement((Element) parent.getElementsByTagName(label).item(0));
 	}
+	
+	
 }

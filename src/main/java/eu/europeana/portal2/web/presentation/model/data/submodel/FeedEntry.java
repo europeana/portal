@@ -21,9 +21,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
+
+import eu.europeana.portal2.web.controllers.utils.RSSImage;
 
 public class FeedEntry {
 
@@ -33,6 +36,11 @@ public class FeedEntry {
 	private String author;
 	private String guid;
 	private Date pubDate;
+	
+	/**
+	 * List of images extracted from the description. Each image has an src and a title field.
+	 */
+	private List<RSSImage> images;
 
 	public String getTitle() {
 		return title;
@@ -100,4 +108,11 @@ public class FeedEntry {
 		return pubDate;
 	}
 
+	public List<RSSImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<RSSImage> images) {
+		this.images = images;
+	}
 }
