@@ -25,6 +25,51 @@ Galleria.addTheme({
     init: function(options) {
         Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
 	
+        /* europeana */
+    	var carouselMode = false;
+    	var parent = this.get('stage');
+    	while(parent != null ){
+    		if( $(parent).hasClass('europeana-carousel')){
+    			carouselMode = true;
+    		}
+    		parent = parent.parentNode;
+    	}
+    	if(!carouselMode){
+    		if(this._options.dataSource.length == 1){
+				var thumbs =	this.$( 'container' ).find(".galleria-thumbnails-container");
+				var stage = 		this.$( 'container' ).find(".galleria-stage");
+				var info = 			this.$( 'container' ).find(".galleria-info");
+				var navLeft =		this.$( 'container' ).find(".galleria-image-nav-left");
+				var navRight =		this.$( 'container' ).find(".galleria-image-nav-right");
+
+				// use extra height - move the stage down
+				
+				var extraHeight = parseInt(thumbs.css("height"));
+				thumbs.css("height", "0px");
+				stage.css("bottom", parseInt(stage.css("bottom"))	- (extraHeight / 2) + "px");
+				stage.css("top",	parseInt(stage.css("top"))		+ (extraHeight / 2) + "px");
+
+				// position info
+				
+				info.css("top",			"auto");
+				info.css("position",	"absolute");
+				info.css("width",		stage.css("width"));
+				info.css("left",		stage.css("left"));
+				info.css("bottom",		stage.css("bottom"));
+
+				// hide navigation
+				
+				navLeft.css("display", "none");
+				navRight.css("display", "none");
+				
+				// custom full doc options
+				this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
+    		}
+    		//return;
+    	}
+    	
+    	/* end europeana */
+    	
         // add some elements
         this.addElement('info-link','info-close');
         this.append({
@@ -37,9 +82,9 @@ Galleria.addTheme({
             click = touch ? 'touchstart' : 'click';
 
         // show loader & counter with opacity
-	if(options.carouselMode != true){
-  	      this.$('loader,counter').show().css('opacity', 0.4);
-	}
+		if(options.carouselMode != true){
+	  	      this.$('loader,counter').show().css('opacity', 0.4);
+		}
 
         // some stuff for non-touch browsers
         if (! touch ) {
@@ -78,11 +123,15 @@ Galleria.addTheme({
         });
 
         this.bind('loadstart', function(e) {
-            //if (!e.cached) {
-            //    this.$('loader').show().fadeTo(200, 0.4);
-            //}
+        	/* europeana */
+        	if(!carouselMode){
+                if (!e.cached) {
+                    this.$('loader').show().fadeTo(200, 0.4);
+                }
+                this.$('info').toggle( this.hasInfo() );
+        	}
+        	/* end europeana */
 
-            this.$('info').toggle( this.hasInfo() );
 
             $(e.thumbTarget).css('opacity',1).parent().siblings().children().css('opacity', 0.6);
         });
@@ -96,21 +145,13 @@ Galleria.addTheme({
         
         
 	/**/
+        if(!carouselMode){
+        	return;
+        }
+        
+        
+        
 
-        
-        
-        
-	var carouselMode = false;
-	var parent = this.get('stage');
-	while(parent != null ){
-		if( $(parent).hasClass('europeana-carousel')){
-			carouselMode = true;
-		}
-		parent = parent.parentNode;
-	}
-	if(!carouselMode){
-		return;
-	}
 	
 	var thisGallery = this;
 
@@ -140,6 +181,10 @@ Galleria.addTheme({
 	navRight.css	("top", (containerHeight - 124)/2 + "px");
 	navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
 	 */
+	
+	var expectedCallBackCount = 0;
+	var completedCallBackCount = 0;
+	
     var setThumbStyle = function(thumb, thumbOb, index){
     	var tParent	= thumb.parent();
 		var margin = 0;
@@ -153,8 +198,6 @@ Galleria.addTheme({
 		thumb.css("max-width",	 "100%");
 		thumb.css("max-height",	 "100%");
 		
-		// Add info box here
-		tParent.append('<div class="europeana-carousel-info"><div class="title">' + dataSource[index].title + "</div><div>" + dataSource[index].description + '</div></div>');
 		
 		/* Gallery.updateCarousel() looks 1st for property "outerWidth" when calculating the total width of the thumbnail list.
 		 * If the width is too short the last item(s) will wrap and never be viewable.
@@ -172,6 +215,21 @@ Galleria.addTheme({
 			thumb.css("top", top + "px");
 		}
 		
+		// add info box and position
+		tParent.append('<div class="europeana-carousel-info"><div class="title">' + dataSource[index].title + "</div><div>" + dataSource[index].description + '</div></div>');
+		
+		// position info
+		var info = tParent.find(".europeana-carousel-info");
+		info.css("top",
+				(
+					parseInt(thumb.css("top"))
+				+
+					parseInt(thumb.css("height"))
+				)
+				-
+				parseInt(info.css("height"))
+				+ "px"
+		);
 		completedCallBackCount ++;	// bump callback counter
 		
 		if(completedCallBackCount == expectedCallBackCount){
@@ -196,9 +254,6 @@ Galleria.addTheme({
 
 		}
     };
-    
-	var expectedCallBackCount = 0;
-	var completedCallBackCount = 0;
 
     $(this._thumbnails).each(function( i, thumb ) {
     	if(thumb.ready){
