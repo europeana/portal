@@ -34,7 +34,13 @@
 	padding-left:		18px;
 }
 
-
+.translate-box{
+	float:				none;
+	border-radius:		5px 5px 5px 5px;
+	background-color:	#DFDFDF;
+	padding:			10px;
+	margin:				10px 0px;
+}
 
 @media only screen and ( min-width:767px ){
 	.additional-info{
@@ -44,6 +50,12 @@
 	#excerpt{
 		padding-left:	10px;
 	}
+	
+	.translate-box{
+		float:				right;
+		margin:				0;
+	}
+	
 }
 
 #phone-object-title{	/* title for phone only */
@@ -51,12 +63,7 @@
 	text-align:	center;
 }
 
-.translate-box{
-	float:				right;
-	border-radius:		5px 5px 5px 5px;
-	background-color:	#DFDFDF;
-	padding:			10px;
-}
+
 
 
 /* img */

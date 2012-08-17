@@ -74,4 +74,5 @@
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/format-link.jspf" %>
 
 </div>
-TRANSLATE ICON (then main data on collapse)
+
+
