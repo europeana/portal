@@ -262,14 +262,17 @@ Galleria.addTheme({
 			offsetLeft -= parseInt(tParent.closest(".galleria-carousel .galleria-thumbnails-list").css("margin-left"));
 			
 			tParent.closest(".galleria-thumbnails").css("margin-left", offsetLeft + "px");
+			
+			tParent.closest(".galleria-thumbnails").css("margin-right", offsetLeft + "px");
+
 			tParent.closest(".galleria-thumbnails").css("width",
 					parseInt(tParent.closest(".galleria-thumbnails").css("width"))
 					+ offsetLeft + "px");
 
 			thisGallery.updateCarousel();
 
-			var stageWidth = parseInt(thisGallery.$('container').find(".galleria-stage").css("width"));
-			
+			//var stageWidth = parseInt(thisGallery.$('container').find(".galleria-stage").css("width"));
+			Galleria.log("Adding offset " + offsetLeft + " to " + thisGallery._carousel.max + " give total of " + (thisGallery._carousel.max + offsetLeft) )
 			thisGallery._carousel.max += offsetLeft;//stageWidth/4;
 //			Galleria.log("Added stageWidth " + stageWidth/4	);
 			/* And since we have access to the dom, fix the navigation icons */
