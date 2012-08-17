@@ -1,9 +1,11 @@
-<h2><a id="blog-feed" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a><spring:message code='from_the_blog_t'/></h2>
+<span class="italic-heading"><a id="blog-feed" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a><spring:message code='from_the_blog_t'/></span>
 <c:choose>
 <c:when test='${not empty model.feedEntries}'>
 <c:forEach items="${model.feedEntries}" var="entry">
   <h3><a href="${entry.link}" target="_self">${entry.title}</a></h3>
   <p>${entry.description}</p>
+  <p>${entry.images}</p>
+  
 </c:forEach>
 </c:when>
 <c:otherwise>
