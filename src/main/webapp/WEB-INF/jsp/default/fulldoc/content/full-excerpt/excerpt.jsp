@@ -28,5 +28,12 @@
 		<!-- go display-ese-data-as-html -->
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/display-ese-data-as-html.jsp" %>
 	</c:if>
+	
+	<c:if test="${ !empty model.fieldsAdditional}">
+		<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
+	</c:if>
+	
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
+
 </div>
 <!-- /excerpt -->

@@ -21,7 +21,15 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 <c:if test='${not empty model.carouselItems}'>
 <c:set var='item' value='${model.carouselItems[0]}'/>
 <div id="index-carousel" class="rcarousel">
-  <ul><li><a href="${item.url}" title="<spring:message code='${item.anchorTitle}'/>" target="<spring:message code='${item.anchorTarget}'/>"><img src="/${model.portalName}<spring:message code='${item.imgUrl}'/>" alt="<spring:message code='${item.imgAlt}'/>" width="<spring:message code='${item.imgWidth}'/>" height="<spring:message code='${item.imgHeight}'/>"/><div class="caption"><spring:message code='${item.anchorTitle}'/></div></a></li></ul>
+  <ul>
+  	<li>
+  		<a href="${item.url}" title="<spring:message code='${item.anchorTitle}'/>" target="<spring:message code='${item.anchorTarget}'/>">
+  			<img src="/${model.portalName}<spring:message code='${item.imgUrl}'/>" alt="<spring:message code='${item.imgAlt}'/>" width="<spring:message code='${item.imgWidth}'/>" height="<spring:message code='${item.imgHeight}'/>"/>
+  			<div class="caption"><spring:message code='${item.anchorTitle}'/>
+  			</div>
+  		</a>
+  	</li>
+  </ul>
   <div class="rcarousel-overlay"></div>
 </div>
 </c:if>

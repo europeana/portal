@@ -1,5 +1,19 @@
 <div class="row">
 	<div class="menu-wrapper twelve columns">
+	
+		<div class="row">
+			<span class="italic-heading"><spring:message code="follow_us_t" /></span>
+			<div id="footer-addthis">
+			</div>
+			<div id="footer-subscribe">
+				<form>
+					<input name="name"	placeholder="<spring:message code="news_letter_name_hint_t" />"/>
+					<input name="email"	placeholder="<spring:message code="news_letter_email_hint_t" />"/>
+					<input type="submit" value="<spring:message code="news_letter_signup_button_t" />"/>
+				</form>
+			</div>
+		</div>
+		
 		<ul class="menu">
 	
 	  		<%-- Explore --%>

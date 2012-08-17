@@ -81,12 +81,18 @@
 			</c:choose>
 			<c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
 				<%-- link to external services if field has them --%>
+				
+				
+			<%--
 			<c:if test="${!empty data.ESSEnabled && data.ESSEnabled && ess}">
 			 | <a href="${model.essUrl}?field=${data.fieldName}&amp;value=${value.valueURL}" 
 				 title="<spring:message code="essHelpIconAltText_t" />"
 				 target="_blank"
 				 class="external-services toggle-menu-icon">${value.value}</a>
 			</c:if>
+			
+			--%>
+			
 			<%-- handle inline or separate lines for multiple values --%>
 			<c:if test="${value_has_next}">
 				<c:choose>

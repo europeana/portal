@@ -38,7 +38,6 @@
 		<link rel="stylesheet" href="/${branding}/css/carousel.css" />
 		<link rel="stylesheet" href="/${branding}/css/fulldoc.css" />
 		<link rel="stylesheet" href="/${branding}/css/lightbox.css" />
-		<link rel="stylesheet" href="/${branding}/css/fulldoc-sidebar-right.css" />
 		<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
 		<link rel="stylesheet" href="/${branding}/css/fulldoc-excerpt.css" />
 		<link rel="stylesheet" href="/${branding}/css/fulldoc-explore-further.css" />

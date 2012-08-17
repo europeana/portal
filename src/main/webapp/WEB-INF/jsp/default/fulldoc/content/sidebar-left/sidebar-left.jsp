@@ -23,12 +23,55 @@
 	</div>
 	
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
-
-    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
 	
-	<c:if test="${ !empty model.fieldsAdditional}">
-		<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
+
+	<%-- Shares link --%>
+	<div id="shares-link-wrapper">
+		 <a href="" id="shares-link" class="block-link bold" title="<spring:message code="Share_item_link_alt_t" />" rel="nofollow"><spring:message code="Share_item_link_t" /></a>
+	</div>
+	
+	<%-- Citation link --%>
+	<div id="citation-link-wrapper">
+    	<a href="" id="citation-link" class="block-link bold" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow"><spring:message code="Cite_Button_t" /></a>
+	</div>
+	
+	<div id="citation">
+		<c:forEach items="${model.citeStyles}" var="citeStyle">
+			<div class="header">
+				<div class="heading"><spring:message code="Cite_Header_t" />
+					<a href="" class="close-button" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
+				</div>
+			</div>
+		
+			<div id="citations">
+				<div class="citation">
+					${citeStyle.citeText}
+				</div>
+				<div class="citation">
+					&lt;ref&gt;${citeStyle.citeText}&lt;/ref&gt;
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+
+
+	<%-- Save page to myeuropeana --%>
+	<c:if test="${model.user}">
+	  <a href="" id="item-save" rel="nofollow" class="block-link bold"><spring:message code="SaveToMyEuropeana_t" /></a>
 	</c:if>
 
 
+	<%-- Embed link --%>
+	<div id="embed-link-wrapper">
+		<a href="${model.embedRecordUrl}" id="item-embed" class="block-link bold" target="_blank" rel="nofollow"><spring:message code="embed_t" /></a>
+	</div>    
+
+	<%-- Add tag --%>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/add-tag.jsp" %>
+
+	<%-- Format labels --%>
+    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/format-link.jspf" %>
+
 </div>
+TRANSLATE ICON (then main data on collapse)

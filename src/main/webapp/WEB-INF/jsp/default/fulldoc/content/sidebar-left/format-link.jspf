@@ -1,0 +1,14 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<c:choose>
+  <c:when test="${fn:contains(model.currentUrl, '&format=label')}">
+    <c:set var="switchlabelLink">${fn:replace(model.currentUrl, '&format=label', '')}</c:set>
+    <c:set var="switchlabelTitle">Normal format</c:set>
+  </c:when>
+  <c:otherwise>
+    <c:set var="switchlabelLink">${model.currentUrl}&format=label</c:set>
+    <c:set var="switchlabelTitle">Label format</c:set>
+  </c:otherwise>
+</c:choose>
+<a href="${switchlabelLink}" id="format-link" class="block-link bold" title="${switchlabelTitle}" rel="nofollow">${switchlabelTitle}</a>
