@@ -1,5 +1,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
 
 <div id="additional-info" class="sidebar" about="${model.document.id}">
@@ -25,6 +26,9 @@
 
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
 	
-    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/additional-info.jsp" %>
+	<c:if test="${ !empty model.fieldsAdditional}">
+		<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
+	</c:if>
+
 
 </div>
