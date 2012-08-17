@@ -65,7 +65,10 @@ Galleria.addTheme({
 				// custom full doc options
 				this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
     		}
-    		//return;
+    		$(window).resize( function() {
+    			// TODO: replace this generic selector with a gallery-instance scoped one
+    			$(".galleria-container").parent().css("height", $(".galleria-container").css("height"));
+    		});
     	}
     	
     	/* end europeana */
@@ -186,6 +189,14 @@ Galleria.addTheme({
 	var completedCallBackCount = 0;
 	
     var setThumbStyle = function(thumb, thumbOb, index){
+    	
+    	/* Friday changes:
+    	 *	update containerWidth & containerHeight
+    	*/
+    	containerHeight = parseInt( thisGallery.$( 'container' ).parent().css("height") );
+    	containerWidth = parseInt( thisGallery.$( 'container' ).parent().css("width") );
+
+
     	var tParent	= thumb.parent();
 		var imgBox = containerHeight;
 		
@@ -216,7 +227,11 @@ Galleria.addTheme({
 		}
 		
 		// add info box and position
-		tParent.append('<div class="europeana-carousel-info"><div class="title">' + dataSource[index].title + "</div><div>" + dataSource[index].description + '</div></div>');
+		/* TODO: Friday */
+		/*
+		if(tParent.find(".europeana-carousel-info").length == 0){
+			tParent.append('<div class="europeana-carousel-info"><div class="title">' + dataSource[index].title + "</div><div>" + dataSource[index].description + '</div></div>');
+		}
 		
 		// position info
 		var info = tParent.find(".europeana-carousel-info");
@@ -225,6 +240,7 @@ Galleria.addTheme({
 			-	parseInt(info.css("height"))
 			+	"px"
 		);
+		*/
 		completedCallBackCount ++;	// bump callback counter
 		
 		if(completedCallBackCount == expectedCallBackCount){
@@ -263,66 +279,56 @@ Galleria.addTheme({
 			navRight.css	("top", (containerHeight - 124)/2 + "px");
 			navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
 
+			/* TODO: Andy Friday change: allows win resize to reuse variable*/
+			completedCallBackCount = 0;
 		}
     };
 
-    $(this._thumbnails).each(function( i, thumb ) {
-    	if(thumb.ready){
-    	}
-    	else{
-    		expectedCallBackCount ++;
-    		thisGallery.bind("thumbnail", function(e) {
-    			if(e.index == i){
-        	        setThumbStyle($(e.thumbTarget), thumb, i);
-    			}
-    	    });
-    	}
-    });
+    var callSetThumbStyle = function(){
+
+        $(thisGallery._thumbnails).each(function( i, thumb ) {
+
+        	if(thumb.ready){
+
+    		//var originalBottomRule  = $(".europeana-carousel-info:first").css("bottom");
+    		//$(".europeana-carousel-info").css("bottom", "auto");
+
+    		thisGallery.trigger({
+    			type: Galleria.THUMBNAIL,
+                            thumbTarget: thumb.image,
+                            index: i,
+                            galleriaData: dataSource
+    		});
+
+    		//$(".europeana-carousel-info").css("bottom", originalBottomRule);
+
+
+
+    		//$(".europeana-carousel .galleria-thumbnails")	.css("overflow", "visible !important");	
+    		//$(".europeana-carousel .galleria-image")	.css("overflow", "visible !important");
+        	}
+        	else{
+        		expectedCallBackCount ++;
+        		thisGallery.bind("thumbnail", function(e) {
+        			if(e.index == i){
+            	        	setThumbStyle($(e.thumbTarget), thumb, i);
+        			}
+        	    });
+        	}
+        });
+    }
+    callSetThumbStyle();
     
 	/*
 	 * TODO
 	 */
 	$(window).resize( function() {
-		//var x = $(".galleria-container").parent().css("height");
-		//thisGallery.$( 'container' ).css("height", x);
-		//Galleria.log("trimmed height to " + x);
-		//thisGallery.rescale();
-		
-		/*
-		Galleria.log(
-
-				thisGallery.$( 'container' ).css("height")
-					+ "  " + 
-				thisGallery.$( 'container' ).parent().css("height")
-				 + " " + 
-				 thisGallery.$( 'container' ).parent().attr("id")
-		);
-		
-		var hC = parseInt(thisGallery.$( 'container' ).css("height"))
-		var hP = parseInt(thisGallery.$( 'container' ).parent().css("height"));
-		
-		if(hC > hP){
-			thisGallery.$( 'container' ).css("height", 
-					parseInt(	thisGallery.$( 'container' ).parent().css("height") )
-					+ 20
-				);
-		}
-		else{
-			thisGallery.$( 'container' ).parent().css("height", 
-					parseInt(	thisGallery.$( 'container' ).css("height") )
-					+ 20 
-					+ "px"
-				);
-		}
-		
-	*/
-		
-		
-		//var id = thisGallery.$( 'container' ).parent().attr("id");
-		//thisGallery.destroy();
-		//Galleria.run('#' + id);
-		//jQuery('#' + id).galleria({dataSource:dataSource});
-
+		//$(".galleria-container").parent().css("height", $(".galleria-container").css("height"));
+		thisGallery.$('container').parent().css("height", thisGallery.$('container').css("height"));
+		callSetThumbStyle();
+		//thisGallery.$('container').find(".galleria-thumbnails").css("left", "auto");
+	        thisGallery._carousel.set(0);
+		// TODO: replace this generic selector with a gallery-instance scoped one
      });
            
 	

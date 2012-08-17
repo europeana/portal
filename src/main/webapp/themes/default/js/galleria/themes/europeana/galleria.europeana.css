@@ -45,7 +45,7 @@
 	color:				#BBBBBB;
 	text-align:			center;
 	position:			absolute;
-	bottom:				10px;		/* dynamically override...... */
+	xxxbottom:				10px;		/* dynamically override...... */
 	padding:			3px;
 	font-size:			80%;
 }
