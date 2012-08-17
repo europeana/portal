@@ -22,7 +22,7 @@
 			});
 			jQuery('#carousel-1').galleria({dataSource:carouselData});
 			jQuery('#carousel-2').galleria({dataSource:carousel2Data});
-			//jQuery('#carousel-3').galleria({dataSource:carousel3Data});
+			jQuery('#carousel-3').galleria({dataSource:carousel3Data});
 	    }		
 	};
 	
