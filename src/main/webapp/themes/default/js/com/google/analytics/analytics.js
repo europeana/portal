@@ -72,7 +72,7 @@ com.google.analytics = {
 		
 		
 		if(js.debug){
-			alert("Track Event:\n\naction =\t\t" + action + "\ncategory = \t" + category);
+//			alert("Track Event:\n\naction =\t\t" + action + "\ncategory = \t" + category);
 		}
 		
 		category = category || 'Europeana Portal';

@@ -15,8 +15,8 @@ eu.europeana.fulldoc = {
 		        window.setTimeout(initCarousels, 100);
 		    }
 		    else{
-//				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
-				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
+				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
+				//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
 				Galleria.configure({
 						transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
 						carousel:		true,
@@ -564,7 +564,10 @@ eu.europeana.fulldoc = {
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes		
 		//jQuery('#header-strip').append(
-		jQuery('#additional-actions-addthis').append(
+		//jQuery('#additional-actions-addthis').append(
+		
+//		alert(jQuery('#addthis_test').length);
+		jQuery('#footer-addthis').append(
 				com.addthis.getToolboxHtml({
 				html_class : 'addthis',
 				url : url,
