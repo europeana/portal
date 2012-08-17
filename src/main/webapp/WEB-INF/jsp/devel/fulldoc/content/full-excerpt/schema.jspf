@@ -1,0 +1,54 @@
+<%@ page import="java.util.logging.Logger" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
+<% final Logger log = Logger.getLogger("schema"); %> 
+<h3>Schema display</h3>
+<table>
+<c:forEach items="${model.schemaMap.document}" var="docMap">
+  <c:set var="schemaName" value="${docMap.key}"/>
+  <c:set var="beanName" value="${docMap.value}"/>
+  <tr><td colspan="2"><h4>${schemaName}</h4></td></tr>
+
+  <c:set var="beanType" value="${model.schemaMap.objects[beanName]}" />
+  <c:choose>
+    <%-- europeanaAggregation --%>
+    <c:when test="${beanName == 'europeanaAggregation'}">
+      <c:set var="docElement" value="${model.document[beanName]}" />
+      <c:forEach items="${model.schemaMap[beanType]}" var="fieldName" varStatus="fieldStatus">
+        <tr valign="top">
+         <td>${fieldName.key}:</td>
+         <td>${docElement[fieldName.value]}</td>
+        </tr>
+      </c:forEach>
+    </c:when>
+
+    <c:otherwise>
+      <c:forEach items="${model.document[beanName]}" var="docElement" varStatus="elementStatus">
+        <c:if test="${fn:length(model.document[beanName]) > 1}">
+          <tr><td colspan="2"><h5>${elementStatus.index + 1}</h5></td></tr>
+        </c:if>
+        <c:forEach items="${model.schemaMap[beanType]}" var="fieldName" varStatus="fieldStatus">
+          <c:if test="${!empty docElement[fieldName.value]}">
+          <tr valign="top">
+           <td>${fieldName.key}:</td>
+           <td>
+             <c:catch var="exception">
+               <c:set var="count" value="${fn:length(docElement[fieldName.value])}" />
+             </c:catch>
+             ${docElement[fieldName.value]}
+             <c:choose>
+               <c:when test="${exception == null}">
+                  (${count})
+               </c:when>
+               <c:otherwise>()</c:otherwise>
+             </c:choose>
+           </td>
+          </tr>
+          </c:if>
+        </c:forEach>
+      </c:forEach>
+    </c:otherwise>
+  </c:choose>
+</c:forEach>
+</table>
