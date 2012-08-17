@@ -11,7 +11,7 @@
 			<div class="three columns">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/sidebar-left.jsp" %>
 			</div>
-			<div class="nine columns">
+			<div class="nine columns" id="main-fulldoc-area">
 			
 				<%-- Translation link --%>
 				<div class="translate-box">
@@ -19,7 +19,6 @@
 				</div>
 				
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
-				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-right/sidebar-right.jsp" %>
 				
 			</div>	
 		</div>
