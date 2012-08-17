@@ -135,7 +135,6 @@ public class ObjectController {
 			log.severe("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-		CiteValue[] citeValues = model.getCiteStyles();
 
 		return page;
 	}

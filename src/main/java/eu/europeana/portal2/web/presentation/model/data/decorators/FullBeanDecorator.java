@@ -977,6 +977,7 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public EuropeanaAggregation getEuropeanaAggregation() {
+		log.info("getEuropeanaAggregation");
 		return fulldoc.getEuropeanaAggregation();
 	}
 

@@ -23,8 +23,13 @@ public class RSSImageExtractor {
 	/**
 	 * Regex pattern for images
 	 */
-	static final Pattern IMG_PATTERN = Pattern.compile("<img [^<>]+/>");
-	
+	static final Pattern IMG_PATTERN = Pattern.compile("<img [^<>]+>");
+
+	/**
+	 * Regex pattern for HTML escaped images
+	 */
+	static final Pattern ESCAPED_IMG_PATTERN = Pattern.compile("&lt;img [^<>]+&gt;");
+
 	/**
 	 * Regex pattern for the src attribute of an image
 	 */
@@ -45,9 +50,24 @@ public class RSSImageExtractor {
 	 *   The list of images
 	 */
 	public static List<RSSImage> extractImages(String text) {
+		return extractImages(text, true);
+	}
+
+	/**
+	 * Extracts images from a HTML source
+	 *
+	 * @param text
+	 *   The HTML text which might contain image elements.
+	 *
+	 * @return
+	 *   The list of images
+	 */
+	public static List<RSSImage> extractImages(String text, boolean useNormalImageFormat) {
 		List<RSSImage> images = new ArrayList<RSSImage>();
 
-		Matcher imgMatcher = IMG_PATTERN.matcher(text);
+		Matcher imgMatcher = (useNormalImageFormat)
+							? IMG_PATTERN.matcher(text)
+							: ESCAPED_IMG_PATTERN.matcher(text);
 		Map<Param, Pattern> patterns = new HashMap<Param, Pattern>(){
 			private static final long serialVersionUID = 1L;
 			{

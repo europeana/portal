@@ -23,6 +23,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -44,6 +45,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.presentation.model.data.submodel.MetaDataFieldPresentation;
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
+import eu.europeana.portal2.web.util.EdmSchemaMapping;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
 import eu.europeana.portal2.web.util.WebUtils;
@@ -53,7 +55,7 @@ public class FullDocPage extends FullDocPreparation {
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private RightsValue rightsOption = null;
-
+	
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
 		if (isEmbedded()) {
@@ -562,5 +564,9 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	public List<BreadCrumb> getBreadcrumbs() {
 		return null;
+	}
+	
+	public Map<String, Map<String, String>> getSchemaMap() {
+		return EdmSchemaMapping.getFullMap();
 	}
 }

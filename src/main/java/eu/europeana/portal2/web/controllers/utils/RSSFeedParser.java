@@ -47,7 +47,8 @@ public class RSSFeedParser {
 	static final String ITEM = "item";
 	static final String PUB_DATE = "pubDate";
 	static final String GUID = "guid";
-	
+
+	boolean useNormalImageFormat = true;
 	private final URL url;
 
 	private int itemLimit;
@@ -59,6 +60,11 @@ public class RSSFeedParser {
 			throw new RuntimeException(e);
 		}
 		this.itemLimit = itemLimit;
+	}
+
+	public RSSFeedParser(String feedUrl, int itemLimit, boolean useNormalImageFormat) {
+		this(feedUrl, itemLimit);
+		this.useNormalImageFormat = useNormalImageFormat;
 	}
 
 	public List<FeedEntry> readFeed() {
@@ -77,7 +83,7 @@ public class RSSFeedParser {
 				
 				String description = getElementValue(element, DESCRIPTION);
 				message.setDescription(description);
-				message.setImages(RSSImageExtractor.extractImages(description));
+				message.setImages(RSSImageExtractor.extractImages(description, useNormalImageFormat));
 				message.setGuid(getElementValue(element, GUID));
 				message.setLink(getElementValue(element, LINK));
 				message.setTitle(getElementValue(element, TITLE));
