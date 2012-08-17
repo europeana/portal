@@ -11,4 +11,7 @@
     <c:set var="switchlabelTitle">Label format</c:set>
   </c:otherwise>
 </c:choose>
-<a href="${switchlabelLink}" id="format-link" class="block-link bold" title="${switchlabelTitle}" rel="nofollow">${switchlabelTitle}</a>
+
+<div id="format-link-wrapper">
+	<a href="${switchlabelLink}" id="format-link" class="block-link bold" title="${switchlabelTitle}" rel="nofollow">${switchlabelTitle}</a>
+</div>

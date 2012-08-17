@@ -34,6 +34,12 @@
 	padding-left:		18px;
 }
 
+#format-link-wrapper{
+	background-image:	url('http://icons.iconarchive.com/icons/saki/nuoveXT-2/16/Actions-format-indent-more-icon.png');
+	background-repeat:	no-repeat;
+	padding-left:		18px;
+}
+
 .translate-box{
 	float:				none;
 	border-radius:		5px 5px 5px 5px;
@@ -53,7 +59,7 @@
 	
 	.translate-box{
 		float:				right;
-		margin:				0;
+		margin:				0px 0px 5px 5px;
 	}
 	
 }
