@@ -5,7 +5,6 @@
 	position:			relative;
 	padding-top:		0;
 	padding-left:		0;
-	background-color:	#fff;
 }
 
 #carousel-1{
@@ -13,13 +12,41 @@
 	width:		100%;
 }
 
+
+.addthis {
+}
+
+#shares-link-wrapper{
+	background-image:	url('http://pluck.nationaldentalreviews.org/ver1.0/Content/ua/images/util/share/pluck-share-icon.gif');
+	background-repeat:	no-repeat;
+	padding-left:		18px;
+}
+
+#citation-link-wrapper{
+	background-image:	url('http://www.ob10.com/OB10Blog/pics/wikipedia_icon.jpg');
+	background-repeat:	no-repeat;
+	padding-left:		18px;
+}
+
+#embed-link-wrapper{
+	background-image:	url('http://shoutomatic.com/static/images/embed_icon16.png');
+	background-repeat:	no-repeat;
+	padding-left:		18px;
+}
+
+
+
 @media only screen and ( min-width:767px ){
 	.additional-info{
-		
+
+	}
+	
+	#excerpt{
+		padding-left:	10px;
 	}
 }
 
-#phone-object-title{
+#phone-object-title{	/* title for phone only */
 	width:		100%;
 	text-align:	center;
 }
@@ -47,14 +74,7 @@ img.trigger{
 		xxborder-bottom: none;
 	}
 	
-/* addthis */
 
-	.addthis {
-		position:	absolute;
-		z-index:	200;
-		top:		4px;
-		right:		0px;
-	}
 	
 	.at300b { float: right; margin-left: 3px; }
 	.at300m { float: right; margin: 0 5px 0 5px; }
@@ -203,5 +223,81 @@ img.trigger{
 		background-position: 5px -973px;
 	}	
 	
+	
+		
+	
+/* additional-actions */
+
+    #additional-actions {
+    	padding: 10px;
+        background-color: #dfdfdf;
+        -moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+    }
+    
+    #item-save-tag fieldset {
+    	margin: 0;
+    	padding: 0;
+    }
+    
+    #item-save-tag input[type=text] {
+    	margin: 2px 0;
+    	width: 180px;
+    }
+    
+    #item-save-tag input[type=submit] {
+    	margin-bottom: 4px;
+    }
+	
+	
+/* translation-services */
+
+	#translation-services {
+		position: relative;
+		display: none;
+		margin: 5px 0 0 0;
+	}
+	
+	
+	#translate-with-google,
+	#translate-with-microsoft {
+		display: inline-block;
+	}
+	
+	#google-translate-element,
+	#microsoft-translate-element {
+		margin-bottom: 7px;
+	}
+	
+	#microsoft-translate-element select {
+		display: block;
+		margin: 0;
+	}
+	
+
+/* fields-enrichment */
+
+	#auto-generated-tags,
+	#fields-enrichment h4 {
+		margin-top: 12px;
+		font-size: 100%;
+		font-weight: normal;
+	}
+	
+	#fields-enrichment {
+		margin: 0;
+		padding: 0;
+	}
+	
+	#fields-enrichment li {
+		list-style: none;
+	}
+	
+	#fields-enrichment ul {
+		margin: 0;
+		padding: 0;
+		display: none;
+	}
 	
 	

@@ -1,4 +1,40 @@
 /* external-services */
+
+	/* citation */
+	
+	#citation {
+		display:	none;
+		position:	relative;
+		width:		100%;		/* to aid centering of ess container */
+	}
+	
+	#citation .external-services-container {
+		display:	block;
+		height:		auto;
+		
+		left:		20px;	/* centering */
+		right:		20px;
+		top:		-2em;
+		position:	absolute;		
+	}
+	
+	#citation h3 {
+		font-size: 100%;
+		padding: 20px 0 0 20px;
+	}
+	
+	#citation p {
+		overflow: auto;
+		padding: 20px;
+	}
+	
+	#citation .header {
+		font-weight: normal;
+		padding: 10px 30px 10px 10px;
+	}
+	
+	/* end citation */
+	
 	
 	a.external-services.toggle-menu-icon {
 		position: relative;
@@ -10,7 +46,12 @@
 		top:				0;
 		left:				0;
 		z-index:			200;
-		width:				175px;
+		
+		
+		/*
+			width:				175px;
+		*/
+		
 		height:				auto;
 		background-color:	#fff;
 		border-radius:		5px;
@@ -22,6 +63,95 @@
 		border:				1px solid black;
         
         padding-top:		4px;
+	}
+
+	#citetabs{
+		margin-top:  4px;
+	    margin-left: 4px;
+	}
+	
+	#citestyle1, #citestyle2{
+		margin:		4px;
+		word-wrap:	break-word;
+	}
+	
+	.external-services-container p {
+        overflow:			hidden;
+        word-wrap:			break-word;
+	}
+	
+	
+	.external-services-container .header {
+		border-radius:		5px 5px 0px 0px;
+		position:			relative;
+		
+		border-top: 1px solid black;
+		
+		height:				25px;
+		width:				auto;
+        overflow:			hidden;
+	}
+	
+	.external-services-container a.close-button {
+		position:				absolute;
+		display:				block;
+		top:					6px;
+		right:					5px;
+		width:					11px;
+		height:					10px;
+
+
+		/*
+		The "nbsp;" in the anchor tag is used together with the following overflow / line-height / v-align and font size rules to fix the empty-link-clickable-area bug in IE7.
+		The 'background-image' / 'background-color' / 'transparent-border' fixes were ineffective here, but these rules (together with a "&nbsp;) fix it.
+		*/
+		font-size:				500%;
+		overflow:				hidden;
+		line-height:			12px;
+		vertical-align:			top;
+		
+		background-color:		#f5f5f5;
+		background-repeat:		no-repeat;
+		background-image:		url(../images/icons/sprite.png);
+		background-position:	0 -1466px;
+	}
+	
+	.external-services-container a.close-button:hover {
+		background-position: 0 -1486px;
+	}
+	
+	.external-services-container .heading {
+		padding: 2px 0 0 7px;
+		z-index:	200;
+	}
+	
+	.external-services-container .services {
+		padding: 10px 0 10px 10px;
+	}
+	
+	.external-services-container .service {
+		display: block;
+	}
+
+
+
+@media only screen and ( min-width:767px ){
+
+	
+	a.external-services.toggle-menu-icon {
+		position: relative;
+		display: inline-block;
+	}
+	
+	.external-services-container {
+		position:			fixed !important;
+
+		width:				456px;
+		margin-left:		-228px;
+		margin-top:			-30px;
+		left:				50% !important;
+		top:				50% !important;
+		
 	}
 
 	#citetabs{
@@ -91,4 +221,5 @@
 	.external-services-container .service {
 		display: block;
 	}
-	
+}
+

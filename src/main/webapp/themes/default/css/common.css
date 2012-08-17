@@ -1,14 +1,5 @@
 /* content */
 
-/*
-    #content {
-        position: relative;
-        z-index: 100;
-        width: 910px;
-        margin: 0 auto 20px auto;
-        padding: 0;
-    }
-*/    
 
 /* common classes */
 
@@ -57,14 +48,33 @@
 
     .sidebar {
     	position: relative;
-		overflow: hidden;
 		/*
+		overflow: hidden;
 		float: left;
 		width: 190px;
-		*/
 		padding: 10px;
+		*/
 		background-color: #dfdfdf;
 	}
+
+
+	#footer-addthis{
+		float:left;
+	}
+	
+	#footer-subscribe{
+		float:right;
+		clear:both;
+	}
+
+
+	.italic-heading{
+		font-weight:	normal;
+		font-style:		italic;
+		font-size:		180%;
+		display:		block;
+	}
+
 
 @media only screen and ( min-width:767px ){
 

@@ -29,11 +29,7 @@
 	padding-left:	0px;
 }
 
-#carousel-1-blurb .heading{
-	font-weight:	normal;
-	font-style:		italic;
-	font-size:		180%;
-	display:		block;
+#carousel-1-blurb .italic-heading{
 	margin:			1em 0;
 }
 
@@ -48,7 +44,7 @@
 		padding-left:	12px;		
 	}
 
-	#carousel-1-blurb .heading{
+	#carousel-1-blurb .italic-heading{
 		margin:			0;
 		margin-bottom:	1em;
 		
