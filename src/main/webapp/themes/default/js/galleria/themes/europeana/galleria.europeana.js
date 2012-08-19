@@ -26,6 +26,7 @@ Galleria.addTheme({
         Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
 	
         /* europeana */
+    	var thisGallery = this;
     	var carouselMode = false;
     	var parent = this.get('stage');
     	while(parent != null ){
@@ -34,7 +35,13 @@ Galleria.addTheme({
     		}
     		parent = parent.parentNode;
     	}
-    	if(!carouselMode){
+    	if(carouselMode){
+        	thisGallery._options.europeana = {thumbRatios : []};
+        	for(var i=0; i<this._options.dataSource.length; i++){
+        		this._options.europeana.thumbRatios[i] = null;
+        	}
+    	}
+    	else{
     		if(this._options.dataSource.length == 1){
 				var thumbs =	this.$( 'container' ).find(".galleria-thumbnails-container");
 				var stage = 		this.$( 'container' ).find(".galleria-stage");
@@ -67,7 +74,8 @@ Galleria.addTheme({
     		}
     		$(window).resize( function() {
     			// TODO: replace this generic selector with a gallery-instance scoped one
-    			$(".galleria-container").parent().css("height", $(".galleria-container").css("height"));
+    			//$(".galleria-container").parent().css("height", $(".galleria-container").css("height"));
+    			thisGallery.$( 'container' ).parent().css("height", $(".galleria-container").css("height"));
     		});
     	}
     	
@@ -148,16 +156,17 @@ Galleria.addTheme({
         
         
 	/**/
-        if(!carouselMode){
-        	return;
-        }
-        
-        
-        
+    if(!carouselMode){
+      	return;
+    }
+    var centreItems = false;
 
-	
-	var thisGallery = this;
+	thisGallery._options.responsive = false; // don't trigger automatic scale
 
+//alert(JSON.stringify(thisGallery._options))
+
+
+    
     this.$('loader').hide();
     
 	var containerHeight = parseInt( this.$( 'container' ).css("height") );
@@ -189,23 +198,77 @@ Galleria.addTheme({
 	var completedCallBackCount = 0;
 	
     var setThumbStyle = function(thumb, thumbOb, index){
-    	
-    	/* Friday changes:
-    	 *	update containerWidth & containerHeight
-    	*/
-    	containerHeight = parseInt( thisGallery.$( 'container' ).parent().css("height") );
-    	containerWidth = parseInt( thisGallery.$( 'container' ).parent().css("width") );
-
-
+    	var imgBoxW = thisGallery._options.europeana.imgBoxW;
     	var tParent	= thumb.parent();
 		var imgBox = containerHeight;
+
+		//Galleria.log("setThumbStyle:  imgBoxW = " + imgBoxW + ", containerWidth = " + containerWidth);
+
 		
-		
-		tParent.css("width",	imgBox + "px");
+		tParent.css("width",	imgBoxW + "px");
 		tParent.css("height",	imgBox + "px");
+
+
+		imgW = thumb.width();
+		imgH = thumb.height();
 		
-		thumb.css("width",		"auto");
-		thumb.css("height",		"auto");
+		var ratio;
+		
+		if(thisGallery._options.europeana.thumbRatios[index]){
+			ratio = thisGallery._options.europeana.thumbRatios[index];
+		}
+		else{
+			thisGallery._options.europeana.thumbRatios[index] = imgW / imgH;
+			ratio = imgW / imgH;
+		}
+		
+		if(imgW > imgH){ // landscape
+			var marginR = parseInt(tParent.css("margin-right"));
+			var newW	= imgBoxW-marginR;
+			
+			if(newW/ratio > containerHeight){
+				var newH = containerHeight / ratio;
+				var newW = newH *  ratio;
+			}
+			
+			if(index==0){
+				//Galleria.log("w=" + imgW + ", h=" + imgH + ", newW=" + newW + ", ratio = " + ratio + " --> makes new height " + (newW/ratio) + " (" + imgH + ")");
+			}
+			
+			thumb.attr("width", newW + "px");
+			thumb.attr("height", newW/ratio + "px");
+
+			thumb.css("width", newW + "px");
+			thumb.css("height", newW/ratio + "px");
+		}
+		else{ // portrait of perfect square
+			var newH = (containerHeight - 2 * 7);
+			var newW = newH * ratio;
+
+			thumb.attr("height",	newH + "px");
+			thumb.attr("width",		newW + "px");
+						
+			thumb.css("height",		newH + "px");
+			thumb.css("width",		newW + "px");
+
+			/*
+			var newH = (containerHeight - 2 * 7);
+			var ratio = imgH / newH;
+			
+			thumb.attr("height", newH  + "px");
+			thumb.attr("width",	 imgW/ratio + "px");
+						
+			thumb.css("height",		newH + "px");
+			thumb.css("width",		 imgW/ratio + "px");
+			*/
+		}
+
+		//thumb.attr("width", "auto");
+		//thumb.attr("height", "auto");
+
+		
+		//thumb.css("width",		"auto");
+		//thumb.css("height",		"auto");
 		thumb.css("max-width",	 "100%");
 		thumb.css("max-height",	 "100%");
 		
@@ -216,12 +279,12 @@ Galleria.addTheme({
 		 * 
 		 * Here we help updateCarousel() by setting "outerWidth" to our box dimension plus the relative component margins and offsets. 
 		 *  */
-		var offset = 2;
+		var offset = 2;		
 		offset += parseInt( tParent.css("margin-right") );
-		thumbOb.outerWidth = imgBox + offset;
+		thumbOb.outerWidth = imgBoxW + offset;
 		
 		/* Vertical centering of individual images */
-		if(imgBox > parseInt(thumb.css("height"))){
+		if(imgBox > thumb.height()){//parseInt(thumb.css("height"))){
 			var top = (imgBox - parseInt(thumb.css("height")) ) / 2;
 			thumb.css("top", top + "px");
 		}
@@ -244,9 +307,7 @@ Galleria.addTheme({
 		completedCallBackCount ++;	// bump callback counter
 		
 		if(completedCallBackCount == expectedCallBackCount){
-			/* Do this once only: horizontal positioning of the full image strip to centre an image within the viewer  */
-			// this works perfectly at gallery height 260 */
-			
+			/* Do this once only: horizontal positioning of the full image strip to centre an image within the viewer  */			
 			
 			/*
 			 * containerWidth
@@ -254,27 +315,31 @@ Galleria.addTheme({
 			 * tParent
 			 * thisGallery
 			 */
+			if(centreItems){
+				var galleryWidth	= containerWidth;
+				var offsetLeft		= (galleryWidth / 2) - (imgBox / 2);
+				
+				offsetLeft -= parseInt(tParent.closest(".galleria-carousel").css("left"));
+				offsetLeft -= parseInt(tParent.closest(".galleria-carousel .galleria-thumbnails-list").css("margin-left"));
+				
+				tParent.closest(".galleria-thumbnails").css("margin-left", offsetLeft + "px");
+				
+				tParent.closest(".galleria-thumbnails").css("margin-right", offsetLeft + "px");
+	
+				tParent.closest(".galleria-thumbnails").css("width",
+						parseInt(tParent.closest(".galleria-thumbnails").css("width"))
+						+ offsetLeft + "px");
+	
+				thisGallery.updateCarousel();
+	
+				//Galleria.log("Adding offset " + offsetLeft + " to " + thisGallery._carousel.max + " give total of " + (thisGallery._carousel.max + offsetLeft) )
+				thisGallery._carousel.max += offsetLeft;
+			}
+			else{
+				thisGallery.updateCarousel();
+			}
 			
-			var galleryWidth	= containerWidth;
-			var offsetLeft		= (galleryWidth / 2) - (imgBox / 2);
 			
-			offsetLeft -= parseInt(tParent.closest(".galleria-carousel").css("left"));
-			offsetLeft -= parseInt(tParent.closest(".galleria-carousel .galleria-thumbnails-list").css("margin-left"));
-			
-			tParent.closest(".galleria-thumbnails").css("margin-left", offsetLeft + "px");
-			
-			tParent.closest(".galleria-thumbnails").css("margin-right", offsetLeft + "px");
-
-			tParent.closest(".galleria-thumbnails").css("width",
-					parseInt(tParent.closest(".galleria-thumbnails").css("width"))
-					+ offsetLeft + "px");
-
-			thisGallery.updateCarousel();
-
-			//var stageWidth = parseInt(thisGallery.$('container').find(".galleria-stage").css("width"));
-			Galleria.log("Adding offset " + offsetLeft + " to " + thisGallery._carousel.max + " give total of " + (thisGallery._carousel.max + offsetLeft) )
-			thisGallery._carousel.max += offsetLeft;//stageWidth/4;
-//			Galleria.log("Added stageWidth " + stageWidth/4	);
 			/* And since we have access to the dom, fix the navigation icons */
 			
 			var navRight	= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-right");
@@ -288,27 +353,55 @@ Galleria.addTheme({
     };
 
     var callSetThumbStyle = function(){
+    	
+    	/* scaling */
+    	var imgBoxW = 0;
+			
+    	/* update containerWidth & containerHeight */
+    	containerHeight = parseInt( thisGallery.$( 'container' ).parent().css("height") );
+    	containerWidth = parseInt( thisGallery.$( 'container' ).parent().css("width") );
+    	
+		var thumbnailsList = thisGallery.$( 'container' ).find('.galleria-thumbnails-list');//  thisGallery.$( 'thumbnails' );//.parent();//galleria-thumbnails-list'
+		
+		var reduce = 0;
+		reduce += parseInt(thumbnailsList.css('margin-left'));
+		reduce += parseInt(thumbnailsList.css('marginRight'));
+		reduce += parseInt(thumbnailsList.parent().css('right'));
+		reduce += parseInt(thumbnailsList.parent().css('left'));
+		reduce = 80; /* hard coded: 30+30+10+10*/
+			
+		var maxItems = (
+				(containerWidth-reduce) 
+				- 
+				(
+						(containerWidth-reduce) % containerHeight
+				)
+				) / containerHeight;
+		imgBoxW = (containerWidth-reduce) / maxItems;
+		
+		imgBoxW -= parseInt(thumbnailsList.find('.galleria-image:first').css("margin-right"));
+		
+		thisGallery._options.carouselSteps = maxItems;
+		
+    	thisGallery._options.europeana.imgBoxW = imgBoxW;
 
+		//Galleria.log("In callSetThumbStyle:  imgBoxW = " + imgBoxW + ", containerWidth = " + containerWidth);
+		
+		/* end  scaling */
+
+		
+		/* end sunday scaling */
         $(thisGallery._thumbnails).each(function( i, thumb ) {
 
         	if(thumb.ready){
 
-    		//var originalBottomRule  = $(".europeana-carousel-info:first").css("bottom");
-    		//$(".europeana-carousel-info").css("bottom", "auto");
+	    		thisGallery.trigger({
+	    			type: Galleria.THUMBNAIL,
+	                      thumbTarget: thumb.image,
+	                      index: i,
+	                      galleriaData: dataSource
+	    		});
 
-    		thisGallery.trigger({
-    			type: Galleria.THUMBNAIL,
-                            thumbTarget: thumb.image,
-                            index: i,
-                            galleriaData: dataSource
-    		});
-
-    		//$(".europeana-carousel-info").css("bottom", originalBottomRule);
-
-
-
-    		//$(".europeana-carousel .galleria-thumbnails")	.css("overflow", "visible !important");	
-    		//$(".europeana-carousel .galleria-image")	.css("overflow", "visible !important");
         	}
         	else{
         		expectedCallBackCount ++;
@@ -319,19 +412,28 @@ Galleria.addTheme({
         	    });
         	}
         });
-    }
+    };
+    
     callSetThumbStyle();
     
 	/*
 	 * TODO
 	 */
 	$(window).resize( function() {
-		//$(".galleria-container").parent().css("height", $(".galleria-container").css("height"));
-		thisGallery.$('container').parent().css("height", thisGallery.$('container').css("height"));
+		
+/*
+		jQuery.each($('#elem').data('events'), function(i, event){
+		    jQuery.each(event, function(i, handler){
+		        console.log( handler.toString() );
+		    });
+		});
+	*/	
+		//return;
+		
+		//thisGallery.$('container').parent().css("height", thisGallery.$('container').css("height"));
+		thisGallery.$('container').css("height", thisGallery.$('container').parent().css("height"));
 		callSetThumbStyle();
-		//thisGallery.$('container').find(".galleria-thumbnails").css("left", "auto");
-	        thisGallery._carousel.set(0);
-		// TODO: replace this generic selector with a gallery-instance scoped one
+		thisGallery._carousel.set(0);
      });
            
 	
