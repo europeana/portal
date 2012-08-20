@@ -19,8 +19,8 @@ public class ImageExtractingTest {
 				"src=\"http://blog.europeana.eu/wp-content/uploads/2012/08/battle-of-arcole.jpg\" " +
 				"alt=\"Antoine-Jean Gros, 'Napoleon Bonaparte : bataille d'Arcole', French National Library\" " +
 				"width=\"182\" height=\"283\" /></a>" +
-				"<a href=\"http://www.europeana.eu/portal/record/9200103/B67F2D7063672BEDC3CAD554F6494BA84909B26C.html\">" +
-				"<img class=\"alignnone  wp-image-7727\" " +
+				"<a href=\"http://www.europeana.eu/portal/record/9200103/B67F2D7063672BEDC3CAD554F6494BA84909B26C.html\" " +
+				"target=\"_blank\"><img class=\"alignnone  wp-image-7727\" " +
 				// target=\"_blank\"
 				"title=\"'Napoleon Bonaparte, sketched at Saint Helena by a British Officier in May last', French National Library\" " +
 				"src=\"http://blog.europeana.eu/wp-content/uploads/2012/08/portraitsketch.jpg\" " +
