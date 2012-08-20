@@ -43,7 +43,15 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				--%>
 			</c:forEach>
 		</script>
-		<div id="carousel-1" class="six columns">
+		
+		
+		<div class="six columns">
+			<div id="carousel-1-header" class="europeana-header">
+			</div>
+			<div id="carousel-1">
+			</div>
+			<div id="carousel-1-footer" class="europeana-footer">
+			</div>
 		</div>
 		
 		<div class="six columns hide-on-phones">

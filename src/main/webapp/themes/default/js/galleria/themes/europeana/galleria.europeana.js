@@ -27,6 +27,7 @@ Galleria.addTheme({
 	
         /* europeana */
     	var thisGallery = this;
+    	/*
     	var carouselMode = false;
     	var parent = this.get('stage');
     	while(parent != null ){
@@ -35,8 +36,24 @@ Galleria.addTheme({
     		}
     		parent = parent.parentNode;
     	}
+    	*/
+    	var carouselId		= thisGallery.$('container').parent().attr("id");// hasClass('europeana-carousel');
+    	var carouselMode	= $('#' + carouselId).hasClass('europeana-carousel');
+    	
+    	thisGallery._options.europeana = {
+    			header:	$('#' + carouselId).parent().find('#' + carouselId + '-header'),
+    			footer:	$('#' + carouselId).parent().find('#' + carouselId + '-footer')
+    	};
+    	var europeana = thisGallery._options.europeana;
+    	if(europeana.footer){
+    		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
+    	}
+    	if(europeana.header){
+    		europeana.header.append( $('#' + carouselId + ' .galleria-info-title') );
+    	}
+    	
     	if(carouselMode){
-        	thisGallery._options.europeana = {thumbRatios : []};
+        	thisGallery._options.europeana.thumbRatios = [];
         	for(var i=0; i<this._options.dataSource.length; i++){
         		this._options.europeana.thumbRatios[i] = null;
         	}
