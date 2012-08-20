@@ -45,7 +45,6 @@
 	color:				#BBBBBB;
 	text-align:			center;
 	position:			absolute;
-	xxxbottom:				10px;		/* dynamically override...... */
 	padding:			3px;
 	font-size:			80%;
 }
@@ -71,18 +70,10 @@
     cursor: pointer;
 }
 
-
-/*  ANDY */
-.galleria-thumbnails{
-	margin:	auto;
-	xxxxleft:130;
-}
-
-.europeana-carousel .galleria-thumbnails .galleria-image img{
+.europeana-carousel .galleria-thumbnails .galleria-image img{	/* centre the images within their containers */
 	position:	relative !important;
 	margin:		auto !important;
 }
-
 
 .galleria-counter {
     position: absolute;
