@@ -61,7 +61,12 @@ Galleria.addTheme({
 				thumbs.find('.galleria-image').eq(index).addClass('active');
 				thumbs.find('img').eq(index).css("opacity", "1");
 				europeana.setInfo(index);
-				//alert(index);
+
+				
+				if(index + (thisGallery._options.carouselSteps) < dataSource.length){			
+					//thisGallery._carousel.set(index);
+				}
+				
 			};
 			europeana.setInfo = function(index){
 				europeana.header.find(".galleria-info-title").html(dataSource[index].title);
@@ -81,9 +86,32 @@ Galleria.addTheme({
 			thumbNavLeft.click(function(){
 				europeana.setActive(thisGallery._carousel.current);
 			});
-			thumbNavRight.click(function(){
-				europeana.setActive(thisGallery._carousel.current);
+			
+
+			thumbNavRight.unbind('click');
+			thumbNavRight.bind('click', function(e){
+                e.preventDefault();
+				
+				if(	thumbNavRight.hasClass("disabled")){
+	                e.preventDefault();
+		       		e.stopPropagation();
+					return;
+				}
+				else{
+	                thisGallery._carousel.set( thisGallery._carousel.current + thisGallery._options.carouselSteps);
+					europeana.setActive(thisGallery._carousel.current);		
+					// disable if last
+    				if(thisGallery._carousel.current + (thisGallery._options.carouselSteps) >= dataSource.length){
+    					thumbNavRight.addClass("disabled");
+    				}
+    				else if(dataSource.length > 1){
+   						thumbNavRight.removeClass("disabled");    			
+    				}
+
+				}
 			});
+			
+			
 			europeana.setInfo(0);
     	}
     	else{
@@ -126,11 +154,6 @@ Galleria.addTheme({
     	
     	/* end europeana */
     	
-        // add some elements
-        //this.addElement('info-link','info-close');
-        //this.append({
-        //    'info' : ['info-link','info-close']
-        //});
 
         // cache some stuff
         //var info = this.$('info-link,info-close,info-text'),
@@ -149,17 +172,6 @@ Galleria.addTheme({
             this.addIdleState( this.get('counter'), { opacity:0 });
         }
 
-        // toggle info
-        /*
-        if ( options._toggleInfo === true ) {
-            info.bind( click, function() {
-                info.toggle();
-            });
-        } else {
-            info.show();
-            this.$('info-link, info-close').hide();
-        }
-		*/
         
         // bind some stuff
         this.bind('thumbnail', function(e) {
@@ -186,7 +198,6 @@ Galleria.addTheme({
                 if (!e.cached) {
                     this.$('loader').show().fadeTo(200, 0.4);
                 }
-                //this.$('info').toggle( this.hasInfo() );
         	}
         	/* end europeana */
 
@@ -206,7 +217,7 @@ Galleria.addTheme({
     if(!carouselMode){
       	return;
     }
-    var centreItems = false;
+    //var centreItems = false;
 
 	thisGallery._options.responsive = false; // don't trigger automatic scale
 
@@ -325,7 +336,11 @@ Galleria.addTheme({
 				thisGallery._carousel.max += offsetLeft;
 			}
 			else{*/
+			//	thumbOb.outerWidth += 1;
+
 				thisGallery.updateCarousel();
+//				Galleria.log(carousel.hooks[ carousel.current ] + carousel.width >= carousel.max)
+				//thisGallery._carousel.max -= 2;
 			/*}*/
 			
 			
@@ -336,7 +351,6 @@ Galleria.addTheme({
 			navRight.css	("top", (containerHeight - 124)/2 + "px");
 			navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
 
-			/* TODO: Andy Friday change: allows win resize to reuse variable*/
 			completedCallBackCount = 0;
 		}
     };
