@@ -3,8 +3,8 @@
 	'use strict';
 
 	var initCarousels = function(){
-		if(typeof Galleria == "undefined") {
-	        window.setTimeout(initCarousels, 100);
+		if(typeof jQuery("#carousel-1").galleria == "undefined") {
+	        window.setTimeout(initCarousels, 200);
 	    }
 	    else{
 			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');

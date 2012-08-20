@@ -13,8 +13,15 @@
 				};
 			</c:forEach>
 		</script>
+		
+		
+		<div id="carousel-2-header" class="europeana-header">
+		</div>
 		<div id="carousel-2" class="europeana-carousel">
 		</div>
+		<div id="carousel-2-footer" class="europeana-footer">
+		</div>
+		
 	</c:if>	
 
 

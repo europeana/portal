@@ -13,7 +13,7 @@
 
 Galleria.addTheme({
     name: 'europeana',
-    author: 'Andy',
+    author: 'Andy MacLean',
     css: 'galleria.europeana.css',
     defaults: {
         transition: 'slide',
@@ -26,25 +26,18 @@ Galleria.addTheme({
         Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
 	
         /* europeana */
-    	var thisGallery = this;
-    	/*
-    	var carouselMode = false;
-    	var parent = this.get('stage');
-    	while(parent != null ){
-    		if( $(parent).hasClass('europeana-carousel')){
-    			carouselMode = true;
-    		}
-    		parent = parent.parentNode;
-    	}
-    	*/
-    	var carouselId		= thisGallery.$('container').parent().attr("id");// hasClass('europeana-carousel');
+    	var thisGallery		= this;
+    	var dataSource		= this._options.dataSource;
+    	var carouselId		= this.$('container').parent().attr("id");
     	var carouselMode	= $('#' + carouselId).hasClass('europeana-carousel');
     	
     	thisGallery._options.europeana = {
     			header:	$('#' + carouselId).parent().find('#' + carouselId + '-header'),
     			footer:	$('#' + carouselId).parent().find('#' + carouselId + '-footer')
     	};
+    	
     	var europeana = thisGallery._options.europeana;
+    	
     	if(europeana.footer){
     		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
     	}
@@ -53,13 +46,48 @@ Galleria.addTheme({
     	}
     	
     	if(carouselMode){
-        	thisGallery._options.europeana.thumbRatios = [];
-        	for(var i=0; i<this._options.dataSource.length; i++){
-        		this._options.europeana.thumbRatios[i] = null;
+        	europeana.thumbRatios = [];
+        	for(var i=0; i<dataSource.length; i++){
+        		europeana.thumbRatios[i] = null;
         	}
+        	
+			var thumbNavLeft =	this.$( 'container' ).find(".galleria-thumb-nav-left");
+			var thumbNavRight =	this.$( 'container' ).find(".galleria-thumb-nav-right");
+			
+			europeana.setActive = function(index){
+				var thumbs = thisGallery.$( 'container' ).find('.galleria-thumbnails'); 
+				thumbs.find('.galleria-image').removeClass('active');
+				thumbs.find('img').css("opacity", "0.6");
+				thumbs.find('.galleria-image').eq(index).addClass('active');
+				thumbs.find('img').eq(index).css("opacity", "1");
+				europeana.setInfo(index);
+				//alert(index);
+			};
+			europeana.setInfo = function(index){
+				europeana.header.find(".galleria-info-title").html(dataSource[index].title);
+				europeana.footer.find(".galleria-info-description").html(dataSource[index].description);
+				
+				europeana.footer.find(".galleria-info-description").click(function(){
+					if(	dataSource[index].link){
+						window.open(dataSource[index].link, "_new");
+						
+						// todo" add hover state / icon
+					}
+					else{
+						return;
+					}
+				});
+			};
+			thumbNavLeft.click(function(){
+				europeana.setActive(thisGallery._carousel.current);
+			});
+			thumbNavRight.click(function(){
+				europeana.setActive(thisGallery._carousel.current);
+			});
+			europeana.setInfo(0);
     	}
     	else{
-    		if(this._options.dataSource.length == 1){
+    		if(dataSource.length == 1){
 				var thumbs =	this.$( 'container' ).find(".galleria-thumbnails-container");
 				var stage = 		this.$( 'container' ).find(".galleria-stage");
 				var info = 			this.$( 'container' ).find(".galleria-info");
@@ -99,14 +127,14 @@ Galleria.addTheme({
     	/* end europeana */
     	
         // add some elements
-        this.addElement('info-link','info-close');
-        this.append({
-            'info' : ['info-link','info-close']
-        });
+        //this.addElement('info-link','info-close');
+        //this.append({
+        //    'info' : ['info-link','info-close']
+        //});
 
         // cache some stuff
-        var info = this.$('info-link,info-close,info-text'),
-            touch = Galleria.TOUCH,
+        //var info = this.$('info-link,info-close,info-text'),
+          var touch = Galleria.TOUCH,
             click = touch ? 'touchstart' : 'click';
 
         // show loader & counter with opacity
@@ -122,6 +150,7 @@ Galleria.addTheme({
         }
 
         // toggle info
+        /*
         if ( options._toggleInfo === true ) {
             info.bind( click, function() {
                 info.toggle();
@@ -130,7 +159,8 @@ Galleria.addTheme({
             info.show();
             this.$('info-link, info-close').hide();
         }
-
+		*/
+        
         // bind some stuff
         this.bind('thumbnail', function(e) {
 
@@ -156,7 +186,7 @@ Galleria.addTheme({
                 if (!e.cached) {
                     this.$('loader').show().fadeTo(200, 0.4);
                 }
-                this.$('info').toggle( this.hasInfo() );
+                //this.$('info').toggle( this.hasInfo() );
         	}
         	/* end europeana */
 
@@ -180,37 +210,23 @@ Galleria.addTheme({
 
 	thisGallery._options.responsive = false; // don't trigger automatic scale
 
-//alert(JSON.stringify(thisGallery._options))
-
-
     
     this.$('loader').hide();
     
 	var containerHeight = parseInt( this.$( 'container' ).css("height") );
 	var containerWidth = parseInt( this.$( 'container' ).css("width") );
-	var dataSource = this._options.dataSource;
 	
 	/* Action */
 	
 	this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 		$(ob).unbind('click');
 		$(ob).click(function(e, a){
-			alert(dataSource[i].link);
        		e.stopPropagation();
-			window.open(dataSource[i].link, "_new");
-		});
-
+       		europeana.setActive(i);
+		});		
 	});
 	
-	
 	/* Styling & info */
-	/*
-	var navRight	= 	$(".galleria-thumbnails-container .galleria-thumb-nav-right");
-	var navLeft		= 	$(".galleria-thumbnails-container .galleria-thumb-nav-left");
-	navRight.css	("top", (containerHeight - 124)/2 + "px");
-	navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
-	 */
-	
 	var expectedCallBackCount = 0;
 	var completedCallBackCount = 0;
 	
@@ -218,13 +234,9 @@ Galleria.addTheme({
     	var imgBoxW = thisGallery._options.europeana.imgBoxW;
     	var tParent	= thumb.parent();
 		var imgBox = containerHeight;
-
-		//Galleria.log("setThumbStyle:  imgBoxW = " + imgBoxW + ", containerWidth = " + containerWidth);
-
 		
 		tParent.css("width",	imgBoxW + "px");
 		tParent.css("height",	imgBox + "px");
-
 
 		imgW = thumb.width();
 		imgH = thumb.height();
@@ -232,6 +244,7 @@ Galleria.addTheme({
 		var ratio;
 		
 		if(thisGallery._options.europeana.thumbRatios[index]){
+			// caching the ratio avoids successive number rounding distorting the aspect ratio
 			ratio = thisGallery._options.europeana.thumbRatios[index];
 		}
 		else{
@@ -247,18 +260,14 @@ Galleria.addTheme({
 				var newH = containerHeight / ratio;
 				var newW = newH *  ratio;
 			}
-			
-			if(index==0){
-				//Galleria.log("w=" + imgW + ", h=" + imgH + ", newW=" + newW + ", ratio = " + ratio + " --> makes new height " + (newW/ratio) + " (" + imgH + ")");
-			}
-			
+
 			thumb.attr("width", newW + "px");
 			thumb.attr("height", newW/ratio + "px");
 
 			thumb.css("width", newW + "px");
 			thumb.css("height", newW/ratio + "px");
 		}
-		else{ // portrait of perfect square
+		else{ // portrait or perfect square
 			var newH = (containerHeight - 2 * 7);
 			var newW = newH * ratio;
 
@@ -267,25 +276,8 @@ Galleria.addTheme({
 						
 			thumb.css("height",		newH + "px");
 			thumb.css("width",		newW + "px");
-
-			/*
-			var newH = (containerHeight - 2 * 7);
-			var ratio = imgH / newH;
-			
-			thumb.attr("height", newH  + "px");
-			thumb.attr("width",	 imgW/ratio + "px");
-						
-			thumb.css("height",		newH + "px");
-			thumb.css("width",		 imgW/ratio + "px");
-			*/
 		}
 
-		//thumb.attr("width", "auto");
-		//thumb.attr("height", "auto");
-
-		
-		//thumb.css("width",		"auto");
-		//thumb.css("height",		"auto");
 		thumb.css("max-width",	 "100%");
 		thumb.css("max-height",	 "100%");
 		
@@ -306,32 +298,12 @@ Galleria.addTheme({
 			thumb.css("top", top + "px");
 		}
 		
-		// add info box and position
-		/* TODO: Friday */
-		/*
-		if(tParent.find(".europeana-carousel-info").length == 0){
-			tParent.append('<div class="europeana-carousel-info"><div class="title">' + dataSource[index].title + "</div><div>" + dataSource[index].description + '</div></div>');
-		}
-		
-		// position info
-		var info = tParent.find(".europeana-carousel-info");
-		info.css("top",
-			(	parseInt(thumb.css("top"))	+ parseInt(thumb.css("height")) )
-			-	parseInt(info.css("height"))
-			+	"px"
-		);
-		*/
+
 		completedCallBackCount ++;	// bump callback counter
 		
 		if(completedCallBackCount == expectedCallBackCount){
-			/* Do this once only: horizontal positioning of the full image strip to centre an image within the viewer  */			
-			
+			/* Do this once only: horizontal positioning of the full image strip to centre an image within the viewer  */
 			/*
-			 * containerWidth
-			 * imgBox (= CONTAINER WIDTH)
-			 * tParent
-			 * thisGallery
-			 */
 			if(centreItems){
 				var galleryWidth	= containerWidth;
 				var offsetLeft		= (galleryWidth / 2) - (imgBox / 2);
@@ -352,9 +324,9 @@ Galleria.addTheme({
 				//Galleria.log("Adding offset " + offsetLeft + " to " + thisGallery._carousel.max + " give total of " + (thisGallery._carousel.max + offsetLeft) )
 				thisGallery._carousel.max += offsetLeft;
 			}
-			else{
+			else{*/
 				thisGallery.updateCarousel();
-			}
+			/*}*/
 			
 			
 			/* And since we have access to the dom, fix the navigation icons */
@@ -377,9 +349,7 @@ Galleria.addTheme({
     	/* update containerWidth & containerHeight */
     	containerHeight = parseInt( thisGallery.$( 'container' ).parent().css("height") );
     	containerWidth = parseInt( thisGallery.$( 'container' ).parent().css("width") );
-    	
-		var thumbnailsList = thisGallery.$( 'container' ).find('.galleria-thumbnails-list');//  thisGallery.$( 'thumbnails' );//.parent();//galleria-thumbnails-list'
-		
+		var thumbnailsList = thisGallery.$( 'container' ).find('.galleria-thumbnails-list');		
 		var reduce = 0;
 		reduce += parseInt(thumbnailsList.css('margin-left'));
 		reduce += parseInt(thumbnailsList.css('marginRight'));
@@ -451,6 +421,7 @@ Galleria.addTheme({
 		thisGallery.$('container').css("height", thisGallery.$('container').parent().css("height"));
 		callSetThumbStyle();
 		thisGallery._carousel.set(0);
+		thisGallery._options.europeana.setActive(0);
      });
            
 	
