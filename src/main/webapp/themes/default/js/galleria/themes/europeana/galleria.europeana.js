@@ -31,21 +31,31 @@ Galleria.addTheme({
     	var carouselId		= this.$('container').parent().attr("id");
     	var carouselMode	= $('#' + carouselId).hasClass('europeana-carousel');
     	
+    	var headerSelector = '#' + carouselId + '-header';
+    	var footerSelector = '#' + carouselId + '-footer';
+
     	thisGallery._options.europeana = {
-    			header:	$('#' + carouselId).parent().find('#' + carouselId + '-header'),
-    			footer:	$('#' + carouselId).parent().find('#' + carouselId + '-footer')
+    			header:	$('#' + carouselId).parent().find(headerSelector),
+    			footer:	$('#' + carouselId).parent().find(footerSelector)
     	};
     	
     	var europeana = thisGallery._options.europeana;
     	
-    	if(europeana.footer){
+    	if(europeana.footer && europeana.header){
     		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
-    	}
-    	if(europeana.header){
     		europeana.header.append( $('#' + carouselId + ' .galleria-info-title') );
+    	}
+    	else{
+    		this.$('container').css("visibility", "hidden");
+    		this.$('container').find(".galleria-thumbnails-list").css("display", "none");
+    		Galleria.log("Error in Galleria.europeana.js: expected elements " + headerSelector + " and " + footerSelector + " to be present in DOM");
+    		return;
     	}
     	
     	if(carouselMode){
+    		/* create accelerators element and store in europeana config (extend the jquery object) */
+    		europeana.header.accelerators = $( '<div class="accelerators"></div>' ).appendTo(europeana.header);
+    		
         	europeana.thumbRatios = [];
         	for(var i=0; i<dataSource.length; i++){
         		europeana.thumbRatios[i] = null;
@@ -60,8 +70,9 @@ Galleria.addTheme({
 				thumbs.find('img').css("opacity", "0.6");
 				thumbs.find('.galleria-image').eq(index).addClass('active');
 				thumbs.find('img').eq(index).css("opacity", "1");
+				
 				europeana.setInfo(index);
-
+				europeana.header.setAccelerator(Math.floor( index / thisGallery._options.carouselSteps));
 				
 				if(index + (thisGallery._options.carouselSteps) < dataSource.length){			
 					//thisGallery._carousel.set(index);
@@ -146,9 +157,7 @@ Galleria.addTheme({
 				this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
     		}
     		$(window).resize( function() {
-    			// TODO: replace this generic selector with a gallery-instance scoped one
-    			//$(".galleria-container").parent().css("height", $(".galleria-container").css("height"));
-    			thisGallery.$( 'container' ).parent().css("height", $(".galleria-container").css("height"));
+    			thisGallery.$(	'container' ).parent().css("height", thisGallery.$( 'container' ).css("height"));
     		});
     	}
     	
@@ -219,8 +228,7 @@ Galleria.addTheme({
     }
     //var centreItems = false;
 
-	thisGallery._options.responsive = false; // don't trigger automatic scale
-
+	thisGallery._options.responsive = false; /* disable default responsive handling (and assume that we ARE responsive) */
     
     this.$('loader').hide();
     
@@ -237,7 +245,12 @@ Galleria.addTheme({
 		});		
 	});
 	
-	/* Styling & info */
+	/* Styling & info:
+	 * 
+	 * Size the images according to container width.
+	 * Calculate carousel step
+	 * Create the accelerators accordingly
+	 *  */
 	var expectedCallBackCount = 0;
 	var completedCallBackCount = 0;
 	
@@ -269,7 +282,7 @@ Galleria.addTheme({
 			
 			if(newW/ratio > containerHeight){
 				var newH = containerHeight / ratio;
-				var newW = newH *  ratio;
+				newW = newH *  ratio;
 			}
 
 			thumb.attr("width", newW + "px");
@@ -313,37 +326,10 @@ Galleria.addTheme({
 		completedCallBackCount ++;	// bump callback counter
 		
 		if(completedCallBackCount == expectedCallBackCount){
-			/* Do this once only: horizontal positioning of the full image strip to centre an image within the viewer  */
-			/*
-			if(centreItems){
-				var galleryWidth	= containerWidth;
-				var offsetLeft		= (galleryWidth / 2) - (imgBox / 2);
-				
-				offsetLeft -= parseInt(tParent.closest(".galleria-carousel").css("left"));
-				offsetLeft -= parseInt(tParent.closest(".galleria-carousel .galleria-thumbnails-list").css("margin-left"));
-				
-				tParent.closest(".galleria-thumbnails").css("margin-left", offsetLeft + "px");
-				
-				tParent.closest(".galleria-thumbnails").css("margin-right", offsetLeft + "px");
-	
-				tParent.closest(".galleria-thumbnails").css("width",
-						parseInt(tParent.closest(".galleria-thumbnails").css("width"))
-						+ offsetLeft + "px");
-	
-				thisGallery.updateCarousel();
-	
-				//Galleria.log("Adding offset " + offsetLeft + " to " + thisGallery._carousel.max + " give total of " + (thisGallery._carousel.max + offsetLeft) )
-				thisGallery._carousel.max += offsetLeft;
-			}
-			else{*/
-			//	thumbOb.outerWidth += 1;
+			
+			/* Do this once only  */
+			thisGallery.updateCarousel();
 
-				thisGallery.updateCarousel();
-//				Galleria.log(carousel.hooks[ carousel.current ] + carousel.width >= carousel.max)
-				//thisGallery._carousel.max -= 2;
-			/*}*/
-			
-			
 			/* And since we have access to the dom, fix the navigation icons */
 			
 			var navRight	= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-right");
@@ -382,16 +368,36 @@ Galleria.addTheme({
 		
 		imgBoxW -= parseInt(thumbnailsList.find('.galleria-image:first').css("margin-right"));
 		
+		/* store steps and width data in europeana config */
 		thisGallery._options.carouselSteps = maxItems;
-		
     	thisGallery._options.europeana.imgBoxW = imgBoxW;
 
-		//Galleria.log("In callSetThumbStyle:  imgBoxW = " + imgBoxW + ", containerWidth = " + containerWidth);
-		
-		/* end  scaling */
+    	/* add accelerators: bound to listeners and stored in europeana config */
+    	europeana.header.find('.accelerator').remove();
+    	europeana.header.accelerators.items = [];
+    	europeana.header.setAccelerator = function(index){
+			europeana.header.find('.accelerator').removeClass('active');
+			europeana.header.find('.accelerator').eq(index).addClass('active');	
+    	};
+    	
+    	var acceleratorsNeeded = Math.ceil( $(thisGallery._thumbnails).length / thisGallery._options.carouselSteps);
 
-		
-		/* end sunday scaling */
+    	for(var i=0; i<acceleratorsNeeded; i++){
+    		europeana.header.accelerators.items[europeana.header.accelerators.items.length]
+    		=
+    		$('<div class="accelerator' + (i==0 ? ' active' : '') + '"></div>').appendTo(europeana.header.accelerators)[0].onclick = function(index){
+    			return function(){
+    				var active = index * thisGallery._options.carouselSteps;
+    				thisGallery._carousel.set(active);
+					thisGallery._options.europeana.setActive(active);
+//					europeana.header.find('.accelerator').removeClass('active');
+	//				$(this).addClass('active');
+    			};
+    		}(i);
+    	}
+
+    	/* iterate thumbs & call setStyle on each */
+
         $(thisGallery._thumbnails).each(function( i, thumb ) {
 
         	if(thumb.ready){

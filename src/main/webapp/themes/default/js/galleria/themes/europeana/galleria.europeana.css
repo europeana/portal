@@ -335,21 +335,55 @@
 /* header */
 
 .europeana-header{
-	padding:	0.5em 0.5em 0 1em;
+	position:		relative;
+	border-radius:	1em 1em 0 0;
+	
+	padding-top:		1em;
+	padding-right:		0.5em;
+	padding-bottom:		0;
+	padding-left:		0.5em;	
 }
 
- .galleria-info-title{
+.galleria-info-title{
     font: bold 12px/1.1 arial,sans-serif;
     margin: 0;
     color: #fff;
+    
+    position:			relative;
+    background-color:	#111;
+    border-radius:		0.75em 0.75em 0 0;
+    padding:			0.5em 0.5em 1em 0.5em;
+    top:				-0.6em;
 }
 
+.accelerators{
+	position:			absolute;
+	top:				1em;
+	right:				1em;
+}
+
+.accelerator{
+	width:				1em;
+	height:				1em;
+	background-color:	#FF9900;
+	float:				left;
+	margin-right:		0.5em;
+	border-radius:		0.5em;
+}
+
+.accelerator.active, .accelerator:hover{
+	background-color:	#FFFF33;
+}
 
 /* footer */
 
 
 .europeana-footer{
-	padding:	0 0.5em 0.5em 1em;
+	border-radius:	0 0 1em 1em;
+	padding-top:		0;
+	padding-right:		0.5em;
+	padding-bottom:		0.75em;
+	padding-left:		0.5em;
 }
 
 
@@ -357,6 +391,12 @@
 	font: italic 12px/1.4 georgia,serif;
     margin: 0;
     color: #bbb;
+    
+    position:			relative;
+    background-color:	#111;
+    border-radius:		0 0 0.75em 0.75em;
+    padding:			0 0.5em;
+    top:				0.3em;
 }
     
 
