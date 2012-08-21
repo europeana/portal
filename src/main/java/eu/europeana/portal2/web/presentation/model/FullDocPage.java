@@ -46,6 +46,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.MetaDataFieldPr
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 import eu.europeana.portal2.web.util.EdmSchemaMapping;
+import eu.europeana.portal2.web.util.FieldInfo;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
 import eu.europeana.portal2.web.util.WebUtils;
@@ -565,8 +566,23 @@ public class FullDocPage extends FullDocPreparation {
 	public List<BreadCrumb> getBreadcrumbs() {
 		return null;
 	}
-	
-	public Map<String, Map<String, String>> getSchemaMap() {
+
+	public List<FieldInfo> getTopLevelSchemaMap() {
+		return EdmSchemaMapping.getTopLevel();
+	}
+
+	public Map<String, List<FieldInfo>> getSchemaMap() {
+		log.info("full map: " + EdmSchemaMapping.getFullMap());
 		return EdmSchemaMapping.getFullMap();
 	}
+
+	public FieldInfo getWebResourceMap() {
+		for (FieldInfo info : EdmSchemaMapping.getTopLevel()) {
+			if (info.getSchemaName().equals("edm:WebResource")) {
+				return info;
+			}
+		}
+		return null;
+	}
+
 }

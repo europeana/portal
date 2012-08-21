@@ -16,10 +16,12 @@
     model.model.enrichmentFields = a subset collection of meta data pre-formated for html presentation
     
   --%>
-  <c:if test="${model.formatLabels && !empty model.metaDataFields}">
-    <europeana:displayEseDataAsMeta metaDataFields="${model.metaDataFields}" showFieldName="true" />
+  <%-- c:if test="${model.formatLabels && !empty model.metaDataFields}" --%>
+  <c:if test="${model.formatLabels}">
+    <%-- europeana:displayEseDataAsMeta metaDataFields="${model.metaDataFields}" showFieldName="true" / --%>
+    <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/full-excerpt/schema.jspf" %>
   </c:if>
-  <c:if test="${!empty model.fields && fn:length(model.fields) > 0}">
+  <c:if test="${!model.formatLabels && !empty model.fields && fn:length(model.fields) > 0}">
     <europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true" />
   </c:if>
 </div>
