@@ -51,7 +51,7 @@ public class NamespaceResolver {
 			}
 		}
 		else {
-			log.severe(String.format("Element %s did not match the pattern %s", element, NAME_PATTERN.pattern()));
+			// log.severe(String.format("Element %s did not match the pattern %s", element, NAME_PATTERN.pattern()));
 		}
 		return null;
 	}

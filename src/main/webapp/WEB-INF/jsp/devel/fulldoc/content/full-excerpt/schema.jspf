@@ -4,27 +4,35 @@
 <h3>Schema display</h3>
 <table>
   <c:forEach items="${model.topLevelSchemaMap}" var="topField">
-    <c:if test="${topField.propertyName != 'webResources' && !empty model.document[topField.propertyName]}">
-      <tr><td colspan="2"><h4>${topField.schemaName}</h4></td></tr>
-
-      <c:choose>
-
-        <%-- europeanaAggregation is a single element --%>
-        <c:when test="${topField.propertyName == 'europeanaAggregation'}">
-          <c:set var="docElement" value="${model.document[topField.propertyName]}" />
-          <europeana:displayDocElement topField="${topField}" docElement="${docElement}" 
+    <c:choose>
+      <c:when test="${topField.propertyName == 'fullBean'}">
+        <europeana:displayDocElement topField="${topField}" docElement="${model.document}" 
             elementStatus="${null}" total="1" />
-        </c:when>
+      </c:when>
+      <c:otherwise>
+        <c:if test="${topField.propertyName != 'webResources' && !empty model.document[topField.propertyName]}">
+          <tr><td colspan="2"><h4>${topField.schemaName}</h4></td></tr>
 
-        <%-- other elements are lists --%>
-        <c:otherwise>
-          <c:set var="total" value="${fn:length(model.document[topField.propertyName])}" />
-          <c:forEach items="${model.document[topField.propertyName]}" var="docElement" varStatus="elementStatus">
-            <europeana:displayDocElement topField="${topField}" docElement="${docElement}" 
-              elementStatus="${elementStatus}" total="${count}"/>
-          </c:forEach>
-        </c:otherwise>
-      </c:choose>
-    </c:if>
+          <c:choose>
+
+            <%-- europeanaAggregation is a single element --%>
+            <c:when test="${topField.propertyName == 'europeanaAggregation'}">
+              <c:set var="docElement" value="${model.document[topField.propertyName]}" />
+              <europeana:displayDocElement topField="${topField}" docElement="${docElement}" 
+                elementStatus="${null}" total="1" />
+            </c:when>
+
+            <%-- other elements are lists --%>
+            <c:otherwise>
+              <c:set var="total" value="${fn:length(model.document[topField.propertyName])}" />
+              <c:forEach items="${model.document[topField.propertyName]}" var="docElement" varStatus="elementStatus">
+                <europeana:displayDocElement topField="${topField}" docElement="${docElement}" 
+                  elementStatus="${elementStatus}" total="${count}"/>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
+        </c:if>
+      </c:otherwise>
+    </c:choose>
   </c:forEach>
 </table>

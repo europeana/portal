@@ -18,12 +18,12 @@
 <!-- elementStatus: ${elementStatus} -->
 <!-- total: ${total} -->
 <!-- topField.type: "${topField.type}" - ${fn:length(model.schemaMap[topField.type])} fields -->
-<c:if test="${elementStatus != null && count > 1}">
+<c:if test="${elementStatus != null && total > 1}">
   <tr><td colspan="2"><h5>${elementStatus.index + 1}</h5></td></tr>
 </c:if>
 
 <c:forEach items="${model.schemaMap[topField.type]}" var="field" varStatus="fieldStatus">
-  <!-- field: ${field.element} -->
+  <!-- field: ${field.propertyName} -->
   <c:if test="${!empty docElement[field.propertyName]}">
     <tr valign="top">
       <td>
@@ -38,20 +38,45 @@
       </td>
       <td>
         <c:choose>
+
           <c:when test="${field.schemaName == 'edm:WebResource'}">
+            <!-- IS A edm:WebResource -->
             <table>
               <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="resouceStatus">
-                <europeana:displayDocElement topField="${model.webResourceMap}" docElement="${fieldInstance}" 
+                <europeana:displayDocElement topField="${model.webResourceField}" docElement="${fieldInstance}" 
                   elementStatus="${resouceStatus}" total="${fn:length(docElement[field.propertyName])}" />
               </c:forEach>
             </table>
           </c:when>
+
+          <c:when test="${field.schemaName == 'relatedItems'}">
+            <!-- IS A relatedItems -->
+            <table>
+              <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="resouceStatus">
+                <europeana:displayDocElement topField="${model.briefBeanField}" docElement="${fieldInstance}" 
+                  elementStatus="${resouceStatus}" total="${fn:length(docElement[field.propertyName])}" />
+              </c:forEach>
+            </table>
+          </c:when>
+
+          <c:when test="${field.collectionOfMaps}">
+            <!-- IS A collection of maps -->
+            <c:forEach items="${docElement[field.propertyName]}" var="mapInstance">
+              <c:forEach items="${mapInstance}" var="fieldInstance">
+                ${fieldInstance.key} / ${fieldInstance.value}<br />
+              </c:forEach>
+            </c:forEach>
+          </c:when>
+
           <c:when test="${field.map}">
+            <!-- IS A map -->
             <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance">
               ${fieldInstance.key} / ${fieldInstance.value}<br />
             </c:forEach>
           </c:when>
+
           <c:when test="${field.collection}">
+            <!-- IS A collection -->
             <c:choose>
               <c:when test="${fn:length(docElement[field.propertyName]) > 1}">
                 <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance">
@@ -61,7 +86,11 @@
               <c:otherwise>${docElement[field.propertyName][0]}</c:otherwise>
             </c:choose>
           </c:when>
-          <c:otherwise>${docElement[field.propertyName]}</c:otherwise>
+
+          <c:otherwise>
+            <!-- IS A simple value -->
+            ${docElement[field.propertyName]}
+          </c:otherwise>
         </c:choose>
       </td>
     </tr>

@@ -3,6 +3,7 @@ package eu.europeana.portal2.web.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * This class gives you information about fields used in EDM schema.
@@ -14,19 +15,23 @@ import java.util.List;
  */
 public class FieldInfo {
 
+	private final Logger log = Logger.getLogger(getClass().getName());
+
 	/**
 	 * The list of current Java types of fields
 	 */
 	private final static List<String> types = new ArrayList<String>(Arrays.asList(
-			"String", "ObjectId", "float", "Boolean", "boolean", "DocType",
-			"String[]", "Map<String,String>", "List<WebResourceImpl>"
+			"String", "ObjectId", "float", "Boolean", "boolean", "DocType", "int", "Date",
+			"String[]", "Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>",
+			"List<Map<String,String>>"
 	));
 
 	/**
 	 * The collection types
 	 */
 	private final static List<String> collections = new ArrayList<String>(Arrays.asList(
-			"String[]", "Map<String,String>", "List<WebResourceImpl>"
+			"String[]", "Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>",
+			"List<Map<String,String>>"
 	));
 
 	/**
@@ -43,21 +48,28 @@ public class FieldInfo {
 	 * The Java data type
 	 */
 	private String type;
+	
+	private String parent;
 
 	/**
 	 * The XML element object
 	 */
 	private Element element;
 
-	public FieldInfo(String schemaName, String propertyName) {
-		this(schemaName, propertyName, null);
-	}
-
-	public FieldInfo(String schemaName, String propertyName, String type) {
+	public FieldInfo(String schemaName, String propertyName, String type, String parent) {
 		this.schemaName = schemaName;
 		this.propertyName = propertyName;
 		this.type = type;
+		this.parent = parent;
 		element = NamespaceResolver.createElement(this.schemaName);
+	}
+
+	public FieldInfo(String schemaName, String propertyName, String type) {
+		this(schemaName, propertyName, type, null);
+	}
+
+	public FieldInfo(String schemaName, String propertyName) {
+		this(schemaName, propertyName, null, null);
 	}
 
 	public String getSchemaName() {
@@ -85,11 +97,15 @@ public class FieldInfo {
 	}
 
 	public boolean isCollection() {
-		return collections.contains(type);
+		return (type != null && collections.contains(type));
 	}
 
 	public boolean isMap() {
-		return type.equals("Map<String,String>");
+		return (type != null && type.equals("Map<String,String>"));
+	}
+
+	public boolean isCollectionOfMaps() {
+		return (type != null && type.equals("List<Map<String,String>>"));
 	}
 
 	public Element getElement() {
@@ -100,6 +116,7 @@ public class FieldInfo {
 		return "{schemaName: " + schemaName 
 				+ ", propertyName: " + propertyName 
 				+ ", type: " + type 
+				+ ", parent: " + parent 
 				+ ", isCollection(): " + isCollection() + "}";
 	}
 }

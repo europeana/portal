@@ -568,15 +568,20 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public List<FieldInfo> getTopLevelSchemaMap() {
-		return EdmSchemaMapping.getTopLevel();
+		List<FieldInfo> list = new ArrayList<FieldInfo>();
+		for (FieldInfo field : EdmSchemaMapping.getTopLevel()) {
+			if (!field.getSchemaName().equals("briefBean")) {
+				list.add(field);
+			}
+		}
+		return list;
 	}
 
 	public Map<String, List<FieldInfo>> getSchemaMap() {
-		log.info("full map: " + EdmSchemaMapping.getFullMap());
 		return EdmSchemaMapping.getFullMap();
 	}
 
-	public FieldInfo getWebResourceMap() {
+	public FieldInfo getWebResourceField() {
 		for (FieldInfo info : EdmSchemaMapping.getTopLevel()) {
 			if (info.getSchemaName().equals("edm:WebResource")) {
 				return info;
@@ -585,4 +590,12 @@ public class FullDocPage extends FullDocPreparation {
 		return null;
 	}
 
+	public FieldInfo getBriefBeanField() {
+		for (FieldInfo info : EdmSchemaMapping.getTopLevel()) {
+			if (info.getSchemaName().equals("briefBean")) {
+				return info;
+			}
+		}
+		return null;
+	}
 }

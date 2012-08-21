@@ -427,13 +427,11 @@ public class FullBeanDecorator implements FullBean {
 			if (proxy.getDcDescription() == null ) {
 				continue;
 			}
-			//log.info("description: " + proxy.getDcDescription());
 			for (String description : proxy.getDcDescription()) {
 				if (description != null) {
 					items.add(description.replace("\n", "<br/>\n"));
 				}
 			}
-			//StringArrayUtils.addToList(items, proxy.getDcDescription());
 		}
 		return StringArrayUtils.toArray(items);
 	}
@@ -977,7 +975,6 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public EuropeanaAggregation getEuropeanaAggregation() {
-		log.info("getEuropeanaAggregation");
 		return fulldoc.getEuropeanaAggregation();
 	}
 
