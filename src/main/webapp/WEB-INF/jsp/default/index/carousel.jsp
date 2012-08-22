@@ -43,7 +43,8 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				--%>
 			</c:forEach>
 			
-			carouselData[0].image = "http://www.europeana.eu/portal/sp/img/ca_teylers.jpg";
+			//carouselData[0].image = "http://www.europeana.eu/portal/sp/img/ca_teylers.jpg";
+		//	carouselData[0].big = "http://upload.wikimedia.org/wikipedia/commons/7/72/Pleiades_Spitzer_big.jpg";
 		</script>
 		
 		
