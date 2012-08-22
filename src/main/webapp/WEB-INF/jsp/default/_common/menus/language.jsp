@@ -8,7 +8,7 @@
   </c:otherwise>
 </c:choose>
 
-  <form action="${language_menu_action}" method="post" id="language-selector">
+  <form action="${language_menu_action}" method="post" id="language-selector" class="hide-on-phones">
     <select name="embeddedlang" title="<spring:message code='ChooseLanguage_t' />">
       <option value="<spring:message code='ChooseLanguage_t'/>" selected><spring:message code='ChooseLanguage_t'/></option>
       <c:forEach items="${model.portalLanguages}" var="language">
