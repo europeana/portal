@@ -42,15 +42,13 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					
 				--%>
 			</c:forEach>
+			
+			carouselData[0].image = "http://www.europeana.eu/portal/sp/img/ca_teylers.jpg";
 		</script>
 		
 		
 		<div class="six columns">
-			<div id="carousel-1-header" class="europeana-header">
-			</div>
 			<div id="carousel-1">
-			</div>
-			<div id="carousel-1-footer" class="europeana-footer">
 			</div>
 		</div>
 		

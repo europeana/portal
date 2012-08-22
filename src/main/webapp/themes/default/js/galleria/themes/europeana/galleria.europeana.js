@@ -31,28 +31,30 @@ Galleria.addTheme({
     	var carouselId		= this.$('container').parent().attr("id");
     	var carouselMode	= $('#' + carouselId).hasClass('europeana-carousel');
     	
-    	var headerSelector = '#' + carouselId + '-header';
-    	var footerSelector = '#' + carouselId + '-footer';
 
-    	thisGallery._options.europeana = {
-    			header:	$('#' + carouselId).parent().find(headerSelector),
-    			footer:	$('#' + carouselId).parent().find(footerSelector)
-    	};
-    	
+    	thisGallery._options.europeana = {};
     	var europeana = thisGallery._options.europeana;
-    	
-    	if(europeana.footer && europeana.header){
-    		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
-    		europeana.header.append( $('#' + carouselId + ' .galleria-info-title') );
-    	}
-    	else{
-    		this.$('container').css("visibility", "hidden");
-    		this.$('container').find(".galleria-thumbnails-list").css("display", "none");
-    		Galleria.log("Error in Galleria.europeana.js: expected elements " + headerSelector + " and " + footerSelector + " to be present in DOM");
-    		return;
-    	}
+
     	
     	if(carouselMode){
+    		
+        	var headerSelector = '#' + carouselId + '-header';
+        	var footerSelector = '#' + carouselId + '-footer';
+        	europeana.header = 	$('#' + carouselId).parent().find(headerSelector);
+        	europeana.footer = 	$('#' + carouselId).parent().find(footerSelector);
+        	
+        	if(europeana.footer && europeana.header){
+        		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
+        		europeana.header.append( $('#' + carouselId + ' .galleria-info-title') );
+        	}
+        	else{
+        		this.$('container').css("visibility", "hidden");
+        		this.$('container').find(".galleria-thumbnails-list").css("display", "none");
+        		Galleria.log("Error in Galleria.europeana.js: expected elements " + headerSelector + " and " + footerSelector + " to be present in DOM");
+        		return;
+        	}
+
+        	
     		/* create accelerators element and store in europeana config (extend the jquery object) */
     		europeana.header.accelerators = $( '<div class="accelerators"></div>' ).appendTo(europeana.header);
     		
@@ -61,18 +63,28 @@ Galleria.addTheme({
         		europeana.thumbRatios[i] = null;
         	}
         	
-			var thumbNavLeft =	this.$( 'container' ).find(".galleria-thumb-nav-left");
-			var thumbNavRight =	this.$( 'container' ).find(".galleria-thumb-nav-right");
+			var thumbNavLeft =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
+			var thumbNavRight =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
 			
 			europeana.setActive = function(index){
+				
+
 				var thumbs = thisGallery.$( 'container' ).find('.galleria-thumbnails'); 
+				
 				thumbs.find('.galleria-image').removeClass('active');
 				thumbs.find('img').css("opacity", "0.6");
 				thumbs.find('.galleria-image').eq(index).addClass('active');
 				thumbs.find('img').eq(index).css("opacity", "1");
+
 				
-				europeana.setInfo(index);
-				europeana.header.setAccelerator(Math.floor( index / thisGallery._options.carouselSteps));
+				/*
+				 * set info cause a window resize (and a reset) on ipad
+				 * 
+				 * 
+				 * thisGallery._options.europeana.setInfo(index);
+				 * */
+				
+				thisGallery._options.europeana.header.setAccelerator(Math.floor( index / thisGallery._options.carouselSteps));
 				
 				if(index + (thisGallery._options.carouselSteps) < dataSource.length){			
 					//thisGallery._carousel.set(index);
@@ -94,15 +106,43 @@ Galleria.addTheme({
 					}
 				});
 			};
+			
+			
+			europeana.header.prev = function(e){
+				e.preventDefault();
+				if(	thumbNavLeft.hasClass("disabled")){
+	                e.preventDefault();
+		       		e.stopPropagation();
+					return;
+				}
+				else{
+	                thisGallery._carousel.set( thisGallery._carousel.current - thisGallery._options.carouselSteps);
+	                thisGallery._options.europeana.setActive(thisGallery._carousel.current);		
+					
+					// disable if first
+    				if(thisGallery._carousel.current - (thisGallery._options.carouselSteps) < 0){
+    					thumbNavLeft.addClass("disabled");
+    				}
+    				else if(dataSource.length > 1){
+   						thumbNavLeft.removeClass("disabled");    			
+    				}
+
+				}
+			};
+			
+			thumbNavLeft.unbind('click');
+			thumbNavLeft.bind('click', function(e){
+                europeana.header.prev(e);
+			});
+			
+			/*
 			thumbNavLeft.click(function(){
 				europeana.setActive(thisGallery._carousel.current);
 			});
-			
+			*/
 
-			thumbNavRight.unbind('click');
-			thumbNavRight.bind('click', function(e){
-                e.preventDefault();
-				
+			europeana.header.next = function(e){
+				e.preventDefault();
 				if(	thumbNavRight.hasClass("disabled")){
 	                e.preventDefault();
 		       		e.stopPropagation();
@@ -110,7 +150,8 @@ Galleria.addTheme({
 				}
 				else{
 	                thisGallery._carousel.set( thisGallery._carousel.current + thisGallery._options.carouselSteps);
-					europeana.setActive(thisGallery._carousel.current);		
+	                thisGallery._options.europeana.setActive(thisGallery._carousel.current);
+	                
 					// disable if last
     				if(thisGallery._carousel.current + (thisGallery._options.carouselSteps) >= dataSource.length){
     					thumbNavRight.addClass("disabled");
@@ -118,20 +159,90 @@ Galleria.addTheme({
     				else if(dataSource.length > 1){
    						thumbNavRight.removeClass("disabled");    			
     				}
-
-				}
-			});
+				}				
+			};
 			
+			thumbNavRight.unbind('click');
+			thumbNavRight.bind('click', function(e){
+                e.preventDefault();
+				europeana.header.next(e);
+			});
 			
 			europeana.setInfo(0);
     	}
     	else{
-    		if(dataSource.length == 1){
+    		var stage = 		this.$( 'container' ).find(".galleria-stage");
+			var navLeft =		this.$( 'container' ).find(".galleria-image-nav-left");
+			var navRight =		this.$( 'container' ).find(".galleria-image-nav-right");
+
+    		if(dataSource.length > 1){
+
+    			/*
+        		thisGallery.bind("idle_enter", function(e) {
+        			navLeft.css("left", "0px");
+        			navLeft.css("right", "auto");
+        			
+        			navRight.css("right", "0px");
+        			navRight.css("left", "auto");
+        			
+        			alert(1)
+        		});
+        		thisGallery.bind("idle_exit", function(e) {
+        			navLeft.css("left", "0px");
+        			navLeft.css("right", "auto");
+        			
+        			
+        			navRight.css("right", "0px");
+        			navRight.css("left", "auto");
+        		});
+    			*/
+    			
+    			
+
+        		thisGallery.bind("image", function(e) {
+        			
+        			var info	= this.$( 'container' ).find(".galleria-info");
+        			var title	= this.$( 'container' ).find(".galleria-info-title");
+        			var thumbs	= this.$( 'container' ).find(".galleria-thumbnails-container");
+        			
+        			var imagesC	= stage.find(".galleria-images");
+        			var images	= stage.find(".galleria-image img");
+        			
+        			imagesC.css("top", "-" + parseInt(images.eq(0).css("top")) +  "px"); /* shift whole gallery up to overcome pre-set 'top' value of all images */
+        			
+        			
+        			stage.after( $('#' + carouselId + ' .galleria-info') );
+        			
+        			info	.css("top", e.imageTarget.height - info.height() + "px");
+        			thumbs	.css("top", e.imageTarget.height + "px");
+        			
+        			//stage.find('.galleria-images').eq(0)
+        			
+//        			e.imageTarget.width = stage.width() + "px";
+        			
+        			/*
+        			navLeft.css("left", "0px");
+        			navRight.css("right", "0px");
+        			
+        			info.css("width",	e.imageTarget.width);
+        			info.css("left",	(stage.width() - info.width()) / 2 + "px" );
+        			//info.css("right",	e.imageTarget.right);
+        			alert("image loaded\n\n" + JSON.stringify(e.imageTarget) + "\n\n" + e.imageTarget.css )
+        			*/
+        	    });
+
+    			
+    			//navLeft.css("left", "0px"); 
+    			//navRight.css("right", "0px");
+    			
+    			
+//        		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
+ //       		europeana.header.append( $('#' + carouselId + ' .galleria-info-title') );
+
+    		}
+    		else{
 				var thumbs =	this.$( 'container' ).find(".galleria-thumbnails-container");
-				var stage = 		this.$( 'container' ).find(".galleria-stage");
 				var info = 			this.$( 'container' ).find(".galleria-info");
-				var navLeft =		this.$( 'container' ).find(".galleria-image-nav-left");
-				var navRight =		this.$( 'container' ).find(".galleria-image-nav-right");
 
 				// use extra height - move the stage down
 				
@@ -156,6 +267,7 @@ Galleria.addTheme({
 				// custom full doc options
 				this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
     		}
+    		
     		$(window).resize( function() {
     			thisGallery.$(	'container' ).parent().css("height", thisGallery.$( 'container' ).css("height"));
     		});
@@ -226,7 +338,90 @@ Galleria.addTheme({
     if(!carouselMode){
       	return;
     }
-    //var centreItems = false;
+    
+    
+    
+    
+    
+    
+    /* SWIPE START */
+    (function( images ) {
+        var swipeStart = [0,0],
+            swipeStop = [0,0],
+            limitX = 30,
+            limitY = 100,
+            multi = false,
+            tid = 0,
+            data,
+            ev = {
+                start: 'touchstart',
+                move: 'touchmove',
+                stop: 'touchend'
+            },
+            getData = function(e) {
+    			var result  = e.originalEvent.touches ? e.originalEvent.touches[0] : e;
+                return e.originalEvent.touches ? e.originalEvent.touches[0] : e;
+            },
+            moveHandler = function( e ) {
+                if ( e.originalEvent.touches && e.originalEvent.touches.length > 1 ) {
+                    return;
+                }
+
+                data = getData( e );
+                swipeStop = [ data.pageX, data.pageY ];
+
+                if ( !swipeStart[0] ) {
+                    swipeStart = swipeStop;
+                }
+
+                if ( Math.abs( swipeStart[0] - swipeStop[0] ) > 10 ) {
+                    e.preventDefault();
+                }
+            },
+            upHandler = function( e ) {
+
+                images.unbind( ev.move, moveHandler );
+
+                // if multitouch (possibly zooming), abort
+                if (false && ( e.originalEvent.touches && e.originalEvent.touches.length ) || multi ) {
+                    multi = !multi;
+                    alert("abort");
+                    return;
+                }
+
+                if ( Galleria.utils.timestamp() - tid < 1000 &&
+                     Math.abs( swipeStart[0] - swipeStop[0] ) > limitX &&
+                     Math.abs( swipeStart[1] - swipeStop[1] ) < limitY ) {
+
+                    e.preventDefault();
+                    
+                    if( swipeStart[0] > swipeStop[0] ){
+            			europeana.header.next(e);
+                    }
+                    else{
+            			europeana.header.prev(e);
+                    }
+                }
+                swipeStart = swipeStop = [0,0];
+
+            };
+
+        images.bind(ev.start, function(e) {
+            if ( e.originalEvent.touches && e.originalEvent.touches.length > 1 ) {
+                return;
+            }
+            data = getData(e);
+            tid = Galleria.utils.timestamp() + 1000;
+            swipeStart = swipeStop = [ data.pageX, data.pageY ];
+            images.bind(ev.move, moveHandler ).one(ev.stop, upHandler);
+
+        });
+
+    }( thisGallery.$( 'thumbnails' ).find('.galleria-image')   ));
+    
+    
+    /* SWIPE END */
+    
 
 	thisGallery._options.responsive = false; /* disable default responsive handling (and assume that we ARE responsive) */
     
@@ -239,10 +434,12 @@ Galleria.addTheme({
 	
 	this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 		$(ob).unbind('click');
+		/*
 		$(ob).click(function(e, a){
        		e.stopPropagation();
        		europeana.setActive(i);
-		});		
+		});
+		*/		
 	});
 	
 	/* Styling & info:
@@ -390,8 +587,6 @@ Galleria.addTheme({
     				var active = index * thisGallery._options.carouselSteps;
     				thisGallery._carousel.set(active);
 					thisGallery._options.europeana.setActive(active);
-//					europeana.header.find('.accelerator').removeClass('active');
-	//				$(this).addClass('active');
     			};
     		}(i);
     	}
@@ -423,19 +618,7 @@ Galleria.addTheme({
     
     callSetThumbStyle();
     
-	/*
-	 * TODO
-	 */
 	$(window).resize( function() {
-		
-/*
-		jQuery.each($('#elem').data('events'), function(i, event){
-		    jQuery.each(event, function(i, handler){
-		        console.log( handler.toString() );
-		    });
-		});
-	*/	
-		//return;
 		
 		//thisGallery.$('container').parent().css("height", thisGallery.$('container').css("height"));
 		thisGallery.$('container').css("height", thisGallery.$('container').parent().css("height"));

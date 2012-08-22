@@ -10,11 +10,11 @@
 					//thumb:			'/${model.portalName}${item.images[0].src}',
 					thumb:			'http://media-cache-ec3.pinterest.com/upload/176484879118638505_jmQ9FkIX_b.jpg',
 					title:			'${item.title}',
-					description:	'What is the real description?  The img seems to be in the description json field',
+					description:	'${item.description}',
 					link:			'${item.link}'
 				};
 			</c:forEach>
-//			alert(JSON.stringify(carousel3Data));
+			//alert(JSON.stringify(carousel3Data[0].description));
 		</script>
 		<div id="carousel-3-header" class="europeana-header">
 		</div>

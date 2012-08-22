@@ -9,11 +9,13 @@
    	height:		260px;
    	max-height:	100%;
    	xxbackground:	#000;
+   	
+   	height:		500px;
 }
 
 #carousel-2{
    xwidth:		100%;
-   	height:		200px;   	
+   	height:		200px;	
    	max-height:	100%;
    	xxbackground:	#000;
 }

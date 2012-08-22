@@ -18,7 +18,8 @@
 					imageCrop:		false,				/* if true, make pan true */
 					imagePan:		false,
 					lightbox:		true,
-					responsive:		true
+					responsive:		true,
+					idleMode:		true
 			});
 			jQuery('#carousel-1').galleria({dataSource:carouselData});
 			jQuery('#carousel-2').galleria({dataSource:carousel2Data});

@@ -5,6 +5,8 @@
 	.menu-wrapper{
 		width:				100%;
 		background-color:	#CCC;
+		margin-top:			10px;
+		margin-bottom:		10px;
 	}
 
 	ul.menu, ul.menu ul{
