@@ -18,25 +18,24 @@
 package eu.europeana.portal2.web.presentation;
 
 public enum SearchPageEnum {
-	
+
 	BD(PortalPageInfo.SEARCH_HTML), TL(PortalPageInfo.TIMELINE), MP(PortalPageInfo.MAP);
-	
+
 	private PortalPageInfo pageInfo;
 
 	SearchPageEnum(PortalPageInfo pageInfo) {
 		this.pageInfo = pageInfo;
 	}
-	
+
 	public PortalPageInfo getPageInfo() {
 		return pageInfo;
 	}
-	
+
 	public String getPageName() {
 		return pageInfo.getPageName();
 	}
-	
+
 	public static SearchPageEnum getDefault() {
 		return BD;
 	}
-
 }
