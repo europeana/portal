@@ -567,6 +567,8 @@ eu.europeana.fulldoc = {
 		//jQuery('#additional-actions-addthis').append(
 		
 //		alert(jQuery('#addthis_test').length);
+		
+		/*
 		jQuery('#footer-addthis').append(
 				com.addthis.getToolboxHtml({
 				html_class : 'addthis',
@@ -581,6 +583,7 @@ eu.europeana.fulldoc = {
 				}
 			})
 		);
+		*/
 
 		jQuery('#lightbox-addthis').append(
 				com.addthis.getToolboxHtml({
