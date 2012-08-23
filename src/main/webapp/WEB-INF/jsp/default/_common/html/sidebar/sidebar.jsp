@@ -1,5 +1,3 @@
-<!-- sidebar -->
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -34,19 +32,14 @@
 	
 	
 	<!-- legend -->
-<h2 id="legend"><spring:message code="Legend_t" />:</h2>
-
-<div id="legend-icons">
-	<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:IMAGE"	class="icon-image"	title="<spring:message code="Image_t" />"	>&nbsp;<spring:message code="Image_t" /></a>
-	<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:VIDEO"	class="icon-video"	title="<spring:message code="Video_t" />"	>&nbsp;<spring:message code="Video_t" /></a>
-	<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:TEXT"	class="icon-text"	title="<spring:message code="Text_t" />"	>&nbsp;<spring:message code="Text_t" /></a>
-	<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:SOUND"	class="icon-audio"	title="<spring:message code="Sound_t" />"	>&nbsp;<spring:message code="Sound_t" /></a>
-	<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:3D"	class="icon-3d"		title="<spring:message code="3D_t" />"		>&nbsp;<spring:message code="3D_t" /></a>
+	<h2 id="legend"><spring:message code="Legend_t" />:</h2>
+	
+	<div id="legend-icons">
+		<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:IMAGE"	class="icon-image"	title="<spring:message code="Image_t" />"	>&nbsp;<spring:message code="Image_t" /></a>
+		<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:VIDEO"	class="icon-video"	title="<spring:message code="Video_t" />"	>&nbsp;<spring:message code="Video_t" /></a>
+		<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:TEXT"	class="icon-text"	title="<spring:message code="Text_t" />"	>&nbsp;<spring:message code="Text_t" /></a>
+		<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:SOUND"	class="icon-audio"	title="<spring:message code="Sound_t" />"	>&nbsp;<spring:message code="Sound_t" /></a>
+		<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:3D"	class="icon-3d"		title="<spring:message code="3D_t" />"		>&nbsp;<spring:message code="3D_t" /></a>
+	</div>
+	<!-- end legend -->
 </div>
-<!-- end legend -->
-	
-	
-	
-	
-</div>
-<!-- /sidebar -->

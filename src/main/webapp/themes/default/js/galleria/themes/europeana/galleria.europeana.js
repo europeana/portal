@@ -171,13 +171,15 @@ Galleria.addTheme({
 			europeana.setInfo(0);
     	}
     	else{
-    		var stage = 		thisGallery.$( 'container' ).find(".galleria-stage");
-			var navLeft =		thisGallery.$( 'container' ).find(".galleria-image-nav-left");
-			var navRight =		thisGallery.$( 'container' ).find(".galleria-image-nav-right");
+    		/* non-carousel mode */
+    		
+    		var stage		= thisGallery.$( 'container' ).find(".galleria-stage");
+			var navLeft		= thisGallery.$( 'container' ).find(".galleria-image-nav-left");
+			var navRight	= thisGallery.$( 'container' ).find(".galleria-image-nav-right");
 			
-			var info	= 	thisGallery.$( 'container' ).find(".galleria-info");
-			var title	= thisGallery.$( 'container' ).find(".galleria-info-title");
-			var thumbs	= thisGallery.$( 'container' ).find(".galleria-thumbnails-container");
+			var info		= thisGallery.$( 'container' ).find(".galleria-info");
+			var title		= thisGallery.$( 'container' ).find(".galleria-info-title");
+			var thumbs		= thisGallery.$( 'container' ).find(".galleria-thumbnails-container");
 			
 			
     		if(dataSource.length > 1){
@@ -205,9 +207,10 @@ Galleria.addTheme({
     			/* add ctrls */
     			
     			var ctrls = $('<div class="img-ctrls"></div>').appendTo(info);
-    			var lbLink = $('<a>lighbtox</a>').appendTo(ctrls);
+    			var lbLink = $('<a>lightbox</a>').appendTo(ctrls);
+    			var xxLink = $('<a>layyout</a>').appendTo(ctrls);
+    			var yyLink = $('<a>trigger</a>').appendTo(ctrls);
 
-    			lbLink.click(function(){ thisGallery.openLightbox()});
     			
     			stage.after(info);
     			info.append(title);
@@ -245,13 +248,29 @@ Galleria.addTheme({
 
     			};
     			
+    			lbLink.click(function(){ 
+        			thisGallery.refreshImage();
+    				//thisGallery.openLightbox()    				
+    			});
+    			xxLink.click(function(){ 
+    				layoutSingle();	
+    			});
+    			yyLink.click(function(){ 
+    					
+    				thisGallery.load(dataSource);
+    			});
+    			
+    			
         		thisGallery.bind("loadfinish", function(e) {
         			layoutSingle();	
 
         			
-        			/*
         			navLeft.css("left", "0px");
         			navRight.css("right", "0px");
+        			
+	        		Galleria.log("in load finish");
+
+        			/*
         			
         			info.css("width",	e.imageTarget.width);
         			info.css("left",	(stage.width() - info.width()) / 2 + "px" );
@@ -260,9 +279,57 @@ Galleria.addTheme({
         			*/
          		 });
         		$(window).resize( function() {
-        			Galleria.log("Call Galleria reload");
-    	    		thisGallery.load(dataSource);
-    	    		thisGallery.refreshImage();
+        			Galleria.log("Call Galleria reload " + Galleria.IMAGE);
+        			
+/*
+        	        $(thisGallery._images).each(function( i, thumb ) {
+
+        	        		Galleria.log("image " + i + ", " + thumb)
+
+        	        		    	    		thisGallery.refreshImage();
+
+        		    		thisGallery.trigger({
+        		    			type: Galleria.IMAGE,
+        		                      thumbTarget: thumb.image,
+        		                      index: i,
+        		                      galleriaData: dataSource
+        		    		});
+                			layoutSingle();	
+
+        	        });
+*/        	      
+        			
+        			
+//        			var dataRef = thisGalleria.
+        			try{
+        				//thisGallery.load(dataSource);
+
+                        galdata = [];
+                        for (i = 0; i < dataSource.length; i++) {
+                            galdata.push(dataSource[i]);
+                        }
+
+        				Galleria.log("ANNIHILATION!");
+        				thisGallery.destroy();
+        				Galleria.log( JSON.stringify(dataSource) );
+        				
+
+        				
+        				var recreate = function(){
+        					// TODO: make generic
+        					var parent = jQuery('#carousel-1').parent();
+        					
+        					$('#carousel-1').remove();
+        					$('<div id="carousel-1"></div>').appendTo(parent).galleria({dataSource:galdata});
+        					
+        				};
+        				setTimeout(recreate, 2000);
+        			}
+        			catch(e){
+        				
+        			}
+        			
+        			
         		});
     		}
     		else{

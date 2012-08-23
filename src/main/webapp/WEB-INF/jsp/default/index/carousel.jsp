@@ -55,6 +55,9 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		
 		<div class="six columns hide-on-phones">
 			<div id="carousel-1-blurb">
+				HELLO
+				<div class="fs1" aria-hidden="true" data-icon="&#x64;"></div>
+					GOODBYE
 				<span class="italic-heading">Europe's Digital Library</span>
 				<p>
 					In Europeana you can search more than 24 million records of paintings, artifacts, books, music, films and more made available by Europe's libraries, archives and museums.

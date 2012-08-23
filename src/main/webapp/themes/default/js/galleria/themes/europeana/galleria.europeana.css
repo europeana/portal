@@ -455,3 +455,8 @@
 .galleria-image{
 	width:100%;
 }
+
+
+.galleria-errors{
+	display:	none;
+}

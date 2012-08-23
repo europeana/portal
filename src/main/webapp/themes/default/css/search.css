@@ -1,3 +1,4 @@
+
 /* query */
 
 	#query {
@@ -5,7 +6,8 @@
 		border-bottom: none;
 	}
 	
-	
+
+
 /* breadcrumb */
 /*
 	#breadcrumb {
@@ -28,6 +30,10 @@
 	
 	
 /* items */
+	#search-results{
+		margin-left:	1em;
+	}
+
 
 	#items {
 		margin: 0;

@@ -14,18 +14,24 @@
 	}
 	
 	#legend-icons a {
-		display: block;
-		float: left;
-		width: 60px;
-		height: 20px;
+		display:	block;
+		float:		left;
+		width:		60px;
+		height:		20px;
+		color:		#333;
+		
+		/*
 		padding: 7px 0 7px 30px;
-		color: #333;
 		background-image: url(../images/icons/sprite.png);
 		background-repeat: no-repeat;
+		*/
+		padding-left:	1em;		
+		padding-right:	1em;		
 	}
 	
 	#legend-icons p { clear: left; }
 	
+	/*
 	#legend-icons a.image {
 		background-position: 5px -1053px;
 	}
@@ -45,3 +51,4 @@
 	#legend-icons a.threeD {
 		background-position: 4px -969px;
 	}	
+	*/

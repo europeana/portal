@@ -5,33 +5,27 @@
 	}
 	
 	#filter-search, #filter-search ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
+		list-style:		none;
+		margin:			0;
+		padding:		0;
 	}
 	
-	.sidebar h2, .sidebar h3 {
-		font-size: 120%;
-		margin-bottom: 10px;
+	.sidebar h2{
+		font-size:		1.2em;
+		padding:		0.5em 0 0.5em 0.5em;
 	}
 	
-	.sidebar h3 {
-		font-size: 100%;
-	}
 
 	#filter-search h3 {
-		font-size: 100%;
-		padding: 4px 0;
-		border-top: solid 1px #c0c0c0;
+		font-size:		1em;
+		margin-bottom:	0.5em;
+		border-top:		solid 1px #c0c0c0;
+		padding-top:	0.2em;
 	}
 	
 	a.facet-section, a.facet-ugc {
 		display:				block;
-		
-		
-		padding-left:			11px;
-		
-		
+		padding-left:			0.5em;
 		
 		color:					#333;
 		background-image:		none;
@@ -39,65 +33,37 @@
 	}
 	
 	
-	a.facet-section {
-		padding-left:			17px;
-		background-image: 		url(../images/icons/sprite.png);
-		background-position:	left -1180px;
-	}
-	
-	
-
-	h3 a.ugc-checked{
-		background-image:		url(../images/icons/checked.png);
-	}
-	
-	h3 a.ugc-unchecked{
-		background-image:		url(../images/icons/unchecked.png);	
-	}
-	
-	h3 a.ugc-checked,  a.ugc-unchecked{
-		margin-left:			0px;
-		padding-left:			17px;
-	}
 
 	/* facet section items */
 	
 		#filter-search ul {
-			overflow: auto;
-			margin-bottom: 7px;
-			display: none;
+			overflow:		auto;
+			margin-left:	2em;
+			margin-bottom:	0.5em;
+			display:		none;
 		}
 		
 		#filter-search h4 {
-			font-size: 100%;
-			padding: 4px 0;
-			font-weight: normal;
+			font-size:		100%;
+			margin:			0 1em;
+			font-weight:	normal;
 		}
 		
 		#filter-search h4 a {
-			display: block;
-			background-image: url(../images/icons/sprite.png);
-			background-repeat: no-repeat;
-			background-position: -35px -1327px;
-			padding-left: 30px;
-			color: #333;
+			display:				block;
+			color:					#333;
 		}
 		
-		#filter-search h4 a.active {
-			background-position: -13px -1349px;
-		}
 		
-/* rights info */
+	/* rights info */
 
 	#rights-info {
-		margin: 0 10px 10px 10px;
-		padding: 4px 4px 4px 25px;
-		
-		background-color: #ccc;
-		background-image: url(../images/icons/sprite.png);
-		background-repeat: no-repeat;
-		background-position: 5px -650px;
-		
-		border: solid  1px #c0c0c0;
+		margin:					0 10px 10px 10px;
+		padding:				4px 4px 4px 25px;
+		background-color:		#ccc;
+		background-image:		url(../images/icons/sprite.png);
+		background-repeat:		no-repeat;
+		background-position:	5px -650px;
+		border:					solid  1px #c0c0c0;
 	}
 		

@@ -71,7 +71,6 @@ eu.europeana.search = {
 	
 	
 	handleFacetSectionClick : function( e ) {
-		
 		var $heading = jQuery(this),
 			self = e.data.self,
 			facet_section = e.data.facet_section;
@@ -92,7 +91,8 @@ eu.europeana.search = {
 	
 	
 	showFacetSection : function( $heading, $facets ) {
-		
+		$heading.addClass('icon-arrow-7');
+		$heading.removeClass('icon-arrow-6');
 		$heading.addClass('active');
 		$facets.slideDown();
 		
@@ -100,7 +100,8 @@ eu.europeana.search = {
 	
 	
 	hideFacetSection : function( $heading, $facets ) {
-		
+		$heading.addClass('icon-arrow-6');
+		$heading.removeClass('icon-arrow-7');
 		$heading.removeClass('active');
 		$facets.slideUp();
 		
@@ -108,15 +109,14 @@ eu.europeana.search = {
 	
 	
 	openActiveFacetSections : function() {
-		
 		var i, ii = this.facet_sections.length;
 		
 		for ( i = 0; i < ii; i += 1 ) {
 			
 			if ( this.facet_sections[i].$heading.hasClass('active') ) {
-				
-				this.facet_sections[i].$facets.slideDown('fast');
-				
+				this.facet_sections[i].$heading.addClass('icon-arrow-7');
+				this.facet_sections[i].$heading.removeClass('icon-arrow-6');
+				this.facet_sections[i].$facets.slideDown('fast');				
 			}
 			
 		}
