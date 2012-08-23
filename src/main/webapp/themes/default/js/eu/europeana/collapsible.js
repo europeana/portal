@@ -12,7 +12,7 @@
 							bodySelector: "ul"
 						}
 				);
-				jQuery("#filter-search ul").css('display', 'block');
+				jQuery("#filter-search ul").css('display', 'block'); // or get rid of css hiding it
 			}
 		});
 		
