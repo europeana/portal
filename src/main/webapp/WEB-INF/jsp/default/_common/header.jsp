@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row" id="header">
 	<%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 	
 	<c:set var="logo_tag" value="h1"/>

@@ -2,6 +2,10 @@
 
 	/* mobile 1st */
 	
+	#header{
+		position:	relative;	/* this to stop the absolutely position width-100% logo wrapper creating scrollbars */
+	}
+	
 	#header-strip{
 		background-color:	transparent;
 	}
