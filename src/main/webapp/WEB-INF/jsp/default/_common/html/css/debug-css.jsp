@@ -10,6 +10,12 @@
 <link rel="stylesheet" href="/${branding}/css/menu-styling.css" />
 <link rel="stylesheet" href="/${branding}/css/responsive-grid.css" />
 
+
+
+<link rel="stylesheet" href="/${branding}/css/europeana-fonts.css" />
+
+
+
 <c:if test="${!empty model.announceMsg}">
 	<link rel="stylesheet" href="/${branding}/css/announce.css" />
 </c:if>
