@@ -1,4 +1,3 @@
-<!-- displayDocElement -->
 <%@ tag trimDirectiveWhitespaces="true" %>
 
 <%-- parameters --%>
@@ -94,4 +93,3 @@
     </tr>
   </c:if>
 </c:forEach>
-<!-- displayDocElement -->
