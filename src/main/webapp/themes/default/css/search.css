@@ -42,13 +42,15 @@
 	}
 	
 	#items li {
+	/*
 		position: relative;
 		float: left;
 		width: 157px;
 		margin: 10px 17px 10px 0;		
 		border-bottom: 1px dotted #a0a0a0;
-		background-image: url(../images/icons/object-types.png);
-		background-repeat: no-repeat;
+	*/	
+		background-image:	url(../images/icons/object-types.png);
+
 	}
 	
 	#items li.last {
@@ -61,11 +63,9 @@
 	
 	
 	#items h2 {
-		margin: 5px 0 0 0;
-		height: 28px;
-		width: 129px;
-		font-size: 90%;
-		overflow: hidden;
+		margin:		5px 0 0 0;
+		font-size:	0.6em;
+		overflow:	hidden;
 	}
 	
 	.item a {
@@ -99,7 +99,78 @@
 		#items li.type-3d {
 			background-position:	134px 1px;
 		}
+		
+	/* ANDY REFACTOR */
+	
+	/** DESKTOP **/
+	/** This breakpoint not wrapped in media selector for the sake of IE8 **/
+	#items{
+		word-spacing:	0;
+		font-size:		0;
+		width:			100%;
+		padding-top:	0;
+		padding-bottom:	0;
+	}
 
+	#items li, #items ul{
+		font-size:		0.8em;
+		word-spacing: 0;
+		
+	}
+
+	#items>li{
+		width:				25%;
+		font-size:			18px;
+		margin-bottom:		0.5em;
+		margin-top:			0.5em;
+		background-repeat:	no-repeat;
+		text-align:			center;
+		position:			relative;
+		border-bottom:		1px dotted #a0a0a0;
+		overflow-x:			hidden;
+		display:			inline-block;
+	}
+		
+	#items>li>a{
+		display:		block;
+		margin-bottom:	0.3em;		
+	}
+		
+	
+	
+	/* mobile (default) */
+	
+	@media all and (max-width: 480px) {
+		
+		#items li, #items ul{
+			font-size:		16px;
+		}
+	
+		#items>li{
+			width:			100%;
+			float:			none;
+			margin-bottom:	1em;
+			margin-top:		0em;
+		}
+			
+		#items{
+			padding-top:	0.5em;
+			padding-bottom:	0.5em;
+		}
+	}
+
+	/** TABLET **/
+	@media all and (max-width: 980px) {
+	
+		#items>li{
+			width:			50%;
+		}
+
+	}
+
+
+
+	/* end Andy refactor of items */
 
 	/* meta-data */
 
@@ -167,20 +238,25 @@
 	}
 	
 	#items .result-additional-info {
-		position: absolute;
-		overflow: hidden;
-		bottom: 0;
-		left: 0;
-		width: 147px;
-		height: auto;
-		margin: 0;
-		padding: 5px;
-		opacity: 0;
-		color: #fff;
-		background-color: #000;
-		background-color: rgba( 0,0,0,.8 );
+		position:			absolute;
+		overflow:			hidden;
+		bottom:				0;
+		left:				0;
+		width:				100%;
 		
-		-moz-transition: 0.25s linear opacity;
-		-webkit-transition: 0.25s linear opacity;
+		height:				auto;
+		max-height:			3em;
+		
+		margin:				0;
+		padding:			5px;
+		opacity:			0;
+		color:				#fff;
+		background-color:	#000;
+		background-color:	rgba( 0,0,0,.8 );
+		
+		-moz-transition:	0.25s linear opacity;
+		-webkit-transition:	0.25s linear opacity;
+		
+		font-size:			0.7em;
 	}
 	
