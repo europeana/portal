@@ -63,12 +63,19 @@
 	#footer-addthis{
 		float:left;
 	}
-	
-	#footer-subscribe{
-		float:right;
-		clear:both;
-	}
 
+	
+	#social-links, #footer-subscribe{
+		/*
+		margin-left:	auto;
+		margin-right:	auto;
+		display:		table;
+		*/
+	}
+	#footer-subscribe input{
+		float:	left;
+		clear:	left;
+	}
 
 	.italic-heading{
 		font-weight:	normal;

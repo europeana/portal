@@ -1,12 +1,17 @@
 
 
 	/** GLOBAL **/
-
-	.menu-wrapper{
-		width:				100%;
+	.footer{
 		background-color:	#CCC;
 		margin-top:			10px;
 		margin-bottom:		10px;
+	}
+	
+	.footer-wrapper{
+		margin-left:	1em;
+		margin-right:	1em;
+		padding-top:	1em;
+		padding-bottom:	1em;
 	}
 
 	ul.menu, ul.menu ul{
@@ -29,9 +34,13 @@
 	/** This breakpoint not wrapped in media selector for the sake of IE8 **/
 
 	ul.menu{							/* centering */
-		width:				90%;
+		width:				100%;
+		/*
 		margin-left:		auto;
 		margin-right:		auto;
+		margin-left:		1em;
+		margin-right:		1em;
+		*/
 	}
 
 	ul.menu li, ul.menu ul{
@@ -52,6 +61,7 @@
 	}
 		
 	ul.menu{
+		width:			100%;
 		padding-top:	0;
 		padding-bottom:	0;
 	}
