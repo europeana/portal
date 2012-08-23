@@ -50,7 +50,7 @@
 	ul.menu>li{
 		width:			25%;
 		float:			left;
-		font-size:		18px;
+		zfont-size:		18px;
 		margin-bottom:	0.5em;
 		margin-top:		0.5em;
 	}
@@ -64,6 +64,7 @@
 		width:			100%;
 		padding-top:	0;
 		padding-bottom:	0;
+		font-size:		2em;
 	}
 	
 	/* IE8 fix: equivalent to li:nth-child(5) */

@@ -22,19 +22,19 @@
 /* Basic fonts */
 
 body{
-	font-size:	1.1em;
+	font-size:	1.2em;
 }
 
 @media only screen and ( min-width:767px ){
 	body{
-		font-size:	1em;
+		font-size:	1.125em;
 	}
 }
 
 
 @media only screen and ( min-width:1140px ){
 	body{
-		font-size:	0.9em;
+		font-size:	1.063em;
 	}
 }
 
