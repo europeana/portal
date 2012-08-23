@@ -73,5 +73,4 @@ public class SchemaOrgMapping {
 	public static SchemaOrgElement get(Element edmElement) {
 		return get(edmElement.getQualifiedName());
 	}
-
 }

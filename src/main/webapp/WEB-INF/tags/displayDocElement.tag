@@ -30,10 +30,17 @@
           </c:otherwise>
         </c:choose>
       </td>
-      <td<c:if test="${field.element != null}"> property="<c:choose>
-          <c:when test="${field.schemaOrgElement != null}">${field.schemaOrgElement}</c:when>
-          <c:otherwise>${field.element.elementName}</c:otherwise>
-        </c:choose><c:out value=" "/>${field.element.fullQualifiedURI}"</c:if>>
+      <c:set var="semanticAttributes">
+        <c:if test="${field.element != null}">
+          <c:out value=" "/>property="<c:choose>
+            <c:when test="${field.schemaOrgElement == null}">${field.schemaOrgElement}</c:when>
+            <c:otherwise>${field.element.elementName}</c:otherwise>
+          </c:choose><c:out value=" "/>${field.element.fullQualifiedURI}"
+          <c:if test="${field.schemaOrgElement == 'schema:url'}">
+            <c:out value=" "/>href="${docElement[field.propertyName]}"</c:if>
+        </c:if>
+      </c:set>
+      <td ${semanticAttributes}>
         <c:choose>
 
           <c:when test="${field.schemaName == 'edm:WebResource'}">
