@@ -6,8 +6,10 @@
 	.underline { text-decoration: underline; }
 	.clear { clear: both; }
 	.small { font-size: 90%; }
-	a.block-link { display: block; line-height: 1.5; }
 	
+	/*
+	a.block-link { display: block; line-height: 1.5; }
+	*/
 	.external {
 		background-image: url(../images/icons/external.png);
 		background-repeat: no-repeat;

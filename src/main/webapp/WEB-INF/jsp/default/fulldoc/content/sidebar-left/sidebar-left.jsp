@@ -24,17 +24,18 @@
 	
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 	
+	<%-- Original context link --%>
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
-
+	<br>
+	
 	<%-- Shares link --%>
-	<div id="shares-link-wrapper">
-		 <a href="" id="shares-link" class="block-link bold" title="<spring:message code="Share_item_link_alt_t" />" rel="nofollow"><spring:message code="Share_item_link_t" /></a>
-	</div>
+	<a href="" id="shares-link" class="icon-share action-link" title="<spring:message code="Share_item_link_alt_t" />" rel="nofollow">&nbsp;<spring:message code="Share_item_link_t" /></a>
+	<br/>
 	
 	<%-- Citation link --%>
-	<div id="citation-link-wrapper">
-    	<a href="" id="citation-link" class="block-link bold" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow"><spring:message code="Cite_Button_t" /></a>
-	</div>
+   	<a href="" id="citation-link" class="action-link icon-cite" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">&nbsp;<spring:message code="Cite_Button_t" /></a>
+	<br/>
+	
 	
 	<div id="citation">
 		<c:forEach items="${model.citeStyles}" var="citeStyle">

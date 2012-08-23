@@ -16,16 +16,14 @@
 .addthis {
 }
 
-#shares-link-wrapper{
-	background-image:	url('http://pluck.nationaldentalreviews.org/ver1.0/Content/ua/images/util/share/pluck-share-icon.gif');
-	background-repeat:	no-repeat;
-	padding-left:		18px;
-}
 
-#citation-link-wrapper{
-	background-image:	url('http://www.ob10.com/OB10Blog/pics/wikipedia_icon.jpg');
-	background-repeat:	no-repeat;
-	padding-left:		18px;
+a.action-link {
+	color:			#333;	
+	line-height:	1.5;
+	font-size:		1em;
+}
+a.action-link:hover{
+	color:			#444;	
 }
 
 #embed-link-wrapper{
