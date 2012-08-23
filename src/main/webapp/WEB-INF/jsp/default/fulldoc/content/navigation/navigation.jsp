@@ -10,7 +10,7 @@
 			
 			<c:if test="${true || model.fullBeanView.docIdWindowPager.returnToResults && !model.embedded}">
 				<li>
-					<a href="{model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl}" rel="nofollow"><spring:message code="ReturnToSearchResults_t" /></a>
+					<a href="${model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl}" rel="nofollow"><spring:message code="ReturnToSearchResults_t" /></a>
 				</li>
 			</c:if>
 					
@@ -18,7 +18,7 @@
 			
 			<c:if test='${true || model.returnTo == "SEARCH_HTML" && model.fullBeanView.docIdWindowPager.next}'>
 				<li>
-					<a href="{model.fullBeanView.docIdWindowPager.nextFullDocUrl}" title="<spring:message code="Next_t" />" class="pagination-next"><spring:message code="Next_t" /></a>
+					<a href="${model.fullBeanView.docIdWindowPager.nextFullDocUrl}" title="<spring:message code="Next_t" />" class="pagination-next"><spring:message code="Next_t" /></a>
 				</li>
 			</c:if>
 			
@@ -26,7 +26,7 @@
 			
 			<c:if test='${true || model.returnTo == "SEARCH_HTML" && model.fullBeanView.docIdWindowPager.previous}'>
 				<li>
-					<a href="{model.fullBeanView.docIdWindowPager.previousFullDocUrl}" title="<spring:message code="Previous_t" />" class="pagination-previous"><spring:message code="Previous_t" /></a>
+					<a href="${model.fullBeanView.docIdWindowPager.previousFullDocUrl}" title="<spring:message code="Previous_t" />" class="pagination-previous"><spring:message code="Previous_t" /></a>
 				</li>
 			</c:if>
 		</ul>
