@@ -13,12 +13,33 @@
     	padding: 0;
     	
     	font-family: arial, helvetica, clean, sans-serif;
-        font-size: 100%;
+        xxxxxxxxxxxxfont-size: 100%;
         color: #333;
         background-color: #fff;
     }
-    
-    
+
+
+/* Basic fonts */
+
+body{
+	font-size:	1.2em;
+}
+
+@media only screen and ( min-width:767px ){
+	body{
+		font-size:	1.1em;
+	}
+}
+
+
+@media only screen and ( min-width:1140px ){
+	body{
+		font-size:	1em;
+	}
+}
+
+/* End basic fonts */
+
     h1, h2, h3, h4, h5, h6 { margin: 0 0 1% 0; padding: 0; line-height: 120%; color: #111; }
     
     h1 { font-size: 200%; }
