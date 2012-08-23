@@ -6,15 +6,17 @@
 
 #carousel-1{
    	height:		260px;
-   	max-height:	100%;
+   	xxmax-height:	100%;
    	xxbackground:	#000;
    	
-   	height:		300px;
+   	height:			300px;
+   	max-height:		300px;
 }
 
 @media only screen and ( min-width:400px ){
 	#carousel-1{
 		height:		480px;
+	   	max-height:	480px;
 	}
 }
 
@@ -22,18 +24,21 @@
 @media only screen and ( min-width:767px ){
 	#carousel-1{
 		height:		600px;		/* boom */
+		max-height:	600px;
 	}
 }
 
 @media only screen and ( min-width:900px ){
 	#carousel-1{
 	   	height:		450px;
+		max-height:	450px;
 	}
 }
 
 @media only screen and ( min-width:1000px ){
 	#carousel-1{
 	   	height:		500px;
+	   	max-height:	500px;
 	}
 }
 
