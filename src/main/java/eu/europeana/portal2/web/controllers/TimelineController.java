@@ -56,7 +56,7 @@ public class TimelineController {
 			throws Exception {
 
 		SearchPage model = new SearchPage();
-		model.setCurrentSearch(SearchPageEnum.TL);
+		model.setCurrentSearch(SearchPageEnum.TIMELINE);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
 		model.setQuery(query);
 		model.setStart(start);
@@ -76,7 +76,7 @@ public class TimelineController {
 		return page;
 	}
 
-	@RequestMapping(value = { "/search.json" })
+	@RequestMapping(value = {"/search.json"})
 	public ModelAndView searchJson(
 			@RequestParam(value = "query", required = false, defaultValue = "") String q,
 			@RequestParam(value = "startFrom", required = false, defaultValue = "1") int start,
@@ -84,7 +84,7 @@ public class TimelineController {
 			HttpServletRequest request
 			) throws Exception {
 		SearchPage model = new SearchPage();
-		model.setCurrentSearch(SearchPageEnum.TL);
+		model.setCurrentSearch(SearchPageEnum.TIMELINE);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, "", defaultTheme));
 
 		Map<String, String[]> params = (Map<String, String[]>)request.getParameterMap();

@@ -30,7 +30,10 @@
           </c:otherwise>
         </c:choose>
       </td>
-      <td>
+      <td<c:if test="${field.element != null}"> property="<c:choose>
+          <c:when test="${field.schemaOrgElement != null}">${field.schemaOrgElement}</c:when>
+          <c:otherwise>${field.element.elementName}</c:otherwise>
+        </c:choose><c:out value=" "/>${field.element.fullQualifiedURI}"</c:if>>
         <c:choose>
 
           <c:when test="${field.schemaName == 'edm:WebResource'}">

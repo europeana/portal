@@ -1,10 +1,11 @@
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.presentation.semantic;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 /**
  * Resolves name spaces, and provides some utility functions.
@@ -31,6 +32,7 @@ public class NamespaceResolver {
 			put("rdfs", new Namespace("rdfs", "http://www.w3.org/2000/01/rdf-schema#"));
 			put("skos", new Namespace("skos", "http://www.w3.org/2004/02/skos/core#"));
 			put("wgs84_pos", new Namespace("wgs84_pos", "http://www.w3.org/2003/01/geo/wgs84_pos#"));
+			put("schema", new Namespace("schema", "http://schema.org/"));
 		}
 	};
 

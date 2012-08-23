@@ -48,7 +48,6 @@ import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
-import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 /**
@@ -59,9 +58,6 @@ public class ObjectController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	// @Autowired
-	// private QueryModelFactory beanQueryModelFactory;
-	
 	@Resource
 	private ConfigInterceptor corelib_web_configInterceptor;
 
@@ -73,7 +69,7 @@ public class ObjectController {
 
 	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
 	private String[] shownAtProviderOverride;
-	
+
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
 
@@ -85,13 +81,13 @@ public class ObjectController {
 
 	@Value("#{europeanaProperties['api2.secret']}")
 	private String api2secret;
-	
+
 	// whether the source is API2
 	private boolean isSoureApi2 = false;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
-	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
 			@PathVariable String collectionId,
 			@PathVariable String recordId,
@@ -100,7 +96,7 @@ public class ObjectController {
 			@RequestParam(value = "query", required = false) String query,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
-			@RequestParam(value = "returnTo", required = false, defaultValue = "BD") SearchPageEnum returnTo,
+			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			@RequestParam(value = "source", required = false, defaultValue="corelib") String source,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) {

@@ -16,7 +16,7 @@
 					
 			<%-- next --%>
 			
-			<c:if test='${true || model.returnTo == "BD" && model.fullBeanView.docIdWindowPager.next}'>
+			<c:if test='${true || model.returnTo == "SEARCH_HTML" && model.fullBeanView.docIdWindowPager.next}'>
 				<li>
 					<a href="{model.fullBeanView.docIdWindowPager.nextFullDocUrl}" title="<spring:message code="Next_t" />" class="pagination-next"><spring:message code="Next_t" /></a>
 				</li>
@@ -24,7 +24,7 @@
 			
 			<%-- previous --%>
 			
-			<c:if test='${true || model.returnTo == "BD" && model.fullBeanView.docIdWindowPager.previous}'>
+			<c:if test='${true || model.returnTo == "SEARCH_HTML" && model.fullBeanView.docIdWindowPager.previous}'>
 				<li>
 					<a href="{model.fullBeanView.docIdWindowPager.previousFullDocUrl}" title="<spring:message code="Previous_t" />" class="pagination-previous"><spring:message code="Previous_t" /></a>
 				</li>

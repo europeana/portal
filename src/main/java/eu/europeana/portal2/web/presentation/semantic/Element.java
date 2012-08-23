@@ -1,4 +1,7 @@
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.presentation.semantic;
+
+import java.util.Map;
+
 
 /**
  * Representation of an XML element
@@ -16,6 +19,11 @@ public class Element {
 	 * Element name
 	 */
 	private String elementName;
+
+	/**
+	 * Attributes
+	 */
+	private Map<String, String> attributes;
 
 	public Element(Namespace namespace, String elementName) {
 		this.namespace = namespace;
@@ -59,5 +67,13 @@ public class Element {
 	 */
 	public String getQualifiedName() {
 		return namespace.getPrefix() + ":" + elementName;
+	}
+
+	public Map<String, String> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, String> attributes) {
+		this.attributes = attributes;
 	}
 }

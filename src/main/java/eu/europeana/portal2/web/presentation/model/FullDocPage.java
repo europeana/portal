@@ -44,9 +44,11 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecor
 import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.presentation.model.data.submodel.MetaDataFieldPresentation;
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
+import eu.europeana.portal2.web.presentation.semantic.EdmSchemaMapping;
+import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
+import eu.europeana.portal2.web.presentation.semantic.SchemaOrgElement;
+import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
-import eu.europeana.portal2.web.util.EdmSchemaMapping;
-import eu.europeana.portal2.web.util.FieldInfo;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
 import eu.europeana.portal2.web.util.WebUtils;
@@ -598,4 +600,9 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		return null;
 	}
+
+	public Map<String, SchemaOrgElement> getSchemaOrgMapping() {
+		return SchemaOrgMapping.getMap();
+	}
+
 }

@@ -338,8 +338,7 @@ public class SearchPage extends SearchPreparation {
 	@Override
 	public UrlBuilder createSearchUrl(String searchTerm, String[] qf,
 			String start) throws UnsupportedEncodingException {
-		return createSearchUrl(getPortalName(), SearchPageEnum.BD, searchTerm,
-				qf, start);
+		return createSearchUrl(getPortalName(), SearchPageEnum.SEARCH_HTML, searchTerm, qf, start);
 	}
 
 	public static UrlBuilder createSearchUrl(String portalname,

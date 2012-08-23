@@ -23,23 +23,11 @@ package eu.europeana.portal2.web.presentation.model;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocumentList;
-
-import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
-import eu.europeana.corelib.utils.StringArrayUtils;
-import eu.europeana.portal2.web.presentation.model.data.decorators.DocIdWindowPagerDecorator;
 
 /**
  * Do not ever touch this class! It is persisted to XML and serves as document

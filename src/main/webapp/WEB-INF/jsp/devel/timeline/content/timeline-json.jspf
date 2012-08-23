@@ -21,7 +21,7 @@
         "start" : "<europeana:json text="${year[0]}" />",
         "title" : "<europeana:json text="${trimmed}" />",
         "icon" : "<europeana:json text="${cell.iconJSON}" />",
-        "link" : "<europeana:json text="${cell.fullDocUrlJSON}&amp;returnTo=TL" />",
+        "link" : "<europeana:json text="${cell.fullDocUrlJSON}&amp;returnTo=TIMELINE" />",
         "image" : "<europeana:json text="${cell.thumbnailJSON}" />",
         "description" : ""
       }<c:if test="${!itemStatus.last}">,</c:if>

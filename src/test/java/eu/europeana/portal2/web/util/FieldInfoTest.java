@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
+
 public class FieldInfoTest {
 
 	@Test

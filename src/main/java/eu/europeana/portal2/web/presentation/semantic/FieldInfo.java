@@ -1,9 +1,10 @@
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.presentation.semantic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+
 
 /**
  * This class gives you information about fields used in EDM schema.
@@ -110,6 +111,14 @@ public class FieldInfo {
 
 	public Element getElement() {
 		return element;
+	}
+
+	public String getSchemaOrgElement() {
+		SchemaOrgElement schemaOrgElement = SchemaOrgMapping.get(element);
+		if (schemaOrgElement != null) {
+			return schemaOrgElement.getElement().getQualifiedName();
+		}
+		return null;
 	}
 
 	public String toString() {

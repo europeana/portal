@@ -1,10 +1,11 @@
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.presentation.semantic;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 
 public class EdmSchemaMapping {
 
