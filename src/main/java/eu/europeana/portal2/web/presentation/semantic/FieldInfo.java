@@ -113,12 +113,33 @@ public class FieldInfo {
 		return element;
 	}
 
+	/**
+	 * Whether the field may contain multiple values, or only single ones
+	 */
+	public boolean isMultiValue() {
+		return isMap() || isCollection() || isCollectionOfMaps();
+	}
+
+	/**
+	 * Gets the mapped schema.org element if any, otherwise null.
+	 */
 	public String getSchemaOrgElement() {
 		SchemaOrgElement schemaOrgElement = SchemaOrgMapping.get(element);
 		if (schemaOrgElement != null) {
-			return schemaOrgElement.getElement().getQualifiedName();
+			return schemaOrgElement.getElement().getElementName();
 		}
 		return null;
+	}
+
+	/**
+	 * Whether the mapped schema.org element is a URL?
+	 */
+	public boolean getSchemaOrgElementIsURL() {
+		SchemaOrgElement schemaOrgElement = SchemaOrgMapping.get(element);
+		if (schemaOrgElement != null) {
+			return schemaOrgElement.getElement().getQualifiedName().equals("schema:url");
+		}
+		return false;
 	}
 
 	public String toString() {

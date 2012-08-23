@@ -33,14 +33,14 @@
       <c:set var="semanticAttributes">
         <c:if test="${field.element != null}">
           <c:out value=" "/>property="<c:choose>
-            <c:when test="${field.schemaOrgElement == null}">${field.schemaOrgElement}</c:when>
+            <c:when test="${field.schemaOrgElement != null}">${field.schemaOrgElement}</c:when>
             <c:otherwise>${field.element.elementName}</c:otherwise>
           </c:choose><c:out value=" "/>${field.element.fullQualifiedURI}"
-          <c:if test="${field.schemaOrgElement == 'schema:url'}">
+          <c:if test="${field.schemaOrgElementIsURL}">
             <c:out value=" "/>href="${docElement[field.propertyName]}"</c:if>
         </c:if>
       </c:set>
-      <td ${semanticAttributes}>
+      <td <c:if test="${!field.multiValue || fn:length(docElement[field.propertyName]) == 1}">${semanticAttributes}</c:if>>
         <c:choose>
 
           <c:when test="${field.schemaName == 'edm:WebResource'}">
@@ -62,24 +62,24 @@
           </c:when>
 
           <c:when test="${field.collectionOfMaps}">
-            <c:forEach items="${docElement[field.propertyName]}" var="mapInstance">
+            <c:forEach items="${docElement[field.propertyName]}" var="mapInstance" varStatus="fieldInstanceStatus">
               <c:forEach items="${mapInstance}" var="fieldInstance">
-                ${fieldInstance.key} / ${fieldInstance.value}<br />
+                <span ${semanticAttributes}>${fieldInstance.key} / ${fieldInstance.value}</span><c:if test="${!fieldInstanceStatus.last}"><br /></c:if>
               </c:forEach>
             </c:forEach>
           </c:when>
 
           <c:when test="${field.map}">
-            <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance">
-              ${fieldInstance.key} / ${fieldInstance.value}<br />
+            <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="fieldInstanceStatus">
+              <span ${semanticAttributes}>${fieldInstance.key} / ${fieldInstance.value}</span><c:if test="${!fieldInstanceStatus.last}"><br /></c:if>
             </c:forEach>
           </c:when>
 
           <c:when test="${field.collection}">
             <c:choose>
               <c:when test="${fn:length(docElement[field.propertyName]) > 1}">
-                <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance">
-                  ${fieldInstance}<br />
+                <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="fieldInstanceStatus">
+                  <span ${semanticAttributes}>${fieldInstance}</span><c:if test="${!fieldInstanceStatus.last}"><br /></c:if>
                 </c:forEach>
               </c:when>
               <c:otherwise>${docElement[field.propertyName][0]}</c:otherwise>
