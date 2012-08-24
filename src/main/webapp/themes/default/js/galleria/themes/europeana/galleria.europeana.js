@@ -268,7 +268,7 @@ Galleria.addTheme({
         			navLeft.css("left", "0px");
         			navRight.css("right", "0px");
         			
-	        		Galleria.log("in load finish");
+	        		//Galleria.log("in load finish");
 
         			/*
         			
@@ -279,7 +279,7 @@ Galleria.addTheme({
         			*/
          		 });
         		$(window).resize( function() {
-        			Galleria.log("Call Galleria reload " + Galleria.IMAGE);
+        			//Galleria.log("Call Galleria reload " + Galleria.IMAGE);
         			
 /*
         	        $(thisGallery._images).each(function( i, thumb ) {
@@ -309,9 +309,8 @@ Galleria.addTheme({
                             galdata.push(dataSource[i]);
                         }
 
-        				Galleria.log("ANNIHILATION!");
         				thisGallery.destroy();
-        				Galleria.log( JSON.stringify(dataSource) );
+        				//Galleria.log( JSON.stringify(dataSource) );
         				
 
         				
@@ -714,13 +713,37 @@ Galleria.addTheme({
     
     callSetThumbStyle();
     
-	$(window).resize( function() {
-		
-		//thisGallery.$('container').parent().css("height", thisGallery.$('container').css("height"));
+    
+    var onResize = function(){
 		thisGallery.$('container').css("height", thisGallery.$('container').parent().css("height"));
+		thisGallery.$('container').css("width", thisGallery.$('container').parent().css("width"));
 		callSetThumbStyle();
 		thisGallery._carousel.set(0);
-		thisGallery._options.europeana.setActive(0);
+		thisGallery._options.europeana.setActive(0);    	
+    };
+
+    
+    /* If this carousel lives in a collapsible container then it needs to refresh when that container has been opened.
+     * Intercept the custom event here
+     */
+	$(window).bind('collapsibleExpanded', function(event, elements) {
+		var sectionIsParent = false;
+		$(elements).each(function(i, e){
+	    	var parent = thisGallery.$('container')[0];
+	    	while(parent != null ){
+	    		if( parent == e ){
+	    			sectionIsParent = true;
+	    		}
+	    		parent = parent.parentNode;
+	    	}
+		});
+		if(sectionIsParent){
+			onResize();
+		}
+	});
+	
+	$(window).resize( function() {
+		onResize();
      });
            
 	

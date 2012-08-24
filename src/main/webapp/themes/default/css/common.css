@@ -3,6 +3,11 @@
 
 /* common classes */
 
+.collapse-icon{
+	float:	right;
+}
+
+
 	.underline { text-decoration: underline; }
 	.clear { clear: both; }
 	.small { font-size: 90%; }

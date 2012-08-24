@@ -1,62 +1,120 @@
-/*
- 
- 		scripts.push({
-			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils' ],
-			callback: function(){
-
-				jQuery("#filter-search li").Collapsible(
-						{
-							headingSelector:"h3 a",
-							bodySelector: "ul"
-						}
-				);
-				jQuery("#filter-search ul").css('display', 'block'); // or get rid of css hiding it
-			}
-		});
-		
-		
-  
- */
-
 (function( $ ) {
 $.fn.Collapsible = function() {
-	var ops = arguments[0] || {};
+	
+	var ops	= {
+			expandedClass		:	'icon-arrow-7',
+			collapsedClass		:	'icon-arrow-6',
+			beenOpened			:	false
+	},
+	opsIn	= arguments[0] || {};
+	for (var attrname in opsIn){
+		ops[attrname] = opsIn[attrname];
+	}
+
+	var log = function(x){
+		console.log(x);
+	};
+	
+
 	
 	return this.each(function(){
-        var $this = $(this);
-        var $header = $this.find(ops.headingSelector);
-        var $body	= $this.find(ops.bodySelector);
+        var $this 		= $(this);
+        var $header 	= $this.find(ops.headingSelector);
+        var $body		= $this.find(ops.bodySelector);
+        var $icon		= ops.iconSelector		?  $this.find(ops.iconSelector)		: null;
+        var $follower	= ops.followerSelector	?  $this.find(ops.followerSelector)	: null;
 
-        var setup = function(){
-    		if ($header.hasClass('active') ) {
-    			$header.addClass('icon-arrow-7');
-    			$header.removeClass('icon-arrow-6');
-    			$body.slideDown('fast');				
-    		}
-    		else{
-    			$header.addClass('icon-arrow-6');
-    			$header.removeClass('icon-arrow-7');
-    			$body.slideUp('fast');
-    		}
+        var up = function(fast){
+			$body.slideUp(fast);
+			if($follower){
+				$follower.slideUp(fast);
+			}
         };
-		setTimeout(setup, 1);
-		
+        
+        var down = function(fast){
+        	$body.slideDown(fast,
+	        	function(){
+	            	if(!ops.beenOpened && ops.fireFirstOpen){
+	            		log("fire first open....");
+	            		ops.beenOpened = true;
+	            		ops.fireFirstOpen();
+	            	}
+	            	else{
+	            		var eventElements = [$this[0]];
+	            		if($follower){
+	            			eventElements[1] = $follower[0]; 
+	            		}
+	            	   	$(window).trigger('collapsibleExpanded', [eventElements] );        		
+	            	}
+	        	}
+        	);
+        	if($follower){
+        		$follower.slideDown(fast);
+        	}
+        };
+        
+        var getTarget = function(){
+        	return $icon ? $icon : $header;	
+        };
+        
+        /* called on setup (@set = false) and following a click (@set = true)  */
+        var setClasses = function(set){
+        	var $target = getTarget();
+        	
+        	if( $target.hasClass('active') ){
+        		if(!set){        			
+        			$target.addClass	(ops.expandedClass);
+        			$target.removeClass	(ops.collapsedClass);
+        			down('fast');
+        		}
+        		else{
+        			$target.addClass	(ops.collapsedClass);
+        			$target.removeClass	(ops.expandedClass);
+        			$target.removeClass('active');
+        			up();        			
+        		}
+        	}
+        	else{
+        		if(!set){        			
+        			$target.addClass	(ops.collapsedClass);
+        			$target.removeClass	(ops.expandedClass);
+	    			up('fast');
+        		}    			
+        		else{        			
+        			$target.addClass	(ops.expandedClass);
+        			$target.removeClass	(ops.collapsedClass);
+        			$target.addClass('active');
+	    			down();
+        		}    			
+        	}
+        };
+        
+        /* collapse on small size and show expand/collapse icons, show on big size and hide expand/collapse icons */
+    	if(ops.toggleBreakpoint){
+    		var fnResize = function(){
+    			var target = getTarget(); 
+    			if($(window).width() > ops.toggleBreakpoint){
+    				target.addClass('active');
+    				target.hide();
+    			}
+    			else{
+    				target.removeClass('active');
+    				target.show();
+    			}
+    			setClasses();
+    		};
+    		$(window).bind('resize', fnResize);
+    		fnResize();
+    	}
+    	else{
+    		setClasses();    		
+    	}
+        
+        
     	$header.bind('click', function(e){
     		e.preventDefault();
-
-        	if ( $header.hasClass('active') ) {	
-        		$header.addClass('icon-arrow-6');
-        		$header.removeClass('icon-arrow-7');
-        		$header.removeClass('active');
-        		$body.slideUp();
-    			
-    		}else{
-    			$header.addClass('icon-arrow-7');
-    			$header.removeClass('icon-arrow-6');
-    			$header.addClass('active');
-    			$body.slideDown();
+    		if(getTarget().is(':visible')){    			
+    			setClasses(true);
     		}
 		});
     });

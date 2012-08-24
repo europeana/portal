@@ -1,4 +1,5 @@
 
+
 #carousel-1-wrapper{
 	margin-top:	20px;
    	max-height:	100%;
@@ -15,8 +16,8 @@
 
 @media only screen and ( min-width:400px ){
 	#carousel-1{
-		height:		480px;
-	   	max-height:	480px;
+		height:		320px;
+	   	max-height:	320px;
 	}
 }
 
@@ -39,6 +40,9 @@
 	#carousel-1{
 	   	height:		500px;
 	   	max-height:	500px;
+	   	
+	   	height:		370px;
+	   	max-height:	370px;
 	}
 }
 
@@ -108,6 +112,11 @@
 /* blog-feed */
 
 
+#section-blog, #section-featured-content, #section-pinterest{
+	margin-top:	1.5em;
+}
+
+
 	#blog-feed {
 		float: right;
 		margin-top: 3px;
@@ -141,6 +150,13 @@
 .rssRow div {
 	color: #666;
 	margin: 0.2em 0 0.4em 0;
+}
+
+
+.icon-pinterest{
+	color:			red;
+	margin-left:	0.4em;
+	position:		absolute;	
 }
 
 .pinterest-button{

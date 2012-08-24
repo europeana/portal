@@ -7,8 +7,14 @@ eu.europeana.search = {
 	init : function() {
 		
 		this.loadComponents();
-		this.setupFacetSections();
-		this.openActiveFacetSections();
+		
+		// make facet sections collapsible
+		jQuery("#filter-search li").not(".ugc-li").Collapsible(
+			{
+				headingSelector:"h3 a",
+				bodySelector: "ul"
+			}
+		);
 		
 		// Andy: conditional load test
 		jQuery("#query-input").focus(function(){
@@ -31,98 +37,8 @@ eu.europeana.search = {
 		
 	},
 	
-	
-	setupFacetSections : function() {
-		var self = this;
-		jQuery('#filter-search > li').not(".ugc-li").each( function( key, value ) {
-			var $elm = jQuery( value ),
-			facet_section;
-			facet_section = self.addFacetSectionDetail( $elm );
-			self.facet_sections[facet_section].$heading.bind( 'click', { self : self, facet_section : facet_section }, self.handleFacetSectionClick );
-			self.setFacetSectionHeight( self.facet_sections[facet_section].$facets, self.facet_sections[facet_section].$heading );
-		});
-	},
-	
-	
-	addFacetSectionDetail : function( $elm ) {
-		
-		this.facet_sections.push({
-			
-			$section : $elm,
-			$heading : $elm.children().eq(0).children(),
-			$facets : $elm.children().eq(1)
-			
-		});
-		
-		return this.facet_sections.length - 1;
-		
-	},
-	
-	
-	setFacetSectionHeight : function( $facet_section, $heading ) {
-		var maxheight = 100;
-		if ( $heading.hasClass('facet-media') ) {
-			maxheight = 125;
-		}
-		var height = ( $facet_section.outerHeight( true ) < maxheight ) ? $facet_section.outerHeight( true ) : maxheight;
-		$facet_section.css( 'height',  height );
-		
-	},
-	
-	
-	handleFacetSectionClick : function( e ) {
-		var $heading = jQuery(this),
-			self = e.data.self,
-			facet_section = e.data.facet_section;
-		
-		e.preventDefault();
-		
-		if ( $heading.hasClass('active') ) {
-			
-			self.hideFacetSection( $heading, self.facet_sections[facet_section].$facets );
-			
-		} else {
-			
-			self.showFacetSection( $heading, self.facet_sections[facet_section].$facets );
-			
-		}
-		
-	},
-	
-	
-	showFacetSection : function( $heading, $facets ) {
-		$heading.addClass('icon-arrow-7');
-		$heading.removeClass('icon-arrow-6');
-		$heading.addClass('active');
-		$facets.slideDown();
-		
-	},
-	
-	
-	hideFacetSection : function( $heading, $facets ) {
-		$heading.addClass('icon-arrow-6');
-		$heading.removeClass('icon-arrow-7');
-		$heading.removeClass('active');
-		$facets.slideUp();
-		
-	},
-	
-	
-	openActiveFacetSections : function() {
-		var i, ii = this.facet_sections.length;
-		
-		for ( i = 0; i < ii; i += 1 ) {
-			
-			if ( this.facet_sections[i].$heading.hasClass('active') ) {
-				this.facet_sections[i].$heading.addClass('icon-arrow-7');
-				this.facet_sections[i].$heading.removeClass('icon-arrow-6');
-				this.facet_sections[i].$facets.slideDown('fast');				
-			}
-			
-		}
-		
-	},
-	
+
+
 	addThis : function() {
 		
 		
@@ -178,3 +94,4 @@ eu.europeana.search = {
 };
 
 eu.europeana.search.init();
+

@@ -22,10 +22,54 @@
 					idleMode:		false,
 					debud:			false
 			});
-			jQuery('#carousel-1').galleria({dataSource:carouselData});
-			jQuery('#carousel-2').galleria({dataSource:carousel2Data});
-			jQuery('#carousel-3').galleria({dataSource:carousel3Data});
-	    }		
+			//jQuery('#carousel-1').galleria({dataSource:carouselData});
+			//jQuery('#carousel-3').galleria({dataSource:carousel3Data});
+	    }
+		
+		
+		// Make sections collapsible
+		var toggleBreakpoint = 800;
+		
+		jQuery("#section-blog").Collapsible({
+			headingSelector:	"#collapse-header",
+			iconSelector:		".collapse-icon",
+			bodySelector:		".collapse-content",
+			
+			expandedClass:		'icon-arrow',
+			collapsedClass:		'icon-arrow-3',
+			
+			toggleBreakpoint:	toggleBreakpoint
+		});
+		
+		jQuery("#section-featured-content").Collapsible({
+			headingSelector:	"#collapse-header",
+			iconSelector:		".collapse-icon",
+			bodySelector:		".collapse-content",
+			followerSelector:	"#section-featured-partner",
+			expandedClass:		'icon-arrow',
+			collapsedClass:		'icon-arrow-3',
+			fireFirstOpen:		function(){
+				jQuery('#carousel-2').galleria({dataSource:carousel2Data});					
+			},
+			toggleBreakpoint:	toggleBreakpoint
+		});
+
+		jQuery("#section-pinterest").Collapsible({
+			headingSelector:	"#collapse-header",
+			iconSelector:		".collapse-icon",
+			bodySelector:		".collapse-content",
+
+			expandedClass:		'icon-arrow',
+			collapsedClass:		'icon-arrow-3',
+			fireFirstOpen:		function(){
+				jQuery('#carousel-3').galleria({dataSource:carousel3Data});					
+			},
+			toggleBreakpoint:	toggleBreakpoint
+		});
+		
+		
+
+		
 	};
 	
 	var init = function() {

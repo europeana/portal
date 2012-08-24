@@ -1,28 +1,38 @@
 
+<div class="six columns">
+	<h4 id="collapse-header">Featured content<span class="collapse-icon"></span></h4>
+
+	<div class="collapse-content">
+		<c:if test='${not empty model.featuredItems}'>
+		    <script type="text/javascript">
+	            var carousel2Data = [];
+				<c:forEach var="item" items="${model.featuredItems}">
+					carousel2Data[carousel2Data.length] = {
+						thumb:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
+						title:			"<spring:message code='${item.anchorTitle}'/>",
+						description:	"<spring:message code='${item.p}'/>",
+						link:			"/${model.portalName}<spring:message code='${item.anchorUrl}'/>"
+					};
+				</c:forEach>
+			</script>
+				
+			
+			<div id="carousel-2-header" class="europeana-header">
+			</div>
+			<div id="carousel-2" class="europeana-carousel">
+			</div>
+			<div id="carousel-2-footer" class="europeana-footer">
+			</div>
+			
+		</c:if>		
+	</div>
+</div>
 
 
-	<c:if test='${not empty model.featuredItems}'>
-	    <script type="text/javascript">
-            var carousel2Data = [];
-			<c:forEach var="item" items="${model.featuredItems}">
-				carousel2Data[carousel2Data.length] = {
-					thumb:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
-					title:			"<spring:message code='${item.anchorTitle}'/>",
-					description:	"<spring:message code='${item.p}'/>",
-					link:			"/${model.portalName}<spring:message code='${item.anchorUrl}'/>"
-				};
-			</c:forEach>
-		</script>
-		
-		
-		<div id="carousel-2-header" class="europeana-header">
-		</div>
-		<div id="carousel-2" class="europeana-carousel">
-		</div>
-		<div id="carousel-2-footer" class="europeana-footer">
-		</div>
-		
-	</c:if>	
+<div class="six columns" id="section-featured-partner">
+	<h4>Featured partner</h4>
+	
+</div>
 
 
 
