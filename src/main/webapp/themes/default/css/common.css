@@ -66,12 +66,24 @@
 
 	
 	#social-links, #footer-subscribe{
-		/*
-		margin-left:	auto;
-		margin-right:	auto;
-		display:		table;
-		*/
+		font-size:	2em;
 	}
+
+	#social-links span{
+		font-size:	1.5em;
+	}
+	
+	#social-links span:first-child{
+		font-size:	1em;
+	}
+	
+	
+	
+	#social-links .social-link{
+		float:	left;
+		color:	#FF75A3;
+	}
+	
 	#footer-subscribe input{
 		float:	left;
 		clear:	left;

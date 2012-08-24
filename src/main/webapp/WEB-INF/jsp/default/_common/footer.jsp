@@ -6,9 +6,10 @@
 					<div id="social-links">
 						<span class="italic-heading"><spring:message code="follow_us_t" /></span>
 					
-						<span class="italic-heading social-link">Facebook</span>			
-						<span class="italic-heading social-link">Twitter</span>
-						<span class="italic-heading social-link">GooglePlus</span>
+						<span class="social-link icon-facebook"></span>			
+						<span class="social-link icon-pinterest-2"></span>
+						<span class="social-link icon-twitter"></span>
+						<span class="social-link icon-blog"></span>
 					</div>
 				</div>
 				<div class="six columns">				
