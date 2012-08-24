@@ -41,20 +41,9 @@
 		list-style: none;
 	}
 	
-	#items li {
-	/*
-		position: relative;
-		float: left;
-		width: 157px;
-		margin: 10px 17px 10px 0;		
-		border-bottom: 1px dotted #a0a0a0;
-	*/	
-		background-image:	url(../images/icons/object-types.png);
-
-	}
-	
-	#items li.last {
-		margin: 10px 0 10px 0;
+	#items li>span{
+		float:			right;
+		margin-right:	1em;
 	}
 	
 	#items img {
@@ -63,42 +52,16 @@
 	
 	
 	#items h2 {
-		margin:		5px 0 0 0;
-		font-size:	0.6em;
-		overflow:	hidden;
+		font-size:		0.6em;
+		overflow:		hidden;
+		float:			left;
+		
+		margin-top:		0.5em;
+		margin-left:	1em;
 	}
 	
-	.item a {
-		display: block;
-		height: 128px;
-	}
 	
 	
-	/* object icon lines */
-	
-		#items li.type-image {
-		  background-position: -14px 143px;
-		}
-		
-		#items li.type-sound {
-		  background-position: 41px 83px;
-		}
-		
-		#items li.type-text {
-		  background-position: 16px 112px;
-		}
-		
-		#items li.type-video {
-		  background-position: 71px 53px;
-		}
-		
-		#items li.type-parent {
-			background-position:	100px 26px;
-		}
-		
-		#items li.type-3d {
-			background-position:	134px 1px;
-		}
 		
 	/* ANDY REFACTOR */
 	
@@ -123,7 +86,6 @@
 		font-size:			18px;
 		margin-bottom:		0.5em;
 		margin-top:			0.5em;
-		background-repeat:	no-repeat;
 		text-align:			center;
 		position:			relative;
 		border-bottom:		1px dotted #a0a0a0;
