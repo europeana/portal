@@ -30,6 +30,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			<c:forEach var="item" items="${model.carouselItems}">
 			
 				carouselData[carouselData.length] = {
+					lb:				carouselData.length%2==0,
 					image:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
 					title:			"<spring:message code='${item.anchorTitle}'/>",
 					description:	"<spring:message code='${item.imgAlt}'/>",
@@ -48,12 +49,14 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		</script>
 		
 		
-		<div class="six columns">
+		<div class="four columns">
+			<img id="carousel-1-scale-image" src="/${model.portalName}<spring:message code='${model.carouselItems[0].imgUrl}'/>"/>
+		
 			<div id="carousel-1">
 			</div>
 		</div>
 		
-		<div class="six columns hide-on-phones">
+		<div class="eight columns hide-on-phones">
 			<div id="carousel-1-blurb">
 				<span class="italic-heading">Europe's Digital Library</span>
 				<p>

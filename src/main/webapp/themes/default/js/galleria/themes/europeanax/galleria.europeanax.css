@@ -8,60 +8,31 @@
 }
 
 .galleria-container {
-    position:	relative;
-    overflow:	visible;
-    xxbackground:	#000;
-}
-
-.europeana-bordered .galleria-container{			/* B */
-	background:	#000;
-}
-
-.europeana-carousel .galleria-container {
+    position: relative;
     overflow: hidden;
-    background:	#000;
+    background: #000;
 }
-
-
 .galleria-container img {
     -moz-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
 }
-
 .galleria-stage {
-    position:	absolute;
-    bottom: 	60px;	/* thumbnails (50) + margin */
-	top:		0px;
-    left:		0px;
-    right:		0px;
-    overflow:	hidden;
-}
-
-
-.europeana-bordered .galleria-stage {			/* B */
+    position: absolute;
     top: 10px;
+    bottom: 60px;
     left: 10px;
     right: 10px;
+    overflow:hidden;
 }
-
-.europeana-carousel .galleria-stage {
-    top:		10px;
-	left:		10px;
-    right:		10px;
-}
-
-
 .galleria-thumbnails-container {
-    height:		50px;
-	position:	absolute;
-    left:		10px;
-    right:		10px;
-    z-index:	2;
-}
 
-.europeana-bordered .galleria-thumbnails-container {			/* B */
-	bottom:	0px;
+    height: 50px;
+    bottom: 0;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
 }
 
 .europeana-carousel .galleria-thumbnails-container {
@@ -140,6 +111,17 @@
     background: url(classic-loader.gif) no-repeat 2px 2px;
 }
 
+.galleria-info {
+	/*
+    width:		90%;
+    top:		50%;
+    z-index:	2;
+    position:	relative;
+    margin:		auto;   
+    text-align:	center;
+    */
+    display:none;    
+}
 
 /*
 .europeana-carousel .galleria-info,
@@ -153,7 +135,7 @@
     padding: 12px;
     display: none;
     */
-    /* IE7 */ /*zoom:1;*/
+    /* IE7 */ zoom:1;
     /*
     background-color: rgba(0, 0, 0, 0.698);
 }
@@ -181,7 +163,7 @@
     filter: alpha(opacity=100);
 }
 */
-/*
+
 .galleria-info-link {
     background-position: -669px -5px;
     opacity: .7;
@@ -196,7 +178,6 @@
 	display:none;
 }
 
-
 .notouch .galleria-info-link:hover {
     opacity: 1;
     filter: alpha(opacity=100);
@@ -205,7 +186,6 @@
     opacity: 1;
     filter: alpha(opacity=100);
 }
-*/
 .galleria-image-nav {
     position: absolute;
     top: 50%;
@@ -225,21 +205,15 @@
     left: 10px;
     z-index: 2;
     background-position: 0 46px;
-    
-    visibility:hidden;
 }
-
-.galleria-image-nav-right {
-	left:	auto;
-	right:	10px;
-}
-
 .europeana-carousel .galleria-image-nav-left,
 .europeana-carousel .galleria-image-nav-right {
 	display:none;
 }
 
 .galleria-image-nav-right {
+    left: auto;
+    right: 10px;
     background-position: -254px 46px;
     z-index: 2;
 }
@@ -256,17 +230,17 @@
 
 .galleria-thumb-nav-left,
 .galleria-thumb-nav-right {
-    cursor:					pointer;
-    background-position:	-495px 5px;
-    background-color:		#000;
-    position:				absolute;
-    left:					0;
-    top:					0;
-    height:					40px;
-    width:					23px;
-    z-index:				3;
-    opacity:				.8;
-    filter:					alpha(opacity=80);
+    cursor: pointer;
+    display: none;
+    background-position: -495px 5px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 40px;
+    width: 23px;
+    z-index: 3;
+    opacity: .8;
+    filter: alpha(opacity=80);
 }
 
 .europeana-carousel .galleria-thumb-nav-left,
@@ -274,7 +248,6 @@
     width:	62px;
     height:	124px;
     background-position: 0 46px;
-    background-color: transparent !important;
 }
 
 .galleria-thumb-nav-right {
@@ -285,6 +258,12 @@
 }
 
 .europeana-carousel .galleria-thumb-nav-right {
+	/*
+    background-position: -578px 5px;
+    border-right: none;
+    right: 0;
+    left: auto;
+    */
     background-position: -254px 46px;
 }
 
@@ -321,13 +300,12 @@
 .notouch .galleria-thumbnails-container .disabled:hover {
     opacity: .2;
     filter: alpha(opacity=20);
-    xxbackground-color: transparent;
+    background-color: transparent;
 }
 
 .galleria-carousel .galleria-thumb-nav-left,
 .galleria-carousel .galleria-thumb-nav-right {
     display: block;
-	background-color: #111;													/* europeana override */
 }
 .galleria-thumb-nav-left,
 .galleria-thumb-nav-right,
@@ -342,17 +320,17 @@
 /* europeana header & footer components */
 
 
-/* common & shared*/
+/* common */
 
+.europeana-header .galleria-info, .europeana-footer .galleria-info{
+	background-color:	#ccc;
+	opacity:			0.5;
+    filter:				alpha(opacity=50);
+}
 
 .europeana-header, .europeana-footer{
     background: #000;
 }
-
-.europeana-header .galleria-info-title, .europeana-footer .galleria-info-description{
-   background-color:	#111;
-}
-
 
 /* header */
 
@@ -366,44 +344,17 @@
 	padding-left:		0.5em;	
 }
 
-.galleria-info {
-    position:			absolute;
-    background-color:	#111;
-    background-color:	rgba(0, 0, 0, 0.5);
-    width:				100%;
-    z-index:			1;
-    visibility:			hidden;
-}
-
-.europeana-carousel .galleria-info{
-    display:none; 
-}
-
-
 .galleria-info-title{
-    font:		bold 12px/1.1 arial,sans-serif;
-    margin:		0;
-    color: 		#fff;
-    opacity:	1 !important;
-	filter:		alpha(opacity=100)  !important;
-    padding:	0.5em 0.5em 1em 0.5em;
-	float:		left;
-}
-
-.galleria-info .img-ctrls{
-	float:	left;
-}
-
-.europeana-header .galleria-info-title{
+    font: bold 12px/1.1 arial,sans-serif;
+    margin: 0;
+    color: #fff;
+    
     position:			relative;
+    background-color:	#111;
     border-radius:		0.75em 0.75em 0 0;
     padding:			0.5em 0.5em 1em 0.5em;
     top:				-0.6em;
-    bottom:				auto;
-    width:				auto;
-    float:				none;
 }
-
 
 .accelerators{
 	position:			absolute;
@@ -435,28 +386,17 @@
 	padding-left:		0.5em;
 }
 
-.galleria-info-description{
-	display:	none !important;
-}
 
-.europeana-footer .galleria-info-description{
+.galleria-info-description{
 	font: italic 12px/1.4 georgia,serif;
     margin: 0;
     color: #bbb;
     
-    display:			block !important;
     position:			relative;
-
-	border-radius:		0 0 0.75em 0.75em;
+    background-color:	#111;
+    border-radius:		0 0 0.75em 0.75em;
     padding:			0 0.5em;
-    top:				0.3em;   
+    top:				0.3em;
 }
     
-.galleria-image{
-	width:100%;
-}
 
-
-.galleria-errors{
-	xdisplay:	none;
-}

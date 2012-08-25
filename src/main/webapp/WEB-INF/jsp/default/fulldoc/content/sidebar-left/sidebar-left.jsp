@@ -15,10 +15,12 @@
 	<div id="carousel-1">
 		<script type="text/javascript">
 			var carouselData = [];
-			carouselData[carouselData.length] = {
+			carouselData[0] = {
 				image:			decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
 				title:			"${model.objectTitle}"
 			};
+			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
+
 		</script>
 	</div>
 	

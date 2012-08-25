@@ -2,7 +2,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div class="twelve columns">
+<div class="three columns push-nine">
+
+
+
+	<div id="carousel-fd" class="europeana-bordered">
+
+	</div>
+
+	
+</div>
+
+
+
+
+
+<div class="nine columns pull-three">
 
 
 	<h4 id="collapse-header">

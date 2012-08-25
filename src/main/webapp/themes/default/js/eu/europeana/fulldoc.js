@@ -1,7 +1,6 @@
 js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
-	
 
 	// provides priority order for which tab to open when no hash is given
 	// provides a list of accepted hash values for validation
@@ -9,36 +8,51 @@ eu.europeana.fulldoc = {
 
 	init : function() {
 
-		// this is a copy/paste from index.js: TODO: make this a common script
+		// this is a copy/paste from index.js
 		var initCarousels = function(){
-			if(typeof Galleria == "undefined") {
-		        window.setTimeout(initCarousels, 100);
-		    }
-		    else{
-				Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
-				//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
-				Galleria.configure({
-						transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
-						carousel:		true,
-						carouselSpeed:	1200,				/* transition speed */
-						carouselSteps:	1,
-						easing:			'galleriaOut',
-						imageCrop:		false,				/* if true, make pan true */
-						imagePan:		false,
-						lightbox:		true,
-						responsive:		true,
-						thumbnails: false
-				});
-				
-				Galleria.ready(function(options) {					
-					this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
 
-				});
-				jQuery('#carousel-1').galleria({dataSource:carouselData});
-		    }		
-		};
-		// end of paste
-		
+
+			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
+			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
+			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
+			
+			/*				
+			Galleria.ready(function(options) {					
+				this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
+
+			});
+			*/
+			//alert(JSON.stringify(carouselData));
+   			Galleria.run('#carousel-1', {
+				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+				carousel:		true,
+				carouselSpeed:	1200,				/* transition speed */
+				carouselSteps:	1,
+				easing:			'galleriaOut',
+				imageCrop:		false,				/* if true, make pan true */
+				imagePan:		false,
+				lightbox:		true,
+				responsive:		true,
+				dataSource:		carouselData,
+				thumbnails: 	carouselData.length>1
+   			});
+			
+   			jQuery('#carousel-2').css("height", "200px");
+   			Galleria.run('#carousel-2', {
+					transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+					carousel:		true,
+					carouselSpeed:	1200,				/* transition speed */
+					carouselSteps:	1,
+					easing:			'galleriaOut',
+					imageCrop:		false,				/* if true, make pan true */
+					imagePan:		false,
+					lightbox:		true,
+					responsive:		true,
+					dataSource:		carousel2Data,
+					thumbnails: 	carousel2Data.length>1
+	   			});
+	
+		};		
 		
 		this.loadComponents();
 		this.addAutoTagHandler();

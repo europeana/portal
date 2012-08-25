@@ -156,19 +156,19 @@ var europeana_bootstrap = function(){
 		});
 
 		scripts.push({
-			name : 'index',
-			file : 'index' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : ['collapsible', 'utils' ]
-		});
-		
-		scripts.push({
 			name : 'galleria',
 			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery-1.4.4.min.js' ]
 		});
-		
+
+		scripts.push({
+			name : 'index',
+			file : 'index' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : ['collapsible', 'utils', 'galleria']
+		});
+				
 		loadScripts(scripts);
 		
 		var index = function(){

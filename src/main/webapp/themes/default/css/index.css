@@ -4,7 +4,7 @@
 	margin-top:	20px;
    	max-height:	100%;
 }
-
+/*
 #carousel-1{
    	height:		260px;
    	xxmax-height:	100%;
@@ -24,7 +24,7 @@
 
 @media only screen and ( min-width:767px ){
 	#carousel-1{
-		height:		600px;		/* boom */
+		height:		600px;
 		max-height:	600px;
 	}
 }
@@ -45,6 +45,8 @@
 	   	max-height:	370px;
 	}
 }
+
+*/
 
 #carousel-2{
    xwidth:		100%;
