@@ -5,7 +5,7 @@
 	</span>
 
 	<%-- mobile menu links --%>
-	<div class="menu show-on-phones"></div>
+	<div class="menu icon-mobilemenu show-on-phones"></div>
 	
 	<%-- Choose a language --%>
 	<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>

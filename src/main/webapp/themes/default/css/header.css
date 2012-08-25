@@ -76,8 +76,11 @@
 		height:					24px;
 		background-color:		white;
 		float:					right;
+		/*
 		background-image:		url(../images/icons/sprite.png);
 		background-position:	0px -318px;
+		*/
+		font-size:				2em;
 		margin:					1px 5px 1px 5px;
 	}
 	
