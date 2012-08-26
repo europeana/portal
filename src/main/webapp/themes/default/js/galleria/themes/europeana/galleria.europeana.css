@@ -451,11 +451,32 @@
     padding:			0 0.5em;
     top:				0.3em;   
 }
-    
+
+/* controls */
+.img-ctrls{
+	font-size:2em;
+	color:white
+}
+
+.img-ctrls .icon-pause,
+.img-ctrls .icon-scaleup,
+.img-ctrls .icon-play{
+	cursor: pointer;
+}
+
+.img-ctrls .icon-pause:hover, .img-ctrls .icon-pause:active,
+.img-ctrls .icon-scaleup:hover, .img-ctrls .icon-scaleup:active,
+.img-ctrls .icon-play:hover, .img-ctrls .icon-play:active,
+.img-ctrls .icon-play.active{
+	color: #9900FF;	
+	color: #dd66FF;	
+	opacity: 0.5;
+}
+
+
 .galleria-image{
 	width:100%;
 }
-
 
 .galleria-errors{
 	xdisplay:	none;

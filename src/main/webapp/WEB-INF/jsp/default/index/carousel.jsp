@@ -50,7 +50,9 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		
 		
 		<div class="four columns">
+		<%--
 			<img id="carousel-1-scale-image" src="/${model.portalName}<spring:message code='${model.carouselItems[0].imgUrl}'/>"/>
+		 --%>
 		
 			<div id="carousel-1">
 			</div>

@@ -168,19 +168,29 @@ Galleria.addTheme({
 			
 			europeana.setInfo(0);
     	}
-    	else if(!borderedMode){
-    		/* non-carousel non-bordered (index page) */
+    	else if(borderedMode){
     		
-    		var stage		= thisGallery.$( 'container' ).find(".galleria-stage");
-			//var navLeft		= thisGallery.$( 'container' ).find(".galleria-image-nav-left");
-			//var navRight	= thisGallery.$( 'container' ).find(".galleria-image-nav-right");
+    		thisGallery._options.responsive = true;
+    		thisGallery._options.responsive = false;
+    		
+    		// Doesn't seem to matter
+    		//alert(    			thisGallery._options.responsive )
 
-			//var info		= thisGallery.$( 'container' ).find(".galleria-info");
+        		$(window).resize( function() {
+        			Galleria.log("Bordered mode resize");
+        			thisGallery.$(	'container' ).parent().css("height", 1.2 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
+        		});
+    	}
+    	else{
+    		/* non-carousel non-bordered (index page) */
+			thisGallery._options.responsive = false;
+
+    		var stage		= thisGallery.$( 'container' ).find(".galleria-stage");
 			var title		= thisGallery.$( 'container' ).find(".galleria-info-title");
 			var thumbs		= thisGallery.$( 'container' ).find(".galleria-thumbnails-container");
 
 			/* add ctrls */
-			var ctrls		= $('<div class="img-ctrls" style="font-size:2em; color:white"></div>').appendTo(info);
+			var ctrls		= $('<div class="img-ctrls"></div>').appendTo(info);
 			var ctrlLB		= $('<span class="icon-scaleup"></span>').appendTo(ctrls);
 			var ctrlPlay	= $('<span class="icon-play"></span>').appendTo(ctrls);
 			var ctrlPause	= $('<span class="icon-pause"></span>').appendTo(ctrls);
@@ -191,22 +201,27 @@ Galleria.addTheme({
 
 			
 			ctrlLB.click(function(){
-				
 				alert( dataSource[thisGallery.getIndex()].lb   );
 				thisGallery.openLightbox();
 			});
-			ctrlPlay.click(function(){     					
-				thisGallery.load(dataSource);
+			ctrlPlay.click(function(){
+				thisGallery.next();
+				thisGallery.play();
+				ctrlPlay.addClass("active");
+				navLeft.css("display", "none");
+				navRight.css("display", "none");
 			});
 			ctrlPause.click(function(){     					
 				thisGallery.pause();
+				ctrlPlay.removeClass("active");
+				navLeft.css("display", "block");
+				navRight.css("display", "block");
 			});
 			
 			
-    		if(dataSource.length > 1){
+    		if(dataSource.length > 1){ // will always be the case on index page for this type of galleria
     			stage.after(info);
     			info.append(title);
-    			thisGallery._options.responsive = false;
     			
     			/* Layout non-carousel (single image mode) */
     			
@@ -251,12 +266,12 @@ Galleria.addTheme({
     		}
     		else{
     			/* we're showing a single image */
-    			
+    			alert("IS THIS EVER USED?")
+				
 				//var thumbs	=	this.$( 'container' ).find(".galleria-thumbnails-container");
 				//var info 	=	this.$( 'container' ).find(".galleria-info");
 
 				/* use extra that no thumbs gives us - move the stage down */
-				
 				var extraHeight = parseInt(thumbs.css("height"));
 				thumbs.css("height", "0px");
 				stage.css("bottom", parseInt(stage.css("bottom"))	- (extraHeight / 2) + "px");
@@ -280,6 +295,7 @@ Galleria.addTheme({
     		}
     		
     		$(window).resize( function() {
+    			Galleria.log("Landing page galleria resize");
     			thisGallery.$(	'container' ).parent().css("height", thisGallery.$( 'container' ).css("height"));
     		});
     	}

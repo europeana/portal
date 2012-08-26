@@ -21,20 +21,29 @@
 				debug:			false
 		});
 			
+		
+		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1").one('load',
+			function() {
+		
+				var parentWidth		= $(this).parent().width();
+				var imgW			= $(this).width();
+				var imgH			= $(this).height();
+				var ratio			= parentWidth / imgW;
+			
+				$(this).remove();
+			
+				$("#carousel-1").css("height",  (imgH * ratio) + 50 + 5 + "px");
+			
+				jQuery('#carousel-1').galleria({dataSource:carouselData});
+			
+			}).each(function() {
+				if(this.complete){
+					$(this).load();
+				}
+		});
+		
+		
 		/*
-		window.scaleGalleria = function($loadedImg){
-			$("#carousel-1-scale-image").show();
-
-			var parentWidth		= $loadedImg.parent().width();
-			var imgW			= $loadedImg.width();
-			var imgH			= $loadedImg.height();
-			var ratio			= parentWidth / imgW;
-			$("#carousel-1-scale-image").hide();
-
-			$("#carousel-1").css("height",  (imgH * ratio) + 50 + 5 + "px");
-
-		};
-		*/
 		$("#carousel-1-scale-image").one('load', function() {
 			
 			var parentWidth		= $(this).parent().width();
@@ -42,7 +51,7 @@
 			var imgH			= $(this).height();
 			var ratio			= parentWidth / imgW;
 			
-			$("#carousel-1-scale-image").hide();
+			$("#carousel-1-scale-image").css("display", "none");
 			$("#carousel-1").css("height",  (imgH * ratio) + 50 + 5 + "px");
 
 			jQuery('#carousel-1').galleria({dataSource:carouselData});
@@ -52,13 +61,21 @@
 				  $(this).load();
 			  }
 		});
+		*/
+		
+		
 		
 		
 		
 		// test fulldoc carousel here
-		var carouselFDData = [{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"}];
 		
-		jQuery('#carousel-fd').css("height", "350px");
+		
+		
+		var carouselFDData = [
+		                   //   {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},
+		                      
+		                      {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"}];
+		jQuery('#carousel-fd').css("height", jQuery('#carousel-fd').width());
 		
 		Galleria.run('#carousel-fd', {
 			transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
