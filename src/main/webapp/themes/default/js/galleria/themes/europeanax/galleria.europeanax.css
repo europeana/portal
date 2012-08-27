@@ -30,11 +30,20 @@
 
 .galleria-stage {
     position:	absolute;
-    bottom: 	60px;	/* thumbnails (50) + margin */
+    bottom: 	110px;	/* thumbnails (100) + margin */
 	top:		0px;
     left:		0px;
     right:		0px;
     overflow:	hidden;
+}
+
+@media only screen and ( min-width:767px ){
+	.galleria-stage {
+		bottom: 	60px;	/* thumbnails (50) + margin */
+	}
+	body{
+		zbackground-color:	red;
+	}
 }
 
 
@@ -52,11 +61,17 @@
 
 
 .galleria-thumbnails-container {
-    height:		50px;
+    height:		100px;
 	position:	absolute;
     left:		10px;
     right:		10px;
     z-index:	2;
+}
+
+@media only screen and ( min-width:767px ){
+	.galleria-thumbnails-container {
+		height:		50px;
+	}
 }
 
 .europeana-bordered .galleria-thumbnails-container {			/* B */
@@ -66,6 +81,7 @@
 .europeana-carousel .galleria-thumbnails-container {
 	height: 100%;
 }
+
 
 .europeana-carousel .europeana-carousel-info{
 	opacity:			1 !important;
@@ -95,13 +111,20 @@
 }
 
 .galleria-thumbnails .galleria-image {
-    height:		40px;
-    width:		60px;
+    height:		80px;
+    width:		120px;
     background:	#000;
     margin:		0 5px 0 0;
     border:		1px solid #000;
     float:		left;
     cursor:		pointer;
+}
+
+@media only screen and ( min-width:767px ){
+	.galleria-thumbnails .galleria-image {
+	    height:		40px;
+	    width:		60px;
+	}
 }
 
 

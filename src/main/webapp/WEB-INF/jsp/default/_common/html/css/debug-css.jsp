@@ -52,6 +52,7 @@
 
 	<c:when test="${model.pageName == 'index.html'}">
 		<link rel="stylesheet" href="/${branding}/css/index.css" />		
+		<link rel="stylesheet" href="/${branding}/js/galleria/themes/europeanax/galleria.europeanax.css" />		
 		<%--
 		<link rel="stylesheet" href="/${branding}/css/carousel.css" />
 		<link rel="stylesheet" href="/${branding}/css/carousel.css" />
