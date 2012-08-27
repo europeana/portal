@@ -40,7 +40,6 @@
 	</organization>
 
 	<properties>
-		<version.codehausJackson>1.9.7</version.codehausJackson>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
