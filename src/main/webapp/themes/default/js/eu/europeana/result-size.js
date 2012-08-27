@@ -22,7 +22,7 @@
 		}
 
 		if(screenWidth<321){
-			document.getElementById('resultSize').setAttribute("value", "1");
+			document.getElementById('resultSize').setAttribute("value", "4");
 		}
 		else if(screenWidth<541){
 			document.getElementById('resultSize').setAttribute("value", "4");

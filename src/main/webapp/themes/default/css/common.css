@@ -94,6 +94,8 @@
 		width:			100%;
 		max-width:		100%;
 		
+		margin-top:				0.2em;
+		margin-bottom:				0.2em;
 		padding:				2px 0px;
 		color:					#333;
 		border:					1px solid #a0a0a0;
@@ -120,7 +122,7 @@
 
 	}
 
-
+	
 	.italic-heading{
 		font-weight:	normal;
 		font-style:		italic;
