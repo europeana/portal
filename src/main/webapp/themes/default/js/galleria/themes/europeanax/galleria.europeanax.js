@@ -276,11 +276,27 @@ Galleria.addTheme({
         			thisGallery.$( 'container' ).find("img").removeAttr("style");
         			thisGallery.$( 'container' ).find("img").removeAttr("width");
         			thisGallery.$( 'container' ).find("img").removeAttr("height");
+        			thumbs.find("div").removeAttr("style");
+        			thumbs.find("img").removeAttr("style");
+        			thumbs.find("img").removeAttr("width");
+        			thumbs.find("img").removeAttr("height");
         			*/
         			
+        			
+        	        
         			//thisGallery.trigger( Galleria.READY );
                     //Galleria.theme.init.call( thisGallery, thisGallery._options );
         			thisGallery._run();
+        	        $(thisGallery._thumbnails).each(function( i, thumb ) {
+        	        	if(thumb.ready){
+        		    		thisGallery.trigger({
+        		    			type: Galleria.THUMBNAIL,
+        		                      thumbTarget: thumb.image,
+        		                      index: i,
+        		                      galleriaData: dataSource
+        		    		});
+        	        	}
+        	        });
         			
         			//init(thisGallery._options)
 //        			Galleria.loadTheme(dataSource[0].themeRef);
