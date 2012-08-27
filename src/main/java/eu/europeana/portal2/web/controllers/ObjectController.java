@@ -102,7 +102,8 @@ public class ObjectController {
 			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		
 		localeChangeInterceptor.preHandle(request, response, this);
-		log.info("=========== /record/{collectionId}/{recordId}.html ============");
+		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
+		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 		log.info("Inside the ObjectController....." + locale.getLanguage().toString());
 		isSoureApi2 = false;
