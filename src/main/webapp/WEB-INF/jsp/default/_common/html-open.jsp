@@ -9,4 +9,5 @@
 <title>${model.pageTitle}</title>
 </head>
 <body>
+
 <c:if test="${not empty model.announceMsg}">${model.announceMsg}</c:if>
