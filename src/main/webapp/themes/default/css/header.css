@@ -34,7 +34,7 @@
 	}
 	
 	#query h3 {
-		font-size:		140%;
+		font-size:		1.3em;		/* this will just squeeze in to a 540px viewport */
 		font-weight:	normal;
 		margin:			12px 0px;
 	}
@@ -43,7 +43,7 @@
 		width:					100%;
 		padding:				2px 0px;
 		color:					#333;
-		font-size:				120%;
+		font-size:				1.2em;
 		border:					1px solid #a0a0a0;
 		-moz-border-radius:		5px;
 		-webkit-border-radius:	5px;

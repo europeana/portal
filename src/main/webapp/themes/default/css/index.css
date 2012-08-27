@@ -120,15 +120,18 @@
 }
 
 
-	#blog-feed {
-		float: right;
-		margin-top: 3px;
-		width: 18px;
-		height: 18px;
-		background-image: url(../images/icons/sprite.png);
-		background-repeat: no-repeat;
-		background-position: 0 -1582px;
-	}
+#blog-feed {
+	float:			right;
+	margin-top:		0.2em;
+	margin-right:	0.5em;		
+	width: 			1em;
+	height:			1em;
+	
+	background-repeat: no-repeat;
+	background-position: 0 -1582px;
+	background-image: url(../images/icons/sprite.png);
+}
+
 
 /* pinterest */
 

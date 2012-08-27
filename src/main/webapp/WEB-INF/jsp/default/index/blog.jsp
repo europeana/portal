@@ -2,27 +2,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div class="three columns push-nine">
 
-
-
-	<div id="carousel-fd" class="europeana-bordered">
-
-	</div>
-
-	
-</div>
-
-
-
-
-
-<div class="nine columns pull-three">
+<div class="twelve columns">
 
 
 	<h4 id="collapse-header">
 		<span class="collapse-icon"></span>
-		<a id="blog-feed" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>
+		<a id="blog-feed" xxxclass="icon-rss" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>
 		<spring:message code='from_the_blog_t'/>
 	</h4>
 	

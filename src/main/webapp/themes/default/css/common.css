@@ -82,17 +82,44 @@
 		font-size:	1em;
 	}
 	
-	
-	
 	#social-links .social-link{
 		float:	left;
 		color:	#FF75A3;
+		width:	25%;
 	}
-	
+
 	#footer-subscribe input{
-		float:	left;
-		clear:	left;
+		float:			left;
+		clear:			left;
+		width:			100%;
+		max-width:		100%;
+		
+		padding:				2px 0px;
+		color:					#333;
+		border:					1px solid #a0a0a0;
+		-moz-border-radius:		5px;
+		-webkit-border-radius:	5px;
+		border-radius:			5px;
+		
 	}
+
+	#footer-subscribe input[type=submit]{
+		background-color:	blue;
+		color:				white;
+		border:				0;
+	}
+
+	@media only screen and ( min-width:768px ){	/* ipad */
+		#social-links .social-link{		
+			width:	auto !important;
+		}
+		
+		#footer-subscribe input[type=submit]{
+			width:				auto;
+		}
+
+	}
+
 
 	.italic-heading{
 		font-weight:	normal;

@@ -317,6 +317,11 @@ Galleria.addTheme({
 			this.addIdleState( this.get('image-nav-left'), { left:-50 });
 			this.addIdleState( this.get('image-nav-right'), { right:-50 });
 			this.addIdleState( this.get('counter'), { opacity:0 });
+			
+			if(this.carouselMode){
+				this.addIdleState( this.get('.galleria-thumb-nav-left'), { left:-50 });		/* TODO: Andy - this doesn't work */
+				this.addIdleState( this.get('.galleria-thumb-nav-right'), { right:-50 });				
+			}
 		}
         
         // bind some stuff

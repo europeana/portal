@@ -70,7 +70,7 @@
 		// test fulldoc carousel here
 		
 		
-		
+		/*
 		var carouselFDData = [
 		                   //   {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+1%2F1%2F1M16_B145043_151.jpg&size=FULL_DOC","title":"Porträtt"},
 		                      
@@ -78,12 +78,12 @@
 		jQuery('#carousel-fd').css("height", jQuery('#carousel-fd').width());
 		
 		Galleria.run('#carousel-fd', {
-			transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+			transition:		'fadeslide',		
 			carousel:		true,
-			carouselSpeed:	1200,				/* transition speed */
+			carouselSpeed:	1200,				
 			carouselSteps:	1,
 			easing:			'galleriaOut',
-			imageCrop:		false,				/* if true, make pan true */
+			imageCrop:		false,				
 			imagePan:		false,
 			lightbox:		true,
 			responsive:		true,
@@ -91,6 +91,7 @@
 			thumbnails: 	carouselFDData.length>1
 		});
 			
+		*/
 
 		// Make sections collapsible
 		var toggleBreakpoint = 800;
