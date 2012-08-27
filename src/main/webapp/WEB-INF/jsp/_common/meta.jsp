@@ -9,6 +9,9 @@
 </c:otherwise>
 </c:choose>
 </c:if>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
 <c:if test='${model.pageName == "fulldoc.html"}'>
   <%@ include file="/WEB-INF/jsp/_common/meta-facebook.jsp" %>
   <%@ include file="/WEB-INF/jsp/_common/meta-open-graph.jsp" %>

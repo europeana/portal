@@ -12,8 +12,8 @@ eu.europeana.fulldoc = {
 		var initCarousels = function(){
 
 
-			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
-			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
+			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
+			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
 			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
 			
 			/*				
@@ -23,20 +23,40 @@ eu.europeana.fulldoc = {
 			});
 			*/
 			//alert(JSON.stringify(carouselData));
+			/*
    			Galleria.run('#carousel-1', {
-				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+				transition:		'fadeslide',		
 				carousel:		true,
-				carouselSpeed:	1200,				/* transition speed */
+				carouselSpeed:	1200,				
 				carouselSteps:	1,
 				easing:			'galleriaOut',
-				imageCrop:		false,				/* if true, make pan true */
+				imageCrop:		false,				
 				imagePan:		false,
 				lightbox:		true,
 				responsive:		true,
 				dataSource:		carouselData,
 				thumbnails: 	carouselData.length>1
    			});
+   			*/
 			
+   			jQuery('#carousel-1').css("height", jQuery('#carousel-1').width());
+   			
+   			Galleria.run('#carousel-1', {
+   				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+   				carousel:		true,
+   				carouselSpeed:	1200,				/* transition speed */
+   				carouselSteps:	1,
+   				easing:			'galleriaOut',
+   				imageCrop:		false,				/* if true, make pan true */
+   				imagePan:		false,
+   				lightbox:		true,
+   				responsive:		true,
+   				dataSource:		carouselData,
+   				thumbnails: 	carouselData.length>1
+   			});
+   				
+   			
+   			
    			jQuery('#carousel-2').css("height", "200px");
    			Galleria.run('#carousel-2', {
 					transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */

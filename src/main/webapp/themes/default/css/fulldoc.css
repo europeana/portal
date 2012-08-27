@@ -6,11 +6,12 @@
 	padding-top:		0;
 	padding-left:		0;
 }
-
+/*
 #carousel-1{
 	height:		350px;
 	width:		100%;
 }
+*/
 #carousel-2{
 	xxheight:		350px;
 	width:		100%;
@@ -50,6 +51,37 @@ a.action-link:hover{
 	margin:				10px 0px;
 }
 
+
+
+.action-link{
+	float:			left;
+	margin-left:	1em;
+}	
+#urlRefIsShownAt{
+	margin-left:	0;
+}
+.action-title{
+	display:		none;
+}
+
+
+@media only screen and ( min-width:400px ){
+	a.action-link {
+		float:			none;
+		display:		block;
+		margin-left:	0;
+	}
+	#urlRefIsShownAt{
+		display:	inline;
+	}
+	
+	.action-title{
+		display:		inline;
+	}
+}
+
+
+
 @media only screen and ( min-width:767px ){
 	.additional-info{
 
@@ -60,8 +92,12 @@ a.action-link:hover{
 	}
 	
 	.translate-box{
-		float:				right;
-		margin:				0px 0px 5px 5px;
+		float:			right;
+		margin:			0px 0px 5px 5px;
+	}
+	
+	a.action-link {
+		xxxfloat:			none;
 	}
 	
 }

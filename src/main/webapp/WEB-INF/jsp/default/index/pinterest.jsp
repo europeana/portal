@@ -24,9 +24,9 @@
 				</c:forEach>
 				//alert(JSON.stringify(carousel3Data[0].description));
 			</script>
-			<div id="carousel-3-header" class="europeana-header"></div>
+			<!-- div id="carousel-3-header" class="europeana-header"></div -->
 			<div id="carousel-3" class="europeana-carousel"></div>
-			<div id="carousel-3-footer" class="europeana-footer"></div>		
+			<!-- div id="carousel-3-footer" class="europeana-footer"></div  -->		
 		</c:if>	
 	</div>
 </div>
