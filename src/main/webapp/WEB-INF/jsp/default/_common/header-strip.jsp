@@ -5,7 +5,12 @@
 	</span>
 
 	<%-- mobile menu links --%>
-	<div class="menu icon-mobilemenu show-on-phones"></div>
+	<div class="mobile-menu icon-mobilemenu show-on-phones">
+		<ul>
+			<li class="item icon-home">	<a target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a></li>
+			<li class="item icon-home">	<a target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a></li>
+		</ul>
+	</div>
 	
 	<%-- Choose a language --%>
 	<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>

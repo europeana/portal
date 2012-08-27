@@ -135,8 +135,28 @@
 
 	};
 	
+	function setupMobileMenu(){
+		/* constructor */
+		var mobileMenu = function(cmp){
+			var self 	= this;
+			self.cmp	= cmp;
+			self.ops	= cmp.find(".item");
+
+			cmp.click(function(){
+				self.cmp.toggleClass("active");
+			});
+		};
+
+		$(".mobile-menu").each(function(i, ob){
+			new mobileMenu($(ob));
+		});
+	}
+	
 	var init = function() {
-		
+		var globalCopyOfBreakpoint = 800;
+		if(jQuery("body").width()<globalCopyOfBreakpoint){
+			setupMobileMenu();
+		}
 		
 		jQuery("#query-input").focus(function(){
 			
