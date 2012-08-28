@@ -14,15 +14,13 @@
 	            var carousel3Data = [];
 				<c:forEach var="item" items="${model.pinterestItems}">
 					carousel3Data[carousel3Data.length] = {
-						//thumb:			('${item.images[0].src}').length == 0 ? 'http://media-cache-ec3.pinterest.com/upload/176484879118638505_jmQ9FkIX_b.jpg' : '/${model.portalName}${item.images[0].src}',
-						//thumb:			'/${model.portalName}${item.images[0].src}',
-						thumb:			'${item.images[0].src}', //'http://media-cache-ec3.pinterest.com/upload/176484879118638505_jmQ9FkIX_b.jpg',
-						title:			'${fn:escapeXml(item.plainDescription)}', //'${item.images[0].title}',
-						//description:	"${fn:escapeXml(item.plainDescription)}",
+						thumb:			'${item.images[0].src}',
+						title:			'${fn:escapeXml(item.plainDescription)}',
 						link:			'${item.link}'
 					};
 				</c:forEach>
 				//alert(JSON.stringify(carousel3Data[0].description));
+				//alert(JSON.stringify(carousel3Data[0]));
 			</script>
 			<!-- div id="carousel-3-header" class="europeana-header"></div -->
 			<div id="carousel-3" class="europeana-carousel"></div>

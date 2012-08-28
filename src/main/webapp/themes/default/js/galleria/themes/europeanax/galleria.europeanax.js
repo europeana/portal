@@ -99,7 +99,12 @@ Galleria.addTheme({
 			};
 			
 			thumbs.find('.galleria-image').each(function(i, e){
-				$('<div class="europeana-carousel-info">' + dataSource[i].title + '</div>').appendTo(e);				
+				$('<div class="europeana-carousel-info">' + dataSource[i].title + '</div>').appendTo(e);
+				
+				$(e).bind("mouseover", function(){					
+					thisGallery.trigger(Galleria.IDLE_EXIT);
+				});
+
 			});
 			
 			/*
@@ -174,6 +179,19 @@ Galleria.addTheme({
                 e.preventDefault();
 				europeana.header.next(e);
 			});
+			
+			
+			thisGallery.bind("idle_enter",function(e) {
+			    Galleria.log("ENTER IDLE"); // the gallery scope
+			    thumbNavRight.hide();
+			    thumbNavLeft.hide();                      
+			});
+			thisGallery.bind("idle_exit",function(e) {
+				Galleria.log("EXIT IDLE"); // the gallery scope
+				thumbNavRight.show();
+				thumbNavLeft.show();                      
+			});
+
 			
 			//europeana.setInfo(0);
     	}
@@ -357,7 +375,16 @@ Galleria.addTheme({
 		if (! touch ) {
 			this.addIdleState( this.get('image-nav-left'), { left:-50 });
 			this.addIdleState( this.get('image-nav-right'), { right:-50 });
+			
 			this.addIdleState( this.get('counter'), { opacity:0 });
+
+			if(carouselMode){
+				this.addIdleState( this.get('galleria-thumb-nav-left'), { left:-50 });
+				this.addIdleState( this.get('galleria-thumb-nav-right'), { right:-50 });
+			}			
+		}
+		else{
+			alert("touch")
 		}
         
         // bind some stuff
@@ -497,6 +524,14 @@ Galleria.addTheme({
 	
 	this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 		$(ob).unbind('click');
+		
+		
+		
+		$(ob).bind("click", function(){
+			window.open(dataSource[i].link);
+			//alert(dataSource[i].link);
+		});
+
 		/*
 		$(ob).click(function(e, a){
        		e.stopPropagation();

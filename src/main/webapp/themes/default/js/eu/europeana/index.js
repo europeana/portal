@@ -18,6 +18,7 @@
 				lightbox:		true,
 				responsive:		true,
 				idleMode:		true,
+				popupLinks:		true,
 				debug:			false
 		});
 			
