@@ -5,6 +5,11 @@
   in order to make sure they do not break the javascript strings
   first need convert spring.messages into freemarker variables
   as the ?js_string won't apply to returned macro strings
+  
+  
+  
+  TODO Andy: performance: set only according to page
+  
 --%>
 <c:set var="ajax_date_retrieval_error"><spring:message code="AjaxDataRetrievalError_t" /></c:set>
 <c:set var="close"><spring:message code='Close_Button_t' /></c:set>
@@ -91,6 +96,12 @@
 <c:otherwise></c:otherwise>
 </c:choose>
 </c:set>
+
+<%--Note: collapse_on_min value 753 corresponds to breakpoint 767 (24 less) /--%>
+<c:set var="breakpoints" value="{collapse_on_min:753}" />
+
+
+
 
 <script>
 window.eu = { europeana : { vars : { msg : { cite:{} }, item : {}, mapview : {} } } };
@@ -266,4 +277,5 @@ eu.europeana.vars.rows = '${rows}';
 eu.europeana.vars.initial_rows = '${initial_rows}';
 </c:when>
 </c:choose>
+eu.europeana.vars.breakpoints = ${breakpoints};
 </script>

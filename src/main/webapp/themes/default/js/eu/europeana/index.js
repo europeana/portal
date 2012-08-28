@@ -73,8 +73,6 @@
 		
 	
 		// Make sections collapsible
-		var toggleBreakpoint = 800;
-		
 		jQuery("#section-blog").Collapsible({
 			headingSelector:	"#collapse-header",
 			iconSelector:		".collapse-icon",
@@ -83,7 +81,7 @@
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
 			
-			toggleBreakpoint:	toggleBreakpoint
+			toggleBreakpoint:	eu.europeana.vars.breakpoints.collapse_on_min
 		});
 		
 		jQuery("#section-featured-content").Collapsible({
@@ -98,7 +96,7 @@
 					jQuery('#carousel-2').galleria({dataSource:carousel2Data});										
 				}
 			},
-			toggleBreakpoint:	toggleBreakpoint
+			toggleBreakpoint:	eu.europeana.vars.breakpoints.collapse_on_min
 		});
 
 		jQuery("#section-pinterest").Collapsible({
@@ -111,7 +109,7 @@
 			fireFirstOpen:		function(){
 				jQuery('#carousel-3').galleria({dataSource:carousel3Data});					
 			},
-			toggleBreakpoint:	toggleBreakpoint
+			toggleBreakpoint:	eu.europeana.vars.breakpoints.collapse_on_min
 		});
 
 	};
