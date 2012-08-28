@@ -121,14 +121,20 @@
 			self.cmp	= cmp;
 			self.ops	= cmp.find(".item");
 
-			cmp.click(function(){
+			cmp.click(function(e){
 				self.cmp.toggleClass("active");
+				e.stopPropagation();
 			});
 		};
 
 		$(".mobile-menu").each(function(i, ob){
 			new mobileMenu($(ob));
 		});
+		
+		$(document).click( function(){
+			$('.mobile-menu' ).removeClass("active");
+		});
+		
 	}
 	
 	var init = function() {
