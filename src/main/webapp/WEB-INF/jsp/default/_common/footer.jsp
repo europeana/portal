@@ -3,14 +3,16 @@
 		<div class="footer-wrapper">
 			<div class="row">
 				<div class="six columns">
+				
 					<div id="social-links">
 						<span class="italic-heading"><spring:message code="follow_us_t" /></span>
-					
 						<span class="social-link icon-facebook"></span>			
 						<span class="social-link icon-pinterest-2"></span>
 						<span class="social-link icon-twitter"></span>
 						<span class="social-link icon-blog"></span>
+						<span class="stretch"></span>
 					</div>
+				
 				</div>
 				<div class="six columns">				
 					<div id="footer-subscribe">
