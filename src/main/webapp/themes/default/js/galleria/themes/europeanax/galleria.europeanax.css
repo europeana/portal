@@ -18,7 +18,7 @@
 
 .europeana-carousel .galleria-container {			/* C */
     overflow:	hidden;
-    background:	#DFDFDF;
+    xxxxxxxxxxbackground:	#DFDFDF;
 }
 
 
@@ -309,7 +309,7 @@
     width:	62px;
     height:	124px;
     background-position: 0 46px;
-    background-color: transparent !important;
+    xxxxxxxbackground-color: transparent !important;
 }
 
 .galleria-thumb-nav-right {
@@ -337,7 +337,7 @@
 
 .europeana-carousel .notouch .galleria-thumb-nav-left:hover,
 .europeana-carousel .notouch .galleria-thumb-nav-right:hover {
-    background-color: transparent;
+    xxxxxxxxxxxbackground-color: transparent;
 }
 
 
@@ -350,7 +350,8 @@
 
 .europeana-carousel .touch .galleria-thumb-nav-left:active,
 .europeana-carousel .touch .galleria-thumb-nav-right:active {
-    background-color: transparent;
+    xxxxxxxxxbackground-color: transparent;
+    background-color: green;
 }
 
 .notouch .galleria-thumbnails-container .disabled:hover {

@@ -16,9 +16,9 @@
 					carousel3Data[carousel3Data.length] = {
 						//thumb:			('${item.images[0].src}').length == 0 ? 'http://media-cache-ec3.pinterest.com/upload/176484879118638505_jmQ9FkIX_b.jpg' : '/${model.portalName}${item.images[0].src}',
 						//thumb:			'/${model.portalName}${item.images[0].src}',
-						thumb:			'http://media-cache-ec3.pinterest.com/upload/176484879118638505_jmQ9FkIX_b.jpg',
-						title:			'${item.title}',
-						description:	'${item.description}',
+						thumb:			'${item.images[0].src}', //'http://media-cache-ec3.pinterest.com/upload/176484879118638505_jmQ9FkIX_b.jpg',
+						title:			'${fn:escapeXml(item.plainDescription)}', //'${item.images[0].title}',
+						//description:	"${fn:escapeXml(item.plainDescription)}",
 						link:			'${item.link}'
 					};
 				</c:forEach>
