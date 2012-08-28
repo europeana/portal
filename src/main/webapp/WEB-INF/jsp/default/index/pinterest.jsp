@@ -1,11 +1,12 @@
 
 <div class="twelve columns">
-	<h4 id="collapse-header">
-		<spring:message code='latest_on_pinterest_t'/>
-		<span	class="icon-pinterest" 
-				style="">
+	<h4 id="collapse-header-3">
+		<span class="left">
+			<spring:message code='latest_on_pinterest_t'/>
 		</span>
-		<span class="collapse-icon">
+		<span class="icon-pinterest left"></span>
+		<span class="collapse-icon"></span>
+		<a class="feed-link" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>		
 	</h4>
 
 	<div class="collapse-content">

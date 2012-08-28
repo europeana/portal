@@ -6,10 +6,12 @@
 <div class="twelve columns">
 
 
-	<h4 id="collapse-header">
+	<h4 id="collapse-header-1">
+		<span class="left">
+			<spring:message code='from_the_blog_t'/>
+		</span>
 		<span class="collapse-icon"></span>
-		<a id="blog-feed" xxxclass="icon-rss" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>
-		<spring:message code='from_the_blog_t'/>
+		<a class="feed-link" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>		
 	</h4>
 	
 	<div class="collapse-content">

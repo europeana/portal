@@ -1,6 +1,10 @@
 
 <div class="six columns">
-	<h4 id="collapse-header">Featured content<span class="collapse-icon"></span></h4>
+	<h4 id="collapse-header-2">
+		<span class="left">Featured content</span>
+		<span class="collapse-icon"></span>
+		<a class="feed-link" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>
+	</h4>
 
 	<div class="collapse-content">
 		<c:if test='${not empty model.featuredItems}'>

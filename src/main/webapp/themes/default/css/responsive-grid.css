@@ -116,3 +116,10 @@
 		table.hide-on-desktops	{display:table !important;}
 		table.show-on-phones	{display:table !important;}
 	}
+
+.left{
+	float:	left;
+}
+.right{
+	float:	right;
+}

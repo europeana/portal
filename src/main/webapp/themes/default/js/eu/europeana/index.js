@@ -74,7 +74,7 @@
 	
 		// Make sections collapsible
 		jQuery("#section-blog").Collapsible({
-			headingSelector:	"#collapse-header",
+			headingSelector:	"#collapse-header-1",
 			iconSelector:		".collapse-icon",
 			bodySelector:		".collapse-content",
 			
@@ -85,7 +85,7 @@
 		});
 		
 		jQuery("#section-featured-content").Collapsible({
-			headingSelector:	"#collapse-header",
+			headingSelector:	"#collapse-header-2",
 			iconSelector:		".collapse-icon",
 			bodySelector:		".collapse-content",
 			followerSelector:	"#section-featured-partner",
@@ -100,7 +100,7 @@
 		});
 
 		jQuery("#section-pinterest").Collapsible({
-			headingSelector:	"#collapse-header",
+			headingSelector:	"#collapse-header-3",
 			iconSelector:		".collapse-icon",
 			bodySelector:		".collapse-content",
 

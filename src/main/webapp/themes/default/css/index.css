@@ -120,7 +120,7 @@
 }
 
 
-#blog-feed {
+.feed-link {
 	float:			right;
 	margin-top:		0.2em;
 	margin-right:	0.5em;		
@@ -130,6 +130,19 @@
 	background-repeat: no-repeat;
 	background-position: 0 -1582px;
 	background-image: url(../images/icons/sprite.png);
+}
+
+.collapse-content{
+	clear:	both;	
+}
+
+@media only screen and ( min-width:767px ){
+	.feed-link {
+		float:			left;
+		margin-left:	0.4em;
+		position:		relative;
+		bottom:			0.19em;
+	}
 }
 
 
@@ -162,7 +175,6 @@
 .icon-pinterest{
 	color:			red;
 	margin-left:	0.4em;
-	position:		absolute;	
 }
 
 .pinterest-button{
