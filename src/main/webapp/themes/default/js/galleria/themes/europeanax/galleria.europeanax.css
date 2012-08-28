@@ -13,7 +13,7 @@
 }
 
 .europeana-bordered .galleria-container{			/* B */
-	background:	#000;
+	xxxbackground:	#000;
 }
 
 .europeana-carousel .galleria-container {			/* C */
@@ -57,6 +57,7 @@
     top:		10px;
 	left:		10px;
     right:		10px;
+    display:		none;
 }
 
 
@@ -381,6 +382,7 @@
 
 .europeana-header, .europeana-footer{
     background: #DFDFDF;
+    background: #000;
 }
 
 .europeana-header .galleria-info-title, .europeana-footer .galleria-info-description{

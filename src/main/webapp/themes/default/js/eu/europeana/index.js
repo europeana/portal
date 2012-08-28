@@ -93,7 +93,9 @@
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
 			fireFirstOpen:		function(){
-				jQuery('#carousel-2').galleria({dataSource:carousel2Data});					
+				if(typeof carousel2Data != 'undefined'){
+					jQuery('#carousel-2').galleria({dataSource:carousel2Data});										
+				}
 			},
 			toggleBreakpoint:	toggleBreakpoint
 		});
