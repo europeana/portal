@@ -115,4 +115,11 @@ public class FeedEntry {
 	public void setImages(List<RSSImage> images) {
 		this.images = images;
 	}
+
+	/**
+	 * Returns the description in plain text, without HTML markups.
+	 */
+	public String getPlainDescription() {
+		return description.replaceAll("<[^<>]+>", "");
+	}
 }
