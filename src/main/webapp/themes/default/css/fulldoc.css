@@ -6,15 +6,9 @@
 	padding-top:		0;
 	padding-left:		0;
 }
-/*
-#carousel-1{
-	height:		350px;
-	width:		100%;
-}
-*/
+
 #carousel-2{
-	xxheight:		350px;
-	width:		100%;
+	width:		100%;		/* height set programatically.  TODO: is this width even needed? */
 }
 
 
