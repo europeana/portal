@@ -401,4 +401,74 @@
 	}
 
 
+	/* IE 8 handled the same way as the above media query: copy and paste and change the class selectors */
+
+		/* logo */
+
+		.ie8 #logo {
+			top:		30px;
+			width:		100%;
+		}
+		
+		.ie8 #logo a {
+			display:	block;
+	   		max-width:	15%;
+		}
+		
+		/* strip */
+		
+		.ie8 #header-strip{
+			background-color:	black;
+			width:				100%;
+			display:			table;
+		}
+				
+		.ie8 #header-strip span{		/* structural fix for vertical align */
+			display:			table-cell !important;
+			vertical-align:		middle;
+		}
+		
+		.ie8 #header-strip a{
+			font-size:			1.1em;
+			color:				white;
+			margin-left:		25px;
+			float:				left;
+		}
+		
+		
+		/* menu-language */
 	
+		.ie8 #language-selector select {
+			font-size:		100%;
+			font-weight:	normal;
+			margin-right:	12px;
+		}
+		
+		
+		/* form */
+		.ie8 #query{
+			width:		470px;
+			text-align:	center;
+			margin-top:	45px;
+		}
+
+		.ie8 #query h3 {
+			font-size:	180%;
+			color:		#666;
+			display:	inline;
+		}
+
+		.ie8 #query-search #rq{
+			width:	225px !important;
+		}
+		
+		.ie8 #query-search input[type=text].map-query {
+			width:	296px;
+		}
+		
+		.ie8 #submit-query{
+			width:	90%;
+			margin:	0px 0px 0px 6px;
+		}
+	
+	/* End of IE 8 handling */
