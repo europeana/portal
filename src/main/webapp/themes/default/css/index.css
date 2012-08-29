@@ -72,7 +72,6 @@
 
 @media only screen and ( min-width:767px ){
 
-	
 	#carousel-1-wrapper{
 		margin-top:	45px;
 	}
@@ -87,6 +86,22 @@
 		
 	}
 }
+
+
+.ie8 #carousel-1-wrapper{
+	margin-top:	45px;
+}
+	
+.ie8 #carousel-1-blurb{
+	padding-left:	12px;		
+}
+
+.ie8 #carousel-1-blurb .italic-heading{
+	margin:			0;
+	margin-bottom:	1em;
+}
+
+
 
 /* addthis */
 
@@ -143,6 +158,13 @@
 		position:		relative;
 		bottom:			0.19em;
 	}
+}
+
+.ie8 .feed-link {
+	float:			left;
+	margin-left:	0.4em;
+	position:		relative;
+	bottom:			0.19em;
 }
 
 

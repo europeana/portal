@@ -45,7 +45,8 @@
               rel="rdfs:seeAlso" resource="${child.id}"
               title="${child.title}"> <img src="${child.thumbnail}"
                 alt="${child.title}" width="70"
-                data-type="${child.type?lower_case}" />
+                
+                data-type="${fn:toLowerCase(model.fullBeanView.parent.type)}" />
             </a></li>
           </c:forEach>
         </ul>

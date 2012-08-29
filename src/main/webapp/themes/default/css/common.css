@@ -142,6 +142,15 @@
 
 	}
 
+	.ie8 #social-links .social-link{		
+		width:	auto !important;
+		float:	left;
+	}
+		
+	.ie8 #footer-subscribe input[type=submit]{
+		width:	auto;
+	}
+	
 	
 	.italic-heading{
 		font-weight:	normal;
@@ -152,13 +161,15 @@
 
 
 @media only screen and ( min-width:767px ){
-
 	.sidebar {
 		xmargin: 0 20px 0 0;
-	}
-	
+	}	
 }
-    
+
+.ie8 .sidebar {
+	xmargin: 0 20px 0 0;
+}	
+
     
 /* breadcrumb */
 

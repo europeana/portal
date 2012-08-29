@@ -36,7 +36,8 @@
 		/* To fix the grid into a certain size, set max-width to width */
 		.row .row{min-width:0;}
 	
-		.column, .columns{margin:0; float:left !important; min-height:1px; position:relative;}
+		.column,
+		.columns{margin:0; float:left !important; min-height:1px; position:relative;}
 
 		.row .one	{width:8.33334%		!important;}
 		.row .two	{width:16.66667%	!important;}
@@ -97,7 +98,8 @@
 
 	.ie8 .row .row{min-width:0;}
 
-	.ie8 .column, .columns{margin:0; float:left !important; min-height:1px; position:relative;}
+	.ie8 .column,
+	.ie8 .columns{margin:0; float:left !important; min-height:1px; position:relative;}
 
 	.ie8 .row .one	{width:8.33334%		!important;}
 	.ie8 .row .two	{width:16.66667%	!important;}

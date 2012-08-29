@@ -39,9 +39,10 @@
 				var thumb		= jQuery('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
 				
 				carousel.css("height",  (imgH * ratio) + thumb.height() + 5 + "px");
+				carousel.css("width",	"100%");
 				thumb.remove();
 				
-				carouselData[0].themeRef = eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js'
+				carouselData[0].themeRef = eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js';
 				jQuery('#carousel-1').galleria({dataSource:carouselData});
 			
 			}).each(function() {
