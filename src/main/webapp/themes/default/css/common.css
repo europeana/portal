@@ -28,16 +28,14 @@
 		background-position: right 2px;
 	}
 	
-	
+	/*
 	.submit-button {	   
 		display: block;
 		height: 22px;
 		
         font-size: 100%;
         color: #fff;
-        background-color: #9900ff; /* purple */
-        /* background-color: #366ab2; blue */
-        /* background-color: #e605bd; pink */
+        background-color: #9900ff;
         
         cursor: pointer;
         margin: 2px 0 0 0;
@@ -48,7 +46,7 @@
 		-webkit-border-radius: 5px;
 		border-radius: 5px;
     }
-	
+	*/	
 
 
 /* sidebar */

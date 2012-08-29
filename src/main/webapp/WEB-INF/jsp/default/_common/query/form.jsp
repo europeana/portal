@@ -16,17 +16,15 @@
 </c:if>
 
 <%-- form --%>
-<div class="row">
+
 	<form id="query-search" action="${query_action}" method="get">
 		<fieldset>
 		
-			<div class="nine columns">
+			<div class="twelve columns">
 				<input type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"/>
-			</div>
-			
-			<div class="three columns">
 				<input id="submit-query" type="submit" class="submit-button" value="<spring:message code='Search_t'/>"/>
 			</div>
+			
 			
 			<%-- map search link --%>
 	
@@ -71,7 +69,7 @@
 			 </c:if>
 	
 			<%-- help link --%>
-			<a id="search-help" class="hide-on-phones" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+			<a class="hide-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+			<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
 		</c:if>
 	</form>
-</div>
