@@ -23,7 +23,7 @@
 	
 	#query{
 		width:		100%;
-		text-align:	right;
+		text-align:	center;
 		position:	relative;
 		margin-top:	35px;
 
@@ -39,22 +39,38 @@
 		margin:			12px 0px;
 	}
 
+	/* prevent line-break on narrow viewports */
+	.search-menu{
+		min-width:	10%;		
+	}
 	#query-input{
-		padding:				2px 0px;
-		color:					#333;
-		font-size:				1.2em;
-		border:					1px solid #a0a0a0;
-		-moz-border-radius:		5px;
-		-webkit-border-radius:	5px;
-		border-radius:			5px;
+		max-width:	80%;
+	}
+	/* end prevent line-break on narrow viewports */
+
+	
+	#query-input{
+		xxxxpadding:				2px 0px;
 		
-		width:					100%;
+		
+		color:					#333;
+		font-size:				inherit;
+		border:					1px solid #E4E4E4;
+
+        -moz-border-radius:		0 0.5em 0.5em 0;
+		-webkit-border-radius:	0 0.5em 0.5em 0;
+		border-radius:			0 0.5em 0.5em 0;
 	}
 
 	@media only screen and ( min-width:767px ){
 		#query-input{
 			xxwidth:	auto !important;
-			width:		60%;
+			width:		40%;
+			
+			-moz-border-radius:		0 0 0 0;
+			-webkit-border-radius:	0 0 0 0;
+			border-radius:			0 0 0 0;
+			
 		}
 	}
 	
@@ -70,15 +86,14 @@
 		color: #999;
 	}
 
-	#submit-query{
-		xxxxxwidth:	90%;
-		margin:	0.5em auto 0px;
-	}
+	
 	
 	.container{
 		position:relative;
 	}
 
+	/* Mobile Menu */
+	
 	.mobile-menu{
 		position:	relative;
 		display:	inline-block;
@@ -145,7 +160,74 @@
 	
 	/* end of extra rules needed for icons */
 
+
+
+
+	/* Search Menu */
 	
+
+	.search-wrapper{
+		font-size:	1.2em;
+		position:relative;
+		width:100%;
+	}
+	
+	.search-menu{
+		position:	relative; 
+		display:	inline-block;
+		float:		right;
+		z-index:	2;	
+
+		float:		none;
+
+		xmax-width:	20%;
+
+		
+		border:			1px solid #e4e4e4;
+
+
+		-moz-border-radius:		0.5em 0 0 0.5em;
+		-webkit-border-radius:	0.5em 0 0 0.5em;
+		border-radius:			0.5em 0 0 0.5em;
+	}
+	
+	.search-menu a {
+		text-decoration:	none;
+		color:				#444444;
+	}
+
+	.search-menu a:hover{
+		text-decoration:	underline;
+	}
+
+	.search-menu .top {
+		background-color:	#DDD;
+	}
+
+	.search-menu ul{
+		list-style-type:	none;
+		position:			absolute;
+		margin:				0px;
+		padding:			0px;
+	}
+
+	.search-menu .item {	/* hidden items */
+		display: 			none;
+		border-radius:		0 0 0.25em 0.25em;
+		margin-top:			0.2em;
+		padding:			0.19em 0.6em 0.1126em;
+		border:				1px solid #e4e4e4;
+		background-color:	#F5F5F5;
+		white-space:		nowrap;
+		
+		z-index:	2;
+	}
+
+	.search-menu.active .item {		/* shown items */
+		display:			block;
+	}
+
+
 	/* user-bar */
 
 	#user-bar {
@@ -163,13 +245,14 @@
 		margin-left: 14px;
 	}
 
-		
+	/*	
 	#refine-search,
 	#save-search,
-	#search-help {
+	.search-help {
 		position: absolute;
 		top: 28px;
 	}
+	*/
 
 	#refine-search {
 		left: 0;
@@ -183,43 +266,50 @@
 		right: 233px;
 	}
 		
-	#search-help {
-		display: inline-block;
-		left: 412px;
-		width: 50px;
-		text-align: center;
-	}
-
-	#search-help.map-query {
-		left: 325px;
+	/* override grid with selector */
+	/*
+	.show-ilb-on-phones.search-help,	.hide-ilb-on-phones.search-help,
+	.show-on-phones.search-help,		.hide-on-phones.search-help*/
+	.search-help {
+		position:		absolute;
+		margin-left:	0.5em;
 	}
 
 
 	.submit-button {
 		display:				block;
-		width:					80%;
-        font-size:				1.2em;
-        color:					#fff;
-        background-color:		#9900ff;
-        
-        cursor:					pointer;
-        
-        xxxmargin:				2px 0;
-        xxpadding:				0.2em 0;
-        
-        border:					none;
-        -moz-border-radius:		0.5em;
-		-webkit-border-radius:	0.5em;
-		border-radius:			0.5em;
+        margin-left:			auto;
+        margin-right:			auto;
+        margin-top:				0.5em;
     }
     
-    
+    .submit-button input{
+		background-color:		#9900ff;
+        border:					none;
+        color:					#fff;
+        cursor:					pointer;
+        font-size:				inherit;
+		width:					90%;
+		
+		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
+		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
+		border-radius:			0.5em 0.5em 0.5em 0.5em;
+	}
+
 	@media only screen and ( min-width:767px ){
 		.submit-button {
+			width:		auto !important;
 			display:	inline-block;
-			width:		auto;
+			margin-top:	0;			
 		}
-    }
+		
+		.submit-button input{
+			width:					auto;
+	        -moz-border-radius:		0 0.5em 0.5em 0;
+			-webkit-border-radius:	0 0.5em 0.5em 0;
+			border-radius:			0 0.5em 0.5em 0;
+		}
+	}
     
     
 	/*
@@ -354,6 +444,9 @@
 		}
 	}
 	
+	/*
+	ANDY: TODO?  restore box shadow
+	
 	#query-search input[type="text"]:focus {
 	   -webkit-box-shadow: 0 0 4px rgba(153,0,255,0.3);
 	   -moz-box-shadow: 0 0 4px rgba(153,0,255,0.3);
@@ -362,9 +455,9 @@
 	}
 	
 	
+	*/
+	
 
-
-	/* MEDIA QUERIES */
 	
 
 	@media only screen and ( min-width:767px ){
@@ -423,6 +516,7 @@
 			display:	inline;
 		}
 
+/*
 		#query-search #rq{
 			xxwidth:	225px !important;
 		}
@@ -430,11 +524,7 @@
 		#query-search input[type=text].map-query {
 			width:	296px;
 		}
-		
-		{
-			xxxxxxxxxxxwidth:	90%;
-			margin:	0px 0px 0px 6px;
-		}
+	*/	
 	}
 
 
@@ -503,9 +593,5 @@
 		width:	296px;
 	}
 	
-	.ie8 #submit-query{
-		zzzzzzzwidth:	90%;
-		margin:	0px 0px 0px 6px;
-	}
 
 /* End of IE 8 handling */

@@ -18,11 +18,46 @@
 <%-- form --%>
 
 	<form id="query-search" action="${query_action}" method="get">
-		<fieldset>
 		
-			<div class="twelve columns">
-				<input type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"/>
-				<input id="submit-query" type="submit" class="submit-button" value="<spring:message code='Search_t'/>"/>
+			<div class="twelve columns search-wrapper">
+				
+				<!-- fieldset-->
+				<%-- search options --%>
+				<div class="search-menu" aria-hidden="true">
+					<span class="hide-ilb-on-phones">Search...</span>
+					<span class="icon-arrow-3"></span>
+					<ul>
+						<li class="item">	<a target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a></li>
+						<li class="item">	<a target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a></li>
+						<li class="item">	<a target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a></li>
+					</ul>
+				<!-- no whitespace allowed between end of div and input -->
+
+				
+				<!--  
+				</div><input
+					type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
+				/><input
+					id="submit-query" type="submit" class="submit-button" value="<spring:message code='Search_t'/>"
+				/><a class="hide-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+					<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
+				-->
+
+
+				</div><input
+					type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
+				/><div
+					id="submit-query" type="submit" class="submit-button" 
+				>
+				
+					<input value="<spring:message code='Search_t'/>" type="submit"/>
+					
+					<a class="show-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
+					
+				</div>
+				<a class="hide-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+					
+				<!--/fieldset-->
 			</div>
 			
 			
@@ -44,7 +79,7 @@
 				<input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/>
 				<input type="hidden" name="lang" value="${model.locale}"/>
 			</c:if>
-		</fieldset>
+		
 		
 		<%-- additional feature links for the search box --%>
 		<c:if test="${not model.embedded}">
@@ -68,8 +103,5 @@
 				</c:if>
 			 </c:if>
 	
-			<%-- help link --%>
-			<a class="hide-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
-			<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
 		</c:if>
 	</form>

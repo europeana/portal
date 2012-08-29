@@ -156,18 +156,26 @@
 
 	/* Mobile Visibility Affordances */
 		
-	.hide-on-phones		{display:none  !important;}
-		
+	.hide-on-phones		{display:none  !important;}		
+	.hide-ilb-on-phones		{display:none  !important;}		
+	
 	.show-on-phones		{display:block !important;}
+	.show-ilb-on-phones	{display:inline-block !important;}
+	
 	
 	@media only screen and ( min-width:767px ){
 		.hide-on-phones		{display:block !important;}	
+		.hide-ilb-on-phones		{display:inline-block !important;}	
+
 		.show-on-phones		{display:none !important;}	
+		.show-ilb-on-phones	{display:none !important;}
 	}
 
+
+/* TODO
 	.ie8	.hide-on-phones		{display:block !important;}	
 	.ie8	.show-on-phones		{display:none !important;}	
-
+*/
 
 	/* Specific overrides for elements that require something other than display:block */
 	/*
