@@ -46,6 +46,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedItem;
+import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedPartner;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
@@ -119,6 +120,7 @@ public class IndexPageController {
 		updatePinterest(model);
 		updateCarousel(model, locale);
 		updateFeaturedItem(model, locale);
+		updateFeaturedPartner(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		
@@ -175,6 +177,28 @@ public class IndexPageController {
 		model.setFeaturedItem(new FeaturedItem(RandomUtils.nextInt(i - 1) + 1));
 	}
 
+	private void updateFeaturedPartner(IndexPage model, Locale locale) {
+		ArrayList<FeaturedPartner> featuredItems = new ArrayList<FeaturedPartner>();
+		boolean keepFetching = true;
+		int i = 1;
+		while (keepFetching) {
+			try {
+				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
+				String url = messageSource.getMessage(label, null, locale);
+				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
+					featuredItems.add(new FeaturedPartner(i));
+					i++;
+				} else {
+					keepFetching = false;
+				}
+			} catch (NoSuchMessageException e) {
+				keepFetching = false;
+			}
+		}
+		model.setFeaturedPartners(featuredItems);
+		model.setFeaturedPartner(new FeaturedPartner(RandomUtils.nextInt(i - 1) + 1));
+	}
+
 	private void updateCarousel(IndexPage model, Locale locale) {
 		carouselItems = new ArrayList<CarouselItem>();
 		boolean keepFetching = true;
@@ -220,7 +244,6 @@ public class IndexPageController {
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				pinterestEntries = newEntries;
 				pinterestAge = Calendar.getInstance();
-
 			}
 		}
 		if ((pinterestEntries != null) && !pinterestEntries.isEmpty()) {

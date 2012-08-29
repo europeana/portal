@@ -24,6 +24,7 @@ import javax.mail.search.SearchTerm;
 import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedItem;
+import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedPartner;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 
 public abstract class IndexData extends SearchPageData {
@@ -38,6 +39,11 @@ public abstract class IndexData extends SearchPageData {
 	private List<FeaturedItem> featuredItems;
 
 	protected FeaturedItem featuredItem;
+
+	/** List of all featured partners */
+	private List<FeaturedPartner> featuredPartners;
+
+	protected FeaturedPartner featuredPartner;
 
 	private FeedEntry pinterestItem;
 
@@ -100,6 +106,22 @@ public abstract class IndexData extends SearchPageData {
 
 	public void setFeaturedItems(List<FeaturedItem> featuredItems) {
 		this.featuredItems = featuredItems;
+	}
+
+	public List<FeaturedPartner> getFeaturedPartners() {
+		return featuredPartners;
+	}
+
+	public void setFeaturedPartners(List<FeaturedPartner> featuredPartners) {
+		this.featuredPartners = featuredPartners;
+	}
+
+	public FeaturedPartner getFeaturedPartner() {
+		return featuredPartner;
+	}
+
+	public void setFeaturedPartner(FeaturedPartner featuredPartner) {
+		this.featuredPartner = featuredPartner;
 	}
 
 	public List<FeedEntry> getPinterestItems() {
