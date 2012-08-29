@@ -202,7 +202,9 @@ public class IndexPageController {
 			}
 		}
 		model.setFeaturedPartners(featuredItems);
-		model.setFeaturedPartner(new FeaturedPartner(RandomUtils.nextInt(i - 1) + 1));
+		if (featuredItems.size() > 0) {
+			model.setFeaturedPartner(new FeaturedPartner(RandomUtils.nextInt(i - 1) + 1));
+		}
 	}
 
 	private void updateCarousel(IndexPage model, Locale locale) {
