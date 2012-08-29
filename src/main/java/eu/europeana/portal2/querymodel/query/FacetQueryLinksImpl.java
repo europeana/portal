@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.portal2.web.model.common.LabelFrequency;
 import eu.europeana.portal2.web.model.facets.Facet;
+import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class FacetQueryLinksImpl implements FacetQueryLinks {
