@@ -9,5 +9,4 @@ public interface FacetQueryLinks {
 	public abstract List<FacetCountLink> getLinks();
 
 	public abstract boolean isSelected();
-
 }

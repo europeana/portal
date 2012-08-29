@@ -15,7 +15,7 @@
  *  the Licence.
  */
 
-package eu.europeana.portal2.web.model.common;
+package eu.europeana.portal2.web.model.facets;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>

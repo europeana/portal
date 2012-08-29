@@ -36,6 +36,7 @@ import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
  * 
  * @author Serkan Demirel (2nd author), <serkan@blackbuilt.nl>
  * @see eu.europeana.definitions.model.RecordModel
+ * @see eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator
  */
 public class BriefBeanViewImpl implements BriefBeanView {
 
@@ -161,25 +162,24 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	public SpellCheck getSpellCheck() {
 		return spellcheck;
 	}
-	
+
 	public void setSpellcheck(SpellCheck spellcheck) {
 		this.spellcheck = spellcheck;
 	}
-	
+
 	public void setBriefDocs(List<? extends BriefBean> briefDocs) {
 		this.briefDocs = briefDocs;
 	}
-	
+
 	public void setPagination(ResultPagination pagination) {
 		this.pagination = pagination;
 	}
-	
+
 	public void setQueryLinks(List<FacetQueryLinks> queryLinks) {
 		this.queryLinks = queryLinks;
 	}
-	
+
 	public void makeQueryLinks(List<Facet> facets, Query query) {
 		this.queryLinks = FacetQueryLinksImpl.createDecoratedFacets(facets, query);
 	}
-
 }

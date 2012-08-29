@@ -1,6 +1,6 @@
 package eu.europeana.portal2.querymodel.query;
 
-import eu.europeana.portal2.web.model.common.LabelFrequency;
+import eu.europeana.portal2.web.model.facets.LabelFrequency;
 
 public class FacetCountLinkImpl implements FacetCountLink {
 
@@ -76,5 +76,4 @@ public class FacetCountLinkImpl implements FacetCountLink {
 	public String toString() {
 		return "<a href='" + url + "'>" + getValue() + "</a> " + (remove ? "(remove)" : "(add)");
 	}
-
 }

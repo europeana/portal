@@ -25,8 +25,8 @@ import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion;
 
-import eu.europeana.portal2.web.model.common.LabelFrequency;
 import eu.europeana.portal2.web.model.facets.Facet;
+import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 
 /**
