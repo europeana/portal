@@ -3,7 +3,7 @@
 
 	<div id="query"${menu_user_exists} class="column centered" xstyle="background-color:#ffe;">
 	
-		<h3 class="show-on-phones"><spring:message code="query_heading_t"/></h3>
+		<h3 class="show-on-phones" aria-hidden="true"><spring:message code="query_heading_t"/></h3>
 		
 		<%@ include file="/WEB-INF/jsp/default/_common/query/form.jsp" %>
 		<%@ include file="/WEB-INF/jsp/default/_common/query/refinement.jsp"%>

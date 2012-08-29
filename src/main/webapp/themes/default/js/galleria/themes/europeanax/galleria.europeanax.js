@@ -218,6 +218,7 @@ Galleria.addTheme({
 			var thumbs		= thisGallery.$( 'container' ).find(".galleria-thumbnails-container");
 
 			/* add ctrls */
+			/*
 			var ctrls		= $('<div class="img-ctrls"></div>').appendTo(info);
 			var ctrlLB		= $('<span class="icon-scaleup"></span>').appendTo(ctrls);
 			var ctrlPlay	= $('<span class="icon-play"></span>').appendTo(ctrls);
@@ -246,6 +247,7 @@ Galleria.addTheme({
 				navRight.css("display", "block");
 			});
 			
+			*/
 			
     		if(dataSource.length > 1){ // will always be the case on index page for this type of galleria
     			stage.after(info);
@@ -384,7 +386,7 @@ Galleria.addTheme({
 			}			
 		}
 		else{
-			alert("touch")
+			//alert("touch")
 		}
         
         // bind some stuff

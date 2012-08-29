@@ -2,7 +2,7 @@
 
     html {
     	position: relative;
-    	font-size: 12px; 
+    	font-size: 100%; 
     	z-index: 1;
     }
     

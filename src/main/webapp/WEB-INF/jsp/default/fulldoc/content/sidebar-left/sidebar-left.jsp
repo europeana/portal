@@ -5,7 +5,7 @@
 
 <div id="additional-info" class="sidebar" about="${model.document.id}">
 
-	<h1 id="phone-object-title" class="show-on-phones">${model.objectTitle}</h1>
+	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 
 <%--
 

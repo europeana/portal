@@ -1,5 +1,5 @@
 
-<div class="row" id="header">
+<div class="row" id="header" role="banner">
 	<%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 	
 	<c:set var="logo_tag" value="h1"/>
@@ -9,7 +9,7 @@
 	
 	<${logo_tag} id="logo">
 		<a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
-			<img src="/${model.portalName}/sp/img/europeana-logo-${model.imageLocale}.png" alt="<spring:message code='AltLogoEuropeana_t' />" width="206" height="123"/>
+			<img src="/${model.portalName}/sp/img/europeana-logo-${model.imageLocale}.png" alt="<spring:message code='AltLogoEuropeana_t' />"/>
 		</a>
 	</${logo_tag}>
 

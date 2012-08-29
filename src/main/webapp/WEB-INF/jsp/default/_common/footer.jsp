@@ -1,4 +1,4 @@
-<div class="row footer">
+<div class="row footer" role="contentinfo">
 	<div class="twelve columns">
 		<div class="footer-wrapper">
 			<div class="row">
@@ -6,9 +6,9 @@
 				
 					<div id="social-links">
 						<span class="italic-heading"><spring:message code="follow_us_t" /></span>
-						<span class="social-link icon-facebook"></span>			
-						<span class="social-link icon-pinterest-2"></span>
-						<span class="social-link icon-twitter"></span>
+						<span class="social-link icon-facebook"		rel="me"></span>			
+						<span class="social-link icon-pinterest-2"	rel="me"></span>
+						<span class="social-link icon-twitter"		rel="me"></span>
 						<span class="social-link icon-blog"></span>
 						<span class="stretch"></span>
 					</div>
@@ -17,15 +17,15 @@
 				<div class="six columns">				
 					<div id="footer-subscribe">
 						<form>
-							<input name="name"	placeholder="<spring:message code="news_letter_name_hint_t" />"/>
-							<input name="email"	placeholder="<spring:message code="news_letter_email_hint_t" />"/>
+							<input name="name"	type="text"		placeholder="<spring:message code="news_letter_name_hint_t" />"/>
+							<input name="email"	type="email"	placeholder="<spring:message code="news_letter_email_hint_t" />"/>
 							<input type="submit" value="<spring:message code="news_letter_signup_button_t" />"/>
 						</form>
 					</div>
 			</div>
 			<div class="row">
 				<div class="twelve columns">
-					<ul class="menu">
+					<ul class="menu" role="navigation">
 				  		<%-- Explore --%>
 						<li>
 							<a href="<spring:message code="notranslate_main_menu_explore_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_a_target_t"/>" title="<spring:message code="main_menu_explore_a_title_t"/>"><spring:message code="main_menu_explore_a_text_t"/></a>

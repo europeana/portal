@@ -94,7 +94,12 @@
 	    line-height:	0;
 	}
 
+	/*
 	#social-links, #footer-subscribe{
+		font-size:	2em;
+	}
+	*/
+	#social-links{
 		font-size:	2em;
 	}
 
@@ -122,6 +127,7 @@
 		-webkit-border-radius:	5px;
 		border-radius:			5px;
 		
+		font-size:				1.2em;		
 	}
 
 	#footer-subscribe input[type=submit]{

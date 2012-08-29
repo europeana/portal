@@ -21,7 +21,7 @@
 		<fieldset>
 		
 			<div class="nine columns">
-				<input type="text" name="query" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"/>
+				<input type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"/>
 			</div>
 			
 			<div class="three columns">
