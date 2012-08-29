@@ -155,6 +155,9 @@ public class IndexPageController {
 		return StringUtils.trimToNull(message);
 	}
 
+	/**
+	 * Sets the featured items list and the highlighted parter
+	 */
 	private void updateFeaturedItem(IndexPage model, Locale locale) {
 		ArrayList<FeaturedItem> featuredItems = new ArrayList<FeaturedItem>();
 		boolean keepFetching = true;
@@ -177,6 +180,9 @@ public class IndexPageController {
 		model.setFeaturedItem(new FeaturedItem(RandomUtils.nextInt(i - 1) + 1));
 	}
 
+	/**
+	 * Sets the featured partner list and the highlighted parter
+	 */
 	private void updateFeaturedPartner(IndexPage model, Locale locale) {
 		ArrayList<FeaturedPartner> featuredItems = new ArrayList<FeaturedPartner>();
 		boolean keepFetching = true;
