@@ -40,11 +40,10 @@ Galleria.addTheme({
     	var info		= thisGallery.$( 'container' ).find(".galleria-info");
 		var navLeft		= thisGallery.$( 'container' ).find(".galleria-image-nav-left");
 		var navRight	= thisGallery.$( 'container' ).find(".galleria-image-nav-right");
-    	
+		var thumbs		= thisGallery.$( 'container' ).find('.galleria-thumbnails'); 
     	
     	if(carouselMode){
-			var thumbs = thisGallery.$( 'container' ).find('.galleria-thumbnails'); 
-
+		
         	var headerSelector = '#' + carouselId + '-header';
         	var footerSelector = '#' + carouselId + '-footer';
         	europeana.header = 	$('#' + carouselId).parent().find(headerSelector);
@@ -202,18 +201,54 @@ Galleria.addTheme({
     		
     		// Doesn't seem to matter
     		//alert(    			thisGallery._options.responsive )
+    		
+    		if(dataSource.length == 1){
+    			
+        		var stage		= thisGallery.$( 'container' ).find(".galleria-stage");
+        		var thumbsC		= thisGallery.$( 'container' ).find('.galleria-thumbnails-container'); 
+            	
+       			/* we're showing a single image */
+				
+				/* use extra that no thumbs gives us - move the stage down */
+				var extraHeight = parseInt(thumbsC.css("height"));
+				thumbs.css	("height", "0px");
+				thumbsC.css	("height", "0px");
+				stage.css("bottom", parseInt(stage.css("bottom"))	- extraHeight + "px");
 
-        		$(window).resize( function() {
-        			Galleria.log("Bordered mode resize");
-        			thisGallery.$(	'container' ).parent().css("height", 1.2 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
-        		});
+				// hide navigation
+				
+				var thumbNavLeft =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
+				var thumbNavRight =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
+
+				thumbNavLeft.css	("display", "none");
+				thumbNavRight.css	("display", "none");
+				navLeft.css			("display", "none");
+				navRight.css		("display", "none");
+				
+				thisGallery.resize();
+				
+				// custom full doc options
+				this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
+    		}
+    		
+    		
+    		
+    		
+
+    		
+    		
+    		
+    		
+       		$(window).resize( function() {
+       			Galleria.log("Bordered mode resize");
+       			thisGallery.$(	'container' ).parent().css("height", 1.2 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
+       		});
     	}
     	else{
     		/* non-carousel non-bordered (index page) */
 			thisGallery._options.responsive = false;
 			//thisGallery._options.responsive = true;
 
-    		var stage		= thisGallery.$( 'container' ).find(".galleria-stage");
 			var title		= thisGallery.$( 'container' ).find(".galleria-info-title");
 			var thumbs		= thisGallery.$( 'container' ).find(".galleria-thumbnails-container");
 
