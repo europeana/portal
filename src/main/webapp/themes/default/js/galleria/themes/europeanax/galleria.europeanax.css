@@ -424,6 +424,7 @@
     visibility:			hidden;
 }
 
+.europeana-bordered .galleria-info,
 .europeana-carousel .galleria-info{
     display:none; 
 }
