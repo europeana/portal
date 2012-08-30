@@ -3,7 +3,8 @@
 	/* mobile 1st */
 	
 	#header{
-		position:	relative;	/* this to stop the absolutely position width-100% logo wrapper creating scrollbars */
+		position:		relative;	/* this to stop the absolutely position width-100% logo wrapper creating scrollbars */
+		border-bottom:	1px solid #E4E4E4;
 	}
 	
 	#header-strip{
@@ -41,16 +42,21 @@
 
 	/* prevent line-break on narrow viewports */
 	.search-menu{
-		min-width:	10%;		
+		xmin-width:	30%;
+				
+		xxmax-width:	30%;
+		xxwhite-space: nowrap;
+  		xxoverflow: hidden;
+				
 	}
 	#query-input{
-		max-width:	80%;
+		max-width:	60%;
 	}
 	/* end prevent line-break on narrow viewports */
 
 	
 	#query-input{
-		xxxxpadding:				2px 0px;
+		padding:				2px;
 		
 		
 		color:					#333;
@@ -167,21 +173,24 @@
 	
 
 	.search-wrapper{
-		font-size:	1.2em;
-		position:relative;
-		width:100%;
+		font-size:		1.2em;
+		position:		relative;
+		
+		margin-top:		1.5em !important;
+		margin-bottom:	1.5em !important;
+		
+		
 	}
 	
 	.search-menu{
-		position:	relative; 
-		display:	inline-block;
-		float:		right;
-		z-index:	2;	
+		position:		relative; 
+		display:		inline-block;
+		float:			right;
+		z-index:		2;	
 
-		float:		none;
+		float:			none;
 
-		xmax-width:	20%;
-
+		text-align:		left;
 		
 		border:			1px solid #e4e4e4;
 
@@ -297,6 +306,12 @@
 	}
 
 	@media only screen and ( min-width:767px ){
+	
+		.search-menu{
+			padding-bottom:	2px;
+			min-width:		0;		
+		}
+
 		.submit-button {
 			width:		auto !important;
 			display:	inline-block;
@@ -305,6 +320,7 @@
 		
 		.submit-button input{
 			width:					auto;
+			padding:				2px;
 	        -moz-border-radius:		0 0.5em 0.5em 0;
 			-webkit-border-radius:	0 0.5em 0.5em 0;
 			border-radius:			0 0.5em 0.5em 0;
@@ -498,9 +514,9 @@
 		/* menu-language */
 	
 		#language-selector select {
-			font-size:		100%;
+			xxfont-size:		100%;
 			font-weight:	normal;
-			margin-right:	12px;
+			margin-right:	1em;
 		}
 		
 		

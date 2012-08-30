@@ -13,6 +13,7 @@
 		</a>
 	</${logo_tag}>
 
-</div>
 
 <%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>
+
+</div>

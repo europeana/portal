@@ -13,10 +13,11 @@
  */
 js.utils.registerNamespace( 'eu.europeana.header' );
 
+
+
 eu.europeana.header = {
 	
 	init : function() {
-		
 		var langSelect=  jQuery("select[name=embeddedlang]");
 		langSelect.change(function(){
 			jQuery(this).parent().submit();
@@ -35,7 +36,91 @@ eu.europeana.header = {
 		
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
+		
+		this.setupSearchMenu();
 	},
+	
+	
+	setupSearchMenu:function(){
+			
+		var searchMenu = function(cmp){
+			var self 	= this;
+			self.cmp	= cmp;
+			self.ops	= cmp.find(".item");
+			self.label	= self.cmp.find(".menu-label").html();
+
+			cmp.click(function(e){
+				self.cmp.toggleClass("active");
+				$('.mobile-menu' ).removeClass("active");
+				e.stopPropagation();
+			});
+			
+			var setLabel = function(val){
+				self.cmp.find(".menu-label").html(  self.label + " " + val );
+			};
+			
+			var setActive = function(val){
+				self.cmp.find(".item a").each(function(i, ob){
+					if($(ob).attr("class") == val){
+						$(ob).parent().addClass("active");
+						setLabel(val);
+					}
+					else{						
+						$(ob).parent().removeClass("active");						
+					}
+				});
+				self.cmp.removeClass("active");
+			};
+
+			self.cmp.find(".item a").click(
+					function(e){
+						var selected = $(this).attr("class");
+						setActive(selected);
+						e.stopPropagation();
+						return false;
+				}
+			);
+						
+			return {
+				"init" : function(){
+					var input		= $('#query-input');
+					var searchTerm	= input.val();
+					
+					self.cmp.find(".item a").each(function(i, ob){
+						var searchType = $(ob).attr("class");
+						if(searchTerm.indexOf(searchType) == 0){
+							setLabel(searchType);
+							input.val(   searchTerm.substr( searchType.length, searchTerm.length)  );
+						}						
+					});
+				},
+				"submit":function(){
+					var active	= self.cmp.find(".item.active a").attr("class");
+					var input	= $('#query-input');
+					
+					input.val( (typeof active == "undefined" ? "" : active) + input.val());
+				}
+			};
+		};	// end menu
+
+
+		$(document).ready(function(){
+			var menu = searchMenu( $(".search-menu") );
+			menu.init();
+			
+			/* menu close */
+			
+			$(document).click( function(){
+				$('.mobile-menu' ).removeClass("active");
+				$('.search-menu' ).removeClass("active");
+			});
+
+			$("#query-search").bind("submit", function(){
+				menu.submit();
+				return true;
+			});
+		});	// end menu  binding
+	}, 
 	
 	enableMapLink:function(){
 		if(typeof eu.europeana.vars.mapview.json_url === "undefined"){

@@ -6,18 +6,31 @@
 	
 	<c:set var="results" value="${model.briefBeanView.briefDocs}" />
 
-	<c:forEach var="cell" items="${results}">
+	<!-- whitespace breaks layout, so the li elements need to run against one another -->
+	<c:forEach var="cell" items="${results}"><li>
+	
+		<div class="thumb-frame">
 		
-		<c:set var="title" value="${cell.title[0]}" />
-		<c:set var="icon_class" value="icon-${fn:toLowerCase(cell.type)}" />
-		
-		<li>
+			<c:set var="title" value="${cell.title[0]}" />
+			<c:set var="icon_class" value="icon-${fn:toLowerCase(cell.type)}" />
+			
 			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/image.jsp" %>
-			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/title.jsp" %>
-			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/additional-info.jsp" %>
+			
+		</div>
+		<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/title.jsp" %>
+		
+		
+		<h2 class="title">
+			<c:if test="${!empty cell.title}">
+				${title}
+			</c:if>
+		</h2>
 			<span class="${icon_class}"></span>
-		</li>
-
-	</c:forEach>
+		<!-- /title -->
+		
+		
+		<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/additional-info.jsp" %>
+				
+	</li></c:forEach>
 </ul>
 <!-- /grid -->

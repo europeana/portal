@@ -1,12 +1,4 @@
 
-/* query */
-
-	#query {
-		height: 112px;
-		border-bottom: none;
-	}
-	
-
 
 /* breadcrumb */
 /*
@@ -41,25 +33,37 @@
 		list-style: none;
 	}
 	
+	#items .thumb-frame{
+		background-color:	#999;
+		height:				8em;
+		margin:				0.5em;
+		text-align:			center;
+	}
+	 
 	#items li>span{
 		float:			right;
-		margin-right:	1em;
+		margin-right:	0.5em;
 	}
 	
-	/*
+	
 	#items img {
-		max-width: 157px;
+		height:			100%;
 	}
-	*/
 	
 	
 	#items h2 {
 		font-size:		0.6em;
 		overflow:		hidden;
-		xxxxxfloat:			left;
+
 		
 		margin-top:		0.5em;
-		margin-left:	1em;
+		
+		line-height:	1em;
+		height:			2em;
+		max-height:		2em;
+
+		position:		absolute;
+		bottom:			0;
 	}
 	
 	
@@ -70,16 +74,16 @@
 	/** DESKTOP **/
 	/** This breakpoint not wrapped in media selector for the sake of IE8 **/
 	#items{
-		word-spacing:	0;
-		font-size:		0;
+		xxxxxxxxxxxxxxxxxxxxxxxxxxword-spacing:	0;
+		xxxxxxxxxxxxxxxxxxxxxxxxxxfont-size:		0;
 		width:			100%;
 		padding-top:	0;
 		padding-bottom:	0;
 	}
 
 	#items li, #items ul{
-		font-size:		0em;
-		word-spacing:	0;
+		xxxfont-size:		0em;
+		xxxword-spacing:	0;
 		
 	}
 
@@ -87,7 +91,7 @@
 		width:				25%;
 		margin-bottom:		0.5em;
 		margin-top:			0.5em;
-		text-align:			center;
+		text-align:			left;
 		position:			relative;
 		border-bottom:		1px dotted #a0a0a0;
 		overflow-x:			hidden;
@@ -97,7 +101,7 @@
 	#items>li>a{
 		display:		block;
 		margin-bottom:	0.3em;
-		font-size:		18px;	
+		xxxxxxxxxxxxxxxxxfont-size:		18px;	
 	}
 		
 	
@@ -107,7 +111,7 @@
 	@media all and (max-width: 480px) {
 		
 		#items>li>h2,#items>li>a{
-			font-size:		16px;
+			xxxxxxxxxxxxxxfont-size:		16px;
 		}
 	
 		#items>li{
@@ -227,6 +231,6 @@
 		-moz-transition:	0.25s linear opacity;
 		-webkit-transition:	0.25s linear opacity;
 		
-		font-size:			12px;
+		xxxxxxxxxfont-size:			12px;
 	}
 	

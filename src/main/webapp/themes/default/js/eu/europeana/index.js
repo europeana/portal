@@ -135,8 +135,9 @@
 		
 	}
 	
+	/*
 	function setupSearchMenu(){
-		/* constructor */
+		
 		var searchMenu = function(cmp){
 			var self 	= this;
 			self.cmp	= cmp;
@@ -162,19 +163,20 @@
 
 		
 	}
+	*/
 
 	var init = function() {
 		var globalCopyOfBreakpoint = 800;
 		if(jQuery("body").width()<globalCopyOfBreakpoint){
 			setupMobileMenu();
 		}
-		setupSearchMenu();
 		
-		/* menu close */
+		/* 
 		$(document).click( function(){
 			$('.mobile-menu' ).removeClass("active");
 			$('.search-menu' ).removeClass("active");
 		});
+		 */
 		
 		jQuery("#query-input").focus(function(){
 			

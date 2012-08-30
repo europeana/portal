@@ -49,7 +49,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		</script>
 		
 		
-		<div class="four columns">
+		<div class="six columns">
 		<%--
 			<img id="carousel-1-scale-image" src="/${model.portalName}<spring:message code='${model.carouselItems[0].imgUrl}'/>"/>
 		 --%>
@@ -58,7 +58,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			</div>
 		</div>
 		
-		<div class="eight columns hide-on-phones">
+		<div class="six columns hide-on-phones">
 			<div id="carousel-1-blurb">
 				<span class="italic-heading">Europe's Digital Library</span>
 				<p>

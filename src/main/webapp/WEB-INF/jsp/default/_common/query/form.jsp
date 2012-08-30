@@ -24,12 +24,15 @@
 				<!-- fieldset-->
 				<%-- search options --%>
 				<div class="search-menu" aria-hidden="true">
-					<span class="hide-ilb-on-phones">Search...</span>
+					<span class="hide-ilb-on-phones menu-label">Search...</span>
 					<span class="icon-arrow-3"></span>
 					<ul>
-						<li class="item">	<a target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a></li>
-						<li class="item">	<a target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a></li>
-						<li class="item">	<a target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a></li>
+						<li class="item">	<a href="" class=""			>All fields</a></li>
+						<li class="item">	<a href="" class="title:"	>Title</a></li>
+						<li class="item">	<a href="" class="who:"		>Who</a></li>
+						<li class="item">	<a href="" class="what:"	>What</a></li>
+						<li class="item">	<a href="" class="when:"	>When</a></li>
+						<li class="item">	<a href="" class="where:"	>Where</a></li>
 					</ul>
 				<!-- no whitespace allowed between end of div and input -->
 

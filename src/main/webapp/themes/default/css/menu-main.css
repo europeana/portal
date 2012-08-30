@@ -48,9 +48,8 @@
 	}
 
 	ul.menu>li{
-		width:			25%;
+		width:			100%;
 		float:			left;
-		zfont-size:		18px;
 		margin-bottom:	0.5em;
 		margin-top:		0.5em;
 	}
@@ -64,54 +63,74 @@
 		width:			100%;
 		padding-top:	0;
 		padding-bottom:	0;
-		font-size:		2em;
+		font-size:		1.6em;
 	}
 	
-	/* IE8 fix: equivalent to li:nth-child(5) */
-	ul.menu li:first-child + li + li + li + li{
+	
+	ul.menu > li{
 		clear:left;
 	}
-
-	/** TABLET **/
-	@media all and (max-width: 980px) {
 	
-		ul.menu>li{
-			width:			50%;
-			float:			left;
+/*
+	@media only screen and (max-width : 768px){
+	*/
+	
+	/* iPads (portrait and landscape) */
+	@media only screen and (min-width : 768px) and (max-width : 979px){
+	
+		ul.menu {
+			font-size:	1.8em;
 		}
-		
-		/* IE8 fix: equivalent to li:nth-child(3) */
-		ul.menu li:first-child + li + li{
+
+		ul.menu > li{
+			clear:	none;
+			width:	50%;
+		}
+
+		ul.menu > li:first-child + li + li{
 			clear:left;
 		}
-		
+	}
+	
+	/* Desktops and laptops  */
+	@media only screen and (min-width: 980px) and (max-width : 1224px) {
+	
+		ul.menu {
+			font-size:	1.5em;
+		}
+	
+		ul.menu {
+			font-size:	1.2em;
+		}
+	
+		ul.menu > li{
+			clear:	none;
+			width:	25%;
+		}
+
+		ul.menu > li:first-child + li + li + li + li{
+			clear:left;
+		}
 	}
 
-	/** MOBILE **/
-	@media all and (max-width: 480px) {
-	
-		/* IE8 fix: equivalent to li:nth-child(5) */
-		ul.menu li:first-child + li + li + li + li{
-			clear:none;
-		}		
-	
-		ul.menu li, ul.menu ul{
-			font-size:		16px;
-		}
+	/* large screens */
 
-		ul.menu>li{
-			width:			100%;
-			float:			none;
-			font-size:		21px;
-			margin-bottom:	1em;
-			margin-top:		0em;
+	@media only screen and (min-width: 1225px)  and (max-width : 1824px) {
+	
+		ul.menu {
+			font-size:	1.5em;
 		}
 		
-		ul.menu{
-			padding-top:	0.5em;
-			padding-bottom:	0.5em;
+		ul.menu > li{
+			clear:	none;
+			width:	25%;
+		}
+
+		ul.menu > li:first-child + li + li + li + li{
+			clear:left;
 		}
 	}
+	
 
 
 
