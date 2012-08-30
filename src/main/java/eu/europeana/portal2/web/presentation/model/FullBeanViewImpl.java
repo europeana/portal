@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.definitions.solr.entity.Proxy;
+import eu.europeana.corelib.utils.StringArrayUtils;
 
 /**
  * Do not ever touch this class! It is persisted to XML and serves as document
@@ -53,16 +55,24 @@ public class FullBeanViewImpl implements FullBeanView {
 	public FullBeanViewImpl(FullBean fullDoc) {
 		this.fullDoc = fullDoc;
 		this.relatedItems = fullDoc.getRelatedItems();
-		this.parents = findParents(fullDoc.getDctermsIsPartOf());
-		this.children = findChildren(fullDoc.getDctermsHasPart());
+		this.parents = findParents();
+		this.children = findChildren();
 		this.docIdWindowPager = createPager();
 	}
 
-	private List<? extends BriefBean> findParents(String[] isPartOf) {
+	private List<? extends BriefBean> findParents() {
+		List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fullDoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDctermsIsPartOf());
+		}
 		return new ArrayList();
 	}
 
-	private List<? extends BriefBean> findChildren(String[] hasPart) {
+	private List<? extends BriefBean> findChildren() {
+		List<String> items = new ArrayList<String>();
+		for (Proxy proxy : fullDoc.getProxies()) {
+			StringArrayUtils.addToList(items, proxy.getDctermsHasPart());
+		}
 		return new ArrayList();
 	}
 	

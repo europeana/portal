@@ -59,7 +59,7 @@ public class CiteValue {
 	 * @return - Citation in format of users locale
 	 */
 	public String getCiteText() {
-		String authorNames = StringArrayUtils.formatList(model.getDocument().getDcCreator());
+		String authorNames = StringArrayUtils.formatList(model.getShourtcut().get("DcCreator"));
 		StringBuilder citeStyleText = new StringBuilder();
 
 		switch (value) {

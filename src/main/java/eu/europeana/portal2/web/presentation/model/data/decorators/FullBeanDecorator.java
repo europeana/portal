@@ -39,16 +39,21 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private FullBean fulldoc;
-	
+
+	private FullBeanShortcut shortcut;
+
 	public FullBeanDecorator(FullBean fulldoc) {
 		this.fulldoc = fulldoc;
+		this.shortcut = new FullBeanShortcut((FullBeanImpl)fulldoc);
 	}
 
 	/**
@@ -75,10 +80,10 @@ public class FullBeanDecorator implements FullBean {
 	 * @return posts author
 	 */
 	public String getPostAuthor() {
-		if (StringUtils.isBlank(getDcCreator()[0])) {
+		if (StringUtils.isBlank(shortcut.get("DcCreator")[0])) {
 			return "none";
 		} else {
-			return getDcCreator()[0];
+			return shortcut.get("DcCreator")[0];
 		}
 	}
 
@@ -98,13 +103,16 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public boolean isPositionAvailable() {
-		return (getEdmPlaceLatitude() != 0) || (getEdmPlaceLongitude() != 0);
+		return (shortcut.getEdmPlaceLatitude() != null && shortcut.getEdmPlaceLatitude()[0] != 0) 
+				|| (shortcut.getEdmPlaceLongitude() != null && shortcut.getEdmPlaceLongitude()[0] != 0);
 	}
 
+	/*
 	@Override
 	public String getFullDocUrl() {
 		return fulldoc.getFullDocUrl();
 	}
+	*/
 
 	@Override
 	public String[] getTitle() {
@@ -129,9 +137,8 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getProvider();
 	}
 
-	@Override
 	public String[] getDataProvider() {
-		return fulldoc.getDataProvider();
+		return shortcut.get("DataProvider");
 	}
 
 	@Override
@@ -221,7 +228,7 @@ public class FullBeanDecorator implements FullBean {
 	 * @Override public String[] getEnrichmentAgentTerm() { return
 	 * fulldoc.getEnrichmentAgentTerm(); }
 	 * 
-	 * @Override public String[] getEnrichmentAgentLabel() { return
+	 * @Overrid)e public String[] getEnrichmentAgentLabel() { return
 	 * fulldoc.getEnrichmentAgentLabel(); }
 	 */
 
@@ -276,12 +283,13 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public boolean isUserGeneratedContent() {
-		if (StringArrayUtils.isNotBlank(fulldoc.getEdmUGC())) {
-			return StringUtils.equalsIgnoreCase(fulldoc.getEdmUGC()[0], "true");
+		if (StringArrayUtils.isNotBlank(shortcut.get("EdmUGC"))) {
+			return StringUtils.equalsIgnoreCase(shortcut.get("EdmUGC")[0], "true");
 		}
 		return false;
 	}
 
+	/*
 	@Override
 	public String[] getDctermsAlternative() {
 		return fulldoc.getDctermsAlternative();
@@ -311,6 +319,7 @@ public class FullBeanDecorator implements FullBean {
 	public String[] getDctermsHasPart() {
 		return fulldoc.getDctermsHasPart();
 	}
+	*/
 
 	public String[] getDctermsHasVersion() {
 		List<String> items = new ArrayList<String>();
@@ -328,6 +337,7 @@ public class FullBeanDecorator implements FullBean {
 		return StringArrayUtils.toArray(items);
 	}
 
+	/*
 	@Override
 	public String[] getDctermsIsPartOf() {
 		return fulldoc.getDctermsIsPartOf();
@@ -412,6 +422,7 @@ public class FullBeanDecorator implements FullBean {
 	public String[] getDcCreator() {
 		return fulldoc.getDcCreator();
 	}
+	*/
 
 	public String[] getDcDate() {
 		List<String> items = new ArrayList<String>();
@@ -448,10 +459,12 @@ public class FullBeanDecorator implements FullBean {
 		return StringArrayUtils.toArray(items);
 	}
 
+	/*
 	@Override
 	public String[] getDcIdentifier() {
 		return fulldoc.getDcIdentifier();
 	}
+	*/
 
 	public String[] getDcLanguage() {
 		List<String> items = new ArrayList<String>();
@@ -461,6 +474,7 @@ public class FullBeanDecorator implements FullBean {
 		return StringArrayUtils.toArray(items);
 	}
 
+	/*
 	@Override
 	public String[] getDcPublisher() {
 		return fulldoc.getDcPublisher();
@@ -470,6 +484,7 @@ public class FullBeanDecorator implements FullBean {
 	public String[] getDcRelation() {
 		return fulldoc.getDcRelation();
 	}
+	*/
 
 	public String[] getDcRights() {
 		List<String> items = new ArrayList<String>();
@@ -479,10 +494,12 @@ public class FullBeanDecorator implements FullBean {
 		return StringArrayUtils.toArray(items);
 	}
 
+	/*
 	@Override
 	public String[] getDcSource() {
 		return fulldoc.getDcSource();
 	}
+	*/
 
 	public String[] getDcSubject() {
 		List<String> items = new ArrayList<String>();
@@ -532,7 +549,7 @@ public class FullBeanDecorator implements FullBean {
 	//	return fulldoc.getEuropeanaType();
 	//}
 
-
+	/*
 	@Override
 	public String[] getAggregationEdmRights() {
 		return fulldoc.getAggregationEdmRights();
@@ -592,6 +609,7 @@ public class FullBeanDecorator implements FullBean {
 	public void setEdmRights(String[] edmRights) {
 		fulldoc.setEdmRights(edmRights);
 	}
+	*/
 
 	@Override
 	public String[] getCountry() {
@@ -608,6 +626,7 @@ public class FullBeanDecorator implements FullBean {
 		fulldoc.setEuropeanaCollectionName(europeanaCollectionName);
 	}
 
+	/*
 	@Override
 	public void setDctermsIsPartOf(String[] dctermsIsPartOf) {
 		fulldoc.setDctermsIsPartOf(dctermsIsPartOf);
@@ -717,12 +736,14 @@ public class FullBeanDecorator implements FullBean {
 	public String[] getEdmIsNextInSequence() {
 		return fulldoc.getEdmIsNextInSequence();
 	}
+	*/
 
 	@Override
 	public String[] getUserTags() {
 		return fulldoc.getUserTags();
 	}
 
+	/*
 	@Override
 	public List<Map<String, String>> getEdmAgentAltLabels() {
 		return fulldoc.getEdmAgentAltLabels();
@@ -802,6 +823,7 @@ public class FullBeanDecorator implements FullBean {
 	public String[] getEdmWebResourceEdmRights() {
 		return fulldoc.getEdmWebResourceEdmRights();
 	}
+	*/
 
 	@Override
 	public List<? extends Place> getPlaces() {
@@ -968,16 +990,19 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getWho();
 	}
 
+	/*
 	@Override
 	public void setUgc(String[] ugc) {
 		fulldoc.setUgc(ugc);
 	}
+	*/
 
 	@Override
 	public EuropeanaAggregation getEuropeanaAggregation() {
 		return fulldoc.getEuropeanaAggregation();
 	}
 
+	/*
 	@Override
 	public void setEdmTimespanBroaderTerm(String[] edmTimespanBroaderTerm) {
 		fulldoc.setEdmTimespanBroaderTerm(edmTimespanBroaderTerm);
@@ -997,12 +1022,14 @@ public class FullBeanDecorator implements FullBean {
 	public void setEdmPlaceBroaderTerm(String[] edmPlaceBroaderTerm) {
 		fulldoc.setEdmPlaceBroaderTerm(edmPlaceBroaderTerm);
 	}
+	*/
 
 	@Override
 	public void setEuropeanaAggregation(EuropeanaAggregation europeanaAggregation) {
 		fulldoc.setEuropeanaAggregation(europeanaAggregation);
 	}
 
+	/*
 	@Override
 	public String getPreviewNoDistribute() {
 		return fulldoc.getPreviewNoDistribute();
@@ -1012,4 +1039,5 @@ public class FullBeanDecorator implements FullBean {
 	public void setPreviewNoDistribute(String previewNoDistribute) {
 		fulldoc.setPreviewNoDistribute(previewNoDistribute);
 	}
+	*/
 }

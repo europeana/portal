@@ -34,6 +34,7 @@ import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.controllers.ObjectController;
@@ -49,6 +50,7 @@ import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgElement;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
+import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
 import eu.europeana.portal2.web.util.WebUtils;
@@ -94,10 +96,11 @@ public class FullDocPage extends FullDocPreparation {
 	 * @return image reference
 	 */
 	public String getImageRef() {
-		return StringArrayUtils.isNotBlank(document.getEdmIsShownBy()) 
-			? document.getEdmIsShownBy()[0]
-			: document.getEdmIsShownAt()[0];
+		return StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy")) 
+			? shortcut.get("EdmIsShownBy")[0]
+			: shortcut.get("EdmIsShownAt")[0];
 	}
+
 
 	private String lightboxRef = null;
 	private boolean lightboxRefChecked = false;
@@ -114,15 +117,15 @@ public class FullDocPage extends FullDocPreparation {
 	 * */
 	public String getLightboxRef() {
 		if (!lightboxRefChecked) {
-			if (StringArrayUtils.isBlank(document.getEdmIsShownBy())
-					&& StringArrayUtils.isBlank(document.getEdmIsShownAt())) {
+			if (StringArrayUtils.isBlank(shortcut.get("EdmIsShownBy"))
+					&& StringArrayUtils.isBlank(shortcut.get("EdmIsShownAt"))) {
 				lightboxRef = null;
 			}
-			String shownBy = document.getEdmIsShownBy()[0] != null
-					? StringUtils.substringBefore(document.getEdmIsShownBy()[0], "?")
+			String shownBy = shortcut.get("EdmIsShownBy")[0] != null
+					? StringUtils.substringBefore(shortcut.get("EdmIsShownBy")[0], "?")
 					: null;
-			String shownAt = document.getEdmIsShownAt()[0] != null
-					? StringUtils.substringBefore(document.getEdmIsShownAt()[0], "?")
+			String shownAt = shortcut.get("EdmIsShownAt")[0] != null
+					? StringUtils.substringBefore(shortcut.get("EdmIsShownAt")[0], "?")
 					: "";
 			if (StringUtils.startsWith(shownBy, "mms")
 					&& StringUtils.startsWith(shownAt, "mms")) {
@@ -133,15 +136,15 @@ public class FullDocPage extends FullDocPreparation {
 
 			if (WebUtils.checkMimeType(shownBy) != null) {
 				lightboxRef = shownBy;
-				String type = fileNameMap.getContentTypeFor(document.getEdmIsShownBy()[0]);
+				String type = fileNameMap.getContentTypeFor(shortcut.get("EdmIsShownBy")[0]);
 				if (WebUtils.checkMimeType(type) != null) {
-					lightboxRef = document.getEdmIsShownBy()[0];
+					lightboxRef = shortcut.get("EdmIsShownBy")[0];
 				}
 			} else if (WebUtils.checkMimeType(shownAt) != null) {
 				lightboxRef = shownAt;
-				String type = fileNameMap.getContentTypeFor(document.getEdmIsShownAt()[0]);
+				String type = fileNameMap.getContentTypeFor(shortcut.get("EdmIsShownAt")[0]);
 				if (WebUtils.checkMimeType(type) != null) {
-					lightboxRef = document.getEdmIsShownAt()[0];
+					lightboxRef = shortcut.get("EdmIsShownAt")[0];
 				}
 			}
 
@@ -151,7 +154,7 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public boolean isEuropeanaIsShownBy() {
-		return StringArrayUtils.isNotBlank(document.getEdmIsShownBy());
+		return StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy"));
 	}
 
 	/**
@@ -165,55 +168,55 @@ public class FullDocPage extends FullDocPreparation {
 
 		addMetaField(fields, Field.EUROPEANA_URI, document.getId());
 		addMetaField(fields, Field.EUROPEANA_COUNTRY, getDocument().getEdmCountry());
-		addMetaField(fields, Field.EUROPEANA_PROVIDER, document.getEdmProvider());
+		addMetaField(fields, Field.EUROPEANA_PROVIDER, shortcut.get("EdmProvider"));
 		addMetaField(fields, Field.EUROPEANA_COLLECTIONNAME, document.getEuropeanaCollectionName());
-		addMetaField(fields, Field.EUROPEANA_ISSHOWNAT, document.getEdmIsShownAt());
-		addMetaField(fields, Field.EUROPEANA_ISSHOWNBY, document.getEdmIsShownBy());
+		addMetaField(fields, Field.EUROPEANA_ISSHOWNAT, shortcut.get("EdmIsShownAt"));
+		addMetaField(fields, Field.EUROPEANA_ISSHOWNBY, shortcut.get("EdmIsShownBy"));
 		// addMetaField(fields, Field.EUROPEANA_OBJECT, document.getThumbnails());
-		addMetaField(fields, Field.EUROPEANA_OBJECT, document.getEdmObject());
+		addMetaField(fields, Field.EUROPEANA_OBJECT, shortcut.get("EdmObject"));
 		addMetaField(fields, Field.EUROPEANA_LANGUAGE, getDocument().getEdmLanguage());
 		// addMetaField(fields, Field.EUROPEANA_TYPE, document.getType().toString());
 		// addMetaField(fields, Field.EUROPEANA_USERTAG, document.getEdmUserTag());
 		// addMetaField(fields, Field.EUROPEANA_YEAR, getDocument().getEdmYear());
-		addMetaField(fields, Field.EUROPEANA_RIGHTS, document.getEdmRights());
+		addMetaField(fields, Field.EUROPEANA_RIGHTS, shortcut.get("EdmRights"));
 		addMetaField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEdmDataProvider());
-		addMetaField(fields, Field.EUROPEANA_UGC, document.getEdmUGC());
+		addMetaField(fields, Field.EUROPEANA_UGC, shortcut.get("EdmUGC"));
 
-		addMetaField(fields, Field.DCTERMS_ALTERNATIVE, document.getDctermsAlternative());
-		addMetaField(fields, Field.DCTERMS_CONFORMSTO, document.getDctermsConformsTo());
-		addMetaField(fields, Field.DCTERMS_CREATED, document.getDctermsCreated());
-		addMetaField(fields, Field.DCTERMS_EXTENT, document.getDctermsExtent());
-		addMetaField(fields, Field.DCTERMS_HASFORMAT, document.getDctermsHasFormat());
-		addMetaField(fields, Field.DCTERMS_HASPART, document.getDctermsHasPart());
+		addMetaField(fields, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
+		addMetaField(fields, Field.DCTERMS_CONFORMSTO, shortcut.get("DctermsConformsTo"));
+		addMetaField(fields, Field.DCTERMS_CREATED, shortcut.get("DctermsCreated"));
+		addMetaField(fields, Field.DCTERMS_EXTENT, shortcut.get("DctermsExtent"));
+		addMetaField(fields, Field.DCTERMS_HASFORMAT, shortcut.get("DctermsHasFormat"));
+		addMetaField(fields, Field.DCTERMS_HASPART, shortcut.get("DctermsHasPart"));
 		addMetaField(fields, Field.DCTERMS_HASVERSION, getDocument().getDctermsHasVersion());
 		addMetaField(fields, Field.DCTERMS_ISFORMATOF, getDocument().getDctermsIsFormatOf());
-		addMetaField(fields, Field.DCTERMS_ISPARTOF, document.getDctermsIsPartOf());
-		addMetaField(fields, Field.DCTERMS_ISREFERENCEDBY, document.getDctermsIsReferencedBy());
-		addMetaField(fields, Field.DCTERMS_ISREPLACEDBY, document.getDctermsIsReplacedBy());
-		addMetaField(fields, Field.DCTERMS_ISREQUIREDBY, document.getDctermsIsRequiredBy());
-		addMetaField(fields, Field.DCTERMS_ISSUED, document.getDctermsIssued());
-		addMetaField(fields, Field.DCTERMS_ISVERSIONOF, document.getDctermsIsVersionOf());
-		addMetaField(fields, Field.DCTERMS_MEDIUM, document.getDctermsMedium());
-		addMetaField(fields, Field.DCTERMS_PROVENANCE, document.getDctermsProvenance());
-		addMetaField(fields, Field.DCTERMS_REFERENCES, document.getDctermsReferences());
-		addMetaField(fields, Field.DCTERMS_REPLACES, document.getDctermsReplaces());
-		addMetaField(fields, Field.DCTERMS_REQUIRES, document.getDctermsRequires());
-		addMetaField(fields, Field.DCTERMS_SPATIAL, document.getDctermsSpatial());
-		addMetaField(fields, Field.DCTERMS_TABLEOFCONTENTS, document.getDctermsTableOfContents());
-		addMetaField(fields, Field.DCTERMS_TEMPORAL, document.getDctermsTemporal());
+		addMetaField(fields, Field.DCTERMS_ISPARTOF, shortcut.get("DctermsIsPartOf"));
+		addMetaField(fields, Field.DCTERMS_ISREFERENCEDBY, shortcut.get("DctermsIsReferencedBy"));
+		addMetaField(fields, Field.DCTERMS_ISREPLACEDBY, shortcut.get("DctermsIsReplacedBy"));
+		addMetaField(fields, Field.DCTERMS_ISREQUIREDBY, shortcut.get("DctermsIsRequiredBy"));
+		addMetaField(fields, Field.DCTERMS_ISSUED, shortcut.get("DctermsIssued"));
+		addMetaField(fields, Field.DCTERMS_ISVERSIONOF, shortcut.get("DctermsIsVersionOf"));
+		addMetaField(fields, Field.DCTERMS_MEDIUM, shortcut.get("DctermsMedium"));
+		addMetaField(fields, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
+		addMetaField(fields, Field.DCTERMS_REFERENCES, shortcut.get("DctermsReferences"));
+		addMetaField(fields, Field.DCTERMS_REPLACES, shortcut.get("DctermsReplaces"));
+		addMetaField(fields, Field.DCTERMS_REQUIRES, shortcut.get("DctermsRequires"));
+		addMetaField(fields, Field.DCTERMS_SPATIAL, shortcut.get("DctermsSpatial"));
+		addMetaField(fields, Field.DCTERMS_TABLEOFCONTENTS, shortcut.get("DctermsTableOfContents"));
+		addMetaField(fields, Field.DCTERMS_TEMPORAL, shortcut.get("DctermsTemporal"));
 
-		addMetaField(fields, Field.DC_CONTRIBUTOR, document.getDcContributor());
-		addMetaField(fields, Field.DC_COVERAGE, document.getDcCoverage());
-		addMetaField(fields, Field.DC_CREATOR, document.getDcCreator());
+		addMetaField(fields, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
+		addMetaField(fields, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
+		addMetaField(fields, Field.DC_CREATOR, shortcut.get("DcCreator"));
 		addMetaField(fields, Field.DC_DATE, getDocument().getDcDate());
 		addMetaField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription());
 		addMetaField(fields, Field.DC_FORMAT, getDocument().getDcFormat());
-		addMetaField(fields, Field.DC_IDENTIFIER, document.getDcIdentifier());
+		addMetaField(fields, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
 		addMetaField(fields, Field.DC_LANGUAGE, getDocument().getDcLanguage());
-		addMetaField(fields, Field.DC_PUBLISHER, document.getDcPublisher());
-		addMetaField(fields, Field.DC_RELATION, document.getDcRelation());
+		addMetaField(fields, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
+		addMetaField(fields, Field.DC_RELATION, shortcut.get("DcRelation"));
 		addMetaField(fields, Field.DC_RIGHTS, getDocument().getDcRights());
-		addMetaField(fields, Field.DC_SOURCE, document.getDcSource());
+		addMetaField(fields, Field.DC_SOURCE, shortcut.get("DcSource"));
 		addMetaField(fields, Field.DC_SUBJECT, getDocument().getDcSubject());
 		addMetaField(fields, Field.DC_TITLE, getDocument().getDcTitle());
 		addMetaField(fields, Field.DC_TYPE, getDocument().getDcType());
@@ -311,16 +314,15 @@ public class FullDocPage extends FullDocPreparation {
 	public RightsValue getRightsOption() {
 		if (rightsOption == null) {
 			// ANDY: avoid null pointer here but edm rights aren't being mapped properly. 
-			if(document.getEdmRights() != null){
-				rightsOption = RightsValue.safeValueByUrl(document.getEdmRights()[0]);				
+			if(shortcut.get("EdmRights") != null){
+				rightsOption = RightsValue.safeValueByUrl(shortcut.get("EdmRights")[0]);
 			}
-			
 		}
 		return rightsOption;
 	}
 
 	public String getThumbnailUrl() throws UnsupportedEncodingException {
-		String thumbnail = URLEncoder.encode(document.getEdmObject()[0], "utf-8");
+		String thumbnail = URLEncoder.encode(shortcut.get("EdmObject")[0], "utf-8");
 		// TODO: check isUseCache()
 		// if (isUseCache()) {
 		boolean useCache = true;
@@ -361,8 +363,9 @@ public class FullDocPage extends FullDocPreparation {
 			}
 		}
 
+		FullBeanShortcut fbShourtcut = new FullBeanShortcut((FullBeanImpl)getFullBeanView().getFullDoc());
 		return KmlPresentation.getKmlDescriptor(getMetaCanonicalUrl(),
-				getCacheUrl(), WebUtils.returnFirst(doc.getEdmObject(), ""),
+				getCacheUrl(), WebUtils.returnFirst(fbShourtcut.get("EdmObject"), ""),
 				WebUtils.returnFirst(doc.getTitle(), ""), descr, sDate, sPlace);
 	}
 
@@ -377,8 +380,8 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	public String getPageTitle() {
 		StringBuilder title = new StringBuilder(getBaseTitle());
-		if (StringArrayUtils.isNotBlank(document.getDcCreator())) {
-			String creator = document.getDcCreator()[0];
+		if (StringArrayUtils.isNotBlank(shortcut.get("DcCreator"))) {
+			String creator = shortcut.get("DcCreator")[0];
 			// clean up creator first
 			creator = creator.replaceAll("[\\<({\\[].*?[})\\>\\]]", ""); // (..)
 																			// [..]
@@ -400,8 +403,8 @@ public class FullDocPage extends FullDocPreparation {
 
 		if (StringArrayUtils.isNotBlank(getDocument().getDcTitle())) {
 			dcTitle = getDocument().getDcTitle()[0];
-		} else if (StringArrayUtils.isNotBlank(document.getDctermsAlternative())) {
-			dcTitle = document.getDctermsAlternative()[0];
+		} else if (StringArrayUtils.isNotBlank(shortcut.get("DctermsAlternative"))) {
+			dcTitle = shortcut.get("DctermsAlternative")[0];
 		} else if (StringArrayUtils.isNotBlank(getDocument().getDcDescription())) {
 			dcTitle = getDocument().getDcDescription()[0];
 			if (dcTitle.indexOf("<br/>\n") > 0) {
@@ -423,12 +426,12 @@ public class FullDocPage extends FullDocPreparation {
 	 * @return reference url
 	 */
 	public String getUrlRef() {
-		return StringUtils.defaultIfBlank(document.getEdmIsShownAt()[0],
-				StringUtils.defaultIfBlank(document.getEdmIsShownBy()[0], "#"));
+		return StringUtils.defaultIfBlank(shortcut.get("EdmIsShownAt")[0],
+				StringUtils.defaultIfBlank(shortcut.get("EdmIsShownBy")[0], "#"));
 	}
 
 	public boolean isUrlRefIsShownBy() {
-		return StringUtils.isBlank(document.getEdmIsShownAt()[0])
+		return StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])
 				&& isEuropeanaIsShownBy();
 	}
 
@@ -444,7 +447,7 @@ public class FullDocPage extends FullDocPreparation {
 		if (isHasDataProvider() && !ArrayUtils.contains(shownAtProviderOverride, getCollectionId())) {
 			return getDocument().getEdmDataProvider()[0];
 		} else {
-			return getDocument().getEdmProvider()[0];
+			return shortcut.get("EdmProvider")[0];
 		}
 	}
 
@@ -561,7 +564,7 @@ public class FullDocPage extends FullDocPreparation {
 	public String getReturnTo() {
 		return returnTo.toString();
 	}
-	
+
 	/**
 	 * Null-returning getter to satisfy EL
 	 */

@@ -9,6 +9,10 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.definitions.solr.entity.Proxy;
+import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
+import eu.europeana.corelib.solr.entity.AggregationImpl;
+import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class BeanUtil {
 
@@ -78,4 +82,73 @@ public class BeanUtil {
 		}
 		return false;
 	}
+	
+	private static Method getProxyMethod(String function) {
+		final Method[] methods = Proxy.class.getMethods();
+		for (Method method : methods) {
+			if (method.getName().equals(function)) {
+				return method;
+			}
+		}
+		return null;
+	}
+
+	private static Method getAggregationMethod(String function) {
+		final Method[] methods = AggregationImpl.class.getMethods();
+		for (Method method : methods) {
+			if (method.getName().equals(function)) {
+				return method;
+			}
+		}
+		return null;
+	}
+
+	public String[] getProxyValue(FullBeanImpl document, String function) {
+		Method method = getProxyMethod(function);
+		if (method == null) {
+			return null;
+		}
+		if (document.getProxies() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Proxy proxy : document.getProxies()) {
+				try {
+					StringArrayUtils.addToList(items, (String[])method.invoke(proxy));
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getAggregationValue(FullBeanImpl document, String function) {
+		Method method = getAggregationMethod(function);
+		if (method == null) {
+			return null;
+		}
+		if (document.getAggregations() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Object _aggregation : document.getAggregations()) {
+				AggregationImpl aggregation = (AggregationImpl)_aggregation;
+				try {
+					StringArrayUtils.addToList(items, (String[])method.invoke(aggregation));
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+
 }

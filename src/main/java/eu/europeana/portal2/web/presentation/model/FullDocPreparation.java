@@ -17,6 +17,8 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +32,9 @@ import org.apache.commons.lang.StringUtils;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
+import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.solr.entity.AggregationImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
@@ -56,9 +60,9 @@ public abstract class FullDocPreparation extends FullDocData {
 		if (fieldsLightbox == null) {
 			fieldsLightbox = new ArrayList<FieldPresentation>();
 
-			addField(fieldsLightbox, Field.DC_CREATOR, document.getDcCreator());
-			addField(fieldsLightbox, Field.DC_RIGHTS, document.getEdmRights());
-			addField(fieldsLightbox, Field.EUROPEANA_DATAPROVIDER, document.getDataProvider());
+			addField(fieldsLightbox, Field.DC_CREATOR, shortcut.get("DcCreator"));
+			addField(fieldsLightbox, Field.DC_RIGHTS, shortcut.get("EdmRights"));
+			addField(fieldsLightbox, Field.EUROPEANA_DATAPROVIDER, shortcut.get("DataProvider"));
 			addField(fieldsLightbox, Field.EUROPEANA_PROVIDER, document.getProvider(),
 					Field.EUROPEANA_COUNTRY.getValues(document.getCountry()));
 		}
@@ -76,16 +80,16 @@ public abstract class FullDocPreparation extends FullDocData {
 			fieldsAdditional = new ArrayList<FieldPresentation>();
 
 			// addField(fieldsAdditional, Field.DC_RIGHTS, document.getRights());
-			addField(fieldsAdditional, Field.DC_RIGHTS, document.getAggregationDcRights());
-			addField(fieldsAdditional, Field.DC_IDENTIFIER, document.getDcIdentifier());
+			addField(fieldsAdditional, Field.DC_RIGHTS, shortcut.get("AggregationDcRights"));
+			addField(fieldsAdditional, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
 			addField(fieldsAdditional, Field.DC_FORMAT, getDocument().getDcFormat(),
-					document.getDctermsExtent(), document.getDctermsMedium());
+					shortcut.get("DctermsExtent"), shortcut.get("DctermsMedium"));
 			//addField(fieldsAdditional, Field.DC_LANGUAGE, document.getDcLanguage());
 			addField(fieldsAdditional, Field.DC_LANGUAGE, document.getLanguage());
-			addField(fieldsAdditional, Field.DC_SOURCE, document.getDcSource());
-			addField(fieldsAdditional, Field.DCTERMS_PROVENANCE, document.getDctermsProvenance());
-			addField(fieldsAdditional, Field.DC_PUBLISHER, document.getDcPublisher());
-			addField(fieldsAdditional, Field.DCTERMS_ISSUED, document.getDctermsIssued());
+			addField(fieldsAdditional, Field.DC_SOURCE, shortcut.get("DcSource"));
+			addField(fieldsAdditional, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
+			addField(fieldsAdditional, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
+			addField(fieldsAdditional, Field.DCTERMS_ISSUED, shortcut.get("DctermsIssued"));
 			addField(fieldsAdditional, Field.EUROPEANA_COLLECTIONNAME, document.getEuropeanaCollectionName());
 		}
 		return fieldsAdditional;
@@ -209,10 +213,10 @@ public abstract class FullDocPreparation extends FullDocData {
 				}
 				addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
 				if (timespan.getBegin() != null) {
-					addField(when, Field.ENRICHMENT_PERIOD_BEGIN, new String[]{timespan.getBegin()});
+					addField(when, Field.ENRICHMENT_PERIOD_BEGIN, timespan.getBegin());
 				}
 				if (timespan.getEnd() != null) {
-					addField(when, Field.ENRICHMENT_PERIOD_END, new String[]{timespan.getEnd()});
+					addField(when, Field.ENRICHMENT_PERIOD_END, timespan.getEnd());
 				}
 			}
 		}
@@ -231,34 +235,34 @@ public abstract class FullDocPreparation extends FullDocData {
 
 			fields = new ArrayList<FieldPresentation>();
 
-			addField(fields, Field.DCTERMS_ALTERNATIVE, document.getDctermsAlternative());
-			addField(fields, Field.DC_CREATOR, document.getDcCreator());
-			addField(fields, Field.DC_CONTRIBUTOR, document.getDcContributor());
-			addField(fields, Field.DC_COVERAGE, document.getDcCoverage());
-			addField(fields, Field.DC_DATE, getDocument().getDcDate(), document.getDctermsCreated());
-			addField(fields, Field.DCTERMS_TEMPORAL, document.getDctermsTemporal());
-			addField(fields, Field.DCTERMS_SPATIAL, document.getDctermsSpatial());
+			addField(fields, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
+			addField(fields, Field.DC_CREATOR, shortcut.get("DcCreator"));
+			addField(fields, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
+			addField(fields, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
+			addField(fields, Field.DC_DATE, getDocument().getDcDate(), shortcut.get("DctermsCreated"));
+			addField(fields, Field.DCTERMS_TEMPORAL, shortcut.get("DctermsTemporal"));
+			addField(fields, Field.DCTERMS_SPATIAL, shortcut.get("DctermsSpatial"));
 			addField(fields, Field.DC_TYPE, getDocument().getDcType());
 			addField(fields, Field.DC_SUBJECT, getDocument().getDcSubject());
-			addField(fields, Field.DC_RELATION, document.getDcRelation(),
-					document.getDctermsReferences(),
-					document.getDctermsIsReferencedBy(),
-					document.getDctermsIsReplacedBy(),
-					document.getDctermsIsRequiredBy(),
-					document.getDctermsIsPartOf(),
-					document.getDctermsHasPart(),
-					document.getDctermsReplaces(),
-					document.getDctermsRequires(),
-					document.getDctermsIsVersionOf(),
+			addField(fields, Field.DC_RELATION, shortcut.get("DcRelation"),
+					shortcut.get("DctermsReferences"),
+					shortcut.get("DctermsIsReferencedBy"),
+					shortcut.get("DctermsIsReplacedBy"),
+					shortcut.get("DctermsIsRequiredBy"),
+					shortcut.get("DctermsIsPartOf"),
+					shortcut.get("DctermsHasPart"),
+					shortcut.get("DctermsReplaces"),
+					shortcut.get("DctermsRequires"),
+					shortcut.get("DctermsIsVersionOf"),
 					getDocument().getDctermsHasVersion(),
-					document.getDctermsConformsTo(),
-					document.getDctermsHasFormat(),
+					shortcut.get("DctermsConformsTo"),
+					shortcut.get("DctermsHasFormat"),
 					getDocument().getDctermsIsFormatOf());
 			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription(),
-					document.getDctermsTableOfContents());
+					shortcut.get("DctermsTableOfContents"));
 			// addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEuropeanaDataProvider());
 			addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEdmDataProvider());
-			addField(fields, Field.EUROPEANA_PROVIDER, document.getEdmProvider(),
+			addField(fields, Field.EUROPEANA_PROVIDER, shortcut.get("EdmProvider"),
 					Field.EUROPEANA_COUNTRY.getValues(new String[]{getDocument().getEdmCountry()}));
 		}
 		return fields;
@@ -298,4 +302,290 @@ public abstract class FullDocPreparation extends FullDocData {
 			}
 		}
 	}
+
+	/*
+	public String[] getEdmIsShownBy() {
+		List<String> items = new ArrayList<String>();
+		for (Object aggregation : document.getAggregations()) {
+			items.add(((AggregationImpl)aggregation).getEdmIsShownBy());
+		}
+		return StringArrayUtils.toArray(items);
+	}
+
+	public String[] getEdmIsShownAt() {
+		List<String> items = new ArrayList<String>();
+		for (Object aggregation : document.getAggregations()) {
+			items.add(((AggregationImpl)aggregation).getEdmIsShownAt());
+		}
+		return StringArrayUtils.toArray(items);
+	}
+
+	public String[] getEdmRights() {
+		List<String> items = new ArrayList<String>();
+		for (Object aggregation : document.getAggregations()) {
+			items.add(((AggregationImpl)aggregation).getEdmRights());
+		}
+		return StringArrayUtils.toArray(items);
+	}
+
+	public String[] getEdmProvider() {
+		if (document.getAggregations() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Object aggregation : document.getAggregations()) {
+				items.add(((AggregationImpl)aggregation).getEdmProvider());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+	
+	public String[] getEdmObject() {
+		if (document.getAggregations() != null) {
+			ArrayList<String> items = new ArrayList<String>();
+			for (Object aggregation : document.getAggregations()) {
+				items.add(((AggregationImpl)aggregation).getEdmObject());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getEdmUGC() {
+		if (document.getAggregations() != null) {
+			ArrayList<String> items = new ArrayList<String>();
+			for (Object aggregation : document.getAggregations()) {
+				items.add(((AggregationImpl)aggregation).getEdmUgc());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getDataProvider() {
+		// What if more than one aggregations point to a providedCHO (more
+		// edm:dataProvider)
+		if (document.getAggregations() != null) {
+			ArrayList<String> items = new ArrayList<String>();
+			for (Object aggregation : document.getAggregations()) {
+				items.add(((AggregationImpl)aggregation).getEdmDataProvider());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getAggregationDcRights() {
+		if (document.getAggregations() != null) {
+			ArrayList<String> items = new ArrayList<String>();
+			for (Object aggregation : document.getAggregations()) {
+				StringArrayUtils.addToList(items, ((AggregationImpl)aggregation).getDcRights());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getDctermsAlternative() {
+		if (document.getProxies() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Proxy proxy : document.getProxies()) {
+				StringArrayUtils.addToList(items, proxy.getDctermsAlternative());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getDcCreator() {
+		if (document.getProxies() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Proxy proxy : document.getProxies()) {
+				StringArrayUtils.addToList(items, proxy.getDcCreator());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getDcIdentifier() {
+		if (document.getProxies() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Proxy proxy : document.getProxies()) {
+				StringArrayUtils.addToList(items, proxy.getDcIdentifier());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getDctermsExtent() {
+		if (document.getProxies() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Proxy proxy : document.getProxies()) {
+				StringArrayUtils.addToList(items, proxy.getDctermsExtent());
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getProxyValue(String function) {
+		Method method = getProxyMethod(function);
+		if (method == null) {
+			return null;
+		}
+		if (document.getProxies() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Proxy proxy : document.getProxies()) {
+				try {
+					StringArrayUtils.addToList(items, (String[])method.invoke(proxy));
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	public String[] getAggregationValue(String function) {
+		Method method = getAggregationMethod(function);
+		if (method == null) {
+			return null;
+		}
+		if (document.getAggregations() != null) {
+			List<String> items = new ArrayList<String>();
+			for (Object _aggregation : document.getAggregations()) {
+				AggregationImpl aggregation = (AggregationImpl)_aggregation;
+				try {
+					StringArrayUtils.addToList(items, (String[])method.invoke(aggregation));
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+			return StringArrayUtils.toArray(items);
+		}
+		return null;
+	}
+
+	private Method getProxyMethod(String function) {
+		final Method[] methods = Proxy.class.getMethods();
+		for (Method method : methods) {
+			if (method.getName().equals(function)) {
+				return method;
+			}
+		}
+		return null;
+	}
+
+	private Method getAggregationMethod(String function) {
+		final Method[] methods = AggregationImpl.class.getMethods();
+		for (Method method : methods) {
+			if (method.getName().equals(function)) {
+				return method;
+			}
+		}
+		return null;
+	}
+
+	public String[] getDctermsMedium() {
+		return getProxyValue("getDctermsMedium");
+	}
+
+	public String[] getDcSource() {
+		return getProxyValue("getDcSource");
+	}
+
+	public String[] getDctermsProvenance() {
+		return getProxyValue("getDctermsProvenance");
+	}
+
+	public String[] getDcPublisher() {
+		return getProxyValue("getDcPublisher");
+	}
+
+	public String[] getDctermsIssued() {
+		return getProxyValue("getDctermsIssued");
+	}
+
+	public String[] getDcContributor() {
+		return getProxyValue("getDcContributor");
+	}
+
+	public String[] getDcCoverage() {
+		return getProxyValue("getDcCoverage");
+	}
+
+	public String[] getDctermsCreated() {
+		return getProxyValue("getDctermsCreated");
+	}
+
+	public String[] getDctermsTemporal() {
+		return getProxyValue("getDctermsTemporal");
+	}
+
+	public String[] getDctermsSpatial() {
+		return getProxyValue("getDctermsSpatial");
+	}
+
+	public String[] getDcRelation() {
+		return getProxyValue("getDcRelation");
+	}
+
+	public String[] getDctermsReferences() {
+		return getProxyValue("getDctermsReferences");
+	}
+
+	public String[] getDctermsIsReferencedBy() {
+		return getProxyValue("getDctermsIsReferencedBy");
+	}
+
+	public String[] getDctermsIsReplacedBy() {
+		return getProxyValue("getDctermsIsReplacedBy");
+	}
+
+	public String[] getDctermsIsRequiredBy() {
+		return getProxyValue("getDctermsIsRequiredBy");
+	}
+
+	public String[] getDctermsIsPartOf() {
+		return getProxyValue("getDctermsIsPartOf");
+	}
+
+	public String[] getDctermsHasPart() {
+		return getProxyValue("getDctermsHasPart");
+	}
+
+	public String[] getDctermsReplaces() {
+		return getProxyValue("getDctermsReplaces");
+	}
+
+	public String[] getDctermsRequires() {
+		return getProxyValue("getDctermsRequires");
+	}
+
+	public String[] getDctermsIsVersionOf() {
+		return getProxyValue("getDctermsIsVersionOf");
+	}
+
+	public String[] getDctermsConformsTo() {
+		return getProxyValue("getDctermsConformsTo");
+	}
+
+	public String[] getDctermsHasFormat() {
+		return getProxyValue("getDctermsHasFormat");
+	}
+
+	public String[] getDctermsTableOfContents() {
+		return getProxyValue("getDctermsTableOfContents");
+	}
+	*/
 }

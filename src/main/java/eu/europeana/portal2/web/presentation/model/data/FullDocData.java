@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
@@ -25,12 +26,15 @@ import eu.europeana.portal2.web.presentation.model.abstracts.RestLocationsData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanViewDecorator;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
+import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public abstract class FullDocData extends RestLocationsData<Void> {
 
 	protected FullBeanView fullBeanView;
 
 	protected FullBean document;
+	
+	protected FullBeanShortcut shortcut;
 
 	protected boolean showFields = false;
 
@@ -43,6 +47,8 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected SearchPageEnum returnTo = SearchPageEnum.getDefault();
 
 	protected String[] shownAtProviderOverride;
+	
+	protected FullBeanDecorator decorator;
 
 	public void setFormat(String format) {
 		this.format = format;
@@ -55,6 +61,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	public void setFullBeanView(FullBeanView fullBeanView) {
 		this.fullBeanView = fullBeanView;
 		this.document = fullBeanView.getFullDoc();
+		this.shortcut = new FullBeanShortcut((FullBeanImpl)this.document);
 	}
 
 	public FullBeanViewDecorator getFullBeanView() {
@@ -70,7 +77,10 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	}
 
 	public FullBeanDecorator getDocument() {
-		return new FullBeanDecorator(document);
+		if (decorator == null) {
+			decorator = new FullBeanDecorator(document);
+		}
+		return decorator;
 	}
 
 	public void setJsonCallback(String jsonCallback) {
@@ -87,5 +97,9 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public void setShownAtProviderOverride(String[] shownAtProviderOverride) {
 		this.shownAtProviderOverride = shownAtProviderOverride;
+	}
+	
+	public FullBeanShortcut getShourtcut() {
+		return shortcut;
 	}
 }
