@@ -247,7 +247,7 @@ eu.europeana.fulldoc = {
 			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory
 		}]);
 	
-		/*
+		
 		js.loader.loadScripts([{
 			name : 'tabs',
 			file : 'tabs' + js.min_suffix + '.js' + js.cache_helper,
@@ -255,7 +255,7 @@ eu.europeana.fulldoc = {
 			dependencies : [ 'carousel' ],
 			callback : function() {self.addTabs();}
 		}]);
-		*/
+		
 		
 		js.loader.loadScripts([{
 			file : 'citation' + js.min_suffix + '.js' + js.cache_helper,
@@ -342,12 +342,16 @@ eu.europeana.fulldoc = {
 	
 	addTabs : function() {
 		eu.europeana.tabs = {};
+		// Andy: short-circuit tabs.  Dan: can you help?
+		eu.europeana.tabs.explore = {options:{menu_ids:{}},toggleTab:function(){}};
+		/*
 		eu.europeana.tabs.explore = new com.gmtplusone.tabs(
 			'#explore-further',
 			{ callbacks : { opened : eu.europeana.fulldoc.tabFeedback }	}
 		);
 		
-		eu.europeana.tabs.explore.init( eu.europeana.fulldoc.addCarousels );		
+		eu.europeana.tabs.explore.init( eu.europeana.fulldoc.addCarousels );
+		*/
 	},
 	
 	
