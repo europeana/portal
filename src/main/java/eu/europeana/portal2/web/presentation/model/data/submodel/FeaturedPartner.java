@@ -35,11 +35,12 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
  * 
  * @author peter.kiraly@kb.nl
  */
-public class FeaturedPartner {
+public class FeaturedPartner extends StaticFeaturedPartner {
 
 	private int i;
 
 	public FeaturedPartner(int i) {
+		super(i);
 		this.i = i;
 	}
 
