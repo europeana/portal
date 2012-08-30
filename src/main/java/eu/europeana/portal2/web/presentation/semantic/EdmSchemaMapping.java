@@ -284,11 +284,11 @@ public class EdmSchemaMapping {
 					new FieldInfo("what", "what", "String[]", mapName),
 					new FieldInfo("where", "where", "String[]", mapName),
 					new FieldInfo("when", "when", "String[]", mapName),
-					new FieldInfo("edmTimespanBroaderTerm", "edmTimespanBroaderTerm", "String[]", mapName),
-					new FieldInfo("edmTimespanBroaderLabel", "edmTimespanBroaderLabel", "List<Map<String,String>>", mapName),
-					new FieldInfo("edmConceptBroaderLabel", "edmConceptBroaderLabel", "List<Map<String,String>>", mapName),
-					new FieldInfo("edmPlaceBroaderTerm", "edmPlaceBroaderTerm", "String[]", mapName),
-					new FieldInfo("previewNoDistribute", "previewNoDistribute", "String", mapName),
+					// new FieldInfo("edmTimespanBroaderTerm", "edmTimespanBroaderTerm", "String[]", mapName),
+					// new FieldInfo("edmTimespanBroaderLabel", "edmTimespanBroaderLabel", "List<Map<String,String>>", mapName),
+					// new FieldInfo("edmConceptBroaderLabel", "edmConceptBroaderLabel", "List<Map<String,String>>", mapName),
+					// new FieldInfo("edmPlaceBroaderTerm", "edmPlaceBroaderTerm", "String[]", mapName),
+					// new FieldInfo("previewNoDistribute", "previewNoDistribute", "String", mapName),
 					new FieldInfo("europeanaCollectionName", "europeanaCollectionName", "String[]", mapName)
 				)));
 			}

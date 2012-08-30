@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -42,6 +43,7 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
@@ -63,6 +65,12 @@ public class ObjectController {
 
 	@Resource
 	private SearchService searchService;
+	
+	@Resource 
+	private Configuration configurationService;
+
+	@Resource(name="runtimeConfig")
+	private Properties config;
 
 	@Resource
 	private LocaleInterceptor localeChangeInterceptor;
@@ -106,6 +114,7 @@ public class ObjectController {
 		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 		log.info("Inside the ObjectController....." + locale.getLanguage().toString());
+		log.info("portal.theme from config: " + config.getProperty("portal.theme"));
 		isSoureApi2 = false;
 		
 		FullDocPage model = new FullDocPage();

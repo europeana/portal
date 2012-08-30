@@ -85,6 +85,18 @@
 	</bean>
 
 	<bean id="searchController" class="eu.europeana.portal2.web.controllers.SearchController" />
+	
+	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
+	
+	<!-- a bean for storing configuration properties. -->
+	<bean id="runtimeConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>file:${EUROPEANA_PROPERTIES}</value>
+			</list>
+		</property>
+	</bean>
+
 	<import resource="../portal2-context.xml"/>
 
 </beans>
