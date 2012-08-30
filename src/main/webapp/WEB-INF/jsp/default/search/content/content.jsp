@@ -7,11 +7,8 @@
 	</div>
 </div>
 <div class="row">
-	<div class="three columns">
-		<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/sidebar.jsp" %>	
-	</div>
 	
-	<div class="nine columns">
+	<div class="nine columns push-three">
 		<c:choose>
 			<c:when test="${view == 'tlv'}">
 				<%@ include file="/WEB-INF/jsp/default/timeline/content/timeline.jsp" %>
@@ -24,6 +21,11 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
+
+	<div class="three columns pull-nine">
+		<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/sidebar.jsp" %>	
+	</div>
+
 	
 </div>
 <!-- /content -->
