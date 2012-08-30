@@ -137,7 +137,7 @@ eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
 eu.europeana.vars.msg.search_error = '${search_error}';
 eu.europeana.vars.addthis_pubid = '${search_addthis_pubid}';
-eu.europeana.vars.query = ${search_query};
+eu.europeana.vars.query = '${model.query}';
 
 // url variables to check for timeline / map content 
 eu.europeana.vars.timeline = {};

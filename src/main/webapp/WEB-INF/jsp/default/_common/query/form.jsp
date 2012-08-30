@@ -24,8 +24,8 @@
 				<!-- fieldset-->
 				<%-- search options --%>
 				<div class="search-menu" aria-hidden="true">
-					<span class="hide-ilb-on-phones menu-label">Search...</span>
-					<span class="icon-arrow-3"></span>
+					<span class="hide-ilb-on-phones menu-label">Search</span>
+					<span class="icon-arrow-3 open-menu"></span>
 					<ul>
 						<li class="item">	<a href="" class=""			>All fields</a></li>
 						<li class="item">	<a href="" class="title:"	>Title</a></li>
@@ -48,7 +48,7 @@
 
 
 				</div><input
-					type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" value="${query_value}" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
+					type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
 				/><div
 					id="submit-query" type="submit" class="submit-button" 
 				>

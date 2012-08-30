@@ -60,9 +60,13 @@ eu.europeana.header = {
 			};
 			
 			var setActive = function(val){
+				self.cmp.removeClass("selected");
 				self.cmp.find(".item a").each(function(i, ob){
 					if($(ob).attr("class") == val){
 						$(ob).parent().addClass("active");
+						if(val){
+							self.cmp.addClass("selected");	
+						}
 						setLabel(val);
 					}
 					else{						
@@ -84,20 +88,20 @@ eu.europeana.header = {
 			return {
 				"init" : function(){
 					var input		= $('#query-input');
-					var searchTerm	= input.val();
+					var searchTerm	= eu.europeana.vars.query.replace("*:*", "");
 					
 					self.cmp.find(".item a").each(function(i, ob){
 						var searchType = $(ob).attr("class");
 						if(searchTerm.indexOf(searchType) == 0){
 							setLabel(searchType);
 							input.val(   searchTerm.substr( searchType.length, searchTerm.length)  );
-						}						
+							setActive(searchType);
+						}
 					});
 				},
 				"submit":function(){
 					var active	= self.cmp.find(".item.active a").attr("class");
 					var input	= $('#query-input');
-					
 					input.val( (typeof active == "undefined" ? "" : active) + input.val());
 				}
 			};

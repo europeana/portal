@@ -50,28 +50,6 @@
 					$(this).load();
 				}
 		});
-		
-		
-		/*
-		$("#carousel-1-scale-image").one('load', function() {
-			
-			var parentWidth		= $(this).parent().width();
-			var imgW			= $(this).width();
-			var imgH			= $(this).height();
-			var ratio			= parentWidth / imgW;
-			
-			$("#carousel-1-scale-image").css("display", "none");
-			$("#carousel-1").css("height",  (imgH * ratio) + 50 + 5 + "px");
-
-			jQuery('#carousel-1').galleria({dataSource:carouselData});
-			
-			}).each(function() {
-			  if(this.complete){
-				  $(this).load();
-			  }
-		});setupSearchMenu
-		*/
-		
 	
 		// Make sections collapsible
 		jQuery("#section-blog").Collapsible({

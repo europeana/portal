@@ -85,15 +85,15 @@
 <c:set var="mapview_layers_google_physical"><spring:message code="mapview_layer_google_physical_t" /></c:set>
 <c:set var="mapview_layers_osm_tiles"><spring:message code="mapview_layer_osm_tiles_t" /></c:set>
 
-<c:set var="search_query">
-	<c:choose><c:when test="${model.query}">true</c:when><c:otherwise>false</c:otherwise></c:choose>
-</c:set>
 <c:set var="search_addthis_pubid">
 	<c:choose>
 		<c:when test="${!empty model.addThisId}">${model.addThisId}</c:when>
 		<c:otherwise></c:otherwise>
 	</c:choose>
 </c:set>
+<%--Note: collapse_on_min value 753 corresponds to breakpoint 767 (24 less) /--%>
+<c:set var="breakpoints" value="{collapse_on_min:753}" />
+
 
 <script type="text/javascript">
 <!--
@@ -130,7 +130,7 @@ eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
 eu.europeana.vars.msg.search_error = '${search_error}';
 eu.europeana.vars.addthis_pubid = '${search_addthis_pubid}';
-eu.europeana.vars.query = ${search_query};
+eu.europeana.vars.query = '${model.query}';
 
 // url variables to check for timeline / map content 
 eu.europeana.vars.timeline = {};
@@ -274,4 +274,6 @@ eu.europeana.vars.timeline = {};
 	</c:when>
 </c:choose>
 //-->
+eu.europeana.vars.breakpoints = ${breakpoints};
+
 </script>
