@@ -27,143 +27,141 @@ import eu.europeana.portal2.querymodel.query.FacetCountLink;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FacetCountLinkDecorator;
 
 public class FacetCountLinkListDecorator implements List<FacetCountLink> {
-    
-    private String type;
-    private List<FacetCountLink> list;
-    
-    public FacetCountLinkListDecorator(String type, List<FacetCountLink> list) {
-        this.type = type;
-        this.list = list;
-    }
-    
-    private List<FacetCountLinkDecorator> asDecoList() {
-        if (list == null) {
-            return null;
-        }
-        List<FacetCountLinkDecorator> newList = new ArrayList<FacetCountLinkDecorator>();
-        for (FacetCountLink facetCountLink : list) {
-            newList.add(new FacetCountLinkDecorator(type, facetCountLink));
-        }
-        return newList;
-    }
 
-    @Override
-    public int size() {
-        return list.size();
-    }
+	private String type;
+	private List<FacetCountLink> list;
 
-    @Override
-    public boolean isEmpty() {
-        return list.isEmpty();
-    }
+	public FacetCountLinkListDecorator(String type, List<FacetCountLink> list) {
+		this.type = type;
+		this.list = list;
+	}
 
-    @Override
-    public boolean contains(Object o) {
-        return list.contains(o);
-    }
+	private List<FacetCountLinkDecorator> asDecoList() {
+		if (list == null) {
+			return null;
+		}
+		List<FacetCountLinkDecorator> newList = new ArrayList<FacetCountLinkDecorator>();
+		for (FacetCountLink facetCountLink : list) {
+			newList.add(new FacetCountLinkDecorator(type, facetCountLink));
+		}
+		return newList;
+	}
 
-    @Override
-    public Iterator<FacetCountLink> iterator() {
-        return list.iterator();
-    }
+	@Override
+	public int size() {
+		return list.size();
+	}
 
-    @Override
-    public Object[] toArray() {
-        if (list != null) {
-            return asDecoList().toArray();
-        }
-        return null;
-    }
+	@Override
+	public boolean isEmpty() {
+		return list.isEmpty();
+	}
 
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return list.toArray(a);
-    }
+	@Override
+	public boolean contains(Object o) {
+		return list.contains(o);
+	}
 
-    @Override
-    public boolean add(FacetCountLink e) {
-        return list.add(e);
-    }
+	@Override
+	public Iterator<FacetCountLink> iterator() {
+		return list.iterator();
+	}
 
-    @Override
-    public boolean remove(Object o) {
-        return list.remove(o);
-    }
+	@Override
+	public Object[] toArray() {
+		if (list != null) {
+			return asDecoList().toArray();
+		}
+		return null;
+	}
 
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return list.containsAll(c);
-    }
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return list.toArray(a);
+	}
 
-    @Override
-    public boolean addAll(Collection<? extends FacetCountLink> c) {
-        return list.addAll(c);
-    }
-    
-    @Override
-    public boolean addAll(int index, Collection<? extends FacetCountLink> c) {
-        return list.addAll(index, c);
-    }
+	@Override
+	public boolean add(FacetCountLink e) {
+		return list.add(e);
+	}
 
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return list.removeAll(c);
-    }
+	@Override
+	public boolean remove(Object o) {
+		return list.remove(o);
+	}
 
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return list.retainAll(c);
-    }
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return list.containsAll(c);
+	}
 
-    @Override
-    public void clear() {
-        list.clear();
-    }
+	@Override
+	public boolean addAll(Collection<? extends FacetCountLink> c) {
+		return list.addAll(c);
+	}
 
-    @Override
-    public FacetCountLink get(int index) {
-        return new FacetCountLinkDecorator(type, list.get(index));
-    }
+	@Override
+	public boolean addAll(int index, Collection<? extends FacetCountLink> c) {
+		return list.addAll(index, c);
+	}
 
-    @Override
-    public FacetCountLink set(int index, FacetCountLink element) {
-        return list.set(index, element);
-    }
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		return list.removeAll(c);
+	}
 
-    @Override
-    public void add(int index, FacetCountLink element) {
-        list.add(index, element);
-    }
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return list.retainAll(c);
+	}
 
-    @Override
-    public FacetCountLink remove(int index) {
-        return list.remove(index);
-    }
+	@Override
+	public void clear() {
+		list.clear();
+	}
 
-    @Override
-    public int indexOf(Object o) {
-        return list.indexOf(o);
-    }
+	@Override
+	public FacetCountLink get(int index) {
+		return new FacetCountLinkDecorator(type, list.get(index));
+	}
 
-    @Override
-    public int lastIndexOf(Object o) {
-        return list.lastIndexOf(o);
-    }
+	@Override
+	public FacetCountLink set(int index, FacetCountLink element) {
+		return list.set(index, element);
+	}
 
-    @Override
-    public ListIterator<FacetCountLink> listIterator() {
-        return list.listIterator();
-    }
+	@Override
+	public void add(int index, FacetCountLink element) {
+		list.add(index, element);
+	}
 
-    @Override
-    public ListIterator<FacetCountLink> listIterator(int index) {
-        return list.listIterator(index);
-    }
+	@Override
+	public FacetCountLink remove(int index) {
+		return list.remove(index);
+	}
 
-    @Override
-    public List<FacetCountLink> subList(int fromIndex, int toIndex) {
-        return new FacetCountLinkListDecorator(type, list.subList(fromIndex, toIndex));
-    }
+	@Override
+	public int indexOf(Object o) {
+		return list.indexOf(o);
+	}
 
+	@Override
+	public int lastIndexOf(Object o) {
+		return list.lastIndexOf(o);
+	}
 
+	@Override
+	public ListIterator<FacetCountLink> listIterator() {
+		return list.listIterator();
+	}
+
+	@Override
+	public ListIterator<FacetCountLink> listIterator(int index) {
+		return list.listIterator(index);
+	}
+
+	@Override
+	public List<FacetCountLink> subList(int fromIndex, int toIndex) {
+		return new FacetCountLinkListDecorator(type, list.subList(fromIndex, toIndex));
+	}
 }
