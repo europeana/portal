@@ -26,7 +26,7 @@ public class StaticFeaturedPartner {
 		this.i = i;
 	}
 
-	// View more latest content from our partners…
+	// View more latest content from our partners
 	public String getViewText() {
 		return "featured-partner-view_text_t";
 	}
