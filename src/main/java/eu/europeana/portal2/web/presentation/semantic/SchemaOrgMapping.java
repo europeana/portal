@@ -1,5 +1,10 @@
 package eu.europeana.portal2.web.presentation.semantic;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,5 +77,50 @@ public class SchemaOrgMapping {
 
 	public static SchemaOrgElement get(Element edmElement) {
 		return get(edmElement.getQualifiedName());
+	}
+	
+	public static void initialize(String filename) {
+		edm2schemaOrg = new HashMap<String, SchemaOrgElement>();
+		Map<String, String> mapping = readFromProperty(filename);
+		for (Map.Entry<String, String> entry : mapping.entrySet()) {
+			// TODO: add more features to SchemaOrgElement later, like attributes, parents etc.
+			edm2schemaOrg.put(entry.getKey(), new SchemaOrgElement(entry.getValue()));
+		}
+	}
+
+	private static Map<String, String> readFromProperty(String file) {
+		Map<String, String> mapping = new HashMap<String, String>();
+		DataInputStream in = null;
+		BufferedReader br = null;
+		try {
+			in = new DataInputStream(new FileInputStream(file));
+			br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			while ((strLine = br.readLine()) != null) {
+				if (strLine.indexOf(" = ") <= 0) {
+					continue;
+				}
+				String[] parts = strLine.split("\\s?=\\s?");
+				mapping.put(parts[0], parts[1]);
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return mapping;
 	}
 }

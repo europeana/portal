@@ -76,4 +76,44 @@ public class Element {
 	public void setAttributes(Map<String, String> attributes) {
 		this.attributes = attributes;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((attributes == null) ? 0 : attributes.hashCode());
+		result = prime * result
+				+ ((elementName == null) ? 0 : elementName.hashCode());
+		result = prime * result
+				+ ((namespace == null) ? 0 : namespace.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Element other = (Element) obj;
+		if (attributes == null) {
+			if (other.attributes != null)
+				return false;
+		} else if (!attributes.equals(other.attributes))
+			return false;
+		if (elementName == null) {
+			if (other.elementName != null)
+				return false;
+		} else if (!elementName.equals(other.elementName))
+			return false;
+		if (namespace == null) {
+			if (other.namespace != null)
+				return false;
+		} else if (!namespace.equals(other.namespace))
+			return false;
+		return true;
+	}
 }

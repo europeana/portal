@@ -17,6 +17,7 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.FileNameMap;
 import java.net.URLConnection;
@@ -61,6 +62,8 @@ public class FullDocPage extends FullDocPreparation {
 
 	private RightsValue rightsOption = null;
 	
+	private String schemaOrgMappingFile;
+
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
 		if (isEmbedded()) {
@@ -605,7 +608,17 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public Map<String, SchemaOrgElement> getSchemaOrgMapping() {
+		if (schemaOrgMappingFile != null && new File(schemaOrgMappingFile).exists()) {
+			SchemaOrgMapping.initialize(schemaOrgMappingFile);
+		}
 		return SchemaOrgMapping.getMap();
 	}
 
+	public String getSchemaOrgMappingFile() {
+		return schemaOrgMappingFile;
+	}
+
+	public void setSchemaOrgMappingFile(String schemaOrgMappingFile) {
+		this.schemaOrgMappingFile = schemaOrgMappingFile;
+	}
 }

@@ -89,9 +89,12 @@ public class ObjectController {
 
 	@Value("#{europeanaProperties['api2.secret']}")
 	private String api2secret;
+	
+	@Value("#{europeanaProperties['schema.org.mapping']}")
+	private String schemaOrgMappingFile;
 
 	// whether the source is API2
-	private boolean isSoureApi2 = false;
+	private boolean isSourceApi2 = false;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -115,8 +118,8 @@ public class ObjectController {
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 		log.info("Inside the ObjectController....." + locale.getLanguage().toString());
 		log.info("portal.theme from config: " + config.getProperty("portal.theme"));
-		isSoureApi2 = false;
-		
+		isSourceApi2 = false;
+
 		FullDocPage model = new FullDocPage();
 //		model.setLocale(locale)
 		model.setCollectionId(collectionId);
@@ -129,6 +132,7 @@ public class ObjectController {
 		model.setReturnTo(returnTo);
 		model.setShownAtProviderOverride(shownAtProviderOverride);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
+		model.setSchemaOrgMappingFile(schemaOrgMappingFile);
 
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
 		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
@@ -171,7 +175,7 @@ public class ObjectController {
 			log.severe("It is not possible to retrieve FullBean though API2 calls so now the controller tries it with corelib calls");
 			fullBean = getFullBeanFromCorelib(collectionId, recordId);
 		} else {
-			isSoureApi2 = true;
+			isSourceApi2 = true;
 		}
 		return fullBean;
 	}
@@ -222,5 +226,4 @@ public class ObjectController {
 		}
 		return false;
 	}
-
 }
