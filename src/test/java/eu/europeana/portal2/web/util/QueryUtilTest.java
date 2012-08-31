@@ -34,4 +34,31 @@ public class QueryUtilTest {
 		assertNotSame(output, input);
 		assertEquals("\\[1987\\]", output);
 	}
+
+	/**
+	 * Testing QueryUtil.escapeQuote
+	 */
+	@Test
+	public void testEscapeQuote() {
+		String input = "Music Library of Greece \"Lilian Voudouri\" - Friends of Music Society";
+		String output = QueryUtil.escapeQuote(input);
+		assertNotSame(output, input);
+		assertEquals("Music Library of Greece \\\"Lilian Voudouri\\\" - Friends of Music Society", output);
+	}
+	
+	/**
+	 * Testing QueryUtil.escapeValue
+	 */
+	@Test
+	public void testValue() {
+		String input = "[1987]";
+		String output = QueryUtil.escapeValue(input);
+		assertNotSame(output, input);
+		assertEquals("\\[1987\\]", output);
+
+		input = "Music Library of Greece \"Lilian Voudouri\" - Friends of Music Society";
+		output = QueryUtil.escapeValue(input);
+		assertNotSame(output, input);
+		assertEquals("Music Library of Greece \\\"Lilian Voudouri\\\" - Friends of Music Society", output);
+	}
 }

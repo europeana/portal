@@ -66,7 +66,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 						}
 						boolean doAppend = true;
 						if (qfField.equalsIgnoreCase(facetField.getName())) {
-							if (item.getLabel().equalsIgnoreCase(qfValue)
+							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(qfValue)
 								|| qfValue.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
 								remove = true;
 								facetSelected = true;
@@ -98,7 +98,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 					url.append(
 						QueryUtil.createPhraseValue(
 							facetField.getName(), 
-							QueryUtil.escapeSquareBrackets(item.getLabel())
+							QueryUtil.escapeValue(item.getLabel())
 						)
 					);
 				}

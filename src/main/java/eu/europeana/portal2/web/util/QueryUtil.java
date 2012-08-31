@@ -122,6 +122,15 @@ public class QueryUtil {
 		return value;
 	}
 
+	public static String escapeValue(String text) {
+		return escapeQuote(
+				escapeSquareBrackets(text));
+	}
+
+	public static String escapeQuote(String text) {
+		return text.replaceAll("\"", "\\\\\"");
+	}
+
 	public static String escapeSquareBrackets(String text) {
 		Matcher matcher = QueryUtil.SQUARE_BRACKET_PATTERN.matcher(text);
 		if (matcher.find()) {
