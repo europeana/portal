@@ -148,6 +148,7 @@
 ul.featured-partner-links{
 	margin-left:	0;
 	padding-left:	0;
+	font-size:		0.75em;
 }
 
 ul.featured-partner-links li{
@@ -164,6 +165,49 @@ ul.featured-partner-links li{
 	text-align:			center;
 	background-color:	#DFDFDF;
 }
+
+
+
+/* Dynamic content classes */
+.feed-block,
+.feed-box,
+.feed-cell,
+.feed-image{
+	display:		block;
+}
+.feed-block{
+	margin-top:		0.5em;
+}
+
+@media only screen and ( min-width:767px ){
+	.feed-block{
+			display:		table;
+			table-layout:	fixed;
+			max-width:		100%;
+			width:			100%;
+	}
+		
+	.feed-box{
+			display:		table-row;
+	}
+	
+	.feed-cell{
+			display:			table-cell;
+			vertical-align:		top;
+			background-color:	#fff;
+	}
+	
+	.feed-image{
+			text-align:			center;
+			vertical-align:		middle;
+	
+			background-color:	#dfdfdf;
+			width:				35%;
+			max-width:			35%;
+	}
+}
+/* End dynamic content classes */
+
 
 /* blog-feed */
 
@@ -224,7 +268,7 @@ p.featured-text{
 
 @media only screen and ( min-width:767px ){
 	.featured-text{
-		margin-left:	0.5em;
+		margin-left:	0.5em !important;
 	}
 		
 }
