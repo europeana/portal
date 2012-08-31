@@ -26,7 +26,7 @@
 					  <h3><a href="${entry.link}" target="_self">${entry.title}</a></h3>
 					  <p>${entry.description}</p>
 					  
-					  IMG = <p>${entry.images[0] }</p> (end img)
+					  IMG = <p>${entry.images[0].src }</p> (end img)
 					
 					  
 					  
