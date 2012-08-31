@@ -2,13 +2,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 
-<!-- 
-
-	ANDY
-	CSS to clean:		feature-frame
- 
- -->
- 
  
 <div class="six columns">
 	<h4 id="collapse-header-2">
