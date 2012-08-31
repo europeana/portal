@@ -145,6 +145,15 @@
 	margin:	0;
 }
 
+ul.featured-partner-links{
+	margin-left:	0;
+	padding-left:	0;
+}
+
+ul.featured-partner-links li{
+	list-style: none outside none;
+}
+
 /* move content down from heder within collapsibel sections */
 #carousel-3,
 #section-featured-content div.featured-content{
