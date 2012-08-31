@@ -202,6 +202,7 @@ ul.featured-partner-links li{
 			display:			table-cell;
 			vertical-align:		top;
 			background-color:	#fff;
+			vertical-align:		middle;
 	}
 	
 	.feed-image{
