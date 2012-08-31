@@ -22,15 +22,12 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
  * 
  * Message keys:
  * 
- * featured-item-%d_h2_t
- * featured-item-%d_h3_t
+ * featured-item-%d_heading_t
  * notranslate_featured-item-%d_a_url_t
  * featured-item-%d_a_title_t
  * notranslate_featured-item-%d_a_target_t
  * notranslate_featured-item-%d_img_url_t
  * featured-item-%d_img_alt_t
- * notranslate_featured-item-%d_img_width_t
- * notranslate_featured-item-%d_img_height_t
  * featured-item-%d_p_t
  * 
  * @author peter.kiraly@kb.nl
@@ -43,14 +40,9 @@ public class FeaturedItem {
 		this.i = i;
 	}
 
-	/** Gets the message key for H2 tag */
-	public String getH2() {
-		return String.format("featured-item-%d_h2_t", i);
-	}
-
 	/** Gets the message key for H3 tag */
-	public String getH3() {
-		return String.format("featured-item-%d_h3_t", i);
+	public String getHeading() {
+		return String.format("featured-item-%d_heading_t", i);
 	}
 
 	/** Gets the URL */
@@ -76,16 +68,6 @@ public class FeaturedItem {
 	/** Gets the message key for image alt label */
 	public String getImgAlt() {
 		return String.format("featured-item-%d_img_alt_t", i);
-	}
-
-	/** Gets the width of image */
-	public String getImgWidth() {
-		return String.format("notranslate_featured-item-%d_img_width_t", i);
-	}
-
-	/** Gets the height of image */
-	public String getImgHeight() {
-		return String.format("notranslate_featured-item-%d_img_height_t", i);
 	}
 
 	/** Gets the message key for p tag */

@@ -13,7 +13,7 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
  * 
  * Visit partners website...
  * - featured-partner-visit_text_t (JSP: visitText)
- * - notranslate_featured-partner-visit_link_t (JSP: visitLink)
+ * - notranslate_featured-partner-%d_visit_link_t (JSP: visitLink)
  * - notranslate_featured-partner-visit_target_t (JSP: visitTarget)
  *
  * @author peter.kiraly@kb.nl
@@ -58,7 +58,7 @@ public class StaticFeaturedPartner {
 	}
 
 	public String getVisitLink() {
-		return "notranslate_featured-partner-visit_link_t";
+		return String.format("notranslate_featured-partner-%d_visit_link_t", i);
 	}
 
 	public String getVisitTarget() {

@@ -22,15 +22,12 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
  * 
  * Message keys the object uses:
  * 
- * featured-partner-%d_h2_t
- * featured-partner-%d_h3_t
+ * featured-partner-%d_heading_t
  * notranslate_featured-partner-%d_a_url_t
  * featured-partner-%d_a_title_t
  * notranslate_featured-partner-%d_a_target_t
  * notranslate_featured-partner-%d_img_url_t
  * featured-partner-%d_img_alt_t
- * notranslate_featured-partner-%d_img_width_t
- * notranslate_featured-partner-%d_img_height_t
  * featured-partner-%d_p_t
  * 
  * @author peter.kiraly@kb.nl
@@ -44,14 +41,9 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 		this.i = i;
 	}
 
-	/** Gets the message key for H2 tag */
-	public String getH2() {
-		return String.format("featured-partner-%d_h2_t", i);
-	}
-
 	/** Gets the message key for H3 tag */
 	public String getH3() {
-		return String.format("featured-partner-%d_h3_t", i);
+		return String.format("featured-partner-%d_heading_t", i);
 	}
 
 	/** Gets the URL */
@@ -77,16 +69,6 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 	/** Gets the message key for image alt label */
 	public String getImgAlt() {
 		return String.format("featured-partner-%d_img_alt_t", i);
-	}
-
-	/** Gets the width of image */
-	public String getImgWidth() {
-		return String.format("notranslate_featured-partner-%d_img_width_t", i);
-	}
-
-	/** Gets the height of image */
-	public String getImgHeight() {
-		return String.format("notranslate_featured-partner-%d_img_height_t", i);
 	}
 
 	/** Gets the message key for p tag */
