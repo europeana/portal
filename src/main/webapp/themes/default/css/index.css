@@ -173,11 +173,18 @@ ul.featured-partner-links li{
 .feed-box,
 .feed-cell,
 .feed-image{
-	display:		block;
+	display:			block;
 }
+
+.feed-image{
+	text-align:			center;
+	vertical-align:		middle;
+}
+
 .feed-block{
 	margin-top:		0.5em;
 }
+
 
 @media only screen and ( min-width:767px ){
 	.feed-block{
@@ -198,12 +205,9 @@ ul.featured-partner-links li{
 	}
 	
 	.feed-image{
-			text-align:			center;
-			vertical-align:		middle;
-	
-			background-color:	#dfdfdf;
 			width:				35%;
 			max-width:			35%;
+			background-color:	#dfdfdf;
 	}
 }
 /* End dynamic content classes */
