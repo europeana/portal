@@ -23,7 +23,7 @@
 		});
 			
 
-
+		
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1").one('load',
 			function() {
 		
@@ -50,6 +50,7 @@
 					$(this).load();
 				}
 		});
+		
 	
 		// Make sections collapsible
 		jQuery("#section-blog").Collapsible({

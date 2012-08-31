@@ -14,21 +14,53 @@
 		<a class="feed-link" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>		
 	</h4>
 	
-	<div class="collapse-content">
+	<div class="row collapse-content">
 		
 		<c:choose>
 			<c:when test='${not empty model.feedEntries}'>
 				<c:forEach items="${model.feedEntries}" var="entry" varStatus="status">
 					<c:if test="${status.index < 2}">
 					
-					
-					
-					  <h3><a href="${entry.link}" target="_self">${entry.title}</a></h3>
-					  <p>${entry.description}</p>
-					  
-					  IMG = <p>${entry.images[0].src }</p> (end img)
-					
-					  
+
+						<div class="six columns">
+
+							<div class="feed-block">
+								<div class="feed-box">
+									<div class="feed-cell feed-image">
+										<h3 class="show-on-phones">
+											<a	href=	"${entry.link}"
+												title=	"${entry.title}"
+												target=	"_self">
+												${entry.title}
+											</a>
+										</h3>
+				
+										<a	href=	"${entry.link}"
+											title=	"${entry.title}"
+											target=	"_self"
+											class=	"image">
+											<img	src=	"${entry.images[0].src}"
+													alt=	"${entry.title}"/>
+										</a>
+									</div>
+									
+									<div class="feed-cell">
+										<h3 class="hide-on-phones featured-text">
+											<a	href=	"${entry.link}"
+												title=	"${entry.title}"
+												target=	"_self">
+													${entry.title}
+											</a>
+										</h3>
+										<p class="featured-text">
+											${entry.description}"
+										</p>					
+									</div>
+											
+								</div>
+							</div>					  
+
+						</div>					  
 					  
 					</c:if>
 				</c:forEach>
