@@ -39,7 +39,7 @@ public class StaticFeaturedPartner {
 		return "notranslate_featured-partner-view_target_t";
 	}
 
-	// Browse the content of all our partners…
+	// Browse the content of all our partners
 	public String getBrowseText() {
 		return "featured-partner-browse_text_t";
 	}
@@ -52,7 +52,7 @@ public class StaticFeaturedPartner {
 		return "notranslate_featured-partner-browse_target_t";
 	}
 
-	// Visit partners website…
+	// Visit partners website
 	public String getVisitText() {
 		return "featured-partner-visit_text_t";
 	}
