@@ -42,7 +42,7 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 	}
 
 	/** Gets the message key for H3 tag */
-	public String getH3() {
+	public String getHeading() {
 		return String.format("featured-partner-%d_heading_t", i);
 	}
 

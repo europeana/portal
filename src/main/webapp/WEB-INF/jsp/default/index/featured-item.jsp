@@ -12,19 +12,42 @@
 	<div class="collapse-content">
 		
 		<c:if test="${!empty model.featuredItem}">
-			<a href="/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />" title="<spring:message code="${model.featuredItem.anchorTitle}" />" target="<spring:message code="${model.featuredItem.anchorTarget}" />" class="image"><img src="/${model.portalName}<spring:message code="${model.featuredItem.imgUrl}" />" alt="<spring:message code="${model.featuredItem.imgAlt}" />" width="<spring:message code="${model.featuredItem.imgWidth}" />" height="<spring:message code="${model.featuredItem.imgHeight}" />"/></a>
-			<h3><a href="/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />" title="<spring:message code="${model.featuredItem.anchorTitle}" />" target="<spring:message code="${model.featuredItem.anchorTarget}" />"><spring:message code="${model.featuredItem.h3}" /></a></h3>
-			<p>
-				<%-- @msgPropertyLimiter '${model.featuredItem.p}' '${featured_item_snipet_limit}' / --%>
-			</p>
-			<!-- ${model.featuredItem.p} -->
-			<!-- ${featured_item_snipet_limit} -->
-			<p><jsp:include page="/WEB-INF/jsp/devel/_common/macros/msg-property-limiter.jsp">
-					<jsp:param name="msg_property_tag" value="${model.featuredItem.p}" />
-					<jsp:param name="length_limit" value="${featured_item_snipet_limit}" />
-				</jsp:include></p>
+		
+		
+			<div class="row featured-content">
+				<div class="five columns">
+					<h3 class="show-on-phones">
+						<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
+							title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
+							target=	"<spring:message code="${model.featuredItem.anchorTarget}" />">
+								<spring:message code="${model.featuredItem.heading}" />
+						</a>
+					</h3>
+					<div class="featured-frame">
+						<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
+							title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
+							target=	"<spring:message code="${model.featuredItem.anchorTarget}" />"
+							class=	"image">
+							<img	src=	"/${model.portalName}<spring:message code="${model.featuredItem.imgUrl}" />"
+									alt=	"<spring:message code="${model.featuredItem.imgAlt}" />"/>
+						</a>
+					</div>
+				</div>
+				
+				<div class="seven columns">
+					<h3 class="hide-on-phones featured-text">
+						<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
+							title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
+							target=	"<spring:message code="${model.featuredItem.anchorTarget}" />">
+								<spring:message code="${model.featuredItem.heading}" />
+						</a>
+					</h3>
+					<p class="featured-text">
+						<spring:message code="${model.featuredItem.p}" />
+					</p>
+				</div>			
+			</div>
 		</c:if>
-
 
 		
 <%--
@@ -55,26 +78,77 @@
 	</div>
 </div>
 
+<%-- 
+
+View more latest content from our partners...
+ - featured-partner-view_text_t (in JSP: viewText)
+ - notranslate_featured-partner-view_link_t (in JSP: viewLink)
+ - notranslate_featured-partner-view_target_t (in JSP: viewTarget)
+
+Browse the content of all our partners...
+ - featured-partner-browse_text_t (in JSP: browseText)
+ - notranslate_featured-partner-browse_link_t (in JSP: browseLink)
+ - notranslate_featured-partner-browse_target_t (in JSP: browseTarget)
+
+Visit partners website...
+ - featured-partner-visit_text_t (in JSP: visitText)
+ - notranslate_featured-partner-visit_link_t (in JSP: visitLink)
+ - notranslate_featured-partner-visit_target_t (in JSP: visitTarget)
+--%>
 
 <div class="six columns" id="section-featured-partner">
-	<h4><spring:message code="featured-partner-title_t" /></h4>
+
 	
-		<c:if test="${!empty model.featuredItem}">
-		<a href="/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />" title="<spring:message code="${model.featuredItem.anchorTitle}" />" target="<spring:message code="${model.featuredItem.anchorTarget}" />" class="image"><img src="/${model.portalName}<spring:message code="${model.featuredItem.imgUrl}" />" alt="<spring:message code="${model.featuredItem.imgAlt}" />" width="<spring:message code="${model.featuredItem.imgWidth}" />" height="<spring:message code="${model.featuredItem.imgHeight}" />"/></a>
-		<h3><a href="/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />" title="<spring:message code="${model.featuredItem.anchorTitle}" />" target="<spring:message code="${model.featuredItem.anchorTarget}" />"><spring:message code="${model.featuredItem.h3}" /></a></h3>
-		<p>
-			<%-- @msgPropertyLimiter '${model.featuredItem.p}' '${featured_item_snipet_limit}' / --%>
-		</p>
-		<!-- ${model.featuredItem.p} -->
-		<!-- ${featured_item_snipet_limit} -->
-		<p><jsp:include page="/WEB-INF/jsp/devel/_common/macros/msg-property-limiter.jsp">
-				<jsp:param name="msg_property_tag" value="${model.featuredItem.p}" />
-				<jsp:param name="length_limit" value="${featured_item_snipet_limit}" />
-			</jsp:include></p>
+<%-- 
+
+	<h4><spring:message code="featured-partner-view_text_t" /></h4>
+--%>
+
+	<c:if test="${!empty model.featuredPartner}">
+	
+		<div class="row">
+			<div class="twelve columns">
+				<h4 id="section-header-featured-partner"><spring:message code="featured-partner-title_t" />!!!</h4>
+			</div>
+		</div>
+		
+		<div class="row featured-content">
+			<div class="five columns">
+				<h3 class="show-on-phones">
+					<a	href=	"<spring:message	code="${model.featuredPartner.anchorUrl}" />"
+						title=	"<spring:message	code="${model.featuredPartner.anchorTitle}" />"
+						target=	"<spring:message	code="${model.featuredPartner.anchorTarget}" />">
+							<spring:message code="${model.featuredPartner.heading}" />
+					</a>
+				</h3>
+				<div class="featured-frame">
+					<a	href=	"<spring:message code="${model.featuredPartner.anchorUrl}" />"
+						title=	"<spring:message code="${model.featuredPartner.anchorTitle}" />"
+						target=	"<spring:message code="${model.featuredPartner.anchorTarget}" />"
+						class="image">
+						<img	src=	"<spring:message	code="${model.featuredPartner.imgUrl}" />"
+								alt=	"<spring:message	code="${model.featuredPartner.imgAlt}" />"/>
+					</a>
+				</div>
+			</div>
+			
+			<div class="seven columns">
+				<h3 class="hide-on-phones featured-text">
+					<a	href=	"<spring:message code="${model.featuredPartner.anchorUrl}" />"
+						title=	"<spring:message code="${model.featuredPartner.anchorTitle}" />"
+						target=	"<spring:message code="${model.featuredPartner.anchorTarget}" />">
+							<spring:message code="${model.featuredPartner.heading}" />
+					</a>
+				</h3>
+				<p class="featured-text">
+					<spring:message code="${model.featuredPartner.p}" />
+				</p>
+			</div>			
+		</div>
+		
 	</c:if>
-
+	
 </div>
-
 
 
 <%--

@@ -18,10 +18,19 @@
 		
 		<c:choose>
 			<c:when test='${not empty model.feedEntries}'>
-				<c:forEach items="${model.feedEntries}" var="entry">
-				  <h3><a href="${entry.link}" target="_self">${entry.title}</a></h3>
-				  <p>${entry.description}</p>
-				  <p>${entry.images}</p>
+				<c:forEach items="${model.feedEntries}" var="entry" varStatus="status">
+					<c:if test="${status.index < 2}">
+					
+					
+					
+					  <h3><a href="${entry.link}" target="_self">${entry.title}</a></h3>
+					  <p>${entry.description}</p>
+					  
+					  IMG = <p>${entry.images[0] }</p> (end img)
+					
+					  
+					  
+					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
