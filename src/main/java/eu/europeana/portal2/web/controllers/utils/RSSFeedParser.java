@@ -84,6 +84,15 @@ public class RSSFeedParser {
 				String description = getElementValue(element, DESCRIPTION);
 				message.setDescription(description);
 				message.setImages(RSSImageExtractor.extractImages(description, useNormalImageFormat));
+				// if no images, tries "content:encoded" element
+				if (message.getImages().size() == 0) {
+					message.setImages(
+						RSSImageExtractor.extractImages(
+							getElementValue(element, "content:encoded"), 
+							useNormalImageFormat
+						)
+					);
+				}
 				message.setGuid(getElementValue(element, GUID));
 				message.setLink(getElementValue(element, LINK));
 				message.setTitle(getElementValue(element, TITLE));
