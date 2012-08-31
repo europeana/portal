@@ -7,12 +7,16 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
 
 public class QueryUtil {
+
+	public static final Pattern SQUARE_BRACKET_PATTERN = Pattern.compile("^\\[(.*?)\\]$");
 
 	private static final Logger log = Logger.getLogger(QueryUtil.class.getName());
 
@@ -118,4 +122,11 @@ public class QueryUtil {
 		return value;
 	}
 
+	public static String escapeSquareBrackets(String text) {
+		Matcher matcher = QueryUtil.SQUARE_BRACKET_PATTERN.matcher(text);
+		if (matcher.find()) {
+			text = "\\[" + matcher.group(1) + "\\]";
+		}
+		return text;
+	}
 }
