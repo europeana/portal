@@ -243,7 +243,7 @@ public class IndexPageController {
 		}
 		model.setFeedEntries(feedEntries);
 	}
-	
+
 	private void updatePinterest(IndexPage model) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -pintTimeout.intValue()));
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
