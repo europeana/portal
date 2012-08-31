@@ -54,30 +54,34 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 			boolean remove = false;
 			StringBuilder url = new StringBuilder();
+			// iterating over actual qf values
 			if (query.getRefinements() != null) {
-				for (String facetTerm : QueryUtil.getFilterQueriesWithoutPhrases(query)) {
-					if (!facetTerm.equals("-TYPE:Wikipedia")) {
-						String[] parts = facetTerm.split(":", 2);
-						String facetName = parts[0];
-						String facetValue = parts[1];
-						if (isTemporarilyPreventYear0000(facetName, facetValue)) {
+				for (String qfTerm : QueryUtil.getFilterQueriesWithoutPhrases(query)) {
+					if (!qfTerm.equals("-TYPE:Wikipedia")) {
+						String[] parts = qfTerm.split(":", 2);
+						String qfField = parts[0];
+						String qfValue = parts[1];
+						if (isTemporarilyPreventYear0000(qfField, qfValue)) {
 							continue;
 						}
-						if (facetName.equalsIgnoreCase(facetField.getName())) {
-							if (item.getLabel().equalsIgnoreCase(facetValue)
-								|| facetValue.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
+						boolean doAppend = true;
+						if (qfField.equalsIgnoreCase(facetField.getName())) {
+							if (item.getLabel().equalsIgnoreCase(qfValue)
+								|| qfValue.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
 								remove = true;
 								facetSelected = true;
-							} else {
-								url.append(FACET_PROMPT).append(facetName).append(':').append(QueryUtil.createPhraseValue(facetName, facetValue));
+								doAppend = false;
 							}
-						} else {
-							url.append(FACET_PROMPT).append(facetName).append(':').append(QueryUtil.createPhraseValue(facetName, facetValue));
+						}
+						if (doAppend) {
+							url.append(FACET_PROMPT).append(qfField).append(':')
+								.append(QueryUtil.createPhraseValue(qfField, qfValue));
 						}
 					}
 				}
 			}
 
+			// adding the current facet to the query link
 			if (!remove) {
 				url.append(FACET_PROMPT);
 				url.append(facetField.getName());
@@ -90,7 +94,13 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 						url.append(license.getOriginalURI());
 					}
 				} else {
-					url.append(QueryUtil.createPhraseValue(facetField.getName(), item.getLabel()));
+					// escape Solr special chars in item.label
+					url.append(
+						QueryUtil.createPhraseValue(
+							facetField.getName(), 
+							QueryUtil.escapeSquareBrackets(item.getLabel())
+						)
+					);
 				}
 			}
 
