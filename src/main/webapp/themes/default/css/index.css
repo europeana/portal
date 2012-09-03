@@ -181,6 +181,11 @@ ul.featured-partner-links li{
 	vertical-align:		middle;
 }
 
+.feed-image img{
+	display:	block;	/* inline image has small margin at bottom */
+	margin:		auto;	/* required to centre block */
+}
+
 .feed-block{
 	margin-top:		0.5em;
 }
