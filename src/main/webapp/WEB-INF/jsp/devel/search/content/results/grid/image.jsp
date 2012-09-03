@@ -8,10 +8,9 @@
 </c:if>
 
 <c:set var="imgBaseUrl" value="http://europeanastatic.eu/api/image?type=TEXT&size=BRIEF_DOC&uri=" />
-<!-- ${cell.edmObject} -->
-<c:if test="${!empty cell.edmObject}">
-  <a href="${cell.fullDocUrl}" title="${cell.title[0]}" ${targetArg} rel="nofollow">
-    <img class="thumbnail" src='${imgBaseUrl}${cell.edmObject[0]}' alt="${cell.title[0]}" data-type="${fn:toLowerCase(cell.type)}" />
+<c:if test="${!empty cell.thumbnail}">
+  <a href="${cell.fullDocUrl}" title="${fn:escapeXml(cell.title[0])}" ${targetArg} rel="nofollow">
+    <img class="thumbnail" src='${cell.thumbnail}' alt="${fn:escapeXml(cell.title[0])}" data-type="${fn:toLowerCase(cell.type)}" />
   </a>
 </c:if>
 <!-- /image -->
