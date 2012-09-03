@@ -1,6 +1,8 @@
-<!-- breadcrumb -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+
+
 <ul id="breadcrumb" class="notranslate">
 	<c:if test="${!empty model.breadcrumbs}">
 		<c:choose>
@@ -32,4 +34,3 @@
 		</c:choose>
 	</c:if>
 </ul>
-<!-- /breadcrumb -->

@@ -4,6 +4,13 @@
 
 <div id="facets-actions" class="sidebar">
 	
+	<!-- breaadcrumbs -->
+
+	<div>
+		<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/breadcrumb.jsp" %>
+	</div>
+	
+
 	<!-- facets -->
 	<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
 		<h2><spring:message code="FilterYourSearch_t" />:</h2>

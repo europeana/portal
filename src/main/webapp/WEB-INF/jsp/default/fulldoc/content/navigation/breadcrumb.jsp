@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<li><h1>Andy: Delete this jsp - it's unreferenced. </h1></li>
 <c:choose>
 	<c:when test='${!query?starts_with("europeana_uri:")}'>
 		<li><spring:message code='MatchesFor_t' />:</li>
