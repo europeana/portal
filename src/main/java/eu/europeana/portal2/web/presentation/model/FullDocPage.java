@@ -325,7 +325,13 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public String getThumbnailUrl() throws UnsupportedEncodingException {
-		String thumbnail = URLEncoder.encode(shortcut.get("EdmObject")[0], "utf-8");
+		String thumbnail = "";
+		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
+			thumbnail = URLEncoder.encode(
+				StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], ""), 
+				"utf-8"
+			);
+		}
 		// TODO: check isUseCache()
 		// if (isUseCache()) {
 		boolean useCache = true;

@@ -118,7 +118,10 @@ public class BriefBeanDecorator implements BriefBean {
 
 	private String getThumbnail(String size) {
 		try {
-			String tn = StringUtils.defaultIfBlank(briefDoc.getEdmObject()[0], "");
+			String tn = "";
+			if (briefDoc.getEdmObject() != null && briefDoc.getEdmObject().length > 0) {
+				tn = StringUtils.defaultIfBlank(briefDoc.getEdmObject()[0], "");
+			}
 			UrlBuilder url = null;
 			// TODO: redo this
 			// if (isUseCache()) {
