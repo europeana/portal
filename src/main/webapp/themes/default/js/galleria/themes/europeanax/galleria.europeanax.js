@@ -43,6 +43,26 @@ Galleria.addTheme({
 		var thumbs		= thisGallery.$( 'container' ).find('.galleria-thumbnails'); 
 		var stage		= thisGallery.$( 'container' ).find(".galleria-stage");
 
+		
+		/* custom styling of nav arrows */
+		navLeft	.addClass("icon-arrow-4");
+		navRight.addClass("icon-arrow-2");
+		
+		var rerunOnResize = function(){
+			thisGallery._run();
+	        $(thisGallery._thumbnails).each(function( i, thumb ) {
+	        	if(thumb.ready){
+		    		thisGallery.trigger({
+		    			type: Galleria.THUMBNAIL,
+		                      thumbTarget: thumb.image,
+		                      index: i,
+		                      galleriaData: dataSource
+		    		});
+	        	}
+	        });	
+		};
+		
+		
     	if(carouselMode){
 		
         	var headerSelector = '#' + carouselId + '-header';
@@ -236,7 +256,25 @@ Galleria.addTheme({
     		
        		$(window).resize( function() {
        			Galleria.log("Bordered mode resize");
-       			thisGallery.$(	'container' ).parent().css("height", 1.2 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
+       			thisGallery.$(	'container' ).parent().css("height", 1.1 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
+       			
+       			rerunOnResize();
+       			/*
+       			// common with landing page carousel
+    			thisGallery._run();
+    	        $(thisGallery._thumbnails).each(function( i, thumb ) {
+    	        	if(thumb.ready){
+    		    		thisGallery.trigger({
+    		    			type: Galleria.THUMBNAIL,
+    		                      thumbTarget: thumb.image,
+    		                      index: i,
+    		                      galleriaData: dataSource
+    		    		});
+    	        	}
+    	        });
+    	        */
+    	        
+    			
        		});
     	}
     	else{
@@ -336,6 +374,9 @@ Galleria.addTheme({
         	        
         			//thisGallery.trigger( Galleria.READY );
                     //Galleria.theme.init.call( thisGallery, thisGallery._options );
+        			
+        			rerunOnResize();
+        			/*
         			thisGallery._run();
         	        $(thisGallery._thumbnails).each(function( i, thumb ) {
         	        	if(thumb.ready){
@@ -347,6 +388,7 @@ Galleria.addTheme({
         		    		});
         	        	}
         	        });
+        			*/
         			
         			//init(thisGallery._options)
 //        			Galleria.loadTheme(dataSource[0].themeRef);

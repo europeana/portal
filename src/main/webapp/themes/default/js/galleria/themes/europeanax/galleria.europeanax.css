@@ -98,11 +98,17 @@
 	text-align:			center;
 	position:			absolute;
 	padding:			3px;
+	/*
 	font-size:			80%;
-	
+	*/
 	/* NEW */
-	bottom:				0px;
-	height:				2em;
+	overflow:			hidden;
+
+	bottom:				0.5em;
+	bottom:				0;
+
+	line-height:		1em;
+	max-height:			2em;
 	width:				99%;
 	z-index:			1;
 }
@@ -263,16 +269,22 @@
 }
 .galleria-image-nav-left,
 .galleria-image-nav-right {
-    opacity: .3;
+    opacity: 0.6;
     filter: alpha(opacity=30);
     cursor: pointer;
+    
+    /*
     width: 62px;
     height: 124px;
+    */
+    font-size:	3em;
+    
     position: absolute;
     left: 10px;
     z-index: 2;
+    /*
     background-position: 0 46px;
-    
+    */
     visibility:hidden;
 }
 
@@ -281,13 +293,21 @@
 	right:	10px;
 }
 
+.galleria-image-nav-left.icon-arrow-4, .galleria-image-nav-right.icon-arrow-2{
+	color:	white;	
+}
+
+
+
 .europeana-carousel .galleria-image-nav-left,
 .europeana-carousel .galleria-image-nav-right {
 	display:none;
 }
 
 .galleria-image-nav-right {
+	/*
     background-position: -254px 46px;
+    */
     z-index: 2;
 }
 .notouch .galleria-image-nav-left:hover,
@@ -306,7 +326,7 @@
     cursor:					pointer;
     background-position:	-495px 5px;
     background-color:		#000;
-    position:				absolute;
+    position:				absolute;		/* custom styling of nav arrows */
     left:					0;
     top:					0;
     height:					40px;
@@ -377,12 +397,14 @@
     display: block;
 	background-color: #111;													/* europeana override */
 }
+
+/*
+.galleria-image-nav-left,
+.galleria-image-nav-right, */
 .galleria-thumb-nav-left,
 .galleria-thumb-nav-right,
 .galleria-info-link,
-.galleria-info-close,
-.galleria-image-nav-left,
-.galleria-image-nav-right {
+.galleria-info-close {
     background-image: url(classic-map.png);
     background-repeat: no-repeat;
 }
