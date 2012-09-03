@@ -19,10 +19,12 @@ package eu.europeana.portal2.web.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -50,21 +52,16 @@ public class SearchUtils {
 		log.info("createResults");
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
-		SearchResults response = new SearchResults("search.json");
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
-		log.info("resultSet: " + resultSet);
-		resultSet.getQuery();
-		response.totalResults = resultSet.getResultSize();
-		response.itemsCount = resultSet.getResults().size();
-		response.items = resultSet.getResults();
 		briefBeanView.setBriefDocs(resultSet.getResults());
 
 		if (StringUtils.containsIgnoreCase(profile, "facets") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.makeQueryLinks(ModelUtils.conventFacetList(resultSet.getFacetFields()), query);
 		}
 
+		List<BreadCrumb> breadCrumbs = null;
 		if (StringUtils.containsIgnoreCase(profile, "breadcrumb") || StringUtils.containsIgnoreCase(profile, "portal")) {
-			response.breadCrumbs = NavigationUtils.createBreadCrumbList(QueryUtil.escapeQuery(query));
+			breadCrumbs = NavigationUtils.createBreadCrumbList(QueryUtil.escapeQuery(query));
 		}
 
 		if (StringUtils.containsIgnoreCase(profile, "spelling") || StringUtils.containsIgnoreCase(profile, "portal")) {
@@ -74,7 +71,7 @@ public class SearchUtils {
 //		}
 		
 		ResultPagination pagination = new ResultPaginationImpl(start, rows, (int)resultSet.getResultSize(), 
-				query.getQuery(), query.getQuery(), response.breadCrumbs);
+				query.getQuery(), query.getQuery(), breadCrumbs);
 		briefBeanView.setPagination(pagination);
 		log.info("end of createResults");
 		return briefBeanView;
