@@ -17,9 +17,10 @@
 	}
 	
 	#logo {		
-		position:	absolute;
+		position:	relative;
 		top:		5px;
 		width:		110px;
+		z-index:	2;
 	}
 	
 	#query{
@@ -481,13 +482,14 @@
 		/* logo */
 
 		#logo {
-			top:		40px;
+			top:		6px;
 			width:		100%;
 		}
 		
 		#logo a {
 			display:	block;
 	   		max-width:	15%;
+	   		position:	absolute;
 		}
 		
 		/* strip */
