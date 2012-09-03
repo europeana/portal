@@ -44,7 +44,11 @@ body{
 
 /* End basic fonts */
 
-    h1, h2, h3, h4, h5, h6 { margin: 0 0 1% 0; padding: 0; line-height: 120%; color: #111; }
+    h1, h2, h3, h4, h5, h6 {
+    	margin: 0;
+    	padding: 0;
+    	color: #111;
+    }
     
     h1 { font-size: 200%; }
     h2 { font-size: 180%; }

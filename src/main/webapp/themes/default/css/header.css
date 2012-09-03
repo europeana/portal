@@ -46,8 +46,103 @@
 		max-width:	60%;
 	}
 	
+	
+	/* Search Menu */
+	
+
+	.search-wrapper{	
+		font-size:		1.2em;
+		position:		relative;
+		margin-top:		1.5em !important;
+		margin-bottom:	1.5em !important;	
+	}
+	
+	/* test to see if font is impacting layout (Andy: TODO: delete) 
+	.search-menu, #query-input, #submit-query input	{
+	   	font-family: Ubuntu;
+	}
+*/
+	
 	#query-input{
-		padding:				2px;
+	    font-family:	'SourceSansProRegular', Arial, sans-serif;
+	    font-weight:	400;
+	    line-height:	1.48;
+	    color:			#333;
+	    outline:		none; /* chrome */
+    }
+
+	.search-menu.selected span.open-menu,
+	.search-menu.selected .item.active{
+	   	text-shadow:0 0 3px #FF0000;
+	}
+	
+	.search-menu{
+		position:				relative; 
+		display:				inline-block;
+		float:					right;
+		z-index:				2;	
+
+		float:					none;
+		text-align:				left;
+		
+		
+		border:					1px solid #e4e4e4;
+
+		top:					0.03em;
+		padding-left:			0.15em;
+		padding-bottom:			0.18em;
+
+		-moz-border-radius:		0.5em 0 0 0.5em;
+		-webkit-border-radius:	0.5em 0 0 0.5em;
+		border-radius:			0.5em 0 0 0.5em;
+	}
+	
+	.search-menu a {
+		text-decoration:	none;
+		color:				#444444;
+	}
+	
+	.search-menu span{
+		line-height:	inherit;
+	}
+
+	.search-menu a:hover{
+		text-decoration:	underline;
+	}
+
+	.search-menu .top {
+		background-color:	#DDD;
+	}
+
+	.search-menu ul{
+		list-style-type:	none;
+		position:			absolute;
+		margin:				0px;
+		padding:			0px;
+	}
+
+	.search-menu .item {	/* hidden items */
+		display: 			none;
+		border-radius:		0 0 0.25em 0.25em;
+		margin-top:			0.2em;
+		padding:			0.19em 0.6em 0.1126em;
+		border:				1px solid #e4e4e4;
+		background-color:	#F5F5F5;
+		white-space:		nowrap;
+		
+		z-index:	2;
+	}
+
+	.search-menu.active .item {		/* shown items */
+		display:			block;
+	}
+	
+	
+	#query-input{
+		xpadding:				0.33em;
+		padding:				0.2em;
+		
+		height:					1.48em;
 		
 		color:					#333;
 		font-size:				inherit;
@@ -157,80 +252,6 @@
 
 
 
-	/* Search Menu */
-	
-
-	.search-wrapper{	
-		font-size:		1.2em;
-		position:		relative;
-		margin-top:		1.5em !important;
-		margin-bottom:	1.5em !important;	
-	}
-	
-	/* test to see if font is impacting layout (Andy: TODO: delete) */
-	.search-menu, #query-input, #submit-query input	{
-	   	font-family: Ubuntu;
-	}
-	
-	.search-menu.selected span.open-menu,
-	.search-menu.selected .item.active{
-	   	text-shadow:0 0 3px #FF0000;
-	}
-	
-	.search-menu{
-		position:				relative; 
-		display:				inline-block;
-		float:					right;
-		z-index:				2;	
-
-		float:					none;
-		text-align:				left;
-		
-		border:					1px solid #e4e4e4;
-
-		padding-left:			0.15em;
-
-		-moz-border-radius:		0.5em 0 0 0.5em;
-		-webkit-border-radius:	0.5em 0 0 0.5em;
-		border-radius:			0.5em 0 0 0.5em;
-	}
-	
-	.search-menu a {
-		text-decoration:	none;
-		color:				#444444;
-	}
-
-	.search-menu a:hover{
-		text-decoration:	underline;
-	}
-
-	.search-menu .top {
-		background-color:	#DDD;
-	}
-
-	.search-menu ul{
-		list-style-type:	none;
-		position:			absolute;
-		margin:				0px;
-		padding:			0px;
-	}
-
-	.search-menu .item {	/* hidden items */
-		display: 			none;
-		border-radius:		0 0 0.25em 0.25em;
-		margin-top:			0.2em;
-		padding:			0.19em 0.6em 0.1126em;
-		border:				1px solid #e4e4e4;
-		background-color:	#F5F5F5;
-		white-space:		nowrap;
-		
-		z-index:	2;
-	}
-
-	.search-menu.active .item {		/* shown items */
-		display:			block;
-	}
-
 
 	/* user-bar */
 
@@ -285,6 +306,9 @@
         margin-left:			auto;
         margin-right:			auto;
         margin-top:				0.5em;
+        
+   	    font-family:	'SourceSansProRegular', Arial, sans-serif;
+	    xxxxxpadding:		0.5em 0.25em 0.5em 0;
     }
     
     .submit-button input{
@@ -295,6 +319,13 @@
         font-size:				inherit;
 		width:					90%;
 		
+		xpadding:				0.2em;
+		padding-bottom:			0.5em;
+		padding-top:			0.25em;
+		padding-left:			0.2em;
+		padding-right:			0.2em;
+		margin-left:			0;	/* override chrome default */
+		
 		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 		border-radius:			0.5em 0.5em 0.5em 0.5em;
@@ -304,7 +335,6 @@
 	
 		.search-menu{
 			padding-left:	0.5em;
-			padding-bottom:	2px;
 			min-width:		0;		
 		}
 
@@ -321,7 +351,6 @@
 		
 		.submit-button input{
 			width:					auto;
-			padding:				2px;
 	        -moz-border-radius:		0 0.5em 0.5em 0;
 			-webkit-border-radius:	0 0.5em 0.5em 0;
 			border-radius:			0 0.5em 0.5em 0;
