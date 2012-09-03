@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<a href="${cell.fullDocUrl}" title="${fn:join(cell.title, ', ')}" ${targetArg} class="result-additional-info" rel="nofollow">
+<a href="${cell.fullDocUrl}" title="${fn:escapeXml(fn:join(cell.title, ', '))}" ${targetArg} class="result-additional-info" rel="nofollow">
 	<c:if test="${!empty cell.dcCreator}">
 		<%-- TODO: find out what is the original cell.creatorXML --%>
 		<!-- cell.dcCreator -->
@@ -41,7 +41,7 @@
 			<c:if test="${fn:length(dataProviderShort) > providerMaxLength}">
 				<c:set var="dataProviderShort" value="${fn:substring(dataProviderShort, 0, providerMaxLength)}..." />
 			</c:if>
-			<span title="${dataProviderFull}">${dataProviderShort}</span>
+			<span title="${fn:escapeXml(dataProviderFull)}">${dataProviderShort}</span>
 		</c:forEach>
 		<br />
 	</c:if>
@@ -53,7 +53,7 @@
 			<c:if test="${fn:length(provider) > providerMaxLength}">
 				<c:set var="provider" value="${fn:substring(cell_provider, 0, providerMaxLength)}..." />
 			</c:if>
-			<span title="${cell_provider}">${provider}</span>
+			<span title="${fn:escapeXml(cell_provider)}">${provider}</span>
 		</c:forEach>
 		<br />
 	</c:if>
