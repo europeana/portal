@@ -21,7 +21,7 @@ import eu.europeana.portal2.web.util.BeanUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 // @ContextConfiguration({"classpath:/servlet/portal2-mvc.xml"})
-@ContextConfiguration({"/servlet/portal2-mvc.xml"})
+@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
 public class ObjectControllerTest {
 
 	@Resource
@@ -59,7 +59,7 @@ public class ObjectControllerTest {
 			assertEquals(proxy.getEdmType().name(), "IMAGE");
 
 			System.out.println(BeanUtil.toString(fullBean));
-			assertEquals("The text representation size should be 3199", 3199, BeanUtil.toString(fullBean).length());
+			assertEquals("The text representation size should be 6140", 6140, BeanUtil.toString(fullBean).length());
 		} catch (SolrTypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

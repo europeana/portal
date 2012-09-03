@@ -12,7 +12,7 @@ import eu.europeana.portal2.web.controllers.utils.RSSImage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 
 /**
- * Tests the Pinterest feed related functions.
+ * Testing the blog parsing features
  * 
  * @author peter.kiraly@kb.nl
  */
