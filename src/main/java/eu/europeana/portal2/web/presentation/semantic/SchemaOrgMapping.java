@@ -8,6 +8,11 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Mapping of EDM elements and schema.org elements
+ *
+ * @author peter.kiraly@kb.nl
+ */
 public class SchemaOrgMapping {
 
 	private static Map<String, SchemaOrgElement> edm2schemaOrg;
@@ -81,27 +86,44 @@ public class SchemaOrgMapping {
 	
 	public static void initialize(String filename) {
 		edm2schemaOrg = new HashMap<String, SchemaOrgElement>();
-		Map<String, String> mapping = readFromProperty(filename);
-		for (Map.Entry<String, String> entry : mapping.entrySet()) {
+		Map<String, SchemaOrgElement> mapping = readFromProperty(filename);
+		for (Map.Entry<String, SchemaOrgElement> entry : mapping.entrySet()) {
 			// TODO: add more features to SchemaOrgElement later, like attributes, parents etc.
-			edm2schemaOrg.put(entry.getKey(), new SchemaOrgElement(entry.getValue()));
+			edm2schemaOrg.put(entry.getKey(), entry.getValue()); //new SchemaOrgElement(entry.getValue()));
 		}
 	}
 
-	private static Map<String, String> readFromProperty(String file) {
-		Map<String, String> mapping = new HashMap<String, String>();
+	private static Map<String, SchemaOrgElement> readFromProperty(String file) {
+		Map<String, SchemaOrgElement> mapping = new HashMap<String, SchemaOrgElement>();
 		DataInputStream in = null;
 		BufferedReader br = null;
 		try {
 			in = new DataInputStream(new FileInputStream(file));
 			br = new BufferedReader(new InputStreamReader(in));
-			String strLine;
-			while ((strLine = br.readLine()) != null) {
-				if (strLine.indexOf(" = ") <= 0) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (isSkippable(line)) {
 					continue;
 				}
-				String[] parts = strLine.split("\\s?=\\s?");
-				mapping.put(parts[0], parts[1]);
+				String[] parts = line.split("\\s?=\\s?");
+				String edm = parts[0];
+				String schema = parts[1];
+
+				String[] edmParts = edm.split("/", 2);
+				// TODO: handle edmParentName
+				String edmParentName = edmParts[0];
+				String edmElementName = edmParts[1];
+
+				SchemaOrgElement schemaElement;
+				if (schema.indexOf("/") == -1) {
+					schemaElement = new SchemaOrgElement(schema);
+				} else {
+					String[] schemaParts = schema.split("/", 2);
+					String schemaParent = schemaParts[0];
+					String schemaElementName = schemaParts[1];
+					schemaElement = new SchemaOrgElement(schemaElementName, new String[]{schemaParent});
+				}
+				mapping.put(edmElementName, schemaElement);
 			}
 		} catch (Exception e){
 			e.printStackTrace();
@@ -122,5 +144,16 @@ public class SchemaOrgMapping {
 			}
 		}
 		return mapping;
+	}
+
+	private static boolean isSkippable(String line) {
+		if (line.equals("")) {
+			return true;
+		} else if (line.indexOf("#") == 0) {
+			return true;
+		} else if (line.indexOf("=") == -1) {
+			return true;
+		}
+		return false;
 	}
 }
