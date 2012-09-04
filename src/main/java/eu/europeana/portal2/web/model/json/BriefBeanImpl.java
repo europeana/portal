@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.solr.client.solrj.beans.Field;
-
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 
@@ -38,7 +36,8 @@ public class BriefBeanImpl implements BriefBean {
 	private String[] dctermsHasPart;
 	private String[] dctermsSpatial;
 	private DocType type;
-	
+	private boolean isOptedOut;
+
 	public String getId() {
 		return id;
 	}
@@ -216,5 +215,13 @@ public class BriefBeanImpl implements BriefBean {
 	@Override
 	public List<Map<String, String>> getEdmPlaceLabel() {
 		return edmPlacePrefLabel;
+	}
+	@Override
+	public Boolean isOptedOut() {
+		return isOptedOut;
+	}
+
+	public void setOptedOut(boolean isOptedOut) {
+		this.isOptedOut = isOptedOut;
 	}
 }

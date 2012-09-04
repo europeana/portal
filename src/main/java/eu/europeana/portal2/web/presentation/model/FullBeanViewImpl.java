@@ -54,7 +54,7 @@ public class FullBeanViewImpl implements FullBeanView {
 
 	public FullBeanViewImpl(FullBean fullDoc) {
 		this.fullDoc = fullDoc;
-		this.relatedItems = fullDoc.getRelatedItems();
+		// this.relatedItems = fullDoc.getRelatedItems();
 		this.parents = findParents();
 		this.children = findChildren();
 		this.docIdWindowPager = createPager();

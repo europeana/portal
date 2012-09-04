@@ -920,6 +920,7 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getAggregations();
 	}
 
+	/*
 	@Override
 	public List<? extends BriefBean> getRelatedItems() {
 		return fulldoc.getRelatedItems();
@@ -929,6 +930,7 @@ public class FullBeanDecorator implements FullBean {
 	public void setRelatedItems(List<? extends BriefBean> relatedItems) {
 		fulldoc.setRelatedItems(relatedItems);
 	}
+	*/
 
 	@Override
 	public List<? extends ProvidedCHO> getProvidedCHOs() {
@@ -948,46 +950,6 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setAbout(String about) {
 		fulldoc.setAbout(about);
-	}
-
-	@Override
-	public void setWhen(String[] when) {
-		fulldoc.setWhen(when);
-	}
-
-	@Override
-	public String[] getWhen() {
-		return fulldoc.getWhen();
-	}
-
-	@Override
-	public void setWhere(String[] where) {
-		fulldoc.setWhere(where);
-	}
-
-	@Override
-	public String[] getWhere() {
-		return fulldoc.getWhere();
-	}
-
-	@Override
-	public void setWhat(String[] what) {
-		fulldoc.setWhat(what);
-	}
-
-	@Override
-	public String[] getWhat() {
-		return fulldoc.getWhat();
-	}
-
-	@Override
-	public void setWho(String[] who) {
-		fulldoc.setWho(who);
-	}
-
-	@Override
-	public String[] getWho() {
-		return fulldoc.getWho();
 	}
 
 	/*
@@ -1027,6 +989,30 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setEuropeanaAggregation(EuropeanaAggregation europeanaAggregation) {
 		fulldoc.setEuropeanaAggregation(europeanaAggregation);
+	}
+
+	@Override
+	public Boolean isOptedOut() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<? extends BriefBean> getSimilarItems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSimilarItems(List<? extends BriefBean> similarItems) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setOptOut(boolean optOut) {
+		// TODO Auto-generated method stub
+		fulldoc.setOptOut(optOut);
 	}
 
 	/*
