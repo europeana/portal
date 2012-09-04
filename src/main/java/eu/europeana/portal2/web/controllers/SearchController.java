@@ -1,5 +1,7 @@
 package eu.europeana.portal2.web.controllers;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -34,6 +36,9 @@ public class SearchController {
 	// private ThumbnailService thumbnailService;
 	
 	private final Logger log = Logger.getLogger(getClass().getName());
+	
+	private final List<String> sortValues = Arrays.asList(new String[]{"score", "title", "date"});
+	private static final String DEFAULT_SORT = "score";
 
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
@@ -89,6 +94,13 @@ public class SearchController {
 		model.setStart(start);
 		model.setRows(rows);
 		model.setQuery(q);
+		if (!sortValues.contains(sort)) {
+			sort = DEFAULT_SORT;
+		}
+		// TODO: the sorting is not solved yet in Solr, so we maintain only one sorting option regardless
+		//       what the user sets.
+		//       REMOVE THIS LINE AS SOON AS POSSIBLE, but not earlier ;-)
+		sort = DEFAULT_SORT;
 		model.setSort(sort);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
@@ -98,7 +110,8 @@ public class SearchController {
 						.setRefinements(qf)
 						.setPageSize(rows)
 						.setStart(start-1) // Solr starts from 0
-						.setParameter("f.YEAR.facet.mincount", "1");
+						.setParameter("f.YEAR.facet.mincount", "1")
+						.setParameter("sort", sort);
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
 		log.info("query: " + query);
