@@ -37,10 +37,11 @@
 					
 					<div class="feed-cell">
 						<h3 class="hide-on-phones featured-text">
+						${model.featuredItem.heading }
 							<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
 								title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
 								target=	"<spring:message code="${model.featuredItem.anchorTarget}" />">
-									<spring:message code="${model.featuredItem.heading}" />
+										<spring:message code="${model.featuredItem.heading}" />
 							</a>
 						</h3>
 						<p class="featured-text">

@@ -1,7 +1,14 @@
-<div class="search-results-navigation notranslate">
-	<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/icons.jsp" %>
+<div class="search-results-navigation notranslate" style="border:solid 1px red;">
+
+
+	<%--@ include file="/WEB-INF/jsp/default/_common/html/navigation/icons.jsp" --%>
+	
 	<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/pagination.jsp" %>
-	<script type="text/javascript">
+	
+	
+	
+	
+	<%--script type="text/javascript">
 		/* hide the link to the map if we're browsing with Internet Explorer */
 		if( navigator.userAgent.indexOf("MSIE") > -1 ){
 			hideElements = function(className) {
@@ -18,5 +25,7 @@
 			// MSIE - hide globe for map option
 			// hideElements("mapview");
 		}
-	</script>
+	</script --%>
+	
+	
 </div>

@@ -36,6 +36,8 @@ eu.europeana.header = {
 		
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
+		jQuery('#jump-to-page').bind('submit', this.jumpToPageSubmit );
+		jQuery('#jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
 		this.setupSearchMenu();
 	},
@@ -418,6 +420,41 @@ eu.europeana.header = {
 		
 	},
 	
+	validateJumpToPage : function(e){
+
+		var key		= window.event ? e.keyCode : e.which;
+		var maxRows	= parseInt(jQuery("#jump-to-page #max-rows"));
+		var currVal = jQuery("#jump-to-page #start-page").val();
+		
+		var underMax = function(){
+			
+			var x = parseInt( jQuery("#jump-to-page #start-page").val() + "" + String.fromCharCode(e.which) )
+			
+			console.log(x  + "    " +  (x < maxRows) + "   max rows = " +  maxRows)
+			return x < maxRows;// true;//parseInt( jQuery("#jump-to-page #start-page").val() + "" + String.fromCharCode(e.which) )  <= maxRows; 
+		};
+		
+		if (e.keyCode == 8 || e.keyCode == 46 || e.keyCode == 37 || e.keyCode == 39) {
+			return underMax();
+		}
+		else if ( key < 48 || key > 57 ) {
+			return false;
+		}
+		else return underMax();
+
+		
+	},
+	
+	jumpToPageSubmit : function( e ){
+		var rows	= parseInt(jQuery("#jump-to-page input[name=rows]").val());
+		var pageNum	= parseInt(jQuery("#jump-to-page #start-page").val());
+		
+		$("#jump-to-page #start").val(1 + ((pageNum-1)*rows) );
+		
+		alert(rows + "\n" + pageNum + "\n\n" + $("#jump-to-page #start").val()   )
+		return true;
+
+	},
 	
 	handleSearchSubmit : function( e ) {
 		
