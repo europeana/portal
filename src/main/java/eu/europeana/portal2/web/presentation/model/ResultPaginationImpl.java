@@ -29,6 +29,7 @@ public class ResultPaginationImpl implements ResultPagination {
 	private int firstPage;
 	private int lastPage;
 	private int nextPage;
+	private int numberOfPages;
 	private int pageNumber;
 	private int numFound;
 	private int start;
@@ -43,13 +44,14 @@ public class ResultPaginationImpl implements ResultPagination {
 		this.rows = rows;
 		
 		int totalPages = numFound / rows;
-		lastPage = totalPages;
+		lastPage = numFound - (numFound % rows);
 		firstPage = 1;
 		
 		if (numFound % rows != 0) {
 			totalPages++;
-			lastPage ++;
 		}
+		this.numberOfPages = totalPages;
+		
 		this.start = 1;
 		if (start != 0) {
 			this.start = start;
@@ -175,6 +177,11 @@ public class ResultPaginationImpl implements ResultPagination {
 	@Override
 	public int getNumFound() {
 		return numFound;
+	}
+	
+	@Override
+	public int getNumberOfPages() {
+		return numberOfPages;
 	}
 
 	@Override

@@ -181,7 +181,7 @@ public class SearchPage extends SearchPreparation {
 	}
 
 	/**
-	 * Returns the url to navigate to the last page of results
+	 * Returns the url to navigate to the first page of results
 	 * 
 	 * @param viewType
 	 *            - How to display the results
@@ -213,12 +213,19 @@ public class SearchPage extends SearchPreparation {
 			return null;
 		}
 		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
-				Integer.toString(briefBeanView.getPagination().getLastPage()));
+				Integer.toString(briefBeanView.getPagination().getLastPage()  ));
 			builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
 				"qf", "start");
 		return getPortalFormattedUrl(builder).toString();
 	}
 
+	public int getNumberOfPages(){
+		if (briefBeanView == null) {
+			return 0;
+		}
+		return briefBeanView.getPagination().getNumberOfPages();
+	}
+	
 	public List<String> getProvidersForInclusion() {
 		List<String> providersForInclusion = new ArrayList<String>();
 		if (getRefinements() != null) {

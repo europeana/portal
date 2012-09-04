@@ -77,6 +77,11 @@ public class PaginationDecorator implements ResultPagination {
     }
     
     @Override
+    public int getNumberOfPages() {
+    	return pagination.getNumberOfPages();
+    }
+    
+    @Override
     public int getLastViewableRecord() {
         return pagination.getLastViewableRecord();
     }

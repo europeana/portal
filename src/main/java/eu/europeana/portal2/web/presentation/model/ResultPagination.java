@@ -23,7 +23,8 @@ public interface ResultPagination {
 
 	int getPreviousPage();
 
-	
+	int getNumberOfPages();
+
 	int getNextPage();
 
 	int getLastViewableRecord();
