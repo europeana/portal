@@ -28,7 +28,7 @@ public interface ResultPagination {
 	int getNextPage();
 
 	int getLastViewableRecord();
-
+	
 	int getNumFound();
 
 	int getRows();

@@ -31,9 +31,9 @@ public class ResultPaginationImpl implements ResultPagination {
 	private int nextPage;
 	private int numberOfPages;
 	private int pageNumber;
-	private int numFound;
 	private int start;
 	private int rows;
+	private int numFound;
 	private List<BreadCrumb> breadcrumbs;
 	private PresentationQueryImpl presentationQuery = new PresentationQueryImpl();
 	private List<PageLink> pageLinks = new ArrayList<PageLink>();

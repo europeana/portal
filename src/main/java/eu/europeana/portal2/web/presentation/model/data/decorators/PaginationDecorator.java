@@ -86,10 +86,6 @@ public class PaginationDecorator implements ResultPagination {
         return pagination.getLastViewableRecord();
     }
 
-    @Override
-    public int getNumFound() {
-        return pagination.getNumFound();
-    }
 
     @Override
     public int getRows() {
@@ -125,4 +121,9 @@ public class PaginationDecorator implements ResultPagination {
         return pagination.getPageNumber();
     }
 
+    @Override
+    public int getNumFound() {
+    	return pagination.getNumFound();
+    }
+    
 }

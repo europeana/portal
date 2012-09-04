@@ -226,6 +226,13 @@ public class SearchPage extends SearchPreparation {
 		return briefBeanView.getPagination().getNumberOfPages();
 	}
 	
+	public int getPageNumber(){
+		if (briefBeanView == null) {
+			return 0;
+		}
+		return briefBeanView.getPagination().getPageNumber();
+	}
+	
 	public List<String> getProvidersForInclusion() {
 		List<String> providersForInclusion = new ArrayList<String>();
 		if (getRefinements() != null) {
