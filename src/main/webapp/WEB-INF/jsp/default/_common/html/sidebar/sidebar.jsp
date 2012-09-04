@@ -13,7 +13,7 @@
 
 	<!-- facets -->
 	<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
-		<h2><spring:message code="FilterYourSearch_t" />:</h2>
+		<h2><spring:message code="RefineYourSearch_t" />:</h2>
 		
 		<ul id="filter-search">
 			<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">

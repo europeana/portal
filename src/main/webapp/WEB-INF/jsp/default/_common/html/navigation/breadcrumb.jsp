@@ -11,14 +11,7 @@
 				<c:set var="breadcrumbs" value="${model.breadcrumbs}" />
 				<c:forEach items="${breadcrumbs}" var="crumb">
 					<c:if test="${crumb.showBreadCrumb}">
-						<c:choose>
-							<c:when test="${crumb.isLast}">
-								<li><b>${crumb.display}</b></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display}</a>&#160;&gt;&#160;</li>
-							</c:otherwise>
-						</c:choose>
+						<li><a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display}</a></li>
 					</c:if>
 				</c:forEach>
 			</c:when>

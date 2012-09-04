@@ -179,14 +179,14 @@
 
 	#breadcrumb {
 		overflow: hidden;
-		margin: 0 0 10px 0;
+		margin: 0 0 0.3em 0;
 		padding: 0;
 		list-style: none;
 	}
 	
 	#breadcrumb li {
-		float: left;
-		margin-right: 5px;
+		xxxxfloat: left;
+		xxxxxxxxxxxxxxxxmargin-right: 5px;
 	}
 	
 	.ui-error, .error {
