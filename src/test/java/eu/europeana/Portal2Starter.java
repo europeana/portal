@@ -6,40 +6,31 @@ import java.io.IOException;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-
-
-
-
 public class Portal2Starter {
 
-    public static String getEuropeanaPath() {
-        return getEuropeanaRoot().getAbsolutePath();
-    }
+	public static String getEuropeanaPath() {
+		return getEuropeanaRoot().getAbsolutePath();
+	}
 
-    private static File getEuropeanaRoot() {
-        try {
-            return new File(".").getCanonicalFile();
-        }
-        catch (IOException e) {
-            throw new RuntimeException("Couldn't get canonical file", e);
-        }
-    }
-    
+	private static File getEuropeanaRoot() {
+		try {
+			return new File(".").getCanonicalFile();
+		} catch (IOException e) {
+			throw new RuntimeException("Couldn't get canonical file", e);
+		}
+	}
 
-    public static void main(String... args) throws Exception {
-    	
-    	System.setProperty("org.eclipse.jetty.util.log.DEBUG","true");
-    	
-        Server server = new Server(8081);
-        server.setStopAtShutdown(true); 
+	public static void main(String... args) throws Exception {
+		System.setProperty("org.eclipse.jetty.util.log.DEBUG", "true");
 
-        String webapp = getEuropeanaPath() + "/src/main/webapp";
-        
-        System.err.println("Webapp path = " + webapp);
+		Server server = new Server(8081);
+		server.setStopAtShutdown(true);
 
-        
-        
-        server.setHandler(new WebAppContext(webapp, "/portal2"));
-        server.start();
-    }
+		String webapp = getEuropeanaPath() + "/src/main/webapp";
+
+		System.err.println("Webapp path = " + webapp);
+
+		server.setHandler(new WebAppContext(webapp, "/portal2"));
+		server.start();
+	}
 }
