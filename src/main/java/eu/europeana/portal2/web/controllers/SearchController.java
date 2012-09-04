@@ -31,14 +31,23 @@ import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
 public class SearchController {
-	
+
 	// @Resource
 	// private ThumbnailService thumbnailService;
-	
+
 	private final Logger log = Logger.getLogger(getClass().getName());
-	
-	private final List<String> sortValues = Arrays.asList(new String[]{"score", "title", "date"});
-	private static final String DEFAULT_SORT = "score";
+
+	/**
+	 * Possible sort options
+	 */
+	private final List<String> sortValues = Arrays.asList(new String[]{
+		"score desc", "title desc", "date desc"
+	});
+
+	/**
+	 * Deafult sort order
+	 */
+	private static final String DEFAULT_SORT = "score desc";
 
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
