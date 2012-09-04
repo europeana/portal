@@ -17,12 +17,14 @@
 
 package eu.europeana.portal2.web.presentation.model.data;
 
+import java.util.List;
+
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.abstracts.RestLocationsData;
+import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanViewDecorator;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
@@ -33,7 +35,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected FullBeanView fullBeanView;
 
 	protected FullBean document;
-	
+
 	protected FullBeanShortcut shortcut;
 
 	protected boolean showFields = false;
@@ -49,6 +51,8 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected String[] shownAtProviderOverride;
 	
 	protected FullBeanDecorator decorator;
+
+	protected List<BriefBeanDecorator> moreLikeThis;
 
 	public void setFormat(String format) {
 		this.format = format;
@@ -101,5 +105,13 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	
 	public FullBeanShortcut getShourtcut() {
 		return shortcut;
+	}
+
+	public List<BriefBeanDecorator> getMoreLikeThis() {
+		return moreLikeThis;
+	}
+
+	public void setMoreLikeThis(List<BriefBeanDecorator> moreLikeThis) {
+		this.moreLikeThis = moreLikeThis;
 	}
 }

@@ -17,8 +17,10 @@
 
 package eu.europeana.portal2.web.controllers;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -29,6 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -38,9 +43,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.definitions.solr.QueryType;
+import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.solr.bean.impl.BriefBeanImpl;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.solr.service.query.MoreLikeThis;
+import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.portal2.services.Configuration;
@@ -50,6 +60,9 @@ import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
+import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
+import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
+import eu.europeana.portal2.web.util.BeanUtil;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 /**
@@ -137,6 +150,7 @@ public class ObjectController {
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
 		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
 		model.setFullBeanView(fullBeanView);
+		model.setMoreLikeThis(getMoreLikeThis(collectionId, recordId, model));
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		try {
@@ -189,9 +203,10 @@ public class ObjectController {
 	private FullBean getFullBeanFromCorelib(String collectionId, String recordId) {
 		FullBean fullBean = null;
 		try {
-			fullBean = searchService.findById(collectionId, recordId);
+			String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
+			fullBean = searchService.findById(europeanaId);
 		} catch (SolrTypeException e) {
-			log.severe("SolrTypeException: " + e.getMessage());
+			log.severe("Solr Type Exception: " + e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
 			log.severe("Exception: " + e.getMessage());
@@ -199,6 +214,22 @@ public class ObjectController {
 		}
 		return fullBean;
 	}
+	
+	private List<BriefBeanDecorator> getMoreLikeThis(String collectionId, String recordId, UrlAwareData<?> model) {
+		List<BriefBeanDecorator> moreLikeThis = new ArrayList<BriefBeanDecorator>();
+		String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
+		try {
+			List<? extends BriefBean> result = searchService.findMoreLikeThis(europeanaId).getBeans(BriefBeanImpl.class);
+			for (BriefBean bean : result) {
+				moreLikeThis.add(new BriefBeanDecorator(model, bean));
+			}
+		} catch (SolrServerException e) {
+			log.severe("Solr Server Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return moreLikeThis;
+	}
+
 
 	private Map<String, String[]> sanitizeParameters(HttpServletRequest request) {
 		Map<String, String[]> parameters = new HashMap<String, String[]>();

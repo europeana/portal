@@ -25,10 +25,10 @@
 		
 		<div class="row">
 			<div class="twelve columns">
-				<c:if test="${!empty model.fullBeanView.relatedItems}">
+				<c:if test="${!empty model.moreLikeThis}">
 					<script type="text/javascript">
 						var carousel2Data = [];
-						<c:forEach items="${model.fullBeanView.relatedItems}" var="doc">
+						<c:forEach items="${model.moreLikeThis}" var="doc">
 							carousel2Data[0] = {
 								image:			decodeURI("${doc.thumbnail}").replace(/&amp;/g, '&'),
 								title:			"${doc.title}"

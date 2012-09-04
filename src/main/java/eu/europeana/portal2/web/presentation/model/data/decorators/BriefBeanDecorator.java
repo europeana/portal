@@ -68,7 +68,6 @@ public class BriefBeanDecorator implements BriefBean {
 	 * @Override public int getIndex() { return briefDoc.getIndex(); }
 	 */
 
-	@Override
 	public String getFullDocUrl() {
 		// log.info("1: " + briefDoc.getId());
 		String url = "record/" + briefDoc.getId().replace("#", "") + ".html";
@@ -343,4 +342,8 @@ public class BriefBeanDecorator implements BriefBean {
 		return briefDoc.getEdmAgent();
 	}
 
+	@Override
+	public Boolean isOptedOut() {
+		return briefDoc.isOptedOut();
+	}
 }

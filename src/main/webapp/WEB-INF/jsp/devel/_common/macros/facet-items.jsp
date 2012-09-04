@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!-- facet: ${facet} -->
 <c:forEach items="${facet.links}" var="facet_item">
   <c:set var="classAttr" value="" />
   <c:if test="${facet_item.remove}">
