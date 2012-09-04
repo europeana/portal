@@ -590,29 +590,10 @@ eu.europeana.fulldoc = {
 		
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes		
-		//jQuery('#header-strip').append(
-		//jQuery('#additional-actions-addthis').append(
-		
-		
-/*
-		var addThisHtml = 			com.addthis.getToolboxHtml({
-			html_class : 'addthis',
-			url : url,
-			title : title,
-			description : description,
-			services : {
-				compact : {},
-				tweet : { count : 'vertical' },
-				google_plusone : { count : 'true', size: 'tall' },
-				facebook_like : { layout : 'box_count' }
-			}
-		});
-*/		
-		
 		
 		
 		var addThisHtml = 		com.addthis.getToolboxHtml_ANDY({
-			html_class : 'addthis icon-share action-link',
+			html_class : 'addthis',
 			url : url,
 			title : title,
 			description : description,
@@ -621,17 +602,11 @@ eu.europeana.fulldoc = {
 			}
 		});
 
-//		alert( JSON.stringify(addThisHtml) );//jQuery('#shares-link').length);
-		
 
-		/*
-		jQuery('#shares-link').append(
+		jQuery('#shares-placeholder').after(
 				addThisHtml
 		);
-		*/
-		jQuery('#shares-placeholder').append(
-				addThisHtml
-		);
+		
 		/*
 
 		jQuery('#lightbox-addthis').append(
@@ -649,11 +624,18 @@ eu.europeana.fulldoc = {
 					}
 				})
 		);
-
-		 */	
+		 */
+		
+		
 		jQuery('.addthis').hide();
 		com.addthis.init( null, true, false );
-		setTimeout( function() { jQuery('.addthis').fadeIn(); }, 600 );
+		
+		setTimeout( function() {
+			jQuery('.addthis .at16t_compact').after( '<span>&nbsp;' +  jQuery('#shares-placeholder').html() );
+			jQuery('#shares-placeholder').remove();
+			jQuery('.addthis .at300bs').css("display", "inline-block");
+			jQuery('.addthis').fadeIn(); },
+			600 );
 	}
 };
 

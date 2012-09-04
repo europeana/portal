@@ -121,9 +121,17 @@ img.trigger{
 	
 
 	
-	.at300b { float: right; margin-left: 3px; }
-	.at300m { float: right; margin: 0 5px 0 5px; }
-	.addthis_button_compact { margin-top: 44px; }
+	.at300b {
+		xxxxfloat: right;
+		xxxmargin-left: 3px;
+	}
+	.at300m {
+		xxxfloat:	right;
+		xxxmargin:	0 5px 0 5px;
+	}
+	.addthis_button_compact {
+		xxxmargin-top: 44px;
+	}
 	
 	
 /* navigation */

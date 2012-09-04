@@ -25,9 +25,8 @@
 			</div>
 			<div class="row">
 				<div class="twelve columns">
-					<ul class="menu" role="navigation">
+					<ul class="menu" role="navigation"><li>
 						<%-- About Us --%>
-						<li>
 							<a href="<spring:message code="notranslate_main_menu_about_a_url_t"/>" target="<spring:message code="notranslate_main_menu_about_a_target_t"/>" title="<spring:message code="main_menu_about_a_title_t"/>"><spring:message code="main_menu_about_a_text_t"/></a>
 							<ul>
 								<li><a href="<spring:message code="notranslate_main_menu_about_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_about_1_a_target_t"/>" title="<spring:message code="main_menu_about_1_a_title_t"/>"><spring:message code="main_menu_about_1_a_text_t"/></a></li>
@@ -35,9 +34,8 @@
 								<li><a href="<spring:message code="notranslate_main_menu_about_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_about_3_a_target_t"/>" title="<spring:message code="main_menu_about_3_a_title_t"/>"><spring:message code="main_menu_about_3_a_text_t"/></a></li>
 								<li><a href="<spring:message code="notranslate_main_menu_about_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_about_4_a_target_t"/>" title="<spring:message code="main_menu_about_4_a_title_t"/>"><spring:message code="main_menu_about_4_a_text_t"/></a></li>
 							</ul>
-						</li>	
+						</li><li>
 						<%-- Help --%>
-						<li>
 							<a href="<spring:message code="notranslate_main_menu_help_a_url_t"/>" target="<spring:message code="notranslate_main_menu_help_a_target_t"/>" title="<spring:message code="main_menu_help_a_title_t"/>"><spring:message code="main_menu_help_a_text_t"/></a>
 							<ul>
 								<li><a href="<spring:message code="notranslate_main_menu_help_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_help_1_a_target_t"/>" title="<spring:message code="main_menu_help_1_a_title_t"/>"><spring:message code="main_menu_help_1_a_text_t"/></a></li>
@@ -46,9 +44,8 @@
 								<li><a href="<spring:message code="notranslate_main_menu_help_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_help_4_a_target_t"/>" title="<spring:message code="main_menu_help_4_a_title_t"/>"><spring:message code="main_menu_help_4_a_text_t"/></a></li>
 								<li><a href="<spring:message code="notranslate_main_menu_help_5_a_url_t"/>" target="<spring:message code="notranslate_main_menu_help_5_a_target_t"/>" title="<spring:message code="main_menu_help_5_a_title_t"/>"><spring:message code="main_menu_help_5_a_text_t"/></a></li>
 							</ul>
-						</li>
+						</li><li>
 						<%-- About Us --%>
-						<li>
 							<a href="<spring:message code="notranslate_main_menu_terms_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_a_target_t"/>" title="<spring:message code="main_menu_terms_a_title_t"/>"><spring:message code="main_menu_terms_a_text_t"/></a>
 							<ul>
 								<li><a href="<spring:message code="notranslate_main_menu_terms_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_1_a_target_t"/>" title="<spring:message code="main_menu_terms_1_a_title_t"/>"><spring:message code="main_menu_terms_1_a_text_t"/></a></li>
@@ -56,18 +53,15 @@
 								<li><a href="<spring:message code="notranslate_main_menu_terms_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_3_a_target_t"/>" title="<spring:message code="main_menu_terms_3_a_title_t"/>"><spring:message code="main_menu_terms_3_a_text_t"/></a></li>
 								<li><a href="<spring:message code="notranslate_main_menu_terms_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_4_a_target_t"/>" title="<spring:message code="main_menu_terms_4_a_title_t"/>"><spring:message code="main_menu_terms_4_a_text_t"/></a></li>
 							</ul>
-						</li>	
+						</li><li>
 				  		<%-- Explore --%>
-						<li>
 							<a href="<spring:message code="notranslate_main_menu_explore_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_a_target_t"/>" title="<spring:message code="main_menu_explore_a_title_t"/>"><spring:message code="main_menu_explore_a_text_t"/></a>
 							<ul>
 								<li><a href="<spring:message code="notranslate_main_menu_explore_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_1_a_target_t"/>" title="<spring:message code="main_menu_explore_1_a_title_t"/>"><spring:message code="main_menu_explore_1_a_text_t"/></a></li>
 								<li><a href="<spring:message code="notranslate_main_menu_explore_2_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_2_a_target_t"/>" title="<spring:message code="main_menu_explore_2_a_title_t"/>"><spring:message code="main_menu_explore_2_a_text_t"/></a></li>
 								<li><a href="<spring:message code="notranslate_main_menu_explore_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_3_a_target_t"/>" title="<spring:message code="main_menu_explore_3_a_title_t"/>"><spring:message code="main_menu_explore_3_a_text_t"/></a></li>
 							</ul>
-						</li>
-				
-					</ul>
+						</li></ul>
 				</div>
 			</div>
 			<div style="clear:both;"></div>

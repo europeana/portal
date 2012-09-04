@@ -148,6 +148,57 @@ com.addthis = {
 	},
 	
 	
+	/*
+	  
+	  
+	<a rel="nofollow" title="Share item on facebook, twitter, etc." class="icon-share action-link" id="shares-link" href="">
+		<span class="action-title">Share item</span>
+		
+		<a class="addthis_button_compact at300m" href="#">
+			<span class="at16nc at300bs at15nc at15t_compact at16t_compact">
+				<span class="at_a11y">More Sharing Services</span>
+			</span>
+		</a>
+
+	</a>
+	
+	
+	*/
+	
+	getToolboxHtml_ANDY : function( options ) {
+		
+		options.html_class = options.html_class || 'addthis_toolbox addthis_default_style';
+		
+		
+//		alert("options.html_class = " + options.html_class + "\n\n" +  JSON.stringify( options.services  ) + "\n\n\n" + this.getButtons( options.services ))
+		
+		var html =
+			
+			'<div '									+
+			'rel="nofollow" '						+
+			'style="width:100%;" '					+
+			'title="get the title" '				+
+			'class="' + options.html_class + '"'	+
+
+			( options.url			? ' addthis:url="'			+ options.url + '"' : '' ) +
+			( options.title			? ' addthis:title="'		+ options.title + '"' : '' ) +
+			( options.description	? ' addthis:description="'	+ options.description + '"' : '' ) +
+			
+			'>' + 
+			
+			( ( options.services )	? this.getButtons( options.services ) : '' ) +
+			
+			'</div>';
+
+	
+		//html = html.replace("at16nc at300bs at15nc at15t_compact at16t_compact", "icon-share")
+		//html = html.replace("addthis_button_compact at300m", "icon-share")
+		
+		return html;
+		
+	},
+	
+	
 	/**
 	 *	Renders a normal AddThis button at an anchor tag. If the tag has no image
 	 *	in it, we load our default image. If the tag has an image in it, that image
@@ -229,10 +280,15 @@ com.addthis = {
 					button_html += this.getTweetButton( i, services[i] );
 					
 				} else {
-					
+					/*
 					button_html +=
 						'<a class="addthis_button_' + i + '">' +
 							( services[i]['text'] ? services[i]['text'] : '' ) +
+						'</a>';
+					*/
+					button_html +=
+						'<a class="addthis_button_' + i + '">' +
+						( services[i]['text'] ? services[i]['text'] : '' ) +
 						'</a>';
 					
 				}

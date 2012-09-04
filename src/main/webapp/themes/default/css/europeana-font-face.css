@@ -20,6 +20,9 @@ body {
 		*/
 	}
 
+/* A severe case of classitis */
+/*
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -33,6 +36,16 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     line-height: 1.48;
     color: #333;
 }
+
+*/
+
+html, body{
+    font-family: 'SourceSansProRegular', Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.48;
+    color: #333;
+}
+
 
 h1,h2,h3,h4 {color: #181818;}
 
