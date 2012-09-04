@@ -1,3 +1,5 @@
+<%--
+
 <h3 id="explore"><spring:message code="ExploreFurther_t" />!</h3>
 
 <div id="explore-further">
@@ -7,3 +9,5 @@
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/explore-further/map.jsp" %>
 	
 </div>
+
+--%>

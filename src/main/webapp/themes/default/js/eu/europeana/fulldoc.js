@@ -23,21 +23,7 @@ eu.europeana.fulldoc = {
 			});
 			*/
 			//alert(JSON.stringify(carouselData));
-			/*
-   			Galleria.run('#carousel-1', {
-				transition:		'fadeslide',		
-				carousel:		true,
-				carouselSpeed:	1200,				
-				carouselSteps:	1,
-				easing:			'galleriaOut',
-				imageCrop:		false,				
-				imagePan:		false,
-				lightbox:		true,
-				responsive:		true,
-				dataSource:		carouselData,
-				thumbnails: 	carouselData.length>1
-   			});
-   			*/
+	
 			
    			jQuery('#carousel-1').css("height", jQuery('#carousel-1').width());
    			
@@ -69,7 +55,7 @@ eu.europeana.fulldoc = {
 					lightbox:		true,
 					responsive:		true,
 					dataSource:		carousel2Data,
-					thumbnails: 	carousel2Data.length>1
+					thumbnails: 	true
 	   			});
 	
 		};		
@@ -343,15 +329,16 @@ eu.europeana.fulldoc = {
 	addTabs : function() {
 		eu.europeana.tabs = {};
 		// Andy: short-circuit tabs.  Dan: can you help?
-		eu.europeana.tabs.explore = {options:{menu_ids:{}},toggleTab:function(){}};
-		/*
+		//eu.europeana.tabs.explore = {options:{menu_ids:{}},toggleTab:function(){}};
+		
+		
 		eu.europeana.tabs.explore = new com.gmtplusone.tabs(
 			'#explore-further',
 			{ callbacks : { opened : eu.europeana.fulldoc.tabFeedback }	}
 		);
 		
 		eu.europeana.tabs.explore.init( eu.europeana.fulldoc.addCarousels );
-		*/
+		
 	},
 	
 	
@@ -606,24 +593,46 @@ eu.europeana.fulldoc = {
 		//jQuery('#header-strip').append(
 		//jQuery('#additional-actions-addthis').append(
 		
-//		alert(jQuery('#addthis_test').length);
 		
+/*
+		var addThisHtml = 			com.addthis.getToolboxHtml({
+			html_class : 'addthis',
+			url : url,
+			title : title,
+			description : description,
+			services : {
+				compact : {},
+				tweet : { count : 'vertical' },
+				google_plusone : { count : 'true', size: 'tall' },
+				facebook_like : { layout : 'box_count' }
+			}
+		});
+*/		
+		
+		
+		
+		var addThisHtml = 		com.addthis.getToolboxHtml_ANDY({
+			html_class : 'addthis icon-share action-link',
+			url : url,
+			title : title,
+			description : description,
+			services : {
+				compact : {}
+			}
+		});
+
+//		alert( JSON.stringify(addThisHtml) );//jQuery('#shares-link').length);
+		
+
 		/*
-		jQuery('#footer-addthis').append(
-				com.addthis.getToolboxHtml({
-				html_class : 'addthis',
-				url : url,
-				title : title,
-				description : description,
-				services : {
-					compact : {},
-					tweet : { count : 'vertical' },
-					google_plusone : { count : 'true', size: 'tall' },
-					facebook_like : { layout : 'box_count' }
-				}
-			})
+		jQuery('#shares-link').append(
+				addThisHtml
 		);
 		*/
+		jQuery('#shares-placeholder').append(
+				addThisHtml
+		);
+		/*
 
 		jQuery('#lightbox-addthis').append(
 				com.addthis.getToolboxHtml({
@@ -641,9 +650,10 @@ eu.europeana.fulldoc = {
 				})
 		);
 
+		 */	
 		jQuery('.addthis').hide();
 		com.addthis.init( null, true, false );
-		setTimeout( function() { jQuery('.addthis').fadeIn(); }, 600 );	
+		setTimeout( function() { jQuery('.addthis').fadeIn(); }, 600 );
 	}
 };
 
