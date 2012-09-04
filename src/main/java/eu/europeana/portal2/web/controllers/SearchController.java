@@ -63,6 +63,7 @@ public class SearchController {
 		@RequestParam(value = "rswDefqry", required = false) String rswDefqry,
 		@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 		@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
+		@RequestParam(value = "sort", required = false, defaultValue="") String sort,
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
 		@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 		HttpServletRequest request, HttpServletResponse response,
