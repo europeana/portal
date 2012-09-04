@@ -12,9 +12,18 @@ public interface ResultPagination {
 	boolean isPrevious();
 
 	boolean isNext();
+	
+	boolean isFirst();
+	
+	boolean isLast();
+	
+	int getFirstPage();
+	
+	int getLastPage();
 
 	int getPreviousPage();
 
+	
 	int getNextPage();
 
 	int getLastViewableRecord();

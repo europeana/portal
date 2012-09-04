@@ -45,7 +45,17 @@ public class PaginationDecorator implements ResultPagination {
     public boolean isNext() {
         return pagination.isNext();
     }
+    
+    @Override
+    public boolean isFirst() {
+    	return pagination.isFirst();
+    }
 
+    @Override
+    public boolean isLast() {
+    	return pagination.isLast();
+    }
+    
     @Override
     public int getPreviousPage() {
         return pagination.getPreviousPage();
@@ -56,6 +66,16 @@ public class PaginationDecorator implements ResultPagination {
         return pagination.getNextPage();
     }
 
+    @Override
+    public int getFirstPage() {
+    	return pagination.getFirstPage();
+    }
+    
+    @Override
+    public int getLastPage() {
+    	return pagination.getLastPage();
+    }
+    
     @Override
     public int getLastViewableRecord() {
         return pagination.getLastViewableRecord();

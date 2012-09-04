@@ -23,7 +23,11 @@ public class ResultPaginationImpl implements ResultPagination {
 	private static final int PAGE_NUMBER_THRESHOLD = 5;
 	private boolean isPrevious;
 	private int previousPage;
+	private boolean isFirst;
+	private boolean isLast;
 	private boolean isNext;
+	private int firstPage;
+	private int lastPage;
 	private int nextPage;
 	private int pageNumber;
 	private int numFound;
@@ -37,9 +41,14 @@ public class ResultPaginationImpl implements ResultPagination {
 			String requestQueryString, String parsedQuery, List<BreadCrumb> breadcrumbs) {
 		this.numFound = numFound;
 		this.rows = rows;
+		
 		int totalPages = numFound / rows;
+		lastPage = totalPages;
+		firstPage = 1;
+		
 		if (numFound % rows != 0) {
 			totalPages++;
+			lastPage ++;
 		}
 		this.start = 1;
 		if (start != 0) {
@@ -57,6 +66,8 @@ public class ResultPaginationImpl implements ResultPagination {
 		}
 		this.isPrevious = start > 1;
 		this.previousPage = start - rows;
+		this.isFirst = pageNumber == 0;
+		this.isLast = pageNumber == lastPage;
 		this.isNext = totalPages > 1 && pageNumber < toPage;
 		this.nextPage = start + rows;
 		for (int page = fromPage; page <= toPage; page++) {
@@ -117,6 +128,16 @@ public class ResultPaginationImpl implements ResultPagination {
 	}
 
 	@Override
+	public int getLastPage() {
+		return lastPage;
+	}
+	
+	@Override
+	public int getFirstPage() {
+		return firstPage;
+	}
+	
+	@Override
 	public boolean isPrevious() {
 		return isPrevious;
 	}
@@ -127,10 +148,20 @@ public class ResultPaginationImpl implements ResultPagination {
 	}
 
 	@Override
+	public boolean isFirst() {
+		return isFirst;
+	}
+	
+	@Override
+	public boolean isLast() {
+		return isLast;
+	}
+
+	@Override
 	public boolean isNext() {
 		return isNext;
 	}
-
+	
 	@Override
 	public int getNextPage() {
 		return nextPage;

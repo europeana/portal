@@ -160,7 +160,7 @@ public class SearchPage extends SearchPreparation {
 				"qf", "start");
 		return getPortalFormattedUrl(builder).toString();
 	}
-
+	
 	/**
 	 * Returns the url to go back to the previous page of results
 	 * 
@@ -176,6 +176,45 @@ public class SearchPage extends SearchPreparation {
 		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
 				Integer.toString(briefBeanView.getPagination().getPreviousPage()));
 		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
+				"qf", "start");
+		return getPortalFormattedUrl(builder).toString();
+	}
+
+	/**
+	 * Returns the url to navigate to the last page of results
+	 * 
+	 * @param viewType
+	 *            - How to display the results
+	 * @return - The url to navigate back to the previous page of results
+	 * @throws UnsupportedEncodingException
+	 */
+	public String getFirstPageUrl() throws UnsupportedEncodingException {
+		if (briefBeanView == null) {
+			return null;
+		}
+		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
+				Integer.toString(briefBeanView.getPagination().getFirstPage()));
+			builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
+				"qf", "start");
+		return getPortalFormattedUrl(builder).toString();
+	}
+
+	
+	/**
+	 * Returns the url to navigate to the last page of results
+	 * 
+	 * @param viewType
+	 *            - How to display the results
+	 * @return - The url to navigate back to the previous page of results
+	 * @throws UnsupportedEncodingException
+	 */
+	public String getLastPageUrl() throws UnsupportedEncodingException {
+		if (briefBeanView == null) {
+			return null;
+		}
+		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
+				Integer.toString(briefBeanView.getPagination().getLastPage()));
+			builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
 				"qf", "start");
 		return getPortalFormattedUrl(builder).toString();
 	}
