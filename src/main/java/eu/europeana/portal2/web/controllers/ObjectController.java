@@ -219,7 +219,7 @@ public class ObjectController {
 		List<BriefBeanDecorator> moreLikeThis = new ArrayList<BriefBeanDecorator>();
 		String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
 		try {
-			List<? extends BriefBean> result = searchService.findMoreLikeThis(europeanaId).getBeans(BriefBeanImpl.class);
+			List<BriefBean> result = searchService.findMoreLikeThis(europeanaId);
 			for (BriefBean bean : result) {
 				moreLikeThis.add(new BriefBeanDecorator(model, bean));
 			}
