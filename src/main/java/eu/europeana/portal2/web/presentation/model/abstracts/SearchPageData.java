@@ -39,7 +39,20 @@ public abstract class SearchPageData extends PortalPageData {
 
 	private String[] refinements;
 
+	/**
+	 * The first result count
+	 */
 	private int start = 1;
+
+	/**
+	 * Number of results
+	 */
+	private int rows = 12;
+
+	/**
+	 * The Solr sort parameter
+	 */
+	private String sort;
 
 	public void setQuery(String query) {
 		this.query = query;
@@ -90,5 +103,21 @@ public abstract class SearchPageData extends PortalPageData {
 	 */
 	public List<PortalLanguage> getPortalLanguages() {
 		return PortalLanguage.getSupported();
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 }

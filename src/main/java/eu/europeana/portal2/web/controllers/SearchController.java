@@ -87,7 +87,9 @@ public class SearchController {
 		log.info("setRefinements on model to " + qf);
 
 		model.setStart(start);
+		model.setRows(rows);
 		model.setQuery(q);
+		model.setSort(sort);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
