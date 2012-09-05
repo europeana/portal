@@ -2,12 +2,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 
+<h2><spring:message code="MatchesFor_t" />:</h2>
 
 <ul id="breadcrumb" class="notranslate">
 	<c:if test="${!empty model.breadcrumbs}">
 		<c:choose>
 			<c:when test="${!empty !model.euroeanaUri}">
-				<li><span class="bold black"><spring:message code="MatchesFor_t" />:</span></li>
 				<c:set var="breadcrumbs" value="${model.breadcrumbs}" />
 				<c:forEach items="${breadcrumbs}" var="crumb">
 					<c:if test="${crumb.showBreadCrumb}">
@@ -15,7 +15,9 @@
 					</c:if>
 				</c:forEach>
 			</c:when>
-			<c:otherwise>
+			
+			<%-- c:otherwise>
+				<li><h1>ANDY: CAN THIS BE DELETED?</h1></li>
 				<li>
 					<spring:message code="ViewingRelatedItems_t" />
 					<c:set var="match" value="${model.briefBeanView.matchDoc}" />
@@ -23,7 +25,8 @@
 						<img src="${match.thumbnail}" alt="${match.title}" height="25" />
 					</a>
 				</li>
-			</c:otherwise>
+			</c:otherwise --%>
+			
 		</c:choose>
 	</c:if>
 </ul>
