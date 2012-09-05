@@ -20,7 +20,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import eu.europeana.corelib.definitions.solr.model.Term;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 
@@ -31,6 +30,7 @@ public class SuggestionControllerTest {
 	@Resource
 	private SearchService searchService;
 
+	// @Inject
 	private ApplicationContext applicationContext;
 
 	private MockHttpServletRequest request;

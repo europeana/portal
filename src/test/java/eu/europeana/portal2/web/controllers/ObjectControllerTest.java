@@ -59,10 +59,10 @@ public class ObjectControllerTest {
 
 			Proxy proxy = fullBean.getProxies().get(0);
 			assertEquals(proxy.getAbout(), "/91627/B056315A5C6D63CF55A8735DBAA45884EC3F1ADE");
-			assertEquals(proxy.getDcIdentifier()[0], "http://kulturarvsdata.se/VGM/media/VGM_A29408");
-			assertEquals(proxy.getDcSubject()[0], "Kulturhistoria");
-			assertEquals(proxy.getDcType()[0], "Foto");
-			assertEquals(proxy.getDctermsIssued()[0], "1900-01-01");
+			assertEquals(proxy.getDcIdentifier().values().iterator().next(), "http://kulturarvsdata.se/VGM/media/VGM_A29408");
+			assertEquals(proxy.getDcSubject().values().iterator().next(), "Kulturhistoria");
+			assertEquals(proxy.getDcType().values().iterator().next(), "Foto");
+			assertEquals(proxy.getDctermsIssued().values().iterator().next(), "1900-01-01");
 			assertEquals(proxy.getEdmType().name(), "IMAGE");
 
 			// System.out.println(BeanUtil.toString(fullBean));
