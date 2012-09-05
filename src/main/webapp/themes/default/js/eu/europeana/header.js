@@ -31,8 +31,8 @@ eu.europeana.header = {
 		this.addAjaxMethods();
 		this.addMenuFocusTriggers();
 		
-		this.enableMapLink();
-		this.enableTimelineLink();
+		//this.enableMapLink();
+		//this.enableTimelineLink();
 		
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
@@ -127,7 +127,7 @@ eu.europeana.header = {
 			});
 		});	// end menu  binding
 	}, 
-	
+	/*
 	enableMapLink:function(){
 		if(typeof eu.europeana.vars.mapview.json_url === "undefined"){
 			return;
@@ -209,7 +209,7 @@ eu.europeana.header = {
     	}
     	jQuery('#breadcrumb').html( jQuery( breadcrumb_html ) );
     },
-    
+    */
     
 	
 	
