@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="/${branding}/css/responsive-grid.css" />
 
 
+<link rel="stylesheet" href="/${branding}/css/ellipsis.css" />
+
 
 <link rel="stylesheet" href="/${branding}/css/europeana-font-icons.css" />
 <!-- link rel="stylesheet" href="/${branding}/css/europeana-fonts.css" /-->

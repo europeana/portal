@@ -16,6 +16,16 @@ eu.europeana.search = {
 			}
 		);
 		
+		// 
+		jQuery('.ellipsis').each(
+				function(i, ob){
+					var fixed	= $(ob).find('.fixed');
+					var html	= fixed.html();
+					fixed.remove();
+					new Ellipsis($(ob), 	{fixed:	'<span class="fixed">' + html + '</span>'} );					
+				}
+		);
+		
 		// Andy: conditional load test
 		jQuery("#query-input").focus(function(){
 			europeana_bootstrap.common.loadResultSizer(

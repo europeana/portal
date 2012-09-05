@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<ul id="items">
+<div id="items">
 	
 	<c:set var="results" value="${model.briefBeanView.briefDocs}" />
 
-	<c:forEach var="cell" items="${results}"><li><!-- whitespace breaks layout - keep li elements together tight -->
+	<c:forEach var="cell" items="${results}"><div class="li"><!-- whitespace breaks layout - keep li elements together tight -->
 	
 		<div class="thumb-frame">
 		
@@ -16,16 +16,24 @@
 			
 		</div>
 
-		<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/title.jsp" %>
+		<%--@ include file="/WEB-INF/jsp/default/search/content/results/grid/title.jsp" --%>
 		
-		<h2 class="title">
-			<c:if test="${!empty cell.title}">
-				${title}
-			</c:if>
-		</h2>
-		<span class="${icon_class}"></span>
+		<div class="ellipsis">
+			<h2>
+				<c:choose>
+					<c:when test="${!empty cell.title}">
+						${title}
+					</c:when>
+					<c:otherwise>
+						 &nbsp;
+					</c:otherwise>
+				</c:choose>				
+			</h2>
+			<span class="fixed"><span aria-hidden="true" class="${icon_class}"></span></span>
+		</div>
+
 				
-		<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/additional-info.jsp" %>
+		<%--@ include file="/WEB-INF/jsp/default/search/content/results/grid/additional-info.jsp" --%>
 		
-	</li></c:forEach>
-</ul>
+	</div></c:forEach>
+</div>

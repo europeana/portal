@@ -31,7 +31,12 @@
 
 	@media only screen and ( min-width:767px ){
 
-		.row{width:100%; max-width:1140px; min-width:727px; margin:0 auto;}
+		.row{
+			width:100%;
+			max-width:1140px;
+			xxxxxxxxxxxxxxxxxmin-width:727px;
+			margin:0 auto;
+		}
 
 		/* To fix the grid into a certain size, set max-width to width */
 		.row .row{min-width:0;}

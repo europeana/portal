@@ -1,12 +1,3 @@
-
-
-/* breadcrumb */
-/*
-	#breadcrumb {
-		margin: 0 0 10px 230px;
-	}
-*/
-
 /* addthis */
 
 	.addthis {
@@ -22,6 +13,7 @@
 	
 	
 /* items */
+
 	#search-results{
 		margin-left:	1em;
 	}
@@ -33,61 +25,56 @@
 		list-style: none;
 	}
 	
-	#items .thumb-frame{
-		background-color:	#999;
-		height:				8em;
-		margin:				0.5em;
-		text-align:			center;
+	#items img {
+		max-height:		100%;
+		max-width:		100%;
+		vertical-align:	middle;
 	}
-	 
-	#items li>span{
-		float:			right;
+
+	.thumb-frame, .ellipsis{
+		margin-left:	0.5em;
 		margin-right:	0.5em;
 	}
 	
+	.thumb-frame{
+		background-color:	#999;
+		height:				8em;
+		line-height:		8em;
+		text-align:			center;
+	}
 	
-	#items img {
-		height:			100%;
+	.ellipsis{
+	
+		height:			2em;
+		max-height:		2em;
+		min-height:		2em;
+		
+		line-height:	1em;
+		
+		margin-top:		0.25em;
+	}
+
+
+
+	#items .ellipsis-inner{
+		min-height:			2em;		/* force height to keep icon in bottom corner */
 	}
 	
 	
 	#items h2 {
-		font-size:		0.6em;
-		overflow:		hidden;
-
-		
-		margin-top:		0.5em;
-		
-		line-height:	1em;
-		height:			2em;
-		max-height:		2em;
-
-		position:		absolute;
-		bottom:			0;
-	}
-	
-	
+		font-size:		1em !important;
+		font-weight:	400;
+		display:		inline;
+  		word-wrap:		break-word;
+  	}
 	
 		
-	/* ANDY REFACTOR */
-	
-	/** DESKTOP **/
-	/** This breakpoint not wrapped in media selector for the sake of IE8 **/
 	#items{
-		xxxxxxxxxxxxxxxxxxxxxxxxxxword-spacing:	0;
-		xxxxxxxxxxxxxxxxxxxxxxxxxxfont-size:		0;
-		width:			100%;
 		padding-top:	0;
 		padding-bottom:	0;
 	}
 
-	#items li, #items ul{
-		xxxfont-size:		0em;
-		xxxword-spacing:	0;
-		
-	}
-
-	#items>li{
+	#items>div.li{
 		width:				25%;
 		margin-bottom:		0.5em;
 		margin-top:			0.5em;
@@ -96,24 +83,14 @@
 		border-bottom:		1px dotted #a0a0a0;
 		overflow-x:			hidden;
 		display:			inline-block;
+		float:				left;
 	}
-		
-	#items>li>a{
-		display:		block;
-		margin-bottom:	0.3em;
-		xxxxxxxxxxxxxxxxxfont-size:		18px;	
-	}
-		
-	
+
 	
 	/* mobile (default) */
 	
 	@media all and (max-width: 480px) {
 		
-		#items>li>h2,#items>li>a{
-			xxxxxxxxxxxxxxfont-size:		16px;
-		}
-	
 		#items>li{
 			width:			49%;
 			max-width:		49%;
@@ -133,7 +110,9 @@
 		}
 	}
 
-	/** TABLET **/
+
+	/* tablet */
+	
 	@media all and (max-width: 980px) {
 	
 		#items>li{
@@ -144,7 +123,6 @@
 
 
 
-	/* end Andy refactor of items */
 
 	/* meta-data */
 
@@ -231,6 +209,5 @@
 		-moz-transition:	0.25s linear opacity;
 		-webkit-transition:	0.25s linear opacity;
 		
-		xxxxxxxxxfont-size:			12px;
 	}
 	

@@ -57,6 +57,16 @@ var europeana_bootstrap = function(){
 	  {	name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'ajax' ]	},
 	  {	name : 'orientation-fix',	file : 'ios-orientationchange-fix' + js.min_suffix + '.js' + js.cache_helper,	path : eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory	}
 
+	  
+	  ,{
+			name : 'ellipsis',
+			file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'utils' ]
+		}
+
+	  
+	  
    	];
 
 	
