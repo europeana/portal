@@ -1,4 +1,4 @@
-<div class="search-results-navigation notranslate" style="border:solid 1px red;">
+<div class="search-results-navigation notranslate">
 
 
 	<%--@ include file="/WEB-INF/jsp/default/_common/html/navigation/icons.jsp" --%>

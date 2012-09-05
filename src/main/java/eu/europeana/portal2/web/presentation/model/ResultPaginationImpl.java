@@ -69,7 +69,7 @@ public class ResultPaginationImpl implements ResultPagination {
 		this.isPrevious = start > 1;
 		this.previousPage = start - rows;
 		this.isFirst = pageNumber == 0;
-		this.isLast = pageNumber == lastPage;
+		this.isLast = pageNumber == totalPages;
 		this.isNext = totalPages > 1 && pageNumber < toPage;
 		this.nextPage = start + rows;
 		for (int page = fromPage; page <= toPage; page++) {

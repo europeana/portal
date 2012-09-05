@@ -1,4 +1,25 @@
-/* pagination */
+/* pagination for search results */
+
+.result-pagination{
+	margin:	0;	
+}
+
+.result-pagination li{
+	float:	left;
+	list-style: none;
+}
+
+#start-page{
+	width:		5em;
+	outline:	none !important;
+}
+#start-page:focus{
+	outline:	none !important;
+}
+
+
+
+/* pagination for map */
 
 	.navigation-pagination {
 		float: left;
