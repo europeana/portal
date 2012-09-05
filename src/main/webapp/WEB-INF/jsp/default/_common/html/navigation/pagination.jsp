@@ -1,44 +1,10 @@
-<!-- pagination -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<c:if test="${!empty model.briefBeanView && !empty model.briefBeanView.pagination.presentationQuery.queryForPresentation}">
 
+<c:if test="${!empty model.briefBeanView && !empty model.briefBeanView.pagination.presentationQuery.queryForPresentation}">
 
 	<div>
 		<ul class="result-pagination">
-		
-	
-	
-		
-			<%-- total nr of results
-			<li class="page-nr">
-				<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;${model.briefBeanView.pagination.numFound}
-			</li>
-			--%>
-	
-	
-			<%-- current page nr 
-			<li class="page-nr">
-				<spring:message code="Page_t" />:
-			</li>
-			--%>
-			
-			<%--
-			<c:forEach var="link" items="${model.briefBeanView.pagination.pageLinks}">
-				<c:choose>
-					<c:when test="${!empty link.linked}">
-						<li class="page-nr">
-							<a href="${link.url}" title="<spring:message code="Page_t" /> ${link.display}">${link.display}</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-nr">
-							<a href="" class="selected" title="<spring:message code="Page_t" /> ${link.display}">${link.display}</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			--%>
 			
 			<%-- first arrow --%>
 			<c:if test="${!model.briefBeanView.pagination.first}">
@@ -48,12 +14,11 @@
 			</c:if>
 			
 			<%-- previous arrow --%>
-			<c:if test="${!empty model.briefBeanView.pagination.previous}">
+			<c:if test="${model.briefBeanView.pagination.previous}">
 				<li>
 					<a href="${model.previousPageUrl}" title="<spring:message code="AltPreviousPage_t" />"> &lt; &nbsp; </a>
 				</li>
 			</c:if>
-			
 			
 			<li class="page-nr">
 				<form method="get" action="${query_action}?" id="jump-to-page">
@@ -64,8 +29,6 @@
 					<input type="hidden" id="max-rows"	value="${model.numberOfPages}" />				
 					<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
 				</form>
-				
-				
 			</li>
 			
 			<%-- next arrow --%>
@@ -84,8 +47,7 @@
 		</ul>
 		
 		<div style="clear:both;"></div>
+		
 	</div>
-		
-		
+
 </c:if>
-<!-- pagination -->
