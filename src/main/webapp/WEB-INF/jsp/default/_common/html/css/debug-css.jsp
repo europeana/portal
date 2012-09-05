@@ -12,7 +12,10 @@
 
 
 
-<link rel="stylesheet" href="/${branding}/css/europeana-fonts.css" />
+<link rel="stylesheet" href="/${branding}/css/europeana-font-icons.css" />
+<!-- link rel="stylesheet" href="/${branding}/css/europeana-fonts.css" /-->
+
+
 <link rel="stylesheet" href="/${branding}/css/europeana-font-face.css" />
 
 

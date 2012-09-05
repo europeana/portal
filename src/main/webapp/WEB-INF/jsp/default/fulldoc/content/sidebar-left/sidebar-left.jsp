@@ -72,7 +72,7 @@
 
 
 	<%-- Embed link --%>
-   	<a href="" id="item-embed" class="icon-cite action-link" title="<spring:message code="embed_t" />" rel="nofollow">
+   	<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
    		<span class="action-title"><spring:message code="embed_t" /></span>
    	</a>
    	
