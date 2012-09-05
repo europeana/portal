@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
@@ -26,8 +27,10 @@ public class FullBeanShortcut {
 
 	private Map<String, List<String>> values;
 
-	private Map<String, List<Float>> floats;
+	private Map<String, List<Map<String, String>>> mapValues;
 
+	private Map<String, List<Float>> floats;
+	
 	/**
 	 * Adds multiple values
 	 * @param property
@@ -55,6 +58,22 @@ public class FullBeanShortcut {
 			values.put(property, new ArrayList<String>());
 		}
 		values.get(property).add(value);
+	}
+
+	private void add(String property, Map<String, String> value) {
+		if (!values.containsKey(property)) {
+			values.put(property, new ArrayList<String>());
+		}
+
+		for (Entry<String, String> entry : value.entrySet()) {
+			values.get(property).add(entry.getValue()); // adding only the value, not the language
+		}
+
+		// saving it into mapValues as well
+		if (!mapValues.containsKey(property)) {
+			mapValues.put(property, new ArrayList<Map<String, String>>());
+		}
+		mapValues.get(property).add(value);
 	}
 
 	private void addFloat(String property, Float value) {
@@ -88,16 +107,26 @@ public class FullBeanShortcut {
 				add("DcContributor", proxy.getDcContributor());
 				add("DcCoverage", proxy.getDcCoverage());
 				add("DcCreator", proxy.getDcCreator());
+				add("DcDate", proxy.getDcDate());
+				add("DcDescription", proxy.getDcDescription());
+				add("DcFormat", proxy.getDcFormat());
 				add("DcIdentifier", proxy.getDcIdentifier());
+				add("DcLanguage", proxy.getDcLanguage());
 				add("DcPublisher", proxy.getDcPublisher());
 				add("DcRelation", proxy.getDcRelation());
+				add("DcRights", proxy.getDcRights());
 				add("DcSource", proxy.getDcSource());
+				add("DcSubject", proxy.getDcSubject());
+				add("DcTitle", proxy.getDcTitle());
+				add("DcType", proxy.getDcType());
 				add("DctermsAlternative", proxy.getDctermsAlternative());
 				add("DctermsConformsTo", proxy.getDctermsConformsTo());
 				add("DctermsCreated", proxy.getDctermsCreated());
 				add("DctermsExtent", proxy.getDctermsExtent());
 				add("DctermsHasFormat", proxy.getDctermsHasFormat());
 				add("DctermsHasPart", proxy.getDctermsHasPart());
+				add("DctermsHasVersion", proxy.getDctermsHasVersion());
+				add("DctermsIsFormatOf", proxy.getDctermsIsFormatOf());
 				add("DctermsIsReferencedBy", proxy.getDctermsIsReferencedBy());
 				add("DctermsIsReplacedBy", proxy.getDctermsIsReplacedBy());
 				add("DctermsIsRequiredBy", proxy.getDctermsIsRequiredBy());

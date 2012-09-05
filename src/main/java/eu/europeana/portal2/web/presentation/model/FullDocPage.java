@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -261,10 +262,16 @@ public class FullDocPage extends FullDocPreparation {
 					addMetaField(fields, Field.ENRICHMENT_PERIOD_LABEL, timespan.getPrefLabel().get(key) + " (" + key + ")");
 				}
 				if (timespan.getBegin() != null) {
-					addMetaField(fields, Field.ENRICHMENT_PERIOD_BEGIN, timespan.getBegin());
+					// TODO: handle language (item.getKey())
+					for (Entry<String, String> item : timespan.getBegin().entrySet()) {
+						addMetaField(fields, Field.ENRICHMENT_PERIOD_BEGIN, item.getValue());
+					}
 				}
 				if (timespan.getEnd() != null) {
-					addMetaField(fields, Field.ENRICHMENT_PERIOD_END, timespan.getEnd());
+					// TODO: handle language (item.getKey())
+					for (Entry<String, String> item : timespan.getEnd().entrySet()) {
+						addMetaField(fields, Field.ENRICHMENT_PERIOD_END, item.getValue());
+					}
 				}
 				// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());
 				// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_LABEL, document.getEnrichmentPeriodBroaderLabel());

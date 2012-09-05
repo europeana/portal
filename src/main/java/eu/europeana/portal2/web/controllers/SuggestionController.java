@@ -36,12 +36,6 @@ public class SuggestionController {
 	@Resource
 	private SearchService searchService;
 
-	/*
-	public SuggestionController(SearchService searchService) {
-		this.searchService = searchService;
-	}
-	*/
-
 	@RequestMapping("/suggestions.json")
 	public ModelAndView suggestionHtml(
 			@RequestParam(value = "term", required = false, defaultValue="") String term,
@@ -67,12 +61,6 @@ public class SuggestionController {
 		if (suggestions != null) {
 			for (Term suggestion : suggestions) {
 				formattedSuggestion.add(suggestion.getTerm());
-				/*
-				Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) suggestion;
-				if (entry.getKey().length() > 3) {
-					formattedSuggestion.add(entry.getKey());
-				}
-				 */
 			}
 		}
 

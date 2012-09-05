@@ -20,6 +20,8 @@ public class AdminController {
 
 	@RequestMapping("/admin.html")
 	public ModelAndView adminHandler() throws Exception {
-		return ControllerUtil.createModelAndViewPage(new AdminPage(), PortalPageInfo.ADMIN);
+		AdminPage model = new AdminPage();
+		model.setTheme("devel");
+		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.ADMIN);
 	}
 }

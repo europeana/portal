@@ -24,7 +24,10 @@ package eu.europeana.portal2.web.presentation.model;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
+
+import org.apache.lucene.analysis.CharArrayMap.EntrySet;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -62,16 +65,24 @@ public class FullBeanViewImpl implements FullBeanView {
 
 	private List<? extends BriefBean> findParents() {
 		List<String> items = new ArrayList<String>();
-		for (Proxy proxy : fullDoc.getProxies()) {
-			StringArrayUtils.addToList(items, proxy.getDctermsIsPartOf());
+		if (fullDoc != null) {
+			for (Proxy proxy : fullDoc.getProxies()) {
+				for (Entry<String, String> item : proxy.getDctermsIsPartOf().entrySet()) {
+					items.add(item.getValue());
+				}
+			}
 		}
 		return new ArrayList();
 	}
 
 	private List<? extends BriefBean> findChildren() {
 		List<String> items = new ArrayList<String>();
-		for (Proxy proxy : fullDoc.getProxies()) {
-			StringArrayUtils.addToList(items, proxy.getDctermsHasPart());
+		if (fullDoc != null) {
+			for (Proxy proxy : fullDoc.getProxies()) {
+				for (Entry<String, String> item : proxy.getDctermsHasPart().entrySet()) {
+					items.add(item.getValue());
+				}
+			}
 		}
 		return new ArrayList();
 	}

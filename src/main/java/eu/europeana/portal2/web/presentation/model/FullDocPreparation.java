@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
@@ -213,10 +214,16 @@ public abstract class FullDocPreparation extends FullDocData {
 				}
 				addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
 				if (timespan.getBegin() != null) {
-					addField(when, Field.ENRICHMENT_PERIOD_BEGIN, timespan.getBegin());
+					// TODO: handle language (item.getKey())
+					for (Entry<String, String> item : timespan.getBegin().entrySet()) {
+						addField(when, Field.ENRICHMENT_PERIOD_BEGIN, item.getValue());
+					}
 				}
 				if (timespan.getEnd() != null) {
-					addField(when, Field.ENRICHMENT_PERIOD_END, timespan.getEnd());
+					// TODO: handle language (item.getKey())
+					for (Entry<String, String> item : timespan.getEnd().entrySet()) {
+						addField(when, Field.ENRICHMENT_PERIOD_END, item.getValue());
+					}
 				}
 			}
 		}
@@ -266,6 +273,10 @@ public abstract class FullDocPreparation extends FullDocData {
 					Field.EUROPEANA_COUNTRY.getValues(new String[]{getDocument().getEdmCountry()}));
 		}
 		return fields;
+	}
+
+	private void addField(List<FieldPresentation> fields, Field fieldInfo, String fieldValue) {
+		addField(fields, fieldInfo, new String[]{fieldValue});
 	}
 
 	private void addField(List<FieldPresentation> fields, Field fieldInfo,
