@@ -421,27 +421,41 @@ eu.europeana.header = {
 	},
 	
 	validateJumpToPage : function(e){
+		if (!Array.prototype.indexOf) {	/* IE 8 */
+			Array.prototype.indexOf = function(obj, start) {
+			     for (var i = (start || 0), j = this.length; i < j; i++) {
+			         if (this[i] === obj) { return i; }
+			     }
+			     return -1;
+			};
+		}
 
 		var key		= window.event ? e.keyCode : e.which;
-		var maxRows	= parseInt(jQuery("#jump-to-page #max-rows"));
-		var currVal = jQuery("#jump-to-page #start-page").val();
-		
+		var maxRows	= parseInt(jQuery("#jump-to-page #max-rows").val());
+
 		var underMax = function(){
-			
-			var x = parseInt( jQuery("#jump-to-page #start-page").val() + "" + String.fromCharCode(e.which) )
-			
-			console.log(x  + "    " +  (x < maxRows) + "   max rows = " +  maxRows)
-			return x < maxRows;// true;//parseInt( jQuery("#jump-to-page #start-page").val() + "" + String.fromCharCode(e.which) )  <= maxRows; 
+			//var x = parseInt( jQuery("#jump-to-page #start-page").val() +  String.fromCharCode(e.which) );
+			var x = parseInt( jQuery("#jump-to-page #start-page").val() +  String.fromCharCode(key) );
+			return x <= maxRows; 
 		};
-		
-		if (e.keyCode == 8 || e.keyCode == 46 || e.keyCode == 37 || e.keyCode == 39) {
-			return underMax();
+
+		if([8, 46, 37, 38, 39, 40].indexOf(e.keyCode)>-1){
+			/* delete, backspace, left, up, right, down */
+			return true;
+		}
+		else if(e.keyCode == 13){
+			/* return */
+			var currVal = jQuery("#jump-to-page #start-page").val();
+			return currVal.length > 0;
 		}
 		else if ( key < 48 || key > 57 ) {
+			/* alphabet */
 			return false;
 		}
-		else return underMax();
-
+		else{
+			/* number */
+			return underMax();
+		}
 		
 	},
 	
@@ -450,10 +464,7 @@ eu.europeana.header = {
 		var pageNum	= parseInt(jQuery("#jump-to-page #start-page").val());
 		
 		$("#jump-to-page #start").val(1 + ((pageNum-1)*rows) );
-		
-		alert(rows + "\n" + pageNum + "\n\n" + $("#jump-to-page #start").val()   )
 		return true;
-
 	},
 	
 	handleSearchSubmit : function( e ) {
