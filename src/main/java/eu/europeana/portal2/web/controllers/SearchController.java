@@ -84,7 +84,7 @@ public class SearchController {
 		Locale locale
 	) {
 		localeChangeInterceptor.preHandle(request, response, this);
-		
+
 		log.info("============== START SEARCHING ==============");
 
 		SearchPage model = new SearchPage();

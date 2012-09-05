@@ -78,7 +78,7 @@ public class ObjectController {
 
 	@Resource
 	private SearchService searchService;
-	
+
 	@Resource 
 	private Configuration configurationService;
 

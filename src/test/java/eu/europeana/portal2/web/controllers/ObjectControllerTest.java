@@ -23,7 +23,6 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-// @ContextConfiguration({"classpath:/servlet/portal2-mvc.xml"})
 @ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
 public class ObjectControllerTest {
 
