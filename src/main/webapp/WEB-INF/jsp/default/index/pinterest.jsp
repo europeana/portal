@@ -1,13 +1,13 @@
 
 <div class="twelve columns">
-	<h4 id="collapse-header-3">
+	<h3 id="collapse-header-3">
 		<span class="left">
 			<spring:message code='latest_on_pinterest_t'/>
 		</span>
 		<span class="icon-pinterest left"></span>
 		<span class="collapse-icon"></span>
-		<a class="feed-link" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>		
-	</h4>
+		<a class="feed-link icon-rss" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>		
+	</h3>
 
 	<div class="collapse-content">
 		<c:if test='${not empty model.pinterestItems}'>

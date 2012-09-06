@@ -4,11 +4,11 @@
 
  
 <div class="six columns">
-	<h4 id="collapse-header-2">
+	<h3 id="collapse-header-2">
 		<span class="left"><spring:message code="featured-content-title_t" /></span>
 		<span class="collapse-icon"></span>
-		<a class="feed-link" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>
-	</h4>
+		<a class="feed-link icon-rss" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>
+	</h3>
 
  
 	<div class="collapse-content">
@@ -17,13 +17,13 @@
 			<div class="feed-block">
 				<div class="feed-box">
 					<div class="feed-cell feed-image">
-						<h3 class="show-on-phones">
+						<h4 class="show-on-phones">
 							<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
 								title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
 								target=	"<spring:message code="${model.featuredItem.anchorTarget}" />">
 									<spring:message code="${model.featuredItem.heading}" />
 							</a>
-						</h3>
+						</h4>
 
 							<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
 								title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
@@ -36,14 +36,14 @@
 					</div>
 					
 					<div class="feed-cell">
-						<h3 class="hide-on-phones featured-text">
-						${model.featuredItem.heading }
+						<h4 class="hide-on-phones featured-text">
+
 							<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
 								title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
 								target=	"<spring:message code="${model.featuredItem.anchorTarget}" />">
 										<spring:message code="${model.featuredItem.heading}" />
 							</a>
-						</h3>
+						</h4>
 						<p class="featured-text">
 							<spring:message code="${model.featuredItem.p}" />
 						</p>					
@@ -65,20 +65,20 @@
 	
 		<div class="row">
 			<div class="twelve columns">
-				<h4 id="section-header-featured-partner"><spring:message code="featured-partner-title_t" /></h4>
+				<h3 id="section-header-featured-partner"><spring:message code="featured-partner-title_t" /></h3>
 			</div>
 		</div>
 
 		<div class="feed-block">		
 			<div class="feed-box">
 				<div class="feed-cell feed-image">
-					<h3 class="show-on-phones">
+					<h4 class="show-on-phones">
 						<a	href=	"<spring:message	code="${model.featuredPartner.anchorUrl}" />"
 							title=	"<spring:message	code="${model.featuredPartner.anchorTitle}" />"
 							target=	"<spring:message	code="${model.featuredPartner.anchorTarget}" />">
 								<spring:message code="${model.featuredPartner.heading}" />
 						</a>
-					</h3>
+					</h4>
 						<a	href=	"<spring:message code="${model.featuredPartner.anchorUrl}" />"
 							title=	"<spring:message code="${model.featuredPartner.anchorTitle}" />"
 							target=	"<spring:message code="${model.featuredPartner.anchorTarget}" />"
@@ -89,13 +89,13 @@
 				</div>
 				
 				<div class="feed-cell">
-					<h3 class="hide-on-phones featured-text">
+					<h4 class="hide-on-phones featured-text">
 						<a	href=	"<spring:message code="${model.featuredPartner.anchorUrl}" />"
 							title=	"<spring:message code="${model.featuredPartner.anchorTitle}" />"
 							target=	"<spring:message code="${model.featuredPartner.anchorTarget}" />">
 								<spring:message code="${model.featuredPartner.heading}" />
 						</a>
-					</h3>
+					</h4>
 					<p class="featured-text">
 						<spring:message code="${model.featuredPartner.p}" />
 					</p>

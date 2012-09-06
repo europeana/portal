@@ -22,7 +22,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 
 <div id="carousel-1-wrapper" class="row">
 
-	<c:if test='${not empty model.carouselItems}'>
+	<c:if test='${!empty model.carouselItems}'>
 	
 	    <script type="text/javascript">
 	            var carouselData = [];   
@@ -44,8 +44,10 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				--%>
 			</c:forEach>
 			
-			//carouselData[0].image = "http://www.europeana.eu/portal/sp/img/ca_teylers.jpg";
-		//	carouselData[0].big = "http://upload.wikimedia.org/wikipedia/commons/7/72/Pleiades_Spitzer_big.jpg";
+			//	carouselData[0].image = "http://www.europeana.eu/portal/sp/img/ca_teylers.jpg";
+			//	carouselData[0].big = "http://upload.wikimedia.org/wikipedia/commons/7/72/Pleiades_Spitzer_big.jpg";
+			
+			
 		</script>
 		
 		
@@ -60,7 +62,8 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		
 		<div class="six columns hide-on-phones">
 			<div id="carousel-1-blurb">
-				<span class="italic-heading">Europe's Digital Library</span>
+				<%--span class="italic-heading">Europe's Digital Library</span--%>
+				<h2>Europe's Digital Library</h2>
 				<p>
 					In Europeana you can search more than 24 million records of paintings, artifacts, books, music, films and more made available by Europe's libraries, archives and museums.
 				</p>			

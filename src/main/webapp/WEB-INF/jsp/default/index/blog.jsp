@@ -6,13 +6,15 @@
 <div class="twelve columns">
 
 
-	<h4 id="collapse-header-1">
+	<h3 id="collapse-header-1">
 		<span class="left">
 			<spring:message code='from_the_blog_t'/>
 		</span>
 		<span class="collapse-icon"></span>
-		<a class="feed-link" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>		
-	</h4>
+		
+		
+		<a class="feed-link icon-rss" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>		
+	</h3>
 	
 	<div class="row collapse-content">
 		
@@ -27,13 +29,13 @@
 							<div class="feed-block">
 								<div class="feed-box">
 									<div class="feed-cell feed-image">
-										<h3 class="show-on-phones">
+										<h4 class="show-on-phones">
 											<a	href=	"${entry.link}"
 												title=	"${entry.title}"
 												target=	"_self">
 												${entry.title}
 											</a>
-										</h3>
+										</h4>
 				
 										<a	href=	"${entry.link}"
 											title=	"${entry.title}"
@@ -45,13 +47,13 @@
 									</div>
 									
 									<div class="feed-cell">
-										<h3 class="hide-on-phones featured-text">
+										<h4 class="hide-on-phones featured-text">
 											<a	href=	"${entry.link}"
 												title=	"${entry.title}"
 												target=	"_self">
 													${entry.title}
 											</a>
-										</h3>
+										</h4>
 										<p class="featured-text">
 											${entry.description}"
 										</p>					

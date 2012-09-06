@@ -234,10 +234,11 @@ ul.featured-partner-links li{
 	margin-right:	0.5em;		
 	width: 			1em;
 	height:			1em;
-	
-	background-repeat: no-repeat;
-	background-position: 0 -1582px;
-	background-image: url(../images/icons/sprite.png);
+	/*
+	background-repeat:		no-repeat;
+	background-position:	0 -1582px;
+	background-image:		url(../images/icons/sprite.png);
+	*/
 }
 
 .collapse-content{
@@ -270,8 +271,7 @@ h3.featured-text{
 }
 
 p.featured-text{
-	line-height:	1em;
-	max-height:		4em;
+	max-height:		5.92em;	/*		4 x 1.48		*/
 	overflow:		hidden;
 }
 
