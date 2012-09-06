@@ -15,7 +15,7 @@ var Ellipsis = function(cmp, ops) {
 
 	var fn = function(){
 		return ( $inner[0].offsetHeight > $cmp.height()+1 );/* chrome +1 for border */
-	}		
+	};
 
 	var respond = function(){
 
