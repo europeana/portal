@@ -1,0 +1,12 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<form action="/${model.portalName}/${model.pageName}#register" method="post" id="register" class="login-box">
+  <h2><spring:message code="Register_t" /></h2>
+  <fieldset>
+    <input type="hidden" name="submit_login" value="Register"/>
+    <label for="register_email"><spring:message code="EmailAddress_t" /></label>
+    <input id="register_email" type="text" name="email" value="" maxlength="50"/>
+    <input type="submit" name="submit_button" class="submit-button" value="<spring:message code="Register_t" />"/>
+    <a href="#login" rel="nofollow"><spring:message code="LogIn_t" /></a><br/>
+    <a href="#request-password" rel="nofollow"><spring:message code="ForgotPassword_t" /></a>
+  </fieldset>
+</form>

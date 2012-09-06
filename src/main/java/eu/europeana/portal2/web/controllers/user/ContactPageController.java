@@ -119,14 +119,14 @@ public class ContactPageController {
 		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CONTACT_PAGE);
 		form.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(form, locale, PortalPageInfo.CONTACT);
-		
+
 		try {
 			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (Exception e) {
 			log.severe(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		return page;
 	}
 
