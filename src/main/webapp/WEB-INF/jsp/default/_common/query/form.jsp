@@ -21,9 +21,8 @@
 		
 			<div class="twelve columns search-wrapper">
 				
-				<!-- fieldset-->
 				<%-- search options --%>
-				<div class="search-menu" aria-hidden="true">
+				<div id="search-menu" class="eu-menu" aria-hidden="true">
 					<span class="hide-ilb-on-phones menu-label">Search</span>
 					<span class="icon-arrow-3 open-menu"></span>
 					<ul>
@@ -59,8 +58,8 @@
 					
 				</div>
 				<a class="hide-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+
 					
-				<!--/fieldset-->
 			</div>
 			
 			
@@ -107,4 +106,8 @@
 			 </c:if>
 	
 		</c:if>
+		
+		
+		<input type="hidden" name="rows"	id="rows" value="7" />
+		
 	</form>

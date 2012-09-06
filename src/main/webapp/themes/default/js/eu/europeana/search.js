@@ -16,7 +16,7 @@ eu.europeana.search = {
 			}
 		);
 		
-		// 
+		// add ellipsis 
 		jQuery('.ellipsis').each(
 				function(i, ob){
 					var fixed	= $(ob).find('.fixed');
@@ -25,6 +25,11 @@ eu.europeana.search = {
 					new Ellipsis($(ob), 	{fixed:	'<span class="fixed">' + html + '</span>'} );					
 				}
 		);
+
+		
+		// add result size control
+		this.setupResultSizeMenu();
+		
 		
 		// Andy: conditional load test
 		jQuery("#query-input").focus(function(){
@@ -48,7 +53,26 @@ eu.europeana.search = {
 	},
 	
 
+	setupResultSizeMenu : function(){
+		
+		var menu = new EuMenu( $("#result-size-menu"),
+			{
+				"fn_init": function(self){
+					var active = self.getActive();
+					if(active.length>0){
+						self.setLabel(active.find("a").attr("class"));
+					}
+				},
+				"fn_item":function(self, selected){
+					jQuery("input[name=rows]").val(selected);
+					self.setLabel(selected);
+				}
+			}
+		);
+		menu.init();
+	},
 
+	
 	addThis : function() {
 		
 		
@@ -75,11 +99,9 @@ eu.europeana.search = {
 				
 			});
 		
-		
+		/*
 		jQuery('.search-results-navigation').append(
-				
 			com.addthis.getToolboxHtml({
-				
 				html_class : 'addthis',
 				url : url,
 				title : title,
@@ -90,15 +112,13 @@ eu.europeana.search = {
 					google_plusone : { count : 'false' },
 					facebook_like : { layout : 'button_count', width : '51' }
 				}
-				
 			})
-			
 		);
 
 		jQuery('.addthis').hide();
 		com.addthis.init( null, true, false );
 		setTimeout( function() { jQuery('.addthis').fadeIn(); }, 600 );
-		
+		*/
 	}
 
 };

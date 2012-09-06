@@ -1,13 +1,22 @@
 /* pagination for search results */
 
 .result-pagination{
-	margin:	0;	
+	float:	right;	
+	margin:	0;
+	margin-top:	0.35em;
 }
 
 .result-pagination li{
 	float:	left;
 	list-style: none;
 }
+
+#result-size-menu{
+	margin-left:	1em;
+}
+
+
+
 
 #start-page{
 	width:		5em;

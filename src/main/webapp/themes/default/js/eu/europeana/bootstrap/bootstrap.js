@@ -64,6 +64,12 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		}
+	  ,{
+			  name : 'EuMenu',
+			  file : 'EuMenu' + js.min_suffix + '.js' + js.cache_helper,
+			  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			  dependencies : [ 'utils' ]
+	  }
 
 	  
 	  

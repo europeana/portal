@@ -21,7 +21,7 @@
 			</c:if>
 			
 			<li class="page-nr">
-				<form method="get" action="${query_action}?" id="jump-to-page">
+				<form method="get" action="${query_action}?" class="jump-to-page">
 					<input type="number" id="start-page" value="${model.pageNumber}" min="1" max="${model.numberOfPages}" /> of ${model.numberOfPages}
 					<input type="hidden" name="start"	id="start" />
 					<input type="hidden" name="rows"	id="rows" value="${model.rows}" />
@@ -45,6 +45,23 @@
 				</li>
 			</c:if>
 		</ul>
+		
+
+		<!-- result size control -->
+		
+		Results per page:
+		<div id="result-size-menu" class="eu-menu" aria-hidden="true">
+			<span class="hide-ilb-on-phones menu-label"></span>
+			<span class="icon-arrow-3 open-menu"></span>
+			<ul>
+				<c:forEach var="size" items="12,24,48,96">
+					<li class="${model.rows == size ? 'item active' : 'item'}">	<a href="" class="${size}"	>${size}</a></li>
+				</c:forEach>
+			</ul>
+		</div>
+		
+		
+		
 		
 		<div style="clear:both;"></div>
 		

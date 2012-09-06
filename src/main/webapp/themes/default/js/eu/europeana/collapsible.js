@@ -15,8 +15,6 @@ $.fn.Collapsible = function() {
 		console.log(x);
 	};
 
-	//alert("eu.europeana.vars.suppresResize = " + eu.europeana.vars.suppresResize)
-	//var awaitingOpen = false;	/* The iphone fires resize event when section opened - causing it to close again.  This variable is key to the fix. */
 	eu.europeana.vars.suppresResize = false;
 	
 	return this.each(function(){
@@ -97,10 +95,8 @@ $.fn.Collapsible = function() {
     		var fnResize = function(){
     			
     			if(eu.europeana.vars.suppresResize){
-    				//alert("return");
     				return;
     			}
-    			//alert("resize")
     			
     			var target = getTarget(); 
     			if($(window).width() > ops.toggleBreakpoint){

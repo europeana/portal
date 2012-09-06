@@ -36,181 +36,78 @@ eu.europeana.header = {
 		
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
-		jQuery('#jump-to-page').bind('submit', this.jumpToPageSubmit );
-		jQuery('#jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
+		
+		jQuery('.jump-to-page').bind('submit', this.jumpToPageSubmit );
+		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
 		this.setupSearchMenu();
 	},
 	
 	
+	
+	
+	
+	
+	
+	
+	
 	setupSearchMenu:function(){
 			
-		var searchMenu = function(cmp){
-			var self 	= this;
-			self.cmp	= cmp;
-			self.ops	= cmp.find(".item");
-			self.label	= self.cmp.find(".menu-label").html();
 
-			cmp.click(function(e){
-				self.cmp.toggleClass("active");
-				$('.mobile-menu' ).removeClass("active");
-				e.stopPropagation();
-			});
-			
-			var setLabel = function(val){
-				self.cmp.find(".menu-label").html(  self.label + " " + val );
-			};
-			
-			var setActive = function(val){
-				self.cmp.removeClass("selected");
-				self.cmp.find(".item a").each(function(i, ob){
-					if($(ob).attr("class") == val){
-						$(ob).parent().addClass("active");
-						if(val){
-							self.cmp.addClass("selected");	
-						}
-						setLabel(val);
-					}
-					else{						
-						$(ob).parent().removeClass("active");						
-					}
-				});
-				self.cmp.removeClass("active");
-			};
+		var menu = new EuMenu( 
+			$("#search-menu"),
+			{
+				"fn_item": function(self){
+					alert("clicked an item");
+				},
 
-			self.cmp.find(".item a").click(
-					function(e){
-						var selected = $(this).attr("class");
-						setActive(selected);
-						e.stopPropagation();
-						return false;
-				}
-			);
-						
-			return {
-				"init" : function(){
+				"fn_init": function(self){
 					var input		= $('#query-input');
 					var searchTerm	= eu.europeana.vars.query.replace("*:*", "");
 					
 					self.cmp.find(".item a").each(function(i, ob){
 						var searchType = $(ob).attr("class");
 						if(searchTerm.indexOf(searchType) == 0){
-							setLabel(searchType);
+							self.setLabel(searchType);
 							input.val(   searchTerm.substr( searchType.length, searchTerm.length)  );
-							setActive(searchType);
+							self.setActive(searchType);
 						}
 					});
 				},
-				"submit":function(){
+				
+				"fn_submit":function(self){
 					var active	= self.cmp.find(".item.active a").attr("class");
 					var input	= $('#query-input');
 					input.val( (typeof active == "undefined" ? "" : active) + input.val());
 				}
-			};
-		};	// end menu
-
-
-		$(document).ready(function(){
-			var menu = searchMenu( $(".search-menu") );
-			menu.init();
 			
-			/* menu close */
-			
-			$(document).click( function(){
-				$('.mobile-menu' ).removeClass("active");
-				$('.search-menu' ).removeClass("active");
-			});
-
-			$("#query-search").bind("submit", function(){
-				menu.submit();
-				return true;
-			});
-		});	// end menu  binding
-	}, 
-	/*
-	enableMapLink:function(){
-		if(typeof eu.europeana.vars.mapview.json_url === "undefined"){
-			return;
-		}
-		if(!eu.europeana.vars.query){
-			jQuery(".mapview_icon").css('display', 'block');
-			return;
-		}
-		jQuery.ajax({
-		  url: eu.europeana.vars.mapview.json_url + "&rows=1",
-		  dataType: 'json',
-		  success: function(data){
-			  if(data.totalResults > 0){
-				  jQuery(".mapview_icon").css('display', 'block');	
-			  }
-			  if(eu.europeana.vars.page_name == "map.html"){
-				  eu.europeana.header.placeBreadCrumb(data.breadcrumb);				  
-			  }
-		  }
-		});
-	},
-	
-	enableTimelineLink:function(){
-		if(typeof eu.europeana.vars.timeline.json_url === "undefined"){
-			return;
-		}
-		if(!eu.europeana.vars.query){
-			jQuery(".timeline_icon").css('display', 'block');
-			return;
-		}
-		jQuery.ajax({
-			url: eu.europeana.vars.timeline.json_url + "&rows=1",
-			dataType: 'json',
-			success: function(data){
-				if(data.totalResults > 0){
-					jQuery(".timeline_icon").css('display', 'block');	
-				}
-			    if(eu.europeana.vars.page_name == "timeline.html"){
-			    	eu.europeana.header.placeBreadCrumb(data.breadcrumb);
-			    }
 			}
+		);
+			
+		menu.init();
+			
+		/* menu close */
+			
+		$(document).click( function(){
+			$('.eu-menu' ).removeClass("active");
+			//$('.mobile-menu' ).removeClass("active");
+			//$('.search-menu' ).removeClass("active");
 		});
-	},
+
+		$("#query-search").bind("submit", function(){
+			menu.submit();
+			return true;
+		});
+
+	}, 
 	
 	
-    placeBreadCrumb : function( breadcrumb ){
-    	if(typeof breadcrumb == 'undefined' || typeof eu.europeana.vars.msg.matches == 'undefined'){
-    		return;
-    	}
-    	
-    	var i,
-    		ii = breadcrumb.length,
-    		breadcrumb_html =
-    			'<li>' +
-    				'<span class="bold black">' + eu.europeana.vars.msg.matches + ':</span>' +
-    			'</li>';
-    	
-    	if ( breadcrumb.length > 1 ) {
-	    	for ( i = 0; i < ii; i += 1 ) {
-	    		breadcrumb_html += '<li>';
-	    		if ( breadcrumb[i].url ) {
-	    			breadcrumb_html +=
-	    				'<a href="' + breadcrumb[i].url + '">' + breadcrumb[i].label + '</a>';
-	    		}
-	    		else{
-	    			breadcrumb_html += '<span class="bold">' + breadcrumb[i].label + '</span>';
-	    		}
-		    		
-		    	if ( ( i + 1 ) !== ii ) {
-		    		breadcrumb_html += ' > </li>';
-		    	}
-		    	else{
-		    		breadcrumb_html += '</li>';
-		    	}
-	    	}
-    	}
-    	else{
-    		breadcrumb_html += '<li>' + breadcrumb[0].label + '</li>';
-    	}
-    	jQuery('#breadcrumb').html( jQuery( breadcrumb_html ) );
-    },
-    */
-    
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -421,6 +318,10 @@ eu.europeana.header = {
 	},
 	
 	validateJumpToPage : function(e){
+		
+		var $this		= $(this);
+		var $jumpToPage	= $(this).parent();
+		
 		if (!Array.prototype.indexOf) {	/* IE 8 */
 			Array.prototype.indexOf = function(obj, start) {
 			     for (var i = (start || 0), j = this.length; i < j; i++) {
@@ -431,12 +332,10 @@ eu.europeana.header = {
 		}
 
 		var key		= window.event ? e.keyCode : e.which;
-		var maxRows	= parseInt(jQuery("#jump-to-page #max-rows").val());
+		var maxRows	= parseInt($jumpToPage.find("#max-rows").val());
 
 		var underMax = function(){
-			//var x = parseInt( jQuery("#jump-to-page #start-page").val() +  String.fromCharCode(e.which) );
-			var x = parseInt( jQuery("#jump-to-page #start-page").val() +  String.fromCharCode(key) );
-			return x <= maxRows; 
+			return parseInt( $this.val() +  String.fromCharCode(key) ) <= maxRows; 
 		};
 
 		if([8, 46, 37, 38, 39, 40].indexOf(e.keyCode)>-1){
@@ -445,7 +344,7 @@ eu.europeana.header = {
 		}
 		else if(e.keyCode == 13){
 			/* return */
-			var currVal = jQuery("#jump-to-page #start-page").val();
+			var currVal = $jumpToPage.find("#start-page").val();
 			return currVal.length > 0;
 		}
 		else if ( key < 48 || key > 57 ) {
@@ -460,10 +359,14 @@ eu.europeana.header = {
 	},
 	
 	jumpToPageSubmit : function( e ){
-		var rows	= parseInt(jQuery("#jump-to-page input[name=rows]").val());
-		var pageNum	= parseInt(jQuery("#jump-to-page #start-page").val());
 		
-		$("#jump-to-page #start").val(1 + ((pageNum-1)*rows) );
+		// set the "start" parameter
+		
+		var $jumpToPage	= $(this).parent();
+		var rows		= parseInt($jumpToPage.find("input[name=rows]").val());
+		var pageNum		= parseInt($jumpToPage.find("#start-page").val());
+		
+		$jumpToPage.find("#start").val(1 + ((pageNum-1)*rows) );
 		return true;
 	},
 	
