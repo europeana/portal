@@ -127,7 +127,7 @@ $.fn.Collapsible = function() {
     		var finishedOpen = function(){
     			awaitingOpen = false;    			
     		};
-    		setTimeout(finishedOpen, 1000);
+    		setTimeout(finishedOpen, 1200);
     		
     		e.preventDefault();
     		if(getTarget().is(':visible')){    			
