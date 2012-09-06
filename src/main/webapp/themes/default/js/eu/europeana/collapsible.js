@@ -15,6 +15,7 @@ $.fn.Collapsible = function() {
 		console.log(x);
 	};
 	
+	var awaitingOpen = false;	/* The iphone fires resize event when section opened - causing it to close again.  This variable is key to the fix. */
 
 	
 	return this.each(function(){
@@ -91,7 +92,15 @@ $.fn.Collapsible = function() {
         
         /* collapse on small size and show expand/collapse icons, show on big size and hide expand/collapse icons */
     	if(ops.toggleBreakpoint){
+    		
     		var fnResize = function(){
+    			
+    			if(awaitingOpen){
+    				//alert("return");
+    				return;
+    			}
+    			//alert("resize")
+    			
     			var target = getTarget(); 
     			if($(window).width() > ops.toggleBreakpoint){
     				target.addClass('active');
@@ -103,6 +112,7 @@ $.fn.Collapsible = function() {
     			}
     			setClasses();
     		};
+    		
     		$(window).bind('resize', fnResize);
     		fnResize();
     	}
@@ -112,10 +122,18 @@ $.fn.Collapsible = function() {
         
         
     	$header.bind('click', function(e){
+    		
+    		awaitingOpen = true;
+    		var finishedOpen = function(){
+    			awaitingOpen = false;    			
+    		};
+    		setTimeout(finishedOpen, 1000);
+    		
     		e.preventDefault();
     		if(getTarget().is(':visible')){    			
     			setClasses(true);
     		}
+    			//return false;
 		});
     });
 };
