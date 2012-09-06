@@ -25,7 +25,7 @@ body{
 	font-size:	1.2em;
 }
 
-@media only screen and ( min-width:767px ){
+@media only screen and ( min-width:48em ){
 	body{
 		font-size:	1.125em;
 	}
@@ -36,7 +36,7 @@ body{
 }
 
 
-@media only screen and ( min-width:1140px ){
+@media only screen and ( min-width:71em ){
 	body{
 		font-size:	1.063em;
 	}

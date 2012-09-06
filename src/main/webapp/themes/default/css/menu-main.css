@@ -63,7 +63,7 @@
 
 	
 	/* iPads (portrait and landscape) */
-	@media all and (min-width:442px) and (max-width:979px) {
+	@media all and (min-width:27.625em) and (max-width:61.1875em) {
 	
 		ul.menu {
 			font-size:	1.8em;
@@ -75,7 +75,7 @@
 	}
 
 	/* Desktops and laptops  */
-	@media all and (min-width:980px) and (max-width:1224px) {
+	@media all and (min-width:61.25em) and (max-width:76.5em) {
 
 		ul.menu {
 			font-size:	1.2em;

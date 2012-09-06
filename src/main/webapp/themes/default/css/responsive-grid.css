@@ -14,14 +14,14 @@
 
 	/* Mobile first */
 
-	.container					{min-width:0; margin-left:0; margin-right:0;}
-	.row						{width:100%; min-width:0; margin-left:0; margin-right:0;}
-	.row .row .column, .row .row .columns		{padding:0;}
-	.column, .columns				{width:auto; float:none; margin-left:0; margin-right:0;}
-	.column:last-child, .columns:last-child		{margin-right:0; float:none;}
+	.container										{min-width:0; margin-left:0; margin-right:0;}
+	.row											{width:100%; min-width:0; margin-left:0; margin-right:0;}
+	.row .row .column, .row .row .columns			{padding:0;}
+	.column, .columns								{width:auto; float:none; margin-left:0; margin-right:0;}
+	.column:last-child, .columns:last-child			{margin-right:0; float:none;}
 	[class*="column"]+[class*="column"]:last-child	{float: none;}
 	[class*="column"]:before,[class*="column"]:after{content:""; display:table;}
-	[class*="column"]:after				{clear:both;}
+	[class*="column"]:after							{clear:both;}
 		
 	.offset-by-one, .offset-by-two, .offset-by-three, .offset-by-four, .offset-by-five, .offset-by-six, .offset-by-seven, .offset-by-eight, .offset-by-nine, .offset-by-ten, .offset-by-eleven, .centered{margin-left:0;}
 		
@@ -29,7 +29,7 @@
 	.pull-one, .pull-two, .pull-three, .pull-four, .pull-five, .pull-six, .pull-seven, .pull-eight, .pull-nine, .pull-ten, .pull-eleven{right:auto;}
 
 
-	@media only screen and ( min-width:767px ){
+	@media only screen and ( min-width:	48em ){
 
 		.row{
 			width:100%;
@@ -168,7 +168,7 @@
 	.show-ilb-on-phones	{display:inline-block !important;}
 	
 	
-	@media only screen and ( min-width:767px ){
+	@media only screen and ( min-width:48em ){
 		.hide-on-phones		{display:block !important;}	
 		.hide-ilb-on-phones		{display:inline-block !important;}	
 

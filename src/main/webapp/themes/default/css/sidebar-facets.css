@@ -4,7 +4,11 @@
 		border-bottom: solid 1px #c0c0c0;
 	}
 	.sidebar h2{
-		border-top:	1px solid #c0c0c0;
+		xxborder-top:	1px solid #c0c0c0;
+	}
+	
+	#facets-actions{
+		margin-top:		0.5em;
 	}
 	
 	#filter-search, #filter-search ul {

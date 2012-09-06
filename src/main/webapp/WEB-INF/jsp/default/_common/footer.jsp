@@ -5,7 +5,7 @@
 				<div class="six columns">
 				
 					<div id="social-links">
-						<span class="italic-heading"><spring:message code="follow_us_t" /></span>
+						<h4><spring:message code="follow_us_t" /></h4>
 						<span class="social-link icon-facebook"		rel="me"></span>			
 						<span class="social-link icon-pinterest-2"	rel="me"></span>
 						<span class="social-link icon-twitter"		rel="me"></span>

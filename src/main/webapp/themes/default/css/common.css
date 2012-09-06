@@ -134,7 +134,7 @@
 		border:				0;
 	}
 
-	@media only screen and ( min-width:768px ){	/* ipad */
+	@media only screen and ( min-width:48em ){	/* ipad */
 		#social-links .social-link{		
 			width:	auto !important;
 			float:	left;
@@ -164,7 +164,7 @@
 	}
 
 
-@media only screen and ( min-width:767px ){
+@media only screen and ( min-width:48em ){
 	.sidebar {
 		xmargin: 0 20px 0 0;
 	}	

@@ -70,7 +70,7 @@
 	margin:			1em 0;
 }
 
-@media only screen and ( min-width:767px ){
+@media only screen and ( min-width:48em ){
 
 	#carousel-1-wrapper{
 		margin-top:	45px;
@@ -191,7 +191,7 @@ ul.featured-partner-links li{
 }
 
 
-@media only screen and ( min-width:767px ){
+@media only screen and ( min-width:48em ){
 	.feed-block{
 			display:		table;
 			table-layout:	fixed;
@@ -245,7 +245,7 @@ ul.featured-partner-links li{
 	clear:	both;	
 }
 
-@media only screen and ( min-width:767px ){
+@media only screen and ( min-width:48em ){
 	.feed-link {
 		float:			left;
 		margin-left:	0.4em;
@@ -276,7 +276,7 @@ p.featured-text{
 }
 
 
-@media only screen and ( min-width:767px ){
+@media only screen and ( min-width:48em ){
 	.featured-text{
 		margin-left:	0.5em !important;
 	}

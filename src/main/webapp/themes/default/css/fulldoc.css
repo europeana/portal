@@ -59,7 +59,7 @@ a.action-link:hover{
 }
 
 
-@media only screen and ( min-width:400px ){
+@media only screen and ( min-width:28em ){
 	a.action-link {
 		float:			none;
 		display:		block;
@@ -76,7 +76,7 @@ a.action-link:hover{
 
 
 
-@media only screen and ( min-width:767px ){
+@media only screen and ( min-width:48em ){
 	.additional-info{
 
 	}
