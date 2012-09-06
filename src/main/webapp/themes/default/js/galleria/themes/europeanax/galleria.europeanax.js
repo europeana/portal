@@ -255,6 +255,11 @@ Galleria.addTheme({
     		
     		
        		$(window).resize( function() {
+       			
+       			if(eu.europeana.vars.suppresResize){
+       				return;
+       			}
+
        			Galleria.log("Bordered mode resize");
        			thisGallery.$(	'container' ).parent().css("height", 1.1 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
        			
@@ -357,6 +362,11 @@ Galleria.addTheme({
         			navRight.css("right", "0px");
          		 });
         		$(window).resize( function() {
+        			
+           			if(eu.europeana.vars.suppresResize){
+           				return;
+           			}
+
         			Galleria.log("Resize landing page carousel: " + jQuery("#carousel-1").css("height")  );
         	
         			/*
@@ -428,6 +438,10 @@ Galleria.addTheme({
     		}
     		
     		$(window).resize( function() {
+       			if(eu.europeana.vars.suppresResize){
+       				return;
+       			}
+
     			Galleria.log("Landing page galleria resize");
     			thisGallery.$(	'container' ).parent().css("height", thisGallery.$( 'container' ).css("height"));
     		});
@@ -827,6 +841,9 @@ Galleria.addTheme({
 	});
 	
 	$(window).resize( function() {
+		if(eu.europeana.vars.suppresResize){
+  			return;
+  		}
 		onResize();
      });
            

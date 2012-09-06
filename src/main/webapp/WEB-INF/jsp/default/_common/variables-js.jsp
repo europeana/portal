@@ -102,9 +102,21 @@
 
 
 
-
 <script>
-window.eu = { europeana : { vars : { msg : { cite:{} }, item : {}, mapview : {} } } };
+window.eu = {
+				europeana : {
+					vars : {
+						msg		: {
+							cite:{}
+						},
+						item	: {},
+						mapview	: {},
+						suppresResize: false
+					} 
+				}
+			};
+
+
 window.js = {
   min_suffix      : '',
   min_directory   : '',

@@ -14,9 +14,10 @@ $.fn.Collapsible = function() {
 	var log = function(x){
 		console.log(x);
 	};
-	
-	var awaitingOpen = false;	/* The iphone fires resize event when section opened - causing it to close again.  This variable is key to the fix. */
 
+	//alert("eu.europeana.vars.suppresResize = " + eu.europeana.vars.suppresResize)
+	//var awaitingOpen = false;	/* The iphone fires resize event when section opened - causing it to close again.  This variable is key to the fix. */
+	eu.europeana.vars.suppresResize = false;
 	
 	return this.each(function(){
         var $this 		= $(this);
@@ -95,7 +96,7 @@ $.fn.Collapsible = function() {
     		
     		var fnResize = function(){
     			
-    			if(awaitingOpen){
+    			if(eu.europeana.vars.suppresResize){
     				//alert("return");
     				return;
     			}
@@ -123,9 +124,10 @@ $.fn.Collapsible = function() {
         
     	$header.bind('click', function(e){
     		
-    		awaitingOpen = true;
+    		//awaitingOpen = true;
+    		eu.europeana.vars.suppresResize = true;
     		var finishedOpen = function(){
-    			awaitingOpen = false;    			
+    			eu.europeana.vars.suppresResize = false;    			
     		};
     		setTimeout(finishedOpen, 1200);
     		
