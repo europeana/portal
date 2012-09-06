@@ -2,16 +2,31 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
 <h2><spring:message code="MatchesFor_t" />:</h2>
 
 <ul id="breadcrumb" class="notranslate">
+
 	<c:if test="${!empty model.breadcrumbs}">
 		<c:choose>
 			<c:when test="${!empty !model.euroeanaUri}">
 				<c:set var="breadcrumbs" value="${model.breadcrumbs}" />
-				<c:forEach items="${breadcrumbs}" var="crumb">
+				
+				<c:forEach items="${breadcrumbs}" var="crumb" varStatus="status">
 					<c:if test="${crumb.showBreadCrumb}">
-						<li><a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display}</a></li>
+						<li>
+
+							<c:if test="${status.index > 0}">
+								<a href="/${model.portalName}/${model.pageName}?query=${model.query}${model.briefBeanView.facetQueryLinks[status.index-1].links[0].url}"
+									><span style="float:right; margin-right:0.5em; font-weight:bold;">X</span></a>
+							</c:if>
+						
+							<a href="${crumb.breadCrumbUrl}" rel="nofollow">${crumb.display}</a>
+						
+						
+						</li>
 					</c:if>
 				</c:forEach>
 			</c:when>
