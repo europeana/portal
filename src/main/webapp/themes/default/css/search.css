@@ -11,9 +11,14 @@
 	text-shadow:	none !important;
 }
 #result-size-menu{
-	border-radius:	0 0 0 0 !important;
+	xxxxxxxborder-radius:	0 0 0 0 !important;
+	
+	border:					1px solid #e4e4e4;
+	
+	
 	padding-left:	0.25em;
 	padding-right:	0.25em;
+	z-index:		2;
 }
 
 

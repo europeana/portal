@@ -54,21 +54,22 @@ var europeana_bootstrap = function(){
 	  {	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui-1.8.2.custom.min.js' ]	},
 	  {	name : 'analytics',			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,					path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,							dependencies : [ 'utils' ]	},
 	  {	name : 'ajax',				file : 'ajax' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'utils' ]	},
-	  {	name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'ajax' ]	},
-	  {	name : 'orientation-fix',	file : 'ios-orientationchange-fix' + js.min_suffix + '.js' + js.cache_helper,	path : eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory	}
-
 	  
-	  ,{
+	  {
+		  name : 'EuMenu',
+		  file : 'EuMenu' + js.min_suffix + '.js' + js.cache_helper,
+		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+		  dependencies : [ 'utils' ]
+	  },
+	  
+	  {	name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'ajax' ]	},
+	  {	name : 'orientation-fix',	file : 'ios-orientationchange-fix' + js.min_suffix + '.js' + js.cache_helper,	path : eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory	},
+	  
+	  {
 			name : 'ellipsis',
 			file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
-		}
-	  ,{
-			  name : 'EuMenu',
-			  file : 'EuMenu' + js.min_suffix + '.js' + js.cache_helper,
-			  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			  dependencies : [ 'utils' ]
 	  }
 
 	  

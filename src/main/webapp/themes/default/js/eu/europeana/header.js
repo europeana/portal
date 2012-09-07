@@ -40,20 +40,36 @@ eu.europeana.header = {
 		jQuery('.jump-to-page').bind('submit', this.jumpToPageSubmit );
 		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
+		this.setupMobileMenu();
 		this.setupSearchMenu();
 	},
 	
 	
-	
-	
-	
-	
-	
+	setupMobileMenu: function(){
+
+		var menu = new EuMenu(
+			$("#mobile-menu"),
+			{
+				"fn_item": function(self){
+					alert("clicked an item");
+				},
+
+				"fn_init": function(self){
+					//alert("init mobile menu");
+				},
+				
+				"fn_submit":function(self){
+				}
+			
+			}
+		);
+		menu.init();
+		
+	},
 	
 	
 	setupSearchMenu:function(){
-			
-
+		
 		var menu = new EuMenu( 
 			$("#search-menu"),
 			{

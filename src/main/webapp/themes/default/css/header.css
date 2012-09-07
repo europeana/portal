@@ -59,12 +59,24 @@
 		margin-bottom:	1.5em !important;	
 	}
 	
+	#search-menu{		/* stop result-size menu showing through the search menu */
+		z-index:				3;
+	
+		border:					1px solid #e4e4e4;
+		
+		-moz-border-radius:		0.5em 0 0 0.5em;
+		-webkit-border-radius:	0.5em 0 0 0.5em;
+		border-radius:			0.5em 0 0 0.5em;
+	}
+	
+	
 	/* test to see if font is impacting layout (Andy: TODO: delete) 
 	.search-menu, #query-input, #submit-query input	{
 	   	font-family: Ubuntu;
 	}
 */
-	
+
+
 	#query-input{
 	    font-family:	'SourceSansProRegular', Arial, sans-serif;
 	    font-weight:	400;
@@ -73,10 +85,6 @@
 	    outline:		none; /* chrome */
     }
 
-
-
-
-	
 	#query-input{
 		xpadding:				0.33em;
 		padding:				0.2em;
@@ -129,7 +137,7 @@
 
 	/* Mobile Menu */
 	
-	.mobile-menu{
+	#mobile-menu{
 		position:	relative;
 		display:	inline-block;
 		float:		right;
@@ -137,66 +145,17 @@
 		z-index:	1;	
 	}
 	
-	.mobile-menu a {
-		text-decoration:	none;
-		color:				#444444;
-	}
-
-	.mobile-menu a:hover{
-		text-decoration:	underline;
-	}
-
-	.mobile-menu .top {
-		background-color:	#DDD;
-	}
-
-	.mobile-menu ul{
-		list-style-type:	none;
+	/* eu menu overrides */
+	
+	#mobile-menu ul{
+		font-size:	0.5em;
 		position:			absolute;
-		right:				-1px;		/* offset cancels parent's border in ff */
-		margin:				0px;
-		padding:			0px;
-	}
-
-	.mobile-menu .item {	/* hidden items */
-		display: 			none;
-		border-radius:		0 0 0.25em 0.25em;
-		margin-top:			0.2em;
-		padding:			0.19em 0.6em 0.1126em;
-		border:				1px solid #e4e4e4;
-		background-color:	#F5F5F5;
-		white-space:		nowrap;
-		font-size:			0.75em;
-	}
-
-	.mobile-menu.active .item {		/* shown items */
-		display:			block;
-	}
-
-	/* extra rules needed for icons */
-
-	.mobile-menu{
-		position:	relative;
-		display:	inline-block;
-		float:		right;
-		font-size:	2em;
-		z-index:	1;	
+		right:				-1px;		
 	}
 	
-	.mobile-menu .item {
-		font-size:			0.75em;
+	#mobile-menu ul li{
+		font-size:	1.2em;			
 	}
-	.mobile-menu a {
-		font-size:			0.75em;
-		vertical-align:		middle;
-		position:			relative;
-		bottom:				0.15em;
-	}
-	
-	/* end of extra rules needed for icons */
-
-
-
 
 
 	/* user-bar */

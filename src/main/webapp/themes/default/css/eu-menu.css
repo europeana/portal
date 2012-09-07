@@ -13,16 +13,19 @@
 	float:					none;
 	text-align:				left;
 	
-	
+/*	
 	border:					1px solid #e4e4e4;
+*/
 
 	top:					0.03em;
 	padding-left:			0.15em;
 	padding-bottom:			0.18em;
 
+	/*
 	-moz-border-radius:		0.5em 0 0 0.5em;
 	-webkit-border-radius:	0.5em 0 0 0.5em;
 	border-radius:			0.5em 0 0 0.5em;
+	*/
 }
 
 .eu-menu a {
