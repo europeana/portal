@@ -29,6 +29,7 @@ import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
+import eu.europeana.portal2.web.presentation.model.SearchFilter;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBeanListDecorator;
 
@@ -106,6 +107,11 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 	@Override
 	public SpellCheck getSpellCheck() {
 		return view.getSpellCheck();
+	}
+
+	@Override
+	public List<SearchFilter> getSearchFilters() {
+		return view.getSearchFilters();
 	}
 
 }

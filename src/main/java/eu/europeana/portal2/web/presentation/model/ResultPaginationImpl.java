@@ -253,7 +253,5 @@ public class ResultPaginationImpl implements ResultPagination {
 		public String getTypeQuery() {
 			return typeQuery;
 		}
-
 	}
-
 }

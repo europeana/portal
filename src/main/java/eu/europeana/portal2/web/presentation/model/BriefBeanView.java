@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * todo: javadoc
+ * TODO: javadoc
  * 
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  * @author Gerald de Jong <geralddejong@gmail.com>
@@ -47,4 +47,6 @@ public interface BriefBeanView {
 	BriefBean getMatchDoc();
 
 	SpellCheck getSpellCheck();
+
+	List<SearchFilter> getSearchFilters();
 }

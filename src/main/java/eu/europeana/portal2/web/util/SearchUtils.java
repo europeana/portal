@@ -59,6 +59,10 @@ public class SearchUtils {
 			briefBeanView.makeQueryLinks(ModelUtils.conventFacetList(resultSet.getFacetFields()), query);
 		}
 
+		if (StringUtils.containsIgnoreCase(profile, "filters") || StringUtils.containsIgnoreCase(profile, "portal")) {
+			briefBeanView.makeFilters(query);
+		}
+
 		List<BreadCrumb> breadCrumbs = null;
 		if (StringUtils.containsIgnoreCase(profile, "breadcrumb") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			breadCrumbs = NavigationUtils.createBreadCrumbList(QueryUtil.escapeQuery(query));

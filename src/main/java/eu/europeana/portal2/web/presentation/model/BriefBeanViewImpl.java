@@ -21,8 +21,12 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -30,6 +34,7 @@ import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinksImpl;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
+import eu.europeana.portal2.web.presentation.utils.SearchFilterUtil;
 
 /**
  * Decorates the brief views with links.
@@ -40,9 +45,12 @@ import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
  */
 public class BriefBeanViewImpl implements BriefBeanView {
 
+	private final Logger log = Logger.getLogger(getClass().getName());
+
 	private ResultPagination pagination;
 	private List<? extends BriefBean> briefDocs;
 	private List<FacetQueryLinks> queryLinks;
+	private List<SearchFilter> searchFilters;
 	private Map<String, String> facetLogs;
 	private BriefBean matchDoc;
 	private SpellCheck spellcheck;
@@ -181,5 +189,38 @@ public class BriefBeanViewImpl implements BriefBeanView {
 
 	public void makeQueryLinks(List<Facet> facets, Query query) {
 		this.queryLinks = FacetQueryLinksImpl.createDecoratedFacets(facets, query);
+	}
+
+	public void makeFilters(Query query) {
+		searchFilters = new ArrayList<SearchFilter>();
+		List<SearchParam> existingValues = SearchFilterUtil.getExistingValues(query);
+
+		for (SearchParam param : existingValues) {
+			List<String> params = new ArrayList<String>();
+			for (SearchParam otherParam : existingValues) {
+				if (param.equals(otherParam)) {
+					continue;
+				}
+				params.add(otherParam.getKey() + "=" + otherParam.getValue());
+			}
+			String url = StringUtils.join(params, "&");
+
+			SearchLabel label = null;
+			String paramValue = param.getValue();
+			if (paramValue.indexOf(":") > -1) {
+				String[] parts = paramValue.split(":", 2);
+				String qfField = parts[0];
+				String qfValue = parts[1];
+				label = new SearchLabel(qfField, qfValue);
+			} else {
+				label = new SearchLabel(null, paramValue);
+			}
+			searchFilters.add(new SearchFilter(label, url));
+		}
+	}
+
+	@Override
+	public List<SearchFilter> getSearchFilters() {
+		return searchFilters;
 	}
 }
