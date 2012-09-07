@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <form action="j_spring_security_check" method="post" id="login" class="login-box">
+<%-- form action="login.html" method="post" id="login" class="login-box" --%>
 
   <h2><spring:message code="LogIn_t" /></h2>
 
