@@ -52,7 +52,6 @@ var Ellipsis = function(cmp, ops) {
 			$fixed.css("right",		"0px");
 			$fixed.css("bottom",	"0px");
 			//$fixed.css("float",	"right");
-			console.log("floating...");
 	
 		}
 	};
