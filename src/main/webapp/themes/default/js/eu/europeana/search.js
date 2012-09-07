@@ -48,29 +48,16 @@ eu.europeana.search = {
 	
 
 	setupResultSizeMenu : function(){
-		
-//		alert("setupResultSizeMenu");
 		var menu = new EuMenu( $("#result-size-menu"),
 			{
 				"fn_init": function(self){
-					
-//					alert("setting menu to hidden field val " + $("#query-search input[name=rows]").val() + "\n\n"
-	//						+ $("#query-search input[name=rows]").length  );
 					self.setActive( $("#query-search input[name=rows]").val() );
-					
-//					val
-					
-	//				var active = self.getActive();
-		//			if(active.length>0){
-			//			self.setLabel(active.find("a").attr("class"));
-				//	}
 				},
 				"fn_item":function(self, selected){
 					jQuery("#query-search input[name=rows]").val(selected);
 					self.setLabel(selected);
 					
 					document.cookie = "europeana_rows=" + selected;
-					//alert("item - set cookie" + setCookie);
 				}
 			}
 		);
