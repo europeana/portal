@@ -34,6 +34,41 @@
 				</h3>
 			</li>
 		</ul>
+		
+		<%--
+		<h2><spring:message code="RefineYourSearch_t" />:</h2>
+		 --%>
+		<h2>Share and Subscribe:</h2>
+		
+		<ul id="share-subscribe">
+			<li>
+				<span class="icon-saveditem share-section-icon"></span>
+				<a class="share-section">
+					<span> Save to my Europeana</span>
+				</a>
+			</li>
+			<li>
+				<a class="share-section">
+					Print
+				</a>
+			</li>
+			<li>
+				<a class="share-section">
+					Subscribe via RSS
+				</a>
+			</li>
+			<li>
+				<a class="share-section">
+					Share
+				</a>
+			</li>
+			<li>
+				<a class="share-section">
+					Mail
+				</a>
+			</li>
+		</ul>
+		
 	</c:if>
 	<!-- /facets -->
 	

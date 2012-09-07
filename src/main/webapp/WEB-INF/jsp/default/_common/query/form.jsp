@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%-- query action --%>
 
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
