@@ -203,7 +203,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 				}
 				params.add(otherParam.getKey() + "=" + otherParam.getValue());
 			}
-			String url = StringUtils.join(params, "&");
+			String url = "search.html" + (params.size() > 0 ? "?" : "") + StringUtils.join(params, "&");
 
 			SearchLabel label = null;
 			String paramValue = param.getValue();

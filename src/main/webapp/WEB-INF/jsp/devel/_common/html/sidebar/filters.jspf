@@ -1,0 +1,32 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<c:if test="${!empty model.briefBeanView.searchFilters}">
+  <h2><spring:message code="FilterYourSearch_t" />:</h2>
+
+  <ul>
+    <c:forEach items="${model.briefBeanView.searchFilters}" var="filter">
+      <c:set var="linkLabel">
+        <c:choose>
+          <c:when test="${!empty filter.fieldCode}">
+            <spring:message code="${filter.fieldCode}" />:
+          </c:when>
+          <c:when test="${!empty filter.field}">
+            ${filter.field}:
+          </c:when>
+          <c:otherwise></c:otherwise>
+        </c:choose>
+        ${filter.label}
+      </c:set>
+
+      <li>
+        <c:choose>
+          <c:when test="${!empty filter.url}">
+            <a href="${fn:escapeXml(filter.url)}">${linkLabel}</a>
+          </c:when>
+          <c:otherwise>${linkLabel}</c:otherwise>
+        </c:choose>
+      </li>
+    </c:forEach>
+  </ul>
+</c:if>
