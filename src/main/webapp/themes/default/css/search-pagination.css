@@ -11,8 +11,28 @@
 	list-style: none;
 }
 
-#result-size-menu{
+.nav-top .eu-menu,
+.nav-bottom .eu-menu{
+	border:			1px solid #e4e4e4;
 	margin-left:	1em;
+	padding-left:	0.25em;
+	padding-right:	0.25em;
+	z-index:		2;
+}
+
+.nav-top .eu-menu ul,
+.nav-bottom .eu-menu ul{
+	width:	5em;	
+}
+
+
+/* Override "glow" on the selected item */
+
+.nav-top .eu-menu.selected span.open-menu,
+.nav-bottom .eu-menu.selected span.open-menu,
+.nav-top .eu-menu.selected .item.active,
+.nav-bottom .eu-menu.selected .item.active{
+	text-shadow:	none !important;
 }
 
 

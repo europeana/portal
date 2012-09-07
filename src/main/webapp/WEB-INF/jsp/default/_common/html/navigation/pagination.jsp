@@ -2,8 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:if test="${!empty model.briefBeanView && !empty model.briefBeanView.pagination.presentationQuery.queryForPresentation}">
-
-	<div>
+	<div class="${position_class}">
 		<ul class="result-pagination">
 			
 			<%-- first arrow --%>
@@ -50,7 +49,7 @@
 		<!-- result size control -->
 		
 		Results per page:
-		<div id="result-size-menu" class="eu-menu" aria-hidden="true">
+		<div class="eu-menu" aria-hidden="true">
 			<span class="menu-label"></span>
 			<span class="icon-arrow-3 open-menu"></span>
 			<ul>
@@ -59,9 +58,6 @@
 				</c:forEach>
 			</ul>
 		</div>
-		
-		
-		
 		
 		<div style="clear:both;"></div>
 		

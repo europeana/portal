@@ -19,7 +19,7 @@ var EuMenu = function(cmpIn, options){
 	
 
 	self.getActive = function(){
-		var res;
+		var res = null;
 		self.cmp.find(".item").each(function(i, ob){
 			if($(ob).hasClass("active")){
 				res = $(ob);						
@@ -69,6 +69,9 @@ var EuMenu = function(cmpIn, options){
 			if(self.options.fn_submit){
 				self.options.fn_submit(self);
 			}
+		},
+		"setActive":function(val){
+			self.setActive(val);
 		}
 	};
 };

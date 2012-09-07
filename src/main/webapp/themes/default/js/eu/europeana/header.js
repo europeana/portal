@@ -149,8 +149,6 @@ eu.europeana.header = {
 			
 		$(document).click( function(){
 			$('.eu-menu' ).removeClass("active");
-			//$('.mobile-menu' ).removeClass("active");
-			//$('.search-menu' ).removeClass("active");
 		});
 
 		$("#query-search").bind("submit", function(){

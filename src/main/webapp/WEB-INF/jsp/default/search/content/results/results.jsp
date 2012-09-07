@@ -4,9 +4,15 @@
 <div id="search-results">
 	<c:choose>
 		<c:when test="${model.hasResults}">
-			<!-- model.hasResults: 1 -->
+		
+			<c:set var="position_class" value="nav-top"/>
+
 			<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/search-results-navigation.jsp" %>
+
 			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid.jsp" %>
+
+			<c:set var="position_class" value="nav-bottom"/>
+
 			<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/search-results-navigation.jsp" %>
 		</c:when>
 		<c:otherwise>
