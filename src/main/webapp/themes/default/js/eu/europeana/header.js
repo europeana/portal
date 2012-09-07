@@ -23,7 +23,7 @@ eu.europeana.header = {
 		
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
-		//this.addAutocompleteHandler();
+		this.addAutocompleteHandler();
 		this.addRefineSearchClickHandler();		
 		this.addAjaxMethods();
 		this.addMenuFocusTriggers();
