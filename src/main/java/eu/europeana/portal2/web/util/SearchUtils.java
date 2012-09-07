@@ -20,6 +20,7 @@ package eu.europeana.portal2.web.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,7 +48,8 @@ public class SearchUtils {
 
 	public static BriefBeanView createResults(SearchService searchService,
 			Class<? extends BriefBean> clazz, String profile, Query query,
-			int start, int rows) 
+			int start, int rows,
+			Map<String, String[]> params) 
 			throws SolrTypeException {
 		log.info("createResults");
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
@@ -60,7 +62,7 @@ public class SearchUtils {
 		}
 
 		if (StringUtils.containsIgnoreCase(profile, "filters") || StringUtils.containsIgnoreCase(profile, "portal")) {
-			briefBeanView.makeFilters(query);
+			briefBeanView.makeFilters(query, params);
 		}
 
 		List<BreadCrumb> breadCrumbs = null;

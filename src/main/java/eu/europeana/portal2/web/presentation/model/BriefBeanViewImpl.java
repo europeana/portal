@@ -191,12 +191,14 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		this.queryLinks = FacetQueryLinksImpl.createDecoratedFacets(facets, query);
 	}
 
-	public void makeFilters(Query query) {
+	public void makeFilters(Query query, Map<String, String[]> urlParams) {
 		searchFilters = new ArrayList<SearchFilter>();
 		List<SearchParam> existingValues = SearchFilterUtil.getExistingValues(query);
+		List<String> otherUrlParams = SearchFilterUtil.getOtherUrlParams(urlParams);
 
 		for (SearchParam param : existingValues) {
 			List<String> params = new ArrayList<String>();
+			params.addAll(otherUrlParams);
 			for (SearchParam otherParam : existingValues) {
 				if (param.equals(otherParam)) {
 					continue;

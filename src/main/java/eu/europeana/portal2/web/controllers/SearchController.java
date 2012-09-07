@@ -3,6 +3,7 @@ package eu.europeana.portal2.web.controllers;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -80,12 +81,15 @@ public class SearchController {
 		@RequestParam(value = "sort", required = false, defaultValue="") String sort,
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
 		@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest request, 
+		HttpServletResponse response,
 		Locale locale
 	) {
 		localeChangeInterceptor.preHandle(request, response, this);
 
 		log.info("============== START SEARCHING ==============");
+		
+		Map<String, String[]> params = request.getParameterMap();
 
 		SearchPage model = new SearchPage();
 		model.setEmbeddedBgColor(embeddedBgColor);
@@ -125,7 +129,7 @@ public class SearchController {
 
 		log.info("query: " + query);
 		try {
-			BriefBeanView briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows);
+			BriefBeanView briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params);
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);

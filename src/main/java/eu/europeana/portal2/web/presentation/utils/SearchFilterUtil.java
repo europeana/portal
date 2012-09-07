@@ -2,6 +2,10 @@ package eu.europeana.portal2.web.presentation.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.portal2.web.presentation.model.SearchParam;
@@ -27,5 +31,22 @@ public class SearchFilterUtil {
 			}
 		}
 		return existingValues;
+	}
+	
+	public static List<String> getOtherUrlParams(Map<String, String[]> urlParams) {
+		List<String> otherUrlValues = new ArrayList<String>();
+		for (Entry<String, String[]> entry : urlParams.entrySet()) {
+			if (entry.getKey().equals("query") || entry.getKey().equals("qf")) {
+				continue;
+			}
+			String key = entry.getKey();
+			if (entry.getValue().length > 1) {
+				key = key + "[]";
+			}
+			for (String value : entry.getValue()) {
+				otherUrlValues.add(key + "=" + value);
+			}
+		}
+		return otherUrlValues;
 	}
 }
