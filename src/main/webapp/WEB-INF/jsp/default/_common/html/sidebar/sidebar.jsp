@@ -7,7 +7,8 @@
 	<!-- breaadcrumbs -->
 
 	<div>
-		<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/breadcrumb.jsp" %>
+		<%--@ include file="/WEB-INF/jsp/default/_common/html/navigation/breadcrumb.jsp" --%>
+		<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/filters.jspf" %>
 	</div>
 	
 

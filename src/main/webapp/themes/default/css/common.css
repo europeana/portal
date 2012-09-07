@@ -175,20 +175,21 @@
 }	
 
     
-/* breadcrumb */
-
-	#breadcrumb {
+/* search-filter (was breadcrumb) */
+/* moved to sidebar-facets.css */
+/*
+	#search-filter {
 		overflow: hidden;
 		margin: 0 0 0.3em 0;
 		padding: 0;
+	}
+	#search-filter ul{
 		list-style: none;
 	}
-	
-	#breadcrumb li {
-		xxxxfloat: left;
-		xxxxxxxxxxxxxxxxmargin-right: 5px;
-	}
-	
+*/
+/* end search-filter (was breadcrumb) */
+
+
 	.ui-error, .error {
 		color: red;
 	}

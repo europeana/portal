@@ -207,6 +207,11 @@ public class BriefBeanViewImpl implements BriefBeanView {
 			}
 			String url = "search.html" + (params.size() > 0 ? "?" : "") + StringUtils.join(params, "&");
 
+			params.add(param.getKey() + "=" + param.getValue());
+
+			String urlFull = "search.html" + (params.size() > 0 ? "?" : "") + StringUtils.join(params, "&");  // Andy
+
+			
 			SearchLabel label = null;
 			String paramValue = param.getValue();
 			if (paramValue.indexOf(":") > -1) {
@@ -217,7 +222,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 			} else {
 				label = new SearchLabel(null, paramValue);
 			}
-			searchFilters.add(new SearchFilter(label, url));
+			searchFilters.add(new SearchFilter(label, url, urlFull));
 		}
 	}
 

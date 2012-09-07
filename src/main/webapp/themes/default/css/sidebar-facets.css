@@ -16,14 +16,24 @@
 		padding:		0;
 	}
 
-	.sidebar #breadcrumb, .sidebar h2{
+	#search-filter,
+	.sidebar h2{
 		padding:		0.5em 0 0em 0.5em;
 	}
 	
-	.sidebar h2,  .sidebar #breadcrumb li .bold{
+	.sidebar h2,
+	#search-filter li .bold{
 		font-size:		1.2em;
 	}
 	
+	#search-filter {
+		overflow: hidden;
+		margin: 0 0 0.3em 0;
+	}
+	
+	#search-filter ul{
+		list-style: none;
+	}
 	
 	#share-subscribe h3,
 	#filter-search h3 {

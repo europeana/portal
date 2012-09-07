@@ -16,11 +16,14 @@ public class SearchFilter {
 	private SearchLabel label;
 
 	private String url = null;
+	
+	private String urlFull = null; // Andy
 
-	public SearchFilter(SearchLabel label, String url) {
+	public SearchFilter(SearchLabel label, String url, String urlFull) {
 		super();
 		this.label = label;
 		this.url = url;
+		this.urlFull = urlFull;
 	}
 
 	public SearchLabel getLabelObject() {
@@ -37,6 +40,14 @@ public class SearchFilter {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getUrlFull() {
+		return urlFull;
+	}
+
+	public void setUrlFull(String urlFull) {
+		this.urlFull = urlFull;
 	}
 
 	@Override
