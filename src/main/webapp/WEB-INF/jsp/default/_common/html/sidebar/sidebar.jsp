@@ -6,11 +6,7 @@
 	
 	<!-- breaadcrumbs -->
 
-	<div>
-		<%--@ include file="/WEB-INF/jsp/default/_common/html/navigation/breadcrumb.jsp" --%>
-		<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/filters.jspf" %>
-	</div>
-	
+	<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/filters.jspf" %>
 
 	<!-- facets -->
 	<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
@@ -80,6 +76,7 @@
 	
 	
 	<!-- legend -->
+	<%--
 	<h2 id="legend"><spring:message code="Legend_t" />:</h2>
 	
 	<div id="legend-icons">
@@ -89,5 +86,6 @@
 		<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:SOUND"	class="icon-audio"	title="<spring:message code="Sound_t" />"	>&nbsp;<spring:message code="Sound_t" /></a>
 		<a href="/${model.portalName}/${model.pageName}?query=${model.query}&amp;qf=TYPE:3D"	class="icon-3d"		title="<spring:message code="3D_t" />"		>&nbsp;<spring:message code="3D_t" /></a>
 	</div>
+	--%>
 	<!-- end legend -->
 </div>

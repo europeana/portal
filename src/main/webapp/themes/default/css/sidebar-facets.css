@@ -8,6 +8,7 @@
 		margin-top:		0.5em;
 	}
 	
+	#search-filter,
 	#filter-search, #filter-search ul,
 	#share-subscribe, #share-subscribe ul
 	 {
@@ -16,7 +17,6 @@
 		padding:		0;
 	}
 
-	#search-filter,
 	.sidebar h2{
 		padding:		0.5em 0 0em 0.5em;
 	}
@@ -37,12 +37,15 @@
 	
 	#share-subscribe h3,
 	#filter-search h3 {
-		font-size:		1em;
+		font-size:		0.8em;
 		margin-bottom:	0.5em;
 		border-top:		solid 1px #c0c0c0;
 		padding-top:	0.2em;
 	}
 	
+	#search-filter{
+		margin-left:		0.7em;
+	}
 	
 	a.facet-section,
 	a.facet-ugc{
