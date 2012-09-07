@@ -107,7 +107,6 @@
 	
 		</c:if>
 		
-		
-		<input type="hidden" name="rows"	id="rows" value="7" />
+		<input type="hidden" name="rows" id="rows" value="${model.rows}" />
 		
 	</form>

@@ -10,13 +10,7 @@ eu.europeana.search = {
 		this.setupFacetSections();
 		this.openActiveFacetSections();
 		
-		// Andy: conditional load test
-		jQuery("#query-input").focus(function(){
-			europeana_bootstrap.common.loadResultSizer(
-				function(){ console.log("in callback for search.js loadResultSizer"); }
-			);
-		});
-
+		jQuery("#query-input").focus();
 	},
 	
 	loadComponents : function() {

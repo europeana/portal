@@ -24,9 +24,19 @@
 <c:set var="results"><spring:message code='Results_t' /></c:set>
 <c:set var="return_to_language"><spring:message code="ReturnToOriginalLanguage_t" /></c:set>
 <c:set var="rows" value='' />
+
+<%--
 <c:if test="${!empty RequestParameters.rows}">
 	<c:set var="rows" value='${RequestParameters.rows}' />
 </c:if>
+ --%>
+
+
+<c:set var="rows">
+ <%= request.getParameter("rows") %>
+</c:set>
+
+
 <c:set var="sample_map_data" value='false' />
 <c:if test="${RequestParameters.sample_map_data}">
 	<c:set var="sample_map_data" value='${RequestParameters.sample_map_data}' />
@@ -269,11 +279,13 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.msg.matches = '${matches}';
 		eu.europeana.vars.msg.date = '${date}';
 		eu.europeana.vars.startFrom = '${startFrom}';
-		eu.europeana.vars.rows = '${rows}';
+
 		eu.europeana.vars.initial_rows = '${initial_rows}';
 	</c:when>
 </c:choose>
 //-->
+
+eu.europeana.vars.rows = '${rows}';
 eu.europeana.vars.breakpoints = ${breakpoints};
 
 </script>

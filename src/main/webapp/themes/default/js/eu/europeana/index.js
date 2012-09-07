@@ -96,14 +96,7 @@
 	
 	var init = function() {
 		
-		jQuery("#query-input").focus(function(){
-			
-			/* conditional load */
-			
-			europeana_bootstrap.common.loadResultSizer(
-					function(){ console.log("in callback for index.js loadResultSizer"); }
-			);
-		});
+		jQuery("#query-input").focus();
 		
 		initCarousels();
 		

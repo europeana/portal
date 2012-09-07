@@ -51,7 +51,7 @@
 		
 		Results per page:
 		<div id="result-size-menu" class="eu-menu" aria-hidden="true">
-			<span class="hide-ilb-on-phones menu-label"></span>
+			<span class="menu-label"></span>
 			<span class="icon-arrow-3 open-menu"></span>
 			<ul>
 				<c:forEach var="size" items="12,24,48,96">
@@ -68,3 +68,5 @@
 	</div>
 
 </c:if>
+
+

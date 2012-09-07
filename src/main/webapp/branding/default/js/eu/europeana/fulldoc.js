@@ -29,11 +29,7 @@ eu.europeana.fulldoc = {
 		
 		
 		// Andy: conditional load test
-		jQuery("#query-input").focus(function(){
-			europeana_bootstrap.common.loadResultSizer(
-				function(){ console.log("in callback for fulldoc.js loadResultSizer"); }
-			);
-		});
+		jQuery("#query-input").focus();
 
 	},
 	

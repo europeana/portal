@@ -80,16 +80,7 @@ var europeana_bootstrap = function(){
 	// functionality common to fulldoc, index and search 
 	var common = function(){
 		return {
-			loadResultSizer:function(callback){
-				loadScripts(
-					[{
-						name : 'result-size',
-						file : 'result-size' + js.min_suffix + '.js' + js.cache_helper,
-						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-						callback : callback
-					}]
-				);
-			}
+			
 		};
 	}();
 
@@ -163,7 +154,6 @@ var europeana_bootstrap = function(){
 			"common":common,
 			"fulldoc":fulldoc
 		};
-
 	}
 	else if(eu.europeana.vars.page_name == 'index.html'){
 		

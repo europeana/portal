@@ -3,17 +3,13 @@
  *
  *  @package	eu.europeana
  *  @author		dan entous <contact@gmtpluosone.com>
+ *  @author		andy maclean <andyjmaclean@gmail.com>
+ *
  *  @created	2011-07-06 17:34 GMT +1
  *  @version	2011-10-20 08:26 GMT +1
  */
 
-/**
- *  @package	eu.europeana
- *  @author		dan entous <contact@gmtplusone.com>
- */
 js.utils.registerNamespace( 'eu.europeana.header' );
-
-
 
 eu.europeana.header = {
 	
@@ -22,6 +18,7 @@ eu.europeana.header = {
 		langSelect.change(function(){
 			jQuery(this).parent().submit();
 		});
+
 		
 		
 		this.addQueryFocus();
@@ -34,16 +31,66 @@ eu.europeana.header = {
 		//this.enableMapLink();
 		//this.enableTimelineLink();
 		
+		this.setupResultSize();
+		
+		this.setupMobileMenu();
+		this.setupSearchMenu();
+		
+
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
 		
 		jQuery('.jump-to-page').bind('submit', this.jumpToPageSubmit );
 		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
-		this.setupMobileMenu();
-		this.setupSearchMenu();
 	},
 	
+	setCookie: function(val){
+		document.cookie = "europeana_rows=" + val;
+	},
+	getCookie: function(){
+		var cookies		= document.cookie.split(";");
+		var cookieVal	= null;
+		
+		for(i=0; i<cookies.length; i++)
+		{
+			var cookieName	= cookies[i].substr(0, cookies[i].indexOf("="));
+			if(cookieName == "europeana_rows"){
+				cookieVal = cookies[i].substr( cookies[i].indexOf("=") + 1, cookies[i].length);
+			}
+		}
+		return cookieVal;		
+	},
+	
+	setupResultSize: function(){
+
+		var rowsField = $("#query-search input[name=rows]");
+		
+
+		// first check the parameter - this will override any cookie
+		if(eu.europeana.vars.rows && eu.europeana.vars.rows != "null"){
+			rowsField.val(eu.europeana.vars.rows);				
+			
+		}
+		else{
+			if(eu.europeana.vars.page_name != "search.html"){
+				
+				// check for cookie
+				var cookie = eu.europeana.header.getCookie();
+				if(cookie){
+					rowsField.val(cookie);
+				}
+				else{
+					if( $("#mobile-menu").is(":visible") ){
+						rowsField.val("12");
+					}
+					else{
+						rowsField.val("24");				
+					}
+				}
+			}
+		}
+	},
 	
 	setupMobileMenu: function(){
 
@@ -51,11 +98,9 @@ eu.europeana.header = {
 			$("#mobile-menu"),
 			{
 				"fn_item": function(self){
-					alert("clicked an item");
 				},
 
 				"fn_init": function(self){
-					//alert("init mobile menu");
 				},
 				
 				"fn_submit":function(self){
@@ -64,7 +109,6 @@ eu.europeana.header = {
 			}
 		);
 		menu.init();
-		
 	},
 	
 	
@@ -74,7 +118,6 @@ eu.europeana.header = {
 			$("#search-menu"),
 			{
 				"fn_item": function(self){
-					alert("clicked an item");
 				},
 
 				"fn_init": function(self){
