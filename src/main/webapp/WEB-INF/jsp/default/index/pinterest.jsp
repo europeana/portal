@@ -6,7 +6,7 @@
 		</span>
 		<span class="icon-pinterest left"></span>
 		<span class="collapse-icon"></span>
-		<a class="feed-link icon-rss" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>		
+		<a class="icon-rss feed-link" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>		
 	</h3>
 
 	<div class="collapse-content">

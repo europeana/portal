@@ -43,28 +43,33 @@
 		
 		<ul id="share-subscribe">
 			<li>
-				<span class="icon-saveditem share-section-icon"></span>
 				<a class="share-section">
-					<span> Save to my Europeana</span>
+					<span class="icon-saveditem"></span>
+					<spring:message code="SaveToMyEuropeana_t" />:
 				</a>
 			</li>
 			<li>
 				<a class="share-section">
+					<span class="icon-print"></span>
 					Print
 				</a>
 			</li>
 			<li>
+			
 				<a class="share-section">
+					<span class="icon-rss"></span>
 					Subscribe via RSS
 				</a>
 			</li>
 			<li>
 				<a class="share-section">
+					<span class="icon-share"></span>
 					Share
 				</a>
 			</li>
 			<li>
 				<a class="share-section">
+					<span class="icon-mail"></span>
 					Mail
 				</a>
 			</li>

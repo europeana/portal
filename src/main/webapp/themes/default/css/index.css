@@ -190,6 +190,10 @@ ul.featured-partner-links li{
 	margin-top:		0.5em;
 }
 
+.icon-rss:before{
+	color: 	orange !important;
+}
+
 
 @media only screen and ( min-width:48em ){
 	.feed-block{

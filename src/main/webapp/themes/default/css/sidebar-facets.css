@@ -44,7 +44,8 @@
 	}
 	
 	
-	a.facet-section, a.facet-ugc {
+	a.facet-section,
+	a.facet-ugc{
 		display:				block;
 		padding-left:			0.5em;
 		color:					#333;
@@ -52,19 +53,17 @@
 		background-repeat:		no-repeat;
 	}
 
-	a.share-section-icon{
-		position:				relative;
-		top:					0.17em;
-	}
 	
-	a.share-section{
+	.share-section{
 		padding-left:			0.5em;
 		color:					#333;
 	}
-	.share-section span span{
-		padding-bottom:	0.1em;
+
+	.share-section span{		/* font icon fix */
+		position:				relative;
+		top:					0.138em;
 	}
-	
+
 
 	/* facet section items */
 	
