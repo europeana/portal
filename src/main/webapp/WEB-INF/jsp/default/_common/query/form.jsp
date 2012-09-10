@@ -19,22 +19,13 @@
 
 <%-- form --%>
 
-<table  cellspacing="0" cellpadding="0" style="width:100%;">
-	<tr>
-		<td style="background-color:red;">XXX</td>
-		<td style="background-color:blue;">A, b sc sd asfg dkg sdgk j;sdgkj jdskj kj sdv;kljk;lj sdv;klj;klj sdl;kvj lj sdv</td>
-		<td style="background-color:orange;">XXX</td>
-	</tr>
-</table>
-
-
 	<form id="query-search" action="${query_action}" method="get">
 		
 			<div class="seven columns offset-by-three search-wrapper">
 				
-				<table style="width:100%;">
+				<table cellspacing="0" cellpadding="0">
 					<tr>
-						<td>
+						<td class="menu-cell">
 							<div id="search-menu" class="eu-menu" aria-hidden="true">
 			
 								<span class="hide-ilb-on-phones menu-label">Search</span>
@@ -49,54 +40,22 @@
 								</ul>
 							</div>
 						</td>
-						<td>
+						<td class="query-cell">
 							<input
 								type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
 							/>							
 						</td>
-						<td>
-							<input value="<spring:message code='Search_t'/>" type="submit"/>
+						<td class="submit-cell">
 							<a class="show-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
 							<a style="position:absolute;"  class="hide-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+
+							<input value="<spring:message code='Search_t'/>" type="submit"/>
 						</td>
 					</tr>
 				</table>
 				
 				
-				<!--
-				<div id="query-input-wrapper">
-				
-					<input
-						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
-					/>
-				
-				</div>
-				
-
-				<div id="search-menu" class="eu-menu" aria-hidden="true">
-
-					<span class="hide-ilb-on-phones menu-label">Search</span>
-					<span class="icon-arrow-3 open-menu"></span>
-					<ul>
-						<li class="item">	<a href="" class=""			>All fields</a></li>
-						<li class="item">	<a href="" class="title:"	>Title</a></li>
-						<li class="item">	<a href="" class="who:"		>Who</a></li>
-						<li class="item">	<a href="" class="what:"	>What</a></li>
-						<li class="item">	<a href="" class="when:"	>When</a></li>
-						<li class="item">	<a href="" class="where:"	>Where</a></li>
-					</ul>
-				</div>
-				<div id="submit-query" class="submit-button">
-
-					<input value="<spring:message code='Search_t'/>" type="submit"/>
-					
-					<a class="show-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
-					
-					<a style="position:absolute;"  class="hide-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
-					
-					
-				</div>
-				 -->
+			
 
 					
 			</div>

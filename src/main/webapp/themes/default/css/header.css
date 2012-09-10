@@ -63,46 +63,47 @@
 
 	.search-wrapper{	
 		font-size:		1.2em;
-		xxxxxposition:		relative;
 		margin-top:		1.5em !important;
 		margin-bottom:	1.5em !important;
 		
-		
-		xxxxxxxoverflow:	hidden;
 		border:					1px solid #e4e4e4;
+		
+		
+		position: relative;
+		
 		
 		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 		border-radius:			0.5em 0.5em 0.5em 0.5em;
-		
-		
 	}
-	
+
+	.menu-cell{
+		padding-left:	0.25em;
+	}
+	.submit-cell{
+		padding-right:	0.25em;
+	}
 	
 	#search-menu.eu-menu{		/* stop result-size menu showing through the search menu */
 		z-index:			3;
-	
-		xxborder:			1px solid #e4e4e4;
 
-		height:				1.48em;
-
-		
-		xxxxfloat:				left;
-		padding:			0;
 		top:				0;
 		
-		/*
-		position:			relative;
-		width:				5em;
-		right:				5em;
-		margin-left:		-100%;
-		*/
+		display:		block;
+		padding-top:	-0.4375em !important;
+
 	}
 	
 	td{
-		border: 1px solid red;
 		padding:		0px;
+		white-space:	nowrap;
+		width:			100%;
 	}
+
+	tr td:first-child, tr td:last-child{
+		width:	auto;
+	}
+	
 	table {
 		border-collapse: collapse;
 		cell-padding:	0;
@@ -111,13 +112,6 @@
 	 
 	
 	
-	/* test to see if font is impacting layout (Andy: TODO: delete) 
-	.search-menu, #query-input, #submit-query input	{
-	   	font-family: Ubuntu;
-	}
-*/
-
-
 	#query-input{
 	    font-family:	'SourceSansProRegular', Arial, sans-serif;
 	    font-weight:	400;
@@ -129,42 +123,29 @@
 	    border:		none;
 	    padding:	0;
 	    margin:		0;
+	    
+	    border-left:	maclean
     }
 
 
 
+	.query-cell{
+		border-left:			1px solid #E4E4E4;
+	}
+	
 	#query-input{
-		
-		xxpadding:				0.2em;
-		
-		xheight:				1.78em;
-		
 	    -webkit-appearance:		none;
-		
-		
 		color:					#333;
 		font-size:				inherit;
-
-/*
-        -moz-border-radius:		0 0.5em 0.5em 0;
-		-webkit-border-radius:	0 0.5em 0.5em 0;
-		border-radius:			0 0.5em 0.5em 0;
-		*/
+		padding-left:			0.25em;
+		padding-right:			0.25em;
 	}
 	
 	#submit-query{
-			height:					1.48em;
-			
-			xxxborder:					1px solid #E4E4E4;
-			
+			height:		1.48em;
 			float:		right;
 			float:		left;
-
 			position:	relative;
-			
-			xxxxxxxxwidth:				25%;
-			width:		4.875em;
-			margin-right:	-4.875em;
 	}
 	
 	
@@ -174,8 +155,6 @@
 		#query{
 			margin-top:				2em;
 		}
-		
-		
 		
 		#query-input-wrapper{
 			width:		100%;
@@ -268,57 +247,47 @@
 		right: 233px;
 	}
 		
-	/* override grid with selector */
-	/*
-	.show-ilb-on-phones.search-help,	.hide-ilb-on-phones.search-help,
-	.show-on-phones.search-help,		.hide-on-phones.search-help*/
 	.search-help {
 		position:		absolute;
 		margin-left:	0.5em;
 	}
 
-
 	.submit-button {
-		display:				block;
-        margin-left:			auto;
-        margin-right:			auto;
-        margin-top:				0.5em;
+		display:			block;
+        margin-left:		auto;
+        margin-right:		auto;
+        margin-top:			0.5em;
         
-   	    font-family:	'SourceSansProRegular', Arial, sans-serif;
-	    xxxxxpadding:		0.5em 0.25em 0.5em 0;
+   	    font-family:		'SourceSansProRegular', Arial, sans-serif;
     }
     
-    .submit-button input{
+ 
+    .submit-cell{
+    	overflow:hidden;
+    }
+   .submit-cell input{
+	
 		background-color:		#9900ff;
         border:					none;
         color:					#fff;
         cursor:					pointer;
         font-size:				inherit;
-		width:					90%;
-		
-/*
-		padding-bottom:			0.5em;
-		padding-top:			0.25em;
-		padding-left:			0.2em;
-		padding-right:			0.2em;
-*/		
 		margin-left:			0;	/* override chrome default */
-		
+		margin-right:			0;	/* override chrome default */
+		height:					100%;	
 		
 	    -webkit-appearance:		none;
 	    
-/*		
-		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
-		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
-		border-radius:			0.5em 0.5em 0.5em 0.5em;
-*/
 		-moz-border-radius:		0 0.5em 0.5em 0;
 		-webkit-border-radius:	0 0.5em 0.5em 0;
 		border-radius:			0 0.5em 0.5em 0;
-
-
-		width:		100%;
-		height:		100%;
+		
+		position:				absolute;
+		top:					0;
+		bottom:					0;
+		right:					0;
+		
+		padding-bottom:			0.36em;/* double that defined in eu-menu */
 	}
 
 	@media only screen and ( min-width:48em ){
@@ -335,11 +304,10 @@
 
 		.submit-button {
 			width:		auto !important;
-			xxxxxxxxxxxdisplay:	inline-block;
 			margin-top:	0;			
 		}
 		
-		.submit-button input{
+		.submit-cell input{
 		/*
 			width:					auto;
 	        -moz-border-radius:		0 0.5em 0.5em 0;
