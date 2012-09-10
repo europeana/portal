@@ -1,5 +1,7 @@
 package eu.europeana.portal2.web.controllers.utils;
 
+import java.util.Map;
+
 /**
  * Container of images extracted from blog posts.
  * Now it contains the following fields:
@@ -12,6 +14,15 @@ public class RSSImage {
 
 	private String src;
 	private String title;
+	private Map<Integer, String> responsiveFileNames;
+	
+	public Map<Integer, String> getResponsiveFileNames() {
+		return responsiveFileNames;
+	}
+
+	public void setResponsiveFileNames(Map<Integer, String> responsiveFileNames) {
+		this.responsiveFileNames = responsiveFileNames;
+	}
 
 	public String getSrc() {
 		return src;

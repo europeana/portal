@@ -106,6 +106,9 @@ public class IndexPageController {
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
 
+	@Value("#{europeanaProperties['static.page.path']}")
+	private String staticPagePath;
+	
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
@@ -235,7 +238,9 @@ public class IndexPageController {
 		// read feed only once every few hours
 		if ((feedAge == null) || feedAge.before(timeout)) {
 			RSSFeedParser parser = new RSSFeedParser(blogUrl, 3);
+			parser.setStaticPagePath(staticPagePath);
 			List<FeedEntry> newEntries = parser.readFeed();
+			
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				feedEntries = newEntries;
 				feedAge = Calendar.getInstance();
@@ -248,6 +253,7 @@ public class IndexPageController {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -pintTimeout.intValue()));
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
 			RSSFeedParser parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue());
+			parser.setStaticPagePath(staticPagePath);
 			List<FeedEntry> newEntries = parser.readFeed();
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				pinterestEntries = newEntries;
