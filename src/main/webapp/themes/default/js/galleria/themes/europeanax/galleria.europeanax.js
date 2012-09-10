@@ -50,6 +50,7 @@ Galleria.addTheme({
 		
 		var rerunOnResize = function(){
 			thisGallery._run();
+			/*
 	        $(thisGallery._thumbnails).each(function( i, thumb ) {
 	        	if(thumb.ready){
 		    		thisGallery.trigger({
@@ -58,8 +59,15 @@ Galleria.addTheme({
 		                      index: i,
 		                      galleriaData: dataSource
 		    		});
+		    		
+		    		
+		    		
+//		    		Galleria.log("thumb event")
 	        	}
+	    		Galleria.log("thumb event")
+
 	        });	
+	        */
 		};
 		
 		
@@ -362,48 +370,14 @@ Galleria.addTheme({
         			navRight.css("right", "0px");
          		 });
         		$(window).resize( function() {
-        			
            			if(eu.europeana.vars.suppresResize){
            				return;
            			}
-
         			Galleria.log("Resize landing page carousel: " + jQuery("#carousel-1").css("height")  );
-        	
-        			/*
-        			thisGallery.$( 'container' ).find("div").removeAttr("style");
-        			thisGallery.$( 'container' ).find("img").removeAttr("style");
-        			thisGallery.$( 'container' ).find("img").removeAttr("width");
-        			thisGallery.$( 'container' ).find("img").removeAttr("height");
-        			thumbs.find("div").removeAttr("style");
-        			thumbs.find("img").removeAttr("style");
-        			thumbs.find("img").removeAttr("width");
-        			thumbs.find("img").removeAttr("height");
-        			*/
-        			
-        			
-        	        
-        			//thisGallery.trigger( Galleria.READY );
-                    //Galleria.theme.init.call( thisGallery, thisGallery._options );
-        			
+            		thisGallery.bind("image", function(e) {
+            			thisGallery.$( 'container' ).find(".galleria-images .galleria-image").css("opacity", "1")
+             		 });
         			rerunOnResize();
-        			/*
-        			thisGallery._run();
-        	        $(thisGallery._thumbnails).each(function( i, thumb ) {
-        	        	if(thumb.ready){
-        		    		thisGallery.trigger({
-        		    			type: Galleria.THUMBNAIL,
-        		                      thumbTarget: thumb.image,
-        		                      index: i,
-        		                      galleriaData: dataSource
-        		    		});
-        	        	}
-        	        });
-        			*/
-        			
-        			//init(thisGallery._options)
-//        			Galleria.loadTheme(dataSource[0].themeRef);
-        			
-        			//thisGallery.next();	/* call to "next" repositions info and thumbnails */
         			return;
         		});
     		}
