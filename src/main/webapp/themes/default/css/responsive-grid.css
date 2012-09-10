@@ -161,19 +161,23 @@
 
 	/* Mobile Visibility Affordances */
 		
-	.hide-on-phones		{display:none  !important;}		
+	.hide-on-phones			{display:none  !important;}		
 	.hide-ilb-on-phones		{display:none  !important;}		
-	
+	.hide-cell-on-phones	{display:none  !important;}		
+
 	.show-on-phones		{display:block !important;}
 	.show-ilb-on-phones	{display:inline-block !important;}
-	
+	.show-cell-on-phones{display:table-cell !important;}		
+
 	
 	@media only screen and ( min-width:48em ){
-		.hide-on-phones		{display:block !important;}	
-		.hide-ilb-on-phones		{display:inline-block !important;}	
+		.hide-on-phones			{display:block			!important;}	
+		.hide-ilb-on-phones		{display:inline-block	!important;}	
+		.hide-cell-on-phones	{display:table-cell		!important;}	
 
-		.show-on-phones		{display:none !important;}	
-		.show-ilb-on-phones	{display:none !important;}
+		.show-on-phones			{display:none !important;}	
+		.show-ilb-on-phones		{display:none !important;}
+		.show-cell-on-phones	{display:none !important;}
 	}
 
 

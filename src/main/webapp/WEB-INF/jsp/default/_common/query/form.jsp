@@ -45,18 +45,22 @@
 								type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
 							/>							
 						</td>
-						<td class="submit-cell">
+						<td class="submit-cell hide-cell-on-phones">
 							<a class="show-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
-							<a style="position:absolute;"  class="hide-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+							<a class="hide-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
 
 							<input value="<spring:message code='Search_t'/>" type="submit"/>
 						</td>
 					</tr>
+					
+					<tr>
+						<td colspan="3" class="submit-cell show-cell-on-phones">
+							<input value="<spring:message code='Search_t'/>" type="submit"/>
+						</td>
+						
+					</tr>
+					
 				</table>
-				
-				
-			
-
 					
 			</div>
 			
