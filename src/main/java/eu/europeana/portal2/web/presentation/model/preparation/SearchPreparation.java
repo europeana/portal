@@ -102,8 +102,7 @@ public abstract class SearchPreparation extends SearchEmbeddedData {
 			/**
 			 * Make the default crumb the first in the list
 			 */
-			UrlBuilder url = new UrlBuilder(briefBeanView.getPagination()
-					.getPresentationQuery().getQueryToSave());
+			UrlBuilder url = new UrlBuilder(briefBeanView.getPagination().getPresentationQuery().getQueryToSave());
 
 			/**
 			 * Replace any subsequent search params with the embedded default.

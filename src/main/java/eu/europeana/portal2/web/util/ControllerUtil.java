@@ -28,14 +28,20 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import eu.europeana.corelib.db.exception.DatabaseException;
+import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.web.presentation.ThemeChecker;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
+import eu.europeana.portal2.web.security.Portal2UserDetails;
 
 /**
  * Utility methods for controllers
@@ -129,20 +135,44 @@ public class ControllerUtil {
 
 	public static String getSessionManagedTheme(HttpServletRequest request, String theme, String defaultTheme) {
 		HttpSession session = request.getSession(true);
-		if (!theme.equals("")) {
+		if (!StringUtils.isBlank(theme)) {
 			theme = ThemeChecker.check(theme, defaultTheme);
 			session.setAttribute("theme", theme);
 		}
 		else {
 			String storedTheme = (String)session.getAttribute("theme");
-			if (storedTheme != null && !storedTheme.equals("")) {
+			if (!StringUtils.isBlank(storedTheme)) {
 				theme = ThemeChecker.check(storedTheme, defaultTheme);
 				log.info("theme2: " + theme);
 			}
 		}
-		if (theme.equals("")) {
+		if (StringUtils.isBlank(theme)) {
 			theme = ThemeChecker.check(defaultTheme);
 		}
 		return theme;
+	}
+	
+	public static User getUser(UserService userService) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null) {
+			log.severe("Authentication is null");
+			return null;
+		}
+		User user = null;
+		Object principal = (Object)authentication.getPrincipal();
+		if (principal instanceof Portal2UserDetails) {
+			user = userService.findByEmail(((Portal2UserDetails)principal).getUsername());
+			log.info("User: " + user.toString());
+		} else {
+			log.warning("Principal is not Portal2UserDetails: " + principal.toString());
+			try {
+				user = userService.findByID(principal.toString());
+				log.info("User: " + user.toString());
+			} catch (DatabaseException e) {
+				log.severe("DatabaseException whily getting user: " + e.getLocalizedMessage());
+				e.printStackTrace();
+			}
+		}
+		return user;
 	}
 }

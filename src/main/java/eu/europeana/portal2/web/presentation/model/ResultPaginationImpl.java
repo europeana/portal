@@ -4,9 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.solr.client.solrj.SolrQuery;
-import org.eclipse.jetty.util.log.Log;
+import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 
@@ -18,6 +16,9 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
  */
 
 public class ResultPaginationImpl implements ResultPagination {
+	
+	private final Logger log = Logger.getLogger(getClass().getName());
+	
 	private static final String FACET_PROMPT = "&qf=";
 	private static final int MARGIN = 3;
 	private static final int PAGE_NUMBER_THRESHOLD = 5;
@@ -73,11 +74,9 @@ public class ResultPaginationImpl implements ResultPagination {
 		this.isNext = totalPages > 1 && pageNumber < toPage;
 		this.nextPage = start + rows;
 		for (int page = fromPage; page <= toPage; page++) {
-			pageLinks.add(new PageLink(page, (page - 1) * rows + 1,
-					pageNumber != page));
+			pageLinks.add(new PageLink(page, (page - 1) * rows + 1, pageNumber != page));
 		}
 		this.breadcrumbs = breadcrumbs; //BreadCrumb.createList(requestQueryString);
-		Log.info("requestQueryString: " + requestQueryString);
 		presentationQuery.queryForPresentation = createQueryForPresentation(requestQueryString);
 		presentationQuery.queryToSave = requestQueryString;
 		presentationQuery.userSubmittedQuery = requestQueryString; // solrQuery.getQuery();
@@ -138,7 +137,7 @@ public class ResultPaginationImpl implements ResultPagination {
 	public int getFirstPage() {
 		return firstPage;
 	}
-	
+
 	@Override
 	public boolean isPrevious() {
 		return isPrevious;

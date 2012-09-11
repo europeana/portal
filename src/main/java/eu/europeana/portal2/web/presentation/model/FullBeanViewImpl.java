@@ -67,6 +67,9 @@ public class FullBeanViewImpl implements FullBeanView {
 		List<String> items = new ArrayList<String>();
 		if (fullDoc != null) {
 			for (Proxy proxy : fullDoc.getProxies()) {
+				if (proxy.getDctermsIsPartOf() == null) {
+					continue;
+				}
 				for (Entry<String, String> item : proxy.getDctermsIsPartOf().entrySet()) {
 					items.add(item.getValue());
 				}
@@ -79,6 +82,9 @@ public class FullBeanViewImpl implements FullBeanView {
 		List<String> items = new ArrayList<String>();
 		if (fullDoc != null) {
 			for (Proxy proxy : fullDoc.getProxies()) {
+				if (proxy.getDctermsHasPart() == null) {
+					continue;
+				}
 				for (Entry<String, String> item : proxy.getDctermsHasPart().entrySet()) {
 					items.add(item.getValue());
 				}

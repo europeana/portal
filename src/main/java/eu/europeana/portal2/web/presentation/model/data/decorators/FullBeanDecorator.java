@@ -52,7 +52,7 @@ public class FullBeanDecorator implements FullBean {
 
 	public FullBeanDecorator(FullBean fulldoc) {
 		this.fulldoc = fulldoc;
-		this.shortcut = new FullBeanShortcut((FullBeanImpl)fulldoc);
+		this.shortcut = new FullBeanShortcut((FullBeanImpl) fulldoc);
 	}
 
 	/**
@@ -91,7 +91,8 @@ public class FullBeanDecorator implements FullBean {
 			String fullDocUrl = getId();
 
 			if (fullDocUrl.indexOf("?") > -1) {
-				fullDocUrl = fullDocUrl.substring(0, fullDocUrl.indexOf(".html"));
+				fullDocUrl = fullDocUrl.substring(0,
+						fullDocUrl.indexOf(".html"));
 			}
 
 			fullDocUrl = fullDocUrl.replace("/resolve/", "/portal/");
@@ -102,8 +103,10 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public boolean isPositionAvailable() {
-		return (shortcut.getEdmPlaceLatitude() != null && shortcut.getEdmPlaceLatitude()[0] != 0) 
-				|| (shortcut.getEdmPlaceLongitude() != null && shortcut.getEdmPlaceLongitude()[0] != 0);
+		return (shortcut.getEdmPlaceLatitude() != null && shortcut
+				.getEdmPlaceLatitude()[0] != 0)
+				|| (shortcut.getEdmPlaceLongitude() != null && shortcut
+						.getEdmPlaceLongitude()[0] != 0);
 	}
 
 	@Override
@@ -134,14 +137,11 @@ public class FullBeanDecorator implements FullBean {
 	public DocType getType() {
 		return fulldoc.getType();
 	}
-	
+
 	public String getEdmType() {
-		// List<String> items = new ArrayList<String>();
 		for (Proxy proxy : fulldoc.getProxies()) {
 			return proxy.getEdmType().toString();
-			//items.add(proxy.getEdmType().toString());
 		}
-		// return StringArrayUtils.toArray(items);
 		return null;
 	}
 
@@ -155,18 +155,12 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getId();
 	}
 
-	public String getEdmCountry() {
-		if (getEuropeanaAggregation() != null) {
-			return getEuropeanaAggregation().getEdmCountry().values().iterator().next();
-		}
-		return null;
+	public String[] getEdmCountry() {
+		return shortcut.get("EdmCountry");
 	}
 
-	public String getEdmLanguage() {
-		if (getEuropeanaAggregation() != null) {
-			return getEuropeanaAggregation().getEdmLanguage().values().iterator().next();
-		}
-		return null;
+	public String[] getEdmLanguage() {
+		return shortcut.get("EdmLanguage");
 	}
 
 	public String[] getEdmDataProvider() {
@@ -175,7 +169,8 @@ public class FullBeanDecorator implements FullBean {
 
 	public boolean isUserGeneratedContent() {
 		if (StringArrayUtils.isNotBlank(shortcut.get("EdmUGC"))) {
-			return StringUtils.equalsIgnoreCase(shortcut.get("EdmUGC")[0], "true");
+			return StringUtils.equalsIgnoreCase(shortcut.get("EdmUGC")[0],
+					"true");
 		}
 		return false;
 	}
@@ -193,15 +188,17 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String[] getDcDescription() {
-		List<String> descriptions = Arrays.asList(shortcut.get("DcDescription"));
-		for (int i=0, l=descriptions.size(); i < l; i++) {
+		List<String> descriptions = Arrays
+				.asList(shortcut.get("DcDescription"));
+		for (int i = 0, l = descriptions.size(); i < l; i++) {
 			descriptions.set(i, descriptions.get(i).replace("\n", "<br/>\n"));
 		}
 		return StringArrayUtils.toArray(descriptions);
 	}
 
 	public String getDcDescriptionCombined() {
-		return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(), ";"));
+		return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(),
+				";"));
 	}
 
 	public String[] getDcFormat() {
@@ -383,7 +380,8 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	@Override
-	public void setEuropeanaAggregation(EuropeanaAggregation europeanaAggregation) {
+	public void setEuropeanaAggregation(
+			EuropeanaAggregation europeanaAggregation) {
 		fulldoc.setEuropeanaAggregation(europeanaAggregation);
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
@@ -18,7 +19,7 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  * @author peter.kiraly@kb.nl
  */
 public class FullBeanShortcut {
-	
+
 	private FullBeanImpl document;
 
 	public FullBeanShortcut(FullBeanImpl document) {
@@ -30,7 +31,7 @@ public class FullBeanShortcut {
 	private Map<String, List<Map<String, String>>> mapValues;
 
 	private Map<String, List<Float>> floats;
-	
+
 	/**
 	 * Adds multiple values
 	 * @param property
@@ -61,6 +62,10 @@ public class FullBeanShortcut {
 	}
 
 	private void add(String property, Map<String, String> value) {
+		if (value == null) {
+			return;
+		}
+
 		if (!values.containsKey(property)) {
 			values.put(property, new ArrayList<String>());
 		}
@@ -88,6 +93,7 @@ public class FullBeanShortcut {
 	 */
 	private void initialize() {
 		values = new HashMap<String, List<String>>();
+		mapValues = new HashMap<String, List<Map<String, String>>>();
 
 		if (document.getAggregations() != null) {
 			for (AggregationImpl aggregation : document.getAggregations()) {
@@ -142,6 +148,12 @@ public class FullBeanShortcut {
 				add("DctermsTemporal", proxy.getDctermsTemporal());
 				add("DctermsTableOfContents", proxy.getDctermsTOC());
 			}
+		}
+		
+		if (document.getEuropeanaAggregation() != null) {
+			EuropeanaAggregation aggregation = document.getEuropeanaAggregation();
+			add("EdmCountry", aggregation.getEdmCountry());
+			add("EdmLanguage", aggregation.getEdmLanguage());
 		}
 	}
 

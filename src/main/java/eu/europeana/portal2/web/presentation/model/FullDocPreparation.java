@@ -265,12 +265,14 @@ public abstract class FullDocPreparation extends FullDocData {
 					shortcut.get("DctermsConformsTo"),
 					shortcut.get("DctermsHasFormat"),
 					getDocument().getDctermsIsFormatOf());
-			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription(),
+			addField(fields, Field.DC_DESCRIPTION, 
+					getDocument().getDcDescription(),
 					shortcut.get("DctermsTableOfContents"));
 			// addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEuropeanaDataProvider());
 			addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEdmDataProvider());
-			addField(fields, Field.EUROPEANA_PROVIDER, shortcut.get("EdmProvider"),
-					Field.EUROPEANA_COUNTRY.getValues(new String[]{getDocument().getEdmCountry()}));
+			addField(fields, Field.EUROPEANA_PROVIDER, 
+					shortcut.get("EdmProvider"),
+					Field.EUROPEANA_COUNTRY.getValues(getDocument().getEdmCountry()));
 		}
 		return fields;
 	}
