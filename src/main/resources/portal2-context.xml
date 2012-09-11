@@ -12,6 +12,9 @@
 	<import resource="corelib-definitions-context.xml" />
 	<import resource="corelib-web-context.xml" />
 
+	<!-- SECURITY -->
+	<import resource="internal/portal2-security.xml" />
+
 	<!-- DEVELOPMENT -->
 	<import resource="internal/portal2-development.xml" />
 </beans>
