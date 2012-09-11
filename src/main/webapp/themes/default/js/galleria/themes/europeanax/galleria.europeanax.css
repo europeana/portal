@@ -91,30 +91,31 @@
 }
 
 
+
 .europeana-carousel .europeana-carousel-info{
 	opacity:			1 !important;
 	background-color:	rgba(0, 0, 0, 0.698);
 	color:				#BBBBBB;
-	text-align:			center;
+
 	position:			absolute;
-	padding-left:		3px;
-	padding-right:		3px;
-	padding-top:		3px;
-	/*
-	font-size:			80%;
-	*/
+
+	padding:			0.2em;
+	-moz-box-sizing:	border-box;
+	box-sizing:			border-box;
+
 	/* NEW */
 	overflow:			hidden;
 
-	bottom:				0.5em;
 	bottom:				0;
 
 	line-height:		1.1em;
-	max-height:			2.2em;
-	width:				94%;
+	height:				2.6em;
+	max-height:			2.6em;
+	width:				100%;
 	z-index:			1;
-	margin-left:		3%;
+	
 }
+
 
 .europeana-carousel .europeana-carousel-info .title{
 	font-weight:	bold;
@@ -273,7 +274,7 @@
 .galleria-image-nav-left,
 .galleria-image-nav-right {
     opacity: 0.6;
-    filter: alpha(opacity=30);
+    filter: alpha(opacity=60);
     cursor: pointer;
     
     /*
@@ -281,7 +282,8 @@
     height: 124px;
     */
     font-size:	3em;
-    
+    font-size:	4em;
+
     position: absolute;
     left: 10px;
     z-index: 2;
@@ -297,7 +299,8 @@
 }
 
 .galleria-image-nav-left.icon-arrow-4, .galleria-image-nav-right.icon-arrow-2{
-	color:	white;	
+	color:			white;	
+	text-shadow:	0 0 0.05em #000;
 }
 
 

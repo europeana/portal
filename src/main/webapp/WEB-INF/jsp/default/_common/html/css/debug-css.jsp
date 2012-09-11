@@ -29,8 +29,8 @@
 			width: 2px;
 		}
 	}
-
-	@media all and (min-width:48em){
+	
+	@media all and (min-width:47em){
 		.euresponsive {
 			width: 3px;
 		}
