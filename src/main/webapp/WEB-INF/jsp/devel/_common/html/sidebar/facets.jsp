@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!-- facets -->
 <c:if test="${!empty model.briefBeanView.facetQueryLinks}">
   <h2><spring:message code="FilterYourSearch_t" />:</h2>
 
@@ -23,4 +22,3 @@
     </li>
   </ul>
 </c:if>
-<!-- /facets -->

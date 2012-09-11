@@ -1,12 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="content">
   <h1><spring:message code="MyEuropeana_t" /></h1>
   <div id="user-panels">
-    <%--
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/user-panels/user-information.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/user-panels/saved-items.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/user-panels/saved-searches.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/user-panels/saved-tags.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/user-panels/remote-search-widget.jspf" %>
-     --%>
   </div>
 </div>
