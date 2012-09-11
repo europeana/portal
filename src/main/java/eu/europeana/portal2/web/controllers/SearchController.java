@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -65,6 +67,9 @@ public class SearchController {
 	@Resource
 	private  LocaleInterceptor localeChangeInterceptor;
 
+	@Resource(name="corelib_db_userService")
+	private UserService userService;
+
 	@RequestMapping({"/search.html", "/brief-doc.html"})
 	public ModelAndView searchHtml(
 		@RequestParam(value = "query", required = false, defaultValue="*:*") String q,
@@ -103,6 +108,9 @@ public class SearchController {
 		model.setRswDefqry(rswDefqry);
 		model.setRefinements(qf);
 		log.info("setRefinements on model to " + qf);
+
+		User user = ControllerUtil.getUser(userService);
+		model.setUser(user);
 
 		model.setStart(start);
 		model.setRows(rows);
