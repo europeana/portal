@@ -1,0 +1,234 @@
+package eu.europeana.portal2.web.controllers.user;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URLDecoder;
+import java.sql.BatchUpdateException;
+import java.util.Locale;
+import java.util.logging.Logger;
+
+import javax.annotation.Resource;
+import javax.mail.search.SearchTerm;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
+import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
+import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.portal2.web.presentation.PortalPageInfo;
+import eu.europeana.portal2.web.presentation.model.AjaxPage;
+import eu.europeana.portal2.web.presentation.model.data.FieldSize;
+import eu.europeana.portal2.web.util.ControllerUtil;
+
+@Controller
+public class AjaxController {
+
+	private final Logger log = Logger.getLogger(getClass().getName());
+
+	@Resource(name="corelib_db_userService")
+	private UserService userService;
+
+	@Value("#{europeanaProperties['portal.theme']}")
+	private String defaultTheme;
+
+	@RequestMapping("/test.json")
+	public ModelAndView handleAjaxTestRequest(
+			HttpServletRequest request,
+			HttpServletResponse response, 
+			Locale locale) 
+					throws Exception {
+		log.info("================ test.json ================");
+		AjaxPage model = new AjaxPage();
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, null, defaultTheme));
+		ModelAndView page = createResponsePage(model);
+		return page;
+	}
+
+	@RequestMapping("/save.ajax")
+	public ModelAndView handleAjaxSaveRequest(
+			HttpServletRequest request,
+			HttpServletResponse response, 
+			Locale locale) 
+					throws Exception {
+		log.info("================ save.json ================");
+		AjaxPage model = new AjaxPage();
+		try {
+			if (!hasJavascriptInjection(request)) {
+				processAjaxSaveRequest(model, request, locale);
+			}
+		} catch (Exception e) {
+			handleAjaxException(model, e, response, request);
+		}
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, null, defaultTheme));
+		ModelAndView page = createResponsePage(model);
+		return page;
+	}
+
+	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request, Locale locale) throws Exception {
+		User user = ControllerUtil.getUser(userService);
+		String className = request.getParameter("className");
+		String idString = request.getParameter("id");
+		if (className == null) {
+			throw new IllegalArgumentException("Expected 'className' parameter!");
+		}
+
+		switch (findModifiable(className)) {
+			/*
+			case SAVED_ITEM:
+				// retrieve object from solr
+				String uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+				FullDocDecorator doc = getFullDoc(uri);
+				SavedItem savedItem = new SavedItem();
+				savedItem.setTitle(StringUtils.abbreviate(doc.getPostTitle(), FieldSize.TITLE));
+				savedItem.setAuthor(StringUtils.abbreviate(doc.getPostAuthor(), FieldSize.AUTHOR));
+				savedItem.setDocType(DocType.get(StringUtils.upperCase(doc.getEuropeanaType())));
+				savedItem.setEuropeanaObject(checkEuropeanaObject(doc.getThumbnail()));
+				savedItem.setLocale(locale);
+				user = userService.createSavedItem(user, savedItem, uri);
+				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_ITEM);
+				break;
+			// className=SavedSearch&query=query%3Dparish&queryString=parish
+			 */
+			case SAVED_SEARCH:
+				String query = getStringParameter("query", FieldSize.QUERY, request);
+				String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request), "utf-8");
+				user = userService.createSavedSearch(user.getId(), query, queryString);
+
+				log.info("SavedSearches: " + StringUtils.join(user.getSavedSearches(), ", "));
+				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_SEARCH);
+				break;
+			/*
+			case SEARCH_TERM:
+				SearchTerm searchTerm = staticInfoDao.addSearchTerm(Long.valueOf(idString));
+				if (searchTerm == null) {
+					model.setSuccess(false);
+				}
+				break;
+			*/
+			/*
+			case SOCIAL_TAG:
+				// retrieve object from solr
+				String uriTag = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+				FullDocDecorator docTag = getFullDoc(uriTag);
+				SocialTag socialTag = new SocialTag();
+				String tagValue = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
+				socialTag.setTag(tagValue);
+				socialTag.setEuropeanaUri(uriTag);
+				socialTag.setDocType(DocType.get(StringUtils.upperCase(docTag.getEuropeanaType())));
+				socialTag.setEuropeanaObject(checkEuropeanaObject(docTag.getThumbnail()));
+				socialTag.setTitle(StringUtils.abbreviate(docTag.getPostTitle(), FieldSize.TITLE));
+				socialTag.setLocale(locale);
+				user = userDao.addSocialTag(user, socialTag);
+				// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SAVE_SOCIAL_TAG, "tag=" + tagValue);
+				break;
+			*/
+			default:
+				throw new IllegalArgumentException("Unhandled removable");
+		}
+
+		// ControllerUtil.setUser(user);
+		model.setUser(user);
+		model.setSuccess(true);
+	}
+
+	private static Modifiable findModifiable(String className) {
+		for (Modifiable modifiable : Modifiable.values()) {
+			if (modifiable.matches(className)) {
+				return modifiable;
+			}
+		}
+		throw new IllegalArgumentException("Unable to find removable class with name " + className);
+	}
+
+	private enum Modifiable {
+		SAVED_ITEM(SavedItem.class), 
+		SAVED_SEARCH(SavedSearch.class), 
+		SEARCH_TERM(SearchTerm.class), 
+		SOCIAL_TAG(SocialTag.class);
+
+		private String className;
+
+		private Modifiable(Class<?> clazz) {
+			this.className = clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1);
+		}
+
+		public boolean matches(String className) {
+			return this.className.equals(className);
+		}
+	}
+
+	private boolean hasJavascriptInjection(HttpServletRequest request) {
+		boolean hasJavascript = false;
+		for (Object o : request.getParameterMap().keySet()) {
+			log.info(String.valueOf(o));
+			// TODO: rething this. Using "<" is a little bit cryptic
+			if (request.getParameter(String.valueOf(o)).contains("<")) {
+				hasJavascript = true;
+				log.warning("The request contains javascript so do not process this request");
+				break;
+			}
+		}
+		return hasJavascript;
+	}
+
+	/**
+	 * Returns a HTTP parameter up to a given length
+	 *
+	 * @param parameterName
+	 * @param maximumLength
+	 * @param request
+	 * @return
+	 */
+	protected static String getStringParameter(String parameterName, int maximumLength, HttpServletRequest request) {
+		String stringValue = request.getParameter(parameterName);
+		if (stringValue == null) {
+			throw new IllegalArgumentException("Missing parameter: " + parameterName);
+		}
+		if (stringValue.length() >= maximumLength) {
+			stringValue = stringValue.substring(0, maximumLength);
+		}
+		stringValue = stringValue.trim();
+		return stringValue;
+	}
+
+	private void handleAjaxException(AjaxPage model, Exception e,
+			HttpServletResponse response, HttpServletRequest request) {
+		model.setSuccess(false);
+		model.setException(getStackTrace(e));
+		response.setStatus(400);
+		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.AJAX_ERROR);
+		log.severe("Problem handling AJAX request: " + e);
+		StringBuilder sb = new StringBuilder();
+		for (StackTraceElement el : e.getStackTrace()) {
+			sb.append(el.toString() + "\n");
+		}
+		log.severe(sb.toString());
+	}
+
+	private String getStackTrace(Exception exception) {
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		for (Throwable e = exception.getCause(); e != null; e = e.getCause()) {
+			if (e instanceof BatchUpdateException) {
+				BatchUpdateException bue = (BatchUpdateException) e;
+				Exception next = bue.getNextException();
+				log.warning("Next exception in batch: " + next);
+				next.printStackTrace(printWriter);
+			}
+		}
+		exception.printStackTrace(printWriter);
+		return stringWriter.toString();
+	}
+
+	private static ModelAndView createResponsePage(AjaxPage model) {
+		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX);
+	}
+}

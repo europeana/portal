@@ -54,9 +54,12 @@ public class LoginPageController {
 			HttpServletRequest request, 
 			HttpServletResponse response, 
 			Locale locale) throws Exception {
+		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		model.setEmail(email);
+		log.info("email: " + email);
+		log.info("buttonPressed: " + buttonPressed);
 
 		if (email != null) {
 			log.info("email submitted: [" + email + "]");
@@ -66,7 +69,7 @@ public class LoginPageController {
 
 			// Register
 			// TODO this value is internationalized in the template
-			if ("Register".equals(buttonPressed)) { 
+			if ("Register".equals(buttonPressed)) {
 				if (!ControllerUtil.validEmailAddress(email)) {
 					model.setFailureFormat(true);
 				} else if (emailExists(email)) {
