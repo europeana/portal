@@ -240,7 +240,6 @@ public class IndexPageController {
 			RSSFeedParser parser = new RSSFeedParser(blogUrl, 3);
 			parser.setStaticPagePath(staticPagePath);
 			List<FeedEntry> newEntries = parser.readFeed();
-			
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				feedEntries = newEntries;
 				feedAge = Calendar.getInstance();
