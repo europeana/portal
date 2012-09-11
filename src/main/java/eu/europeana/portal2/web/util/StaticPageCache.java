@@ -65,9 +65,7 @@ public class StaticPageCache {
 		}
 	}
 
-	public void writeBinaryPage(String fileName, OutputStream out)
-			throws IOException {
-
+	public void writeBinaryPage(String fileName, OutputStream out) throws IOException {
 		Page page = fetchPage(fileName, null);
 		if (page != null) {
 			page.writeBinaryContent(out);
@@ -88,11 +86,16 @@ public class StaticPageCache {
 					String defautFileName = fileName.replace(DOT, "_" + Locale.ENGLISH.getLanguage() + DOT);
 					page = pageMap().get(defautFileName);
 					if (page == null) {
+						log.severe(String.format("filename (%s,  %s) is not existing", fileName, lingualFileName, defautFileName));
 						return null;
 					}
 				}
 				return page;
+			} else {
+				log.severe("checkForDot: false for " + fileName);
 			}
+		} else {
+			log.severe("fileName " + fileName + " does not match the pattern " + fileNamePattern.pattern());
 		}
 		return null;
 	}
@@ -147,7 +150,7 @@ public class StaticPageCache {
 				try {
 					content = StringUtils.join(FileUtils.readLines(file, "UTF-8"), '\n');
 				} catch (Exception e) {
-					log.warning("Unable to read static page " + file);
+					log.severe("Unable to read static page " + file);
 				} finally {
 					fetched = true;
 				}
