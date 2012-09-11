@@ -108,6 +108,13 @@ public class IndexPageController {
 
 	@Value("#{europeanaProperties['static.page.path']}")
 	private String staticPagePath;
+
+	@Value("#{europeanaProperties['portal.responsive.widths']}")
+	private String responsiveImageWidthString;
+	
+	@Value("#{europeanaProperties['portal.responsive.labels']}")
+	private String responsiveImageLabelString;
+
 	
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
@@ -232,12 +239,23 @@ public class IndexPageController {
 		model.setCarouselItems(carouselItems);
 	}
 
+	private int[] parseResponsiveImageWidths(){
+		String[]	imageWidths	= responsiveImageWidthString.split(",");
+		int[]		result		= new int[imageWidths.length];
+		
+		for(int i=0; i<imageWidths.length; i++){
+			result[i] = Integer.parseInt(imageWidths[i]); 
+		}		
+		return result;
+	}
+
+	
 	private void updateFeedIfNeeded(IndexPage model) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(),
 				-blogTimeout.intValue()));
 		// read feed only once every few hours
 		if ((feedAge == null) || feedAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(blogUrl, 3);
+			RSSFeedParser parser = new RSSFeedParser(blogUrl, 3, responsiveImageLabelString.split(","), parseResponsiveImageWidths());
 			parser.setStaticPagePath(staticPagePath);
 			List<FeedEntry> newEntries = parser.readFeed();
 			if ((newEntries != null) && (newEntries.size() > 0)) {
@@ -251,7 +269,7 @@ public class IndexPageController {
 	private void updatePinterest(IndexPage model) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -pintTimeout.intValue()));
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue());
+			RSSFeedParser parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue(), responsiveImageLabelString.split(","), parseResponsiveImageWidths());
 			parser.setStaticPagePath(staticPagePath);
 			List<FeedEntry> newEntries = parser.readFeed();
 			if ((newEntries != null) && (newEntries.size() > 0)) {

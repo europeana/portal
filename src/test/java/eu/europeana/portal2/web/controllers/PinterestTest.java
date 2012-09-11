@@ -28,7 +28,7 @@ public class PinterestTest {
 
 	@Before
 	public void runBeforeEveryTests() {
-		parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue());
+		parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue(), new String[0], new int[0]);
 	}
 
 	/**

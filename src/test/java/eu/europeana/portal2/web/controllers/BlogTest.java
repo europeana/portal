@@ -28,7 +28,7 @@ public class BlogTest {
 
 	@Before
 	public void runBeforeEveryTests() {
-		parser = new RSSFeedParser(blogFeedUrl, blogItemLimit.intValue());
+		parser = new RSSFeedParser(blogFeedUrl, blogItemLimit.intValue(), new String[0], new int[0]);
 	}
 
 	/**

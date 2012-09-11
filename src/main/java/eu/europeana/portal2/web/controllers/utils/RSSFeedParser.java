@@ -34,6 +34,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.jetty.util.log.Log;
+import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -56,9 +57,9 @@ public class RSSFeedParser {
 	static final String PUB_DATE = "pubDate";
 	static final String GUID = "guid";
 
-	static final int[] widths = new int[]{200, 150, 90};// TODO: set in properties
-	static final String[] fNames = new String[]{ "_1", "_2", "_3"};// TODO: set in properties
-
+	int[] responsiveWidths;
+	String[] fNames;
+	
 	boolean useNormalImageFormat = true;
 	private final URL url;
 
@@ -73,20 +74,23 @@ public class RSSFeedParser {
 
 	private int itemLimit;
 
-	public RSSFeedParser(String feedUrl, int itemLimit) {
+	public RSSFeedParser(String feedUrl, int itemLimit, String[] fNames, int[] responsiveWidths) {
 		try {
 			this.url = new URL(feedUrl);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
-		this.itemLimit = itemLimit;
+		this.itemLimit			= itemLimit;
+		this.fNames				= fNames;
+		this.responsiveWidths	= responsiveWidths;
 	}
 
-	public RSSFeedParser(String feedUrl, int itemLimit, boolean useNormalImageFormat) {
-		this(feedUrl, itemLimit);
+	public RSSFeedParser(String feedUrl, int itemLimit, boolean useNormalImageFormat, String[] fNames, int[] responsiveWidths) {
+		this(feedUrl, itemLimit, fNames, responsiveWidths);
 		this.useNormalImageFormat = useNormalImageFormat;
 	}
 
+	
 	private Map<String, String> createResponsiveImage(String location) {
 
 		Map<String, String> responsiveImages = new HashMap<String, String>();
@@ -115,8 +119,9 @@ public class RSSFeedParser {
 			return responsiveImages;
 		}
 
-		for (int i = 0, l = widths.length; i<l; i++){
+		for (int i = 0, l = responsiveWidths.length; i<l; i++){
 			String fileName = toFS + fNames[i] + "." + extension;
+			
 			// work out new image name 
 			String fileUrl = "/sp/rss-blog-cache/" + fileName;
 			String filePath = directory + fileName; 
@@ -124,7 +129,7 @@ public class RSSFeedParser {
 			log.info(String.format("new file is %s, url is %s, old file is %s, ", filePath, fileUrl, location));
 			BufferedImage responsive = null;
 			try {
-				responsive = ImageUtils.scale(orig, widths[i], 200);
+				responsive = ImageUtils.scale(orig, responsiveWidths[i], 0);	// zero-height to auto-calculate
 			} catch (IOException e) {
 				log.severe("IOException during scaling image: " + e.getLocalizedMessage());
 				e.printStackTrace();
