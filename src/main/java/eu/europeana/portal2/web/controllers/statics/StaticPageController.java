@@ -227,6 +227,13 @@ public class StaticPageController {
 		fetchVerbatimPage(request, response);
 	}
 
+	@RequestMapping("/rss-blog-cache/**/*.jpg")
+	public void fetchRssJpg(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("RSS image: " + request.getPathInfo());
+		response.setContentType("image/jpeg");
+		fetchVerbatimPage(request, response);
+	}
+
 	/**
 	 * All sp/ png are served up from here
 	 * 
@@ -240,6 +247,13 @@ public class StaticPageController {
 	@RequestMapping("/img/**/*.png")
 	public void fetchMcPng(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		response.setContentType("image/png");
+		fetchVerbatimPage(request, response);
+	}
+
+	@RequestMapping("/rss-blog-cache/**/*.png")
+	public void fetchRssPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("RSS image: " + request.getPathInfo());
 		response.setContentType("image/png");
 		fetchVerbatimPage(request, response);
 	}
@@ -261,16 +275,20 @@ public class StaticPageController {
 		fetchVerbatimPage(request, response);
 	}
 
-	private void fetchVerbatimPage(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	@RequestMapping("/rss-blog-cache/**/*.gif")
+	public void fetchRssGif(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("RSS image: " + request.getPathInfo());
+		response.setContentType("image/gif");
+		fetchVerbatimPage(request, response);
+	}
+
+	private void fetchVerbatimPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		log.info("staticPagePath: " + staticPagePath);
 		staticPageCache.setStaticPagePath(staticPagePath);
 		OutputStream out = response.getOutputStream();
 		try {
-			staticPageCache.writeBinaryPage(
-					makePageFileName(request.getServletPath(),
-							request.getPathInfo()), out);
+			staticPageCache.writeBinaryPage(makePageFileName(request.getServletPath(), request.getPathInfo()), out);
 		} finally {
 			out.flush();
 			out.close();
@@ -282,12 +300,10 @@ public class StaticPageController {
 	 */
 
 	@RequestMapping("/error.html")
-	public ModelAndView errorPageHandler(HttpServletRequest request,
-			Locale locale) throws Exception {
+	public ModelAndView errorPageHandler(HttpServletRequest request, Locale locale) throws Exception {
 		CorePageInfo pageType = CorePageInfo.ERROR;
 		clickStreamLogger.logStaticPageView(request, pageType);
-		return ControllerUtil.createModelAndViewPage(new EmptyModelPage(),
-				locale, pageType);
+		return ControllerUtil.createModelAndViewPage(new EmptyModelPage(), locale, pageType);
 	}
 	
 	public void setStaticPageCache(StaticPageCache staticPageCache) {
