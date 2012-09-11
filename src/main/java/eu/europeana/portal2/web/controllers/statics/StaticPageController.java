@@ -165,8 +165,9 @@ public class StaticPageController {
 	 * w/o language for verbatim pages
 	 */
 	private String makePageFileName(String pageNamePrefix, String pageName) {
-		return (pageNamePrefix == null ? "" : pageNamePrefix)
+		String pageFileName = (pageNamePrefix == null ? "" : pageNamePrefix)
 				+ (pageName == null ? "" : pageName);
+		return pageFileName;
 	}
 
 	/**
@@ -229,7 +230,6 @@ public class StaticPageController {
 
 	@RequestMapping("/rss-blog-cache/**/*.jpg")
 	public void fetchRssJpg(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		log.info("RSS image: " + request.getPathInfo());
 		response.setContentType("image/jpeg");
 		fetchVerbatimPage(request, response);
 	}
@@ -253,7 +253,6 @@ public class StaticPageController {
 
 	@RequestMapping("/rss-blog-cache/**/*.png")
 	public void fetchRssPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		log.info("RSS image: " + request.getPathInfo());
 		response.setContentType("image/png");
 		fetchVerbatimPage(request, response);
 	}
@@ -277,18 +276,18 @@ public class StaticPageController {
 
 	@RequestMapping("/rss-blog-cache/**/*.gif")
 	public void fetchRssGif(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		log.info("RSS image: " + request.getPathInfo());
 		response.setContentType("image/gif");
 		fetchVerbatimPage(request, response);
 	}
 
 	private void fetchVerbatimPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-		log.info("staticPagePath: " + staticPagePath);
 		staticPageCache.setStaticPagePath(staticPagePath);
 		OutputStream out = response.getOutputStream();
 		try {
-			staticPageCache.writeBinaryPage(makePageFileName(request.getServletPath(), request.getPathInfo()), out);
+			String pageFileName = makePageFileName(request.getServletPath(), request.getPathInfo());
+			staticPageCache.writeBinaryPage(pageFileName, out);
+		} catch (Exception e) {
+			log.severe("Exception during fetchVerbatimPage: " + e.getLocalizedMessage());
 		} finally {
 			out.flush();
 			out.close();
