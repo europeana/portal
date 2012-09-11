@@ -97,9 +97,6 @@
 </c:choose>
 </c:set>
 
-<%--Note: collapse_on_min value 753 corresponds to breakpoint 767 (24 less) /--%>
-<c:set var="breakpoints" value="{collapse_on_min:753}" />
-
 
 
 <script>
@@ -290,5 +287,4 @@ eu.europeana.vars.initial_rows = '${initial_rows}';
 </c:choose>
 
 eu.europeana.vars.rows = '${rows}';
-eu.europeana.vars.breakpoints = ${breakpoints};
 </script>

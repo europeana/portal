@@ -7,10 +7,8 @@
 		
 		var setup = function(){
 			
-			//var initialSuffix = '_1.jpg'; // smallest by default
 			var initialSuffix = '_1.'; // smallest by default
 			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
-				//initialSuffix = '_4.jpg'; // largest by default
 				initialSuffix = '_4.'; // largest by default
 			}
 			
@@ -26,14 +24,6 @@
 					'4': '_4.'
 				}
 
-				/*
-				suffixes: {
-					'1': '_1.jpg',
-					'2': '_2.jpg',
-					'3': '_3.jpg',
-					'4': '_4.jpg'
-				}
-				*/
 			});
 			
 		};
@@ -108,7 +98,7 @@
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
 			
-			toggleBreakpoint:	eu.europeana.vars.breakpoints.collapse_on_min
+			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 		
 		jQuery("#section-featured-content").Collapsible({
@@ -123,7 +113,8 @@
 					jQuery('#carousel-2').galleria({dataSource:carousel2Data});										
 				}
 			},
-			toggleBreakpoint:	eu.europeana.vars.breakpoints.collapse_on_min
+			
+			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 
 		jQuery("#section-pinterest").Collapsible({
@@ -136,7 +127,8 @@
 			fireFirstOpen:		function(){
 				jQuery('#carousel-3').galleria({dataSource:carousel3Data});					
 			},
-			toggleBreakpoint:	eu.europeana.vars.breakpoints.collapse_on_min
+			
+			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 
 	};

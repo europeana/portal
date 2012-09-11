@@ -90,26 +90,23 @@ $.fn.Collapsible = function() {
         };
         
         /* collapse on small size and show expand/collapse icons, show on big size and hide expand/collapse icons */
-    	if(ops.toggleBreakpoint){
+    	if(ops.toggleFn){
     		
     		var fnResize = function(){
-    			
     			if(eu.europeana.vars.suppresResize){
     				return;
     			}
-    			
     			var target = getTarget(); 
-    			if($(window).width() > ops.toggleBreakpoint){
+    			if(ops.toggleFn() == true){
+    				target.removeClass('active');
+    				target.show();   				
+    			}
+    			else{
     				target.addClass('active');
     				target.hide();
     			}
-    			else{
-    				target.removeClass('active');
-    				target.show();
-    			}
     			setClasses();
     		};
-    		
     		$(window).bind('resize', fnResize);
     		fnResize();
     	}

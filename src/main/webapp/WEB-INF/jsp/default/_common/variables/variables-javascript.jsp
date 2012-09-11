@@ -101,8 +101,6 @@
 		<c:otherwise></c:otherwise>
 	</c:choose>
 </c:set>
-<%--Note: collapse_on_min value 753 corresponds to breakpoint 767 (24 less) /--%>
-<c:set var="breakpoints" value="{collapse_on_min:753}" />
 
 
 <script type="text/javascript">
@@ -286,6 +284,5 @@ eu.europeana.vars.timeline = {};
 //-->
 
 eu.europeana.vars.rows = '${rows}';
-eu.europeana.vars.breakpoints = ${breakpoints};
 
 </script>
