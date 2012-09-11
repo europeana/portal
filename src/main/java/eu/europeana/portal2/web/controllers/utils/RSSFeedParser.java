@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.controllers.utils;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,11 +56,14 @@ public class RSSFeedParser {
 	static final String PUB_DATE = "pubDate";
 	static final String GUID = "guid";
 
+	static final int[] widths = new int[]{200, 150, 90};// TODO: set in properties
+	static final String[] fNames = new String[]{ "_1", "_2", "_3"};// TODO: set in properties
+
 	boolean useNormalImageFormat = true;
 	private final URL url;
 
 	String staticPagePath = "";
-	
+
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	public void setStaticPagePath(String staticPagePath) {
@@ -83,53 +87,77 @@ public class RSSFeedParser {
 		this.useNormalImageFormat = useNormalImageFormat;
 	}
 
-	private Map<String, String> createResponsiveImage(String location) throws IOException{
-		
-		Map<String, String> result = new HashMap<String, String>();
-		
-		int[] widths = new int[]{200, 150, 90};// TODO: set in properties
-		
-		String[] fNames = new String[]{ "_1", "_2", "_3"};// TODO: set in properties
-		
+	private Map<String, String> createResponsiveImage(String location) {
 
-		String directory = staticPagePath;
-		String toFS = location.replace("/", "-").replace(":", "-");
-		String extension = toFS.substring(toFS.lastIndexOf(".")+1);
-		
-		BufferedImage orig = ImageIO.read( new URL( location )  );
-		
-		
-		for(int i=0; i<widths.length; i++){
-		
+		Map<String, String> responsiveImages = new HashMap<String, String>();
+
+		String directory = staticPagePath + "/sp/rss-blog-cache/";
+		File dir = new File(directory);
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+
+		String extension = location.substring(location.lastIndexOf(".") + 1);
+		String nameWithoutExt = location.substring(0, location.lastIndexOf(".") - 1);
+		String toFS = nameWithoutExt.replace("/", "-").replace(":", "-").replace(".", "-");
+		BufferedImage orig = null;
+		try {
+			orig = ImageIO.read(new URL(location));
+		} catch (MalformedURLException e) {
+			log.severe("MalformedURLException during reading in location: " + e.getLocalizedMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			log.severe("IOException during reading in location: " + e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+
+		if (orig == null) {
+			return responsiveImages;
+		}
+
+		for (int i = 0, l = widths.length; i<l; i++){
+			String fileName = toFS + fNames[i] + "." + extension;
 			// work out new image name 
-			String fileUrl		= "/sp/rss-blog-cache/" + toFS.substring( 0, toFS.lastIndexOf("."))  + fNames[i] + "." + extension;
-			String newFileName	= directory + "rss-blog-cache/" + toFS.substring( 0, toFS.lastIndexOf("."))  + fNames[i] + "." + extension; 
+			String fileUrl = "/sp/rss-blog-cache/" + fileName;
+			String filePath = directory + fileName; 
 
-			System.err.println("new filename is " + newFileName + ", old filename is " + location + ", url is " + fileUrl);
-			
-			
-			BufferedImage responsive = ImageUtils.scale(orig, widths[i], 200);
+			log.info(String.format("new file is %s, url is %s, old file is %s, ", filePath, fileUrl, location));
+			BufferedImage responsive = null;
+			try {
+				responsive = ImageUtils.scale(orig, widths[i], 200);
+			} catch (IOException e) {
+				log.severe("IOException during scaling image: " + e.getLocalizedMessage());
+				e.printStackTrace();
+			}
+			if (responsive == null) {
+				continue;
+			}
+			responsiveImages.put(fNames[i], fileUrl);
 
-			result.put(fNames[i], fileUrl);
-		
-		    java.io.File outputfile = new java.io.File(	newFileName);
-		    
-		    if(!outputfile.exists()){
-		    	
-				System.err.println("create: extension = " + extension + ">>>" + outputfile.getAbsoluteFile()  + "<<< original width = " + orig.getWidth() );
-				try{					
-					outputfile.createNewFile();
-					javax.imageio.ImageIO.write(responsive, extension, outputfile);
-				}
-				catch(Exception e){
+			File outputfile = new File(filePath);
+			if (!outputfile.exists()) {
+				boolean created = false;
+				try {
+					created = outputfile.createNewFile();
+				} catch (IOException e) {
+					log.severe("IOException during create new file: " + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
-				System.err.println("created");
-		    }
+
+				if (created) {
+					try {
+						ImageIO.write(responsive, extension, outputfile);
+					} catch (IOException e) {
+						log.severe("IOException during writing new file: " + e.getLocalizedMessage());
+						e.printStackTrace();
+					}
+					log.info("created");
+				}
+			}
 		}
-		return result;
+		return responsiveImages;
 	}
-	
+
 	public List<FeedEntry> readFeed() {
 		try {
 			List<FeedEntry> feeds = new ArrayList<FeedEntry>();
@@ -157,16 +185,9 @@ public class RSSFeedParser {
 					);
 				}
 				// now we have the image URLs
-				try{
-
-					for (RSSImage image : message.getImages()){
-						  Map<String,String> responsiveFileNames = createResponsiveImage(image.getSrc());
-						  image.setResponsiveFileNames(responsiveFileNames);
-					}
-
-				}
-				catch(IOException e){
-					e.printStackTrace();
+				for (RSSImage image : message.getImages()){
+					Map<String, String> responsiveFileNames = createResponsiveImage(image.getSrc());
+					image.setResponsiveFileNames(responsiveFileNames);
 				}
 				message.setGuid(getElementValue(element, GUID));
 				message.setLink(getElementValue(element, LINK));
@@ -209,6 +230,4 @@ public class RSSFeedParser {
 	protected String getElementValue(Element parent, String label) {
 		return getCharacterDataFromElement((Element) parent.getElementsByTagName(label).item(0));
 	}
-	
-	
 }
