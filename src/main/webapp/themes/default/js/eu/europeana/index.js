@@ -7,20 +7,33 @@
 		
 		var setup = function(){
 			
-			var initialSuffix = '_1.jpg'; // smallest by default
+			//var initialSuffix = '_1.jpg'; // smallest by default
+			var initialSuffix = '_1.'; // smallest by default
 			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
-				initialSuffix = '_3.jpg'; // largest by default
+				//initialSuffix = '_4.jpg'; // largest by default
+				initialSuffix = '_4.'; // largest by default
 			}
 			
 			responsiveGallery({
 				scriptClass:	'euresponsive-script',
 				testClass:		'euresponsive',
 				initialSuffix:	initialSuffix,
+
+				suffixes: {
+					'1': '_1.',
+					'2': '_2.',
+					'3': '_3.',
+					'4': '_4.'
+				}
+
+				/*
 				suffixes: {
 					'1': '_1.jpg',
 					'2': '_2.jpg',
-					'3': '_3.jpg'
+					'3': '_3.jpg',
+					'4': '_4.jpg'
 				}
+				*/
 			});
 			
 		};
@@ -29,7 +42,6 @@
 			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			callback : function() {
-				//console.log("disabled");
 				setup(); 
 			}
 		}]);

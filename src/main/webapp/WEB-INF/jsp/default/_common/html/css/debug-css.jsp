@@ -18,26 +18,26 @@
 
 <!-- responsive image breakpoints -->
 <style>
-	@media all and (min-width: 320px){
+	@media all and (min-width: 20em){
 		.euresponsive {
 			width: 1px;
 		}
 	}
 
-	@media all and (min-width: 480px){
+	@media all and (min-width:30em){
 		.euresponsive {
 			width: 2px;
 		}
 	}
 
-	@media all and (min-width: 600px){
+	@media all and (min-width:48em){
 		.euresponsive {
 			width: 3px;
 		}
 	}
 
-	@media all and (min-width: 960px){
-		euresponsive {
+	@media all and (min-width:49em){
+		.euresponsive {
 			width: 4px;
 		}
 	}
