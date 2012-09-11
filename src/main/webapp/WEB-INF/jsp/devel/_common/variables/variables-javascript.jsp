@@ -184,7 +184,7 @@ eu.europeana.vars.timeline = {};
 	</c:when>
 
 	<c:when test="${model.pageName == 'myeuropeana.html'}">
-		<c:if test="${model.user}">
+		<c:if test="${!empty model.user}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.item_not_removed = '${item_not_removed}';
 
