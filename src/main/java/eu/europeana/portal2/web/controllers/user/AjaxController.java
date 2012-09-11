@@ -39,17 +39,18 @@ public class AjaxController {
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
 
-	@RequestMapping("/test.json")
-	public ModelAndView handleAjaxTestRequest(
-			HttpServletRequest request,
-			HttpServletResponse response, 
-			Locale locale) 
-					throws Exception {
-		log.info("================ test.json ================");
+	@RequestMapping("/remove.ajax")
+	public ModelAndView handleAjaxRemoveRequest(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		AjaxPage model = new AjaxPage();
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, null, defaultTheme));
-		ModelAndView page = createResponsePage(model);
-		return page;
+		try {
+			if (!hasJavascriptInjection(request)) {
+				processAjaxRemoveRequest(model, request);
+			}
+		} catch (Exception e) {
+			handleAjaxException(model, e, response, request);
+		}
+		return createResponsePage(model);
 	}
 
 	@RequestMapping("/save.ajax")
@@ -80,23 +81,15 @@ public class AjaxController {
 			throw new IllegalArgumentException("Expected 'className' parameter!");
 		}
 
+		String uri = null;
 		switch (findModifiable(className)) {
-			/*
 			case SAVED_ITEM:
-				// retrieve object from solr
-				String uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
-				FullDocDecorator doc = getFullDoc(uri);
-				SavedItem savedItem = new SavedItem();
-				savedItem.setTitle(StringUtils.abbreviate(doc.getPostTitle(), FieldSize.TITLE));
-				savedItem.setAuthor(StringUtils.abbreviate(doc.getPostAuthor(), FieldSize.AUTHOR));
-				savedItem.setDocType(DocType.get(StringUtils.upperCase(doc.getEuropeanaType())));
-				savedItem.setEuropeanaObject(checkEuropeanaObject(doc.getThumbnail()));
-				savedItem.setLocale(locale);
-				user = userService.createSavedItem(user, savedItem, uri);
+				uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+				user = userService.createSavedItem(user.getId(), uri);
+				log.info("SavedItems: " + StringUtils.join(user.getSavedItems(), ", "));
 				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_ITEM);
 				break;
 			// className=SavedSearch&query=query%3Dparish&queryString=parish
-			 */
 			case SAVED_SEARCH:
 				String query = getStringParameter("query", FieldSize.QUERY, request);
 				String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request), "utf-8");
@@ -113,28 +106,51 @@ public class AjaxController {
 				}
 				break;
 			*/
-			/*
 			case SOCIAL_TAG:
-				// retrieve object from solr
-				String uriTag = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
-				FullDocDecorator docTag = getFullDoc(uriTag);
-				SocialTag socialTag = new SocialTag();
-				String tagValue = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
-				socialTag.setTag(tagValue);
-				socialTag.setEuropeanaUri(uriTag);
-				socialTag.setDocType(DocType.get(StringUtils.upperCase(docTag.getEuropeanaType())));
-				socialTag.setEuropeanaObject(checkEuropeanaObject(docTag.getThumbnail()));
-				socialTag.setTitle(StringUtils.abbreviate(docTag.getPostTitle(), FieldSize.TITLE));
-				socialTag.setLocale(locale);
-				user = userDao.addSocialTag(user, socialTag);
+				uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+				String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
+				user = userService.createSocialTag(user.getId(), uri, tag);
 				// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SAVE_SOCIAL_TAG, "tag=" + tagValue);
 				break;
+			default:
+				throw new IllegalArgumentException("Unhandled ajax action: " + className);
+		}
+
+		model.setUser(user);
+		model.setSuccess(true);
+	}
+
+	private void processAjaxRemoveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
+		User user = ControllerUtil.getUser(userService);
+		String className = request.getParameter("className");
+		String idString = request.getParameter("id");
+		if (className == null || idString == null) {
+			throw new IllegalArgumentException("Expected 'className' and 'id' parameters!");
+		}
+		Long id = Long.valueOf(idString);
+
+		switch (findModifiable(className)) {
+			case SAVED_ITEM:
+				userService.removeSavedItem(user.getId(), id);
+				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_ITEM);
+				break;
+			case SAVED_SEARCH:
+				userService.removeSavedSearch(user.getId(), id);
+				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_SEARCH);
+				break;
+			/*
+			case SEARCH_TERM:
+				user = staticInfoDao.removeSearchTerm(id);
+				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SEARCH_TERM);
+				break;
 			*/
+			case SOCIAL_TAG:
+				userService.removeSocialTag(user.getId(), id);
+				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SOCIAL_TAG);
+				break;
 			default:
 				throw new IllegalArgumentException("Unhandled removable");
 		}
-
-		// ControllerUtil.setUser(user);
 		model.setUser(user);
 		model.setSuccess(true);
 	}

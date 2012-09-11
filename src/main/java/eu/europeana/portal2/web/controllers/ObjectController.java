@@ -43,6 +43,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.QueryType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -109,6 +111,9 @@ public class ObjectController {
 	// whether the source is API2
 	private boolean isSourceApi2 = false;
 
+	@Resource(name="corelib_db_userService")
+	private UserService userService;
+
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -146,6 +151,9 @@ public class ObjectController {
 		model.setShownAtProviderOverride(shownAtProviderOverride);
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
 		model.setSchemaOrgMappingFile(schemaOrgMappingFile);
+
+		User user = ControllerUtil.getUser(userService);
+		model.setUser(user);
 
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
 		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);

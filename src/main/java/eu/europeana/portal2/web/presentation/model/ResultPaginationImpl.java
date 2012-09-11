@@ -77,10 +77,10 @@ public class ResultPaginationImpl implements ResultPagination {
 			pageLinks.add(new PageLink(page, (page - 1) * rows + 1, pageNumber != page));
 		}
 		this.breadcrumbs = breadcrumbs; //BreadCrumb.createList(requestQueryString);
-		presentationQuery.queryForPresentation = createQueryForPresentation(requestQueryString);
+		presentationQuery.queryForPresentation = createQueryForPresentation(parsedQuery);
 		presentationQuery.queryToSave = requestQueryString;
-		presentationQuery.userSubmittedQuery = requestQueryString; // solrQuery.getQuery();
-		presentationQuery.typeQuery = removePresentationFilters(requestQueryString);
+		presentationQuery.userSubmittedQuery = parsedQuery; // solrQuery.getQuery();
+		presentationQuery.typeQuery = removePresentationFilters(parsedQuery);
 	}
 
 	private static String removePresentationFilters(String requestQueryString) {

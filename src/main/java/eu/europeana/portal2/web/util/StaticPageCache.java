@@ -111,6 +111,7 @@ public class StaticPageCache {
 	private Map<String, Page> pageMap() {
 		if (pageMapCache.isEmpty()) {
 			if (staticPagePath == null) {
+				log.severe("staticPagePath is not set!");
 				throw new RuntimeException(staticPagePath + " is not set!");
 			}
 			File root = new File(staticPagePath);
@@ -131,6 +132,8 @@ public class StaticPageCache {
 				String baseFileName = file.getPath().substring(root.getPath().length()).replace('\\', '/');
 				if (checkForDot(baseFileName)) {
 					pageMapCache.put(baseFileName, new Page(file));
+				} else {
+					log.warning(String.format("Skip registering file to static cache: %s", file.getAbsolutePath()));
 				}
 			}
 		}
