@@ -41,14 +41,7 @@
 											title=	"${entry.title}"
 											target=	"_self"
 											class=	"image">
-											<!-- 
-													src=	"${entry.images[0].src}"
-											 -->	
-											 
-											 ${entry.images[0].responsiveFileNames}
-											<img
-													src=	"/${model.portalName}${entry.images[0].responsiveFileNames['_1']}"
-													alt=	"${entry.title}"/>
+											<img src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
 										</a>
 									</div>
 									
@@ -62,14 +55,11 @@
 										</h4>
 										<p class="featured-text">
 											${entry.description}"
-										</p>					
+										</p>
 									</div>
-											
 								</div>
-							</div>					  
-
-						</div>					  
-					  
+							</div>
+						</div>
 					</c:if>
 				</c:forEach>
 			</c:when>
