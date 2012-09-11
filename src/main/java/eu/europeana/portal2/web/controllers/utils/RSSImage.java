@@ -14,13 +14,13 @@ public class RSSImage {
 
 	private String src;
 	private String title;
-	private Map<Integer, String> responsiveFileNames;
+	private Map<String, String> responsiveFileNames;
 	
-	public Map<Integer, String> getResponsiveFileNames() {
+	public Map<String, String> getResponsiveFileNames() {
 		return responsiveFileNames;
 	}
 
-	public void setResponsiveFileNames(Map<Integer, String> responsiveFileNames) {
+	public void setResponsiveFileNames(Map<String, String> responsiveFileNames) {
 		this.responsiveFileNames = responsiveFileNames;
 	}
 

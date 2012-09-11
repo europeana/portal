@@ -83,9 +83,9 @@ public class RSSFeedParser {
 		this.useNormalImageFormat = useNormalImageFormat;
 	}
 
-	private Map<Integer, String> createResponsiveImage(String location) throws IOException{
+	private Map<String, String> createResponsiveImage(String location) throws IOException{
 		
-		Map<Integer, String> result = new HashMap<Integer, String>();
+		Map<String, String> result = new HashMap<String, String>();
 		
 		int[] widths = new int[]{200, 150, 90};// TODO: set in properties
 		
@@ -94,31 +94,32 @@ public class RSSFeedParser {
 
 		String directory = staticPagePath;
 		String toFS = location.replace("/", "-").replace(":", "-");
-		String extension = toFS.substring(toFS.lastIndexOf("."));
+		String extension = toFS.substring(toFS.lastIndexOf(".")+1);
+		
+		BufferedImage orig = ImageIO.read( new URL( location )  );
+		
 		
 		for(int i=0; i<widths.length; i++){
-			
-			//http://blog.europeana.eu/wp-content/uploads/2012/09/794px-Participating_Countries_WLM_2012.svg_.png
-			//String directory	= "blog.europeana.eu";     // set in properties 
-			String newFileName	= directory + "rss-blog-cache/" + toFS.substring( 0, toFS.lastIndexOf("."))  + fNames[i] + extension; 
+		
+			// work out new image name 
+			String fileUrl		= "/sp/rss-blog-cache/" + toFS.substring( 0, toFS.lastIndexOf("."))  + fNames[i] + "." + extension;
+			String newFileName	= directory + "rss-blog-cache/" + toFS.substring( 0, toFS.lastIndexOf("."))  + fNames[i] + "." + extension; 
 
-			System.err.println("new filename is " + newFileName + ", old filename is " + location);
+			System.err.println("new filename is " + newFileName + ", old filename is " + location + ", url is " + fileUrl);
 			
-			//BufferedImage orig = ImageIO.read( getClass().getResourceAsStream("/images/GREATWAR.jpg") );
-			BufferedImage orig = ImageIO.read( new URL( location )  );// getClass().getResourceAsStream(location ) );
 			
-			BufferedImage reponsive = ImageUtils.scale(orig, widths[i], 200);
+			BufferedImage responsive = ImageUtils.scale(orig, widths[i], 200);
 
-			result.put(widths[i], newFileName);
+			result.put(fNames[i], fileUrl);
 		
 		    java.io.File outputfile = new java.io.File(	newFileName);
 		    
 		    if(!outputfile.exists()){
 		    	
-				System.err.println("create: >>>" + outputfile.getAbsoluteFile()  + "<<<");
+				System.err.println("create: extension = " + extension + ">>>" + outputfile.getAbsoluteFile()  + "<<< original width = " + orig.getWidth() );
 				try{					
 					outputfile.createNewFile();
-					javax.imageio.ImageIO.write(reponsive, extension, outputfile);
+					javax.imageio.ImageIO.write(responsive, extension, outputfile);
 				}
 				catch(Exception e){
 					e.printStackTrace();
@@ -159,7 +160,7 @@ public class RSSFeedParser {
 				try{
 
 					for (RSSImage image : message.getImages()){
-						  Map<Integer,String> responsiveFileNames = createResponsiveImage(image.getSrc());
+						  Map<String,String> responsiveFileNames = createResponsiveImage(image.getSrc());
 						  image.setResponsiveFileNames(responsiveFileNames);
 					}
 
