@@ -2,6 +2,41 @@
 	
 	'use strict';
 
+	var initResponsiveImages = function(){
+		
+		
+		var setup = function(){
+			
+			var initialSuffix = '_1.jpg'; // smallest by default
+			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
+				initialSuffix = '_3.jpg'; // largest by default
+			}
+			
+			responsiveGallery({
+				scriptClass:	'euresponsive-script',
+				testClass:		'euresponsive',
+				initialSuffix:	initialSuffix,
+				suffixes: {
+					'1': '_1.jpg',
+					'2': '_2.jpg',
+					'3': '_3.jpg'
+				}
+			});
+			
+		};
+
+		js.loader.loadScripts([{
+			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
+			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			callback : function() {
+				//console.log("disabled");
+				setup(); 
+			}
+		}]);
+
+		
+	};
+	
 	var initCarousels = function(){
 
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
@@ -100,6 +135,7 @@
 		
 		initCarousels();
 		
+		initResponsiveImages();
 	};
 	
 	jQuery(document).ready(function(){

@@ -12,15 +12,37 @@
 
 
 <link rel="stylesheet" href="/${branding}/css/eu-menu.css" />
-
 <link rel="stylesheet" href="/${branding}/css/ellipsis.css" />
-
-
 <link rel="stylesheet" href="/${branding}/css/europeana-font-icons.css" />
-<!-- link rel="stylesheet" href="/${branding}/css/europeana-fonts.css" /-->
-
-
 <link rel="stylesheet" href="/${branding}/css/europeana-font-face.css" />
+
+<!-- responsive image breakpoints -->
+<style>
+	@media all and (min-width: 320px){
+		.euresponsive {
+			width: 1px;
+		}
+	}
+
+	@media all and (min-width: 480px){
+		.euresponsive {
+			width: 2px;
+		}
+	}
+
+	@media all and (min-width: 600px){
+		.euresponsive {
+			width: 3px;
+		}
+	}
+
+	@media all and (min-width: 960px){
+		euresponsive {
+			width: 4px;
+		}
+	}
+</style>
+<!-- end responsive image breakpoints -->
 
 
 

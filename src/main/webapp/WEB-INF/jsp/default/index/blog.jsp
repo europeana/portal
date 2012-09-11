@@ -41,7 +41,11 @@
 											title=	"${entry.title}"
 											target=	"_self"
 											class=	"image">
-											<img src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
+											
+					            			<script class="euresponsive-script">document.write("<" + "!--")</script><noscript>
+												<img src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
+											</noscript -->
+											
 										</a>
 									</div>
 									
