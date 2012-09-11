@@ -1,48 +1,44 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h3>
-	<#-- onclick="euQuery.cookie('ui-tabs-4', '1', { expires: 1 });" -->
-	<a href="#saved-notifications"
-	title="<@spring.message 'SavedNotifications_t'/>">
-	
-		<@spring.message 'SavedNotifications_t'/>
-	
-	</a>
-	
+  <%-- onclick="euQuery.cookie('ui-tabs-4', '1', { expires: 1 });" --%>
+  <a href="#saved-notifications" title="<spring:message code="SavedNotifications_t" />">
+    <spring:message code="SavedNotifications_t" />
+  </a>
 </h3>
 
 <div id="saved-notifications">
-	
-	<#if ( model.user.notifications?size > 0 )>
+  
+  <#if ( model.user.notifications?size > 0 )>
 
-		<#assign imgtoshow = "item-image.gif"/>
+    <#assign imgtoshow = "item-image.gif"/>
 
-		<#list model.user.notifications as item>
-		
-			<div class="item-info">
+    <#list model.user.notifications as item>
+    
+      <div class="item-info">
 
-				<#if true> <#-- !item.europeanaId.orphan -->
-	
-					<a href='/${model.portalName}/${item.getEuropeanaUri()?replace("http://www.europeana.eu/resolve/", "")}.html?bt=savedItem'><strong><@stringLimiter "${item.title}" "50"/></strong></a>
-					<p><@spring.message 'Creator_t'/>: <em>${item.author}</em></p>
-					<p><@spring.message 'DateSaved_t'/>: <em>${item.dateSaved?datetime}</em></p>
+        <#if true> <#-- !item.europeanaId.orphan -->
+  
+          <a href='/${model.portalName}/${item.getEuropeanaUri()?replace("http://www.europeana.eu/resolve/", "")}.html?bt=savedItem'><strong><@stringLimiter "${item.title}" "50"/></strong></a>
+          <p><@spring.message 'Creator_t'/>: <em>${item.author}</em></p>
+          <p><@spring.message 'DateSaved_t'/>: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em></p>
 
-				<#else>
+        <#else>
 
-					<strong class="fg-gray" ><@stringLimiter "${item.title}" "50"/></strong>
-					<div class="ui-widget ui-info">
-						
-						<strong>Attention:</strong> this item has been withdrawn by the provider.
-					</div>
+          <strong class="fg-gray" ><@stringLimiter "${item.title}" "50"/></strong>
+          <div class="ui-widget ui-info">
+            
+            <strong>Attention:</strong> this item has been withdrawn by the provider.
+          </div>
 
-				</#if>
-			
-			</div>
-			
-		</#list>
+        </#if>
+      
+      </div>
+      
+    </#list>
 
-	<#else>
-		
-		<@spring.message 'NoSavedNotifications_t'/>
-		
-	</#if>
-	
+  <#else>
+    
+    <@spring.message 'NoSavedNotifications_t'/>
+    
+  </#if>
 </div>

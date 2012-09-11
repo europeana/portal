@@ -185,12 +185,12 @@ eu.europeana.vars.timeline = {};
 			eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
 		</c:if>
 
-		<c:if test="${model.user}">
+		<c:if test="${!empty model.user}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.saved_item = '${saved_item}';
 			eu.europeana.vars.msg.save_item_failed = '${save_item_failed}';
 			eu.europeana.vars.msg.saved_tag = '${saved_tag}';	
-			eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';					
+			eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
 			eu.europeana.vars.item.uri = '${model.document.id}';
 		</c:if>
 
@@ -200,7 +200,7 @@ eu.europeana.vars.timeline = {};
 		</c:if>
 	</c:when>
 	<c:when test="${model.pageName == 'myeuropeana.html'}">
-		<c:if test="${model.user}">
+		<c:if test="${!empty model.user}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.item_not_removed = '${item_not_removed}';
 

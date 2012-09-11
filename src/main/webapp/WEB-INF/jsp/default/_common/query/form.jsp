@@ -97,7 +97,7 @@
 	
 			<%-- save search link --%>
 	 	
-			<c:if test="${model.user} && 'search.html' == ${model.pageName}">
+			<c:if test="${!empty model.user} && 'search.html' == ${model.pageName}">
 				<spring:message code='SaveToMyEuropeana_t'/>
 				<c:if test="${model.briefBeanView}">
 					<input type="text" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}"/>

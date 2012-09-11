@@ -66,7 +66,7 @@
 
 
 	<%-- Save page to myeuropeana --%>
-	<c:if test="${model.user}">
+	<c:if test="${!empty model.user}">
 	  <a href="" id="item-save" rel="nofollow" class="block-link bold"><spring:message code="SaveToMyEuropeana_t" /></a>
 	</c:if>
 
@@ -83,7 +83,7 @@
 	--%>
 
 	<%-- Add tag --%>
-	<c:if test="${model.user}">
+	<c:if test="${!empty model.user}">
 	  <form id="item-save-tag">
 	    <fieldset>
 	      <label for="add-tag" class="bold"><spring:message code="AddATag_t" /></label><br />

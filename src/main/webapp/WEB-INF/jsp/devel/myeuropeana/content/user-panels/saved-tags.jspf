@@ -13,67 +13,58 @@
     </c:when>
     <c:otherwise>
       <%-- Iterate over Saved Tags --%>
-      <c:forEach items="${model.user.socialTagLists}" var="count">
-        <div class="saved-tag">
-          <%-- nr of items with this tag --%>
-          <c:set var="tagQuery" value="europeana_uri:(" />
-          <c:forEach items="${count.list}" var="tag">
-            <%-- TODO: add tagQuery to href instead of searching for the userTag directly --%>
-            <c:set var="tagQuery" value='${tagQuery}"${tag.europeanaUri}"'/>
-          </c:forEach>
-          <c:set var="tagQuery" value="${tagQuery})"/>
-          <%-- ${tagQuery} --%>
-          <span class="bold">${count.tag} (${count.list?size})</span><br/>
+      <ul>
+        <c:forEach items="${model.user.socialTags}" var="tag">
+          <li>
+            <div class="saved-tag">
+              <%-- nr of items with this tag --%>
+              <c:set var="tagQuery" value='europeana_uri:("${tag.europeanaUri}")' />
+              <span class="bold">${tag.tag}</span><br/>
 
-          <%-- iterate over items with the tag --%>
-          <ul>
-            <c:forEach items="${count.list}" var="tag">
-              <li>
-                <%-- Item Image --%>
-                <%-- Determine fallback image for this tag --%>
-                <c:set var="imgtoshow" value="item-image.gif" />
-                <c:set var="docType" value="${tag.docType}" />
+              <%-- Item Image --%>
+              <%-- Determine fallback image for this tag --%>
+              <c:set var="imgtoshow" value="item-image.gif" />
+              <c:set var="docType" value="${tag.docType}" />
+              <c:choose>
+                <c:when test="${tag.docType == 'IMAGE'}">
+                  <c:set var="imgtoshow" value="item-image.gif"/>
+                </c:when>
+                <c:when test="${tag.docType == 'VIDEO'}">
+                  <c:set var="imgtoshow" value="item-video.gif"/>
+                </c:when>
+                <c:when test="${tag.docType == 'SOUND'}">
+                  <c:set var="imgtoshow" value="item-sound.gif"/>
+                </c:when>
+                <c:when test="${tag.docType == 'TEXT'}">
+                  <c:set var="imgtoshow" value="item-text.gif"/>
+                </c:when>
+                <c:when test="${tag.docType == '_3D'}">
+                  <c:set var="imgtoshow" value="item-3d.gif"/>
+                  <c:set var="docType" value="3d"/>
+                </c:when>
+              </c:choose>
+
+              <%-- Place Image --%>
+              <a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
                 <c:choose>
-                  <c:when test="${tag.docType == 'IMAGE'}">
-                    <c:set var="imgtoshow" value="item-image.gif"/>
+                  <c:when test="${!empty tag.europeanaObject}">
+                    <img src="${model.cacheUrl}uri=${fn:escapeXml(tag.europeanaObject)}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
                   </c:when>
-                  <c:when test="${tag.docType == 'VIDEO'}">
-                    <c:set var="imgtoshow" value="item-video.gif"/>
-                  </c:when>
-                  <c:when test="${tag.docType == 'SOUND'}">
-                    <c:set var="imgtoshow" value="item-sound.gif"/>
-                  </c:when>
-                  <c:when test="${tag.docType == 'TEXT'}">
-                    <c:set var="imgtoshow" value="item-text.gif"/>
-                  </c:when>
-                  <c:when test="${tag.docType == '_3D'}">
-                    <c:set var="imgtoshow" value="item-3d.gif"/>
-                    <c:set var="docType" value="3d"/>
-                  </c:when>
+                  <c:otherwise>
+                    <img src="/${branding}/images/icons/item-types/${imgtoshow}" alt="${tag.title}"/>
+                  </c:otherwise>
                 </c:choose>
-
-                <%-- Place Image --%>
-                <a href="${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
-                  <c:choose>
-                    <c:when test="${!empty tag.europeanaObject}">
-                      <img src="${model.cacheUrl}uri=${fn:escapeXml(tag.europeanaObject)}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
-                    </c:when>
-                    <c:otherwise>
-                      <img src="/${branding}/images/icons/item-types/${imgtoshow}" alt="${tag.title}"/>
-                    </c:otherwise>
-                  </c:choose>
-                </a>
-                <%-- item info --%>
-                <%-- !tag.europeanaId.orphan> --%>
-                <a class="bold" href="${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>
-                <spring:message code="DateSaved_t" />: <em>${tag.dateSaved?datetime}</em><br/>
-                <%-- delete tag button --%>
-                <button id="${tag.id}" class="remove-saved-tag submit-button"><spring:message code="Delete_t" /></button>
-              </li>
-            </c:forEach>
-          </ul>
-        </div>
-      </c:forEach>
+              </a>
+              <%-- item info --%>
+              <%-- !tag.europeanaId.orphan> --%>
+              <a class="bold" href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>
+              <spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${tag.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
+              <%-- delete tag button --%>
+              <button id="${tag.id}" class="remove-saved-tag submit-button"><spring:message code="Delete_t" /></button>
+            </div>
+          </li>
+        </c:forEach>
+      </ul>
     </c:otherwise>
   </c:choose>
 </div>

@@ -1,9 +1,9 @@
 <!-- sidebar right -->
 <a href=""><spring:message code='TranslateDetails_t'/></a>
-<c:if test="${model.user}"><a href="" rel="nofollow"><spring:message code='SaveToMyEuropeana_t'/></a></c:if>
+<c:if test="${!empty model.user}"><a href="" rel="nofollow"><spring:message code='SaveToMyEuropeana_t'/></a></c:if>
 <a href="${model.embedRecordUrl}" target="_blank" rel="nofollow"><spring:message code='embed_t'/></a>
 <a href="" title="<spring:message code='AltCiteInfo_t' />" rel="nofollow"><spring:message code='Cite_Button_t' /></a>
-<c:if test="${model.user}">
+<c:if test="${!empty model.user}">
 <form>  
 	<fieldset>
 		<label for="add-tag" class="bold"><spring:message code='AddATag_t'/></label><br/>
