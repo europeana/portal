@@ -30,6 +30,23 @@ public class ObjectControllerTest {
 	private SearchService searchService;
 
 	@Test
+	public void testRecordSimple() {
+		String propertiesFile = System.getenv().get("EUROPEANA_PROPERTIES");
+		assertNotNull("Properties file should not be null", propertiesFile);
+		assertTrue("Properties file should be existing", new File(propertiesFile).exists());
+
+		FullBean fullBean = null;
+		try {
+			fullBean = searchService.findById("91637", "9B40B6F5434D21550352BCE6DEBA0C4B7CACCDC6");
+		} catch (SolrTypeException e) {
+			fail("Exception happened during retrieving");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull("Full bean should not be null", fullBean);
+	}
+
+	@Test
 	public void testRecord() {
 		String propertiesFile = System.getenv().get("EUROPEANA_PROPERTIES");
 		assertNotNull("Properties file should not be null", propertiesFile);
@@ -76,7 +93,7 @@ public class ObjectControllerTest {
 	@Test
 	public void testMoreLikeThis() {
 		try {
-			List<BriefBean> beans = searchService.findMoreLikeThis("/91627/B056315A5C6D63CF55A8735DBAA45884EC3F1ADE");
+			List<BriefBean> beans = searchService.findMoreLikeThis("/91637/9B40B6F5434D21550352BCE6DEBA0C4B7CACCDC6");
 			assertNotNull(beans);
 			assertEquals(10, beans.size());
 		} catch (SolrServerException e) {
