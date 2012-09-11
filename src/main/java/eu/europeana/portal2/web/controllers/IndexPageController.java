@@ -115,7 +115,6 @@ public class IndexPageController {
 	@Value("#{europeanaProperties['portal.responsive.labels']}")
 	private String responsiveImageLabelString;
 
-	
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
@@ -249,7 +248,6 @@ public class IndexPageController {
 		return result;
 	}
 
-	
 	private void updateFeedIfNeeded(IndexPage model) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(),
 				-blogTimeout.intValue()));
