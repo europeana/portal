@@ -41,7 +41,13 @@
 											title=	"${entry.title}"
 											target=	"_self"
 											class=	"image">
-											<img	src=	"${entry.images[0].src}"
+											<!-- 
+													src=	"${entry.images[0].src}"
+											 -->	
+											 
+											 ${entry.images[0].responsiveFileNames}
+											<img
+													src=	"/${model.portalName}${entry.images[0].responsiveFileNames['_1']}"
 													alt=	"${entry.title}"/>
 										</a>
 									</div>
