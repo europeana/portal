@@ -121,22 +121,24 @@
 		padding:				2px 0px;
 		color:					#333;
 		border:					1px solid #a0a0a0;
-		-moz-border-radius:		5px;
-		-webkit-border-radius:	5px;
-		border-radius:			5px;
 		
 		font-size:				1.2em;		
 	}
 
-	#footer-subscribe input[type=submit]{
+	
+	.europeana-button-1{
+
 		background-color:		blue;
-		color:					white;
-		border:					0;
-		padding:				1em 1em;
-		-moz-border-radius:		10px;
-		-webkit-border-radius:	10px;
-		border-radius:			10px;
+		color:					white !important;
+		border:					0 !important;
+	
+		padding:				0.5em 0.5em !important;
+		margin:					0;
+		-moz-border-radius:		0.75em;
+		-webkit-border-radius:	0.75em;
+		border-radius:			0.75em;
 	}
+	
 
 	@media only screen and ( min-width:48em ){	/* ipad */
 		#social-links .social-link{		

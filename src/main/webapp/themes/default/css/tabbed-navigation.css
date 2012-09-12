@@ -1,15 +1,9 @@
-/* tabbed-content */
-
+	
 	.tab-navigation h3, .tab-navigation li {
 		display: inline;
-		font-size: 110%;
 		font-weight: normal;
 	}
-	
-	.tab-navigation li {
-		margin-right: 10px;
-	}
-	
+		
 	.tab .panel {
 		display: none;
 	}
@@ -17,32 +11,47 @@
 	
 	/* explore-further tabs */
 
-	.tab-navigation {
-		height: 20px;
-		border-bottom: 1px solid #a0a0a0;
-	}
 	
    	.tab-navigation h3 a {
-   		display: block;
-   		float: left;
-   		padding: 2px 7px;
-   		margin-right: 10px;
-   		height: 15px;
+   		padding:							0.15em 0.4em;
+   		margin-right:						0.5em;
+   		margin-bottom:						0.5em;
+   		z-index:	20;
    		
-   		border: 1px solid #a0a0a0;
-		-moz-border-radius-topleft: 5px;
-		-moz-border-radius-topright: 5px;
-		-webkit-border-top-left-radius: 5px;
-		-webkit-border-top-right-radius: 5px;
-		border-top-left-radius: 5px;
-		border-top-right-radius: 5px;
+   		border:								1px solid #a0a0a0;
+		display:							inline-block;
+		
+		-moz-border-radius-topleft:			5px;
+		-moz-border-radius-topright:		5px;
+		-webkit-border-top-left-radius:		5px;
+		-webkit-border-top-right-radius:	5px;
+		
+		border-top-left-radius:				5px;
+		border-top-right-radius:			5px;
    	}
+   	
+   	
+   	@media only screen and ( min-width:48em ){
+   	
+		.tab-navigation{
+			text-align:			left;
+		}
+		
+		.tab-navigation li {
+			margin-right: 		1em;
+		}
+		
+   	   	.tab-navigation h3 a {
+   	   		margin-bottom:		0;
+   		}
+		
+	}
    	
    	.tab-navigation h3 a.active,
    	.tab-navigation h3 a:hover {
    		border-bottom: 1px solid #fff;
    	}
-   	
+
    	.tab-navigation h3 a:hover {
    		text-decoration: underline;
    	}
