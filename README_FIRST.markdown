@@ -196,7 +196,7 @@ Run inside Eclipse:
 
 ### Properties
 portal.responsive.widths: the comma separated values of image widths in index page
-  example:
+  example: 200,300,700,200
 
 portal.responsive.labels: the comma separated values of width-identifiers in index page
-  example:
+  example: _1,_2,_3,_4
