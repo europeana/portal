@@ -193,3 +193,10 @@ Run inside Eclipse:
 2. Fill the form: Name: ContentLoader, Project: corelib-solr, Class: ContentLoader (you can search it)
 3. Arguments tab: Working directory: Other: ${workspace_loc}/trunk
 4. Environment tab: create new variable: key: EUROPEANA_PROPERTIES, value: <your europeana.properties file>
+
+### Properties
+portal.responsive.widths: the comma separated values of image widths in index page
+  example:
+
+portal.responsive.labels: the comma separated values of width-identifiers in index page
+  example:
