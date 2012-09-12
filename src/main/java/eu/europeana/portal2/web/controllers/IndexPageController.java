@@ -41,6 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
@@ -75,46 +76,16 @@ public class IndexPageController {
 	// @Autowired
 	// private ClickStreamLogger clickStreamLogger;
 
-	@Resource
 	// private ReloadableResourceBundleMessageSource messageSource;
-	private ResourceBundleMessageSource messageSource;
 
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
+	@Resource private ResourceBundleMessageSource messageSource;
+
+	@Resource private ConfigInterceptor corelib_web_configInterceptor;
 	
-	@Resource
-	private  LocaleInterceptor localeChangeInterceptor;
+	@Resource private LocaleInterceptor localeChangeInterceptor;
 
-	@Value("#{europeanaProperties['portal.blog.url']}")
-	private String blogUrl;
-
-	@Value("#{europeanaProperties['portal.blog.timeout']}")
-	private Integer blogTimeout;
-
-	@Value("#{europeanaProperties['portal.pinterest.url']}")
-	private String pintUrl;
-
-	@Value("#{europeanaProperties['portal.pinterest.feedurl']}")
-	private String pintFeedUrl;
-
-	@Value("#{europeanaProperties['portal.pinterest.timeout']}")
-	private Integer pintTimeout;
-
-	@Value("#{europeanaProperties['portal.pinterest.itemslimit']}")
-	private Integer pintItemLimit;
+	@Resource private Configuration configurationService;
 	
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
-
-	@Value("#{europeanaProperties['static.page.path']}")
-	private String staticPagePath;
-
-	@Value("#{europeanaProperties['portal.responsive.widths']}")
-	private String responsiveImageWidthString;
-	
-	@Value("#{europeanaProperties['portal.responsive.labels']}")
-	private String responsiveImageLabelString;
-
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
@@ -131,10 +102,10 @@ public class IndexPageController {
 		updateFeaturedItem(model, locale);
 		updateFeaturedPartner(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
-		
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, configurationService.getDefaultTheme()));
+
 		localeChangeInterceptor.preHandle(request, response, this);
-		
+
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model,
@@ -239,22 +210,21 @@ public class IndexPageController {
 	}
 
 	private int[] parseResponsiveImageWidths(){
-		String[]	imageWidths	= responsiveImageWidthString.split(",");
-		int[]		result		= new int[imageWidths.length];
-		
-		for(int i=0; i<imageWidths.length; i++){
-			result[i] = Integer.parseInt(imageWidths[i]); 
-		}		
-		return result;
+		String[] imageWidths = configurationService.getResponsiveImageWidthString().split(",");
+		int[] widths = new int[imageWidths.length];
+
+		for (int i=0, len=imageWidths.length; i<len; i++) {
+			widths[i] = Integer.parseInt(imageWidths[i]);
+		}
+		return widths;
 	}
 
 	private void updateFeedIfNeeded(IndexPage model) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(),
-				-blogTimeout.intValue()));
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -configurationService.getBlogTimeout()));
 		// read feed only once every few hours
 		if ((feedAge == null) || feedAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(blogUrl, 3, responsiveImageLabelString.split(","), parseResponsiveImageWidths());
-			parser.setStaticPagePath(staticPagePath);
+			RSSFeedParser parser = new RSSFeedParser(configurationService.getBlogUrl(), 3, configurationService.getResponsiveImageLabelString().split(","), parseResponsiveImageWidths());
+			parser.setStaticPagePath(configurationService.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed();
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				feedEntries = newEntries;
@@ -265,10 +235,10 @@ public class IndexPageController {
 	}
 
 	private void updatePinterest(IndexPage model) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -pintTimeout.intValue()));
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -configurationService.getPintTimeout()));
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue(), responsiveImageLabelString.split(","), parseResponsiveImageWidths());
-			parser.setStaticPagePath(staticPagePath);
+			RSSFeedParser parser = new RSSFeedParser(configurationService.getPintFeedUrl(), configurationService.getPintItemLimit(), configurationService.getResponsiveImageLabelString().split(","), parseResponsiveImageWidths());
+			parser.setStaticPagePath(configurationService.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed();
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				pinterestEntries = newEntries;
@@ -281,6 +251,6 @@ public class IndexPageController {
 		} else {
 			model.setPinterestItem(null);
 		}
-		model.setPinterestUrl(pintUrl);
+		model.setPinterestUrl(configurationService.getPintUrl());
 	}
 }
