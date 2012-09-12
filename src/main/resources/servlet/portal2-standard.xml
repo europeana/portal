@@ -31,6 +31,8 @@
 	<bean name="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />
 	<bean name="clickStreamLogger" class="eu.europeana.portal2.web.util.ClickStreamLoggerImpl" />
 
+	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
+
 <!-- 
 	<bean id="staticPageCacheTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail">
