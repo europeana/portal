@@ -22,7 +22,7 @@
 							 --%>
 							
 							<input name="email"	type="email"	placeholder="<spring:message code="news_letter_email_hint_t" />"/>
-							<input type="submit" value="<spring:message code="news_letter_signup_button_t" />"/>
+							<input type="submit" class="europeana-button-1" value="<spring:message code="news_letter_signup_button_t" />"/>
 						</form>
 					</div>
 			</div>
