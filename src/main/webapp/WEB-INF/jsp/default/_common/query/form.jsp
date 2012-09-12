@@ -43,7 +43,7 @@
 						<td class="query-cell">
 							<input
 								type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
-							/>							
+								value="${model.query}"/>							
 						</td>
 						<td class="submit-cell hide-cell-on-phones">
 							<a class="show-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
