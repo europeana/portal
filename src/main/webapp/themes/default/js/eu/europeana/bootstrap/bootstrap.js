@@ -84,7 +84,6 @@ var europeana_bootstrap = function(){
 		};
 	}();
 
-	
 	if(eu.europeana.vars.page_name == 'contact.html'){
 		scripts.push({
 			name : 'contact',
@@ -195,11 +194,14 @@ var europeana_bootstrap = function(){
 
 	}	
 	else if(eu.europeana.vars.page_name == 'login.html'){
+		
 		scripts.push({
 			file : 'login' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'map.html'){
 		/* IE versions 7 and 8 don't support the canvas object, so we add the google code here to make it work */
@@ -232,6 +234,8 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'register-success.html'){	// change password success
 		scripts.push({
@@ -239,6 +243,8 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'search.html'){
 		
@@ -293,7 +299,7 @@ var europeana_bootstrap = function(){
 	
 
 	// expose functions
-	alert("shouldn't see this if on index, search or fulldoc....");
+	//alert("shouldn't see this if on index, search or fulldoc....");
 	return{
 		"fulldoc":fulldoc,
 		"index":index,
