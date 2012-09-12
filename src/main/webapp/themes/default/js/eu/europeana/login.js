@@ -3,9 +3,8 @@
 	var $login_response = jQuery('#login-response'),
 		login_boxes = [ jQuery('#login'), jQuery('#request-password'), jQuery('#register') ];
 	
-	showBox( window.location.hash );
+	showBox( window.location.hash ? window.location.hash : "#login");
 	addListeners();	
-	
 	
 	function checkForResponse() {
 		
@@ -82,7 +81,6 @@
 				}
 				
 			}
-			
 			$target.show();
 			
 		} else {
