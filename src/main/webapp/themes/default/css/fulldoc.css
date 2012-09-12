@@ -39,10 +39,9 @@ a.action-link:hover{
 
 .translate-box{
 	float:				none;
-	border-radius:		5px 5px 5px 5px;
+	xxxborder-radius:		0.25em;
 	background-color:	#DFDFDF;
-	padding:			10px;
-	margin:				10px 0px;
+	padding:			0.5em;
 }
 
 
@@ -87,11 +86,6 @@ a.action-link:hover{
 	
 	.translate-box{
 		float:			right;
-		margin:			0px 0px 5px 5px;
-	}
-	
-	a.action-link {
-		xxxfloat:			none;
 	}
 	
 }
