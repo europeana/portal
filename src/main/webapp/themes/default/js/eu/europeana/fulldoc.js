@@ -276,7 +276,18 @@ eu.europeana.fulldoc = {
 					// comment out this line to save 300 - 385 milliseconds of initial load time
 					// leave this line in place to have the translator automatically opened 
 					
-					// function(){jQuery("#translate-item").trigger('click');}
+					function(){
+						if(! $("#mobile-menu").is(":visible") ){
+							jQuery("#translate-item").trigger('click');
+							jQuery("#translate-item").unbind('click');
+							jQuery("#translate-item").bind('click', function(e){e.preventDefault();});
+							jQuery("#translate-item").addClass('disabled');
+							jQuery("#translate-item span")
+							.removeClass(eu.europeana.translation_services.more_icon_class)
+							.removeClass(eu.europeana.translation_services.less_icon_class)
+							.removeClass(eu.europeana.translation_services.more_icon_class_phone);
+						}
+					}
 					
 			);}
 		}]);

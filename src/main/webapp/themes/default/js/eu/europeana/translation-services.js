@@ -4,11 +4,15 @@ js.utils.registerNamespace( 'eu.europeana.translation_services' );
 eu.europeana.translation_services = {
 	more_icon_class : 'icon-arrow-8', 
 	less_icon_class : 'icon-arrow-7', 
+	more_icon_class_phone : 'icon-arrow-6',
+	
 	links : {
 		
 		$show_services : jQuery('#translate-item'),
 		$return_to_original : jQuery( '<a href="" style="display:none;">' + eu.europeana.vars.msg.return_to_language + '</a>' )
-		
+		, $iconD: jQuery('#translate-item').find('.iconD')
+		, $iconP: jQuery('#translate-item').find('.iconP')
+
 	},
 	
 	containers : {
@@ -46,8 +50,9 @@ eu.europeana.translation_services = {
 		
 		this.links.$show_services.bind( 'click', { self : this }, this.toggleShowServices );
 		this.links.$show_services.after( this.containers.$translation_services );
-		this.links.$show_services.addClass(eu.europeana.translation_services.more_icon_class);
 
+		this.links.$iconD.addClass(eu.europeana.translation_services.more_icon_class);
+		this.links.$iconP.addClass(eu.europeana.translation_services.more_icon_class_phone);
 		
 		this.captureOriginalTextNodes();
 		this.setUpCallbacks('microsoft');
@@ -128,15 +133,21 @@ eu.europeana.translation_services = {
 		e.preventDefault();
 		
 		if ( self.containers.$translation_services.is(':hidden') ) {
-			self.links.$show_services.removeClass(eu.europeana.translation_services.more_icon_class);
-			self.links.$show_services.addClass(eu.europeana.translation_services.less_icon_class);
+			self.links.$iconD.removeClass(eu.europeana.translation_services.more_icon_class);
+			self.links.$iconP.removeClass(eu.europeana.translation_services.more_icon_class_phone);
 
+			self.links.$iconD.addClass(eu.europeana.translation_services.less_icon_class);
+			self.links.$iconP.addClass(eu.europeana.translation_services.less_icon_class);
+			
 			self.containers.$translation_services.slideDown();
 			
 		} else {
-			self.links.$show_services.removeClass(eu.europeana.translation_services.less_icon_class);
-			self.links.$show_services.addClass(eu.europeana.translation_services.more_icon_class);
+			self.links.$iconD.removeClass(eu.europeana.translation_services.less_icon_class);
+			self.links.$iconP.removeClass(eu.europeana.translation_services.less_icon_class);
 
+			self.links.$iconD.addClass(eu.europeana.translation_services.more_icon_class);
+			self.links.$iconP.addClass(eu.europeana.translation_services.more_icon_class_phone);
+			
 			self.containers.$translation_services.slideUp();
 		}
 

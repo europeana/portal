@@ -44,6 +44,10 @@ a.action-link:hover{
 	padding:			0.5em;
 }
 
+a.disabled:hover{
+	color:#2A85E8;
+	cursor:default;
+}
 
 
 .action-link{
