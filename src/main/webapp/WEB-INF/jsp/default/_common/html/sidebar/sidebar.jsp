@@ -10,8 +10,24 @@
 
 	<!-- facets -->
 	<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
+	
 		<h2><spring:message code="RefineYourSearch_t" />:</h2>
-		
+		<%--
+		<form id="xrefine-search-form" method="get" action="${query_action}">
+			<ul id="refinements">
+				<li>
+					<input name="rq" value="notre dame"/>
+				</li>
+
+				<li>${fn:length(model.refinements)}</li>
+				<li>${model.refinements}</li>
+				<li>
+					<input type="submit">
+				</li>
+			</ul>
+		</form>
+		--%>		
+				
 		<ul id="filter-search">
 			<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
 				<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
@@ -32,9 +48,6 @@
 			</li>
 		</ul>
 		
-		<%--
-		<h2><spring:message code="RefineYourSearch_t" />:</h2>
-		 --%>
 		<h2>Share and Subscribe:</h2>
 		
 		<ul id="share-subscribe">
