@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,6 +27,7 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.service.EmailService;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ContactPage;
 import eu.europeana.portal2.web.presentation.model.validation.ContactPageValidator;
@@ -37,21 +37,16 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @RequestMapping("/contact.html")
 public class ContactPageController {
 
+	@Resource(name="corelib_web_emailService") private EmailService emailService;
+	
+	@Resource(name="corelib_db_userService") private UserService userService;
+
+	@Resource private ConfigInterceptor corelib_web_configInterceptor;
+
+	@Resource(name="configurationService") private Configuration config;
+
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	@Resource(name="corelib_web_emailService")
-	private EmailService emailService;
-	
-	@Resource(name="corelib_db_userService")
-	private UserService userService;
-
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
-
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
-
-	
 	// @Autowired
 	// private ClickStreamLogger clickStreamLogger;
 
@@ -82,9 +77,9 @@ public class ContactPageController {
 			HttpServletResponse response, 
 			Locale locale) {
 		ContactPage model = createContactForm();
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
+		config.injectProperties(model, request);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.CONTACT);
-		
+
 		try {
 			corelib_web_configInterceptor.postHandle(request, response, this, page);
 		} catch (Exception e) {
@@ -117,7 +112,7 @@ public class ContactPageController {
 			// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND);
 		}
 		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CONTACT_PAGE);
-		form.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
+		form.setTheme(ControllerUtil.getSessionManagedTheme(request, config.getDefaultTheme()));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(form, locale, PortalPageInfo.CONTACT);
 
 		try {

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +19,7 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
@@ -32,14 +32,11 @@ public class TimelineController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 	
-	@Resource
-	private SearchService searchService;
+	@Resource private SearchService searchService;
 
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
+	@Resource private ConfigInterceptor corelib_web_configInterceptor;
 
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
+	@Resource(name="configurationService") private Configuration config;
 
 	@RequestMapping("/timeline.html")
 	public ModelAndView timelineHtml(
@@ -63,7 +60,7 @@ public class TimelineController {
 		model.setStartPage(startPage);
 		model.setRefinements(qf);
 		model.setRefineKeyword(StringUtils.trimToNull(rq));
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
+		config.injectProperties(model, request);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.TIMELINE);
 		try {
@@ -85,7 +82,7 @@ public class TimelineController {
 			) throws Exception {
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, "", defaultTheme));
+		config.injectProperties(model, request);
 
 		Map<String, String[]> params = (Map<String, String[]>)request.getParameterMap();
 

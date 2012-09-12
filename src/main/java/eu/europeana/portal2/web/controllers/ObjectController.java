@@ -75,44 +75,18 @@ public class ObjectController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
+	@Resource private ConfigInterceptor corelib_web_configInterceptor;
 
-	@Resource
-	private SearchService searchService;
+	@Resource private SearchService searchService;
 
-	@Resource 
-	private Configuration configurationService;
+	@Resource private LocaleInterceptor localeChangeInterceptor;
 
-	@Resource(name="runtimeConfig")
-	private Properties config;
+	@Resource(name="corelib_db_userService") private UserService userService;
 
-	@Resource
-	private LocaleInterceptor localeChangeInterceptor;
-
-	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
-	private String[] shownAtProviderOverride;
-
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
-
-	@Value("#{europeanaProperties['api2.url']}")
-	private String api2url;
-
-	@Value("#{europeanaProperties['api2.key']}")
-	private String api2key;
-
-	@Value("#{europeanaProperties['api2.secret']}")
-	private String api2secret;
-	
-	@Value("#{europeanaProperties['schema.org.mapping']}")
-	private String schemaOrgMappingFile;
+	@Resource(name="configurationService") private Configuration config;
 
 	// whether the source is API2
 	private boolean isSourceApi2 = false;
-
-	@Resource(name="corelib_db_userService")
-	private UserService userService;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -134,8 +108,7 @@ public class ObjectController {
 		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
 		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
-		log.info("Inside the ObjectController....." + locale.getLanguage().toString());
-		log.info("portal.theme from config: " + config.getProperty("portal.theme"));
+		log.info("Locale language: " + locale.getLanguage());
 		isSourceApi2 = false;
 
 		FullDocPage model = new FullDocPage();
@@ -148,9 +121,10 @@ public class ObjectController {
 		model.setRefinements(qf);
 		model.setStart(start);
 		model.setReturnTo(returnTo);
-		model.setShownAtProviderOverride(shownAtProviderOverride);
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
-		model.setSchemaOrgMappingFile(schemaOrgMappingFile);
+
+		config.injectProperties(model, request);
+		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
+		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
@@ -191,7 +165,7 @@ public class ObjectController {
 	 */
 	private FullBean getFullBeanFromApi(String collectionId, String recordId, HttpServletRequest request) {
 		FullBean fullBean = null;
-		ApiFulldocParser parser = new ApiFulldocParser(api2url, api2key, api2secret, request.getSession());
+		ApiFulldocParser parser = new ApiFulldocParser(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
 		fullBean = parser.getFullBean(collectionId, recordId);
 		if (fullBean == null) {
 			log.severe("It is not possible to retrieve FullBean though API2 calls so now the controller tries it with corelib calls");

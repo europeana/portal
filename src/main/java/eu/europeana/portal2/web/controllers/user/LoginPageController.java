@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,12 +15,21 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.service.EmailService;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
 public class LoginPageController {
+
+	@Resource(name="corelib_web_emailService") private EmailService emailService;
+	
+	@Resource(name="corelib_db_userService") private UserService userService;
+
+	@Resource private ConfigInterceptor corelib_web_configInterceptor;
+
+	@Resource(name="configurationService") private Configuration config;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -34,18 +42,6 @@ public class LoginPageController {
 	// @Autowired
 	// private ClickStreamLogger clickStreamLogger;
 
-	@Resource(name="corelib_web_emailService")
-	private EmailService emailService;
-	
-	@Resource(name="corelib_db_userService")
-	private UserService userService;
-
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
-
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
-
 	@RequestMapping("/login.html")
 	public ModelAndView handle(
 			@RequestParam(value = "email", required = false) String email,
@@ -56,7 +52,7 @@ public class LoginPageController {
 			Locale locale) throws Exception {
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
+		config.injectProperties(model, request);
 		model.setEmail(email);
 		log.info("email: " + email);
 		log.info("buttonPressed: " + buttonPressed);

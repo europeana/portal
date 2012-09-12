@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
@@ -84,8 +84,8 @@ public class IndexPageController {
 	
 	@Resource private LocaleInterceptor localeChangeInterceptor;
 
-	@Resource private Configuration configurationService;
-	
+	@Resource(name="configurationService") private Configuration config;
+
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
@@ -102,7 +102,7 @@ public class IndexPageController {
 		updateFeaturedItem(model, locale);
 		updateFeaturedPartner(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, configurationService.getDefaultTheme()));
+		config.injectProperties(model, request);
 
 		localeChangeInterceptor.preHandle(request, response, this);
 
@@ -210,7 +210,7 @@ public class IndexPageController {
 	}
 
 	private int[] parseResponsiveImageWidths(){
-		String[] imageWidths = configurationService.getResponsiveImageWidthString().split(",");
+		String[] imageWidths = config.getResponsiveImageWidthString().split(",");
 		int[] widths = new int[imageWidths.length];
 
 		for (int i=0, len=imageWidths.length; i<len; i++) {
@@ -220,11 +220,11 @@ public class IndexPageController {
 	}
 
 	private void updateFeedIfNeeded(IndexPage model) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -configurationService.getBlogTimeout()));
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -config.getBlogTimeout()));
 		// read feed only once every few hours
 		if ((feedAge == null) || feedAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(configurationService.getBlogUrl(), 3, configurationService.getResponsiveImageLabelString().split(","), parseResponsiveImageWidths());
-			parser.setStaticPagePath(configurationService.getStaticPagePath());
+			RSSFeedParser parser = new RSSFeedParser(config.getBlogUrl(), 3, config.getResponsiveImageLabelString().split(","), parseResponsiveImageWidths());
+			parser.setStaticPagePath(config.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed();
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				feedEntries = newEntries;
@@ -235,10 +235,10 @@ public class IndexPageController {
 	}
 
 	private void updatePinterest(IndexPage model) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -configurationService.getPintTimeout()));
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -config.getPintTimeout()));
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(configurationService.getPintFeedUrl(), configurationService.getPintItemLimit(), configurationService.getResponsiveImageLabelString().split(","), parseResponsiveImageWidths());
-			parser.setStaticPagePath(configurationService.getStaticPagePath());
+			RSSFeedParser parser = new RSSFeedParser(config.getPintFeedUrl(), config.getPintItemLimit(), config.getResponsiveImageLabelString().split(","), parseResponsiveImageWidths());
+			parser.setStaticPagePath(config.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed();
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				pinterestEntries = newEntries;
@@ -251,6 +251,6 @@ public class IndexPageController {
 		} else {
 			model.setPinterestItem(null);
 		}
-		model.setPinterestUrl(configurationService.getPintUrl());
+		model.setPinterestUrl(config.getPintUrl());
 	}
 }

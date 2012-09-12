@@ -2,7 +2,6 @@ package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -10,20 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.util.NamedList;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.exception.ProblemType;
-import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.definitions.solr.model.Term;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SuggestionsPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
@@ -33,8 +29,9 @@ public class SuggestionController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	@Resource
-	private SearchService searchService;
+	@Resource private SearchService searchService;
+
+	@Resource(name="configurationService") private Configuration config;
 
 	@RequestMapping("/suggestions.json")
 	public ModelAndView suggestionHtml(
@@ -67,6 +64,7 @@ public class SuggestionController {
 		log.info("formattedSuggestion: " + StringUtils.join(formattedSuggestion, ", "));
 		SuggestionsPage model = new SuggestionsPage();
 		model.setResults(formattedSuggestion);
+		config.injectProperties(model, request);
 
 		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_SUGGESTION);
 	}

@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.model.CorePageInfo;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
@@ -56,6 +56,10 @@ import eu.europeana.portal2.web.presentation.model.StaticPage;
 @Controller
 public class StaticPageController {
 
+	@Resource private ConfigInterceptor corelib_web_configInterceptor;
+
+	@Resource(name="configurationService") private Configuration config;
+
 	public static final String AFFIX_TEMPLATE_VAR_FOR_LEFT = "left";
 
 	private static final String AFFIX_TEMPLATE_VAR_FOR_HEADER = "header";
@@ -72,21 +76,6 @@ public class StaticPageController {
 
 	// @Resource
 	// private ResourceBundleMessageSource messageSource;
-
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
-
-	@Value("#{europeanaProperties['portal.name']}")
-	private String portalName;
-
-	@Value("#{europeanaProperties['portal.server']}")
-	private String portalServer;
-
-	@Value("#{europeanaProperties['static.page.path']}")
-	private String staticPagePath;
-
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
 
 	/**
 	 * All of the pages are served up from here
@@ -109,18 +98,15 @@ public class StaticPageController {
 
 		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
-		log.info("portalName: " + portalName);
-		log.info("portalServer: " + portalServer);
-		log.info("staticPagePath: " + staticPagePath);
-		staticPageCache.setStaticPagePath(staticPagePath);
+		staticPageCache.setStaticPagePath(config.getStaticPagePath());
 
 		// test for possible redirects first!
 		Redirect redirect = Redirect.safeValueOf(pageName);
 		if (redirect != null) {
 			StringBuilder sb = new StringBuilder();
 			if (!redirect.getRedirect().startsWith("http")) {
-				sb.append(portalServer);
-				sb.append(portalName);
+				sb.append(config.getPortalServer());
+				sb.append(config.getPortalName());
 			}
 			sb.append(redirect.getRedirect());
 			response.setStatus(301);
@@ -140,7 +126,7 @@ public class StaticPageController {
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
+		config.injectProperties(model, request);
 
 		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
 
@@ -281,7 +267,7 @@ public class StaticPageController {
 	}
 
 	private void fetchVerbatimPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		staticPageCache.setStaticPagePath(staticPagePath);
+		staticPageCache.setStaticPagePath(config.getStaticPagePath());
 		OutputStream out = response.getOutputStream();
 		try {
 			String pageFileName = makePageFileName(request.getServletPath(), request.getPathInfo());

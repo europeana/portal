@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +22,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AjaxPage;
 import eu.europeana.portal2.web.presentation.model.data.FieldSize;
@@ -31,13 +31,11 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class AjaxController {
 
+	@Resource(name="corelib_db_userService") private UserService userService;
+
+	@Resource(name="configurationService") private Configuration config;
+
 	private final Logger log = Logger.getLogger(getClass().getName());
-
-	@Resource(name="corelib_db_userService")
-	private UserService userService;
-
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
 
 	@RequestMapping("/remove.ajax")
 	public ModelAndView handleAjaxRemoveRequest(HttpServletRequest request,
@@ -50,6 +48,7 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
+		config.injectProperties(model, request);
 		return createResponsePage(model);
 	}
 
@@ -68,7 +67,7 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, null, defaultTheme));
+		config.injectProperties(model, request);
 		ModelAndView page = createResponsePage(model);
 		return page;
 	}
@@ -76,7 +75,7 @@ public class AjaxController {
 	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request, Locale locale) throws Exception {
 		User user = ControllerUtil.getUser(userService);
 		String className = request.getParameter("className");
-		String idString = request.getParameter("id");
+		// String idString = request.getParameter("id");
 		if (className == null) {
 			throw new IllegalArgumentException("Expected 'className' parameter!");
 		}

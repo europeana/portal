@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -50,9 +49,6 @@ import eu.europeana.portal2.web.security.Portal2UserDetails;
  */
 
 public class ControllerUtil {
-
-	@Value("#{europeanaProperties['portal.google.plus.publisher.id']}")
-	private static String portalGooglePlusPublisherId;
 
 	private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[_A-Za-z0-9-]+)";
 
@@ -77,10 +73,8 @@ public class ControllerUtil {
 	public static ModelAndView createModelAndViewPage(PortalPageData model, Locale locale, PageInfo view) {
 		// adjust model
 		model.setLocale(locale);
-		// model.setUser(ControllerUtil.getUser());
 		model.setPageInfo(view);
 		model.setPageTitle(view.getPageTitle());
-		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(portalGooglePlusPublisherId));
 
 		// create page
 		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
@@ -133,8 +127,22 @@ public class ControllerUtil {
 		return url;
 	}
 
-	public static String getSessionManagedTheme(HttpServletRequest request, String theme, String defaultTheme) {
+	/**
+	 * Returns the right theme variable.
+	 * 
+	 * It checks the request parameter "theme", and the default theme defined in the property file "portal.theme".
+	 * 
+	 * @param request
+	 *   Actual HTTP request object
+	 * @param defaultTheme
+	 *   The default theme comes from the property file
+	 *
+	 * @return
+	 *   A valid theme name
+	 */
+	public static String getSessionManagedTheme(HttpServletRequest request, String defaultTheme) {
 		HttpSession session = request.getSession(true);
+		String theme = request.getParameter("theme");
 		if (!StringUtils.isBlank(theme)) {
 			theme = ThemeChecker.check(theme, defaultTheme);
 			session.setAttribute("theme", theme);
@@ -169,7 +177,7 @@ public class ControllerUtil {
 				user = userService.findByID(principal.toString());
 				log.info("User: " + user.toString());
 			} catch (DatabaseException e) {
-				log.severe("DatabaseException whily getting user: " + e.getLocalizedMessage());
+				log.severe("DatabaseException while getting user: " + e.getLocalizedMessage());
 				e.printStackTrace();
 			}
 		}

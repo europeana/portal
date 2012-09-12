@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +25,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
@@ -40,6 +40,18 @@ public class SearchController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
+	@Resource private SearchService searchService;
+	
+	@Resource private InternalResourceViewResolver viewResolver;
+
+	@Resource private ConfigInterceptor corelib_web_configInterceptor;
+
+	@Resource private LocaleInterceptor localeChangeInterceptor;
+
+	@Resource(name="corelib_db_userService") private UserService userService;
+
+	@Resource(name="configurationService") private Configuration config;
+
 	/**
 	 * Possible sort options
 	 */
@@ -51,24 +63,6 @@ public class SearchController {
 	 * Deafult sort order
 	 */
 	private static final String DEFAULT_SORT = "score desc";
-
-	@Value("#{europeanaProperties['portal.theme']}")
-	private String defaultTheme;
-
-	@Resource
-	private SearchService searchService;
-	
-	@Resource
-	private InternalResourceViewResolver viewResolver;
-
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
-	
-	@Resource
-	private  LocaleInterceptor localeChangeInterceptor;
-
-	@Resource(name="corelib_db_userService")
-	private UserService userService;
 
 	@RequestMapping({"/search.html", "/brief-doc.html"})
 	public ModelAndView searchHtml(
@@ -123,7 +117,7 @@ public class SearchController {
 		//       REMOVE THIS LINE AS SOON AS POSSIBLE, but not earlier ;-)
 		sort = DEFAULT_SORT;
 		model.setSort(sort);
-		model.setTheme(ControllerUtil.getSessionManagedTheme(request, theme, defaultTheme));
+		config.injectProperties(model, request);
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 

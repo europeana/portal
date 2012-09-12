@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.data.CarouselPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
@@ -33,9 +34,10 @@ public class CarouselController {
 	@Resource
 	private ConfigInterceptor corelib_web_configInterceptor;
 
-	@Resource
-	private ResourceBundleMessageSource messageSource;
+	@Resource private ResourceBundleMessageSource messageSource;
 	// private ReloadableResourceBundleMessageSource messageSource;
+
+	@Resource(name="configurationService") private Configuration config;
 
 	@RequestMapping(value="/carousel.json", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ModelAndView carouselHandler(
@@ -45,13 +47,14 @@ public class CarouselController {
 			HttpServletResponse response,
 			Locale locale)
 			throws Exception {
-		
+
 		CarouselPage model = new CarouselPage();
 		model.setLocale(locale);
 		if (start < 1) {
 			start = 1;
 		}
 		model.setStart(start);
+		config.injectProperties(model, request);
 
 		List<CarouselItem> carouselItems = new ArrayList<CarouselItem>();
 		boolean keepFetching = true;
