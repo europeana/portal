@@ -37,8 +37,6 @@ Installation
 8. you can stop tomcat with the terminal command sh /Applications/tomcat/bin/shutdown.sh
 
 
-
-
 ### Jetty
 #### Mac OSX
 
@@ -60,7 +58,6 @@ You'll need a run configuration, so select "Run Configurations..." / "Java Appli
 [Tab Environment]
   New ... > name = EUROPEANA_PROPERTIES, value = europeana.properties
   append to native environment
-
 
 
 ### maven
@@ -99,7 +96,6 @@ If you don't have fresh corelib build, run the following line, which builds the 
 
 ### browse the portal
 Now can use portal2 which is available at http://localhost:8080/portal2/search.html?query=*:*
-
 
 
 Eclipse Setup
@@ -188,15 +184,17 @@ If you want to index the 200 records, leave it as it is:
 If you want to index the full record set, just remove the "-test" from the file name, such like this:
   private static String COLLECTION = "corelib/corelib-solr/src/test/resources/records-test.zip";
 
-Run inside Eclipse:
+#### Run inside Eclipse:
 1. Run > Run configuration ... > New launch configuration (icon)
 2. Fill the form: Name: ContentLoader, Project: corelib-solr, Class: ContentLoader (you can search it)
 3. Arguments tab: Working directory: Other: ${workspace_loc}/trunk
 4. Environment tab: create new variable: key: EUROPEANA_PROPERTIES, value: <your europeana.properties file>
 
 ### Properties
-portal.responsive.widths: the comma separated values of image widths in index page
+* *portal.responsive.widths*: the comma separated values of image widths in index page  
   example: 200,300,700,200
-
-portal.responsive.labels: the comma separated values of width-identifiers in index page
+* *portal.responsive.labels*: the comma separated values of image width identifiers in index page  
   example: _1,_2,_3,_4
+
+
+Tip: you can play with the markdown syntax here: http://joncom.be/experiments/markdown-editor/edit/
