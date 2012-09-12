@@ -129,9 +129,13 @@
 	}
 
 	#footer-subscribe input[type=submit]{
-		background-color:	blue;
-		color:				white;
-		border:				0;
+		background-color:		blue;
+		color:					white;
+		border:					0;
+		padding:				1em 1em;
+		-moz-border-radius:		10px;
+		-webkit-border-radius:	10px;
+		border-radius:			10px;
 	}
 
 	@media only screen and ( min-width:48em ){	/* ipad */
