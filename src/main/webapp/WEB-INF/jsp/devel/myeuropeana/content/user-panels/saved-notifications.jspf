@@ -1,3 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h3>
   <%-- onclick="euQuery.cookie('ui-tabs-4', '1', { expires: 1 });" --%>
@@ -7,38 +11,27 @@
 </h3>
 
 <div id="saved-notifications">
-  
-  <#if ( model.user.notifications?size > 0 )>
-
-    <#assign imgtoshow = "item-image.gif"/>
-
-    <#list model.user.notifications as item>
-    
-      <div class="item-info">
-
-        <#if true> <#-- !item.europeanaId.orphan -->
-  
-          <a href='/${model.portalName}/${item.getEuropeanaUri()?replace("http://www.europeana.eu/resolve/", "")}.html?bt=savedItem'><strong><@stringLimiter "${item.title}" "50"/></strong></a>
-          <p><@spring.message 'Creator_t'/>: <em>${item.author}</em></p>
-          <p><@spring.message 'DateSaved_t'/>: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em></p>
-
-        <#else>
-
-          <strong class="fg-gray" ><@stringLimiter "${item.title}" "50"/></strong>
-          <div class="ui-widget ui-info">
-            
-            <strong>Attention:</strong> this item has been withdrawn by the provider.
-          </div>
-
-        </#if>
-      
-      </div>
-      
-    </#list>
-
-  <#else>
-    
-    <@spring.message 'NoSavedNotifications_t'/>
-    
-  </#if>
+  <c:choose>
+    <c:when test="${fn:length(model.user.notifications) > 0}">
+      <c:set var="imgtoshow" value="item-image.gif" />
+      <c:forEach items="${model.user.notifications} var="item">
+        <div class="item-info">
+          <c:choose>
+            <c:when test="true"><%-- !item.europeanaId.orphan --%>
+              <a href='/${model.portalName}/${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem'><strong><europeana:stringLimiter theStr="${item.title}" size="50" /></strong></a>
+              <p><spring:message code="Creator_t" />: <em>${item.author}</em></p>
+              <p><spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em></p>
+            </c:when>
+            <c:otherwise>
+              <strong class="fg-gray"><europeana:stringLimiter theStr=""${item.title}" size="50"/></strong>
+              <div class="ui-widget ui-info">
+                <strong>Attention:</strong> this item has been withdrawn by the provider.
+              </div>
+            </c:otherwise>
+          </c:choose>
+        </div>
+      </c:forEach>
+    </c:when>
+    <c:otherwise><spring:message code="NoSavedNotifications_t" /></c:otherwise>
+  </c:choose>
 </div>
