@@ -2,7 +2,8 @@ js.utils.registerNamespace( 'eu.europeana.translation_services' );
 
 
 eu.europeana.translation_services = {
-	
+	more_icon_class : 'icon-arrow-8', 
+	less_icon_class : 'icon-arrow-7', 
 	links : {
 		
 		$show_services : jQuery('#translate-item'),
@@ -45,6 +46,8 @@ eu.europeana.translation_services = {
 		
 		this.links.$show_services.bind( 'click', { self : this }, this.toggleShowServices );
 		this.links.$show_services.after( this.containers.$translation_services );
+		this.links.$show_services.addClass(eu.europeana.translation_services.more_icon_class);
+
 		
 		this.captureOriginalTextNodes();
 		this.setUpCallbacks('microsoft');
@@ -125,15 +128,16 @@ eu.europeana.translation_services = {
 		e.preventDefault();
 		
 		if ( self.containers.$translation_services.is(':hidden') ) {
-			
-			self.links.$show_services.addClass('active');
+			self.links.$show_services.removeClass(eu.europeana.translation_services.more_icon_class);
+			self.links.$show_services.addClass(eu.europeana.translation_services.less_icon_class);
+
 			self.containers.$translation_services.slideDown();
 			
 		} else {
-			
-			self.links.$show_services.removeClass('active');
+			self.links.$show_services.removeClass(eu.europeana.translation_services.less_icon_class);
+			self.links.$show_services.addClass(eu.europeana.translation_services.more_icon_class);
+
 			self.containers.$translation_services.slideUp();
-			
 		}
 
 	},

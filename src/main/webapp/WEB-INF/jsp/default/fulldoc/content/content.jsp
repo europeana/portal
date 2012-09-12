@@ -14,7 +14,7 @@
 			<div class="nine columns" id="main-fulldoc-area">
 				<%-- Translation link --%>
 				<div class="translate-box">
-					<a href="" id="translate-item" class="toggle-menu-icon bold"><spring:message code="TranslateDetails_t" /></a>
+					<a href="" id="translate-item" class="bold"><spring:message code="TranslateDetails_t" /></a>
 				</div>
 				
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
