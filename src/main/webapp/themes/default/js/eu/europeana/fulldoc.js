@@ -5,6 +5,10 @@ eu.europeana.fulldoc = {
 	// provides priority order for which tab to open when no hash is given
 	// provides a list of accepted hash values for validation
 	tab_priority : [ '#related-items','#similar-content','#map-view' ],
+	
+	more_icon_class:"icon-arrow-6",
+	
+	less_icon_class:"icon-arrow-7",
 
 	init : function() {
 
@@ -544,7 +548,7 @@ eu.europeana.fulldoc = {
 		jQuery('#fields-enrichment h3 a, #fields-enrichment h4 a').each(function( key, value ) {
 			
 			jQuery(value).bind('click', self.handleAutoTagClick );
-			
+			jQuery(value).find('.icon').addClass(eu.europeana.fulldoc.more_icon_class);
 		});
 		
 	},
@@ -553,16 +557,18 @@ eu.europeana.fulldoc = {
 		
 		e.preventDefault();
 		var $elm = jQuery(this);
-		$elm.parent().next().slideToggle();
 		
-		if ( $elm.hasClass('active') ) {
+		$elm.parent().next().slideToggle();
+		$elm = $elm.find('.icon');
+		
+		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {
 			
-			$elm.removeClass('active');
-			
+			$elm.removeClass(eu.europeana.fulldoc.more_icon_class);
+			$elm.addClass(eu.europeana.fulldoc.less_icon_class);
 		} else {
 			
-			$elm.addClass('active');
-			
+			$elm.removeClass(eu.europeana.fulldoc.less_icon_class);
+			$elm.addClass(eu.europeana.fulldoc.more_icon_class);
 		}
 		
 	},
