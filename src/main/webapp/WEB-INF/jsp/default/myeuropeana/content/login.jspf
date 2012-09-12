@@ -13,7 +13,7 @@
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/login/request-password-form.jspf" %>
 
     <div id="login-response">
-      <c:if test="${model.errorMessage}">
+      <c:if test="${!empty model.errorMessage}">
         <b class="error">${model.errorMessage}</b>
       </c:if>
       
@@ -31,8 +31,8 @@
       </c:if>
 
       <c:if test="${model.success}">
-        <spring:message code="AnEmailHasBeenSentTo_t" />: <b>${model.email}</b>.
-        <spring:message code="PleaseFollowTheLinkProvided_t" />.
+       	<spring:message code="AnEmailHasBeenSentTo_t" />: <b>${model.email}</b>.
+       	<spring:message code="PleaseFollowTheLinkProvided_t" />.
       </c:if>
 
       <c:if test="${model.failureFormat}">
