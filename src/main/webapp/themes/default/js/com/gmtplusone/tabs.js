@@ -41,10 +41,8 @@ com.gmtplusone.tabs = function( target, options ) {
 	
 	
 	this.options = jQuery.extend( true, {}, default_options, options );
-	
-		this.options.menu_ids = [];
-		this.options.target = ( typeof target === 'string' && target.length > 0 ) ? target : this.options.target;
-	
+	this.options.menu_ids = [];
+	this.options.target = ( typeof target === 'string' && target.length > 0 ) ? target : this.options.target;
 		
 	this.init = function( callback ) {
 		
@@ -96,10 +94,11 @@ com.gmtplusone.tabs = function( target, options ) {
 			
 			$nav_container.prepend( properties.menu_items[i] );
 			properties.menu_items[i].children().eq(0)
-				.bind( 'click', { self : this }, this.handleMenuClick );
+				.bind( 'click', { self : this }, 
+					this.handleMenuClick
+				);
 			
 		}
-		
 	};
 	
 	
@@ -107,6 +106,7 @@ com.gmtplusone.tabs = function( target, options ) {
 		var self = e.data.self,
 			$item = jQuery(this);
 		self.toggleTab( $item.attr('href') );
+		e.preventDefault();
 	};
 	
 
