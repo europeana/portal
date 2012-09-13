@@ -271,7 +271,10 @@ Galleria.addTheme({
        			Galleria.log("Bordered mode resize");
        			thisGallery.$(	'container' ).parent().css("height", 1.1 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
        			
-       			rerunOnResize();
+       			thisGallery.bind("image", function(e) {
+       				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").css("opacity", "1")
+       			});
+    			rerunOnResize();
        			/*
        			// common with landing page carousel
     			thisGallery._run();
