@@ -14,7 +14,7 @@
 
 <c:if test="${!empty RequestParameters.view}"><c:set var="view" value="${RequestParameters.view}" /></c:if>
 <c:if test="${!empty RequestParameters.query}"><c:set var="query" value="${RequestParameters.query}" /></c:if>
-<c:if test="${model.pageName == 'search.html'}"><c:set var="langActionUrl" value="{$model.viewUrlTable}" /></c:if>
+<c:if test="${model.pageName == 'search.html'}"><c:set var="langActionUrl" value="${model.viewUrlTable}" /></c:if>
 
 <%-- menus --%>
 <c:set var="menu1_active" value="" />

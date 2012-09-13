@@ -92,12 +92,12 @@
 				<%-- handle inline or separate lines for multiple values --%>
 				<c:if test="${value_has_next}">
 					<c:choose>
-						<c:when test="{!empty data.seperateLines && data.seperateLines}">
+						<c:when test="${!empty data.seperateLines && data.seperateLines}">
 							<br /><br />
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="{!empty data.ESSEnabled && data.ESSEnabled && ess}">&#160;</c:when>
+								<c:when test="${!empty data.ESSEnabled && data.ESSEnabled && ess}">&#160;</c:when>
 								<c:otherwise>;</c:otherwise>
 							</c:choose>
 						</c:otherwise>
