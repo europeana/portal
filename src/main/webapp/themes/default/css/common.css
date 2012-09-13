@@ -74,6 +74,7 @@
 	    text-align:			justify;
 	    -ms-text-justify:	distribute-all-lines;
 	    text-justify:		distribute-all-lines;
+	    max-height:			4em;
 	}
 	
 	#social-links .social-link{
