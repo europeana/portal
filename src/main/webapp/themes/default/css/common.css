@@ -172,28 +172,12 @@
 
 @media only screen and ( min-width:48em ){
 	.sidebar {
-		xmargin: 0 20px 0 0;
 	}	
 }
 
 .ie8 .sidebar {
-	xmargin: 0 20px 0 0;
-}	
 
-    
-/* search-filter (was breadcrumb) */
-/* moved to sidebar-facets.css */
-/*
-	#search-filter {
-		overflow: hidden;
-		margin: 0 0 0.3em 0;
-		padding: 0;
-	}
-	#search-filter ul{
-		list-style: none;
-	}
-*/
-/* end search-filter (was breadcrumb) */
+}	
 
 
 	.ui-error, .error {
@@ -213,66 +197,8 @@
 	
 /* search-results */
 
-	#search-results {
-	/*
-		position: relative;
-		float: left;
-		width: 680px;
-		margin: 0;
-		padding: 0;
-		*/
-		/*
-		-moz-box-shadow: 0 0 5px #333;
-        -webkit-box-shadow: 0 0 5px #333;
-        box-shadow: 0 0 5px #333;
-        */
-	}
 	
 	/* Fix for IE7 (hid text but overflow icons were still visible) */	
 	#item-subject{
 		position:relative;
 	}
-
-	/* toggle-menu-icon */
-	/*
-	a.toggle-menu-icon {
-		display: inline-block;
-		background-image: url(../images/icons/sprite.png);
-		background-repeat: no-repeat;
-		background-position: right -1561px;
-		padding-right: 12px;
-		min-width: 11px;
-		min-height: 11px;
-	}
-	
-	a.toggle-menu-icon.active {
-		background-position: right -1545px;
-	}
-	*/
-
-
-/* pagination */
-	
-	.pagination-next, .pagination-previous {
-		min-width: 14px;
-		min-height: 14px;
-		background-image: url(../images/icons/sprite.png);
-		background-repeat: no-repeat;
-	}
-	
-	a.pagination-next {
-		background-position: 0 -586px;
-	}
-	
-	a.pagination-next:hover {
-		background-position: 0 -602px;
-	}
-	
-	a.pagination-previous {
-		background-position: 0 -553px;
-	}
-	
-	a.pagination-previous:hover {
-		background-position: 0 -570px;
-	}
-		

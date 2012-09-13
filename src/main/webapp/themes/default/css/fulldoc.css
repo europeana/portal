@@ -132,39 +132,26 @@ img.trigger{
 	}
 	
 	
-/* navigation */
+/* Navigation (return to search results, previous, next) */
 
+/* Full doc navigation appears to be in the header - override header's bottom border and add the same border to under the nav links  */
+
+	#header{
+		border-bottom:	0;
+	}
+	
 	#navigation {
-		overflow: auto;
-		margin: 50px 0 20px 0;
-		padding: 0 0 10px 0;
-		list-style: none;
-		border-bottom: 1px solid #a0a0a0;
-		width: 100%;
+		overflow:		auto;
+		padding:		0;
+		list-style:		none;
+		border-bottom:	1px solid #E4E4E4;
+		width:			100%;
 	}
 	
 	#navigation li, .navigation li {
 		display: inline;
 	}
 	
-	#nav-return {
-		float: left;
-	}
-	
-	#navigation a:link, #navigation a:visited,
-	.navigation a:link, .navigation a:visited {
-		color: #666;
-		text-decoration: underline;
-	}
-	
-	#navigation a:hover, .navigation a:hover {
-		color: #ff00c2;
-	}
-	
-	#actions .navigation {
-		margin: 0 0 10px 0;
-		overflow: auto;
-	}
 	
 /* pagination */
 
@@ -173,35 +160,21 @@ img.trigger{
 	}
 	
 	.pagination-next {
-		padding-right: 14px;
-		margin-left: 20px;
+		margin-left: 1.5em;
 	}
-	
-	.pagination-previous {
-		padding-left: 14px;
-	}
-	
-	a.pagination-next {
-		background-position: right -617px;
-	}
-	
-	a.pagination-next:hover {
-		background-position: right -633px;
-	}
-	
-	
 	
 	.item-metadata {
-		line-height: 1.6;
-		margin-bottom: 7px;
+		margin-bottom:	0.5em;
 	}
 	
+	/*
 	.item-ugc {
 		background-image: url(../images/icons/sprite.png);
 		background-position: 180px -1681px;
     	background-repeat: no-repeat;
     	height:			24px;
 	}
+	*/
 	
 	.external.item-metadata {
 		display : block;
