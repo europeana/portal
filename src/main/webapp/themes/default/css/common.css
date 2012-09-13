@@ -15,6 +15,7 @@
 	/*
 	a.block-link { display: block; line-height: 1.5; }
 	*/
+	/*
 	.external {
 		background-image: url(../images/icons/external.png);
 		background-repeat: no-repeat;
@@ -27,38 +28,12 @@
 		background-repeat: no-repeat;
 		background-position: right 2px;
 	}
-	
-	/*
-	.submit-button {	   
-		display: block;
-		height: 22px;
-		
-        font-size: 100%;
-        color: #fff;
-        background-color: #9900ff;
-        
-        cursor: pointer;
-        margin: 2px 0 0 0;
-        padding: 4px 8px 6px 8px;
-        
-        border: 0;
-        -moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		border-radius: 5px;
-    }
-	*/	
-
+	*/
 
 /* sidebar */
 
     .sidebar {
     	position: relative;
-		/*
-		overflow: hidden;
-		float: left;
-		width: 190px;
-		padding: 10px;
-		*/
 		background-color: #dfdfdf;
 	}
 
@@ -93,11 +68,7 @@
 	    line-height:	0;
 	}
 
-	/*
-	#social-links, #footer-subscribe{
-		font-size:	2em;
-	}
-	*/
+
 	#social-links{
 		font-size:	2em;
 	}
@@ -117,7 +88,7 @@
 		width:			100%;
 		max-width:		100%;
 		
-		margin-top:				0.2em;
+		margin-top:				1em;
 		margin-bottom:			0.2em;
 		padding:				2px 0px;
 		color:					#333;
@@ -148,7 +119,7 @@
 		}
 		
 		#footer-subscribe input[type=submit]{
-			width:				auto;
+			width:	auto;
 		}
 
 	}

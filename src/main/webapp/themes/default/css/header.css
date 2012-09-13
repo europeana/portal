@@ -27,10 +27,7 @@
 		width:		100%;
 		text-align:	center;
 		position:	relative;
-		
-		xxxxxxmargin-top:	35px;
-		
-		margin-top:	-2em;
+		margin-top:	-1em;
 	}
 		
 	#query .row {
@@ -307,7 +304,7 @@
     	height:			100%;
     	vertical-align:	middle;
     	position:		relative;
-		padding-top:	0.5em;
+		padding-top:	1em;
     }
     
     .submit-cell a{
@@ -450,35 +447,37 @@
 		padding-top: 3px;
 	}
 		
+	/* Andy: TODO */
 	#additional-feedback {
-		position: absolute;
-		z-index: 10;
-		top: 150px;
-		left: 283px;
-		width: 364px;
-		height: auto;
-		margin: 8px 0 0 0;
-		padding: 4px 4px 4px 25px;
-		background-color: #dfdfdf;
-		background-image: url(../images/icons/sprite.png);
-		background-repeat: no-repeat;
-		background-position: 5px -650px;
-		border: solid  1px #c0c0c0;
+		position:				absolute;
+		z-index:				10;
+		top:					150px;
+		left:					283px;
+		width:					364px;
+		height:					auto;
+		margin:					8px 0 0 0;
+		padding:				4px 4px 4px 25px;
+		background-color:		#dfdfdf;
+		background-image:		url(../images/icons/sprite.png);
+		background-repeat:		no-repeat;
+		background-position:	5px -650px;
+		border:					solid  1px #c0c0c0;
 	}
 	
 
 	/* autocomplete */
 
+	/* Andy: TODO */
 	.ui-autocomplete {
-		position: relative;
-		z-index: 1000;
-		width: 180px;
-		padding: 5px;
-		border: 1px solid #a0a0a0;
-		border-radius: 5px;
-		list-style: none;
-		background-color: white;
-		overflow: hidden;
+		position:			relative;
+		z-index:			1000;
+		width:				180px;
+		padding:			5px;
+		border:				1px solid #a0a0a0;
+		border-radius:		5px;
+		list-style:			none;
+		background-color:	white;
+		overflow:			hidden;
 	}
 	
 	a.ui-corner-all {
@@ -540,7 +539,7 @@
 		
 		#logo a {
 			display:	block;
-	   		max-width:	15%;
+	   		max-width:	18%;
 	   		position:	absolute;
 		}
 		
@@ -560,7 +559,7 @@
 		#header-strip a{
 			font-size:			1.1em;
 			color:				white;
-			margin-left:		25px;
+			margin-left:		1.5em;
 			float:				left;
 		}
 		
@@ -628,7 +627,7 @@
 	.ie8 #header-strip a{
 		font-size:			1.1em;
 		color:				white;
-		margin-left:		25px;
+		margin-left:		1.5em;
 		float:				left;
 	}
 	
