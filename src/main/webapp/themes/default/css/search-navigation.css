@@ -34,6 +34,7 @@
 .nav-numbers input{	
 	font-size:	1em;
 	border:		1px solid #E4E4E4;
+	text-align:	center;
 }
 
 @media only screen and ( min-width:48em ){
