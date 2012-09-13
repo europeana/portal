@@ -17,19 +17,17 @@ eu.europeana.fulldoc = {
 
 
 			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
-			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
-			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
-			
-			/*				
-			Galleria.ready(function(options) {					
-				this.$( 'container' ).css("border-radius", "10px 10px 0px 0px");
 
-			});
-			*/
-			//alert(JSON.stringify(carouselData));
-	
-			
    			jQuery('#carousel-1').css("height", jQuery('#carousel-1').width());
+   			
+   			// mock some lightbox data
+   			for(var i=0; i<carouselData.length; i++){
+   				carouselData[i].lightboxable = {
+   						
+   						url : ''
+   				}
+   			}
+   			// end mock
    			
    			Galleria.run('#carousel-1', {
    				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
@@ -42,25 +40,45 @@ eu.europeana.fulldoc = {
    				lightbox:		true,
    				responsive:		true,
    				dataSource:		carouselData,
-   				thumbnails: 	carouselData.length>1
+   				thumbnails: 	carouselData.length>1,
+				extend: function(e){
+
+					//$(window).resize(function(){});
+					var triggerPanel = null;
+					
+					this.bind("image", function(e) {
+						
+						if(this._options.dataSource[e.index].url.length>0){
+							if(!triggerPanel){							
+								triggerPanel = $('<div class="lb-trigger bold view" >'
+										+ '<span rel="#lightbox" title="View" class="lb-trigger view">View</span>'
+										+ '</div>') 
+									.appendTo( this.$( 'container' ).find('.galleria-images') );
+							}
+						}
+
+					});
+				} 
    			});
    				
    			
+   			if(typeof carousel2Data != 'undefined'){
+   	   			jQuery('#carousel-2').css("height", "200px");
+   	   			Galleria.run('#carousel-2', {
+   						transition:		'fadeslide',
+   						carousel:		true,
+   						carouselSpeed:	1200,
+   						carouselSteps:	1,
+   						easing:			'galleriaOut',
+   						imageCrop:		false,
+   						imagePan:		false,
+   						lightbox:		true,
+   						responsive:		true,
+   						dataSource:		carousel2Data,
+   						thumbnails: 	true
+   		   		});   				
+   			}
    			
-   			jQuery('#carousel-2').css("height", "200px");
-   			Galleria.run('#carousel-2', {
-					transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
-					carousel:		true,
-					carouselSpeed:	1200,				/* transition speed */
-					carouselSteps:	1,
-					easing:			'galleriaOut',
-					imageCrop:		false,				/* if true, make pan true */
-					imagePan:		false,
-					lightbox:		true,
-					responsive:		true,
-					dataSource:		carousel2Data,
-					thumbnails: 	true
-	   			});
 	
 		};		
 		
@@ -170,6 +188,8 @@ eu.europeana.fulldoc = {
 
 						var doSetUpTrigger = function(initLightbox){
 							var triggerDiv = jQuery("div.trigger");
+							var lbTriggerDiv = jQuery("div.lb-trigger");
+							
 							var triggerImg = jQuery("img.trigger");
 							var realWidth = parseInt(triggerImg.width());
 							if(realWidth == 0){
@@ -177,7 +197,12 @@ eu.europeana.fulldoc = {
 							}
 							triggerDiv.css("display", "block");
 							triggerDiv.css("width", realWidth + "px");
-															
+
+							lbTriggerDiv.css("display", "block");
+							lbTriggerDiv.css("width", realWidth + "px");
+							
+alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("width") + "\n\n"  +lbTriggerDiv.length  )
+
 							if(initLightbox){
 								//$("#lightbox_href").removeAttr("href");
 								//$("#lightbox_href").attr("rel", "#lightbox");
@@ -214,6 +239,7 @@ eu.europeana.fulldoc = {
 				
 				var triggerImage = $("img.trigger");
 				triggerImage.bind('imageload', function(){
+					alert("imgOnLoad")
 					imgOnLoad();
 				});
 			}
@@ -263,8 +289,6 @@ eu.europeana.fulldoc = {
 				self.addThis();
 			}
 		}]);
-	
-
 
 		js.loader.loadScripts([{
 			name : 'translation-services',
@@ -334,22 +358,22 @@ eu.europeana.fulldoc = {
 	
 	
 	addTabs : function() {
+		if($('#explore-further').length==0){
+			return;
+		}
 		eu.europeana.tabs = {};
-		// Andy: short-circuit tabs.  Dan: can you help?
-		//eu.europeana.tabs.explore = {options:{menu_ids:{}},toggleTab:function(){}};
-		
-		
 		eu.europeana.tabs.explore = new com.gmtplusone.tabs(
 			'#explore-further',
 			{ callbacks : { opened : eu.europeana.fulldoc.tabFeedback }	}
 		);
-		
 		eu.europeana.tabs.explore.init( eu.europeana.fulldoc.addCarousels );
-		
 	},
 	
-	
 	openTab : function() {
+		if(typeof eu.europeana.tabs == "undefined"){
+			return;
+		}
+		
 		var	tab_priority = eu.europeana.fulldoc.tab_priority,
 			tab_to_open = '',
 			menu_ids = eu.europeana.tabs.explore.options.menu_ids,

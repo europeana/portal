@@ -3,9 +3,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
+THIS
+<br>
+IS
+<br>
+THE
+<br>
+IMAGE (${urlRefIdImg})
 <script type="text/javascript">
-	alert("loaded image - the lightbox trigger");
+	//alert("loaded image - the lightbox trigger");
 </script>
 
 <c:if test="${!empty model.imageRef}">
@@ -27,91 +33,115 @@
 		<a id="${urlRefIdImg}"></a>
 	</c:if>
 
-<c:choose>
+	<c:choose>
+	
+	
+	<%-- Andy hack 
+		<c:when test="${lightboxRef}"> 
+	--%>
+		<c:when test="${lightboxRef || true}"> 
+	<%-- Andy hack end--%>
+	
+	
+			<%-- Andy hack
+				<a id="lightbox_href" href="/${model.portalName}/redirect.html?shownAt=${model.urlRef}&amp;provider=${model.document.europeanaDataProvider[0]}&amp;id=${model.document.id}" target="_blank">
+			--%> 
+			<a id="lightbox_href" href="/${model.portalName}/" target="_blank">
+			<%-- Andy hack end--%>
+				<img class="trigger" src="${model.thumbnailUrl}" alt="${model.pageTitle}"/>
+			</a>
+			<div class="trigger bold view">
+				<span class="trigger read" title="<spring:message code="view_t" />" rel="#lightbox"><spring:message code="view_t" /></span>
+			</div>
+		</c:when>
+	
+		<c:otherwise>
+			<a href="${model.urlRef}" class=" image ajax" target="_blank" rel="nofollow" resource="${model.urlRef}" id="${urlRefIdImg}" title="${model.pageTitle}">
+				<img src="${model.thumbnailUrl}" alt="${model.pageTitle}" data-type="${fn:toLowerCase(model.document.type)}" id="item-image" class="trigger"/>
+				<span about="${model.document.id}" rel="foaf:depiction">
+					<span rel="foaf:thumbnail" resource="${model.thumbnailUrl}"></span>
+				</span>
+			</a>
+	
+			<c:if test='${(model[edmIsShownBy] && model[edmIsShownAt] && model.edmIsShownBy[0] != model.edmIsShownAt[0]) 
+					|| (model[edmIsShownBy] && 
+					(		fn:endsWith(model.document.edmIsShownBy[0], "jpeg")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "jpg")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "gif")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "png")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "mp3")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "mp4")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "avi")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "wmv")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "txt")
+						|| fn:endsWith(model.document.edmIsShownBy[0], "pdf")
+					))
+					
+					 || true
+					
+					}'>
+					
+				<c:set var="shownBy" value="${model.document.edmIsShownBy[0]}" />
+				<c:choose>
+					<c:when test="${fn:toLowerCase(model.document.edmType) == 'text'}">
+						<div class="lb-trigger read">
+							<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
+								<span class="trigger bold read" title="<spring:message code="read_t" />" rel="nofollow"><spring:message code="read_t" /></span>
+							</a>
+						</div>
 
+						<div class="trigger read">
+							<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
+								<span class="trigger bold read" title="<spring:message code="read_t" />" rel="nofollow"><spring:message code="read_t" /></span>
+							</a>
+						</div>
+					</c:when>
+	
+					<c:when test="${fn:toLowerCase(model.document.edmType) == 'video' || fn:toLowerCase(model.document.type) == 'sound'}">
+						<div class="lb-trigger play">
+							<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
+								<span class="trigger bold play" title="<spring:message code="play_t" />" rel="nofollow"><spring:message code="play_t" /></span>
+							</a>
+						</div>
 
-<%-- Andy hack 
-	<c:when test="${lightboxRef}"> 
---%>
-	<c:when test="${lightboxRef || true}"> 
-<%-- Andy hack end--%>
+						<div class="trigger play">
+							<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
+								<span class="trigger bold play" title="<spring:message code="play_t" />" rel="nofollow"><spring:message code="play_t" /></span>
+							</a>
+						</div>
+					</c:when>
+					
+					<c:when test="${fn:toLowerCase(model.document.edmType) == 'image'}">
+						<div class="lb-trigger view">
+							<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
+								<span class="trigger bold view" title="<spring:message code="view_t" />" rel="nofollow"><spring:message code="view_t" /></span>
+							</a>
+						</div>
 
-
-		<%-- Andy hack
-			<a id="lightbox_href" href="/${model.portalName}/redirect.html?shownAt=${model.urlRef}&amp;provider=${model.document.europeanaDataProvider[0]}&amp;id=${model.document.id}" target="_blank">
-		--%> 
-		<a id="lightbox_href" href="/${model.portalName}/" target="_blank">
-		<%-- Andy hack end--%>
-			<img class="trigger" src="${model.thumbnailUrl}" alt="${model.pageTitle}"/>
-		</a>
-		<div class="trigger bold view">
-			<span class="trigger read" title="<spring:message code="view_t" />" rel="#lightbox"><spring:message code="view_t" /></span>
-		</div>
-	</c:when>
-
-	<c:otherwise>
-		<a href="${model.urlRef}" class=" image ajax" target="_blank" rel="nofollow" resource="${model.urlRef}" id="${urlRefIdImg}" title="${model.pageTitle}">
-			<img src="${model.thumbnailUrl}" alt="${model.pageTitle}" data-type="${fn:toLowerCase(model.document.type)}" id="item-image" class="trigger"/>
-			<span about="${model.document.id}" rel="foaf:depiction">
-				<span rel="foaf:thumbnail" resource="${model.thumbnailUrl}"></span>
-			</span>
-		</a>
-
-		<c:if test='${(model[edmIsShownBy] && model[edmIsShownAt] && model.edmIsShownBy[0] != model.edmIsShownAt[0]) 
-				|| (model[edmIsShownBy] && 
-				(		fn:endsWith(model.document.edmIsShownBy[0], "jpeg")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "jpg")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "gif")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "png")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "mp3")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "mp4")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "avi")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "wmv")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "txt")
-					|| fn:endsWith(model.document.edmIsShownBy[0], "pdf")
-				))
+						<div class="trigger view">
+							<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
+								<span class="trigger bold view" title="<spring:message code="view_t" />" rel="nofollow"><spring:message code="view_t" /></span>
+							</a>
+						</div>
+					</c:when>
+				</c:choose>
 				
-				 || true
-				
-				}'>
-				
-			<c:set var="shownBy" value="${model.document.edmIsShownBy[0]}" />
-			<c:choose>
-				<c:when test="${fn:toLowerCase(model.document.edmType) == 'text'}">
-					<div class="trigger read">
+				<c:if test="${fn:toLowerCase(model.document.edmType) == '3d'}">
+					<div class="lb-trigger view">
 						<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
-							<span class="trigger bold read" title="<spring:message code="read_t" />" rel="nofollow"><spring:message code="read_t" /></span>
+							<span class="trigger bold view" title="<spring:message code="view_t" />" rel="nofollow"><spring:message code="view_t" /></span>
 						</a>
 					</div>
-				</c:when>
 
-				<c:when test="${fn:toLowerCase(model.document.edmType) == 'video' || fn:toLowerCase(model.document.type) == 'sound'}">
-					<div class="trigger play">
-						<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
-							<span class="trigger bold play" title="<spring:message code="play_t" />" rel="nofollow"><spring:message code="play_t" /></span>
-						</a>
-					</div>
-				</c:when>
-				
-				<c:when test="${fn:toLowerCase(model.document.edmType) == 'image'}">
 					<div class="trigger view">
 						<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
 							<span class="trigger bold view" title="<spring:message code="view_t" />" rel="nofollow"><spring:message code="view_t" /></span>
 						</a>
 					</div>
-				</c:when>
-			</c:choose>
-			
-			<c:if test="${fn:toLowerCase(model.document.edmType) == '3d'}">
-				<div class="trigger view">
-					<a id="urlRefIsShownByPlay" href="${shownBy}" rel="nofollow" target="_blank">
-						<span class="trigger bold view" title="<spring:message code="view_t" />" rel="nofollow"><spring:message code="view_t" /></span>
-					</a>
-				</div>
+				</c:if>
 			</c:if>
-		</c:if>
-	</c:otherwise>
-</c:choose>
+		</c:otherwise>
+	</c:choose>
 </c:if>
 
 <%--div style="float:right;"--%>

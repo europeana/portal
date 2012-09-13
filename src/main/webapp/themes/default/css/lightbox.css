@@ -206,25 +206,36 @@
 		text-decoration:	none !important;
 	}
 	
-	img.trigger{
+	img.trigger,
+	img.lb-trigger{
+	
 		cursor:	pointer;
 	}
-	
-	div.trigger{
+
+
+	div.trigger,
+	div.lb-trigger{
 		display:				none;
 		background-color:		#DFDFDF;
 		margin-bottom:			8px;
 		min-width:				70px;
-		height:					30px;
+		
+		xxxxheight:					30px;
+		z-index:30;
+		
 		position:				relative;
 		border-radius:			0 0 5px 5px;	/* 5px 5px 5px 5px; */
 	}
 	
-	.trigger a{
+	.trigger a,
+	.lb-trigger a{
 		color:					black;
 	}
 		
-	span.trigger, span.download, span.download_lightbox{
+	span.trigger,
+	span.lb-trigger,
+	span.download,
+	span.download_lightbox{
 		float:					left;
 		margin-left:			10px;
 		margin-top:				6px;
