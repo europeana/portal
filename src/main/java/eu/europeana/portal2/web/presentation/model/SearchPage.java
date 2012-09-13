@@ -72,22 +72,18 @@ public class SearchPage extends SearchPreparation {
 
 		// remove default values to clean up url...
 		url.removeDefault("view", "table");
-		url.removeDefault("start", "1");
-		url.removeDefault("startPage", "1");
+		// url.removeDefault("start", "1");
+		// url.removeDefault("startPage", "1");
 		url.removeDefault("embedded", "false");
 
 		return url;
 	}
 
 	@Override
-	public UrlBuilder enrichFullDocUrl(UrlBuilder builder)
-			throws UnsupportedEncodingException {
-		builder.addParamsFromURL(getBriefBeanView().getPagination()
-				.getPresentationQuery().getQueryForPresentation());
-		builder.addParam(
-				"startPage",
-				Integer.toString(getBriefBeanView().getPagination().getStart()),
-				true);
+	public UrlBuilder enrichFullDocUrl(UrlBuilder builder) throws UnsupportedEncodingException {
+
+		builder.addParamsFromURL(getBriefBeanView().getPagination().getPresentationQuery().getQueryForPresentation());
+		builder.addParam("startPage", Integer.toString(getBriefBeanView().getPagination().getStart()), true);
 		builder = getPortalFormattedUrl(builder);
 
 		if (isEmbedded()) {

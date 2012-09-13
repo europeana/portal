@@ -19,6 +19,7 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.portal2.web.presentation.model.DocIdWindow;
@@ -27,6 +28,8 @@ import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class DocIdWindowPagerDecorator implements DocIdWindowPager {
+
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	DocIdWindowPager pager;
 	FullDocData model;
@@ -46,15 +49,13 @@ public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 	 * 
 	 * @return url of previous page
 	 */
-	public String getPagerReturnToPreviousPageUrl()
-			throws UnsupportedEncodingException {
+	public String getPagerReturnToPreviousPageUrl() throws UnsupportedEncodingException {
 		int maxPageResults = 12;
 		// the "start" param is manipulated here to ensure that the
 		// "return to search results" link doesn't swallow previous results
 		int pageNo = (model.getStart() - 1) / maxPageResults;
 		int calcStart = 1 + (pageNo * maxPageResults);
-		UrlBuilder builder = model.createSearchUrl(model.getQuery(),
-				model.getRefinements(), Integer.toString(calcStart));
+		UrlBuilder builder = model.createSearchUrl(model.getQuery(), model.getRefinements(), Integer.toString(calcStart));
 		return model.prepareFullDocUrl(builder).toString();
 	}
 
@@ -142,5 +143,4 @@ public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 	public int getFullDocUriInt() {
 		return pager.getFullDocUriInt();
 	}
-
 }

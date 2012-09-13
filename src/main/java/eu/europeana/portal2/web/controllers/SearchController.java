@@ -87,7 +87,7 @@ public class SearchController {
 		localeChangeInterceptor.preHandle(request, response, this);
 
 		log.info("============== START SEARCHING ==============");
-		
+
 		Map<String, String[]> params = request.getParameterMap();
 
 		SearchPage model = new SearchPage();

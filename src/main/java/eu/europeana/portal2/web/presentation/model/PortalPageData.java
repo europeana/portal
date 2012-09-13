@@ -2,10 +2,13 @@ package eu.europeana.portal2.web.presentation.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import eu.europeana.corelib.web.model.PageData;
 
 public abstract class PortalPageData extends PageData {
+
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private String theme = "default";
 

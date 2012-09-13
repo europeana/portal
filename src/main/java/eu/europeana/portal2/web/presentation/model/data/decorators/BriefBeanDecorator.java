@@ -40,6 +40,12 @@ public class BriefBeanDecorator implements BriefBean {
 
 	protected BriefBean briefDoc;
 	private UrlAwareData<?> model;
+	private int index;
+
+	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefDoc, int index) {
+		this(model, briefDoc);
+		this.index = index;
+	}
 
 	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefDoc) {
 		this.model = model;
@@ -64,25 +70,20 @@ public class BriefBeanDecorator implements BriefBean {
 		return false;
 	}
 
-	/*
-	 * @Override public int getIndex() { return briefDoc.getIndex(); }
-	 */
+	public int getIndex() {
+		return index;
+	}
 
 	public String getFullDocUrl() {
-		// log.info("1: " + briefDoc.getId());
 		String url = "record/" + briefDoc.getId().replace("#", "") + ".html";
 		UrlBuilder builder = new UrlBuilder(url);
-		// log.info("1: " + briefDoc.getId());
-		// log.info("2: " + url);
 
-		// builder.addParam("start", Integer.toString(getIndex()), true);
-
+		builder.addParam("start", Integer.toString(getIndex()), true);
 		try {
 			builder = model.enrichFullDocUrl(builder);
 		} catch (UnsupportedEncodingException e) {
-			// will never happen, do ignore...
+			log.severe("UnsupportedEncodingException while enrich url: " + e.getLocalizedMessage());
 		}
-		// log.info("3: " + builder.toString());
 		return builder.toString();
 	}
 

@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -31,10 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,13 +41,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.definitions.solr.QueryType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.solr.bean.impl.BriefBeanImpl;
+import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.corelib.solr.service.query.MoreLikeThis;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
@@ -64,7 +58,6 @@ import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
-import eu.europeana.portal2.web.util.BeanUtil;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 /**
@@ -85,9 +78,6 @@ public class ObjectController {
 
 	@Resource(name="configurationService") private Configuration config;
 
-	// whether the source is API2
-	private boolean isSourceApi2 = false;
-
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -96,7 +86,7 @@ public class ObjectController {
 			@PathVariable String recordId,
 			@RequestParam(value = "format", required = false) String format,
 			@RequestParam(value = "embedded", required = false) String embedded,
-			@RequestParam(value = "query", required = false) String query,
+			@RequestParam(value = "query", required = false) String queryString,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
@@ -109,7 +99,6 @@ public class ObjectController {
 		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 		log.info("Locale language: " + locale.getLanguage());
-		isSourceApi2 = false;
 
 		FullDocPage model = new FullDocPage();
 //		model.setLocale(locale)
@@ -117,7 +106,7 @@ public class ObjectController {
 		model.setRecordId(recordId);
 		model.setFormat(format);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
-		model.setQuery(query);
+		model.setQuery(queryString);
 		model.setRefinements(qf);
 		model.setStart(start);
 		model.setReturnTo(returnTo);
@@ -130,7 +119,9 @@ public class ObjectController {
 		model.setUser(user);
 
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
-		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean);
+		Query query = new Query(queryString).setRefinements(qf);
+
+		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
 		model.setFullBeanView(fullBeanView);
 		model.setMoreLikeThis(getMoreLikeThis(collectionId, recordId, model));
 
@@ -170,8 +161,6 @@ public class ObjectController {
 		if (fullBean == null) {
 			log.severe("It is not possible to retrieve FullBean though API2 calls so now the controller tries it with corelib calls");
 			fullBean = getFullBeanFromCorelib(collectionId, recordId);
-		} else {
-			isSourceApi2 = true;
 		}
 		return fullBean;
 	}

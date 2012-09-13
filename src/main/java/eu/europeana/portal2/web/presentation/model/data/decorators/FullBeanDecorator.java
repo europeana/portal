@@ -188,8 +188,11 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String[] getDcDescription() {
-		List<String> descriptions = Arrays
-				.asList(shortcut.get("DcDescription"));
+		if (shortcut.get("DcDescription") == null) {
+			return null;
+		}
+
+		List<String> descriptions = Arrays.asList(shortcut.get("DcDescription"));
 		for (int i = 0, l = descriptions.size(); i < l; i++) {
 			descriptions.set(i, descriptions.get(i).replace("\n", "<br/>\n"));
 		}
@@ -197,8 +200,7 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String getDcDescriptionCombined() {
-		return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(),
-				";"));
+		return StringEscapeUtils.escapeXml(StringUtils.join(getDcDescription(), ";"));
 	}
 
 	public String[] getDcFormat() {

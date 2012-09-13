@@ -51,7 +51,6 @@ public class SearchUtils {
 			int start, int rows,
 			Map<String, String[]> params, String queryString) 
 			throws SolrTypeException {
-		log.info("createResults");
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
@@ -79,7 +78,6 @@ public class SearchUtils {
 		ResultPagination pagination = new ResultPaginationImpl(start, rows, (int)resultSet.getResultSize(), 
 				queryString, query.getQuery(), breadCrumbs);
 		briefBeanView.setPagination(pagination);
-		log.info("end of createResults");
 		return briefBeanView;
 	}
 

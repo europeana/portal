@@ -24,15 +24,16 @@ package eu.europeana.portal2.web.presentation.model;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
-
-import org.apache.lucene.analysis.CharArrayMap.EntrySet;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
-import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.solr.exceptions.SolrTypeException;
+import eu.europeana.corelib.solr.service.SearchService;
 
 /**
  * Do not ever touch this class! It is persisted to XML and serves as document
@@ -43,8 +44,10 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  */
 public class FullBeanViewImpl implements FullBeanView {
 
+	private SearchService searchService;
+
 	private static final long serialVersionUID = -4971453940874288310L;
-	private transient Logger log = Logger.getLogger(getClass().getName());
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	// Do not ever touch these fields as they are persisted as document cache
 	private FullBean fullDoc;
@@ -55,12 +58,18 @@ public class FullBeanViewImpl implements FullBeanView {
 	private List<? extends BriefBean> parents;
 	private List<? extends BriefBean> children;
 
-	public FullBeanViewImpl(FullBean fullDoc) {
+	public FullBeanViewImpl(FullBean fullDoc, Map<String, String[]> httpParameters,
+			Query query, SearchService searchService) {
+		this.searchService = searchService;
 		this.fullDoc = fullDoc;
 		// this.relatedItems = fullDoc.getRelatedItems();
 		this.parents = findParents();
 		this.children = findChildren();
-		this.docIdWindowPager = createPager();
+
+		Class<? extends BriefBean> clazz = BriefBean.class;
+		log.info("id: " + fullDoc.getId());
+		log.info("about: " + fullDoc.getAbout());
+		this.docIdWindowPager = createPager(fullDoc.getAbout(), httpParameters, query, searchService, clazz);
 	}
 
 	private List<? extends BriefBean> findParents() {
@@ -70,8 +79,8 @@ public class FullBeanViewImpl implements FullBeanView {
 				if (proxy.getDctermsIsPartOf() == null) {
 					continue;
 				}
-				for (Entry<String, String> item : proxy.getDctermsIsPartOf().entrySet()) {
-					items.add(item.getValue());
+				for (Entry<String, List<String>> item : proxy.getDctermsIsPartOf().entrySet()) {
+					items.addAll(item.getValue());
 				}
 			}
 		}
@@ -85,19 +94,41 @@ public class FullBeanViewImpl implements FullBeanView {
 				if (proxy.getDctermsHasPart() == null) {
 					continue;
 				}
-				for (Entry<String, String> item : proxy.getDctermsHasPart().entrySet()) {
-					items.add(item.getValue());
+				for (Entry<String, List<String>> item : proxy.getDctermsHasPart().entrySet()) {
+					items.addAll(item.getValue());
 				}
 			}
 		}
 		return new ArrayList();
 	}
-	
-	private DocIdWindowPager createPager() {
+
+	public DocIdWindowPager createPager(String id, Map<String, String[]> httpParameters,
+			Query query, SearchService searchService, Class<? extends BriefBean> clazz) {
 		// TODO: implement later
-		return null;
-		//return new DocIdWindowPagerDecorator(this, null);
+		// return null;
+		DocIdWindowPager pager = null;
+		try {
+			pager = DocIdWindowPagerImpl.fetchPager(id, httpParameters, query, searchService, clazz);
+		} catch (SolrTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pager;
 	}
+
+	/*
+    private void createPager(BeanQueryModelFactory factory, Map<String, String[]> params) throws SolrServerException, EuropeanaQueryException {
+        docIdWindowPager = null;
+        if (params.containsKey("query")) {
+            try {
+                docIdWindowPager = DocIdWindowPagerImpl.fetchPager(params, factory.createFromQueryParams(params), factory.getActiveSolrServer(), factory.getIdBean());
+            }
+            catch (Exception e) {
+                log.error("Failed to create pager for " + StringUtils.join(params.values(), ";"), e);
+            }
+        }
+    }
+    */
 
 	@Override
 	public DocIdWindowPager getDocIdWindowPager() throws Exception,

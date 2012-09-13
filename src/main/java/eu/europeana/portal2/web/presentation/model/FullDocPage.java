@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -58,8 +57,6 @@ import eu.europeana.portal2.web.util.SearchUtils;
 import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private RightsValue rightsOption = null;
 	
@@ -263,14 +260,18 @@ public class FullDocPage extends FullDocPreparation {
 				}
 				if (timespan.getBegin() != null) {
 					// TODO: handle language (item.getKey())
-					for (Entry<String, String> item : timespan.getBegin().entrySet()) {
-						addMetaField(fields, Field.ENRICHMENT_PERIOD_BEGIN, item.getValue());
+					for (Entry<String, List<String>> item : timespan.getBegin().entrySet()) {
+						for (String value : item.getValue()) {
+							addMetaField(fields, Field.ENRICHMENT_PERIOD_BEGIN, value);
+						}
 					}
 				}
 				if (timespan.getEnd() != null) {
 					// TODO: handle language (item.getKey())
-					for (Entry<String, String> item : timespan.getEnd().entrySet()) {
-						addMetaField(fields, Field.ENRICHMENT_PERIOD_END, item.getValue());
+					for (Entry<String, List<String>> item : timespan.getEnd().entrySet()) {
+						for (String value : item.getValue()) {
+							addMetaField(fields, Field.ENRICHMENT_PERIOD_END, value);
+						}
 					}
 				}
 				// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());

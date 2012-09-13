@@ -18,6 +18,8 @@
 package eu.europeana.portal2.web.presentation.model;
 
 /**
+ * Basic interface returning a search's offset, and hitCount.
+ * 
  * @author Gerald de Jong <geralddejong@gmail.com>
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  */

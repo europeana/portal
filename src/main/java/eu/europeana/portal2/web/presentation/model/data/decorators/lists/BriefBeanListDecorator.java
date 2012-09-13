@@ -34,20 +34,27 @@ public class BriefBeanListDecorator<E extends BriefBean> implements List<E> {
 
 	private UrlAwareData<?> model;
 	private List<E> list;
+	private boolean transformedToDecorator = false;
 
 	public BriefBeanListDecorator(UrlAwareData<?> model, List<E> list) {
 		this.model = model;
 		this.list = list;
 		this.list = (List<E>) asDecoList();
+		transformedToDecorator = true;
 	}
 
 	public List<BriefBeanDecorator> asDecoList() {
-		List<BriefBeanDecorator> newList = new ArrayList<BriefBeanDecorator>();
-		for (BriefBean briefDoc : list) {
-			// log.info("original FullDoc: " + briefDoc.getId());
-			newList.add(new BriefBeanDecorator(model, briefDoc));
+		if (transformedToDecorator) {
+			return (List<BriefBeanDecorator>)list;
 		}
-		return newList;
+		else {
+			List<BriefBeanDecorator> newList = new ArrayList<BriefBeanDecorator>();
+			int index = model.getStart();
+			for (BriefBean briefDoc : list) {
+				newList.add(new BriefBeanDecorator(model, briefDoc, index++));
+			}
+			return newList;
+		}
 	}
 
 	@Override

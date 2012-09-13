@@ -30,8 +30,10 @@ import eu.europeana.corelib.utils.StringArrayUtils;
 
 public class UrlBuilder {
 
+	private final Logger log = Logger.getLogger(getClass().getName());
+
 	private String baseUrl;
-	
+
 	private Map<String, String> params = new HashMap<String, String>();
 	private Map<String, List<String>> multiParams = new HashMap<String, List<String>>();
 
@@ -200,5 +202,4 @@ public class UrlBuilder {
 		}
 		return sb.toString();
 	}
-
 }

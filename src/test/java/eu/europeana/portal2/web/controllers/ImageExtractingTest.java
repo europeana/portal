@@ -23,6 +23,5 @@ public class ImageExtractingTest {
 
 		assertEquals("http://blog.europeana.eu/wp-content/uploads/2012/08/portraitsketch.jpg", images.get(1).getSrc());
 		assertEquals("'Napoleon Bonaparte, sketched at Saint Helena by a British Officier in May last', French National Library", images.get(1).getTitle());
-
 	}
 }

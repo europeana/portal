@@ -28,7 +28,7 @@ public class FullBeanShortcut {
 
 	private Map<String, List<String>> values;
 
-	private Map<String, List<Map<String, String>>> mapValues;
+	private Map<String, List<Map<String, List<String>>>> mapValues;
 
 	private Map<String, List<Float>> floats;
 
@@ -61,7 +61,7 @@ public class FullBeanShortcut {
 		values.get(property).add(value);
 	}
 
-	private void add(String property, Map<String, String> value) {
+	private void add(String property, Map<String, List<String>> value) {
 		if (value == null) {
 			return;
 		}
@@ -70,13 +70,13 @@ public class FullBeanShortcut {
 			values.put(property, new ArrayList<String>());
 		}
 
-		for (Entry<String, String> entry : value.entrySet()) {
-			values.get(property).add(entry.getValue()); // adding only the value, not the language
+		for (Entry<String, List<String>> entry : value.entrySet()) {
+			values.get(property).addAll(entry.getValue()); // adding only the value, not the language
 		}
 
 		// saving it into mapValues as well
 		if (!mapValues.containsKey(property)) {
-			mapValues.put(property, new ArrayList<Map<String, String>>());
+			mapValues.put(property, new ArrayList<Map<String, List<String>>>());
 		}
 		mapValues.get(property).add(value);
 	}
@@ -93,67 +93,67 @@ public class FullBeanShortcut {
 	 */
 	private void initialize() {
 		values = new HashMap<String, List<String>>();
-		mapValues = new HashMap<String, List<Map<String, String>>>();
+		mapValues = new HashMap<String, List<Map<String, List<String>>>>();
 
 		if (document.getAggregations() != null) {
 			for (AggregationImpl aggregation : document.getAggregations()) {
 				add("EdmIsShownBy", aggregation.getEdmIsShownBy());
 				add("EdmIsShownAt", aggregation.getEdmIsShownAt());
-				add("EdmRights", aggregation.getEdmRights());
-				add("EdmProvider", aggregation.getEdmProvider());
+				add("EdmRights", aggregation.getEdmRights()); // Map
+				add("EdmProvider", aggregation.getEdmProvider()); // Map
 				add("EdmObject", aggregation.getEdmObject());
 				add("EdmUGC", aggregation.getEdmUgc());
-				add("DataProvider", aggregation.getEdmDataProvider());
-				add("AggregationDcRights", aggregation.getDcRights());
+				add("DataProvider", aggregation.getEdmDataProvider()); // Map
+				add("AggregationDcRights", aggregation.getDcRights()); // Map
 			}
 		}
 
 		if (document.getProxies() != null) {
 			for (Proxy proxy : document.getProxies()) {
-				add("DcContributor", proxy.getDcContributor());
-				add("DcCoverage", proxy.getDcCoverage());
-				add("DcCreator", proxy.getDcCreator());
-				add("DcDate", proxy.getDcDate());
-				add("DcDescription", proxy.getDcDescription());
-				add("DcFormat", proxy.getDcFormat());
-				add("DcIdentifier", proxy.getDcIdentifier());
-				add("DcLanguage", proxy.getDcLanguage());
-				add("DcPublisher", proxy.getDcPublisher());
-				add("DcRelation", proxy.getDcRelation());
-				add("DcRights", proxy.getDcRights());
-				add("DcSource", proxy.getDcSource());
-				add("DcSubject", proxy.getDcSubject());
-				add("DcTitle", proxy.getDcTitle());
-				add("DcType", proxy.getDcType());
-				add("DctermsAlternative", proxy.getDctermsAlternative());
-				add("DctermsConformsTo", proxy.getDctermsConformsTo());
-				add("DctermsCreated", proxy.getDctermsCreated());
-				add("DctermsExtent", proxy.getDctermsExtent());
-				add("DctermsHasFormat", proxy.getDctermsHasFormat());
-				add("DctermsHasPart", proxy.getDctermsHasPart());
-				add("DctermsHasVersion", proxy.getDctermsHasVersion());
-				add("DctermsIsFormatOf", proxy.getDctermsIsFormatOf());
-				add("DctermsIsReferencedBy", proxy.getDctermsIsReferencedBy());
-				add("DctermsIsReplacedBy", proxy.getDctermsIsReplacedBy());
-				add("DctermsIsRequiredBy", proxy.getDctermsIsRequiredBy());
-				add("DctermsIsPartOf", proxy.getDctermsIsPartOf());
-				add("DctermsIssued", proxy.getDctermsIssued());
-				add("DctermsIsVersionOf", proxy.getDctermsIsVersionOf());
-				add("DctermsMedium", proxy.getDctermsMedium());
-				add("DctermsProvenance", proxy.getDctermsProvenance());
-				add("DctermsReferences", proxy.getDctermsReferences());
-				add("DctermsReplaces", proxy.getDctermsReplaces());
-				add("DctermsRequires", proxy.getDctermsRequires());
-				add("DctermsSpatial", proxy.getDctermsSpatial());
-				add("DctermsTemporal", proxy.getDctermsTemporal());
-				add("DctermsTableOfContents", proxy.getDctermsTOC());
+				add("DcContributor", proxy.getDcContributor()); // Map
+				add("DcCoverage", proxy.getDcCoverage()); // Map
+				add("DcCreator", proxy.getDcCreator()); // Map
+				add("DcDate", proxy.getDcDate()); // Map
+				add("DcDescription", proxy.getDcDescription()); // Map
+				add("DcFormat", proxy.getDcFormat()); // Map
+				add("DcIdentifier", proxy.getDcIdentifier()); // Map
+				add("DcLanguage", proxy.getDcLanguage()); // Map
+				add("DcPublisher", proxy.getDcPublisher()); // Map
+				add("DcRelation", proxy.getDcRelation()); // Map
+				add("DcRights", proxy.getDcRights()); // Map
+				add("DcSource", proxy.getDcSource()); // Map
+				add("DcSubject", proxy.getDcSubject()); // Map
+				add("DcTitle", proxy.getDcTitle()); // Map
+				add("DcType", proxy.getDcType()); // Map
+				add("DctermsAlternative", proxy.getDctermsAlternative()); // Map
+				add("DctermsConformsTo", proxy.getDctermsConformsTo()); // Map
+				add("DctermsCreated", proxy.getDctermsCreated()); // Map
+				add("DctermsExtent", proxy.getDctermsExtent()); // Map
+				add("DctermsHasFormat", proxy.getDctermsHasFormat()); // Map
+				add("DctermsHasPart", proxy.getDctermsHasPart()); // Map
+				add("DctermsHasVersion", proxy.getDctermsHasVersion()); // Map
+				add("DctermsIsFormatOf", proxy.getDctermsIsFormatOf()); // Map
+				add("DctermsIsReferencedBy", proxy.getDctermsIsReferencedBy()); // Map
+				add("DctermsIsReplacedBy", proxy.getDctermsIsReplacedBy()); // Map
+				add("DctermsIsRequiredBy", proxy.getDctermsIsRequiredBy()); // Map
+				add("DctermsIsPartOf", proxy.getDctermsIsPartOf()); // Map
+				add("DctermsIssued", proxy.getDctermsIssued()); // Map
+				add("DctermsIsVersionOf", proxy.getDctermsIsVersionOf()); // Map
+				add("DctermsMedium", proxy.getDctermsMedium()); // Map
+				add("DctermsProvenance", proxy.getDctermsProvenance()); // Map
+				add("DctermsReferences", proxy.getDctermsReferences()); // Map
+				add("DctermsReplaces", proxy.getDctermsReplaces()); // Map
+				add("DctermsRequires", proxy.getDctermsRequires()); // Map
+				add("DctermsSpatial", proxy.getDctermsSpatial()); // Map
+				add("DctermsTemporal", proxy.getDctermsTemporal()); // Map
+				add("DctermsTableOfContents", proxy.getDctermsTOC()); // Map
 			}
 		}
 		
 		if (document.getEuropeanaAggregation() != null) {
 			EuropeanaAggregation aggregation = document.getEuropeanaAggregation();
-			add("EdmCountry", aggregation.getEdmCountry());
-			add("EdmLanguage", aggregation.getEdmLanguage());
+			add("EdmCountry", aggregation.getEdmCountry()); // Map
+			add("EdmLanguage", aggregation.getEdmLanguage()); // Map
 		}
 	}
 

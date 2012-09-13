@@ -22,10 +22,16 @@ import java.util.List;
 import eu.europeana.corelib.definitions.solr.beans.IdBean;
 
 /**
+ * It returns such properties as
+ * - offset
+ * - hitCount: the number of hits
+ * - ids: the list of Beans
+ * 
  * @author Gerald de Jong <geralddejong@gmail.com>
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  */
 
 public interface DocIdWindow extends PagingWindow {
+
 	List<? extends IdBean> getIds();
 }

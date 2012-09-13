@@ -17,8 +17,6 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,9 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
-import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
-import eu.europeana.corelib.solr.entity.AggregationImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
@@ -215,14 +211,18 @@ public abstract class FullDocPreparation extends FullDocData {
 				addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
 				if (timespan.getBegin() != null) {
 					// TODO: handle language (item.getKey())
-					for (Entry<String, String> item : timespan.getBegin().entrySet()) {
-						addField(when, Field.ENRICHMENT_PERIOD_BEGIN, item.getValue());
+					for (Entry<String, List<String>> item : timespan.getBegin().entrySet()) {
+						for (String value : item.getValue()) {
+							addField(when, Field.ENRICHMENT_PERIOD_BEGIN, value);
+						}
 					}
 				}
 				if (timespan.getEnd() != null) {
 					// TODO: handle language (item.getKey())
-					for (Entry<String, String> item : timespan.getEnd().entrySet()) {
-						addField(when, Field.ENRICHMENT_PERIOD_END, item.getValue());
+					for (Entry<String, List<String>> item : timespan.getEnd().entrySet()) {
+						for (String value : item.getValue()) {
+							addField(when, Field.ENRICHMENT_PERIOD_END, value);
+						}
 					}
 				}
 			}

@@ -33,8 +33,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.eclipse.jetty.util.log.Log;
-import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -46,6 +44,7 @@ import eu.europeana.corelib.utils.ImageUtils;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 
 public class RSSFeedParser {
+
 	static final String TITLE = "title";
 	static final String DESCRIPTION = "description";
 	static final String CHANNEL = "channel";
@@ -68,7 +67,6 @@ public class RSSFeedParser {
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	public void setStaticPagePath(String staticPagePath) {
-		Log.info("setStaticPagePath " + staticPagePath);
 		this.staticPagePath = staticPagePath;
 	}
 

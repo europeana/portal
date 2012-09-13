@@ -26,6 +26,7 @@ public class SchemaOrMappingInPortalTest {
 	public void test() {
 		// fail("Not yet implemented");
 		String mappingFile = config.getProperty("schema.org.mapping");
+		System.out.println(mappingFile);
 		assertNotNull(mappingFile);
 		assertTrue(new File(mappingFile).exists());
 		Properties schemaProp = new Properties();
@@ -35,10 +36,11 @@ public class SchemaOrMappingInPortalTest {
 				System.out.println(key);
 			}
 		} catch (FileNotFoundException e) {
+			fail("File not found: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
+			fail("I/O issue: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 	}
-
 }
