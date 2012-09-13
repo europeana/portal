@@ -6,20 +6,20 @@
 		<ul class="result-pagination">
 			
 			<%-- first arrow --%>
-			<c:if test="${!model.briefBeanView.pagination.first}">
-				<li>
+			<li class="nav-first">
+				<c:if test="${!model.briefBeanView.pagination.first}">
 					<a href="${model.firstPageUrl}" title="<spring:message code="AltFirstPage_t" />">&lt; &lt; &nbsp;</a>
-				</li>
-			</c:if>
+				</c:if>
+			</li>
 			
 			<%-- previous arrow --%>
-			<c:if test="${model.briefBeanView.pagination.previous}">
-				<li>
+			<li class="nav-prev">
+				<c:if test="${model.briefBeanView.pagination.previous}">
 					<a href="${model.previousPageUrl}" title="<spring:message code="AltPreviousPage_t" />"> &lt; &nbsp; </a>
-				</li>
-			</c:if>
+				</c:if>
+			</li>
 			
-			<li class="page-nr">
+			<li class="nav-numbers">
 				<form method="get" action="${query_action}?" class="jump-to-page">
 					<input type="number" id="start-page" value="${model.pageNumber}" min="1" max="${model.numberOfPages}" /> of ${model.numberOfPages}
 					<input type="hidden" name="start"	id="start" />
@@ -31,25 +31,24 @@
 			</li>
 			
 			<%-- next arrow --%>
-			<c:if test="${model.briefBeanView.pagination.next}">
-				<li>
+			<li class="nav-next">
+				<c:if test="${model.briefBeanView.pagination.next}">
 					<a href="${model.nextPageUrl}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; </a>
-				</li>
-			</c:if>
+				</c:if>
+			</li>
 			
 			<%-- last arrow --%>
-			<c:if test="${!model.briefBeanView.pagination.last}">
-				<li>
+			<li class="nav-last">
+				<c:if test="${!model.briefBeanView.pagination.last}">
 					<a href="${model.lastPageUrl}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt; &gt;</a>
-				</li>
-			</c:if>
+				</c:if>
+			</li>
 		</ul>
 		
 
 		<!-- result size control -->
-		
-		Results per page:
-		<div class="eu-menu" aria-hidden="true">
+		<span class="hide-ilb-on-phones"><spring:message code="ResultsPerPage_t" />:</span>
+		<div class="eu-menu hide-ilb-on-phones" aria-hidden="true">
 			<span class="menu-label"></span>
 			<span class="icon-arrow-3 open-menu"></span>
 			<ul>

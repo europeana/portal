@@ -1,29 +1,53 @@
 /* pagination for search results */
 
 .result-pagination{
-	float:	right;	
-	margin:	0;
-	margin-top:	0.35em;
+	float:			none;	
+	margin:			0;
+	width:			100%;
+	padding-left:	0;
+	display:		table;
+	table-layout:	fixed;
+	
+	font-size:		1.5em;
 }
 
+
 .result-pagination li{
-	float:	left;
-	list-style: none;
+	list-style: 	none;
+	display:		table-cell;
+	vertical-align:	middle;
 }
+
+
+@media only screen and ( min-width:48em ){
+	
+	.result-pagination{
+		float:		right;
+		width:		auto;	
+		font-size:	1em;
+		margin-top:	0.2em;
+	}
+	
+}
+
 
 .nav-top .eu-menu,
 .nav-bottom .eu-menu{
 	border:			1px solid #e4e4e4;
-	margin-left:	1em;
+	margin-left:	0.5em;
 	padding-left:	0.25em;
 	padding-right:	0.25em;
 	z-index:		2;
 }
 
-.nav-top .eu-menu ul,
-.nav-bottom .eu-menu ul{
-	width:	5em;	
+.nav-top	.eu-menu ul,
+.nav-bottom	.eu-menu ul{
+	.nav-top .eu-menu,
+	.nav-bottom .eu-menu{
+		margin-left:	1em;
+	}
 }
+
 
 
 /* Override "glow" on the selected item */
@@ -39,7 +63,7 @@
 
 
 #start-page{
-	width:		5em;
+	width:		2.7em;
 	outline:	none !important;
 }
 #start-page:focus{
@@ -50,29 +74,26 @@
 
 /* pagination for map */
 
-	.navigation-pagination {
-		float: left;
-		overflow: hidden;
-		height: 21px;
-		margin: 6px 0 0 0;
-		padding: 0;
-	}
+.navigation-pagination {
+	float:		left;
+	overflow:	hidden;
+	height:		21px;
+	margin:		6px 0 0 0;
+	padding:	0;
+}
+
+.navigation-pagination li {
+	list-style:	none;
+}
+
+.navigation-pagination a {
+	display:	block;
+}
+
+.navigation-pagination a.selected {
+	color:				#666;
+	text-decoration:	underline;
+}
+
 	
-	.navigation-pagination li {
-		list-style: none;
-	}
 	
-	.navigation-pagination a {
-		display: block;
-	}
-	
-	.navigation-pagination a.selected {
-		color: #666;
-		text-decoration: underline;
-	}
-	
-	.navigation-pagination .page-nr {
-		float: left;
-		margin-right: 5px;
-		min-width: 11px;
-	}
