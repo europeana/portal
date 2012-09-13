@@ -22,48 +22,43 @@
 			</div>	
 		</div>
 		
-		
-		<div class="row">
-			<div class="twelve columns">
-			
-				<c:if test="${!empty model.moreLikeThis}">
-				
-					<%-- data for carousel --%>
-					<script type="text/javascript">
-						var carousel2Data = [];
-						<c:forEach items="${model.moreLikeThis}" var="doc">
-						
-							carousel2Data[carousel2Data.length] = {
-								image:			decodeURI("${doc.thumbnail}").replace(/&amp;/g, '&'),
-								title:			"${fn:join(doc.title, ' ') }"
-							};
+		<c:if test="${!empty model.moreLikeThis}">
+
+			<div class="row">
+				<div class="twelve columns">
+
+						<%-- data for carousel --%>
+						<script type="text/javascript">
+							var carousel2Data = [];
+							<c:forEach items="${model.moreLikeThis}" var="doc">
 							
-						</c:forEach>
+								carousel2Data[carousel2Data.length] = {
+									image:			decodeURI("${doc.thumbnail}").replace(/&amp;/g, '&'),
+									title:			"${fn:join(doc.title, ' ') }"
+								};
+								
+							</c:forEach>
+						</script>
 						
-						/*alert("carousel2Data (" + carousel2Data.length + ")\n\n" +  JSON.stringify(carousel2Data));*/				
-					</script>
-					
-					<%-- markup for carousel --%>
-					<div id="explore-further">
-						<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
-						<div id="similar-content">
-							<%--
-							<div id="carousel-2-header" class="europeana-header">
+						<%-- markup for carousel --%>
+						<div id="explore-further">
+							<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
+							<div id="similar-content">
+								<%--
+								<div id="carousel-2-header" class="europeana-header">
+								</div>
+								--%>
+								<div id="carousel-2"  about="${model.document.id}" class="europeana-carousel">
+								</div>
+								<%--
+								<div id="carousel-2-footer" class="europeana-footer">
+								</div>
+								--%>
 							</div>
-							--%>
-							<div id="carousel-2"  about="${model.document.id}" class="europeana-carousel">
-							</div>
-							<%--
-							<div id="carousel-2-footer" class="europeana-footer">
-							</div>
-							--%>
-						</div>
-					</div>					
-
-				</c:if>
-
-			</div>	
-		</div>
+						</div>	
+				</div>	
+			</div>
+		</c:if>
 	</div>
 </div>
 <!-- end content -->
