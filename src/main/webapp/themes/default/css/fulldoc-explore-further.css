@@ -6,7 +6,7 @@
 	}
 	
    	#explore-further {
-   		margin: 0 0 20px 0;
+   		margin: 1em 0 1em 0;
    		padding: 0;
    	}
    	
@@ -32,8 +32,10 @@
 /* similar content */
 
 	#similar-content {
-   		display: none;
-   		margin-top: 10px; 	
+   		display:		none;
+   		margin-top:		-1px;
+   		padding-top:	0.25em;
+   		border-top:		1px solid #A0A0A0;
    	}
    	
    	
