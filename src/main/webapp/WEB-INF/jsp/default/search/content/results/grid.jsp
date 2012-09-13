@@ -19,7 +19,10 @@
 		<%--@ include file="/WEB-INF/jsp/default/search/content/results/grid/title.jsp" --%>
 		
 		<div class="ellipsis">
-			<h2>
+<!-- check iphone before restoring h2 --> 
+<!-- 
+<h2>
+-->
 				<c:choose>
 					<c:when test="${!empty cell.title}">
 						${title}
@@ -28,7 +31,9 @@
 						 &nbsp;
 					</c:otherwise>
 				</c:choose>				
-			</h2>
+<!-- 
+</h2>
+-->
 			<span class="fixed"><span aria-hidden="true" class="${icon_class}"></span></span>
 		</div>
 

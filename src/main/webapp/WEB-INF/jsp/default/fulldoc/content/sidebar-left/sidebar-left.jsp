@@ -8,10 +8,9 @@
 	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 
 <%--
-
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/image.jsp" %>
-	
 --%>
+	
 
 	<div id="carousel-1" class="europeana-bordered">
 		<script type="text/javascript">

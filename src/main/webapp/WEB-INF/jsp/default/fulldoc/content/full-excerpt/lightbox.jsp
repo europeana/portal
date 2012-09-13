@@ -19,7 +19,7 @@
 				<%--a	href="/portal/.media?europeanaUri=${model.document.id}&recordId=${model.recordId}&lightboxRef=${lightboxRef}"
 					style="display:block;width:500px;height:350px;"
 					id="player"></a--%>
-				<a href="${lightboxRef}" style="display:block; width:500px; height:350px;" id="player"></a>
+				<h1><a href="${lightboxRef}" style="display:block; width:500px; height:350px;" id="player">HELLO THERE ANDY</a></h1>
 			</div>
 
 			<img id="lightbox_image" class="content-image" style="display:none"

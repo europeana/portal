@@ -4,6 +4,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
+<script type="text/javascript">
+	alert("loaded image - the lightbox trigger");
+</script>
+
 <c:if test="${!empty model.imageRef}">
 
 	<%-- Andy
