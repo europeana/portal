@@ -8,6 +8,6 @@
 		position:relative;
 	}
 	.ellipsis-inner span{
-		line-height:1em;
+		line-height:0.9em;
 		font-size:0.9em;
 	}

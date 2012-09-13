@@ -1,7 +1,7 @@
 var Ellipsis = function(cmp, ops) {
 
 	var $cmp	= $(cmp);
-        var $inner 	= $cmp.find('.ellipsis-inner');
+    var $inner 	= $cmp.find('.ellipsis-inner');
 	var text	= [];
 
 	var tail	= ops && ops.tail ? ops.tail : "...";
@@ -18,8 +18,23 @@ var Ellipsis = function(cmp, ops) {
 	};
 
 	var respond = function(){
+		
+		$cmp	= $(cmp);
+	    $inner 	= $cmp.find('.ellipsis-inner');
 
-		$inner.html(text.join('') + (fixed ? fixed : ""));
+	    
+		var sub = "... XXXXX";
+		$inner.html(text.join('') + (fixed ? sub : ""));
+
+		
+		//console.log("in respond: " + text.join(''))
+
+		
+		//if(text.join('').indexOf("lingsmekanism")>-1){
+			
+			//alert( $inner.html() + "     " +   fn() );
+		//}
+		
 		if(fn()){
 
 			$inner.html("");
@@ -34,25 +49,27 @@ var Ellipsis = function(cmp, ops) {
 						str = str.substring(0, str.length>0 ? str.length-1 : str.length); // subtract last
 						lastChar = str.substring(str.length-2, str.length-1);
 					}
-					$inner.html(str + tail + (fixed ? fixed : "") );
+					$inner.html(str + tail + (fixed ? sub : "") );
 
 					i=text.length; // return
 				}
 				else{
 					str += text[i];
-					$inner.html(str + tail + (fixed ? fixed : "") );
+					$inner.html(str + tail + (fixed ? sub : "") );
+					//console.log("append " +   str + tail + (fixed ? sub : "")      );
 					i++;
 				}
 			}
 		}
 
 		if(fixed){
+			$cmp.html($cmp.html().replace(sub, fixed) );
+			
 			var $fixed = $cmp.find('.fixed');
 			$fixed.css("position",	"absolute");
 			$fixed.css("right",		"0px");
 			$fixed.css("bottom",	"0px");
 			//$fixed.css("float",	"right");
-	
 		}
 	};
 
@@ -74,7 +91,7 @@ var Ellipsis = function(cmp, ops) {
 		for(var i=0; i<innerHtml.length; i++){ // initialise text
 			text[i]=innerHtml.substr(i, 1);
 		}
-
+//fixed = '<span class="fixed">wtf???</span>';
 		respond();
 	};
 
@@ -82,6 +99,7 @@ var Ellipsis = function(cmp, ops) {
 
 	$(window).bind('resize', function(){
 		respond();
+		//console.log("responding!");
 	});
 
 };
