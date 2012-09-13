@@ -35,11 +35,12 @@
 	
 	/* end citation */
 	
-	
+	/*
 	a.external-services.toggle-menu-icon {
 		position: relative;
 		display: inline-block;
 	}
+	*/
 	
 	.external-services-container {
 		position:			absolute;
@@ -137,11 +138,12 @@
 
 @media only screen and ( min-width:48em ){
 
-	
+	/*
 	a.external-services.toggle-menu-icon {
 		position: relative;
 		display: inline-block;
 	}
+	*/
 	
 	.external-services-container {
 		position:			fixed !important;

@@ -234,6 +234,7 @@
 	}
 
 	/* toggle-menu-icon */
+	/*
 	a.toggle-menu-icon {
 		display: inline-block;
 		background-image: url(../images/icons/sprite.png);
@@ -247,6 +248,7 @@
 	a.toggle-menu-icon.active {
 		background-position: right -1545px;
 	}
+	*/
 
 
 /* pagination */
