@@ -51,12 +51,14 @@
 		<h2>Share and Subscribe:</h2>
 		
 		<ul id="share-subscribe">
-			<li>
-				<a class="share-section">
-					<span class="icon-saveditem"></span>
-					<spring:message code="SaveToMyEuropeana_t" />:
-				</a>
-			</li>
+			<c:if test="${!empty model.user}">
+				<li>
+					<a class="share-section">
+						<span class="icon-saveditem"></span>
+						<spring:message code="SaveToMyEuropeana_t" />
+					</a>
+				</li>
+			</c:if>
 			<li>
 				<a class="share-section">
 					<span class="icon-print"></span>

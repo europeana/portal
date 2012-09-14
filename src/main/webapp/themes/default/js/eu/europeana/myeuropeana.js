@@ -20,8 +20,8 @@ eu.europeana.myeuropeana = {
 		this.loadComponents();
 		this.addUserBarListeners();		
 		this.addUserPanelListeners();
+		this.addHashListener();
 		this.addItemHighlight();
-		
 	},
 	
 	
@@ -98,6 +98,11 @@ eu.europeana.myeuropeana = {
 		
 	},
 	
+	addHashListener : function() {
+		$(window).bind('hashchange', function() {
+			eu.europeana.myeuropeana.openTab(window.location.hash);
+		});
+	},	
 	
 	handleRemoveUserPanelItem : function( e ) {
 		

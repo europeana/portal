@@ -551,6 +551,7 @@
 			background-color:	black;
 			width:				100%;
 			display:			table;
+			font-size:			1.1em;
 		}
 				
 		#header-strip span{		/* structural fix for vertical align */
@@ -558,14 +559,31 @@
 			vertical-align:		middle;
 		}
 		
-		#header-strip a{
-			font-size:			1.1em;
+		
+		#header-strip .white{
 			color:				white;
 			margin-left:		1.5em;
-			float:				left;
+			display:			inline !important;
 		}
 		
-		
+
+		@media only screen and ( max-width:68em ){	/* the header strip wants to wrap here if the user is logged in - reduce the text size */
+			#header-strip{
+				font-size:			1em;	
+			}
+		}
+		@media only screen and ( max-width:58em ){	/* the header strip wants to wrap here if the user is logged in - reduce the text size */
+			#header-strip{
+				font-size:			0.9em;
+			}
+			#header-strip .white{
+				margin-left:		0.5em;
+			}
+			#header-strip a:first-child{
+				margin-left:		0.25em;
+			}
+		}
+	
 		/* menu-language */
 	
 		#language-selector select {
