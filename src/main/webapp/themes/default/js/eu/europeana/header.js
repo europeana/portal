@@ -35,7 +35,7 @@ eu.europeana.header = {
 		
 		this.setupMobileMenu();
 		this.setupSearchMenu();
-		
+		this.setupLanguageMenu();
 
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
@@ -110,7 +110,28 @@ eu.europeana.header = {
 		);
 		menu.init();
 	},
-	
+
+	setupLanguageMenu: function(){
+
+		var menu = new EuMenu(
+			$("#lang-menu"),
+			{
+				"fn_item": function(self){
+					$("input[name=embeddedlang]").val(self.getActive());
+					$("#language-selector").submit();
+				},
+
+				"fn_init": function(self){
+				},
+				
+				"fn_submit":function(self){
+				}
+			
+			}
+		);
+		menu.setActive("choose");
+		menu.init();
+	},
 	
 	setupSearchMenu:function(){
 		

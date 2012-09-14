@@ -242,12 +242,18 @@
 
 	/* Mobile Menu */
 	
+	#lang-menu,
 	#mobile-menu{
 		position:	relative;
-		display:	inline-block;
+		xxxxxdisplay:	inline-block;
 		float:		right;
-		font-size:	2em;
 		z-index:	1;	
+	}
+	#mobile-menu{
+		font-size:	2em;
+	}
+	#lang-menu{
+		margin-right:	1em;
 	}
 	
 	/* eu menu overrides */

@@ -8,11 +8,21 @@
   </c:otherwise>
 </c:choose>
 
-  <form action="${language_menu_action}" method="post" id="language-selector" class="hide-on-phones">
-    <select name="embeddedlang" title="<spring:message code='ChooseLanguage_t' />">
-      <option value="<spring:message code='ChooseLanguage_t'/>" selected><spring:message code='ChooseLanguage_t'/></option>
-      <c:forEach items="${model.portalLanguages}" var="language">
-        <option value="${language.languageCode}">${language.languageName}</option>
-      </c:forEach>
-    </select>
-  </form>
+<div class="eu-menu no-highlight white" id="lang-menu">
+	<form action="${language_menu_action}" method="post" id="language-selector">
+		<span class="menu-label"></span>
+		<span class="icon-arrow-3 open-menu"></span>
+	    <ul title="<spring:message code='ChooseLanguage_t' />">
+			<li class="item">
+				<a class="choose"><spring:message code='ChooseLanguage_t'/></a>
+			</li>
+			<c:forEach items="${model.portalLanguages}" var="language">
+				<li class="item">
+					<a class="${language.languageCode}">${language.languageName}</a>
+				</li>
+			</c:forEach>
+		</ul>
+	<input type="hidden" name="embeddedlang" value=""/>
+	</form>
+</div>
+  

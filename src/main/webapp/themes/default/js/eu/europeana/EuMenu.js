@@ -5,6 +5,7 @@ var EuMenu = function(cmpIn, options){
 	self.ops		= self.cmp.find(".item");
 	self.label		= self.cmp.find(".menu-label").html();
 	self.options	= options;
+	self.val		= null;
 	
 	self.cmp.click(function(e){
 		$('.eu-menu' ).removeClass("active");
@@ -19,13 +20,15 @@ var EuMenu = function(cmpIn, options){
 	
 
 	self.getActive = function(){
-		var res = null;
+		/*
+		 * var res = null;
 		self.cmp.find(".item").each(function(i, ob){
 			if($(ob).hasClass("active")){
 				res = $(ob);						
 			}
 		});
-		return res;
+		*/
+		return self.val;//res;
 	};
 	
 	self.setActive = function(val){
@@ -34,9 +37,10 @@ var EuMenu = function(cmpIn, options){
 			if($(ob).attr("class") == val){
 				$(ob).parent().addClass("active");
 				if(val){
-					self.cmp.addClass("selected");	
+					self.cmp.addClass("selected");
+					self.val = val;
 				}
-				self.setLabel(val);
+				self.setLabel( $(ob).html() );
 			}
 			else{						
 				$(ob).parent().removeClass("active");						
@@ -70,7 +74,7 @@ var EuMenu = function(cmpIn, options){
 				self.options.fn_submit(self);
 			}
 		},
-		"setActive":function(val){
+		"setActive":function(val, highlight){
 			self.setActive(val);
 		}
 	};

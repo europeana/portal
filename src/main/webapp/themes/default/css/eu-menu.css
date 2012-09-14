@@ -3,6 +3,11 @@
 .eu-menu.selected .item.active{
    	text-shadow:0 0 3px #FF0000;
 }
+.eu-menu.no-highlight span.open-menu,
+.eu-menu.no-highlight .item.active{
+   	text-shadow:	none;
+}
+
 
 .eu-menu{
 	position:				relative; 
