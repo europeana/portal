@@ -66,10 +66,16 @@ var europeana_bootstrap = function(){
 	  {	name : 'orientation-fix',	file : 'ios-orientationchange-fix' + js.min_suffix + '.js' + js.cache_helper,	path : eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory	},
 	  
 	  {
-			name : 'ellipsis',
-			file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			name : 'touchswipe',
+			file : 'touch-swipe' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'utils' ]
+	  },
+	  {
+		  name : 'ellipsis',
+		  file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
+		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+		  dependencies : [ 'utils' ]
 	  }
 
 	  
@@ -126,7 +132,7 @@ var europeana_bootstrap = function(){
 			name : 'galleria',
 			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/galleria/',
-			dependencies : [ 'jquery-1.4.4.min.js' ]
+			dependencies : [ 'jquery-1.4.4.min.js', 'touchswipe'  ]
 		});
 
 		var fulldoc = function(){
