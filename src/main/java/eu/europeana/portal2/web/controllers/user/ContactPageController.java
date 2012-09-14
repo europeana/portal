@@ -2,8 +2,6 @@ package eu.europeana.portal2.web.controllers.user;
 
 import java.security.Principal;
 import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -25,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -40,8 +37,6 @@ public class ContactPageController {
 	@Resource(name="corelib_web_emailService") private EmailService emailService;
 	
 	@Resource(name="corelib_db_userService") private UserService userService;
-
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -76,17 +71,11 @@ public class ContactPageController {
 			HttpServletRequest request, 
 			HttpServletResponse response, 
 			Locale locale) {
+		config.registerBaseObjects(request, response, locale);
 		ContactPage model = createContactForm();
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.CONTACT);
-
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
-		}
-		
+		config.postHandle(this, page);
 		return page;
 	}
 
@@ -98,29 +87,24 @@ public class ContactPageController {
 			HttpServletRequest request, 
 			HttpServletResponse response, 
 			Locale locale)
-			throws Exception {
+					throws Exception {
+		config.registerBaseObjects(request, response, locale);
 		if (result.hasErrors()) {
 			// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND_FAILURE);
 		} else {
-			Map<String, Object> model = new TreeMap<String, Object>();
-			model.put("email", form.getEmail());
-			model.put("feedback", form.getFeedbackText());
-			emailService.sendFeedback(form.getEmail(), form.getFeedbackText());
+			// Map<String, Object> model = new TreeMap<String, Object>();
+			// model.put("email", form.getEmail());
+			// model.put("feedback", form.getFeedbackText());
 			// model.put(EmailSender.TO_EMAIL, form.getEmail());
 			// userFeedbackConfirmSender.sendEmail(model);
+			emailService.sendFeedback(form.getEmail(), form.getFeedbackText());
 			form.setSubmitMessage("Your feedback was successfully sent. Thank you!");
 			// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND);
 		}
 		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CONTACT_PAGE);
-		form.setTheme(ControllerUtil.getSessionManagedTheme(request, config.getDefaultTheme()));
+		config.injectProperties(form);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(form, locale, PortalPageInfo.CONTACT);
-
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
-		}
+		config.postHandle(this, page);
 
 		return page;
 	}

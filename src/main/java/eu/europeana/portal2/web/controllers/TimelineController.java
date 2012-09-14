@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
@@ -34,8 +33,6 @@ public class TimelineController {
 	
 	@Resource private SearchService searchService;
 
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
-
 	@Resource(name="configurationService") private Configuration config;
 
 	@RequestMapping("/timeline.html")
@@ -50,7 +47,8 @@ public class TimelineController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale)
-			throws Exception {
+					throws Exception {
+		config.registerBaseObjects(request, response, locale);
 
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
@@ -60,15 +58,10 @@ public class TimelineController {
 		model.setStartPage(startPage);
 		model.setRefinements(qf);
 		model.setRefineKeyword(StringUtils.trimToNull(rq));
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.TIMELINE);
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
-		}
+		config.postHandle(this, page);
 
 		return page;
 	}
@@ -78,11 +71,14 @@ public class TimelineController {
 			@RequestParam(value = "query", required = false, defaultValue = "") String q,
 			@RequestParam(value = "startFrom", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue = "1000") int rows,
-			HttpServletRequest request
-			) throws Exception {
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale) 
+					throws Exception {
+		config.registerBaseObjects(request, response, locale);
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 
 		Map<String, String[]> params = (Map<String, String[]>)request.getParameterMap();
 
@@ -109,6 +105,8 @@ public class TimelineController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.TIMELINE_JSON);
 		// clickStreamLogger.logBriefResultView(request, briefBeanView, solrQuery, page);
+		config.postHandle(this, page);
+
 		return page;
 	}
 }

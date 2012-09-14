@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -38,8 +39,11 @@ public class SuggestionController {
 			@RequestParam(value = "term", required = false, defaultValue="") String term,
 			@RequestParam(value = "size", required = false, defaultValue="10") int size,
 			HttpServletRequest request,
-			HttpServletResponse response) 
+			HttpServletResponse response,
+			Locale locale)
 					throws EuropeanaQueryException {
+		config.registerBaseObjects(request, response, locale);
+
 		if (term == null) {
 			throw new EuropeanaQueryException(ProblemType.MALFORMED_QUERY);
 		}
@@ -64,8 +68,10 @@ public class SuggestionController {
 		log.info("formattedSuggestion: " + StringUtils.join(formattedSuggestion, ", "));
 		SuggestionsPage model = new SuggestionsPage();
 		model.setResults(formattedSuggestion);
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 
-		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_SUGGESTION);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_SUGGESTION);
+		config.postHandle(this, page);
+		return page;
 	}
 }

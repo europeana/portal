@@ -20,7 +20,6 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.services.Configuration;
@@ -33,20 +32,17 @@ import eu.europeana.portal2.web.util.SearchUtils;
 @Controller
 public class SearchController {
 
-	// @Resource
-	// private ThumbnailService thumbnailService;
-
-	private final Logger log = Logger.getLogger(getClass().getName());
+	// @Resource private ThumbnailService thumbnailService;
 
 	@Resource private SearchService searchService;
 	
 	@Resource private InternalResourceViewResolver viewResolver;
 
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
-
 	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
+
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	/**
 	 * Possible sort options
@@ -80,6 +76,7 @@ public class SearchController {
 		HttpServletResponse response,
 		Locale locale
 	) {
+		config.registerBaseObjects(request, response, locale);
 		localeChangeInterceptor.preHandle(request, response, this);
 
 		log.info("============== START SEARCHING ==============");
@@ -108,7 +105,8 @@ public class SearchController {
 		//       REMOVE THIS LINE AS SOON AS POSSIBLE, but not earlier ;-)
 		sort = DEFAULT_SORT;
 		model.setSort(sort);
-		config.injectProperties(model, request);
+		config.injectProperties(model);
+
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 
@@ -135,24 +133,9 @@ public class SearchController {
 			e.printStackTrace();
 		}
 
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
-		}
-		// model.addMessage("theme: " + model.getTheme());
+		config.postHandle(this, page);
 
 		return page;
-	}
-
-	public ConfigInterceptor getCorelib_web_configInterceptor() {
-		return corelib_web_configInterceptor;
-	}
-
-	public void setCorelib_web_configInterceptor(
-			ConfigInterceptor corelib_web_configInterceptor) {
-		this.corelib_web_configInterceptor = corelib_web_configInterceptor;
 	}
 
 	public InternalResourceViewResolver getViewResolver() {

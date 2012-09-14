@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -26,8 +25,6 @@ public class LoginPageController {
 	@Resource(name="corelib_web_emailService") private EmailService emailService;
 	
 	@Resource(name="corelib_db_userService") private UserService userService;
-
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -49,10 +46,12 @@ public class LoginPageController {
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, 
 			HttpServletResponse response, 
-			Locale locale) throws Exception {
+			Locale locale) 
+					throws Exception {
+		config.registerBaseObjects(request, response, locale);
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 		model.setEmail(email);
 		log.info("email: " + email);
 		log.info("buttonPressed: " + buttonPressed);
@@ -100,14 +99,8 @@ public class LoginPageController {
 		// page.addObject("register", register);
 		model.setErrorMessage("1".equals(request.getParameter("error")) ? "Invalid Credentials" : null);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGIN);
+		config.postHandle(this, page);
 		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.LOGIN, page);
-
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
-		}
 
 		return page;
 	}

@@ -38,8 +38,12 @@ public class AjaxController {
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	@RequestMapping("/remove.ajax")
-	public ModelAndView handleAjaxRemoveRequest(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ModelAndView handleAjaxRemoveRequest(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale) 
+					throws Exception {
+		config.registerBaseObjects(request, response, locale);
 		AjaxPage model = new AjaxPage();
 		try {
 			if (!hasJavascriptInjection(request)) {
@@ -48,8 +52,10 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
-		config.injectProperties(model, request);
-		return createResponsePage(model);
+		config.injectProperties(model);
+		ModelAndView page = createResponsePage(model);
+		config.postHandle(this, page);
+		return page;
 	}
 
 	@RequestMapping("/save.ajax")
@@ -58,6 +64,7 @@ public class AjaxController {
 			HttpServletResponse response, 
 			Locale locale) 
 					throws Exception {
+		config.registerBaseObjects(request, response, locale);
 		log.info("================ save.json ================");
 		AjaxPage model = new AjaxPage();
 		try {
@@ -67,8 +74,9 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 		ModelAndView page = createResponsePage(model);
+		config.postHandle(this, page);
 		return page;
 	}
 

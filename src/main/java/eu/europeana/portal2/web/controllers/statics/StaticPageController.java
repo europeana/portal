@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.model.CorePageInfo;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
@@ -55,8 +54,6 @@ import eu.europeana.portal2.web.presentation.model.StaticPage;
 
 @Controller
 public class StaticPageController {
-
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -92,8 +89,12 @@ public class StaticPageController {
 	public ModelAndView fetchStaticPage(
 			@PathVariable String pageName,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			HttpServletRequest request, HttpServletResponse response,
-			Locale locale) throws Exception {
+			HttpServletRequest request, 
+			HttpServletResponse response,
+			Locale locale) 
+					throws Exception {
+		config.registerBaseObjects(request, response, locale);
+
 		pageName = "/" + pageName + ".html";
 
 		log.info("=========== fetchStaticPage ==============");
@@ -126,13 +127,12 @@ public class StaticPageController {
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 
 		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.STATICPAGE);
-		corelib_web_configInterceptor.postHandle(request, response, this, page);
-		model.addMessage("theme: " + model.getTheme());
+		config.postHandle(this, page);
 
 		return page;
 	}

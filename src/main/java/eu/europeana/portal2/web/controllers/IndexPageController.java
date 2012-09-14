@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
@@ -69,8 +68,6 @@ public class IndexPageController {
 
 	@Resource private ResourceBundleMessageSource messageSource;
 
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
-	
 	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
@@ -90,8 +87,9 @@ public class IndexPageController {
 			@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
 			HttpServletRequest request,
 			HttpServletResponse response,
-			Locale locale)
-			throws Exception {
+			Locale locale) {
+		config.registerBaseObjects(request, response, locale);
+
 		IndexPage model = new IndexPage();
 		// update dynamic items
 		updateFeedIfNeeded(model);
@@ -100,24 +98,17 @@ public class IndexPageController {
 		updateFeaturedItem(model, locale);
 		updateFeaturedPartner(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 
 		localeChangeInterceptor.preHandle(request, response, this);
 
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
-		final ModelAndView page = ControllerUtil.createModelAndViewPage(model,
-				locale, PortalPageInfo.INDEX);
+		final ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.INDEX);
 		// clickStreamLogger.logUserAction(request,
 		// ClickStreamLogger.UserAction.INDEXPAGE, page);
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// model.addMessage("theme: " + model.getTheme());
-
+		config.postHandle(this, page);
+		
 		return page;
 	}
 

@@ -35,7 +35,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,7 +44,6 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
@@ -66,8 +64,6 @@ public class ObjectController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
-
 	@Resource private SearchService searchService;
 
 	@Resource private LocaleInterceptor localeChangeInterceptor;
@@ -76,7 +72,7 @@ public class ObjectController {
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
-	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
 			@PathVariable String collectionId,
 			@PathVariable String recordId,
@@ -88,8 +84,11 @@ public class ObjectController {
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			@RequestParam(value = "source", required = false, defaultValue="corelib") String source,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) {
+			HttpServletRequest request,
+			HttpServletResponse response, 
+			Locale locale) {
 		
+		config.registerBaseObjects(request, response, locale);
 		localeChangeInterceptor.preHandle(request, response, this);
 		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
 		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
@@ -107,7 +106,7 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 
@@ -119,12 +118,7 @@ public class ObjectController {
 		model.setMoreLikeThis(getMoreLikeThis(collectionId, recordId, model));
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe("Exception: " + e.getMessage());
-			e.printStackTrace();
-		}
+		config.postHandle(this, page);
 
 		return page;
 	}

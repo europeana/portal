@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
@@ -24,8 +23,6 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 public class UserManagementController {
 
 	@Resource(name="corelib_db_userService") private UserService userService;
-
-	@Resource private ConfigInterceptor corelib_web_configInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -38,20 +35,15 @@ public class UserManagementController {
 			HttpServletResponse response,
 			Locale locale) 
 					throws Exception {
+		config.registerBaseObjects(request, response, locale);
 		EmptyModelPage model = new EmptyModelPage();
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU);
+		config.postHandle(this, page);
 		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.MY_EUROPEANA);
-
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
-		}
 
 		return page;
 	}
@@ -65,10 +57,17 @@ public class UserManagementController {
 
 	@RequestMapping("/logout.html")
 	public ModelAndView logoutHandler(
-			HttpServletRequest request, 
+			HttpServletRequest request,
+			HttpServletResponse response,
 			Locale locale)
 					throws Exception {
+		config.registerBaseObjects(request, response, locale);
+		EmptyModelPage model = new EmptyModelPage();
+		config.injectProperties(model);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGOUT);
+		config.postHandle(this, page);
 		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.LOGOUT);
-		return ControllerUtil.createModelAndViewPage(new EmptyModelPage(), locale, PortalPageInfo.MYEU_LOGOUT);
+
+		return page;
 	}
 }

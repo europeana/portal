@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.data.CarouselPage;
@@ -31,9 +30,6 @@ public class CarouselController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 	
-	@Resource
-	private ConfigInterceptor corelib_web_configInterceptor;
-
 	@Resource private ResourceBundleMessageSource messageSource;
 	// private ReloadableResourceBundleMessageSource messageSource;
 
@@ -47,6 +43,7 @@ public class CarouselController {
 			HttpServletResponse response,
 			Locale locale)
 			throws Exception {
+		config.registerBaseObjects(request, response, locale);
 
 		CarouselPage model = new CarouselPage();
 		model.setLocale(locale);
@@ -54,7 +51,7 @@ public class CarouselController {
 			start = 1;
 		}
 		model.setStart(start);
-		config.injectProperties(model, request);
+		config.injectProperties(model);
 
 		List<CarouselItem> carouselItems = new ArrayList<CarouselItem>();
 		boolean keepFetching = true;
@@ -83,12 +80,7 @@ public class CarouselController {
 		model.setTotal(total);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.CAROUSEL);
-		try {
-			corelib_web_configInterceptor.postHandle(request, response, this, page);
-		} catch (Exception e) {
-			log.severe("Exception: " + e.getMessage());
-			e.printStackTrace();
-		}
+		config.postHandle(this, page);
 
 		return page;
 	}
