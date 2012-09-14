@@ -52,13 +52,24 @@
 		
 		<ul id="share-subscribe">
 			<c:if test="${!empty model.user}">
+
 				<li>
-					<a class="share-section">
+					<a id="save-search" class="share-section" rel="nofollow">
 						<span class="icon-saveditem"></span>
 						<spring:message code="SaveToMyEuropeana_t" />
 					</a>
+					
+					<c:if test="${!empty model.briefBeanView}">
+						<input type="hidden" id="query-to-save" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}"/>
+					</c:if>
+					<c:if test="${!empty model.query}">
+						<input type="hidden" id="query-string-to-save" value="${fn:escapeXml(model.query)}"/>
+					</c:if>					
 				</li>
+				
 			</c:if>
+			
+			
 			<li>
 				<a class="share-section">
 					<span class="icon-print"></span>
