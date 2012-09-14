@@ -1,14 +1,23 @@
 package eu.europeana.portal2.services;
 
+import java.util.logging.Logger;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
+import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 public class Configuration {
+
+	@Resource(name="corelib_db_userService") private UserService userService;
+
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	///////////////////////////////// properties
 
@@ -77,6 +86,8 @@ public class Configuration {
 	public void injectProperties(PortalPageData model, HttpServletRequest request) {
 		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(portalGooglePlusPublisherId));
 		model.setTheme(getTheme(request));
+		User user = ControllerUtil.getUser(userService);
+		model.setUser(user);
 	}
 
 	private String getTheme(HttpServletRequest request) {

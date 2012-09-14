@@ -39,8 +39,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.db.service.UserService;
-import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -73,8 +71,6 @@ public class ObjectController {
 	@Resource private SearchService searchService;
 
 	@Resource private LocaleInterceptor localeChangeInterceptor;
-
-	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -114,9 +110,6 @@ public class ObjectController {
 		config.injectProperties(model, request);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
-
-		User user = ControllerUtil.getUser(userService);
-		model.setUser(user);
 
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
 		Query query = new Query(queryString).setRefinements(qf);

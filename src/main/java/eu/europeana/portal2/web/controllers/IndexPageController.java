@@ -61,20 +61,9 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class IndexPageController {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-	
-	private static List<FeedEntry> feedEntries;
-	private static Calendar feedAge;
-	private List<CarouselItem> carouselItems;
+	// @Resource private ProposedSearchTermSampler proposedSearchTermSampler;
 
-	private static List<FeedEntry> pinterestEntries;
-	private static Calendar pinterestAge;
-
-	// @Autowired
-	// private ProposedSearchTermSampler proposedSearchTermSampler;
-
-	// @Autowired
-	// private ClickStreamLogger clickStreamLogger;
+	// @Resource private ClickStreamLogger clickStreamLogger;
 
 	// private ReloadableResourceBundleMessageSource messageSource;
 
@@ -85,6 +74,15 @@ public class IndexPageController {
 	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
+
+	private final Logger log = Logger.getLogger(getClass().getName());
+	
+	private static List<FeedEntry> feedEntries;
+	private static Calendar feedAge;
+	private List<CarouselItem> carouselItems;
+
+	private static List<FeedEntry> pinterestEntries;
+	private static Calendar pinterestAge;
 
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
