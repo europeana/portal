@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -298,6 +299,9 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	}
 
 	private static String encode(String string) {
+		if (StringUtils.isBlank(string)) {
+			return string;
+		}
 		try {
 			return URLEncoder.encode(string, "utf-8");
 		} catch (UnsupportedEncodingException e) {

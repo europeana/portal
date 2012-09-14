@@ -1,10 +1,14 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.web.presentation.model.data.AdminData;
 
 public class AdminPage extends AdminData {
+
+	private List<User> users;
 
 	/**
 	 * Returns the total amount of memory in the Java virtual machine. The value 
@@ -37,5 +41,13 @@ public class AdminPage extends AdminData {
 	 */
 	public String getMaxMemory() {
 		return new DecimalFormat("#,###,###,###").format(Runtime.getRuntime().maxMemory());
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 }

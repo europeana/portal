@@ -1,0 +1,23 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div id="content">
+
+<table>
+  <caption>State of memory types</caption>
+  <tr><td>Total memory</td><td align="right">${model.totalMemory}</td></tr>
+  <tr><td>Free memory</td><td align="right">${model.freeMemory}</td></tr>
+  <tr><td>Max memory</td><td align="right">${model.maxMemory}</td></tr>
+</table>
+
+<table>
+  <caption>Users</caption>
+<c:forEach items="${model.users}" var="user">
+  <tr>
+    <td>${user.userName}</td>
+    <td>${user.email}</td>
+    <td>${user.registrationDate}</td>
+    <td>${user.role}</td>
+  </tr>
+</c:forEach>
+</table>
+
+</div>

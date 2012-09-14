@@ -204,6 +204,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.3.0.Final</version>
 		</dependency>
+		<!-- json.org needs for JSON formatting -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20070829</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
