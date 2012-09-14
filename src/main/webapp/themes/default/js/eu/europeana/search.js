@@ -60,6 +60,8 @@ eu.europeana.search = {
 				menuBottom.setActive(selected);
 
 				document.cookie = "europeana_rows=" + selected;
+				
+				jQuery("#query-search").submit();
 			}
 		};
 		var menuTop = new EuMenu( $(".nav-top .eu-menu"), config);
