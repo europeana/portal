@@ -20,8 +20,9 @@
 <%-- form --%>
 
 	<form id="query-search" action="${query_action}" method="get">
-		
+			<!-- 
 			<div class="seven columns offset-by-three search-wrapper">
+			-->
 				
 				<table cellspacing="0" cellpadding="0">
 					<tr>
@@ -46,23 +47,19 @@
 								value="${model.query}"/>							
 						</td>
 						<td class="submit-cell hide-cell-on-phones">
-							<a class="show-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
-							<a class="hide-ilb-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
-
 							<input value="<spring:message code='Search_t'/>" type="submit"/>
 						</td>
 					</tr>
 					
 					<tr>
 						<td colspan="3" class="submit-cell show-cell-on-phones">
+							<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
 							<input value="<spring:message code='Search_t'/>" type="submit"/>
 						</td>
-						
 					</tr>
 					
 				</table>
-					
-			</div>
+				
 			
 			
 			<%-- map search link --%>

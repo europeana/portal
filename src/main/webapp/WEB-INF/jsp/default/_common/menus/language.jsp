@@ -8,8 +8,8 @@
   </c:otherwise>
 </c:choose>
 
-<div class="eu-menu no-highlight white" id="lang-menu">
-	<form action="${language_menu_action}" method="post" id="language-selector">
+<form action="${language_menu_action}" method="post" id="language-selector">
+	<div class="eu-menu no-highlight white hide-ilb-on-phones" id="lang-menu">
 		<span class="menu-label"></span>
 		<span class="icon-arrow-3 open-menu"></span>
 	    <ul title="<spring:message code='ChooseLanguage_t' />">
@@ -22,7 +22,7 @@
 				</li>
 			</c:forEach>
 		</ul>
-	<input type="hidden" name="embeddedlang" value=""/>
-	</form>
-</div>
+		<input type="hidden" name="embeddedlang" value=""/>
+	</div>
+</form>
   

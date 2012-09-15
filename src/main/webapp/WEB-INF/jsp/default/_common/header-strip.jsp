@@ -68,8 +68,27 @@
 	<%-- mobile menu links --%>
 	<div id="mobile-menu" class="eu-menu icon-mobilemenu show-on-phones" aria-hidden="true">
 		<ul>
-			<li class="item icon-home">	<a target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a></li>
-			<li class="item icon-home">	<a target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a></li>
+			<li class="item icon-home">
+				<a	class="/${model.portalName}/"
+					target="<spring:message code="notranslate_main_menu_home_a_target_t"/>"
+					href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
+			</li>
+			<li class="item icon-home">
+				<a	class="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
+					target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
+					href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
+			</li>
+			
+			<!-- language options -->
+			<li class="item lang">
+				<a class=""><spring:message code='ChooseLanguage_t' /></a>
+			</li>
+			
+			<c:forEach items="${model.portalLanguages}" var="language">
+				<li class="item lang">
+					<a class="${language.languageCode}">${language.languageName}</a>
+				</li>
+			</c:forEach>
 		</ul>
 	</div>
 	

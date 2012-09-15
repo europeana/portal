@@ -8,7 +8,7 @@ var EuMenu = function(cmpIn, options){
 	self.val		= null;
 	
 	self.cmp.click(function(e){
-		$('.eu-menu' ).removeClass("active");
+		$('.eu-menu' ).not(self.cmp).removeClass("active");
 		self.cmp.toggleClass("active");
 		e.stopPropagation();
 	});
@@ -18,17 +18,18 @@ var EuMenu = function(cmpIn, options){
 		self.cmp.find(".menu-label").html(  self.label + " " + val );
 	};
 	
-
-	self.getActive = function(){
-		/*
-		 * var res = null;
+	self.getActiveItem = function(){
+		var res = null;
 		self.cmp.find(".item").each(function(i, ob){
 			if($(ob).hasClass("active")){
 				res = $(ob);						
 			}
 		});
-		*/
-		return self.val;//res;
+		return res;
+	};
+	
+	self.getActive = function(){
+		return self.val;
 	};
 	
 	self.setActive = function(val){

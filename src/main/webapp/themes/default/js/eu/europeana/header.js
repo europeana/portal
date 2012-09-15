@@ -52,7 +52,7 @@ eu.europeana.header = {
 		var cookies		= document.cookie.split(";");
 		var cookieVal	= null;
 		
-		for(i=0; i<cookies.length; i++)
+		for(var i=0; i<cookies.length; i++)
 		{
 			var cookieName	= cookies[i].substr(0, cookies[i].indexOf("="));
 			if(cookieName == "europeana_rows"){
@@ -98,14 +98,16 @@ eu.europeana.header = {
 			$("#mobile-menu"),
 			{
 				"fn_item": function(self){
-				},
-
-				"fn_init": function(self){
-				},
-				
-				"fn_submit":function(self){
+					if(self.getActiveItem().hasClass("lang")){
+						var active = self.getActive();
+						if(active){
+							$("input[name=embeddedlang]").val(self.getActive());							
+							$("#language-selector").submit();
+						}
+						return;
+					}
+					window.location = self.getActive();
 				}
-			
 			}
 		);
 		menu.init();
@@ -119,14 +121,7 @@ eu.europeana.header = {
 				"fn_item": function(self){
 					$("input[name=embeddedlang]").val(self.getActive());
 					$("#language-selector").submit();
-				},
-
-				"fn_init": function(self){
-				},
-				
-				"fn_submit":function(self){
-				}
-			
+				}			
 			}
 		);
 		menu.setActive("choose");
@@ -176,17 +171,7 @@ eu.europeana.header = {
 			menu.submit();
 			return true;
 		});
-
-	}, 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	},
 	
 	/**
 	 *	js solution for tabbing through main menu
