@@ -21,6 +21,15 @@ a.action-link {
 	line-height:	1.5;
 	font-size:		1em;
 }
+
+#shares-link{
+	display: none;	
+}
+
+#shares-link .addthis_button{
+	color:			#333;
+}
+
 a.action-link:hover{
 	color:			#444;	
 }

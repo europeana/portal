@@ -34,11 +34,21 @@
 	
 	<div class="clear"></div>
 	
+	<%-- Shares link 
+	<a id="shares-link" class="icon-share action-link action-title"  rel="nofollow">
+		<span  title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
+	</a>
+	--%>
+	
+	
 	<%-- Shares link --%>
-	<a href="" id="shares-link" class="icon-share action-link" title="<spring:message code="Share_item_link_alt_t" />" rel="nofollow">
-		<span class="action-title"><spring:message code="Share_item_link_t" /></span>
+	<a id="shares-link" class="icon-share action-link" rel="nofollow">
+		<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
 	</a>
 	
+	
+	
+		
 	<%-- Citation link --%>
    	<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
    		<span class="action-title"><spring:message code="Cite_Button_t" /></span>

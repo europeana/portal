@@ -148,34 +148,16 @@ com.addthis = {
 	},
 	
 	
-	/*
-	  
-	  
-	<a rel="nofollow" title="Share item on facebook, twitter, etc." class="icon-share action-link" id="shares-link" href="">
-		<span class="action-title">Share item</span>
-		
-		<a class="addthis_button_compact at300m" href="#">
-			<span class="at16nc at300bs at15nc at15t_compact at16t_compact">
-				<span class="at_a11y">More Sharing Services</span>
-			</span>
-		</a>
 
-	</a>
-	
-	
-	*/
 	
 	getToolboxHtml_ANDY : function( options ) {
 		
 		options.html_class = options.html_class || 'addthis_toolbox addthis_default_style';
 		
 		
-//		alert("options.html_class = " + options.html_class + "\n\n" +  JSON.stringify( options.services  ) + "\n\n\n" + this.getButtons( options.services ))
-		
 		var html =
 			
-			'<div '									+
-			'rel="nofollow" '						+
+			'<span '								+
 			'style="width:100%;" '					+
 			'title="get the title" '				+
 			'class="' + options.html_class + '"'	+
@@ -186,13 +168,9 @@ com.addthis = {
 			
 			'>' + 
 			
-			( ( options.services )	? this.getButtons( options.services ) : '' ) +
+			( ( options.services )	? this.getButtons( options.services, options.link_html ) : '' ) +
 			
-			'</div>';
-
-	
-		//html = html.replace("at16nc at300bs at15nc at15t_compact at16t_compact", "icon-share")
-		//html = html.replace("addthis_button_compact at300m", "icon-share")
+			'</span>';	
 		
 		return html;
 		
@@ -254,7 +232,7 @@ com.addthis = {
 	},
 	
 	
-	getButtons : function( services ) {
+	getButtons : function( services, link_html ) {
 		
 		var i = '',
 			button_html = '';
@@ -280,17 +258,21 @@ com.addthis = {
 					button_html += this.getTweetButton( i, services[i] );
 					
 				} else {
-					/*
+
+					
 					button_html +=
-						'<a class="addthis_button_' + i + '">' +
-							( services[i]['text'] ? services[i]['text'] : '' ) +
+						'<a class="addthis_button">' +
+						( services[i]['text'] ? services[i]['text'] : '' ) +
+						(link_html ? link_html : '') + 
 						'</a>';
-					*/
-					button_html +=
+
+					/*
+	 					button_html +=
 						'<a class="addthis_button_' + i + '">' +
 						( services[i]['text'] ? services[i]['text'] : '' ) +
 						'</a>';
-					
+
+					 */
 				}
 				
 			}

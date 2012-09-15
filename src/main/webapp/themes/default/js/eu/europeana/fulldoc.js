@@ -612,32 +612,32 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 		var url = jQuery('head link[rel="canonical"]').attr('href'),
 			title = jQuery('head title').html(),
 			description = jQuery('head meta[name="description"]').attr('content');
-		window.addthis_config = com.addthis.createConfigObject({
-			pubid : eu.europeana.vars.addthis_pubid,
-			ui_language: 'en', // eu.europeana.vars.locale,
-			data_ga_property: eu.europeana.vars.gaId,
-			data_ga_social : true,
-			data_track_clickback: true,
-			ui_use_css : true
-		});
+			window.addthis_config = com.addthis.createConfigObject({
+				pubid : eu.europeana.vars.addthis_pubid,
+				ui_language: 'en', // eu.europeana.vars.locale,
+				data_ga_property: eu.europeana.vars.gaId,
+				data_ga_social : true,
+				data_track_clickback: true,
+				ui_use_css : true});
 		
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes		
 		
 		
-		var addThisHtml = 		com.addthis.getToolboxHtml_ANDY({
-			html_class : 'addthis',
+		var addThisHtml = com.addthis.getToolboxHtml_ANDY({
+			html_class : '',
 			url : url,
 			title : title,
 			description : description,
 			services : {
 				compact : {}
-			}
+			},
+			link_html : $('#shares-link').html()
+		
 		});
 
-
-		jQuery('#shares-placeholder').after(
-				addThisHtml
+		jQuery('#shares-link').html(
+			addThisHtml
 		);
 		
 		/*
@@ -660,15 +660,13 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 		 */
 		
 		
-		jQuery('.addthis').hide();
+		jQuery('#shares-link').hide();
 		com.addthis.init( null, true, false );
 		
 		setTimeout( function() {
-			jQuery('.addthis .at16t_compact').after( '<span>&nbsp;' +  jQuery('#shares-placeholder').html() );
-			jQuery('#shares-placeholder').remove();
-			jQuery('.addthis .at300bs').css("display", "inline-block");
-			jQuery('.addthis').fadeIn(); },
+			jQuery('#shares-link').fadeIn(); },
 			600 );
+		
 	}
 };
 
