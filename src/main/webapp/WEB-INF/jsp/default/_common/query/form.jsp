@@ -20,67 +20,68 @@
 <%-- form --%>
 
 	<form id="query-search" action="${query_action}" method="get">
-			<!-- 
-			<div class="seven columns offset-by-three search-wrapper">
-			-->
 				
-				<table cellspacing="0" cellpadding="0">
-					<tr>
-						<td class="menu-cell">
-							<div id="search-menu" class="eu-menu" aria-hidden="true">
-			
-								<span class="hide-ilb-on-phones menu-label">Search</span>
-								<span class="icon-arrow-3 open-menu"></span>
-								<ul>
-									<li class="item">	<a href="" class=""			>All fields</a></li>
-									<li class="item">	<a href="" class="title:"	>Title</a></li>
-									<li class="item">	<a href="" class="who:"		>Who</a></li>
-									<li class="item">	<a href="" class="what:"	>What</a></li>
-									<li class="item">	<a href="" class="when:"	>When</a></li>
-									<li class="item">	<a href="" class="where:"	>Where</a></li>
-								</ul>
-							</div>
-						</td>
-						<td class="query-cell">
-							<input
-								type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
-								value="${model.query}"/>							
-						</td>
-						<td class="submit-cell hide-cell-on-phones">
-							<input value="<spring:message code='Search_t'/>" type="submit"/>
-						</td>
-					</tr>
-					
-					<tr>
-						<td colspan="3" class="submit-cell show-cell-on-phones">
-							<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
-							<input value="<spring:message code='Search_t'/>" type="submit"/>
-						</td>
-					</tr>
-					
-				</table>
-				
-			
-			
-			<%-- map search link --%>
+		<table cellspacing="0" cellpadding="0">
+			<tr>
+				<td class="menu-cell">
+					<div id="search-menu" class="eu-menu" aria-hidden="true">
 	
-			<c:if test="${model.debug} && 'map.html' == ${model.pageName}">
-				<input type="checkbox" id="box_search"/>
-				<label for="box_search"><spring:message code='MapBoxedSearch_t'/></label>
-			</c:if>
-	
-			<%-- embedded search --%>
-	
-			<c:if test="${model.embedded}">
-				<input type="hidden" name="embedded" value="${model.embeddedString}"/>
-				<input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}"/>
-				<input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}"/>
-				<input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}"/>
-				<input type="hidden" name="rswUserId" value="${model.rswUserId}"/>
-				<input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/>
-				<input type="hidden" name="lang" value="${model.locale}"/>
-			</c:if>
+						<span class="hide-ilb-on-phones menu-label">Search</span>
+						<span class="icon-arrow-3 open-menu"></span>
+						<ul>
+							<li class="item">	<a href="" class=""			>All fields</a></li>
+							<li class="item">	<a href="" class="title:"	>Title</a></li>
+							<li class="item">	<a href="" class="who:"		>Who</a></li>
+							<li class="item">	<a href="" class="what:"	>What</a></li>
+							<li class="item">	<a href="" class="when:"	>When</a></li>
+							<li class="item">	<a href="" class="where:"	>Where</a></li>
+						</ul>
+					</div>
+				</td>
+				<td class="query-cell">
+					<input
+						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
+						value="${model.query}"/>							
+				</td>
+				<td class="submit-cell hide-cell-on-phones">
+					<button class="icon-mag" type="submit">
+						<spring:message code='Search_t'/>
+					</button>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="3" class="submit-cell show-cell-on-phones">
+					<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
+					<button class="icon-mag" type="submit">
+						<spring:message code='Search_t'/>
+					</button>
+				</td>
+			</tr>
+			
+		</table>
+			
 		
+		
+		<%-- map search link --%>
+
+		<c:if test="${model.debug} && 'map.html' == ${model.pageName}">
+			<input type="checkbox" id="box_search"/>
+			<label for="box_search"><spring:message code='MapBoxedSearch_t'/></label>
+		</c:if>
+
+		<%-- embedded search --%>
+
+		<c:if test="${model.embedded}">
+			<input type="hidden" name="embedded" value="${model.embeddedString}"/>
+			<input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}"/>
+			<input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}"/>
+			<input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}"/>
+			<input type="hidden" name="rswUserId" value="${model.rswUserId}"/>
+			<input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/>
+			<input type="hidden" name="lang" value="${model.locale}"/>
+		</c:if>
+	
 		
 		<%-- additional feature links for the search box --%>
 		

@@ -160,24 +160,24 @@ table tr:first-child{
 
 	
 #query-input{
-    font-weight:		400;
+	font-weight:		400;
 	font-size:			inherit;
 	line-height:		1.48;
-    color:				#333;
-    outline:			none; /* chrome */
+	color:				#333;
+	outline:			none; /* chrome */
 
-    -webkit-appearance:	none;
+	-webkit-appearance:	none;
 
-    padding:			0;
+	padding:			0;
 	padding-left:		0.25em;
 	padding-right:		0.25em;
 
-    
-    width:				90%;
-    border:				none;
-    margin:				0;
-    
-    float:				left;
+	
+	width:				90%;
+	border:				none;
+	margin:				0;
+	
+	float:				left;
 }
 
 
@@ -312,23 +312,21 @@ table tr:first-child{
 	position:		relative;
 	padding-bottom:	2em;
 }
-    
 
-
-
-.submit-cell input{
-    font-family:			'SourceSansProRegular', Arial, sans-serif;
-	background-color:		#9900ff;
-       border:					none;
-       color:					#fff;
-       cursor:					pointer;
-       font-size:				inherit;
+.submit-cell button{
+	font-family:			'SourceSansProRegular', Arial, sans-serif;
+	/*background-color:		#9900ff;*/
+	background-color:		blue;
+	border:					none;
+	color:					#fff;
+	cursor:					pointer;
+	font-size:				inherit;
 	margin-left:			0;	/* override chrome default */
 	margin-right:			0;	/* override chrome default */
 	height:					100%;	
 	
-    -webkit-appearance:		none;
-    /*
+	-webkit-appearance:		none;
+	/*
 	-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 	-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 	border-radius:			0.5em 0.5em 0.5em 0.5em;
@@ -347,11 +345,11 @@ table tr:first-child{
 
 @media only screen and ( min-width:48em ){
 
-    .submit-cell{
+	.submit-cell{
 		padding-top:		0;
-   	}
+	}
 
-	.submit-cell input{
+	.submit-cell button{
 		position:				absolute;
 		padding-bottom:			0.175em;
 		-moz-border-radius:		0 0.5em 0.5em 0;
@@ -367,7 +365,7 @@ table tr:first-child{
 
 	.search-menu.selected span.open-menu,
 	.search-menu.selected .item.active{
-   		text-shadow:	none;
+	 	text-shadow:	none;
 	}
 
 	.submit-button {
@@ -375,8 +373,8 @@ table tr:first-child{
 		margin-top:	0;			
 	}
 }
-    
-    
+	
+	
 	/*
 	.locale-ca #search-help {
 		width: 46px;
@@ -459,7 +457,7 @@ table tr:first-child{
 	background-image:		url(../images/icons/sprite.png);
 	background-repeat:		no-repeat;
 	background-position:	5px -650px;
-	border:					solid  1px #c0c0c0;
+	border:					solid 1px #c0c0c0;
 }
 */
 
@@ -491,7 +489,7 @@ a.ui-corner-all {
 a.ui-corner-all:hover,
 a.ui-state-hover {
 	color: #fff;
-	background-color: #000;	    
+	background-color: #000;		
 }
 
 
