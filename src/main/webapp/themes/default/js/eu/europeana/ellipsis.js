@@ -3,10 +3,14 @@ var Ellipsis = function(cmp, ops) {
 	var $cmp	= $(cmp);
     var $inner 	= $cmp.find('.ellipsis-inner');
 	var text	= [];
+	var sub = "... XXXXX";
 
 	var tail	= ops && ops.tail ? ops.tail : "...";
 	var fixed	= false;
 
+	// new way
+	var totalText = "";
+	
 
 	if(ops && ops.fixed){
 		fixed = ops.fixed;
@@ -17,23 +21,75 @@ var Ellipsis = function(cmp, ops) {
 		return ( $inner[0].offsetHeight > $cmp.height()+1 );/* chrome +1 for border */
 	};
 
+	
+	var tryForSize = function(length){
+		$inner.html(totalText.substr(0,length) + (fixed ? sub : ""));
+		
+		//console.log("tryForSize " + length + "\n\nHTML=" + $inner.html());
+		
+		return !fn();
+	};
+	
+	var locateMax = function(guess, bite, hone){
+		var newHone = hone;
+		var newBite = 0;
+		var newGuess = 0;
+		
+		//console.log("locatemax... bite = " + bite);
+		
+		if(guess>totalText.length){
+			//console.log("guess>totalText.length    (" + guess+ ">" + totalText.length + ")" );
+
+			newBite = Math.max(1, bite/2);
+			newGuess = guess - newBite;
+		}
+		else{
+			if(tryForSize(guess)){	// too wee or correct
+				if(bite==1){
+					return guess;
+				}
+				else{
+					newBite = hone ? Math.max(1, bite/2) : bite;
+					newGuess = guess + newBite;
+				}
+			}
+			else{	// too big - start honing!
+				newHone = true;
+				newBite = hone ? Math.max(1, bite/2) : bite;
+				newGuess = guess - newBite;
+			}			
+		}
+		return locateMax(newGuess, newBite, newHone);
+	};
+	
 	var respond = function(){
 		
 		$cmp	= $(cmp);
 	    $inner 	= $cmp.find('.ellipsis-inner');
 
-	    
-		var sub = "... XXXXX";
-		$inner.html(text.join('') + (fixed ? sub : ""));
+		// start new
 
-		
-		//console.log("in respond: " + text.join(''))
+		var max = locateMax(20, 20, false);
 
-		
-		//if(text.join('').indexOf("lingsmekanism")>-1){
+		var theText = totalText.substr(0,max);
+		$inner.html(  theText + (max<totalText.length ? tail : '') +  sub );
+
+		if(fixed){
+			$cmp.html($cmp.html().replace(sub, fixed) );
 			
-			//alert( $inner.html() + "     " +   fn() );
-		//}
+			var $fixed = $cmp.find('.fixed');
+			$fixed.css("position",	"absolute");
+			$fixed.css("right",		"0px");
+			$fixed.css("bottom",	"0px");
+			//$fixed.css("float",	"right");
+		}
+
+		
+		// end new
+		
+		
+		/*
+		$inner.html(text.join('') + (fixed ? sub : ""));
 		
 		if(fn()){
 
@@ -61,7 +117,6 @@ var Ellipsis = function(cmp, ops) {
 				}
 			}
 		}
-
 		if(fixed){
 			$cmp.html($cmp.html().replace(sub, fixed) );
 			
@@ -71,6 +126,9 @@ var Ellipsis = function(cmp, ops) {
 			$fixed.css("bottom",	"0px");
 			//$fixed.css("float",	"right");
 		}
+
+		*/
+
 	};
 
 
@@ -88,9 +146,13 @@ var Ellipsis = function(cmp, ops) {
 
 
 		var innerHtml = $inner.html().trim();
+		totalText = innerHtml;
+
 		for(var i=0; i<innerHtml.length; i++){ // initialise text
 			text[i]=innerHtml.substr(i, 1);
 		}
+		
+		
 //fixed = '<span class="fixed">wtf???</span>';
 		respond();
 	};
