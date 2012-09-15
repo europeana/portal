@@ -137,6 +137,12 @@
     float:		left;
     cursor:		pointer;
 }
+/*
+.europeana-carousel .galleria-thumbnails .galleria-image {
+    margin:		0 0.6em 0 0.6em;
+    border:		0;
+}
+*/
 
 @media only screen and ( min-width:767px ){
 	.galleria-thumbnails .galleria-image {
@@ -153,7 +159,8 @@
 
 .europeana-carousel .galleria-thumbnails .galleria-image {
 	background:	#DFDFDF;
-    border:		1px solid #DFDFDF;
+    margin:		0 9px 0 9px;	/* pixel values only - em causes FF / chrome to disagree */
+	border:		0 !important;
 }
 
 .galleria-thumbnails{	/* centre the film strip in the default gallery */
@@ -342,14 +349,6 @@
     filter:					alpha(opacity=80);
 }
 
-.europeana-carousel .galleria-thumb-nav-left,
-.europeana-carousel .galleria-thumb-nav-right {
-    width:	62px;
-    height:	124px;
-    background-position: 0 46px;
-    xxxxxxxbackground-color: transparent !important;
-}
-
 .galleria-thumb-nav-right {
     background-position: -578px 5px;
     border-right: none;
@@ -357,8 +356,27 @@
     left: auto;
 }
 
+
+.europeana-carousel .galleria-thumb-nav-left,
 .europeana-carousel .galleria-thumb-nav-right {
-    background-position: -254px 46px;
+	
+    width:				auto;
+    height:				auto;
+    font-size:			6em;
+    
+    background-color:	transparent !important;
+    
+   	color:				white;	
+	text-shadow:		0 0 10px #000;
+	
+	left:				-0.25em;
+	right:				auto;
+}
+
+
+.europeana-carousel .galleria-thumb-nav-right {
+    left:				auto;
+    right:				-0.25em;
 }
 
 .galleria-thumbnails-container .disabled {
@@ -414,6 +432,12 @@
     background-image: url(classic-map.png);
     background-repeat: no-repeat;
 }
+
+.europeana-carousel .galleria-thumb-nav-left,
+.europeana-carousel .galleria-thumb-nav-right{
+    background-image: none;
+}
+
 
 /* europeana header & footer components */
 
