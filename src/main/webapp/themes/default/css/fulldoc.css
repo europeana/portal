@@ -257,7 +257,10 @@ img.trigger{
 	}	
 	
 	
-		
+	.rights-badge{
+		color:		black;
+		font-size:	1.5em;
+	}
 	
 /* additional-actions */
 

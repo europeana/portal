@@ -16,9 +16,14 @@
           alt="${model.rightsOption.rightsText}" />
       </c:when>
       <c:otherwise>
-        <img
+      
+      	<span title="${model.rightsOption.rightsText}" class="${model.rightsOption.rightsIcon}"></span>
+      	<%--
+      	  <img
           src="/${branding}/images/rights/${model.rightsOption.rightsIcon}"
           alt="${model.rightsOption.rightsText}" />
+      	 --%>
+          
       </c:otherwise>
     </c:choose>
   </a>
