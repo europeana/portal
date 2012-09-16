@@ -5,7 +5,7 @@
 	
 	<c:set var="results" value="${model.briefBeanView.briefDocs}" />
 
-	<c:forEach var="cell" items="${results}"><div class="li"><!-- whitespace breaks layout - keep li elements together tight -->
+	<c:forEach var="cell" items="${results}" varStatus="x"><div class="li"><!-- whitespace breaks layout - keep li elements together tight -->
 	
 		<div class="thumb-frame">
 		
@@ -18,16 +18,10 @@
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
 		<div class="ellipsis">
-
-				<c:choose>
-					<c:when test="${!empty cell.title}">
-						${title}
-					</c:when>
-					<c:otherwise>
-						 &nbsp;
-					</c:otherwise>
-				</c:choose>				
-
+			<c:choose>
+				<c:when test="${!empty cell.title}">${title}</c:when>
+				<c:otherwise></c:otherwise>
+			</c:choose>				
 			<span class="fixed"><span aria-hidden="true" class="${icon_class}"></span></span>
 		</div>
 
