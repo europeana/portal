@@ -91,11 +91,10 @@
 }
 
 
-
 .europeana-carousel .europeana-carousel-info{
 	opacity:			1 !important;
 	background-color:	rgba(0, 0, 0, 0.698);
-	color:				#BBBBBB;
+	color:				#FFF;
 
 	position:			absolute;
 
@@ -544,7 +543,7 @@
 .europeana-footer .galleria-info-description{
 	font: italic 12px/1.4 georgia,serif;
     margin: 0;
-    color: #bbb;
+    color: #fff;
     
     display:			block !important;
     position:			relative;
