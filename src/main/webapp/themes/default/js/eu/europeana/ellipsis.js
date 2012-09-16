@@ -3,7 +3,7 @@ var Ellipsis = function(cmp, ops) {
 	var $cmp	= $(cmp);
     var $inner 	= $cmp.find('.ellipsis-inner');
 	var text	= [];
-	var sub = "... XXXXX";
+	var sub = "... XXX";
 
 	var tail	= ops && ops.tail ? ops.tail : "...";
 	var fixed	= false;
@@ -23,10 +23,7 @@ var Ellipsis = function(cmp, ops) {
 
 	
 	var tryForSize = function(length){
-		$inner.html(totalText.substr(0,length) + (fixed ? sub : ""));
-		
-		//console.log("tryForSize " + length + "\n\nHTML=" + $inner.html());
-		
+		$inner.html(totalText.substr(0,length) + (fixed ? sub : tail));
 		return !fn();
 	};
 	
@@ -35,11 +32,7 @@ var Ellipsis = function(cmp, ops) {
 		var newBite = 0;
 		var newGuess = 0;
 		
-		//console.log("locatemax... bite = " + bite);
-		
 		if(guess>totalText.length){
-			//console.log("guess>totalText.length    (" + guess+ ">" + totalText.length + ")" );
-
 			newBite = Math.max(1, bite/2);
 			newGuess = guess - newBite;
 		}
@@ -69,22 +62,19 @@ var Ellipsis = function(cmp, ops) {
 
 		// start new
 
-		var max = locateMax(20, 20, false);
+		var max = locateMax(20, 16, false);
 
 		var theText = totalText.substr(0,max);
-		$inner.html(  theText + (max<totalText.length ? tail : '') +  sub );
+		$inner.html(  theText + (max<totalText.length ? totalText.length>0 ? tail : '' : '') + (fixed ? fixed : "") );
 
 		
 		if(fixed){
-			$inner.html($inner.html().replace(sub, fixed) );
-			
 			var $fixed = $cmp.find('.fixed');
 			$fixed.css("position",	"absolute");
 			$fixed.css("right",		"0px");
 			$fixed.css("bottom",	"0px");
 			//$fixed.css("float",	"right");
 		}
-
 		
 		// end new
 		
@@ -149,12 +139,11 @@ var Ellipsis = function(cmp, ops) {
 		var innerHtml = $inner.html().trim();
 		totalText = innerHtml;
 
+		console.log("totalText >" + totalText + "< (" + totalText.length + ")  " + totalText.substr(totalText.length-1, 1)  );
+		 
 		for(var i=0; i<innerHtml.length; i++){ // initialise text
 			text[i]=innerHtml.substr(i, 1);
 		}
-		
-		
-//fixed = '<span class="fixed">wtf???</span>';
 		respond();
 	};
 
