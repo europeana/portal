@@ -84,9 +84,8 @@
 				</a>
 			</li>
 			<li>
-				<a class="share-section">
-					<span class="icon-share"></span>
-					Share
+				<a id="shares-link" class="icon-share share-section" rel="nofollow">
+					<span title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
 				</a>
 			</li>
 			<li>

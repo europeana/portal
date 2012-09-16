@@ -97,6 +97,28 @@ eu.europeana.search = {
 				
 			});
 		
+			var addThisHtml = com.addthis.getToolboxHtml_ANDY({
+				html_class : '',
+				url : url,
+				title : title,
+				description : description,
+				services : {
+					compact : {}
+				},
+				link_html : $('#shares-link').html()
+			
+			});
+			
+			jQuery('#shares-link').html(
+				addThisHtml
+			);
+			
+			com.addthis.init( null, true, false );
+			
+			setTimeout( function() {
+				jQuery('#shares-link').fadeIn(); },
+				600 );
+			
 		/*
 		jQuery('.search-results-navigation').append(
 			com.addthis.getToolboxHtml({

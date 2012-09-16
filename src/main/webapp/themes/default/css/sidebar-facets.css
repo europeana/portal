@@ -56,15 +56,22 @@
 		background-repeat:		no-repeat;
 	}
 
+	.share-section,
+	.share-section .addthis_button{
+		color:					#333;
+	}
 	
 	.share-section{
 		padding-left:			0.5em;
-		color:					#333;
 	}
 
-	.share-section span{		/* font icon fix */
+	.share-section.span{		/* font icon fix */
 		position:				relative;
 		top:					0.138em;
+	}
+	
+	#shares-link{
+		display:	none;
 	}
 
 
