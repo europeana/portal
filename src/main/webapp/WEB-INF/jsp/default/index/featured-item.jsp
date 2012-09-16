@@ -121,6 +121,7 @@
 						<li>			
 							<a	href	= "<spring:message code="${model.featuredPartner.visitLink}" />"
 								target	= "<spring:message code="notranslate_featured-partner-visit_target_t" />"
+								rel		= "nofollow"
 								class	= "icon-external-right europeana">
 								<spring:message code="featured-partner-visit_text_t" />
 							</a>

@@ -117,6 +117,8 @@ $.fn.Collapsible = function() {
         
     	$header.bind('click', function(e){
     		
+    		//alert($(this)[0].nodeName);
+    		
     		//awaitingOpen = true;
     		eu.europeana.vars.suppresResize = true;
     		var finishedOpen = function(){
@@ -124,7 +126,7 @@ $.fn.Collapsible = function() {
     		};
     		setTimeout(finishedOpen, 1200);
     		
-    		e.preventDefault();
+    		//e.preventDefault();
     		if(getTarget().is(':visible')){    			
     			setClasses(true);
     		}

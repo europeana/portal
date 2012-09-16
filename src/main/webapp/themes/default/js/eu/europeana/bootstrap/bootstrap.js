@@ -49,8 +49,9 @@ var europeana_bootstrap = function(){
 	
 	// array of scripts needed for all pages
 	var scripts = [
-	  {								file : 'jquery-1.4.4.min.js',													path : eu.europeana.vars.branding + '/js/jquery/'	},
-	  { 							file : 'jquery-ui-1.8.2.custom.min.js',											path : eu.europeana.vars.branding + '/js/jquery/',															dependencies : [ 'jquery-1.4.4.min.js' ]	},
+//	  {								file : 'jquery-1.4.4.min.js',													path : eu.europeana.vars.branding + '/js/jquery/'	},
+	  {	name  : 'jquery',			file : 'jquery-1.8.1.min.js',													path : eu.europeana.vars.branding + '/js/jquery/'	},
+	  { 							file : 'jquery-ui-1.8.2.custom.min.js',											path : eu.europeana.vars.branding + '/js/jquery/',															dependencies : [ 'jquery' ]	},
 	  {	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui-1.8.2.custom.min.js' ]	},
 	  {	name : 'analytics',			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,					path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,							dependencies : [ 'utils' ]	},
 	  {	name : 'ajax',				file : 'ajax' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'utils' ]	},
@@ -132,7 +133,7 @@ var europeana_bootstrap = function(){
 			name : 'galleria',
 			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/galleria/',
-			dependencies : [ 'jquery-1.4.4.min.js', 'touchswipe'  ]
+			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
 
 		var fulldoc = function(){
@@ -173,7 +174,7 @@ var europeana_bootstrap = function(){
 			name : 'galleria',
 			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/galleria/',
-			dependencies : [ 'jquery-1.4.4.min.js' ]
+			dependencies : [ 'jquery' ]
 		});
 
 		scripts.push({

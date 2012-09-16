@@ -16,16 +16,24 @@ eu.europeana.search = {
 			}
 		);
 		
-		// add ellipsis 
+		// add ellipsis
+		var ellipsisObjects = [];
 		jQuery('.ellipsis').each(
 				function(i, ob){
 					var fixed	= $(ob).find('.fixed');
 					var html	= fixed.html();
 					fixed.remove();
-					new Ellipsis($(ob), {fixed:	'<span class="fixed">' + html + '</span>'} );					
+					ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob), {fixed:	'<span class="fixed">' + html + '</span>'} );					
 				}
 		);
+		$(window).bind('resize', function(){
+			for(var i=0; i<ellipsisObjects.length; i++ ){
+				ellipsisObjects[i].respond();
+			}
+		});
 
+
+		
 		
 		// add result size control
 		this.setupResultSizeMenu();

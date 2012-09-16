@@ -7,9 +7,19 @@
 
 
 	<h3 id="collapse-header-1">
-		<span class="left">
-			<spring:message code='from_the_blog_t'/>
-		</span>
+		<%--
+		<a	xclass	= "icon-external-right"
+			rel		= "nofollow"
+			target	= "_new"
+			href	= "<spring:message code='europeana-blog-url'/>">
+		--%>
+			<span class="left">
+			
+				<spring:message code='from_the_blog_t'/>
+			</span>
+		<%--
+		</a>
+		--%>
 		<span class="collapse-icon"></span>
 		
 		

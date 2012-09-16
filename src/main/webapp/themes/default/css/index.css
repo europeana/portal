@@ -169,6 +169,10 @@ ul.featured-partner-links li{
 
 
 /* Dynamic content classes */
+h3 a span{
+	color:#181818;	
+}
+
 .feed-block,
 .feed-box,
 .feed-cell,

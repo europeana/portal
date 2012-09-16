@@ -160,11 +160,18 @@ var Ellipsis = function(cmp, ops) {
 
 	init();
 
+	/*
 	$(window).bind('resize', function(){
 		respond();
 		//console.log("responding!");
 	});
-
+	*/
+	
+	return {
+		"respond":function(){
+			respond();
+		}
+	}
 };
 
 
