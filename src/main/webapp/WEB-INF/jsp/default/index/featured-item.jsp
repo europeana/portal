@@ -103,23 +103,25 @@
 					
 					<ul class="featured-partner-links featured-text">
 						<li>						
-							<a	href	="<spring:message code="notranslate_featured-partner-view_link_t" />"
-								target	="<spring:message code="notranslate_featured-partner-view_target_t" />">
+							<a	href	= "<spring:message code="notranslate_featured-partner-view_link_t" />"
+								target	= "<spring:message code="notranslate_featured-partner-view_target_t" />"
+								class	= "europeana">
 								<spring:message code="featured-partner-view_text_t" />
 							</a>
 						</li>
 						<li>						
 
-							<a	href	="<spring:message code="notranslate_featured-partner-browse_link_t" />"
-								target	="<spring:message code="notranslate_featured-partner-browse_target_t" />">
+							<a	href	= "<spring:message code="notranslate_featured-partner-browse_link_t" />"
+								target	= "<spring:message code="notranslate_featured-partner-browse_target_t" />"
+								class	= "europeana">
 								<spring:message code="featured-partner-browse_text_t" />
 							</a>
 
 						</li>						
 						<li>			
-							<a	href	="<spring:message code="${model.featuredPartner.visitLink}" />"
-								target	="<spring:message code="notranslate_featured-partner-visit_target_t" />"
-								class	="icon-external-right">
+							<a	href	= "<spring:message code="${model.featuredPartner.visitLink}" />"
+								target	= "<spring:message code="notranslate_featured-partner-visit_target_t" />"
+								class	= "icon-external-right europeana">
 								<spring:message code="featured-partner-visit_text_t" />
 							</a>
 						</li>
