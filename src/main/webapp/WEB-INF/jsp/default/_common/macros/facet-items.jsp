@@ -3,11 +3,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:forEach var="facet_item" items="${facet.links}">
 
-	<c:set var="classAttr" value="icon-plus" />
+	<c:set var="checkedValue" value='' />
 	
 	<c:if test="${facet_item.remove}" >
-		<c:set var="classAttr" value='icon-minus' />
+		<c:set var="checkedValue" value='checked="checked"' />
 	</c:if>
+	
+	
 
 	<c:set var="label">
 		<c:choose>
@@ -22,9 +24,14 @@
 
 	<li>
 		<h4>
+			
 			<a  href="/${model.portalName}/${model.pageName}?query=${model.query}${facet_item.url}"
-				title="${facet_item.value}" class="${classAttr}" rel="nofollow">&nbsp;${label} (${facet_item.count})</a>
+				title="${facet_item.value}" rel="nofollow">
+				<input type="checkbox" ${checkedValue}/>&nbsp;${label} (${facet_item.count})
+			</a>
 		</h4>
+		
+		
 	</li>
 </c:forEach>
 <!-- /facet-items -->
