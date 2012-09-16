@@ -21,6 +21,27 @@
 	font-style: normal;
 	speak: none;
 }
+
+
+			/* Andy: modification */
+		
+			[data-icon]:after {
+				font-family: 'europeana';
+				content: attr(data-icon);
+				speak: none;
+			}
+			
+			/* Use the following CSS code if you want to have a class per icon */
+			[class^="icon-"]:after,
+			[class*=" icon-"]:after {
+				font-family: 'europeana';
+				font-style: normal;
+				speak: none;
+			}
+
+
+
+
 .icon-logo:before {
 	content: "\61";
 }
@@ -177,6 +198,14 @@
 .icon-external:before {
 	content: "\50";
 }
+
+
+/* Andy: modification */
+.icon-external-right:after {
+	content: "\50";
+}
+
+
 .icon-download:before {
 	content: "\51";
 }

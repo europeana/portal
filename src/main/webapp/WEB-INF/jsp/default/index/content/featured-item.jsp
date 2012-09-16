@@ -1,6 +1,8 @@
 <!-- featured-item -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<h1>ANDY: delete this</h1>
 <div class="tout">
 	<c:if test="${!empty model.featuredItem}">
 		<h2><spring:message code="${model.featuredItem.h2}" /></h2>

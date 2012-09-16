@@ -22,7 +22,6 @@
 			<c:when test='${not empty model.feedEntries}'>
 				<c:forEach items="${model.feedEntries}" var="entry" varStatus="status">
 					<c:if test="${status.index < 2}">
-					
 
 						<div class="six columns">
 
@@ -32,7 +31,8 @@
 										<h4 class="show-on-phones">
 											<a	href=	"${entry.link}"
 												title=	"${entry.title}"
-												target=	"_self">
+												target=	"_self"
+												class=	"europeana">
 												${entry.title}
 											</a>
 										</h4>
@@ -53,7 +53,8 @@
 										<h4 class="hide-on-phones featured-text">
 											<a	href=	"${entry.link}"
 												title=	"${entry.title}"
-												target=	"_self">
+												target=	"_self"
+												class=	"europeana">
 													${entry.title}
 											</a>
 										</h4>

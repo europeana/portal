@@ -1,15 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
- 
 <div class="six columns">
 	<h3 id="collapse-header-2">
 		<span class="left"><spring:message code="featured-content-title_t" /></span>
 		<span class="collapse-icon"></span>
 		<a class="feed-link icon-rss" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>
 	</h3>
-
  
 	<div class="collapse-content">
 		<c:if test="${!empty model.featuredItem}">
@@ -18,9 +15,10 @@
 				<div class="feed-box">
 					<div class="feed-cell feed-image">
 						<h4 class="show-on-phones">
-							<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
-								title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
-								target=	"<spring:message code="${model.featuredItem.anchorTarget}" />">
+							<a	href	= "/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
+								title	= "<spring:message code="${model.featuredItem.anchorTitle}" />"
+								target	= "<spring:message code="${model.featuredItem.anchorTarget}" />"
+								class	= "europeana">
 									<spring:message code="${model.featuredItem.heading}" />
 							</a>
 						</h4>
@@ -40,7 +38,8 @@
 
 							<a	href=	"/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />"
 								title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
-								target=	"<spring:message code="${model.featuredItem.anchorTarget}" />">
+								target=	"<spring:message code="${model.featuredItem.anchorTarget}" />"
+								class=	"europeana">
 										<spring:message code="${model.featuredItem.heading}" />
 							</a>
 						</h4>
@@ -73,16 +72,17 @@
 			<div class="feed-box">
 				<div class="feed-cell feed-image">
 					<h4 class="show-on-phones">
-						<a	href=	"<spring:message	code="${model.featuredPartner.anchorUrl}" />"
-							title=	"<spring:message	code="${model.featuredPartner.anchorTitle}" />"
-							target=	"<spring:message	code="${model.featuredPartner.anchorTarget}" />">
+						<a	href	= "<spring:message	code="${model.featuredPartner.anchorUrl}" />"
+							title	= "<spring:message	code="${model.featuredPartner.anchorTitle}" />"
+							target	= "<spring:message	code="${model.featuredPartner.anchorTarget}" />"
+							class	= "europeana">
 								<spring:message code="${model.featuredPartner.heading}" />
 						</a>
 					</h4>
-						<a	href=	"<spring:message code="${model.featuredPartner.anchorUrl}" />"
-							title=	"<spring:message code="${model.featuredPartner.anchorTitle}" />"
-							target=	"<spring:message code="${model.featuredPartner.anchorTarget}" />"
-							class="image">
+						<a	href	= "<spring:message code="${model.featuredPartner.anchorUrl}" />"
+							title	= "<spring:message code="${model.featuredPartner.anchorTitle}" />"
+							target	= "<spring:message code="${model.featuredPartner.anchorTarget}" />"
+							class	= "image">
 							<img	src=	"<spring:message	code="${model.featuredPartner.imgUrl}" />"
 									alt=	"<spring:message	code="${model.featuredPartner.imgAlt}" />"/>
 						</a>
@@ -90,9 +90,10 @@
 				
 				<div class="feed-cell">
 					<h4 class="hide-on-phones featured-text">
-						<a	href=	"<spring:message code="${model.featuredPartner.anchorUrl}" />"
-							title=	"<spring:message code="${model.featuredPartner.anchorTitle}" />"
-							target=	"<spring:message code="${model.featuredPartner.anchorTarget}" />">
+						<a	href	= "<spring:message code="${model.featuredPartner.anchorUrl}" />"
+							title	= "<spring:message code="${model.featuredPartner.anchorTitle}" />"
+							target	= "<spring:message code="${model.featuredPartner.anchorTarget}" />"
+							class	= "europeana">
 								<spring:message code="${model.featuredPartner.heading}" />
 						</a>
 					</h4>
@@ -117,7 +118,8 @@
 						</li>						
 						<li>			
 							<a	href	="<spring:message code="${model.featuredPartner.visitLink}" />"
-								target	="<spring:message code="notranslate_featured-partner-visit_target_t" />">
+								target	="<spring:message code="notranslate_featured-partner-visit_target_t" />"
+								class	="icon-external-right">
 								<spring:message code="featured-partner-visit_text_t" />
 							</a>
 						</li>

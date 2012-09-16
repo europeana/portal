@@ -71,8 +71,11 @@ h4 {
 a {
 	text-decoration: none;
 	color:#2a85e8; /*#5cbaec;*/
-	/*border-bottom:1px dotted #9dc425;
-	padding:0 1px;*/
+}
+
+a.europeana{
+	border-bottom:1px dotted #9dc425;
+	padding:0 1px;
 }
 
 a:hover {
