@@ -74,8 +74,9 @@ var Ellipsis = function(cmp, ops) {
 		var theText = totalText.substr(0,max);
 		$inner.html(  theText + (max<totalText.length ? tail : '') +  sub );
 
+		
 		if(fixed){
-			$cmp.html($cmp.html().replace(sub, fixed) );
+			$inner.html($inner.html().replace(sub, fixed) );
 			
 			var $fixed = $cmp.find('.fixed');
 			$fixed.css("position",	"absolute");

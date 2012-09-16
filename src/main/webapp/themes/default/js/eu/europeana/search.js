@@ -22,7 +22,7 @@ eu.europeana.search = {
 					var fixed	= $(ob).find('.fixed');
 					var html	= fixed.html();
 					fixed.remove();
-					new Ellipsis($(ob), 	{fixed:	'<span class="fixed">' + html + '</span>'} );					
+					new Ellipsis($(ob), {fixed:	'<span class="fixed">' + html + '</span>'} );					
 				}
 		);
 
