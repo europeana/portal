@@ -173,6 +173,8 @@ public class ControllerUtil {
 			log.info("User: " + user.toString());
 		} else {
 			log.warning("Principal is not Portal2UserDetails: " + principal.toString());
+			// TODO: it is not a logged-in-user, do we need to get default information?
+			/*
 			try {
 				user = userService.findByID(principal.toString());
 				log.info("User: " + user.toString());
@@ -180,6 +182,7 @@ public class ControllerUtil {
 				log.severe("DatabaseException while getting user: " + e.getLocalizedMessage());
 				e.printStackTrace();
 			}
+			*/
 		}
 		return user;
 	}
