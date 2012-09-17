@@ -232,8 +232,8 @@ eu.europeana.lightbox = {
 			}
 		},
 		
-		init:function() {
-			jQuery("span.trigger, #lightbox_href").overlay({
+		init:function(src) {
+			jQuery(".lb-trigger span").overlay({
 				mask: {
 					color: '#ffffff',
 					loadSpeed: 200,
@@ -248,8 +248,10 @@ eu.europeana.lightbox = {
 					var contentWrap		= jQuery(overlay.find(".content-wrap"));
 					var contentImage	= jQuery(contentWrap.find(".content-image"));
 					var playerDiv		= jQuery(contentWrap.find(".playerDiv"));
-					var contentAnchor	= jQuery(playerDiv.find("a"));
-					var src				= contentAnchor.attr("href");
+					
+					//var contentAnchor	= jQuery(playerDiv.find("a"));
+					//var src				= contentAnchor.attr("href");
+					
 					if(src && typeof src === 'string'){
 						var wmv		= src.match(/wmv$/)		|| src.match(/WMV$/);
 						var mp3		= src.match(/mp3$/)		|| src.match(/MP3$/);

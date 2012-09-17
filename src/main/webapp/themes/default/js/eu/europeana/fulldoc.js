@@ -23,8 +23,10 @@ eu.europeana.fulldoc = {
    			// mock some lightbox data
    			for(var i=0; i<carouselData.length; i++){
    				carouselData[i].lightboxable = {
-   						
-   						url : 'xxxx'
+
+   						type : 'image',
+   						url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
+
    				};
    			}
    			// end mock
@@ -44,24 +46,57 @@ eu.europeana.fulldoc = {
 				extend: function(e){
 
 					//$(window).resize(function(){});
-					var triggerPanel = null;
+					var jsLoaded		= false;
+					var triggerPanel	= null;
+
+					var initLightbox = function(url){
+						$('#lightbox_image').one('load', function(){
+							eu.europeana.lightbox.init(url);
+							jQuery(".lb-trigger span").show();	// show the trigger now that the overlay and image have loaded
+						}); 
+						$('#lightbox_image').attr('src', url);
+					};					
+
 					
 					this.bind("image", function(e) {
 						
-						if(this._options.dataSource[e.index].lightboxable.url.length>0){
+						var lightboxable = this._options.dataSource[e.index].lightboxable; 
+						
+						if(lightboxable && lightboxable.url.length>0){
+							
 							if(!triggerPanel){
-								//alert("add..");
-								/*
-								triggerPanel = $('<div class="lb-trigger icon-mag  bold view" >'
-										+ '<span rel="#lightbox" title="View" class="lb-trigger view">View</span>'
-										+ '</div>') 
-									.appendTo( this.$( 'container' ).find('.galleria-images') );
-								*/
+
 								triggerPanel = $('<div class="lb-trigger" >'
 										+ '<span rel="#lightbox" title="View" class="icon-mag">View</span>'
 										+ '</div>') 
-									.appendTo( this.$( 'container' ).find('.galleria-images') );
+									.appendTo( this.$( 'container' ).find('.galleria-images'));
 
+								var loadJS = function(){
+
+									js.loader.loadScripts([{
+										name: 'jquery-tools',
+										file : 'jquery.tools.min.js' + js.cache_helper,
+										path : eu.europeana.vars.branding + '/js/jquery/',
+										dependencies : [ 'jquery' ]
+									}]);
+										
+									js.loader.loadScripts([{
+										name : 'jwplayer',
+										file : 'jwplayer.js' + js.cache_helper,
+										path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
+									}]);
+									
+									js.loader.loadScripts([{
+										file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
+										path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+										dependencies : [ 'jquery-tools', 'jwplayer'],
+										callback: function(){
+											initLightbox(lightboxable.url);
+											jsLoaded = true;
+										}
+									}]);
+								};
+								loadJS();
 							}
 						}
 
@@ -138,7 +173,7 @@ eu.europeana.fulldoc = {
 			
 			
 		// move this to bootstrap
-			
+		/*
 		js.loader.loadScripts([{
 			name: 'jquery-tools',
 			file : 'jquery.tools.min.js' + js.cache_helper,
@@ -151,14 +186,14 @@ eu.europeana.fulldoc = {
 			file : 'jwplayer.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
 		}]);
-			
+		*/
+		/*
 		js.loader.loadScripts([{
 			file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery-tools', 'jwplayer'],
 				
 			callback: function(){
-				
 				(function ($) {
 					$.event.special.imageload = {
 						add: function (hollaback) {
@@ -185,13 +220,13 @@ eu.europeana.fulldoc = {
 				}(jQuery));
 				
 
-				/* this callback ensures that the trigger image overlay is correctly sized */						
+				// this callback ensures that the trigger image overlay is correctly sized				
 				//var imgOnLoad = function(img, msg){
 				var imgOnLoad = function(){
 
 					var lightboxImg		= jQuery(".content-image");
 					
-					/* function to size and show the lightbox 'toolbar' and initialise lightbox (should only be called when main lightbox image has loaded)  */
+					// function to size and show the lightbox 'toolbar' and initialise lightbox (should only be called when main lightbox image has loaded) 
 					var setUpTrigger = function(type){
 
 						var doSetUpTrigger = function(initLightbox){
@@ -252,7 +287,8 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 				});
 			}
 		}]);
-
+		*/
+		
 		
 	
 		// dependency group - carousel, tabs and truncate content functionality (+citation)
@@ -307,7 +343,6 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 					// Andy: this callback within a callback expands the link to the service and triggers the loading of the microsoft translate scripts
 					// comment out this line to save 300 - 385 milliseconds of initial load time
 					// leave this line in place to have the translator automatically opened 
-					
 					function(){
 						if(! $("#mobile-menu").is(":visible") ){
 							jQuery("#translate-item").trigger('click');
