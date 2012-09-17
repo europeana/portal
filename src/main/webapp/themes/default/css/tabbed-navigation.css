@@ -16,9 +16,9 @@
    		padding:							0.15em 0.4em;
    		margin-right:						0.5em;
    		margin-bottom:						0.5em;
-   		z-index:	20;
    		
    		border:								1px solid #a0a0a0;
+		border-bottom:						none;
 		display:							inline-block;
 		
 		-moz-border-radius-topleft:			5px;
@@ -28,6 +28,9 @@
 		
 		border-top-left-radius:				5px;
 		border-top-right-radius:			5px;
+		
+		outline: 							none; /* firefox */
+   		z-index:	20;
    	}
    	
    	
@@ -35,6 +38,7 @@
    	
 		.tab-navigation{
 			text-align:			left;
+			border-bottom:		1px solid #A0A0A0;
 		}
 		
 		.tab-navigation li {
@@ -42,7 +46,7 @@
 		}
 		
    	   	.tab-navigation h3 a {
-   	   		margin-bottom:		0;
+   	   		margin-bottom:		-1px;
    		}
 		
 	}
@@ -50,6 +54,8 @@
    	.tab-navigation h3 a.active,
    	.tab-navigation h3 a:hover {
    		border-bottom: 1px solid #fff;
+
+   		
    	}
 
    	.tab-navigation h3 a:hover {
