@@ -283,25 +283,20 @@
     filter: alpha(opacity=60);
     cursor: pointer;
     
-    /*
-    width: 62px;
-    height: 124px;
-    */
-    font-size:	3em;
-    font-size:	4em;
+    font-size:	5em;
 
     position: absolute;
-    left: 10px;
-    z-index: 2;
-    /*
-    background-position: 0 46px;
-    */
+    left: -0.15em;
+
     visibility:hidden;
+    margin-left:-10px;
+    z-index: 2;
 }
 
 .galleria-image-nav-right {
-	left:	auto;
-	right:	10px;
+	left:			auto;
+	margin-right:	-10px;
+	right:			-0.15em;
 }
 
 .galleria-image-nav-left.icon-arrow-4, .galleria-image-nav-right.icon-arrow-2{
