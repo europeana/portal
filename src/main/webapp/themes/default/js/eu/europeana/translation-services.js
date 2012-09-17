@@ -64,10 +64,14 @@ eu.europeana.translation_services = {
 		var self = this;
 		
 	   	jQuery("#translate-item").click(function(){
-			europeana_bootstrap.fulldoc.translate(
-					function(){
-						self.addTranslatorMicrosoft();			
-					});
+			js.loader.loadScripts([{
+				name : 'microsoft-translator',
+				file: 'translator' + js.min_suffix + '.js' + js.cache_helper,
+				path: eu.europeana.vars.branding + '/js/com/microsoft/' + js.min_directory,
+				callback: function(){
+					self.addTranslatorMicrosoft();
+				} 
+			}]);			
 	    });
 
 	   	if(typeof callback != "undefined"){

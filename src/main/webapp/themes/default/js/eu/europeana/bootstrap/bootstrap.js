@@ -138,29 +138,10 @@ var europeana_bootstrap = function(){
 		});
 
 
-		var fulldoc = function(){
-			return {
-				lightbox:function(callback){
-					
-				},
-				translate:function(callback){					
-					js.loader.loadScripts([{
-						name : 'microsoft-translator',
-						file: 'translator' + js.min_suffix + '.js' + js.cache_helper,
-						path: eu.europeana.vars.branding + '/js/com/microsoft/' + js.min_directory,
-						callback: function(){
-							callback();
-						} 
-					}]);
-				}
-			};
-		}();
-
 		loadScripts(scripts);
 
 		return{
-			"common":common,
-			"fulldoc":fulldoc
+			"common":common
 		};
 	}
 	else if(eu.europeana.vars.page_name == 'index.html'){
