@@ -14,11 +14,13 @@ js.utils.registerNamespace( 'eu.europeana.header' );
 eu.europeana.header = {
 	
 	init : function() {
+		/*
 		var langSelect=  jQuery("select[name=embeddedlang]");
 		langSelect.change(function(){
 			jQuery(this).parent().submit();
 		});
-
+		*/
+		
 		this.initResponsiveLogo();
 		
 		this.addQueryFocus();
@@ -46,7 +48,6 @@ eu.europeana.header = {
 	},
 	
 	initResponsiveLogo : function(){
-
 		var setup = function(){
 			var initialSuffix = '-1.'; // smallest by default
 			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
@@ -63,14 +64,7 @@ eu.europeana.header = {
 				}
 			});
 		};
-
-		js.loader.loadScripts([{
-			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			callback : function() {
-				setup(); 
-			}
-		}]);
+		setup();
 	},
 	
 	setCookie: function(val){
