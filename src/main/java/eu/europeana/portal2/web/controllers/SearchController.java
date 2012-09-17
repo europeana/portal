@@ -88,7 +88,7 @@ public class SearchController {
 		model.setEmbeddedForeColor(embeddedForeColor);
 		model.setEmbedded(embedded);
 		model.setEmbeddedLang(embeddedLang);
-		log.info("set embedded land to " + embeddedLang);
+		log.info("set embedded language to " + embeddedLang);
 
 		model.setEmbeddedLogo(embeddedLogo);
 		model.setRswUserId(rswUserId);
