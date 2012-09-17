@@ -1,7 +1,7 @@
 
 
 <div id="header" role="banner" class="row">
-<%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
+	<%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 
 	<div style="display:table; width:100%;">
 	
@@ -15,7 +15,7 @@
 			<${logo_tag} id="_logo" xstyle="display:inline-block; max-width:90%; ">
 	
 				<a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
-					<img style="vertical-align:middle;"  src="/${model.portalName}/sp/img/europeana-logo-${model.imageLocale}.png" alt="<spring:message code='AltLogoEuropeana_t' />"/>
+					<img class="responsive-logo" style="vertical-align:middle;"  src="/${branding}/images/europeana-logo-1.png" alt="<spring:message code='AltLogoEuropeana_t' />"/>
 				</a>
 				
 			</${logo_tag}>
