@@ -13,8 +13,7 @@
 			target	= "_new"
 			href	= "<spring:message code='europeana-blog-url'/>">
 		--%>
-			<span class="left">
-			
+			<span class="left collapse-header-text">
 				<spring:message code='from_the_blog_t'/>
 			</span>
 		<%--

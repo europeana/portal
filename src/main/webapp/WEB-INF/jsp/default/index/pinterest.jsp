@@ -1,7 +1,7 @@
 
 <div class="twelve columns">
 	<h3 id="collapse-header-3">
-		<span class="left">
+		<span class="left collapse-header-text">
 			<spring:message code='latest_on_pinterest_t'/>
 		</span>
 		<span class="icon-pinterest left"></span>

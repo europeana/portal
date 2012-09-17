@@ -131,6 +131,12 @@
 
 /* collapsible section headings */
 
+.collapse-header-text, .icon-pinterest{
+	padding-top:	1em !important;
+	padding-bottom:	1em !important;
+}
+
+
 #section-featured-partner,
 #collapse-header-3,
 #collapse-header-2,
@@ -148,7 +154,6 @@
 ul.featured-partner-links{
 	margin-left:	0;
 	padding-left:	0;
-	zzzzzzfont-size:		0.75em;
 }
 
 ul.featured-partner-links li{
@@ -238,15 +243,9 @@ h3 a span{
 
 .feed-link {
 	float:			right;
-	margin-top:		0.2em;
-	margin-right:	0.5em;		
-	width: 			1em;
-	height:			1em;
-	/*
-	background-repeat:		no-repeat;
-	background-position:	0 -1582px;
-	background-image:		url(../images/icons/sprite.png);
-	*/
+	margin-right:	0.5em;
+	padding-top:	1em;
+	padding-bottom:	1em;
 }
 
 .collapse-content{
@@ -257,8 +256,10 @@ h3 a span{
 	.feed-link {
 		float:			left;
 		margin-left:	0.4em;
+		/*
 		position:		relative;
 		bottom:			0.19em;
+		*/
 	}
 }
 

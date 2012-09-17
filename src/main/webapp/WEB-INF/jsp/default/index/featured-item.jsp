@@ -3,7 +3,7 @@
 
 <div class="six columns">
 	<h3 id="collapse-header-2">
-		<span class="left"><spring:message code="featured-content-title_t" /></span>
+		<span class="left collapse-header-text"><spring:message code="featured-content-title_t" /></span>
 		<span class="collapse-icon"></span>
 		<a class="feed-link" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a>
 	</h3>
@@ -64,7 +64,7 @@
 	
 		<div class="row">
 			<div class="twelve columns">
-				<h3 id="section-header-featured-partner"><spring:message code="featured-partner-title_t" /></h3>
+				<h3 id="section-header-featured-partner" class="collapse-header-text"><spring:message code="featured-partner-title_t" /></h3>
 			</div>
 		</div>
 
