@@ -62,7 +62,6 @@ eu.europeana.header = {
 					'2': '-2.'
 				}
 			});
-			alert("set up complete");
 		};
 
 		js.loader.loadScripts([{
