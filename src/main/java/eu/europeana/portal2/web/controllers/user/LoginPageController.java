@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.db.service.TokenService;
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -23,10 +25,12 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 public class LoginPageController {
 
 	@Resource(name="corelib_web_emailService") private EmailService emailService;
-	
+
 	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="configurationService") private Configuration config;
+
+	@Resource(name="corelib_db_tokenService") private TokenService tokenService;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -58,8 +62,6 @@ public class LoginPageController {
 		log.info("buttonPressed: " + buttonPressed);
 
 		if (email != null) {
-			log.info("email submitted: [" + email + "]");
-
 			String registerUri = request.getRequestURL().toString();
 			int lastSlash = registerUri.lastIndexOf("/");
 
@@ -71,7 +73,10 @@ public class LoginPageController {
 				} else if (emailExists(email)) {
 					model.setFailureExists(true);
 				} else {
+					Token token = tokenService.create(email);
 					registerUri = registerUri.substring(0, lastSlash + 1) + "register.html";
+					log.info("token: " + token);
+					emailService.sendToken(token, registerUri);
 					// tokenReplyEmailSender.sendEmail(email, registerUri, "register");
 					model.setSuccess(true);
 				}
@@ -85,6 +90,7 @@ public class LoginPageController {
 					model.setFailureForgotDoesntExist(true);
 				} else {
 					registerUri = registerUri.substring(0, lastSlash + 1) + "change-password.html";
+					log.info("registerUri: " + registerUri);
 					// tokenReplyEmailSender.sendEmail(email, registerUri, "forgotPassword");
 					model.setForgotSuccess(true);
 				}
