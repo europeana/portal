@@ -29,18 +29,34 @@
         </c:otherwise>
       </c:choose>
     </c:forEach>
+
+    <%-- first arrow (nav-first) --%>
+    <li class="page-nr">
+      <c:if test="${!model.briefBeanView.pagination.first}">
+        <a href="${model.firstPageUrl}" class="pagination-previous" title="<spring:message code="AltFirstPage_t" />"></a>
+      </c:if>
+    </li>
+
     <%-- previous arrow --%>
     <c:if test="${!empty model.briefBeanView.pagination.previous}">
       <li class="page-nr">
         <a href="${model.previousPageUrl}" class="pagination-previous" title="<spring:message code="AltPreviousPage_t" />"></a>
       </li>
     </c:if>
+
     <%-- next arrow --%>
     <c:if test="${!empty model.briefBeanView.pagination.next}">
       <li class="page-nr">
         <a href="${model.nextPageUrl}" class="pagination-next" title="<spring:message code="AltNextPage_t" />"></a>
       </li>
     </c:if>
+
+    <%-- last arrow (nav-last) --%>
+    <li class="page-nr">
+      <c:if test="${!model.briefBeanView.pagination.last}">
+        <a href="${model.lastPageUrl}" class="pagination-next" title="<spring:message code="AltLastPage_t" />"></a>
+      </c:if>
+    </li>
   </ul>
 </c:if>
 <!-- pagination -->
