@@ -1,10 +1,14 @@
 (function() {
-	
+
 	var $login_response = jQuery('#login-response'),
-		login_boxes = [ jQuery('#login'), jQuery('#request-password'), jQuery('#register') ];
+	login_boxes = [ jQuery('#login'), jQuery('#request-password'), jQuery('#register') ];
+
+	function init(){
+		addListeners();	
+		addHashListener();
+		showBox( window.location.hash ? window.location.hash : "#login");
+	}
 	
-	showBox( window.location.hash ? window.location.hash : "#login");
-	addListeners();	
 	
 	function checkForResponse() {
 		
@@ -28,6 +32,11 @@
 		
 	}
 	
+	function addHashListener() {
+		$(window).bind('hashchange', function() {
+			showBox(window.location.hash);
+		});
+	}
 	
 	function toggleBoxes(e) {
 		
@@ -93,5 +102,8 @@
 		checkForResponse();
 		
 	}
+	
+	init();
+	
 	
 })();
