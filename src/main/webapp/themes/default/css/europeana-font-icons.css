@@ -1,11 +1,12 @@
 @font-face {
 	font-family: 'europeana';
-	src: url('../images/europeana-fonts/europeana.eot?#') format('eot'),
-		url('../images/europeana-fonts/europeana.svg#europeana') format('svg'),
-		url('../images/europeana-fonts/europeana.woff') format('woff'),
-		url('../images/europeana-fonts/europeana.ttf') format('truetype');
+	src: url('../images/europeana-font-files/europeana.eot?#') format('eot'),
+		url('../images/europeana-font-files/europeana.svg#europeana') format('svg'),
+		url('../images/europeana-font-files/europeana.woff') format('woff'),
+		url('../images/europeana-font-files/europeana.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+	color:red !important;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
