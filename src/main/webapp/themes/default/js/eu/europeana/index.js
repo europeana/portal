@@ -9,7 +9,6 @@
 			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
 				initialSuffix = '_4.'; // largest by default
 			}
-			alert('set up 2nd gallery...');
 			new responsiveGallery({
 				imgSelector		: '.responsive',
 				initialSuffix	: initialSuffix,
