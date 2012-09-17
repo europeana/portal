@@ -259,3 +259,10 @@
 		bottom:		0;
 		z-index:	1;
 	}
+	
+	
+/* NEW */
+
+.lb-trigger span{
+	display:none;
+}

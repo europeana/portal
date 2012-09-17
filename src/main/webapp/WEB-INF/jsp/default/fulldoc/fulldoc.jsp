@@ -26,9 +26,9 @@
 
 	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/content.jsp" %>
+	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/responsive-lightbox.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
-	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/lightbox.jsp" %>
 	
 </div>
 <%-- end responsive grid --%>
