@@ -77,8 +77,13 @@ var europeana_bootstrap = function(){
 		  file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
 		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 		  dependencies : [ 'utils' ]
+	  },
+	  
+	  {
+		  	name: 'euresponsive',
+			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
+			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
 	  }
-
 	  
 	  
    	];
@@ -291,10 +296,12 @@ var europeana_bootstrap = function(){
 	// expose functions
 	//alert("shouldn't see this if on index, search or fulldoc....");
 	return{
+		/*
 		"fulldoc":fulldoc,
 		"index":index,
 		"search":search,
 		"common":common
+		*/
 	};
 }();
 
