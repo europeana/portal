@@ -50,11 +50,7 @@
 											title=	"${entry.title}"
 											target=	"_self"
 											class=	"image">
-											
-					            			<script class="euresponsive-script">document.write("<" + "!--")</script><noscript>
-												<img src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
-											</noscript -->
-											
+											<img class="responsive" src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
 										</a>
 									</div>
 									
