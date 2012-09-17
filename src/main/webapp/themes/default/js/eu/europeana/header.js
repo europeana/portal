@@ -19,7 +19,7 @@ eu.europeana.header = {
 			jQuery(this).parent().submit();
 		});
 
-		
+		this.initResponsiveLogo();
 		
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
@@ -45,9 +45,39 @@ eu.europeana.header = {
 		
 	},
 	
+	initResponsiveLogo : function(){
+
+		var setup = function(){
+			var initialSuffix = '-1.'; // smallest by default
+			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
+				initialSuffix = '-2.'; // largest by default
+			}
+			new responsiveGallery({
+				galleryName		: 'euresponsive-logo',
+				imgSelector		: '.responsive-logo',
+				initialSuffix	: initialSuffix,
+				suffixes: {
+					'0': '-1.',
+					'1': '-1.',
+					'2': '-2.'
+				}
+			});
+			alert("set up complete");
+		};
+
+		js.loader.loadScripts([{
+			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
+			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			callback : function() {
+				setup(); 
+			}
+		}]);
+	},
+	
 	setCookie: function(val){
 		document.cookie = "europeana_rows=" + val;
 	},
+	
 	getCookie: function(){
 		var cookies		= document.cookie.split(";");
 		var cookieVal	= null;
