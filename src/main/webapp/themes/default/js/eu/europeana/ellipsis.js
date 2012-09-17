@@ -139,7 +139,7 @@ var Ellipsis = function(cmp, ops) {
 		var innerHtml = $inner.html().trim();
 		totalText = innerHtml;
 
-		console.log("totalText >" + totalText + "< (" + totalText.length + ")  " + totalText.substr(totalText.length-1, 1)  );
+//		console.log("totalText >" + totalText + "< (" + totalText.length + ")  " + totalText.substr(totalText.length-1, 1)  );
 		 
 		for(var i=0; i<innerHtml.length; i++){ // initialise text
 			text[i]=innerHtml.substr(i, 1);
