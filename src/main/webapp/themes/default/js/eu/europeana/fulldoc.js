@@ -21,7 +21,9 @@ eu.europeana.fulldoc = {
    			jQuery('#carousel-1').css("height", jQuery('#carousel-1').width());
    			
    			// mock some lightbox data
+   			/*
    			for(var i=0; i<carouselData.length; i++){
+   				
    				carouselData[i].lightboxable = {
 
    						type : 'image',
@@ -29,6 +31,7 @@ eu.europeana.fulldoc = {
 
    				};
    			}
+   			*/
    			// end mock
    			
    			Galleria.run('#carousel-1', {
