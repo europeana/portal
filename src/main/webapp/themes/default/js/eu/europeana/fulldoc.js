@@ -48,6 +48,25 @@ eu.europeana.fulldoc = {
    				thumbnails: 	carouselData.length>1,
 				extend: function(e){
 
+					var doEllipsis = function(){
+						var ellipsisObjects = [];
+						jQuery('.europeana-carousel-info').each(
+							function(i, ob){
+								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
+							}
+						);
+						$(window).bind('resize', function(){
+							for(var i=0; i<ellipsisObjects.length; i++ ){
+								ellipsisObjects[i].respond();
+							}
+						});
+					};
+
+					$(this).ready(function(e) {
+						setTimeout(doEllipsis, 1000);
+					});
+					
+					
 					//$(window).resize(function(){});
 					var jsLoaded		= false;
 					var triggerPanel	= null;
