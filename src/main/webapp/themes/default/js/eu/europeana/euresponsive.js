@@ -18,28 +18,17 @@
 				}
 			}
 
-			function Gallery(script) {
-				this.htmlStr = script.nextSibling.nodeValue.slice( 10, -11 ); // extract img tag from comment
-				this.container = document.createElement( 'div' );
-				script.parentNode.insertBefore( this.container, script.nextSibling );
+			function Gallery(elIn) {
+				console.log("new gallery " + elIn.attr("class"));
+				this.el = elIn;
 			}
 			
 
 			Gallery.prototype.changeLayout = function(escapedInitialSuffix, newSuffix) {
 				
-				var img = jQuery(this.container).find("img");
 
-				/*
-				var newHtmlStr = this.htmlStr.replace(
-					new RegExp('(src="[^"]*)' + escapedInitialSuffix + '"', 'g'),
-					'$1' + newSuffix + '"'
-				);
-				*/
-				var newHtmlStr = this.htmlStr.replace(
-					new RegExp('(src="[^"]*)' + escapedInitialSuffix +  '([A-z]*)"', 'g'),
-					'$1' + newSuffix + '$2' + '"'
-				);
-
+				var newHtmlStr = this.el.attr("src").replace(escapedInitialSuffix, newSuffix);
+console.log("chsnge from  " + this.el.attr("src") + " to " + newHtmlStr + "\n   - newSuffix " + newSuffix);
 				
 				// regex expression doesn't work in IE.... quick fix: text replace
 				if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
@@ -47,70 +36,58 @@
 				}
 
 				// don't show what was hidden...
-				var display		= img.css("display");
-				var visibility	= img.css("visibility");
+				var display		= this.el.css("display");
+				var visibility	= this.el.css("visibility");
 
-				this.container.innerHTML = newHtmlStr;
-				
-				img = jQuery(this.container).find("img");
-				
-				img.css("display", display);
-				img.css("visibility", visibility);
+				this.el.attr("src", newHtmlStr);
+console.log("el.src is now  " + this.el.attr("src")  );
+	
+				this.el.css("display", display);
+				this.el.css("visibility", visibility);
 			};
 			
 			
 			window.responsiveGallery = function(args) {
-				
-				// fn to measure the size of the suffixes associative array
-				/*
-				if(typeof Object.prototype.size == "undefined"){					
-					Object.prototype.size = function () {
-						var len = this.length ? --this.length : -1;
-						for (var k in this)
-							len++;
-						return len;
-					}
-				}
-				*/
-				
 				/* testDiv:			used to measure the window width
-				 * scripts:			identify the responsive images
 				 * lastSuffix:		stores the last applied suffix
 				 * 
 				 * */
-				var testDiv = document.createElement( 'div' ),
-					scripts = document.getElementsByTagName( 'script' ),
-					lastSuffix,
-					escapedInitialSuffix = escapeRegex( args.initialSuffix || '' ),
-					galleries = [];
+				var self = this;
+				self.ops = args;
+				self.testDiv = document.createElement( 'div' ),
+				self.lastSuffix = null,
+				self.escapedInitialSuffix = self.ops.initialSuffix; // escapeRegex( args.initialSuffix || '' ),
+				self.galleries = [];
 
 				// Add the test div to the page
-				testDiv.className = args.testClass || 'gallery-test';
-				testDiv.style.cssText = 'position:absolute;top:-100em';
-				document.body.insertBefore(testDiv, document.body.firstChild);
+				self.testDiv.className 		= self.ops.galleryName ? self.ops.galleryName : 'euresponsive';
+				self.testDiv.style.cssText	= 'position:absolute;top:-100em';
+				document.body.insertBefore(self.testDiv, document.body.firstChild);
 
 				// Init galleries
-				for (var i=scripts.length; i--;) {
-					var script = scripts[i];
-					if ( hasClass(script, args.scriptClass) ) {
-						galleries.push( new Gallery(script) );
-					}
-				}
+				$(self.ops.imgSelector).each(function(i, ob){
+					self.galleries.push( new Gallery( $(ob) ) );
+				});
+
 
 				function respond() {
-					var newSuffix = args.suffixes[testDiv.offsetWidth] || args.initialSuffix;
+					var newSuffix = self.ops.suffixes[self.testDiv.offsetWidth] || self.ops.initialSuffix;
 					
-					if (newSuffix === lastSuffix) {
+					console.log("size " + newSuffix + ", num to update = " + self.galleries.length );
+					
+					if (newSuffix === self.lastSuffix) {
+						
+						console.log("returning");
+
 						return;
 					}
 					
-					for (var i = galleries.length; i--;) {
-						galleries[i].changeLayout(escapedInitialSuffix, newSuffix);
+					for (var i = self.galleries.length; i--;) {
+						self.galleries[i].changeLayout(self.lastSuffix ? self.lastSuffix : self.escapedInitialSuffix, newSuffix);
 					}
 					
-					lastSuffix = newSuffix;
+					self.lastSuffix = newSuffix;
 				}
-				
 				respond();
 				addListener(window, 'resize', respond);
 			};
