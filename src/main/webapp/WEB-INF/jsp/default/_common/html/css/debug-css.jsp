@@ -41,6 +41,16 @@
 			width: 4px;
 		}
 	}
+	
+	.euresponsive-logo {
+		width: 1px;
+	}
+
+	@media all and (min-width:44em){
+		.euresponsive-logo {
+			width: 2px;
+		}
+	}
 </style>
 <!-- end responsive image breakpoints -->
 
