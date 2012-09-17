@@ -94,6 +94,9 @@ public class SearchController {
 		model.setRswUserId(rswUserId);
 		model.setRswDefqry(rswDefqry);
 		model.setRefinements(qf);
+		if (start < 1) {
+			start = 1;
+		}
 		model.setStart(start);
 		model.setRows(rows);
 		model.setQuery(q);

@@ -139,79 +139,72 @@ public class SearchPage extends SearchPreparation {
 	}
 
 	/**
-	 * Returns the url to navigate back to the previous page of results
+	 * Returns the URL to navigate back to the previous page of results
 	 * 
 	 * @param viewType
 	 *            - How to display the results
-	 * @return - The url to navigate back to the previous page of results
+	 * @return - The URL to navigate back to the previous page of results
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getNextPageUrl() throws UnsupportedEncodingException {
-		if (briefBeanView == null) {
-			return null;
-		}
-		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
-				Integer.toString(briefBeanView.getPagination().getNextPage()));
-		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
-				"qf", "start");
-		return getPortalFormattedUrl(builder).toString();
+		return createNavigationUrl(briefBeanView.getPagination().getNextPage());
 	}
 	
 	/**
-	 * Returns the url to go back to the previous page of results
+	 * Returns the URL to go back to the previous page of results
 	 * 
 	 * @param viewType
 	 *            - What format the view should be displayed in
-	 * @return - Url to go back to previous page of results
+	 * @return - URL to go back to previous page of results
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getPreviousPageUrl() throws UnsupportedEncodingException {
-		if (briefBeanView == null) {
-			return null;
-		}
-		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
-				Integer.toString(briefBeanView.getPagination().getPreviousPage()));
-		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
-				"qf", "start");
-		return getPortalFormattedUrl(builder).toString();
+		return createNavigationUrl(briefBeanView.getPagination().getPreviousPage());
 	}
 
 	/**
-	 * Returns the url to navigate to the first page of results
+	 * Returns the URL to navigate to the first page of results
 	 * 
 	 * @param viewType
 	 *            - How to display the results
-	 * @return - The url to navigate back to the previous page of results
+	 * @return - The URL to navigate back to the previous page of results
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getFirstPageUrl() throws UnsupportedEncodingException {
-		if (briefBeanView == null) {
-			return null;
-		}
-		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
-				Integer.toString(briefBeanView.getPagination().getFirstPage()));
-			builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
-				"qf", "start");
-		return getPortalFormattedUrl(builder).toString();
+		return createNavigationUrl(briefBeanView.getPagination().getFirstPage());
 	}
 
 	
 	/**
-	 * Returns the url to navigate to the last page of results
+	 * Returns the URL to navigate to the last page of results
 	 * 
 	 * @param viewType
 	 *            - How to display the results
-	 * @return - The url to navigate back to the previous page of results
+	 * @return - The URL to navigate back to the previous page of results
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getLastPageUrl() throws UnsupportedEncodingException {
+		return createNavigationUrl(briefBeanView.getPagination().getLastPage());
+	}
+
+	/**
+	 * Creates the navigation URL (first, last, prev, next)
+	 * 
+	 * @param start
+	 *   The start parameter
+	 * @return
+	 *   The URL of the page
+	 * @throws UnsupportedEncodingException
+	 */
+	private String createNavigationUrl(int start) throws UnsupportedEncodingException {
 		if (briefBeanView == null) {
 			return null;
 		}
-		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(),
-				Integer.toString(briefBeanView.getPagination().getLastPage()  ));
-			builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), "query",
-				"qf", "start");
+		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(), Integer.toString(start));
+		builder.addParam("rows", Integer.toString(getRows()), true);
+		builder.addParamsFromURL(
+			briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), 
+			"query", "qf", "start", "rows");
 		return getPortalFormattedUrl(builder).toString();
 	}
 
@@ -297,15 +290,14 @@ public class SearchPage extends SearchPreparation {
 	 * @return - Timeline url
 	 */
 	public String getViewUrlTimeline() throws UnsupportedEncodingException {
-		return getPortalFormattedUrl(
-				getViewUrl(PortalPageInfo.TIMELINE.getPageName())).toString();
+		return getPortalFormattedUrl(getViewUrl(PortalPageInfo.TIMELINE.getPageName())).toString();
 	}
 
 	public String getJsonUrlTimeline() throws UnsupportedEncodingException {
 		return StringUtils.replace(
-				getPortalFormattedUrl(
-						getViewUrl(PortalPageInfo.TIMELINE_JSON.getPageName()))
-						.toString(), "&amp;", "&");
+			getPortalFormattedUrl(
+				getViewUrl(PortalPageInfo.TIMELINE_JSON.getPageName())
+			).toString(), "&amp;", "&");
 	}
 
 	public boolean isShowTimeLine() {
