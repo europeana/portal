@@ -17,14 +17,16 @@ public class ContactPageValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 		ContactPage form = (ContactPage) o;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email",
-				"email.required", "Email is required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "feedbackText",
-				"feedbackText.required", "Please enter some feedback text");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, 
+			"email", "email.required", "Email is required"
+		);
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, 
+			"feedbackText", "feedbackText.required", "Please enter some feedback text"
+		);
 
 		if (!ControllerUtil.validEmailAddress(form.getEmail())) {
 			errors.rejectValue("email", "email.invalidEmail", "Please enter a valid email address");
 		}
 	}
-
 }

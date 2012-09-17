@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Resource
 	private ApiKeyService apiKeyService;
-	
+
 	@Resource
 	private UserService userService;
 

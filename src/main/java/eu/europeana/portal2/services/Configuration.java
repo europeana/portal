@@ -127,8 +127,6 @@ public class Configuration {
 	private String getTheme(HttpServletRequest request) {
 		return ControllerUtil.getSessionManagedTheme(request, defaultTheme);
 	}
-	
-	
 
 	///////////////////////////////// getters and setters
 
