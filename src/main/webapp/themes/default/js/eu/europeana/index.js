@@ -3,40 +3,25 @@
 	'use strict';
 
 	var initResponsiveImages = function(){
-		
-		
+
 		var setup = function(){
-			
 			var initialSuffix = '_1.'; // smallest by default
 			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
 				initialSuffix = '_4.'; // largest by default
 			}
-			
-			responsiveGallery({
-				scriptClass:	'euresponsive-script',
-				testClass:		'euresponsive',
-				initialSuffix:	initialSuffix,
-
+			alert('set up 2nd gallery...');
+			new responsiveGallery({
+				imgSelector		: '.responsive',
+				initialSuffix	: initialSuffix,
 				suffixes: {
 					'1': '_1.',
 					'2': '_2.',
 					'3': '_3.',
 					'4': '_4.'
 				}
-
 			});
-			
 		};
-
-		js.loader.loadScripts([{
-			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			callback : function() {
-				setup(); 
-			}
-		}]);
-
-		
+		setup();
 	};
 	
 	var initCarousels = function(){
