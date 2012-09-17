@@ -52,6 +52,7 @@ public class LoginPageController {
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
 		config.injectProperties(model);
+
 		model.setEmail(email);
 		log.info("email: " + email);
 		log.info("buttonPressed: " + buttonPressed);
@@ -106,7 +107,6 @@ public class LoginPageController {
 	}
 
 	private boolean emailExists(String email) {
-		// return userDao.fetchUserByEmail(email) != null;
-		return true;
+		return userService.findByEmail(email) != null;
 	}
 }
