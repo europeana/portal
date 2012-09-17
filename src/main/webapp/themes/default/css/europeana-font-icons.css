@@ -69,9 +69,28 @@
 .icon-arrow-6:before {
 	content: "\69";
 }
+
+
+
+/* Andy: modification */
+.icon-arrow-6-right:after {
+	content: "\69";
+}
+
+
 .icon-arrow-7:before {
 	content: "\6a";
 }
+
+
+
+.icon-arrow-7-right:after {
+	content: "\6a";
+}
+
+
+
+
 .icon-arrow-8:before {
 	content: "\6b";
 }

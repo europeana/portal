@@ -6,9 +6,9 @@ eu.europeana.fulldoc = {
 	// provides a list of accepted hash values for validation
 	tab_priority : [ '#related-items','#similar-content','#map-view' ],
 	
-	more_icon_class:"icon-arrow-6",
+	more_icon_class:"icon-arrow-6-right",
 	
-	less_icon_class:"icon-arrow-7",
+	less_icon_class:"icon-arrow-7-right",
 
 	init : function() {
 
@@ -24,8 +24,8 @@ eu.europeana.fulldoc = {
    			for(var i=0; i<carouselData.length; i++){
    				carouselData[i].lightboxable = {
    						
-   						url : ''
-   				}
+   						url : 'xxxx'
+   				};
    			}
    			// end mock
    			
@@ -48,12 +48,20 @@ eu.europeana.fulldoc = {
 					
 					this.bind("image", function(e) {
 						
-						if(this._options.dataSource[e.index].url.length>0){
-							if(!triggerPanel){							
-								triggerPanel = $('<div class="lb-trigger bold view" >'
+						if(this._options.dataSource[e.index].lightboxable.url.length>0){
+							if(!triggerPanel){
+								//alert("add..");
+								/*
+								triggerPanel = $('<div class="lb-trigger icon-mag  bold view" >'
 										+ '<span rel="#lightbox" title="View" class="lb-trigger view">View</span>'
 										+ '</div>') 
 									.appendTo( this.$( 'container' ).find('.galleria-images') );
+								*/
+								triggerPanel = $('<div class="lb-trigger" >'
+										+ '<span rel="#lightbox" title="View" class="icon-mag">View</span>'
+										+ '</div>') 
+									.appendTo( this.$( 'container' ).find('.galleria-images') );
+
 							}
 						}
 
@@ -583,7 +591,7 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 		jQuery('#fields-enrichment h3 a, #fields-enrichment h4 a').each(function( key, value ) {
 			
 			jQuery(value).bind('click', self.handleAutoTagClick );
-			jQuery(value).find('.icon').addClass(eu.europeana.fulldoc.more_icon_class);
+			jQuery(value).addClass(eu.europeana.fulldoc.more_icon_class);
 		});
 		
 	},
@@ -594,7 +602,7 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 		var $elm = jQuery(this);
 		
 		$elm.parent().next().slideToggle();
-		$elm = $elm.find('.icon');
+		//$elm = $elm.find('.icon');
 		
 		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {
 			
