@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:if test="${!empty model.moreLikeThis}">
-	<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
+	<h3><a href="#similar-content">xxxx<spring:message code="SimilarContent_t" /></a></h3>
 	<div id="similar-content" class="carousel">
 		<div class="carousel-container" about="${model.document.id}">
 			<ul>
