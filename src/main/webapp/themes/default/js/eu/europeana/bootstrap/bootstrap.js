@@ -122,12 +122,6 @@ var europeana_bootstrap = function(){
 		});
 	}
 	else if(eu.europeana.vars.page_name == 'full-doc.html'){
-		scripts.push({
-			name : 'fulldoc',
-			file : 'fulldoc' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils' ]
-		});
 
 		scripts.push({
 			name : 'galleria',
@@ -135,6 +129,14 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
+
+		scripts.push({
+			name : 'fulldoc',
+			file : 'fulldoc' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'utils', 'galleria' ]
+		});
+
 
 		var fulldoc = function(){
 			return {
