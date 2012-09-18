@@ -17,10 +17,13 @@
 		top:		-2em;
 		position:	absolute;		
 	}
-	
+
+	#citetabs{
+		padding: 1em;
+	}
 	#citation h3 {
 		font-size: 100%;
-		padding: 20px 0 0 20px;
+		xxxpadding: 20px 0 0 20px;
 	}
 	
 	#citation p {
@@ -64,11 +67,6 @@
 		border:				1px solid black;
         
         padding-top:		4px;
-	}
-
-	#citetabs{
-		margin-top:  4px;
-	    margin-left: 4px;
 	}
 	
 	#citestyle1, #citestyle2{
@@ -153,16 +151,6 @@
 		margin-top:			-30px;
 		left:				50% !important;
 		top:				50% !important;
-		
-	}
-
-	#citetabs{
-		margin-top:  4px;
-	    margin-left: 4px;
-	}
-	
-	#citestyle1, #citestyle2{
-		margin:				4px;
 		
 	}
 	
