@@ -126,7 +126,7 @@ $.fn.Collapsible = function() {
     		};
     		setTimeout(finishedOpen, 1200);
     		
-    		//e.preventDefault();
+    		e.preventDefault();
     		if(getTarget().is(':visible')){    			
     			setClasses(true);
     		}
