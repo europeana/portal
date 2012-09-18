@@ -58,6 +58,9 @@ a.disabled:hover{
 	cursor:default;
 }
 
+div.actions{
+	padding-left:	1em;
+}
 
 .action-link{
 	float:			left;
@@ -307,8 +310,9 @@ img.trigger{
 	}
 	
 	#microsoft-translate-element select {
-		display: block;
-		margin: 0;
+		display:		block;
+		margin:			0;
+		margin-bottom:	1em;
 	}
 	
 

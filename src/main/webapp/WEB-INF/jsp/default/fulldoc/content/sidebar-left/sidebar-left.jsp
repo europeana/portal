@@ -24,103 +24,104 @@
 		</script>
 	</div>
 	
-	
-	
-	<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
-	
-	<%-- Original context link --%>
-    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
-	<br>
-	
-	<div class="clear"></div>
-	
-	<%-- Shares link 
-	<a id="shares-link" class="icon-share action-link action-title"  rel="nofollow">
-		<span  title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
-	</a>
-	--%>
-	
-	
-	<%-- Shares link --%>
-	<a id="shares-link" class="icon-share action-link" rel="nofollow">
-		<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
-	</a>
-	
-	
-	
 		
-	<%-- Citation link --%>
-   	<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
-   		<span class="action-title"><spring:message code="Cite_Button_t" /></span>
-   	</a>
-	
-	<div id="citation">
-		<c:forEach items="${model.citeStyles}" var="citeStyle">
-			<div class="header">
-				<div class="heading"><spring:message code="Cite_Header_t" />
-					<a href="" class="close-button" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
-				</div>
-			</div>
+	<div class="actions">	
+		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 		
-			<div id="citations">
-				<div class="citation">
-					${citeStyle.citeText}
+		<%-- Original context link --%>
+	    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
+		<br>
+		
+		<div class="clear"></div>
+		
+		<%-- Shares link 
+		<a id="shares-link" class="icon-share action-link action-title"  rel="nofollow">
+			<span  title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
+		</a>
+		--%>
+		
+		
+		<%-- Shares link --%>
+		<a id="shares-link" class="icon-share action-link" rel="nofollow">
+			<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
+		</a>
+		
+		
+		
+			
+		<%-- Citation link --%>
+	   	<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
+	   		<span class="action-title"><spring:message code="Cite_Button_t" /></span>
+	   	</a>
+		
+		<div id="citation">
+			<c:forEach items="${model.citeStyles}" var="citeStyle">
+				<div class="header">
+					<div class="heading"><spring:message code="Cite_Header_t" />
+						<a href="" class="close-button" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
+					</div>
 				</div>
-				<div class="citation">
-					&lt;ref&gt;${citeStyle.citeText}&lt;/ref&gt;
+			
+				<div id="citations">
+					<div class="citation">
+						${citeStyle.citeText}
+					</div>
+					<div class="citation">
+						&lt;ref&gt;${citeStyle.citeText}&lt;/ref&gt;
+					</div>
 				</div>
-			</div>
-		</c:forEach>
-	</div>
-
-
-	<%-- Save page to myeuropeana --%>
-	<c:if test="${!empty model.user}">
-	  <a href="" id="item-save" rel="nofollow" class="block-link bold"><spring:message code="SaveToMyEuropeana_t" /></a>
-	</c:if>
-
-
-	<%-- Embed link --%>
-   	<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
-   		<span class="action-title"><spring:message code="embed_t" /></span>
-   	</a>
-   	
-	<%--
-	<div id="embed-link-wrapper">
-		<a href="${model.embedRecordUrl}" id="item-embed" class="block-link bold" target="_blank" rel="nofollow"><spring:message code="embed_t" /></a>
-	</div>    
-	--%>
-
-	<%-- Add tag --%>
-	<c:if test="${!empty model.user}">
-	  <form id="item-save-tag">
-	    <fieldset>
-	      <label for="add-tag" class="bold"><spring:message code="AddATag_t" /></label><br />
-	      <input type="text" id="item-tag" maxlength="50" />
-	      <input type="submit" class="submit-button" value="<spring:message code="Add_t" />" />
-	    </fieldset>
-	  </form>
-	</c:if>
-
-
-	<c:choose>
-		<c:when test="${fn:contains(model.currentUrl, '&format=label')}">
-			<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '&format=label', '')}</c:set>
-			<c:set var="switchlabelTitle">Normal format</c:set>
-		</c:when>
-		<c:otherwise>
-			<c:set var="switchlabelLink">${model.currentUrl}&format=label</c:set>
-			<c:set var="switchlabelTitle">Label format</c:set>
-		</c:otherwise>
-	</c:choose>
-
-	<%-- Format labels --%>
-   	<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
-   		<span class="action-title">${switchlabelTitle}</span>
-   	</a>
-   	
-   	<div class="clear"></div>
-   	
+			</c:forEach>
+		</div>
+	
+	
+		<%-- Save page to myeuropeana --%>
+		<c:if test="${!empty model.user}">
+		  <a href="" id="item-save" rel="nofollow" class="block-link bold"><spring:message code="SaveToMyEuropeana_t" /></a>
+		</c:if>
+	
+	
+		<%-- Embed link --%>
+	   	<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
+	   		<span class="action-title"><spring:message code="embed_t" /></span>
+	   	</a>
+	   	
+		<%--
+		<div id="embed-link-wrapper">
+			<a href="${model.embedRecordUrl}" id="item-embed" class="block-link bold" target="_blank" rel="nofollow"><spring:message code="embed_t" /></a>
+		</div>    
+		--%>
+	
+		<%-- Add tag --%>
+		<c:if test="${!empty model.user}">
+		  <form id="item-save-tag">
+		    <fieldset>
+		      <label for="add-tag" class="bold"><spring:message code="AddATag_t" /></label><br />
+		      <input type="text" id="item-tag" maxlength="50" />
+		      <input type="submit" class="submit-button" value="<spring:message code="Add_t" />" />
+		    </fieldset>
+		  </form>
+		</c:if>
+	
+	
+		<c:choose>
+			<c:when test="${fn:contains(model.currentUrl, '&format=label')}">
+				<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '&format=label', '')}</c:set>
+				<c:set var="switchlabelTitle">Normal format</c:set>
+			</c:when>
+			<c:otherwise>
+				<c:set var="switchlabelLink">${model.currentUrl}&format=label</c:set>
+				<c:set var="switchlabelTitle">Label format</c:set>
+			</c:otherwise>
+		</c:choose>
+	
+		<%-- Format labels --%>
+	   	<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
+	   		<span class="action-title">${switchlabelTitle}</span>
+	   	</a>
+	   	
+	   	<div class="clear"></div>
+	   	
+   	</div>
    	
 </div>
 
