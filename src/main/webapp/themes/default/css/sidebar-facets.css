@@ -5,30 +5,43 @@
 	}
 	
 	#facets-actions{
-		margin-top:		0.5em;
+		margin-top:				0.5em;
+		padding-left:			1em;
+		padding-right:			1em;
+		
+		box-sizing:				border-box;
+		-moz-box-sizing:		border-box;
+		-webkit-box-sizing:		border-box;
 	}
 	
 	#search-filter,
-	#filter-search, #filter-search ul,
-	#share-subscribe, #share-subscribe ul
+	#filter-search,
+	#filter-search ul,
+	#share-subscribe,
+	#share-subscribe ul
 	 {
 		list-style:		none;
 		margin:			0;
 		padding:		0;
 	}
 
+	#filter-search li ul{
+		max-height:		10em;
+		overflow:		auto;
+	}
+
 	.sidebar h2{
-		padding:		0.5em 0 0em 0.5em;
+		padding:		0.5em 0 0 0;
 	}
 	
 	.sidebar h2,
 	#search-filter li .bold{
-		font-size:		1.2em;
+		font-size:		1em;
 	}
 	
 	#search-filter {
 		overflow: hidden;
-		margin: 0 0 0.3em 0;
+		margin: 0 0 0.5em 0;
 	}
 	
 	#search-filter ul{
@@ -37,20 +50,19 @@
 	
 	#share-subscribe h3,
 	#filter-search h3 {
-		font-size:		0.8em;
+		font-size:		1em;
 		margin-bottom:	0.5em;
 		border-top:		solid 1px #c0c0c0;
 		padding-top:	0.2em;
 	}
 	
 	#search-filter{
-		margin-left:		0.7em;
+		margin-left:		1em;
 	}
 	
 	a.facet-section,
 	a.facet-ugc{
 		display:				block;
-		padding-left:			0.5em;
 		color:					#333;
 		background-image:		none;
 		background-repeat:		no-repeat;
@@ -65,10 +77,18 @@
 		padding-left:			0.5em;
 	}
 
-	.share-section.span{		/* font icon fix */
+
+	/* font icon fix */
+	/*
+	.share-section.span{	
 		position:				relative;
 		top:					0.138em;
 	}
+	*/
+	
+	
+	
+	
 	
 	#shares-link{
 		display:	none;
@@ -79,7 +99,7 @@
 	
 		#filter-search ul {
 			overflow:		auto;
-			margin-left:	2em;
+			margin-left:	1em;
 			margin-bottom:	0.5em;
 			display:		none;
 		}
