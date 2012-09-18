@@ -48,6 +48,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedPartner;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 /**
@@ -62,10 +63,9 @@ public class IndexPageController {
 
 	// @Resource private ProposedSearchTermSampler proposedSearchTermSampler;
 
-	// @Resource private ClickStreamLogger clickStreamLogger;
+	@Resource private ClickStreamLogger clickStreamLogger;
 
 	// private ReloadableResourceBundleMessageSource messageSource;
-
 	@Resource private ResourceBundleMessageSource messageSource;
 
 	@Resource private LocaleInterceptor localeChangeInterceptor;
@@ -105,10 +105,9 @@ public class IndexPageController {
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.INDEX);
-		// clickStreamLogger.logUserAction(request,
-		// ClickStreamLogger.UserAction.INDEXPAGE, page);
 		config.postHandle(this, page);
-		
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.INDEXPAGE, page);
+
 		return page;
 	}
 
