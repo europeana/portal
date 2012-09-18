@@ -4,7 +4,9 @@
 /* common classes */
 
 .collapse-icon{
-	float:	right;
+	float:			right;
+	padding-top:	1em;
+	padding-bottom:	1em;
 }
 
 
