@@ -28,6 +28,7 @@ import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ContactPage;
 import eu.europeana.portal2.web.presentation.model.validation.ContactPageValidator;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -40,10 +41,9 @@ public class ContactPageController {
 
 	@Resource(name="configurationService") private Configuration config;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource private ClickStreamLogger clickStreamLogger;
 
-	// @Autowired
-	// private ClickStreamLogger clickStreamLogger;
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -90,7 +90,7 @@ public class ContactPageController {
 					throws Exception {
 		config.registerBaseObjects(request, response, locale);
 		if (result.hasErrors()) {
-			// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND_FAILURE);
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND_FAILURE);
 		} else {
 			// Map<String, Object> model = new TreeMap<String, Object>();
 			// model.put("email", form.getEmail());
@@ -99,9 +99,9 @@ public class ContactPageController {
 			// userFeedbackConfirmSender.sendEmail(model);
 			emailService.sendFeedback(form.getEmail(), form.getFeedbackText());
 			form.setSubmitMessage("Your feedback was successfully sent. Thank you!");
-			// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND);
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND);
 		}
-		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CONTACT_PAGE);
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CONTACT_PAGE);
 		config.injectProperties(form);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(form, locale, PortalPageInfo.CONTACT);
 		config.postHandle(this, page);

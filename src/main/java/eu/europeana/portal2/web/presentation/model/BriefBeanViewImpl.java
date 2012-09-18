@@ -22,11 +22,13 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.solr.client.solrj.response.FacetField;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -91,39 +93,38 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		return briefDoc;
 	}
 	*/
+	
+	public void setFacetLogs(List<FacetField> facetFieldList) {
+		this.facetLogs = createFacetLogs(facetFieldList);
+	}
 
-	/*
-	// todo: what are facet logs, how heavy, and is it needed?
-	private Map<String, String> createFacetLogs(QueryResponse solrResponse) {
+	// TODO: what are facet logs, how heavy, and is it needed?
+	private Map<String, String> createFacetLogs(List<FacetField> facetFieldList) {
 		Map<String, String> facetLogs = new HashMap<String, String>();
-		List<FacetField> facetFieldList = solrResponse.getFacetFields();
 		if (facetFieldList != null) {
 			for (FacetField facetField : facetFieldList) {
 				// only for LANGUAGE or COUNTRY field
 				if (facetField.getName().equalsIgnoreCase("LANGUAGE")
 						|| facetField.getName().equalsIgnoreCase("COUNTRY")) {
-					StringBuilder out = new StringBuilder();
 					List<FacetField.Count> list = facetField.getValues();
 					if (list == null) {
 						break;
 					}
+					List<String> counts = new ArrayList<String>();
 					int counter = 0;
 					for (FacetField.Count count : list) {
 						counter++;
-						out.append(count.toString()).append(",");
+						counts.add(count.toString());
 						if (counter > 5) {
 							break;
 						}
 					}
-					// StringUtlis.join()!!
-					facetLogs.put(facetField.getName(), out.toString()
-							.substring(0, out.toString().length() - 1));
+					facetLogs.put(facetField.getName(), StringUtils.join(counts, ","));
 				}
 			}
 		}
 		return facetLogs;
 	}
-	*/
 
 	/*
 	// createPagination(solrResponse, solrQuery, requestQueryString);

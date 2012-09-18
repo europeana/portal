@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
@@ -56,22 +57,17 @@ public interface ClickStreamLogger {
 
 	void logUserAction(HttpServletRequest request, UserAction action);
 
-	void logUserAction(HttpServletRequest request, UserAction action,
-			ModelAndView model);
+	void logUserAction(HttpServletRequest request, UserAction action, ModelAndView model);
 
-	void logCustomUserAction(HttpServletRequest request, UserAction action,
-			String logString);
+	void logCustomUserAction(HttpServletRequest request, UserAction action, String logString);
 
 	void logStaticPageView(HttpServletRequest request, PageInfo pageType);
 
-	void logLanguageChange(HttpServletRequest request, Locale oldLocale,
-			UserAction languageChange);
+	void logLanguageChange(HttpServletRequest request, Locale oldLocale, UserAction languageChange);
 
-	void logBriefResultView(HttpServletRequest request,
-			BriefBeanView briefBeanView, SolrQuery solrQuery, ModelAndView page);
+	void logBriefResultView(HttpServletRequest request, BriefBeanView briefBeanView, Query query, ModelAndView page);
 
-	void logFullResultView(HttpServletRequest request, UserAction action, 
-			FullBeanView fullResultView, ModelAndView page, String europeanaUri);
+	void logFullResultView(HttpServletRequest request, UserAction action, FullBeanView fullResultView, ModelAndView page, String europeanaUri);
 
 	/**
 	 * Enum for different user actions that can be logged.

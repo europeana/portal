@@ -72,6 +72,9 @@ public class SearchUtils {
 		if (StringUtils.containsIgnoreCase(profile, "spelling") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.setSpellcheck(ModelUtils.convertSpellCheck(resultSet.getSpellcheck()));
 		}
+		
+		briefBeanView.setFacetLogs(resultSet.getFacetFields());
+		
 //		if (StringUtils.containsIgnoreCase(profile, "suggestions") || StringUtils.containsIgnoreCase(profile, "portal")) {
 //		}
 		

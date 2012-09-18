@@ -26,6 +26,7 @@ import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AjaxPage;
 import eu.europeana.portal2.web.presentation.model.data.FieldSize;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -34,6 +35,8 @@ public class AjaxController {
 	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="configurationService") private Configuration config;
+
+	@Resource private ClickStreamLogger clickStreamLogger;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -94,7 +97,7 @@ public class AjaxController {
 				uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 				user = userService.createSavedItem(user.getId(), uri);
 				log.info("SavedItems: " + StringUtils.join(user.getSavedItems(), ", "));
-				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_ITEM);
+				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_ITEM);
 				break;
 			// className=SavedSearch&query=query%3Dparish&queryString=parish
 			case SAVED_SEARCH:
@@ -103,7 +106,7 @@ public class AjaxController {
 				user = userService.createSavedSearch(user.getId(), query, queryString);
 
 				log.info("SavedSearches: " + StringUtils.join(user.getSavedSearches(), ", "));
-				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_SEARCH);
+				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_SEARCH);
 				break;
 			/*
 			case SEARCH_TERM:
@@ -117,7 +120,7 @@ public class AjaxController {
 				uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 				String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
 				user = userService.createSocialTag(user.getId(), uri, tag);
-				// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SAVE_SOCIAL_TAG, "tag=" + tagValue);
+				clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
 				break;
 			default:
 				throw new IllegalArgumentException("Unhandled ajax action: " + className);
@@ -139,11 +142,11 @@ public class AjaxController {
 		switch (findModifiable(className)) {
 			case SAVED_ITEM:
 				userService.removeSavedItem(user.getId(), id);
-				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_ITEM);
+				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_ITEM);
 				break;
 			case SAVED_SEARCH:
 				userService.removeSavedSearch(user.getId(), id);
-				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_SEARCH);
+				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_SEARCH);
 				break;
 			/*
 			case SEARCH_TERM:
@@ -153,7 +156,7 @@ public class AjaxController {
 			*/
 			case SOCIAL_TAG:
 				userService.removeSocialTag(user.getId(), id);
-				// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SOCIAL_TAG);
+				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SOCIAL_TAG);
 				break;
 			default:
 				throw new IllegalArgumentException("Unhandled removable");

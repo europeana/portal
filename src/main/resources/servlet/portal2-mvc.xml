@@ -86,6 +86,8 @@
 
 	<bean id="searchController" class="eu.europeana.portal2.web.controllers.SearchController" />
 
+	<bean id="clickStreamLogger" class="eu.europeana.portal2.web.util.ClickStreamLoggerImpl"/>
+
 	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
 
 	<!-- a bean for storing configuration properties. -->

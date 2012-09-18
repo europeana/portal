@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 
@@ -41,6 +43,8 @@ public class SearchController {
 	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
+
+	@Resource private ClickStreamLogger clickStreamLogger;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -122,8 +126,9 @@ public class SearchController {
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
 		log.info("query: " + query);
+		BriefBeanView briefBeanView = null;
 		try {
-			BriefBeanView briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, request.getQueryString());
+			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, request.getQueryString());
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
@@ -137,6 +142,7 @@ public class SearchController {
 		}
 
 		config.postHandle(this, page);
+		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 
 		return page;
 	}

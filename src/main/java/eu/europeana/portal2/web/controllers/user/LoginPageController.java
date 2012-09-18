@@ -19,6 +19,7 @@ import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -32,16 +33,9 @@ public class LoginPageController {
 
 	@Resource(name="corelib_db_tokenService") private TokenService tokenService;
 
+	@Resource private ClickStreamLogger clickStreamLogger;
+
 	private final Logger log = Logger.getLogger(getClass().getName());
-
-	// @Autowired
-	// private TokenReplyEmailSender tokenReplyEmailSender;
-
-	// @Autowired
-	// private UserDao userDao;
-
-	// @Autowired
-	// private ClickStreamLogger clickStreamLogger;
 
 	@RequestMapping("/login.html")
 	public ModelAndView handle(
@@ -107,7 +101,7 @@ public class LoginPageController {
 		model.setErrorMessage("1".equals(request.getParameter("error")) ? "Invalid Credentials" : null);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGIN);
 		config.postHandle(this, page);
-		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.LOGIN, page);
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.LOGIN, page);
 
 		return page;
 	}

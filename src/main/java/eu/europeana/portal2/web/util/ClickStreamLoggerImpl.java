@@ -27,11 +27,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.joda.time.DateTime;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.DocIdWindowPager;
@@ -43,13 +44,13 @@ import eu.europeana.portal2.web.presentation.model.FullBeanView;
 public class ClickStreamLoggerImpl implements ClickStreamLogger {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
-	private static String VERSION = "1.0";
+	private static final Logger log2 = Logger.getLogger("ClickStreamLoggerImpl");
 
+	private static String VERSION = "2.0";
+	
 	@Override
-	public void logUserAction(HttpServletRequest request, UserAction action,
-			ModelAndView model) {
-		log.info(MessageFormat.format("[action={0}, view={1}, {2}]", action,
-				model.getViewName(), printLogAffix(request)));
+	public void logUserAction(HttpServletRequest request, UserAction action, ModelAndView page) {
+		log.info(MessageFormat.format("[action={0}, view={1}, {2}]", action, page.getViewName(), printLogAffix(request, page)));
 	}
 
 	/**
@@ -65,40 +66,30 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 
 	@Override
 	public void logUserAction(HttpServletRequest request, UserAction action) {
-		log.info(MessageFormat.format("[action={0}, {1}]", action,
-				printLogAffix(request)));
+		log.info(MessageFormat.format("[action={0}, {1}]", action, printLogAffix(request)));
 	}
 
 	@Override
-	public void logCustomUserAction(HttpServletRequest request,
-			UserAction action, String logString) {
-		log.info(MessageFormat.format("[action={0}, {2}, {1}]", action,
-				printLogAffix(request), logString));
+	public void logCustomUserAction(HttpServletRequest request, UserAction action, String logString) {
+		log.info(MessageFormat.format("[action={0}, {2}, {1}]", action, printLogAffix(request), logString));
 	}
 
 	@Override
 	public void logStaticPageView(HttpServletRequest request, PageInfo pageType) {
-		log.info(MessageFormat.format("[action={0}, view={1}, {2}]",
-				UserAction.STATICPAGE, pageType.getTemplate(),
-				printLogAffix(request)));
+		log.info(MessageFormat.format("[action={0}, view={1}, {2}]", UserAction.STATICPAGE, pageType.getTemplate(), printLogAffix(request)));
 	}
 
 	@Override
-	public void logLanguageChange(HttpServletRequest request, Locale oldLocale,
-			UserAction languageChange) {
-		log.info(MessageFormat.format("[action={0}, oldLang={1}, {2}]",
-				languageChange, oldLocale.getLanguage(), printLogAffix(request)));
+	public void logLanguageChange(HttpServletRequest request, Locale oldLocale, UserAction languageChange) {
+		log.info(MessageFormat.format("[action={0}, oldLang={1}, {2}]", languageChange, oldLocale.getLanguage(), printLogAffix(request)));
 	}
 
 	@Override
-	public void logBriefResultView(HttpServletRequest request,
-			BriefBeanView briefBeanView, SolrQuery solrQuery, ModelAndView page) {
-		String query = briefBeanView.getPagination().getPresentationQuery()
-				.getUserSubmittedQuery(); //
+	public void logBriefResultView(HttpServletRequest request, BriefBeanView briefBeanView, Query solrQuery, ModelAndView page) {
+		String query = (briefBeanView.getPagination() == null) ? null : briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery();
 		String queryConstraints = "";
-		if (solrQuery.getFilterQueries() != null) {
-			queryConstraints = StringUtils.join(solrQuery.getFilterQueries(),
-					",");
+		if (solrQuery.getRefinements() != null) {
+			queryConstraints = StringUtils.join(solrQuery.getRefinements(), ",");
 		}
 		// String pageId;
 		// private String state;
@@ -107,8 +98,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 		if (params.containsKey("bt")) {
 			if (request.getParameter("bt").equalsIgnoreCase("pacta")) {
 				userAction = UserAction.BRIEF_RESULT_FROM_PACTA;
-			} else if (request.getParameter("bt").equalsIgnoreCase(
-					"savedSearch")) {
+			} else if (request.getParameter("bt").equalsIgnoreCase("savedSearch")) {
 				userAction = UserAction.BRIEF_RESULT_FROM_SAVED_SEARCH;
 			}
 		} else if (params.containsKey("rtr")
@@ -119,19 +109,14 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 		int nrResults = briefBeanView.getPagination().getNumFound();
 		String languageFacets = briefBeanView.getFacetLogs().get("LANGUAGE");
 		String countryFacet = briefBeanView.getFacetLogs().get("COUNTRY");
-		log.info(MessageFormat
-				.format("[action={0}, view={1}, query={2}, queryType={7}, queryConstraints=\"{3}\", page={4}, "
-						+ "numFound={5}, langFacet={8}, countryFacet={9}, {6}]",
-						userAction, page.getViewName(), query,
-						queryConstraints, pageNr, nrResults,
-						printLogAffix(request), solrQuery.getQueryType(),
-						languageFacets, countryFacet));
+		log.info(MessageFormat.format(
+			"[action={0}, view={1}, query={2}, queryType={7}, queryConstraints=\"{3}\", page={4}, numFound={5}, langFacet={8}, countryFacet={9}, {6}]",
+			userAction, page.getViewName(), query, queryConstraints, pageNr, nrResults,
+			printLogAffix(request, page), solrQuery.getQueryType(), languageFacets, countryFacet));
 	}
 
 	@Override
-	public void logFullResultView(HttpServletRequest request,
-			UserAction userAction, FullBeanView fullResultView,
-			ModelAndView page, String europeanaUri) {
+	public void logFullResultView(HttpServletRequest request, UserAction userAction, FullBeanView fullResultView, ModelAndView page, String europeanaUri) {
 		String originalQuery = "";
 		String startPage = "";
 		String numFound = "";
@@ -141,9 +126,9 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 			startPage = String.valueOf(idWindowPager.getFullDocUriInt());
 			numFound = idWindowPager.getDocIdWindow().getHitCount().toString();
 		} catch (UnsupportedEncodingException e) {
-			// todo decide what to do with this error
+			// TODO decide what to do with this error
 		} catch (Exception e) {
-			// todo decide what to do with this error
+			// TODO decide what to do with this error
 		}
 
 		Map params = request.getParameterMap();
@@ -158,18 +143,20 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 				userAction = UserAction.FULL_RESULT_FROM_TIME_LINE_VIEW;
 			}
 		}
-		log.info(MessageFormat
-				.format("[action={0}, europeana_uri={2}, query={4}, start={3}, numFound={5}, {1}]",
-						userAction, printLogAffix(request), europeanaUri,
-						startPage, originalQuery, numFound));
+		log.info(MessageFormat.format("[action={0}, europeana_uri={2}, query={4}, start={3}, numFound={5}, {1}]",
+				userAction, printLogAffix(request, page), europeanaUri, startPage, originalQuery, numFound));
 	}
 
 	private static String printLogAffix(HttpServletRequest request) {
+		return printLogAffix(request, null);
+	}
+	
+	private static String printLogAffix(HttpServletRequest request, ModelAndView page) {
 		DateTime date = new DateTime();
 		String ip = request.getRemoteAddr();
 		String reqUrl = getRequestUrl(request);
-		// TODO: create user management
-		final User user = null; // ControllerUtil.getUser();
+		PageData model = (PageData)page.getModel().get(PageData.PARAM_MODEL);
+		final User user = (page == null) ? null : (User)model.getUser();
 		String userId;
 		if (user != null) {
 			userId = user.getId().toString();
@@ -194,11 +181,9 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 				}
 			}
 		}
-		return MessageFormat
-				.format("userId={0}, lang={1}, req={4}, date={2}, ip={3}, user-agent={5}, referer={6}, utma={8}, "
-						+ "utmb={9}, utmc={10}, v={7}", userId, language, date,
-						ip, reqUrl, userAgent, referer, VERSION, utma, utmb,
-						utmc);
+		return MessageFormat.format(
+			"userId={0}, lang={1}, req={4}, date={2}, ip={3}, user-agent={5}, referer={6}, utma={8}, utmb={9}, utmc={10}, v={7}", 
+			userId, language, date, ip, reqUrl, userAgent, referer, VERSION, utma, utmb, utmc);
 	}
 
 	private static String getRequestUrl(HttpServletRequest request) {
@@ -221,8 +206,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 					out.append(key).append("=").append(value).append("&");
 				}
 			}
-			queryString = out.toString().substring(0,
-					out.toString().length() - 1);
+			queryString = out.toString().substring(0, out.toString().length() - 1);
 		} else {
 			queryString = out.toString();
 		}

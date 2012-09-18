@@ -23,6 +23,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SuggestionsPage;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -33,6 +34,8 @@ public class SuggestionController {
 	@Resource private SearchService searchService;
 
 	@Resource(name="configurationService") private Configuration config;
+
+	@Resource private ClickStreamLogger clickStreamLogger;
 
 	@RequestMapping("/suggestions.json")
 	public ModelAndView suggestionHtml(

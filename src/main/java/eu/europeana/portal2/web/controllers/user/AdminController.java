@@ -45,7 +45,6 @@ public class AdminController {
 		AdminPage model = new AdminPage();
 		model.setTheme("devel");
 		config.injectProperties(model);
-		
 		model.setUsers(userService.findAll());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN);

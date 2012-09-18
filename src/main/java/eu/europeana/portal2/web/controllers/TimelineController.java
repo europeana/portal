@@ -23,17 +23,20 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
 public class TimelineController {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-	
 	@Resource private SearchService searchService;
 
+	@Resource private ClickStreamLogger clickStreamLogger;
+
 	@Resource(name="configurationService") private Configuration config;
+
+	private final Logger log = Logger.getLogger(getClass().getName());
 
 	@RequestMapping("/timeline.html")
 	public ModelAndView timelineHtml(
@@ -62,6 +65,7 @@ public class TimelineController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.TIMELINE);
 		config.postHandle(this, page);
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.TIMELINE, page);
 
 		return page;
 	}
@@ -104,7 +108,7 @@ public class TimelineController {
 		model.setQuery(briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.TIMELINE_JSON);
-		// clickStreamLogger.logBriefResultView(request, briefBeanView, solrQuery, page);
+		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		config.postHandle(this, page);
 
 		return page;

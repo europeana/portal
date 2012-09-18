@@ -54,6 +54,8 @@ import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
+import eu.europeana.portal2.web.util.ClickStreamLogger;
+import eu.europeana.portal2.web.util.ClickStreamLogger.UserAction;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 /**
@@ -69,6 +71,8 @@ public class ObjectController {
 	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
+
+	@Resource private ClickStreamLogger clickStreamLogger;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -119,6 +123,7 @@ public class ObjectController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		config.postHandle(this, page);
+		clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView.getFullDoc().getAbout());
 
 		return page;
 	}
