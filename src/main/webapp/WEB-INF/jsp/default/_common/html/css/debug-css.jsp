@@ -46,7 +46,7 @@
 		width: 1px;
 	}
 
-	@media all and (min-width:44em){
+	@media all and (min-width:70em){
 		.euresponsive-logo {
 			width: 2px;
 		}
