@@ -21,6 +21,8 @@
 	top:					0.03em;
 	padding-left:			0.15em;
 	padding-bottom:			0.18em;
+	
+	cursor:					pointer;
 }
 
 .eu-menu a {
