@@ -7,10 +7,43 @@
 					<h3><spring:message code="follow_us_t" /></h3>
 					<div id="social-links">
 						<span></span><!-- Andy: empty span needed to stop 1st item appearing smaller in firefox -->
-						<span class="social-link icon-facebook"		rel="me"></span>			
-						<span class="social-link icon-pinterest-2"	rel="me"></span>
-						<span class="social-link icon-twitter"		rel="me"></span>
-						<span class="social-link icon-blog"			rel="me"></span>
+						
+						<a class	="social-link"
+							title	="<spring:message code="europeana-facebook-title_t" />"
+							href	="<spring:message code="europeana-facebook-url" />"
+							target	="<spring:message code="europeana-facebook-target" />"
+							rel		="me"
+							>
+							<span class="social-link icon-facebook"></span>
+						</a>
+							
+						<a class	="social-link"
+							title	="<spring:message code="europeana-pinterest-title_t" />"
+							href	="<spring:message code="europeana-pinterest-url" />"
+							target	="<spring:message code="europeana-pinterest-target" />"
+							rel		="me"
+							>
+							<span class="social-link icon-pinterest-2"></span>
+						</a>
+						
+						<a class	="social-link"
+							title	="<spring:message code="europeana-twitter-title_t" />"
+							href	="<spring:message code="europeana-twitter-url" />"
+							target	="<spring:message code="europeana-twitter-target" />"
+							rel		="me"
+							>
+							<span class="social-link icon-twitter"></span>
+						</a>
+						
+						<a class	="social-link"
+							title	="<spring:message code="europeana-blog-title_t" />"
+							href	="<spring:message code="europeana-blog-url" />"
+							target	="<spring:message code="europeana-blog-target" />"
+							>
+							<span class="social-link icon-blog"			></span>
+						</a>
+						
+						
 						<span class="stretch"></span>
 					</div>
 				</div>

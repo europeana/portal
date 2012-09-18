@@ -686,8 +686,7 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 				ui_use_css : true});
 		
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
-		// @see /js/com/addthis/addthis.js for those attributes		
-		
+		// @see /js/com/addthis/addthis.js for those attributes
 		
 		var addThisHtml = com.addthis.getToolboxHtml_ANDY({
 			html_class : '',

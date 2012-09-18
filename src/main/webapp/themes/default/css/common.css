@@ -37,12 +37,15 @@
 }
 	
 #social-links .social-link{
-	float:			none;
-	color:			#FF75A3;
-	display:		inline-block;
-	*display:		inline;
-	zoom:			1;
+	float:		none;
+	color:		#FF75A3;
+	display:	inline-block;
+	*display:	inline;
+	zoom:		1;
+	width:		auto !important;
+	cursor:		pointer;
 }
+
 	
 	
 .stretch {
@@ -57,7 +60,7 @@
 	font-size:	2em;
 }
 
-#social-links span{
+#social-links a{
 	font-size:	1.5em;
 }
 	
@@ -95,10 +98,6 @@
 }
 	
 
-#social-links .social-link{		
-	width:	auto !important;
-	float:	left;
-}
 		
 #footer-subscribe input[type=submit]{
 	width:	100%;
@@ -131,7 +130,8 @@
 
 
 @media only screen and ( min-width:48em ){
-	.sidebar {
+	#social-links .social-link{
+		float:	left;
 	}	
 }
 

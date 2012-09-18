@@ -97,12 +97,11 @@ eu.europeana.search = {
 				
 			});
 			
+			url = jQuery('head meta[property="og:url"]').attr('content');
 			window.addthis_share = com.addthis.createShareObject({
-				
 				// nb: twitter templates will soon be deprecated, no date is given
 				// @link http://www.addthis.com/help/client-api#configuration-sharing-templates
 				templates: { twitter: title + ': ' + url + ' #europeana' }
-				
 			});
 		
 			var addThisHtml = com.addthis.getToolboxHtml_ANDY({
