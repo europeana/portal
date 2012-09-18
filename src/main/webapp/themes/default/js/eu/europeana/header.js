@@ -57,6 +57,7 @@ eu.europeana.header = {
 				galleryName		: 'euresponsive-logo',
 				imgSelector		: '.responsive-logo',
 				initialSuffix	: initialSuffix,
+				mode			: 'div',
 				suffixes: {
 					'0': '-1.',
 					'1': '-1.',
