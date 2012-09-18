@@ -270,7 +270,16 @@ Galleria.addTheme({
        			thisGallery.$(	'container' ).parent().css("height", 1.1 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
        			
        			thisGallery.bind("image", function(e) {
-       				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").css("opacity", "1")
+       				var imgShows = false;
+       				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
+       					if($(ob).is(':visible')){
+       						imgShows = true;
+       					}
+       				});
+       				if(!imgShows){
+           				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");       					
+       				}
+       				
        			});
     			rerunOnResize();
        			/*
@@ -375,8 +384,22 @@ Galleria.addTheme({
            				return;
            			}
             		thisGallery.bind("image", function(e) {
-            			thisGallery.$( 'container' ).find(".galleria-images .galleria-image").css("opacity", "1")
-             		 });
+            			//thisGallery.$( 'container' ).find(".galleria-images .galleria-image").css("opacity", "1")
+
+            			// Andy: copy & paste from bordered - tidy this
+           				var imgShows = false;
+           				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
+           					if($(ob).is(':visible')){
+           						imgShows = true;
+           					}
+           				});
+           				if(!imgShows){
+               				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");       					
+           				}
+           				
+            		
+            		
+            		});
         			rerunOnResize();
         			return;
         		});
