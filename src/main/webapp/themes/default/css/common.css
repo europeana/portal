@@ -8,138 +8,126 @@
 }
 
 
-	.underline { text-decoration: underline; }
-	.clear { clear: both; }
-	.small { font-size: 90%; }
+.underline { text-decoration: underline; }
+.clear { clear: both; }
+.small { font-size: 90%; }
 	
-	/*
-	a.block-link { display: block; line-height: 1.5; }
-	*/
-	/*
-	.external {
-		background-image: url(../images/icons/external.png);
-		background-repeat: no-repeat;
-		background-position: right -486px;
-		padding-right: 20px;
-	}
-	
-	a.external:hover {
-		background-image: url(../images/icons/external.png);
-		background-repeat: no-repeat;
-		background-position: right 2px;
-	}
-	*/
+
 
 /* sidebar */
 
-    .sidebar {
-    	position: relative;
-		background-color: #dfdfdf;
-	}
+.sidebar {
+	position: relative;
+	background-color: #dfdfdf;
+}
 
 
 /* Footer */
 
-	#footer-addthis{
-		float:left;
-	}
+#footer-addthis{
+	float: left;
+}
 
-	/* #container { */
-	#social-links {
-	    text-align:			justify;
-	    -ms-text-justify:	distribute-all-lines;
-	    text-justify:		distribute-all-lines;
-	    max-height:			4em;
-	}
+/* #container { */
+#social-links {
+	text-align:			justify;
+	-ms-text-justify:	distribute-all-lines;
+	text-justify:		distribute-all-lines;
+	max-height:			2em;
+}
 	
-	#social-links .social-link{
-	    float:			none;
-		color:			#FF75A3;
-	    display:		inline-block;
-	    *display:		inline;
-	    zoom:			1;
-	}
+#social-links .social-link{
+	float:			none;
+	color:			#FF75A3;
+	display:		inline-block;
+	*display:		inline;
+	zoom:			1;
+}
 	
 	
-	.stretch {
-	    width:			100%;
-	    display:		inline-block;
-	    font-size:		0;
-	    line-height:	0;
-	}
+.stretch {
+	width:			100%;
+	display:		inline-block;
+	font-size:		0;
+	line-height:	0;
+}
 
 
-	#social-links{
-		font-size:	2em;
-	}
+#social-links{
+	font-size:	2em;
+}
 
-	#social-links span{
-		font-size:	1.5em;
-	}
+#social-links span{
+	font-size:	1.5em;
+}
 	
-	#social-links span:first-child{
-		margin-bottom:	1em;
-		font-size:		1em;
-	}
+#social-links span:first-child{
+	margin-bottom:	1em;
+	font-size:		1em;
+}
 
-	#footer-subscribe input{
-		float:			left;
-		clear:			left;
-		width:			100%;
-		max-width:		100%;
+#footer-subscribe input{
+	float:			left;
+	clear:			left;
+	width:			100%;
+	max-width:		100%;
+	
+	margin-top:				1em;
+	margin-bottom:			0.2em;
+	padding:				2px 0px;
+	color:					#333;
+	border:					1px solid #a0a0a0;
+	
+	font-size:				1.2em;		
+}
+
+	
+.europeana-button-1{
+	background-color:		blue;
+	color:					white !important;
+	border:					0 !important;
+
+	padding:				0.5em 0.5em !important;
+	margin:					0;
+	-moz-border-radius:		0.75em;
+	-webkit-border-radius:	0.75em;
+	border-radius:			0.75em;
+}
+	
+
+#social-links .social-link{		
+	width:	auto !important;
+	float:	left;
+}
 		
-		margin-top:				1em;
-		margin-bottom:			0.2em;
-		padding:				2px 0px;
-		color:					#333;
-		border:					1px solid #a0a0a0;
-		
-		font-size:				1.2em;		
-	}
+#footer-subscribe input[type=submit]{
+	width:	100%;
+}
+
+.footer-links{
+	list-style-type:	none;
+	padding-left:		0;
+}
+
+.footer-links li{
+	display:		inline;
+	padding-right:	2em;
+	color:			white;
+}
+
+.footer h3,
+.footer h3 a,
+.footer-links li a{
+	color:			white;
+}
 
 	
-	.europeana-button-1{
-
-		background-color:		blue;
-		color:					white !important;
-		border:					0 !important;
-	
-		padding:				0.5em 0.5em !important;
-		margin:					0;
-		-moz-border-radius:		0.75em;
-		-webkit-border-radius:	0.75em;
-		border-radius:			0.75em;
-	}
-	
-
-	@media only screen and ( min-width:48em ){	/* ipad */
-		#social-links .social-link{		
-			width:	auto !important;
-			float:	left;
-		}
-		
-		#footer-subscribe input[type=submit]{
-			width:	auto;
-		}
-
-	}
-
-	.ie8 #social-links .social-link{		
-		width:	auto !important;
-		float:	left;
-	}
-		
-	.ie8 #footer-subscribe input[type=submit]{
-		width:	auto;
-	}
-	
-	
-	.italic-heading{
-		font-weight:	normal;
-		font-style:		italic;
-		font-size:		1.5em;
-		display:		block;
-	}
+.italic-heading{
+	font-weight:	normal;
+	font-style:		italic;
+	font-size:		1.5em;
+	display:		block;
+}
 
 
 @media only screen and ( min-width:48em ){
@@ -152,25 +140,25 @@
 }	
 
 
-	.ui-error, .error {
-		color: red;
-	}
+.ui-error, .error {
+	color: red;
+}
+
+
+.error-border {
+	border: 1px dotted red !important;
+}
 	
-	.error-border {
-		border: 1px dotted red !important;
-	}
-	
-	.ui-info { color: blue; }
-	
-	
-	.black { color: #000; }
-	.bold { font-weight: bold; }
-	
-	
+.ui-info { color: blue; }
+
+.black { color: #000; }
+.bold { font-weight: bold; }
+
+
 /* search-results */
 
 	
-	/* Fix for IE7 (hid text but overflow icons were still visible) */	
-	#item-subject{
-		position:relative;
-	}
+/* Fix for IE7 (hid text but overflow icons were still visible) */	
+#item-subject{
+	position:relative;
+}
