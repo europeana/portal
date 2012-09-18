@@ -76,19 +76,6 @@
 	.share-section{
 		padding-left:			0.5em;
 	}
-
-
-	/* font icon fix */
-	/*
-	.share-section.span{	
-		position:				relative;
-		top:					0.138em;
-	}
-	*/
-	
-	
-	
-	
 	
 	#shares-link{
 		display:	none;
@@ -115,8 +102,9 @@
 		}
 		
 		
+	/* Andy: TODO */
+	
 	/* rights info */
-
 	#rights-info {
 		margin:					0 10px 10px 10px;
 		padding:				4px 4px 4px 25px;
