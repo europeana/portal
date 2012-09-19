@@ -12,8 +12,11 @@
   <c:set var="urlRefId" value="urlRefIsShownBy" />
 </c:if>
 
-<span class="icon-external"></span>
-<a id="${urlRefId}" href="/${model.portalName}/redirect.html?shownAt=${model.urlRef}&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.id}" ${href_attributes}>
+
+
+<a	id="${urlRefId}"
+	class="icon-external-right europeana"
+	href="/${model.portalName}/redirect.html?shownAt=${model.urlRef}&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.id}" ${href_attributes}>
   ${model.shownAtProvider}
 </a>
 <!-- original-context -->

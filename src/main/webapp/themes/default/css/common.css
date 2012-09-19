@@ -77,13 +77,22 @@
 	width:			100%;
 	max-width:		100%;
 	
-	margin-top:				1em;
-	margin-bottom:			0.2em;
+	margin-top:				2em;
+	margin-bottom:			1em;
 	padding:				2px 0px;
 	color:					#333;
 	border:					1px solid #a0a0a0;
 	
 	font-size:				1.2em;		
+}
+
+#urlRefIsShownAt{
+	zzzcolor:	#333;
+}
+
+#footer-subscribe input.europeana-button-1{
+	margin-top:			1em;
+	margin-bottom:		2em;
 }
 
 	
@@ -94,11 +103,20 @@
 
 	padding:				0.5em 0.5em !important;
 	margin:					0;
+	
+	/*
 	-moz-border-radius:		0.75em;
 	-webkit-border-radius:	0.75em;
 	border-radius:			0.75em;
-}
+	*/
 	
+	-webkit-appearance:		none;
+	
+	-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
+	-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
+	border-radius:			0.5em 0.5em 0.5em 0.5em;
+	
+}
 
 		
 #footer-subscribe input[type=submit]{

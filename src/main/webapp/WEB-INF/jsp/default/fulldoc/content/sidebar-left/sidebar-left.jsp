@@ -32,6 +32,7 @@
 		
 		<%-- Original context link --%>
 	    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
+	    
 		<br>
 		
 		<div class="clear"></div>
