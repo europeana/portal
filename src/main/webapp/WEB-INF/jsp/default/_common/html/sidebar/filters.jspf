@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:if test="${!empty model.briefBeanView.searchFilters}">
-	<h2><spring:message code="FilterYourSearch_t" />:</h2>
+	<h2><spring:message code="MatchesFor_t" />:</h2>
 	
 	<ul id="search-filter" class="notranslate">
 		<c:forEach items="${model.briefBeanView.searchFilters}" var="filter">

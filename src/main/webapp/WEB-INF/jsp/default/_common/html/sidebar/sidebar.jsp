@@ -12,23 +12,45 @@
 	<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
 	
 		<h2><spring:message code="RefineYourSearch_t" />:</h2>
-		<%--
-		<form id="xrefine-search-form" method="get" action="${query_action}">
-			<ul id="refinements">
-				<li>
-					<input name="rq" value="notre dame"/>
-				</li>
+		
+		
 
-				<li>${fn:length(model.refinements)}</li>
-				<li>${model.refinements}</li>
-				<li>
-					<input type="submit">
-				</li>
-			</ul>
-		</form>
-		--%>		
 				
 		<ul id="filter-search">
+			<li>
+				<h3>
+					<a class="facet-section icon-arrow-6 active">
+						<spring:message code="AddKeywords_t" />
+					</a>
+				</h3>
+
+				<form id="refine-search-form" method="get" action="${query_action}">
+				
+					<input type="hidden" name="query" value="${model.query}"/>
+					<c:forEach var="refinement" items="${model.refinements}">
+						<input type="hidden" name="qf" value="${refinement}"/>
+					</c:forEach>
+					
+					<ul id="refinements">
+						<li>
+							<input name="qf"/>
+						</li>
+						<li>
+							<input type="submit">
+						</li>
+										<li>${fn:length(model.refinements)}</li>
+						
+					</ul>
+					
+				</form>
+			</li>
+			
+		
+		
+		
+		
+		
+		
 			<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
 				<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 			</c:forEach>

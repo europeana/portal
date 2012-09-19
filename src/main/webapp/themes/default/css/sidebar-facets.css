@@ -1,5 +1,6 @@
 /* filter-search */
 	
+	#search-filter,
 	#filter-search {
 		border-bottom: solid 1px #c0c0c0;
 	}
@@ -25,13 +26,17 @@
 		padding:		0;
 	}
 
+	#refinements li{
+		display:	inline;
+	}
+
 	#filter-search li ul{
 		max-height:		10em;
 		overflow:		auto;
 	}
 
 	.sidebar h2{
-		padding:		0.5em 0 0 0;
+		padding:		0.5em 0 0.5em 0;
 	}
 	
 	.sidebar h2,
@@ -55,11 +60,7 @@
 		border-top:		solid 1px #c0c0c0;
 		padding-top:	0.2em;
 	}
-	
-	#search-filter{
-		margin-left:		1em;
-	}
-	
+		
 	a.facet-section,
 	a.facet-ugc{
 		display:				block;

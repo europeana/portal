@@ -36,12 +36,13 @@
 }
 
 
-
+/*
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
 	.responsive-logo{
 		background-image:	url('../images/europeana-logo-retina-1.png');
 	} 
 }
+*/
 
 
 
@@ -81,12 +82,14 @@
 		width:			10%;
 	}
 }
-
+/*
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi)  and ( min-width:48em ){
 	.responsive-logo{
+		background-color:red;
 		background-image:	url('../images/europeana-logo-retina-2.png');
 	} 
 }
+*/
 
 
 /* end outer layout */
