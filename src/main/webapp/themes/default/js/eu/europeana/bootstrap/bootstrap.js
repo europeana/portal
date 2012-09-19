@@ -258,7 +258,10 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			file : 'search' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils', 'collapsible' ]
+			dependencies : [ 'utils', 'collapsible', 'ellipsis', 'EuMenu' ],
+			callback: function(){
+				eu.europeana.search.init();
+			}
 		});
 
 		loadScripts(scripts);
