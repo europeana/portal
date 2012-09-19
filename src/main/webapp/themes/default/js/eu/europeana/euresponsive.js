@@ -30,7 +30,7 @@
 				if(this.mode == "img"){
 					var newHtmlStr = this.el.attr("src").replace(escapedInitialSuffix, newSuffix);
 	
-	console.log("change from  " + this.el.attr("src") + " to " + newHtmlStr + "\n   - newSuffix " + newSuffix);
+	//console.log("change from  " + this.el.attr("src") + " to " + newHtmlStr + "\n   - newSuffix " + newSuffix);
 					
 					// media queries don't work in IE - revert to biggest (last) image size
 					if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
@@ -43,7 +43,7 @@
 	
 					this.el.attr("src", newHtmlStr);
 	
-	console.log("el.src is now  " + this.el.attr("src")  );
+	//console.log("el.src is now  " + this.el.attr("src")  );
 		
 					this.el.css("display", display);
 					this.el.css("visibility", visibility);
@@ -53,7 +53,7 @@
 					
 					var bgImg = this.el.css("background-image");
 					
-					console.log("background-image =  " + bgImg );
+					//console.log("background-image =  " + bgImg );
 					
 					bgImg = bgImg.replace(escapedInitialSuffix, newSuffix);
 					
@@ -70,7 +70,7 @@
 					this.el.css("background-image", bgImg);
 
 
-		console.log("el.background-image is now  " + this.el.attr("background-image")  );
+		//console.log("el.background-image is now  " + this.el.css("background-image")  );
 
 					
 					this.el.css("display", display);
