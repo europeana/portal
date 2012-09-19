@@ -22,7 +22,8 @@
 					carousel3Data[carousel3Data.length] = {
 						thumb:			'${item.images[0].src}',
 						title:			'${fn:escapeXml(item.plainDescription)}',
-						link:			'${item.link}'
+						link:			'${item.link}',
+						linkTarget:		'_new'
 					};
 					
 				</c:forEach>

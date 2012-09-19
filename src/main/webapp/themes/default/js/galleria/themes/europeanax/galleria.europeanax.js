@@ -523,20 +523,25 @@ Galleria.addTheme({
     	/* Action */
         var swiping = false;
     	
-        /*
+  
     	this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
     		$(ob).unbind('click');
     		$(ob).bind("click", function(){
     			if(swiping){
-    				alert("click cancelled by swipe " + swiping);
+    				//alert("click cancelled by swipe " + swiping);
     				return;
     			}
-    			alert("click,,," + swiping);
-    				//window.open(dataSource[i].link);
+
+    			if(dataSource[i].linkTarget){
+        			window.open(dataSource[i].link, dataSource[i].linkTarget);    				
+    			}
+    			else{
+        			window.location = dataSource[i].link;
+    			}
     		});
 
         });
-*/
+        /**/
     	
     	
         /*

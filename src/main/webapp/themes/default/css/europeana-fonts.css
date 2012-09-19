@@ -1,13 +1,10 @@
-
-
-
 @font-face {
 	font-family: 'europeana';
-	src: url('../images/europeana-fonts/europeana.eot');
-	src: url('../images/europeana-fonts/europeana.eot?#iefix') format('embedded-opentype'),
-		url('../images/europeana-fonts/europeana.svg#europeana') format('svg'),
-		url('../images/europeana-fonts/europeana.woff') format('woff'),
-		url('../images/europeana-fonts/europeana.ttf') format('truetype');
+	src:url('fonts/europeana.eot');
+	src:url('fonts/europeana.eot?#iefix') format('embedded-opentype'),
+		url('fonts/europeana.svg#europeana') format('svg'),
+		url('fonts/europeana.woff') format('woff'),
+		url('fonts/europeana.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -17,6 +14,8 @@
 	font-family: 'europeana';
 	content: attr(data-icon);
 	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -24,12 +23,11 @@
 	font-family: 'europeana';
 	font-style: normal;
 	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
 }
 .icon-logo:before {
 	content: "\61";
-}
-.icon-tagline:before {
-	content: "\62";
 }
 .icon-pinterest:before {
 	content: "\63";
@@ -91,23 +89,11 @@
 .icon-publicdomain:before {
 	content: "\76";
 }
-.icon-restricted:before {
+.icon-unknown:before {
 	content: "\77";
 }
-.icon-paid:before {
+.icon-copyright:before {
 	content: "\78";
-}
-.icon-free:before {
-	content: "\79";
-}
-.icon-unknown:before {
-	content: "\7a";
-}
-.icon-licensepd:before {
-	content: "\31";
-}
-.icon-licensezero:before {
-	content: "\32";
 }
 .icon-blog:before {
 	content: "\33";
@@ -163,7 +149,7 @@
 .icon-tag:before {
 	content: "\4a";
 }
-.icon-cite:before {
+.icon-embed:before {
 	content: "\4b";
 }
 .icon-ugc:before {
@@ -212,25 +198,25 @@
 	content: "\5a";
 }
 .icon-mappin:before {
-	content: "\21";
+	content: "\23";
 }
 .icon-rew:before {
 	content: "\40";
 }
 .icon-ff:before {
-	content: "\23";
-}
-.icon-stop:before {
 	content: "\24";
 }
-.icon-pause:before {
+.icon-stop:before {
 	content: "\25";
+}
+.icon-pause:before {
+	content: "\26";
 }
 .icon-play:before {
 	content: "\5e";
 }
 .icon-soundon:before {
-	content: "\26";
+	content: "\27";
 }
 .icon-soundoff:before {
 	content: "\2a";
@@ -249,4 +235,25 @@
 }
 .icon-3d:before {
 	content: "\7b";
+}
+.icon-cite:before {
+	content: "\7d";
+}
+.icon-hierarchy:before {
+	content: "\3c";
+}
+.icon-multiple:before {
+	content: "\3e";
+}
+.icon-translate:before {
+	content: "\3f";
+}
+.icon-return:before {
+	content: "\2f";
+}
+.icon-power:before {
+	content: "\2c";
+}
+.icon-euflag:before {
+	content: "\2b";
 }

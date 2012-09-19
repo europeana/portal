@@ -40,7 +40,8 @@
 						
 							carousel2Data[carousel2Data.length] = {
 								image:			decodeURI("${doc.thumbnail}").replace(/&amp;/g, '&'),
-								title:			"${fn:join(doc.title, ' ') }"
+								title:			'${fn:join(doc.title, ' ') }'.replace(/\"/g, '&quot;'),
+								link:			'/${model.portalName}/${doc.fullDocUrl}'
 							};
 							
 						</c:forEach>

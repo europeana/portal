@@ -14,6 +14,8 @@
 	font-family: 'europeana';
 	content: attr(data-icon);
 	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -21,6 +23,8 @@
 	font-family: 'europeana';
 	font-style: normal;
 	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
 }
 
 
@@ -30,6 +34,8 @@
 				font-family: 'europeana';
 				content: attr(data-icon);
 				speak: none;
+				font-weight: normal;
+				-webkit-font-smoothing: antialiased;
 			}
 			
 			/* Use the following CSS code if you want to have a class per icon */
@@ -38,6 +44,8 @@
 				font-family: 'europeana';
 				font-style: normal;
 				speak: none;
+				font-weight: normal;
+				-webkit-font-smoothing: antialiased;
 			}
 
 
@@ -45,9 +53,6 @@
 
 .icon-logo:before {
 	content: "\61";
-}
-.icon-tagline:before {
-	content: "\62";
 }
 .icon-pinterest:before {
 	content: "\63";
@@ -128,24 +133,13 @@
 .icon-publicdomain:before {
 	content: "\76";
 }
-.icon-restricted:before {
+.icon-unknown:before {
 	content: "\77";
 }
-.icon-paid:before {
+.icon-copyright:before {
 	content: "\78";
 }
-.icon-free:before {
-	content: "\79";
-}
-.icon-unknown:before {
-	content: "\7a";
-}
-.icon-licensepd:before {
-	content: "\31";
-}
-.icon-licensezero:before {
-	content: "\32";
-}
+
 .icon-blog:before {
 	content: "\33";
 }
@@ -257,25 +251,25 @@
 	content: "\5a";
 }
 .icon-mappin:before {
-	content: "\21";
+	content: "\23";
 }
 .icon-rew:before {
 	content: "\40";
 }
 .icon-ff:before {
-	content: "\23";
-}
-.icon-stop:before {
 	content: "\24";
 }
-.icon-pause:before {
+.icon-stop:before {
 	content: "\25";
+}
+.icon-pause:before {
+	content: "\26";
 }
 .icon-play:before {
 	content: "\5e";
 }
 .icon-soundon:before {
-	content: "\26";
+	content: "\27";
 }
 .icon-soundoff:before {
 	content: "\2a";
@@ -315,12 +309,4 @@
 }
 .icon-euflag:before {
 	content: "\2b";
-}
-
-.test {
-	font-size: 36px;
-	color: red;
-	-moz-box-shadow: 10px 10px 5px #888;
--webkit-box-shadow: 10px 10px 5px #888;
-box-shadow: 10px 10px 5px #888;
 }
