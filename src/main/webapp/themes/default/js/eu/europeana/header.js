@@ -523,4 +523,4 @@ eu.europeana.header = {
 	}
 };
 
-eu.europeana.header.init();
+
