@@ -68,8 +68,7 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 	}
 
 	/**
-	 * Gives back a title which should be output directly. Not matching any
-	 * labels
+	 * Gives back a title which should be output directly. Not matching any labels
 	 * 
 	 * @return
 	 */

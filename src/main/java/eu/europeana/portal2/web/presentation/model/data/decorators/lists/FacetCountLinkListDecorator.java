@@ -22,29 +22,36 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.logging.Logger;
 
 import eu.europeana.portal2.querymodel.query.FacetCountLink;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FacetCountLinkDecorator;
 
 public class FacetCountLinkListDecorator implements List<FacetCountLink> {
 
+	private final Logger log = Logger.getLogger(getClass().getName());
+
 	private String type;
 	private List<FacetCountLink> list;
+	private List<FacetCountLink> decoratedList;
 
 	public FacetCountLinkListDecorator(String type, List<FacetCountLink> list) {
 		this.type = type;
 		this.list = list;
+		this.decoratedList = null;
 	}
 
-	private List<FacetCountLinkDecorator> asDecoList() {
+	private List<FacetCountLink> asDecoList() {
 		if (list == null) {
 			return null;
 		}
-		List<FacetCountLinkDecorator> newList = new ArrayList<FacetCountLinkDecorator>();
-		for (FacetCountLink facetCountLink : list) {
-			newList.add(new FacetCountLinkDecorator(type, facetCountLink));
+		if (decoratedList == null) {
+			decoratedList = new ArrayList();
+			for (FacetCountLink facetCountLink : list) {
+				decoratedList.add(new FacetCountLinkDecorator(type, facetCountLink));
+			}
 		}
-		return newList;
+		return decoratedList;
 	}
 
 	@Override
@@ -64,7 +71,7 @@ public class FacetCountLinkListDecorator implements List<FacetCountLink> {
 
 	@Override
 	public Iterator<FacetCountLink> iterator() {
-		return list.iterator();
+		return asDecoList().iterator();
 	}
 
 	@Override
@@ -152,12 +159,12 @@ public class FacetCountLinkListDecorator implements List<FacetCountLink> {
 
 	@Override
 	public ListIterator<FacetCountLink> listIterator() {
-		return list.listIterator();
+		return asDecoList().listIterator();
 	}
 
 	@Override
 	public ListIterator<FacetCountLink> listIterator(int index) {
-		return list.listIterator(index);
+		return asDecoList().listIterator(index);
 	}
 
 	@Override
