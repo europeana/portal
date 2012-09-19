@@ -68,6 +68,16 @@
             </c:forEach>
           </c:when>
 
+          <c:when test="${field.mapsOfLists}">
+            <c:forEach items="${docElement[field.propertyName]}" var="languageVersion" varStatus="langStatus">
+              <em>${languageVersion.key}:</em>
+              <c:forEach items="${languageVersion.value}" var="fieldInstance" varStatus="instanceStatus">
+                <span ${semanticAttributes}>${fieldInstance}</span><c:if test="${!instanceStatus.last}">, </c:if>
+              </c:forEach>
+              <c:if test="${!langStatus.last}"><br /></c:if>
+            </c:forEach>
+          </c:when>
+
           <c:when test="${field.map}">
             <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="fieldInstanceStatus">
               <span ${semanticAttributes}>${fieldInstance.key} / ${fieldInstance.value}</span><c:if test="${!fieldInstanceStatus.last}"><br /></c:if>

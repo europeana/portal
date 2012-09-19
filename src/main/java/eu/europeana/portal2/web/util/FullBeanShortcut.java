@@ -133,10 +133,10 @@ public class FullBeanShortcut {
 				add("DctermsHasPart", proxy.getDctermsHasPart()); // Map
 				add("DctermsHasVersion", proxy.getDctermsHasVersion()); // Map
 				add("DctermsIsFormatOf", proxy.getDctermsIsFormatOf()); // Map
+				add("DctermsIsPartOf", proxy.getDctermsIsPartOf()); // Map
 				add("DctermsIsReferencedBy", proxy.getDctermsIsReferencedBy()); // Map
 				add("DctermsIsReplacedBy", proxy.getDctermsIsReplacedBy()); // Map
 				add("DctermsIsRequiredBy", proxy.getDctermsIsRequiredBy()); // Map
-				add("DctermsIsPartOf", proxy.getDctermsIsPartOf()); // Map
 				add("DctermsIssued", proxy.getDctermsIssued()); // Map
 				add("DctermsIsVersionOf", proxy.getDctermsIsVersionOf()); // Map
 				add("DctermsMedium", proxy.getDctermsMedium()); // Map
@@ -145,8 +145,8 @@ public class FullBeanShortcut {
 				add("DctermsReplaces", proxy.getDctermsReplaces()); // Map
 				add("DctermsRequires", proxy.getDctermsRequires()); // Map
 				add("DctermsSpatial", proxy.getDctermsSpatial()); // Map
-				add("DctermsTemporal", proxy.getDctermsTemporal()); // Map
 				add("DctermsTableOfContents", proxy.getDctermsTOC()); // Map
+				add("DctermsTemporal", proxy.getDctermsTemporal()); // Map
 			}
 		}
 		

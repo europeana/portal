@@ -91,8 +91,7 @@ public class FullBeanDecorator implements FullBean {
 			String fullDocUrl = getId();
 
 			if (fullDocUrl.indexOf("?") > -1) {
-				fullDocUrl = fullDocUrl.substring(0,
-						fullDocUrl.indexOf(".html"));
+				fullDocUrl = fullDocUrl.substring(0, fullDocUrl.indexOf(".html"));
 			}
 
 			fullDocUrl = fullDocUrl.replace("/resolve/", "/portal/");
@@ -103,10 +102,8 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public boolean isPositionAvailable() {
-		return (shortcut.getEdmPlaceLatitude() != null && shortcut
-				.getEdmPlaceLatitude()[0] != 0)
-				|| (shortcut.getEdmPlaceLongitude() != null && shortcut
-						.getEdmPlaceLongitude()[0] != 0);
+		return (shortcut.getEdmPlaceLatitude() != null && shortcut.getEdmPlaceLatitude()[0] != 0)
+				|| (shortcut.getEdmPlaceLongitude() != null && shortcut.getEdmPlaceLongitude()[0] != 0);
 	}
 
 	@Override
@@ -382,13 +379,16 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	@Override
-	public void setEuropeanaAggregation(
-			EuropeanaAggregation europeanaAggregation) {
+	public void setEuropeanaAggregation(EuropeanaAggregation europeanaAggregation) {
 		fulldoc.setEuropeanaAggregation(europeanaAggregation);
 	}
 
 	@Override
 	public Boolean isOptedOut() {
+		return fulldoc.isOptedOut();
+	}
+
+	public Boolean getOptedOut() {
 		return fulldoc.isOptedOut();
 	}
 

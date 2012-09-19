@@ -24,7 +24,7 @@ public class FieldInfo {
 	private final static List<String> types = new ArrayList<String>(Arrays.asList(
 			"String", "ObjectId", "float", "Boolean", "boolean", "DocType", "int", "Date",
 			"String[]", "Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>",
-			"List<Map<String,String>>"
+			"List<Map<String,String>>", "Map<String, List<String>>"
 	));
 
 	/**
@@ -32,7 +32,7 @@ public class FieldInfo {
 	 */
 	private final static List<String> collections = new ArrayList<String>(Arrays.asList(
 			"String[]", "Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>",
-			"List<Map<String,String>>"
+			"List<Map<String,String>>", "Map<String, List<String>>"
 	));
 
 	/**
@@ -107,6 +107,10 @@ public class FieldInfo {
 
 	public boolean isCollectionOfMaps() {
 		return (type != null && type.equals("List<Map<String,String>>"));
+	}
+
+	public boolean isMapsOfLists() {
+		return (type != null && type.equals("Map<String,List<String>>"));
 	}
 
 	public Element getElement() {
