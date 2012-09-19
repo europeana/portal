@@ -8,7 +8,7 @@
 			<c:set var="className" value=" map-query" />
 		</c:if>
 
-		<input type="text" name="rq" id="rq" value="" class="${className}" title="<spring:message code="RefineYourSearch_t" />">
+		<input type="text" name="qf" id="qf" value="" class="${className}" title="<spring:message code="RefineYourSearch_t" />">
 		<input type="hidden" name="query" <c:if test="${!empty model.query}">value="${model.query}"</c:if>/>
 		<input type="submit" class="submit-button" value="<spring:message code="RefineYourSearch_t" />" />
 

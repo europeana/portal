@@ -1,6 +1,6 @@
 <form method="get" action="${query_action}">		
 	<fieldset>
-		<input type="text" name="rq" id="rq" value="" class="${className}" title="<spring:message code="RefineYourSearch_t"/>">
+		<input type="text" name="qf" id="qf" value="" class="${className}" title="<spring:message code="RefineYourSearch_t"/>">
 		<input type="hidden" name="query" <c:if test="${!empty model.query}">value="${model.query}"</c:if>/>
 		<input type="submit" class="submit-button" value="<spring:message code="RefineYourSearch_t"/>" />
 		<c:if test="${model.debug && model.pageName == 'map.html'}">
@@ -18,7 +18,7 @@
 		
 		<c:if test="${!empty model.refinements}">
 		  <c:forEach items="${model.refinements}" var="refinement">
-				<input type="hidden" name="qf" value="${refinement}"/>					
+				<input type="hidden" name="qf" value="${refinement}"/>
 			</c:forEach>
 		</c:if>
 		
@@ -26,16 +26,16 @@
 		
 		
 		<c:if test="${!empty model[providersForInclusion]}">
-		  <c:forEach items="${model.providersForInclusion}" var="providerForInclusion">				
+		  <c:forEach items="${model.providersForInclusion}" var="providerForInclusion">
 				<input type="hidden" name="qf" value="${providerForInclusion}" />
 			</c:forEach>
 		</c:if>
 		
 		<%--
-		<c:if test="${!empty model.facetsForInclusion}">			
-			<list model.facetsForInclusion as facetsForInclusion>								
-				<input type="hidden" name="qf" value="${facetsForInclusion}" />						
-			</list>				
+		<c:if test="${!empty model.facetsForInclusion}">
+			<list model.facetsForInclusion as facetsForInclusion>
+				<input type="hidden" name="qf" value="${facetsForInclusion}" />
+			</list>
 		</c:if>
 		 --%>
 		 
