@@ -263,6 +263,8 @@ Galleria.addTheme({
     		
        		$(window).resize( function() {
        			
+       			
+       			
        			if(eu.europeana.vars.suppresResize){
        				return;
        			}
@@ -272,16 +274,18 @@ Galleria.addTheme({
        			thisGallery.bind("image", function(e) {
        				var imgShows = false;
        				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
-       					if($(ob).is(':visible')){
+   						if($(ob).is(':visible') && $(ob).css("opacity") == "1" ){
        						imgShows = true;
        					}
        				});
        				if(!imgShows){
-           				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");       					
+           				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");
        				}
        				
        			});
     			rerunOnResize();
+    			
+    			
        			/*
        			// common with landing page carousel
     			thisGallery._run();
@@ -389,7 +393,7 @@ Galleria.addTheme({
             			// Andy: copy & paste from bordered - tidy this
            				var imgShows = false;
            				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
-           					if($(ob).is(':visible')){
+       						if($(ob).is(':visible') && $(ob).css("opacity") == "1" ){
            						imgShows = true;
            					}
            				});
