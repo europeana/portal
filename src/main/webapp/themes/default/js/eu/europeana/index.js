@@ -108,7 +108,7 @@
 
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
-			xfireFirstOpen:		function(){
+			fireFirstOpen:		function(){
 				
 				jQuery('#carousel-3').galleria({
 					dataSource:carousel3Data,
