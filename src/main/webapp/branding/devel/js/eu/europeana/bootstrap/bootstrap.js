@@ -62,9 +62,20 @@
 		}
 		
 	];
-	
+
 	switch ( eu.europeana.vars.page_name ) {
-			
+
+		case 'api/console.html' :
+			scripts.push({
+				file : 'console' + js.min_suffix + '.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+				dependencies: ['jquery-1.4.4.min.js'],
+				callback: function() {
+					consoleReady();
+				}
+			});
+			break;
+
 		case 'contact.html' :
 			
 			scripts.push({
