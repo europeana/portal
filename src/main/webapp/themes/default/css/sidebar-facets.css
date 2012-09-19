@@ -25,6 +25,10 @@
 		margin:			0;
 		padding:		0;
 	}
+	#share-subscribe{
+		padding-bottom:	0.5em;
+	}
+	
 
 	#refinements li{
 		width:		100%;
