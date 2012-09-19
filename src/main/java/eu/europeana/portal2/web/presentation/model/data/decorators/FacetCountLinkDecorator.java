@@ -87,9 +87,9 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 			}
 		}
 		if (StringUtils.equals(type, "LANGUAGE")) {
-			PortalLanguage l = PortalLanguage.safeValueOf(facetCountLink.getValue());
-			if ((l != null) && (l.getLanguageName() != null)) {
-				return l.getLanguageName();
+			PortalLanguage language = PortalLanguage.safeValueOf(facetCountLink.getValue());
+			if ((language != null) && (language.getLanguageName() != null)) {
+				return language.getLanguageName();
 			}
 		}
 		return StringUtils.abbreviate(title, 20);
