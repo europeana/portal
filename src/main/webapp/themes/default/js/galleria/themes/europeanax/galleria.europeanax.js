@@ -262,24 +262,34 @@ Galleria.addTheme({
     		
     		
        		$(window).resize( function() {
-       			
-       			
-       			
+    
+       			Galleria.log("Resize....");
        			if(eu.europeana.vars.suppresResize){
+       				Galleria.log("suppress resize!");
        				return;
        			}
 
        			thisGallery.$(	'container' ).parent().css("height", 1.1 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
        			
-       			thisGallery.bind("image", function(e) {
+Galleria.log("BIND....");
+       			thisGallery.bind("transitionend", function(e) {
+
+Galleria.log("TRANSITION ENDS");
        				var imgShows = false;
        				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
    						if($(ob).is(':visible') && $(ob).css("opacity") == "1" ){
        						imgShows = true;
+Galleria.log("IMAGE SHOWS");
        					}
+   						else{
+   							
+Galleria.log("IMAGE NO SHOW");
+   							
+   						}
        				});
        				if(!imgShows){
            				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");
+Galleria.log("APPLIED OPACITY");
        				}
        				
        			});
@@ -387,7 +397,7 @@ Galleria.addTheme({
            			if(eu.europeana.vars.suppresResize){
            				return;
            			}
-            		thisGallery.bind("image", function(e) {
+            		thisGallery.bind("transitionend", function(e) {
             			//thisGallery.$( 'container' ).find(".galleria-images .galleria-image").css("opacity", "1")
 
             			// Andy: copy & paste from bordered - tidy this

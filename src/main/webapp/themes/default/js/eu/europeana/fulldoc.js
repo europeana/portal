@@ -728,7 +728,9 @@ alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("w
 		com.addthis.init( null, true, false );
 		
 		setTimeout( function() {
-			jQuery('#shares-link').fadeIn(); },
+			jQuery('#shares-link').fadeIn(function(){
+				$(this).css("display", "inline-block");
+			}); },
 			600 );
 		
 	}

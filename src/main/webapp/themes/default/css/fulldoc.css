@@ -3,8 +3,15 @@
 #additional-info {
 	width:				100%;
 	position:			relative;
-	padding-top:		0;
-	padding-left:		0;
+	padding:			0;
+	
+	
+	padding-left:		1em;
+	padding-right:		1em;
+	
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
 }
 
 #carousel-2{
@@ -54,18 +61,34 @@ a.action-link:hover{
 }
 
 a.disabled:hover{
-	color:#2A85E8;
-	cursor:default;
+	color:		#2A85E8;
+	cursor:		default;
+}
+
+div.original-context{
+	xxxxxxpadding-left:	1em;
+	xxxxxxpadding-right:	1em;
 }
 
 div.actions{
 	padding-left:	1em;
+	padding-right:	1em;
+	padding:		1em;
+	max-height:		3em;
+	text-align:		justify;
 }
 
-.action-link{
-	float:			left;
-	margin-left:	1em;
+a.action-link{
+	font-size:		2em;
+	display:		inline-block;
 }	
+
+	
+a.action-link span{
+	width:			auto !important;
+	font-size:		1.5em;
+}
+
 
 #urlRefIsShownAt{
 	margin-left:	0;
@@ -103,12 +126,28 @@ div.actions{
 
 	}
 
+	div.actions{
+		padding:		0;
+		xxxxxpadding-left:	1em;
+
+		max-height:		none;
+		text-align:		left;
+	}
+
+
 	a.action-link {
 		float:			none;
 		display:		block;
 		margin-left:	0;
+		font-size:		1em;
+	}
+
+	a.action-link span{
+		xxxxwidth:			auto !important;
+		font-size:		1em;
 	}
 	
+
 	#urlRefIsShownAt{
 		display:	inline;
 	}

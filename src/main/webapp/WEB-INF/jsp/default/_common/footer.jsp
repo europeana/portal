@@ -5,6 +5,7 @@
 			
 				<div class="six columns">
 					<h3><spring:message code="follow_us_t" /></h3>
+					
 					<div id="social-links">
 						<span></span><!-- Andy: empty span needed to stop 1st item appearing smaller in firefox -->
 						

@@ -26,8 +26,7 @@
 		/>
 	</div>
 	
-		
-	<div class="actions">	
+	<div class="original-context">
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 		
 		<%-- Original context link --%>
@@ -36,6 +35,10 @@
 		<br>
 		
 		<div class="clear"></div>
+	
+	</div>
+		
+	<div class="actions">	
 		
 		<%-- Shares link 
 		<a id="shares-link" class="icon-share action-link action-title"  rel="nofollow">
@@ -73,7 +76,7 @@
 			</c:forEach>
 		</div>
 	
-	
+		
 		<%-- Save page to myeuropeana --%>
 		<c:if test="${!empty model.user}">
 		  <a href="" id="item-save" rel="nofollow" class="block-link bold"><spring:message code="SaveToMyEuropeana_t" /></a>
@@ -118,6 +121,8 @@
 	   	<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
 	   		<span class="action-title">${switchlabelTitle}</span>
 	   	</a>
+	   	
+	   	<span class="stretch"></span>
 	   	
 	   	<div class="clear"></div>
 	   	
