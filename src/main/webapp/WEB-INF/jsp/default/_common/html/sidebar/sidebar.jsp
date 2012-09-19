@@ -42,12 +42,6 @@
 					
 				</form>
 			</li>
-			
-		
-		
-		
-		
-		
 		
 			<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
 				<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>

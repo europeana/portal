@@ -1,6 +1,12 @@
-<!-- content -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+
 <div id="content" class="row">
+
 	<div class="twelve columns">
+	
 		<div class="row">
 			<div class="twelve columns">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/navigation/navigation.jsp" %>
@@ -27,39 +33,50 @@
 			<div class="row">
 				<div class="twelve columns">
 
-						<%-- data for carousel --%>
-						<script type="text/javascript">
-							var carousel2Data = [];
-							<c:forEach items="${model.moreLikeThis}" var="doc">
-							
-								carousel2Data[carousel2Data.length] = {
-									image:			decodeURI("${doc.thumbnail}").replace(/&amp;/g, '&'),
-									title:			"${fn:join(doc.title, ' ') }"
-								};
-								
-							</c:forEach>
-						</script>
+					<%-- data for carousel --%>
+					<script type="text/javascript">
+						var carousel2Data = [];
+						<c:forEach items="${model.moreLikeThis}" var="doc">
 						
-						<%-- markup for carousel --%>
-						<div id="explore-further">
-							<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
-							<div id="similar-content">
-								<%--
-								<div id="carousel-2-header" class="europeana-header">
-								</div>
-								--%>
-								<div id="carousel-2"  about="${model.document.id}" class="europeana-carousel">
-								</div>
-								<%--
-								<div id="carousel-2-footer" class="europeana-footer">
-								</div>
-								--%>
+							carousel2Data[carousel2Data.length] = {
+								image:			decodeURI("${doc.thumbnail}").replace(/&amp;/g, '&'),
+								title:			"${fn:join(doc.title, ' ') }"
+							};
+							
+						</c:forEach>
+					</script>
+					
+					<%-- markup for carousel --%>
+					<div id="explore-further">
+						<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
+						<div id="similar-content">
+						
+							<%--
+							<div id="carousel-2-header" class="europeana-header"></div>
+							--%>
+							
+							<div id="carousel-2" about="${model.document.id}" class="europeana-carousel">
+
+								<c:forEach var="similar" items="${model.moreLikeThis}">
+									<img	src="${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
+											data-type="${fn:toLowerCase(similar.type)}"
+									/>
+								</c:forEach>
+							
 							</div>
-						</div>	
+							
+							<%--
+							<div id="carousel-2-footer" class="europeana-footer"></div>
+							--%>
+							
+						</div>
+					</div>
+
 				</div>	
 			</div>
 		</c:if>
 	</div>
 </div>
-<!-- end content -->
+
+
 

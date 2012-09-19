@@ -7,20 +7,19 @@
 
 	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 
-<%--
-	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/image.jsp" %>
---%>
-	
-
 	<div id="carousel-1" class="europeana-bordered">
+		<img src="${model.thumbnailUrl}" alt="${model.pageTitle}" data-type="${fn:toLowerCase(model.document.edmType)}"/>
 		<script type="text/javascript">
 			var carouselData = [];
+			
+//			alert(     "${ fn:replace( model.objectTitle, "", ''    ) } "     );
+			
 			carouselData[0] = {
 				image:			decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
-				title:			"${model.objectTitle}"
+				title:			("${model.objectTitle}").replace('"', "'"),
+				dataType:		"${fn:toLowerCase(model.document.edmType)}"
 			};
 			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
-
 		</script>
 	</div>
 	
