@@ -382,7 +382,7 @@ Galleria.addTheme({
         			navRight.css("right", "0px");
          		 });
         		$(window).resize( function() {
-           			if(eu.europeana.vars.suppresResize){
+           			if(eu.europeana.vars.suppresResize){	/* waiting for a collapsible section (parent) to open or close */
            				return;
            			}
            			
