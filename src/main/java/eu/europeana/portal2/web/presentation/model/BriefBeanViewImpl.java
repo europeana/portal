@@ -212,7 +212,6 @@ public class BriefBeanViewImpl implements BriefBeanView {
 
 			String urlFull = "search.html" + (params.size() > 0 ? "?" : "") + StringUtils.join(params, "&");  // Andy
 
-			
 			SearchLabel label = null;
 			String paramValue = param.getValue();
 			if (paramValue.indexOf(":") > -1) {

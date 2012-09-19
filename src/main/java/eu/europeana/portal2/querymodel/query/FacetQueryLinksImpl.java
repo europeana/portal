@@ -2,6 +2,7 @@ package eu.europeana.portal2.querymodel.query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -47,16 +48,22 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 		if (facetField.getFields().isEmpty()) {
 			return;
 		}
+		Map<String, List<String>> refinements = QueryUtil.getFilterQueriesWithoutPhrases(query);
+		StringBuilder baseUrl = new StringBuilder();
+		for (String term : refinements.get(QueryUtil.REFINEMENTS)) {
+			baseUrl.append(FACET_PROMPT).append(term);
+		}
+
 		for (LabelFrequency item : facetField.getFields()) {
 			if (isTemporarilyPreventYear0000(this.type, item.getLabel())) {
 				continue;
 			}
 
 			boolean remove = false;
-			StringBuilder url = new StringBuilder();
+			StringBuilder url = new StringBuilder(baseUrl.toString());
 			// iterating over actual qf values
 			if (query.getRefinements() != null) {
-				for (String qfTerm : QueryUtil.getFilterQueriesWithoutPhrases(query)) {
+				for (String qfTerm : refinements.get(QueryUtil.FACETS)) {
 					if (!qfTerm.equals("-TYPE:Wikipedia")) {
 						String[] parts = qfTerm.split(":", 2);
 						String qfField = parts[0];

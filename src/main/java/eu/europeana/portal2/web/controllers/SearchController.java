@@ -10,13 +10,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import eu.europeana.corelib.db.service.ThumbnailService;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -34,7 +34,7 @@ import eu.europeana.portal2.web.util.SearchUtils;
 @Controller
 public class SearchController {
 
-	// @Resource private ThumbnailService thumbnailService;
+	@Resource private ThumbnailService thumbnailService;
 
 	@Resource private SearchService searchService;
 	

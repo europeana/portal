@@ -276,10 +276,11 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		previousFullDocUrl = out.toString();
 	}
 
+	// TODO: it filters out the normal refinements and rows as well!!!
 	private void setQueryStringForPaging(Query solrQuery, String startPage) {
 		StringBuilder out = new StringBuilder();
 		out.append("query=").append(encode(solrQuery.getQuery()));
-		final String[] facetQueries = QueryUtil.getFilterQueriesWithoutPhrases(solrQuery);
+		final List<String> facetQueries = QueryUtil.getFilterQueriesWithoutPhrases(solrQuery).get(QueryUtil.FACETS);
 		if (facetQueries != null) {
 			for (String facetTerm : facetQueries) {
 				out.append("&qf=").append(facetTerm);

@@ -32,7 +32,15 @@ public class SearchFilterUtil {
 		}
 		return existingValues;
 	}
-	
+
+	/**
+	 * Filters parameters other than query and qf
+	 *
+	 * @param urlParams
+	 *   The existing set of parameters
+	 * @return
+	 *   The filtered out parameters
+	 */
 	public static List<String> getOtherUrlParams(Map<String, String[]> urlParams) {
 		List<String> otherUrlValues = new ArrayList<String>();
 		for (Entry<String, String[]> entry : urlParams.entrySet()) {

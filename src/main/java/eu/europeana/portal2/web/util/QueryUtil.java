@@ -5,7 +5,9 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,17 +18,21 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 
 public class QueryUtil {
 
+	public static final String FACETS = "facets";
+	public static final String REFINEMENTS = "refinements";
+
 	public static final Pattern SQUARE_BRACKET_PATTERN = Pattern.compile("^\\[(.*?)\\]$");
 
 	private static final Logger log = Logger.getLogger(QueryUtil.class.getName());
 
-	public static String[] getFilterQueriesWithoutPhrases(Query solrQuery) {
+	public static Map<String, List<String>> getFilterQueriesWithoutPhrases(Query solrQuery) {
 		String[] filterQueries = solrQuery.getRefinements();
 		if (filterQueries == null) {
 			return null;
 		}
-		List<String> nonPhraseFilterQueries = new ArrayList<String>(
-				filterQueries.length);
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> nonPhraseFilterQueries = new ArrayList<String>(filterQueries.length);
+		List<String> refinements = new ArrayList<String>();
 		for (String facetTerm : filterQueries) {
 			if (facetTerm.contains(":")) {
 				int colon = facetTerm.indexOf(":");
@@ -35,17 +41,19 @@ public class QueryUtil {
 					facetName = facetName.replaceFirst("\\{!tag=.*?\\}", "");
 				}
 				String facetValue = facetTerm.substring(colon + 1);
-				if (facetValue.length() >= 2 && facetValue.startsWith("\"")
+				if (facetValue.length() >= 2 
+						&& facetValue.startsWith("\"")
 						&& facetValue.endsWith("\"")) {
-					facetValue = facetValue.substring(1,
-							facetValue.length() - 1);
+					facetValue = facetValue.substring(1, facetValue.length() - 1);
 				}
-				nonPhraseFilterQueries.add(MessageFormat.format("{0}:{1}",
-						facetName, facetValue));
+				nonPhraseFilterQueries.add(MessageFormat.format("{0}:{1}", facetName, facetValue));
+			} else {
+				refinements.add(facetTerm);
 			}
 		}
-		return nonPhraseFilterQueries.toArray(new String[nonPhraseFilterQueries
-				.size()]);
+		map.put(FACETS, nonPhraseFilterQueries);
+		map.put(REFINEMENTS, refinements);
+		return map; // nonPhraseFilterQueries.toArray(new String[nonPhraseFilterQueries.size()]);
 	}
 
 	public static Query escapeQuery(Query originalQuery) {
