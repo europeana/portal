@@ -254,16 +254,12 @@ Galleria.addTheme({
     		}
     		
     		
+  
     		
-    		
-
-    		
-    		
-    		
+    		// resize function for bordered mode
     		
        		$(window).resize( function() {
     
-       			Galleria.log("Resize....");
        			if(eu.europeana.vars.suppresResize){
        				Galleria.log("suppress resize!");
        				return;
@@ -271,25 +267,17 @@ Galleria.addTheme({
 
        			thisGallery.$(	'container' ).parent().css("height", 1.1 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
        			
-Galleria.log("BIND....");
-       			thisGallery.bind("transitionend", function(e) {
 
-Galleria.log("TRANSITION ENDS");
+       			thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
+
        				var imgShows = false;
        				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
    						if($(ob).is(':visible') && $(ob).css("opacity") == "1" ){
        						imgShows = true;
-Galleria.log("IMAGE SHOWS");
        					}
-   						else{
-   							
-Galleria.log("IMAGE NO SHOW");
-   							
-   						}
        				});
        				if(!imgShows){
            				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");
-Galleria.log("APPLIED OPACITY");
        				}
        				
        			});
@@ -397,10 +385,8 @@ Galleria.log("APPLIED OPACITY");
            			if(eu.europeana.vars.suppresResize){
            				return;
            			}
-            		thisGallery.bind("transitionend", function(e) {
-            			//thisGallery.$( 'container' ).find(".galleria-images .galleria-image").css("opacity", "1")
-
-            			// Andy: copy & paste from bordered - tidy this
+           			
+            		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
            				var imgShows = false;
            				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
        						if($(ob).is(':visible') && $(ob).css("opacity") == "1" ){
@@ -410,9 +396,6 @@ Galleria.log("APPLIED OPACITY");
            				if(!imgShows){
                				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");       					
            				}
-           				
-            		
-            		
             		});
         			rerunOnResize();
         			return;
