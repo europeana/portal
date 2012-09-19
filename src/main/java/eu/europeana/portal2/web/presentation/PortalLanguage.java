@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Hold the languages used by portal. (Subset of the Language enum in definitions project)
  * 
@@ -15,30 +17,40 @@ public enum PortalLanguage {
 	EU(true, "Basque (eus)", "basque_t"),
 	BG(true, "&#x0411;&#x044a;&#x043b;&#x0433;&#x0430;&#x0440;&#x0441;&#x043a;&#x0438; (bul)", "bulgarian_t"),
 	CA(true, "Catal&#224; (ca)", null),
+	CAT(true, "Catal&#224; (ca)", null), // added
 	CS(true, "&#268;e&#353;tina (cze/cse)", "czechlanguage_t"), 
 	DA(true, "Dansk (dan)", "danish_t"), 
 	DE(true, "Deutsch (deu)", "german_t"), 
+	GER(true, "Deutsch (deu)", "german_t"), // added
 	EL(true, "&#917;&#955;&#955;&#951;&#957;&#953;&#954;&#940; (ell/gre)", "greek_t"), 
 	EN(true, "English (eng)","english_t"), 
+	ENG(true, "English (eng)","english_t"), // added
 	ES(true, "Espa&#241;ol (esp)", "spanish_t"), 
+	SPA(true, "Espa&#241;ol (esp)", "spanish_t"), // added
 	ET(true, "Eesti (est)", "estonian_t"), 
 	FI(true, "Suomi (fin)", "finnish_t"), 
+	FIN(true, "Suomi (fin)", "finnish_t"),  // added
 	FR(true, "Fran&#231;ais (fre)", "french_t"), 
+	FRE(true, "Fran&#231;ais (fre)", "french_t"),  // added
 	GA(true, "Irish (gle)", "irish_t"), 
 	HU(true, "Magyar (hun)", "hungarian_t", false), 
+	HUN(true, "Magyar (hun)", "hungarian_t", false), // added
 	IS(true, "&#205;slenska (ice)", "icelandic_t"), 
 	IT(true, "Italiano (ita)","italian_t"), 
+	ITA(true, "Italiano (ita)","italian_t"), // added
 	LT(true, "Lietuvi&#371; (lit)", "lithuanian_t"), 
 	LV(true, "Latvie&#353;u (lav)","latvian_t"), 
 	MT(true, "Malti (mlt)", "maltese_t", false), 
 	NL(true, "Nederlands (dut)", "dutch_t"), 
 	NO(true, "Norsk (nor)", "norwegian_t"),
 	PL(true, "Polski (pol)", "polish_t"), 
+	POL(true, "Polski (pol)", "polish_t"), // added
 	PT(true, "Portugu&#234;s (por)", "portuguese_t"),
 	RO(true, "Rom&#226;n&#259; (rom)", "romanian_t", false),
 	RU(true, "Russian (rus)", "russian_t"),
 	SK(true, "Slovensk&#253; (slo)", "slovak_t"), 
-	SL(true, "Sloven&#353;&#269;ina (slv)", "slovenian_t"), 
+	SL(true, "Sloven&#353;&#269;ina (slv)", "slovenian_t"),
+	SLV(true, "Sloven&#353;&#269;ina (slv)", "slovenian_t"), // added
 	SV(true, "Svenska (sve/swe)", "swedish_t"),
 	UK(true, "Ukrainian (ukr)", "ukrainian_t", false),
 	// UNSUPPORTED LANGUAGES (BUT OCCURS IN FACETS):
@@ -60,6 +72,7 @@ croatian_t=Croatian (hrv)
 luxemburgish_t=Luxemburgish (ltz)
 
  */
+	// TODO: la, lat = latin, de-DE, en-GB, EN-GB, nn, 
 
 	private String languageName;
 	private boolean portalSupport;
@@ -98,7 +111,7 @@ luxemburgish_t=Luxemburgish (ltz)
 	}
 
 	public static PortalLanguage safeValueOf(String value) {
-		if ((value == null) || ("".equals(value.trim()))) {
+		if (StringUtils.isBlank(value)) {
 			return null;
 		}
 		try {
