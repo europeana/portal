@@ -19,11 +19,9 @@
 			}
 
 			function Gallery(elIn, modeIn) {
-				console.log("new gallery " + elIn.attr("class"));
 				this.el = elIn;
-				this.mode = modeIn
+				this.mode = modeIn;
 			}
-			
 
 			Gallery.prototype.changeLayout = function(escapedInitialSuffix, newSuffix) {
 				
@@ -69,14 +67,10 @@
 					
 					this.el.css("background-image", bgImg);
 
-
-		//console.log("el.background-image is now  " + this.el.css("background-image")  );
-
+					//console.log("el.background-image is now  " + this.el.css("background-image")  );
 					
 					this.el.css("display", display);
 					this.el.css("visibility", visibility);
-
-					
 				}
 			};
 			
