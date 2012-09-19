@@ -1,19 +1,19 @@
 /* html */
 
-    html {
-    	position: relative;
-    	font-size: 100%; 
-    	z-index: 1;
-    }
-    
-    body {
-    	position: relative;
-    	z-index: 1;
-    	margin: 0 auto;
-    	padding: 0;
-        color: #333;
-        background-color: #fff;
-    }
+html{
+	position: relative;
+	font-size: 100%; 
+	z-index: 1;
+}
+
+body {
+	position: relative;
+	z-index: 1;
+	margin: 0 auto;
+	padding: 0;
+	color: #333;
+	background-color: #fff;
+}
 
 
 /* Basic fonts */
@@ -28,7 +28,7 @@ body{
 	}
 }
 
-.ie8	body{
+.ie8 body{
 	font-size:	1.125em;
 }
 
@@ -41,40 +41,39 @@ body{
 
 /* End basic fonts */
 
-    h1, h2, h3, h4, h5, h6 {
-    	margin: 0;
-    	padding: 0;
-    	color: #111;
-    }
-    
-    h1 { font-size: 200%; }
-    h2 { font-size: 180%; }
-    h3 { font-size: 160%; }
-    h4 { font-size: 140%; }    
-    h5 { font-size: 120%; }
-    h6 { font-size: 100%; }
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	color: #111;
+}
+
+h1 { font-size: 200%; }
+h2 { font-size: 180%; }
+h3 { font-size: 160%; }
+h4 { font-size: 140%; }		
+h5 { font-size: 120%; }
+h6 { font-size: 100%; }
 
 /*
-    p { margin: 0 0 12px 0; padding: 0; line-height: 1.5; }
- */  
-    img { border: none; }
-    
-	    
+		p { margin: 0 0 12px 0; padding: 0; line-height: 1.5; }
+ */	
+img { border: none; }
+		
+			
 /* links */
 
-    a { text-decoration: none; color: #0075ff; }
-    a:visited { color: #0075ff; }
-    a:hover { color: #ff00c2; }
-    
-    
-    iframe {
-    	border: none;
-    	overflow: hidden;
-    }
-    
-    fieldset {
-    	border: none;
-    	margin: 0;
-    	padding: 0;
-    }
-    
+a { text-decoration: none; color: #0075ff; }
+a:visited { color: #0075ff; }
+a:hover { color: #ff00c2; }
+
+
+iframe {
+	border: none;
+	overflow: hidden;
+}
+
+fieldset {
+	border: none;
+	margin: 0;
+	padding: 0;
+}

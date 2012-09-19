@@ -57,9 +57,13 @@
 							
 							<div id="carousel-2" about="${model.document.id}" class="europeana-carousel">
 
+								<%-- hidden seo images --%>
+								
 								<c:forEach var="similar" items="${model.moreLikeThis}">
-									<img	src="${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
-											data-type="${fn:toLowerCase(similar.type)}"
+									<img	src			= "${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
+											data-type	= "${fn:toLowerCase(similar.type)}"
+											class		= "hidden"
+											title		= "${fn:join(similar.title, ' ') }"
 									/>
 								</c:forEach>
 							

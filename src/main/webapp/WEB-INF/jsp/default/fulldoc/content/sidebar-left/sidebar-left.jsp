@@ -8,12 +8,8 @@
 	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 
 	<div id="carousel-1" class="europeana-bordered">
-		<img src="${model.thumbnailUrl}" alt="${model.pageTitle}" data-type="${fn:toLowerCase(model.document.edmType)}"/>
 		<script type="text/javascript">
 			var carouselData = [];
-			
-//			alert(     "${ fn:replace( model.objectTitle, "", ''    ) } "     );
-			
 			carouselData[0] = {
 				image:			decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
 				title:			("${model.objectTitle}").replace('"', "'"),
@@ -21,6 +17,13 @@
 			};
 			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
 		</script>
+		
+		<%-- hidden seo image --%>
+		<img	src			= "${model.thumbnailUrl}"
+				alt			= "${model.pageTitle}"
+				data-type	= "${fn:toLowerCase(model.document.edmType)}"
+				class		= "hidden"
+		/>
 	</div>
 	
 		
@@ -39,15 +42,12 @@
 		</a>
 		--%>
 		
-		
 		<%-- Shares link --%>
 		<a id="shares-link" class="icon-share action-link" rel="nofollow">
 			<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
 		</a>
 		
 		
-		
-			
 		<%-- Citation link --%>
 	   	<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
 	   		<span class="action-title"><spring:message code="Cite_Button_t" /></span>

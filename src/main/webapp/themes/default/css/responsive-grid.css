@@ -205,3 +205,6 @@
 .right{
 	float:	right;
 }
+.hidden{
+	display:none;
+}

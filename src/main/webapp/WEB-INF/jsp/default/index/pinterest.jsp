@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="twelve columns">
 	<h3 id="collapse-header-3">
@@ -11,21 +13,41 @@
 
 	<div class="collapse-content">
 		<c:if test='${not empty model.pinterestItems}'>
+		
 		    <script type="text/javascript">
+		    
 	            var carousel3Data = [];
 				<c:forEach var="item" items="${model.pinterestItems}">
+				
 					carousel3Data[carousel3Data.length] = {
 						thumb:			'${item.images[0].src}',
 						title:			'${fn:escapeXml(item.plainDescription)}',
 						link:			'${item.link}'
 					};
+					
 				</c:forEach>
-				//alert(JSON.stringify(carousel3Data[0].description));
-				//alert(JSON.stringify(carousel3Data[0]));
+
 			</script>
-			<!-- div id="carousel-3-header" class="europeana-header"></div -->
-			<div id="carousel-3" class="europeana-carousel"></div>
-			<!-- div id="carousel-3-footer" class="europeana-footer"></div  -->		
+			
+			
+			<%-- div id="carousel-3-header" class="europeana-header"></div --%>
+			
+			<div id="carousel-3" class="europeana-carousel">
+				<c:forEach var="item" items="${model.pinterestItems}">
+				
+					<a href="${item.link}" class="hidden">
+						<img	src		= "${item.images[0].src}"
+								alt		= "${fn:escapeXml(item.plainDescription)}"
+								title	= "${fn:escapeXml(item.plainDescription)}"
+						/>	
+					</a>
+					
+				</c:forEach>
+			</div>
+			
+			<%-- div id="carousel-3-footer" class="europeana-footer"></div  --%>
+			
+					
 		</c:if>	
 	</div>
 </div>
