@@ -21,7 +21,13 @@
 			
 			<li class="nav-numbers">
 				<form method="get" action="${query_action}?" class="jump-to-page">
-					<input type="number" id="start-page" value="${model.pageNumber}" min="1" max="${model.numberOfPages}" /> of ${model.numberOfPages}
+					<%--
+					<input type="number" id="start-page" value="${model.pageNumber}" min="1" max="${model.numberOfPages}" pattern="[0-9]*" /> of ${model.numberOfPages}
+					 --%>
+					
+					<input type="text" id="start-page" value="${model.pageNumber}" xxxxxpattern="[0-9]*" /> of ${model.numberOfPages}
+					
+					
 					<input type="hidden" name="start"	id="start" />
 					<input type="hidden" name="rows"	id="rows" value="${model.rows}" />
 					<input type="hidden" name="query"	value="${model.query}"/>

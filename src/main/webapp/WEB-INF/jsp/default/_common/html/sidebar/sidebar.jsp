@@ -33,13 +33,11 @@
 					
 					<ul id="refinements">
 						<li>
-							<input name="qf"/>
+							<input type="text" name="qf"/>
+							<span>
+								<input class="submit" type="submit" value="<spring:message code="AddKeywordsSubmitLabel_t" />">
+							</span>
 						</li>
-						<li>
-							<input type="submit">
-						</li>
-										<li>${fn:length(model.refinements)}</li>
-						
 					</ul>
 					
 				</form>

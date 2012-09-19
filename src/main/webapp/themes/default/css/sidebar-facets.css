@@ -27,7 +27,50 @@
 	}
 
 	#refinements li{
-		display:	inline;
+		width:		100%;
+		display:	table;
+	}
+	
+	#refinements li span{
+		display:		table-cell;
+		width:			1px;
+		white-space:	nowrap;
+	}
+	
+	#refinements input{
+		outline-width:			0;
+		outline:				none;
+		border:					0;
+		
+		padding:				4px;
+		margin:					0;
+		font-size:				1.1em;
+	}
+	
+	#refinements input[type='text']{
+		border:		1px solid #A0A0A0;
+		display:	table-cell;
+		width:		100%;
+	}
+	
+	#refinements input[type='submit']{
+		color:								white;
+		background-color:					blue;
+		margin-left:						0px;
+
+		-webkit-appearance:					none;
+
+		border:								0;
+		border:								1px solid blue;
+		
+		-moz-border-top-left-radius:		0;
+		-moz-border-bottom-left-radius:		0;
+
+		-webkit-border-top-left-radius:		0;
+		-webkit-border-bottom-left-radius:	0;
+
+		border-top-left-radius:				0;
+		border-bottom-left-radius:			0;
 	}
 
 	#filter-search li ul{
@@ -41,12 +84,12 @@
 	
 	.sidebar h2,
 	#search-filter li .bold{
-		font-size:		1em;
+		font-size:		1.2em;
 	}
 	
 	#search-filter {
-		overflow: hidden;
-		margin: 0 0 0.5em 0;
+		overflow:		hidden;
+		padding-bottom:	0.5em;
 	}
 	
 	#search-filter ul{
@@ -88,7 +131,7 @@
 		#filter-search ul {
 			overflow:		auto;
 			margin-left:	1em;
-			margin-bottom:	0.5em;
+			margin-bottom:	1em;
 			display:		none;
 		}
 		

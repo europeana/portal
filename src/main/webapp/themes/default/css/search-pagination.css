@@ -65,10 +65,19 @@
 #start-page{
 	width:		2.7em;
 	outline:	none !important;
+	-webkit-user-modify: read-write-plaintext-only;
 }
 #start-page:focus{
 	outline:	none !important;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 
 
 

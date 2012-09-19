@@ -26,7 +26,7 @@
 					<img class="responsive-logo" style="vertical-align:middle;"  src="/${branding}/images/europeana-logo-1.png" alt="<spring:message code='AltLogoEuropeana_t' />"/>
 				 -->
 					
-				<div class="responsive-logo"
+				<span class="responsive-logo"
 					alt		= "<spring:message code='AltLogoEuropeana_t' />"
 					title	= "<spring:message code='AltLogoEuropeana_t' />"
 				/>
