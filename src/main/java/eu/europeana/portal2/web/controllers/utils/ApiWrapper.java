@@ -29,11 +29,14 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 
 public class ApiWrapper {
-	
+
 	private static final String SESSION_KEY = "apisession";
 	private final Logger log = Logger.getLogger(getClass().getName());
+	private String lastUrl;
 
 	protected String apiUrl;
 	protected String api2key;
@@ -45,6 +48,34 @@ public class ApiWrapper {
 		this.api2key = api2key;
 		this.api2secret = api2secret;
 		this.session = session;
+	}
+
+	public String getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort) {
+		StringBuilder url = new StringBuilder(apiUrl);
+		url.append("/search.json?");
+		if (!StringUtils.isBlank(query)) {
+			url.append("&query=").append(query);
+		}
+		if (!ArrayUtils.isEmpty(refinements)) {
+			for (String qf : refinements) {
+				if (!StringUtils.isBlank(qf)) {
+					url.append("&qf=").append(qf);
+				}
+			}
+		}
+		url.append("&start=").append(start);
+		url.append("&rows=").append(rows);
+		url.append("&profile=").append(profile);
+
+		return getJsonResponse(url.toString());
+	}
+
+	public String getObject(String collectionId, String recordId) {
+		return getJsonResponse(apiUrl + "/record/" + collectionId + "/" + recordId + ".json");
+	}
+
+	public String getObject(String recordId) {
+		return getJsonResponse(apiUrl + "/record/" + recordId + ".json");
 	}
 
 	protected String getSessionID() {
@@ -65,6 +96,7 @@ public class ApiWrapper {
 	}
 
 	public String getJsonResponse(String url) {
+		lastUrl = url;
 		String jsonResponse = null;
 		try {
 			String sessionId = getSessionID();
@@ -90,7 +122,7 @@ public class ApiWrapper {
 			log.severe(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		return jsonResponse;
 	}
 
@@ -119,5 +151,9 @@ public class ApiWrapper {
 		}
 		log.info("resulted apiSession: " + apiSession);
 		return apiSession;
+	}
+
+	public String getUrl() {
+		return lastUrl;
 	}
 }

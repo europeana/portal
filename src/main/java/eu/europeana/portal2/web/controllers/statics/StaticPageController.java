@@ -68,7 +68,7 @@ public class StaticPageController {
 	private StaticPageCache staticPageCache = new StaticPageCache();
 
 	private ClickStreamLogger clickStreamLogger = new ClickStreamLoggerImpl();
-	
+
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	// @Resource
@@ -290,9 +290,8 @@ public class StaticPageController {
 		clickStreamLogger.logStaticPageView(request, pageType);
 		return ControllerUtil.createModelAndViewPage(new EmptyModelPage(), locale, pageType);
 	}
-	
+
 	public void setStaticPageCache(StaticPageCache staticPageCache) {
 		this.staticPageCache = staticPageCache;
 	}
-
 }

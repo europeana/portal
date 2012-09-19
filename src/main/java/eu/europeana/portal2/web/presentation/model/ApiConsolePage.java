@@ -11,10 +11,11 @@ import eu.europeana.portal2.web.presentation.model.data.ApiData;
  * @author peter.kiraly@kb.nl
  */
 public class ApiConsolePage extends ApiData {
-	
+
 	private String function;
 	private String jsonString;
-	
+	private String apiUrl;
+
 	// search parameters
 	private String query;
 	private String[] refinements;
@@ -28,7 +29,7 @@ public class ApiConsolePage extends ApiData {
 	private String recordId;
 
 	private List<String> defaultFunctions = Arrays.asList(new String[]{"search", "record"});
-	private List<String> defaultProfiles = Arrays.asList(new String[]{"standard", "portal", "facets", "breadcrumb", "spelling"});
+	private List<String> defaultProfiles = Arrays.asList(new String[]{"standard", "portal", "facets", "breadcrumb", "spelling", "minimal"});
 	private List<String> defaultRows = Arrays.asList(new String[]{"12", "24", "48", "96"});
 
 	public String getFunction() {
@@ -121,5 +122,13 @@ public class ApiConsolePage extends ApiData {
 
 	public void setRecordId(String recordId) {
 		this.recordId = recordId;
+	}
+
+	public String getApiUrl() {
+		return apiUrl;
+	}
+
+	public void setApiUrl(String apiUrl) {
+		this.apiUrl = apiUrl;
 	}
 }

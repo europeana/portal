@@ -58,7 +58,7 @@ public class RSSFeedParser {
 
 	int[] responsiveWidths;
 	String[] fNames;
-	
+
 	boolean useNormalImageFormat = true;
 	private final URL url;
 
@@ -88,7 +88,6 @@ public class RSSFeedParser {
 		this.useNormalImageFormat = useNormalImageFormat;
 	}
 
-	
 	private Map<String, String> createResponsiveImage(String location) {
 
 		Map<String, String> responsiveImages = new HashMap<String, String>();
@@ -119,7 +118,7 @@ public class RSSFeedParser {
 
 		for (int i = 0, l = responsiveWidths.length; i<l; i++){
 			String fileName = toFS + fNames[i] + "." + extension;
-			
+
 			// work out new image name 
 			String fileUrl = "/sp/rss-blog-cache/" + fileName;
 			String filePath = directory + fileName; 
@@ -174,7 +173,7 @@ public class RSSFeedParser {
 				if (element.getElementsByTagName(AUTHOR).getLength() > 0) {
 					message.setAuthor(getElementValue(element, "dc:creator"));
 				}
-				
+
 				String description = getElementValue(element, DESCRIPTION);
 				message.setDescription(description);
 				message.setImages(RSSImageExtractor.extractImages(description, useNormalImageFormat));

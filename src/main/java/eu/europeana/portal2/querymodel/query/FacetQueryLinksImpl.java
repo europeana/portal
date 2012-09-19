@@ -162,10 +162,9 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 	public boolean isSelected() {
 		return facetSelected;
 	}
-	
+
 	@Override
 	public String toString() {
 		return type + " (" + links +")";
 	}
-
 }

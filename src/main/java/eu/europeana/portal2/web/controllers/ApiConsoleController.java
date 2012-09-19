@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.controllers.utils.ApiRecordWrapper;
-import eu.europeana.portal2.web.controllers.utils.ApiSearchWrapper;
+import eu.europeana.portal2.web.controllers.utils.ApiWrapper;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ApiConsolePage;
 import eu.europeana.portal2.web.util.ControllerUtil;
@@ -66,6 +65,7 @@ public class ApiConsoleController {
 		if (!model.getDefaultProfiles().contains(profile)) {
 			profile = "standard";
 		}
+
 		if (!model.getDefaultRows().contains(Integer.toString(rows))) {
 			rows = 12;
 		}
@@ -80,14 +80,16 @@ public class ApiConsoleController {
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 
+		ApiWrapper api = new ApiWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
 		String rawJsonString = "";
 		if (function.equals("search") && !StringUtils.isBlank(query)) {
-			ApiSearchWrapper apiSearch = new ApiSearchWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
-			rawJsonString = apiSearch.getSearchResult(query, refinements, profile, start, rows, sort);
+			rawJsonString = api.getSearchResult(query, refinements, profile, start, rows, sort);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			ApiRecordWrapper apiSearch = new ApiRecordWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
-			rawJsonString = apiSearch.getSearchResult(collectionId, recordId);
+			rawJsonString = api.getObject(collectionId, recordId);
+		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
+			rawJsonString = api.getObject(recordId);
 		}
+
 		String niceJsonString = rawJsonString;
 		try {
 			niceJsonString = JsonFormatter.format(rawJsonString);
@@ -96,6 +98,7 @@ public class ApiConsoleController {
 		}
 
 		model.setJsonString(niceJsonString);
+		model.setApiUrl(api.getUrl());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);
 		config.postHandle(this, page);

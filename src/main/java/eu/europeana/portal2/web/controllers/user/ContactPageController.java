@@ -36,7 +36,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 public class ContactPageController {
 
 	@Resource(name="corelib_web_emailService") private EmailService emailService;
-	
+
 	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="configurationService") private Configuration config;
