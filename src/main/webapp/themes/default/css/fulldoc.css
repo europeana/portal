@@ -14,10 +14,17 @@
 	-webkit-box-sizing:	border-box;
 }
 
+
+#similar-content{			/* Andy: negative percentages to correspond to galleria stage / container padding and margins: to make exact use percentages in galleria css */
+	width:			108%;
+	margin-left:	-4%;
+	margin-right:	-4%;
+	
+}
+
 #carousel-2{
 	width:		100%;		/* height set programatically.  TODO: is this width even needed? */
 }
-
 
 .addthis {
 }

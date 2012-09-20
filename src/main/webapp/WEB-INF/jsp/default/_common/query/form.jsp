@@ -44,16 +44,18 @@
 						value="${model.query}"/>							
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
-					<button class="icon-mag" type="submit">
-						<spring:message code='Search_t'/>
-					</button>
+				
+						<button class="icon-mag deans-button-1" type="submit">
+							<spring:message code='Search_t'/>
+						</button>
+						
 				</td>
 			</tr>
 			
 			<tr>
 				<td colspan="3" class="submit-cell show-cell-on-phones">
 					<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html">?</a>
-					<button class="icon-mag" type="submit">
+					<button class="icon-mag deans-button-1" type="submit">
 						<spring:message code='Search_t'/>
 					</button>
 				</td>

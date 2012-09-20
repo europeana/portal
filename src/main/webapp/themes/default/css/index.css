@@ -246,7 +246,8 @@ h3 a span{
 }
 
 .feed-block{
-	margin-top:		0.5em;
+	margin-top:			1.5em;
+	margin-bottom:		1em;
 }
 
 .icon-rss:before{
@@ -306,11 +307,22 @@ h3 a span{
 	.feed-link {
 		float:			left;
 		margin-left:	0.4em;
+				
+		padding-top:	0.5em;
+		padding-bottom:	0.5em;
+
 		/*
 		position:		relative;
 		bottom:			0.19em;
 		*/
 	}
+	
+	.collapse-header-text, .icon-pinterest{
+		padding-top:	0.5em !important;
+		padding-bottom:	0.5em !important;
+	}
+}
+	
 }
 
 .ie8 .feed-link {

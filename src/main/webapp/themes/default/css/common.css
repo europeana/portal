@@ -46,6 +46,7 @@
 	zoom:		1;
 	width:		auto !important;
 	cursor:		pointer;
+	overflow:	hidden;
 }
 
 	
@@ -72,7 +73,7 @@
 }
 
 #footer-subscribe input{
-	float:			left;
+	float:			right;
 	clear:			left;
 	width:			100%;
 	max-width:		100%;
@@ -95,32 +96,50 @@
 	margin-bottom:		2em;
 }
 
+
+.deans-button-1{
+	background-color:		#0048ff;
+	color:					white !important;
+	
+	color: #ffffff;
+	background: -moz-linear-gradient(
+		top,
+		#0048ff 0%,
+		#4c7ecf);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#0048ff),
+		to(#4c7ecf));
+	-moz-box-shadow:
+		3px 3px 13px rgba(51,51,51,0.5),
+		inset 0px 0px 0px rgba(255,255,255,0);
+	-webkit-box-shadow:
+		3px 3px 13px rgba(51,51,51,0.5),
+		inset 0px 0px 0px rgba(255,255,255,0);
+	box-shadow:
+		3px 3px 13px rgba(51,51,51,0.5),
+		inset 0px 0px 0px rgba(255,255,255,0);
+	
+}
 	
 .europeana-button-1{
-	background-color:		blue;
-	color:					white !important;
 	border:					0 !important;
-
 	padding:				0.5em 0.5em !important;
 	margin:					0;
-	
-	/*
-	-moz-border-radius:		0.75em;
-	-webkit-border-radius:	0.75em;
-	border-radius:			0.75em;
-	*/
-	
 	-webkit-appearance:		none;
-	
 	-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 	-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 	border-radius:			0.5em 0.5em 0.5em 0.5em;
-	
 }
 
 		
 #footer-subscribe input[type=submit]{
 	width:	100%;
+}
+		
+#footer-subscribe input[type=email]{
+	padding-top:	0.25em;
+	padding-bottom:	0.25em;
 }
 
 .footer-links{
@@ -153,6 +172,16 @@
 	#social-links .social-link{
 		float:	left;
 	}	
+	
+	#footer-subscribe input{
+		width:			50%;
+		max-width:		50%;
+		
+		margin-top:		0;
+		margin-bottom:	0;
+		
+	}
+	
 }
 
 .ie8 .sidebar {

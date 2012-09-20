@@ -249,7 +249,7 @@ eu.europeana.header = {
 	addQueryFocus : function() {
 		
 		var exceptions = [
-          'full-doc.html',
+          //'full-doc.html',
           'login.html',
           'forgotPassword.html',
           'register-success.html'
@@ -268,6 +268,17 @@ eu.europeana.header = {
 			}
 			
 		}
+		
+		
+		jQuery('#query-input').focus(function(){
+			$("#query-full table tr:first-child .query-cell").addClass("glow");
+			//$("#query-full table").addClass("glow");
+		});
+		jQuery('#query-input').blur(function(){
+			$("#query-full table tr:first-child .query-cell").removeClass("glow");
+			//$("#query-full table").removeClass("glow");
+		});
+		
 		
 		if ( input_focus ) {
 			
