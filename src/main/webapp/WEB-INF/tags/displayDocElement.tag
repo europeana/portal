@@ -13,7 +13,7 @@
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
 <c:if test="${elementStatus != null && total > 1}">
-  <tr><td colspan="2"><h5>${elementStatus.index + 1}</h5></td></tr>
+  <tr><td colspan="2"><h5>${elementStatus.index + 1}.</h5></td></tr>
 </c:if>
 
 <c:forEach items="${model.schemaMap[topField.type]}" var="field" varStatus="fieldStatus">
