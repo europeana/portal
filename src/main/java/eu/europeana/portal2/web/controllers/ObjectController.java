@@ -193,7 +193,6 @@ public class ObjectController {
 		return moreLikeThis;
 	}
 
-
 	private Map<String, String[]> sanitizeParameters(HttpServletRequest request) {
 		Map<String, String[]> parameters = new HashMap<String, String[]>();
 		Enumeration params = request.getParameterNames();
@@ -215,8 +214,7 @@ public class ObjectController {
 			}
 			// one quote
 			String query = values[0];
-			return query.contains("\"")
-					&& StringUtils.indexOf(query, '\"') == StringUtils.lastIndexOf(query, '\"');
+			return query.contains("\"") && StringUtils.indexOf(query, '\"') == StringUtils.lastIndexOf(query, '\"');
 		}
 		return false;
 	}
