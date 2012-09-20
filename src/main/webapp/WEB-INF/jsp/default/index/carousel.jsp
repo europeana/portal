@@ -69,13 +69,18 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		
 		<div class="six columns hide-on-phones">
 			<div id="carousel-1-blurb">
-				<h2>Europe's Digital Library</h2>
+				<h2>Europe's Heritage - Collected for You!</h2>
+				
+								
 				<p>
-					In Europeana you can search more than 24 million records of paintings, artifacts, books, music, films and more made available by Europe's libraries, archives and museums.
-				</p>			
-				<p>
-					You can also explore online exhibitions and follow the latest......
-				</p>		
+				Explore more than 20 million items from a range of Europe's leading galleries, libraries, archives and museums.
+				
+				From The Girl with the Pearl Earring to Newton's Laws of Motion, from the music of Mozart to the TV-news of times gone by, it's all here!
+				
+				Start your Europeana adventure now and find something amazing! 				
+				</p>
+				
+				
 			</div>
 		</div>
 		
