@@ -1,8 +1,6 @@
-<!-- excerpt -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
-
 <div id="item-details" about="${model.document.id}">
   <h1>${model.objectTitle}</h1>
   <%--
@@ -18,11 +16,9 @@
   --%>
   <%-- c:if test="${model.formatLabels && !empty model.metaDataFields}" --%>
   <c:if test="${model.formatLabels}">
-    <%-- europeana:displayEseDataAsMeta metaDataFields="${model.metaDataFields}" showFieldName="true" / --%>
     <%@ include file="/WEB-INF/jsp/devel/fulldoc/content/full-excerpt/schema.jspf" %>
   </c:if>
   <c:if test="${!model.formatLabels && !empty model.fields && fn:length(model.fields) > 0}">
     <europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true" />
   </c:if>
 </div>
-<!-- /excerpt -->

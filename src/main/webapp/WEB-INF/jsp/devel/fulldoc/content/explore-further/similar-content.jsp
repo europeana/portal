@@ -12,7 +12,7 @@
           <li>
             <c:set var="relItemQuery" value='europeana_uri:"${model.document.id}"' />
             <a href="/${model.portalName}/${doc.fullDocUrl}" rel="rdfs:seeAlso" resource="${doc.id}" title="${doc.title[0]}">
-              <img src="${imgBaseUrl}${doc.edmObject[0]}" alt="${doc.title[0]}" width="70" data-type="${fn:toLowerCase(doc.type)}" />
+              <img src="${imgBaseUrl}${doc.thumbnail}" alt="${doc.title[0]}" width="70" data-type="${fn:toLowerCase(doc.type)}" />
             </a>
           </li>
         </c:forEach>
