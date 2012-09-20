@@ -1,9 +1,5 @@
 
 
-#carousel-1-wrapper{
-	margin-top:	20px;
-   	max-height:	100%;
-}
 /*
 #carousel-1{
    	height:		260px;
@@ -62,44 +58,95 @@
    	xxbackground:	#000;
 }
 
-#carousel-1-blurb{
-	padding-left:	0px;
+
+
+
+/* main content gutters */
+
+.carousel-spacer{
+	margin-right:	0;
+	margin-top:		1.5em;
+	xxxmargin-bottom:	1.5em;
 }
 
-#carousel-1-blurb .italic-heading{
-	margin:			1em 0;
+.blurb-spacer{
+	margin-left:	0;
+	margin-top:		1.5em;
+	xxxmargin-bottom:	1.5em;
 }
+
+
+#section-blog .six:first-child .feeb-block-spacer{
+	margin-right:	0;
+}
+
+#section-blog .six:last-child .feeb-block-spacer{
+	margin-left:	0;
+}
+
+#section-featured-content .six:first-child .feeb-block-spacer{
+	margin-right:	0;
+}
+
+#section-featured-content .six:last-child .feeb-block-spacer{
+	margin-left:	0;
+}
+
 
 @media only screen and ( min-width:48em ){
-
-	#carousel-1-wrapper{
-		margin-top:	45px;
+	.carousel-spacer{
+		margin-right:	1em;
+		margin-top:		1.25em;
 	}
 	
-	#carousel-1-blurb{
-		padding-left:	12px;		
+	.blurb-spacer{
+		margin-left:	1em;
+		margin-top:		1.25em;
 	}
 
-	#carousel-1-blurb .italic-heading{
-		margin:			0;
-		margin-bottom:	1em;
-		
+	#section-blog .six:first-child .feeb-block-spacer{
+		margin-right:	1em;
 	}
+	#section-blog .six:last-child .feeb-block-spacer{
+		margin-left:	1em;
+	}
+
+	#section-featured-content .six:first-child .feeb-block-spacer{
+		margin-right:	1em;
+	}
+	#section-featured-content .six:last-child .feeb-block-spacer{
+		margin-left:	1em;
+	}
+
 }
 
 
-.ie8 #carousel-1-wrapper{
-	margin-top:	45px;
-}
+@media only screen and ( min-width:60em ){
+	.carousel-spacer{
+		margin-right:	2em;
+		margin-top:		2.5em;
+	}
 	
-.ie8 #carousel-1-blurb{
-	padding-left:	12px;		
+	.blurb-spacer{
+		margin-left:	2em;
+		margin-top:		2.5em;
+	}
+
+	#section-blog .six:first-child .feeb-block-spacer{
+		margin-right:	2em;
+	}
+	#section-blog .six:last-child .feeb-block-spacer{
+		margin-left:	2em;
+	}
+
+	#section-featured-content .six:first-child .feeb-block-spacer{
+		margin-right:	2em;
+	}
+	#section-featured-content .six:last-child .feeb-block-spacer{
+		margin-left:	2em;
+	}
 }
 
-.ie8 #carousel-1-blurb .italic-heading{
-	margin:			0;
-	margin-bottom:	1em;
-}
 
 
 
@@ -144,9 +191,12 @@
 .collapse-content{
 	border-top:		1px solid #E4E4E4;
 }
-#section-header-featured-partner{
+
+#featured-partner-header-wrapper{
 	border-bottom:	1px solid #E4E4E4;
 }
+
+
 #section-featured-content h4{
 	margin:	0;
 }

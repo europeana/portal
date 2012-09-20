@@ -24,7 +24,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
 
 
-<div id="carousel-1-wrapper" class="row">
+<div class="row">
 
 	<c:if test='${!empty model.carouselItems}'>
 	
@@ -51,27 +51,34 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 		
 		
 		<div class="six columns">
-		
-			<div id="carousel-1">
+
+			<div class="carousel-spacer">
 			
-				<c:forEach var="item" items="${model.carouselItems}">
-					<a href="${item.url}">
-						<img	src		= "/${model.portalName}<spring:message code='${item.imgUrl}'/>"
-								title	= "<spring:message code='${item.anchorTitle}'/>"
-								alt		= "<spring:message code='${item.imgAlt}'/>"
-								class	= "hidden"
-						/>
-					</a>
-				</c:forEach>
+				<div id="carousel-1">
+				
+					<c:forEach var="item" items="${model.carouselItems}">
+						<a href="${item.url}">
+							<img	src		= "/${model.portalName}<spring:message code='${item.imgUrl}'/>"
+									title	= "<spring:message code='${item.anchorTitle}'/>"
+									alt		= "<spring:message code='${item.imgAlt}'/>"
+									class	= "hidden"
+							/>
+						</a>
+					</c:forEach>
+								
+				</div>
+				
+			</div>		
 			
-			</div>
 		</div>
 		
+		
 		<div class="six columns hide-on-phones">
-			<div id="carousel-1-blurb">
+		
+			<div class="blurb-spacer">
+		
 				<h2>Europe's Heritage - Collected for You!</h2>
 				
-								
 				<p>
 				Explore more than 20 million items from a range of Europe's leading galleries, libraries, archives and museums.
 				
@@ -82,6 +89,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				
 				
 			</div>
+				
 		</div>
 		
 	</c:if>	

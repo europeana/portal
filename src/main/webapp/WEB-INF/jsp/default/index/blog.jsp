@@ -34,41 +34,44 @@
 
 						<div class="six columns">
 
-							<div class="feed-block">
-								<div class="feed-box">
-									<div class="feed-cell feed-image">
-										<h4 class="show-on-phones">
-											<a	href=	"${entry.link}"
-												title=	"${entry.title}"
-												target=	"_self"
-												class=	"europeana">
-												${entry.title}
-											</a>
-										</h4>
-				
-										<a	href=	"${entry.link}"
-											title=	"${entry.title}"
-											target=	"_self"
-											class=	"image">
-											<img class="responsive" src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
-										</a>
+							<div class="feeb-block-spacer">
+									<div class="feed-block">
+										<div class="feed-box">
+											<div class="feed-cell feed-image">
+												<h4 class="show-on-phones">
+													<a	href=	"${entry.link}"
+														title=	"${entry.title}"
+														target=	"_self"
+														class=	"europeana">
+														${entry.title}
+													</a>
+												</h4>
+						
+												<a	href=	"${entry.link}"
+													title=	"${entry.title}"
+													target=	"_self"
+													class=	"image">
+													<img class="responsive" src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
+												</a>
+											</div>
+											
+											<div class="feed-cell">
+												<h4 class="hide-on-phones featured-text">
+													<a	href=	"${entry.link}"
+														title=	"${entry.title}"
+														target=	"_self"
+														class=	"europeana">
+															${entry.title}
+													</a>
+												</h4>
+												<p class="featured-text">
+													${entry.description}"
+												</p>
+											</div>
+										</div>
 									</div>
-									
-									<div class="feed-cell">
-										<h4 class="hide-on-phones featured-text">
-											<a	href=	"${entry.link}"
-												title=	"${entry.title}"
-												target=	"_self"
-												class=	"europeana">
-													${entry.title}
-											</a>
-										</h4>
-										<p class="featured-text">
-											${entry.description}"
-										</p>
-									</div>
-								</div>
 							</div>
+									
 						</div>
 					</c:if>
 				</c:forEach>
