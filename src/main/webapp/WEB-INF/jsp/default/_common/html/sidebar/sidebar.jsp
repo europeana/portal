@@ -27,6 +27,8 @@
 				<form id="refine-search-form" method="get" action="${query_action}">
 				
 					<input type="hidden" name="query" value="${model.query}"/>
+					<input type="hidden" name="rows" id="rows" value="${model.rows}"/>
+					
 					<c:forEach var="refinement" items="${model.refinements}">
 						<input type="hidden" name="qf" value="${refinement}"/>
 					</c:forEach>

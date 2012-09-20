@@ -150,9 +150,6 @@ eu.europeana.search = {
 
 };
 
-$(document).ready(function(){			
-	eu.europeana.search.init();
-});
 
 
 

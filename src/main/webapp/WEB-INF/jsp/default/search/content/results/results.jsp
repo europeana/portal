@@ -7,13 +7,24 @@
 		
 			<c:set var="position_class" value="nav-top"/>
 
-			<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/search-results-navigation.jsp" %>
+
+			<div class="search-results-navigation notranslate">
+				<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/pagination.jsp" %>
+			</div>
+
+
 
 			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid.jsp" %>
 
 			<c:set var="position_class" value="nav-bottom"/>
 
-			<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/search-results-navigation.jsp" %>
+
+
+			<div class="search-results-navigation notranslate">
+				<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/pagination.jsp" %>
+			</div>
+
+
 		</c:when>
 		<c:otherwise>
 			<!-- model.hasResults: 0 -->
