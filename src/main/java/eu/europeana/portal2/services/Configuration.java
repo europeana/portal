@@ -91,6 +91,12 @@ public class Configuration {
 	// Schema.org maping
 	@Value("#{europeanaProperties['schema.org.mapping']}")
 	private String schemaOrgMappingFile;
+	
+	@Value("#{europeanaProperties['imageCacheUrl']}")
+	private String imageCacheUrl;
+
+	@Value("#{europeanaProperties['portal.minCompletenessToPromoteInSitemaps']}")
+	private int minCompletenessToPromoteInSitemaps;
 
 	/////////////////////////////// complex functions
 
@@ -200,5 +206,13 @@ public class Configuration {
 
 	public static String getPortalGooglePlusPublisherId() {
 		return portalGooglePlusPublisherId;
+	}
+
+	public String getImageCacheUrl() {
+		return imageCacheUrl;
+	}
+
+	public int getMinCompletenessToPromoteInSitemaps() {
+		return minCompletenessToPromoteInSitemaps;
 	}
 }

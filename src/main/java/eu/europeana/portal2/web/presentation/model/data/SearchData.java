@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
-import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BreadcrumbListDecorator;

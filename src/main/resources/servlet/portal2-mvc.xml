@@ -90,6 +90,8 @@
 
 	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
 
+	<bean id="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />
+
 	<!-- a bean for storing configuration properties. -->
 	<bean id="runtimeConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">

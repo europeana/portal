@@ -155,8 +155,11 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 		DateTime date = new DateTime();
 		String ip = request.getRemoteAddr();
 		String reqUrl = getRequestUrl(request);
-		PageData model = (PageData)page.getModel().get(PageData.PARAM_MODEL);
-		final User user = (page == null) ? null : (User)model.getUser();
+		User user = null;
+		if (page != null) {
+			PageData model = (PageData)page.getModel().get(PageData.PARAM_MODEL);
+			user = (User)model.getUser();
+		}
 		String userId;
 		if (user != null) {
 			userId = user.getId().toString();
@@ -181,6 +184,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 				}
 			}
 		}
+
 		return MessageFormat.format(
 			"userId={0}, lang={1}, req={4}, date={2}, ip={3}, user-agent={5}, referer={6}, utma={8}, utmb={9}, utmc={10}, v={7}", 
 			userId, language, date, ip, reqUrl, userAgent, referer, VERSION, utma, utmb, utmc);
