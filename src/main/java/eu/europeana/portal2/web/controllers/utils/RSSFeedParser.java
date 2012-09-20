@@ -126,7 +126,8 @@ public class RSSFeedParser {
 			log.info(String.format("new file is %s, url is %s, old file is %s, ", filePath, fileUrl, location));
 			BufferedImage responsive = null;
 			try {
-				responsive = ImageUtils.scale(orig, responsiveWidths[i], 0);	// zero-height to auto-calculate
+				int height = (int)Math.ceil((responsiveWidths[i] * orig.getHeight()) / orig.getWidth());
+				responsive = ImageUtils.scale(orig, responsiveWidths[i], height);
 			} catch (IOException e) {
 				log.severe("IOException during scaling image: " + e.getLocalizedMessage());
 				e.printStackTrace();
