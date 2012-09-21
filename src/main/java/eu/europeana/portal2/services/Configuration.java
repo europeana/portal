@@ -98,6 +98,9 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.minCompletenessToPromoteInSitemaps']}")
 	private int minCompletenessToPromoteInSitemaps;
 
+	@Value("#{europeanaProperties['portal.contentchecker']}")
+	private String isContentChecker;
+
 	/////////////////////////////// complex functions
 
 	public void registerBaseObjects(HttpServletRequest request, HttpServletResponse response, Locale locale) {
@@ -214,5 +217,9 @@ public class Configuration {
 
 	public int getMinCompletenessToPromoteInSitemaps() {
 		return minCompletenessToPromoteInSitemaps;
+	}
+	
+	public boolean isContentChecker() {
+		return isContentChecker.equals("true");
 	}
 }
