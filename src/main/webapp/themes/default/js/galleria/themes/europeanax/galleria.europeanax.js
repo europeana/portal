@@ -225,6 +225,47 @@ Galleria.addTheme({
     		// Doesn't seem to matter
     		//alert(    			thisGallery._options.responsive )
     		
+    		/*
+    		thisGallery.bind("loadstart", function( e ){
+    			
+    			//alert(e.index + "\n\n");
+    			
+//    			alert("START " +  e.imageTarget.width + "  " + e.imageTarget.height + " ...."  );	// already shrunk !
+    			
+    			
+//    			alert("img ready - " + thisGallery.$( 'container' ).find(".galleria-stage").find(".galleria-images img").length);
+    			
+    			
+    			
+    		});
+    		
+    		thisGallery.bind("loadfinish", function( e ){
+    			
+    			//alert(e.index + "\n\n");
+    			
+    			alert("FINISH " +  e.imageTarget.width + "  " + e.imageTarget.height + " ...."  );	// already shrunk !
+    			
+    			
+//    			alert("img ready - " + thisGallery.$( 'container' ).find(".galleria-stage").find(".galleria-images img").length);
+    			
+    			
+    			
+    		});
+    		*/
+    		
+    		
+    		
+    		
+    		
+    		thisGallery.$( 'container' ).find(".galleria-stage").find(".galleria-images img").each(function(i, ob){
+
+    			ob = $(ob);
+    			alert( " ob = " + ob.attr("width") + ", " + $(ob).width() ); 
+    			
+    		});
+
+    		
+    		
     		if(dataSource.length == 1){
     			
         		var thumbsC		= thisGallery.$( 'container' ).find('.galleria-thumbnails-container'); 
