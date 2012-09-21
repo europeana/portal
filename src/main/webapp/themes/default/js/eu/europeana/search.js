@@ -16,6 +16,19 @@ eu.europeana.search = {
 			}
 		);
 		
+		
+		// make facet checkboxes clickable
+		jQuery("#filter-search li input[type='checkbox']").click(function(){
+			
+			var label = $("#filter-search li label[for='" + $(this).attr('id') + "']");
+			
+			window.location = label.closest("a").attr("href");
+
+		});
+			
+		
+		
+		
 		// add ellipsis
 		var ellipsisObjects = [];
 		jQuery('.ellipsis').each(

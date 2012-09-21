@@ -24,11 +24,15 @@
 
 	<li>
 		<h4>
-			
+		
+			<input type="checkbox" ${checkedValue} id="cb-${label}" name="cb-${label}"/>
+				
 			<a  href="/${model.portalName}/${model.pageName}?query=${model.query}${facet_item.url}"
 				title="${facet_item.value}" rel="nofollow">
-				<input type="checkbox" ${checkedValue}/>&nbsp;${label} (${facet_item.count})
+				
+				<label for="cb-${label}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 			</a>
+			
 		</h4>
 		
 		
