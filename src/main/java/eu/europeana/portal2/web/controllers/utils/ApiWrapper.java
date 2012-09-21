@@ -32,6 +32,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.portal2.web.util.QueryUtil;
+
 public class ApiWrapper {
 
 	private static final String SESSION_KEY = "apisession";
@@ -54,12 +56,12 @@ public class ApiWrapper {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append("/search.json?");
 		if (!StringUtils.isBlank(query)) {
-			url.append("&query=").append(query);
+			url.append("&query=").append(QueryUtil.encode(query));
 		}
 		if (!ArrayUtils.isEmpty(refinements)) {
 			for (String qf : refinements) {
 				if (!StringUtils.isBlank(qf)) {
-					url.append("&qf=").append(qf);
+					url.append("&qf=").append(QueryUtil.encode(qf));
 				}
 			}
 		}
