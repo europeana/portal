@@ -1,4 +1,5 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
+<%-- This tag creates an encoded URL escaping special characters --%>
 
 <%-- parameters --%>
 <%@ attribute name="url" required="true" %>
