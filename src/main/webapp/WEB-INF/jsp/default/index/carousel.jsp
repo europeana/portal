@@ -24,7 +24,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
 
 
-<div class="row">
+<div class="row" style="position:relative;">
 
 	<c:if test='${!empty model.carouselItems}'>
 	
@@ -81,17 +81,31 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				
 				<p>
 				Explore more than 20 million items from a range of Europe's leading galleries, libraries, archives and museums.
-				
-				From The Girl with the Pearl Earring to Newton's Laws of Motion, from the music of Mozart to the TV-news of times gone by, it's all here!
-				
-				Start your Europeana adventure now and find something amazing! 				
 				</p>
 				
+				<p>
+				From <a class="europeana">The Girl with the Pearl Earring</a> to <a class="europeana">Newton's Laws of Motion</a>, from the music of <a class="europeana">Mozart</a> to the TV-news of times gone by, it's all here!
+				</p>
+				
+				<p>
+				Start your Europeana adventure now and find something amazing! 				
+				</p>
 				
 			</div>
 				
 		</div>
+
+
 		
 	</c:if>	
+
+		<div class="social-shares">
+			<span class="label">Share with your friends:</span>
+			<span aria-hidden="true" class="icon-facebook"></span>
+			<span aria-hidden="true" class="icon-twitter"></span>
+			<span aria-hidden="true" class="icon-pinterest-2"></span>
+			<span aria-hidden="true" class="icon-mail"></span>
+			<span aria-hidden="true" class="icon-share"></span>
+		</div>
 </div>
 

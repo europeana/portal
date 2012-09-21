@@ -1,5 +1,45 @@
 
 
+.social-shares{
+	text-align:		right;
+	position:		absolute;
+	bottom:			0;
+	right:			0;
+	margin-right:	1em;	
+}
+
+.social-shares span.label{
+	position:	relative;
+	bottom:		0.5em;
+}
+
+.social-shares	.icon-facebook{
+	color:	#3B5998;
+	font-size:		2em;
+}
+
+
+.social-shares	.icon-twitter{
+	color:	#4099FF;
+	font-size:		2em;
+}
+
+.social-shares	.icon-pinterest-2{
+	color:	#E00002;
+	font-size:		2em;
+}
+
+.social-shares	.icon-mail{
+	font-size:		2em;
+}
+
+.social-shares	.icon-share{
+	color:	green;
+	font-size:		2em;
+}
+
+
+
 /*
 #carousel-1{
    	height:		260px;
