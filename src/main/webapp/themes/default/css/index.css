@@ -287,8 +287,12 @@ h3 a span{
 
 
 #section-blog, #section-featured-content, #section-pinterest{
-	margin-top:		0.75em;
-	margin-bottom:	0.75em;
+	xxxxxmargin-top:		0.75em;
+	xxxxxmargin-bottom:	0.75em;
+	
+	padding-top:		0.75em	!important;
+	padding-bottom:		0.75em	!important;
+	
 }
 
 

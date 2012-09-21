@@ -208,3 +208,136 @@
 .hidden{
 	display:none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* grid styling */
+
+
+
+@media only screen and ( min-width:	48em ){
+
+	.container>.row{
+		/* allow row to have padding */
+		box-sizing:			border-box;
+		-moz-box-sizing:	border-box;
+		-webkit-box-sizing:	border-box;
+	}
+
+	.container>.row{
+		padding-left:1em;
+		padding-right:1em;
+	}
+
+	.container{
+		background-color:	#999;
+		background-color:	#DADADA;
+	}
+	/*
+	.container>.row:not(:last-child){
+		background-color:	white;	
+	}
+	*/
+	.container>.row:not(.footer){
+		background-color:	white;	
+	}
+
+}
+
+
+
+/* overrides that don't belong here */
+
+/* rules for index.css  */
+
+/*
+	overrides rule on line 208 +-
+	
+	(can lose all the !important statements once integrated)
+
+ */
+ 
+ /*
+
+#section-blog,
+#section-featured-content,
+#section-pinterest{
+	margin-bottom:		0	!important;
+	margin-top:		0	!important;
+	padding-bottom:		0.75em	!important;
+	padding-top:		0.75em	!important;
+
+}
+*/
+
+
+/* rules for footer  (move this to more appropriate file) */
+
+/*
+	menu-main.css line 208
+
+	(can lose the !important statements?  1 needed...)
+
+ */
+/*
+
+.footer{
+	margin-top:		0	!important;	
+	margin-bottom:		0	!important;
+
+	padding-top:		1.1em	!important;
+	padding-bottom:		1.1em	!important;
+}
+*/
+
+/* That fixes basics apart from header strip: 
+
+	- the jsp @import needs moved up 1 dom level (becomes direct child of conatiner)
+
+	- the class .row needs added to #header-strip
+
+	- <div style="display:table; width:100%;"> should wrap #header-strip contents
+		- does the job of header css (line 557) which should be deleted:
+
+
+			@media only screen and ( min-width:48em ){
+				#header-strip{
+					width:				100%;
+					display:			table;
+				}
+
+
+	- the following css needs applied
+*/
+
+
+/*
+
+#header-strip{
+	
+	font-size: 1em !important;
+}
+
+#header-strip .white:first-child{
+	
+	margin-left:	0 !important;	
+}
+
+#lang-menu{
+	 
+	margin-right:	0 !important;
+}
+*/
+

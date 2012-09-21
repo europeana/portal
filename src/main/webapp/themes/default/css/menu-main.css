@@ -3,8 +3,12 @@
 	/** GLOBAL **/
 	.footer{
 		background-color:	#333;
-		margin-top:			1.1em !important;
-		margin-bottom:		1.1em !important;
+		xxxxxxmargin-top:			1.1em !important;
+		xxxxxxmargin-bottom:		1.1em !important;
+		
+		padding-top:		1.1em	!important;
+		padding-bottom:		1.1em	!important;
+		
 	}
 	
 	.footer-wrapper{

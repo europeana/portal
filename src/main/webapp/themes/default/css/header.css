@@ -325,7 +325,9 @@ table tr:first-child{
 	font-size:	2em;
 }
 #lang-menu{
-	margin-right:	1em;
+	xxxxxxmargin-right:	1em;
+	
+	margin-right:	0 !important;
 }
 	
 
@@ -533,6 +535,7 @@ a.ui-state-hover {
 		width:				100%;
 		display:			table;
 		font-size:			1.1em;
+		font-size:			1em;
 	}
 	
 			
@@ -548,7 +551,8 @@ a.ui-state-hover {
 	}
 	
 	#header-strip .white:first-child {
-		margin-left:		1em;	
+		xxxxxxmargin-left:		1em;	
+		margin-left:		0;	
 	}
 	
 	@media only screen and ( max-width:68em ){	/* the header strip wants to wrap here if the user is logged in - reduce the text size */
