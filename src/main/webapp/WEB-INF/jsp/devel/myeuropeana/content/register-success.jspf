@@ -1,0 +1,6 @@
+<div id="content">
+  <div id="login-boxes">
+    <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/register-success/register-success-form.jspf" %>
+    <div id="login-response"></div>
+  </div>
+</div>

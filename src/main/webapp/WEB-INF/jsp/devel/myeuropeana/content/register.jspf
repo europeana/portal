@@ -1,0 +1,16 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<div id="content">
+  <h1><spring:message code="Register_t" /></h1>
+
+  <sf:form modelAttribute="model" action="register.html" method="POST">
+    <sf:hidden path="token" />
+    <%-- sf:hidden path="email" / --%>
+
+    <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/register/email-details.jspf" %>
+    <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/register/login-details.jspf" %>
+    <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/register/password.jspf" %>
+    <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/register/submit.jspf" %>
+
+  </sf:form>
+</div>
