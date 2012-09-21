@@ -13,120 +13,137 @@
 	.at300b, .at300m { float: right; margin-left: 3px; }
 	
 	
+/* actions */
+
+.action-title{
+	display:	none;
+}
+	
 /* items */
 
-	#search-results{
-		margin-left:	1em;
-	}
+#search-results{
+	margin-left:	1em;
+}
 
 
-	#items {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	
-	#items img {
-		max-height:		100%;
-		max-width:		100%;
-		vertical-align:	middle;
-	}
+#items {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
 
-	.thumb-frame, .ellipsis{
-		margin-left:	0.5em;
-		margin-right:	0.5em;
-	}
+#items img {
+	max-height:		100%;
+	max-width:		100%;
+	vertical-align:	middle;
+}
+
+.thumb-frame, .ellipsis{
+	margin-left:	0.5em;
+	margin-right:	0.5em;
+}
+
+.thumb-frame{
+	background-color:	#999;
+	height:				8em;
+	line-height:		8em;
+	text-align:			center;
+}
+
+.ellipsis{
+
+	height:			2em;
+	max-height:		2em;
+	min-height:		2em;
 	
-	.thumb-frame{
-		background-color:	#999;
-		height:				8em;
-		line-height:		8em;
-		text-align:			center;
-	}
+	line-height:	1em;
 	
-	.ellipsis{
+	margin-top:		0.25em;
+}
+
+
+
+#items .ellipsis-inner{
+	min-height:			2em;		/* force height to keep icon in bottom corner */
+}
+
 	
-		height:			2em;
-		max-height:		2em;
-		min-height:		2em;
+#items h2 {
+	font-size:		1em !important;
+	font-weight:	400;
+	display:		inline;
+ 		word-wrap:		break-word;
+ 	}
+
+	
+#items{
+	padding-top:	0;
+	padding-bottom:	0;
+}
+
+#items>div.li{
+	width:				25%;
+	margin-bottom:		0.5em;
+	margin-top:			0.5em;
+	text-align:			left;
+	position:			relative;
+	border-bottom:		1px dotted #a0a0a0;
+	overflow-x:			hidden;
+	display:			inline-block;
+	float:				left!important;	/* chrome / webkit fix */
+}
+
+
+
+/* mobile */
+
+@media all and (max-width: 30em) {
+	
+	
+	#items>div.li{
+		width:			49%;
+		max-width:		49%;
+		float:			none;
+		margin-bottom:	1em;
+		margin-top:		0em;
 		
-		line-height:	1em;
-		
-		margin-top:		0.25em;
+		margin-left:	0px;
+		margin-right:	0px;
+		padding-left:	0px;
+		padding-right:	0px;
 	}
-
-
-
-	#items .ellipsis-inner{
-		min-height:			2em;		/* force height to keep icon in bottom corner */
-	}
-	
-	
-	#items h2 {
-		font-size:		1em !important;
-		font-weight:	400;
-		display:		inline;
-  		word-wrap:		break-word;
-  	}
-	
 		
 	#items{
-		padding-top:	0;
-		padding-bottom:	0;
+		padding-top:	0.5em;
+		padding-bottom:	0.5em;
 	}
+}
+
+
+/* tablet */
+
+@media all and (max-width: 48em) {
 
 	#items>div.li{
-		width:				25%;
-		margin-bottom:		0.5em;
-		margin-top:			0.5em;
-		text-align:			left;
-		position:			relative;
-		border-bottom:		1px dotted #a0a0a0;
-		overflow-x:			hidden;
-		display:			inline-block;
-		float:				left!important;	/* chrome / webkit fix */
+		width:			50%;
 	}
-
-
-
-	/* mobile */
 	
-	@media all and (max-width: 30em) {
-		
-		
-		#items>div.li{
-			width:			49%;
-			max-width:		49%;
-			float:			none;
-			margin-bottom:	1em;
-			margin-top:		0em;
-			
-			margin-left:	0px;
-			margin-right:	0px;
-			padding-left:	0px;
-			padding-right:	0px;
-		}
-			
-		#items{
-			padding-top:	0.5em;
-			padding-bottom:	0.5em;
-		}
+	#search-results{
+		margin-left:	0;
+	}		
+
+}
+
+/* tablet & bigger */
+@media all and (min-width: 48em) {
+
+	.action-title{
+		display:	inline;
 	}
-
-
-	/* tablet */
 	
-	@media all and (max-width: 48em) {
 	
-		#items>div.li{
-			width:			50%;
-		}
-		
-		#search-results{
-			margin-left:	0;
-		}		
-
-	}
+}
+	
 
 
 
