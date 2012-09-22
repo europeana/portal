@@ -61,8 +61,7 @@ img { border: none; }
 		
 			
 /* links */
-
-a { text-decoration: none; color: #0075ff; }
+a { text-decoration: none; color: #0075ff; outline: 0; }
 a:visited { color: #0075ff; }
 a:hover { color: #ff00c2; }
 

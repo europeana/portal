@@ -34,8 +34,7 @@
 	border-top-left-radius:				5px;
 	border-top-right-radius:			5px;
 
-	outline: 							none; /* firefox */
-	z-index:	20;
+	z-index:							20;
 }
 
   	
