@@ -161,11 +161,19 @@ Galleria.addTheme({
 					return;
 				}
 				else{
-	                thisGallery._carousel.set( thisGallery._carousel.current - thisGallery._options.carouselSteps);
+	                thisGallery._carousel.set(
+	                		Math.max(thisGallery._carousel.current - thisGallery._options.carouselSteps, 0)
+	                );
 	                thisGallery._options.europeana.setActive(thisGallery._carousel.current);		
 					
 					// disable if first
+    				/*
     				if(thisGallery._carousel.current - (thisGallery._options.carouselSteps) < 0){
+    					thumbNavLeft.addClass("disabled");
+    				}
+    				*/
+	                
+    				if(thisGallery._carousel.current <= 0){
     					thumbNavLeft.addClass("disabled");
     				}
     				else if(dataSource.length > 1){
@@ -804,9 +812,23 @@ Galleria.addTheme({
 		 *  
 		 *  */
 
-		
+		// the fix that failed on chrome zoom:
 		thumbOb.outerWidth = tParent.outerWidth(true);
 
+		
+		
+		//var offset = 0;// 2;		
+		//xoffset += parseInt( tParent.css("margin-right") );
+		//thumbOb.outerWidth = imgBoxW + offset;
+		//Galleria.log("newW = " + newW);
+		//thumbOb.outerWidth = imgBoxW+2;
+
+		
+	tParent.find('.europeana-carousel-info').css('font-size', '0.7em');
+	tParent.find('.europeana-carousel-info').html('imgBoxW ' + imgBoxW + ", set: " + thumbOb.outerWidth);
+		
+		
+//		thumbOb.outerWidth = tParent.outerWidth(true);
 
 		/* Vertical centering of individual images */
 		if(imgBoxH > thumb.height()){

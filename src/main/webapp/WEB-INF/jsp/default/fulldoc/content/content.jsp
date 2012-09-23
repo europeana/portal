@@ -8,24 +8,28 @@
 	<div class="twelve columns">
 	
 		<div class="row">
-			<div class="twelve columns">
-				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/navigation/navigation.jsp" %>
-			</div>
+			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/navigation/navigation.jsp" %>
 		</div>
 
 		<div class="row">
-			<div class="three columns">
+
+			<div class="three-cols-fulldoc-sidebar">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/sidebar-left.jsp" %>
 			</div>
-			<div class="nine columns" id="main-fulldoc-area">
+
+
+			<div class="nine-cols-fulldoc" id="main-fulldoc-area">
+			
 				<%-- Translation link --%>
 				<div class="translate-box">
 					<a href="" id="translate-item" class="bold"><span class="iconD hide-ilb-on-phones"></span><spring:message code="TranslateDetails_t" /><span class="iconP show-ilb-on-phones"></span></a>
 				</div>
-				
+
+				<%-- Main data area --%>				
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
 				
-			</div>	
+			</div>
+			
 		</div>
 		
 		<c:if test="${!empty model.moreLikeThis}">
@@ -45,6 +49,20 @@
 							};
 							
 						</c:forEach>
+						/*
+						carousel2Data[carousel2Data.length] = {
+								image:			'http://europeanastatic.eu/api/image?query=paris&type=IMAGE&uri=http%3A%2F%2Fdigitaltmuseum.se%2FBigImageContent.do%3FimageIndex%3D0%26owner%3DS-NM%26identifier%3DNM.0327524%2B&size=BRIEF_DOC',
+								title:			'',
+								link:			''
+							};
+						
+						carousel2Data[carousel2Data.length] = {
+								image:			'http://europeanastatic.eu/api/image?query=paris&type=IMAGE&uri=http%3A%2F%2Fdigitaltmuseum.se%2FBigImageContent.do%3FimageIndex%3D0%26owner%3DS-NM%26identifier%3DNM.0327524%2B&size=BRIEF_DOC',
+								title:			'',
+								link:			''
+							};
+						*/
+						
 					</script>
 					
 					<%-- markup for carousel --%>

@@ -8,7 +8,7 @@
   </c:otherwise>
 </c:choose>
 
-<form action="${language_menu_action}" method="post" id="language-selector">
+<form action="${language_menu_action}" method="post" id="language-selector" style="display:table-cell; vertical-align:middle;">
 	<div class="eu-menu no-highlight white hide-ilb-on-phones" id="lang-menu">
 		<span class="menu-label"></span>
 		<span class="icon-arrow-3 open-menu"></span>
@@ -22,7 +22,7 @@
 				</li>
 			</c:forEach>
 		</ul>
-		<input type="hidden" name="embeddedlang" value=""/>
+		<input type="hidden" name="embeddedlang" value="" style="margin:0;padding:0;"/>
 	</div>
 </form>
   

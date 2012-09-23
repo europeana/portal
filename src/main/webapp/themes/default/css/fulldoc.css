@@ -16,11 +16,26 @@
 
 
 #similar-content{			/* Andy: negative percentages to correspond to galleria stage / container padding and margins: to make exact use percentages in galleria css */
+	/*
 	width:			108%;
 	margin-left:	-4%;
 	margin-right:	-4%;
+	*/
+	width:			100%;
 	
 }
+
+
+#carousel-1{	
+	max-width:	220px;		/* max thumbanil size plus galleria stage offset (2 * 10) */
+	width:		220px;
+	min-with:	220px;
+	
+	background-color:	#d0d0d0;
+	
+	margin:		auto;
+}
+
 
 #carousel-2{
 	width:		100%;		/* height set programatically.  TODO: is this width even needed? */
@@ -72,10 +87,6 @@ a.disabled:hover{
 	cursor:		default;
 }
 
-div.original-context{
-	xxxxxxpadding-left:	1em;
-	xxxxxxpadding-right:	1em;
-}
 
 div.actions{
 	padding-left:	1em;
@@ -128,19 +139,36 @@ a.action-link span{
 	padding-top:	1.5em;
 }
 
-@media only screen and ( min-width:48em ){
-	.additional-info{
 
+#navigation {
+	overflow:		auto;
+	padding:		0;
+	margin:			0;
+	list-style:		none;
+	width:			100%;	
+	border-bottom:	1px solid #E4E4E4;	
+}
+
+#navigation li, .navigation li {
+	display: inline;
+}
+
+
+@media only screen and ( min-width:48em ){
+
+	#navigation {
+		margin-bottom:	1em;
+		padding:		0.75em 0 0.75em 0;
 	}
+	
+	
+	/* links */
 
 	div.actions{
 		padding:		0;
-		xxxxxpadding-left:	1em;
-
 		max-height:		none;
 		text-align:		left;
 	}
-
 
 	a.action-link {
 		float:			none;
@@ -198,18 +226,7 @@ img.trigger{
 	border-bottom:	0;
 }
 	
-#navigation {
-	overflow:		auto;
-	padding:		0;
-	list-style:		none;
-	border-bottom:	1px solid #E4E4E4;
-	width:			100%;
-}
 
-#navigation li, .navigation li {
-	display: inline;
-}
-	
 	
 /* pagination */
 

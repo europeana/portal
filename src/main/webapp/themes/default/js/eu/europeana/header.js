@@ -35,8 +35,8 @@ eu.europeana.header = {
 		
 		this.setupResultSize();
 		
-		this.setupMobileMenu();
-		this.setupSearchMenu();
+		//this.setupMobileMenu();
+		//this.setupSearchMenu();
 		this.setupLanguageMenu();
 
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );

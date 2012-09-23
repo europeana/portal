@@ -18,7 +18,19 @@ eu.europeana.fulldoc = {
 
 			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 
-   			jQuery('#carousel-1').css("height", jQuery('#carousel-1').width());
+			/*	max thumb-width is 200px
+			 *	
+			 *	max height could be anything
+			 *	
+			 * */
+			var a4						= {w:210 , h:297 };
+			var maxThumbWidth			= 200;
+			var galleriaOffsetY			= 70;	// thumbnail + thumbnail margin top & bottom
+			var a4Equiv					= (  (maxThumbWidth / a4.w) * a4.h) + galleriaOffsetY; 
+   			jQuery('#carousel-1').css("height", a4Equiv);
+   			
+   			//var a4H = 283 + 70;
+   			//jQuery('#carousel-1').css("height", a4H);
    			
    			// mock some lightbox data
    			/*
@@ -35,17 +47,18 @@ eu.europeana.fulldoc = {
    			// end mock
    			
    			Galleria.run('#carousel-1', {
-   				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
-   				carousel:		true,
-   				carouselSpeed:	1200,				/* transition speed */
-   				carouselSteps:	1,
-   				easing:			'galleriaOut',
-   				imageCrop:		false,				/* if true, make pan true */
-   				imagePan:		false,
-   				lightbox:		true,
-   				responsive:		true,
-   				dataSource:		carouselData,
-   				thumbnails: 	carouselData.length>1,
+   				transition:			'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+   				carousel:			true,
+   				carouselSpeed:		1200,				/* transition speed */
+   				carouselSteps:		1,
+   				easing:				'galleriaOut',
+   				imageCrop:			false,				/* if true, make pan true */
+   				imagePan:			false,
+   				lightbox:			true,
+   				responsive:			true,
+   				dataSource:			carouselData,
+   				thumbnails: 		carouselData.length>1,
+   				max_scale_ratio:	1,					/* prevent stretching */
 				extend: function(e){
 
 					var doEllipsis = function(){

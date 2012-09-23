@@ -1,17 +1,21 @@
 /* header */
 
-/* mobile 1st */
-
-#header{
-	border-bottom:	1px solid #E4E4E4;
-}
-	
 #header-strip{
 	background-color:	transparent;
 	position:			absolute;
 	right:				20px;		/* pixel value to cancel out responsive container's padding */
 }
-	
+
+#header-strip>div{
+	display:	table;
+	width:		100%;
+}
+
+
+
+#lang-menu.eu-menu{
+	padding-bottom:	0;
+}
 	
 /* outer layout */
 #logo h1{
@@ -22,7 +26,8 @@
 #logo-and-search{
 	display:		table;
 	width:			100%;
-	margin:			0;		
+	margin:			0;
+	border-bottom:	1px solid #E4E4E4;	
 }
 
 
@@ -66,10 +71,6 @@
 		width:			25%;
 		display:		table-cell;
 	}
-	
-	#header-strip{
-		position:		static;
-	}
 
 	#query-full, #query-info{
 		display:		table-cell;
@@ -88,8 +89,8 @@
 	}
 	
 	#logo-and-search{
-		margin-top:		1.5em;
-		margin-bottom:	1.5em;
+		padding-top:		1.5em;
+		padding-bottom:	1.5em;
 	}
 	
 }
@@ -315,18 +316,22 @@ table tr:first-child{
 
 /* Mobile Menu */
 
+#header-strip form{
+	float:		right;	/* chrome lines form left */
+}
+
 #lang-menu,
 #mobile-menu{
 	position:	relative;
 	float:		right;
 	z-index:	3;	
 }
+
 #mobile-menu{
 	font-size:	2em;
 }
-#lang-menu{
-	xxxxxxmargin-right:	1em;
-	
+
+#lang-menu{	
 	margin-right:	0 !important;
 }
 	
@@ -524,7 +529,7 @@ a.ui-state-hover {
 }
 	
 
-	
+
 
 @media only screen and ( min-width:48em ){
 
@@ -533,7 +538,11 @@ a.ui-state-hover {
 	#header-strip{
 		background-color:	#333;
 		width:				100%;
-		display:			table;
+		
+		position:			static;
+	
+		xdisplay:			table;
+		
 		font-size:			1.1em;
 		font-size:			1em;
 	}
@@ -551,7 +560,6 @@ a.ui-state-hover {
 	}
 	
 	#header-strip .white:first-child {
-		xxxxxxmargin-left:		1em;	
 		margin-left:		0;	
 	}
 	
@@ -576,14 +584,6 @@ a.ui-state-hover {
 	#query{
 		text-align:	center;
 	}
-
-	/*
-	#query h3 {
-		font-size:	180%;
-		color:		#666;
-		display:	inline;
-	}
-	*/
 }
 
 

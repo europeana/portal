@@ -1239,6 +1239,8 @@ Galleria = function() {
                 if ( thumb.ready ) {
 //thumb.css('width', '200px');
 //thumb.css('height', 'auto');
+ Galleria.log("internal w = " + thumb.outerWidth || $( thumb.container ).outerWidth( true )   );
+ 
                     w += thumb.outerWidth || $( thumb.container ).outerWidth( true );
                     hooks[ i+1 ] = w;
                     h = Math.max( h, thumb.outerHeight || $( thumb.container).outerHeight( true ) );

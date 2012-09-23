@@ -11,6 +11,7 @@
 		<script type="text/javascript">
 			var carouselData = [];
 			carouselData[0] = {
+				// "image":	"http://localhost/a4-test.jpg",
 				"image":		decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
 				"title":		('${model.objectTitle}').replace(/\"/g, '&quot;'),
 				"dataType":		"${fn:toLowerCase(model.document.edmType)}"
