@@ -8,6 +8,8 @@
 	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 
 	<div id="carousel-1" class="europeana-bordered">
+	
+	
 		<script type="text/javascript">
 			var carouselData = [];
 			carouselData[0] = {
@@ -18,13 +20,18 @@
 			};
 			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
 		</script>
+	
 		
-		<%-- hidden seo image --%>
-		<img	src			= "${model.thumbnailUrl}"
-				alt			= "${model.pageTitle}"
-				data-type	= "${fn:toLowerCase(model.document.edmType)}"
-				class		= "hidden"
-		/>
+		<%-- hidden seo images --%>
+		
+		<div id="img-h-measure">
+			<img	src			= "${model.thumbnailUrl}"
+					alt			= "${model.pageTitle}"
+					data-type	= "${fn:toLowerCase(model.document.edmType)}"
+					class		= "no-show"/>
+		</div>
+		
+		
 	</div>
 	
 	<div class="original-context">

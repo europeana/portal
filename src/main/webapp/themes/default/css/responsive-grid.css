@@ -208,6 +208,9 @@
 .hidden{
 	display:none;
 }
+.no-show{
+	visibility:hidden;
+}
 
 
 

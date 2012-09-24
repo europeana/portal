@@ -1,4 +1,17 @@
 
+/* start carousel pre-load height calculation */
+
+#img-h-measure img{
+	display:			inline-block;
+	vertical-align :	bottom; 
+}
+
+#img-h-measure{
+	white-space:		nowrap;
+}
+
+/* end carousel pre-load height calculation */
+
 
 #additional-info {
 	width:				100%;

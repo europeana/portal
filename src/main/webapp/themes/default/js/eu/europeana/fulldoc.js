@@ -19,126 +19,146 @@ eu.europeana.fulldoc = {
 			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 
 			/*	max thumb-width is 200px
-			 *	
 			 *	max height could be anything
-			 *	
-			 * */
-			var a4						= {w:210 , h:297 };
-			var maxThumbWidth			= 200;
-			var galleriaOffsetY			= 70;	// thumbnail + thumbnail margin top & bottom
-			var a4Equiv					= (  (maxThumbWidth / a4.w) * a4.h) + galleriaOffsetY; 
-   			jQuery('#carousel-1').css("height", a4Equiv);
+			 */
    			
-   			//var a4H = 283 + 70;
-   			//jQuery('#carousel-1').css("height", a4H);
    			
-   			// mock some lightbox data
-   			/*
-   			for(var i=0; i<carouselData.length; i++){
+  			$("#img-h-measure img").imagesLoaded( function(){
+  					
+  				var tallestImageH = $("#img-h-measure").height();
+
+  				var galleriaOffsetY			= 70;	// thumbnail + thumbnail margin top & bottom (is this value responsive ?)
+  				
+  				/*
+  				var a4						= {w:210 , h:297 };
+  				var maxThumbWidth			= 200;
+  				var a4Equiv					= (  (maxThumbWidth / a4.w) * a4.h) + galleriaOffsetY;
+  	   			//var a4H = 283 + 70;
+  	   			//jQuery('#carousel-1').css("height", a4H);
+  	   			jQuery('#carousel-1').css("height", a4Equiv);
+				*/
+  				jQuery('#carousel-1').css("height", tallestImageH + galleriaOffsetY);
+  				
    				
-   				carouselData[i].lightboxable = {
+   	   			// mock some lightbox data
+   				
+   				
+   	   			/*
+   	   			for(var i=0; i<carouselData.length; i++){
+   	   				
+   	   				carouselData[i].lightboxable = {
 
-   						type : 'image',
-   						url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
+   	   						type : 'image',
+   	   						url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
 
-   				};
-   			}
-   			*/
-   			// end mock
-   			
-   			Galleria.run('#carousel-1', {
-   				transition:			'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
-   				carousel:			true,
-   				carouselSpeed:		1200,				/* transition speed */
-   				carouselSteps:		1,
-   				easing:				'galleriaOut',
-   				imageCrop:			false,				/* if true, make pan true */
-   				imagePan:			false,
-   				lightbox:			true,
-   				responsive:			true,
-   				dataSource:			carouselData,
-   				thumbnails: 		carouselData.length>1,
-   				max_scale_ratio:	1,					/* prevent stretching */
-				extend: function(e){
+   	   				};
+   	   			}
+   	   			*/
+   				
+   	   			// end mock lightbox data
+   				
+   				
 
-					var doEllipsis = function(){
-						var ellipsisObjects = [];
-						jQuery('.europeana-carousel-info').each(
-							function(i, ob){
-								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-							}
-						);
-						$(window).bind('resize', function(){
-							for(var i=0; i<ellipsisObjects.length; i++ ){
-								ellipsisObjects[i].respond();
-							}
+	   			Galleria.run('#carousel-1', {
+	   				transition:			'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
+	   				carousel:			true,
+	   				carouselSpeed:		1200,				/* transition speed */
+	   				carouselSteps:		1,
+	   				easing:				'galleriaOut',
+	   				imageCrop:			false,				/* if true, make pan true */
+	   				imagePan:			false,
+	   				lightbox:			true,
+	   				responsive:			true,
+	   				dataSource:			carouselData,
+	   				thumbnails: 		carouselData.length>1,
+	   				max_scale_ratio:	1,					/* prevent stretching */
+					extend: function(e){
+	
+						var doEllipsis = function(){
+							var ellipsisObjects = [];
+							jQuery('.europeana-carousel-info').each(
+								function(i, ob){
+									ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
+								}
+							);
+							$(window).bind('resize', function(){
+								for(var i=0; i<ellipsisObjects.length; i++ ){
+									ellipsisObjects[i].respond();
+								}
+							});
+						};
+	
+						$(this).ready(function(e) {
+							setTimeout(doEllipsis, 1000);
 						});
-					};
-
-					$(this).ready(function(e) {
-						setTimeout(doEllipsis, 1000);
-					});
-					
-					
-					//$(window).resize(function(){});
-					var jsLoaded		= false;
-					var triggerPanel	= null;
-
-					var initLightbox = function(url){
-						$('#lightbox_image').one('load', function(){
-							eu.europeana.lightbox.init(url);
-							jQuery(".lb-trigger span").show();	// show the trigger now that the overlay and image have loaded
-						}); 
-						$('#lightbox_image').attr('src', url);
-					};					
-
-					
-					this.bind("image", function(e) {
 						
-						var lightboxable = this._options.dataSource[e.index].lightboxable; 
 						
-						if(lightboxable && lightboxable.url.length>0){
+						//$(window).resize(function(){});
+						var jsLoaded		= false;
+						var triggerPanel	= null;
+	
+						var initLightbox = function(url){
+							$('#lightbox_image').one('load', function(){
+								eu.europeana.lightbox.init(url);
+								jQuery(".lb-trigger span").show();	// show the trigger now that the overlay and image have loaded
+							}); 
+							$('#lightbox_image').attr('src', url);
+						};					
+	
+						
+						this.bind("image", function(e) {
 							
-							if(!triggerPanel){
-
-								triggerPanel = $('<div class="lb-trigger" >'
-										+ '<span rel="#lightbox" title="View" class="icon-mag">View</span>'
-										+ '</div>') 
-									.appendTo( this.$( 'container' ).find('.galleria-images'));
-
-								var loadJS = function(){
-
-									js.loader.loadScripts([{
-										name: 'jquery-tools',
-										file : 'jquery.tools.min.js' + js.cache_helper,
-										path : eu.europeana.vars.branding + '/js/jquery/',
-										dependencies : [ 'jquery' ]
-									}]);
+							var lightboxable = this._options.dataSource[e.index].lightboxable; 
+							
+							if(lightboxable && lightboxable.url.length>0){
+								
+								if(!triggerPanel){
+	
+									triggerPanel = $('<div class="lb-trigger" >'
+											+ '<span rel="#lightbox" title="View" class="icon-mag">View</span>'
+											+ '</div>') 
+										.appendTo( this.$( 'container' ).find('.galleria-images'));
+	
+									var loadJS = function(){
+	
+										js.loader.loadScripts([{
+											name: 'jquery-tools',
+											file : 'jquery.tools.min.js' + js.cache_helper,
+											path : eu.europeana.vars.branding + '/js/jquery/',
+											dependencies : [ 'jquery' ]
+										}]);
+											
+										js.loader.loadScripts([{
+											name : 'jwplayer',
+											file : 'jwplayer.js' + js.cache_helper,
+											path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
+										}]);
 										
-									js.loader.loadScripts([{
-										name : 'jwplayer',
-										file : 'jwplayer.js' + js.cache_helper,
-										path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
-									}]);
-									
-									js.loader.loadScripts([{
-										file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
-										path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-										dependencies : [ 'jquery-tools', 'jwplayer'],
-										callback: function(){
-											initLightbox(lightboxable.url);
-											jsLoaded = true;
-										}
-									}]);
-								};
-								loadJS();
+										js.loader.loadScripts([{
+											file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
+											path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+											dependencies : [ 'jquery-tools', 'jwplayer'],
+											callback: function(){
+												initLightbox(lightboxable.url);
+												jsLoaded = true;
+											}
+										}]);
+									};
+									loadJS();
+								}
 							}
-						}
-
-					});
-				} 
-   			});
-   				
+	
+						}); // end bind image
+						
+					} // end extend
+	   				
+	   			}); // end Galleria.run
+	   		
+	   			
+  			});	// end imagesloaded
+  			
+	   			
+		
    			
    			if(typeof carousel2Data != 'undefined'){
    	   			jQuery('#carousel-2').css("height", "200px");
@@ -179,7 +199,23 @@ eu.europeana.fulldoc = {
 		
 		jQuery('#lightbox_href').bind('click', this.handleRedirectIsShownByImgClick );
 		
-		initCarousels();
+		
+		
+
+		
+		js.loader.loadScripts([{
+			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			callback : function() {
+				initCarousels();
+			}
+		}]);
+		
+
+		
+		
+		
+		
 
 	},
 
