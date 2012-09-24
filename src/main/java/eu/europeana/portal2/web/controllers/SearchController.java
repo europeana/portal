@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import eu.europeana.corelib.db.entity.nosql.Image;
+import eu.europeana.corelib.db.entity.nosql.ImageCache;
 import eu.europeana.corelib.db.service.ThumbnailService;
+import eu.europeana.corelib.definitions.model.ThumbSize;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -84,6 +87,13 @@ public class SearchController {
 		localeChangeInterceptor.preHandle(request, response, this);
 
 		log.info("============== START SEARCHING ==============");
+		String baseUrl = String.format("%s://%s:%d/tasks/",request.getScheme(),  request.getServerName(), request.getServerPort());
+		log.info("-- baseUrl = " + baseUrl);
+		log.info("-- getLocalAddr = " + request.getLocalAddr());
+		log.info("-- getLocalName = " + request.getLocalName());
+		log.info("-- getLocalAddr = " + request.getLocalAddr());
+		log.info("-- pathinfo = " + request.getPathInfo());
+		log.info("-- PathTranslated = " + request.getPathTranslated());
 
 		Map<String, String[]> params = request.getParameterMap();
 
@@ -129,6 +139,18 @@ public class SearchController {
 		BriefBeanView briefBeanView = null;
 		try {
 			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, request.getQueryString());
+			/*
+			 * see ThumbnailServiceTest, MongoImageViewServlet
+			for (BriefBean bean : briefBeanView.getBriefDocs()) {
+				for (String url : bean.getEdmObject()) {
+					ImageCache cache = thumbnailService.findByOriginalUrl(url);
+					Image image = cache.getImages().get(ThumbSize.TINY.toString());
+					image.getHeight();
+					image.getWidth();
+					image.getImage();
+				}
+			}
+			*/
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
