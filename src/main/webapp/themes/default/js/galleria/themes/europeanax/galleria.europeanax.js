@@ -50,7 +50,7 @@ Galleria.addTheme({
 		
 		var rerunOnResize = function(){
 			thisGallery._run();
-			/*
+			
 	        $(thisGallery._thumbnails).each(function( i, thumb ) {
 	        	if(thumb.ready){
 		    		thisGallery.trigger({
@@ -61,7 +61,7 @@ Galleria.addTheme({
 		    		});
 	        	}
 	        });	
-	        */
+	        
 		};
 		
 		
@@ -263,20 +263,9 @@ Galleria.addTheme({
     		
     		
     		
-    		
-    		
-    		thisGallery.$( 'container' ).find(".galleria-stage").find(".galleria-images img").each(function(i, ob){
-
-    			ob = $(ob);
-    			alert( " ob = " + ob.attr("width") + ", " + $(ob).width() ); 
-    			
-    		});
-
-    		
+    		var thumbsC		= thisGallery.$( 'container' ).find('.galleria-thumbnails-container'); 
     		
     		if(dataSource.length == 1){
-    			
-        		var thumbsC		= thisGallery.$( 'container' ).find('.galleria-thumbnails-container'); 
             	
        			/* we're showing a single image */
 				
@@ -303,50 +292,60 @@ Galleria.addTheme({
     		}
     		
     		
-  
-    		
-    		// resize function for bordered mode
+
+    		// resize function for bordered mode (full-doc page)
     		
        		$(window).resize( function() {
-    
-       			if(eu.europeana.vars.suppresResize){
+       			
+   			Galleria.log("START OVER! " + Galleria.get().length );
+   			//thisGallery.$('container').remove();
+			
+			if(eu.europeana.vars.suppresResize){
        				Galleria.log("suppress resize!");
        				return;
-       			}
+       		}
 
-       			thisGallery.$(	'container' ).parent().css("height", 1.1 * parseInt(thisGallery.$( 'container' ).css("height")) + "px");
        			
+       			var container = thisGallery.$('container');
+       			var thumbnailsHeightPhone		= 100;
+       			var thumbnailsHeightDesktop		= 50;
+       			var thumbnailsHeight			= parseInt(thumbsC.css("height"));
+       			
+       			var carouselHeight	= parseInt(container.parent().css("height"));
+       			var carouselHeightAdd	= 0;
+       			var stage = container.find('.galleria-stage'); 
+       			
+       			var stageBottom = parseInt(stage.css("bottom"));
+       			var stageBottomPhone = 110;
+       			var stageBottomDesktop = 60;
+       			
+       			container.parent().css("height", eu.europeana.fulldoc.getCarouselHeight());
 
-       			thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
-
-       				var imgShows = false;
-       				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
-   						if($(ob).is(':visible') && $(ob).css("opacity") == "1" ){
-       						imgShows = true;
-       					}
-       				});
-       				if(!imgShows){
-           				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");
-       				}
+       			if( window.showingPhone() ){
        				
+           			stage.css("bottom", stageBottomPhone + "px");
+           			
+       			}
+       			else{
+       				stage.css("bottom", stageBottomDesktop + "px");     				
+           			
+       			}
+       			thisGallery._createThumbnails();
+       			
+       			stage.find('.galleria-image').each(function(i, ob){
+       				$(ob).css('top', '0px');
        			});
-    			rerunOnResize();
-    			
-    			
-       			/*
-       			// common with landing page carousel
-    			thisGallery._run();
-    	        $(thisGallery._thumbnails).each(function( i, thumb ) {
-    	        	if(thumb.ready){
-    		    		thisGallery.trigger({
-    		    			type: Galleria.THUMBNAIL,
-    		                      thumbTarget: thumb.image,
-    		                      index: i,
-    		                      galleriaData: dataSource
-    		    		});
-    	        	}
-    	        });
-    	        */
+       		
+       			jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");
+
+       			thisGallery.load(dataSource);
+    			thisGallery.refreshImage();
+       			//Galleria.remove(thisGallery);
+       			//eu.europeana.fulldoc.runCarousel();
+      return;
+
+       			return;
+     
     	        
     			
        		});
@@ -822,8 +821,8 @@ Galleria.addTheme({
 		//thumbOb.outerWidth = imgBoxW+2;
 
 		
-	tParent.find('.europeana-carousel-info').css('font-size', '0.7em');
-	tParent.find('.europeana-carousel-info').html('imgBoxW ' + imgBoxW + ", set: " + thumbOb.outerWidth);
+	//tParent.find('.europeana-carousel-info').css('font-size', '0.7em');
+	//tParent.find('.europeana-carousel-info').html('imgBoxW ' + imgBoxW + ", set: " + thumbOb.outerWidth);
 		
 		
 

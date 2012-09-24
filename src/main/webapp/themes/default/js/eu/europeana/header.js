@@ -20,7 +20,7 @@ eu.europeana.header = {
 			jQuery(this).parent().submit();
 		});
 		*/
-		
+		this.initResponsiveUtility();
 		this.initResponsiveLogo();
 		
 		this.addQueryFocus();
@@ -45,6 +45,10 @@ eu.europeana.header = {
 		jQuery('.jump-to-page').bind('submit', this.jumpToPageSubmit );
 		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
+	},
+
+	initResponsiveUtility : function(){
+		window.showingPhone = function(){ return  $("#mobile-menu").is(":visible"); };
 	},
 	
 	initResponsiveLogo : function(){
