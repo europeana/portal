@@ -86,10 +86,23 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 
 	@Override
 	public void logBriefResultView(HttpServletRequest request, BriefBeanView briefBeanView, Query solrQuery, ModelAndView page) {
-		String query = (briefBeanView.getPagination() == null) ? null : briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery();
+		// initial values
+		int pageNr = 1;
+		int nrResults = 0;
+		String languageFacets = null;
+		String countryFacet = null;
+		String query = "";
 		String queryConstraints = "";
-		if (solrQuery.getRefinements() != null) {
-			queryConstraints = StringUtils.join(solrQuery.getRefinements(), ",");
+
+		if (briefBeanView != null) {
+			pageNr = briefBeanView.getPagination().getPageNumber();
+			nrResults = briefBeanView.getPagination().getNumFound();
+			languageFacets = briefBeanView.getFacetLogs().get("LANGUAGE");
+			countryFacet = briefBeanView.getFacetLogs().get("COUNTRY");
+			query = (briefBeanView.getPagination() == null) ? null : briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery();
+			if (solrQuery.getRefinements() != null) {
+				queryConstraints = StringUtils.join(solrQuery.getRefinements(), ",");
+			}
 		}
 		// String pageId;
 		// private String state;
@@ -105,10 +118,6 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 				&& request.getParameter("rtr").equalsIgnoreCase("true")) {
 			userAction = UserAction.RETURN_TO_RESULTS;
 		}
-		int pageNr = briefBeanView.getPagination().getPageNumber();
-		int nrResults = briefBeanView.getPagination().getNumFound();
-		String languageFacets = briefBeanView.getFacetLogs().get("LANGUAGE");
-		String countryFacet = briefBeanView.getFacetLogs().get("COUNTRY");
 		log.info(MessageFormat.format(
 			"[action={0}, view={1}, query={2}, queryType={7}, queryConstraints=\"{3}\", page={4}, numFound={5}, langFacet={8}, countryFacet={9}, {6}]",
 			userAction, page.getViewName(), query, queryConstraints, pageNr, nrResults,
