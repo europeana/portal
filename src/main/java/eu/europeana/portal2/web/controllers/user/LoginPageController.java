@@ -56,8 +56,7 @@ public class LoginPageController {
 		log.info("buttonPressed: " + buttonPressed);
 
 		if (email != null) {
-			String registerUri = request.getRequestURL().toString();
-			int lastSlash = registerUri.lastIndexOf("/");
+			String registerUri = config.getPortalServer() + "/" + config.getPortalName(); //request.getRequestURL().toString();
 
 			// Register
 			// TODO this value is internationalized in the template
@@ -68,10 +67,10 @@ public class LoginPageController {
 					model.setFailureExists(true);
 				} else {
 					Token token = tokenService.create(email);
-					registerUri = registerUri.substring(0, lastSlash + 1) + "register.html";
+					registerUri = registerUri + "/register.html";
 					log.info("token: " + token);
+					log.info("registerUri: " + registerUri);
 					emailService.sendToken(token, registerUri);
-					// tokenReplyEmailSender.sendEmail(email, registerUri, "register");
 					model.setSuccess(true);
 				}
 			}
@@ -83,7 +82,7 @@ public class LoginPageController {
 				} else if (!emailExists(email)) {
 					model.setFailureForgotDoesntExist(true);
 				} else {
-					registerUri = registerUri.substring(0, lastSlash + 1) + "change-password.html";
+					registerUri = registerUri + "/change-password.html";
 					log.info("registerUri: " + registerUri);
 					// tokenReplyEmailSender.sendEmail(email, registerUri, "forgotPassword");
 					model.setForgotSuccess(true);

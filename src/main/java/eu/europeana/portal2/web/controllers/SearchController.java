@@ -1,7 +1,5 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -12,17 +10,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import eu.europeana.corelib.db.entity.nosql.Image;
-import eu.europeana.corelib.db.entity.nosql.ImageCache;
-import eu.europeana.corelib.db.service.ThumbnailService;
-import eu.europeana.corelib.definitions.model.ThumbSize;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -39,8 +32,6 @@ import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
 public class SearchController {
-
-	@Resource private ThumbnailService thumbnailService;
 
 	@Resource private SearchService searchService;
 	
@@ -90,28 +81,6 @@ public class SearchController {
 		localeChangeInterceptor.preHandle(request, response, this);
 
 		log.info("============== START SEARCHING ==============");
-		String hostAddress = null;
-		try {
-			hostAddress = InetAddress.getLocalHost().getHostAddress();
-			if (StringUtils.isBlank(hostAddress)) {
-				hostAddress = request.getServerName() + ':' + request.getServerPort();
-			}
-			log.info("-- getHostName = " + InetAddress.getLocalHost().getHostName());
-		} catch (UnknownHostException e1) {
-			e1.printStackTrace();
-		}
-		String baseUrl = String.format("%s://%s/",request.getScheme(), hostAddress);
-		log.info("-- baseUrl = " + baseUrl);
-		log.info("-- getServerName = " + request.getServerName());
-		log.info("-- getLocalName = " + request.getLocalName());
-		log.info("-- getLocalAddr = " + request.getLocalAddr());
-		log.info("-- pathinfo = " + request.getPathInfo());
-		log.info("-- PathTranslated = " + request.getPathTranslated());
-		log.info("-- getRequestURL = " + request.getRequestURL().toString());
-		log.info("-- getContextPath = " + request.getContextPath());
-		log.info("-- getServletPath = " + request.getServletPath());
-		log.info("-- referer = " + request.getHeader("referer"));
-
 		Map<String, String[]> params = request.getParameterMap();
 
 		SearchPage model = new SearchPage();
@@ -156,18 +125,6 @@ public class SearchController {
 		BriefBeanView briefBeanView = null;
 		try {
 			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, request.getQueryString());
-			/*
-			 * see ThumbnailServiceTest, MongoImageViewServlet
-			for (BriefBean bean : briefBeanView.getBriefDocs()) {
-				for (String url : bean.getEdmObject()) {
-					ImageCache cache = thumbnailService.findByOriginalUrl(url);
-					Image image = cache.getImages().get(ThumbSize.TINY.toString());
-					image.getHeight();
-					image.getWidth();
-					image.getImage();
-				}
-			}
-			*/
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
