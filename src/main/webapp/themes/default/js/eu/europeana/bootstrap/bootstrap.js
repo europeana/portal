@@ -49,7 +49,7 @@ var europeana_bootstrap = function(){
 	
 	// array of scripts needed for all pages
 	var scripts = [
-//	  {								file : 'jquery-1.4.4.min.js',													path : eu.europeana.vars.branding + '/js/jquery/'	},
+//	  {								file : 'jquery-1.4.4.min.js',	// keep in case map / timeline have 1.4 dependency												path : eu.europeana.vars.branding + '/js/jquery/'	},
 	  {	name  : 'jquery',			file : 'jquery-1.8.1.min.js',													path : eu.europeana.vars.branding + '/js/jquery/'	},
 	  { 							file : 'jquery-ui-1.8.2.custom.min.js',											path : eu.europeana.vars.branding + '/js/jquery/',															dependencies : [ 'jquery' ]	},
 	  {	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui-1.8.2.custom.min.js' ]	},
@@ -92,14 +92,6 @@ var europeana_bootstrap = function(){
 	  
 	  
    	];
-
-	
-	// functionality common to fulldoc, index and search 
-	var common = function(){
-		return {
-			
-		};
-	}();
 
 	if(eu.europeana.vars.page_name == 'contact.html'){
 		scripts.push({
@@ -150,9 +142,6 @@ var europeana_bootstrap = function(){
 
 		loadScripts(scripts);
 
-		return{
-			"common":common
-		};
 	}
 	else if(eu.europeana.vars.page_name == 'index.html'){
 		
@@ -186,11 +175,6 @@ var europeana_bootstrap = function(){
 				}
 			};
 		}();
-		
-		return{
-			"common":common,
-			"index":index
-		};
 
 	}	
 	else if(eu.europeana.vars.page_name == 'login.html'){
@@ -265,17 +249,6 @@ var europeana_bootstrap = function(){
 		});
 
 		loadScripts(scripts);
-
-		var search = function(){
-			return {
-				
-			};
-		}();
-		
-		return{
-			"common":common,
-			"search":search
-		};
 	}
 	else if(eu.europeana.vars.page_name == 'staticpage.html'){
 		scripts.push({
@@ -298,19 +271,6 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'utils' ]
 		});
 	}	
-	
-	
-
-	// expose functions
-	//alert("shouldn't see this if on index, search or fulldoc....");
-	return{
-		/*
-		"fulldoc":fulldoc,
-		"index":index,
-		"search":search,
-		"common":common
-		*/
-	};
 }();
 
 // end conditional load object
