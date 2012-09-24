@@ -256,7 +256,7 @@
 @media only screen and ( min-width:	48em ){
 
 	.three-cols-fulldoc-sidebar{
-		width:		25%;
+		width:		1px;
 		display:	table-cell;	
 	}
 	
