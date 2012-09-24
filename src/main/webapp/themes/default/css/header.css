@@ -4,6 +4,11 @@
 	background-color:	transparent;
 	position:			absolute;
 	right:				20px;		/* pixel value to cancel out responsive container's padding */
+	
+	/*
+	width:50%;
+	display:block;
+	*/
 }
 
 #header-strip>div{
@@ -30,6 +35,11 @@
 	border-bottom:	1px solid #E4E4E4;	
 }
 
+/*
+#logo-and-search h1 a{
+	z-index:	4;
+}
+*/
 
 #query-full{
 	display:		block;
