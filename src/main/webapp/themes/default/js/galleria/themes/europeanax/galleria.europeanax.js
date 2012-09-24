@@ -812,9 +812,7 @@ Galleria.addTheme({
 		 *  
 		 *  */
 
-		// the fix that failed on chrome zoom:
 		thumbOb.outerWidth = tParent.outerWidth(true);
-
 		
 		
 		//var offset = 0;// 2;		
@@ -828,7 +826,6 @@ Galleria.addTheme({
 	tParent.find('.europeana-carousel-info').html('imgBoxW ' + imgBoxW + ", set: " + thumbOb.outerWidth);
 		
 		
-//		thumbOb.outerWidth = tParent.outerWidth(true);
 
 		/* Vertical centering of individual images */
 		if(imgBoxH > thumb.height()){
@@ -869,11 +866,16 @@ Galleria.addTheme({
     	containerWidth = parseInt( thisGallery.$( 'container' ).parent().css("width") );
 		var thumbnailsList = thisGallery.$( 'container' ).find('.galleria-thumbnails-list');		
 		var reduce = 0;
+		/*
 		reduce += parseInt(thumbnailsList.css('margin-left'));
 		reduce += parseInt(thumbnailsList.css('marginRight'));
 		reduce += parseInt(thumbnailsList.parent().css('right'));
 		reduce += parseInt(thumbnailsList.parent().css('left'));
+		*/
 		reduce = 80; /* hard coded: 30+30+10+10, the margins and the left values of containers.... */
+		reduce = 20; /* hard coded: 10+10, the margins and the left values of containers.... */
+		reduce = 0;
+		reduce = -18;	/* cancel 1st and last galleria-image side margins */
 		
 		var containerWidth_R = containerWidth-reduce;
 		

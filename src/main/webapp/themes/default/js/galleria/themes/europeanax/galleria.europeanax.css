@@ -66,8 +66,6 @@
 
 .europeana-bordered .galleria-stage .galleria-image {
 	
-	
-	
 }
 
 
@@ -79,6 +77,12 @@
     right:		10px;
     z-index:	2;
 }
+
+.europeana-carousel .galleria-thumbnails-container {
+    left:		0px;
+    right:		0px;
+}
+
 
 @media only screen and ( min-width:767px ){
 	.galleria-thumbnails-container {
@@ -131,11 +135,25 @@
 	margin:			0 0 7px;
 	color:			white;
 }
-	
+
+
+
+
 .galleria-carousel .galleria-thumbnails-list {
-    margin-left: 30px;
-    margin-right: 30px;
+	
+    xxxmargin-left: 30px;
+    xxxmargin-right: 30px;
+    
+    margin-left:	0px;
+    margin-right:	0px;
+
+
+    margin-left:	-9px;
+    margin-right:	-9px;        
 }
+
+
+
 
 .galleria-thumbnails .galleria-image {
     height:		80px;
@@ -177,6 +195,8 @@
 	box-sizing:			border-box;
 	*/
 }
+
+	
 
 .galleria-thumbnails{	/* centre the film strip in the default gallery */
 	margin:	auto;
