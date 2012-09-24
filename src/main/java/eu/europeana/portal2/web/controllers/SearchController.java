@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,20 +90,25 @@ public class SearchController {
 		localeChangeInterceptor.preHandle(request, response, this);
 
 		log.info("============== START SEARCHING ==============");
-		String baseUrl = String.format("%s://%s:%d/tasks/",request.getScheme(),  request.getServerName(), request.getServerPort());
+		String hostAddress = null;
+		try {
+			hostAddress = InetAddress.getLocalHost().getHostAddress();
+			if (StringUtils.isBlank(hostAddress)) {
+				hostAddress = request.getServerName() + ':' + request.getServerPort();
+			}
+			log.info("-- getHostName = " + InetAddress.getLocalHost().getHostName());
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
+		String baseUrl = String.format("%s://%s/",request.getScheme(), hostAddress);
 		log.info("-- baseUrl = " + baseUrl);
-		log.info("-- getLocalAddr = " + request.getLocalAddr());
+		log.info("-- getServerName = " + request.getServerName());
 		log.info("-- getLocalName = " + request.getLocalName());
 		log.info("-- getLocalAddr = " + request.getLocalAddr());
 		log.info("-- pathinfo = " + request.getPathInfo());
 		log.info("-- PathTranslated = " + request.getPathTranslated());
 		log.info("-- getRequestURL = " + request.getRequestURL().toString());
-		try {
-			log.info("-- getHostAddress = " + InetAddress.getLocalHost().getHostAddress());
-			log.info("-- getHostName = " + InetAddress.getLocalHost().getHostName());
-		} catch (UnknownHostException e1) {
-			e1.printStackTrace();
-		}
+		log.info("-- getContextPath = " + request.getContextPath());
 
 		Map<String, String[]> params = request.getParameterMap();
 
