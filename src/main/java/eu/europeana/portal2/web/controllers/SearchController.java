@@ -1,5 +1,7 @@
 package eu.europeana.portal2.web.controllers;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -94,6 +96,13 @@ public class SearchController {
 		log.info("-- getLocalAddr = " + request.getLocalAddr());
 		log.info("-- pathinfo = " + request.getPathInfo());
 		log.info("-- PathTranslated = " + request.getPathTranslated());
+		log.info("-- getRequestURL = " + request.getRequestURL().toString());
+		try {
+			log.info("-- getHostAddress = " + InetAddress.getLocalHost().getHostAddress());
+			log.info("-- getHostName = " + InetAddress.getLocalHost().getHostName());
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
 
 		Map<String, String[]> params = request.getParameterMap();
 
