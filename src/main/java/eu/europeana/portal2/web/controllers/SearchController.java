@@ -109,6 +109,8 @@ public class SearchController {
 		log.info("-- PathTranslated = " + request.getPathTranslated());
 		log.info("-- getRequestURL = " + request.getRequestURL().toString());
 		log.info("-- getContextPath = " + request.getContextPath());
+		log.info("-- getServletPath = " + request.getServletPath());
+		log.info("-- referer = " + request.getHeader("referer"));
 
 		Map<String, String[]> params = request.getParameterMap();
 
