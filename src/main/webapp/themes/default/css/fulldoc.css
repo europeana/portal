@@ -18,7 +18,6 @@
 	position:			relative;
 	padding:			0;
 	
-	
 	padding-left:		1em;
 	padding-right:		1em;
 	
@@ -28,25 +27,17 @@
 }
 
 
-#similar-content{			/* Andy: negative percentages to correspond to galleria stage / container padding and margins: to make exact use percentages in galleria css */
-	/*
-	width:			108%;
-	margin-left:	-4%;
-	margin-right:	-4%;
-	*/
+#similar-content{
 	width:			100%;
-	
 }
 
 
 #carousel-1{	
-	max-width:	220px;		/* max thumbanil size plus galleria stage offset (2 * 10) */
-	width:		220px;
-	min-with:	220px;
-	
+	max-width:			220px;		/* max thumbanil size plus galleria stage offset (2 * 10) */
+	width:				220px;
+	min-with:			220px;
 	background-color:	#d0d0d0;
-	
-	margin:		auto;
+	margin:				auto;
 }
 
 
