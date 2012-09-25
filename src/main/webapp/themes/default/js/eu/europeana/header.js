@@ -21,7 +21,7 @@ eu.europeana.header = {
 		});
 		*/
 		this.initResponsiveUtility();
-		this.initResponsiveLogo();
+		//this.initResponsiveLogo();
 		
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
@@ -50,7 +50,7 @@ eu.europeana.header = {
 	initResponsiveUtility : function(){
 		window.showingPhone = function(){ return  $("#mobile-menu").is(":visible"); };
 	},
-	
+	/*
 	initResponsiveLogo : function(){
 		var setup = function(){
 			var initialSuffix = '-1.'; // smallest by default
@@ -71,7 +71,7 @@ eu.europeana.header = {
 		};
 		setup();
 	},
-	
+	*/
 	setCookie: function(val){
 		document.cookie = "europeana_rows=" + val;
 	},
