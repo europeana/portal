@@ -66,7 +66,7 @@
 			<c:forEach items="${model.citeStyles}" var="citeStyle">
 				<div class="header">
 					<div class="heading"><spring:message code="Cite_Header_t" />
-						<a href="" class="close-button" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
+						<a href="" class="close-button icon-remove" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
 					</div>
 				</div>
 			
