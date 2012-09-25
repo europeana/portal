@@ -24,12 +24,12 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
 
 
-<div class="row" style="position:relative;">
+<div class="row carousel-row">
 
 	<c:if test='${!empty model.carouselItems}'>
 	
 	    <script type="text/javascript">
-	            var carouselData = [];   
+	        var carouselData = [];   
 	
 			<c:forEach var="item" items="${model.carouselItems}">
 			
@@ -49,8 +49,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			
 		</script>
 		
-		
-		<div class="six columns">
+		<div class="carousel-wrap">
 
 			<div class="carousel-spacer">
 			
@@ -72,8 +71,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			
 		</div>
 		
-		
-		<div class="six columns hide-on-phones">
+		<div class="hide-cell-on-phones">
 		
 			<div class="blurb-spacer">
 		
@@ -92,20 +90,19 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				</p>
 				
 			</div>
+
+			<div class="social-shares">
+				<span class="label">Share with your friends:</span>
+				<span aria-hidden="true" class="icon-facebook"></span>
+				<span aria-hidden="true" class="icon-twitter"></span>
+				<span aria-hidden="true" class="icon-pinterest-2"></span>
+				<span aria-hidden="true" class="icon-mail"></span>
+				<span aria-hidden="true" class="icon-share"></span>
+			</div>
 				
 		</div>
-
-
 		
 	</c:if>	
 
-		<div class="social-shares">
-			<span class="label">Share with your friends:</span>
-			<span aria-hidden="true" class="icon-facebook"></span>
-			<span aria-hidden="true" class="icon-twitter"></span>
-			<span aria-hidden="true" class="icon-pinterest-2"></span>
-			<span aria-hidden="true" class="icon-mail"></span>
-			<span aria-hidden="true" class="icon-share"></span>
-		</div>
 </div>
 
