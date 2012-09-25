@@ -37,16 +37,24 @@ Galleria.addTheme({
     	var europeana = thisGallery._options.europeana;
     	
     	
-    	var info		= thisGallery.$( 'container' ).find(".galleria-info");
-		var navLeft		= thisGallery.$( 'container' ).find(".galleria-image-nav-left");
-		var navRight	= thisGallery.$( 'container' ).find(".galleria-image-nav-right");
-		var thumbs		= thisGallery.$( 'container' ).find('.galleria-thumbnails'); 
-		var stage		= thisGallery.$( 'container' ).find(".galleria-stage");
+    	var info			= thisGallery.$( 'container' ).find(".galleria-info");
+		var navLeft			= thisGallery.$( 'container' ).find(".galleria-image-nav-left");
+		var navRight		= thisGallery.$( 'container' ).find(".galleria-image-nav-right");
+		var thumbs			= thisGallery.$( 'container' ).find('.galleria-thumbnails'); 
+		var stage			= thisGallery.$( 'container' ).find(".galleria-stage");
+		var thumbNavLeft	= thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
+		var thumbNavRight	= thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
+		
 
 		
 		/* custom styling of nav arrows */
 		navLeft	.addClass("icon-arrow-4");
 		navRight.addClass("icon-arrow-2");
+		
+		/* custom styling of nav arrows */
+		thumbNavLeft.addClass("icon-arrow-4");
+		thumbNavRight.addClass("icon-arrow-2");
+
 		
 		var rerunOnResize = function(){
 			thisGallery._run();
@@ -94,12 +102,12 @@ Galleria.addTheme({
         		europeana.thumbRatios[i] = null;
         	}
         	
-			var thumbNavLeft =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
-			var thumbNavRight =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
+			//var thumbNavLeft =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
+			//var thumbNavRight =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
 			
 			/* custom styling of nav arrows */
-			thumbNavLeft.addClass("icon-arrow-4");
-			thumbNavRight.addClass("icon-arrow-2");
+			//thumbNavLeft.addClass("icon-arrow-4");
+			//thumbNavRight.addClass("icon-arrow-2");
 			
 			
 			europeana.setActive = function(index){
@@ -263,7 +271,9 @@ Galleria.addTheme({
     		
     		
     		
-    		var thumbsC		= thisGallery.$( 'container' ).find('.galleria-thumbnails-container'); 
+    		var thumbsC			= thisGallery.$( 'container' ).find('.galleria-thumbnails-container'); 
+			//var thumbNavLeft	=	thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
+			//var thumbNavRight	=	thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
     		
     		if(dataSource.length == 1){
             	
@@ -276,10 +286,6 @@ Galleria.addTheme({
 				stage.css("bottom", parseInt(stage.css("bottom"))	- extraHeight + "px");
 
 				// hide navigation
-				
-				var thumbNavLeft =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
-				var thumbNavRight =	thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
-
 				thumbNavLeft.css	("display", "none");
 				thumbNavRight.css	("display", "none");
 				navLeft.css			("display", "none");
@@ -292,112 +298,74 @@ Galleria.addTheme({
     		}
     		
     		
+/* TO FINISH / TEST */
+    		
+//thumbNavLeft.addClass("icon-arrow-4");
+//thumbNavRight.addClass("icon-arrow-2");
+
+
+
 
     		// resize function for bordered mode (full-doc page)
     		
        		$(window).resize( function() {
        			
-   			Galleria.log("START OVER! " + Galleria.get().length );
-   			//thisGallery.$('container').remove();
-			
-			if(eu.europeana.vars.suppresResize){
-       				Galleria.log("suppress resize!");
-       				return;
-       		}
+				if(eu.europeana.vars.suppresResize){
+	       				Galleria.log("suppress resize!");
+	       				return;
+	       		}
+	
+	   			var container			= thisGallery.$('container');
+	   			var stage				= container.find('.galleria-stage');
+	   			
+	   			var stageBottomPhone	= 110;	/* linked to css values */
+	   			var stageBottomDesktop	= 60;
+	   			
+	   			container.parent().css	("height", eu.europeana.fulldoc.getCarouselHeight() + "px");	// resize container to make space for bigger thumbs
+	   			container.css			("height", eu.europeana.fulldoc.getCarouselHeight() + "px");
+	
+	   			if( window.showingPhone() ){
+	       			stage.css("bottom", stageBottomPhone + "px");
+	   			}
+	   			else{
+	   				stage.css("bottom", stageBottomDesktop + "px");     	
+	   			}
+	
+	       		// vanishing image fix
+        		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {	
+       				var imgShows = false;
+       				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
+       					
+       					$(ob).find("img").css("top", ( ($(ob).height() - $(ob).find("img").height()) /2 ) + "px");	// vertical alignment fix
+       					
+   						if($(ob).is(':visible') && $(ob).css("opacity") == "1" ){
+       						imgShows = true;
+       					}
+       				});
+       				if(!imgShows){
+           				thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");       					
+       				}
+        		});
 
-       			
-       			var container = thisGallery.$('container');
-       			var thumbnailsHeightPhone		= 100;
-       			var thumbnailsHeightDesktop		= 50;
-       			var thumbnailsHeight			= parseInt(thumbsC.css("height"));
-       			
-       			var carouselHeight	= parseInt(container.parent().css("height"));
-       			var carouselHeightAdd	= 0;
-       			var stage = container.find('.galleria-stage'); 
-       			
-       			var stageBottom = parseInt(stage.css("bottom"));
-       			var stageBottomPhone = 110;
-       			var stageBottomDesktop = 60;
-       			
-       			container.parent().css("height", eu.europeana.fulldoc.getCarouselHeight());
-
-       			if( window.showingPhone() ){
-       				
-           			stage.css("bottom", stageBottomPhone + "px");
-           			
-       			}
-       			else{
-       				stage.css("bottom", stageBottomDesktop + "px");     				
-           			
-       			}
-       			thisGallery._createThumbnails();
-       			
-       			stage.find('.galleria-image').each(function(i, ob){
-       				$(ob).css('top', '0px');
-       			});
-       		
-       			jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");
-
-       			thisGallery.load(dataSource);
-    			thisGallery.refreshImage();
-       			//Galleria.remove(thisGallery);
-       			//eu.europeana.fulldoc.runCarousel();
-      return;
-
-       			return;
-     
-    	        
-    			
+	       		thisGallery.load(dataSource);		// reload needed as rerun / doing nothing shrinks the images
+	   			thisGallery._createThumbnails();	// thumbs need updated too
+	    		//thisGallery.refreshImage();
        		});
     	}
     	else{
+    		
     		/* non-carousel non-bordered (index page) */
 			thisGallery._options.responsive = false;
-			//thisGallery._options.responsive = true;
 
 			var title		= thisGallery.$( 'container' ).find(".galleria-info-title");
 			var thumbs		= thisGallery.$( 'container' ).find(".galleria-thumbnails-container");
-
-			/* add ctrls */
-			/*
-			var ctrls		= $('<div class="img-ctrls"></div>').appendTo(info);
-			var ctrlLB		= $('<span class="icon-scaleup"></span>').appendTo(ctrls);
-			var ctrlPlay	= $('<span class="icon-play"></span>').appendTo(ctrls);
-			var ctrlPause	= $('<span class="icon-pause"></span>').appendTo(ctrls);
-
-    		thisGallery.bind("image", function(e) {
-    			dataSource[e.index].lb ? ctrlLB.show() : ctrlLB.hide();
-    		});
-
-			
-			ctrlLB.click(function(){
-				alert( dataSource[thisGallery.getIndex()].lb   );
-				thisGallery.openLightbox();
-			});
-			ctrlPlay.click(function(){
-				thisGallery.next();
-				thisGallery.play();
-				ctrlPlay.addClass("active");
-				navLeft.css("display", "none");
-				navRight.css("display", "none");
-			});
-			ctrlPause.click(function(){     					
-				thisGallery.pause();
-				ctrlPlay.removeClass("active");
-				navLeft.css("display", "block");
-				navRight.css("display", "block");
-			});
-			
-			*/
 			
     		if(dataSource.length > 1){ // will always be the case on index page for this type of galleria
     			stage.after(info);
     			info.append(title);
-    			
-    			/* Layout non-carousel (single image mode) */
-    			
-    			var layoutSingle = function(){
 
+     			
+        		thisGallery.bind("loadfinish", function(e) {
         			/* stretch images and pull to top */
         			var imagesC	= stage.find(".galleria-images");
         			var images	= stage.find(".galleria-image img");
@@ -421,11 +389,8 @@ Galleria.addTheme({
         			);
         			info	.css("top", infoTop - info.height() + "px");
            			thumbs	.css("top", (infoTop + 3) + "px");
-    			};
-    			//  controls
-    			
-        		thisGallery.bind("loadfinish", function(e) {
-        			layoutSingle();	
+           			
+           			
         			navLeft.css("left", "0px");
         			navRight.css("right", "0px");
          		 });
@@ -842,14 +807,16 @@ Galleria.addTheme({
 
 			/* And since we have access to the dom, fix the navigation icons */
 			
-			var navRight	= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-right");
-			var navLeft		= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-left");
+//			var navRight	= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-right");
+	//		var navLeft		= tParent.closest(".galleria-carousel").find(".galleria-thumb-nav-left");
 			
 			//navRight.css	("top", (containerHeight - 124)/2 + "px");
 			//navLeft.css		("top", (containerHeight - 124)/2 + "px");    	
 
-			navRight.css	("top", (containerHeight - parseInt(navRight.height())	)/2 + "px");
-			navLeft.css		("top", (containerHeight - parseInt(navLeft.height())	)/2 + "px");    	
+			thumbNavLeft.css	("top", (containerHeight - parseInt(thumbNavLeft.height())	)/2 + "px");
+			thumbNavRight.css	("top", (containerHeight - parseInt(thumbNavRight.height())	)/2 + "px");
+			//navRight.css	("top", (containerHeight - parseInt(navRight.height())	)/2 + "px");
+			//navLeft.css		("top", (containerHeight - parseInt(navLeft.height())	)/2 + "px");    	
 
 			completedCallBackCount = 0;
 		}

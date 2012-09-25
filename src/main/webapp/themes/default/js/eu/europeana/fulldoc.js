@@ -16,14 +16,8 @@ eu.europeana.fulldoc = {
 		var initCarousels = function(){
 
 
-			//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 
-			/*	max thumb-width is 200px
-			 *	max height could be anything
-			 */
-   			
-   			
   			$("#img-h-measure img").imagesLoaded( function(){
   					
   				eu.europeana.fulldoc.getCarouselHeight = function(){
@@ -35,144 +29,163 @@ eu.europeana.fulldoc = {
   	  					galleriaOffsetY	= 120;	
   	  				}
   	  				
-  	  				console.log("return " + (tallestImageH + galleriaOffsetY) + "px");
+  	  				console.log("eu.europeana.fulldoc.getCarouselHeight returns " + (tallestImageH + galleriaOffsetY) + "px");
   	  				
   	  				return tallestImageH + galleriaOffsetY;
   				};
-  				
-  				
- // 				jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");
-
-  				
+  				  				
    	   			// mock some lightbox data
    	   			/*
    	   			for(var i=0; i<carouselData.length; i++){
    	   				
-   	   				carouselData[i].lightboxable = {
-
-   	   						type : 'image',
-   	   						url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
-
-   	   				};
+   	   				if(i%2==0){
+   	   					carouselData[i].lightboxable = {
+   	   							type : 'image',
+   	   							url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
+   	   					};   	   					
+   	   				}
+   	   				
    	   			}
    	   			*/
    	   			// end mock lightbox data
 
-  				eu.europeana.fulldoc.runCarousel = function(thisGallery){
 
-  					Galleria.log("carouselData length  " + carouselData.length);
+				Galleria.log("carouselData length  " + carouselData.length);
   					
-  					//var parent = $('#carousel-1').parent();
-  					//$('#carousel-1').remove();
-  					//parent.prepend('<div id="carousel-1"></div>');
-  	  				jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");
-  	  				//jQuery('#carousel-1').addClass('europeana-bordered');
-  			
+  				jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");	// set height to max height that will be needed
   					
   	  			thisGallery = Galleria.run('#carousel-1', {
-		   				transition:			'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
-		   				carousel:			true,
-		   				carouselSpeed:		1200,				/* transition speed */
-		   				carouselSteps:		1,
-		   				easing:				'galleriaOut',
-		   				imageCrop:			false,				/* if true, make pan true */
-		   				imagePan:			false,
-		   				lightbox:			true,
-		   				responsive:			true,
-		   				dataSource:			carouselData,
-		   				thumbnails: 		carouselData.length>1,
-		   				max_scale_ratio:	1,					/* prevent stretching */
-						extend: function(e){
-							
-							var doEllipsis = function(){
-								var ellipsisObjects = [];
-								jQuery('.europeana-carousel-info').each(
-									function(i, ob){
-										ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-									}
-								);
-								$(window).bind('resize', function(){
-									for(var i=0; i<ellipsisObjects.length; i++ ){
-										ellipsisObjects[i].respond();
-									}
-								});
-							};
-		
-							$(this).ready(function(e) {
-								setTimeout(doEllipsis, 1000);
-							});
-							
-							
-							//$(window).resize(function(){});
-							var jsLoaded		= false;
-							var triggerPanel	= null;
-	
-							var initLightbox = function(url){
-								$('#lightbox_image').one('load', function(){
-									eu.europeana.lightbox.init(url);
-									jQuery(".lb-trigger span").show();	// show the trigger now that the overlay and image have loaded
-								}); 
-								$('#lightbox_image').attr('src', url);
-							};					
-		
-							
-							this.bind("image", function(e) {
-								
-								var lightboxable = this._options.dataSource[e.index].lightboxable; 
-								
-								if(lightboxable && lightboxable.url.length>0){
-									
-									if(!triggerPanel){
-		
-										triggerPanel = $('<div class="lb-trigger" >'
-												+ '<span rel="#lightbox" title="View" class="icon-mag">View</span>'
-												+ '</div>') 
-											.appendTo( this.$( 'container' ).find('.galleria-images'));
-		
-										var loadJS = function(){
-		
-											js.loader.loadScripts([{
-												name: 'jquery-tools',
-												file : 'jquery.tools.min.js' + js.cache_helper,
-												path : eu.europeana.vars.branding + '/js/jquery/',
-												dependencies : [ 'jquery' ]
-											}]);
-												
-											js.loader.loadScripts([{
-												name : 'jwplayer',
-												file : 'jwplayer.js' + js.cache_helper,
-												path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
-											}]);
-											
-											js.loader.loadScripts([{
-												file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
-												path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-												dependencies : [ 'jquery-tools', 'jwplayer'],
-												callback: function(){
-													initLightbox(lightboxable.url);
-													jsLoaded = true;
-												}
-											}]);
-										};
-										loadJS();
-									}
+	   				transition:			'fadeslide',
+	   				carousel:			true,
+	   				carouselSpeed:		1200,
+	   				carouselSteps:		1,
+	   				easing:				'galleriaOut',
+	   				imageCrop:			false,
+	   				imagePan:			false,
+	   				lightbox:			true,
+	   				responsive:			true,
+	   				dataSource:			carouselData,
+	   				thumbnails: 		carouselData.length>1,
+	   				max_scale_ratio:	1,					/* prevent stretching (does this work?  no reference to this variable in galleria that I can find) */
+					extend: function(e){
+						
+						var triggerHeight	= 40;
+						
+						var doEllipsis = function(){
+							var ellipsisObjects = [];
+							jQuery('.europeana-carousel-info').each(
+								function(i, ob){
+									ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 								}
-		
-							}); // end bind image
+							);
+							$(window).bind('resize', function(){
+								for(var i=0; i<ellipsisObjects.length; i++ ){
+									ellipsisObjects[i].respond();
+								}
+							});
+						};
+	
+						$(this).ready(function(e) {
+							setTimeout(doEllipsis, 1000);
+						});
+						
+
+						var jsLoaded		= false;
+						var triggerPanel	= null;
+
+						
+						var initLightbox = function(url, gallery){
+							$('#lightbox_image').one('load', function(){
+								eu.europeana.lightbox.init(url);
+								showTrigger(true, gallery);
+							}); 
+							$('#lightbox_image').attr('src', url);
+						};
+						
+						// centre thumbnails
+						var fixThumbNav = function(gallery){
+							var imageNav		= gallery.$('container').find('.galleria-image-nav');
+							var imageNavR		= gallery.$('container').find('.galleria-image-nav-right');
+							var gImage			= gallery.$('container').find('.galleria-stage .galleria-image img:last-child');
+							var heightDiff		=  gImage.height() - imageNavR.height();
+							var stageTopMargin	= parseInt(gallery.$('container').find('.galleria-stage').css("margin-top")  );
 							
-						} // end extend
-		   				
-		   			}); // end Galleria.run
-  				};
-  				eu.europeana.fulldoc.runCarousel();
-	   			
+							imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
+							imageNav.css("margin-top", "0px");
+						};		
+						
+						// Show or hide the trigger - resizing relevant elements
+						var showTrigger = function(show, gallery){
+							var normalHeight =  eu.europeana.fulldoc.getCarouselHeight();
+			  				jQuery('#carousel-1')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
+			  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
+							$('.lb-trigger').css('display', (show ? 'block' : 'none'));
+							fixThumbNav(gallery);
+						};
+						
+						
+						this.bind("image", function(e) {	// lightbox trigger
+							var gallery = this;
+							var lightboxable = gallery._options.dataSource[e.index].lightboxable;
+							if(lightboxable && lightboxable.url.length>0){
+								if(!triggerPanel){
+									this.$( 'container' ).find('.galleria-images').after(
+											'<div class="lb-trigger" >'
+											+ '<span rel="#lightbox" title="View" class="icon-mag">View</span>'
+											+ '</div>'
+									);
+									triggerPanel = this.$( 'container' ).find('.lb-trigger');
+
+									
+									var loadJS = function(){
+										
+										js.loader.loadScripts([{
+											name: 'jquery-tools',
+											file : 'jquery.tools.min.js' + js.cache_helper,
+											path : eu.europeana.vars.branding + '/js/jquery/',
+											dependencies : [ 'jquery' ]
+										}]);
+											
+										js.loader.loadScripts([{
+											name : 'jwplayer',
+											file : 'jwplayer.js' + js.cache_helper,
+											path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
+										}]);
+										
+										js.loader.loadScripts([{
+											file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
+											path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+											dependencies : [ 'jquery-tools', 'jwplayer'],
+											callback: function(){
+												initLightbox(lightboxable.url, gallery);
+												jsLoaded = true;
+											}
+										}]);
+									};
+									loadJS();
+								}
+								else{
+									showTrigger(true, gallery);
+								}
+							}
+							else{
+								showTrigger(false, gallery);
+								//hideTrigger(gallery);
+							}
+	
+						}); // end bind image
+						
+					} // end extend
+	   				
+	   			}); // end Galleria.run
+   			
   			});	// end imagesloaded
   			
 	   			
 		
    			
    			if(typeof carousel2Data != 'undefined'){
-   				/*
+   				
    	   			jQuery('#carousel-2').css("height", "200px");
    	   			Galleria.run('#carousel-2', {
    						transition:		'fadeslide',
@@ -187,7 +200,7 @@ eu.europeana.fulldoc = {
    						dataSource:		carousel2Data,
    						thumbnails: 	true
    		   		});
-   		   		*/   				
+   		   		   				
    			}
    			
 	
@@ -255,123 +268,7 @@ eu.europeana.fulldoc = {
 		}]);
 			
 			
-			
-		// move this to bootstrap
-		/*
-		js.loader.loadScripts([{
-			name: 'jquery-tools',
-			file : 'jquery.tools.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/',
-			dependencies : [ 'jquery-1.4.4.min.js' ]
-		}]);
-			
-		js.loader.loadScripts([{
-			name : 'jwplayer',
-			file : 'jwplayer.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
-		}]);
-		*/
-		/*
-		js.loader.loadScripts([{
-			file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'jquery-tools', 'jwplayer'],
-				
-			callback: function(){
-				(function ($) {
-					$.event.special.imageload = {
-						add: function (hollaback) {
-							if ( this.nodeType === 1 && this.tagName.toLowerCase() === 'img' && this.src !== '' ) {
-								// Image is already complete, fire the hollaback (fixes browser issues were cached
-								// images isn't triggering the load event)
-								if ( this.complete || this.readyState === 4 ) {
-									
-									$(this).live('load', hollaback.handler);
-									hollaback.handler.apply(this);
-								}
 
-								// Check if data URI images is supported, fire 'error' event if not
-								else if ( this.readyState === 'uninitialized' && this.src.indexOf('data:') === 0 ) {
-
-									$(this).trigger('error');
-								}
-								else {
-									$(this).bind('load', hollaback.handler);
-								}
-							}
-						}
-					};
-				}(jQuery));
-				
-
-				// this callback ensures that the trigger image overlay is correctly sized				
-				//var imgOnLoad = function(img, msg){
-				var imgOnLoad = function(){
-
-					var lightboxImg		= jQuery(".content-image");
-					
-					// function to size and show the lightbox 'toolbar' and initialise lightbox (should only be called when main lightbox image has loaded) 
-					var setUpTrigger = function(type){
-
-						var doSetUpTrigger = function(initLightbox){
-							var triggerDiv = jQuery("div.trigger");
-							var lbTriggerDiv = jQuery("div.lb-trigger");
-							
-							var triggerImg = jQuery("img.trigger");
-							var realWidth = parseInt(triggerImg.width());
-							if(realWidth == 0){
-								realWidth = parseInt(triggerImg.width);
-							}
-							triggerDiv.css("display", "block");
-							triggerDiv.css("width", realWidth + "px");
-
-							lbTriggerDiv.css("display", "block");
-							lbTriggerDiv.css("width", realWidth + "px");
-							
-alert("t w = " + realWidth + " lbTriggerDiv.css(width) = " + lbTriggerDiv.css("width") + "\n\n"  +lbTriggerDiv.length  )
-
-							if(initLightbox){
-								//$("#lightbox_href").removeAttr("href");
-								//$("#lightbox_href").attr("rel", "#lightbox");
-								eu.europeana.lightbox.init();
-							}
-						}; // end doSetUpTrigger
-						
-						
-						
-						if(type == "img"){ // for images we check that hot-linking is allowed before enabling the lightbox trigger (i.e. we wait for the image to load and check the dimensions)
-						
-							lightboxImg.bind('imageload', function(){
-								var lightboxImgW = eu.europeana.lightbox.getImgDimensionsFromSrc(lightboxImg.attr("src")).w;
-								if(lightboxImgW > 0){
-									doSetUpTrigger(true);
-								}
-							});
-						}
-						else if(type == "other"){
-							doSetUpTrigger(false);
-						}
-					}
-					if(typeof lightboxImg != 'undefined' && typeof lightboxImg.attr("src") != 'undefined' && lightboxImg.attr("src").length>0){
-						setUpTrigger("img");
-					}
-					//else if(jQuery("div.playerDiv a ") && jQuery("div.playerDiv a ").attr("href").length > 0){
-					//	setUpTrigger("other");								
-					//}
-					else{
-						setUpTrigger("other");								
-					}
-
-				}; // end imageOnLoad
-				
-				var triggerImage = $("img.trigger");
-				triggerImage.bind('imageload', function(){
-					alert("imgOnLoad")
-					imgOnLoad();
-				});
-			}
-		}]);
-		*/
 		
 		
 	
