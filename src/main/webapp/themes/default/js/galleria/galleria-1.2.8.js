@@ -5163,6 +5163,7 @@ Galleria.loadTheme = function( src, options ) {
     @returns Instance or Array of instances
 */
 
+
 Galleria.get = function( index ) {
     if ( !!_instances[ index ] ) {
         return _instances[ index ];
@@ -5172,6 +5173,22 @@ Galleria.get = function( index ) {
         Galleria.raise('Gallery index ' + index + ' not found');
     }
 };
+
+// ANDY ADDED
+/*
+Galleria.remove = function( galleria_instance ) {
+	var newInstances = [];
+	for(var i=0; i<_instances.length; i++){
+		if(_instances[i] != galleria_instance){
+			newInstances[newInstances.length] = galleria_instance;
+		}
+	}
+	Galleria.log("instances.length " + _instances.length + ", newInstances.length = " + newInstances.length);
+	_instances = newInstances;
+}
+*/
+
+
 
 /**
 
