@@ -35,10 +35,10 @@ eu.europeana.fulldoc = {
   				};
   				  				
    	   			// mock some lightbox data
-   	   			/*
+   	   			
    	   			for(var i=0; i<carouselData.length; i++){
    	   				
-   	   				if(i%2==0){
+   	   				if(false && i%2==0){
    	   					carouselData[i].lightboxable = {
    	   							type : 'image',
    	   							url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
@@ -46,7 +46,7 @@ eu.europeana.fulldoc = {
    	   				}
    	   				
    	   			}
-   	   			*/
+   	   			
    	   			// end mock lightbox data
 
 
@@ -118,9 +118,17 @@ eu.europeana.fulldoc = {
 						var showTrigger = function(show, gallery){
 							var normalHeight =  eu.europeana.fulldoc.getCarouselHeight();
 			  				jQuery('#carousel-1')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
-			  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
-							$('.lb-trigger').css('display', (show ? 'block' : 'none'));
+			  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");
+							//$('.lb-trigger').css('display', (show ? 'block' : 'none'));
 							fixThumbNav(gallery);
+							if(show){
+								$('.lb-trigger').fadeIn(500);
+								//$('.lb-trigger').css('display', 'none');
+							}
+							else{
+								$('.lb-trigger').css('display', 'none');								
+							}
+
 						};
 						
 						
@@ -135,7 +143,7 @@ eu.europeana.fulldoc = {
 											+ '</div>'
 									);
 									triggerPanel = this.$( 'container' ).find('.lb-trigger');
-
+									triggerPanel.hide();
 									
 									var loadJS = function(){
 										
