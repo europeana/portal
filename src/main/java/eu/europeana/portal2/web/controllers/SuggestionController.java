@@ -1,6 +1,5 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -41,6 +40,7 @@ public class SuggestionController {
 	public ModelAndView suggestionHtml(
 			@RequestParam(value = "term", required = false, defaultValue="") String term,
 			@RequestParam(value = "size", required = false, defaultValue="10") int size,
+			@RequestParam(value = "field", required = false, defaultValue="") String field,
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale)
@@ -55,22 +55,24 @@ public class SuggestionController {
 
 		List<Term> suggestions = null;
 		try {
-			suggestions = searchService.suggestions(term, size);
+			suggestions = searchService.suggestions(term, size, field);
 		} catch (SolrTypeException e) {
 			log.severe("SolrTypeException: " + e.getMessage());
 			e.printStackTrace();
 		}
 
+		/*
 		ArrayList<String> formattedSuggestion = new ArrayList<String>();
 		if (suggestions != null) {
 			for (Term suggestion : suggestions) {
 				formattedSuggestion.add(suggestion.getTerm());
 			}
 		}
+		*/
 
-		log.info("formattedSuggestion: " + StringUtils.join(formattedSuggestion, ", "));
+		log.info("formattedSuggestion: " + StringUtils.join(suggestions, ", "));
 		SuggestionsPage model = new SuggestionsPage();
-		model.setResults(formattedSuggestion);
+		model.setResults(suggestions);
 		config.injectProperties(model);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_SUGGESTION);
