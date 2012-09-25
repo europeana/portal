@@ -18,5 +18,5 @@
 package eu.europeana.portal2.web.presentation.enums.fieldutils;
 
 public interface FieldValueProcessor {
-    public String processValue(String value);
+	public String processValue(String value);
 }
