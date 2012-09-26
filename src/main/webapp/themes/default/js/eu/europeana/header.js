@@ -14,18 +14,10 @@ js.utils.registerNamespace( 'eu.europeana.header' );
 eu.europeana.header = {
 	
 	init : function() {
-		/*
-		var langSelect=  jQuery("select[name=embeddedlang]");
-		langSelect.change(function(){
-			jQuery(this).parent().submit();
-		});
-		*/
+
 		this.initResponsiveUtility();
-		//this.initResponsiveLogo();
-		
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
-		this.addAutocompleteHandler();
 		this.addRefineSearchClickHandler();		
 		this.addAjaxMethods();
 		this.addMenuFocusTriggers();
@@ -38,6 +30,8 @@ eu.europeana.header = {
 		this.setupMobileMenu();
 		this.setupSearchMenu();
 		this.setupLanguageMenu();
+		
+		this.addAutocompleteHandler();
 
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
@@ -48,13 +42,13 @@ eu.europeana.header = {
 	},
 
 	initResponsiveUtility : function(){
-		window.showingPhone = function(){ return  $("#mobile-menu").is(":visible"); };
+		window.showingPhone = function(){ return $("#mobile-menu").is(":visible"); };
 	},
 	/*
 	initResponsiveLogo : function(){
 		var setup = function(){
 			var initialSuffix = '-1.'; // smallest by default
-			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
+			if(jQuery.browser.msie && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 ) ){
 				initialSuffix = '-2.'; // largest by default
 			}
 			new responsiveGallery({
@@ -172,7 +166,7 @@ eu.europeana.header = {
 						var searchType = $(ob).attr("class");
 						if(searchTerm.indexOf(searchType) == 0){
 							self.setLabel(searchType);
-							input.val(   searchTerm.substr( searchType.length, searchTerm.length)  );
+							input.val(	searchTerm.substr( searchType.length, searchTerm.length) );
 							self.setActive(searchType);
 						}
 					});
@@ -186,9 +180,11 @@ eu.europeana.header = {
 			
 			}
 		);
-			
+
 		menu.init();
-			
+		
+		eu.europeana.header.searchMenu = menu;
+		
 		/* menu close */
 			
 		$(document).click( function(){
@@ -253,10 +249,10 @@ eu.europeana.header = {
 	addQueryFocus : function() {
 		
 		var exceptions = [
-          //'full-doc.html',
-          'login.html',
-          'forgotPassword.html',
-          'register-success.html'
+			//'full-doc.html',
+			'login.html',
+			'forgotPassword.html',
+			'register-success.html'
 		],
 		i,
 		ii = exceptions.length,
@@ -295,91 +291,78 @@ eu.europeana.header = {
 	
 	addAutocompleteHandler : function() {
 		
-		if ( js.debug ) {
+		jQuery('#query-input, #qf').each(function(i, id){
 			
-			jQuery('#query-input, #qf')
-				.autocomplete({
-					
-					//minLength : 2,
-					delay : 200,
-					//dataType : 'text',
-					
-					//define callback to format results
-			        source: function( request, response ) {
-			            
-			        	//pass request to server
-			        	jQuery.getJSON(  '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
-			        		
-			                //create array for response objects
-			                var suggestions = [];
-			                
-			                //process response
-			                jQuery.each( data.suggestions, function(i, val) {
-			                    
-			                	suggestions.push( val );
-			                    
-			                });
-			                
-			                //pass array to callback
-			                response( suggestions );
-			                
-			            });
-			        	
-			        },
-			        
-			        select : function(e) {
-			        	
-			        	switch ( this.id ) {
-			        	
-				        	case 'query-input' :
-				        		
-				        		setTimeout( function() { jQuery('#query-search').submit(); }, 10 );
-				        		break;
-				        		
-				        		
-				        	case 'qf' :
-				        		
-				        		setTimeout( function() { jQuery('#refine-search-form').submit(); }, 10 );
-				        		break;
-			        	
-			        	}
-			        	
-			        }
+			$(id).autocomplete({
 				
-				});
-			
-		} else {
-			
-			jQuery('#query-input')
-				.autocomplete( {
-					
-					//define callback to format results
-			        source: function( request, response ) {
-			            
-			        	//pass request to server
-			        	jQuery.getJSON(  '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
-			        		
-			                //create array for response objects
-			                var suggestions = [];
-			                
-			                //process response
-			                jQuery.each( data.suggestions, function(i, val) {
-			                    
-			                	suggestions.push( val );
-			                    
-			                });
-			                
-			                //pass array to callback
-			                response( suggestions );
-			                
-			            });
-			        	
-			        }
+				minLength : 3,
 				
-				});
+				delay : 100,
+				
+				//dataType : 'text',
+				
+				//define callback to format results
+				
+				source: function( request, response ) {
+					
+					var filter = eu.europeana.header.searchMenu.getActive();
+					if(filter){
+						filter = filter.replace(/:/g, '');
+						request.field = filter;
+					}
+					
+					jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
+						
+						//create array for response objects
+						var suggestions = [];
+						
+						//process response
+						jQuery.each( data.suggestions, function(i, val) {
+							val.label = val.term;
+							suggestions.push( val );
+						});
+						
+						//pass array to callback
+						response( suggestions );
+						
+					});
+					
+				},
+				
+				select : function(e) {
+					
+					switch ( this.id ) {
+						case 'query-input' :
+							setTimeout( function() { jQuery('#query-search').submit(); }, 10 );
+							break;
+							
+						case 'qf' :
+							
+							setTimeout( function() { jQuery('#refine-search-form').submit(); }, 10 );
+							break;
+					}
+					
+				}
 			
-		}
+			});
 		
+			// Formatting 
+			
+			$.ui.autocomplete.prototype._renderItem = function (ul, item) {
+				if(!item.label){
+					item.label = item.term;
+				}
+				
+				item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
+				item.label +=  " (" + item.frequency + ")";
+				item.label += '<span style="float:right">' + completionTranslations[item.field] + '</span>';
+				
+				return $("<li></li>")
+					.data("item.autocomplete", item )
+					.append("<a>" + item.label + "</a>")
+					.appendTo(ul);
+	        };
+		});
 	},
 	
 	
@@ -426,10 +409,10 @@ eu.europeana.header = {
 		
 		if (!Array.prototype.indexOf) {	/* IE 8 */
 			Array.prototype.indexOf = function(obj, start) {
-			     for (var i = (start || 0), j = this.length; i < j; i++) {
-			         if (this[i] === obj) { return i; }
-			     }
-			     return -1;
+				 for (var i = (start || 0), j = this.length; i < j; i++) {
+					 if (this[i] === obj) { return i; }
+				 }
+				 return -1;
 			};
 		}
 
@@ -437,7 +420,7 @@ eu.europeana.header = {
 		var maxRows	= parseInt($jumpToPage.find("#max-rows").val());
 
 		var underMax = function(){
-			return parseInt( $this.val() +  String.fromCharCode(key) ) <= maxRows; 
+			return parseInt( $this.val() + String.fromCharCode(key) ) <= maxRows; 
 		};
 
 		if([8, 46, 37, 38, 39, 40].indexOf(e.keyCode)>-1){

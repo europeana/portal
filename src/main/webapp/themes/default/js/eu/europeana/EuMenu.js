@@ -35,11 +35,19 @@ var EuMenu = function(cmpIn, options){
 	self.setActive = function(val){
 		self.cmp.removeClass("selected");
 		self.cmp.find(".item a").each(function(i, ob){
+			
 			if($(ob).attr("class") == val){
 				$(ob).parent().addClass("active");
-				if(val){
+				if(typeof val != 'undefined'){
 					self.cmp.addClass("selected");
 					self.val = val;
+					
+					if(val == ''){
+						self.cmp.find('.icon-arrow-3').removeClass('open-menu');
+					}
+					else{
+						self.cmp.find('.icon-arrow-3').addClass('open-menu');
+					}
 				}
 				self.setLabel( $(ob).html() );
 			}
@@ -56,7 +64,6 @@ var EuMenu = function(cmpIn, options){
 			var selected = $(this).attr("class");
 			self.setActive(selected);
 			e.stopPropagation();
-			
 			if(self.options.fn_item){
 				self.options.fn_item(self, selected);
 			}
@@ -76,7 +83,11 @@ var EuMenu = function(cmpIn, options){
 			}
 		},
 		"setActive":function(val, highlight){
+			console.log("MENUU SET ACTIVE TO >" + val + "<" );
 			self.setActive(val);
+		},
+		"getActive":function(){
+			return self.getActive();
 		}
 	};
 };

@@ -29,12 +29,12 @@
 						<span class="hide-ilb-on-phones menu-label">Search</span>
 						<span class="icon-arrow-3 open-menu"></span>
 						<ul>
-							<li class="item">	<a href="" class=""			>All fields</a></li>
-							<li class="item">	<a href="" class="title:"	>Title</a></li>
-							<li class="item">	<a href="" class="who:"		>Who</a></li>
-							<li class="item">	<a href="" class="what:"	>What</a></li>
-							<li class="item">	<a href="" class="when:"	>When</a></li>
-							<li class="item">	<a href="" class="where:"	>Where</a></li>
+							<li class="item">	<a href="" class=""			><spring:message code='FieldedSearchAllFields_t' /></a></li>
+							<li class="item">	<a href="" class="title:"	><spring:message code='FieldedSearchTitle_t' /></a></li>
+							<li class="item">	<a href="" class="who:"		><spring:message code='FieldedSearchWho_t' /></a></li>
+							<li class="item">	<a href="" class="what:"	><spring:message code='FieldedSearchWhat_t' /></a></li>
+							<li class="item">	<a href="" class="when:"	><spring:message code='FieldedSearchWhen_t' /></a></li>
+							<li class="item">	<a href="" class="where:"	><spring:message code='FieldedSearchWhere_t' /></a></li>
 						</ul>
 					</div>
 				</td>

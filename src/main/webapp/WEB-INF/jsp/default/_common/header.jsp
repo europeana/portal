@@ -18,6 +18,15 @@
 
 		</div>
 		
+		<script type="text/javascript">
+			var completionTranslations = {};
+			completionTranslations['Title']			= "<spring:message code='FieldedSearchTitle_t' />";
+			completionTranslations['Place']			= "<spring:message code='FieldedSearchWhere_t' />";
+			completionTranslations['Time/Period']	= "<spring:message code='FieldedSearchWhen_t' />";
+			completionTranslations['Subject']		= "<spring:message code='FieldedSearchWhat_t' />";
+			completionTranslations['Creator']		= "<spring:message code='FieldedSearchWho_t' />";			
+		</script>
+		
 		<%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>
 		
 	</div>
