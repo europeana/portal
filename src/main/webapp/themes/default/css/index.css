@@ -1,6 +1,9 @@
-
 .carousel-row{
 	position:	relative;
+}
+
+.carousel-row>div{
+	vertical-align: top;
 }
 
 .carousel-wrap{
