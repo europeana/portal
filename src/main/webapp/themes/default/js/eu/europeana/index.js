@@ -47,19 +47,18 @@
 		
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1").one('load',
 			function() {
-		
-				var parentWidth		= $(this).parent().width();
 				var imgW			= $(this).width();
 				var imgH			= $(this).height();
-				var ratio			= parentWidth / imgW;
-			
 				$(this).remove();
-			
+
+				var carousel		= jQuery("#carousel-1");
+				var parentWidth		= carousel.width();
 				
-				var carousel	= jQuery("#carousel-1");
-				var thumb		= jQuery('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
+				var ratio			= imgW / imgH;
+				var thumb			= jQuery('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
 				
-				carousel.css("height",  (imgH * ratio) + thumb.height() + 5 + "px");
+				carousel.css("height",  (parentWidth/ratio) + thumb.height() + 5 + "px");
+				
 				carousel.css("width",	"100%");
 				thumb.remove();
 				

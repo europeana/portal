@@ -7,8 +7,7 @@
 }
 
 .carousel-wrap{
-	display:table-cell;
-	width:50%;
+	display:	block;
 }
 
 
@@ -149,6 +148,11 @@
 
 
 @media only screen and ( min-width:48em ){
+	.carousel-wrap{
+		display:	table-cell;
+		width:		50%;
+	}
+	
 	.carousel-spacer{
 		margin-right:	1em;
 		margin-top:		1.25em;
