@@ -1,4 +1,3 @@
-
 <%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 
 <div id="header" role="banner" class="row">
@@ -11,11 +10,7 @@
 			
 				<a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
 				
-				<%-- 
-					<img class="responsive-logo" style="vertical-align:middle;"  src="/${branding}/images/europeana-logo-1.png" alt="<spring:message code='AltLogoEuropeana_t' />"/>
-				 --%>
-					
-				<span class="responsive-logo"></span>
+					<span class="responsive-logo" alt="<spring:message code='AltLogoEuropeana_t' />"></span>
 
 				</a>
 				
