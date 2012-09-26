@@ -79,7 +79,10 @@ Galleria.addTheme({
         	var footerSelector = '#' + carouselId + '-footer';
         	europeana.header = 	$('#' + carouselId).parent().find(headerSelector);
         	europeana.footer = 	$('#' + carouselId).parent().find(footerSelector);
-        	
+			thisGallery._options.europeana.similarItems =  thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
+				
+			//thisGallery.$( 'container' ).css('box-sizing', 'content-box');
+			 
         	if(europeana.footer && europeana.header){
         		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
         		europeana.header.append( $('#' + carouselId + ' .galleria-info-title') );
@@ -228,14 +231,21 @@ Galleria.addTheme({
 			var expectedCallBackCount = 0;
 			var completedCallBackCount = 0;
 			
-			var setThumbStyle = function(thumb, thumbOb, index){
-				var imgBoxW = thisGallery._options.europeana.imgBoxW;
-				var tParent	= thumb.parent();
-				var imgBoxH = containerHeight;
+			var setThumbStyle = function(thumb, thumbOb, index){	// called for each thumbnail once loaded
+				var imgBoxW		= thisGallery._options.europeana.imgBoxW;
+				var tParent		= thumb.parent();
+				var imgBoxH		= containerHeight;
 				
 				tParent.css("width",	imgBoxW + "px");
 				tParent.css("height",	imgBoxH + "px");
+				
+Galleria.log('tparent w set to ' + imgBoxW);
 
+				if(thisGallery._options.europeana.similarItems){
+					var imgMargin	= thisGallery._options.europeana.imgMargin;
+					tParent.css("margin",	"0 " + imgMargin + "px");
+				}
+				
 				imgW = thumb.width();
 				imgH = thumb.height();
 				
@@ -260,21 +270,25 @@ Galleria.addTheme({
 						newW = newH *  ratio;
 					}
 					newW = parseInt(newW);
-					thumb.attr("width", newW + "px");
-					thumb.attr("height", newW/ratio + "px");
+				//	Galleria.log('tparent w set to ' + imgBoxW);
 
-					thumb.css("width", newW + "px");
-					thumb.css("height", newW/ratio + "px");
+					//thumb.attr("width", newW + "px");
+					//thumb.attr("height", newW/ratio + "px");
+
+					//thumb.css("width", newW + "px");
+					//thumb.css("height", newW/ratio + "px");
 				}
 				else{ // portrait or perfect square
 					var newH = (containerHeight - 2 * 7);
 					var newW = parseInt(newH * ratio);
 
-					thumb.attr("height",	newH + "px");
-					thumb.attr("width",		newW + "px");
+					//thumb.attr("height",	newH + "px");
+					//thumb.attr("width",		newW + "px");
 								
-					thumb.css("height",		newH + "px");
-					thumb.css("width",		newW + "px");
+					//thumb.css("height",		newH + "px");
+					//thumb.css("width",		newW + "px");
+					
+					// maclean
 				}
 
 				thumb.css("max-width",	 "100%");
@@ -298,9 +312,25 @@ Galleria.addTheme({
 				//thumbOb.outerWidth = imgBoxW+2;
 				
 				
-				thumbOb.outerWidth = tParent.outerWidth(true);
-
+//				thumbOb.outerWidth = Math.min(imgBoxW  + 18, tParent.outerWidth(true) );
 				
+				
+				thumbOb.outerWidth = tParent.outerWidth(true);
+				Galleria.log("A) set offset to " + tParent.outerWidth(true) 
+				+ "\n\n"		
+				);
+				
+	/*			
+				
+thumbOb.outerWidth = 	thisGallery.$( 'container' ).find('.galleria-thumbnails').width() / thisGallery.$( 'container' ).find('.galleria-thumbnails .galleria-image').length;
+				
+Galleria.log("A) set offset to " + tParent.outerWidth(true) + " or " + tParent.outerWidth(false)  );
+
+Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-thumbnails').width() 
+		+ " / "
+		+ thisGallery.$( 'container' ).find('.galleria-thumbnails .galleria-image').length
+	);
+*/
 				/* Vertical centering of individual images */
 				if(imgBoxH > thumb.height()){
 					var top = (imgBoxH - parseFloat(thumb.css("height")) ) / 2;
@@ -324,7 +354,7 @@ Galleria.addTheme({
 				}
 		    };
 
-		    var callSetThumbStyle = function(){	// called once when the last thumbnail has loaded
+		    var callSetThumbStyle = function(){	// called once
 		    	
 		    	/* scaling */
 		    	var imgBoxW = 0;
@@ -334,38 +364,42 @@ Galleria.addTheme({
 		    	containerWidth = parseInt( thisGallery.$( 'container' ).parent().css("width") );
 				var thumbnailsList = thisGallery.$( 'container' ).find('.galleria-thumbnails-list');
 				
-				var reduce = 0;
-				/*
-				reduce += parseInt(thumbnailsList.css('margin-left'));
-				reduce += parseInt(thumbnailsList.css('marginRight'));
-				reduce += parseInt(thumbnailsList.parent().css('right'));
-				reduce += parseInt(thumbnailsList.parent().css('left'));
-				*/
-				
-				reduce = 80;	/* hard coded: 30+30+10+10, the margins and the left values of containers.... */
-				reduce = 20;	/* hard coded: 10+10, the margins and the left values of containers.... */
-				reduce = 0;
-				reduce = -18;	/* cancel 1st and last galleria-image side margins (9px + 9px) */
-				
-				var containerWidth_R = containerWidth-reduce;
-				
-				
 				var maxItems = 0;
-				
-				if( thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content" ){ // similar items fixed width based
+				//thisGallery._options.europeana.similarItems =  thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
+				if(thisGallery._options.europeana.similarItems ){ // similar items fixed width based
 					
 					var	itemWidth	= 200;
 					var	minMargin	= 9;	// min margin pixels
-					var	maxItems	= parseInt(		(containerWidth + 2 * minMargin) / (itemWidth + (2 * minMargin))		);
+					 	maxItems	= parseInt(		(containerWidth + 2 * minMargin) / (itemWidth + (2 * minMargin))		);
 						maxItems	= Math.max(maxItems, 1); // avoid division by zero!
 
 					var newMargin	= (containerWidth - (maxItems * itemWidth))   / ((maxItems-1) * 2);
-
-					//alert("Width " + containerWidth + " allows " + maxItems + " items with a " + newMargin + "px margin");
 					
-					imgBoxW = itemWidth;
+					thisGallery._options.europeana.imgMargin = Math.round(newMargin);
+					//$('.galleria-thumbnails .galleria-image').css('margin-left',	newMargin);
+					//$('.galleria-thumbnails .galleria-image').css('margin-right',	newMargin);
+					
+					//alert("Width " + containerWidth + " allows " + maxItems + " items with a " + newMargin + "px margin");
+					Galleria.log("PARSING " + parseFloat(itemWidth) + "  " + parseInt(itemWidth) );
+					imgBoxW = Math.round(itemWidth);
 				}
-				else{	// fit as many as will go, squared with the height of gthe carousel 
+				else{	// fit as many as will go, squared with the height of the carousel 
+					
+					var reduce = 0;
+					/*
+					reduce += parseInt(thumbnailsList.css('margin-left'));
+					reduce += parseInt(thumbnailsList.css('marginRight'));
+					reduce += parseInt(thumbnailsList.parent().css('right'));
+					reduce += parseInt(thumbnailsList.parent().css('left'));
+					*/
+					
+					reduce = 80;	/* hard coded: 30+30+10+10, the margins and the left values of containers.... */
+					reduce = 20;	/* hard coded: 10+10, the margins and the left values of containers.... */
+					reduce = 0;
+					reduce = -18;	/* cancel 1st and last galleria-image side margins (9px + 9px) */
+					
+					var containerWidth_R = containerWidth-reduce;
+					
 					maxItems = (
 							containerWidth_R
 							- 
@@ -375,9 +409,19 @@ Galleria.addTheme({
 							) / containerHeight;
 
 					maxItems = Math.max(maxItems, 1); // avoid division by zero!
-					imgBoxW = containerWidth_R / maxItems;
+					imgBoxW =  containerWidth_R / maxItems;
+					
+					
 					imgBoxW -= parseFloat(thumbnailsList.find('.galleria-image:first').css("margin-right"));
 					imgBoxW -= parseFloat(thumbnailsList.find('.galleria-image:first').css("margin-left"));
+					
+
+					Galleria.log('pre round ' + imgBoxW)
+//					imgBoxW = Math.round(imgBoxW);
+					imgBoxW = parseInt(imgBoxW)
+
+					Galleria.log('post round ' + imgBoxW)
+					
 				}
 				
 				
@@ -385,7 +429,17 @@ Galleria.addTheme({
 				thisGallery._options.carouselSteps = maxItems;
 		    	thisGallery._options.europeana.imgBoxW = imgBoxW;
 
+				if(thisGallery._options.europeana.similarItems){
+					var imgMargin	= thisGallery._options.europeana.imgMargin;
+
+					thumbnailsList.css("margin",	"0 -" + imgMargin + "px");
+				//	thumbList.css("margin-left",	"-" + imgMargin + "px");
+					//thumbList.css("margin-right",	"-" + imgMargin + "px");
+				}
+
+		    	
 		    	/* add accelerators: bound to listeners and stored in europeana config */
+				/*
 		    	if(europeana.header && europeana.footer && europeana.header.length > 0 && europeana.footer.length > 0){
 		        	europeana.header.find('.accelerator').remove();
 		        	europeana.header.accelerators.items = [];
@@ -408,7 +462,7 @@ Galleria.addTheme({
 		        		}(i);
 		        	}    		
 		    	}
-		    	
+		    	*/
 
 		    	/* iterate thumbs & call setStyle on each */
 
@@ -428,7 +482,7 @@ Galleria.addTheme({
 		        		expectedCallBackCount ++;
 		        		thisGallery.bind("thumbnail", function(e) {
 		        			if(e.index == i){
-		            	        	setThumbStyle($(e.thumbTarget), thumb, i);
+		            	        setThumbStyle($(e.thumbTarget), thumb, i);
 		        			}
 		        	    });
 		        	}
