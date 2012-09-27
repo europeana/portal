@@ -84,6 +84,8 @@
     z-index:	2;
     
     height:		100px; /* linked to js */
+    
+    overflow:	hidden;
 }
 
 .europeana-carousel .galleria-thumbnails-container {
@@ -703,7 +705,7 @@
 }
 
 .galleria-image{
-	maclean__width:100%;
+	width:100%;
 }
 
 .galleria-errors{
