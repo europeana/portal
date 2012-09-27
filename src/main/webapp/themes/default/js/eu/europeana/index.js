@@ -63,7 +63,10 @@
 				thumb.remove();
 				
 				carouselData[0].themeRef = eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js';
-				jQuery('#carousel-1').galleria({dataSource:carouselData});
+				jQuery('#carousel-1').galleria({
+					dataSource:carouselData,
+					autoplay:5000
+				});
 			
 			}).each(function() {
 				if(this.complete){
