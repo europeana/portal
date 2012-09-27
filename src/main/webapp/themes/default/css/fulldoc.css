@@ -80,10 +80,10 @@ a.action-link:hover{
 }
 
 .translate-box{
-	float:				none;
-	xxxborder-radius:		0.25em;
 	background-color:	#DFDFDF;
+	float:				none;
 	padding:			0.5em;
+	margin-left:		none;
 }
 
 a.disabled:hover{
@@ -202,6 +202,7 @@ a.action-link span{
 	
 	.translate-box{
 		float:			right;
+		margin-left:	2em;
 	}
 	
 }
