@@ -74,30 +74,11 @@ Galleria.addTheme({
 		
 		
     	if(carouselMode){
-		
         	var headerSelector = '#' + carouselId + '-header';
         	var footerSelector = '#' + carouselId + '-footer';
         	europeana.header = 	$('#' + carouselId).parent().find(headerSelector);
         	europeana.footer = 	$('#' + carouselId).parent().find(footerSelector);
-			thisGallery._options.europeana.similarItems = true;// thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
-				
-			//thisGallery.$( 'container' ).css('box-sizing', 'content-box');
-			 
-        	if(europeana.footer && europeana.header){
-        		europeana.footer.append( $('#' + carouselId + ' .galleria-info-description') );
-        		europeana.header.append( $('#' + carouselId + ' .galleria-info-title') );
-        		
-        		/* create accelerators element and store in europeana config (extend the jquery object) */
-        		europeana.header.accelerators = $( '<div class="accelerators"></div>' ).appendTo(europeana.header);
-        	}
-        	/*
-        	else{
-        		this.$('container').css("visibility", "hidden");
-        		this.$('container').find(".galleria-thumbnails-list").css("display", "none");
-        		Galleria.log("Error in Galleria.europeana.js: expected elements " + headerSelector + " and " + footerSelector + " to be present in DOM");
-        		return;
-        	}
-        	*/
+			thisGallery._options.europeana.similarItems = thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
     		
         	europeana.thumbRatios = [];
         	for(var i=0; i<dataSource.length; i++){
@@ -123,64 +104,6 @@ Galleria.addTheme({
 
 			});
 			
-			/*
-			europeana.header.prev = function(e){
-				e.preventDefault();
-				if(	thumbNavLeft.hasClass("disabled")){
-	                e.preventDefault();
-		       		e.stopPropagation();
-					return;
-				}
-				else{
-	                thisGallery._carousel.set(
-	                		Math.max(thisGallery._carousel.current - thisGallery._options.carouselSteps, 0)
-	                );
-	                thisGallery._options.europeana.setActive(thisGallery._carousel.current);		
-					
-    				if(thisGallery._carousel.current <= 0){
-    					thumbNavLeft.addClass("disabled");
-    				}
-    				else if(dataSource.length > 1){
-   						thumbNavLeft.removeClass("disabled");    			
-    				}
-
-				}
-			};
-			
-			thumbNavLeft.unbind('click');
-			thumbNavLeft.bind('click', function(e){
-                europeana.header.prev(e);
-			});
-
-			europeana.header.next = function(e){
-				e.preventDefault();
-				if(	thumbNavRight.hasClass("disabled")){
-	                e.preventDefault();
-		       		e.stopPropagation();
-					return;
-				}
-				else{
-	                thisGallery._carousel.set( thisGallery._carousel.current + thisGallery._options.carouselSteps);
-	                thisGallery._options.europeana.setActive(thisGallery._carousel.current);
-	                
-					// disable if last
-    				if(thisGallery._carousel.current + (thisGallery._options.carouselSteps) >= dataSource.length){
-    					thumbNavRight.addClass("disabled");
-    				}
-    				else if(dataSource.length > 1){
-   						thumbNavRight.removeClass("disabled");    			
-    				}
-				}				
-			};
-			
-			thumbNavRight.unbind('click');
-			thumbNavRight.bind('click', function(e){
-                e.preventDefault();
-				europeana.header.next(e);
-			});
-			
-			*/
-
 			thisGallery.bind("idle_enter",function(e) {
 			    thumbNavRight.hide();
 			    thumbNavLeft.hide();                      
@@ -190,9 +113,8 @@ Galleria.addTheme({
 				thumbNavLeft.show();                      
 			});
 			
-			
 						
-			thisGallery._options.responsive = false; /* disable default responsive handling (and assume that we ARE responsive) */
+			thisGallery._options.responsive = false; /* disable default responsive handling (because it's rubbish) and use custom fns */
 		    
 		    this.$('loader').hide();
 		    
@@ -239,15 +161,20 @@ Galleria.addTheme({
 				tParent.css("width",	imgBoxW + "px");
 				tParent.css("height",	imgBoxH + "px");
 				
-//Galleria.log('tparent w set to ' + imgBoxW);
+				var imgMargin	= thisGallery._options.europeana.imgMargin;
+				tParent.css("margin",	"0 " + imgMargin + "px");
 
-				if(thisGallery._options.europeana.similarItems){
-					var imgMargin	= thisGallery._options.europeana.imgMargin;
-					tParent.css("margin",	"0 " + imgMargin + "px");
-				}
 				
+				// image sizing 
+				thumb.removeAttr('width');
+				thumb.removeAttr('height');
+				thumb.css('width',	'auto');
+				thumb.css('height',	'auto');
+
 				imgW = thumb.width();
 				imgH = thumb.height();
+				
+				//tParent.find('.europeana-carousel-info').html('w=' + imgW + ', h=' + imgH);		// debug 
 				
 				var ratio;
 				
@@ -260,6 +187,8 @@ Galleria.addTheme({
 					ratio = imgW / imgH;
 				}
 				
+				/*
+				
 				if(imgW > imgH){ // landscape
 					var marginR = parseFloat(tParent.css("margin-right"));
 					var marginL = parseFloat(tParent.css("margin-left"));
@@ -270,26 +199,30 @@ Galleria.addTheme({
 						newW = newH *  ratio;
 					}
 					newW = parseInt(newW);
-				//	Galleria.log('tparent w set to ' + imgBoxW);
+					
+					
+					//	Galleria.log('tparent w set to ' + imgBoxW);
 
-					//thumb.attr("width", newW + "px");
-					//thumb.attr("height", newW/ratio + "px");
+					thumb.attr("width", newW + "px");
+					thumb.attr("height", newW/ratio + "px");
 
-					//thumb.css("width", newW + "px");
-					//thumb.css("height", newW/ratio + "px");
+					thumb.css("width", newW + "px");
+					thumb.css("height", newW/ratio + "px");
 				}
 				else{ // portrait or perfect square
 					var newH = (containerHeight - 2 * 7);
 					var newW = parseInt(newH * ratio);
 
-					//thumb.attr("height",	newH + "px");
-					//thumb.attr("width",		newW + "px");
+					
+					thumb.attr("height",	newH + "px");
+					thumb.attr("width",		newW + "px");
 								
-					//thumb.css("height",		newH + "px");
-					//thumb.css("width",		newW + "px");
+					thumb.css("height",		newH + "px");
+					thumb.css("width",		newW + "px");
 					
 					// maclean
 				}
+				*/
 
 				thumb.css("max-width",	 "100%");
 				thumb.css("max-height",	 "100%");
@@ -304,31 +237,8 @@ Galleria.addTheme({
 				 *  
 				 *  */
 
-				
-				//var offset = 0;// 2;		
-				//xoffset += parseInt( tParent.css("margin-right") );
-				//thumbOb.outerWidth = imgBoxW + offset;
-				//Galleria.log("newW = " + newW);
-				//thumbOb.outerWidth = imgBoxW+2;
-				
-				
-//				thumbOb.outerWidth = Math.min(imgBoxW  + 18, tParent.outerWidth(true) );
-				
-				
 				thumbOb.outerWidth = tParent.outerWidth(true);
-//				Galleria.log("A) set offset to " + tParent.outerWidth(true) );
-				
-	/*			
-				
-thumbOb.outerWidth = 	thisGallery.$( 'container' ).find('.galleria-thumbnails').width() / thisGallery.$( 'container' ).find('.galleria-thumbnails .galleria-image').length;
-				
-Galleria.log("A) set offset to " + tParent.outerWidth(true) + " or " + tParent.outerWidth(false)  );
 
-Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-thumbnails').width() 
-		+ " / "
-		+ thisGallery.$( 'container' ).find('.galleria-thumbnails .galleria-image').length
-	);
-*/
 				/* Vertical centering of individual images */
 				if(imgBoxH > thumb.height()){
 					var top = (imgBoxH - parseFloat(thumb.css("height")) ) / 2;
@@ -352,7 +262,7 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 				}
 		    };
 
-		    var callSetThumbStyle = function(){	// called once
+		    var calculateLayout = function(){	// called once
 		    	
 		    	/* scaling */
 		    	var imgBoxW = 0;
@@ -362,84 +272,34 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 		    	containerWidth = parseInt( thisGallery.$( 'container' ).parent().css("width") );
 				var thumbnailsList = thisGallery.$( 'container' ).find('.galleria-thumbnails-list');
 				
-				var maxItems = 0;
-				//thisGallery._options.europeana.similarItems =  thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
-				if(thisGallery._options.europeana.similarItems ){ // similar items fixed width based
-					
-					var	itemWidth	= 200;
-					var	minMargin	= 9;	// min margin pixels
-					 	maxItems	= parseInt(		(containerWidth + 2 * minMargin) / (itemWidth + (2 * minMargin))		);
-						maxItems	= Math.max(maxItems, 1); // avoid division by zero!
+				var maxItems	= 0;
+				var	itemWidth	= 200;
+				var	minMargin	= 9;	// min margin pixels
+				 	maxItems	= parseInt(		(containerWidth + 2 * minMargin) / (itemWidth + (2 * minMargin))		);
+					maxItems	= Math.max(maxItems, 1); // avoid division by zero!
 
-					var newMargin	= (containerWidth - (maxItems * itemWidth))   / ((maxItems-1) * 2);
-					
-					thisGallery._options.europeana.imgMargin = newMargin;
-
-					//Galleria.log( "newMargin = " + newMargin	+ "\n\n" + Math.round(newMargin));
-					imgBoxW = Math.round(itemWidth);
+				if(window.showingPhone()){
+					maxItems = 1;
 				}
-				else{	// fit as many as will go, squared with the height of the carousel 
 					
-					var reduce = 0;
-					reduce = -18;	/* cancel 1st and last galleria-image side margins (9px + 9px) */
-					
-					var containerWidth_R = containerWidth-reduce;
-					
-					maxItems = (
-							containerWidth_R
-							- 
-							(
-									containerWidth_R % containerHeight
-							)
-							) / containerHeight;
+				var newMargin	= (containerWidth - (maxItems * itemWidth))   / (( Math.max(1,  maxItems-1)) * 2);
 
-					maxItems = Math.max(maxItems, 1); // avoid division by zero!
-					imgBoxW =  containerWidth_R / maxItems;
-					
-					
-					imgBoxW -= parseFloat(thumbnailsList.find('.galleria-image:first').css("margin-right"));
-					imgBoxW -= parseFloat(thumbnailsList.find('.galleria-image:first').css("margin-left"));
-					
-//					imgBoxW = Math.round(imgBoxW);
-					imgBoxW = parseInt(imgBoxW);
-				}
+				imgBoxW = Math.round(itemWidth);
 				
 				
-				/* store steps and width data in europeana config */
-				thisGallery._options.carouselSteps = maxItems;
-		    	thisGallery._options.europeana.imgBoxW = imgBoxW;
+				/* store steps and width data in europeana config - adjust thumnail list (negative) margin to override first/last margins */
+				thisGallery._options.europeana.imgMargin	= newMargin;
+				thisGallery._options.carouselSteps			= maxItems;
+		    	thisGallery._options.europeana.imgBoxW		= imgBoxW;
 
-				if(thisGallery._options.europeana.similarItems){
-					var imgMargin	= thisGallery._options.europeana.imgMargin;
+				var imgMargin	= newMargin;
+				
+				if(!window.showingPhone()){
 					thumbnailsList.css("margin",	"0 -" + imgMargin + "px");
 				}
-
-		    	
-		    	/* add accelerators: bound to listeners and stored in europeana config */
-				/*
-		    	if(europeana.header && europeana.footer && europeana.header.length > 0 && europeana.footer.length > 0){
-		        	europeana.header.find('.accelerator').remove();
-		        	europeana.header.accelerators.items = [];
-		        	europeana.header.setAccelerator = function(index){
-		    			europeana.header.find('.accelerator').removeClass('active');
-		    			europeana.header.find('.accelerator').eq(index).addClass('active');	
-		        	};
-		        	
-		        	var acceleratorsNeeded = Math.ceil( $(thisGallery._thumbnails).length / thisGallery._options.carouselSteps);
-
-		        	for(var i=0; i<acceleratorsNeeded; i++){
-		        		europeana.header.accelerators.items[europeana.header.accelerators.items.length]
-		        		=
-		        		$('<div class="accelerator' + (i==0 ? ' active' : '') + '"></div>').appendTo(europeana.header.accelerators)[0].onclick = function(index){
-		        			return function(){
-		        				var active = index * thisGallery._options.carouselSteps;
-		        				thisGallery._carousel.set(active);
-		    					thisGallery._options.europeana.setActive(active);
-		        			};
-		        		}(i);
-		        	}    		
-		    	}
-		    	*/
+				else{
+					thumbnailsList.css("margin",	"0 0px");
+				}
 
 		    	/* iterate thumbs & call setStyle on each */
 
@@ -453,7 +313,6 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 			                      index: i,
 			                      galleriaData: dataSource
 			    		});
-
 		        	}
 		        	else{
 		        		expectedCallBackCount ++;
@@ -465,14 +324,13 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 		        	}
 		        });
 		    };
-		    
-		    callSetThumbStyle();
+		    calculateLayout();
 		    
 		    
 		    var onResize = function(){
 				thisGallery.$('container').css("height", thisGallery.$('container').parent().css("height"));
 				thisGallery.$('container').css("width", thisGallery.$('container').parent().css("width"));
-				callSetThumbStyle();
+				calculateLayout();
 				thisGallery._carousel.set(0);
 				thisGallery._options.europeana.setActive(0);    	
 		    };
@@ -507,6 +365,21 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 			
 			
 			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			// END CAROUSEL MODE
 			
 			
 			
