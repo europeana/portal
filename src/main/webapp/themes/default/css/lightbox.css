@@ -257,10 +257,9 @@
 	div.lb-trigger{
 		position:	absolute;
 		bottom:		0;
+		cursor:		pointer;
+		
 		z-index:	1;
-
-
-
 		z-index:30;							/* ANDY - this won't be needed once put in place.....  */
 	}
 	
