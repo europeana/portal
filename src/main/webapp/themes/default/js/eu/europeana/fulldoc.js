@@ -38,7 +38,7 @@ eu.europeana.fulldoc = {
    	   			
    	   			for(var i=0; i<carouselData.length; i++){
    	   				
-   	   				if(false && i%2==0){
+   	   				if(i%2==0){
    	   					carouselData[i].lightboxable = {
    	   							type : 'image',
    	   							url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
@@ -79,6 +79,9 @@ eu.europeana.fulldoc = {
 								}
 							);
 							$(window).bind('resize', function(){
+								if(eu.europeana.vars.suppresResize){
+									return;
+								}
 								for(var i=0; i<ellipsisObjects.length; i++ ){
 									ellipsisObjects[i].respond();
 								}
@@ -119,15 +122,30 @@ eu.europeana.fulldoc = {
 							var normalHeight =  eu.europeana.fulldoc.getCarouselHeight();
 			  				jQuery('#carousel-1')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
 			  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");
+			  				
 							//$('.lb-trigger').css('display', (show ? 'block' : 'none'));
+			  				
+			  				
 							fixThumbNav(gallery);
+							eu.europeana.vars.suppresResize = true;
+							
 							if(show){
+								setTimeout(function(){
+									eu.europeana.vars.suppresResize = false;
+									
+								}, 520);
 								$('.lb-trigger').fadeIn(500);
+								
 								//$('.lb-trigger').css('display', 'none');
+								
 							}
 							else{
-								$('.lb-trigger').css('display', 'none');								
+								$('.lb-trigger').css('display', 'none');
+								eu.europeana.vars.suppresResize = false;
+								
 							}
+							
+							
 
 						};
 						

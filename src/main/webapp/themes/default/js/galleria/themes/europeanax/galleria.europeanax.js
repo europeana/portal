@@ -220,7 +220,6 @@ Galleria.addTheme({
 					thumb.css("height",		newH + "px");
 					thumb.css("width",		newW + "px");
 					
-					// maclean
 				}
 				*/
 
@@ -436,6 +435,7 @@ Galleria.addTheme({
        			
 				if(eu.europeana.vars.suppresResize){
 	       			Galleria.log("suppress resize!");
+	       		
 	       			return;
 	       		}
 	
