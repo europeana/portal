@@ -79,7 +79,7 @@ Galleria.addTheme({
         	var footerSelector = '#' + carouselId + '-footer';
         	europeana.header = 	$('#' + carouselId).parent().find(headerSelector);
         	europeana.footer = 	$('#' + carouselId).parent().find(footerSelector);
-			thisGallery._options.europeana.similarItems =  thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
+			thisGallery._options.europeana.similarItems = true;// thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
 				
 			//thisGallery.$( 'container' ).css('box-sizing', 'content-box');
 			 
@@ -239,7 +239,7 @@ Galleria.addTheme({
 				tParent.css("width",	imgBoxW + "px");
 				tParent.css("height",	imgBoxH + "px");
 				
-Galleria.log('tparent w set to ' + imgBoxW);
+//Galleria.log('tparent w set to ' + imgBoxW);
 
 				if(thisGallery._options.europeana.similarItems){
 					var imgMargin	= thisGallery._options.europeana.imgMargin;
@@ -316,9 +316,7 @@ Galleria.log('tparent w set to ' + imgBoxW);
 				
 				
 				thumbOb.outerWidth = tParent.outerWidth(true);
-				Galleria.log("A) set offset to " + tParent.outerWidth(true) 
-				+ "\n\n"		
-				);
+//				Galleria.log("A) set offset to " + tParent.outerWidth(true) );
 				
 	/*			
 				
@@ -375,27 +373,14 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 
 					var newMargin	= (containerWidth - (maxItems * itemWidth))   / ((maxItems-1) * 2);
 					
-					thisGallery._options.europeana.imgMargin = Math.round(newMargin);
-					//$('.galleria-thumbnails .galleria-image').css('margin-left',	newMargin);
-					//$('.galleria-thumbnails .galleria-image').css('margin-right',	newMargin);
-					
-					//alert("Width " + containerWidth + " allows " + maxItems + " items with a " + newMargin + "px margin");
-					Galleria.log("PARSING " + parseFloat(itemWidth) + "  " + parseInt(itemWidth) );
+					thisGallery._options.europeana.imgMargin = newMargin;
+
+					//Galleria.log( "newMargin = " + newMargin	+ "\n\n" + Math.round(newMargin));
 					imgBoxW = Math.round(itemWidth);
 				}
 				else{	// fit as many as will go, squared with the height of the carousel 
 					
 					var reduce = 0;
-					/*
-					reduce += parseInt(thumbnailsList.css('margin-left'));
-					reduce += parseInt(thumbnailsList.css('marginRight'));
-					reduce += parseInt(thumbnailsList.parent().css('right'));
-					reduce += parseInt(thumbnailsList.parent().css('left'));
-					*/
-					
-					reduce = 80;	/* hard coded: 30+30+10+10, the margins and the left values of containers.... */
-					reduce = 20;	/* hard coded: 10+10, the margins and the left values of containers.... */
-					reduce = 0;
 					reduce = -18;	/* cancel 1st and last galleria-image side margins (9px + 9px) */
 					
 					var containerWidth_R = containerWidth-reduce;
@@ -415,13 +400,8 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 					imgBoxW -= parseFloat(thumbnailsList.find('.galleria-image:first').css("margin-right"));
 					imgBoxW -= parseFloat(thumbnailsList.find('.galleria-image:first').css("margin-left"));
 					
-
-					Galleria.log('pre round ' + imgBoxW)
 //					imgBoxW = Math.round(imgBoxW);
-					imgBoxW = parseInt(imgBoxW)
-
-					Galleria.log('post round ' + imgBoxW)
-					
+					imgBoxW = parseInt(imgBoxW);
 				}
 				
 				
@@ -431,10 +411,7 @@ Galleria.log("B) set offset to " + thisGallery.$( 'container' ).find('.galleria-
 
 				if(thisGallery._options.europeana.similarItems){
 					var imgMargin	= thisGallery._options.europeana.imgMargin;
-
 					thumbnailsList.css("margin",	"0 -" + imgMargin + "px");
-				//	thumbList.css("margin-left",	"-" + imgMargin + "px");
-					//thumbList.css("margin-right",	"-" + imgMargin + "px");
 				}
 
 		    	
