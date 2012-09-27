@@ -33,25 +33,35 @@ eu.europeana.fulldoc = {
   	  				
   	  				return tallestImageH + galleriaOffsetY;
   				};
-  				  				
+
+
+
    	   			// mock some lightbox data
-   	   			
+  				/*
+   	   			var lightboxImages = [
+   	   				'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg',
+   	   				'http://garytymon.files.wordpress.com/2011/05/02.jpg',
+   	   				'http://3.bp.blogspot.com/-BwELLLI2HuQ/TjzWsDBc-EI/AAAAAAAAAeM/p5_LAtteZws/s1600/millenium-falcon.jpg',
+   	   				'http://1.bp.blogspot.com/-Em5hSysjkFo/TsVKcZ-uHZI/AAAAAAAAETQ/YcRPI26OiLo/s1600/111711d.jpg',
+   	   				'http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg'
+   	   			];
+
+   	   			var lightboxImgCount = 0;
+
    	   			for(var i=0; i<carouselData.length; i++){
-   	   				
-   	   				if(i%2==0){
+   	   				if(i%2==0){   	   					
    	   					carouselData[i].lightboxable = {
    	   							type : 'image',
-   	   							url : 'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg'
-   	   					};   	   					
+   	   							url : lightboxImages[lightboxImgCount]
+   	   					};
+   	   					lightboxImgCount ++;
    	   				}
-   	   				
    	   			}
-   	   			
+   	   			//*/
    	   			// end mock lightbox data
 
 
-				Galleria.log("carouselData length  " + carouselData.length);
-  					
+
   				jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");	// set height to max height that will be needed
   					
   	  			thisGallery = Galleria.run('#carousel-1', {
@@ -122,34 +132,24 @@ eu.europeana.fulldoc = {
 							var normalHeight =  eu.europeana.fulldoc.getCarouselHeight();
 			  				jQuery('#carousel-1')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
 			  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");
-			  				
-							//$('.lb-trigger').css('display', (show ? 'block' : 'none'));
-			  				
-			  				
 							fixThumbNav(gallery);
-							eu.europeana.vars.suppresResize = true;
 							
+							eu.europeana.vars.suppresResize = true;	/* stop ipad triggering a resize event */
 							if(show){
+								
 								setTimeout(function(){
-									eu.europeana.vars.suppresResize = false;
-									
+									eu.europeana.vars.suppresResize = false;	// fadeIn callback not working so use timeout to restore variable
 								}, 520);
+								
 								$('.lb-trigger').fadeIn(500);
-								
-								//$('.lb-trigger').css('display', 'none');
-								
 							}
 							else{
 								$('.lb-trigger').css('display', 'none');
 								eu.europeana.vars.suppresResize = false;
-								
 							}
-							
-							
-
 						};
-						
-						
+
+
 						this.bind("image", function(e) {	// lightbox trigger
 							var gallery = this;
 							var lightboxable = gallery._options.dataSource[e.index].lightboxable;
@@ -157,7 +157,7 @@ eu.europeana.fulldoc = {
 								if(!triggerPanel){
 									this.$( 'container' ).find('.galleria-images').after(
 											'<div class="lb-trigger" >'
-											+ '<span rel="#lightbox" title="View" class="icon-mag">View</span>'
+											+ '<span rel="#lightbox" title="' + triggerLabels[lightboxable.type] + '" class="icon-mag">' + triggerLabels[lightboxable.type] + '</span>'
 											+ '</div>'
 									);
 									triggerPanel = this.$( 'container' ).find('.lb-trigger');
@@ -191,12 +191,12 @@ eu.europeana.fulldoc = {
 									loadJS();
 								}
 								else{
-									showTrigger(true, gallery);
+									initLightbox(lightboxable.url, gallery);
+									//showTrigger(true, gallery);
 								}
 							}
 							else{
 								showTrigger(false, gallery);
-								//hideTrigger(gallery);
 							}
 	
 						}); // end bind image
@@ -291,22 +291,17 @@ eu.europeana.fulldoc = {
 		js.loader.loadScripts([{
 			file: 'window-open' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/js/' + js.min_directory
-		}]);
-			
-			
+		}]);		
 
-		
-		
-	
+
 		// dependency group - carousel, tabs and truncate content functionality (+citation)
-	
+
 		js.loader.loadScripts([{
 			name : 'carousel',
 			file : 'carousel' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory
 		}]);
-	
-		
+
 		js.loader.loadScripts([{
 			name : 'tabs',
 			file : 'tabs' + js.min_suffix + '.js' + js.cache_helper,
@@ -314,15 +309,14 @@ eu.europeana.fulldoc = {
 			dependencies : [ 'carousel' ],
 			callback : function() {self.addTabs();}
 		}]);
-		
-		
+
 		js.loader.loadScripts([{
 			file : 'citation' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'tabs' ],
 			callback: function(){eu.europeana.citation.init();}
 		}]);
-		
+
 		js.loader.loadScripts([{
 			name : 'truncate-content',
 			file : 'truncate-content' + js.min_suffix + '.js' + js.cache_helper,
