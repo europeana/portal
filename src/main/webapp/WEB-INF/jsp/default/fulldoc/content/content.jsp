@@ -37,8 +37,19 @@
 			<div class="row">
 				<div class="twelve columns">
 
-					<%-- data for carousel --%>
 					<script type="text/javascript">
+					
+						<%-- Translation data for lightbox triggers: map lightboxble type to message 
+						
+						--%>
+						var triggerLabels = {
+								'image'		:	'<spring:message code="view_t"		/>',
+								'play'		:	'<spring:message code="play_t"		/>',	// todo - base the label on the lightboxable type
+								'download'	:	'<spring:message code="download_t"	/>',	// todo
+								'read'		:	'<spring:message code="read_t"		/>'		// todo
+						};
+					
+						<%-- data for carousel --%>
 						var carousel2Data = [];
 						<c:forEach items="${model.moreLikeThis}" var="doc">
 						
@@ -49,19 +60,6 @@
 							};
 							
 						</c:forEach>
-						/*
-						carousel2Data[carousel2Data.length] = {
-								image:			'http://europeanastatic.eu/api/image?query=paris&type=IMAGE&uri=http%3A%2F%2Fdigitaltmuseum.se%2FBigImageContent.do%3FimageIndex%3D0%26owner%3DS-NM%26identifier%3DNM.0327524%2B&size=BRIEF_DOC',
-								title:			'',
-								link:			''
-							};
-						
-						carousel2Data[carousel2Data.length] = {
-								image:			'http://europeanastatic.eu/api/image?query=paris&type=IMAGE&uri=http%3A%2F%2Fdigitaltmuseum.se%2FBigImageContent.do%3FimageIndex%3D0%26owner%3DS-NM%26identifier%3DNM.0327524%2B&size=BRIEF_DOC',
-								title:			'',
-								link:			''
-							};
-						*/
 						
 					</script>
 					
@@ -70,10 +68,6 @@
 						<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
 						<div id="similar-content">
 						
-							<%--
-							<div id="carousel-2-header" class="europeana-header"></div>
-							--%>
-							
 							<div id="carousel-2" about="${model.document.id}" class="europeana-carousel">
 
 								<%-- hidden seo images --%>
@@ -87,10 +81,6 @@
 								</c:forEach>
 							
 							</div>
-							
-							<%--
-							<div id="carousel-2-footer" class="europeana-footer"></div>
-							--%>
 							
 						</div>
 					</div>
