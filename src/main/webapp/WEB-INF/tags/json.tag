@@ -10,4 +10,4 @@
 <%-- fn:replace(text, "/", "\\/") --%>
 <%-- c:set var="text" value='${fn:replace(text, "/", "\\\\/")}' / --%>
 <%-- fn:replace(text, "\"", "\\\"") --%>
-${fn:replace(fn:replace(fn:replace(text, "/", "\\/"), '"', '\\"'), "'", "\\'")}
+${fn:replace(fn:replace(text, "/", "\\/"), '"', '\\"')}

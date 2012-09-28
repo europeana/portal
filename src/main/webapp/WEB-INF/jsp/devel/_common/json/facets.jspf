@@ -1,10 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-"facets": [{
-  <c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet" varStatus="facetStatus">
-    "${fn:toLowerCase(facet.type)}": [
-      <c:forEach items="${facet.links}" var="item" varStatus="itemStatus">
+"facets": [{<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet" varStatus="facetStatus">
+    "${fn:toLowerCase(facet.type)}": [<c:forEach items="${facet.links}" var="item" varStatus="itemStatus">
         {"label": "${item.value}","count": ${item.count}}<c:if test="${!itemStatus.last}">,</c:if>
       </c:forEach>
     ]<c:if test="${!facetStatus.last}">,</c:if>

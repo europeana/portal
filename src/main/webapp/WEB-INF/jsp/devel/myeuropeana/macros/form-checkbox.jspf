@@ -9,7 +9,7 @@
 	<div id="agree">
 	
 		<input type="hidden" name="_${id}" value="false" />
-		<input type="checkbox" id="${id}" name="${id}" title="<spring:message code="IAgree_t" />"
+		<input type="checkbox" id="${id}" name="${id}" title="<spring:message code="IAgree_t" />">
 		<%-- <#if spring.status.value>checked="checked"</#if> --%>
 		${attributes}
 		<spring:closeTag />

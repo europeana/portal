@@ -4,20 +4,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags" %>
-{
+<%--@ include file="/WEB-INF/jsp/devel/_common/json/navigation.jspf" --%>
+<%--@ include file="/WEB-INF/jsp/devel/_common/json/breadcrumb.jspf" --%>
+<%--@ include file="/WEB-INF/jsp/devel/_common/json/facets.jspf" --%>{
   "dateTimeFormat" : "iso8601",
-  <%@ include file="/WEB-INF/jsp/devel/_common/json/navigation.jspf" %>
-  <%@ include file="/WEB-INF/jsp/devel/_common/json/breadcrumb.jspf" %>
-  <%@ include file="/WEB-INF/jsp/devel/_common/json/facets.jspf" %>
-  "events": [
-    <c:forEach items="${model.results}" var="cell" varStatus="itemStatus">
-      <c:set var="year" value="${cell.year}" /><%-- cell.year?date('yyyy') --%>
-      <%--
-      <#assign year = year?string.medium/>
-      <#assign year = year?replace('Jan 1, ','')/>
-      --%>
-      <c:set var="trimmed"><europeana:stringLimiter theStr="${cell.titleJSON}" size="70" /></c:set>
-      {
+  "events": [<c:forEach items="${model.results}" var="cell" varStatus="itemStatus">
+      <c:set var="year" value="${cell.year}" /><c:set var="trimmed"><europeana:stringLimiter theStr="${cell.titleJSON}" size="70" /></c:set>{
         "start" : "<europeana:json text="${year[0]}" />",
         "title" : "<europeana:json text="${trimmed}" />",
         "icon" : "<europeana:json text="${cell.iconJSON}" />",
