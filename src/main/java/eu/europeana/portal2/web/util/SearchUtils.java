@@ -50,7 +50,7 @@ public class SearchUtils {
 			Class<? extends BriefBean> clazz, String profile, Query query,
 			int start, int rows,
 			Map<String, String[]> params, String queryString) 
-			throws SolrTypeException {
+					throws SolrTypeException {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
@@ -72,12 +72,12 @@ public class SearchUtils {
 		if (StringUtils.containsIgnoreCase(profile, "spelling") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.setSpellcheck(ModelUtils.convertSpellCheck(resultSet.getSpellcheck()));
 		}
-		
+
 		briefBeanView.setFacetLogs(resultSet.getFacetFields());
-		
+
 //		if (StringUtils.containsIgnoreCase(profile, "suggestions") || StringUtils.containsIgnoreCase(profile, "portal")) {
 //		}
-		
+
 		ResultPagination pagination = new ResultPaginationImpl(start, rows, (int)resultSet.getResultSize(), 
 				queryString, query.getQuery(), breadCrumbs);
 		briefBeanView.setPagination(pagination);

@@ -31,16 +31,19 @@ import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.SearchFilter;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
-import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBeanListDecorator;
 
 public class BriefBeanViewDecorator implements BriefBeanView {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
+	private final static String[] facetOrder = new String[]{"TYPE", "LANGUAGE", "YEAR", "COUNTRY", "RIGHTS", "PROVIDER", "DATA_PROVIDER"};
+
 	private SearchData model;
 	private BriefBeanView view;
 
 	private List<FacetQueryLinks> facets = null;
+
+	private List<BriefBeanDecorator> beans = null;
 
 	public BriefBeanViewDecorator(SearchData model, BriefBeanView view) {
 		this.model = model;
@@ -50,27 +53,25 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getBriefBeans() {
-		//if (breadcrumbs != null) {
-			BriefBeanListDecorator<BriefBean> decorator = new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) view.getBriefBeans());
-			// BreadcrumbListDecorator breadcrumbListDecorator = new BreadcrumbListDecorator(this, breadcrumbs);
-			return decorator.asDecoList();
-		//}
-		//return null;
-
-		// return new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) view.getBriefDocs());
+		if (beans == null) {
+			beans = new ArrayList<BriefBeanDecorator>();
+			int index = model.getStart();
+			for (BriefBean briefDoc : view.getBriefBeans()) {
+				beans.add(new BriefBeanDecorator(model, briefDoc, index++));
+			}
+		}
+		return beans;
 	}
 
 	@Override
 	public List<FacetQueryLinks> getFacetQueryLinks() {
 		if (facets == null) {
 			// setting the order and facet types we want
-			String[] order = new String[] { "TYPE", "LANGUAGE", "YEAR",
-					"COUNTRY", "RIGHTS", "PROVIDER", "DATA_PROVIDER" };
-			FacetQueryLinks[] oFacets = new FacetQueryLinks[order.length];
+			FacetQueryLinks[] oFacets = new FacetQueryLinks[facetOrder.length];
 			List<FacetQueryLinks> list = view.getFacetQueryLinks();
 			for (FacetQueryLinks facet : list) {
 				if ((facet.getLinks() != null) && (facet.getLinks().size() > 0)) {
-					int index = ArrayUtils.indexOf(order, facet.getType());
+					int index = ArrayUtils.indexOf(facetOrder, facet.getType());
 					if (index != -1) {
 						oFacets[index] = facet;
 					}
@@ -113,5 +114,4 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 	public List<SearchFilter> getSearchFilters() {
 		return view.getSearchFilters();
 	}
-
 }

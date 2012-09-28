@@ -38,18 +38,18 @@ public class BriefBeanDecorator implements BriefBean {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	protected BriefBean briefDoc;
+	protected BriefBean briefBean;
 	private UrlAwareData<?> model;
 	private int index;
 
-	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefDoc, int index) {
-		this(model, briefDoc);
+	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefBean, int index) {
+		this(model, briefBean);
 		this.index = index;
 	}
 
-	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefDoc) {
+	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefBean) {
 		this.model = model;
-		this.briefDoc = briefDoc;
+		this.briefBean = briefBean;
 	}
 
 	public String getKmlBegin() {
@@ -75,7 +75,7 @@ public class BriefBeanDecorator implements BriefBean {
 	}
 
 	public String getFullDocUrl() {
-		String url = "record/" + briefDoc.getId().replace("#", "") + ".html";
+		String url = "record/" + briefBean.getId().replace("#", "") + ".html";
 		UrlBuilder builder = new UrlBuilder(url);
 
 		builder.addParam("start", Integer.toString(getIndex()), true);
@@ -93,23 +93,23 @@ public class BriefBeanDecorator implements BriefBean {
 
 	@Override
 	public String getId() {
-		return briefDoc.getId();
+		return briefBean.getId();
 	}
 
 	@Override
 	public String[] getTitle() {
-		return briefDoc.getTitle();
+		return briefBean.getTitle();
 	}
 
 	public String getTitleJSON() {
-		String s = StringUtils.join(briefDoc.getTitle(), ' ');
+		String s = StringUtils.join(briefBean.getTitle(), ' ');
 		s = StringUtils.strip(s, "\\/");
 		s = StringUtils.trim(s);
 		return s;
 	}
 
 	public String getTitleXML() {
-		return StringEscapeUtils.escapeXml(StringUtils.join(briefDoc.getTitle(), ' '));
+		return StringEscapeUtils.escapeXml(StringUtils.join(briefBean.getTitle(), ' '));
 	}
 
 	public String getThumbnail() {
@@ -119,8 +119,8 @@ public class BriefBeanDecorator implements BriefBean {
 	private String getThumbnail(String size) {
 		try {
 			String tn = "";
-			if (briefDoc.getEdmObject() != null && briefDoc.getEdmObject().length > 0) {
-				tn = StringUtils.defaultIfBlank(briefDoc.getEdmObject()[0], "");
+			if (briefBean.getEdmObject() != null && briefBean.getEdmObject().length > 0) {
+				tn = StringUtils.defaultIfBlank(briefBean.getEdmObject()[0], "");
 			}
 			UrlBuilder url = null;
 			// TODO: redo this
@@ -151,17 +151,12 @@ public class BriefBeanDecorator implements BriefBean {
 		return StringUtils.replace(getIcon(), "&amp;", "&");
 	}
 
-	/*
-	 * @Override public String[] getThumbnails() { return null;
-	 * //briefDoc.getThumbnails(); }
-	 */
-
 	public String getCreator() {
-		if (StringArrayUtils.isNotBlank(briefDoc.getDcCreator())) {
-			return briefDoc.getDcCreator()[0];
+		if (StringArrayUtils.isNotBlank(briefBean.getDcCreator())) {
+			return briefBean.getDcCreator()[0];
 		}
-		if (StringArrayUtils.isNotBlank(briefDoc.getDcContributor())) {
-			return briefDoc.getDcContributor()[0];
+		if (StringArrayUtils.isNotBlank(briefBean.getDcContributor())) {
+			return briefBean.getDcContributor()[0];
 		}
 		return null;
 	}
@@ -172,161 +167,106 @@ public class BriefBeanDecorator implements BriefBean {
 
 	@Override
 	public String[] getYear() {
-		return briefDoc.getYear();
+		return briefBean.getYear();
 	}
 
 	@Override
 	public String[] getProvider() {
-		return briefDoc.getProvider();
+		return briefBean.getProvider();
 	}
 
 	@Override
 	public String[] getDataProvider() {
-		return briefDoc.getDataProvider();
+		return briefBean.getDataProvider();
 	}
 
 	@Override
 	public String[] getLanguage() {
-		return briefDoc.getLanguage();
+		return briefBean.getLanguage();
 	}
 
 	@Override
 	public DocType getType() {
-		if (briefDoc.getType() == null) {
+		if (briefBean.getType() == null) {
 			// prevent user visual errors on unknown (invalid?) doctypes
 			return DocType.IMAGE;
 		}
-		return briefDoc.getType();
+		return briefBean.getType();
 	}
 
 	@Override
 	public int getEuropeanaCompleteness() {
-		return briefDoc.getEuropeanaCompleteness();
+		return briefBean.getEuropeanaCompleteness();
 	}
 
 	@Override
 	public String[] getEdmPlace() {
-		return briefDoc.getEdmPlace();
+		return briefBean.getEdmPlace();
 	}
 
 	@Override
 	public List<Map<String, String>> getEdmPlaceLabel() {
-		return briefDoc.getEdmPlaceLabel();
+		return briefBean.getEdmPlaceLabel();
 	}
-
-	/*
-	 * these are in ApiBean
-	 * 
-	 * @Override public String[] getEdmPlaceBroaderTerm() { return
-	 * briefDoc.getEdmPlaceBroaderTerm(); }
-	 * 
-	 * @Override public String[] getEdmPlaceBroaderLabel() { return
-	 * briefDoc.getEdmPlaceBroaderLabel(); }
-	 */
 
 	@Override
 	public Float getEdmPlaceLatitude() {
-		return briefDoc.getEdmPlaceLatitude();
+		return briefBean.getEdmPlaceLatitude();
 	}
 
 	@Override
 	public Float getEdmPlaceLongitude() {
-		return briefDoc.getEdmPlaceLongitude();
+		return briefBean.getEdmPlaceLongitude();
 	}
 
 	@Override
 	public String[] getEdmTimespan() {
-		return briefDoc.getEdmTimespan();
+		return briefBean.getEdmTimespan();
 	}
 
 	@Override
 	public List<Map<String, String>> getEdmTimespanLabel() {
-		return briefDoc.getEdmTimespanLabel();
+		return briefBean.getEdmTimespanLabel();
 	}
-
-	/*
-	 * in ApiBean
-	 * 
-	 * @Override public String[] getEdmPeriodBroaderTerm() { return
-	 * briefDoc.getEdmPeriodBroaderTerm(); }
-	 * 
-	 * @Override public String[] getEdmPeriodBroaderLabel() { return
-	 * briefDoc.getEdmPeriodBroaderLabel(); }
-	 */
 
 	@Override
 	public String[] getEdmTimespanBegin() {
-		return briefDoc.getEdmTimespanBegin();
+		return briefBean.getEdmTimespanBegin();
 	}
 
 	@Override
 	public String[] getEdmTimespanEnd() {
-		return briefDoc.getEdmTimespanEnd();
+		return briefBean.getEdmTimespanEnd();
 	}
-
-	/*
-	 * all in ApiBean
-	 * 
-	 * @Override public String[] getEdmConceptTerm() { return
-	 * briefDoc.getEdmConceptTerm(); }
-	 * 
-	 * @Override public String[] getEdmConceptLabel() { return
-	 * briefDoc.getEdmConceptLabel(); }
-	 * 
-	 * @Override public String[] getEdmConceptBroaderTerm() { return
-	 * briefDoc.getEdmConceptBroaderTerm(); }
-	 * 
-	 * @Override public String[] getEdmConceptBroaderLabel() { return
-	 * briefDoc.getEdmConceptBroaderLabel(); }
-	 */
-
-	/*
-	 * @Override public String[] getEdmAgentTerm() { return
-	 * briefDoc.getEdmAgentTerm(); }
-	 */
 
 	@Override
 	public List<Map<String, String>> getEdmAgentLabel() {
-		return briefDoc.getEdmAgentLabel();
+		return briefBean.getEdmAgentLabel();
 	}
 
 	@Override
 	public Date getTimestamp() {
-		return briefDoc.getTimestamp();
+		return briefBean.getTimestamp();
 	}
-
-	/*
-	 * in ApiBean aggregationEdmRights
-	 * 
-	 * @Override public String[] getEuropeanaRights() { return
-	 * briefDoc.getEuropeanaRights(); }
-	 */
 
 	@Override
 	public String[] getDcContributor() {
-		return briefDoc.getDcContributor();
+		return briefBean.getDcContributor();
 	}
 
 	@Override
 	public String[] getDcCreator() {
-		return briefDoc.getDcCreator();
+		return briefBean.getDcCreator();
 	}
 
 	@Override
 	public String[] getDctermsHasPart() {
-		return briefDoc.getDctermsHasPart();
+		return briefBean.getDctermsHasPart();
 	}
-
-	/*
-	 * in ApiBean
-	 * 
-	 * @Override public String[] getDctermsIsPartOf() { return
-	 * briefDoc.getDctermsIsPartOf(); }
-	 */
 
 	@Override
 	public String[] getDctermsSpatial() {
-		return returnNullIfEmpty(briefDoc.getDctermsSpatial());
+		return returnNullIfEmpty(briefBean.getDctermsSpatial());
 	}
 
 	private String[] returnNullIfEmpty(String[] test) {
@@ -335,21 +275,21 @@ public class BriefBeanDecorator implements BriefBean {
 
 	@Override
 	public String[] getEdmObject() {
-		return briefDoc.getEdmObject();
+		return briefBean.getEdmObject();
 	}
 
 	@Override
 	public String[] getEdmAgent() {
-		return briefDoc.getEdmAgent();
+		return briefBean.getEdmAgent();
 	}
 
 	@Override
 	public Boolean isOptedOut() {
-		return briefDoc.isOptedOut();
+		return briefBean.isOptedOut();
 	}
 
 	@Override
 	public String[] getRights() {
-		return briefDoc.getRights();
+		return briefBean.getRights();
 	}
 }

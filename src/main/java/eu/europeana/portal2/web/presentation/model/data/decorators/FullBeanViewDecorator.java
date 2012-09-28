@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -26,7 +27,6 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.portal2.web.presentation.model.DocIdWindowPager;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
-import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BriefBeanListDecorator;
 
 public class FullBeanViewDecorator implements FullBeanView {
 	private static final long serialVersionUID = -5504231572868214828L;
@@ -34,6 +34,10 @@ public class FullBeanViewDecorator implements FullBeanView {
 
 	private FullDocData model;
 	private FullBeanView fullBeanView;
+
+	private List<BriefBeanDecorator> relatedItems = null;
+	private List<BriefBeanDecorator> parents = null;
+	private List<BriefBeanDecorator> children = null;
 
 	public FullBeanViewDecorator(FullDocData model, FullBeanView fullBeanView) {
 		this.model = model;
@@ -55,7 +59,10 @@ public class FullBeanViewDecorator implements FullBeanView {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getRelatedItems() {
-		return new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) fullBeanView.getRelatedItems());
+		if (relatedItems == null) {
+			relatedItems = createDecoratedBeans(fullBeanView.getRelatedItems());
+		}
+		return relatedItems;
 	}
 
 	@Override
@@ -69,10 +76,10 @@ public class FullBeanViewDecorator implements FullBeanView {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getChildren() {
-		if (fullBeanView.getChildren() != null) {
-			return new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) fullBeanView.getChildren());
+		if (children != null) {
+			children = createDecoratedBeans(fullBeanView.getChildren());
 		}
-		return null;
+		return children;
 	}
 
 	@Override
@@ -86,10 +93,18 @@ public class FullBeanViewDecorator implements FullBeanView {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getParents() {
-		if (fullBeanView.getParents() != null) {
-			return new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) fullBeanView.getParents());
+		if (parents != null) {
+			parents = createDecoratedBeans(fullBeanView.getParents());
 		}
-		return null;
+		return parents;
 	}
 
+	private List<BriefBeanDecorator> createDecoratedBeans(List<? extends BriefBean> list) {
+		List<BriefBeanDecorator> items = new ArrayList<BriefBeanDecorator>();
+		int index = 1;
+		for (BriefBean briefDoc : list) {
+			items.add(new BriefBeanDecorator(model, briefDoc, index++));
+		}
+		return items;
+	}
 }
