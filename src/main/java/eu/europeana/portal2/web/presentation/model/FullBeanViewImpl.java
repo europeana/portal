@@ -104,13 +104,11 @@ public class FullBeanViewImpl implements FullBeanView {
 
 	public DocIdWindowPager createPager(String id, Map<String, String[]> httpParameters,
 			Query query, SearchService searchService, Class<? extends BriefBean> clazz) {
-		// TODO: implement later
-		// return null;
 		DocIdWindowPager pager = null;
 		try {
 			pager = DocIdWindowPagerImpl.fetchPager(id, httpParameters, query, searchService, clazz);
 		} catch (SolrTypeException e) {
-			// TODO Auto-generated catch block
+			log.severe("SolrTypeException: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 		return pager;

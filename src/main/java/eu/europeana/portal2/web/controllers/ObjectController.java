@@ -91,7 +91,7 @@ public class ObjectController {
 			HttpServletRequest request,
 			HttpServletResponse response, 
 			Locale locale) {
-		
+
 		config.registerBaseObjects(request, response, locale);
 		localeChangeInterceptor.preHandle(request, response, this);
 		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));

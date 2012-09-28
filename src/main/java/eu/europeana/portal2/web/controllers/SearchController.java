@@ -125,7 +125,7 @@ public class SearchController {
 		log.info("query: " + query);
 		BriefBeanView briefBeanView = null;
 		try {
-			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, request.getQueryString());
+			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params);
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);

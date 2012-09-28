@@ -58,7 +58,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	private SpellCheck spellcheck;
 
 	public BriefBeanViewImpl() {};
-	
+
 	/*
 	public BriefBeanViewImpl(BeanQueryModelFactory factory,
 			SolrQuery solrQuery, QueryResponse solrResponse,

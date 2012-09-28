@@ -32,9 +32,7 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.utils.NavigationUtils;
-import eu.europeana.portal2.web.controllers.utils.SearchUtil;
 import eu.europeana.portal2.web.model.ModelUtils;
-import eu.europeana.portal2.web.model.SearchResults;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
@@ -44,12 +42,12 @@ import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class SearchUtils {
 
-	private static final Logger log = Logger.getLogger(SearchUtil.class.getName());
+	private static final Logger log = Logger.getLogger(SearchUtils.class.getName());
 
 	public static BriefBeanView createResults(SearchService searchService,
 			Class<? extends BriefBean> clazz, String profile, Query query,
 			int start, int rows,
-			Map<String, String[]> params, String queryString) 
+			Map<String, String[]> params) 
 					throws SolrTypeException {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
@@ -78,8 +76,7 @@ public class SearchUtils {
 //		if (StringUtils.containsIgnoreCase(profile, "suggestions") || StringUtils.containsIgnoreCase(profile, "portal")) {
 //		}
 
-		ResultPagination pagination = new ResultPaginationImpl(start, rows, (int)resultSet.getResultSize(), 
-				queryString, query.getQuery(), breadCrumbs);
+		ResultPagination pagination = new ResultPaginationImpl(start, rows, (int)resultSet.getResultSize(), query, breadCrumbs);
 		briefBeanView.setPagination(pagination);
 		return briefBeanView;
 	}

@@ -1,12 +1,12 @@
 package eu.europeana.portal2.web.presentation.model;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
+import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.portal2.web.util.QueryUtil;
 
 /**
  * This class is used to compute result navigation to be inserted in the
@@ -39,8 +39,7 @@ public class ResultPaginationImpl implements ResultPagination {
 	private PresentationQueryImpl presentationQuery = new PresentationQueryImpl();
 	private List<PageLink> pageLinks = new ArrayList<PageLink>();
 
-	public ResultPaginationImpl(int start, int rows, int numFound,
-			String requestQueryString, String parsedQuery, List<BreadCrumb> breadcrumbs) {
+	public ResultPaginationImpl(int start, int rows, int numFound, Query query, List<BreadCrumb> breadcrumbs) {
 		this.numFound = numFound;
 		this.rows = rows;
 		
@@ -77,10 +76,11 @@ public class ResultPaginationImpl implements ResultPagination {
 			pageLinks.add(new PageLink(page, (page - 1) * rows + 1, pageNumber != page));
 		}
 		this.breadcrumbs = breadcrumbs; //BreadCrumb.createList(requestQueryString);
-		presentationQuery.queryForPresentation = createQueryForPresentation(parsedQuery);
-		presentationQuery.queryToSave = requestQueryString;
-		presentationQuery.userSubmittedQuery = parsedQuery; // solrQuery.getQuery();
-		presentationQuery.typeQuery = removePresentationFilters(parsedQuery);
+
+		presentationQuery.queryForPresentation = createQueryForPresentation(query);
+		presentationQuery.queryToSave = query.getQuery();
+		presentationQuery.userSubmittedQuery = query.getQuery(); // solrQuery.getQuery();
+		presentationQuery.typeQuery = removePresentationFilters(query.getQuery());
 	}
 
 	private static String removePresentationFilters(String requestQueryString) {
@@ -108,24 +108,16 @@ public class ResultPaginationImpl implements ResultPagination {
 		return urlString;
 	}
 
-	private static String createQueryForPresentation(String query) {
+	private static String createQueryForPresentation(Query query) {
 		StringBuilder queryString = new StringBuilder();
-		queryString.append("query").append("=").append(encode(query));
-		String[] facetQueries = null; //SolrQueryUtil.getFilterQueriesWithoutPhrases(solrQuery);
+		queryString.append("query").append("=").append(QueryUtil.encode(query.getQuery()));
+		String[] facetQueries = query.getRefinements();
 		if (facetQueries != null) {
 			for (String facetTerm : facetQueries) {
 				queryString.append(FACET_PROMPT).append(facetTerm);
 			}
 		}
 		return queryString.toString();
-	}
-
-	private static String encode(String value) {
-		try {
-			return URLEncoder.encode(value, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@Override
