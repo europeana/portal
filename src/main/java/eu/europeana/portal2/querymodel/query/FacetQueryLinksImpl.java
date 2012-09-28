@@ -50,8 +50,10 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 		}
 		Map<String, List<String>> refinements = QueryUtil.getFilterQueriesWithoutPhrases(query);
 		StringBuilder baseUrl = new StringBuilder();
-		for (String term : refinements.get(QueryUtil.REFINEMENTS)) {
-			baseUrl.append(FACET_PROMPT).append(term);
+		if (refinements != null) {
+			for (String term : refinements.get(QueryUtil.REFINEMENTS)) {
+				baseUrl.append(FACET_PROMPT).append(term);
+			}
 		}
 
 		for (LabelFrequency item : facetField.getFields()) {

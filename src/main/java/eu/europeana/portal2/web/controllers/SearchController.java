@@ -118,7 +118,8 @@ public class SearchController {
 						.setPageSize(rows)
 						.setStart(start-1) // Solr starts from 0
 						.setParameter("f.YEAR.facet.mincount", "1")
-						.setParameter("sort", sort);
+						.setParameter("sort", sort)
+						.setProduceFacetUnion(true);
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
 		log.info("query: " + query);

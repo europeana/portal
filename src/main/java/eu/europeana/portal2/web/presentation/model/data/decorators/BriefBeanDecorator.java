@@ -347,4 +347,9 @@ public class BriefBeanDecorator implements BriefBean {
 	public Boolean isOptedOut() {
 		return briefDoc.isOptedOut();
 	}
+
+	@Override
+	public String[] getRights() {
+		return briefDoc.getRights();
+	}
 }

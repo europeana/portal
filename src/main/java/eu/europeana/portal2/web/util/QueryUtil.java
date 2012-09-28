@@ -57,7 +57,7 @@ public class QueryUtil {
 	}
 
 	public static Query escapeQuery(Query originalQuery) {
-		// Query query = new Query(originalQuery); //(Query)originalQuery.clone();// 
+		// Query query = new Query(originalQuery); //(Query)originalQuery.clone();//
 		Query query;
 		try {
 			query = originalQuery.clone();
@@ -65,7 +65,10 @@ public class QueryUtil {
 			// TODO Auto-generated catch block
 			log.severe(e.getMessage());
 			return originalQuery;
-		}// 
+		}//
+		if (originalQuery.getRefinements() == null) {
+			return originalQuery;
+		}
 		String[] refinements = new String[query.getRefinements().length];
 		int i = 0;
 		for (String refinement : query.getRefinements()) {
