@@ -102,7 +102,7 @@ public class TimelineController {
 			.setStart(start-1) // Solr starts from 0
 			.setParameter("f.YEAR.facet.mincount", "1");
 
-		BriefBeanView briefBeanView = SearchUtils.createResults(searchService, BriefBean.class, "portal", query, start, rows, params);
+		BriefBeanView briefBeanView = SearchUtils.createResults(searchService, BriefBean.class, "standard", query, start, rows, params);
 		model.setBriefBeanView(briefBeanView);
 		model.setQuery(briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery());
 
