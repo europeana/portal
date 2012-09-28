@@ -152,6 +152,7 @@
 				data_ga_property: eu.europeana.vars.gaId,
 				data_ga_social : true,
 				data_track_clickback: true,
+				ui_click: true,		// disable hover
 				ui_use_css : true});
 		
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
@@ -166,9 +167,9 @@
 				compact : {}
 			},
 			link_html : $('#shares-link').html()
-		
 		});
 
+		
 		jQuery('#shares-link').html(
 			addThisHtml
 		);
