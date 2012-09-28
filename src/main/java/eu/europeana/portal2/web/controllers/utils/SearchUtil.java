@@ -35,12 +35,12 @@ public class SearchUtil {
 
 		SearchResults response = new SearchResults("search.json");
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
-		log.info("resultSet: " + resultSet);
-		resultSet.getQuery();
+
 		response.totalResults = resultSet.getResultSize();
 		response.itemsCount = resultSet.getResults().size();
 		response.items = resultSet.getResults();
-		briefBeanView.setBriefDocs(resultSet.getResults());
+		briefBeanView.setBriefBeans(resultSet.getResults());
+
 		if (StringUtils.containsIgnoreCase(profile, "facets") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.makeQueryLinks(ModelUtils.conventFacetList(resultSet.getFacetFields()), query);
 		}

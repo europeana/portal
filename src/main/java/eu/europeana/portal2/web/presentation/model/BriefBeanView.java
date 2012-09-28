@@ -36,7 +36,7 @@ import java.util.Map;
  */
 
 public interface BriefBeanView {
-	List<? extends BriefBean> getBriefDocs();
+	List<? extends BriefBean> getBriefBeans();
 
 	List<FacetQueryLinks> getFacetQueryLinks(); // throws UnsupportedEncodingException;
 

@@ -2,7 +2,7 @@
 
 	<c:set var="row_counter" value="1" />
 	<c:set var="cell_counter" value="1" />
-	<c:set var="results" value="${model.briefBeanView.briefDocs}" />
+	<c:set var="results" value="${model.briefBeanView.briefBeans}" />
   
 	<c:forEach var="cell" items="${results}">
   

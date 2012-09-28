@@ -54,7 +54,7 @@ public class SearchUtils {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
-		briefBeanView.setBriefDocs(resultSet.getResults());
+		briefBeanView.setBriefBeans(resultSet.getResults());
 
 		if (StringUtils.containsIgnoreCase(profile, "facets") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.makeQueryLinks(ModelUtils.conventFacetList(resultSet.getFacetFields()), query);

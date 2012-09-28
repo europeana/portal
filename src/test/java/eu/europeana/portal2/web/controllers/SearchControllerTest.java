@@ -96,7 +96,7 @@ public class SearchControllerTest {
 			briefBeanView = SearchUtils.createResults(searchService, clazz, "portal", query, start, 12, params, "query=*:*&qf=general");
 			model.setBriefBeanView(briefBeanView);
 			int index = start;
-			for (Object o : model.getBriefBeanView().getBriefDocs()) {
+			for (Object o : model.getBriefBeanView().getBriefBeans()) {
 				assertTrue(o instanceof BriefBeanDecorator);
 				BriefBeanDecorator bean = (BriefBeanDecorator)o;
 				assertTrue(bean.getFullDocUrl().indexOf("start=" + index++) > -1);
@@ -130,7 +130,7 @@ public class SearchControllerTest {
 			BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 
 			ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
-			briefBeanView.setBriefDocs(resultSet.getResults());
+			briefBeanView.setBriefBeans(resultSet.getResults());
 			List<FacetField> facetFields = resultSet.getFacetFields();
 			for (FacetField field : facetFields) {
 				System.out.println(field);

@@ -50,7 +50,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private ResultPagination pagination;
-	private List<? extends BriefBean> briefDocs;
+	private List<? extends BriefBean> briefBeans;
 	private List<FacetQueryLinks> queryLinks;
 	private List<SearchFilter> searchFilters;
 	private Map<String, String> facetLogs;
@@ -143,8 +143,8 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	*/
 
 	@Override
-	public List<? extends BriefBean> getBriefDocs() {
-		return briefDocs;
+	public List<? extends BriefBean> getBriefBeans() {
+		return briefBeans;
 	}
 
 	@Override
@@ -176,8 +176,8 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		this.spellcheck = spellcheck;
 	}
 
-	public void setBriefDocs(List<? extends BriefBean> briefDocs) {
-		this.briefDocs = briefDocs;
+	public void setBriefBeans(List<? extends BriefBean> briefBeans) {
+		this.briefBeans = briefBeans;
 	}
 
 	public void setPagination(ResultPagination pagination) {

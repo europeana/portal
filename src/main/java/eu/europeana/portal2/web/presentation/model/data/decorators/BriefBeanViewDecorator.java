@@ -49,9 +49,9 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<? extends BriefBean> getBriefDocs() {
+	public List<? extends BriefBean> getBriefBeans() {
 		//if (breadcrumbs != null) {
-			BriefBeanListDecorator<BriefBean> decorator = new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) view.getBriefDocs());
+			BriefBeanListDecorator<BriefBean> decorator = new BriefBeanListDecorator<BriefBean>(model, (List<BriefBean>) view.getBriefBeans());
 			// BreadcrumbListDecorator breadcrumbListDecorator = new BreadcrumbListDecorator(this, breadcrumbs);
 			return decorator.asDecoList();
 		//}
