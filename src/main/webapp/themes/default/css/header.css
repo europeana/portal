@@ -135,7 +135,12 @@ table {
 	position:		relative;
 }
 
+/*
 table, tr, td{
+	width:100%;
+}
+*/
+table, tr{
 	width:100%;
 }
 
@@ -144,9 +149,14 @@ td{
 	white-space:	nowrap;
 }
 
+
 tr td:first-child, tr td:last-child{
 	width:	auto;
 }
+
+
+
+
 
 table tr:first-child{
 	border:		1px solid #E4E4E4;
@@ -169,7 +179,7 @@ table tr:first-child{
 	
 	border-top:			1px solid #E4E4E4;
 	border-bottom:		1px solid #E4E4E4;
-	border-right:		1px solid #E4E4E4;
+	xxxborder-right:		1px solid #E4E4E4;
 }
 
 @media only screen and ( min-width:48em ){
@@ -202,34 +212,32 @@ table tr:first-child{
 	font-size:			inherit;
 	line-height:		1.48;
 	color:				#333;
-	outline:			none; /* chrome */
 
-	-webkit-appearance:	none;
-
-	padding:			0;
-	padding-left:		0.25em;
-	padding-right:		0.25em;
-
+	outline:						none;						/* firefox */
+	-webkit-appearance:				none;						/* chrome */
+	-webkit-tap-highlight-color:	none;						/* android */
+	-webkit-user-modify:			read-write-plaintext-only;	/* android */
 	
-	width:				90%;
-	border:				none;
+	padding:			0;
 	margin:				0;
 	
-	float:				left;
-	
-	
-	box-sizing:			border-box;
-	-moz-box-sizing:	border-box;
-	-webkit-box-sizing:	border-box;
-
-	
+	width:				100%;
+	border:				none;
 }
+
+#query-input:focus {
+    outline:						none;
+   	-webkit-appearance:				none;
+	-webkit-tap-highlight-color:	rgba(0, 0, 0, 0);
+	-webkit-user-modify:			read-write-plaintext-only;
+}
+
 
 
 .query-cell{
 	border-left:	1px solid #E4E4E4;
+	padding:		0 0.25em;
 	overflow:		hidden;
-	padding-left:	0.5em;
 }
 
 
@@ -254,7 +262,8 @@ table tr:first-child{
          -8px -11px 4px -10px rgba(153, 0, 255, 0.3);
          
          */ 
-	box-shadow:			inset -4px 0 4px rgba(153, 0, 255, 0.3),		0 0 0 rgba(153, 0, 255, 0.3),	0 0 0 rgba(153, 0, 255, 0.3),	0 0 4px rgba(153, 0, 255, 0.3);
+	zzzbox-shadow:	inset	0 0 4px rgba(153, 0, 255, 0.3);
+	box-shadow:	inset	0 0 4px #4C7ECF;
          
 
 }
@@ -291,7 +300,7 @@ table tr:first-child{
 	
 	#query-input{
 		width:					100%;
-		
+																xxbackground-color:red;
 		-moz-border-radius:		0 0 0 0;
 		-webkit-border-radius:	0 0 0 0;
 		border-radius:			0 0 0 0;
@@ -448,7 +457,10 @@ table tr:first-child{
 		padding:				0;
 		padding-bottom:			0.175em;
 		padding-right:			0.5em;
+		
 		padding-left:			0.25em;
+		
+		
 		-moz-border-radius:		0 0.5em 0.5em 0;
 		-webkit-border-radius:	0 0.5em 0.5em 0;
 		border-radius:			0 0.5em 0.5em 0;

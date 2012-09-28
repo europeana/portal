@@ -15,6 +15,17 @@ eu.europeana.header = {
 	
 	init : function() {
 
+		//$("#query-search table").removeClass("no-show");
+
+		$('.submit-cell').css("width",	$('.submit-cell button')	.outerWidth(true) + "px"); 
+		$('.menu-cell').css("width",	$('#search-menu')			.outerWidth(true) + "px");
+		
+		$('.submit-cell button').css("border-left",	"solid 1px #4C7ECF");	// do this after the resize to stop 1px gap in FF
+		
+		$("#query-search>table")									.css("display",		"none");
+		$("#query-search>table")									.css("visibility",	"visible");
+		$("#query-search>table").fadeIn(600);
+		
 		this.initResponsiveUtility();
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
@@ -44,6 +55,7 @@ eu.europeana.header = {
 	initResponsiveUtility : function(){
 		window.showingPhone = function(){ return $("#mobile-menu").is(":visible"); };
 	},
+	
 	/*
 	initResponsiveLogo : function(){
 		var setup = function(){
@@ -66,6 +78,7 @@ eu.europeana.header = {
 		setup();
 	},
 	*/
+	
 	setCookie: function(val){
 		document.cookie = "europeana_rows=" + val;
 	},
@@ -295,6 +308,16 @@ eu.europeana.header = {
 			
 			$(id).autocomplete({
 				
+			    open: function(event, ui) {
+			        var oldLeft		= jQuery(".ui-autocomplete").offset().left;
+			        var oldWidth	= jQuery(".ui-autocomplete").width();
+			        var newLeft 	= oldLeft	- parseInt( $(id).parent().css('padding-left') );
+			        var newWidth	= oldWidth	- parseInt( $(id).parent().css('padding-left') );
+	                $(".ui-autocomplete").css("left",	newLeft + "px");
+	                $(".ui-autocomplete").css("width",	newWidth + "px");
+
+			    },
+			    
 				minLength : 3,
 				
 				delay : 100,
@@ -352,6 +375,8 @@ eu.europeana.header = {
 				if(!item.label){
 					item.label = item.term;
 				}
+				
+				//ul.css('padding-left', '-0.25em');
 				
 				item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 				item.label +=  " (" + item.frequency + ")";

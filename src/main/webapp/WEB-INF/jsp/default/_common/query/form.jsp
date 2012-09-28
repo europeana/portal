@@ -21,7 +21,7 @@
 
 	<form id="query-search" action="${query_action}" method="get">
 				
-		<table cellspacing="0" cellpadding="0">
+		<table cellspacing="0" cellpadding="0" class="no-show">
 			<tr>
 				<td class="menu-cell">
 					<div id="search-menu" class="eu-menu" aria-hidden="true">
@@ -43,12 +43,13 @@
 						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
 						value="${model.query}"/>							
 				</td>
-				<td class="submit-cell hide-cell-on-phones">
+				<td class="submit-cell hide-cell-on-phones" zzzstyle="border-left: 3px solid blue;">
 				
 						<button class="icon-mag deans-button-1" type="submit">
 							<spring:message code='Search_t'/>
 						</button>
 						
+		
 				</td>
 			</tr>
 			
