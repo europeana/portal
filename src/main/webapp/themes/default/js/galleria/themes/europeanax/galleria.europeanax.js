@@ -272,7 +272,8 @@ Galleria.addTheme({
 				var thumbnailsList = thisGallery.$( 'container' ).find('.galleria-thumbnails-list');
 				
 				var maxItems	= 0;
-				var	itemWidth	= 200;
+				var	itemWidth	= thisGallery._options.europeana.similarItems ? eu.europeana.fulldoc.getCarousel2Dimensions().w : 200;
+				
 				var	minMargin	= 9;	// min margin pixels
 				 	maxItems	= parseInt(		(containerWidth + 2 * minMargin) / (itemWidth + (2 * minMargin))		);
 					maxItems	= Math.max(maxItems, 1); // avoid division by zero!
@@ -445,8 +446,9 @@ Galleria.addTheme({
 	   			var stageBottomPhone	= 110;	/* linked to css values */
 	   			var stageBottomDesktop	= 60;
 	   			
-	   			container.parent().css	("height", eu.europeana.fulldoc.getCarouselHeight() + "px");	// resize container to make space for bigger thumbs
-	   			container.css			("height", eu.europeana.fulldoc.getCarouselHeight() + "px");
+	   			var containerCalculatedHeight = eu.europeana.fulldoc.getCarousel1Height();
+	   			container.parent().css	("height", containerCalculatedHeight + "px");	// resize container to make space for bigger thumbs
+	   			container.css			("height", containerCalculatedHeight + "px");
 	
 	   			if( window.showingPhone() ){
 	       			stage.css("bottom", stageBottomPhone + "px");

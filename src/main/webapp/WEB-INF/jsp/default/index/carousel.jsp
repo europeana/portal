@@ -119,14 +119,11 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				</a>
 				
 				
-				
-				
-				<span id="shares-link" aria-hidden="true" class="icon-share">
-					<span title="<spring:message code="Share_item_link_alt_t" />"></span>
+				<span id="shares-link" aria-hidden="true">
+					<span title="<spring:message code="Share_item_link_alt_t" />">
+						<span aria-hidden="true" class="icon-share"></span>
+					</span>
 				</span>
-				
-				
-				
 				
 				
 				<a	title	="<spring:message code="europeana-pinterest-title_t" />"

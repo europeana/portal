@@ -66,21 +66,22 @@
 					<%-- markup for carousel --%>
 					<div id="explore-further">
 						<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
-						<div id="similar-content">
-						
-							<div id="carousel-2" about="${model.document.id}" class="europeana-carousel">
 
-								<%-- hidden seo images --%>
-								
-								<c:forEach var="similar" items="${model.moreLikeThis}">
-									<img	src			= "${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
-											data-type	= "${fn:toLowerCase(similar.type)}"
-											class		= "hidden"
-											title		= "${fn:join(similar.title, ' ') }"
-									/>
-								</c:forEach>
-							
-							</div>
+						<%-- SEO friendly html rendering of images used as an image dimension measuring utility: has to live outside of the initially hidden #similar-content div --%>
+
+						<div id="carousel-2-img-measure">
+							<c:forEach var="similar" items="${model.moreLikeThis}">
+								<img	src			= "${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
+										alt			= "${fn:join(similar.title, ' ') }"
+										title		= "${fn:join(similar.title, ' ') }"
+										data-type	= "${fn:toLowerCase(similar.type)}"
+										class		= "no-show"/>
+							</c:forEach>
+						</div>
+
+						<div id="similar-content">
+
+							<div id="carousel-2" about="${model.document.id}" class="europeana-carousel"></div>
 							
 						</div>
 					</div>

@@ -7,14 +7,18 @@
 
 	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 		
-		<%-- hidden seo images --%>
+	<%-- hidden seo images --%>
+	
+	<div id="carousel-1-img-measure">
+	
+		<!-- TODO: make sure all item images are listed here -->
 		
-		<div id="img-h-measure" style="position:absolute;">
-			<img	src			= "${model.thumbnailUrl}"
-					alt			= "${model.pageTitle}"
-					data-type	= "${fn:toLowerCase(model.document.edmType)}"
-					class		= "no-show"/>
-		</div>
+		<img	src			= "${model.thumbnailUrl}"
+				alt			= "${model.pageTitle}"
+				data-type	= "${fn:toLowerCase(model.document.edmType)}"
+				class		= "no-show"/>
+	</div>
+		
 	<div id="carousel-1" class="europeana-bordered">
 		<script type="text/javascript">
 			var carouselData = [];

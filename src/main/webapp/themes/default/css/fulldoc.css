@@ -1,14 +1,18 @@
 
 /* start carousel pre-load height calculation */
 
-#img-h-measure img{
+#carousel-1-img-measure img,
+#carousel-2-img-measure img{
 	display:			inline-block;
-	vertical-align :	bottom; 
+	vertical-align :	bottom;
 }
 
-#img-h-measure{
-	white-space:		nowrap;
+#carousel-1-img-measure,
+#carousel-2-img-measure{
+	position:		absolute;
+	white-space:	nowrap;
 }
+
 
 /* end carousel pre-load height calculation */
 
