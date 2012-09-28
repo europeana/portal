@@ -26,8 +26,6 @@
 	var initCarousels = function(){
 
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
-		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeana/galleria.europeana.js');
-		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/classic/galleria.classic.js');
 		Galleria.configure({
 				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
 				carousel:		true,
@@ -44,7 +42,6 @@
 		});
 			
 
-		
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1").one('load',
 			function() {
 				var imgW			= $(this).width();
@@ -62,7 +59,6 @@
 				carousel.css("width",	"100%");
 				thumb.remove();
 				
-				carouselData[0].themeRef = eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js';
 				jQuery('#carousel-1').galleria({
 					dataSource:carouselData,
 					autoplay:5000
@@ -143,12 +139,13 @@
 	};
 	
 	var initAddThis = function(){
+		
 		var url = jQuery('head link[rel="canonical"]').attr('href'),
 			title = jQuery('head title').html(),
 			description = jQuery('head meta[name="description"]').attr('content');
 			window.addthis_config = com.addthis.createConfigObject({
 				pubid : eu.europeana.vars.addthis_pubid,
-				ui_language: 'en', // eu.europeana.vars.locale,
+				ui_language: eu.europeana.vars.locale,
 				data_ga_property: eu.europeana.vars.gaId,
 				data_ga_social : true,
 				data_track_clickback: true,
