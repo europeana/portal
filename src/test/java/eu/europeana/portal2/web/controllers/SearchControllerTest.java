@@ -93,7 +93,7 @@ public class SearchControllerTest {
 		BriefBeanView briefBeanView;
 
 		try {
-			briefBeanView = SearchUtils.createResults(searchService, clazz, "portal", query, start, 12, params, "query=*:*&qf=general");
+			briefBeanView = SearchUtils.createResults(searchService, clazz, "portal", query, start, 12, params);
 			model.setBriefBeanView(briefBeanView);
 			int index = start;
 			for (Object o : model.getBriefBeanView().getBriefBeans()) {
