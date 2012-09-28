@@ -12,226 +12,6 @@ eu.europeana.fulldoc = {
 
 	init : function() {
 
-		// this is a copy/paste from index.js
-		var initCarousels = function(){
-
-
-			Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
-
-  			$("#img-h-measure img").imagesLoaded( function(){
-  					
-  				eu.europeana.fulldoc.getCarouselHeight = function(){
-
-  	  				var tallestImageH = $("#img-h-measure").height();
-
-  	  				var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
-  	  				if( window.showingPhone() ){
-  	  					galleriaOffsetY	= 120;	
-  	  				}
-  	  				
-  	  				console.log("eu.europeana.fulldoc.getCarouselHeight returns " + (tallestImageH + galleriaOffsetY) + "px");
-  	  				
-  	  				return tallestImageH + galleriaOffsetY;
-  				};
-
-
-
-   	   			// mock some lightbox data
-  				/*
-   	   			var lightboxImages = [
-   	   				'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg',
-   	   				'http://garytymon.files.wordpress.com/2011/05/02.jpg',
-   	   				'http://3.bp.blogspot.com/-BwELLLI2HuQ/TjzWsDBc-EI/AAAAAAAAAeM/p5_LAtteZws/s1600/millenium-falcon.jpg',
-   	   				'http://1.bp.blogspot.com/-Em5hSysjkFo/TsVKcZ-uHZI/AAAAAAAAETQ/YcRPI26OiLo/s1600/111711d.jpg',
-   	   				'http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg'
-   	   			];
-
-   	   			var lightboxImgCount = 0;
-
-   	   			for(var i=0; i<carouselData.length; i++){
-   	   				if(i%2==0){   	   					
-   	   					carouselData[i].lightboxable = {
-   	   							type : 'image',
-   	   							url : lightboxImages[lightboxImgCount]
-   	   					};
-   	   					lightboxImgCount ++;
-   	   				}
-   	   			}
-   	   			//*/
-   	   			// end mock lightbox data
-
-
-
-  				jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");	// set height to max height that will be needed
-  					
-  	  			thisGallery = Galleria.run('#carousel-1', {
-	   				transition:			'fadeslide',
-	   				carousel:			true,
-	   				carouselSpeed:		1200,
-	   				carouselSteps:		1,
-	   				easing:				'galleriaOut',
-	   				imageCrop:			false,
-	   				imagePan:			false,
-	   				lightbox:			true,
-	   				responsive:			true,
-	   				dataSource:			carouselData,
-	   				thumbnails: 		carouselData.length>1,
-	   				max_scale_ratio:	1,					/* prevent stretching (does this work?  no reference to this variable in galleria that I can find) */
-					extend: function(e){
-						
-						var triggerHeight	= 40;
-						
-						var doEllipsis = function(){
-							var ellipsisObjects = [];
-							jQuery('.europeana-carousel-info').each(
-								function(i, ob){
-									ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-								}
-							);
-							$(window).bind('resize', function(){
-								if(eu.europeana.vars.suppresResize){
-									return;
-								}
-								for(var i=0; i<ellipsisObjects.length; i++ ){
-									ellipsisObjects[i].respond();
-								}
-							});
-						};
-	
-						$(this).ready(function(e) {
-							setTimeout(doEllipsis, 1000);
-						});
-						
-
-						var jsLoaded		= false;
-						var triggerPanel	= null;
-
-						
-						var initLightbox = function(url, gallery){
-							$('#lightbox_image').one('load', function(){
-								eu.europeana.lightbox.init(url);
-								showTrigger(true, gallery);
-							}); 
-							$('#lightbox_image').attr('src', url);
-						};
-						
-						// centre thumbnails
-						var fixThumbNav = function(gallery){
-							var imageNav		= gallery.$('container').find('.galleria-image-nav');
-							var imageNavR		= gallery.$('container').find('.galleria-image-nav-right');
-							var gImage			= gallery.$('container').find('.galleria-stage .galleria-image img:last-child');
-							var heightDiff		=  gImage.height() - imageNavR.height();
-							var stageTopMargin	= parseInt(gallery.$('container').find('.galleria-stage').css("margin-top")  );
-							
-							imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
-							imageNav.css("margin-top", "0px");
-						};		
-						
-						// Show or hide the trigger - resizing relevant elements
-						var showTrigger = function(show, gallery){
-							var normalHeight =  eu.europeana.fulldoc.getCarouselHeight();
-			  				jQuery('#carousel-1')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
-			  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");
-							fixThumbNav(gallery);
-							
-							eu.europeana.vars.suppresResize = true;	/* stop ipad triggering a resize event */
-							if(show){
-								
-								setTimeout(function(){
-									eu.europeana.vars.suppresResize = false;	// fadeIn callback not working so use timeout to restore variable
-								}, 520);
-								
-								$('.lb-trigger').fadeIn(500);
-							}
-							else{
-								$('.lb-trigger').css('display', 'none');
-								eu.europeana.vars.suppresResize = false;
-							}
-						};
-
-
-						this.bind("image", function(e) {	// lightbox trigger
-							var gallery = this;
-							var lightboxable = gallery._options.dataSource[e.index].lightboxable;
-							if(lightboxable && lightboxable.url.length>0){
-								if(!triggerPanel){
-									this.$( 'container' ).find('.galleria-images').after(
-											'<div class="lb-trigger" >'
-											+ '<span rel="#lightbox" title="' + triggerLabels[lightboxable.type] + '" class="icon-mag">' + triggerLabels[lightboxable.type] + '</span>'
-											+ '</div>'
-									);
-									triggerPanel = this.$( 'container' ).find('.lb-trigger');
-									triggerPanel.hide();
-									
-									var loadJS = function(){
-										
-										js.loader.loadScripts([{
-											name: 'jquery-tools',
-											file : 'jquery.tools.min.js' + js.cache_helper,
-											path : eu.europeana.vars.branding + '/js/jquery/',
-											dependencies : [ 'jquery' ]
-										}]);
-											
-										js.loader.loadScripts([{
-											name : 'jwplayer',
-											file : 'jwplayer.js' + js.cache_helper,
-											path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
-										}]);
-										
-										js.loader.loadScripts([{
-											file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
-											path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-											dependencies : [ 'jquery-tools', 'jwplayer'],
-											callback: function(){
-												initLightbox(lightboxable.url, gallery);
-												jsLoaded = true;
-											}
-										}]);
-									};
-									loadJS();
-								}
-								else{
-									initLightbox(lightboxable.url, gallery);
-									//showTrigger(true, gallery);
-								}
-							}
-							else{
-								showTrigger(false, gallery);
-							}
-	
-						}); // end bind image
-						
-					} // end extend
-	   				
-	   			}); // end Galleria.run
-   			
-  			});	// end imagesloaded
-  			
-	   			
-		
-   			
-   			if(typeof carousel2Data != 'undefined'){
-   				
-   	   			jQuery('#carousel-2').css("height", "200px");
-   	   			Galleria.run('#carousel-2', {
-   						transition:		'fadeslide',
-   						carousel:		true,
-   						carouselSpeed:	1200,
-   						carouselSteps:	1,
-   						easing:			'galleriaOut',
-   						imageCrop:		false,
-   						imagePan:		false,
-   						lightbox:		true,
-   						responsive:		true,
-   						dataSource:		carousel2Data,
-   						thumbnails: 	true
-   		   		});
-   		   		   				
-   			}
-   			
-	
-		};		
-		
 		this.loadComponents();
 		this.addAutoTagHandler();
 
@@ -250,25 +30,6 @@ eu.europeana.fulldoc = {
 		jQuery('#urlRefIsShownByPlay').bind('click', this.handleRedirectIsShownByPlayClick );
 		
 		jQuery('#lightbox_href').bind('click', this.handleRedirectIsShownByImgClick );
-		
-		
-		
-
-		
-		js.loader.loadScripts([{
-			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
-			callback : function() {
-				initCarousels();
-			}
-		}]);
-		
-
-		
-		
-		
-		
-
 	},
 
 	
@@ -341,26 +102,31 @@ eu.europeana.fulldoc = {
 			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			callback : function() {eu.europeana.translation_services.init(
 			
-					// Andy: this callback within a callback expands the link to the service and triggers the loading of the microsoft translate scripts
-					// comment out this line to save 300 - 385 milliseconds of initial load time
-					// leave this line in place to have the translator automatically opened 
-					function(){
-						if(! $("#mobile-menu").is(":visible") ){
-							jQuery("#translate-item").trigger('click');
-							jQuery("#translate-item").unbind('click');
-							jQuery("#translate-item").bind('click', function(e){e.preventDefault();});
-							jQuery("#translate-item").addClass('disabled');
-							jQuery("#translate-item span")
-							.removeClass(eu.europeana.translation_services.more_icon_class)
-							.removeClass(eu.europeana.translation_services.less_icon_class)
-							.removeClass(eu.europeana.translation_services.more_icon_class_phone);
-						}
+				// Andy: this callback within a callback expands the link to the service and triggers the loading of the microsoft translate scripts
+				// comment out this line to save 300 - 385 milliseconds of initial load time
+				// leave this line in place to have the translator automatically opened 
+				function(){
+					if(! $("#mobile-menu").is(":visible") ){
+						jQuery("#translate-item").trigger('click');
+						jQuery("#translate-item").unbind('click');
+						jQuery("#translate-item").bind('click', function(e){e.preventDefault();});
+						jQuery("#translate-item").addClass('disabled');
+						jQuery("#translate-item span")
+						.removeClass(eu.europeana.translation_services.more_icon_class)
+						.removeClass(eu.europeana.translation_services.less_icon_class)
+						.removeClass(eu.europeana.translation_services.more_icon_class_phone);
 					}
-					
+				}
 			);}
 		}]);
 		
-		
+		js.loader.loadScripts([{
+			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			callback : function() {
+				self.initCarousels();
+			}
+		}]);
 	},
 
 	
@@ -430,32 +196,32 @@ eu.europeana.fulldoc = {
 		
 	
 		// find the prioritized tab that exists on the page
-			for ( x = 0; x < xx; x += 1 ) {
-				for ( i = 0; i < ii; i += 1 ) {
-					if ( menu_ids[i] === tab_priority[x] ) {
-						tab_to_open = tab_priority[x];
-						priority_found = true;
-						break;
-					}
+		for ( x = 0; x < xx; x += 1 ) {
+			for ( i = 0; i < ii; i += 1 ) {
+				if ( menu_ids[i] === tab_priority[x] ) {
+					tab_to_open = tab_priority[x];
+					priority_found = true;
+					break;
 				}
-				if ( priority_found ) { break; }
 			}
+			if ( priority_found ) { break; }
+		}
 		
 		// if hash is present see if its valid, in the tab_priority array
-			if ( hash ) {
-				for ( i = 0; i < ii; i += 1 ) {
-					if ( menu_ids[i] === hash ) {
-						tab_to_open = hash;
-						break;
-					}
+		if ( hash ) {
+			for ( i = 0; i < ii; i += 1 ) {
+				if ( menu_ids[i] === hash ) {
+					tab_to_open = hash;
+					break;
 				}
 			}
+		}
 		eu.europeana.tabs.explore.toggleTab( tab_to_open );
 	},
 	
 	
 	tabFeedback : function( id ) {
-		
+		/*
 		if ( !eu.europeana.fulldoc.similar && '#similar-content' === id ) {
 			if ( eu.europeana.carousel.similar ) {
 				eu.europeana.carousel.similar.init();
@@ -469,10 +235,10 @@ eu.europeana.fulldoc = {
 				eu.europeana.fulldoc.related = true;
 			}
 		}
-		
+		*/
 	},
 	
-	
+	/*
 	addCarousels : function() {
 
 		eu.europeana.carousel = {};
@@ -504,7 +270,7 @@ eu.europeana.fulldoc = {
 		);
 		
 	},
-	
+	*/
 	
 	adjustDescription : function() {
 		
@@ -683,6 +449,16 @@ eu.europeana.fulldoc = {
 			addThisHtml
 		);
 		
+		
+		jQuery('#shares-link').hide();
+		com.addthis.init( null, true, false );
+		
+		setTimeout( function() {
+			jQuery('#shares-link').fadeIn(function(){
+				$(this).css("display", "inline-block");
+			}); },
+			600 );
+		
 		/*
 
 		jQuery('#lightbox-addthis').append(
@@ -702,16 +478,224 @@ eu.europeana.fulldoc = {
 		);
 		 */
 		
-		
-		jQuery('#shares-link').hide();
-		com.addthis.init( null, true, false );
-		
-		setTimeout( function() {
-			jQuery('#shares-link').fadeIn(function(){
-				$(this).css("display", "inline-block");
-			}); },
-			600 );
-		
+	},
+	
+	initCarousels : function(){
+
+		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
+
+			$("#img-h-measure img").imagesLoaded( function(){
+					
+				eu.europeana.fulldoc.getCarouselHeight = function(){
+
+	  				var tallestImageH = $("#img-h-measure").height();
+
+	  				var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
+	  				if( window.showingPhone() ){
+	  					galleriaOffsetY	= 120;	
+	  				}
+	  				
+	  				console.log("eu.europeana.fulldoc.getCarouselHeight returns " + (tallestImageH + galleriaOffsetY) + "px");
+	  				
+	  				return tallestImageH + galleriaOffsetY;
+				};
+
+
+
+	   			// mock some lightbox data
+				//*
+	   			var lightboxImages = [
+	   				'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg',
+	   				'http://garytymon.files.wordpress.com/2011/05/02.jpg',
+	   				'http://3.bp.blogspot.com/-BwELLLI2HuQ/TjzWsDBc-EI/AAAAAAAAAeM/p5_LAtteZws/s1600/millenium-falcon.jpg',
+	   				'http://1.bp.blogspot.com/-Em5hSysjkFo/TsVKcZ-uHZI/AAAAAAAAETQ/YcRPI26OiLo/s1600/111711d.jpg',
+	   				'http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg'
+	   			];
+
+	   			var lightboxImgCount = 0;
+
+	   			for(var i=0; i<carouselData.length; i++){
+	   				if(i%2==0){   	   					
+	   					carouselData[i].lightboxable = {
+	   							type : 'image',
+	   							url : lightboxImages[lightboxImgCount]
+	   					};
+	   					lightboxImgCount ++;
+	   				}
+	   			}
+	   			//*/
+	   			// end mock lightbox data
+
+
+
+				jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarouselHeight() + "px");	// set height to max height that will be needed
+					
+	  			thisGallery = Galleria.run('#carousel-1', {
+   				transition:			'fadeslide',
+   				carousel:			true,
+   				carouselSpeed:		1200,
+   				carouselSteps:		1,
+   				easing:				'galleriaOut',
+   				imageCrop:			false,
+   				imagePan:			false,
+   				lightbox:			true,
+   				responsive:			true,
+   				dataSource:			carouselData,
+   				thumbnails: 		carouselData.length>1,
+   				max_scale_ratio:	1,					/* prevent stretching (does this work?  no reference to this variable in galleria that I can find) */
+				extend: function(e){
+					
+					var triggerHeight	= 40;
+					
+					var doEllipsis = function(){
+						var ellipsisObjects = [];
+						jQuery('.europeana-carousel-info').each(
+							function(i, ob){
+								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
+							}
+						);
+						$(window).bind('resize', function(){
+							if(eu.europeana.vars.suppresResize){
+								return;
+							}
+							for(var i=0; i<ellipsisObjects.length; i++ ){
+								ellipsisObjects[i].respond();
+							}
+						});
+					};
+
+					$(this).ready(function(e) {
+						setTimeout(doEllipsis, 1000);
+					});
+					
+
+					var jsLoaded		= false;
+					var triggerPanel	= null;
+
+					
+					var initLightbox = function(url, gallery){
+						$('#lightbox_image').one('load', function(){
+							eu.europeana.lightbox.init(url);
+							showTrigger(true, gallery);
+						}); 
+						$('#lightbox_image').attr('src', url);
+					};
+					
+					// centre thumbnails
+					var fixThumbNav = function(gallery){
+						var imageNav		= gallery.$('container').find('.galleria-image-nav');
+						var imageNavR		= gallery.$('container').find('.galleria-image-nav-right');
+						var gImage			= gallery.$('container').find('.galleria-stage .galleria-image img:last-child');
+						var heightDiff		=  gImage.height() - imageNavR.height();
+						var stageTopMargin	= parseInt(gallery.$('container').find('.galleria-stage').css("margin-top")  );
+						
+						imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
+						imageNav.css("margin-top", "0px");
+					};		
+					
+					// Show or hide the trigger - resizing relevant elements
+					var showTrigger = function(show, gallery){
+						var normalHeight =  eu.europeana.fulldoc.getCarouselHeight();
+		  				jQuery('#carousel-1')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
+		  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");
+						fixThumbNav(gallery);
+						
+						eu.europeana.vars.suppresResize = true;	/* stop ipad triggering a resize event */
+						if(show){
+							
+							setTimeout(function(){
+								eu.europeana.vars.suppresResize = false;	// fadeIn callback not working so use timeout to restore variable
+							}, 520);
+							
+							$('.lb-trigger').fadeIn(500);
+						}
+						else{
+							$('.lb-trigger').css('display', 'none');
+							eu.europeana.vars.suppresResize = false;
+						}
+					};
+
+
+					this.bind("image", function(e) {	// lightbox trigger
+						var gallery = this;
+						var lightboxable = gallery._options.dataSource[e.index].lightboxable;
+						if(lightboxable && lightboxable.url.length>0){
+							if(!triggerPanel){
+								this.$( 'container' ).find('.galleria-images').after(
+										'<div class="lb-trigger" >'
+										+ '<span rel="#lightbox" title="' + triggerLabels[lightboxable.type] + '" class="icon-mag">' + triggerLabels[lightboxable.type] + '</span>'
+										+ '</div>'
+								);
+								triggerPanel = this.$( 'container' ).find('.lb-trigger');
+								triggerPanel.hide();
+								
+								var loadJS = function(){
+									
+									js.loader.loadScripts([{
+										name: 'jquery-tools',
+										file : 'jquery.tools.min.js' + js.cache_helper,
+										path : eu.europeana.vars.branding + '/js/jquery/',
+										dependencies : [ 'jquery' ]
+									}]);
+										
+									js.loader.loadScripts([{
+										name : 'jwplayer',
+										file : 'jwplayer.js' + js.cache_helper,
+										path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
+									}]);
+									
+									js.loader.loadScripts([{
+										file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
+										path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+										dependencies : [ 'jquery-tools', 'jwplayer'],
+										callback: function(){
+											initLightbox(lightboxable.url, gallery);
+											jsLoaded = true;
+										}
+									}]);
+								};
+								loadJS();
+							}
+							else{
+								initLightbox(lightboxable.url, gallery);
+								//showTrigger(true, gallery);
+							}
+						}
+						else{
+							showTrigger(false, gallery);
+						}
+
+					}); // end bind image
+					
+				} // end extend
+   				
+   			}); // end Galleria.run
+			
+			});	// end imagesloaded
+			
+   			
+	
+			
+			if(typeof carousel2Data != 'undefined'){
+				
+	   			jQuery('#carousel-2').css("height", "200px");
+	   			Galleria.run('#carousel-2', {
+						transition:		'fadeslide',
+						carousel:		true,
+						carouselSpeed:	1200,
+						carouselSteps:	1,
+						easing:			'galleriaOut',
+						imageCrop:		false,
+						imagePan:		false,
+						lightbox:		true,
+						responsive:		true,
+						dataSource:		carousel2Data,
+						thumbnails: 	true
+		   		});
+		   		   				
+			}
+			
+
 	}
 };
 

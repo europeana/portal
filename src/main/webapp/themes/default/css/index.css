@@ -50,6 +50,14 @@
 	font-size:		2em;
 }
 
+#shares-link{
+	display: none;
+}
+
+#shares-link .addthis_button{
+	color:			#333;
+}
+
 
 
 /*

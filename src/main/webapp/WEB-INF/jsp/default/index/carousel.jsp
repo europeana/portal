@@ -93,11 +93,51 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 
 			<div class="social-shares">
 				<span class="label">Share with your friends:</span>
-				<span aria-hidden="true" class="icon-facebook"></span>
-				<span aria-hidden="true" class="icon-twitter"></span>
-				<span aria-hidden="true" class="icon-pinterest-2"></span>
-				<span aria-hidden="true" class="icon-mail"></span>
-				<span aria-hidden="true" class="icon-share"></span>
+
+				<a	title	="<spring:message code="europeana-facebook-title_t" />"
+					href	="<spring:message code="europeana-facebook-url" />"
+					target	="<spring:message code="europeana-facebook-target" />"
+					rel		="me"
+					>
+					<span aria-hidden="true" class="icon-facebook"></span>
+				</a>
+
+				<a	title	="<spring:message code="europeana-twitter-title_t" />"
+					href	="<spring:message code="europeana-twitter-url" />"
+					target	="<spring:message code="europeana-twitter-target" />"
+					rel		="me"
+					>
+					<span aria-hidden="true" class="icon-twitter"></span>
+				</a>
+				
+				<a	title	="<spring:message code="europeana-pinterest-title_t" />"
+					href	="<spring:message code="europeana-pinterest-url" />"
+					target	="<spring:message code="europeana-pinterest-target" />"
+					rel		="me"
+					>
+					<span aria-hidden="true" class="icon-pinterest-2"></span>
+				</a>
+				
+				
+				
+				
+				<span id="shares-link" aria-hidden="true" class="icon-share">
+					<span title="<spring:message code="Share_item_link_alt_t" />"></span>
+				</span>
+				
+				
+				
+				
+				
+				<a	title	="<spring:message code="europeana-pinterest-title_t" />"
+					href	="<spring:message code="europeana-pinterest-url" />"
+					target	="<spring:message code="europeana-pinterest-target" />"
+					rel		="me"
+					>
+					<span aria-hidden="true" class="icon-mail"></span>
+				</a>				
+				
+				
 			</div>
 				
 		</div>
