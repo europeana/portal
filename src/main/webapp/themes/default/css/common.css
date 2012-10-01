@@ -142,6 +142,19 @@
 	padding-bottom:	0.25em;
 }
 
+#id_email::-webkit-input-placeholder{
+	color: #999;
+}
+
+#id_email:-moz-placeholder{
+	color: #999;
+}
+
+#id_email:-ms-input-placeholder{
+	color: #999;
+}
+
+
 .footer-links{
 	list-style-type:	none;
 	padding-left:		0;
@@ -153,12 +166,13 @@
 	color:			white;
 }
 
+/*
 .footer h3,
 .footer h3 a,
 .footer-links li a{
 	color:			white;
 }
-
+*/
 	
 .italic-heading{
 	font-weight:	normal;

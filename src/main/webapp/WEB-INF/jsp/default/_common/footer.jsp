@@ -51,12 +51,12 @@
 				
 				<div class="six columns">				
 					<div id="footer-subscribe">
-						<form>
+						<form action="https://app.e2ma.net/app2/audience/signup/1415029/1403149/?v=a">
 							<%--
 							<input name="name"	type="text"		placeholder="<spring:message code="news_letter_name_hint_t" />"/>
 							 --%>
 							
-							<input name="email"	type="email"	placeholder="<spring:message code="news_letter_email_hint_t" />"/>
+							<input id="id_email" name="id_email"	type="email"	placeholder="<spring:message code="news_letter_email_hint_t" />"/>
 							<input type="submit" class="europeana-button-1 deans-button-1" value="<spring:message code="news_letter_signup_button_t" />"/>
 						</form>
 					</div>

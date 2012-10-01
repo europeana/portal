@@ -2,13 +2,15 @@
 
 	/** GLOBAL **/
 	.footer{
-		background-color:	#333;
+		xxxxxxxxxbackground-color:	#333;
 		xxxxxxmargin-top:			1.1em !important;
 		xxxxxxmargin-bottom:		1.1em !important;
 		
 		padding-top:		1.1em	!important;
 		padding-bottom:		1.1em	!important;
-		
+
+
+		background-image:	url('../images/light_noise_diagonal_@2X.png')
 	}
 	
 	.footer-wrapper{
