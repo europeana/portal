@@ -1,12 +1,35 @@
-
+/*
 .eu-menu.selected span.open-menu,
 .eu-menu.selected .item.active{
-   	text-shadow:0 0 3px #FF0000;
+   	zzzztext-shadow:0 0 3px #FF0000;
+   	
+	box-shadow:			inset 0 0 4px #4C7ECF;
 }
 .eu-menu.no-highlight span.open-menu,
 .eu-menu.no-highlight .item.active{
-   	text-shadow:	none;
+   	zzzztext-shadow:	none;
+	box-shadow:			none;
 }
+*/
+
+.eu-menu.selected span.open-menu{
+	text-shadow:	0 5px 1px #4C7ECF;	
+}
+.eu-menu.no-highlight span.open-menu{
+	text-shadow:	none;
+}
+
+.eu-menu.selected .item.active{
+	box-shadow:			inset 0 0 4px #4C7ECF;
+}
+
+
+.eu-menu.no-highlight .item.active{
+	box-shadow:			none;
+}
+
+
+
 
 
 .eu-menu{
