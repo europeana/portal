@@ -92,6 +92,30 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			</div>
 
 			<div class="social-shares">
+			
+			
+			<!-- AddThis Button BEGIN -->
+			<%-- 
+			<div class="addthis_toolbox addthis_default_style xxaddthis_32x32_style">
+			
+				<a class="addthis_button_facebook" >
+					<span class="icon-facebook"></span>
+				</a>
+				
+				<a class="addthis_button_twitter" >
+					<span class="icon-twitter"></span>
+				</a>
+				
+				
+
+				<a class="addthis_button_preferred_4"></a>
+				<a class="addthis_button_compact"></a>
+				<a class="addthis_counter addthis_bubble_style"></a>
+			</div>
+			<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5069655a56d28488"></script>
+			--%>
+			
+			
 				<span class="label">Share with your friends:</span>
 
 				<a	title	="<spring:message code="europeana-facebook-title_t" />"
@@ -133,7 +157,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					>
 					<span aria-hidden="true" class="icon-mail"></span>
 				</a>				
-				
+
 				
 			</div>
 				

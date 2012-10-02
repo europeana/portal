@@ -12,8 +12,6 @@
 	<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
 	
 		<h2><spring:message code="RefineYourSearch_t" />:</h2>
-		
-		
 
 				
 		<ul id="filter-search">

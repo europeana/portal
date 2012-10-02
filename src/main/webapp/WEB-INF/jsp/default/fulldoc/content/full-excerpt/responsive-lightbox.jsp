@@ -8,20 +8,27 @@
 <!--Include div for lightbox -->
 <div class="simple_overlay" id="lightbox">
 	<div class="content-wrap">
+	
+		<span id="nav-prev" class="icon-arrow-4"></span>
+		<span id="nav-next" class="icon-arrow-2"></span>
+	
 		<!--	Note: the anchor style is used to size the media player (see eu.europeana.lightbox.playerOps for more info)
 				the same width attributes need copied into the div element to keep the lightbox centred in IE7.								 
 		-->
+		
 		<div class="playerDiv" style="display:block;width:0px;height:0px;">
+		
 			<%--a	href="/portal/.media?europeanaUri=${model.document.id}&recordId=${model.recordId}&lightboxRef=${lightboxRef}"
 				style="display:block;width:500px;height:350px;"
 				id="player"></a--%>
+				
 			<a href="${lightboxRef}" style="display:block; width:500px; height:350px;" id="player"></a>
 		</div>
 
 		<img id="lightbox_image" class="content-image" style="display:none" src=""/>
 		
 		<div class="lightbox-rights" id="rights-collapsed">
-			<@displayRights true/>
+			<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 		</div>
 		<div class="info">
 			<div class="hide_show_meta">
@@ -41,7 +48,11 @@
 					<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
 				</div>
 			</div>
-			<div class="spacer"></div>
+			
+			
+			<!-- div class="spacer"></div-->
+			
+			
 			<%--js target div--%>
 			<div id="lightbox-addthis"></div>
 			<div class="direct-download">

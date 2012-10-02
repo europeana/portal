@@ -6,6 +6,8 @@ eu.europeana.lightbox = {
 		
 		overlay:null,
 		
+		carouselData: null,
+		
 		showMetadata:function(){
 			jQuery(".content-wrap .info-open").show();
 			eu.europeana.lightbox.metaDataToggled();				
@@ -193,7 +195,8 @@ eu.europeana.lightbox = {
 		zoomImg : function(){					
 			var stats	= eu.europeana.lightbox.calculateMaxImgSize("zoom", "default");
 			var img		= jQuery(".content-image");
-			var html	= '<div class="zoomedImgDiv"><img id="zoomedImg" src="' + img.attr("src") + '" style="width:' + stats.w + 'px; height:' + stats.h + 'px;">' + eu.europeana.vars.lightbox_rights + '</div>';
+			var html	= '<div class="zoomedImgDiv"><img id="zoomedImg" src="' + img.attr("src") + '" style="width:' + stats.w + 'px; height:' + stats.h + 'px;">' + (eu.europeana.vars.lightbox_rights ? eu.europeana.vars.lightbox_rights : '') + '</div>';
+
 			jQuery("body").append(html);
 			
 			
@@ -232,7 +235,12 @@ eu.europeana.lightbox = {
 			}
 		},
 		
-		init:function(src) {
+//		init:function(src, carouselData) {
+		init:function(src, navOb) {
+			//alert("init")
+			//eu.europeana.lightbox.carouselData = carouselData;
+			eu.europeana.lightbox.navOb = navOb;
+			
 			jQuery(".lb-trigger span").overlay({
 				mask: {
 					color: '#ffffff',
@@ -403,6 +411,8 @@ eu.europeana.lightbox = {
 				var contentImage = jQuery(contentWrap.find(".content-image"));
 				var stats = eu.europeana.lightbox.calculateMaxImgSize("none", showMeta);
 				
+console.log("layout.... " + stats.w + " x " + stats.h);				
+				
 				overlay.css("height",	stats.h + "px");
 				overlay.css("width",	(stats.w - borderWidth) + "px");
 
@@ -411,8 +421,11 @@ eu.europeana.lightbox = {
 
 				contentWrap.css("width", 		(stats.w - borderWidth) + "px");
 				contentWrap.css("height",		stats.h + "px");
-				
-				var closeBtn = overlay.find(".close");
+
+				var closeBtn	= overlay.find(".close");
+				var navNext		= contentWrap.find('#nav-next');
+				var navPrev		= contentWrap.find('#nav-prev');
+
 				if(!closeBtn.data("originalCss")){					
 					closeBtn.data("originalCss", {"right":closeBtn.css("right")} );
 				}
@@ -438,8 +451,7 @@ eu.europeana.lightbox = {
 						contentInfo.css("minHeight",	stats.h + "px");
 						contentInfo.css("maxHeight",	stats.h + "px");						
 					}
-
-					
+				
 
 					// Unpin "original context" from bottom of info panel - display it normally - in line with other metadata.
 					contentInfo.find('.original-context').css('position', 'static');
@@ -460,6 +472,10 @@ eu.europeana.lightbox = {
 					contentInfo.css("left",			"-1px");
 					
 					
+					//alert("landscape")	
+//				contentInfo.find('#nav-next').css('top', );
+	//			contentInfo.find('#nav-prev').css('top', );
+
 					// pin "original context" to bottom of info panel - there's room for it there and it looks better
 					contentInfo.find('.original-context').css('position', 'absolute');
 					contentInfo.find('.original-context').css('bottom', '25px');
@@ -496,6 +512,21 @@ eu.europeana.lightbox = {
 				// centre the lightbox 
 				overlay.css("left",	stats.left	+ "px" );
 				overlay.css("top",	stats.top	+ "px" );
+				
+				navNext.css('top', (stats.h - navNext.height()) / 2 + "px");
+				navPrev.css('top', (stats.h - navNext.height()) / 2 + "px");
+
+				if(!eu.europeana.lightbox.navOb.wired){
+					navNext.click(function(){
+						eu.europeana.lightbox.navOb.next();
+					});
+					navPrev.click(function(){
+						eu.europeana.lightbox.navOb.prev();
+					});
+					eu.europeana.lightbox.navOb.wired = true;
+				}
+				
+				
 			}
 
 		},

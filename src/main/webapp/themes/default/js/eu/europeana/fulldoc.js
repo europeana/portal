@@ -486,11 +486,12 @@ eu.europeana.fulldoc = {
 		// mock some lightbox data
 		//
 		var lightboxImages = [
+		    'http://godsofart.com/wp-content/uploads/2012/01/Star_Wars_Tales_by_UdonCrew.jpg',
 			'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg',
+			'http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg',
 			'http://garytymon.files.wordpress.com/2011/05/02.jpg',
 			'http://3.bp.blogspot.com/-BwELLLI2HuQ/TjzWsDBc-EI/AAAAAAAAAeM/p5_LAtteZws/s1600/millenium-falcon.jpg',
-			'http://1.bp.blogspot.com/-Em5hSysjkFo/TsVKcZ-uHZI/AAAAAAAAETQ/YcRPI26OiLo/s1600/111711d.jpg',
-			'http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg'
+			'http://1.bp.blogspot.com/-Em5hSysjkFo/TsVKcZ-uHZI/AAAAAAAAETQ/YcRPI26OiLo/s1600/111711d.jpg'
 		];
 
 		var lightboxImgCount = 0;
@@ -498,8 +499,8 @@ eu.europeana.fulldoc = {
 		for(var i=0; i<carouselData.length; i++){
 			if(i%2==0){   	   					
 				carouselData[i].lightboxable = {
-						type : 'image',
-						url : lightboxImages[lightboxImgCount]
+						type	: 'image',
+						url		: lightboxImages[lightboxImgCount]
 				};
 				lightboxImgCount ++;
 			}
@@ -517,14 +518,14 @@ eu.europeana.fulldoc = {
 			easing:				'galleriaOut',
 			imageCrop:			false,
 			imagePan:			false,
-			lightbox:			true,
+			lightbox:			false,
 			responsive:			true,
 			dataSource:			carouselData,
 			thumbnails: 		carouselData.length>1,
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find) 
 			extend: function(e){
 			
-				var triggerHeight	= 40;
+				//var triggerHeight	= 40;
 				
 				var doEllipsis = function(){
 					var ellipsisObjects = [];
@@ -554,46 +555,83 @@ eu.europeana.fulldoc = {
 				
 				var initLightbox = function(url, gallery){
 					$('#lightbox_image').one('load', function(){
-						eu.europeana.lightbox.init(url);
+
+						var navOb = function(){
+							
+							var nav = function(direction){
+								var currentUrl = $("#lightbox_image").attr("src");
+								var submodel = [];
+								var submodelActive = 0;
+								
+								for(var i=0; i<carouselData.length; i++){
+									if(carouselData[i].lightboxable){
+										if(carouselData[i].lightboxable.url == currentUrl){
+											submodelActive = submodel.length;
+										}
+										submodel[submodel.length] = carouselData[i].lightboxable;
+									}
+								}
+								
+								var newActive = submodelActive + direction;
+								if(newActive<0){
+									newActive = submodel.length -1;
+								}
+								else if(newActive >= submodel.length){
+									newActive = 0;						
+								}
+								
+								$("#hidden_img").unbind( '.imagesLoaded' );
+								$("#hidden_img").remove();
+								$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
+									function(){
+										$("#lightbox_image").attr("src", submodel[newActive].url);
+										eu.europeana.lightbox.layout();
+									}
+								);
+							}
+							this.prev = function(){
+								nav(-1);
+							}
+							this.next = function(){
+								nav(1);
+							}
+						};
+						
+						var navOb = new navOb();
+						
+						eu.europeana.lightbox.init(url, navOb);
 						showTrigger(true, gallery);
-					}); 
+					});
+					
 					$('#lightbox_image').attr('src', url);
 				};
 				
 				// centre thumbnails
-				var fixThumbNav = function(gallery){
-					var imageNav		= gallery.$('container').find('.galleria-image-nav');
-					var imageNavR		= gallery.$('container').find('.galleria-image-nav-right');
-					var gImage			= gallery.$('container').find('.galleria-stage .galleria-image img:last-child');
-					var heightDiff		=  gImage.height() - imageNavR.height();
+				var verticallyAlignImageNav = function(gallery){
+					
+					var imageNav	= gallery.$('container').find('.galleria-image-nav');
+					
+					imageNav.css("margin-top", "0px");
+					imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
+					
+					var stage		= gallery.$('container').find('.galleria-stage');
+					var imageNavR	= gallery.$('container').find('.galleria-image-nav-right');
+					var heightDiff	= stage.height() - imageNavR.height();
 					var stageTopMargin	= parseInt(gallery.$('container').find('.galleria-stage').css("margin-top")  );
 					
 					imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
-					imageNav.css("margin-top", "0px");
 				};		
 				
 				// Show or hide the trigger - resizing relevant elements
 				var showTrigger = function(show, gallery){
-					var normalHeight =  eu.europeana.fulldoc.getCarousel1Height();
-	  				jQuery('#carousel-1')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");	// set height to max height that will be needed
-	  				gallery.$('container')	.css("height", (normalHeight + (show ? triggerHeight : 0)) + "px");
-					fixThumbNav(gallery);
-					
-					eu.europeana.vars.suppresResize = true;	// stop ipad triggering a resize event 
 					if(show){
-						
-						setTimeout(function(){
-							eu.europeana.vars.suppresResize = false;	// fadeIn callback not working so use timeout to restore variable
-						}, 520);
-						
 						$('.lb-trigger').fadeIn(500);
 					}
 					else{
 						$('.lb-trigger').css('display', 'none');
-						eu.europeana.vars.suppresResize = false;
 					}
+					verticallyAlignImageNav(gallery);
 				};
-	
 	
 				this.bind("image", function(e) {	// lightbox trigger
 					var gallery = this;
@@ -602,7 +640,7 @@ eu.europeana.fulldoc = {
 						if(!triggerPanel){
 							this.$( 'container' ).find('.galleria-images').after(
 									'<div class="lb-trigger" >'
-									+ '<span rel="#lightbox" title="' + triggerLabels[lightboxable.type] + '" class="icon-mag">' + triggerLabels[lightboxable.type] + '</span>'
+									+ '<span rel="#lightbox" title="' + triggerLabels[lightboxable.type] + '" class="icon-magplus">' + triggerLabels[lightboxable.type] + '</span>'
 									+ '</div>'
 							);
 							triggerPanel = this.$( 'container' ).find('.lb-trigger');
@@ -629,7 +667,24 @@ eu.europeana.fulldoc = {
 									dependencies : [ 'jquery-tools', 'jwplayer'],
 									callback: function(){
 										initLightbox(lightboxable.url, gallery);
+										//initLightbox(lightboxable.url);
 										jsLoaded = true;
+										
+										$(window).on("resize", function(){
+											if(eu.europeana.lightbox.layout){
+												eu.europeana.lightbox.layout();												
+											}
+										});
+										
+										w.addEventListener( "orientationchange",
+											function(){
+												if(eu.europeana.lightbox.layout){
+													eu.europeana.lightbox.layout();												
+												}
+											},
+										false);
+
+
 									}
 								}]);
 							};
@@ -653,7 +708,10 @@ eu.europeana.fulldoc = {
 	
 	initBottomCarousel : function(){
 		if(typeof carousel2Data != 'undefined'){
-   			jQuery('#carousel-2').css("height", Math.max(150, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
+			
+			// 150 too small for iphone: make min height 200
+   			jQuery('#carousel-2').css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
+   			
    			Galleria.run('#carousel-2', {
 					transition:		'fadeslide',
 					carousel:		true,
