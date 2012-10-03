@@ -6,9 +6,9 @@ eu.europeana.fulldoc = {
 	// provides a list of accepted hash values for validation
 	tab_priority : [ '#related-items','#similar-content','#map-view' ],
 	
-	more_icon_class:"icon-arrow-6-right",
+	more_icon_class : "icon-arrow-6-right",
 	
-	less_icon_class:"icon-arrow-7-right",
+	less_icon_class : "icon-arrow-7-right",
 
 	init : function() {
 
@@ -661,32 +661,36 @@ eu.europeana.fulldoc = {
 									path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
 								}]);
 								
-								js.loader.loadScripts([{
-									file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
-									path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-									dependencies : [ 'jquery-tools', 'jwplayer'],
-									callback: function(){
-										initLightbox(lightboxable.url, gallery);
-										//initLightbox(lightboxable.url);
-										jsLoaded = true;
-										
-										$(window).on("resize", function(){
-											if(eu.europeana.lightbox.layout){
-												eu.europeana.lightbox.layout();												
-											}
-										});
-										
-										w.addEventListener( "orientationchange",
-											function(){
+								
+								
+								if(!window.showingPhone()){
+									
+									js.loader.loadScripts([{
+										file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
+										path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+										dependencies : [ 'jquery-tools', 'jwplayer'],
+										callback: function(){
+											initLightbox(lightboxable.url, gallery);
+											jsLoaded = true;
+
+											$(window).on("resize", function(){
 												if(eu.europeana.lightbox.layout){
 													eu.europeana.lightbox.layout();												
 												}
-											},
-										false);
-
-
-									}
-								}]);
+											});
+											
+											w.addEventListener( "orientationchange",
+												function(){
+													if(eu.europeana.lightbox.layout){
+														eu.europeana.lightbox.layout();												
+													}
+												},
+											false);
+										}
+									}]);									
+								}
+								
+								
 							};
 							loadJS();
 						}
