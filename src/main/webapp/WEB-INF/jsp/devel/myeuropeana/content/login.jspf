@@ -8,6 +8,7 @@
   <div id="login-boxes">
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/login/login-form.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/login/register-form.jspf" %>
+    <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/login/register-api-form.jspf" %>
     <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/login/request-password-form.jspf" %>
 
     <div id="login-response">

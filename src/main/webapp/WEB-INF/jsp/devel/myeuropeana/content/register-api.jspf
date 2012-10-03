@@ -1,0 +1,33 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<div id="content">
+  <h1><spring:message code="RegisterAPI_t" /></h1>
+
+  <sf:form modelAttribute="model" action="register-api.html" method="POST">
+    <sf:hidden path="token" />
+    <%-- sf:hidden path="email" / --%>
+
+    <div>
+      <div class="help"><spring:message code="EmailUse_t" />.</div>
+      <label for="email"><spring:message code="EmailAddress_t" /></label>
+      <sf:input id="email" path="email" disabled="disabled" />
+      <i><sf:errors path="email" cssClass="error"/></i>
+    </div>
+
+    <div>
+      <div class="help"><spring:message code="UserNameExplain_t" />.</div>
+      <label for="apiKey">Api key</label>
+      <sf:input path="apiKey"/>
+      <i><sf:errors path="apiKey" cssClass="error"/></i>
+    </div>
+
+    <div>
+      <div class="help"><spring:message code="UserNameExplain_t" />.</div>
+      <label for="privateKey">Private key</label>
+      <sf:input path="privateKey"/>
+      <i><sf:errors path="privateKey" cssClass="error"/></i>
+    </div>
+
+    <%@ include file="/WEB-INF/jsp/devel/myeuropeana/content/register/submit.jspf" %>
+  </sf:form>
+</div>

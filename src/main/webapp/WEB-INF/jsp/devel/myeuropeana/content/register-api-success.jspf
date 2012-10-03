@@ -1,0 +1,8 @@
+<div id="content">
+  <div id="login-boxes">
+    <p>Congratulation! You successfully registered Europeana API services.</p>
+    <p>Your API Key is <tt>${model.apiKey}</tt></p>
+    <p>Your Private Key is <tt>${model.privateKey}</tt></p>
+    <div id="login-response"></div>
+  </div>
+</div>
