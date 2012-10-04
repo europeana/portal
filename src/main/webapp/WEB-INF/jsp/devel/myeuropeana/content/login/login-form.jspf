@@ -18,7 +18,9 @@
     <input type="hidden" name="_spring_security_remember_me" value="true"/>
 
     <input type="submit" name="submit_login" class="submit-button" value="<spring:message code="LogIn_t" />"/>
+
     <a href="#register" rel="nofollow"><spring:message code="Register_t" /></a><br/>
+    <a href="#register-api" rel="nofollow"><spring:message code="RegisterAPI_t" /></a><br/>
     <a href="#request-password" rel="nofollow"><spring:message code="ForgotPassword_t" /></a>
   </fieldset>
 </form>
