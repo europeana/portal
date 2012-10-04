@@ -97,7 +97,6 @@ public class ObjectController {
 		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
 		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
-		log.info("Locale language: " + locale.getLanguage());
 
 		FullDocPage model = new FullDocPage();
 //		model.setLocale(locale)
@@ -115,6 +114,7 @@ public class ObjectController {
 		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
+		log.info("fullBean: " + (fullBean == null));
 		Query query = new Query(queryString).setRefinements(qf);
 
 		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
@@ -128,8 +128,23 @@ public class ObjectController {
 		return page;
 	}
 
+	@RequestMapping(value = "/record/{collectionId}/{recordId}.json", produces = MediaType.TEXT_HTML_VALUE)
+	public String redirect(
+			@PathVariable String collectionId,
+			@PathVariable String recordId,
+			@RequestParam(value = "wskey", required = false) String wskey,
+			@RequestParam(value = "callback", required = false) String callback,
+			HttpServletRequest request
+				) throws Exception {
+		StringBuilder sb = new StringBuilder(config.getApi2url());
+		sb.append("/v1/record/").append(collectionId).append("/").append(recordId).append(".json");
+		if (!StringUtils.isBlank(request.getQueryString())) {
+			sb.append("?").append(request.getQueryString());
+		}
+		return "redirect:" + sb.toString();
+	}
+
 	private FullBean getFullBean(String collectionId, String recordId, String source, HttpServletRequest request) {
-		log.info("Get full bean using source: " + source);
 		FullBean fullBean = null;
 		if (source.equals("api2")) {
 			fullBean = getFullBeanFromApi(collectionId, recordId, request);

@@ -36,11 +36,15 @@ public class LoginPageController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
+	
+	private static final String REGISTER = "Register";
+	private static final String REGISTER_API = "RegisterAPI";
+	private static final String REQUEST = "Request";
 
 	@RequestMapping("/login.html")
 	public ModelAndView handle(
 			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "submit_login", required = false) String buttonPressed,
+			@RequestParam(value = "requested_action", required = false) String requestedAction,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, 
 			HttpServletResponse response, 
@@ -53,7 +57,7 @@ public class LoginPageController {
 
 		model.setEmail(email);
 		log.info("email: " + email);
-		log.info("buttonPressed: " + buttonPressed);
+		log.info("requestedAction: " + requestedAction);
 
 		if (email != null) {
 			String baseUrl = new StringBuilder(config.getPortalServer())
@@ -62,8 +66,7 @@ public class LoginPageController {
 				.toString().replace("//", "/");
 
 			// Register
-			// TODO this value is internationalized in the template
-			if ("Register".equals(buttonPressed)) {
+			if (REGISTER.equals(requestedAction)) {
 				if (!ControllerUtil.validEmailAddress(email)) {
 					model.setFailureFormat(true);
 				} else if (emailExists(email)) {
@@ -78,8 +81,23 @@ public class LoginPageController {
 				}
 			}
 
+			else if (REGISTER_API.equals(requestedAction)) {
+				if (!ControllerUtil.validEmailAddress(email)) {
+					model.setFailureFormat(true);
+				//} else if (emailExists(email)) {
+				//	model.setFailureExists(true);
+				} else {
+					Token token = tokenService.create(email);
+					String url = baseUrl + "/register-api.html";
+					log.info("token: " + token);
+					log.info("registerUri: " + url);
+					emailService.sendToken(token, url);
+					model.setSuccess(true);
+				}
+			}
+
 			// Forgot Password
-			else if ("Request".equals(buttonPressed)) {
+			else if (REQUEST.equals(requestedAction)) {
 				if (!ControllerUtil.validEmailAddress(email)) {
 					model.setFailureForgotFormat(true);
 				} else if (!emailExists(email)) {

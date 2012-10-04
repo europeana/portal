@@ -31,13 +31,14 @@ public class UserManagementController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	@RequestMapping("/myeuropeana.html")
+	@RequestMapping("/myeuropeana2.html")
 	public ModelAndView myEuropeanaHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale) 
 					throws Exception {
+		log.info("===== myeuropeana.html =======");
 		config.registerBaseObjects(request, response, locale);
 		EmptyModelPage model = new EmptyModelPage();
 		config.injectProperties(model);

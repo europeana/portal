@@ -68,7 +68,9 @@ public enum PortalPageInfo implements PageInfo {
 	MYEU_PASS_CHANGE("forgotPassword.html", "Europeana - Forgot Password", "myeuropeana/change-password"),
 	MYEU_PASS_CHANGED("register-success.html", "Europeana - Registration continued", "myeuropeana/change-password-success"),
 	MYEU_REGISTER("register.html", "Europeana - Registration", "myeuropeana/register"),
+	MYEU_REGISTER_API("register-api.html", "Europeana - Registration", "myeuropeana/register-api"),
 	MYEU_REGISTERED("register-success.html", "myeuropeana/register-success"),
+	MYEU_REGISTERED_API("register-api-success.html", "myeuropeana/register-api-success"),
 
 	PROVIDERS("europeana-providers.html", "Europeana - Providers", "providers/providers"),
 
