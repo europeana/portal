@@ -72,6 +72,18 @@ public class ApiWrapper {
 		return getJsonResponse(url.toString());
 	}
 
+	public String getSuggestions(String query, int rows, boolean phrases) {
+		StringBuilder url = new StringBuilder(apiUrl);
+		url.append("/suggestions.json?");
+		if (!StringUtils.isBlank(query)) {
+			url.append("&query=").append(QueryUtil.encode(query));
+		}
+		url.append("&rows=").append(rows);
+		url.append("&phrases=").append(phrases);
+
+		return getJsonResponse(url.toString());
+	}
+
 	public String getObject(String collectionId, String recordId) {
 		return getJsonResponse(apiUrl + "/record/" + collectionId + "/" + recordId + ".json");
 	}

@@ -28,7 +28,10 @@ public class ApiConsolePage extends ApiData {
 	private String collectionId;
 	private String recordId;
 
-	private List<String> defaultFunctions = Arrays.asList(new String[]{"search", "record"});
+	// suggestions parameters
+	private boolean phrases;
+
+	private List<String> supportedFunctions = Arrays.asList(new String[]{"search", "record", "suggestions"});
 	private List<String> defaultProfiles = Arrays.asList(new String[]{"standard", "portal", "facets", "breadcrumb", "spelling", "minimal"});
 	private List<String> defaultRows = Arrays.asList(new String[]{"12", "24", "48", "96"});
 
@@ -56,8 +59,8 @@ public class ApiConsolePage extends ApiData {
 		return defaultRows;
 	}
 
-	public List<String> getDefaultFunctions() {
-		return defaultFunctions;
+	public List<String> getSupportedFunctions() {
+		return supportedFunctions;
 	}
 
 	public String getQuery() {
@@ -130,5 +133,13 @@ public class ApiConsolePage extends ApiData {
 
 	public void setApiUrl(String apiUrl) {
 		this.apiUrl = apiUrl;
+	}
+
+	public boolean isPhrases() {
+		return phrases;
+	}
+
+	public void setPhrases(boolean phrases) {
+		this.phrases = phrases;
 	}
 }

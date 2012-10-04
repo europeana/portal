@@ -57,7 +57,7 @@ var selectedPanel = '${model.function}';
       <form>
         <h2><spring:message code="apiconsole_function_t" />:</h2>
         <p class="section">
-          <c:forEach items="${model.defaultFunctions}" var="function">
+          <c:forEach items="${model.supportedFunctions}" var="function">
             <input type="radio" name="function" id="api-function-${function}" value="${function}" <c:if test="${model.function == function}">checked="checked"</c:if> />
             <label for="api-function-${function}">${function}</label>
           </c:forEach>
@@ -106,6 +106,24 @@ var selectedPanel = '${model.function}';
 
           <label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>
           <input type="text" id="api-recordId" name="recordId" value="${model.recordId}" /><br/>
+        </fieldset>
+
+        <fieldset id="suggestions-panel">
+          <legend><spring:message code="apiconsole_suggestions_parameters_t" /></legend>
+
+          <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
+          <input type="text" id="api-query" name="query2" value="${model.query}" /><br/>
+
+          <p class="section">
+            <label for="api-suggestions-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>
+            <c:forEach items="${model.defaultRows}" var="rows">
+              <input type="radio" name="rows2" id="api-suggestions-rows-${rows}" value="${rows}" <c:if test="${model.rows == rows}">checked="checked"</c:if> />
+              <label for="api-suggestions-rows-${rows}">${rows}</label>
+            </c:forEach>
+          </p>
+
+          <label for="api-phrases"><spring:message code="apiconsole_phrases_t" />:</label><br/>
+          <input type="checkbox" id="api-phrases" name="phrases" <c:if test="${model.phrases}">checked="checked"</c:if> /><br/>
         </fieldset>
 
         <input type="submit" value="get result">
