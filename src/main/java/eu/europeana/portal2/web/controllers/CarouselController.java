@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +30,7 @@ public class CarouselController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 	
-	@Resource private ResourceBundleMessageSource messageSource;
-	// private ReloadableResourceBundleMessageSource messageSource;
+	@Resource private ReloadableResourceBundleMessageSource messageSource;
 
 	@Resource(name="configurationService") private Configuration config;
 
