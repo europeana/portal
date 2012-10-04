@@ -43,12 +43,10 @@ public class ApiConsoleController {
 	public ModelAndView playground(
 			@RequestParam(value = "function", required = false, defaultValue="search") String function,
 			@RequestParam(value = "query", required = false) String query,
-			@RequestParam(value = "query2", required = false) String query2,
 			@RequestParam(value = "qf", required = false) String[] refinements,
 			@RequestParam(value = "profile", required = false, defaultValue="standard") String profile,
 			@RequestParam(value = "start", required = false, defaultValue="1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
-			@RequestParam(value = "rows2", required = false, defaultValue="12") int rows2,
 			@RequestParam(value = "sort", required = false) String sort,
 			@RequestParam(value = "collectionId", required = false) String collectionId,
 			@RequestParam(value = "recordId", required = false) String recordId,
@@ -60,14 +58,8 @@ public class ApiConsoleController {
 		ApiConsolePage model = new ApiConsolePage();
 		config.injectProperties(model);
 
-		log.info("function: " + function);
 		if (!model.getSupportedFunctions().contains(function)) {
 			function = "search";
-		}
-		log.info("function: " + function);
-		if (function.equals("suggestions")) {
-			query = query2;
-			rows = rows2;
 		}
 
 		refinements = clearRefinements(refinements);

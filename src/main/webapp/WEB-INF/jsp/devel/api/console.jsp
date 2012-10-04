@@ -54,18 +54,19 @@ var selectedPanel = '${model.function}';
 <table id="api-console" width="100%">
   <tr valign="top">
     <td id="api-form">
-      <form>
-        <h2><spring:message code="apiconsole_function_t" />:</h2>
-        <p class="section">
-          <c:forEach items="${model.supportedFunctions}" var="function">
-            <input type="radio" name="function" id="api-function-${function}" value="${function}" <c:if test="${model.function == function}">checked="checked"</c:if> />
-            <label for="api-function-${function}">${function}</label>
-          </c:forEach>
-        </p>
+      <h2><spring:message code="apiconsole_function_t" />:</h2>
+      <p class="section">
+        <c:forEach items="${model.supportedFunctions}" var="function">
+          <input type="radio" name="function" id="api-function-${function}" value="${function}" <c:if test="${model.function == function}">checked="checked"</c:if> />
+          <label for="api-function-${function}">${function}</label>
+        </c:forEach>
+      </p>
 
-        <fieldset id="search-panel">
-          <legend><spring:message code="apiconsole_search_parameters_t" /></legend>
+      <fieldset id="search-panel">
+        <legend><spring:message code="apiconsole_search_parameters_t" /></legend>
 
+        <form>
+          <input type="hidden" name="function" value="search" />
           <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
           <input type="text" id="api-query" name="query" value="${model.query}" /><br/>
 
@@ -81,7 +82,6 @@ var selectedPanel = '${model.function}';
             <input type="radio" name="profile" id="api-profile-${profile}" value="${profile}" <c:if test="${model.profile == profile}">checked="checked"</c:if> />
             <label for="api-profile-${profile}">${profile}</label><br/>
           </c:forEach>
-          
 
           <p class="section">
             <label for="api-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>
@@ -90,44 +90,55 @@ var selectedPanel = '${model.function}';
               <label for="api-rows-${rows}">${rows}</label>
             </c:forEach>
           </p>
-          
+
           <p class="section">
             <label for="api-start"><spring:message code="apiconsole_start_t" />:</label><br/>
             <input type="text" name="start" value="${model.start}" />
           </p>
-        </fieldset>
 
-        <fieldset id="record-panel">
-          <legend><spring:message code="apiconsole_record_parameters_t" /></legend>
+          <input type="submit" value="get result">
+        </form>
+      </fieldset>
+
+      <fieldset id="record-panel">
+        <legend><spring:message code="apiconsole_record_parameters_t" /></legend>
+
+        <form>
+          <input type="hidden" name="function" value="record" />
           <%--
           <label for="api-collectionId">Collection id:</label><br/>
           <input type="text" id="api-collectionId" name="collectionId" value="${model.collectionId}" /><br/>
-           --%>
+         --%>
 
           <label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>
           <input type="text" id="api-recordId" name="recordId" value="${model.recordId}" /><br/>
-        </fieldset>
 
-        <fieldset id="suggestions-panel">
-          <legend><spring:message code="apiconsole_suggestions_parameters_t" /></legend>
+          <input type="submit" value="get result">
+        </form>
+      </fieldset>
 
+      <fieldset id="suggestions-panel">
+        <legend><spring:message code="apiconsole_suggestions_parameters_t" /></legend>
+
+        <form>
+          <input type="hidden" name="function" value="suggestions" />
           <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
-          <input type="text" id="api-query" name="query2" value="${model.query}" /><br/>
+          <input type="text" id="api-query" name="query" value="${model.query}" /><br/>
 
           <p class="section">
             <label for="api-suggestions-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>
             <c:forEach items="${model.defaultRows}" var="rows">
-              <input type="radio" name="rows2" id="api-suggestions-rows-${rows}" value="${rows}" <c:if test="${model.rows == rows}">checked="checked"</c:if> />
+              <input type="radio" name="rows" id="api-suggestions-rows-${rows}" value="${rows}" <c:if test="${model.rows == rows}">checked="checked"</c:if> />
               <label for="api-suggestions-rows-${rows}">${rows}</label>
             </c:forEach>
           </p>
 
           <label for="api-phrases"><spring:message code="apiconsole_phrases_t" />:</label><br/>
           <input type="checkbox" id="api-phrases" name="phrases" <c:if test="${model.phrases}">checked="checked"</c:if> /><br/>
-        </fieldset>
 
-        <input type="submit" value="get result">
-      </form>
+          <input type="submit" value="get result">
+        </form>
+      </fieldset>
     </td>
     <td id="api-result">
       <div id="request-url-title"><h2><spring:message code="apiconsole_request_url_t" /></h2></div>
