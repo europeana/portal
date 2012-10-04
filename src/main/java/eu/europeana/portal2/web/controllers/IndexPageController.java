@@ -33,7 +33,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,8 +65,7 @@ public class IndexPageController {
 
 	@Resource private ClickStreamLogger clickStreamLogger;
 
-	// private ReloadableResourceBundleMessageSource messageSource;
-	@Resource private ResourceBundleMessageSource messageSource;
+	@Resource private ReloadableResourceBundleMessageSource messageSource;
 
 	@Resource private LocaleInterceptor localeChangeInterceptor;
 
@@ -88,6 +87,8 @@ public class IndexPageController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale) {
+		log.info("===== index ====");
+		log.info(messageSource.toString());
 		config.registerBaseObjects(request, response, locale);
 
 		IndexPage model = new IndexPage();
@@ -145,7 +146,9 @@ public class IndexPageController {
 			}
 		}
 		model.setFeaturedItems(featuredItems);
-		model.setFeaturedItem(new FeaturedItem(RandomUtils.nextInt(i - 1) + 1));
+		if (i > 1) {
+			model.setFeaturedItem(new FeaturedItem(RandomUtils.nextInt(i - 1) + 1));
+		}
 	}
 
 	/**

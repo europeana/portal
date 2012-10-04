@@ -80,8 +80,12 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="message_keys/messages" />
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:message_keys/messages" />
+		<!-- property name="basename" value="#{europeanaProperties['message.portal2.resource']}" / -->
+		<property name="cacheSeconds" value="#{europeanaProperties['message.cache.seconds']}" />
+		<property name="fileEncodings" value="UTF-8"/>
+		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 
 	<bean id="searchController" class="eu.europeana.portal2.web.controllers.SearchController" />
@@ -99,6 +103,12 @@
 				<value>file:${EUROPEANA_PROPERTIES}</value>
 			</list>
 		</property>
+	</bean>
+
+	<bean id="apiKeyService" class="eu.europeana.corelib.db.service.impl.ApiKeyServiceImpl" p:dao-ref="corelib_db_apiKeyDao" />
+
+	<bean id="corelib_db_apiKeyDao" parent="corelib_db_dao">
+		<constructor-arg type="java.lang.Class" value="eu.europeana.corelib.db.entity.relational.ApiKeyImpl" />
 	</bean>
 
 	<import resource="../portal2-context.xml"/>

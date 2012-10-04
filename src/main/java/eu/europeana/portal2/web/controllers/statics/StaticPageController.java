@@ -71,9 +71,6 @@ public class StaticPageController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	// @Resource
-	// private ResourceBundleMessageSource messageSource;
-
 	/**
 	 * All of the pages are served up from here
 	 * 
