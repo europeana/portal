@@ -95,8 +95,8 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			
 			
 			<!-- AddThis Button BEGIN -->
-			<%-- 
-			<div class="addthis_toolbox addthis_default_style xxaddthis_32x32_style">
+ 			<%--
+			<div id="addthis_new" class="addthis_toolbox addthis_default_style xxaddthis_32x32_style">
 			
 				<a class="addthis_button_facebook" >
 					<span class="icon-facebook"></span>
@@ -106,15 +106,34 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					<span class="icon-twitter"></span>
 				</a>
 				
-				
+				<a id="pinterest-share" class="addthis_button_pinterest" >
+					<span class="icon-pinterest-2"></span>
+				</a>
 
 				<a class="addthis_button_preferred_4"></a>
 				<a class="addthis_button_compact"></a>
 				<a class="addthis_counter addthis_bubble_style"></a>
 			</div>
-			<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5069655a56d28488"></script>
-			--%>
+ 			 --%>
 			
+			
+
+			
+			
+			
+			
+
+<%--
+			<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5069655a56d28488"></script>
+
+addthis.addEventListener('addthis.ready', addthisReady);
+
+
+$('#pinterest-share').removeClass('at300b');
+$('#pinterest-share span').removeClass('at_PinItButton');
+$('#pinterest-share span').addClass('icon-pinterest-2');
+			
+ --%>
 			
 				<span class="label">Share with your friends:</span>
 
