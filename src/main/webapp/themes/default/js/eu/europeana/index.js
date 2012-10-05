@@ -56,12 +56,14 @@
 				
 				carousel.css("height",  (parentWidth/ratio) + thumb.height() + 5 + "px");
 				
+				//alert("height will be set to " + carousel.css("height"));
+				
 				carousel.css("width",	"100%");
 				thumb.remove();
 				
 				jQuery('#carousel-1').galleria({
 					dataSource:carouselData,
-					autoplay:5000
+					autoplay:17000
 				});
 			
 			}).each(function() {

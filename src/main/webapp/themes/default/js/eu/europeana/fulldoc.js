@@ -606,7 +606,7 @@ eu.europeana.fulldoc = {
 					$('#lightbox_image').attr('src', url);
 				};
 				
-				// centre thumbnails
+
 				var verticallyAlignImageNav = function(gallery){
 					
 					var imageNav	= gallery.$('container').find('.galleria-image-nav');
