@@ -39,7 +39,7 @@
             <c:out value=" "/>href="${docElement[field.propertyName]}"</c:if>
         </c:if>
       </c:set>
-      <td <c:if test="${!field.multiValue || fn:length(docElement[field.propertyName]) == 1}">${semanticAttributes}</c:if>>
+      <td <c:if test="${(!field.multiValue || fn:length(docElement[field.propertyName]) == 1) && !field.mapsOfLists}">${semanticAttributes}</c:if>>
         <c:choose>
 
           <c:when test="${field.schemaName == 'edm:WebResource'}">
@@ -72,7 +72,7 @@
             <c:forEach items="${docElement[field.propertyName]}" var="languageVersion" varStatus="langStatus">
               <em>${languageVersion.key}:</em>
               <c:forEach items="${languageVersion.value}" var="fieldInstance" varStatus="instanceStatus">
-                <span ${semanticAttributes}>${fieldInstance}</span><c:if test="${!instanceStatus.last}">, </c:if>
+                <span ${semanticAttributes} xml:lang="${languageVersion.key}">${fieldInstance}</span><c:if test="${!instanceStatus.last}">, </c:if>
               </c:forEach>
               <c:if test="${!langStatus.last}"><br /></c:if>
             </c:forEach>
