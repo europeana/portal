@@ -139,7 +139,7 @@
 	};
 	
 	var initAddThis = function(){
-		
+return;
 		var url = jQuery('head link[rel="canonical"]').attr('href'),
 			title = jQuery('head title').html(),
 			description = jQuery('head meta[name="description"]').attr('content');
@@ -167,10 +167,69 @@
 		});
 
 		
+		/*
+		<span style="width:100%;" title="get the title" class="addthis_toolbox addthis_default_style" addthis:title="Europeana - Homepage" addthis:description="Europeana - Homepage">
+			<a class="addthis_button">
+				<span title="Share item on facebook, twitter, etc.">
+					<span aria-hidden="true" class="icon-share">
+					</span>
+				</span>
+			</a>
+		</span>	
+		*/
+
+		var addThisHtml = com.addthis.getToolboxHtml_ANDY({
+			html_class : '',
+			url : url,
+			title : title,
+			description : description,
+			services : {
+				compact			:	{},
+				tweet			:	{},
+				google_plusone	:	{},
+				facebook_like	:	{},
+				email			:	{},
+				pinterest		:	{}
+
+			}
+			//, link_html : $('#shares-link').html()
+		});
+
+		
+		
+		$("#addthis_new").html(addThisHtml);
+		alert("done: " + $("#addthis_new").length + "    \n\n\n" + addThisHtml   );
+		
+		$('#addthis_new .addthis_button')					.html('+')
+		$('#addthis_new .addthis_button_tweet')				.html('T')
+		$('#addthis_new .addthis_button_google_plusone')	.html('G')
+		$('#addthis_new .addthis_button_facebook_like')		.html('F')
+		
+		
+		alert("com.addthis.loaded = " + com.addthis.loaded  );
+		
+		
+		//addthis.addEventListener('addthis.ready' );
+		
+		com.addthis.init( null, true, false,
+			function(){
+				alert("add this has loaded..... rerork the dom");
+				
+//				$('#addthis_new .addthis_button_facebook_like')		.html('<span class="icon-facebook"></span>');
+
+				
+			}
+		);
+		
+		return;
+		
+		
+		
+		//alert("addThisHtml = " + addThisHtml);
+		
 		jQuery('#shares-link').html(
 			addThisHtml
 		);
-		
 		
 		jQuery('#shares-link').hide();
 		com.addthis.init( null, true, false );
@@ -193,6 +252,7 @@
 		initResponsiveImages();
 		
 		
+		
 		js.loader.loadScripts([{
 			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
@@ -200,6 +260,7 @@
 				initAddThis();
 			}
 		}]);
+		
 	};
 	
 	jQuery(document).ready(function(){
