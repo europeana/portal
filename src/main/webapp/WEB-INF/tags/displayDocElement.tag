@@ -34,13 +34,11 @@
           <c:out value=" "/>property="<c:choose>
             <c:when test="${field.schemaOrgElement != null}">${field.schemaOrgElement}</c:when>
             <c:otherwise>${field.element.elementName}</c:otherwise>
-          </c:choose><c:out value=" "/>${field.element.fullQualifiedURI}"
-          <c:if test="${field.schemaOrgElementIsURL}">
-            <c:out value=" "/>href="${docElement[field.propertyName]}"</c:if>
+          </c:choose>${" "}${field.element.fullQualifiedURI}"
+          <c:if test="${field.schemaOrgElementIsURL}">${" "}href="${docElement[field.propertyName]}"</c:if>
         </c:if>
       </c:set>
-      <td <c:if test="${(!field.multiValue || fn:length(docElement[field.propertyName]) == 1) && !field.mapsOfLists}">${semanticAttributes}</c:if>>
-        <c:choose>
+      <td<c:if test="${!empty semanticAttributes && (!field.multiValue || fn:length(docElement[field.propertyName]) == 1) && !field.mapsOfLists}">${" "}${semanticAttributes}</c:if>><c:choose>
 
           <c:when test="${field.schemaName == 'edm:WebResource'}">
             <table>
@@ -95,9 +93,7 @@
             </c:choose>
           </c:when>
 
-          <c:otherwise>
-            ${docElement[field.propertyName]}
-          </c:otherwise>
+          <c:otherwise>${docElement[field.propertyName]}</c:otherwise>
         </c:choose>
       </td>
     </tr>

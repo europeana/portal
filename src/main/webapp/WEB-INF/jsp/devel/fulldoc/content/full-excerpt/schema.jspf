@@ -13,7 +13,6 @@
           <tr><td colspan="2"><h4>${topField.schemaName}</h4></td></tr>
 
           <c:choose>
-
             <%-- europeanaAggregation is a single element --%>
             <c:when test="${topField.propertyName == 'europeanaAggregation'}">
               <c:set var="docElement" value="${model.document[topField.propertyName]}" />
