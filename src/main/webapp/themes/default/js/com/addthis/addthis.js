@@ -28,7 +28,7 @@ com.addthis = {
 	 *	If defined, only core assets will be loaded. Once you're ready to load the
 	 *	rest of the assets, call the function addthis.init()
 	 */
-	init : function( pubid, domready, async ) {
+	init : function( pubid, domready, async, callbackIn ) {
 		
 		pubid = pubid || null;
 		domready = domready || false;
@@ -38,7 +38,7 @@ com.addthis = {
 			
 			file : this.getFilename( pubid, domready, async ),
 			path : this.path,
-			callback : com.addthis.loaded
+			callback : callbackIn ? callbackIn : com.addthis.loaded
 			
 		}]);
 		
@@ -257,7 +257,17 @@ com.addthis = {
 					
 					button_html += this.getTweetButton( i, services[i] );
 					
-				} else {
+				} else if ( i.search(/email/) > -1 ) {
+					
+					button_html += this.getEmailButton( i, services[i] );
+					
+				} else if ( i.search(/pinterest/) > -1 ) {
+						
+					button_html += this.pinterestButton( i, services[i] );
+						
+				}
+				
+				else {
 
 					
 					button_html +=
@@ -431,6 +441,26 @@ com.addthis = {
 		
 	},
 	
+	
+	getEmailButton : function(){
+		var emailHtml = ''
+		+ '<a href="http://www.addthis.com/bookmark.php" '
+		+ 	'class="addthis_button_email">'
+		+	'<img src="http://s7.addthis.com/button1-email.gif" '
+		+ 	'width="54" height="16" border="0" alt="Email" /></a>';
+		
+	    return emailHtml;
+	},
+	
+	pinterestButton : function(){
+		
+		var pinterestButton = ''
+		+ '<a id="pinterest-share" class="addthis_button_pinterest" >'
+		+ 	'<span class="icon-pinterest-2"></span>'
+		+ '</a>';
+		
+		return pinterestButton;
+	},
 	
 	/**
 	 * 
