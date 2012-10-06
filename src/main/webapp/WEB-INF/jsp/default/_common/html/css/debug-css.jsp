@@ -14,7 +14,10 @@
 <link rel="stylesheet" href="/${branding}/css/eu-menu.css" />
 <link rel="stylesheet" href="/${branding}/css/ellipsis.css" />
 <link rel="stylesheet" href="/${branding}/css/europeana-font-icons.css" />
-<link rel="stylesheet" href="/${branding}/css/europeana-font-face.css" />
+
+<%-- disabled font for now
+	<link rel="stylesheet" href="/${branding}/css/europeana-font-face.css" />
+--%>
 
 <!-- responsive image breakpoints -->
 <style>

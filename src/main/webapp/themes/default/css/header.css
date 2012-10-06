@@ -418,7 +418,8 @@ table tr:first-child{
 }
 
 .submit-cell button{
-	font-family:			'SourceSansProRegular', Arial, sans-serif;
+	font-family:			arial helvetica sans-serif;
+	/*font-family:			'SourceSansProRegular', Arial, sans-serif;*/
 	/*background-color:		#9900ff;*/
 	
 	border:					none;

@@ -1,13 +1,14 @@
 /* html */
 
 html{
-	position: relative;
-	font-size: 100%; 
-	z-index: 1;
+	zzzposition:		relative;
+	font-size:		100%; 
+	font-family:	sans-serif;
+	z-index:		1;
 }
 
 body {
-	position: relative;
+	zzzposition: relative;
 	z-index: 1;
 	margin: 0 auto;
 	padding: 0;
