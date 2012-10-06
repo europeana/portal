@@ -9,6 +9,14 @@
 		background-image:	url('../images/dust.png');
 	}
 	
+	
+	@media all and (-webkit-min-device-pixel-ratio: 2) {
+		.footer{
+			background-image:	url('../images/dust_@2X.png');
+		}
+	}
+	
+	
 	.footer-wrapper{
 		margin-left:	1em;
 		margin-right:	1em;
