@@ -17,13 +17,15 @@
 		</div>
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
-		<div class="ellipsis">
-			<c:choose>
-				<c:when test="${!empty cell.title}">${title}</c:when>
-				<c:otherwise></c:otherwise>
-			</c:choose>				
-			<span class="fixed"><span aria-hidden="true" class="${icon_class}"></span></span>
-		</div>
+		<a href="${cell.fullDocUrl}" title="${fn:escapeXml(cell.title[0])}">
+			<div class="ellipsis">
+				<c:choose>
+					<c:when test="${!empty cell.title}">${title}</c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>				
+				<span class="fixed"><span aria-hidden="true" class="${icon_class}"></span></span>
+			</div>
+		</a>
 
 				
 		<%--@ include file="/WEB-INF/jsp/default/search/content/results/grid/additional-info.jsp" --%>
