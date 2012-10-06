@@ -23,6 +23,13 @@
 #lang-menu.eu-menu{
 	padding-bottom:	0;
 }
+#lang-menu ul{
+	right:	0;
+}
+#lang-menu .item {
+	padding-right:	1em;
+}
+
 	
 /* outer layout */
 #logo h1{

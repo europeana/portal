@@ -365,12 +365,8 @@ h3 a span{
 
 
 #section-blog, #section-featured-content, #section-pinterest{
-	xxxxxmargin-top:		0.75em;
-	xxxxxmargin-bottom:	0.75em;
-	
 	padding-top:		0.75em	!important;
 	padding-bottom:		0.75em	!important;
-	
 }
 
 
@@ -398,11 +394,14 @@ h3 a span{
 		bottom:			0.19em;
 		*/
 	}
-	
-	.collapse-header-text, .icon-pinterest{
+
+
+	.collapse-header-text,
+	.icon-pinterest{
 		padding-top:	0.5em !important;
 		padding-bottom:	0.5em !important;
 	}
+	
 }
 	
 }
@@ -464,7 +463,8 @@ p.featured-text{
 
 .icon-pinterest{
 	color:			red;
-	margin-left:	0.4em;
+	margin-left:	0.3em;
+	margin-top:		-1px;
 }
 
 .pinterest-button{

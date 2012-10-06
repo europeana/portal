@@ -112,14 +112,6 @@
 						</p>
 						
 						<ul class="featured-partner-links featured-text">
-							<li>						
-								<a	href	= "<spring:message code="notranslate_featured-partner-view_link_t" />"
-									target	= "<spring:message code="notranslate_featured-partner-view_target_t" />"
-									class	= "europeana">
-									<spring:message code="featured-partner-view_text_t" />
-								</a>
-							</li>
-							
 							
 							<%--
 							<li>						
@@ -137,13 +129,19 @@
 							<li>
 								<c:set var="instituteName"><spring:message code="${model.featuredPartner.name}" /></c:set>
 							
-							                
-							
 								<a	href	= "<spring:message code="${model.featuredPartner.visitLink}" arguments="${instituteName}" />"
 									target	= "<spring:message code="notranslate_featured-partner-visit_target_t" />"
 									rel		= "nofollow"
 									class	= "icon-external-right europeana">
 									<spring:message code="featured-partner-visit_text_t"  arguments="${instituteName}" />
+								</a>
+							</li>
+
+							<li>						
+								<a	href	= "<spring:message code="notranslate_featured-partner-view_link_t" />"
+									target	= "<spring:message code="notranslate_featured-partner-view_target_t" />"
+									class	= "europeana">
+									<spring:message code="featured-partner-view_text_t" />
 								</a>
 							</li>
 	
