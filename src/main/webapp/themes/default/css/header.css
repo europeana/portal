@@ -4,6 +4,8 @@
 	background-color:	transparent;
 	position:			absolute;
 	right:				20px;		/* pixel value to cancel out responsive container's padding */
+	padding-bottom:		0.5em;
+	padding-top:		0.5em;
 	
 	/*
 	width:50%;
