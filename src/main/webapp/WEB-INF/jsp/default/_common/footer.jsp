@@ -59,6 +59,12 @@
 							<input id="id_email" name="email"	type="email"	placeholder="<spring:message code="news_letter_email_hint_t" />"/>
 							<input type="submit" class="europeana-button-1 deans-button-1" value="<spring:message code="news_letter_signup_button_t" />"/>
 						</form>
+						
+						<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
+								<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
+						</div>
+						<script type="text/javascript">if(typeof signupFormObj !='undefined'){signupFormObj.drawForm();}</script>
+						
 					</div>
 				</div>
 			</div>

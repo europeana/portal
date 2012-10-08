@@ -146,6 +146,12 @@ var europeana_bootstrap = function(){
 	else if(eu.europeana.vars.page_name == 'index.html'){
 		
 		scripts.push({
+			name : 'email_service',
+			file : '1403149/?v=a',
+			path : 'https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/'
+		});
+		
+		scripts.push({
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
@@ -163,7 +169,7 @@ var europeana_bootstrap = function(){
 			name : 'index',
 			file : 'index' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : ['collapsible', 'utils', 'galleria']
+			dependencies : ['collapsible', 'utils', 'galleria', 'email_service']
 		});
 				
 		loadScripts(scripts);
