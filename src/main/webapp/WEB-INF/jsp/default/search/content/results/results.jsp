@@ -29,7 +29,7 @@
 		<c:otherwise>
 			<!-- model.hasResults: 0 -->
 			<c:choose>
-				<c:when test="model.briefBeanView">
+        		<c:when test="${model.briefBeanView != null}">
 					<h2><spring:message code="NoItemsFound_t" /></h2>
 				</c:when>
 				<c:otherwise>
