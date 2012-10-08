@@ -5,12 +5,10 @@
 	<div class="${position_class}">
 	
 		<c:if test="${position_class == 'nav-top'}">
-	
-			<div class="result-count">
+			<div class="result-count show-on-phones">
 				<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;
 	      		<fmt:formatNumber value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0" />
 			</div>
-	
 		</c:if>
 		
 		<ul class="result-pagination">
@@ -74,6 +72,13 @@
 			</ul>
 		</div>
 		
+		
+		
+		<div class="result-count result-count-inline hide-on-phones">
+			<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;
+      		<fmt:formatNumber value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0" />
+		</div>
+		
 		<div style="clear:both;"></div>
 
 
@@ -82,7 +87,6 @@
 				<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;
 	      		<fmt:formatNumber value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0" />
 			</div>
-	
 		</c:if>
 
 		

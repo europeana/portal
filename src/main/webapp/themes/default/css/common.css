@@ -40,8 +40,7 @@
 	
 #social-links .social-link{
 	float:		none;
-	color:		#0075FF;
-
+	xxxxxxxxxcolor:		#0075FF;
 	display:	inline-block;
 	*display:	inline;
 	zoom:		1;
@@ -50,7 +49,31 @@
 	overflow:	hidden;
 }
 
-	
+.social-link.icon-facebook{
+	color:		#3b5998;
+}
+.social-link.icon-twitter{
+	color:		#00a0d1;
+}
+.social-link.icon-pinterest{
+	color:		#00a0d1;
+}
+.social-link.icon-blog{
+	color:		#db4a39;
+}
+ 
+
+
+
+
+#social-links .social-link span.text{
+	font-size:		0.4em;
+	position:		relative;
+	bottom:			0.75em;
+	display:		none;
+	color:			#333;
+	margin-left:	0.25em;
+}
 	
 .stretch {
 	width:			100%;
@@ -73,28 +96,26 @@
 	font-size:		1em;
 }
 
+#footer-subscribe{
+	margin-top:		2em;
+}
+
 #footer-subscribe input{
-	float:			right;
-	clear:			left;
-	width:			100%;
-	max-width:		100%;
+	float:				none;
 	
-	margin-top:				2em;
-	margin-bottom:			1em;
-	padding:				2px 0px;
-	color:					#333;
-	border:					1px solid #a0a0a0;
+	margin-top:			0.8em;
+	margin-bottom:		2em;
+		
+	padding:			2px 0px;
+	color:				#333;
+	border:				1px solid #a0a0a0;
 	
-	font-size:				1.2em;		
+	font-size:			1.2em;
+	width:				100%;		
 }
 
 #urlRefIsShownAt{
 	zzzcolor:	#333;
-}
-
-#footer-subscribe input.europeana-button-1{
-	margin-top:			1em;
-	margin-bottom:		2em;
 }
 
 
@@ -134,14 +155,6 @@
 }
 
 		
-#footer-subscribe input[type=submit]{
-	width:	100%;
-}
-		
-#footer-subscribe input[type=email]{
-	padding-top:	0.25em;
-	padding-bottom:	0.25em;
-}
 
 #id_email::-webkit-input-placeholder{
 	color: #999;
@@ -156,16 +169,47 @@
 }
 
 
+#footer-links-all{
+	margin-top:	1em;	
+}
+
 .footer-links{
 	list-style-type:	none;
 	padding-left:		0;
 }
 
 .footer-links li{
-	display:		inline;
 	padding-right:	2em;
 	color:			white;
 }
+
+.footer-links .icon-logo{
+	position:		relative;
+	top:			0.25em;
+	margin-right:	0.25em;
+	font-size:		1.5em;
+}
+
+#link-logo-1{
+	color:	#;
+}
+
+#link-logo-2{
+	color:	#;
+}
+
+#link-logo-3{
+	color:	#;
+}
+
+#link-logo-4{
+	color:	#;
+}
+
+#link-logo-5{
+	color:	#;
+}
+ 
 
 /*
 .footer h3,
@@ -183,21 +227,62 @@
 }
 
 
+
 @media only screen and ( min-width:48em ){
+	
+	#footer-links-all{
+		margin-top:	2em;	
+	}
+	
 	#social-links .social-link{
-		float:	left;
+		float:			left;
+		min-width:		50%;
+		height:			1.5em;
+		margin-bottom:	0;
 	}	
 	
+	#social-links .social-link span.text{
+		display:		inline;
+	}
+	
+	#footer-subscribe{
+		margin-top:			0;
+	}
+	
 	#footer-subscribe input{
-		width:			50%;
-		max-width:		50%;
+		width:				45%;
+		max-width:			45%;
 		
-		margin-top:		0;
-		margin-bottom:	0;
+		float:				right;
+		margin-top:			0.8em;
+		margin-bottom:		1em;
+
+		color:				#333;
+		border:				1px solid #a0a0a0;
+		font-size:			1.2em;		
+			
 		
+	}
+	#footer-subscribe input[type=text],
+	#footer-subscribe input[type=email]{
+		float:				left;
+		margin-top:			1em;
+		padding:			0.3em;
+	}
+	
+	#footer-subscribe span{
+		display:	block;
+		clear:		both;
+		font-size:	0.75em;
+		color:		#999;
 	}
 	
 }
+
+
+
+
+
 
 .ie8 .sidebar {
 

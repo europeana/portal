@@ -81,7 +81,7 @@ a.europeana{
 	text-decoration: none;
 }
 
-a:hover {
+a.europeana:hover {
 	/*background-color:#d9efff;*/
 	color:#11639D; /*#2382c5;*/
 	border-bottom:1px dotted #9dc425;

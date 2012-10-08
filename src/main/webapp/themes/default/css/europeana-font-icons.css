@@ -216,7 +216,8 @@
 
 /* Andy: modification */
 .icon-external-right:after {
-	content: "\50";
+	content:		"\50";
+	margin-left:	0.4em;
 }
 
 

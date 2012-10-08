@@ -9,19 +9,14 @@
 		<c:set var="checkedValue" value='checked="checked"' />
 	</c:if>
 	
-	
 
 	<c:set var="label">
 		<c:choose>
-			<c:when test="${!empty facet_item.value}">
-				${facet_item.value}
-			</c:when>
-			<c:otherwise>
-				${facet_item.title}
-			</c:otherwise>
+			<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
+			<c:otherwise>${facet_item.value}</c:otherwise>
 		</c:choose>
 	</c:set>
-
+  
 	<li>
 		<h4>
 		

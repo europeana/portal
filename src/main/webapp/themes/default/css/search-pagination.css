@@ -5,6 +5,11 @@
 	text-align:	center;
 }
 
+.result-count-inline{
+	position:	absolute;
+	top:		0.6em;	
+}
+
 .result-pagination{
 	float:			none;	
 	margin:			0;

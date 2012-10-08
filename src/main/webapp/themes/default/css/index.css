@@ -354,8 +354,8 @@ h3 a span{
 	.feed-image{
 			width:				35%;
 			max-width:			35%;
-			background-color:	#dfdfdf;
-			vertical-align:		middle;	
+			background-color:	#fff;
+			vertical-align:		top;	
 	}
 }
 /* End dynamic content classes */
