@@ -106,6 +106,16 @@
 	padding-bottom:	0.5em;
 }
 
+#search-filter .icon-remove{
+	float:			right;
+	clear:			both;
+	margin-left:	0.25em;
+	position:		relative;
+	bottom:			0.2em
+}
+
+
+
 #search-filter ul{
 	list-style: none;
 }
