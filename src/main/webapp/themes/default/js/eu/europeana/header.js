@@ -50,39 +50,25 @@ eu.europeana.header = {
 		jQuery('.jump-to-page').bind('submit', this.jumpToPageSubmit );
 		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
-		
-		//signupFormObj.drawForm();
-		//alert("done drawing form");
 
-		
+		eu.europeana.header.setupNewsletterForm();
+
 	},
 
+	setupNewsletterForm : function(){
+		if(typeof(signupFormObj) != "undefined" && typeof(jQuery) != "undefined"  ){
+			$('#e2ma_signup_submit_button').attr('value',		window.emma.submitLabel);
+			$('#id_email').attr('placeholder',	window.emma.placeholder);
+			$('#id_email').attr('title',		window.emma.placeholder);
+		}
+		else{
+			setTimeout(eu.europeana.header.setupNewsletterForm , 1000);
+		}
+	},
+	
 	initResponsiveUtility : function(){
 		window.showingPhone = function(){ return $("#mobile-menu").is(":visible"); };
 	},
-	
-	/*
-	initResponsiveLogo : function(){
-		var setup = function(){
-			var initialSuffix = '-1.'; // smallest by default
-			if(jQuery.browser.msie && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 ) ){
-				initialSuffix = '-2.'; // largest by default
-			}
-			new responsiveGallery({
-				galleryName		: 'euresponsive-logo',
-				imgSelector		: '.responsive-logo',
-				initialSuffix	: initialSuffix,
-				mode			: 'div',
-				suffixes: {
-					'0': '-1.',
-					'1': '-1.',
-					'2': '-2.'
-				}
-			});
-		};
-		setup();
-	},
-	*/
 	
 	setCookie: function(val){
 		document.cookie = "europeana_rows=" + val;

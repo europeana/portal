@@ -8,9 +8,6 @@
 'use strict';
 
 
-// Andy: proposed structure for conditional loading
-// TODO: track which scripts are loaded so we don't attempt to reload the same stuff
-// TODO: doesn't loader already track what has already been loaded?
 
 var europeana_bootstrap = function(){
 	
@@ -62,7 +59,7 @@ var europeana_bootstrap = function(){
 		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 		  dependencies : [ 'utils' ]
 	  },
-	  
+
 	  {	name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 		dependencies : [ 'ajax' ],
 		callback : function(){
@@ -146,12 +143,6 @@ var europeana_bootstrap = function(){
 	else if(eu.europeana.vars.page_name == 'index.html'){
 		
 		scripts.push({
-			name : 'email_service',
-			file : '1403149/?v=a',
-			path : 'https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/'
-		});
-		
-		scripts.push({
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
@@ -169,20 +160,11 @@ var europeana_bootstrap = function(){
 			name : 'index',
 			file : 'index' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : ['collapsible', 'utils', 'galleria', 'email_service']
+			dependencies : ['collapsible', 'utils', 'galleria']
 		});
 				
 		loadScripts(scripts);
-		
-		var index = function(){
-			return {
-				testIndex:function(){
-					console.log("called testIndex");
-				}
-			};
-		}();
-
-	}	
+	}
 	else if(eu.europeana.vars.page_name == 'login.html'){
 		
 		scripts.push({

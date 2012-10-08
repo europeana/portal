@@ -208,7 +208,7 @@ return;
 		$('#addthis_new .addthis_button_facebook_like')		.html('F')
 		
 		
-		alert("com.addthis.loaded = " + com.addthis.loaded  );
+//		alert("com.addthis.loaded = " + com.addthis.loaded  );
 		
 		
 		//addthis.addEventListener('addthis.ready' );

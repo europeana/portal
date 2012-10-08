@@ -57,26 +57,17 @@
 					
 						<h3><spring:message code="news_letter_signup_t" /></h3>
 					
-						<form action="https://app.e2ma.net/app2/audience/signup/1415029/1403149/?v=a">
-							<%--
-							<input name="name"	type="text"		placeholder="<spring:message code="news_letter_name_hint_t" />"/>
-							 --%>
-							
-							<input id="id_email" name="email" type="email" placeholder="<spring:message code="news_letter_email_hint_t" />"/>
-							<input type="submit" class="europeana-button-1 deans-button-1" value="<spring:message code="news_letter_signup_button_t" />"/>
-							
-							<span style="xdisplay:block; xmax-width:50%; xfloat:right; ">
-								<spring:message code="news_letter_description_t" />
-							</span>
-							
-							
-						</form>
-						
-<%-- 
 						<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
-								<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
+							<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
 						</div>
---%>
+						
+						<script type="text/javascript">
+							window.emma = {
+								"placeholder" : "<spring:message code='news_letter_email_hint_t' />",
+								"submitLabel" : "<spring:message code='news_letter_signup_button_t' />"
+							};
+							signupFormObj.drawForm();
+						</script>
 						
 					</div>
 				</div>

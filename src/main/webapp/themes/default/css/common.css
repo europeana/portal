@@ -119,6 +119,13 @@
 }
 
 
+#e2ma_signup_reset_button,
+.e2ma_signup_form_label,
+.e2ma_signup_form_required_footnote{
+	display:	none;
+}
+
+#e2ma_signup_submit_button,
 .deans-button-1{
 	background-color:		#0048ff;
 	color:					white !important;
@@ -144,6 +151,7 @@
 	
 }
 	
+#e2ma_signup_submit_button,
 .europeana-button-1{
 	border:					0 !important;
 	padding:				0.5em 0.5em !important;
