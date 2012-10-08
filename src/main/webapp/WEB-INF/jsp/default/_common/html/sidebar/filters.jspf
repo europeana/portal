@@ -27,7 +27,7 @@
 					<c:when test="${!empty filter.url}">
 
 					<a href="${fn:escapeXml(filter.url)}">
-						<span style="float:right; margin-right:0.5em; font-weight:bold;">X</span>
+						<span class="icon-remove"></span>
 					</a>
 					
 					<a href="${fn:escapeXml(filter.urlFull)}">${linkLabel}</a>
