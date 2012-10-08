@@ -83,7 +83,7 @@
 
 
 		<c:if test="${position_class == 'nav-bottom'}">
-			<div class="result-count">
+			<div class="result-count show-on-phones">
 				<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;
 	      		<fmt:formatNumber value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0" />
 			</div>
