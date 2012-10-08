@@ -47,17 +47,41 @@
 				<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 			</c:forEach>
 	
+	
 			<li class="ugc-li">
 				<h3>
+				
+				<%--
 					<c:set var="ugcClassName">
 						<c:choose>
 							<c:when test="${model.UGCFilter}">icon-yes</c:when>
 							<c:otherwise>icon-no</c:otherwise>
 						</c:choose>
 					</c:set>
+					
 					<a class="facet-ugc ${ugcClassName}" rel="nofollow" href="${model.UGCUrl}">
 						<spring:message code="IncludeUGC_t" />
 					</a>
+				 --%>
+					
+					<c:set var="checkedValue" value='checked="checked"' />
+					
+					<c:choose>
+						<c:when test="${model.UGCFilter}">
+							<c:set var="checkedValue" value='' />
+						</c:when>
+					</c:choose>
+					
+					
+					<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"/>
+					
+					<a  href="${model.UGCUrl}"
+						title="${model.UGCUrl}" rel="nofollow">
+						<label for="cb-ugc" style="display:inline"> &nbsp;<spring:message code="IncludeUGC_t" /></label>
+					</a>
+					
+					
+					
 				</h3>
 			</li>
 		</ul>

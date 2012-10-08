@@ -111,7 +111,8 @@
 	clear:			both;
 	margin-left:	0.25em;
 	position:		relative;
-	bottom:			0.2em
+	bottom:			0.2em;
+	color:			#333;
 }
 
 
@@ -134,6 +135,15 @@ a.facet-ugc{
 	color:					#333;
 	background-image:		none;
 	background-repeat:		no-repeat;
+}
+
+.ugc-li label{
+	color:	#333;
+} 
+
+cb-ugc{
+	margin-left:	0;
+	padding-left:	0;
 }
 
 .share-section,
