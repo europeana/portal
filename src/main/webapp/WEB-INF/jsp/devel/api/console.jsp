@@ -96,6 +96,11 @@ var selectedPanel = '${model.function}';
             <input type="text" name="start" value="${model.start}" />
           </p>
 
+          <p class="section">
+            <label for="api-callback"><spring:message code="apiconsole_callback_t" />:</label><br/>
+            <input type="text" name="callback" value="${model.callback}" />
+          </p>
+
           <input type="submit" value="get result">
         </form>
       </fieldset>
@@ -112,6 +117,11 @@ var selectedPanel = '${model.function}';
 
           <label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>
           <input type="text" id="api-recordId" name="recordId" value="${model.recordId}" /><br/>
+
+          <p class="section">
+            <label for="api-callback"><spring:message code="apiconsole_callback_t" />:</label><br/>
+            <input type="text" name="callback" value="${model.callback}" />
+          </p>
 
           <input type="submit" value="get result">
         </form>
@@ -135,6 +145,11 @@ var selectedPanel = '${model.function}';
 
           <label for="api-phrases"><spring:message code="apiconsole_phrases_t" />:</label><br/>
           <input type="checkbox" id="api-phrases" name="phrases" <c:if test="${model.phrases}">checked="checked"</c:if> /><br/>
+
+          <p class="section">
+            <label for="api-callback"><spring:message code="apiconsole_callback_t" />:</label><br/>
+            <input type="text" name="callback" value="${model.callback}" />
+          </p>
 
           <input type="submit" value="get result">
         </form>

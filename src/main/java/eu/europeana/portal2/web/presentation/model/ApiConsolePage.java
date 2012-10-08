@@ -23,6 +23,7 @@ public class ApiConsolePage extends ApiData {
 	private int start;
 	private int rows;
 	private String sort;
+	private String callback;
 
 	// record parameters
 	private String collectionId;
@@ -141,5 +142,13 @@ public class ApiConsolePage extends ApiData {
 
 	public void setPhrases(boolean phrases) {
 		this.phrases = phrases;
+	}
+
+	public String getCallback() {
+		return callback;
+	}
+
+	public void setCallback(String callback) {
+		this.callback = callback;
 	}
 }

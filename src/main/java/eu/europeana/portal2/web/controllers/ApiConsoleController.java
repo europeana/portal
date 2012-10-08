@@ -42,6 +42,7 @@ public class ApiConsoleController {
 	@RequestMapping(value = "/api/console.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView playground(
 			@RequestParam(value = "function", required = false, defaultValue="search") String function,
+			@RequestParam(value = "callback", required = false) String callback,
 			@RequestParam(value = "query", required = false) String query,
 			@RequestParam(value = "qf", required = false) String[] refinements,
 			@RequestParam(value = "profile", required = false, defaultValue="standard") String profile,
@@ -81,17 +82,18 @@ public class ApiConsoleController {
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 		model.setPhrases(phrases);
+		model.setCallback(callback);
 
 		ApiWrapper api = new ApiWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
 		String rawJsonString = "";
 		if (function.equals("search") && !StringUtils.isBlank(query)) {
-			rawJsonString = api.getSearchResult(query, refinements, profile, start, rows, sort);
+			rawJsonString = api.getSearchResult(query, refinements, profile, start, rows, sort, callback);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			rawJsonString = api.getObject(collectionId, recordId);
+			rawJsonString = api.getObject(collectionId, recordId, callback);
 		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			rawJsonString = api.getObject(recordId);
+			rawJsonString = api.getObject(recordId, callback);
 		} else if (function.equals("suggestions") && !StringUtils.isBlank(query)) {
-			rawJsonString = api.getSuggestions(query, rows, phrases);
+			rawJsonString = api.getSuggestions(query, rows, phrases, callback);
 		}
 
 		String niceJsonString = rawJsonString;

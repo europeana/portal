@@ -52,7 +52,7 @@ public class ApiWrapper {
 		this.session = session;
 	}
 
-	public String getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort) {
+	public String getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append("/search.json?");
 		if (!StringUtils.isBlank(query)) {
@@ -68,11 +68,12 @@ public class ApiWrapper {
 		url.append("&start=").append(start);
 		url.append("&rows=").append(rows);
 		url.append("&profile=").append(profile);
+		url.append("&callback=").append(callback);
 
 		return getJsonResponse(url.toString());
 	}
 
-	public String getSuggestions(String query, int rows, boolean phrases) {
+	public String getSuggestions(String query, int rows, boolean phrases, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append("/suggestions.json?");
 		if (!StringUtils.isBlank(query)) {
@@ -80,16 +81,29 @@ public class ApiWrapper {
 		}
 		url.append("&rows=").append(rows);
 		url.append("&phrases=").append(phrases);
+		if (!StringUtils.isBlank(callback)) {
+			url.append("&callback=").append(callback);
+		}
 
 		return getJsonResponse(url.toString());
 	}
 
-	public String getObject(String collectionId, String recordId) {
-		return getJsonResponse(apiUrl + "/record/" + collectionId + "/" + recordId + ".json");
+	public String getObject(String collectionId, String recordId, String callback) {
+		StringBuilder url = new StringBuilder(apiUrl + "/record/" + collectionId + "/" + recordId + ".json");
+		if (!StringUtils.isBlank(callback)) {
+			url.append("?callback=").append(callback);
+		}
+
+		return getJsonResponse(url.toString());
 	}
 
-	public String getObject(String recordId) {
-		return getJsonResponse(apiUrl + "/record/" + recordId + ".json");
+	public String getObject(String recordId, String callback) {
+		StringBuilder url = new StringBuilder(apiUrl + "/record/" + recordId + ".json");
+		if (!StringUtils.isBlank(callback)) {
+			url.append("?callback=").append(callback);
+		}
+
+		return getJsonResponse(url.toString());
 	}
 
 	protected String getSessionID() {
@@ -106,6 +120,7 @@ public class ApiWrapper {
 				log.severe("It was unsuccessfull to get apiSession");
 			}
 		}
+
 		return sessionId;
 	}
 
