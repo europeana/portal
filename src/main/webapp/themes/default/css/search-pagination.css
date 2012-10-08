@@ -1,5 +1,10 @@
 /* pagination for search results */
 
+.result-count{
+	width:		100%;
+	text-align:	center;
+}
+
 .result-pagination{
 	float:			none;	
 	margin:			0;
@@ -7,11 +12,12 @@
 	padding-left:	0;
 	display:		table;
 	table-layout:	fixed;
-	
 	font-size:		1.5em;
+	
+	clear:	both;
 }
 
-
+.result-count li,
 .result-pagination li{
 	list-style: 	none;
 	display:		table-cell;
@@ -20,7 +26,7 @@
 
 
 @media only screen and ( min-width:48em ){
-	
+
 	.result-pagination{
 		float:		right;
 		width:		auto;	

@@ -50,6 +50,11 @@ eu.europeana.header = {
 		jQuery('.jump-to-page').bind('submit', this.jumpToPageSubmit );
 		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
+		
+		//signupFormObj.drawForm();
+		//alert("done drawing form");
+
+		
 	},
 
 	initResponsiveUtility : function(){
@@ -313,8 +318,9 @@ eu.europeana.header = {
 			        var oldWidth	= jQuery(".ui-autocomplete").width();
 			        var newLeft 	= oldLeft	- parseInt( $(id).parent().css('padding-left') );
 			        var newWidth	= oldWidth	- parseInt( $(id).parent().css('padding-left') );
-	                $(".ui-autocomplete").css("left",	newLeft + "px");
-	                $(".ui-autocomplete").css("width",	newWidth + "px");
+	                $(".ui-autocomplete").css("left",		newLeft + "px");
+	                $(".ui-autocomplete").css("width",		newWidth + "px");
+	                $(".ui-autocomplete").css("z-index",	2);
 
 			    },
 			    

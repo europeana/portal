@@ -1,16 +1,16 @@
 
 /* addthis */
 
-	.addthis {
-		position: absolute;
-		z-index: 200;
-		top: 7px;
-		right: 5px;
-		min-width: 133px;
-		max-width: 180px;
-	}
-	
-	.at300b, .at300m { float: right; margin-left: 3px; }
+.addthis {
+	position: absolute;
+	z-index: 200;
+	top: 7px;
+	right: 5px;
+	min-width: 133px;
+	max-width: 180px;
+}
+
+.at300b, .at300m { float: right; margin-left: 3px; }
 	
 	
 /* actions */
