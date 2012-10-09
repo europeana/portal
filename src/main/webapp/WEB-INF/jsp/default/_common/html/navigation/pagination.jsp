@@ -11,6 +11,13 @@
 			</div>
 		</c:if>
 		
+		
+		<div class="result-count result-count-inline hide-on-phones">
+			<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;
+      		<fmt:formatNumber value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0" />
+		</div>
+		
+		
 		<ul class="result-pagination">
 			
 			<%-- first arrow --%>
@@ -26,6 +33,7 @@
 					<a href="${model.previousPageUrl}" title="<spring:message code="AltPreviousPage_t" />"> &lt; &nbsp; </a>
 				</c:if>
 			</li>
+
 			
 			<li class="nav-numbers">
 				<form method="get" action="${query_action}?" class="jump-to-page">
@@ -72,12 +80,6 @@
 			</ul>
 		</div>
 		
-		
-		
-		<div class="result-count result-count-inline hide-on-phones">
-			<spring:message code="Results_t" />&nbsp;${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}&nbsp;<spring:message code="Of_t" />&nbsp;
-      		<fmt:formatNumber value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0" />
-		</div>
 		
 		<div style="clear:both;"></div>
 

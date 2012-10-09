@@ -3,11 +3,13 @@
 .result-count{
 	width:		100%;
 	text-align:	center;
+	z-index:	0;	
 }
 
 .result-count-inline{
 	position:	absolute;
-	top:		0.6em;	
+	top:		0.6em;
+	z-index:	0;	
 }
 
 .result-pagination{
@@ -19,7 +21,9 @@
 	table-layout:	fixed;
 	font-size:		1.5em;
 	
-	clear:	both;
+	clear:			both;
+	position:		relative;
+	z-index:		1;	
 }
 
 .result-count li,
