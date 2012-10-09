@@ -14,7 +14,7 @@ eu.europeana.fulldoc = {
 
 		this.loadComponents();
 		this.addAutoTagHandler();
-		this.addSidebarRightData();
+		//this.addSidebarRightData();
 		
 		jQuery('#item-save-tag').bind('submit', this.handleSaveTagSubmit );
 		jQuery('#item-save').bind('click', this.handleSaveItemClick );

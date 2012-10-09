@@ -1,7 +1,7 @@
 js.utils.registerNamespace( 'eu.europeana.lightbox' );
 
+alert(221212);
 eu.europeana.lightbox = {
-
 		playMedia:false,
 		
 		overlay:null,
@@ -381,9 +381,13 @@ eu.europeana.lightbox = {
 		
 		layout:function(showMeta){
 			
+			var overlay = eu.europeana.lightbox.overlay;
+			
+			if(!overlay.is(':visible')){
+				return;
+			}
 			com.google.analytics.europeanaEventTrack("Lightbox View");
 			
-			var overlay = eu.europeana.lightbox.overlay;
 			var contentWrap = jQuery(overlay.find(".content-wrap"));
 			var contentInfo = jQuery(overlay.find(".info"));
 			var borderWidth = jQuery(contentInfo).outerWidth(false) - jQuery(contentInfo).innerWidth();
