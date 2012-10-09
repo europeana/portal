@@ -5,7 +5,7 @@
 
 
 <%-- Andy hack --%>
-<c:set var="lightboxRef" value="http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg" />
+<%--c:set var="lightboxRef" value="http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg" /--%>
 <%-- Andy hack end --%>
 
 <c:if test="${!empty lightboxRef}">

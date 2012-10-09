@@ -11,6 +11,8 @@
 	
 		<span id="nav-prev" class="icon-arrow-4"></span>
 		<span id="nav-next" class="icon-arrow-2"></span>
+		<span id="nav-prev-zoomed" class="icon-arrow-4"></span>
+		<span id="nav-next-zoomed" class="icon-arrow-2"></span>
 	
 		<!--	Note: the anchor style is used to size the media player (see eu.europeana.lightbox.playerOps for more info)
 				the same width attributes need copied into the div element to keep the lightbox centred in IE7.								 

@@ -646,17 +646,25 @@ eu.europeana.fulldoc = {
 								$("#hidden_img").remove();
 								$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
 									function(){
+										var zoomed = false;
+										if(  $("#zoomedImg").is(":visible")){
+											eu.europeana.lightbox.closeZoom();
+											zoomed = true;
+										}
 										$("#lightbox_image").attr("src", submodel[newActive].url);
 										eu.europeana.lightbox.layout();
+										if(zoomed){
+											eu.europeana.lightbox.zoomImg();
+										}
 									}
 								);
-							}
+							};
 							this.prev = function(){
 								nav(-1);
-							}
+							};
 							this.next = function(){
 								nav(1);
-							}
+							};
 						};
 						
 						var navOb = new navOb();

@@ -1,6 +1,5 @@
 js.utils.registerNamespace( 'eu.europeana.lightbox' );
 
-alert(221212);
 eu.europeana.lightbox = {
 		playMedia:false,
 		
@@ -100,7 +99,7 @@ eu.europeana.lightbox = {
 			
 		    if(orientation == "none"){ // initial call when sizing image
 		    	var allStats = [];
-		    	var landscapeContracted, portraitContracted, landscapeExpanded, portraitExpanded;
+		    	var landscapeContracted = null, portraitContracted = null, landscapeExpanded = null, portraitExpanded = null;
 		    	
 	    		var comparatorGt	= function(a, b){ return a > b; };
 	    		var comparatorGtE	= function(a, b){ return a >= b; };	    		
@@ -195,17 +194,30 @@ eu.europeana.lightbox = {
 		zoomImg : function(){					
 			var stats	= eu.europeana.lightbox.calculateMaxImgSize("zoom", "default");
 			var img		= jQuery(".content-image");
-			var html	= '<div class="zoomedImgDiv"><img id="zoomedImg" src="' + img.attr("src") + '" style="width:' + stats.w + 'px; height:' + stats.h + 'px;">' + (eu.europeana.vars.lightbox_rights ? eu.europeana.vars.lightbox_rights : '') + '</div>';
+			var html	= '<div class="zoomedImgDiv"><img id="zoomedImg" src="' + img.attr("src") + '" style="width:' + stats.w + 'px; height:' + stats.h + 'px;">' 
+							+ (eu.europeana.vars.lightbox_rights ? eu.europeana.vars.lightbox_rights : '');
+							+ '</div>';
 
 			jQuery("body").append(html);
-			
-			
-			jQuery(".zoomedImgDiv").css("top",		stats.top + "px");
-			jQuery(".zoomedImgDiv").css("left",		stats.left + "px");
+
+			jQuery(".zoomedImgDiv").css("top",		stats.top	+ "px");
+			jQuery(".zoomedImgDiv").css("left",		stats.left	+ "px");
 			jQuery(".zoomedImgDiv").css("display",	"block");
 			jQuery(".zoomedImgDiv").css("position",	"fixed");
 			jQuery(".zoomedImgDiv").css("zIndex",	"9999");
 			
+			var contentWrap	= jQuery(eu.europeana.lightbox.overlay.find(".content-wrap"));
+			var navNext		= contentWrap.find('#nav-next-zoomed');
+			var navPrev		= contentWrap.find('#nav-prev-zoomed');
+
+			jQuery(".zoomedImgDiv").append(navNext);
+			jQuery(".zoomedImgDiv").append(navPrev);
+
+			navNext.css('top', (stats.h - navNext.height()) / 2 + "px");
+			navPrev.css('top', (stats.h - navNext.height()) / 2 + "px");
+
+			navNext.show();
+			navPrev.show();
 			
 			html = '<div id="zoomClose"></div>';
 			jQuery(".zoomedImgDiv").append(html);
@@ -229,16 +241,23 @@ eu.europeana.lightbox = {
 		},
 
 		closeZoom:function(){
+			
+			var contentWrap	= jQuery(eu.europeana.lightbox.overlay.find(".content-wrap"));
+			contentWrap.append($('#nav-next-zoomed'));
+			contentWrap.append($('#nav-prev-zoomed'));
+
+			$('#nav-next-zoomed').hide();
+			$('#nav-prev-zoomed').hide();
+			
 			jQuery(".zoomedImgDiv").remove();
-			if(eu.europeana.lightbox.overlay){				
+			if(eu.europeana.lightbox.overlay){
 				eu.europeana.lightbox.overlay.show();
+				//eu.europeana.lightbox.layout();
 			}
 		},
 		
-//		init:function(src, carouselData) {
 		init:function(src, navOb) {
-			//alert("init")
-			//eu.europeana.lightbox.carouselData = carouselData;
+			
 			eu.europeana.lightbox.navOb = navOb;
 			
 			jQuery(".lb-trigger span").overlay({
@@ -256,10 +275,10 @@ eu.europeana.lightbox = {
 					var contentWrap		= jQuery(overlay.find(".content-wrap"));
 					var contentImage	= jQuery(contentWrap.find(".content-image"));
 					var playerDiv		= jQuery(contentWrap.find(".playerDiv"));
-					
+
 					//var contentAnchor	= jQuery(playerDiv.find("a"));
 					//var src				= contentAnchor.attr("href");
-					
+
 					if(src && typeof src === 'string'){
 						var wmv		= src.match(/wmv$/)		|| src.match(/WMV$/);
 						var mp3		= src.match(/mp3$/)		|| src.match(/MP3$/);
@@ -276,11 +295,11 @@ eu.europeana.lightbox = {
 							jQuery(playerDiv).css("width",	dimensions.w);
 							jQuery(playerDiv).css("height",	dimensions.h);
 							contentAnchor.hide();									
-							var callback;
+							var callback = null;
 							if(wmv){
 								callback = function(data){
 									jQuery(playerDiv).html(eu.europeana.lightbox.getWmvPlayer(data.streamLocation, dimensions.w, dimensions.h, false));
-								}
+								};
 							}
 							else if(flv || avi || mp4 || mp3){
 								callback = function(data){
@@ -298,7 +317,7 @@ eu.europeana.lightbox = {
 											}
 										}
 									});
-								}
+								};
 							}
 							else{
 								alert("flac files are not supported yet");
@@ -415,8 +434,6 @@ eu.europeana.lightbox = {
 				var contentImage = jQuery(contentWrap.find(".content-image"));
 				var stats = eu.europeana.lightbox.calculateMaxImgSize("none", showMeta);
 				
-console.log("layout.... " + stats.w + " x " + stats.h);				
-				
 				overlay.css("height",	stats.h + "px");
 				overlay.css("width",	(stats.w - borderWidth) + "px");
 
@@ -475,11 +492,6 @@ console.log("layout.... " + stats.w + " x " + stats.h);
 					contentInfo.css("top",			"0px");
 					contentInfo.css("left",			"-1px");
 					
-					
-					//alert("landscape")	
-//				contentInfo.find('#nav-next').css('top', );
-	//			contentInfo.find('#nav-prev').css('top', );
-
 					// pin "original context" to bottom of info panel - there's room for it there and it looks better
 					contentInfo.find('.original-context').css('position', 'absolute');
 					contentInfo.find('.original-context').css('bottom', '25px');
@@ -521,6 +533,23 @@ console.log("layout.... " + stats.w + " x " + stats.h);
 				navPrev.css('top', (stats.h - navNext.height()) / 2 + "px");
 
 				if(!eu.europeana.lightbox.navOb.wired){
+					contentWrap.find('#nav-next-zoomed').click(function(){
+						eu.europeana.lightbox.navOb.next();
+					});
+					contentWrap.find('#nav-prev-zoomed').click(function(){
+						eu.europeana.lightbox.navOb.prev();
+					});
+					
+					$('#nav-prev-zoomed')
+						.on('click', function() {
+							eu.europeana.lightbox.navOb.prev();
+					    });
+
+					$('#nav-next-zoomed')
+						.on('click', function() {
+							eu.europeana.lightbox.navOb.next();
+						});
+					
 					navNext.click(function(){
 						eu.europeana.lightbox.navOb.next();
 					});
