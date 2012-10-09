@@ -42,7 +42,7 @@
 							href	="<spring:message code="europeana-google-url" />"
 							target	="<spring:message code="europeana-google-target" />"
 							>
-							<span class="social-link icon-blog"><span class="text xhide-on-phones"><spring:message code="europeana-google_t" /></span></span>
+							<span class="social-link icon-google"><span class="text xhide-on-phones"><spring:message code="europeana-google_t" /></span></span>
 						</a>
 						
 						

@@ -14,7 +14,8 @@ eu.europeana.fulldoc = {
 
 		this.loadComponents();
 		this.addAutoTagHandler();
-
+		this.addSidebarRightData();
+		
 		jQuery('#item-save-tag').bind('submit', this.handleSaveTagSubmit );
 		jQuery('#item-save').bind('click', this.handleSaveItemClick );
 		jQuery('#item-embed').bind('click', this.handleEmbedClick );
@@ -32,6 +33,67 @@ eu.europeana.fulldoc = {
 		jQuery('#lightbox_href').bind('click', this.handleRedirectIsShownByImgClick );
 	},
 
+	/*
+	addSidebarRightData : function(){
+		
+		var callbacks = {};
+		
+		var makeAjaxCall = function(request){
+			
+			jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request,
+					
+				function(data) {
+				
+					
+					callbacks[request.field].received = callbacks[request.field].received + 1;
+					
+					callbacks[request.field].count = callbacks[request.field].count + data.suggestions.length;
+					
+					
+					if(callbacks[request.field].received == callbacks[request.field].expected){
+						
+						alert("request.field " + request.field + " " +     callbacks[request.field].count  );
+						
+					}
+					
+				
+					
+				}
+			);			
+			
+		};
+		
+		
+		if(typeof sidebarRightData != "undefined"){
+			
+			for(var i=0; i<sidebarRightData.length; i++){
+
+				callbacks[sidebarRightData[i].field] = {
+					//"field"		: sidebarRightData[i].filterField,
+					"expected"	: sidebarRightData[i].terms.length,
+					"received"	: 0,
+					"count"		: 0 
+				};
+				
+				for(var j=0; j<sidebarRightData[i].terms.length; j++){
+					
+					makeAjaxCall( {"field" : sidebarRightData[i].filterField, "term": sidebarRightData[i].terms[j] }  );
+					
+				}
+
+			}
+			
+		}
+		
+		
+		sidebarRightData[sidebarRightData.length] = {
+			"title"	: "Der Title",
+			"terms"	: ["${model.objectTitle}"]
+		};
+		
+	},
+	
+	*/
 	
 	loadComponents : function() {
 		

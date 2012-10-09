@@ -140,9 +140,10 @@
 	content: "\78";
 }
 
-.icon-blog:before {
+.icon-google:before {
 	content: "\33";
 }
+
 .icon-rss:before {
 	content: "\34";
 }
