@@ -82,7 +82,7 @@
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
 			
-			toggleFn: 			window.showingPhone
+			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 		
 		jQuery("#section-featured-content").Collapsible({
