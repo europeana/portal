@@ -37,7 +37,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				carouselData[carouselData.length] = {
 					image:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
 					title:			"<spring:message code='${item.anchorTitle}'/>",
-					description:	"<spring:message code='${item.imgAlt}'/>",
+					description:	"<spring:message code='${item.description}'/>",
 					link:			"${item.url}"
 				};
 				
@@ -46,10 +46,11 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					${item.imgWidth}
 					${item.imgHeight}					
 				--%>
+				
 			</c:forEach>
 			
 /* fix for home
- */
+ 
 	        carouselData = [];   
 
 			carouselData[0] = {
@@ -79,7 +80,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					description:	"Description of image",
 					link:			"http://www.google.co.uk"
 			};
- 				
+*/
 
 		</script>
 		

@@ -433,10 +433,12 @@ Galleria.addTheme({
 			thisGallery._options.responsive = false;
 
 			var title		= thisGallery.$( 'container' ).find(".galleria-info-title");
+			var description	= thisGallery.$( 'container' ).find(".galleria-info-description");
 			
     		if(dataSource.length > 1){ // will always be the case on index page for this type of galleria
     			stage.after(info);
     			info.append(title);
+    			info.append(description);
 
      			
         		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
