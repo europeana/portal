@@ -199,33 +199,85 @@
 }
 
 .footer-bottom-links{
-	margin-top:		1em;
-	border-top:		solid 1px #999;
+	margin-top:		0;
+	border-top:		solid 1px #E4E4E4;
 	padding-top:	0.5em;
 	margin-bottom:	1em;
+	position:		relative;
 }
 	
 .footer-bottom-link{
 	color:			#333 !important;
 	margin-right:	1em;
+	display:		block;
 }
 
-.footer-bottom-link:first-child{
+.footer-bottom-link{
 	margin-left:	1em;
+}
+
+.footer-bottom-links div:first-child{
+	margin-bottom:	1em;
 }
 
 .footer-funded-by{
 	color:		#333 !important;
-	right:		0;
-	top:		-0.2em;
-	position:	absolute;
+	right:		1em;
+	
+	
+	position:	static;
+	display:	block;
+	
+	width:		100%;
+	text-align:	right;
+	
+	font-size:	0.7em;
 }
 
 .icon-euflag{
 	background-color:	blue;
 	color:				yellow;
 	margin-left:		1em;
+	margin-right:		1em;
 }
+
+
+
+@media only screen and ( min-width:48em ){
+	.footer-bottom-link{
+		display:		inline;
+		margin-left:	0;
+	}
+	
+	.footer-bottom-link:first-child{
+		margin-left:	1em;
+	}
+	
+	.footer-bottom-links{
+		margin-top:		1em;
+	}
+	
+	
+	.footer-funded-by{
+		right:		0;
+		top:		-0.2em;
+		bottom:		auto;
+		position:	absolute;
+		font-size:	1em;
+		position:	relative;
+		bottom:		4px;
+		
+	}
+
+	.icon-euflag{
+		margin-right:		0;
+	}
+
+} 
+
+
+
+
 	
 #link-logo-1{
 	color:	#;
