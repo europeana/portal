@@ -97,6 +97,7 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'embed'){
 		scripts.push({
@@ -105,6 +106,7 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'europeana-providers.html'){
 		scripts.push({
@@ -112,6 +114,7 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'forgotPassword.html'){
 		scripts.push({
@@ -119,6 +122,7 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'full-doc.html'){
 
@@ -197,7 +201,8 @@ var europeana_bootstrap = function(){
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'utils' ]
 			});
-		}		
+		}
+		loadScripts(scripts);
 	}		
 	else if(eu.europeana.vars.page_name == 'myeuropeana.html'){
 		scripts.push({
@@ -239,11 +244,12 @@ var europeana_bootstrap = function(){
 		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'staticpage.html'){
-		scripts.push({
-			file : 'addthis' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
-			dependencies : [ 'utils' ]
-		});
+		//scripts.push({
+			//file : 'addthis' + js.min_suffix + '.js' + js.cache_helper,
+			//path : eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
+			//dependencies : [ 'utils' ]
+		//});
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'timeline.html'){
 		scripts.push({
@@ -251,6 +257,7 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'search-widget.html'){
 		scripts.push({
@@ -258,6 +265,7 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		loadScripts(scripts);
 	}	
 }();
 
