@@ -106,6 +106,8 @@ public class ObjectController {
 			HttpServletResponse response, 
 			Locale locale) {
 
+		long t0 = (new Date()).getTime();
+
 		config.registerBaseObjects(request, response, locale);
 		localeChangeInterceptor.preHandle(request, response, this);
 		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
@@ -113,7 +115,6 @@ public class ObjectController {
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 
 		FullDocPage model = new FullDocPage();
-//		model.setLocale(locale)
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 		model.setFormat(format);
@@ -127,16 +128,25 @@ public class ObjectController {
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 
+		long tgetFullBean0 = (new Date()).getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
+		long tgetFullBean1 = (new Date()).getTime();
+		log.info("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		log.info("fullBean: " + (fullBean == null));
 		Query query = new Query(queryString).setRefinements(qf);
 
+		// full bean view
 		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
 		model.setFullBeanView(fullBeanView);
-		model.setMoreLikeThis(getMoreLikeThis(collectionId, recordId, model));
 
-		Date d0 = new Date();
-		long t0 = d0.getTime();
+		// more like this
+		List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
+		if (fullBean.getSimilarItems() == null) {
+			similarItems = getMoreLikeThis(collectionId, recordId, model);
+		}
+		model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
+
+		long tSeeAlso0 = (new Date()).getTime();
 		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
 		Map<String, List<String>> seeAlsoParams = new HashMap<String, List<String>>();
 		for (String metaField : seeAlsoFields.keySet()) {
@@ -151,13 +161,15 @@ public class ObjectController {
 			seeAlsoParams.put(metaField, fieldValues);
 		}
 		model.setSeeAlsoSuggestions(searchService.seeAlso(seeAlsoParams));
-		Date d1 = new Date();
-		long t1 = d1.getTime();
-		log.info("takes: " + (t1 - t0));
+		long tSeeAlso1 = (new Date()).getTime();
+		log.info("see also takes: " + (tSeeAlso1 - tSeeAlso0));
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		config.postHandle(this, page);
 		clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView.getFullDoc().getAbout());
+
+		long t1 = (new Date()).getTime();
+		log.info("object page takes: " + (t1 - t0));
 
 		return page;
 	}
@@ -226,19 +238,25 @@ public class ObjectController {
 		}
 		return fullBean;
 	}
-	
-	private List<BriefBeanDecorator> getMoreLikeThis(String collectionId, String recordId, UrlAwareData<?> model) {
-		List<BriefBeanDecorator> moreLikeThis = new ArrayList<BriefBeanDecorator>();
+
+	private List<BriefBean> getMoreLikeThis(String collectionId, String recordId, UrlAwareData<?> model) {
 		String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
+		List<BriefBean> result = null;
 		try {
-			List<BriefBean> result = searchService.findMoreLikeThis(europeanaId);
-			for (BriefBean bean : result) {
-				moreLikeThis.add(new BriefBeanDecorator(model, bean));
-			}
+			result = searchService.findMoreLikeThis(europeanaId);
 		} catch (SolrServerException e) {
 			log.severe("Solr Server Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
+		return result;
+	}
+
+	private List<BriefBeanDecorator> prepareMoreLikeThis(List<? extends BriefBean> result, UrlAwareData<?> model) {
+		List<BriefBeanDecorator> moreLikeThis = new ArrayList<BriefBeanDecorator>();
+		for (BriefBean bean : result) {
+			moreLikeThis.add(new BriefBeanDecorator(model, bean));
+		}
+
 		return moreLikeThis;
 	}
 
