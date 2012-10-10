@@ -15,13 +15,16 @@
 	
 	
 /* feedback */
-	
+	#feedback {
+		padding-bottom:	1em;
+	}
+
 	#feedback legend {
 		display: none;
 	}
 	
 	#feedback input[type='text'], #feedback textarea {
-		width: 90%;
+		width:			100%;
 	}
 	
 	#feedback input[type='text']:hover,
