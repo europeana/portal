@@ -25,7 +25,7 @@ public class WebUtilTest {
 		ApiFulldocParser parser = new ApiFulldocParser("http://localhost:8080/api2", "api2demo", "verysecret", null);
 		parser.getFullBean("91627", "7E8AAB01E1C2AD825615C3153CF82C1B2D39B224");
 	}
-	
+
 	public void objectMapperCleanJsonTest() {
 		FullBean fullBean = null;
 		ObjectMapper mapper = new ObjectMapper();

@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.List;
+import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
@@ -53,6 +54,8 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected FullBeanDecorator decorator;
 
 	protected List<BriefBeanDecorator> moreLikeThis;
+
+	protected Map<String, Map<String, Integer>> seeAlsoSuggestions;
 
 	public void setFormat(String format) {
 		this.format = format;
@@ -113,5 +116,14 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public void setMoreLikeThis(List<BriefBeanDecorator> moreLikeThis) {
 		this.moreLikeThis = moreLikeThis;
+	}
+
+	public Map<String, Map<String, Integer>> getSeeAlsoSuggestions() {
+		return seeAlsoSuggestions;
+	}
+
+	public void setSeeAlsoSuggestions(
+			Map<String, Map<String, Integer>> seeAlsoSuggestions) {
+		this.seeAlsoSuggestions = seeAlsoSuggestions;
 	}
 }

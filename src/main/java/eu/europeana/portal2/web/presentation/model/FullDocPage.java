@@ -399,14 +399,12 @@ public class FullDocPage extends FullDocPreparation {
 		StringBuilder title = new StringBuilder(getBaseTitle());
 		if (StringArrayUtils.isNotBlank(shortcut.get("DcCreator"))) {
 			String creator = shortcut.get("DcCreator")[0];
-			// clean up creator first
-			creator = creator.replaceAll("[\\<({\\[].*?[})\\>\\]]", ""); // (..)
-																			// [..]
-																			// <..>
-																			// {..}
-			creator = StringUtils.strip(creator, ","); // strip , from begin or
-														// end
-			creator = StringUtils.trim(creator);// strip spaces
+			// clean up creator first (..), [..], <..>, {..}
+			creator = creator.replaceAll("[\\<({\\[].*?[})\\>\\]]", "");
+			// strip , from begin or end
+			creator = StringUtils.strip(creator, ",");
+			// strip spaces
+			creator = StringUtils.trim(creator);
 			if (StringUtils.isNotBlank(creator)) {
 				title.append(" | ").append(creator);
 			}

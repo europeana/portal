@@ -18,6 +18,8 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,7 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
@@ -57,6 +60,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDeco
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLogger.UserAction;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
@@ -75,6 +79,16 @@ public class ObjectController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
+	public static final Map<String, List<String>> seeAlsoFields = new HashMap<String, List<String>>(){
+		private static final long serialVersionUID = 1L; 
+		{
+			put("what", Arrays.asList(new String[]{"DcType", "DcSubject", "DcFormat"}));
+			put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated", "DctermsTemporal"}));
+			put("who", Arrays.asList(new String[]{"DcContributor", "DcCreator"}));
+			put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
+			put("title", Arrays.asList(new String[]{"DcTitle", "DctermsAlternative"}));
+		}
+	};
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
@@ -120,6 +134,26 @@ public class ObjectController {
 		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
 		model.setFullBeanView(fullBeanView);
 		model.setMoreLikeThis(getMoreLikeThis(collectionId, recordId, model));
+
+		Date d0 = new Date();
+		long t0 = d0.getTime();
+		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
+		Map<String, List<String>> seeAlsoParams = new HashMap<String, List<String>>();
+		for (String metaField : seeAlsoFields.keySet()) {
+			List<String> fieldValues = new ArrayList<String>();
+			for (String edmField : seeAlsoFields.get(metaField)) {
+				String[] values = shortcut.get(edmField);
+				if (values != null) {
+					int size = fieldValues.size();
+					fieldValues.addAll(Arrays.asList(values));
+				}
+			}
+			seeAlsoParams.put(metaField, fieldValues);
+		}
+		model.setSeeAlsoSuggestions(searchService.seeAlso(seeAlsoParams));
+		Date d1 = new Date();
+		long t1 = d1.getTime();
+		log.info("takes: " + (t1 - t0));
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		config.postHandle(this, page);

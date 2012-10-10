@@ -68,7 +68,7 @@ public class SitemapController {
 	}
 
 	public static String solrQueryClauseToIncludeRecordsToPromoteInSitemaps(int min) {
-		return "europeana_completeness:[" + min + " TO *] ";
+		return "COMPLETENESS:[" + min + " TO *] ";
 	}
 
 	public static String solrQueryClauseToIncludePlaces() {
@@ -141,9 +141,10 @@ public class SitemapController {
 				queryForPlaces = solrQueryClauseToIncludePlaces();
 			}
 			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps())
-					+ " AND europeana_recordHashFirstSix:" + prefix + "*"
+					+ " AND europeana_id:/" + prefix + "*"
 					+ queryForPlaces;
 			Query query = new Query(queryString).setParameter("rows", "20000");
+			log.info("queryString: " + queryString);
 			List<? extends BriefBean> resultSet = null;
 			try {
 				resultSet = searchService.search(BriefBean.class, query).getResults();
