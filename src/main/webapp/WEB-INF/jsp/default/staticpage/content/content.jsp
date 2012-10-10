@@ -1,4 +1,6 @@
-<div id="content">
+<div class="row">
+
+
   <%@ include file="/WEB-INF/jsp/default/_common/content/messages.jsp"%>
   <%@ include file="/WEB-INF/jsp/default/_common/menus/sidebar.jsp"%>
   <c:choose>
@@ -9,4 +11,6 @@
       <h2>Unable to find content for this page.</h2>
     </c:otherwise>
   </c:choose>
+  
+  
 </div>
