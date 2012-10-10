@@ -61,13 +61,13 @@
 							<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
 						</div>
 						
-						<script type="text/javascript">
+						<!-- script type="text/javascript">
 							window.emma = {
 								"placeholder" : "<spring:message code='news_letter_email_hint_t' />",
 								"submitLabel" : "<spring:message code='news_letter_signup_button_t' />"
 							};
 							signupFormObj.drawForm();
-						</script>
+						</script-->
 						
 					</div>
 				</div>

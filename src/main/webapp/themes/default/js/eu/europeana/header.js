@@ -51,7 +51,7 @@ eu.europeana.header = {
 		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
 
-		eu.europeana.header.setupNewsletterForm();
+		//eu.europeana.header.setupNewsletterForm();
 
 	},
 
