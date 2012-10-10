@@ -94,6 +94,29 @@ public class StaticPageController {
 
 		pageName = "/" + pageName + ".html";
 
+		ModelAndView page = doFetchStaticPage(pageName, response, locale);
+
+		return page;
+	}
+
+	@RequestMapping("/rights/{pageName}.html")
+	public ModelAndView fetchStaticRightsPage(
+			@PathVariable String pageName,
+			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
+			HttpServletRequest request, 
+			HttpServletResponse response,
+			Locale locale) 
+					throws Exception {
+		config.registerBaseObjects(request, response, locale);
+
+		pageName = "/rights/" + pageName + ".html";
+
+		ModelAndView page = doFetchStaticPage(pageName, response, locale);
+
+		return page;
+	}
+
+	private ModelAndView doFetchStaticPage(String pageName, HttpServletResponse response, Locale locale) {
 		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		staticPageCache.setStaticPagePath(config.getStaticPagePath());
@@ -130,9 +153,10 @@ public class StaticPageController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.STATICPAGE);
 		config.postHandle(this, page);
-
+	
 		return page;
 	}
+
 
 	private String getStaticPagePart(String fileName, String partName, Locale language) {
 

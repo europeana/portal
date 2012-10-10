@@ -134,7 +134,7 @@ public class StaticPageCache {
 					pageMapCache.put(baseFileName, new Page(file));
 				} else {
 					if (!baseFileName.endsWith(".svn-base") && !baseFileName.endsWith(".js")) {
-						log.warning(String.format("Skip registering file to static cache: %s", file.getAbsolutePath()));
+						// log.warning(String.format("Skip registering file to static cache: %s", file.getAbsolutePath()));
 					}
 				}
 			}

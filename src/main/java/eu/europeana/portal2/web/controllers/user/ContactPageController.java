@@ -1,6 +1,5 @@
 package eu.europeana.portal2.web.controllers.user;
 
-import java.security.Principal;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -28,6 +27,7 @@ import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ContactPage;
 import eu.europeana.portal2.web.presentation.model.validation.ContactPageValidator;
+import eu.europeana.portal2.web.security.Portal2UserDetails;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
@@ -56,8 +56,11 @@ public class ContactPageController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = null;
 		if (authentication != null) {
-			Principal principal = (Principal)authentication.getPrincipal();
-			user = userService.findByEmail(principal.getName());
+			// Principal principal = (Principal)authentication.getPrincipal();
+			Object principal = (Object)authentication.getPrincipal();
+			if (principal instanceof Portal2UserDetails) {
+				user = userService.findByEmail(((Portal2UserDetails)principal).getUsername());
+			}
 		}
 		if (user != null) {
 			form.setEmail(user.getEmail());
