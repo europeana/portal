@@ -13,6 +13,8 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public enum PortalLanguage {
+	
+	EN(true, "English (eng)","english_t"), 
 
 	EU(true, "Basque (eus)", "basque_t"),
 	
@@ -26,9 +28,7 @@ public enum PortalLanguage {
 	
 	DE(true, "Deutsch (deu)", "german_t"), 
 
-	EL(true, "&#917;&#955;&#955;&#951;&#957;&#953;&#954;&#940; (ell/gre)", "greek_t"),
-	
-	EN(true, "English (eng)","english_t"), 
+	EL(true, "&#917;&#955;&#955;&#951;&#957;&#953;&#954;&#940; (ell/gre)", "greek_t"),	
 
 	ES(true, "Espa&#241;ol (esp)", "spanish_t"), 
 
