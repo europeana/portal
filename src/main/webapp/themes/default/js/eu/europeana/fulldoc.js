@@ -618,7 +618,7 @@ eu.europeana.fulldoc = {
 				var initLightbox = function(url, gallery){
 					$('#lightbox_image').one('load', function(){
 
-						var navOb = function(){
+						var NavOb = function(){
 							
 							var nav = function(direction){
 								var currentUrl = $("#lightbox_image").attr("src");
@@ -667,7 +667,7 @@ eu.europeana.fulldoc = {
 							};
 						};
 						
-						var navOb = new navOb();
+						var navOb = new NavOb();
 						
 						eu.europeana.lightbox.init(url, navOb);
 						showTrigger(true, gallery);
