@@ -627,5 +627,9 @@ a.ui-state-hover {
 	}
 }
 
+.contact-page #query-full{
+	display:	none !important;
+}
+
 
 
