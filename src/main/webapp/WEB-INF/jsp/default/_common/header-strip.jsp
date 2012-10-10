@@ -65,7 +65,7 @@
 						target="<spring:message code="notranslate_main_menu_home_a_target_t"/>"
 						href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
 				</li>
-				<li class="item icon-home">
+				<li class="item icon-logo">
 					<a	class="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
 						target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
 						href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>

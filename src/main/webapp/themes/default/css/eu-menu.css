@@ -33,19 +33,15 @@
 
 
 .eu-menu{
-	position:				relative; 
+	cursor:					pointer;
 	display:				inline-block;
-	float:					right;
-	z-index:				2;	
-
 	float:					none;
-	text-align:				left;
-
-	top:					0.03em;
 	padding-left:			0.15em;
 	padding-bottom:			0.18em;
-	
-	cursor:					pointer;
+	position:				relative; 
+	text-align:				left;
+	top:					0.03em;
+	z-index:				3;	
 }
 
 .eu-menu a {

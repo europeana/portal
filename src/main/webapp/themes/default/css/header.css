@@ -175,8 +175,10 @@ tr td:first-child, tr td:last-child{
 
 table tr:first-child{
 	border:		1px solid #E4E4E4;
+	font-size:	1.4em;
 }
-	
+
+
 .menu-cell{
 	-moz-border-radius:		0.5em 0 0 0.5em;
 	-webkit-border-radius:	0.5em 0 0 0.5em;
@@ -210,6 +212,7 @@ table tr:first-child{
 		-moz-border-radius:		0;
 		-webkit-border-radius:	0;
 		border-radius:			0;
+		font-size:				1em;
 	}
 	
 	.menu-cell,

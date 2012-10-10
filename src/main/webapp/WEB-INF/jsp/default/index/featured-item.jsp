@@ -21,7 +21,7 @@
 									title	= "<spring:message code="${model.featuredItem.anchorTitle}" />"
 									target	= "<spring:message code="${model.featuredItem.anchorTarget}" />"
 									class	= "europeana">
-										<spring:message code="${model.featuredItem.heading}" />
+										XXX
 								</a>
 							</h4>
 	
@@ -42,7 +42,7 @@
 									title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
 									target=	"<spring:message code="${model.featuredItem.anchorTarget}" />"
 									class=	"europeana">
-											<spring:message code="${model.featuredItem.heading}" />
+											XXX
 								</a>
 							</h4>
 							<p class="featured-text">
@@ -86,14 +86,14 @@
 								title	= "<spring:message	code="${model.featuredPartner.anchorTitle}" />"
 								target	= "<spring:message	code="${model.featuredPartner.anchorTarget}" />"
 								class	= "europeana">
-									<spring:message code="${model.featuredPartner.heading}" />
+									XXX
 							</a>
 						</h4>
 							<a	href	= "<spring:message code="${model.featuredPartner.anchorUrl}" />"
 								title	= "<spring:message code="${model.featuredPartner.anchorTitle}" />"
 								target	= "<spring:message code="${model.featuredPartner.anchorTarget}" />"
 								class	= "image">
-								<img	src=	"<spring:message	code="${model.featuredPartner.imgUrl}" />"
+								<img	src=	"/${model.portalName}<spring:message	code="${model.featuredPartner.imgUrl}" />"
 										alt=	"<spring:message	code="${model.featuredPartner.imgAlt}" />"/>
 							</a>
 					</div>
@@ -104,7 +104,7 @@
 								title	= "<spring:message code="${model.featuredPartner.anchorTitle}" />"
 								target	= "<spring:message code="${model.featuredPartner.anchorTarget}" />"
 								class	= "europeana">
-									<spring:message code="${model.featuredPartner.heading}" />
+									XXX
 							</a>
 						</h4>
 						<p class="featured-text">
@@ -138,7 +138,7 @@
 							</li>
 
 							<li>						
-								<a	href	= "<spring:message code="notranslate_featured-partner-view_link_t" />"
+								<a	href	= "/${model.portalName}<spring:message code="notranslate_featured-partner-view_link_t" />"
 									target	= "<spring:message code="notranslate_featured-partner-view_target_t" />"
 									class	= "europeana">
 									<spring:message code="featured-partner-view_text_t" />
