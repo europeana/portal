@@ -198,6 +198,35 @@
 	font-size:		1.5em;
 }
 
+.footer-bottom-links{
+	margin-top:		1em;
+	border-top:		solid 1px #999;
+	padding-top:	0.5em;
+	margin-bottom:	1em;
+}
+	
+.footer-bottom-link{
+	color:			#333 !important;
+	margin-right:	1em;
+}
+
+.footer-bottom-link:first-child{
+	margin-left:	1em;
+}
+
+.footer-funded-by{
+	color:		#333 !important;
+	right:		0;
+	top:		-0.2em;
+	position:	absolute;
+}
+
+.icon-euflag{
+	background-color:	blue;
+	color:				yellow;
+	margin-left:		1em;
+}
+	
 #link-logo-1{
 	color:	#;
 }
