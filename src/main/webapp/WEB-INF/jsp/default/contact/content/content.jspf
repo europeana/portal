@@ -7,7 +7,7 @@
 	<div class="six columns">
 		<div class="contact-wrap">
 			<h2><spring:message code="Contacts_t" /></h2>
-			<h4>Europeana.eu</h4>
+			<h4 class="no-underline">Europeana.eu</h4>
 			<p>
 			c/o the Koninklijke Bibliotheek<br/>
 			National Library of the Netherlands<br/>
@@ -32,6 +32,7 @@
 		<div class="feedback-wrap">
 
 			<h3><spring:message code="SendUsFeedback_t" /></h3>
+			
 			<c:choose>
 				<c:when test="${not empty model.submitMessage}">
 					<p class="success">${model.submitMessage}</p>
@@ -57,8 +58,11 @@
 									<span class="error"><em>Please enter some feedback text.</em></span>
 								</c:if>
 							</p>
-	
-							<input type="submit" class="deans-button-1 europeana-button-1" value="Send"/>
+							<div class="row">
+								<div class="twelve columns">
+									<input type="submit" class="deans-button-1 europeana-button-1" value="Send"/>
+								</div>
+							</div>
 						</fieldset>
 					</form>
 				</c:otherwise>

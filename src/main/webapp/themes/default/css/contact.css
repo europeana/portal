@@ -1,11 +1,13 @@
 
-h4 {
+h4{
 	font-size: 100%;
 	color: #666;
+}
+
+h4:not(.no-underline) {
 	border-bottom: 1px solid #eaeaea;
 }
 
-	
 /* feedback */
 #feedback {
 	padding-bottom:	1em;
@@ -15,7 +17,7 @@ h4 {
 #feedback, #email{
 	width:			100%;
 }
-	
+
 /*
 #feedback input[type='text']:hover,
 #feedback input[type='text']:focus,
@@ -25,10 +27,20 @@ h4 {
 }
 */
 	
+.contact-wrap{
+	padding-top:	2em;
+}
 
 .feedback-wrap{
 	padding-top:	2em;
 	padding-bottom:	2em;
+}
+
+.feedback-wrap input[type="submit"]{
+	display:	block;
+	margin:		auto;
+	width:		100%;
+	font-size:	1.2em;
 }
 
 @media only screen and ( min-width:48em ){
@@ -44,8 +56,13 @@ h4 {
 	
 	.feedback-wrap{
 		padding-left:	1em;
-		padding-top:	0;
 		padding-bottom:	0;
+	}
+	
+	.feedback-wrap input[type="submit"]{
+		margin:		0;
+		width:		auto;
+		font-size:	1em;
 	}
 }
 

@@ -443,7 +443,7 @@ table tr:first-child{
 	border:					none;
 	color:					#fff;
 	cursor:					pointer;
-	font-size:				inherit;
+	font-size:				1.2em;
 	margin-left:			0;	/* override chrome default */
 	margin-right:			0;	/* override chrome default */
 	height:					100%;	
@@ -478,7 +478,7 @@ table tr:first-child{
 		padding-right:			0.5em;
 		
 		padding-left:			0.25em;
-		
+		font-size:				1em;
 		
 		-moz-border-radius:		0 0.5em 0.5em 0;
 		-webkit-border-radius:	0 0.5em 0.5em 0;
