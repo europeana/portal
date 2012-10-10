@@ -1,12 +1,12 @@
 
 #carousel-1{
-	xbackground-color:	red;
 	margin-bottom:		1em;
 }
 
 @media only screen and ( min-width:48em ){
 	#carousel-1{
-		margin-bottom:	0;	
+		margin-bottom:	0;
+		margin-top:		2em;	
 	}
 }
 	
