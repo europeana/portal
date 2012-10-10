@@ -262,15 +262,18 @@
 		right:		0;
 		top:		-0.2em;
 		bottom:		auto;
-		position:	absolute;
-		font-size:	1em;
 		position:	relative;
-		bottom:		4px;
+		font-size:	1em;
+		
+		float:		right;
+		width:		auto;
 		
 	}
 
 	.icon-euflag{
 		margin-right:		0;
+		position:	relative;
+		bottom:		4px;
 	}
 
 } 
