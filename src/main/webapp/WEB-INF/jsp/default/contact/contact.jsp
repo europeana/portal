@@ -5,7 +5,7 @@
 <%-- @ include file="/WEB-INF/jsp/devel/_common/macros/msg-property-limiter.jsp" --%>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html-open.jsp" %>
-<div class="container contact-page">
+<div class="container">
 
   <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
   <%@ include file="/WEB-INF/jsp/default/contact/content/content.jspf" %>

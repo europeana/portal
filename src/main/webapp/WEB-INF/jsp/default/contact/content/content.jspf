@@ -2,64 +2,68 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div id="zcontact-details" class="row">
+<div class="row">
 
 	<div class="six columns">
-
-	<h2><spring:message code="Contacts_t" /></h2>
-	<h4>Europeana.eu</h4>
-	<p>
-	c/o the Koninklijke Bibliotheek<br/>
-	National Library of the Netherlands<br/>
-	PO Box 90407<br/>
-	2509 LK The Hague
-	</p>
-	
-	<h4>To be added to the press list or for general communications</h4>
-	<p>
-	<span class="addr" title="Jonathan Purday">jonathan.purday [@] bl [.] uk</span>
-	Phone 0031 70 31 40 991
-	</p>
-		
-		<h4>To contribute content to Europeana</h4>
-		<p>
-			See the <a href="http://version1.europeana.eu/web/guest/provide_content">content providers</a> page on our project site
-		</p>
+		<div class="contact-wrap">
+			<h2><spring:message code="Contacts_t" /></h2>
+			<h4>Europeana.eu</h4>
+			<p>
+			c/o the Koninklijke Bibliotheek<br/>
+			National Library of the Netherlands<br/>
+			PO Box 90407<br/>
+			2509 LK The Hague
+			</p>
+			
+			<h4>To be added to the press list or for general communications</h4>
+			<p>
+			<span class="addr" title="Jonathan Purday">jonathan.purday [@] bl [.] uk</span>
+			Phone 0031 70 31 40 991
+			</p>
+			
+			<h4>To contribute content to Europeana</h4>
+			<p>
+				See the <a href="http://version1.europeana.eu/web/guest/provide_content">content providers</a> page on our project site
+			</p>
+		</div>
 	</div>
 
-	<div id="feedback" class="six columns">
-		<h3><spring:message code="SendUsFeedback_t" /></h3>
-		<c:choose>
-			<c:when test="${not empty model.submitMessage}">
-				<p class="success">${model.submitMessage}</p>
-			</c:when>
-			<c:otherwise>
-				<form action="" method="post">
-					<fieldset>
-						<legend>feedback form</legend>
-						<p>
-							<label for="email">Your email address:</label><br/>
-							<input type="text" name="email" id="email" maxlength="50" value="${model.email}" /><br/>
-							<spring:bind path="model.email" />
-							<c:forEach items="${spring.status.errorMessages}" var="error">
-								<span class="error"><em>${error}</em></span> <br/>
-							</c:forEach>
-						</p>
+	<div class="six columns">
+		<div class="feedback-wrap">
 
-						<p>
-							<label for="feedback">Your feedback or comments:</label><br/>
-							<textarea name="feedbackText" id="feedback" class="required">${model.feedbackText}</textarea>
-							<spring:bind path="model.feedbackText" />
-							<c:if test="${spring.status.error}">
-								<span class="error"><em>Please enter some feedback text.</em></span>
-							</c:if>
-						</p>
-
-						<input type="submit" class="submit-button" value="Send"/>
-					</fieldset>
-				</form>
-			</c:otherwise>
-		</c:choose>
+			<h3><spring:message code="SendUsFeedback_t" /></h3>
+			<c:choose>
+				<c:when test="${not empty model.submitMessage}">
+					<p class="success">${model.submitMessage}</p>
+				</c:when>
+				<c:otherwise>
+					<form action="" method="post">
+						<fieldset>
+							<legend>feedback form</legend>
+							<p>
+								<label for="email">Your email address:</label><br/>
+								<input type="text" name="email" id="email" maxlength="50" value="${model.email}" /><br/>
+								<spring:bind path="model.email" />
+								<c:forEach items="${spring.status.errorMessages}" var="error">
+									<span class="error"><em>${error}</em></span> <br/>
+								</c:forEach>
+							</p>
+	
+							<p>
+								<label for="feedback">Your feedback or comments:</label><br/>
+								<textarea name="feedbackText" id="feedback" class="required">${model.feedbackText}</textarea>
+								<spring:bind path="model.feedbackText" />
+								<c:if test="${spring.status.error}">
+									<span class="error"><em>Please enter some feedback text.</em></span>
+								</c:if>
+							</p>
+	
+							<input type="submit" class="deans-button-1 europeana-button-1" value="Send"/>
+						</fieldset>
+					</form>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
 
 	<div id="thank-you">
@@ -94,4 +98,4 @@
 			Dzi&#281;kujemy za przedstawienie opinii. Je&#347;li opinia wymaga odpowiedzi, zesp&#243;&#322; Europeany skontaktuje si&#281; z Panem/Pani&#261; w mo&#380;liwie najbli&#380;szym czasie. <b>Aby skr&#243;ci&#263; okres oczekiwania na odpowied&#378;, prosimy o sformu&#322;owanie opinii po angielsku.</b>	
 		</p>
 	</div>
-
+</div>
