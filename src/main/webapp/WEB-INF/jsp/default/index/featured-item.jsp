@@ -21,7 +21,7 @@
 									title	= "<spring:message code="${model.featuredItem.anchorTitle}" />"
 									target	= "<spring:message code="${model.featuredItem.anchorTarget}" />"
 									class	= "europeana">
-										XXX
+									spring:message code="{model.featured-partner-1_h3_t}" /	
 								</a>
 							</h4>
 	
@@ -32,7 +32,6 @@
 									<img	src=	"/${model.portalName}<spring:message code="${model.featuredItem.imgUrl}" />"
 											alt=	"<spring:message code="${model.featuredItem.imgAlt}" />"/>
 								</a>
-	
 						</div>
 						
 						<div class="feed-cell">
@@ -42,7 +41,7 @@
 									title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
 									target=	"<spring:message code="${model.featuredItem.anchorTarget}" />"
 									class=	"europeana">
-											XXX
+									spring:message code="{model.featured-partner-1_h3_t}" /
 								</a>
 							</h4>
 							<p class="featured-text">
