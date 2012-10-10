@@ -55,7 +55,7 @@
 						
 					<div id="footer-subscribe">
 					
-						<!-- h3><spring:message code="news_letter_signup_t" /></h3>
+						<h3><spring:message code="news_letter_signup_t" /></h3>
 					
 						<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
 							<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
@@ -67,7 +67,7 @@
 								"submitLabel" : "<spring:message code='news_letter_signup_button_t' />"
 							};
 							signupFormObj.drawForm();
-						</script-->
+						</script>
 						
 					</div>
 				</div>
@@ -139,39 +139,3 @@
 
 
 
-			<div class="row footer-bottom-links">
-				<div class="twelve columns">
-
-					<a class="europeana footer-bottom-link"
-						href="<spring:message code="footer_menu_about_us_url"/>"
-						target="<spring:message code="footer_menu_about_us_target_t"/>"
-						title="<spring:message code="footer_menu_about_us_title_t"/>">
-							<spring:message code="footer_menu_about_us_text_t"/>
-					</a>
-
-					<a class="europeana footer-bottom-link"
-						href="<spring:message code="footer_menu_tou_url"/>"
-						target="<spring:message code="footer_menu_tou_target_t"/>"
-						title="<spring:message code="footer_menu_tou_title_t"/>">
-							<spring:message code="footer_menu_tou_text_t"/>
-					</a>
-
-					<a class="europeana footer-bottom-link"
-						href="<spring:message code="footer_menu_contact_us_url"/>"
-						target="<spring:message code="footer_menu_contact_us_target_t"/>"
-						title="<spring:message code="footer_menu_contact_us_title_t"/>">
-							<spring:message code="footer_menu_contact_us_text_t"/>
-					</a>
-
-					<a class="europeana footer-bottom-link"
-						href="<spring:message code="footer_menu_sitemap_url"/>"
-						target="<spring:message code="footer_menu_sitemap_target_t"/>"
-						title="<spring:message code="footer_menu_sitemap_title_t"/>">
-							<spring:message code="footer_menu_sitemap_text_t"/>
-					</a>
-
-				
-					<span class="footer-funded-by"><spring:message code="FundedBy_t"/><span class="icon-euflag"></span>
-			
-				</div>
-			</div>

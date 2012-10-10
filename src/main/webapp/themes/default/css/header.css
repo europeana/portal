@@ -32,6 +32,12 @@
 
 	
 /* outer layout */
+
+#logo{
+	z-index:2;
+	position:relative;	
+}
+
 #logo h1{
 	display:	block;
 	width:		100%; 

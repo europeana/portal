@@ -440,7 +440,8 @@
     right:				0;
     max-width:			100%;
     
-    bottom:				auto;
+    bottom:				0;
+    margin-bottom:		5px;
 	max-height:			40%;
 }
 
@@ -451,7 +452,10 @@
 	    
 	    right:				auto;
 	    max-width:			45%;
+        bottom:				auto;
+        margin-bottom:		0;
 	}
+
 }
 
 .europeana-bordered .galleria-info,
@@ -479,17 +483,42 @@
 	xxmargin-top:	4px;	/* Andy: 5px gap may vanish when equal height images used - otherwise use this. */
 }
 
+
 .galleria-info-title{
-	font-size:	1.2em;
-}
-.galleria-info-description{
-	font-size:	0.8em;
+	font-size:	0.9em;
 }
 
 /* footer */
 
+.galleria-info-description{
+	display:	none !important;
+}
 
 .europeana-bordered .galleria-info-description,
 .europeana-carousel .galleria-info-description{
 	display:	none !important;
+}
+
+
+@media only screen and ( min-width:767px ){
+	
+	.galleria-info-title{
+		font-size:	1.2em;
+	}
+	.galleria-info-description{
+		font-size:	0.8em;
+	}
+		
+	.galleria-info {
+	    top:				1em;
+	    left:				1em;
+	    
+	    right:				auto;
+	    max-width:			45%;
+	}
+	
+	.galleria-info-description{
+		display:	block;
+	}
+
 }
