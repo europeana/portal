@@ -78,9 +78,9 @@ public class RSSFeedParser {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
-		this.itemLimit			= itemLimit;
-		this.fNames				= fNames;
-		this.responsiveWidths	= responsiveWidths;
+		this.itemLimit = itemLimit;
+		this.fNames = fNames;
+		this.responsiveWidths = responsiveWidths;
 	}
 
 	public RSSFeedParser(String feedUrl, int itemLimit, boolean useNormalImageFormat, String[] fNames, int[] responsiveWidths) {

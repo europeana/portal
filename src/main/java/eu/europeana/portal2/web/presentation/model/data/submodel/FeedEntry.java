@@ -36,7 +36,7 @@ public class FeedEntry {
 	private String author;
 	private String guid;
 	private Date pubDate;
-	
+
 	/**
 	 * List of images extracted from the description. Each image has an src and a title field.
 	 */

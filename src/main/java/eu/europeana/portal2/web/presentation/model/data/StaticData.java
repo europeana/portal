@@ -65,5 +65,4 @@ public abstract class StaticData extends SearchPageData {
 	public String getDefaultContent() {
 		return defaultContent;
 	}
-
 }

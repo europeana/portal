@@ -153,7 +153,7 @@ public class StaticPageController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.STATICPAGE);
 		config.postHandle(this, page);
-	
+
 		return page;
 	}
 

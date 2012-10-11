@@ -155,7 +155,7 @@ public class IndexPageController {
 	 * Sets the featured partner list and the highlighted parter
 	 */
 	private void updateFeaturedPartner(IndexPage model, Locale locale) {
-		ArrayList<FeaturedPartner> featuredItems = new ArrayList<FeaturedPartner>();
+		ArrayList<FeaturedPartner> featuredPartners = new ArrayList<FeaturedPartner>();
 		boolean keepFetching = true;
 		int i = 1;
 		while (keepFetching) {
@@ -163,7 +163,7 @@ public class IndexPageController {
 				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
-					featuredItems.add(new FeaturedPartner(i));
+					featuredPartners.add(new FeaturedPartner(i));
 					i++;
 				} else {
 					keepFetching = false;
@@ -172,8 +172,8 @@ public class IndexPageController {
 				keepFetching = false;
 			}
 		}
-		model.setFeaturedPartners(featuredItems);
-		if (featuredItems.size() > 0) {
+		model.setFeaturedPartners(featuredPartners);
+		if (featuredPartners.size() > 0) {
 			model.setFeaturedPartner(new FeaturedPartner(RandomUtils.nextInt(i - 1) + 1));
 		}
 	}

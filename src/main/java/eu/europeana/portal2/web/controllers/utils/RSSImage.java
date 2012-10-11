@@ -15,7 +15,7 @@ public class RSSImage {
 	private String src;
 	private String title;
 	private Map<String, String> responsiveFileNames;
-	
+
 	public Map<String, String> getResponsiveFileNames() {
 		return responsiveFileNames;
 	}
