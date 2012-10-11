@@ -43,7 +43,9 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 
 	/** Gets the message key for H3 tag */
 	public String getHeading() {
-		return String.format("featured-partner-%d_heading_t", i);
+		//featured-item-2_h3_t
+		return String.format("featured-partner-%d_h3_t", i);
+		//return String.format("featured-partner-%d_heading_t", i);
 	}
 
 	/** Gets the URL */
@@ -77,7 +79,10 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 	}
 	
 	/** Gets the message key for name tag  */
+	/*
 	public String getName() {
 		return String.format("featured-partner-%d_name_t", i);
+		//return String.format("featured-partner-%d_name_t", i);
 	}
+	*/
 }

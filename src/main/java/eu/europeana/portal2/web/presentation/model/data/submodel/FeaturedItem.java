@@ -43,7 +43,7 @@ public class FeaturedItem {
 	/** Gets the message key for H3 tag */
 	public String getHeading() {
 		//return String.format("featured-item-%d_heading_t", i);
-		return String.format("featured-partner-%d_h3_t", i);
+		return String.format("featured-item-%d_h3_t", i);
 	}
 
 	/** Gets the URL */

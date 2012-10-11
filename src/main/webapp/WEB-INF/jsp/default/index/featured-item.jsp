@@ -21,7 +21,7 @@
 									title	= "<spring:message code="${model.featuredItem.anchorTitle}" />"
 									target	= "<spring:message code="${model.featuredItem.anchorTarget}" />"
 									class	= "europeana">
-									spring:message code="{model.featured-partner-1_h3_t}" /	
+									<spring:message code="${model.featuredItem.heading}" />	
 								</a>
 							</h4>
 	
@@ -41,7 +41,7 @@
 									title=	"<spring:message code="${model.featuredItem.anchorTitle}" />"
 									target=	"<spring:message code="${model.featuredItem.anchorTarget}" />"
 									class=	"europeana">
-									spring:message code="{model.featured-partner-1_h3_t}" /
+									<spring:message code="${model.featuredItem.heading}" />
 								</a>
 							</h4>
 							<p class="featured-text">
@@ -85,7 +85,8 @@
 								title	= "<spring:message	code="${model.featuredPartner.anchorTitle}" />"
 								target	= "<spring:message	code="${model.featuredPartner.anchorTarget}" />"
 								class	= "europeana">
-									XXX
+								<spring:message code="${model.featuredPartner.heading}" />	
+								
 							</a>
 						</h4>
 							<a	href	= "<spring:message code="${model.featuredPartner.anchorUrl}" />"
@@ -103,7 +104,7 @@
 								title	= "<spring:message code="${model.featuredPartner.anchorTitle}" />"
 								target	= "<spring:message code="${model.featuredPartner.anchorTarget}" />"
 								class	= "europeana">
-									XXX
+								<spring:message code="${model.featuredPartner.heading}" />	
 							</a>
 						</h4>
 						<p class="featured-text">
@@ -126,18 +127,19 @@
 							 
 							 
 							<li>
-								<c:set var="instituteName"><spring:message code="${model.featuredPartner.name}" /></c:set>
+								<c:set var="instituteName"> spring:message code="{model.featuredPartner.name}" </c:set>
+								<%--c:set var="instituteName"><spring:message code="${model.featuredPartner.name}" /></c:set--%>
 							
-								<a	href	= "<spring:message code="${model.featuredPartner.visitLink}" arguments="${instituteName}" />"
+								<a	href	= "<spring:message code="${model.featuredPartner.visitLink}"  />"
 									target	= "<spring:message code="notranslate_featured-partner-visit_target_t" />"
 									rel		= "nofollow"
 									class	= "icon-external-right europeana">
-									<spring:message code="featured-partner-visit_text_t"  arguments="${instituteName}" />
+									<spring:message code="featured-partner-visit_text_t"   />
 								</a>
 							</li>
 
 							<li>						
-								<a	href	= "/${model.portalName}<spring:message code="notranslate_featured-partner-view_link_t" />"
+								<a	href	= "/${model.portalName}/<spring:message code="notranslate_featured-partner-view_link_t" />"
 									target	= "<spring:message code="notranslate_featured-partner-view_target_t" />"
 									class	= "europeana">
 									<spring:message code="featured-partner-view_text_t" />
