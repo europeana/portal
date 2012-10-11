@@ -194,95 +194,82 @@ eu.europeana.header = {
 		}
 		
 	},
-	
-	
+
 	addAutocompleteHandler : function() {
-		
-		if ( js.debug ) {
-			
+		if (js.debug) {
 			jQuery('#query-input, #rq')
 				.autocomplete({
-					
-					//minLength : 2,
-					delay : 200,
-					//dataType : 'text',
-					
-					//define callback to format results
-			        source: function( request, response ) {
-			            
-			        	//pass request to server
-			        	jQuery.getJSON(  '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
-			        		
-			                //create array for response objects
-			                var suggestions = [];
-			                
-			                //process response
-			                jQuery.each( data.suggestions, function(i, val) {
-			                    
-			                	suggestions.push( val );
-			                    
-			                });
-			                
-			                //pass array to callback
-			                response( suggestions );
-			                
-			            });
-			        	
-			        },
-			        
-			        select : function(e) {
-			        	
-			        	switch ( this.id ) {
-			        	
-				        	case 'query-input' :
-				        		
-				        		setTimeout( function() { jQuery('#query-search').submit(); }, 10 );
-				        		break;
-				        		
-				        		
-				        	case 'rq' :
-				        		
-				        		setTimeout( function() { jQuery('#refine-search-form').submit(); }, 10 );
-				        		break;
-			        	
-			        	}
-			        	
-			        }
-				
+					open: function(event, ui) {
+						var oldLeft		= jQuery(".ui-autocomplete").offset().left;
+						var oldWidth	= jQuery(".ui-autocomplete").width();
+						var newLeft 	= oldLeft	- parseInt( $(id).parent().css('padding-left') );
+						var newWidth	= oldWidth	- parseInt( $(id).parent().css('padding-left') );
+						$(".ui-autocomplete").css("left",		newLeft + "px");
+						$(".ui-autocomplete").css("width",		newWidth + "px");
+						$(".ui-autocomplete").css("z-index",	2);
+					},
+					minLength : 3,
+					delay : 400,
+					// define callback to format results
+					source: function( request, response ) {
+						// pass request to server
+						jQuery.getJSON(  '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
+							// create array for response objects
+							var suggestions = [];
+							// process response
+							jQuery.each(data.suggestions, function(i, val) {
+								suggestions.push(val);
+							});
+							// pass array to callback
+							response( suggestions );
+						});
+					},
+
+					select : function(e) {
+						switch ( this.id ) {
+							case 'query-input' :
+								setTimeout( function() { jQuery('#query-search').submit(); }, 10 );
+								break;
+							case 'rq' :
+								setTimeout( function() { jQuery('#refine-search-form').submit(); }, 10 );
+								break;
+						}
+					}
 				});
-			
 		} else {
-			
-			jQuery('#query-input')
-				.autocomplete( {
-					
-					//define callback to format results
-			        source: function( request, response ) {
-			            
-			        	//pass request to server
-			        	jQuery.getJSON(  '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
-			        		
-			                //create array for response objects
-			                var suggestions = [];
-			                
-			                //process response
-			                jQuery.each( data.suggestions, function(i, val) {
-			                    
-			                	suggestions.push( val );
-			                    
-			                });
-			                
-			                //pass array to callback
-			                response( suggestions );
-			                
-			            });
-			        	
-			        }
-				
-				});
-			
+			jQuery('#query-input').autocomplete({
+				delay : 400,
+				//define callback to format results
+				source: function( request, response ) {
+					//pass request to server
+					jQuery.getJSON(  '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
+						//create array for response objects
+						var suggestions = [];
+						//process response
+						jQuery.each( data.suggestions, function(i, val) {
+							suggestions.push( val );
+						});
+						//pass array to callback
+						response( suggestions );
+					});
+				}
+			});
 		}
-		
+
+		// Formatting
+		$.ui.autocomplete.prototype._renderItem = function (ul, item) {
+			if (!item.label){
+				item.label = item.term;
+			}
+			item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
+			item.label +=  " (" + item.frequency + ")";
+			item.label += '<span style="float:right">' + completionTranslations[item.field] + '</span>';
+
+			return $("<li></li>")
+				.data("item.autocomplete", item )
+				.append("<a>" + item.label + "</a>")
+				.appendTo(ul);
+		};
 	},
 	
 	

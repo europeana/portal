@@ -205,7 +205,7 @@ eu.europeana.header = {
 				.autocomplete({
 					
 					//minLength : 2,
-					delay : 200,
+					delay : 400,
 					//dataType : 'text',
 					
 					//define callback to format results
@@ -256,6 +256,7 @@ eu.europeana.header = {
 			
 			jQuery('#query-input')
 				.autocomplete( {
+					delay : 400,
 					
 					//define callback to format results
 			        source: function( request, response ) {
