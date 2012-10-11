@@ -72,6 +72,8 @@ public enum PortalPageInfo implements PageInfo {
 	MYEU_REGISTERED("register-success.html", "myeuropeana/register-success"),
 	MYEU_REGISTERED_API("register-api-success.html", "myeuropeana/register-api-success"),
 
+	NEWSLETTER("newsletter.html", "Europeana - Newsletter", "newsletter/newsletter"),
+
 	PROVIDERS("europeana-providers.html", "Europeana - Providers", "providers/providers"),
 
 	SEARCH_HTML("search.html", "Europeana - Search results", "search/search"),
