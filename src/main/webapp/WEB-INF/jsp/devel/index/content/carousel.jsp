@@ -31,8 +31,6 @@
 							target="<spring:message code="${item.anchorTarget}" />">
 							<img src="/${model.portalName}<spring:message code="${item.imgUrl}" />" 
 							alt="<spring:message code="${item.imgAlt}" />" 
-							<%-- width="<spring:message code="${item.imgWidth}" />" --%>
-							height="<spring:message code="${item.imgHeight}" />"/>
 						</a>
 					</li>
 				</c:forEach>
