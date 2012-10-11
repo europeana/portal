@@ -669,8 +669,10 @@ eu.europeana.fulldoc = {
 						
 						var navOb = new NavOb();
 						
-						eu.europeana.lightbox.init(url, navOb);
-						showTrigger(true, gallery);
+						if(typeof (eu.europeana.lightbox) != "undefined"){							
+							eu.europeana.lightbox.init(url, navOb);
+							showTrigger(true, gallery);
+						}
 					});
 					
 					$('#lightbox_image').attr('src', url);
@@ -744,9 +746,12 @@ eu.europeana.fulldoc = {
 											jsLoaded = true;
 
 											$(window).on("resize", function(){
+												/*
 												if(eu.europeana.lightbox.layout){
 													eu.europeana.lightbox.layout();												
 												}
+												*/
+												console.log("fulldoc.js resizing.....................");
 											});
 											
 											w.addEventListener( "orientationchange",

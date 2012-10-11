@@ -61,6 +61,7 @@
 							<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
 						</div>
 						
+						<script type="text/javascript" src="https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/1403149/?v=a"></script>
 						<script type="text/javascript">
 							window.emma = {
 								"placeholder" : "<spring:message code='news_letter_email_hint_t' />",

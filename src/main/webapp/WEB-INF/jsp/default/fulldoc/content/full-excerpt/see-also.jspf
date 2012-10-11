@@ -1,0 +1,19 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:if test="${!empty model.seeAlsoSuggestions}">
+
+  <!-- h3>See also</h3-->
+  
+  <c:forEach items="${model.seeAlsoSuggestions}" var="metafield">
+    <strong>${metafield.key}</strong>
+    <ul>
+      <c:forEach items="${metafield.value}" var="field">
+        <c:url value="/search.html" var="url">
+          <c:param name="query" value='${metafield.key}:"${field.key}"'/>
+        </c:url>
+        <li><a href="${url}">${field.key}</a> (${field.value})</li>
+      </c:forEach>
+    </ul>
+  </c:forEach>
+</c:if>

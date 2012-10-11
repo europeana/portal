@@ -312,7 +312,7 @@ eu.europeana.header = {
 			    
 				minLength : 3,
 				
-				delay : 100,
+				delay : 400,
 				
 				//dataType : 'text',
 				

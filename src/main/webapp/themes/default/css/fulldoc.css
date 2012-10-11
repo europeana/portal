@@ -84,12 +84,32 @@ a.action-link:hover{
 	padding-left:		18px;
 }
 
-.translate-box{
-	background-color:	#DFDFDF;
-	float:				none;
-	padding:			0.5em;
-	margin-left:		none;
+#sidebar-right-wrapper{
+	margin-top:		1em;
 }
+	
+.sidebar-right{
+	background-color:	#DFDFDF;
+	padding:			1em;
+	margin-left:		0;
+}
+
+.sidebar-right ul,
+.sidebar-right li{
+	list-style-type:	none;
+	padding-left:		0;
+	margin:				0;	
+}
+
+
+.sidebar-right ul{
+	padding-top:	0.5em;
+}
+.sidebar-right ul li{
+	margin-left:		1em;
+	margin-bottom:		0.5em;	/* spacing the same as the metadata spacing on smnall devices */ 
+}
+
 
 a.disabled:hover{
 	color:		#2A85E8;
@@ -100,7 +120,7 @@ a.disabled:hover{
 div.actions{
 	padding-left:	1em;
 	padding-right:	1em;
-	padding:		1em;
+	padding-bottom:	1em;
 	max-height:		3em;
 	text-align:		justify;
 }
@@ -187,7 +207,6 @@ a.action-link span{
 	}
 
 	a.action-link span{
-		xxxxwidth:			auto !important;
 		font-size:		1em;
 	}
 	
@@ -205,11 +224,19 @@ a.action-link span{
 		padding-top:	0;
 	}
 	
-	.translate-box{
-		float:			right;
+	.sidebar-right{
 		margin-left:	2em;
 	}
 	
+	.sidebar-right ul{
+		padding-top:	0;
+	}	
+	
+	.sidebar-right ul li{
+		margin-bottom:	0; 
+	}
+	
+
 }
 
 #phone-object-title{	/* title for phone only */
@@ -357,6 +384,12 @@ h1 {
 
 /* translation-services */
 
+#translate-container{
+	padding-top:		1em;
+	padding-bottom:		1em;	
+}
+
+
 #translation-services {
 	position: relative;
 	display: none;
@@ -381,28 +414,50 @@ h1 {
 }
 	
 
+#additional-info .original-context{
+	margin-top:		1em;
+}
+
+
+@media only screen and ( min-width:48em ){
+	
+	#translate-container{
+		padding-top:	0;
+	}
+
+	#additional-info .original-context{
+		
+		margin-bottom:		1em;
+	}
+
+
+}
+
+
+	
+
 /* fields-enrichment */
 
-	#auto-generated-tags,
-	#fields-enrichment h4 {
-		margin-top: 12px;
-		font-size: 100%;
-		font-weight: normal;
-	}
-	
-	#fields-enrichment {
-		margin: 0;
-		padding: 0;
-	}
-	
-	#fields-enrichment li {
-		list-style: none;
-	}
-	
-	#fields-enrichment ul {
-		margin: 0;
-		padding: 0;
-		display: none;
-	}
-	
+#auto-generated-tags,
+#fields-enrichment h4 {
+	margin-top: 12px;
+	font-size: 100%;
+	font-weight: normal;
+}
+
+#fields-enrichment {
+	margin: 0;
+	padding: 0;
+}
+
+#fields-enrichment li {
+	list-style: none;
+}
+
+#fields-enrichment ul {
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+
 	

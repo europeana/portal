@@ -136,6 +136,13 @@
 	   	<div class="clear"></div>
 	   	
    	</div>
+   	<div id="translate-container">
+	   	<!-- translate services -->
+	   	
+		<a href="" id="translate-item" class="bold">
+		<spring:message code="TranslateDetails_t" />
+		<span class="iconP"></span></a>
+   	</div>
    	
 </div>
 

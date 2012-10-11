@@ -20,14 +20,26 @@
 
 			<div class="nine-cols-fulldoc" id="main-fulldoc-area">
 			
-				<%-- Translation link --%>
-				<div class="translate-box">
-					<a href="" id="translate-item" class="bold"><span class="iconD hide-ilb-on-phones"></span><spring:message code="TranslateDetails_t" /><span class="iconP show-ilb-on-phones"></span></a>
+				<div class="row">
+				
+					<div class="nine-cols-fulldoc">
+			
+						<%-- Main data area --%>				
+						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
+					
+					</div>
+				
+					<div id="sidebar-right-wrapper" class="three-cols-fulldoc-sidebar">
+					
+						<%-- Sidebar right --%>
+						<div class="sidebar-right">
+							<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+						</div>
+						
+					</div>
+				
 				</div>
 
-				<%-- Main data area --%>				
-				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
-				
 			</div>
 			
 		</div>

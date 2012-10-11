@@ -8,7 +8,6 @@
 
 <title>${model.pageTitle}</title>
 
-<script type="text/javascript" src="https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/1403149/?v=a"></script>
 
 </head>
 <body>
