@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -8,7 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,22 +53,15 @@ public class SuggestionController {
 
 		log.info("============== START SUGGESTIONS ==============");
 
-		List<Term> suggestions = null;
-		try {
-			suggestions = searchService.suggestions(term, size, field);
-		} catch (SolrTypeException e) {
-			log.severe("SolrTypeException: " + e.getMessage());
-			e.printStackTrace();
-		}
-
-		/*
-		ArrayList<String> formattedSuggestion = new ArrayList<String>();
-		if (suggestions != null) {
-			for (Term suggestion : suggestions) {
-				formattedSuggestion.add(suggestion.getTerm());
+		List<Term> suggestions = new ArrayList<Term>();
+		if (term.length() >= 3) {
+			try {
+				suggestions = searchService.suggestions(term, size, field);
+			} catch (SolrTypeException e) {
+				log.severe("SolrTypeException: " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
-		*/
 
 		log.info("number of suggestions: " + suggestions.size());
 		SuggestionsPage model = new SuggestionsPage();
