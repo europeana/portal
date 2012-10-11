@@ -30,7 +30,7 @@
 						<a  href="${item.url}" title="<spring:message code="${item.anchorTitle}" />" 
 							target="<spring:message code="${item.anchorTarget}" />">
 							<img src="/${model.portalName}<spring:message code="${item.imgUrl}" />" 
-							alt="<spring:message code="${item.imgAlt}" />" 
+							alt="<spring:message code="${item.imgAlt}" />" />
 						</a>
 					</li>
 				</c:forEach>
