@@ -70,7 +70,7 @@ public class SuggestionController {
 		}
 		*/
 
-		log.info("formattedSuggestion: " + StringUtils.join(suggestions, ", "));
+		log.info("number of suggestions: " + suggestions.size());
 		SuggestionsPage model = new SuggestionsPage();
 		model.setResults(suggestions);
 		config.injectProperties(model);

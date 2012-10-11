@@ -197,14 +197,13 @@ eu.europeana.header = {
 	
 	
 	addAutocompleteHandler : function() {
-		
 		if ( js.debug ) {
 			
 			jQuery('#query-input, #rq')
 				.autocomplete({
 					
 					//minLength : 2,
-					delay : 200,
+					delay : 400,
 					//dataType : 'text',
 					
 					//define callback to format results
@@ -258,6 +257,7 @@ eu.europeana.header = {
 					
 					//define callback to format results
 			        source: function( request, response ) {
+						delay : 400,
 			            
 			        	//pass request to server
 			        	jQuery.getJSON(  '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
