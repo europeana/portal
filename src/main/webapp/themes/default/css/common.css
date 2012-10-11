@@ -207,13 +207,25 @@
 }
 	
 .footer-bottom-link{
-	xxxcolor:			#333 !important;
 	margin-right:	1em;
+	margin-left:	1em;
 	display:		block;
 }
 
-.footer-bottom-link{
-	margin-left:	1em;
+#link-logo-1{
+	color:	#ffbf32;
+}
+#link-logo-2{
+	color:	#f6823e;
+}
+#link-logo-3{
+	color:	#007162;
+}
+#link-logo-4{
+	color:	#2f3020;
+}
+#link-logo-5{
+	color:	#804292;
 }
 
 .footer-bottom-links div:first-child{

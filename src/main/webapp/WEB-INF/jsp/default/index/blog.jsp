@@ -7,21 +7,10 @@
 
 
 	<h3 id="collapse-header-1">
-		<%--
-		<a	xclass	= "icon-external-right"
-			rel		= "nofollow"
-			target	= "_new"
-			href	= "<spring:message code='europeana-blog-url'/>">
-		--%>
-			<span class="left collapse-header-text">
-				<spring:message code='from_the_blog_t'/>
-			</span>
-		<%--
-		</a>
-		--%>
+		<span class="left collapse-header-text">
+			<spring:message code='from_the_blog_t'/>
+		</span>
 		<span class="collapse-icon"></span>
-		
-		
 		<a class="feed-link icon-rss" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>		
 	</h3>
 	
@@ -34,43 +23,40 @@
 
 						<div class="six columns">
 
-							<div class="feeb-block-spacer">
-									<div class="feed-block">
-										<div class="feed-box">
-											<div class="feed-cell feed-image">
-												<h4 class="show-on-phones">
-													<a	href=	"${entry.link}"
-														title=	"${entry.title}"
-														target=	"_self"
-														class=	"europeana">
-														${entry.title}
-													</a>
-												</h4>
+							<div class="fi-block-spacer">
+					
+								<h4 class="show-on-phones">
+									<a	href=	"${entry.link}"
+										title=	"${entry.title}"
+										target=	"_self"
+										class=	"europeana">
+										${entry.title}
+									</a>
+								</h4>
+							
 						
-												<a	href=	"${entry.link}"
-													title=	"${entry.title}"
-													target=	"_self"
-													class=	"image">
-													<img class="responsive" src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
-												</a>
-											</div>
-											
-											<div class="feed-cell">
-												<h4 class="hide-on-phones featured-text">
-													<a	href=	"${entry.link}"
-														title=	"${entry.title}"
-														target=	"_self"
-														class=	"europeana">
-															${entry.title}
-													</a>
-												</h4>
-												<p class="featured-text">
-													${entry.description}"
-												</p>
-											</div>
-										</div>
-									</div>
+								<a	href=	"${entry.link}"
+									title=	"${entry.title}"
+									target=	"_self"
+									class=	"image">
+									<img class="responsive" src="/${model.portalName}${entry.images[0].responsiveFileNames['_1']}" alt="${entry.title}" />
+								</a>
+			
+								<h4 class="hide-on-phones">
+									<a	href=	"${entry.link}"
+										title=	"${entry.title}"
+										target=	"_self"
+										class=	"europeana">
+										${entry.title}
+									</a>
+								</h4>
+
+								<p class="featured-text">
+									${entry.description}"
+								</p>
+				
 							</div>
+							
 									
 						</div>
 					</c:if>
