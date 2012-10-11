@@ -50,10 +50,20 @@
 					</div>
 				</div>
 				
-				<div class="six columns">		
+				<div id="newsletter-wrapper" class="six columns">		
 				
-						
-					<div id="footer-subscribe">
+					
+					<script type="text/javascript">
+						window.emma = {
+							"placeholder" : "<spring:message code='news_letter_email_hint_t' />",
+							"submitLabel" : "<spring:message code='news_letter_signup_button_t' />"
+						};
+					</script>
+					
+					<h3><spring:message code="news_letter_signup_t" /></h3>
+
+					<iframe style="margin:0; width:100%;" id="footer-iframe" src="/${model.portalName}/newsletter.html"></iframe>
+					<%--div id="footer-subscribe">
 					
 						<h3><spring:message code="news_letter_signup_t" /></h3>
 					
@@ -70,7 +80,10 @@
 							signupFormObj.drawForm();
 						</script>
 						
-					</div>
+					</div --%>
+					
+					
+					
 				</div>
 			</div>
 

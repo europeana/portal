@@ -96,9 +96,12 @@
 	font-size:		1em;
 }
 
-#footer-subscribe{
+
+#newsletter-wrapper{
+	position:	relative;
 	margin-top:		2em;
 }
+
 
 #footer-subscribe input{
 	float:				none;
@@ -287,6 +290,14 @@
 		position:	relative;
 		bottom:		4px;
 	}
+	
+
+	#newsletter-wrapper{
+		position:	relative;
+		left:		1em;
+		margin-top:	0;
+	}
+	
 
 } 
 
@@ -364,8 +375,7 @@
 		color:				#333;
 		border:				1px solid #a0a0a0;
 		font-size:			1.2em;		
-			
-		
+
 	}
 	#footer-subscribe input[type=text],
 	#footer-subscribe input[type=email]{
