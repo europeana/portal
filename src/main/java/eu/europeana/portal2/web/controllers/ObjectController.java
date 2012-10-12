@@ -82,11 +82,13 @@ public class ObjectController {
 	public static final Map<String, List<String>> seeAlsoFields = new HashMap<String, List<String>>(){
 		private static final long serialVersionUID = 1L; 
 		{
-			put("what", Arrays.asList(new String[]{"DcType", "DcSubject", "DcFormat"}));
-			put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated", "DctermsTemporal"}));
-			put("who", Arrays.asList(new String[]{"DcContributor", "DcCreator"}));
-			put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
 			put("title", Arrays.asList(new String[]{"DcTitle", "DctermsAlternative"}));
+			put("who", Arrays.asList(new String[]{"DcContributor", "DcCreator"}));
+			put("what", Arrays.asList(new String[]{"DcType", "DcSubject", "DcFormat"}));
+			// put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated", "DctermsTemporal"}));
+			// put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
+			put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
+			put("PROVIDER", Arrays.asList(new String[]{"EdmProvider"}));
 		}
 	};
 
@@ -154,12 +156,15 @@ public class ObjectController {
 			for (String edmField : seeAlsoFields.get(metaField)) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
-					int size = fieldValues.size();
+					// int size = fieldValues.size();
 					fieldValues.addAll(Arrays.asList(values));
 				}
 			}
-			seeAlsoParams.put(metaField, fieldValues);
+			if (fieldValues.size() > 0) {
+				seeAlsoParams.put(metaField, fieldValues);
+			}
 		}
+		searchService.seeAlso(seeAlsoParams);
 		model.setSeeAlsoSuggestions(searchService.seeAlso(seeAlsoParams));
 		long tSeeAlso1 = (new Date()).getTime();
 		log.info("see also takes: " + (tSeeAlso1 - tSeeAlso0));
