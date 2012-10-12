@@ -14,7 +14,7 @@
 		<!-- TODO: make sure all item images are listed here -->
 		
 		<img	src			= "${model.thumbnailUrl}"
-				alt			= "${model.pageTitle}"
+				alt			= "${fn:escapeXml(model.pageTitle)}"
 				data-type	= "${fn:toLowerCase(model.document.edmType)}"
 				class		= "no-show"/>
 	</div>
@@ -24,8 +24,8 @@
 			var carouselData = [];
 			carouselData[0] = {
 				// "image":	"http://localhost/a4-test.jpg",
-				"image":		decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
-				"title":		('${model.objectTitle}').replace(/\"/g, '&quot;'),
+				"image":		decodeURI("${fn:escapeXml(model.thumbnailUrl)}").replace(/&amp;/g, '&'),
+				"title":		('${fn:escapeXml(model.objectTitle)}'),
 				"dataType":		"${fn:toLowerCase(model.document.edmType)}"
 			};
 			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
