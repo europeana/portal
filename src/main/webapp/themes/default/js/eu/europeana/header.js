@@ -51,10 +51,11 @@ eu.europeana.header = {
 		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
 		
 
-		eu.europeana.header.setupNewsletterForm();
+		//eu.europeana.header.setupNewsletterForm();
 
 	},
 
+	/*
 	setupNewsletterForm : function(){
 		if(typeof(signupFormObj) != "undefined" && typeof(jQuery) != "undefined"  ){
 			$('#e2ma_signup_submit_button').attr('value',		window.emma.submitLabel);
@@ -65,6 +66,7 @@ eu.europeana.header = {
 			setTimeout(eu.europeana.header.setupNewsletterForm , 1000);
 		}
 	},
+	*/
 	
 	initResponsiveUtility : function(){
 		window.showingPhone = function(){ return $("#mobile-menu").is(":visible"); };

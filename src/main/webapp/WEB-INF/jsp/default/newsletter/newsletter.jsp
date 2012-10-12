@@ -1,5 +1,7 @@
 <html>
 	<head>
+
+		<script type="text/javascript" src="themes/default/js/jquery/jquery-1.8.1.min.js"></script>
 	
 		<link rel="stylesheet" href="themes/default/css/html.css" />
 		<link rel="stylesheet" href="themes/default/css/common.css" />
@@ -13,7 +15,7 @@
 		
 		
 		<style type="text/css">
-#e2ma_signup{
+			#e2ma_signup{
 			}
 			
 			.e2ma_signup_form_button_row,
@@ -50,41 +52,56 @@
 				width:	100%;
 			}
 			
-@media only screen and ( min-width:500px ){ /* less margins */
-
 			
-	#footer-subscribe input[type=text],
-	#footer-subscribe input[type=email],
-	#footer-subscribe input[type=submit]{
+	#footer-subscribe.phone input[type=text],
+	#footer-subscribe.phone input[type=email],
+	#footer-subscribe.phone input[type=submit]{
 		width:				100%;
 	}
 
-	#footer-subscribe input[type=submit]{
+	#footer-subscribe.phone input[type=submit]{
 		top:				4em;
 	}			
-}
 			
 		</style>
 	</head>
 	<body>
 
-<div id="footer-subscribe">	
-	
-	<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
-		<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
-	</div>
-						
-	<script type="text/javascript" src="https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/1403149/?v=a"></script>
-	<script type="text/javascript">
-	
+		<div id="footer-subscribe">	
+			
+			<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
+				<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
+			</div>
+								
+			<script type="text/javascript" src="https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/1403149/?v=a"></script>
+			<script type="text/javascript">
+				window.emma = window.parent.emma;
+				signupFormObj.drawForm();
+				document.getElementById('e2ma_signup_submit_button').setAttribute('value',		window.emma.submitLabel);
+				document.getElementById('id_email').setAttribute('placeholder',	window.emma.placeholder);
+				document.getElementById('id_email').setAttribute('title',		window.emma.placeholder);
+			</script>
+		</div>
+
+		<script type="text/javascript">
+			var toggleFn = function(){
+				if(  $("#mobile-menu", window.parent.document).is(":visible")  ){
+					$("#footer-subscribe").addClass("phone");
+				}
+				else{					
+					$("#footer-subscribe").removeClass("phone");
+				}
+			};
 		
-		window.emma = window.parent.emma;
-		signupFormObj.drawForm();
-		document.getElementById('e2ma_signup_submit_button').setAttribute('value',		window.emma.submitLabel);
-		document.getElementById('id_email').setAttribute('placeholder',	window.emma.placeholder);
-		document.getElementById('id_email').setAttribute('title',		window.emma.placeholder);
-	</script>
-</div>
+			$(document).ready(function(){
+				toggleFn();
+			});
+			
+			$(window).resize( function() {
+				toggleFn();
+		     });
+
+		</script>
 
 	</body>
 </html>	
