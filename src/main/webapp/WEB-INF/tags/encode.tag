@@ -8,6 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:url var="encoded" value=""><c:param name="output" value="${model.urlRef}" /></c:url>
+<c:url var="encoded" value=""><c:param name="output" value="${url}" /></c:url>
 <c:set var="encoded" value="${fn:substringAfter(encoded, '=')}" />
 ${encoded}

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="eu" tagdir="/WEB-INF/tags" %>
 <form id="query-search" method="get" action="${query_action}">
   <fieldset>
     <c:choose>
@@ -15,7 +16,7 @@
     <c:set var="inputTitle"><spring:message code="SearchTerm_t" /></c:set>
 
     <input type="text" name="query" id="query-input" class="${className}" title="${inputTitle}"
-    <c:if test="${!empty model.query}">value="${model.query}"</c:if> maxlength="175" />
+    <c:if test="${!empty model.query}">value="${fn:escapeXml(model.query)}"</c:if> maxlength="175" />
     <input type="submit" class="submit-button" value="<spring:message code="Search_t" />" />
 
     <%-- save search link --%>
@@ -25,13 +26,13 @@
     </c:if>
 
     <c:if test="${model.embedded}">
-      <input type="hidden" name="embedded"       value="${model.embeddedString}" />
-      <input type="hidden" name="embeddedBgColor"   value="${model.embeddedBgColor}" />
-      <input type="hidden" name="embeddedForeColor"   value="${model.embeddedForeColor}" />
-      <input type="hidden" name="embeddedLogo"     value="${model.embeddedLogo}" />
-      <input type="hidden" name="rswUserId"       value="${model.rswUserId}" />
-      <input type="hidden" name="rswDefqry"      value="${model.rswDefqry}" />
-      <input type="hidden" name="lang"        value="${model.locale}" />
+      <input type="hidden" name="embedded" value="${model.embeddedString}" />
+      <input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}" />
+      <input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}" />
+      <input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}" />
+      <input type="hidden" name="rswUserId" value="${model.rswUserId}" />
+      <input type="hidden" name="rswDefqry" value="${model.rswDefqry}" />
+      <input type="hidden" name="lang" value="${model.locale}" />
     </c:if>
   </fieldset>
 
