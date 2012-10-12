@@ -3,6 +3,12 @@
 
 <div id="excerpt">
 	<div id="item-details" about="${model.document.id}">
+	
+		<div class="sidebar-right hide-on-phones">
+			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+		</div>			
+	
+	
 		<h1 class="hide-on-phones">${model.objectTitle}</h1>
 		<%--
 			
@@ -37,8 +43,10 @@
 	
 	</div>
 	
-	
-	
 </div>
+
+<div class="sidebar-right show-on-phones">
+	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+</div>			
 
 

@@ -84,14 +84,15 @@ a.action-link:hover{
 	padding-left:		18px;
 }
 
-#sidebar-right-wrapper{
-	margin-top:		1em;
-}
 	
 .sidebar-right{
 	background-color:	#DFDFDF;
 	padding:			1em;
-	margin-left:		0;
+	margin:				1em 0 1em 0;
+}
+
+.sidebar-right div:first-child{
+	margin-bottom:		1em;
 }
 
 .sidebar-right ul,
@@ -225,7 +226,8 @@ a.action-link span{
 	}
 	
 	.sidebar-right{
-		margin-left:	2em;
+		float:			right;
+		margin:			0 0 1em 1em;
 	}
 	
 	.sidebar-right ul{

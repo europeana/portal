@@ -17,29 +17,8 @@
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/sidebar-left.jsp" %>
 			</div>
 
-
 			<div class="nine-cols-fulldoc" id="main-fulldoc-area">
-			
-				<div class="row">
-				
-					<div class="nine-cols-fulldoc">
-			
-						<%-- Main data area --%>				
-						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
-					
-					</div>
-				
-					<div id="sidebar-right-wrapper" class="three-cols-fulldoc-sidebar">
-					
-						<%-- Sidebar right --%>
-						<div class="sidebar-right">
-							<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
-						</div>
-						
-					</div>
-				
-				</div>
-
+				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
 			</div>
 			
 		</div>
