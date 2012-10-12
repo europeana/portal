@@ -15,7 +15,7 @@
 							target	="<spring:message code="europeana-facebook-target" />"
 							rel		="me"
 							>
-							<span class="social-link icon-facebook"><span class="text xhide-on-phones"><spring:message code="europeana-facebook_t" /></span></span>
+							<span class="social-link icon-facebook"><span class="text"><spring:message code="europeana-facebook_t" /></span></span>
 						</a>
 							
 						<a class	="social-link"
@@ -24,7 +24,7 @@
 							target	="<spring:message code="europeana-twitter-target" />"
 							rel		="me"
 							>
-							<span class="social-link icon-twitter"><span class="text xhide-on-phones"><spring:message code="europeana-twitter_t" /></span></span>
+							<span class="social-link icon-twitter"><span class="text"><spring:message code="europeana-twitter_t" /></span></span>
 						</a>
 
 						<a class	="social-link"
@@ -33,7 +33,7 @@
 							target	="<spring:message code="europeana-pinterest-target" />"
 							rel		="me"
 							>
-							<span class="social-link icon-pinterest-2"><span class="text xhide-on-phones"><spring:message code="europeana-pinterest_t" /></span></span>
+							<span class="social-link icon-pinterest-2"><span class="text"><spring:message code="europeana-pinterest_t" /></span></span>
 						</a>
 						
 						
@@ -42,7 +42,7 @@
 							href	="<spring:message code="europeana-google-url" />"
 							target	="<spring:message code="europeana-google-target" />"
 							>
-							<span class="social-link icon-google"><span class="text xhide-on-phones"><spring:message code="europeana-google_t" /></span></span>
+							<span class="social-link icon-google"><span class="text"><spring:message code="europeana-google_t" /></span></span>
 						</a>
 						
 						
@@ -113,20 +113,8 @@
 						<li><a class="europeana" href="<spring:message code="notranslate_main_menu_api_3_a_url"/>" target="<spring:message code="notranslate_main_menu_api_3_a_target_t"/>" title="<spring:message code="main_menu_api_3_a_title_t"/>"><spring:message code="main_menu_api_3_a_text_t"/></a></li>
 						<li><a class="europeana icon-external-right" href="<spring:message code="notranslate_main_menu_api_4_a_url"/>" target="<spring:message code="notranslate_main_menu_api_4_a_target_t"/>" title="<spring:message code="main_menu_api_4_a_title_t"/>"><spring:message code="main_menu_api_4_a_text_t"/></a></li>
 					</ul>
-
 				</div>
-			
 			</div>
-			
-			
-<%-- 
-		<li><a href="<spring:message code="notranslate_main_menu_terms_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_1_a_target_t"/>" title="<spring:message code="main_menu_terms_1_a_title_t"/>"><spring:message code="main_menu_terms_1_a_text_t"/></a></li>
-		<li><a href="<spring:message code="notranslate_main_menu_terms_2_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_2_a_target_t"/>" title="<spring:message code="main_menu_terms_2_a_title_t"/>"><spring:message code="main_menu_terms_2_a_text_t"/></a></li>
-		<li><a href="<spring:message code="notranslate_main_menu_terms_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_3_a_target_t"/>" title="<spring:message code="main_menu_terms_3_a_title_t"/>"><spring:message code="main_menu_terms_3_a_text_t"/></a></li>
-		<li><a href="<spring:message code="notranslate_main_menu_terms_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_terms_4_a_target_t"/>" title="<spring:message code="main_menu_terms_4_a_title_t"/>"><spring:message code="main_menu_terms_4_a_text_t"/></a></li>
- --%>			
-			
-
 		</div>
 	</div>
 </div>
