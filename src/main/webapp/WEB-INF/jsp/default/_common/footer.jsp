@@ -78,7 +78,7 @@
 					</h3>
 					
 
-					<ul class="footer-links">
+					<ul class="footer-links with-icons">
 						<li><span class="icon-logo" id="link-logo-1"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_1_a_url"/>" target="<spring:message code="notranslate_main_menu_explore_1_a_target_t"/>" title="<spring:message code="main_menu_explore_1_a_title_t"/>"><spring:message code="main_menu_explore_1_a_text_t"/></a></li>
 						<li><span class="icon-logo" id="link-logo-2"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_2_a_url"/>" target="<spring:message code="notranslate_main_menu_explore_2_a_target_t"/>" title="<spring:message code="main_menu_explore_2_a_title_t"/>"><spring:message code="main_menu_explore_2_a_text_t"/></a></li>
 						<li><span class="icon-logo" id="link-logo-3"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_3_a_url"/>" target="<spring:message code="notranslate_main_menu_explore_3_a_target_t"/>" title="<spring:message code="main_menu_explore_3_a_title_t"/>"><spring:message code="main_menu_explore_3_a_text_t"/></a></li>
