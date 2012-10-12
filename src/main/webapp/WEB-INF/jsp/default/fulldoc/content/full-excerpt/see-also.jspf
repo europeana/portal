@@ -4,7 +4,7 @@
 <c:if test="${!empty model.seeAlsoSuggestions}">
 
 	<div>
-		<strong><spring:message code="SearchForHeader_t" /></strong>
+		<strong><spring:message code="see_also_header_t" /></strong>
 	</div>
 	
 	<c:forEach items="${model.seeAlsoSuggestions}" var="metafield">
