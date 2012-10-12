@@ -469,6 +469,9 @@
     
 }
 
+.galleria-info{
+	cursor:	pointer;	
+}
 
 .galleria-info-description,
 .galleria-info-title{

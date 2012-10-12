@@ -264,7 +264,6 @@ Galleria.addTheme({
 	    	this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 	    		$(ob).unbind('click');
 	    		$(ob).bind("click", function(){
-
 	    			if(dataSource[i].linkTarget){
 	        			window.open(dataSource[i].link, dataSource[i].linkTarget);    				
 	    			}
@@ -435,10 +434,20 @@ Galleria.addTheme({
 			var title		= thisGallery.$( 'container' ).find(".galleria-info-title");
 			var description	= thisGallery.$( 'container' ).find(".galleria-info-description");
 			
+			
     		if(dataSource.length > 1){ // will always be the case on index page for this type of galleria
     			stage.after(info);
     			info.append(title);
     			info.append(description);
+
+
+	    			
+	    		info.click(function(){
+	    			var i = thisGallery.getIndex();
+        			window.open(dataSource[i].link, "_new");
+        			
+	    		});
+    			
 
      			
         		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
