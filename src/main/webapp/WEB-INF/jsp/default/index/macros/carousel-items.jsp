@@ -39,5 +39,5 @@
 </c:if>
 
 <a href="${url}" title="<spring:message code="carousel-item-${ord1}_a_title_t" />" target="<spring:message code="notranslate_carousel-item-${ord1}_a_target_t" />">
-	<img src="/${model.portalName}spring:message code="notranslate_carousel-item-${ord1}_img_url_t" />" width="<spring:message code="notranslate_carousel-item-${ord1}_img_width_t" />"  height="<spring:message code="notranslate_carousel-item-${ord1}_img_height_t" />" alt="<spring:message code="carousel-item-${ord1}_img_alt_t" />"/>
+	<img src="/${model.portalName}spring:message code="notranslate_carousel-item-${ord1}_img_url_t" />" width="<spring:message code="notranslate_carousel-item-${ord1}_img_width_t" />" alt="<spring:message code="carousel-item-${ord1}_img_alt_t" />"/>
 </a>
