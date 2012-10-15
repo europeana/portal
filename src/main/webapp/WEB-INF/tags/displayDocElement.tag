@@ -43,8 +43,10 @@
           <c:when test="${field.schemaName == 'edm:WebResource'}">
             <table>
               <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="resouceStatus">
+              <%--
                 <europeana:displayDocElement topField="${model.webResourceField}" docElement="${fieldInstance}" 
                   elementStatus="${resouceStatus}" total="${fn:length(docElement[field.propertyName])}" />
+              --%>
               </c:forEach>
             </table>
           </c:when>
@@ -52,8 +54,10 @@
           <c:when test="${field.schemaName == 'relatedItems'}">
             <table>
               <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="resouceStatus">
+              <%--
                 <europeana:displayDocElement topField="${model.briefBeanField}" docElement="${fieldInstance}" 
                   elementStatus="${resouceStatus}" total="${fn:length(docElement[field.propertyName])}" />
+               --%>
               </c:forEach>
             </table>
           </c:when>

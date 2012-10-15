@@ -14,7 +14,6 @@ eu.europeana.fulldoc = {
 
 		this.loadComponents();
 		this.addAutoTagHandler();
-		//this.addSidebarRightData();
 		
 		jQuery('#item-save-tag').bind('submit', this.handleSaveTagSubmit );
 		jQuery('#item-save').bind('click', this.handleSaveItemClick );
@@ -33,67 +32,6 @@ eu.europeana.fulldoc = {
 		jQuery('#lightbox_href').bind('click', this.handleRedirectIsShownByImgClick );
 	},
 
-	/*
-	addSidebarRightData : function(){
-		
-		var callbacks = {};
-		
-		var makeAjaxCall = function(request){
-			
-			jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request,
-					
-				function(data) {
-				
-					
-					callbacks[request.field].received = callbacks[request.field].received + 1;
-					
-					callbacks[request.field].count = callbacks[request.field].count + data.suggestions.length;
-					
-					
-					if(callbacks[request.field].received == callbacks[request.field].expected){
-						
-						alert("request.field " + request.field + " " +     callbacks[request.field].count  );
-						
-					}
-					
-				
-					
-				}
-			);			
-			
-		};
-		
-		
-		if(typeof sidebarRightData != "undefined"){
-			
-			for(var i=0; i<sidebarRightData.length; i++){
-
-				callbacks[sidebarRightData[i].field] = {
-					//"field"		: sidebarRightData[i].filterField,
-					"expected"	: sidebarRightData[i].terms.length,
-					"received"	: 0,
-					"count"		: 0 
-				};
-				
-				for(var j=0; j<sidebarRightData[i].terms.length; j++){
-					
-					makeAjaxCall( {"field" : sidebarRightData[i].filterField, "term": sidebarRightData[i].terms[j] }  );
-					
-				}
-
-			}
-			
-		}
-		
-		
-		sidebarRightData[sidebarRightData.length] = {
-			"title"	: "Der Title",
-			"terms"	: ["${model.objectTitle}"]
-		};
-		
-	},
-	
-	*/
 	
 	loadComponents : function() {
 		
@@ -283,56 +221,8 @@ eu.europeana.fulldoc = {
 	
 	
 	tabFeedback : function( id ) {
-		/*
-		if ( !eu.europeana.fulldoc.similar && '#similar-content' === id ) {
-			if ( eu.europeana.carousel.similar ) {
-				eu.europeana.carousel.similar.init();
-				eu.europeana.fulldoc.similar = true;
-			}
-		}
-		
-		if ( !eu.europeana.fulldoc.related && '#related-content' === id ) {
-			if ( eu.europeana.carousel.related ) {
-				eu.europeana.carousel.related.init();
-				eu.europeana.fulldoc.related = true;
-			}
-		}
-		*/
-	},
-	
-	/*
-	addCarousels : function() {
-
-		eu.europeana.carousel = {};
-		
-		if ( jQuery('#similar-content').length > 0 ) {
-			
-			eu.europeana.carousel.similar = eu.europeana.fulldoc.createCarousel('#similar-content');
-			
-		}
-		
-		if ( jQuery('#related-content').length > 0 ) {
-			
-			eu.europeana.carousel.related = eu.europeana.fulldoc.createCarousel('#related-content');
-			
-		}
 
 	},
-	
-	createCarousel : function( id ) {
-		
-		return new com.gmtplusone.carousel(
-			id,
-			{ animation :
-				{
-					arrow_keys_active : false,
-					hover_title : false 
-				}
-			}
-		);
-		
-	},
-	*/
 	
 	adjustDescription : function() {
 		
@@ -542,11 +432,166 @@ eu.europeana.fulldoc = {
 		
 	},
 	
+	showLightboxTrigger : function(show, gallery){
+		if(show){
+			
+			var marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
+			$('.lb-trigger').css("margin-left", marginTrigger + "px");
+			
+			$('.lb-trigger').fadeIn(500);
+		}
+		else{
+			$('.lb-trigger').css('display', 'none');
+		}
+		
+		
+		
+		if(gallery){
+			var imageNav	= gallery.$('container').find('.galleria-image-nav');
+			
+			imageNav.css("margin-top", "0px");
+			imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
+			
+			var stage		= gallery.$('container').find('.galleria-stage');
+			var imageNavR	= gallery.$('container').find('.galleria-image-nav-right');
+			var heightDiff	= stage.height() - imageNavR.height();
+			var stageTopMargin	= parseInt(gallery.$('container').find('.galleria-stage').css("margin-top")  );
+			
+			imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
+		}
+		
+	},
+	
+	initLightbox : function(url, gallery){
+		
+		$('#lightbox_image').one('load', function(){
+
+			var NavOb = function(){
+				
+				var nav = function(direction){
+					var currentUrl = $("#lightbox_image").attr("src");
+					var submodel = [];
+					var submodelActive = 0;
+					
+					for(var i=0; i<carouselData.length; i++){
+						if(carouselData[i].lightboxable){
+							if(carouselData[i].lightboxable.url == currentUrl){
+								submodelActive = submodel.length;
+							}
+							submodel[submodel.length] = carouselData[i].lightboxable;
+						}
+					}
+					
+					var newActive = submodelActive + direction;
+					if(newActive<0){
+						newActive = submodel.length -1;
+					}
+					else if(newActive >= submodel.length){
+						newActive = 0;						
+					}
+					
+					$("#hidden_img").unbind( '.imagesLoaded' );
+					$("#hidden_img").remove();
+					$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
+						function(){
+							var zoomed = false;
+							if(  $("#zoomedImg").is(":visible")){
+								eu.europeana.lightbox.closeZoom();
+								zoomed = true;
+							}
+							$("#lightbox_image").attr("src", submodel[newActive].url);
+							eu.europeana.lightbox.layout();
+							if(zoomed){
+								eu.europeana.lightbox.zoomImg();
+							}
+						}
+					);
+				};
+				this.prev = function(){
+					nav(-1);
+				};
+				this.next = function(){
+					nav(1);
+				};
+			};
+			
+			var navOb = new NavOb();
+			if(typeof (eu.europeana.lightbox) != "undefined"){							
+				eu.europeana.lightbox.init(url, navOb);
+				eu.europeana.fulldoc.showLightboxTrigger(true, gallery);
+			}
+		});
+		
+		$('#lightbox_image').attr('src', url);
+		
+	},
+	
+	loadLightboxJS : function(gallery){
+		
+		js.loader.loadScripts([{
+			name: 'jquery-tools',
+			file : 'jquery.tools.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/',
+			dependencies : [ 'jquery' ]
+		}]);
+			
+		js.loader.loadScripts([{
+			name : 'jwplayer',
+			file : 'jwplayer.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
+		}]);
+		
+		if(!window.showingPhone()){
+			
+			js.loader.loadScripts([{
+				file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+				dependencies : [ 'jquery-tools', 'jwplayer'],
+				callback: function(){
+					
+
+					if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
+						$('#carousel-1-img-measure' ).append(
+								'<div class="lb-trigger" >'
+								+ '<span rel="#lightbox" title="' + triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+								+ '" class="icon-magplus">'
+								+ triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+								+ '</span>'
+								+ '</div>'
+						);
+						eu.europeana.fulldoc.triggerPanel = $('#carousel-1-img-measure' ).find('.lb-trigger');
+						eu.europeana.fulldoc.triggerPanel.hide();
+						eu.europeana.fulldoc.loadLightboxJS(gallery);
+					}
+					
+					eu.europeana.fulldoc.initLightbox(eu.europeana.fulldoc.lightboxable.url, gallery);
+					jsLoaded = true;
+
+					$(window).on("resize", function(){
+						//if(eu.europeana.lightbox.layout){
+						//	eu.europeana.lightbox.layout();												
+						//}
+						//console.log("fulldoc.js resizing.....................");
+					});
+					
+					
+					$(window).on( "orientationchange",
+						function(){
+							if(eu.europeana.lightbox.layout){
+								eu.europeana.lightbox.layout();												
+							}
+						},
+					false);
+				}
+			}]);									
+		}
+	},
+	
 	
 	initTopCarousel : function(){
 		
 		// mock some lightbox data
-		//
+
 		var lightboxImages = [
 		    'http://godsofart.com/wp-content/uploads/2012/01/Star_Wars_Tales_by_UdonCrew.jpg',
 			'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg',
@@ -586,8 +631,6 @@ eu.europeana.fulldoc = {
 			thumbnails: 		carouselData.length>1,
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find) 
 			extend: function(e){
-			
-				//var triggerHeight	= 40;
 				
 				var doEllipsis = function(){
 					var ellipsisObjects = [];
@@ -612,171 +655,44 @@ eu.europeana.fulldoc = {
 				
 	
 				var jsLoaded		= false;
-				var triggerPanel	= null;
-	
-				
-				var initLightbox = function(url, gallery){
-					$('#lightbox_image').one('load', function(){
-
-						var NavOb = function(){
-							
-							var nav = function(direction){
-								var currentUrl = $("#lightbox_image").attr("src");
-								var submodel = [];
-								var submodelActive = 0;
-								
-								for(var i=0; i<carouselData.length; i++){
-									if(carouselData[i].lightboxable){
-										if(carouselData[i].lightboxable.url == currentUrl){
-											submodelActive = submodel.length;
-										}
-										submodel[submodel.length] = carouselData[i].lightboxable;
-									}
-								}
-								
-								var newActive = submodelActive + direction;
-								if(newActive<0){
-									newActive = submodel.length -1;
-								}
-								else if(newActive >= submodel.length){
-									newActive = 0;						
-								}
-								
-								$("#hidden_img").unbind( '.imagesLoaded' );
-								$("#hidden_img").remove();
-								$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
-									function(){
-										var zoomed = false;
-										if(  $("#zoomedImg").is(":visible")){
-											eu.europeana.lightbox.closeZoom();
-											zoomed = true;
-										}
-										$("#lightbox_image").attr("src", submodel[newActive].url);
-										eu.europeana.lightbox.layout();
-										if(zoomed){
-											eu.europeana.lightbox.zoomImg();
-										}
-									}
-								);
-							};
-							this.prev = function(){
-								nav(-1);
-							};
-							this.next = function(){
-								nav(1);
-							};
-						};
-						
-						var navOb = new NavOb();
-						
-						if(typeof (eu.europeana.lightbox) != "undefined"){							
-							eu.europeana.lightbox.init(url, navOb);
-							showTrigger(true, gallery);
-						}
-					});
-					
-					$('#lightbox_image').attr('src', url);
-				};
-				
-
-				var verticallyAlignImageNav = function(gallery){
-					
-					var imageNav	= gallery.$('container').find('.galleria-image-nav');
-					
-					imageNav.css("margin-top", "0px");
-					imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
-					
-					var stage		= gallery.$('container').find('.galleria-stage');
-					var imageNavR	= gallery.$('container').find('.galleria-image-nav-right');
-					var heightDiff	= stage.height() - imageNavR.height();
-					var stageTopMargin	= parseInt(gallery.$('container').find('.galleria-stage').css("margin-top")  );
-					
-					imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
-				};		
-				
-				// Show or hide the trigger - resizing relevant elements
-				var showTrigger = function(show, gallery){
-					if(show){
-						$('.lb-trigger').fadeIn(500);
-					}
-					else{
-						$('.lb-trigger').css('display', 'none');
-					}
-					verticallyAlignImageNav(gallery);
-				};
 	
 				this.bind("image", function(e) {	// lightbox trigger
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////					
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////					
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////					
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					
 					var gallery = this;
-					var lightboxable = gallery._options.dataSource[e.index].lightboxable;
-					if(lightboxable && lightboxable.url.length>0){
-						if(!triggerPanel){
+					eu.europeana.fulldoc.lightboxable = gallery._options.dataSource[e.index].lightboxable;
+					//var lightboxable = gallery._options.dataSource[e.index].lightboxable;
+					if(eu.europeana.fulldoc.lightboxable && eu.europeana.fulldoc.lightboxable.url.length>0){
+						if(!eu.europeana.fulldoc.triggerPanel){
 							this.$( 'container' ).find('.galleria-images').after(
 									'<div class="lb-trigger" >'
-									+ '<span rel="#lightbox" title="' + triggerLabels[lightboxable.type] + '" class="icon-magplus">' + triggerLabels[lightboxable.type] + '</span>'
+										+ '<span rel="#lightbox" title="' + triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+													+ '" class="icon-magplus">'
+													+ triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+										+ '</span>'
 									+ '</div>'
 							);
-							triggerPanel = this.$( 'container' ).find('.lb-trigger');
-							triggerPanel.hide();
-							
-							var loadJS = function(){
-								
-								js.loader.loadScripts([{
-									name: 'jquery-tools',
-									file : 'jquery.tools.min.js' + js.cache_helper,
-									path : eu.europeana.vars.branding + '/js/jquery/',
-									dependencies : [ 'jquery' ]
-								}]);
-									
-								js.loader.loadScripts([{
-									name : 'jwplayer',
-									file : 'jwplayer.js' + js.cache_helper,
-									path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
-								}]);
-								
-								
-								
-								if(!window.showingPhone()){
-									
-									js.loader.loadScripts([{
-										file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
-										path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-										dependencies : [ 'jquery-tools', 'jwplayer'],
-										callback: function(){
-											initLightbox(lightboxable.url, gallery);
-											jsLoaded = true;
-
-											$(window).on("resize", function(){
-												/*
-												if(eu.europeana.lightbox.layout){
-													eu.europeana.lightbox.layout();												
-												}
-												*/
-												console.log("fulldoc.js resizing.....................");
-											});
-											
-											w.addEventListener( "orientationchange",
-												function(){
-													if(eu.europeana.lightbox.layout){
-														eu.europeana.lightbox.layout();												
-													}
-												},
-											false);
-										}
-									}]);									
-								}
-								
-								
-							};
-							loadJS();
+							eu.europeana.fulldoc.triggerPanel = this.$( 'container' ).find('.lb-trigger');
+							eu.europeana.fulldoc.triggerPanel.hide();
+							eu.europeana.fulldoc.loadLightboxJS(gallery);
 						}
 						else{
-							initLightbox(lightboxable.url, gallery);
-							//showTrigger(true, gallery);
+							eu.europeana.fulldoc.initLightbox(eu.europeana.fulldoc.lightboxable.url, gallery);
 						}
 					}
 					else{
-						showTrigger(false, gallery);
+						eu.europeana.fulldoc.showLightboxTrigger(false, gallery);
 					}
+					
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	
 				}); // end bind image
 			
@@ -813,23 +729,35 @@ eu.europeana.fulldoc = {
 
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 
+			
 		$("#carousel-1-img-measure img").imagesLoaded( function(){
 			
-			eu.europeana.fulldoc.getCarousel1Height = function(){
+			if(carouselData.length>1){ // we only need a carousel if there's more than one image to show
+				
+				eu.europeana.fulldoc.getCarousel1Height = function(){
+					
+					var tallestImageH = $("#carousel-1-img-measure").height();
+					
+					var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
+					if( window.showingPhone() ){
+						galleriaOffsetY	= 120;	
+					}
+					
+					return tallestImageH + galleriaOffsetY;
+				};
+				eu.europeana.fulldoc.initTopCarousel();
+			}
+			else{
+				$("#carousel-1-img-measure img").removeClass("no-show");
+				$("#carousel-1-img-measure").css("position",	"relative");
+				$("#carousel-1-img-measure").css("text-align",	"center");
 
-  				var tallestImageH = $("#carousel-1-img-measure").height();
-
-  				var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
-  				if( window.showingPhone() ){
-  					galleriaOffsetY	= 120;	
-  				}
-  				
-  				return tallestImageH + galleriaOffsetY;
-			};
-			
-			eu.europeana.fulldoc.initTopCarousel();
+				if(carouselData[0].lightboxable){
+					eu.europeana.fulldoc.lightboxable = carouselData[0].lightboxable;
+					eu.europeana.fulldoc.loadLightboxJS();
+				}
+			}
 		});
-		
 		
 		$("#carousel-2-img-measure img").imagesLoaded( function(){
 			
