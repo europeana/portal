@@ -284,3 +284,8 @@ eu.europeana.vars.timeline = {};
 //-->
 
 eu.europeana.vars.rows = '${rows}';
+
+<%-- 'for share-this' --%>
+var switchTo5x = true;
+if ( window.stLight ) { stLight.options({publisher : '${model.shareThisId}'}); }
+</script>

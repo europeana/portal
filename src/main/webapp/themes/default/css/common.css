@@ -1,3 +1,15 @@
+/* sharethis */
+
+#header {
+	position: relative;
+}
+
+#shareicons {
+	position: absolute;
+	bottom: 0;
+	right: 10px;
+}
+
 /* content */
 
 

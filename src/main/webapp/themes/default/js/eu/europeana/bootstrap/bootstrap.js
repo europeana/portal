@@ -126,11 +126,11 @@ var europeana_bootstrap = function(){
 	}
 	else if(eu.europeana.vars.page_name == 'full-doc.html'){
 
-//		scripts.push({
-//			name : 'sharethis',
-//			file : 'buttons.js',
-//			path : '//w.sharethis.com/button/'
-//		});
+		scripts.push({
+			name : 'sharethis',
+			file : 'buttons.js',
+			path : '//w.sharethis.com/button/'
+		});
 		
 		scripts.push({
 			name : 'galleria',
