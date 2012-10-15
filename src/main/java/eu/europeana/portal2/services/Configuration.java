@@ -1,6 +1,9 @@
 package eu.europeana.portal2.services;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -22,6 +25,8 @@ public class Configuration {
 	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="corelib_web_configInterceptor") private ConfigInterceptor configInterceptor;
+	
+	@Resource private Properties europeanaProperties;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -101,6 +106,8 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.contentchecker']}")
 	private String isContentChecker;
 
+	private Map<String, String> seeAlsoTranslations;
+	
 	/////////////////////////////// complex functions
 
 	public void registerBaseObjects(HttpServletRequest request, HttpServletResponse response, Locale locale) {
@@ -218,8 +225,21 @@ public class Configuration {
 	public int getMinCompletenessToPromoteInSitemaps() {
 		return minCompletenessToPromoteInSitemaps;
 	}
-	
+
 	public boolean isContentChecker() {
 		return isContentChecker.equals("true");
+	}
+
+	public Map<String, String> getSeeAlsoTranslations() {
+		if (seeAlsoTranslations == null) {
+			seeAlsoTranslations = new HashMap<String, String>();
+			int i = 1;
+			while (europeanaProperties.containsKey("portal.seeAlso.field." + i)) {
+				String[] parts = europeanaProperties.getProperty("portal.seeAlso.field." + i).split("=", 2);
+				seeAlsoTranslations.put(parts[0], parts[1]);
+				i++;
+			}
+		}
+		return seeAlsoTranslations;
 	}
 }

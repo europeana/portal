@@ -24,6 +24,7 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.model.abstracts.RestLocationsData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
@@ -55,7 +56,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	protected List<BriefBeanDecorator> moreLikeThis;
 
-	protected Map<String, Map<String, Integer>> seeAlsoSuggestions;
+	protected SeeAlsoSuggestions seeAlsoSuggestions;
 
 	public void setFormat(String format) {
 		this.format = format;
@@ -118,12 +119,11 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 		this.moreLikeThis = moreLikeThis;
 	}
 
-	public Map<String, Map<String, Integer>> getSeeAlsoSuggestions() {
+	public SeeAlsoSuggestions getSeeAlsoSuggestions() {
 		return seeAlsoSuggestions;
 	}
 
-	public void setSeeAlsoSuggestions(
-			Map<String, Map<String, Integer>> seeAlsoSuggestions) {
+	public void setSeeAlsoSuggestions(SeeAlsoSuggestions seeAlsoSuggestions) {
 		this.seeAlsoSuggestions = seeAlsoSuggestions;
 	}
 }

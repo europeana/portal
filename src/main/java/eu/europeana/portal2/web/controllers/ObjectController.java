@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -55,6 +56,7 @@ import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
+import eu.europeana.portal2.web.presentation.model.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
@@ -79,15 +81,14 @@ public class ObjectController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
-	public static final Map<String, List<String>> seeAlsoFields = new HashMap<String, List<String>>(){
-		private static final long serialVersionUID = 1L; 
+	public static final Map<String, List<String>> seeAlsoFields = new HashMap<String, List<String>>() {
+		private static final long serialVersionUID = 1L;
 		{
 			put("title", Arrays.asList(new String[]{"DcTitle", "DctermsAlternative"}));
 			put("who", Arrays.asList(new String[]{"DcContributor", "DcCreator"}));
 			put("what", Arrays.asList(new String[]{"DcType", "DcSubject", "DcFormat"}));
 			// put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated", "DctermsTemporal"}));
 			// put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
-			put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
 			put("PROVIDER", Arrays.asList(new String[]{"EdmProvider"}));
 		}
 	};
@@ -149,23 +150,7 @@ public class ObjectController {
 		model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
 
 		long tSeeAlso0 = (new Date()).getTime();
-		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
-		Map<String, List<String>> seeAlsoParams = new HashMap<String, List<String>>();
-		for (String metaField : seeAlsoFields.keySet()) {
-			List<String> fieldValues = new ArrayList<String>();
-			for (String edmField : seeAlsoFields.get(metaField)) {
-				String[] values = shortcut.get(edmField);
-				if (values != null) {
-					// int size = fieldValues.size();
-					fieldValues.addAll(Arrays.asList(values));
-				}
-			}
-			if (fieldValues.size() > 0) {
-				seeAlsoParams.put(metaField, fieldValues);
-			}
-		}
-		searchService.seeAlso(seeAlsoParams);
-		model.setSeeAlsoSuggestions(searchService.seeAlso(seeAlsoParams));
+		model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
 		long tSeeAlso1 = (new Date()).getTime();
 		log.info("see also takes: " + (tSeeAlso1 - tSeeAlso0));
 
@@ -289,5 +274,38 @@ public class ObjectController {
 			return query.contains("\"") && StringUtils.indexOf(query, '\"') == StringUtils.lastIndexOf(query, '\"');
 		}
 		return false;
+	}
+
+	/**
+	 * Create see also suggestions
+	 * 
+	 * @param fullBean
+	 *   The full bean
+	 * @return
+	 *   The object contains the see also suggestions
+	 */
+	private SeeAlsoSuggestions createSeeAlsoSuggestions(FullBean fullBean) {
+
+		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
+		Map<String, List<String>> seeAlsoParams = new HashMap<String, List<String>>();
+		for (String metaField : seeAlsoFields.keySet()) {
+			List<String> fieldValues = new ArrayList<String>();
+			for (String edmField : seeAlsoFields.get(metaField)) {
+				String[] values = shortcut.get(edmField);
+				if (values != null) {
+					fieldValues.addAll(Arrays.asList(values));
+				}
+			}
+			if (fieldValues.size() > 0) {
+				seeAlsoParams.put(metaField, fieldValues);
+			}
+		}
+		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations());
+		Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
+		for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {
+			seeAlsoSuggestions.add(entry.getKey(), entry.getValue());
+		}
+
+		return seeAlsoSuggestions;
 	}
 }
