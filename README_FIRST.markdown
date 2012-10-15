@@ -1,27 +1,95 @@
 Europeana Portal2 Setup
 =======================
+
 Requirements
 ------------
-* Tomcat 6.x or 7.x
+* Java Webserver : Tomcat 6.x, Tomcat 7.x, or Jetty (included in eclipse)
 * Java 6.x JDK
-* Maven 3.0.x
-* (This document doesn't describe how to install, and setup all of these tools.)
+* Maven 2.2.x
+
+*note* This document doesn't describe how to install, and setup all of these tools.
 
 
-==================
+
+Recommendations
+---------------
+use [Eclipse IDE for Java EE Developers]( http://www.eclipse.org/downloads/ ) as your IDE
+
+
+
 Odd things you need to know, to get a portal running
 ----------------------------------------------------
-You need to setup postgres, details is in the
+* You need to setup postgres, details is in the
 trunk/README_FIRST.markdown
 
-When doing queries, you must add  &theme=vanilla
 
-==================
 
-Installation
-------------
+Checkout the projects
+---------------------
+1. create a working directory for all of the projects, e.g., /Users/your_user_directory/workspace/europeana-portal
+2. make sure you’re in that directory.
+3. checkout the portal2 project http://europeanalabs.eu/svn/europeana/trunk/portal2/
+4. checkout the corelib projects http://europeanalabs.eu/svn/europeana/trunk/corelib/
+5. checkout the staticpages https://europeanalabs.eu/svn/europeana/trunk/staticpages2/
+
+
+
+Install & Setup Eclipse
+-----------------------
+### Download and Install Eclipse
+[Eclipse IDE for Java EE Developers]( http://www.eclipse.org/downloads/ )
+
+
+### Install Maven Support for Eclipse via the Maven Plugin
+The maven plugin is at http://eclipse.org/m2e/download/
+Latest m2e release (recommended) is http://download.eclipse.org/technology/m2e/releases
+
+1. Select the menu “Help : Install New Software”
+2. Work with: http://download.eclipse.org/technology/m2e/releases
+3. Click on “Add …”
+4. Click on “OK”
+5. Check the box next to Maven Integration for Eclipse
+6. Follow the rest of the process to install the plugin.
+
+
+### Install Subclipse
+To work with svn within eclipse it’s necessary to install a plugin. of the two that exist, subclipse seems to be the better.
+
+1. figure out which version of svn is installed, e.g. svn --version
+2. find the appropriate eclipse update site for your version of svn, http://subclipse.tigris.org/servlets/ProjectProcess?pageID=p4wYuA
+	
+	Links for 1.8.x Release (for Subversion 1.7.x):
+	Eclipse update site URL: http://subclipse.tigris.org/update_1.8.x
+	
+	Links for 1.6.x Release (for Subversion 1.6.x):
+	Eclipse update site URL: http://subclipse.tigris.org/update_1.6.x
+
+3. Help > Install New Software
+4. Work with: update_site_from_step2_above
+5. Click on “Add …”
+6. Click on “OK”
+7. Check the box next to subclipse plugins you want to install
+8. Follow the rest of the process to install the plugin.
+
+
+### Import the project(s)
+Depending on the Maven Projects you need to work on, import them by choosing:
+
+1. File > Import
+2. In the wizard select Maven > Existing Maven Projects
+3. Browse to the checkout directory for the Maven Project(s)
+4. Select Open
+5. After some evaluating eclipse will show the Maven Projects that exist in the directory and a checkbox next to the ones it will import
+6. Modify the checkboxes if you don't want to import all of the ones listed.
+7. Click Finish
+
+
+
+Install Tomcat or Setup Jetty in Eclipse
+----------------------------------------
 ### Tomcat
 #### Mac OSX
+
 1. download the Core tar.gz distribution to your Downloads folder, e.g., http://tomcat.apache.org/download-70.cgi
 2. untar the Core distribution in your Downloads folder
 3. move the distribution folder to your Applications folder
@@ -40,37 +108,50 @@ Installation
 ### Jetty
 #### Mac OSX
 
-An alternative to Tomcat, running portal2 on the Jetty server allows developers to quickly see the results of their updates to css, js, and jsps without redeployment.
-You'll need a run configuration, so select "Run Configurations..." / "Java Application" / "New", and fill in the fields as follows:
+An alternative to Tomcat, running portal2 on the Jetty server in eclipse, allows developers to quickly see the results of their updates to css, js, and jsps without redeployment. You’ll need a setup a configuration file in eclipse.
 
-[Tab Main]
-  Name: Portal 2 Jetty Starter (or whatever)
-  Project: portal 2
-  Main Class: eu.europeana.Portal2Starter
-  Working Directory:  ${workspace_loc:portal2}
-
-[Tab Arguments]
-  VM Arguments: -Xms1024m -Xmx2048m
-
-[Tab Classpath]
-  Add all of the corelib projects, if not already present.
-
-[Tab Environment]
-  New ... > name = EUROPEANA_PROPERTIES, value = europeana.properties
-  append to native environment
-
-
-### maven
-the .m2 repository may not be able to source the following repositories. both of these are available as zip files in http://dropbox.com/home/EuropeanaShared/tmp/ if that folder has been shared with your dropbox account:
-1. .m2/commons-logging/commons-logging-api/99.0-does-not-exist/
-2. .m2/woodstock/wstx-asl/3.2.7/
+1. from eclipse’s “project explorer”, right click on the “portal2” project.
+2. select “Run As : Run Configurations …”
+3. double-click on “Java Application” to create a new Java Application configuration.
+4. [Tab Main]
+	Name: Portal 2 Jetty Starter (or whatever)
+	Project: portal2
+	Main Class: eu.europeana.Portal2Starter
+5. [Tab Arguments]
+	VM Arguments: -Xms1024m -Xmx2048m
+	Working Directory:  ${workspace_loc:portal2}
+6. [Tab Classpath]
+	make sure the following projects are under “User Entries” :
+		portal2
+		Maven Dependencies
+		corelib-solr-definitions
+		corelib-db
+		corelib-definitions
+		corelib-solr
+		corelib-solr-dereference
+		corelib-solr-tools
+		corelib-utils
+		corelib-web
+	if not, click “Add Projects …”
+	click “Select All” or select the appropriate projects as needed
+	checked - “Add exported entriesof selected projects.”
+	checked - “Add required projects of selected projects.”
+	click “OK”
+7. [Tab Environment]
+	click on “New …”
+	name = EUROPEANA_PROPERTIES
+	value = europeana.properties
+	checked - “Append to native environment”
+8. click “Apply”
+9. if all other setup has been completed, mentioned in this readme - click “Run”
+10. if all is well you should be able to view portal2 on http://localhost:8081/portal2/
 
 
 
 Configuration
 -------------
 ### europeana.properties
-1. you can register the europeana.properties file in tomcat as mentioned above in step 5 or in /etc/profile:
+1. you can register the europeana.properties file in Tomcat as mentioned above in step 5 of the Tomcat section or in /etc/profile:
    export EUROPEANA_PROPERTIES=[path to project]/europeana.properties.new
    (The name of the file can be anything, but I use new to distinguish it from the old portal's europeana.properties file.)
 2. make sure the static.page.path = is set to your static directroy
@@ -85,49 +166,21 @@ Configuration
 ### corelib build
 If you don't have fresh corelib build, run the following line, which builds the corelib; a requirement in order for the portal2 to work properly:
 
-1. cd [path to project]/corelib/corelib-solr-definitions/
+1. cd [path to project]/corelib/
 2. run mvn clean install -DskipTests
-3. cd [path to project]/corelib/
-4. run mvn clean install -DskipTests
 
 ### portal2 build
 1. cd [path to project]/portal2/
-2. ./redeploy.sh - this will build the project, deploy the portal2 war file to Tomcat, and start Tomcat
+2. run mvn clean install -DskipTests
+3. if running under Tomcat, you will need to copy the portal2 war to Tomcat. you can use ./redeploy.sh, instead of following the above to build the project, deploy the portal2 war file to Tomcat, and start Tomcat
 
 ### browse the portal
 Now can use portal2 which is available at http://localhost:8080/portal2/search.html?query=*:*
 
 
-Eclipse Setup
--------------
-### Install Maven Support for Eclipse via the Maven Plugin
-the maven plugin is at http://eclipse.org/m2e/download/
-Latest m2e release (recommended) is http://download.eclipse.org/technology/m2e/releases
-To install it
-
-1. Help > Install New Software
-2. Work with: http://download.eclipse.org/technology/m2e/releases
-3. Click on Add...
-4. Check the box next to Maven Integration for Eclipse
-5. Follow the rest of the process to install the plugin.
-
-### Import the project(s)
-Depending on the Maven Projects you need to work on, import them by choosing:
-1. File > Import
-2. In the wizard select Maven > Existing Maven Projects
-3. Browse to the checkout directory for the Maven Project(s)
-4. Select Open
-5. After some evaluating eclipse will show the Maven Projects that exist in the directory and a checkbox next to the ones it will import
-6. Modify the checkboxes if you don't want to import all of the ones listed.
-7. Click Finish
-
-### Install Subclipse
-find the appropriate eclipse update site for your version of svn, http://subclipse.tigris.org/servlets/ProjectProcess?pageID=p4wYuA, and install it similarly to the maven plugin
-
-
 
 Indexing locally
----------------
+----------------
 Corelib contains a utility called ContentLoader for creating a local index. You have to make some changes before running it.
 
 ### Install latest Mongo and Solr 3.5.0
@@ -197,4 +250,25 @@ If you want to index the full record set, just remove the "-test" from the file 
   example: _1,_2,_3,_4
 
 
-Tip: you can play with the markdown syntax here: http://joncom.be/experiments/markdown-editor/edit/
+
+additional assets
+-----------------
+### static pages
+you’ll need a directory for the static pages. checkout the following to a local directory in your project and make sure the europeana.properties file has the corresponding reference, static.page.path = full_os_path_to_staticpages2
+
+svn co https://europeanalabs.eu/svn/europeana/trunk/staticpages2/
+
+### message keys
+they are part of the portal2 project and reside in portal2/src/main/resources/message_keys/. the europeana.properties entry should look something like the following :
+
+message.resource=file:portal2/src/main/resources/message_keys/messages
+
+
+
+
+markdown syntax
+---------------
+Tip: you can play with the markdown syntax here: <http://joncom.be/experiments/markdown-editor/edit/>
+
+and here is a link to more on its syntax
+<http://daringfireball.net/projects/markdown/syntax>
