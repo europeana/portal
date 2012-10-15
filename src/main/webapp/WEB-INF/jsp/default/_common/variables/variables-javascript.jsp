@@ -284,5 +284,3 @@ eu.europeana.vars.timeline = {};
 //-->
 
 eu.europeana.vars.rows = '${rows}';
-
-</script>

@@ -101,17 +101,17 @@
 
 <script>
 window.eu = {
-				europeana : {
-					vars : {
-						msg		: {
-							cite:{}
-						},
-						item	: {},
-						mapview	: {},
-						suppresResize: false
-					} 
-				}
-			};
+	europeana : {
+		vars : {
+			msg		: {
+				cite:{}
+			},
+			item	: {},
+			mapview	: {},
+			suppresResize: false
+		} 
+	}
+};
 
 
 window.js = {
@@ -287,4 +287,8 @@ eu.europeana.vars.initial_rows = '${initial_rows}';
 </c:choose>
 
 eu.europeana.vars.rows = '${rows}';
+
+<%-- 'for share-this' --%>
+var switchTo5x = true;
+if ( window.stLight ) { stLight.options({publisher : '${model.shareThisId}'}); }
 </script>

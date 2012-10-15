@@ -126,6 +126,12 @@ var europeana_bootstrap = function(){
 	}
 	else if(eu.europeana.vars.page_name == 'full-doc.html'){
 
+//		scripts.push({
+//			name : 'sharethis',
+//			file : 'buttons.js',
+//			path : '//w.sharethis.com/button/'
+//		});
+		
 		scripts.push({
 			name : 'galleria',
 			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
@@ -145,6 +151,12 @@ var europeana_bootstrap = function(){
 
 	}
 	else if(eu.europeana.vars.page_name == 'index.html'){
+		
+		scripts.push({
+			name : 'sharethis',
+			file : 'buttons.js',
+			path : '//w.sharethis.com/button/'
+		});
 		
 		scripts.push({
 			name : 'collapsible',
@@ -224,6 +236,12 @@ var europeana_bootstrap = function(){
 		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'search.html'){
+		
+		scripts.push({
+			name : 'sharethis',
+			file : 'buttons.js',
+			path : '//w.sharethis.com/button/'
+		});
 		
 		scripts.push({
 			name : 'collapsible',

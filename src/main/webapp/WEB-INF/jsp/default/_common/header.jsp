@@ -31,4 +31,11 @@
 		
 	</div>
 
+  	<div id="shareicons">
+	  <span class='st_facebook_large' displayText='Facebook'></span>
+	  <span class='st_twitter_large' displayText='Tweet'></span>
+	  <span class='st_email_large' displayText='Email'></span>
+	  <span class='st_sharethis_large' displayText='ShareThis'></span>
+	</div>
+	
 </div>
