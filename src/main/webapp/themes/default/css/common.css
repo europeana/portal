@@ -1,5 +1,4 @@
 /* sharethis */
-
 #header {
 	position: relative;
 }
@@ -7,7 +6,8 @@
 #shareicons {
 	position: absolute;
 	bottom: 0;
-	right: 10px;
+	left: 50%;
+	margin-left: -75px;
 }
 
 /* content */
@@ -280,6 +280,13 @@
 
 
 @media only screen and ( min-width:48em ){
+	
+	#shareicons {
+		left: auto;
+		right: 10px;
+		margin-left: auto;		
+	}
+	
 	.footer-bottom-link{
 		display:		inline;
 		margin-left:	0;
