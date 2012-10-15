@@ -42,11 +42,14 @@
 		});
 			
 
-		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1").one('load',
+		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");
+		$("#carousel-1").imagesLoaded(
 			function() {
+
 				var imgW			= $(this).width();
 				var imgH			= $(this).height();
-				$(this).remove();
+				
+				$("#carousel-1 img").remove();
 
 				var carousel		= jQuery("#carousel-1");
 				var parentWidth		= carousel.width();
@@ -55,8 +58,6 @@
 				var thumb			= jQuery('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
 				
 				carousel.css("height",  (parentWidth/ratio) + thumb.height() + 5 + "px");
-				
-				//alert("height will be set to " + carousel.css("height"));
 				
 				carousel.css("width",	"100%");
 				thumb.remove();
@@ -249,7 +250,14 @@ return;
 		
 		jQuery("#query-input").focus();
 		
-		initCarousels();
+		js.loader.loadScripts([{
+			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			callback : function() {
+				initCarousels();
+			}
+		}]);
+//		initCarousels();
 		
 		initResponsiveImages();
 		
