@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -73,7 +72,7 @@ public interface ClickStreamLogger {
 	 * Enum for different user actions that can be logged.
 	 */
 	public enum UserAction {
-		// todo: add descriptions
+		// TODO: add descriptions
 		// language specific actions
 		LANGUAGE_CHANGE,
 
