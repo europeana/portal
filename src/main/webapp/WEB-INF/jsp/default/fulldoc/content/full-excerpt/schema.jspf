@@ -22,14 +22,12 @@
             </c:when>
 
             <%-- other elements are lists --%>
-            <%--
             <c:otherwise>
               <c:set var="total" value="${fn:length(model.document[topField.propertyName])}" />
               <c:forEach items="${model.document[topField.propertyName]}" var="docElement" varStatus="elementStatus">
                 <europeana:displayDocElement topField="${topField}" docElement="${docElement}" elementStatus="${elementStatus}" total="${total}"/>
               </c:forEach>
             </c:otherwise>
-            --%>
           </c:choose>
         </c:if>
       </c:otherwise>
