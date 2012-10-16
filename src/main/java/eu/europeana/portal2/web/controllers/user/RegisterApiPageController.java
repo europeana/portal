@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -23,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.db.entity.relational.ApiKeyImpl;
-import eu.europeana.corelib.db.entity.relational.UserImpl;
 import eu.europeana.corelib.db.exception.DatabaseException;
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.TokenService;
@@ -38,7 +35,6 @@ import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.RegisterApiPage;
-import eu.europeana.portal2.web.presentation.model.RegisterPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
@@ -71,7 +67,7 @@ public class RegisterApiPageController {
 	/**
 	 * The default daily usage limit of API
 	 */
-	private static final int DEFAULT_USAGE_LIMIT = 10000;
+	private static final long DEFAULT_USAGE_LIMIT = 10000;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -130,20 +126,15 @@ public class RegisterApiPageController {
 			return page;
 		}
 
-		ApiKey apiKey = new ApiKeyImpl();
-		apiKey.setApiKey(model.getApiKey());
-		apiKey.setPrivateKey(model.getPrivateKey());
-		apiKey.setUsageLimit(DEFAULT_USAGE_LIMIT);
-		User user = userService.findByEmail(model.getEmail());
-		if (user != null) {
-			apiKey.setUser(user);
-		}
-		ApiKey stored = apiKeyService.store(apiKey);
-
 		Token token = tokenService.findByID(model.getToken());
+		User user = userService.createApiKey(model.getEmail(), model.getApiKey(), model.getPrivateKey(), DEFAULT_USAGE_LIMIT);
+		ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
+		log.info("User: " + user);
+		log.info("ApiKey: " + apiKey);
+
 		tokenService.remove(token);
 		log.info("token is removed: " + model.getToken());
-		// sendNotificationEmail(user);
+		sendNotificationEmails(user, apiKey);
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API_SUCCESS);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTERED_API);
@@ -152,15 +143,15 @@ public class RegisterApiPageController {
 		return page;
 	}
 
-	/*
-	private void sendNotificationEmail(User user) {
+	private void sendNotificationEmails(User user, ApiKey apiKey) {
+		log.info("Sending emails about the successfull API registration");
 		try {
-			emailService.sendRegisterNotify(user);
+			emailService.sendRegisterApiNotifyUser(apiKey);
+			emailService.sendRegisterApiNotifyAdmin(user);
 		} catch (Exception e) {
 			log.severe("Unable to send email to sys " + e.getLocalizedMessage());
 		}
 	}
-	*/
 
 	private String generatePassPhrase(int length) {
 		// This variable contains the list of allowable characters for the
