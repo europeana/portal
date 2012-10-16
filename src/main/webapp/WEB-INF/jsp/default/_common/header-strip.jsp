@@ -15,7 +15,7 @@
 				<c:when test="${!empty model.user}">
 					<span class="white">
 						<spring:message code="LoggedInAs_t"/>:
-						<a	href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#user-information"
+						<a	href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#user-information"
 							target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
 							title="<spring:message code="main_menu_myeuropeana_a_title_t"/>"
 							>
@@ -25,19 +25,19 @@
 						<c:if test="${!empty model.user.savedItems}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedItems_t"/>:
-							<a href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-items">${fn:length(model.user.savedItems)}</a>
+							<a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-items">${fn:length(model.user.savedItems)}</a>
 						</c:if>
 						
 						<c:if test="${!empty model.user.savedSearches}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedSearches_t"/>:
-							<a href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-searches">${fn:length(model.user.savedSearches)}</a>
+							<a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-searches">${fn:length(model.user.savedSearches)}</a>
 						</c:if>
 
 						<c:if test="${!empty model.user.savedSearches}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedTags_t"/>:
-							<a href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-tags">${fn:length(model.user.socialTags)}</a>
+							<a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-tags">${fn:length(model.user.socialTags)}</a>
 						</c:if>
 
 						&nbsp;|&nbsp;
