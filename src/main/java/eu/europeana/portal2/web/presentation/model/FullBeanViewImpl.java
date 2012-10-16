@@ -67,8 +67,6 @@ public class FullBeanViewImpl implements FullBeanView {
 		this.children = findChildren();
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
-		log.info("id: " + fullDoc.getId());
-		log.info("about: " + fullDoc.getAbout());
 		this.docIdWindowPager = createPager(fullDoc.getAbout(), httpParameters, query, searchService, clazz);
 	}
 
@@ -272,10 +270,10 @@ public class FullBeanViewImpl implements FullBeanView {
 
 	private FullBean createFullDoc(BeanQueryModelFactory factory,
 			QueryResponse solrResponse, Map<String, String[]> params)
-			throws EuropeanaQueryException {
+				throws EuropeanaQueryException {
 		SolrDocumentList matchDoc = (SolrDocumentList) solrResponse
 				.getResponse().get("match");
-		// todo: populate from RecordModel
+		// TODO: populate from RecordModel
 		List<? extends FullBean> fullBean = solrBinder.bindFullDoc(matchDoc);
 		// List<FullDoc> fullBean = factory.getBinder().getBeans(FullDoc.class,
 		// matchDoc);
