@@ -31,7 +31,7 @@ public class UserManagementController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	@RequestMapping("/myeuropeana2.html")
+	@RequestMapping("/myeuropeana.html")
 	public ModelAndView myEuropeanaHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request,
