@@ -28,7 +28,7 @@
 	    <input type="hidden" name="_spring_security_remember_me" value="true"/>
 	
 	
-	    <input type="submit" name="submit_login" class="europeana-button-1" value="<spring:message code="LogIn_t" />"/>
+	    <input type="submit" name="submit_login" class="europeana-button-1 deans-button-1" value="<spring:message code="LogIn_t" />"/>
 	    
 	    
 	    <a href="#register" rel="nofollow"><spring:message code="Register_t" /></a><br/>

@@ -184,6 +184,65 @@ a.action-link span{
 }
 
 
+
+#item-save-tag input{
+	outline-width:			0;
+	outline:				none;
+	border:					0;
+	padding:				4px;
+	margin:					0;
+	font-size:				1.1em;
+}
+
+
+#item-save-tag input[type='text']{
+	border:		1px solid #A0A0A0;
+	display:	table-cell;
+	width:		100%;
+}
+
+#item-save-tag input[type='submit']{
+	color:								white;
+	background-color:					blue;
+	margin-left:						0px;
+
+	-webkit-appearance:					none;
+
+	border:								0;
+	border:								1px solid blue;
+	
+	-moz-border-top-left-radius:		0;
+	-moz-border-bottom-left-radius:		0;
+
+	-webkit-border-top-left-radius:		0;
+	-webkit-border-bottom-left-radius:	0;
+
+	border-top-left-radius:				0;
+	border-bottom-left-radius:			0;
+}
+
+#item-save-tag li span,
+#item-save-tag span {
+	display: table-cell;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/*
+#item-save-tag input[type="submit"]{
+  border: 1px solid #A0A0A0;
+  display: table-cell;
+  width: 100%;
+}
+
+#refinements input[type="text"] {
+  border: 1px solid #A0A0A0;
+  display: table-cell;
+  width: 100%;
+}
+
+*/
+
 @media only screen and ( min-width:48em ){
 
 	#navigation {

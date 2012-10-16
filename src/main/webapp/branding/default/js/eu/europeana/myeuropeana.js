@@ -21,7 +21,7 @@ eu.europeana.myeuropeana = {
 		this.addUserBarListeners();		
 		this.addUserPanelListeners();
 		this.addItemHighlight();
-		
+
 	},
 	
 	

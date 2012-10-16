@@ -335,6 +335,38 @@ eu.europeana.fulldoc = {
 			europeanaUri : eu.europeana.vars.item.uri
 		};
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+			
+			
+		/*
+		e.preventDefault();
+		var ajax_feedback = {
+			saved_items_count : 0,
+			$saved_items : jQuery('#saved-items-count'),
+			success : function() {
+				var html =
+					'<span id="save-item-feedback">' +
+						eu.europeana.vars.msg.saved_item +
+					'</span>';
+				eu.europeana.ajax.methods.addFeedbackContent( html );
+				eu.europeana.ajax.methods.showFeedbackContainer();
+				ajax_feedback.saved_items_count = parseInt( ajax_feedback.$saved_items.html(), 10 );
+				ajax_feedback.$saved_items.html( ajax_feedback.saved_items_count + 1 );
+			},
+			failure : function() {
+				var html =
+					'<span id="save-item-feedback" class="error">' +
+						eu.europeana.vars.msg.save_item_failed +
+					'</span>';
+				eu.europeana.ajax.methods.addFeedbackContent( html );
+				eu.europeana.ajax.methods.showFeedbackContainer();
+			}
+		},
+		ajax_data = {
+			className : "SavedItem",
+			europeanaUri : eu.europeana.vars.item.uri
+		};
+		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+		*/
 	},
 	
 	
@@ -464,7 +496,8 @@ eu.europeana.fulldoc = {
 	
 	initLightbox : function(url, gallery){
 		
-		$('#lightbox_image').one('load', function(){
+		//$('#lightbox_image').one('load', function(){
+		//$('#lightbox_image').one('load', function(){
 
 			var NavOb = function(){
 				
@@ -520,7 +553,7 @@ eu.europeana.fulldoc = {
 				eu.europeana.lightbox.init(url, navOb);
 				eu.europeana.fulldoc.showLightboxTrigger(true, gallery);
 			}
-		});
+		//});
 		
 		$('#lightbox_image').attr('src', url);
 		
@@ -561,17 +594,18 @@ eu.europeana.fulldoc = {
 						);
 						eu.europeana.fulldoc.triggerPanel = $('#carousel-1-img-measure' ).find('.lb-trigger');
 						eu.europeana.fulldoc.triggerPanel.hide();
-						eu.europeana.fulldoc.loadLightboxJS(gallery);
+						//eu.europeana.fulldoc.loadLightboxJS(gallery);
 					}
 					
+					
 					eu.europeana.fulldoc.initLightbox(eu.europeana.fulldoc.lightboxable.url, gallery);
+					
 					jsLoaded = true;
 
 					$(window).on("resize", function(){
-						//if(eu.europeana.lightbox.layout){
-						//	eu.europeana.lightbox.layout();												
-						//}
-						//console.log("fulldoc.js resizing.....................");
+						if(eu.europeana.lightbox.layout){
+							eu.europeana.lightbox.layout();												
+						}
 					});
 					
 					
@@ -582,6 +616,7 @@ eu.europeana.fulldoc = {
 							}
 						},
 					false);
+
 				}
 			}]);									
 		}
@@ -657,12 +692,6 @@ eu.europeana.fulldoc = {
 				var jsLoaded		= false;
 	
 				this.bind("image", function(e) {	// lightbox trigger
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////					
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////					
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////					
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					
 					var gallery = this;
 					eu.europeana.fulldoc.lightboxable = gallery._options.dataSource[e.index].lightboxable;
 					//var lightboxable = gallery._options.dataSource[e.index].lightboxable;
@@ -687,13 +716,6 @@ eu.europeana.fulldoc = {
 					else{
 						eu.europeana.fulldoc.showLightboxTrigger(false, gallery);
 					}
-					
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	
 				}); // end bind image
 			
 			} // end extend

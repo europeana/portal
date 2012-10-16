@@ -2,12 +2,13 @@
 
 	#ajax-feedback {
 		position: absolute;
+		position: fixed;
 		z-index: 2000;
-		top: 27px;
+		top: 50%;
 		left: 50%;
 		
 		width: 200px;
-		margin-left: -80px;
+		margin-left: -100px;
 		padding: 10px;
 		
 		font-size: 110%;

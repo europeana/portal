@@ -5,7 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h3>
 	<a href="#saved-items"><spring:message code="SavedItems_t" /></a>
-</h3><div id="saved-items">
+</h3>
+<div id="saved-items">
 	<c:choose>
 		<c:when test="${fn:length(model.user.savedItems) < 1 }">
 			<spring:message code="NoSavedItems_t" />
@@ -40,8 +41,15 @@
 						</c:when>
 					</c:choose>
 					
+
+
+
+
+
+					
+					
 					<%-- Place Image --%>
-					<a href='/${model.portalName}/record/${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
+					<a href='/${model.portalName}/${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
 						<c:choose>
 							<c:when test="${!empty item.europeanaObject}">
 								<img src="${model.cacheUrl}uri=${fn:escapeXml(item.europeanaObject)}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
@@ -53,12 +61,12 @@
 					</a>
 					
 					<%-- Item Info --%>
-					<a href='/${model.portalName}/record/${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold"><europeana:stringLimiter theStr="${item.title}" size="50"/></a><br/>
+					<a href='/${model.portalName}/${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold"><europeana:stringLimiter theStr="${item.title}" size="50"/></a><br/>
 					<spring:message code="Creator_t" />: <em>${item.author}</em><br/>
 					<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
 					
 					<%-- Delete Saved Item button --%>
-					<button id="${item.id}" class="remove-saved-item europeana-button-1"><spring:message code="Delete_t" /></button>
+					<button id="${item.id}" class="remove-saved-item deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
 				</div>
 			</c:forEach>
 		</c:otherwise>

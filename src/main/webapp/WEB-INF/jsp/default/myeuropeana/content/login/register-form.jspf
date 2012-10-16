@@ -8,7 +8,7 @@
 		
 		<fieldset>
 		
-			<input type="hidden" name="submit_login" value="Register"/>
+		    <input type="hidden" name="requested_action" value="Register"/>
 			
 			<label for="register_email"><spring:message code="EmailAddress_t" /></label>
 			<br/>
@@ -16,7 +16,7 @@
 			<input id="register_email" type="text" name="email" value="" maxlength="50"/>
 			<br/>
 			
-			<input type="submit" name="submit_button" class="europeana-button-1" value="<spring:message code="Register_t" />"/>
+			<input type="submit" name="submit_button" class="europeana-button-1 deans-button-1" value="<spring:message code="Register_t" />"/>
 			
 			<a href="#login" rel="nofollow"><spring:message code="LogIn_t" /></a><br/>
 			

@@ -196,7 +196,7 @@ eu.europeana.vars.msg.saved_item = '${saved_item}';
 eu.europeana.vars.msg.save_item_failed = '${save_item_failed}';
 eu.europeana.vars.msg.saved_tag = '${saved_tag}'; 
 eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
-eu.europeana.vars.item.uri = '${model.document.id}';
+eu.europeana.vars.item.uri = '${model.document.about}';
 </c:if>
 
 <c:if test="${model[lightboxRef]}">
