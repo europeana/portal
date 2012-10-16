@@ -204,9 +204,7 @@ eu.europeana.myeuropeana = {
 			id : parseInt( $elm.attr('id'), 10 )
 			
 		};
-		
 		eu.europeana.ajax.methods.user_panel( 'remove', ajax_data, ajax_feedback );
-		
 	},
 	
 	

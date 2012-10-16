@@ -22,7 +22,7 @@ eu.europeana.ajax = function( options ) {
 			
 			feedback_container : '#ajax-feedback',
 			feedback_container_html : '<div id="ajax-feedback"></div>',
-			feedback_container_add_to : '#content',
+			feedback_container_add_to : '.container',
 			feedback_delay_default : 700,
 			feedback_delay_max : 7000,
 			feedback_delay_incrementor : 50
@@ -153,7 +153,6 @@ eu.europeana.ajax = function( options ) {
 	
 	
 	eu.europeana.ajax.prototype.getFeedbackContainerDelay = function() {
-		
 		var container_html = jQuery( this.options.feedback_container ).html(),
 			container_string_length = container_html.length,
 			delay = this.options.feedback_delay_incrementor * container_string_length + this.options.feedback_delay_default;
