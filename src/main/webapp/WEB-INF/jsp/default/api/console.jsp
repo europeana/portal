@@ -35,6 +35,9 @@
 		margin-bottom:		0.5em;
 	}
 	
+	#request-url, #response{
+		padding:	0.75em;
+	}
 	#api-result, #request-url-title, #request-url, #response-title, #response{
 	 	xmargin-left:		1em;
 	 	xmargin-right:		1em;
