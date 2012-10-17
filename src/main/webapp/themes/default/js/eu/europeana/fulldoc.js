@@ -320,6 +320,9 @@ eu.europeana.fulldoc = {
 				eu.europeana.ajax.methods.showFeedbackContainer();
 				ajax_feedback.saved_items_count = parseInt( ajax_feedback.$saved_items.html(), 10 );
 				ajax_feedback.$saved_items.html( ajax_feedback.saved_items_count + 1 );
+				
+				$("#item-save").removeClass("icon-unsaveditem");
+				$("#item-save").addClass("icon-saveditem");
 			},
 			failure : function() {
 				var html =

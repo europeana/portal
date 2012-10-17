@@ -100,9 +100,19 @@
 
 		<%-- Save page to myeuropeana --%>
 		<c:if test="${!empty model.user}">
-			<a href="" id="item-save" rel="nofollow" class="icon-unsaveditem action-link">
+		
+			<c:set var="savedIcon" value="icon-unsaveditem" />
+					
+			<c:forEach items="${model.user.savedItems}" var="item">
+				<c:if test="${model.document.about == item.europeanaUri}">
+					<c:set var="savedIcon" value="icon-saveditem" />
+				</c:if>
+			</c:forEach>
+		
+			<a href="" id="item-save" rel="nofollow" class="${savedIcon} action-link">
 				<span class="action-title"><spring:message code="SaveToMyEuropeana_t" /></span>
 			</a>
+			
 		</c:if>
 	
 		<%-- Add tag --%>
