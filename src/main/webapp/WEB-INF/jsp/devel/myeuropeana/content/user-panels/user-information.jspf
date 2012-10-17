@@ -25,4 +25,13 @@
     <strong><spring:message code="lastName_t" />:</strong><br/>
     ${model.user.lastName}
   </c:if>
+
+  <strong><spring:message code="myeuropeana_UserRole_t" />:</strong><br/>
+  ${model.user.role}<br/>
+  <br/>
+
+  <c:if test="${model.user.role == 'ROLE_GOD'}">
+    <c:url var="adminPage" value="/admin.html" />
+    <a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
+  </c:if>
 </div>

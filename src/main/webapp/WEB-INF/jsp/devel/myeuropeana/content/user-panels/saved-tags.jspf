@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h3>
-  <a  href="#saved-tags"><spring:message code="SavedTags_t" /></a>
+  <a href="#saved-tags"><spring:message code="SavedTags_t" /></a>
 </h3>
 
 <div id="saved-tags">
