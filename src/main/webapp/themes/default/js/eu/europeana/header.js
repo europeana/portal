@@ -47,11 +47,6 @@ eu.europeana.header = {
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
 		
-		jQuery('.jump-to-page').bind('submit', this.jumpToPageSubmit );
-		jQuery('.jump-to-page #start-page').bind('keypress', this.validateJumpToPage);
-		
-
-		//eu.europeana.header.setupNewsletterForm();
 
 	},
 
@@ -420,59 +415,8 @@ eu.europeana.header = {
 		eu.europeana.ajax.methods.init();
 		
 	},
-	
-	validateJumpToPage : function(e){
-		
-		var $this		= $(this);
-		var $jumpToPage	= $(this).parent();
-		
-		if (!Array.prototype.indexOf) {	/* IE 8 */
-			Array.prototype.indexOf = function(obj, start) {
-				 for (var i = (start || 0), j = this.length; i < j; i++) {
-					 if (this[i] === obj) { return i; }
-				 }
-				 return -1;
-			};
-		}
 
-		var key		= window.event ? e.keyCode : e.which;
-		var maxRows	= parseInt($jumpToPage.find("#max-rows").val());
 
-		var underMax = function(){
-			return parseInt( $this.val() + String.fromCharCode(key) ) <= maxRows; 
-		};
-
-		if([8, 46, 37, 38, 39, 40].indexOf(e.keyCode)>-1){
-			/* delete, backspace, left, up, right, down */
-			return true;
-		}
-		else if(e.keyCode == 13){
-			/* return */
-			var currVal = $jumpToPage.find("#start-page").val();
-			return currVal.length > 0;
-		}
-		else if ( key < 48 || key > 57 ) {
-			/* alphabet */
-			return false;
-		}
-		else{
-			/* number */
-			return underMax();
-		}
-		
-	},
-	
-	jumpToPageSubmit : function( e ){
-		
-		// set the "start" parameter
-		
-		var $jumpToPage	= $(this).parent();
-		var rows		= parseInt($jumpToPage.find("input[name=rows]").val());
-		var pageNum		= parseInt($jumpToPage.find("#start-page").val());
-		
-		$jumpToPage.find("#start").val(1 + ((pageNum-1)*rows) );
-		return true;
-	},
 	
 	handleSearchSubmit : function( e ) {
 		
