@@ -107,7 +107,7 @@
 				
 			</c:if>
 			
-			
+			<%--
 			<li>
 				<a class="share-section icon-print">
 					<span class="action-title">Print</span>
@@ -120,16 +120,19 @@
 					
 				</a>
 			</li>
+			 --%>
 			<li>
 				<a id="shares-link" class="icon-share share-section" rel="nofollow">
 					<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
 				</a>
 			</li>
+			<%--
 			<li>
 				<a class="share-section icon-mail">
 					<span class="action-title">Mail</span>
 				</a>
 			</li>
+			 --%>
 			<li class="stretch"></li>
 		</ul>
 		
