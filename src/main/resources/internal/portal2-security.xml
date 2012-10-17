@@ -8,7 +8,8 @@
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/admin/*.html" access="ROLE_GOD"/>
+		<intercept-url pattern="/admin.html" access="ROLE_USER"/>
+		<intercept-url pattern="/admin/*.html" access="ROLE_USER"/>
 		<intercept-url pattern="/secure/*.html" access="ROLE_USER"/>
 		<intercept-url pattern="/myeuropeana.html" access="ROLE_USER" />
 		<form-login login-page="/login.html" authentication-failure-url="/login.html?error=1" />

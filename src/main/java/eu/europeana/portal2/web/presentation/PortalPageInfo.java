@@ -43,6 +43,7 @@ public enum PortalPageInfo implements PageInfo {
 	ADMIN(null, "admin/admin"),
 	API_CONCOLE("api/console.html", "Europeana - API console", "api/console"),
 	API_REGISTER("api/register.html", "Europeana - API register", "api/register"),
+	ADMIN_LIMIT_APIKEY("admin/limitApiKey.html", "Europeana - API register", "admin/limit-apikey"),
 
 	AJAX(null, "ajax/ajax"),
 	AJAX_SUGGESTION(null, "ajax/suggestions"),
