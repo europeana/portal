@@ -238,9 +238,9 @@ var europeana_bootstrap = function(){
 	}
 	else if(eu.europeana.vars.page_name == 'register-success.html'){	// change password success
 		scripts.push({
+			name : 'register-success',
 			file : 'register-success' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils' ]
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
 		});
 		
 		loadScripts(scripts);
