@@ -86,9 +86,11 @@
 		</div>
 		
 		<%-- Embed link --%>
+		<%--
 	 	<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
 	 		<span class="action-title"><spring:message code="embed_t" /></span>
 	 	</a>
+	 	--%>
 		 	
 		<%--
 		<div id="embed-link-wrapper">
