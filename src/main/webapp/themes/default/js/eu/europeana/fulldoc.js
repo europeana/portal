@@ -745,6 +745,8 @@ eu.europeana.fulldoc = {
 				$("#carousel-1-img-measure img").removeClass("no-show");
 				$("#carousel-1-img-measure").css("position",	"relative");
 				$("#carousel-1-img-measure").css("text-align",	"center");
+				$("#additional-info").css("padding-top", "1em");
+				
 
 				if(carouselData[0].lightboxable){
 					eu.europeana.fulldoc.lightboxable = carouselData[0].lightboxable;
