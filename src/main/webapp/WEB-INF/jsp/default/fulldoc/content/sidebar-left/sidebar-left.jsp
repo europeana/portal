@@ -41,6 +41,19 @@
 		</script>
 	</div>
 	
+
+	<%-- 
+	<c:if test="${!empty model.topLevelSchemaMap}">
+		<c:forEach items="${model.topLevelSchemaMap}" var="map">
+		
+			<c:if test="${!empty map.schemaName && map.schemaName == 'edm:WebResource' }">
+			</c:if>
+
+		</c:forEach>
+	</c:if>
+	--%>	
+ 
+	
 	<div class="original-context">
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 		<%-- Original context link --%>
