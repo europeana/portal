@@ -1,0 +1,22 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<form action="j_spring_security_check" method="post" class="login-box">
+
+  <h2><spring:message code="registrationSucceed_t" /></h2>
+
+  <fieldset>
+    <label for="j_username"><spring:message code="EmailAddress_t" /></label><br/>
+    <input type="text" id="j_username" name="j_username" value="${model.email}" maxlength="50"/><br/>
+
+    <label for="j_password"><spring:message code="Password_t" /></label><br/>
+    <input type="password" id="j_password" name="j_password" value="${model.password}" maxlength="50"/><br/>
+
+<%--
+      _spring_security_remember_me should always be true.
+      The user shouldn't have an option to uncheck it.
+      That's why this is a hidden field and not a checkbox
+--%>
+    <input type="hidden" name="_spring_security_remember_me" value="true" />
+
+    <input name="submit_login" type="submit" value="Login" class="submit-button europeana-button-1 deans-button-1" />
+  </fieldset>
+</form>

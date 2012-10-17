@@ -7,17 +7,16 @@
 
 
 <%@ include file="/WEB-INF/jsp/default/_common/html-open.jsp" %>
+	<div class="container">
 
-<div class="container">
+		<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 
-  <%@ include file="/WEB-INF/jsp/default/_common/html/header.jsp" %>
-  
-  <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/register-success.jspf" %>
-  
-  <%@ include file="/WEB-INF/jsp/default/_common/html/footer.jsp" %>
-  
-  <%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
+		<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/register-success.jspf" %>
 
-</div>
-  
+		<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
+
+		<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
+
+	</div>
+
 <%@ include file="/WEB-INF/jsp/default/_common/html-close.jsp" %>
