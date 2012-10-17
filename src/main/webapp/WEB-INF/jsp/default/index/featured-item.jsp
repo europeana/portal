@@ -71,7 +71,7 @@
 		<div class="fi-block-spacer">
 
 			<h4 class="show-on-phones">
-				<a	href	= "<spring:message	code="${model.featuredPartner.anchorUrl}" />"
+				<a	href	= "/${model.portalName}<spring:message	code="${model.featuredPartner.anchorUrl}" />"
 					title	= "<spring:message	code="${model.featuredPartner.anchorTitle}" />"
 					target	= "<spring:message	code="${model.featuredPartner.anchorTarget}" />"
 					class	= "europeana">
@@ -91,7 +91,7 @@
 			</a>
 
 			<h4 class="hide-on-phones">
-				<a	href	= "<spring:message	code="${model.featuredPartner.anchorUrl}" />"
+				<a	href	= "/${model.portalName}<spring:message	code="${model.featuredPartner.anchorUrl}" />"
 					title	= "<spring:message	code="${model.featuredPartner.anchorTitle}" />"
 					target	= "<spring:message	code="${model.featuredPartner.anchorTarget}" />"
 					class	= "europeana">
