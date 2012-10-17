@@ -29,7 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private UserService userService;
 
 	@Override
-	public UserDetails loadUserByUsername(String key) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String key) 
+			throws UsernameNotFoundException {
+
 		if (StringUtils.contains(key, "@")) {
 			User user = userService.findByEmail(key);
 			if (user != null) {
