@@ -142,17 +142,26 @@ eu.europeana.search = {
 
 		var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 		var index = 0;
-		$.each(params, function(name, val) {
+		var found = false;
+		$.each(params, function(name, val){
+			var match = (name == paramNameIn);
+			if(match){
+				found = true;
+			}
+			
 			if( typeof(val) == "string" ){
-				newUrl += ((index==0) ? "?" : "&") + name + "=" + (name == paramNameIn ? paramValIn : val);				
+				newUrl += ((index==0) ? "?" : "&") + name + "=" + (match ? paramValIn : val);				
 			}
 			else{
 				for(var j=0; j<val.length; j++){
-					newUrl += ((index==0 && j==0) ? "?" : "&") + name + "=" + (name == paramNameIn ? paramValIn : val[j]);
+					newUrl += ((index==0 && j==0) ? "?" : "&") + name + "=" + (match ? paramValIn : val[j]);
 				}
 			}
 			index++;
 		});
+		if(!found){
+			newUrl += "&" + paramNameIn + "=" + paramValIn;
+		}
 		return newUrl;
 	},
 	
