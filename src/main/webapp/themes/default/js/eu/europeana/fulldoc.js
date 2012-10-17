@@ -338,38 +338,7 @@ eu.europeana.fulldoc = {
 			europeanaUri : eu.europeana.vars.item.uri
 		};
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-			
-			
-		/*
-		e.preventDefault();
-		var ajax_feedback = {
-			saved_items_count : 0,
-			$saved_items : jQuery('#saved-items-count'),
-			success : function() {
-				var html =
-					'<span id="save-item-feedback">' +
-						eu.europeana.vars.msg.saved_item +
-					'</span>';
-				eu.europeana.ajax.methods.addFeedbackContent( html );
-				eu.europeana.ajax.methods.showFeedbackContainer();
-				ajax_feedback.saved_items_count = parseInt( ajax_feedback.$saved_items.html(), 10 );
-				ajax_feedback.$saved_items.html( ajax_feedback.saved_items_count + 1 );
-			},
-			failure : function() {
-				var html =
-					'<span id="save-item-feedback" class="error">' +
-						eu.europeana.vars.msg.save_item_failed +
-					'</span>';
-				eu.europeana.ajax.methods.addFeedbackContent( html );
-				eu.europeana.ajax.methods.showFeedbackContainer();
-			}
-		},
-		ajax_data = {
-			className : "SavedItem",
-			europeanaUri : eu.europeana.vars.item.uri
-		};
-		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-		*/
+
 	},
 	
 	
