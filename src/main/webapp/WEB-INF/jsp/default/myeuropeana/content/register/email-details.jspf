@@ -1,0 +1,23 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+
+<fieldset>
+	<div class="row">
+		<legend>Step 1. : Email details</legend>
+		<h3><spring:message code="EmailAddress_t" /></h3>
+	</div>
+
+	<div class="row">
+		<div class="help"><spring:message code="EmailUse_t" />.</div>
+	</div>
+
+	<div class="row">
+		<div class="four columns">
+			<label for="email"><spring:message code="EmailAddress_t" /></label>
+		</div>
+		<div class="six columns">
+			<sf:input id="email" path="email" disabled="disabled" />
+			<i><sf:errors path="email" cssClass="error"/></i>
+		</div>
+	</div>
+</fieldset>

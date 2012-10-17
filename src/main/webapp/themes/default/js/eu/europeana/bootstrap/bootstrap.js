@@ -93,7 +93,6 @@ var europeana_bootstrap = function(){
 	  
    	];
 
-
 	if(eu.europeana.vars.page_name == 'api/console.html'){
 		loadScripts(scripts);
 	}
@@ -232,6 +231,9 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'utils' ]
 		});
 		
+		loadScripts(scripts);
+	}
+	else if(eu.europeana.vars.page_name == 'register.html'){
 		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'register-success.html'){	// change password success
