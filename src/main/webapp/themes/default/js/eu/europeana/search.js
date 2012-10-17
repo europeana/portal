@@ -74,15 +74,22 @@ eu.europeana.search = {
 				self.setActive( $("#query-search input[name=rows]").val() );
 			},
 			"fn_item":function(self, selected){
-				
-				jQuery("#query-search input[name=rows]").val(selected);
-				
-				menuTop.setActive(selected);
-				menuBottom.setActive(selected);
+				var params = {};
 
-				document.cookie = "europeana_rows=" + selected;
-				
-				jQuery("#query-search").submit();
+				document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+				    function decode(s) {
+				        return decodeURIComponent(s.split("+").join(" "));
+				    }
+				    params[decode(arguments[1])] = decode(arguments[2]);
+				});
+
+				var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+				var index = 0;
+				$.each(params, function(name, val) {
+					newUrl += ((index==0) ? "?" : "&") + name + "=" + (name == "rows" ? selected : val);
+					index++;
+				});
+				window.location.href = newUrl;
 			}
 		};
 		var menuTop = new EuMenu( $(".nav-top .eu-menu"), config);
