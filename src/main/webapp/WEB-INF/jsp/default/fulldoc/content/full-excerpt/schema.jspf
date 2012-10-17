@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 <h3>Schema display</h3>
-<table vocab="http://schema.org/" typeof="CreativeWork">
+<table vocab="http://schema.org/" typeof="CreativeWork" style="table-layout:fixed;">
   <c:forEach items="${model.topLevelSchemaMap}" var="topField">
     <c:choose>
       <c:when test="${topField.propertyName == 'fullBean'}">
@@ -17,8 +17,6 @@
             <c:when test="${topField.propertyName == 'europeanaAggregation'}">
               <c:set var="docElement" value="${model.document[topField.propertyName]}" />
               <europeana:displayDocElement topField="${topField}" docElement="${docElement}" elementStatus="${null}" total="1" />
-            <%--
-             --%>
             </c:when>
 
             <%-- other elements are lists --%>

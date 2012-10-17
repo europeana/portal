@@ -29,19 +29,20 @@
 		<!-- ${!empty model.fields} -->
 		<!-- ${fn:length(model.fields) > 0} -->
 	
-		<c:if test="${model.formatLabels}">
-			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/schema.jspf" %>
-		</c:if>
 		<c:if test="${!model.formatLabels && !empty model.fields && fn:length(model.fields) > 0}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true" />
 		</c:if>
-
-		
 		<c:if test="${ !empty model.fieldsAdditional}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
 		</c:if>
 		
 	    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
+
+
+		<c:if test="${model.formatLabels}">
+			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/schema.jspf" %>
+		</c:if>
+
 	
 	</div>
 	
