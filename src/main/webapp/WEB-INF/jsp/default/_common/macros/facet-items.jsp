@@ -22,7 +22,7 @@
 		
 			<input type="checkbox" ${checkedValue} id="cb-${label}" name="cb-${label}"/>
 				
-			<a  href="/${model.portalName}/${model.pageName}?query=${model.query}${facet_item.url}"
+			<a  href="/${model.portalName}/${model.pageName}?query=${model.query}${facet_item.url}${rowsParam}"
 				title="${facet_item.value}" rel="nofollow">
 				
 				<label for="cb-${label}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>

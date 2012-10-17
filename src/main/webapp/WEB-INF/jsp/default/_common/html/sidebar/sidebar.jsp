@@ -43,6 +43,11 @@
 				</form>
 			</li>
 		
+		
+			<c:set var="rowsParam" value=""/>
+			<c:if test="${!empty model.rows}">
+				<c:set var="rowsParam" value="&rows=${model.rows}"/>
+			</c:if>
 			<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
 				<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 			</c:forEach>
