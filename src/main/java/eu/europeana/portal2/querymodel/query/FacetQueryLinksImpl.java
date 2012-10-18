@@ -74,12 +74,13 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 							continue;
 						}
 						boolean doAppend = true;
+						String comparableQf = qfValue;
 						if (qfField.equals(RIGHTS_FACET)) {
-							qfValue = qfValue.replace("http\\:", "http:");
+							comparableQf = qfValue.replace("http\\:", "http:");
 						}
 						if (qfField.equalsIgnoreCase(facetField.getName())) {
-							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(qfValue)
-								|| qfValue.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
+							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(comparableQf)
+								|| comparableQf.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
 								remove = true;
 								facetSelected = true;
 								doAppend = false;
