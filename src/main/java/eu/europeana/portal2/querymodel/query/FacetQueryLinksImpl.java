@@ -74,6 +74,9 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 							continue;
 						}
 						boolean doAppend = true;
+						if (qfField.equals(RIGHTS_FACET)) {
+							qfValue = qfValue.replace("http\\:", "http:");
+						}
 						if (qfField.equalsIgnoreCase(facetField.getName())) {
 							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(qfValue)
 								|| qfValue.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
