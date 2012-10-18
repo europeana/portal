@@ -467,10 +467,7 @@ eu.europeana.fulldoc = {
 	},
 	
 	initLightbox : function(url, gallery){
-		return;
-		//$('#lightbox_image').one('load', function(){
-		//$('#lightbox_image').one('load', function(){
-
+			return;
 			var NavOb = function(){
 				
 				var nav = function(direction){
@@ -520,9 +517,16 @@ eu.europeana.fulldoc = {
 				};
 			};
 			
-			var navOb = new NavOb();
-			if(typeof (eu.europeana.lightbox) != "undefined"){							
-				eu.europeana.lightbox.init(url, navOb);
+			var lightboxableCount = 0;
+			for(var i=0; i<carouselData.length; i++){
+				if(carouselData[i].lightboxable){
+					lightboxableCount++;
+				}
+			}
+			//alert(carouselData.length + "   " + lightboxableCount);
+			
+			if(typeof (eu.europeana.lightbox) != "undefined"){
+				eu.europeana.lightbox.init(url, lightboxableCount > 1 ? new NavOb() : null);
 				eu.europeana.fulldoc.showLightboxTrigger(true, gallery);
 			}
 	
@@ -597,7 +601,7 @@ eu.europeana.fulldoc = {
 	initTopCarousel : function(){
 		
 		// mock some lightbox data
-
+		/*
 		var lightboxImages = [
 		    'http://godsofart.com/wp-content/uploads/2012/01/Star_Wars_Tales_by_UdonCrew.jpg',
 			'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg',
@@ -618,7 +622,7 @@ eu.europeana.fulldoc = {
 				lightboxImgCount ++;
 			}
 		}
-		
+		*/
 		// end mock lightbox data
 
 		jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarousel1Height() + "px");	// set height to max height that will be needed

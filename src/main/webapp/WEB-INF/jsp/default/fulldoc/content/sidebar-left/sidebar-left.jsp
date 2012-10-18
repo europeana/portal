@@ -22,25 +22,45 @@
 	<div id="carousel-1" class="europeana-bordered">
 		<script type="text/javascript">
 			var carouselData = [];
-			carouselData[0] = {
-				"image":		decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
-				"title":		('${fn:escapeXml(model.objectTitle)}'),
-				"dataType":		"${fn:toLowerCase(model.document.edmType)}"
-				/*
-				"lightboxable": {
-					"url" 	: "http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg",
-					"type"	: "image"
-				}
-				*/
-			};
 			
-			<c:if test="${!empty model.fullImages}">
+			<c:if test="${!empty model.thumbnails && fn:length(model.thumbnails) > 0 }">
+
+				/*
+				carouselData[0] = {
+					"image":		decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
+					"title":		('${fn:escapeXml(model.objectTitle)}'),
+					"dataType":		"${fn:toLowerCase(model.document.edmType)}"
+					
+					,"lightboxable": {
+						"url" 	: "http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg",
+						"type"	: "image"
+					}
+				};
+				*/
+				
+				<c:forEach items="${model.thumbnails}" var="thumbnail">
+						carouselData[carouselData.length] = {
+							"image":		decodeURI("${thumbnail}").replace(/&amp;/g, '&'),
+							"title":		('${fn:escapeXml(model.objectTitle)}'),
+							"dataType":		"${fn:toLowerCase(model.document.edmType)}"
+							
+							,"lightboxable": {
+								"url" 	: "http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg",
+								"type"	: "image"
+							}
+							
+						};
+				</c:forEach>
+				
+			</c:if>
+			
+			<c:if test="${!empty model.fullImages && fn:length(model.fullImages) > 0 }">
 				carouselData[0].lightboxable = {
 						"url" 	: "${model.fullImages[0]}",
 						"type"	: "image"						
 				};
 			</c:if>
-			
+
 			/*
 			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
 			carouselData[2] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
@@ -50,20 +70,7 @@
 			
 		</script>
 	</div>
-	
-
-	<%-- 
-	<c:if test="${!empty model.topLevelSchemaMap}">
-		<c:forEach items="${model.topLevelSchemaMap}" var="map">
 		
-			<c:if test="${!empty map.schemaName && map.schemaName == 'edm:WebResource' }">
-			</c:if>
-
-		</c:forEach>
-	</c:if>
-	--%>	
- 
-	
 	<div class="original-context">
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 		<%-- Original context link --%>

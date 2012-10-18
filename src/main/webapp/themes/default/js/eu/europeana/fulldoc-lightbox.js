@@ -209,7 +209,8 @@ eu.europeana.lightbox = {
 			var contentWrap	= jQuery(eu.europeana.lightbox.overlay.find(".content-wrap"));
 			var navNext		= contentWrap.find('#nav-next-zoomed');
 			var navPrev		= contentWrap.find('#nav-prev-zoomed');
-
+			$('#nav-next-zoomed, #nav-prev-zoomed').css('display', 'block');
+			
 			jQuery(".zoomedImgDiv").append(navNext);
 			jQuery(".zoomedImgDiv").append(navPrev);
 
@@ -259,7 +260,11 @@ eu.europeana.lightbox = {
 		init:function(src, navOb) {
 			
 			eu.europeana.lightbox.navOb = navOb;
-			
+
+			if(navOb){
+				$('#nav-next, #nav-prev').css('display', 'block');
+			}
+
 			jQuery(".lb-trigger span").overlay({
 				mask: {
 					color: '#ffffff',
@@ -532,7 +537,7 @@ eu.europeana.lightbox = {
 				navNext.css('top', (stats.h - navNext.height()) / 2 + "px");
 				navPrev.css('top', (stats.h - navNext.height()) / 2 + "px");
 
-				if(!eu.europeana.lightbox.navOb.wired){
+				if(eu.europeana.lightbox.navOb && !eu.europeana.lightbox.navOb.wired){
 					contentWrap.find('#nav-next-zoomed').click(function(){
 						eu.europeana.lightbox.navOb.next();
 					});

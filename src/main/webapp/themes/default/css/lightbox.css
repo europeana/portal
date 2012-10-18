@@ -277,6 +277,7 @@
 		color:			white;
 		text-shadow:	0 0 2px #000000;
 		cursor:			pointer;
+		display:		none;
 	}
 	
 	#nav-prev-zoomed,
