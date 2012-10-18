@@ -467,7 +467,7 @@ eu.europeana.fulldoc = {
 	},
 	
 	initLightbox : function(url, gallery){
-		
+		return;
 		//$('#lightbox_image').one('load', function(){
 		//$('#lightbox_image').one('load', function(){
 
@@ -525,8 +525,7 @@ eu.europeana.fulldoc = {
 				eu.europeana.lightbox.init(url, navOb);
 				eu.europeana.fulldoc.showLightboxTrigger(true, gallery);
 			}
-		//});
-		
+	
 		$('#lightbox_image').attr('src', url);
 		
 	},

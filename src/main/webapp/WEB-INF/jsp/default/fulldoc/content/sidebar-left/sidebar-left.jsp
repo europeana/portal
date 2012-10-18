@@ -25,12 +25,21 @@
 			carouselData[0] = {
 				"image":		decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
 				"title":		('${fn:escapeXml(model.objectTitle)}'),
-				"dataType":		"${fn:toLowerCase(model.document.edmType)}",
+				"dataType":		"${fn:toLowerCase(model.document.edmType)}"
+				/*
 				"lightboxable": {
 					"url" 	: "http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg",
 					"type"	: "image"
 				}
+				*/
 			};
+			
+			<c:if test="${!empty model.fullImages}">
+				carouselData[0].lightboxable = {
+						"url" 	: "${model.fullImages[0]}",
+						"type"	: "image"						
+				};
+			</c:if>
 			
 			/*
 			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
