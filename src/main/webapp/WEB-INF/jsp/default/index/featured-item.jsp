@@ -111,13 +111,15 @@
 					</a>
 				</li>
 
-				<li>						
+				<%--
+				<li>
 					<a	href	= "/${model.portalName}/<spring:message code="notranslate_featured-partner-view_link_t" />"
 						target	= "<spring:message code="notranslate_featured-partner-view_target_t" />"
 						class	= "europeana">
 						<spring:message code="featured-partner-view_text_t" />
 					</a>
 				</li>
+				 --%>
 
 			</ul>
 

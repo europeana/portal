@@ -43,6 +43,7 @@ import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.portal2.querymodel.query.RightsOption;
 import eu.europeana.portal2.web.controllers.ObjectController;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
@@ -98,6 +99,10 @@ public class FullDocPage extends FullDocPreparation {
 
 	public ExternalService[] getExternalSearchServices() {
 		return ExternalService.values();
+	}
+	
+	public String getEdmRights(){
+		return Arrays.asList(shortcut.get("EdmRights")).isEmpty() ? null : shortcut.get("EdmRights")[0];
 	}
 
 	/**

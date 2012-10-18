@@ -415,10 +415,35 @@ h1 {
 
 
 .rights-badge{
-	color:		black;
-	font-size:	1.5em;
-}
+	float:			left;
+	width:			100%;
+	color:			#333 !important;
 	
+	font-size:		1.5em;
+	
+	border-bottom:	1px solid #AAAAAA;
+	margin-bottom:	1em;
+	padding-bottom:	1em;
+	
+}
+
+.rights-badge span.rights-icon{
+	float:			left;
+	xxxmargin-top:	-0.1em;
+	margin-bottom:	-0.2em;	/* stop rights text line-wrapping */
+	margin-right:	0.25em;
+	margin-top:		0.25em;
+}
+
+.rights-badge span.icon-external-right{
+	position:		relative;
+	top:			0.2em;	
+}
+
+.rights-badge span.rights-text{
+	font-size:	0.75em;
+}
+
 /* additional-actions */
 
 #additional-actions {
@@ -483,15 +508,17 @@ h1 {
 
 @media only screen and ( min-width:48em ){
 	
+	.rights-badge{
+		font-size:	1em;
+	}
+	
 	#translate-container{
 		padding-top:	0;
 	}
 
 	#additional-info .original-context{
-		
 		margin-bottom:		1em;
 	}
-
 
 }
 

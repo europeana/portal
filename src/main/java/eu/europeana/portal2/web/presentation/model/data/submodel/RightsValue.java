@@ -77,13 +77,9 @@ public class RightsValue {
 		return right.getRightsIcon();
 	}
 
-	/**
-	 * Returns the url of the icon associated with the results (for the lightbox)
-	 * 
-	 * @return url of icon associated with the results
-	 */
-	public String getRightsIconLightbox() {
-		return right.getRightsIconLightbox();
+
+	public boolean getRightsShowExternalIcon() {
+		return right.getShowExternalIcon();
 	}
 
 	public boolean isNoc() {
