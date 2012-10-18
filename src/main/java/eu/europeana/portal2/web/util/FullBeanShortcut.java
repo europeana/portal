@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
+import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
 import eu.europeana.corelib.solr.entity.PlaceImpl;
@@ -105,6 +106,10 @@ public class FullBeanShortcut {
 				add("EdmUGC", aggregation.getEdmUgc());
 				add("DataProvider", aggregation.getEdmDataProvider()); // Map - Aggregation/edm:dataProvider
 				add("AggregationDcRights", aggregation.getDcRights()); // Map
+				add("EdmHasView", aggregation.getHasView()); // Map
+				for (WebResource webResource : aggregation.getWebResources()) {
+					add("WebResourceAbout", webResource.getAbout()); // Map
+				}
 			}
 		}
 
@@ -155,6 +160,7 @@ public class FullBeanShortcut {
 			add("EdmCountry", aggregation.getEdmCountry()); // Map - EuropeanaAggregation/edm:country
 			add("EdmLanguage", aggregation.getEdmLanguage()); // Map
 		}
+
 	}
 
 	/**

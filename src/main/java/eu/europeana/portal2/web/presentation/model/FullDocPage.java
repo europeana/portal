@@ -23,14 +23,19 @@ import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
+import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
@@ -58,9 +63,13 @@ import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
 
+	private static final String[] IMAGE_FIELDS = new String[]{"EdmObject", "EdmIsShownBy", "WebResourceAbout", "EdmHasView"};
+
 	private RightsValue rightsOption = null;
-	
+
 	private String schemaOrgMappingFile;
+
+	private String[] allImages = null;
 
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
@@ -351,6 +360,62 @@ public class FullDocPage extends FullDocPreparation {
 			return prepareFullDocUrl(url).toString();
 		}
 		return thumbnail;
+	}
+
+	public List<String> getThumbnails() {
+		// TODO: use ThumbSize.TINY
+		return getImageToShow("BRIEF_DOC");
+	}
+
+	public List<String> getFullImages() {
+		// TODO: use ThumbSize.LARGE
+		return getImageToShow("FULL_DOC");
+	}
+
+	private List<String> getImageToShow(String size) {
+		List<String> imageList = new LinkedList<String>();
+		String docType = getDocument().getEdmType();
+		for (String image : getImages()) {
+			String imageType = docType;
+			if (image.toLowerCase().endsWith(".mp3")) {
+				imageType = DocType.SOUND.name();
+			} else if (image.toLowerCase().endsWith(".mpg")) {
+				imageType = DocType.VIDEO.name();
+			}
+			imageList.add(createImageUrl(image, imageType, size));
+		}
+		return imageList;
+	}
+
+	private String createImageUrl(String image, String docType, String size) {
+		UrlBuilder url = new UrlBuilder(getCacheUrl());
+		url.addParam("uri", image, true);
+		url.addParam("size", size, true);
+		url.addParam("type", docType, true);
+		return prepareFullDocUrl(url).toString();
+	}
+
+	private String[] getImages() {
+		if (allImages == null) {
+			Set<String> isShownAt = new HashSet<String>();
+			if (shortcut.get("EdmIsShownAt") != null) {
+				isShownAt.addAll(Arrays.asList(shortcut.get("EdmIsShownAt")));
+			}
+			Set<String> images = new HashSet<String>();
+
+			for (String imageField : IMAGE_FIELDS) {
+				if (shortcut.get(imageField) != null && shortcut.get(imageField).length > 0) {
+					for (String image : shortcut.get(imageField)) {
+						if (!StringUtils.isBlank(image) && !isShownAt.contains(image)) {
+							images.add(image);
+						}
+					}
+				}
+			}
+			allImages = images.toArray(new String[images.size()]);
+		}
+
+		return allImages;
 	}
 
 	public boolean isAllowIndexing() {
