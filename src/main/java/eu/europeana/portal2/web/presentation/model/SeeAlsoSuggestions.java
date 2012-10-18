@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import eu.europeana.portal2.web.util.ControllerUtil;
+
 public class SeeAlsoSuggestions {
 
 	private Map<String, String> seeAlsoTranslations;
@@ -29,7 +31,13 @@ public class SeeAlsoSuggestions {
 			field = new Field(fieldName, seeAlsoTranslations.get(fieldName));
 			fields.put(fieldName, field);
 		}
-		field.addSuggestion(new Suggestion(query, fieldValue, count));
+		String extendedQuery;
+		if (fieldName.equals("PROVIDER")) {
+			extendedQuery = query;
+		} else {
+			extendedQuery = fieldName + ":(" + ControllerUtil.clearSeeAlso(fieldValue) + ")";
+		}
+		field.addSuggestion(new Suggestion(extendedQuery, fieldValue, count));
 	}
 
 	public Map<String, Field> getFields() {
