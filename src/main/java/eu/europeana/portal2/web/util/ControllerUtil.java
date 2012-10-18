@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,6 +52,14 @@ import eu.europeana.portal2.web.security.Portal2UserDetails;
 public class ControllerUtil {
 
 	private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[_A-Za-z0-9-]+)";
+	
+	private static final Pattern[] SEE_ALSO_PATTERNS = new Pattern[]{
+		Pattern.compile("\\s*\\(.*?\\)\\s*$"),
+		Pattern.compile("\\s*\\[.*?\\]\\s*$"),
+		Pattern.compile("\\s*\\d+-\\d+\\s*$")
+	};
+	private static final String EMPTY_STRING = "";
+
 
 	public static boolean validEmailAddress(String emailAddress) {
 		return emailAddress.matches(EMAIL_REGEXP);
@@ -140,12 +150,13 @@ public class ControllerUtil {
 	 *   A valid theme name
 	 */
 	public static String getSessionManagedTheme(HttpServletRequest request, String defaultTheme) {
-		HttpSession session = request.getSession(true);
+		// HttpSession session = request.getSession(true);
 		String theme = request.getParameter("theme");
 		if (!StringUtils.isBlank(theme)) {
 			theme = ThemeChecker.check(theme, defaultTheme);
-			session.setAttribute("theme", theme);
+			// session.setAttribute("theme", theme);
 		}
+		/*
 		else {
 			String storedTheme = (String)session.getAttribute("theme");
 			if (!StringUtils.isBlank(storedTheme)) {
@@ -153,6 +164,7 @@ public class ControllerUtil {
 				log.info("theme2: " + theme);
 			}
 		}
+		*/
 		if (StringUtils.isBlank(theme)) {
 			theme = ThemeChecker.check(defaultTheme);
 		}
@@ -185,4 +197,23 @@ public class ControllerUtil {
 		}
 		return user;
 	}
+
+	public static String clearSeeAlso(String value) {
+
+		value = value.replaceAll("\n", " ")
+				.replaceAll(",", " ")
+				.replaceAll(":", " ")
+				.replaceAll("\\s+", " ");
+		Matcher m;
+		for (Pattern pattern : SEE_ALSO_PATTERNS) {
+			m = pattern.matcher(value);
+			while (m.find()) {
+				value = m.replaceFirst(EMPTY_STRING);
+				m = pattern.matcher(value);
+			}
+		}
+
+		return value;
+	}
+
 }
