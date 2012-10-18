@@ -12,14 +12,14 @@ public class MixedTest {
 
 	String UNION_FACETS_FORMAT = "'{'!ex={0}'}'{0}";
 
-	// @Test
+	@Test
 	public void test() {
 		assertEquals("{!ex=COUNTRY}COUNTRY", MessageFormat.format(UNION_FACETS_FORMAT, "COUNTRY"));
 	}
 
 	@Test
 	public void testClearSeeAlso() {
-		assertEquals("Rembrandt Harmens van Rĳn", clearSeeAlso("Rembrandt Harmens van Rĳn 1606-1669 [picture] (1606-1669)"));
+		assertEquals("Rembrandt Harmenszoon van Rijn", clearSeeAlso("Rembrandt Harmenszoon van Rijn 1606-1669 [picture] (1606-1669)"));
 	}
 
 	private String clearSeeAlso(String value) {
