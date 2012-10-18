@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ThemeChecker {
 
-	private static final String DEFAULT_THEME = "default";
+	public static final String DEFAULT_THEME = "default";
 
 	private static List<String> registeredThemes = new ArrayList<String>();
 	

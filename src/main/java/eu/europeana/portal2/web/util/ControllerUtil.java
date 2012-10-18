@@ -166,7 +166,8 @@ public class ControllerUtil {
 		}
 		*/
 		if (StringUtils.isBlank(theme)) {
-			theme = ThemeChecker.check(defaultTheme);
+			// theme = ThemeChecker.check(defaultTheme);
+			theme = ThemeChecker.DEFAULT_THEME;
 		}
 		return theme;
 	}
