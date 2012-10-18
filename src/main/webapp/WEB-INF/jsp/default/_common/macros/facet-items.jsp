@@ -1,6 +1,7 @@
 <!-- facet-items -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:forEach var="facet_item" items="${facet.links}">
 
 	<c:set var="checkedValue" value='' />
@@ -22,8 +23,8 @@
 		
 			<input type="checkbox" ${checkedValue} id="cb-${label}" name="cb-${label}"/>
 				
-			<a  href="/${model.portalName}/${model.pageName}?query=${model.query}${facet_item.url}${rowsParam}${startParam}"
-				title="${facet_item.value}" rel="nofollow">
+			<a  href="/${model.portalName}/${model.pageName}?query=${model.query}${fn:escapeXml(facet_item.url)}${rowsParam}${startParam}"
+				title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
 				
 				<label for="cb-${label}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 			</a>
