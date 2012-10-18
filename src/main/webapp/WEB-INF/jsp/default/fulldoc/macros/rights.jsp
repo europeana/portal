@@ -1,23 +1,65 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <c:set var="inLightbox" scope="request" value="false"/>  
 
 <%--#macro displayRights inLightbox --%>
 <c:if test="${!empty model.rightsOption}">
-  <a href="${model.rightsOption.rightsUrl}"
+
+
+  <a
+  	<%--
+  	href="${model.rightsOption.rightsUrl}"
+  	 --%>
+  	href="${model.edmRights}"
     title="${model.rightsOption.rightsText}"
     class="item-metadata rights-badge" target="_blank"
     rel="license europeana:rights">
     <c:choose>
       <c:when test="${inLightbox}">
         <img
-          src="/${branding}/images/rights/${model.rightsOption.rightsIconLightbox}"
+          src="/${branding}/images/rights/${model.rightsOption.rightsIcon}"
           alt="${model.rightsOption.rightsText}" />
       </c:when>
       <c:otherwise>
       
-      	<span title="${model.rightsOption.rightsText}" class="${model.rightsOption.rightsIcon}"></span>
+		
+		<c:set var="rightsIcons" value="${fn:split(model.rightsOption.rightsIcon, ' ')}" />
+		
+
+		<c:forEach items="${rightsIcons}" var="rightsIcon">
+	      	<span title="${model.rightsOption.rightsText}" class="rights-icon ${rightsIcon}"></span>
+		</c:forEach>
+		
+		<span class="rights-text">${model.rightsOption.rightsText}</span>
+
+
+		
+		<%--
+		<c:forEach items="${rightsIcons}" var="rightsIcon" varStatus="status">
+			
+	      	<span title="${model.rightsOption.rightsText}" class="${rightsIcon}">
+	      		<c:if test="${status.last}">${model.rightsOption.rightsText}</c:if>
+	      	</span>
+	      	
+		</c:forEach>
+		 --%>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+      	<%--
+	      	<span title="${model.rightsOption.rightsText}" class="${model.rightsOption.rightsIcon}">${model.rightsOption.rightsText}</span>
+      	 --%>
+
+
+      
       	<%--
       	  <img
           src="/${branding}/images/rights/${model.rightsOption.rightsIcon}"

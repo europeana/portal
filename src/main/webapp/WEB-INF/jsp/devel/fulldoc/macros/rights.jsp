@@ -8,7 +8,7 @@
     <c:choose>
       <c:when test="${inLightbox}">
         <img
-          src="/${branding}/images/rights/${model.rightsOption.rightsIconLightbox}"
+          src="/${branding}/images/rights/${model.rightsOption.rightsIcon}"
           alt="${model.rightsOption.rightsText}" />
       </c:when>
       <c:otherwise>
