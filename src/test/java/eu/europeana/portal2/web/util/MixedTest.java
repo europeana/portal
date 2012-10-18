@@ -19,7 +19,7 @@ public class MixedTest {
 
 	@Test
 	public void testClearSeeAlso() {
-		assertEquals("Rembrandt Harmensz van Rĳn", clearSeeAlso("Rembrandt Harmensz van Rĳn 1606-1669 [picture] (1606-1669)"));
+		assertEquals("Rembrandt Harmens van Rĳn", clearSeeAlso("Rembrandt Harmens van Rĳn 1606-1669 [picture] (1606-1669)"));
 	}
 
 	private String clearSeeAlso(String value) {
