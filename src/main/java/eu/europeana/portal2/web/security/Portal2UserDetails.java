@@ -20,6 +20,7 @@ public class Portal2UserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// user.getRole()
 		return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 	}
 
