@@ -56,12 +56,10 @@ public final class EuropeanaRightsConverter {
 		if ((matcher = Pattern.compile(EUROPEANA).matcher(uri)).matches()) {
 			return tryEuropeanaLicenses(matcher);
 		}
-		if ((matcher = Pattern.compile(CREATIVE_COMMONS).matcher(uri))
-				.matches()) {
+		if ((matcher = Pattern.compile(CREATIVE_COMMONS).matcher(uri)).matches()) {
 			return tryCcLicenses(matcher);
 		}
-		if ((matcher = Pattern.compile(CREATIVE_COMMONS_PD).matcher(uri))
-				.matches()) {
+		if ((matcher = Pattern.compile(CREATIVE_COMMONS_PD).matcher(uri)).matches()) {
 			return tryCcPublicDomain(matcher);
 		}
 		return new License(uri);
@@ -70,8 +68,7 @@ public final class EuropeanaRightsConverter {
 	public static String convertCc(String original) {
 		Matcher matcher;
 		License license;
-		if ((matcher = Pattern.compile(CREATIVE_COMMONS).matcher(original))
-				.matches()) {
+		if ((matcher = Pattern.compile(CREATIVE_COMMONS).matcher(original)).matches()) {
 			license = tryCcLicenses(matcher);
 			return license.getModifiedURI();
 		}
@@ -93,8 +90,7 @@ public final class EuropeanaRightsConverter {
 			result.append(matcher.group(walk).toUpperCase()).append(" ");
 		}
 		result.append(matcher.group(matcher.groupCount()));
-		return new License(matcher.group(), String.format("%s",
-				EUROPEANA_RIGHTS_MAP.get(result.toString())));
+		return new License(matcher.group(), String.format("%s", EUROPEANA_RIGHTS_MAP.get(result.toString())));
 	}
 
 	/**
@@ -108,9 +104,10 @@ public final class EuropeanaRightsConverter {
 	 * @return The extracted information about the URI or null if not matched.
 	 */
 	private static License tryCcLicenses(Matcher matcher) {
-		return new License(matcher.group(), String.format("CC %s", matcher
-				.group(2).toUpperCase().trim()), String.format("%s%s/*",
-				matcher.group(1).replace(":", "\\:"), matcher.group(2)));
+		return new License(matcher.group(), 
+			String.format("CC %s", matcher.group(2).toUpperCase().trim()), 
+			String.format("%s%s/*", matcher.group(1).replace("http:", "http\\:"), matcher.group(2))
+		);
 	}
 
 	/**
@@ -145,6 +142,7 @@ public final class EuropeanaRightsConverter {
 		public License(String originalURI, String label) {
 			this.originalURI = originalURI;
 			this.label = label;
+			this.modifiedURI = originalURI.replace("http:", "http\\:");
 		}
 
 		public License(String originalURI, String label, String modifiedURI) {

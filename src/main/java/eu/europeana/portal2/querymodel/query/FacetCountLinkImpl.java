@@ -10,12 +10,33 @@ public class FacetCountLinkImpl implements FacetCountLink {
 
 	private RightsOption rightsOption = null;
 
+	/**
+	 * Create a facet link
+	 * 
+	 * @param facetCount
+	 *   A pair of label and frequency
+	 * @param url
+	 *   The URL
+	 * @param remove
+	 *   Whether to remove or not
+	 */
 	public FacetCountLinkImpl(LabelFrequency facetCount, String url, boolean remove) {
 		this.facetCount = facetCount;
 		this.url = url;
 		this.remove = remove;
 	}
 
+	/**
+	 * Create a facet link
+	 * 
+	 * @param rightsOption
+	 * @param facetCount
+	 *   A pair of label and frequency
+	 * @param url
+	 *   The URL
+	 * @param remove
+	 *   Whether to remove or not
+	 */
 	public FacetCountLinkImpl(RightsOption rightsOption,
 			LabelFrequency facetCount, String url, boolean remove) {
 		this(facetCount, url, remove);

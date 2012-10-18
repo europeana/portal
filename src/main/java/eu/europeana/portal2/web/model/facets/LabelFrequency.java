@@ -21,9 +21,9 @@ package eu.europeana.portal2.web.model.facets;
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  */
 public class LabelFrequency {
-	
+
 	public String label;
-	
+
 	public long count;
 
 	public LabelFrequency() {}
@@ -32,7 +32,7 @@ public class LabelFrequency {
 		this.label = label;
 		this.count = count;
 	}
-	
+
 	public String getLabel() {
 		return label;
 	}
@@ -44,7 +44,7 @@ public class LabelFrequency {
 	public long getCount() {
 		return count;
 	}
-	
+
 	public void setCount(long count) {
 		this.count = count;
 	}
