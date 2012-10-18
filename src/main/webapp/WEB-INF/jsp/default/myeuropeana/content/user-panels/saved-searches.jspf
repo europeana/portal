@@ -16,9 +16,10 @@
 			
 			<c:forEach items="${model.user.savedSearches}" var="search">
 				<div class="saved-search">
-					<a href="/${model.portalName}/search.html?${search.query}&amp;bt=savedSearch">${search.queryString}</a><br/>
+					<a href="/${model.portalName}/search.html?query=${search.query}&amp;bt=savedSearch">${search.queryString}</a><br/>
 					<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${search.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
 					<button id="${search.id}" class="remove-saved-search  deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
+					
 					<%-- 
 					<c:if test="${model.user.role == 'ROLE_PACTA' || model.user.role == 'ROLE_EDITOR'}"> --%>
 						<%-- TODO: move search term conditional in here --%>
