@@ -152,6 +152,16 @@ public class FullBeanShortcut {
 				add("DctermsSpatial", proxy.getDctermsSpatial()); // Map - Proxy/dcterms:spatial
 				add("DctermsTableOfContents", proxy.getDctermsTOC()); // Map - Proxy/dcterms:tableOfContents
 				add("DctermsTemporal", proxy.getDctermsTemporal()); // Map - Proxy/dcterms:temporal
+				add("EdmHasMet", proxy.getEdmHasMet()); // Map - Proxy/dcterms:temporal
+				add("EdmHasType", proxy.getEdmHasType());
+				add("EdmIncorporates", proxy.getEdmIncorporates());
+				add("EdmIsDerivativeOf", proxy.getEdmIsDerivativeOf());
+				add("EdmIsRelatedTo", proxy.getEdmIsRelatedTo());
+				add("EdmIsRepresentationOf", proxy.getEdmIsRepresentationOf());
+				add("EdmIsSimilarTo", proxy.getEdmIsSimilarTo());
+				add("EdmIsSuccessorOf", proxy.getEdmIsSuccessorOf());
+				add("EdmRealizes", proxy.getEdmRealizes());
+				add("EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
 			}
 		}
 		

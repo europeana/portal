@@ -147,7 +147,12 @@ public class IndexPageController {
 		}
 		model.setFeaturedItems(featuredItems);
 		if (i > 1) {
-			model.setFeaturedItem(new FeaturedItem(RandomUtils.nextInt(i - 1) + 1));
+			int index = 0;
+			if (featuredItems.size() > 1) {
+				int max = featuredItems.size() - 1;
+				index = RandomUtils.nextInt(max);
+			}
+			model.setFeaturedItem(featuredItems.get(index));
 		}
 	}
 
@@ -163,6 +168,7 @@ public class IndexPageController {
 				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
+					log.info("i = " + i + ", url: " + url);
 					featuredPartners.add(new FeaturedPartner(i));
 					i++;
 				} else {
@@ -174,7 +180,12 @@ public class IndexPageController {
 		}
 		model.setFeaturedPartners(featuredPartners);
 		if (featuredPartners.size() > 0) {
-			model.setFeaturedPartner(new FeaturedPartner(RandomUtils.nextInt(i - 1) + 1));
+			int index = 0;
+			if (featuredPartners.size() > 1) {
+				int max = featuredPartners.size() - 1;
+				index = RandomUtils.nextInt(max);
+			}
+			model.setFeaturedPartner(featuredPartners.get(index));
 		}
 	}
 

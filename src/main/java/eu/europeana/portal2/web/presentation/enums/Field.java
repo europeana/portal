@@ -63,17 +63,17 @@ public enum Field {
 			ExternalService.WORLDCAT),
 	DC_RIGHTS("dc:rights", "dc_rights_t", true, false, true, ExternalService.none()),
 	DC_CONTRIBUTOR("dc:contributor", "dc_contributor_t", "who:%s"),
-			
+
 	// DCTERMS
 	DCTERMS_ALTERNATIVE("dcterms:alternative", "dcterms_alternative_t", false, false, true, ExternalService.none()),
 	DCTERMS_CONFORMSTO("dcterms:conformsTo", null),
-	DCTERMS_CREATED("dcterms:created", null),
+	DCTERMS_CREATED("dcterms:created", "dcterms_created_t"),
 	DCTERMS_EXTENT("dcterms:extent", null),
 	DCTERMS_HASFORMAT("dcterms:hasFormat", null),
-	DCTERMS_HASPART("dcterms:hasPart", null),
+	DCTERMS_HASPART("dcterms:hasPart", "dcterms_hasPart_t"),
 	DCTERMS_HASVERSION("dcterms:hasVersion", null),
 	DCTERMS_ISFORMATOF("dcterms:isFormatOf", null),
-	DCTERMS_ISPARTOF("dcterms:isPartOf", null),
+	DCTERMS_ISPARTOF("dcterms:isPartOf", "dcterms_isPartOf_t"),
 	DCTERMS_ISREFERENCEDBY("dcterms:isReferencedBy", null),
 	DCTERMS_ISREPLACEDBY("dcterms:isReplacedBy", null),
 	DCTERMS_ISREQUIREDBY("dcterms:isRequiredBy", null),
@@ -87,7 +87,7 @@ public enum Field {
 	DCTERMS_SPATIAL("dcterms:spatial", "dcterms_spatial_t", "where:%s", false, false, true, ExternalService.none()),
 	DCTERMS_TABLEOFCONTENTS("dcterms:tableOfContents", null),
 	DCTERMS_TEMPORAL("dcterms:temporal", "dcterms_temporal_t", false, false, true, ExternalService.none()),
-	
+
 	// EUROPEANA
 	EUROPEANA_URI("europeana:uri", null),
 	EUROPEANA_COMPLETENESS("europeana:completeness", "europeana_completeness_t"),
@@ -132,7 +132,11 @@ public enum Field {
 	ENRICHMENT_CONCEPT_BROADER_TERM("enrichment:concept_broader_term", "concept_broader_term_t"),
 	ENRICHMENT_CONCEPT_BROADER_LABEL("enrichment:concept_broader_label", "concept_broader_label_t"),
 	ENRICHMENT_AGENT_TERM("enrichment:agent_term", "agent_term_t"),
-	ENRICHMENT_AGENT_LABEL("enrichment:agent_label", "agent_label_t");
+	ENRICHMENT_AGENT_LABEL("enrichment:agent_label", "agent_label_t"),
+
+	EDM_ISNEXTINSEQUENCE("edm:isNextInSequence", "edm_isNextInSequence_t"),
+	
+	;
 	
 	private String fieldName;
 	private String fieldLabel;

@@ -243,33 +243,51 @@ public abstract class FullDocPreparation extends FullDocData {
 			fields = new ArrayList<FieldPresentation>();
 
 			addField(fields, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
+			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription());
 			addField(fields, Field.DC_CREATOR, shortcut.get("DcCreator"));
 			addField(fields, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
 			addField(fields, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
-			addField(fields, Field.DC_DATE, getDocument().getDcDate(), shortcut.get("DctermsCreated"));
-			addField(fields, Field.DCTERMS_TEMPORAL, shortcut.get("DctermsTemporal"));
 			addField(fields, Field.DCTERMS_SPATIAL, shortcut.get("DctermsSpatial"));
+			addField(fields, Field.DC_DATE, getDocument().getDcDate());
+			addField(fields, Field.DCTERMS_TEMPORAL, shortcut.get("DctermsTemporal"));
+			addField(fields, Field.DCTERMS_ISSUED, shortcut.get("DctermsIssued"));
+			addField(fields, Field.DCTERMS_CREATED, shortcut.get("DctermsCreated"));
 			addField(fields, Field.DC_TYPE, getDocument().getDcType());
+			addField(fields, Field.DC_FORMAT, shortcut.get("DcFormat"), 
+					shortcut.get("DctermsExtent"),
+					shortcut.get("DctermsMedium"));
+			// addField(fields, Field.DCTERMS_EXTENT, );
+			// addField(fields, Field.DCTERMS_MEDIUM, );
 			addField(fields, Field.DC_SUBJECT, getDocument().getDcSubject());
+			addField(fields, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
 			addField(fields, Field.DC_RELATION, shortcut.get("DcRelation"),
 					shortcut.get("DctermsReferences"),
 					shortcut.get("DctermsIsReferencedBy"),
 					shortcut.get("DctermsIsReplacedBy"),
 					shortcut.get("DctermsIsRequiredBy"),
-					shortcut.get("DctermsIsPartOf"),
-					shortcut.get("DctermsHasPart"),
 					shortcut.get("DctermsReplaces"),
 					shortcut.get("DctermsRequires"),
 					shortcut.get("DctermsIsVersionOf"),
 					getDocument().getDctermsHasVersion(),
 					shortcut.get("DctermsConformsTo"),
 					shortcut.get("DctermsHasFormat"),
-					getDocument().getDctermsIsFormatOf());
-			addField(fields, Field.DC_DESCRIPTION, 
-					getDocument().getDcDescription(),
-					shortcut.get("DctermsTableOfContents"));
+					getDocument().getDctermsIsFormatOf(),
+					shortcut.get("EdmHasMet"),
+					shortcut.get("EdmHasType"),
+					shortcut.get("EdmIncorporates"),
+					shortcut.get("EdmIsDerivativeOf"),
+					shortcut.get("EdmIsRelatedTo"),
+					shortcut.get("EdmIsRepresentationOf"),
+					shortcut.get("EdmIsSimilarTo"),
+					shortcut.get("EdmIsSuccessorOf"),
+					shortcut.get("EdmRealizes")
+			);
+			addField(fields, Field.DCTERMS_ISPARTOF, shortcut.get("DctermsIsPartOf"));
+			addField(fields, Field.DCTERMS_HASPART, shortcut.get("DctermsHasPart"));
+			addField(fields, Field.EDM_ISNEXTINSEQUENCE, shortcut.get("EdmIsNextInSequence"));
+
 			// addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEuropeanaDataProvider());
-			addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEdmDataProvider());
+			addField(fields, Field.EUROPEANA_DATAPROVIDER, shortcut.get("DataProvider"));
 			addField(fields, Field.EUROPEANA_PROVIDER, 
 					shortcut.get("EdmProvider"),
 					Field.EUROPEANA_COUNTRY.getValues(getDocument().getEdmCountry()));
@@ -284,6 +302,7 @@ public abstract class FullDocPreparation extends FullDocData {
 	private void addField(List<FieldPresentation> fields, Field fieldInfo,
 			String[]... fieldValuesArrays) {
 		if ((fieldValuesArrays == null) || (fieldInfo.getFieldLabel() == null)) {
+			log.info(String.format("fieldInfo: %s, %s", fieldInfo.getFieldName(), fieldInfo.getFieldLabel()));
 			return;
 		}
 
@@ -306,6 +325,7 @@ public abstract class FullDocPreparation extends FullDocData {
 		if (fieldInfo.doSortValues()) {
 			Collections.sort(fieldValues);
 		}
+
 		if (!fieldValues.isEmpty()) {
 			try {
 				fields.add(new FieldPresentation(this, fieldInfo, fieldValues));
