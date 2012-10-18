@@ -41,7 +41,7 @@ public class CarouselController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale)
-			throws Exception {
+					throws Exception {
 		config.registerBaseObjects(request, response, locale);
 
 		CarouselPage model = new CarouselPage();
