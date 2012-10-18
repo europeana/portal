@@ -9,6 +9,8 @@
 <c:if test="${!empty model.rightsOption}">
 
 
+
+
   <a
   	<%--
   	href="${model.rightsOption.rightsUrl}"
@@ -34,7 +36,7 @@
 		<span class="rights-text">
 			<c:set var="rightsText" value="${fn:replace(model.rightsOption.rightsText, ' ', '_')}" />
 			<c:set var="rightsText" value="${fn:replace(rightsText, '-', '_')}" />
-			<spring:message code="rights_${rightsText}" />
+			<spring:message code="rights_${rightsText}_t" />
 		</span>
 		
 		<c:if test="${model.rightsOption.rightsShowExternalIcon}">
