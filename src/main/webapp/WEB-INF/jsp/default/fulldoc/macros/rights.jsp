@@ -36,7 +36,7 @@
 		<span class="rights-text">
 			<c:set var="rightsText" value="${fn:replace(model.rightsOption.rightsText, ' ', '_')}" />
 			<c:set var="rightsText" value="${fn:replace(rightsText, '-', '_')}" />
-			<spring:message code="rights_${rightsText}_t" />
+			<spring:message code="rights_${rightsText}" />
 		</span>
 		
 		<c:if test="${model.rightsOption.rightsShowExternalIcon}">
