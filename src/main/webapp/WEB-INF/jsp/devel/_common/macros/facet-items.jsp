@@ -15,5 +15,5 @@
     </c:choose>
   </c:set>
 
-  <li><h4><a href="/${model.portalName}/${model.pageName}?query=${model.query}${fn:escapeXml(facet_item.url)}" title="${fn:escapeXml(facet_item.value)}" ${classAttr} rel="nofollow">${label} (${facet_item.count})</a></h4></li>
+  <li><h4><a href="/${model.portalName}/${model.pageName}?query=${fn:escapeXml(model.query)}${fn:escapeXml(facet_item.url)}" title="${fn:escapeXml(facet_item.value)}" ${classAttr} rel="nofollow">${label} (${facet_item.count})</a></h4></li>
 </c:forEach>
