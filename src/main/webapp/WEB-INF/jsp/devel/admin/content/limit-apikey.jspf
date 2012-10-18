@@ -4,32 +4,23 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <div id="content">
 
-  <h1><spring:message code="RegisterAPI_t" /></h1>
+  <h1><spring:message code="admin_limitApiKey_title_t" /></h1>
 
-  <sf:form modelAttribute="model" action="limit-apikey.html" method="POST">
-
-    <div>
-      <div class="help"><spring:message code="EmailUse_t" />.</div>
-      <label for="email"><spring:message code="EmailAddress_t" /></label>
-      <sf:input id="email" path="email" disabled="disabled" />
-      <i><sf:errors path="email" cssClass="error"/></i>
-    </div>
+  <sf:form modelAttribute="model" method="POST">
 
     <div>
-      <div class="help"><spring:message code="UserNameExplain_t" />.</div>
       <label for="apiKey">Api key</label>
-      <sf:input path="apiKey"/>
+      <sf:input path="apiKey" disabled="true" />
       <i><sf:errors path="apiKey" cssClass="error"/></i>
     </div>
 
     <div>
-      <div class="help"><spring:message code="UserNameExplain_t" />.</div>
-      <label for="usageLimit">Private key</label>
+      <label for="usageLimit">Usage limit</label>
       <sf:input path="usageLimit"/>
       <i><sf:errors path="usageLimit" cssClass="error"/></i>
     </div>
 
-    <input id="submit_limit" type="submit" name="submit_limit" value="<spring:message code="FinishRegistration_t" /> &raquo;" class="submit-button"/>
+    <input id="submit_limit" type="submit" name="submit_limit" value="<spring:message code="admin_limitApiKey_t" /> &raquo;" class="submit-button"/>
   </sf:form>
 
 </div>

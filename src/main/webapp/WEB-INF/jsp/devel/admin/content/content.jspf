@@ -48,7 +48,7 @@
             <c:param name="apiKey" value="${apiKey.id}" />
           </c:url>
           <c:url var="limitApiKey" value="/admin/limitApiKey.html">
-            <c:param name="userId" value="${apiKey.id}" />
+            <c:param name="userId" value="${user.id}" />
             <c:param name="apiKey" value="${apiKey.id}" />
           </c:url>
           <tr>
