@@ -107,7 +107,8 @@
 						target	= "<spring:message code="notranslate_featured-partner-visit_target_t" />"
 						rel		= "nofollow"
 						class	= "icon-external-right europeana">
-						<spring:message code="featured-partner-visit_text_t"   />
+						<spring:message code="featured-partner-visit_text_t"   />&nbsp;
+						<spring:message code="featured-partner-visit_name_t"   />
 					</a>
 				</li>
 
