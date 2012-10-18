@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -81,7 +82,7 @@ public class ObjectController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
-	public static final Map<String, List<String>> seeAlsoFields = new HashMap<String, List<String>>() {
+	public static final Map<String, List<String>> seeAlsoFields = new LinkedHashMap<String, List<String>>() {
 		private static final long serialVersionUID = 1L;
 		{
 			put("title", Arrays.asList(new String[]{"DcTitle", "DctermsAlternative"}));
@@ -287,13 +288,15 @@ public class ObjectController {
 	private SeeAlsoSuggestions createSeeAlsoSuggestions(FullBean fullBean) {
 
 		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
-		Map<String, List<String>> seeAlsoParams = new HashMap<String, List<String>>();
+		Map<String, List<String>> seeAlsoParams = new LinkedHashMap<String, List<String>>();
 		for (String metaField : seeAlsoFields.keySet()) {
 			List<String> fieldValues = new ArrayList<String>();
 			for (String edmField : seeAlsoFields.get(metaField)) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
-					fieldValues.addAll(Arrays.asList(values));
+					for (String value : values) {
+						fieldValues.add(clearSeeAlso(value));
+					}
 				}
 			}
 			if (fieldValues.size() > 0) {
@@ -307,5 +310,12 @@ public class ObjectController {
 		}
 
 		return seeAlsoSuggestions;
+	}
+	
+	private String clearSeeAlso(String value) {
+		while (value.matches(" \\([^\\(\\)]+\\)\\s*$")) {
+			value = value.replaceAll(" \\([^\\(\\)]+\\)\\s*$", "");
+		}
+		return value;
 	}
 }
