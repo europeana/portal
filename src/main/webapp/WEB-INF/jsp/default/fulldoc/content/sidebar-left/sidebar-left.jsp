@@ -179,9 +179,11 @@
 		</c:choose>
 	
 		<%-- Format labels --%>
+			<%--
 		 	<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
 		 		<span class="action-title">${switchlabelTitle}</span>
 		 	</a>
+		 	--%>
 		 	
 		 	<span class="stretch"></span>
 		 	
