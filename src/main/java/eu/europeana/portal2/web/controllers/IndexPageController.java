@@ -124,10 +124,8 @@ public class IndexPageController {
 		return StringUtils.trimToNull(message);
 	}
 
-	
-
 	/**
-	 * We assume that the English locale file has the saem number of featured items / partners as all the other locale files 
+	 * We assume that the English locale file has the same number of featured items / partners as all the other locale files 
 	 **/
 	/*
 	private int getMessageCount(String msg){
@@ -144,11 +142,26 @@ public class IndexPageController {
 		return i;
 	}
 	*/
-		
-	
-	
-	
-	
+
+	/**
+	 * We assume that the English locale file has the same number of featured items / partners as all the other locale files 
+	 **/
+	/*
+	private int getMessageCount(String msg){
+		boolean keepFetching = true;
+		int i = 1;
+		while (keepFetching) {
+			try {
+				messageSource.getMessage(msg, null, Locale.ENGLISH);
+			} catch (NoSuchMessageException e) {
+				keepFetching = false;
+			}
+			
+		}
+		return i;
+	}
+	*/
+
 	/**
 	 * Sets the featured items list and the highlighted parter
 	 */
@@ -193,7 +206,6 @@ public class IndexPageController {
 				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
-					log.info("i = " + i + ", url: " + url);
 					featuredPartners.add(new FeaturedPartner(i));
 					i++;
 				} else {
