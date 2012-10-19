@@ -106,6 +106,9 @@ public class ObjectController {
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			@RequestParam(value = "source", required = false, defaultValue="corelib") String source,
+			
+			@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
+
 			HttpServletRequest request,
 			HttpServletResponse response, 
 			Locale locale) {
@@ -127,6 +130,7 @@ public class ObjectController {
 		model.setRefinements(qf);
 		model.setStart(start);
 		model.setReturnTo(returnTo);
+		model.setRows(rows);
 
 		config.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
