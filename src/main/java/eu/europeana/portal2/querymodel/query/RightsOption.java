@@ -47,10 +47,8 @@ public enum RightsOption {
 	EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "icon-copyright", false),
 
 	//EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "eu_unknown.jpg", "cc-unknown.png"); // +transparent
-	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright", "icon-unknown", false);
+	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false);
 
-	
-	
 	private String url = null;
 	private String rightsText = null;
 	private String rightsIcon = null;
