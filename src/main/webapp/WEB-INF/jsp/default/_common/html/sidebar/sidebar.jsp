@@ -45,13 +45,17 @@
 		
 		
 			<c:set var="rowsParam" value=""/>
-			<c:set var="startParam" value=""/>
 			<c:if test="${!empty model.rows}">
 				<c:set var="rowsParam" value="&rows=${model.rows}"/>
 			</c:if>
+			
+			<%--
+			<c:set var="startParam" value=""/>
 			<c:if test="${!empty model.rows}">
 				<c:set var="startParam" value="&start=${model.start}"/>
 			</c:if>
+			--%>
+			
 			<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
 				<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 			</c:forEach>
