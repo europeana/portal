@@ -120,6 +120,7 @@ window.js = {
 if ( !window.console ) { window.console = js.empty_console; }
 js.console = js.empty_console;
 
+<%--
 <c:if test="${model.debug}">
 	js.debug = true;
 	js.cache_helper = '?' + new Date().getTime();
@@ -130,6 +131,11 @@ js.console = js.empty_console;
 	js.min_suffix = '.min';
 	js.min_directory = 'min/';
 </c:if>
+--%>
+js.debug = true;
+js.cache_helper = '?' + new Date().getTime();
+js.console = window.console;
+
 
 eu.europeana.vars.portal_name = '${model.portalName}';
 eu.europeana.vars.page_name = '${model.pageName}';

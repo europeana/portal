@@ -3,6 +3,7 @@
 <link rel="shortcut icon" href="/${model.portalName}/favicon.ico" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://api.europeana.eu/api/opensearch.xml" title="Europeana Search" />
 
+	<%--
 <c:choose>
 	<c:when test="${!empty model.minify && model.minify}">
 		<%@ include file="/WEB-INF/jsp/default/_common/html/css/production-css.jsp" %>
@@ -11,6 +12,10 @@
 		<%@ include file="/WEB-INF/jsp/default/_common/html/css/debug-css.jsp" %>
 	</c:otherwise>
 </c:choose>
+	--%>
 
+	<%@ include file="/WEB-INF/jsp/default/_common/html/css/debug-css.jsp" %>
+	
+	
 <%-- c:if test="${!empty model.headerContent}">${model.headerContent}</c:if --%>
 <!-- /links -->
