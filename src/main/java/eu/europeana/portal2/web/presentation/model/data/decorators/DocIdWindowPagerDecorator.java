@@ -56,6 +56,7 @@ public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 		int pageNo = (model.getStart() - 1) / maxPageResults;
 		int calcStart = 1 + (pageNo * maxPageResults);
 		UrlBuilder builder = model.createSearchUrl(model.getQuery(), model.getRefinements(), Integer.toString(calcStart));
+		builder.addParam("rows", String.valueOf(model.getRows()), true);
 		return model.prepareFullDocUrl(builder).toString();
 	}
 
