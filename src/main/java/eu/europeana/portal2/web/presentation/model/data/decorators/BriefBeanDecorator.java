@@ -292,4 +292,10 @@ public class BriefBeanDecorator implements BriefBean {
 	public String[] getRights() {
 		return briefBean.getRights();
 	}
+
+	@Override
+	public String[] getEdmPreview() {
+		
+		return briefBean.getEdmPreview();
+	}
 }

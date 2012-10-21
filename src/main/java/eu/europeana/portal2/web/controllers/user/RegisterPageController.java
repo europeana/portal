@@ -111,7 +111,7 @@ public class RegisterPageController {
 			return page;
 		}
 
-		User user = userService.create(model.getToken(), model.getUserName(), model.getPassword());
+		User user = userService.create(model.getToken(), model.getUserName(), model.getPassword(),"","");
 		sendNotificationEmail(user);
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_SUCCESS);

@@ -37,6 +37,8 @@ public class BriefBeanImpl implements BriefBean {
 	private String[] dctermsSpatial;
 	private DocType type;
 	private boolean isOptedOut;
+	private String[] edmPreview;
+	
 
 	public String getId() {
 		return id;
@@ -223,5 +225,10 @@ public class BriefBeanImpl implements BriefBean {
 
 	public void setOptedOut(boolean isOptedOut) {
 		this.isOptedOut = isOptedOut;
+	}
+	@Override
+	public String[] getEdmPreview() {
+		
+		return this.edmPreview;
 	}
 }
