@@ -67,9 +67,11 @@ public class LoginPageController {
 
 			// Register
 			if (REGISTER.equals(requestedAction)) {
-				if (!ControllerUtil.validEmailAddress(email)) {
-					model.setFailureFormat(true);
-				} else if (emailExists(email)) {
+//				if (!ControllerUtil.validEmailAddress(email)) {
+//					model.setFailureFormat(true);
+//				} else 
+					
+					if (emailExists(email)) {
 					model.setFailureExists(true);
 				} else {
 					Token token = tokenService.create(email);
@@ -82,18 +84,18 @@ public class LoginPageController {
 			}
 
 			else if (REGISTER_API.equals(requestedAction)) {
-				if (!ControllerUtil.validEmailAddress(email)) {
-					model.setFailureFormat(true);
-				//} else if (emailExists(email)) {
-				//	model.setFailureExists(true);
-				} else {
+//				if (!ControllerUtil.validEmailAddress(email)) {
+//					model.setFailureFormat(true);
+//				//} else if (emailExists(email)) {
+//				//	model.setFailureExists(true);
+//				} else {
 					Token token = tokenService.create(email);
 					String url = baseUrl + "/register-api.html";
 					log.info("token: " + token);
 					log.info("registerUri: " + url);
 					emailService.sendToken(token, url);
 					model.setSuccess(true);
-				}
+//				}
 			}
 
 			// Forgot Password

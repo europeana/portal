@@ -14,7 +14,7 @@
           <div>
             <label for="firstName"><spring:message code="FirstName_t" /></label><br/>
             <sf:input id="firstName" path="firstName" />
-            <em><sf:errors path="email" cssClass="error"/></em>
+            <em><sf:errors path="firstName" cssClass="error"/></em>
           </div>
         </td>
         <td>
@@ -29,7 +29,7 @@
         <td>
           <div>
             <label for="email"><spring:message code="EmailAddress_t" /></label><br/>
-            <sf:input id="email" path="email" disabled="true" />
+            <sf:input id="email" path="email" readonly="true" />
             <em><sf:errors path="email" cssClass="error"/></em>
           </div>
         </td>
@@ -66,12 +66,12 @@
       <tr>
         <td>
           <label for="apiKey"><spring:message code="myeuropeana_ApiKey_t" /></label><br/>
-          <sf:input path="apiKey" disabled="true" />
+          <sf:input id="apiKey_disabled" path="apiKey" readonly="true" />
           <i><sf:errors path="apiKey" cssClass="error"/></i>
         </td>
         <td>
           <label for="privateKey"><spring:message code="myeuropeana_PrivateKey_t" /></label><br/>
-          <sf:input path="privateKey" disabled="true" />
+          <sf:input id="privateKey" path="privateKey" readonly="true" />
           <i><sf:errors path="privateKey" cssClass="error"/></i>
         </td>
       </tr>
