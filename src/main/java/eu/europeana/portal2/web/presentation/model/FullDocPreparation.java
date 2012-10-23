@@ -61,7 +61,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			addField(fieldsLightbox, Field.DC_RIGHTS, shortcut.get("EdmRights"));
 			addField(fieldsLightbox, Field.EUROPEANA_DATAPROVIDER, shortcut.get("DataProvider"));
 			addField(fieldsLightbox, Field.EUROPEANA_PROVIDER, document.getProvider(),
-					Field.EUROPEANA_COUNTRY.getValues(document.getCountry()));
+					Field.EDM_COUNTRY.getValues(document.getCountry()));
 		}
 		return fieldsLightbox;
 	}
@@ -75,19 +75,21 @@ public abstract class FullDocPreparation extends FullDocData {
 	public List<FieldPresentation> getFieldsAdditional() throws Exception {
 		if (fieldsAdditional == null) {
 			fieldsAdditional = new ArrayList<FieldPresentation>();
+			/*
 
-			// addField(fieldsAdditional, Field.DC_RIGHTS, document.getRights());
 			addField(fieldsAdditional, Field.DC_RIGHTS, shortcut.get("AggregationDcRights"));
 			addField(fieldsAdditional, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
-			addField(fieldsAdditional, Field.DC_FORMAT, getDocument().getDcFormat(),
-					shortcut.get("DctermsExtent"), shortcut.get("DctermsMedium"));
-			//addField(fieldsAdditional, Field.DC_LANGUAGE, document.getDcLanguage());
+			addField(fieldsAdditional, Field.DC_FORMAT, 
+					shortcut.get("DcFormat"),
+					shortcut.get("DctermsExtent"),
+					shortcut.get("DctermsMedium"));
 			addField(fieldsAdditional, Field.DC_LANGUAGE, document.getLanguage());
 			addField(fieldsAdditional, Field.DC_SOURCE, shortcut.get("DcSource"));
 			addField(fieldsAdditional, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
 			addField(fieldsAdditional, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
 			addField(fieldsAdditional, Field.DCTERMS_ISSUED, shortcut.get("DctermsIssued"));
 			addField(fieldsAdditional, Field.EUROPEANA_COLLECTIONNAME, document.getEuropeanaCollectionName());
+			*/
 		}
 		return fieldsAdditional;
 	}
@@ -243,7 +245,8 @@ public abstract class FullDocPreparation extends FullDocData {
 			fields = new ArrayList<FieldPresentation>();
 
 			addField(fields, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
-			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription());
+			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription(),
+					shortcut.get("DctermsTableOfContents"));
 			addField(fields, Field.DC_CREATOR, shortcut.get("DcCreator"));
 			addField(fields, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
 			addField(fields, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
@@ -256,8 +259,6 @@ public abstract class FullDocPreparation extends FullDocData {
 			addField(fields, Field.DC_FORMAT, shortcut.get("DcFormat"), 
 					shortcut.get("DctermsExtent"),
 					shortcut.get("DctermsMedium"));
-			// addField(fields, Field.DCTERMS_EXTENT, );
-			// addField(fields, Field.DCTERMS_MEDIUM, );
 			addField(fields, Field.DC_SUBJECT, getDocument().getDcSubject());
 			addField(fields, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
 			addField(fields, Field.DC_RELATION, shortcut.get("DcRelation"),
@@ -285,12 +286,14 @@ public abstract class FullDocPreparation extends FullDocData {
 			addField(fields, Field.DCTERMS_ISPARTOF, shortcut.get("DctermsIsPartOf"));
 			addField(fields, Field.DCTERMS_HASPART, shortcut.get("DctermsHasPart"));
 			addField(fields, Field.EDM_ISNEXTINSEQUENCE, shortcut.get("EdmIsNextInSequence"));
-
-			// addField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEuropeanaDataProvider());
+			addField(fields, Field.DC_LANGUAGE, shortcut.get("DcLanguage"));
+			addField(fields, Field.DC_RIGHTS, shortcut.get("DcRights"));
+			addField(fields, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
+			addField(fields, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
+			addField(fields, Field.DC_SOURCE, shortcut.get("DcSource"));
 			addField(fields, Field.EUROPEANA_DATAPROVIDER, shortcut.get("DataProvider"));
-			addField(fields, Field.EUROPEANA_PROVIDER, 
-					shortcut.get("EdmProvider"),
-					Field.EUROPEANA_COUNTRY.getValues(getDocument().getEdmCountry()));
+			addField(fields, Field.EUROPEANA_PROVIDER, shortcut.get("EdmProvider"));
+			addField(fields, Field.EDM_COUNTRY, Field.EDM_COUNTRY.getValues(shortcut.get("EdmCountry")));
 		}
 		return fields;
 	}

@@ -289,8 +289,8 @@ public class SitemapController {
 	public ModelAndView handleListOfContributors(HttpServletRequest request,
 			Locale locale) throws EuropeanaQueryException {
 
-		String displayPageUrl = new StringBuilder(config.getPortalServer())
-			.append(config.getPortalName()).toString();
+		String portalServer = new StringBuilder(config.getPortalServer())
+									.append(config.getPortalName()).toString();
 
 		// sitemap index - collections overview
 		List<ContributorItem> entries = new ArrayList<ContributorItem>();
@@ -301,9 +301,9 @@ public class SitemapController {
 				try {
 					String query = StringEscapeUtils.escapeXml(String.format(
 							"%s/search.html?query=*:*&qf=PROVIDER:%s",
-							displayPageUrl, convertProviderToUrlParameter(provider.getName())));
+							portalServer, convertProviderToUrlParameter(provider.getName())));
 					ContributorItem contributorItem = new ContributorItem(query,
-							provider.getName(), provider.getCount(), displayPageUrl);
+							provider.getName(), provider.getCount(), portalServer);
 
 					List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 

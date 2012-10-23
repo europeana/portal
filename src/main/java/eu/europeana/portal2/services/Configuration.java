@@ -107,7 +107,7 @@ public class Configuration {
 	private String isContentChecker;
 
 	private Map<String, String> seeAlsoTranslations;
-	
+
 	/////////////////////////////// complex functions
 
 	public void registerBaseObjects(HttpServletRequest request, HttpServletResponse response, Locale locale) {

@@ -182,7 +182,7 @@ public class FullDocPage extends FullDocPreparation {
 		List<MetaDataFieldPresentation> fields = new ArrayList<MetaDataFieldPresentation>();
 
 		addMetaField(fields, Field.EUROPEANA_URI, document.getId());
-		addMetaField(fields, Field.EUROPEANA_COUNTRY, getDocument().getEdmCountry());
+		addMetaField(fields, Field.EDM_COUNTRY, getDocument().getEdmCountry());
 		addMetaField(fields, Field.EUROPEANA_PROVIDER, shortcut.get("EdmProvider"));
 		addMetaField(fields, Field.EUROPEANA_COLLECTIONNAME, document.getEuropeanaCollectionName());
 		addMetaField(fields, Field.EUROPEANA_ISSHOWNAT, shortcut.get("EdmIsShownAt"));

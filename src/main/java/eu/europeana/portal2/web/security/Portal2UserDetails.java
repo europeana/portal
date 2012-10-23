@@ -1,12 +1,16 @@
 package eu.europeana.portal2.web.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.definitions.users.Role;
 
 public class Portal2UserDetails implements UserDetails {
 
@@ -20,8 +24,13 @@ public class Portal2UserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// user.getRole()
-		return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
+		List<String> roles = new ArrayList<String>();
+		Role role = user.getRole();
+		roles.add(role.name());
+		if (!role.name().equals(Role.ROLE_USER.name())) {
+			roles.add(Role.ROLE_USER.name());
+		}
+		return AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils.join(roles, ","));
 	}
 
 	@Override
