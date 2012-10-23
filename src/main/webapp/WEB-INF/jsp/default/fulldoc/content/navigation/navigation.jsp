@@ -8,7 +8,9 @@
 	
 			<%-- return --%>
 			
-			<c:if test="${!empty model.fullBeanView.docIdWindowPager.returnToResults && !model.embedded}">
+			<c:if test="${!empty model.fullBeanView.docIdWindowPager.returnToResults 
+          && model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl != null
+          && !model.embedded}">
 				<li>
 					<a href="${model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl}" rel="nofollow"><spring:message code="ReturnToSearchResults_t" /></a>
 				</li>

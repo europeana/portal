@@ -89,6 +89,7 @@
 
 	#login,
 	#register,
+	#register-api,
     #request-password,
     #login-response {
     	display: block;

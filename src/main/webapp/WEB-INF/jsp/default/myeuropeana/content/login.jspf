@@ -10,6 +10,7 @@
   
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/login/login-form.jspf" %>
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/login/register-form.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/login/register-api-form.jspf" %>
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/login/request-password-form.jspf" %>
 
     <div id="login-response">

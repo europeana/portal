@@ -19,7 +19,7 @@
 			<input type="submit" name="submit_button" class="europeana-button-1 deans-button-1" value="<spring:message code="Register_t" />"/>
 			
 			<a href="#login" rel="nofollow"><spring:message code="LogIn_t" /></a><br/>
-			
+      <a href="#register-api" rel="nofollow"><spring:message code="RegisterAPI_t" /></a><br/>
 			<a href="#request-password" rel="nofollow"><spring:message code="ForgotPassword_t" /></a>
 			
 		</fieldset>
