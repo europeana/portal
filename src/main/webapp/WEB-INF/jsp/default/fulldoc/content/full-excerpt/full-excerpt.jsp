@@ -32,7 +32,7 @@
 		<c:if test="${!model.formatLabels && !empty model.fields && fn:length(model.fields) > 0}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true" />
 		</c:if>
-		<c:if test="${ !empty model.fieldsAdditional}">
+		<c:if test="${!empty model.fieldsAdditional}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
 		</c:if>
 		
