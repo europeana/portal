@@ -50,7 +50,11 @@ public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 	 * @return url of previous page
 	 */
 	public String getPagerReturnToPreviousPageUrl() throws UnsupportedEncodingException {
-		int maxPageResults = 12;
+		if (model.getQuery() == null) {
+			return null;
+		}
+
+		int maxPageResults = model.getRows();
 		// the "start" param is manipulated here to ensure that the
 		// "return to search results" link doesn't swallow previous results
 		int pageNo = (model.getStart() - 1) / maxPageResults;

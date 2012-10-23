@@ -87,7 +87,9 @@ public class SearchUtils {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
-		url.addParam("query", URLEncoder.encode(searchTerm, "UTF-8"), true);
+		if (searchTerm != null) {
+			url.addParam("query", URLEncoder.encode(searchTerm, "UTF-8"), true);
+		}
 		if (qf != null) {
 			url.addParam("qf", qf, true);
 		}
