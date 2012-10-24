@@ -42,7 +42,7 @@ eu.europeana.header = {
 		this.setupSearchMenu();
 		this.setupLanguageMenu();
 		
-		//this.addAutocompleteHandler();
+		this.addAutocompleteHandler();
 
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
