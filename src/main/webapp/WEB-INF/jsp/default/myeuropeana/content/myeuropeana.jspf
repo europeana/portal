@@ -10,6 +10,7 @@
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/saved-searches.jspf" %>
     
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/saved-tags.jspf" %>
+    <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/api-keys.jspf" %>
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/remote-search-widget.jspf" %>
 
      
