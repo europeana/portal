@@ -26,7 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.Authentication;
@@ -62,7 +61,7 @@ public class ControllerUtil {
 
 
 	public static boolean validEmailAddress(String emailAddress) {
-		return emailAddress.matches(EMAIL_REGEXP);
+		return emailAddress.endsWith("@localhost") || emailAddress.matches(EMAIL_REGEXP);
 	}
 
 	// @Value("#{europeanaProperties['portal.theme']}")

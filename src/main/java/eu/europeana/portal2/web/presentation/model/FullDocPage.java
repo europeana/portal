@@ -467,7 +467,7 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	public String getPageTitle() {
 		StringBuilder title = new StringBuilder(getBaseTitle());
-		if (StringArrayUtils.isNotBlank(shortcut.get("DcCreator"))) {
+		if (shortcut != null && StringArrayUtils.isNotBlank(shortcut.get("DcCreator"))) {
 			String creator = shortcut.get("DcCreator")[0];
 			// clean up creator first (..), [..], <..>, {..}
 			creator = creator.replaceAll("[\\<({\\[].*?[})\\>\\]]", "");
@@ -485,6 +485,9 @@ public class FullDocPage extends FullDocPreparation {
 	
 	private String getBaseTitle() {
 		String dcTitle = "";
+		if (document == null) {
+			return dcTitle;
+		}
 
 		if (StringArrayUtils.isNotBlank(getDocument().getDcTitle())) {
 			dcTitle = getDocument().getDcTitle()[0];

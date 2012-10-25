@@ -79,6 +79,7 @@ public class SearchController {
 	) {
 		config.registerBaseObjects(request, response, locale);
 		localeChangeInterceptor.preHandle(request, response, this);
+		rows = Math.min(rows, config.getRowLimit());
 
 		log.info("============== START SEARCHING ==============");
 		Map<String, String[]> params = request.getParameterMap();

@@ -106,6 +106,9 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.contentchecker']}")
 	private String isContentChecker;
 
+	@Value("#{europeanaProperties['portal.rowLimit']}")
+	private String rowLimit;
+
 	private Map<String, String> seeAlsoTranslations;
 
 	/////////////////////////////// complex functions
@@ -228,6 +231,10 @@ public class Configuration {
 
 	public boolean isContentChecker() {
 		return isContentChecker.equals("true");
+	}
+
+	public int getRowLimit() {
+		return Integer.parseInt(rowLimit);
 	}
 
 	public Map<String, String> getSeeAlsoTranslations() {

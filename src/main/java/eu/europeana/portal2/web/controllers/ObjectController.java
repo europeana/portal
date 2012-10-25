@@ -140,28 +140,30 @@ public class ObjectController {
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
 		long tgetFullBean1 = (new Date()).getTime();
 		log.info("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
-		log.info("fullBean: " + (fullBean == null));
-		Query query = new Query(queryString).setRefinements(qf);
-
-		// full bean view
-		FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
-		model.setFullBeanView(fullBeanView);
-
-		// more like this
-		List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
-		if (fullBean.getSimilarItems() == null) {
-			similarItems = getMoreLikeThis(collectionId, recordId, model);
-		}
-		model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
-
-		long tSeeAlso0 = (new Date()).getTime();
-		model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
-		long tSeeAlso1 = (new Date()).getTime();
-		log.info("see also takes: " + (tSeeAlso1 - tSeeAlso0));
-
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
+		if (fullBean != null) {
+			log.info("fullBean: " + (fullBean == null));
+			Query query = new Query(queryString).setRefinements(qf);
+
+			// full bean view
+			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
+			model.setFullBeanView(fullBeanView);
+
+			// more like this
+			List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
+			if (fullBean.getSimilarItems() == null) {
+				similarItems = getMoreLikeThis(collectionId, recordId, model);
+			}
+			model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
+
+			long tSeeAlso0 = (new Date()).getTime();
+			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
+			long tSeeAlso1 = (new Date()).getTime();
+			log.info("see also takes: " + (tSeeAlso1 - tSeeAlso0));
+			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView.getFullDoc().getAbout());
+		}
+
 		config.postHandle(this, page);
-		clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView.getFullDoc().getAbout());
 
 		long t1 = (new Date()).getTime();
 		log.info("object page takes: " + (t1 - t0));
