@@ -75,7 +75,7 @@
 			<span class="icon-arrow-3 open-menu"></span>
 			<ul>
 				<c:forEach var="size" items="12,24,48,96">
-					<li class="${model.rows == size ? 'item active' : 'item'}">	<a href="" class="${size}"	>${size}</a></li>
+					<li class="${model.rows == size ? 'item active' : 'item'}">	<a href="" class="${size}">${size}</a></li>
 				</c:forEach>
 			</ul>
 		</div>
