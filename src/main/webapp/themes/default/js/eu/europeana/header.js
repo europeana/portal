@@ -309,7 +309,7 @@ eu.europeana.header = {
 			    
 				minLength : 3,
 				
-				delay : 400,
+				delay : 200,
 				
 				//dataType : 'text',
 				
@@ -323,7 +323,7 @@ eu.europeana.header = {
 						request.field = filter;
 					}
 					
-					jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
+					jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request.toLowerCase(), function(data) {
 						
 						//create array for response objects
 						var suggestions = [];
