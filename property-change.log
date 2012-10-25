@@ -1,0 +1,11 @@
+2012-10-25
+remove displayPageUrl
+
+new property:
+
+api.rowLimit
+description: The maximal number of rows in an API search result
+
+example:
+api.rowLimit = 100
+
