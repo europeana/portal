@@ -35,13 +35,13 @@ public class ContributorItem {
 	private final String name;
 	private final long count;
 	private List<DataProviderItem> dataProviders;
-	private final String displayPageUrl;
+	private final String portalServer;
 
-	public ContributorItem(String loc, String name, long count, String displayPageUrl) {
+	public ContributorItem(String loc, String name, long count, String portalServer) {
 		this.loc = loc;
 		this.count = count;
 		this.name = name;
-		this.displayPageUrl = displayPageUrl;
+		this.portalServer = portalServer;
 	}
 
 	public void setDataProviders(List<DataProviderItem> dataProviders) {
@@ -62,7 +62,7 @@ public class ContributorItem {
 			StringBuilder toEncode = new StringBuilder("europeana_dataProvider:\"");
 			toEncode.append(dp).append("\"");
 
-			StringBuilder sb = new StringBuilder(displayPageUrl);
+			StringBuilder sb = new StringBuilder(portalServer);
 			sb.append("/search.html?query=").append(URLEncoder.encode(toEncode.toString(), "UTF-8"));
 			return sb.toString();
 

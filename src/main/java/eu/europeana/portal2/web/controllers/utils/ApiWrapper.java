@@ -36,8 +36,24 @@ import eu.europeana.portal2.web.util.QueryUtil;
 
 public class ApiWrapper {
 
+	private static final String SEARCH_PATH = "/v2/search.json?";
+	private static final String SUGGESTIONS_PATH = "/v2/suggestions.json?";
+	private static final String RECORD_PATH = "/v2/record/";
+	private static final String RECORD_EXT = ".json";
+
 	private static final String SESSION_KEY = "apisession";
+
+	private static final String WSKEY_PARAM = "?wskey=";
+	private static final String START_PARAM = "&start=";
+	private static final String ROWS_PARAM = "&rows=";
+	private static final String PROFILE_PARAM = "&profile=";
+	private static final String CALLBACK_PARAM = "&callback=";
+	private static final String QUERY_PARAM = "&query=";
+	private static final String QF_PARAM = "&qf=";
+	private static final String PHRASES_PARAM = "&phrases=";
+
 	private final Logger log = Logger.getLogger(getClass().getName());
+
 	private String lastUrl;
 
 	protected String apiUrl;
@@ -54,56 +70,96 @@ public class ApiWrapper {
 
 	public String getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
-		url.append("/search.json?");
+		url.append(SEARCH_PATH);
+		url.append(WSKEY_PARAM).append(api2key);
 		if (!StringUtils.isBlank(query)) {
-			url.append("&query=").append(QueryUtil.encode(query));
+			url.append(QUERY_PARAM).append(QueryUtil.encode(query));
 		}
 		if (!ArrayUtils.isEmpty(refinements)) {
 			for (String qf : refinements) {
 				if (!StringUtils.isBlank(qf)) {
-					url.append("&qf=").append(QueryUtil.encode(qf));
+					url.append(QF_PARAM).append(QueryUtil.encode(qf));
 				}
 			}
 		}
-		url.append("&start=").append(start);
-		url.append("&rows=").append(rows);
-		url.append("&profile=").append(profile);
-		url.append("&callback=").append(callback);
-
-		return getJsonResponse(url.toString());
-	}
-
-	public String getSuggestions(String query, int rows, boolean phrases, String callback) {
-		StringBuilder url = new StringBuilder(apiUrl);
-		url.append("/suggestions.json?");
-		if (!StringUtils.isBlank(query)) {
-			url.append("&query=").append(QueryUtil.encode(query));
-		}
-		url.append("&rows=").append(rows);
-		url.append("&phrases=").append(phrases);
-		if (!StringUtils.isBlank(callback)) {
-			url.append("&callback=").append(callback);
-		}
+		url.append(START_PARAM).append(start);
+		url.append(ROWS_PARAM).append(rows);
+		url.append(PROFILE_PARAM).append(profile);
+		url.append(CALLBACK_PARAM).append(callback);
 
 		return getJsonResponse(url.toString());
 	}
 
 	public String getObject(String collectionId, String recordId, String callback) {
-		StringBuilder url = new StringBuilder(apiUrl + "/record/" + collectionId + "/" + recordId + ".json");
+		StringBuilder url = new StringBuilder(apiUrl);
+		url.append(RECORD_PATH);
+		url.append(collectionId).append("/").append(recordId).append(RECORD_EXT);
+		url.append(WSKEY_PARAM).append(api2key);
 		if (!StringUtils.isBlank(callback)) {
-			url.append("?callback=").append(callback);
+			url.append(CALLBACK_PARAM).append(callback);
 		}
 
 		return getJsonResponse(url.toString());
 	}
 
 	public String getObject(String recordId, String callback) {
-		StringBuilder url = new StringBuilder(apiUrl + "/record/" + recordId + ".json");
+		StringBuilder url = new StringBuilder(apiUrl);
+		url.append(RECORD_PATH);
+		url.append(recordId).append(RECORD_EXT);
+		url.append(WSKEY_PARAM).append(api2key);
 		if (!StringUtils.isBlank(callback)) {
-			url.append("?callback=").append(callback);
+			url.append(CALLBACK_PARAM).append(callback);
 		}
 
 		return getJsonResponse(url.toString());
+	}
+
+	public String getSuggestions(String query, int rows, boolean phrases, String callback) {
+		StringBuilder url = new StringBuilder(apiUrl);
+		url.append(SUGGESTIONS_PATH);
+		if (!StringUtils.isBlank(query)) {
+			url.append(QUERY_PARAM).append(QueryUtil.encode(query));
+		}
+		url.append(ROWS_PARAM).append(rows);
+		url.append(PHRASES_PARAM).append(phrases);
+		if (!StringUtils.isBlank(callback)) {
+			url.append(CALLBACK_PARAM).append(callback);
+		}
+
+		return getJsonResponse(url.toString());
+	}
+
+	public String getJsonResponse(String url) {
+		lastUrl = url;
+		String jsonResponse = null;
+		try {
+			/*
+			String sessionId = getSessionID();
+			if (sessionId == null) {
+				return null;
+			}
+			*/
+
+			HttpClient client = new HttpClient();
+			GetMethod method = new GetMethod(url);
+			log.info("get URL: " + method.getURI().toString());
+			// method.setRequestHeader("Cookie", sessionId);
+
+			int statusCode = client.executeMethod(method);
+			if (statusCode != HttpStatus.SC_OK) {
+				log.severe("Method failed: " + method.getStatusLine());
+			}
+
+			// Read the response body.
+			StringWriter writer = new StringWriter();
+			IOUtils.copy(method.getResponseBodyAsStream(), writer, "UTF-8");
+			jsonResponse = writer.toString();
+		} catch (IOException e) {
+			log.severe(e.getMessage());
+			e.printStackTrace();
+		}
+
+		return jsonResponse;
 	}
 
 	protected String getSessionID() {
@@ -122,37 +178,6 @@ public class ApiWrapper {
 		}
 
 		return sessionId;
-	}
-
-	public String getJsonResponse(String url) {
-		lastUrl = url;
-		String jsonResponse = null;
-		try {
-			String sessionId = getSessionID();
-			if (sessionId == null) {
-				return null;
-			}
-
-			HttpClient client = new HttpClient();
-			GetMethod method = new GetMethod(url);
-			log.info("get URL: " + method.getURI().toString());
-			method.setRequestHeader("Cookie", sessionId);
-
-			int statusCode = client.executeMethod(method);
-			if (statusCode != HttpStatus.SC_OK) {
-				log.severe("Method failed: " + method.getStatusLine());
-			}
-
-			// Read the response body.
-			StringWriter writer = new StringWriter();
-			IOUtils.copy(method.getResponseBodyAsStream(), writer, "UTF-8");
-			jsonResponse = writer.toString();
-		} catch (IOException e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
-		}
-
-		return jsonResponse;
 	}
 
 	private String requestApiSession() {
