@@ -1,0 +1,75 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<div class="row">
+
+<table>
+  <caption>State of memory types</caption>
+  <tr><td>Total memory</td><td align="right">${model.totalMemory}</td></tr>
+  <tr><td>Free memory</td><td align="right">${model.freeMemory}</td></tr>
+  <tr><td>Max memory</td><td align="right">${model.maxMemory}</td></tr>
+</table>
+
+<table>
+  <caption>Users</caption>
+  <thead>
+    <tr>
+      <th><spring:message code="admin_userName_t" /></th>
+      <th><spring:message code="EmailAddress_t" /></th>
+      <th><spring:message code="admin_Registration_t" /></th>
+      <th><spring:message code="myeuropeana_UserRole_t" /></th>
+      <th><spring:message code="Actions_t" /></th>
+      <th><spring:message code="myeuropeana_ApiKeys_t" /></th>
+    </tr>
+  </thead>
+  <tbody>
+<c:forEach items="${model.users}" var="user">
+  <tr valign="top">
+    <td>${user.userName}</td>
+    <td>${user.email}</td>
+    <td><fmt:formatDate value="${user.registrationDate}" type="DATE" pattern="yyyy-MM-dd" /></td>
+    <td>${user.role}</td>
+    <td>
+      <c:url var="removeUser" value="/admin/removeUser.html">
+        <c:param name="id" value="${user.id}" />
+      </c:url>
+      <a href="${removeUser}"><spring:message code="admin_RemoveUser_t" /></a>
+      |
+      <c:url var="blockUser" value="/admin/blockUser.html">
+        <c:param name="id" value="${user.id}" />
+      </c:url>
+      <a href="${blockUser}"><spring:message code="admin_BlockUser_t" /></a>
+    </td>
+    <td>
+      <table>
+        <c:forEach items="${user.apiKeys}" var="apiKey">
+          <c:url var="removeApiKey" value="/admin/removeApiKey.html">
+            <c:param name="userId" value="${user.id}" />
+            <c:param name="apiKey" value="${apiKey.id}" />
+          </c:url>
+          <c:url var="limitApiKey" value="/admin/limitApiKey.html">
+            <c:param name="userId" value="${user.id}" />
+            <c:param name="apiKey" value="${apiKey.id}" />
+          </c:url>
+          <tr>
+            <td width="70%"><code>${apiKey.id}</code> / <code>${apiKey.privateKey}</code> / ${apiKey.usageLimit}</td>
+            <td width="30%">
+                <a href="${removeApiKey}"><spring:message code="Remove_t" /></a>
+              | <a href="${limitApiKey}"><spring:message code="admin_limitApiKey_t" /></a>
+            </td>
+          </tr>
+        </c:forEach>
+      </table>
+    </td>
+  </tr>
+</c:forEach>
+  <tr>
+    <td colspan="6">
+        <a href="<c:url value="/admin/exportApiKeys.html" />"><spring:message code="admin_exportApiKeys_t" /></a>
+      | <a href="<c:url value="/admin/exportUsers.html" />"><spring:message code="admin_exportUsers_t" /></a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</div>

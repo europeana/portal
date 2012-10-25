@@ -1,0 +1,26 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<div id="content">
+
+  <h1><spring:message code="admin_limitApiKey_title_t" /></h1>
+
+  <sf:form modelAttribute="model" method="POST">
+
+    <div>
+      <label for="apiKey">Api key</label>
+      <sf:input path="apiKey" disabled="true" />
+      <i><sf:errors path="apiKey" cssClass="error"/></i>
+    </div>
+
+    <div>
+      <label for="usageLimit">Usage limit</label>
+      <sf:input path="usageLimit"/>
+      <i><sf:errors path="usageLimit" cssClass="error"/></i>
+    </div>
+
+    <input id="submit_limit" type="submit" name="submit_limit" value="<spring:message code="admin_limitApiKey_t" /> &raquo;" class="submit-button"/>
+  </sf:form>
+
+</div>
