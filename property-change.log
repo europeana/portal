@@ -9,3 +9,10 @@ description: The maximal number of rows in an API search result
 example:
 api.rowLimit = 100
 
+new property:
+
+api.optOutList
+description: Location of opt-out list, used by both api and portal. It should point to an existing file which contains the list of opt-out collections.
+
+example:
+api.optOutList=/home/peterkiraly/workspace/europeana/trunk/api/opt-out.list.txt
