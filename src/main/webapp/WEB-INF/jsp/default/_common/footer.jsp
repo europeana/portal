@@ -107,11 +107,11 @@
 					<h3>
 						<a class="europeana" href="/${model.portalName}/<spring:message code="notranslate_main_menu_api_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_a_target_t"/>" title="<spring:message code="main_menu_api_a_title_t"/>"><spring:message code="main_menu_api_a_text_t"/></a>
 					</h3>
-					<ul class="footer-links">			
-						<li><a class="europeana" href="<spring:message code="notranslate_main_menu_api_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_1_a_target_t"/>" title="<spring:message code="main_menu_api_1_a_title_t"/>"><spring:message code="main_menu_api_1_a_text_t"/></a></li>
-						<li><a class="europeana" href="<spring:message code="notranslate_main_menu_api_2_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_2_a_target_t"/>" title="<spring:message code="main_menu_api_2_a_title_t"/>"><spring:message code="main_menu_api_2_a_text_t"/></a></li>
-						<li><a class="europeana" href="<spring:message code="notranslate_main_menu_api_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_3_a_target_t"/>" title="<spring:message code="main_menu_api_3_a_title_t"/>"><spring:message code="main_menu_api_3_a_text_t"/></a></li>
-						<li><a class="europeana icon-external-right" href="<spring:message code="notranslate_main_menu_api_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_4_a_target_t"/>" title="<spring:message code="main_menu_api_4_a_title_t"/>"><spring:message code="main_menu_api_4_a_text_t"/></a></li>
+					<ul class="footer-links">
+						<li><a class="europeana" href="/${model.portalName}/<spring:message code="notranslate_main_menu_api_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_1_a_target_t"/>" title="<spring:message code="main_menu_api_1_a_title_t"/>"><spring:message code="main_menu_api_1_a_text_t"/></a></li>
+						<li><a class="europeana" href="/${model.portalName}/<spring:message code="notranslate_main_menu_api_2_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_2_a_target_t"/>" title="<spring:message code="main_menu_api_2_a_title_t"/>"><spring:message code="main_menu_api_2_a_text_t"/></a></li>
+						<li><a class="europeana" href="/${model.portalName}/<spring:message code="notranslate_main_menu_api_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_3_a_target_t"/>" title="<spring:message code="main_menu_api_3_a_title_t"/>"><spring:message code="main_menu_api_3_a_text_t"/></a></li>
+						<li><a class="europeana icon-external-right" href="/${model.portalName}/<spring:message code="notranslate_main_menu_api_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_4_a_target_t"/>" title="<spring:message code="main_menu_api_4_a_title_t"/>"><spring:message code="main_menu_api_4_a_text_t"/></a></li>
 					</ul>
 				</div>
 			</div>
@@ -119,11 +119,8 @@
 	</div>
 </div>
 
-
-
 <div class="row footer-bottom-links">
 	<div class="twelve columns">
-
 
 		<a class="europeana footer-bottom-link"
 			href="/${model.portalName}/<spring:message code="footer_menu_about_us_url_t"/>"

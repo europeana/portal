@@ -4,13 +4,13 @@
 <div id="header-strip" class="row">
 	<div>
 		<span class="hide-on-phones">
-		
+
 			<a	href="/${model.portalName}/"
 				target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" 
 				title="<spring:message code="main_menu_home_a_title_t"/>"
 				class="white left"><spring:message code="main_menu_home_a_text_t"
 			/></a>
-			
+
 			<c:choose>
 				<c:when test="${!empty model.user}">
 					<span class="white">
@@ -48,18 +48,18 @@
 				<c:otherwise>
 					<%-- uncomment this to restore myeuropeana link --%>
 					
-					<a	href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
+					<a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
 						target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
 						title="<spring:message code="main_menu_myeuropeana_a_title_t"/>"
 						class="white left">
 						<spring:message code="main_menu_myeuropeana_a_text_t"/>
 					</a>
 					
-				</c:otherwise>		
+				</c:otherwise>
 			</c:choose>
-			
+
 		</span>
-	
+
 		<%-- mobile menu links --%>
 		<div id="mobile-menu" class="eu-menu icon-mobilemenu show-on-phones" aria-hidden="true">
 			<ul>
@@ -68,19 +68,18 @@
 						target="<spring:message code="notranslate_main_menu_home_a_target_t"/>"
 						href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
 				</li>
-				
+
 				<li class="item icon-logo">
 					<a	class="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
 						target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
-						href="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
+						href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
 				</li>
-				
 
 				<%-- language options --%>
 				<li class="item lang">
 					<spring:message code='ChooseLanguage_t' />
 				</li>
-				
+
 				<c:forEach items="${model.portalLanguages}" var="language">
 					<li class="item lang">
 						<a class="${language.languageCode}">${language.languageName}</a>
@@ -88,9 +87,9 @@
 				</c:forEach>
 			</ul>
 		</div>
-		
+
 		<%-- Choose a language --%>
 		<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>
-		
+
 	</div>
 </div>
