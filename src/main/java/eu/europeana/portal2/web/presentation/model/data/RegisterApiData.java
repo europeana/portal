@@ -4,6 +4,10 @@ import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 
 public class RegisterApiData extends SearchPageData {
 
+	protected boolean failureFormat = false;
+	protected boolean failureExists = false;
+	protected boolean success = false;
+
 	private String token;
 	private String email;
 	private String userName;
@@ -17,6 +21,7 @@ public class RegisterApiData extends SearchPageData {
 	private String phone;
 	private String address;
 	private String website;
+	private String requestedAction;
 
 	public String getToken() {
 		return token;
@@ -120,5 +125,37 @@ public class RegisterApiData extends SearchPageData {
 
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+
+	public String getRequestedAction() {
+		return requestedAction;
+	}
+
+	public void setRequestedAction(String requestedAction) {
+		this.requestedAction = requestedAction;
+	}
+
+	public boolean isFailureFormat() {
+		return failureFormat;
+	}
+
+	public void setFailureFormat(boolean failureFormat) {
+		this.failureFormat = failureFormat;
+	}
+
+	public boolean isFailureExists() {
+		return failureExists;
+	}
+
+	public void setFailureExists(boolean failureExists) {
+		this.failureExists = failureExists;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 }

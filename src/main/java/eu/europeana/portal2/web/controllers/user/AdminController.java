@@ -8,21 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
-import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AdminPage;
-import eu.europeana.portal2.web.presentation.model.LimitApiKeyPage;
-import eu.europeana.portal2.web.presentation.model.RegisterApiPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
@@ -68,7 +63,7 @@ public class AdminController {
 	
 	@RequestMapping("/admin/removeUser.html")
 	public String removeUserHandler(
-			@RequestParam(value = "id", required = true) int id,
+			@RequestParam(value = "id", required = true) long id,
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale)

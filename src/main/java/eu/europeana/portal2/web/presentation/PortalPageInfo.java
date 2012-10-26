@@ -42,8 +42,10 @@ public enum PortalPageInfo implements PageInfo {
 
 	ADMIN(null, "admin/admin"),
 	API_CONCOLE("api/console.html", "Europeana - API console", "api/console"),
-	API_REGISTER("api/register.html", "Europeana - API register", "api/register"),
-	ADMIN_LIMIT_APIKEY("admin/limitApiKey.html", "Europeana - API register", "admin/limit-apikey"),
+	API_REQUEST("europeana-api.html", "Europeana - API register", "api/request"),
+	API_REGISTER_FORM("europeana-api.html", "Europeana - Registration", "api/register-api"),
+	API_REGISTER_SUCCESS("register-api-success.html", "api/register-api-success"),
+	ADMIN_LIMIT_APIKEY("admin/limitApiKey.html", "Europeana - Limit API key", "admin/limit-apikey"),
 
 	AJAX(null, "ajax/ajax"),
 	AJAX_SUGGESTION(null, "ajax/suggestions"),
@@ -69,9 +71,7 @@ public enum PortalPageInfo implements PageInfo {
 	MYEU_PASS_CHANGE("forgotPassword.html", "Europeana - Forgot Password", "myeuropeana/change-password"),
 	MYEU_PASS_CHANGED("register-success.html", "Europeana - Registration continued", "myeuropeana/change-password-success"),
 	MYEU_REGISTER("register.html", "Europeana - Registration", "myeuropeana/register"),
-	MYEU_REGISTER_API("register-api.html", "Europeana - Registration", "myeuropeana/register-api"),
 	MYEU_REGISTERED("register-success.html", "myeuropeana/register-success"),
-	MYEU_REGISTERED_API("register-api-success.html", "myeuropeana/register-api-success"),
 
 	NEWSLETTER("newsletter.html", "Europeana - Newsletter", "newsletter/newsletter"),
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,8 @@ import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.web.exception.EmailServiceException;
+import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -47,28 +50,25 @@ import eu.europeana.portal2.web.util.ControllerUtil;
  */
 
 @Controller
-@RequestMapping("/register-api.html")
+@RequestMapping("/europeana-api.html")
 public class RegisterApiPageController {
 
-	@Resource(name = "corelib_db_userService")
-	private UserService userService;
+	@Resource(name = "corelib_db_userService") private UserService userService;
 
-	@Resource(name = "corelib_db_tokenService")
-	private TokenService tokenService;
+	@Resource(name = "corelib_db_tokenService") private TokenService tokenService;
 
-	@Resource(name = "corelib_web_emailService")
-	private EmailService emailService;
+	@Resource(name = "corelib_web_emailService") private EmailService emailService;
 
-	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	@Resource private ClickStreamLogger clickStreamLogger;
 
-	@Resource(name = "configurationService")
-	private Configuration config;
+	@Resource(name = "configurationService") private Configuration config;
 
-	@Resource
-	private ApiKeyService apiKeyService;
+	@Resource private ApiKeyService apiKeyService;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
+
+	private static final String REQUEST_API = "RequestAPI";
+	private static final String REGISTER_API = "RegisterAPI";
 
 	/**
 	 * The default daily usage limit of API
@@ -81,34 +81,41 @@ public class RegisterApiPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView getRequest(@RequestParam("token") String tokenKey,
+	protected ModelAndView getRequest(
+			@RequestParam(value = "token", required = false, defaultValue="") String tokenKey,
 			@ModelAttribute("model") RegisterApiPage model,
-			HttpServletRequest request, HttpServletResponse response,
-			Locale locale) throws EuropeanaQueryException, DatabaseException {
-		log.info("================= /register-api.html GET ==================");
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale) 
+					throws EuropeanaQueryException, DatabaseException {
+
+		log.info("================= /europeana-api.html GET ==================");
 		config.registerBaseObjects(request, response, locale);
 		config.injectProperties(model);
 
-		log.info("Received get request, putting token into registration form model attribute: "
-				+ tokenKey);
-		Token token = tokenService.findByID(tokenKey);
-		// when token is null, show useful message
-		if (token == null) {
-			throw new EuropeanaQueryException(ProblemType.UNKNOWN_TOKEN);
+		ModelAndView page;
+		if (StringUtils.isBlank(tokenKey)) {
+			// request API form
+			page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REQUEST);
+		} else {
+			log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
+			Token token = tokenService.findByID(tokenKey);
+			// when token is null, show useful message
+			if (token == null) {
+				throw new EuropeanaQueryException(ProblemType.UNKNOWN_TOKEN);
+			}
+			model.setToken(token.getToken());
+			model.setEmail(token.getEmail());
+			String apiKey = null;
+			do {
+				apiKey = generatePassPhrase(9);
+			} while (!isUnique(apiKey));
+			model.setApiKey(apiKey);
+			model.setPrivateKey(generatePassPhrase(9));
+			page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REGISTER_FORM);
 		}
-		model.setToken(token.getToken());
-		model.setEmail(token.getEmail());
-		String apiKey = null;
-		do {
-			apiKey = generatePassPhrase(9);
-		} while (!isUnique(apiKey));
-		model.setApiKey(apiKey);
-		model.setPrivateKey(generatePassPhrase(9));
-		clickStreamLogger.logUserAction(request,
-				ClickStreamLogger.UserAction.REGISTER_API);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model,
-				locale, PortalPageInfo.MYEU_REGISTER_API);
-		
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API);
+
 		config.postHandle(this, page);
 
 		return page;
@@ -121,6 +128,7 @@ public class RegisterApiPageController {
 			HttpServletResponse response, Locale locale)
 			throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /register-api.html POST ==================");
+		
 		config.registerBaseObjects(request, response, locale);
 		config.injectProperties(model);
 		if (result.hasErrors()) {
@@ -128,29 +136,58 @@ public class RegisterApiPageController {
 			clickStreamLogger.logUserAction(request,
 					ClickStreamLogger.UserAction.REGISTER_API_FAILURE);
 			ModelAndView page = ControllerUtil.createModelAndViewPage(model,
-					locale, PortalPageInfo.MYEU_REGISTER_API);
+					locale, PortalPageInfo.API_REGISTER_FORM);
 			config.postHandle(this, page);
 			return page;
 		}
 
-		ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
-		User user = userService.createApiKey(model.getToken(),
+		String baseUrl = config.getPortalUrl();
+
+		log.info("requestedAction: " + model.getRequestedAction());
+		// Register for API
+		PageInfo target = null;
+		if (model.getRequestedAction().equals(REQUEST_API)) {
+			
+			if (!ControllerUtil.validEmailAddress(model.getEmail())) {
+				model.setFailureFormat(true);
+			//} else if (emailExists(email)) {
+			//	model.setFailureExists(true);
+			} else {
+				log.info("Sending API registration email");
+				Token token = tokenService.create(model.getEmail());
+				String url = baseUrl + "/europeana-api.html";
+				log.info("token: " + token);
+				log.info("registerUri: " + url);
+				try {
+					emailService.sendToken(token, url);
+				} catch (EmailServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				model.setSuccess(true);
+				target = PortalPageInfo.API_REQUEST;
+			}
+		} else {
+			log.info("Creating API user");
+			ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
+			String token = model.getToken();
+			log.info("token: " + token);
+			User user = userService.createApiKey(token,
 				model.getEmail(), model.getApiKey(), model.getPrivateKey(),
-				DEFAULT_USAGE_LIMIT, model.getUserName(),
+				DEFAULT_USAGE_LIMIT, model.getEmail(), // use email for username
 				model.getCompany(), model.getCountry(), model.getFirstName(),
-				model.getLastName(), model.getWebsite(), model.getAddress());
+				model.getLastName(), model.getWebsite(), model.getAddress(), model.getPhone());
 
-		
-		log.info("User: " + user);
-		log.info("ApiKey: " + apiKey);
-		tokenService.remove(tokenService.findByID(model.getToken()));
-		log.info("token is removed: " + model.getToken());
-		sendNotificationEmails(user, apiKey);
+			log.info("User: " + user);
+			log.info("ApiKey: " + apiKey);
+			tokenService.remove(tokenService.findByID(token));
+			log.info("token is removed: " + model.getToken());
+			sendNotificationEmails(user, apiKey);
+			target = PortalPageInfo.API_REGISTER_SUCCESS;
+		}
 
-		clickStreamLogger.logUserAction(request,
-				ClickStreamLogger.UserAction.REGISTER_API_SUCCESS);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model,
-				locale, PortalPageInfo.MYEU_REGISTERED_API);
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API_SUCCESS);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, target);
 		config.postHandle(this, page);
 
 		return page;
@@ -211,21 +248,23 @@ public class RegisterApiPageController {
 		@Override
 		public void validate(Object o, Errors errors) {
 			RegisterApiPage form = (RegisterApiPage) o;
-
 			final int PASS_MIN = 6;
 			final int PASS_MAX = 30;
 
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "apiKey",
-					"apiKey.required", "API key is required");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "privateKey",
-					"privateKey.required", "Private key is required");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName",
-					"firstName.required", "First name is required");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName",
-					"lastName.required", "Last name is required");
+			if (form.getRequestedAction().equals(REQUEST_API)) {
+				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "apiKey.required", "Email address is required");
+				if (!ControllerUtil.validEmailAddress(form.getEmail())) {
+					errors.rejectValue("email", "email.invalid", "Invalid email address.");
+				}
+				return;
+			}
+
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "apiKey", "apiKey.required", "API key is required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "privateKey", "privateKey.required", "Private key is required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required", "First name is required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.required", "Last name is required");
 			if (!validApiKey(form.getApiKey())) {
-				errors.rejectValue("apiKey", "apiKey.invalidChars",
-						"API key may only contain letters, and digits.");
+				errors.rejectValue("apiKey", "apiKey.invalidChars", "API key may only contain letters, and digits.");
 			}
 
 			if (form.getApiKey() != null) {
@@ -233,14 +272,11 @@ public class RegisterApiPageController {
 					errors.rejectValue(
 							"apiKey",
 							"apiKey.tooLong",
-							String.format(
-									"API Key is too long, it should be max %d characters.",
-									PASS_MAX));
+							String.format("API Key is too long, it should be max %d characters.", PASS_MAX));
 				}
 
 				if (!isUnique(form.getApiKey())) {
-					errors.rejectValue("apiKey", "apiKey.exists",
-							"API Key already exists.");
+					errors.rejectValue("apiKey", "apiKey.exists", "API Key already exists.");
 				}
 			}
 
@@ -249,24 +285,19 @@ public class RegisterApiPageController {
 					errors.rejectValue(
 							"privateKey",
 							"privateKey.length",
-							String.format(
-									"Private key is too short, it should be %d-%d character.",
-									PASS_MIN, PASS_MAX));
+							String.format("Private key is too short, it should be %d-%d character.", PASS_MIN, PASS_MAX));
 				}
 
 				if (form.getPrivateKey().length() > PASS_MAX) {
 					errors.rejectValue(
 							"privateKey",
 							"privateKey.length",
-							String.format(
-									"Private key is too long, it should be %d-%d character.",
-									PASS_MIN, PASS_MAX));
+							String.format("Private key is too long, it should be %d-%d character.", PASS_MIN, PASS_MAX));
 				}
 			}
 
 			if (!form.getDisclaimer()) {
-				errors.rejectValue("disclaimer", "disclaimer.unchecked",
-						"Disclaimer must be accepted.");
+				errors.rejectValue("disclaimer", "disclaimer.unchecked", "Disclaimer must be accepted.");
 			}
 		}
 

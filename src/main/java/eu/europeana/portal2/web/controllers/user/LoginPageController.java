@@ -36,7 +36,7 @@ public class LoginPageController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
-	
+
 	private static final String REGISTER = "Register";
 	private static final String REGISTER_API = "RegisterAPI";
 	private static final String REQUEST = "Request";
@@ -60,18 +60,13 @@ public class LoginPageController {
 		log.info("requestedAction: " + requestedAction);
 
 		if (email != null) {
-			String baseUrl = new StringBuilder(config.getPortalServer())
-				.append("/")
-				.append(config.getPortalName())
-				.toString().replace("//", "/");
+			String baseUrl = config.getPortalUrl();
 
 			// Register
 			if (REGISTER.equals(requestedAction)) {
-//				if (!ControllerUtil.validEmailAddress(email)) {
-//					model.setFailureFormat(true);
-//				} else 
-					
-					if (emailExists(email)) {
+				if (!ControllerUtil.validEmailAddress(email)) {
+					model.setFailureFormat(true);
+				} else if (emailExists(email)) {
 					model.setFailureExists(true);
 				} else {
 					Token token = tokenService.create(email);
@@ -83,6 +78,7 @@ public class LoginPageController {
 				}
 			}
 
+			// Register for API
 			else if (REGISTER_API.equals(requestedAction)) {
 //				if (!ControllerUtil.validEmailAddress(email)) {
 //					model.setFailureFormat(true);
