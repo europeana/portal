@@ -32,7 +32,6 @@
 	    
 	    
 	    <a href="#register" rel="nofollow"><spring:message code="Register_t" /></a><br/>
-      <a href="#register-api" rel="nofollow"><spring:message code="RegisterAPI_t" /></a><br/>
 	    <a href="#request-password" rel="nofollow"><spring:message code="ForgotPassword_t" /></a>
 	  </fieldset>
 	</form>

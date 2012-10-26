@@ -7,13 +7,10 @@
 <%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
 
 <div class="container">
-
 	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/myeuropeana.jspf" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
-
 </div>	
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/html/close-html.jsp" %>
-
