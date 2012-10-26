@@ -132,7 +132,7 @@
 							<br/>
 		
 							<label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
-							<c:forEach items="${model.defaultProfiles}" var="profile">
+							<c:forEach items="${model.defaultSearchProfiles}" var="profile">
 								<%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
 								<input type="radio" name="profile" id="api-profile-${profile}" value="${profile}" <c:if test="${model.profile == profile}">checked="checked"</c:if> />
 								<label for="api-profile-${profile}">${profile}</label><br/>
@@ -172,7 +172,14 @@
 							<label for="api-collectionId">Collection id:</label><br/>
 							<input type="text" id="api-collectionId" name="collectionId" value="${model.collectionId}" /><br/>
 						 --%>
-		
+
+              <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
+              <c:forEach items="${model.defaultObjectProfiles}" var="profile">
+                <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
+                <input type="radio" name="profile" id="api-profile-${profile}" value="${profile}" <c:if test="${model.profile == profile}">checked="checked"</c:if> />
+                <label for="api-profile-${profile}">${profile}</label><br/>
+              </c:forEach>
+
 							<label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>
 							<input type="text" id="api-recordId" name="recordId" value="${model.recordId}" /><br/>
 		
@@ -229,10 +236,7 @@
 				</div>
 			</div>
 
-
 	</div>
-	
-	
 	<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp"%>
 </div>
 

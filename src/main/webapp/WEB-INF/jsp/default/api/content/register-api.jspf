@@ -62,7 +62,11 @@
           </td>
         </tr>
         <tr>
-          <td></td>
+          <td>
+            <label for="website"><spring:message code="registration_website_t" /></label><br/>
+            <sf:input id="website" path="website" />
+            <em><sf:errors path="website" cssClass="error"/></em>
+          </td>
           <td></td>
         </tr>
         <tr>
