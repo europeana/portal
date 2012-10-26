@@ -38,7 +38,7 @@ public class ApiFulldocParser extends ApiWrapper {
 
 	public FullBean getFullBean(String collectionId, String recordId) {
 		FullBean fullBean = null;
-		String json = getObject(collectionId, recordId);
+		String json = getObject(collectionId, recordId, null);
 		if (json == null) {
 			return fullBean;
 		}

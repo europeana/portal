@@ -169,7 +169,6 @@ public class RegisterApiPageController {
 			}
 		} else {
 			log.info("Creating API user");
-			ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 			String token = model.getToken();
 			log.info("token: " + token);
 			User user = userService.createApiKey(token,
@@ -177,6 +176,7 @@ public class RegisterApiPageController {
 				DEFAULT_USAGE_LIMIT, model.getEmail(), // use email for username
 				model.getCompany(), model.getCountry(), model.getFirstName(),
 				model.getLastName(), model.getWebsite(), model.getAddress(), model.getPhone());
+			ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 
 			log.info("User: " + user);
 			log.info("ApiKey: " + apiKey);
@@ -199,7 +199,7 @@ public class RegisterApiPageController {
 			emailService.sendRegisterApiNotifyUser(apiKey);
 			emailService.sendRegisterApiNotifyAdmin(user);
 		} catch (Exception e) {
-			log.severe("Unable to send email to sys " + e.getLocalizedMessage());
+			log.severe("Unable to send email to sys: " + e.getLocalizedMessage());
 		}
 	}
 

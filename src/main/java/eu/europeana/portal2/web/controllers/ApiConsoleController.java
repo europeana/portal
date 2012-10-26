@@ -37,6 +37,9 @@ public class ApiConsoleController {
 
 	@Resource(name="configurationService") private Configuration config;
 
+	private static final String SEARCH = "search";
+	private static final String RECORD = "record";
+
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	@RequestMapping(value = "/api/console.html", produces = MediaType.TEXT_HTML_VALUE)
@@ -60,12 +63,16 @@ public class ApiConsoleController {
 		config.injectProperties(model);
 
 		if (!model.getSupportedFunctions().contains(function)) {
-			function = "search";
+			function = SEARCH;
 		}
 
 		refinements = clearRefinements(refinements);
-		if (!model.getDefaultProfiles().contains(profile)) {
+		if (function.equals(SEARCH) && !model.getDefaultSearchProfiles().contains(profile)) {
 			profile = "standard";
+		}
+
+		if (function.equals(RECORD) && !model.getDefaultObjectProfiles().contains(profile)) {
+			profile = "full";
 		}
 
 		if (!model.getDefaultRows().contains(Integer.toString(rows))) {
@@ -89,9 +96,9 @@ public class ApiConsoleController {
 		if (function.equals("search") && !StringUtils.isBlank(query)) {
 			rawJsonString = api.getSearchResult(query, refinements, profile, start, rows, sort, callback);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			rawJsonString = api.getObject(collectionId, recordId, callback);
+			rawJsonString = api.getObject(collectionId, recordId, profile, callback);
 		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			rawJsonString = api.getObject(recordId, callback);
+			rawJsonString = api.getObject(recordId, profile, callback);
 		} else if (function.equals("suggestions") && !StringUtils.isBlank(query)) {
 			rawJsonString = api.getSuggestions(query, rows, phrases, callback);
 		}

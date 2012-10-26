@@ -33,7 +33,9 @@ public class ApiConsolePage extends ApiData {
 	private boolean phrases;
 
 	private List<String> supportedFunctions = Arrays.asList(new String[]{"search", "record", "suggestions"});
-	private List<String> defaultProfiles = Arrays.asList(new String[]{"standard", "portal", "facets", "breadcrumb", "spelling", "minimal"});
+	// TODO: add back "spelling"
+	private List<String> defaultSearchProfiles = Arrays.asList(new String[]{"standard", "portal", "facets", "breadcrumb", "minimal"});
+	private List<String> defaultObjectProfiles = Arrays.asList(new String[]{"full", "similar"});
 	private List<String> defaultRows = Arrays.asList(new String[]{"12", "24", "48", "96"});
 
 	public String getFunction() {
@@ -52,8 +54,12 @@ public class ApiConsolePage extends ApiData {
 		this.jsonString = jsonString;
 	}
 
-	public List<String> getDefaultProfiles() {
-		return defaultProfiles;
+	public List<String> getDefaultSearchProfiles() {
+		return defaultSearchProfiles;
+	}
+
+	public List<String> getDefaultObjectProfiles() {
+		return defaultObjectProfiles;
 	}
 
 	public List<String> getDefaultRows() {

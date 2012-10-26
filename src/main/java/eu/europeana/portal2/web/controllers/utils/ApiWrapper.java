@@ -85,16 +85,6 @@ public class ApiWrapper {
 		url.append(START_PARAM).append(start);
 		url.append(ROWS_PARAM).append(rows);
 		url.append(PROFILE_PARAM).append(profile);
-		url.append(CALLBACK_PARAM).append(callback);
-
-		return getJsonResponse(url.toString());
-	}
-
-	public String getObject(String collectionId, String recordId, String callback) {
-		StringBuilder url = new StringBuilder(apiUrl);
-		url.append(RECORD_PATH);
-		url.append(collectionId).append("/").append(recordId).append(RECORD_EXT);
-		url.append(WSKEY_PARAM).append(api2key);
 		if (!StringUtils.isBlank(callback)) {
 			url.append(CALLBACK_PARAM).append(callback);
 		}
@@ -102,11 +92,18 @@ public class ApiWrapper {
 		return getJsonResponse(url.toString());
 	}
 
-	public String getObject(String recordId, String callback) {
+	public String getObject(String collectionId, String recordId, String profile, String callback) {
+		return getObject(collectionId, recordId + "/" + profile, callback);
+	}
+
+	public String getObject(String recordId, String profile, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(RECORD_PATH);
 		url.append(recordId).append(RECORD_EXT);
 		url.append(WSKEY_PARAM).append(api2key);
+		if (!StringUtils.isBlank(profile)) {
+			url.append(PROFILE_PARAM).append(profile);
+		}
 		if (!StringUtils.isBlank(callback)) {
 			url.append(CALLBACK_PARAM).append(callback);
 		}
