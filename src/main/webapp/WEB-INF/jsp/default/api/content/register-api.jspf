@@ -1,0 +1,92 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<div class="row" id="registration-content">
+  <h1><spring:message code="RegisterAPI_t" /></h1>
+
+  <div class="twelve columns">
+    <sf:form modelAttribute="model" action="europeana-api.html" method="POST" acceptCharset="UTF-8">
+      <sf:hidden path="token" />
+      <sf:input type="hidden" path="requestedAction" value="RegisterAPI" />
+
+      <table>
+        <tr>
+          <td>
+            <div>
+              <label for="firstName"><spring:message code="FirstName_t" />&nbsp;<span class="error">*</span></label><br/>
+              <sf:input id="firstName" path="firstName" />
+              <em><sf:errors path="firstName" cssClass="error"/></em>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for="lastName"><spring:message code="lastName_t" />&nbsp;<span class="error">*</span></label><br/>
+              <sf:input id="lastName" path="lastName" />
+              <em><sf:errors path="lastName" cssClass="error"/></em>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <label for="email"><spring:message code="EmailAddress_t" />&nbsp;<span class="error">*</span></label><br/>
+              <sf:input id="email" path="email" readonly="true" />
+              <em><sf:errors path="email" cssClass="error"/></em>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <label for="company"><spring:message code="registration_company_t" /></label><br/>
+            <sf:input id="company" path="company" />
+            <em><sf:errors path="company" cssClass="error"/></em>
+          </td>
+          <td>
+            <label for="country"><spring:message code="Country_t" /></label><br/>
+            <sf:input id="country" path="country" />
+            <em><sf:errors path="country" cssClass="error"/></em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="phone"><spring:message code="registration_phone_t" /></label><br/>
+            <sf:input id="phone" path="phone" />
+            <em><sf:errors path="phone" cssClass="error"/></em>
+          </td>
+          <td>
+            <label for="address"><spring:message code="registration_address_t" /></label><br/>
+            <sf:input id="address" path="address" />
+            <em><sf:errors path="address" cssClass="error"/></em>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <label for="apiKey"><spring:message code="myeuropeana_ApiKey_t" /></label><br/>
+            <sf:input id="apiKey" path="apiKey" readonly="true" />
+            <i><sf:errors path="apiKey" cssClass="error"/></i>
+          </td>
+          <td>
+            <label for="privateKey"><spring:message code="myeuropeana_PrivateKey_t" /></label><br/>
+            <sf:input id="privateKey" path="privateKey" readonly="true" />
+            <i><sf:errors path="privateKey" cssClass="error"/></i>
+          </td>
+        </tr>
+      </table>
+
+      <div id="agree">
+        <c:url var="tou" value="/rights/api-terms-of-use.html" />
+        <sf:checkbox path="disclaimer" id="disclaimer"/>
+        <label for="disclaimer"><spring:message code="registration_confirm_api_tou_t" /> &nbsp;<a href="${tou}" target="blank" class="europeana icon-external-right"><spring:message code="termsOfUse_t" /></a></label>
+        <em><sf:errors path="disclaimer" cssClass="error"/></em>
+      </div>
+
+      <input id="submit_registration" type="submit" name="submit_registration" value="<spring:message code="FinishRegistration_t" /> &raquo;" class="submit-button"/>
+    </sf:form>
+  </div>
+</div>

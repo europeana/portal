@@ -1,0 +1,11 @@
+<div class="row" id="registration-content">
+  <h1><spring:message code="RegisterAPI_t" /></h1>
+  <div class="twelve columns">
+    <div id="login-boxes">
+      <p>Congratulation! You successfully registered Europeana API services.</p>
+      <p>Your API Key is <tt>${model.apiKey}</tt></p>
+      <p>Your Private Key is <tt>${model.privateKey}</tt></p>
+      <div id="login-response"></div>
+    </div>
+  </div>
+</div>

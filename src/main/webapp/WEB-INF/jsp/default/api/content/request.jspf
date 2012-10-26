@@ -1,0 +1,28 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<div class="row">
+  <div id="login-boxes" class="twelve columns">
+    <div class="login-box">
+      <sf:form modelAttribute="model" action="europeana-api.html" method="POST">
+      
+        <h2><spring:message code="RegisterAPI_t" /></h2>
+        <fieldset>
+          <sf:input type="hidden" path="requestedAction" value="RequestAPI" />
+
+          <label for="register_email"><spring:message code="EmailAddress_t" /></label><br/>
+          <sf:input id="register_email" path="email" type="text" name="email" maxlength="50"/>
+          <em><sf:errors path="email" cssClass="error"/></em><br/>
+
+          <input type="submit" name="submit_button" class="europeana-button-1 deans-button-1"
+            value="<spring:message code="RegisterAPI_t" />"/>
+        </fieldset>
+      </sf:form>
+
+      <c:if test="${model.success}">
+        <spring:message code="AnEmailHasBeenSentTo_t" />: <b>${model.email}</b>.
+        <spring:message code="PleaseFollowTheLinkProvided_t" />.
+      </c:if>
+
+    </div>
+  </div>
+</div>
