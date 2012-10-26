@@ -323,7 +323,7 @@ eu.europeana.header = {
 						request.field = filter;
 					}
 					
-					jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request.toLowerCase(), function(data) {
+					jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
 						
 						//create array for response objects
 						var suggestions = [];
