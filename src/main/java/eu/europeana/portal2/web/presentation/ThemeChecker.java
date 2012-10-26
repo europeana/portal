@@ -21,7 +21,7 @@ public class ThemeChecker {
 		registeredThemes.add("portal1");
 		registeredThemes.add("vanilla");
 		registeredThemes.add("devel");
-		
+
 		registeredThemes.add("portal2-html");
 		registeredThemes.add("portal2-html-css");
 		registeredThemes.add("portal2-html-css-js");
