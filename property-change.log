@@ -1,17 +1,21 @@
 2012-10-25
 remove displayPageUrl
 
-new property:
+new properties:
 
-api.rowLimit
-description: The maximal number of rows in an API search result
+1) api.rowLimit
+description: The maximal number of records in an API search result
 
 example:
 api.rowLimit = 100
 
-new property:
+2) portal.rowLimit
+description: The maximal number of records in an portal search result
 
-api.optOutList
+example:
+portal.rowLimit = 96
+
+3) api.optOutList
 description: Location of opt-out list, used by both api and portal. It should point to an existing file which contains the list of opt-out collections.
 
 example:
