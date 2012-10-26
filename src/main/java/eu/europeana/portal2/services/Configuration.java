@@ -109,7 +109,11 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.rowLimit']}")
 	private String rowLimit;
 
+	/////////////////////////////// generated properties
+
 	private Map<String, String> seeAlsoTranslations;
+
+	private String portalUrl;
 
 	/////////////////////////////// complex functions
 
@@ -248,5 +252,17 @@ public class Configuration {
 			}
 		}
 		return seeAlsoTranslations;
+	}
+	
+	public String getPortalUrl() {
+		if (portalUrl == null) {
+			StringBuilder sb = new StringBuilder(portalServer);
+			if (!portalServer.endsWith("/") && !portalName.startsWith("/")) {
+				sb.append("/");
+			}
+			sb.append(portalName);
+			portalUrl = sb.toString();
+		}
+		return portalUrl;
 	}
 }
