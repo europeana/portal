@@ -5,10 +5,10 @@
 <%@ include file="/WEB-INF/jsp/portal2-html/_common/meta.jsp" %>
 <%@ include file="/WEB-INF/jsp/portal2-html/_common/links.jsp" %>
 <c:if test="${model.theme == 'portal2-html-css' || model.theme == 'portal2-html-css-js'}">
-<%@ include file="/WEB-INF/jsp/portal2-html-css/_common/links.jsp" %>
+<%@ include file="/WEB-INF/jsp/portal2-html-css/_common/links-debug.jsp" %>
 </c:if>
 <c:if test="${model.theme == 'portal2-html-css-js'}">
-<%@ include file="/WEB-INF/jsp/portal2-html-css-js/_common/links.jsp" %>
+<%@ include file="/WEB-INF/jsp/portal2-html-css-js/_common/links-debug.jsp" %>
 </c:if>
 <title>${model.pageTitle}</title>
 </head>
