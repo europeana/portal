@@ -1,4 +1,3 @@
-<%@ include file="/WEB-INF/jsp/_common/tag-libraries.jsp" %>
 <div id="header-strip" class="row">
 <div>
 <span class="hide-on-phones"><a href="/${model.portalName}/" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" title="<spring:message code="main_menu_home_a_title_t"/>" class="white left"><spring:message code="main_menu_home_a_text_t"/></a>
