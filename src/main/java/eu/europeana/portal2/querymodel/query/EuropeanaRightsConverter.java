@@ -106,7 +106,7 @@ public final class EuropeanaRightsConverter {
 	private static License tryCcLicenses(Matcher matcher) {
 		return new License(matcher.group(), 
 			String.format("CC %s", matcher.group(2).toUpperCase().trim()), 
-			String.format("%s%s/*", matcher.group(1).replace("http:", "http\\:"), matcher.group(2))
+			String.format("%s%s/*", matcher.group(1), matcher.group(2))
 		);
 	}
 
@@ -142,7 +142,7 @@ public final class EuropeanaRightsConverter {
 		public License(String originalURI, String label) {
 			this.originalURI = originalURI;
 			this.label = label;
-			this.modifiedURI = originalURI.replace("http:", "http\\:");
+			this.modifiedURI = originalURI;
 		}
 
 		public License(String originalURI, String label, String modifiedURI) {

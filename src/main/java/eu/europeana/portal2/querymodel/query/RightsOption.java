@@ -53,7 +53,7 @@ public enum RightsOption {
 	private String rightsText = null;
 	private String rightsIcon = null;
 	private boolean showExternalIcon = false;
-	
+
 	/**
 	 * Constructor for method
 	 * 
@@ -70,8 +70,6 @@ public enum RightsOption {
 		this.rightsIcon = rightsIcon;
 		this.showExternalIcon = showExternalIconIn;
 	}
-
-
 
 	/**
 	 * Returns the full Url associated with the rights
@@ -99,7 +97,7 @@ public enum RightsOption {
 	public String getRightsIcon() {
 		return rightsIcon;
 	}
-	
+
 	/**
 	 * Returns the url of the icon associated with the results
 	 * 
@@ -108,8 +106,6 @@ public enum RightsOption {
 	public boolean getShowExternalIcon() {
 		return showExternalIcon;
 	}
-
-
 
 	public static RightsOption safeValueByUrl(String url) {
 		if (StringUtils.isNotBlank(url)) {
