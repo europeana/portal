@@ -1,6 +1,7 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -57,6 +58,8 @@ public class AdminController {
 		AdminPage model = new AdminPage();
 		model.setTheme("devel");
 		config.injectProperties(model);
+
+		long t0 = new Date().getTime();
 		// model.setUsers(userService.findAll());
 		List<User> users = new ArrayList<User>();
 		List<ApiKey> apiKeys = apiKeyService.findAll();
@@ -66,6 +69,8 @@ public class AdminController {
 				users.add(user);
 			}
 		}
+		long t = (new Date().getTime() - t0);
+		log.info("get users took " + t);
 		model.setUsers(users);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN);
