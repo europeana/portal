@@ -17,12 +17,12 @@
 		</div>
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
-		<a href="${cell.fullDocUrl}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}">
+		<a href="${fn:escapeXml(cell.fullDocUrl)}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}">
 			<div class="ellipsis">
 				<c:choose>
 					<c:when test="${!empty cell.title}">${title}</c:when>
 					<c:otherwise></c:otherwise>
-				</c:choose>				
+				</c:choose>
 				<span class="fixed"><span aria-hidden="true" class="${icon_class}"></span></span>
 			</div>
 		</a>
