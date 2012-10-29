@@ -199,6 +199,6 @@ public class ApiWrapper {
 	}
 
 	public String getUrl() {
-		return lastUrl.replace(api2key, wskeyReplacement);
+		return lastUrl == null ? null : lastUrl.replace(api2key, wskeyReplacement);
 	}
 }
