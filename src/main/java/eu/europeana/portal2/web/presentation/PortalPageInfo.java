@@ -42,9 +42,9 @@ public enum PortalPageInfo implements PageInfo {
 
 	ADMIN(null, "admin/admin"),
 	API_CONCOLE("api/console.html", "Europeana - API console", "api/console"),
-	API_REQUEST("europeana-api.html", "Europeana - API register", "api/request"),
-	API_REGISTER_FORM("europeana-api.html", "Europeana - Registration", "api/register-api"),
-	API_REGISTER_SUCCESS("register-api-success.html", "api/register-api-success"),
+	API_REQUEST("api/registration.html", "Europeana - API register", "api/request"),
+	API_REGISTER_FORM("api/registration.html", "Europeana - Registration", "api/register-api"),
+	API_REGISTER_SUCCESS("api/registration-success.html", "api/register-api-success"),
 	ADMIN_LIMIT_APIKEY("admin/limitApiKey.html", "Europeana - Limit API key", "admin/limit-apikey"),
 
 	AJAX(null, "ajax/ajax"),

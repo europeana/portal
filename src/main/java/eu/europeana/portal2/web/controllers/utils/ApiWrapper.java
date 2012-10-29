@@ -36,8 +36,8 @@ import eu.europeana.portal2.web.util.QueryUtil;
 
 public class ApiWrapper {
 
-	private static final String SEARCH_PATH = "/v2/search.json?";
-	private static final String SUGGESTIONS_PATH = "/v2/suggestions.json?";
+	private static final String SEARCH_PATH = "/v2/search.json";
+	private static final String SUGGESTIONS_PATH = "/v2/suggestions.json";
 	private static final String RECORD_PATH = "/v2/record/";
 	private static final String RECORD_EXT = ".json";
 
@@ -46,6 +46,7 @@ public class ApiWrapper {
 	private static final String WSKEY_PARAM = "?wskey=";
 	private static final String START_PARAM = "&start=";
 	private static final String ROWS_PARAM = "&rows=";
+	private static final String SUGGESTION_ROWS_PARAM = "?rows=";
 	private static final String PROFILE_PARAM = "&profile=";
 	private static final String CALLBACK_PARAM = "&callback=";
 	private static final String QUERY_PARAM = "&query=";
@@ -60,12 +61,14 @@ public class ApiWrapper {
 	protected String api2key;
 	protected String api2secret;
 	protected HttpSession session;
+	protected String wskeyReplacement;
 
 	public ApiWrapper(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		this.apiUrl = apiUrl;
 		this.api2key = api2key;
 		this.api2secret = api2secret;
 		this.session = session;
+		wskeyReplacement = api2key.replaceAll(".", "x");
 	}
 
 	public String getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort, String callback) {
@@ -114,10 +117,10 @@ public class ApiWrapper {
 	public String getSuggestions(String query, int rows, boolean phrases, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(SUGGESTIONS_PATH);
+		url.append(SUGGESTION_ROWS_PARAM).append(rows);
 		if (!StringUtils.isBlank(query)) {
 			url.append(QUERY_PARAM).append(QueryUtil.encode(query));
 		}
-		url.append(ROWS_PARAM).append(rows);
 		url.append(PHRASES_PARAM).append(phrases);
 		if (!StringUtils.isBlank(callback)) {
 			url.append(CALLBACK_PARAM).append(callback);
@@ -130,18 +133,9 @@ public class ApiWrapper {
 		lastUrl = url;
 		String jsonResponse = null;
 		try {
-			/*
-			String sessionId = getSessionID();
-			if (sessionId == null) {
-				return null;
-			}
-			*/
-
 			HttpClient client = new HttpClient();
 			GetMethod method = new GetMethod(url);
 			log.info("get URL: " + method.getURI().toString());
-			// method.setRequestHeader("Cookie", sessionId);
-
 			int statusCode = client.executeMethod(method);
 			if (statusCode != HttpStatus.SC_OK) {
 				log.severe("Method failed: " + method.getStatusLine());
@@ -205,6 +199,6 @@ public class ApiWrapper {
 	}
 
 	public String getUrl() {
-		return lastUrl;
+		return lastUrl.replace(api2key, wskeyReplacement);
 	}
 }

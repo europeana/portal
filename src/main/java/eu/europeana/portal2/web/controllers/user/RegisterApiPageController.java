@@ -50,7 +50,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
  */
 
 @Controller
-@RequestMapping("/europeana-api.html")
+@RequestMapping("/api/registration.html")
 public class RegisterApiPageController {
 
 	@Resource(name = "corelib_db_userService") private UserService userService;
@@ -89,7 +89,7 @@ public class RegisterApiPageController {
 			Locale locale) 
 					throws EuropeanaQueryException, DatabaseException {
 
-		log.info("================= /europeana-api.html GET ==================");
+		log.info("================= /api/registration.html GET ==================");
 		config.registerBaseObjects(request, response, locale);
 		config.injectProperties(model);
 
@@ -127,16 +127,15 @@ public class RegisterApiPageController {
 			BindingResult result, HttpServletRequest request,
 			HttpServletResponse response, Locale locale)
 			throws EuropeanaQueryException, DatabaseException {
-		log.info("================= /register-api.html POST ==================");
+		log.info("================= /api/registration.html POST ==================");
 		
 		config.registerBaseObjects(request, response, locale);
 		config.injectProperties(model);
 		if (result.hasErrors()) {
-			log.info("The registration form has errors");
-			clickStreamLogger.logUserAction(request,
-					ClickStreamLogger.UserAction.REGISTER_API_FAILURE);
-			ModelAndView page = ControllerUtil.createModelAndViewPage(model,
-					locale, PortalPageInfo.API_REGISTER_FORM);
+			log.info("The registration form has errors " + model.getFirstName());
+
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API_FAILURE);
+			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REGISTER_FORM);
 			config.postHandle(this, page);
 			return page;
 		}
@@ -155,7 +154,7 @@ public class RegisterApiPageController {
 			} else {
 				log.info("Sending API registration email");
 				Token token = tokenService.create(model.getEmail());
-				String url = baseUrl + "/europeana-api.html";
+				String url = baseUrl + "/api/registration.html";
 				log.info("token: " + token);
 				log.info("registerUri: " + url);
 				try {
@@ -228,7 +227,6 @@ public class RegisterApiPageController {
 
 	private boolean isUnique(String apiKey) {
 		try {
-			log.info("apiKeyService: " + apiKeyService);
 			return (apiKeyService.findByID(apiKey) == null);
 		} catch (DatabaseException e) {
 			log.severe("DatabaseException while finding apikey: "

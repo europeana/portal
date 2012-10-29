@@ -58,6 +58,7 @@ public class ApiConsoleController {
 			HttpServletRequest request,
 			HttpServletResponse response, 
 			Locale locale) {
+		log.info("===== /api/console.html =====");
 		config.registerBaseObjects(request, response, locale);
 		ApiConsolePage model = new ApiConsolePage();
 		config.injectProperties(model);
@@ -112,6 +113,7 @@ public class ApiConsoleController {
 
 		model.setJsonString(niceJsonString);
 		model.setApiUrl(api.getUrl());
+		log.info("API URL: " + model.getApiUrl());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);
 		config.postHandle(this, page);
