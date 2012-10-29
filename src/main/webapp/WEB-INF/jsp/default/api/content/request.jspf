@@ -1,9 +1,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="row">
   <div id="login-boxes" class="twelve columns">
     <div class="login-box">
-      <sf:form modelAttribute="model" action="europeana-api.html" method="POST">
+      <c:url var="action" value="/api/registration.html" />
+      <sf:form modelAttribute="model" action="${action}" method="POST">
       
         <h2><spring:message code="RegisterAPI_t" /></h2>
         <fieldset>
