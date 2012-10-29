@@ -13,7 +13,9 @@
 </div>
 <div id="newsletter-wrapper" class="six columns">
 <h3><spring:message code="news_letter_signup_t" /></h3>
-<!--  <iframe style="margin:0; width:100%;" id="footer-iframe" src="/${model.portalName}/newsletter.html"></iframe>  -->
+<c:if test="${model.theme == 'portal2-html-css-js'}">
+<iframe style="margin:0; width:100%;" id="footer-iframe" src="/${model.portalName}/newsletter.html"></iframe>
+</c:if>
 </div>
 </div>
 <div class="row" id="footer-links-all">
