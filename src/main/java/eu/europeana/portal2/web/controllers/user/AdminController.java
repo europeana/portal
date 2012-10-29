@@ -1,5 +1,7 @@
 package eu.europeana.portal2.web.controllers.user;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -54,7 +57,16 @@ public class AdminController {
 		AdminPage model = new AdminPage();
 		model.setTheme("devel");
 		config.injectProperties(model);
-		model.setUsers(userService.findAll());
+		// model.setUsers(userService.findAll());
+		List<User> users = new ArrayList<User>();
+		List<ApiKey> apiKeys = apiKeyService.findAll();
+		for (ApiKey apiKey : apiKeys) {
+			User user = apiKey.getUser();
+			if (!users.contains(user)) {
+				users.add(user);
+			}
+		}
+		model.setUsers(users);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN);
 		config.postHandle(this, page);
