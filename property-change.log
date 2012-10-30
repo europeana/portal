@@ -20,3 +20,11 @@ description: Location of opt-out list, used by both api and portal. It should po
 
 example:
 api.optOutList=/home/peterkiraly/workspace/europeana/trunk/api/opt-out.list.txt
+
+2012-10-29
+
+new property:
+register-api.to
+
+example:
+register-api.to = api@europeana.eu
