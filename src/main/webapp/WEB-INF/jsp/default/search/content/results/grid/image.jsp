@@ -12,7 +12,7 @@
  --%>
  
 <c:if test="${!empty cell.thumbnail}">
-	<a href="${fn:escapeXml(cell.fullDocUrl)}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}" ${targetArg} rel="nofollow">
+	<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}" ${targetArg} rel="nofollow">
 		<img class="thumbnail" src='${cell.thumbnail}' alt="${cell.title[0]}" data-type="${fn:toLowerCase(cell.type)}" />
 	</a>
 </c:if>

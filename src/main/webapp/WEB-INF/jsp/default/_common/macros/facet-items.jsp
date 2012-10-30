@@ -23,7 +23,7 @@
 		
 			<input type="checkbox" ${checkedValue} id="cb-${label}" name="cb-${label}"/>
 				
-			<a  href="/${model.portalName}/${model.pageName}?query=${fn:escapeXml(model.query)}${fn:escapeXml(facet_item.url)}${rowsParam}"
+			<a  href="/${model.portalName}/${model.pageName}?query=${fn:replace(model.query, '"', '&quot;')}${fn:replace(facet_item.url, '"', '&quot;')}${rowsParam}"
 				title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
 				
 				<label for="cb-${label}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
