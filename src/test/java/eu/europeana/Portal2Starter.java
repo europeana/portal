@@ -27,19 +27,15 @@ public class Portal2Starter {
 		server.setStopAtShutdown(true);
 
 		String webapp = getEuropeanaPath() + "/src/main/webapp";
-
 		System.err.println("Webapp path = " + webapp);
 
-		try{
-			
+		try {
 			WebAppContext wac = new WebAppContext(webapp, "/portal2");
 			server.setHandler(wac);
-			
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		server.start();
 	}
 }
