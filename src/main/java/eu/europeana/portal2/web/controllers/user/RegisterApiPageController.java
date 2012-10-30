@@ -146,11 +146,9 @@ public class RegisterApiPageController {
 		// Register for API
 		PageInfo target = null;
 		if (model.getRequestedAction().equals(REQUEST_API)) {
-			
+
 			if (!ControllerUtil.validEmailAddress(model.getEmail())) {
 				model.setFailureFormat(true);
-			//} else if (emailExists(email)) {
-			//	model.setFailureExists(true);
 			} else {
 				log.info("Sending API registration email");
 				Token token = tokenService.create(model.getEmail());
@@ -158,9 +156,9 @@ public class RegisterApiPageController {
 				log.info("token: " + token);
 				log.info("registerUri: " + url);
 				try {
-					emailService.sendToken(token, url);
+					emailService.sendApiToken(token, url);
 				} catch (EmailServiceException e) {
-					// TODO Auto-generated catch block
+					log.severe("Error during API token sending. " + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 				model.setSuccess(true);
