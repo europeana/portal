@@ -52,6 +52,7 @@ public class ApiWrapper {
 	private static final String QUERY_PARAM = "&query=";
 	private static final String QF_PARAM = "&qf=";
 	private static final String PHRASES_PARAM = "&phrases=";
+	private static final String HEADER = "{\"apikey\":\"";
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -62,6 +63,8 @@ public class ApiWrapper {
 	protected String api2secret;
 	protected HttpSession session;
 	protected String wskeyReplacement;
+	protected String headerApiKey;
+	protected String headerApiKeyReplacement;
 
 	public ApiWrapper(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		this.apiUrl = apiUrl;
@@ -69,6 +72,8 @@ public class ApiWrapper {
 		this.api2secret = api2secret;
 		this.session = session;
 		wskeyReplacement = api2key.replaceAll(".", "x");
+		headerApiKey = HEADER + api2key + "\",";
+		headerApiKeyReplacement = HEADER + wskeyReplacement + "\",";
 	}
 
 	public String getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort, String callback) {
@@ -150,7 +155,7 @@ public class ApiWrapper {
 			e.printStackTrace();
 		}
 
-		return jsonResponse;
+		return jsonResponse.replace(headerApiKey, headerApiKeyReplacement);
 	}
 
 	protected String getSessionID() {
