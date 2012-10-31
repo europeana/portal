@@ -75,9 +75,6 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 						}
 						boolean doAppend = true;
 						String comparableQf = qfValue;
-						if (qfField.equals(RIGHTS_FACET)) {
-							qfValue = '"' + qfValue + '"';
-						}
 						if (qfField.equalsIgnoreCase(facetField.getName())) {
 							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(comparableQf)
 								|| comparableQf.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
@@ -101,8 +98,8 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 				url.append(":");
 				if (RIGHTS_FACET.equals(type)) {
 					EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel());
-					String value = (license.getModifiedURI() != null) ? license.getModifiedURI() : license.getOriginalURI();
-					url.append('"').append(value).append('"');
+					String value = (license.isModified()) ? license.getModifiedURI() : '"' + license.getOriginalURI() + '"';
+					url.append(value);
 				} else {
 					// escape Solr special chars in item.label
 					url.append(

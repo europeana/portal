@@ -143,6 +143,8 @@ public class Configuration {
 			configInterceptor.postHandle(request, response, object, page);
 		} catch (Exception e) {
 			log.severe("Exception: " + e.getMessage());
+			log.severe(String.format("configInterceptor: %s, request: %s, response: %s, object: %s, page: %s",
+				(configInterceptor == null), (request == null), (response == null), (object == null), (page == null)));
 			e.printStackTrace();
 		}
 	}

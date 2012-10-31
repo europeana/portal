@@ -94,7 +94,7 @@ public final class EuropeanaRightsConverter {
 	}
 
 	/**
-	 * Tries to convert a URI with the format
+	 * Tries to convert a URI in the format
 	 * http://creativecommons.org/licenses/TYPE/VERSION/COUNTRY/ to (CC TYPE
 	 * VESRSION).
 	 * 
@@ -104,14 +104,14 @@ public final class EuropeanaRightsConverter {
 	 * @return The extracted information about the URI or null if not matched.
 	 */
 	private static License tryCcLicenses(Matcher matcher) {
-		return new License(matcher.group(), 
+		return new License(matcher.group(),
 			String.format("CC %s", matcher.group(2).toUpperCase().trim()), 
 			String.format("%s%s/*", matcher.group(1), matcher.group(2))
 		);
 	}
 
 	/**
-	 * Tries to convert a URI with the format
+	 * Tries to convert a URI in the format
 	 * http://creativecommons.org/publicdomain/mark/VERSION/ to (CC Public
 	 * Domain VERSION).
 	 * 
@@ -134,6 +134,7 @@ public final class EuropeanaRightsConverter {
 		private String label;
 
 		private String modifiedURI;
+		private boolean modified = false;
 
 		public License(String originalURI) {
 			this.originalURI = originalURI;
@@ -145,10 +146,18 @@ public final class EuropeanaRightsConverter {
 			this.modifiedURI = originalURI;
 		}
 
+		/**
+		 * Construct new license
+		 * 
+		 * @param originalURI The original URI
+		 * @param label Label to use
+		 * @param modifiedURI The modified URI
+		 */
 		public License(String originalURI, String label, String modifiedURI) {
 			this.originalURI = originalURI;
 			this.label = label;
 			this.modifiedURI = modifiedURI;
+			modified = true;
 		}
 
 		public String getOriginalURI() {
@@ -187,6 +196,10 @@ public final class EuropeanaRightsConverter {
 			sb.append(", modifiedURI='").append(modifiedURI).append('\'');
 			sb.append('}');
 			return sb.toString();
+		}
+
+		public boolean isModified() {
+			return modified;
 		}
 	}
 }
