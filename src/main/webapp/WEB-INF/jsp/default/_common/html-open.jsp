@@ -10,6 +10,6 @@
 
 
 </head>
-<body>
+<body class="locale-${model.locale}">
 
 <c:if test="${not empty model.announceMsg}">${model.announceMsg}</c:if>

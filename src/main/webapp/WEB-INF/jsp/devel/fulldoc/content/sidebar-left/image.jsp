@@ -15,7 +15,7 @@
 <a id="${urlRefIdImg}"></a>
 <c:choose>
   <c:when test="${lightboxRef}">
-    <a id="lightbox_href" href="/${model.portalName}/redirect.html?shownAt=${model.urlRef}&amp;provider=${model.document.europeanaDataProvider[0]}&amp;id=${model.document.id}" target="_blank">
+    <a id="lightbox_href" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${model.document.europeanaDataProvider[0]}&amp;id=${model.document.id}" target="_blank">
       <img class="trigger" src="${model.thumbnailUrl}" alt="${model.pageTitle}"/>
     </a>
     <div class="trigger bold view">

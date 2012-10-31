@@ -16,7 +16,7 @@
 
 <a	id="${urlRefId}"
 	class="icon-external-right europeana"
-	href="/${model.portalName}/redirect.html?shownAt=${model.urlRef}&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.id}" ${href_attributes}>
+	href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.id}" ${href_attributes}>
   ${model.shownAtProvider}
 </a>
 <!-- original-context -->
