@@ -31,96 +31,97 @@
  * @var data.showTranslationServices bool - whether or not translation of the field is appropriate
  * @var data.externalServices array - a collection of External Services associated with the field
  * @var data.ESSEnabled bool - whether or not the field has external services associated with it,
- *		e.g., the object can be searched for on wikipedia or imdb
+ *    e.g., the object can be searched for on wikipedia or imdb
  *
  * @author Dan Entous <contact@pennlinepublishing.com>
  * @modified 2011-06-08 15:25 GMT+1
 --%>
 
 <c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
-	<c:set var="item_id" value="" />
-	<c:if test='${"dc:description"	== data.fieldName}'><c:set var="item_id" value=' id="item-description" '	/></c:if>
-	<c:if test='${"dc:subject"		== data.fieldName}'><c:set var="item_id" value=' id="item-subject" '		/></c:if>
+  <c:set var="item_id" value="" />
+  <c:if test='${"dc:description"  == data.fieldName}'><c:set var="item_id" value=' id="item-description" ' /></c:if>
+  <c:if test='${"dc:subject"    == data.fieldName}'><c:set var="item_id" value=' id="item-subject" ' /></c:if>
 
-	<c:set var="item_class" value=""/>
-	<c:if test='${"dc:rights" == data.fieldName}'><c:set var="item_class" value=' item-moreless' /></c:if>
+  <c:set var="item_class" value=""/>
+  <c:if test='${"dc:rights" == data.fieldName}'><c:set var="item_class" value=' item-moreless' /></c:if>
 
-	<%-- If the content is UGC we skip the dc:source display --%>
-	<c:if test="${!('dc:source' == data.fieldName && ugc)}">
-		<<c:out value="${wrapper}"/> <c:out value="${item_id}" /> class="item-metadata${item_class}">
-			<%-- field's label --%>
-			<span class="bold notranslate"><spring:message code="${data.fieldLabel}" />:</span>
+  <%-- If the content is UGC we skip the dc:source display --%>
+  <c:if test="${!('dc:source' == data.fieldName && ugc)}">
+    <<c:out value="${wrapper}"/> <c:out value="${item_id}" /> class="item-metadata${item_class}">
+      <%-- field's label --%>
+      <span class="bold notranslate"><spring:message code="${data.fieldLabel}" />:</span>
 
-			<%-- iterate over possible values for the given label --%>
-			
-			<c:forEach items="${data.fieldValues}" var="value">
-			
-				<%-- determine if value is translatable or not --%>
-				
-				<c:set var="translatable" value=' class="notranslate"' />
-				<c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
-					<c:set var="translatable" value=' class="translate"' />
-				</c:if>
-				
-				
-				<%-- display the field's value
-					 value.searchOn = the value has an href value that when clicked on will issue a search in the portal based on other metadata criteria available to the item
-					 value.url = the value is actually a url that links to further information --%>
-					 
-				<c:set var="seo_wrapper" value="" />
-				
-				<c:if test="${'dcterms:alternative' == data.fieldName}">
-					<c:set var="seo_wrapper" value="h2" />
-				</c:if>
-				<c:if test="${'dc:creator' == data.fieldName}">
-					<c:set var="seo_wrapper" value="h2" />
-				</c:if>
-				
-				<c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
-				
-				<c:choose>
-					<c:when test="${value.searchOn}">
-						<a href="${value.searchOn}" target="_top"${translatable} rel="nofollow">${value.value}</a>
-					</c:when>
-					<c:when test="${value.url}">
-						<a href="${value.value}" target="_blank"${translatable} rel="nofollow">${value.value}</a>
-					</c:when>
-					<c:otherwise>
-						<span${translatable}>${value.value}
-							<c:if test="${value.value == '3D PDF'}">
-								<img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
-							</c:if>
-						</span>
-					</c:otherwise>
-				</c:choose>
-				
-				<c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
-				
-				
-				<%-- link to external services if field has them --%>
-				<%--
-				<c:if test="${!empty data.ESSEnabled && data.ESSEnabled && ess}">
-				 | <a href="${model.essUrl}?field=${data.fieldName}&amp;value=${value.valueURL}" 
-					 title="<spring:message code="essHelpIconAltText_t" />"
-					 target="_blank" class="external-services toggle-menu-icon">${value.value}</a>
-				</c:if>
-				--%>
-				<%-- handle inline or separate lines for multiple values --%>
-				<c:if test="${value_has_next}">
-					<c:choose>
-						<c:when test="{!empty data.seperateLines && data.seperateLines}">
-							<br /><br />
-						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="{!empty data.ESSEnabled && data.ESSEnabled && ess}">&#160;</c:when>
-								<c:otherwise>;</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-				</c:if>
-			</c:forEach>
-		</${wrapper}>
-	</c:if>
+      <%-- iterate over possible values for the given label --%>
+      <c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+
+        <%-- determine if value is translatable or not --%>
+        <c:set var="translatable" value='class="notranslate"' />
+        <c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
+          <c:set var="translatable" value='class="translate"' />
+        </c:if>
+
+        <c:set var="separator" value='' />
+        <c:if test="${!valueStatus.last}">
+          <c:set var="separator" value='; ' />
+        </c:if>
+
+        <%-- display the field's value
+           value.searchOn = the value has an href value that when clicked on will issue a search in the portal based on other metadata criteria available to the item
+           value.url = the value is actually a url that links to further information --%>
+        <c:set var="seo_wrapper" value="" />
+
+        <c:if test="${'dcterms:alternative' == data.fieldName}">
+          <c:set var="seo_wrapper" value="h2" />
+        </c:if>
+        <c:if test="${'dc:creator' == data.fieldName}">
+          <c:set var="seo_wrapper" value="h2" />
+        </c:if>
+
+        <c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
+
+        <c:choose>
+           <c:when test="${value.searchOn}">
+            <a href="${value.searchOn}" target="_top" ${translatable} rel="nofollow">${value.value}</a>${separator}
+          </c:when>
+          <c:when test="${value.url}">
+            <a href="${value.value}" target="_blank" ${translatable} rel="nofollow">${value.value}</a>${separator}
+          </c:when>
+          <c:otherwise>
+            <span ${translatable}>
+              <c:out value="${value.value}" />
+              <c:if test="${value.value == '3D PDF'}">
+                <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
+              </c:if>
+            </span><c:out value="${separator}" />
+          </c:otherwise>
+        </c:choose>
+        <c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
+
+        <%-- link to external services if field has them --%>
+        <%--
+        <c:if test="${!empty data.ESSEnabled && data.ESSEnabled && ess}">
+         | <a href="${model.essUrl}?field=${data.fieldName}&amp;value=${value.valueURL}" 
+           title="<spring:message code="essHelpIconAltText_t" />"
+           target="_blank" class="external-services toggle-menu-icon">${value.value}</a>
+        </c:if>
+        --%>
+
+        <%-- handle inline or separate lines for multiple values --%>
+        <c:if test="${value_has_next}">
+          <c:choose>
+            <c:when test="{!empty data.seperateLines && data.seperateLines}">
+              <br /><br />
+            </c:when>
+            <c:otherwise>
+              <c:choose>
+                <c:when test="{!empty data.ESSEnabled && data.ESSEnabled && ess}">&#160;</c:when>
+                <c:otherwise>;</c:otherwise>
+              </c:choose>
+            </c:otherwise>
+          </c:choose>
+        </c:if>
+      </c:forEach>
+    </${wrapper}>
+  </c:if>
 </c:forEach>
 <!-- /displayEseDataAsHtml -->

@@ -68,9 +68,9 @@
 
           <c:when test="${field.mapsOfLists}">
             <c:forEach items="${docElement[field.propertyName]}" var="languageVersion" varStatus="langStatus">
-              <em>${languageVersion.key}:</em>
+              <em>${languageVersion.key}:</em><br />
               <c:forEach items="${languageVersion.value}" var="fieldInstance" varStatus="instanceStatus">
-                <span ${semanticAttributes} xml:lang="${languageVersion.key}">${fieldInstance}</span><c:if test="${!instanceStatus.last}">, </c:if>
+                <span ${semanticAttributes} xml:lang="${languageVersion.key}">${fieldInstance}</span><c:if test="${!instanceStatus.last}"><br /></c:if>
               </c:forEach>
               <c:if test="${!langStatus.last}"><br /></c:if>
             </c:forEach>
