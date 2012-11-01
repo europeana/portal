@@ -17,6 +17,9 @@
 
 package eu.europeana.portal2.web.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.sql.BatchUpdateException;
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Locale;
@@ -214,6 +217,21 @@ public class ControllerUtil {
 		}
 
 		return value;
+	}
+
+	public static String getStackTrace(Exception exception) {
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		for (Throwable e = exception.getCause(); e != null; e = e.getCause()) {
+			if (e instanceof BatchUpdateException) {
+				BatchUpdateException bue = (BatchUpdateException) e;
+				Exception next = bue.getNextException();
+				log.warning("Next exception in batch: " + next);
+				next.printStackTrace(printWriter);
+			}
+		}
+		exception.printStackTrace(printWriter);
+		return stringWriter.toString();
 	}
 
 }
