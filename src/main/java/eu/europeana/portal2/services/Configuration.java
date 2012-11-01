@@ -1,38 +1,26 @@
 package eu.europeana.portal2.services;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
-import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
-import eu.europeana.portal2.web.presentation.model.PortalPageData;
-import eu.europeana.portal2.web.util.ControllerUtil;
 
 public class Configuration {
 
 	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="corelib_web_configInterceptor") private ConfigInterceptor configInterceptor;
-	
+
 	@Resource private Properties europeanaProperties;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
-
-	private HttpServletRequest request;
-	private HttpServletResponse response;
-	private Locale locale;
 
 	///////////////////////////////// properties
 
@@ -114,45 +102,6 @@ public class Configuration {
 	private Map<String, String> seeAlsoTranslations;
 
 	private String portalUrl;
-
-	/////////////////////////////// complex functions
-
-	public void registerBaseObjects(HttpServletRequest request, HttpServletResponse response, Locale locale) {
-		this.request = request;
-		this.response = response;
-		this.locale = locale;
-	}
-
-	public void injectProperties(PortalPageData model) {
-		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(portalGooglePlusPublisherId));
-		model.setTheme(getTheme(request));
-		User user = ControllerUtil.getUser(userService);
-		model.setUser(user);
-	}
-
-	/**
-	 * Wraps the config interceptor's postHandle method.
-	 * 
-	 * @param object
-	 *   A controller object
-	 * @param page
-	 *   The model and view object
-	 */
-	public void postHandle(Object object, ModelAndView page) {
-		try {
-			configInterceptor.postHandle(request, response, object, page);
-		} catch (Exception e) {
-			log.severe("Exception - " + e.getClass() + ": " + e.getMessage());
-			log.severe(ControllerUtil.getStackTrace(e));
-			log.severe(String.format("configInterceptor: %s, request: %s, response: %s, object: %s, page: %s",
-				(configInterceptor != null), (request != null), (response != null), (object != null), (page != null)));
-			e.printStackTrace();
-		}
-	}
-
-	private String getTheme(HttpServletRequest request) {
-		return ControllerUtil.getSessionManagedTheme(request, defaultTheme);
-	}
 
 	///////////////////////////////// getters and setters
 

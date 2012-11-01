@@ -34,6 +34,7 @@ import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.presentation.model.validation.ChangePasswordPageValidator;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 
 /**
@@ -73,9 +74,9 @@ public class ChangePasswordController {
 			HttpServletResponse response, 
 			Locale locale
 				) throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		log.info("=========== change-password.html POST =================");
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		if (tokenKey == null) {
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.ERROR_NO_TOKEN);
@@ -91,7 +92,7 @@ public class ChangePasswordController {
 		model.setEmail(token.getEmail());
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_SUCCES);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}
@@ -104,9 +105,9 @@ public class ChangePasswordController {
 			HttpServletResponse response, 
 			Locale locale)
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		log.info("=========== change-password.html POST =================");
-		config.injectProperties(model);
+		injector.injectProperties(model);
 		if (result.hasErrors()) {
 			log.info("The change password form has errors");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_FAILURE);
@@ -130,7 +131,7 @@ public class ChangePasswordController {
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_SUCCESS);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGED);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

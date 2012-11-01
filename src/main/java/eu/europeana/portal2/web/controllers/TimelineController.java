@@ -25,6 +25,7 @@ import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
@@ -51,7 +52,7 @@ public class TimelineController {
 			HttpServletResponse response,
 			Locale locale)
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
@@ -61,10 +62,10 @@ public class TimelineController {
 		model.setStartPage(startPage);
 		model.setRefinements(qf);
 		model.setRefineKeyword(StringUtils.trimToNull(rq));
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.TIMELINE);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.TIMELINE, page);
 
 		return page;
@@ -79,10 +80,10 @@ public class TimelineController {
 			HttpServletResponse response,
 			Locale locale) 
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		Map<String, String[]> params = (Map<String, String[]>)request.getParameterMap();
 
@@ -108,7 +109,7 @@ public class TimelineController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.TIMELINE_JSON);
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

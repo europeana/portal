@@ -28,6 +28,7 @@ import eu.europeana.portal2.web.presentation.model.AjaxPage;
 import eu.europeana.portal2.web.presentation.model.data.FieldSize;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 public class AjaxController {
@@ -46,7 +47,7 @@ public class AjaxController {
 			HttpServletResponse response,
 			Locale locale) 
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		AjaxPage model = new AjaxPage();
 		try {
 			if (!hasJavascriptInjection(request)) {
@@ -55,9 +56,9 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
-		config.injectProperties(model);
+		injector.injectProperties(model);
 		ModelAndView page = createResponsePage(model);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		return page;
 	}
 
@@ -67,7 +68,7 @@ public class AjaxController {
 			HttpServletResponse response, 
 			Locale locale) 
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		log.info("================ save.json ================");
 		AjaxPage model = new AjaxPage();
 		try {
@@ -77,9 +78,9 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
-		config.injectProperties(model);
+		injector.injectProperties(model);
 		ModelAndView page = createResponsePage(model);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		return page;
 	}
 

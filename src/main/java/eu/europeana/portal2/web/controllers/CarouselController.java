@@ -24,6 +24,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.data.CarouselPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 public class CarouselController {
@@ -42,7 +43,7 @@ public class CarouselController {
 			HttpServletResponse response,
 			Locale locale)
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 
 		CarouselPage model = new CarouselPage();
 		model.setLocale(locale);
@@ -50,7 +51,7 @@ public class CarouselController {
 			start = 1;
 		}
 		model.setStart(start);
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		List<CarouselItem> carouselItems = new ArrayList<CarouselItem>();
 		boolean keepFetching = true;
@@ -79,7 +80,7 @@ public class CarouselController {
 		model.setTotal(total);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.CAROUSEL);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

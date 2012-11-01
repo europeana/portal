@@ -22,6 +22,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LimitApiKeyPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 /**
  * 
@@ -34,7 +35,6 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @RequestMapping("/admin/limitApiKey.html")
 public class AdminApiLimitController {
 
-	// @Resource private LocaleInterceptor localeChangeInterceptor;
 	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="configurationService") private Configuration config;
@@ -55,8 +55,8 @@ public class AdminApiLimitController {
 			Locale locale)
 					throws Exception {
 		log.info("==== /admin/limitApiKey.html ====");
-		config.registerBaseObjects(request, response, locale);
-		config.injectProperties(model);
+		Injector injector = new Injector(request, response, locale);
+		injector.injectProperties(model);
 
 		ApiKey apiKey = apiKeyService.findByID(apiKeyId);
 		model.setApiKey(apiKey.getId());
@@ -64,7 +64,7 @@ public class AdminApiLimitController {
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_LIMIT_APIKEY);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

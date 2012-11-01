@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
 import eu.europeana.corelib.web.model.PageData;
 
 public abstract class PortalPageData extends PageData {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
+
+	private HttpServletRequest request;
 
 	private String theme = "default";
 
@@ -51,5 +55,13 @@ public abstract class PortalPageData extends PageData {
 
 	public void setUseCache(boolean useCache) {
 		this.useCache = useCache;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 }

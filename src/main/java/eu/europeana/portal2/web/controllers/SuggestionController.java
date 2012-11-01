@@ -24,6 +24,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SuggestionsPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 public class SuggestionController {
@@ -45,7 +46,7 @@ public class SuggestionController {
 			HttpServletResponse response,
 			Locale locale)
 					throws EuropeanaQueryException {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 
 		if (term == null) {
 			throw new EuropeanaQueryException(ProblemType.MALFORMED_QUERY);
@@ -66,10 +67,10 @@ public class SuggestionController {
 		log.info("number of suggestions: " + suggestions.size());
 		SuggestionsPage model = new SuggestionsPage();
 		model.setResults(suggestions);
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_SUGGESTION);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		return page;
 	}
 }

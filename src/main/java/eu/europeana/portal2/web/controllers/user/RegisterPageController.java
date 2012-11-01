@@ -35,6 +35,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.RegisterPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 /**
  * During registration, users click on an email link to end up here with a
@@ -74,8 +75,8 @@ public class RegisterPageController {
 			Locale locale)
 					throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /register.html GET ==================");
-		config.registerBaseObjects(request, response, locale);
-		config.injectProperties(model);
+		Injector injector = new Injector(request, response, locale);
+		injector.injectProperties(model);
 
 		log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
 		Token token = tokenService.findByID(tokenKey);
@@ -87,7 +88,7 @@ public class RegisterPageController {
 		model.setEmail(token.getEmail());
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}
@@ -101,13 +102,13 @@ public class RegisterPageController {
 			Locale locale)
 					throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /register.html POST ==================");
-		config.registerBaseObjects(request, response, locale);
-		config.injectProperties(model);
+		Injector injector = new Injector(request, response, locale);
+		injector.injectProperties(model);
 		if (result.hasErrors()) {
 			log.info("The registration form has errors");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
 			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
-			config.postHandle(this, page);
+			injector.postHandle(this, page);
 			return page;
 		}
 
@@ -116,7 +117,7 @@ public class RegisterPageController {
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_SUCCESS);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTERED);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

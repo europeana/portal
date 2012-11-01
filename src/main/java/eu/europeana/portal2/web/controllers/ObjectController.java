@@ -64,6 +64,7 @@ import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLogger.UserAction;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
+import eu.europeana.portal2.web.util.Injector;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
@@ -74,8 +75,6 @@ public class ObjectController {
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	@Resource private SearchService searchService;
-
-	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -115,8 +114,8 @@ public class ObjectController {
 
 		long t0 = (new Date()).getTime();
 
-		config.registerBaseObjects(request, response, locale);
-		localeChangeInterceptor.preHandle(request, response, this);
+		Injector injector = new Injector(request, response, locale);
+
 		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
 		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
@@ -132,7 +131,7 @@ public class ObjectController {
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
 
-		config.injectProperties(model);
+		injector.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 
@@ -163,7 +162,7 @@ public class ObjectController {
 			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView.getFullDoc().getAbout());
 		}
 
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		long t1 = (new Date()).getTime();
 		log.info("object page takes: " + (t1 - t0));

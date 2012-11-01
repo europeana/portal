@@ -19,6 +19,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 public class NewsletterController {
@@ -39,14 +40,14 @@ public class NewsletterController {
 			Locale locale) 
 					throws Exception {
 		log.info("===== newsletter.html =======");
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		EmptyModelPage model = new EmptyModelPage();
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.NEWSLETTER);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.NEWSLETTER);
 
 		return page;

@@ -23,6 +23,7 @@ import eu.europeana.portal2.web.controllers.utils.ApiWrapper;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ApiConsolePage;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.JsonFormatter;
 
 /**
@@ -58,10 +59,11 @@ public class ApiConsoleController {
 			HttpServletRequest request,
 			HttpServletResponse response, 
 			Locale locale) {
+		Injector injector = new Injector(request, response, locale);
 		log.info("===== /api/console.html =====");
-		config.registerBaseObjects(request, response, locale);
+
 		ApiConsolePage model = new ApiConsolePage();
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		if (!model.getSupportedFunctions().contains(function)) {
 			function = SEARCH;
@@ -116,7 +118,7 @@ public class ApiConsoleController {
 		log.info("API URL: " + model.getApiUrl());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

@@ -40,6 +40,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.RegisterApiPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 /**
  * During registration, users click on an email link to end up here with a
@@ -90,8 +91,8 @@ public class RegisterApiPageController {
 					throws EuropeanaQueryException, DatabaseException {
 
 		log.info("================= /api/registration.html GET ==================");
-		config.registerBaseObjects(request, response, locale);
-		config.injectProperties(model);
+		Injector injector = new Injector(request, response, locale);
+		injector.injectProperties(model);
 
 		ModelAndView page;
 		if (StringUtils.isBlank(tokenKey)) {
@@ -116,7 +117,7 @@ public class RegisterApiPageController {
 		}
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API);
 
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}
@@ -128,15 +129,15 @@ public class RegisterApiPageController {
 			HttpServletResponse response, Locale locale)
 			throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /api/registration.html POST ==================");
-		
-		config.registerBaseObjects(request, response, locale);
-		config.injectProperties(model);
+
+		Injector injector = new Injector(request, response, locale);
+		injector.injectProperties(model);
 		if (result.hasErrors()) {
 			log.info("The registration form has errors " + model.getFirstName());
 
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API_FAILURE);
 			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REGISTER_FORM);
-			config.postHandle(this, page);
+			injector.postHandle(this, page);
 			return page;
 		}
 
@@ -185,7 +186,7 @@ public class RegisterApiPageController {
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API_SUCCESS);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, target);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

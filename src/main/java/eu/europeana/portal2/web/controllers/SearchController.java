@@ -28,6 +28,7 @@ import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
@@ -36,8 +37,6 @@ public class SearchController {
 	@Resource private SearchService searchService;
 	
 	@Resource private InternalResourceViewResolver viewResolver;
-
-	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -77,14 +76,15 @@ public class SearchController {
 		HttpServletResponse response,
 		Locale locale
 	) {
-		config.registerBaseObjects(request, response, locale);
-		localeChangeInterceptor.preHandle(request, response, this);
+		Injector injector = new Injector(request, response, locale);
+
 		rows = Math.min(rows, config.getRowLimit());
 
 		log.info("============== START SEARCHING ==============");
 		Map<String, String[]> params = request.getParameterMap();
 
 		SearchPage model = new SearchPage();
+		model.setRequest(request);
 		model.setEmbeddedBgColor(embeddedBgColor);
 		model.setEmbeddedForeColor(embeddedForeColor);
 		model.setEmbedded(embedded);
@@ -109,7 +109,7 @@ public class SearchController {
 		//       REMOVE THIS LINE AS SOON AS POSSIBLE, but not earlier ;-)
 		sort = DEFAULT_SORT;
 		model.setSort(sort);
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
@@ -139,7 +139,7 @@ public class SearchController {
 			e.printStackTrace();
 		}
 
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 
 		return page;

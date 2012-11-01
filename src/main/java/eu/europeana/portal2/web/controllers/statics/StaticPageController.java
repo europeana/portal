@@ -38,6 +38,7 @@ import eu.europeana.portal2.web.model.CorePageInfo;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.StaticPageCache;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.enums.Redirect;
@@ -90,11 +91,11 @@ public class StaticPageController {
 			HttpServletResponse response,
 			Locale locale) 
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 
 		pageName = "/" + pageName + ".html";
 
-		ModelAndView page = doFetchStaticPage(pageName, response, locale);
+		ModelAndView page = doFetchStaticPage(injector, pageName, response, locale);
 
 		return page;
 	}
@@ -107,16 +108,16 @@ public class StaticPageController {
 			HttpServletResponse response,
 			Locale locale) 
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 
 		pageName = "/rights/" + pageName + ".html";
 
-		ModelAndView page = doFetchStaticPage(pageName, response, locale);
+		ModelAndView page = doFetchStaticPage(injector, pageName, response, locale);
 
 		return page;
 	}
 
-	private ModelAndView doFetchStaticPage(String pageName, HttpServletResponse response, Locale locale) {
+	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response, Locale locale) {
 		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		staticPageCache.setStaticPagePath(config.getStaticPagePath());
@@ -147,12 +148,12 @@ public class StaticPageController {
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.STATICPAGE);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

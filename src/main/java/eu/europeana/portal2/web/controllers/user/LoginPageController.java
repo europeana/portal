@@ -21,6 +21,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 public class LoginPageController {
@@ -50,10 +51,10 @@ public class LoginPageController {
 			HttpServletResponse response, 
 			Locale locale) 
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		model.setEmail(email);
 		log.info("email: " + email);
@@ -124,7 +125,7 @@ public class LoginPageController {
 		// page.addObject("register", register);
 		model.setErrorMessage("1".equals(request.getParameter("error")) ? "Invalid Credentials" : null);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGIN);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.LOGIN, page);
 
 		return page;

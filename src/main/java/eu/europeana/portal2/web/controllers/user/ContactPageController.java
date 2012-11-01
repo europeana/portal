@@ -30,6 +30,7 @@ import eu.europeana.portal2.web.presentation.model.validation.ContactPageValidat
 import eu.europeana.portal2.web.security.Portal2UserDetails;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 @RequestMapping("/contact.html")
@@ -74,11 +75,12 @@ public class ContactPageController {
 			HttpServletRequest request, 
 			HttpServletResponse response, 
 			Locale locale) {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		ContactPage model = createContactForm();
-		config.injectProperties(model);
+		injector.injectProperties(model);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.CONTACT);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
+
 		return page;
 	}
 
@@ -91,7 +93,7 @@ public class ContactPageController {
 			HttpServletResponse response, 
 			Locale locale)
 					throws Exception {
-		config.registerBaseObjects(request, response, locale);
+		Injector injector = new Injector(request, response, locale);
 		if (result.hasErrors()) {
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND_FAILURE);
 		} else {
@@ -105,9 +107,9 @@ public class ContactPageController {
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND);
 		}
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CONTACT_PAGE);
-		config.injectProperties(form);
+		injector.injectProperties(form);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(form, locale, PortalPageInfo.CONTACT);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 
 		return page;
 	}

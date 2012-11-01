@@ -50,6 +50,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedPartner
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 /**
  * Where people arrive.
@@ -66,8 +67,6 @@ public class IndexPageController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	@Resource private ReloadableResourceBundleMessageSource messageSource;
-
-	@Resource private LocaleInterceptor localeChangeInterceptor;
 
 	@Resource(name="configurationService") private Configuration config;
 
@@ -87,9 +86,10 @@ public class IndexPageController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale) {
+		Injector injector = new Injector(request, response, locale);
+
 		log.info("===== index ====");
 		log.info(messageSource.toString());
-		config.registerBaseObjects(request, response, locale);
 
 		IndexPage model = new IndexPage();
 		// update dynamic items
@@ -99,14 +99,12 @@ public class IndexPageController {
 		updateFeaturedItem(model, locale);
 		updateFeaturedPartner(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
-		config.injectProperties(model);
-
-		localeChangeInterceptor.preHandle(request, response, this);
+		injector.injectProperties(model);
 
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.INDEX);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.INDEXPAGE, page);
 
 		return page;

@@ -24,6 +24,7 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AdminPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 /**
  * 
@@ -35,7 +36,6 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class AdminController {
 
-	// @Resource private LocaleInterceptor localeChangeInterceptor;
 	@Resource(name="corelib_db_userService") private UserService userService;
 
 	@Resource(name="configurationService") private Configuration config;
@@ -53,11 +53,11 @@ public class AdminController {
 			Locale locale)
 					throws Exception {
 		log.info("==== admin.html ====");
-		config.registerBaseObjects(request, response, locale);
-		// localeChangeInterceptor.preHandle(request, response, this);
+		Injector injector = new Injector(request, response, locale);
+
 		AdminPage model = new AdminPage();
 		model.setTheme("devel");
-		config.injectProperties(model);
+		injector.injectProperties(model);
 
 		long t0 = new Date().getTime();
 		// model.setUsers(userService.findAll());
@@ -74,7 +74,7 @@ public class AdminController {
 		model.setUsers(users);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN);
-		config.postHandle(this, page);
+		injector.postHandle(this, page);
 		return page;
 	}
 	
