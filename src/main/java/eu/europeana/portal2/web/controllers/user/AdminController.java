@@ -1,18 +1,25 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.ApiKeyService;
@@ -45,6 +52,9 @@ public class AdminController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
+	
+	private static final String RECORD_SEPARATOR = "\n";
+	private static final String FIELD_SEPARATOR = ",";
 
 	@RequestMapping("/admin.html")
 	public ModelAndView adminHandler(
@@ -125,5 +135,93 @@ public class AdminController {
 		userService.removeApiKey(userId, apiKey);
 
 		return "redirect:/admin.html";
+	}
+
+	/**
+	 * Export API users to comma separated list
+	 * 
+	 * @param request
+	 * @param response
+	 * @param locale
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/exportUsers.html", produces = MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String exportUsersHandler(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale)
+					throws Exception {
+		log.info("==== admin/exportUsers.html ====");
+		response.setHeader("Content-Type", "text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
+
+		Map<Long, User> users = new TreeMap<Long, User>();
+		List<ApiKey> apiKeys = apiKeyService.findAll();
+		for (ApiKey apiKey : apiKeys) {
+			User user = apiKey.getUser();
+			if (!users.containsKey(user.getId())) {
+				users.put(user.getId(), user);
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
+			"id", "First name", "Last name", "Email", "Company", "Country",
+			"Address", "Phone", "Website", "Number of keys", "Keys (limit)"
+		));
+		sb.append(csvEncodeRecord(fieldNames));
+		for (User user : users.values()) {
+			sb.append(csvEncodeRecord(csvEncodeUser(user)));
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Create an CSV encoded record (list of fields) from a User object
+	 * @param user
+	 * @return
+	 */
+	private List<String> csvEncodeUser(User user) {
+		List<String> fields = new LinkedList<String>();
+		fields.add(user.getId().toString());
+		fields.add(csvEncodeField(user.getFirstName()));
+		fields.add(csvEncodeField(user.getLastName()));
+		fields.add(csvEncodeField(user.getEmail()));
+		fields.add(csvEncodeField(user.getCompany()));
+		fields.add(csvEncodeField(user.getCountry()));
+		fields.add(csvEncodeField(user.getAddress()));
+		fields.add(csvEncodeField(user.getPhone()));
+		fields.add(csvEncodeField(user.getWebsite()));
+		fields.add(String.valueOf(user.getApiKeys().size()));
+		List<String> keys = new LinkedList<String>();
+		for (ApiKey key : user.getApiKeys()) {
+			keys.add(key.getId() + " (" + key.getUsageLimit() + ")");
+		}
+		fields.add(csvEncodeField(StringUtils.join(keys, ", ")));
+		return fields;
+	}
+	
+	/**
+	 * Encode a field for usage in CSV
+	 * @param field
+	 * @return
+	 */
+	private String csvEncodeField(String field) {
+		if (StringUtils.isBlank(field)) {
+			return "";
+		}
+		if (field.indexOf('"') > -1) {
+			field = field.replaceAll("\"", "\"\"");
+		}
+		field = '"' + field + '"';
+		return field;
+	}
+
+	/**
+	 * Encode a record (list of fields) for usage in CSV
+	 */
+	private String csvEncodeRecord(List<String> fields) {
+		return StringUtils.join(fields, FIELD_SEPARATOR) + RECORD_SEPARATOR;
 	}
 }
