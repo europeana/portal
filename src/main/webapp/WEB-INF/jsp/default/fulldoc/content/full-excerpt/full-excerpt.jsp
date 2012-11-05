@@ -5,20 +5,21 @@
 <div id="excerpt">
 	
 	<c:set var="about" value=""/>
-	<c:if test="${not empty model.document[id]}">
+	
+	
+	<c:if test="${not empty model['document']  }">
 		<c:set var="about" value="${model.document.id}"/>
 	</c:if>
 	
-	<div id="item-details" about="${about}">
 	
+	<div id="item-details" about="${about}">
 	
 		<div class="sidebar-right hide-on-phones">
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
 		</div>			
 	
 		<h1 class="hide-on-phones">${model.objectTitle}</h1>
-		<%--
-			
+		<%--			
 			model.metaDataFileds = a collection of all metadata on the object pre-formated for <meta> element output in the <head>
 			model.formatLabels = a boolean that is triggered via the url query string &format=labels
 			the macro @displayEseDataAsMeta will output the meta data in its typical <meta> format or
@@ -38,10 +39,11 @@
 			${fn:length(model.fields) > 0}
 		--%>
 	
-		<c:if test="${!model.formatLabels && !empty model[fields] && fn:length(model.fields) > 0}">
+		
+		<c:if test="${!model.formatLabels && !empty model['fields'] && fn:length(model.fields) > 0}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true" />
 		</c:if>
-		<c:if test="${!empty model[fieldsAdditional]}">
+		<c:if test="${!empty model['fieldsAdditional']}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
 		</c:if>
 		

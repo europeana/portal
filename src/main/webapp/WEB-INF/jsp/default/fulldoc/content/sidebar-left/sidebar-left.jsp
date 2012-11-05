@@ -3,7 +3,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<div id="additional-info" class="sidebar" about="${model.document.id}">
+<c:set var="about" value=""/>
+<c:if test="${not empty model.document['id']}">
+	<c:set var="about" value="${model.document.id}"/>
+</c:if>
+
+<div id="additional-info" class="sidebar" about="${about}">
 
 	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 		
@@ -12,10 +17,25 @@
 	<div id="carousel-1-img-measure">
 	
 		<!-- TODO: make sure all item images are listed here -->
+		<c:set var="thumbnail"	value=""/>
+		<c:set var="dataType"	value=""/>
+		<c:set var="alt"		value=""/>
 		
-		<img	src			= "${model.thumbnailUrl}"
-				alt			= "${fn:escapeXml(model.pageTitle)}"
-				data-type	= "${fn:toLowerCase(model.document.edmType)}"
+		<c:if test="${not empty model['thumbnailUrl']}">
+			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
+		</c:if>
+
+		<c:if test="${not empty model.document['edmType']}">
+			<c:set var="dataType" value="${fn:toLowerCase(model.document.edmType)}"/>
+		</c:if>
+
+		<c:if test="${not empty model['pageTitle']}">
+			<c:set var="alt" value="${fn:escapeXml(model.pageTitle)}"/>
+		</c:if>
+
+		<img	src			= "${thumbnail}"
+				alt			= "${alt}"
+				data-type	= "${dataType}"
 				class		= "no-show"/>
 	</div>
 		
@@ -23,9 +43,9 @@
 		<script type="text/javascript">
 			var carouselData = [];
 			carouselData[0] = {
-				"image":		decodeURI("${model.thumbnailUrl}").replace(/&amp;/g, '&'),
+				"image":		decodeURI("${thumbnail}").replace(/&amp;/g, '&'),
 				"title":		('${fn:escapeXml(model.objectTitle)}'),
-				"dataType":		"${fn:toLowerCase(model.document.edmType)}"
+				"dataType":		"${fn:toLowerCase(dataType)}"
 				
 				/*
 				,"lightboxable": {
@@ -35,8 +55,8 @@
 				*/
 			};
 				
-			<c:if test="${!empty model.thumbnails && fn:length(model.thumbnails) > 0 }">
 				<%--				
+			<c:if test="${!empty model.thumbnails && fn:length(model.thumbnails) > 0 }">
 				<c:forEach items="${model.thumbnails}" var="thumbnail">
 						carouselData[carouselData.length] = {
 							"image":		decodeURI("${thumbnail}").replace(/&amp;/g, '&'),
@@ -50,8 +70,8 @@
 							
 						};
 				</c:forEach>
-				--%>
 			</c:if>
+				--%>
 			
 			<%--				
 			<c:if test="${!empty model.fullImages && fn:length(model.fullImages) > 0 }">
@@ -72,47 +92,53 @@
 	</div>
 		
 	<div class="original-context">
+	
+		<%-- Rights --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
+		
 		<%-- Original context link --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
+		
 		<br>
+		
 		<div class="clear"></div>
+		
 	</div>
 		
 	<div class="actions">	
-		<%-- Shares link 
-		<a id="shares-link" class="icon-share action-link action-title"	rel="nofollow">
-			<span	title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
-		</a>
-		--%>
+		
 		
 		<%-- Shares link --%>
+		
 		<a id="shares-link" class="icon-share action-link" rel="nofollow">
 			<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
 		</a>
 		
 		<%-- Citation link --%>
+		
 	 	<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
 	 		<span class="action-title"><spring:message code="Cite_Button_t" /></span>
 	 	</a>
 		
 		<div id="citation">
-			<c:forEach items="${model.citeStyles}" var="citeStyle">
-				<div class="header">
-					<div class="heading"><spring:message code="Cite_Header_t" />
-						<a href="" class="close-button icon-remove" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
+			<c:if test="${not empty model['citeStyles']}">
+				<c:forEach items="${model.citeStyles}" var="citeStyle">
+					<div class="header">
+						<div class="heading"><spring:message code="Cite_Header_t" />
+							<a href="" class="close-button icon-remove" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
+						</div>
 					</div>
-				</div>
-			
-				<div id="citations">
-					<div class="citation">
-						${citeStyle.citeText}
+				
+					<div id="citations">
+						<div class="citation">
+							${citeStyle.citeText}
+						</div>
+						<div class="citation">
+							&lt;ref&gt;${citeStyle.citeText}&lt;/ref&gt;
+						</div>
 					</div>
-					<div class="citation">
-						&lt;ref&gt;${citeStyle.citeText}&lt;/ref&gt;
-					</div>
-				</div>
-			</c:forEach>
+				</c:forEach>
+			</c:if>
 		</div>
 		
 		<%-- Embed link --%>
@@ -129,6 +155,7 @@
 		--%>
 
 		<%-- Save page to myeuropeana --%>
+
 		<c:if test="${!empty model.user}">
 		
 			<c:set var="savedIcon" value="icon-unsaveditem" />
@@ -146,6 +173,7 @@
 		</c:if>
 	
 		<%-- Add tag --%>
+		
 		<c:if test="${!empty model.user}">
 			<form id="item-save-tag">
 				<fieldset>
@@ -166,7 +194,6 @@
 			</form>
 		</c:if>
 	
-	
 		<c:choose>
 			<c:when test="${fn:contains(model.currentUrl, '&format=label')}">
 				<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '&format=label', '')}</c:set>
@@ -179,24 +206,25 @@
 		</c:choose>
 	
 		<%-- Format labels --%>
-			<%--
-		 	<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
-		 		<span class="action-title">${switchlabelTitle}</span>
-		 	</a>
-		 	--%>
+	 	<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
+	 		<span class="action-title">${switchlabelTitle}</span>
+	 	</a>
 		 	
-		 	<span class="stretch"></span>
+	 	<span class="stretch"></span>
 		 	
-		 	<div class="clear"></div>
+	 	<div class="clear"></div>
 		 	
-	 	</div>
-	 	<div id="translate-container">
-		 	<!-- translate services -->
-		 	
+ 	</div>
+ 	
+ 	
+ 	<div id="translate-container">
+	
+ 		<!-- translate services -->
 		<a href="" id="translate-item" class="bold">
-		<spring:message code="TranslateDetails_t" />
-		<span class="iconP"></span></a>
-	 	</div>
+			<spring:message code="TranslateDetails_t" />
+			<span class="iconP"></span>
+		</a>
+	</div>
 	 	
 </div>
 
