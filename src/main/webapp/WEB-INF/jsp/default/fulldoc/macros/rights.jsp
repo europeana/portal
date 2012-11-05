@@ -6,9 +6,7 @@
 <c:set var="inLightbox" scope="request" value="false"/>  
 
 <%--#macro displayRights inLightbox --%>
-<c:if test="${!empty model.rightsOption}">
-
-
+<c:if test="${!empty model[rightsOption]}">
 
 
   <a
