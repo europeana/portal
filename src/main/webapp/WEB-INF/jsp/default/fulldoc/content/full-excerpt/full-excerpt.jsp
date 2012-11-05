@@ -3,12 +3,18 @@
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
 <div id="excerpt">
-	<div id="item-details" about="${model.document.id}">
+	
+	<c:set var="about" value=""/>
+	<c:if test="${not empty model.document[id]}">
+		<c:set var="about" value="${model.document.id}"/>
+	</c:if>
+	
+	<div id="item-details" about="${about}">
+	
 	
 		<div class="sidebar-right hide-on-phones">
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
 		</div>			
-	
 	
 		<h1 class="hide-on-phones">${model.objectTitle}</h1>
 		<%--
@@ -24,26 +30,27 @@
 			
 		--%>
 		
-		<!-- ${model.formatLabels} -->
-		<!-- ${!empty model.metaDataFields} -->
-		<!-- ${!empty model.fields} -->
-		<!-- ${fn:length(model.fields) > 0} -->
+
+		<%-- 
+			${model.formatLabels}
+			${!empty model.metaDataFields}
+			${!empty model.fields}
+			${fn:length(model.fields) > 0}
+		--%>
 	
-		<c:if test="${!model.formatLabels && !empty model.fields && fn:length(model.fields) > 0}">
+		<c:if test="${!model.formatLabels && !empty model[fields] && fn:length(model.fields) > 0}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true" />
 		</c:if>
-		<c:if test="${!empty model.fieldsAdditional}">
+		<c:if test="${!empty model[fieldsAdditional]}">
 			<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
 		</c:if>
 		
 	    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
-
 		<c:if test="${model.formatLabels}">
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/schema.jspf" %>
 		</c:if>
-
-	
+		
 	</div>
 	
 </div>
