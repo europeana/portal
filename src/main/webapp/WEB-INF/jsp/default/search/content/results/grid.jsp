@@ -17,7 +17,7 @@
 		</div>
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
-		<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}">
+		<a href="${fn:replace(cell.fullDocUrl, "\"", "&quot;")}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}">
 			<div class="ellipsis">
 				<c:choose>
 					<c:when test="${!empty cell.title}">${title}</c:when>
