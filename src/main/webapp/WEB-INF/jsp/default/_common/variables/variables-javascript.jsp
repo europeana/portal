@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <%--
 	escape all localized messages from the message.properties file
 	in order to make sure they do not break the javascript strings
@@ -144,7 +146,8 @@ eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
 eu.europeana.vars.msg.search_error = '${search_error}';
 eu.europeana.vars.addthis_pubid = '${search_addthis_pubid}';
-eu.europeana.vars.query = '${model.query}';
+eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
+
 
 // url variables to check for timeline / map content 
 eu.europeana.vars.timeline = {};

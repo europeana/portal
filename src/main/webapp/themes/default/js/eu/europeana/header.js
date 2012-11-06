@@ -161,8 +161,7 @@ eu.europeana.header = {
 
 				"fn_init": function(self){
 					var input		= $('#query-input');
-					var searchTerm	= eu.europeana.vars.query.replace("*:*", "");
-					
+					var searchTerm	= input.val().replace("*:*", "");
 					self.cmp.find(".item a").each(function(i, ob){
 						var searchType = $(ob).attr("class");
 						if(searchTerm.indexOf(searchType) == 0){
