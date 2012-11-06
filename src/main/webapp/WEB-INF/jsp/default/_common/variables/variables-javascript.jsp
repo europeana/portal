@@ -174,7 +174,7 @@ eu.europeana.vars.timeline = {};
 
 	<c:when test="${model.pageName == 'full-doc.html'}">
 		eu.europeana.vars.msg.translate_with = '${translate_with}';
-		eu.europeana.vars.msg.return_to_language = '${return_to_language}';
+		eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
 		eu.europeana.vars.msg.more = '${see_more}';
 		eu.europeana.vars.msg.less = '${see_less}';
 		eu.europeana.vars.msg.select_language = '${select_language}';

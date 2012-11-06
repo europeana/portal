@@ -79,7 +79,7 @@
 
 				<c:forEach items="${model.portalLanguages}" var="language">
 					<li class="item lang">
-						<a class="${language.languageCode}">${language.languageName}</a>
+						<a class="<c:out value="${language.languageCode}"/>"><c:out value="${language.languageCode}"/></a>
 					</li>
 				</c:forEach>
 			</ul>
