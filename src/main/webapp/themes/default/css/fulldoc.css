@@ -346,8 +346,12 @@ img.trigger{
 
 .item-metadata {
 	margin-bottom:	0.5em;
+	
 }
 
+.item-metadata a{
+	word-break:		break-word;
+}
 
 .external.item-metadata {
 	display : block;
