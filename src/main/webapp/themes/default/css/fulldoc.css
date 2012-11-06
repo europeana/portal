@@ -360,10 +360,11 @@ a.item-metadata.image {
 
 
 /* full excerpt */
-
+/*
 h1 {
 	font-size: 180%;
 }
+*/
 
 .item-metadata h2 {
 	display: inline;
