@@ -89,6 +89,12 @@ a.action-link:hover{
 	background-color:	#DFDFDF;
 	padding:			1em;
 	margin:				1em 0 1em 0;
+	border-radius:		5px;		/* TODO webkit etc  (look into sass) */
+		
+}
+
+.sidebar-right strong{
+	font-size:			0.875em;	
 }
 
 .sidebar-right div:first-child{
@@ -109,6 +115,7 @@ a.action-link:hover{
 .sidebar-right ul li{
 	margin-left:		1em;
 	margin-bottom:		0.5em;	/* spacing the same as the metadata spacing on smnall devices */ 
+	font-size:			0.75em;	
 }
 
 
