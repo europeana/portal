@@ -644,7 +644,7 @@ eu.europeana.fulldoc = {
 				
 				var doEllipsis = function(){
 					var ellipsisObjects = [];
-					jQuery('.europeana-carousel-info').each(
+					jQuery('#carousel-1 .europeana-carousel-info').each(
 						function(i, ob){
 							ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 						}
