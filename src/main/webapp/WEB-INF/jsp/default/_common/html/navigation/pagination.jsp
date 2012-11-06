@@ -48,7 +48,7 @@
 					
 					<input type="hidden" name="start"	id="start" />
 					<input type="hidden" name="rows"	id="rows" value="${model.rows}" />
-					<input type="hidden" name="query"	value="${model.query}"/>
+					<input type="hidden" name="query"	value="<c:out value="${model.query}"/>"	/>
 					<input type="hidden" id="max-rows"	value="${model.numberOfPages}" />				
 					<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
 				</form>

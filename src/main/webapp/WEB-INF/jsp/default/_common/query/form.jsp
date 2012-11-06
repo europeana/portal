@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <%-- query action --%>
 
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
@@ -41,15 +42,13 @@
 				<td class="query-cell">
 					<input
 						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
-						value="${model.query}"/>							
+						value="<c:out value="${model.query}"/>"
+						/>							
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
-				
-						<button class="icon-mag deans-button-1" type="submit">
-							<spring:message code='Search_t'/>
-						</button>
-						
-		
+					<button class="icon-mag deans-button-1" type="submit">
+						<spring:message code='Search_t'/>
+					</button>
 				</td>
 			</tr>
 			
