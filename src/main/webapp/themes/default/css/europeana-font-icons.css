@@ -288,6 +288,9 @@
 .icon-audio:before {
 	content: "\5d";
 }
+.icon-sound:before {
+	content: "\5d";
+}
 .icon-3d:before {
 	content: "\7b";
 }
