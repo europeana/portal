@@ -715,7 +715,30 @@ eu.europeana.fulldoc = {
 					lightbox:		true,
 					responsive:		true,
 					dataSource:		carousel2Data,
-					thumbnails: 	true
+					thumbnails: 	true,
+					extend: function(e){
+						var doEllipsis = function(){
+							var ellipsisObjects = [];
+							jQuery('#carousel-2 .europeana-carousel-info').each(
+								function(i, ob){
+									ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
+								}
+							);
+							$(window).bind('resize', function(){
+								if(eu.europeana.vars.suppresResize){
+									return;
+								}
+								for(var i=0; i<ellipsisObjects.length; i++ ){
+									ellipsisObjects[i].respond();
+								}
+							});
+						};
+						$(this).ready(function(e) {
+							setTimeout(doEllipsis, 1000);
+						});
+					}
+					
+					
 	   		});
 	   		   				
 		}
