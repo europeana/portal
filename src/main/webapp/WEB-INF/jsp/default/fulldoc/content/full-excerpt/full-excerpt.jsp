@@ -19,6 +19,18 @@
 		</div>			
 	
 		<h1 class="hide-on-phones">${model.objectTitle}</h1>
+		
+		
+		<c:forEach items="${model.document.dcTitle}" var="title">
+			<c:if test="${title != model.objectTitle }">
+				<div class="item-metadata">
+					<span class="bold notranslate">
+						<spring:message code="dc_title_t" />:</span>
+						<span class="translate">${title}</span>
+				</div>
+			</c:if>
+		</c:forEach>
+		
 		<%--			
 			model.metaDataFileds = a collection of all metadata on the object pre-formated for <meta> element output in the <head>
 			model.formatLabels = a boolean that is triggered via the url query string &format=labels
