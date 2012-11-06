@@ -4,7 +4,8 @@ $.fn.Collapsible = function() {
 	var ops	= {
 			expandedClass		:	'icon-arrow-7',
 			collapsedClass		:	'icon-arrow-6',
-			beenOpened			:	false
+			beenOpened			:	false,
+			executeDefaultClick	:	false
 	},
 	opsIn	= arguments[0] || {};
 	for (var attrname in opsIn){
@@ -116,9 +117,7 @@ $.fn.Collapsible = function() {
         
         
     	$header.bind('click', function(e){
-    		
-    		//alert($(this)[0].nodeName);
-    		
+    		 
     		//awaitingOpen = true;
     		eu.europeana.vars.suppresResize = true;
     		var finishedOpen = function(){
@@ -126,7 +125,10 @@ $.fn.Collapsible = function() {
     		};
     		setTimeout(finishedOpen, 1200);
     		
-    		e.preventDefault();
+    		if(!ops.executeDefaultClick){    			
+    			e.preventDefault();
+    		}
+    		
     		if(getTarget().is(':visible')){    			
     			setClasses(true);
     		}

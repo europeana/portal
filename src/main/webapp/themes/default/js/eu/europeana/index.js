@@ -79,10 +79,9 @@
 			headingSelector:	"#collapse-header-1",
 			iconSelector:		".collapse-icon",
 			bodySelector:		".collapse-content",
-			
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
-			
+			executeDefaultClick: true,
 			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 		
