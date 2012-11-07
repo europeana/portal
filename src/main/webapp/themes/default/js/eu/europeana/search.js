@@ -3,7 +3,6 @@ js.utils.registerNamespace( 'eu.europeana.search' );
 eu.europeana.search = {
 	
 	facet_sections : [],
-
 	init : function() {
 		
 		this.loadComponents();
@@ -246,10 +245,17 @@ eu.europeana.search = {
 		com.addthis.init( null, true, false );
 		setTimeout( function() { jQuery('.addthis').fadeIn(); }, 600 );
 		*/
+	},
+	
+	checkKeywordSupplied : function(){
+		if($('#newKeyword').val().length>0){
+			return true;
+		}
+		else{
+			$('#newKeyword').addClass('error-border');
+			return false;
+		}	
 	}
 
 };
-
-
-
 
