@@ -81,7 +81,6 @@
 	</bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<!-- property name="basename" value="classpath:message_keys/messages" / -->
 		<property name="basename" value="#{europeanaProperties['message.resource']}" />
 		<property name="cacheSeconds" value="#{europeanaProperties['message.cache.seconds']}" />
 		<property name="fileEncodings" value="UTF-8"/>
