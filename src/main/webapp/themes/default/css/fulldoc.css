@@ -397,34 +397,14 @@ h1 {
 	
 /* object-type */
 
+/*
 .object-type {
 	float: right;
 	width: 25px;
 	height: 25px;
 	color: #333;
-	background-image: url(../images/icons/sprite.png);
-	background-repeat: no-repeat;
 }
-
-.object-type.image {
-	background-position: 5px -1058px;
-}
-
-.object-type.video {
-	background-position: 5px -1005px
-}
-
-.object-type.text {
-	background-position: 8px -1109px
-}
-
-.object-type.sound {
-	background-position: 5px -1138px
-}
-
-.object-type.threeD {
-	background-position: 5px -973px;
-}	
+*/
 
 
 .rights-badge{

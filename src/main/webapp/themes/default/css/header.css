@@ -504,27 +504,6 @@ table tr:first-child{
 }
 	
 	
-/* Andy: TODO */
-/*
-#additional-feedback{
-	position:				absolute;
-	z-index:				10;
-	top:					150px;
-	left:					283px;
-	width:					364px;
-	height:					auto;
-	margin:					8px 0 0 0;
-	padding:				4px 4px 4px 25px;
-	background-color:		#dfdfdf;
-	background-image:		url(../images/icons/sprite.png);
-	background-repeat:		no-repeat;
-	background-position:	5px -650px;
-	border:					solid 1px #c0c0c0;
-}
-*/
-
-
-/* Andy: TODO */
 .ui-autocomplete {
 	position:			relative;
 	z-index:			1000;

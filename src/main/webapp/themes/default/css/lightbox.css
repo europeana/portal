@@ -226,31 +226,24 @@
 		cursor:					pointer;
 		width:					20px;
 		height:					23px;
-	
-		background-image:		url(../images/icons/sprite.png);
-		background-repeat:		no-repeat;
 	}
 	
 		
 	span.view, span.read, span.play{	/* these are already triggers */
-		background-position:	0px -1828px; /* -1852 for light version */
 		padding-left:			28px;
 		white-space:			nowrap;
 		padding-top:			1px;
 	}
 		
 	span.download{
-		background-position:	0px -1876px;
 	}
 	
 	span.play{
-		background-position:	3px -1898px;
 	}
 
 	#lightbox-download span.download{
 		margin-right:		8px;
 		margin-top: 		0px;
-		background-position:	-28px -1876px;
 	}
 	
 

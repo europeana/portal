@@ -151,9 +151,6 @@ cb-ugc{
 	color:					#333;
 }
 
-.share-section{
-	xxxxxxpadding-left:			0.5em;
-}
 
 #shares-link{
 	display:	none;
@@ -179,20 +176,6 @@ cb-ugc{
 	color:					#333;
 }
 	
-	
-/* Andy: TODO */
-
-/* rights info */
-#rights-info {
-	margin:					0 10px 10px 10px;
-	padding:				4px 4px 4px 25px;
-	background-color:		#ccc;
-	background-image:		url(../images/icons/sprite.png);
-	background-repeat:		no-repeat;
-	background-position:	5px -650px;
-	border:					solid  1px #c0c0c0;
-}
-
 
 
 @media all and (min-width: 48em) {
