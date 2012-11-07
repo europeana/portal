@@ -270,13 +270,18 @@
 	right:			-0.15em;
 }
 
+/* index page */
 .galleria-image-nav-left.icon-arrow-4, .galleria-image-nav-right.icon-arrow-2{
 	color:			white;	
 	text-shadow:	0 0 1px #000;
-	filter:			progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=45, strength=2)
-					progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135, strength=2)
-					progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=225, strength=2)
-					progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=315, strength=2);
+}
+
+.galleria-image-nav-left.icon-arrow-4, .galleria-image-nav-right.icon-arrow-2{	
+	filter:				progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=45, strength=2)
+						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135, strength=2)
+						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=225, strength=2)
+						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=315, strength=2);
+	background-clip:	text;
 }
 
 
@@ -361,14 +366,22 @@
     
     background-color:	transparent !important;
     
-   	color:				white;	
+   	color:				white;
 	text-shadow:		0 0 10px #000;
 	
 	left:				0px;
 	right:				auto;
 }
 
-
+.europeana-carousel .galleria-thumb-nav-left:before,
+.europeana-carousel .galleria-thumb-nav-right:before{	
+	filter:				progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=45, strength=2)
+						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135, strength=2)
+						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=225, strength=2)
+						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=315, strength=2);
+	background-clip:	text;
+}
+	
 .europeana-carousel .galleria-thumb-nav-right {
     left:				auto;
     right:				-0.3em;
