@@ -22,7 +22,7 @@
 					</a>
 				</h3>
 
-				<form id="refine-search-form" method="get" action="${query_action}">
+				<form id="refine-search-form" method="get" action="${query_action}" onsubmit="return eu.europeana.search.checkKeywordSupplied()">
 				
 					<input type="hidden" name="query" value="<c:out value="${model.query}"/>"/>
 					
@@ -34,7 +34,7 @@
 					
 					<ul id="refinements">
 						<li>
-							<input type="text" name="qf"/>
+							<input id="newKeyword" type="text" name="qf"/>
 							<span>
 								<input class="submit deans-button-1" type="submit" value="<spring:message code="AddKeywordsSubmitLabel_t" />">
 							</span>
