@@ -421,14 +421,15 @@ eu.europeana.header = {
 	
 	handleSearchSubmit : function( e ) {
 		
-		if ( jQuery('#query-input').val().length < 1 ) {
+		var emptySearch = jQuery('#query-input').val().length < 1 || (eu.europeana.header.searchMenu.getActive() == jQuery('#query-input').val());
+		if ( emptySearch ) {
 			
 			e.preventDefault();
 			jQuery('#query-input').addClass('error-border');
 			jQuery('#additional-feedback')
 				.addClass('error')
 				.html(eu.europeana.vars.msg.search_error);
-			
+			jQuery('#query-input').val("");
 		}
 		
 	},
