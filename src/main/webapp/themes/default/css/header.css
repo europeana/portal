@@ -463,6 +463,10 @@ table tr:first-child{
 }
 
 
+#search-menu{
+	padding-left:		1em	!important;	
+	padding-right:		1em	!important;
+}
 
 @media only screen and ( min-width:48em ){
 
