@@ -6,8 +6,6 @@ eu.europeana.search = {
 
 	init : function() {
 		
-		$("#query-input").focus();
-
 		this.loadComponents();
 		
 		// make facet sections collapsible

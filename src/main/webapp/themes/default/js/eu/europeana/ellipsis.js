@@ -135,8 +135,8 @@ var Ellipsis = function(cmp, ops) {
 			$inner.append(content);
 		}
 
-
-		var innerHtml = $inner.html().trim();
+		var innerHtml = $inner.html();
+		innerHtml = $.trim(innerHtml);
 		totalText = innerHtml;
 
 //		console.log("totalText >" + totalText + "< (" + totalText.length + ")  " + totalText.substr(totalText.length-1, 1)  );

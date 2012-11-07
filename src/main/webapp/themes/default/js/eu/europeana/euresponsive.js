@@ -23,7 +23,7 @@
 				this.mode = modeIn;
 			}
 
-			Gallery.prototype.changeLayout = function(escapedInitialSuffix, newSuffix) {
+			Gallery.prototype.changeLayout = function(escapedInitialSuffix, newSuffix, ieSuffixes) {
 				
 				if(this.mode == "img"){
 					var newHtmlStr = this.el.attr("src").replace(escapedInitialSuffix, newSuffix);
@@ -32,7 +32,7 @@
 					
 					// media queries don't work in IE - revert to biggest (last) image size
 					if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
-						newHtmlStr = newHtmlStr.replace(self.ops.suffixes[0], self.ops.suffixes[self.ops.suffixes.length-1]);
+						newHtmlStr = newHtmlStr.replace(ieSuffixes[0], ieSuffixes[ieSuffixes.length-1]);
 					}
 	
 					// don't show what was hidden...
@@ -57,7 +57,7 @@
 					
 					// media queries don't work in IE - revert to biggest (last) image size
 					if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
-						bgImg = bgImg.replace(self.ops.suffixes[0], self.ops.suffixes[self.ops.suffixes.length-1]);
+						bgImg = bgImg.replace(ieSuffixes[0], ieSuffixes[ieSuffixes.length-1]);
 					}
 
 					// don't show what was hidden...
@@ -117,7 +117,9 @@
 					}
 					
 					for (var i = self.galleries.length; i--;) {
-						self.galleries[i].changeLayout(self.lastSuffix ? self.lastSuffix : self.escapedInitialSuffix, newSuffix);
+						self.galleries[i].changeLayout(self.lastSuffix ? self.lastSuffix : self.escapedInitialSuffix, newSuffix,
+								[self.ops.suffixes[0], self.ops.suffixes[self.ops.suffixes.length-1]]
+						);
 					}
 					
 					self.lastSuffix = newSuffix;

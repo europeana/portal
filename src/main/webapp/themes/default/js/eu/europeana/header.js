@@ -24,7 +24,9 @@ eu.europeana.header = {
 		
 		$("#query-search>table")									.css("display",		"none");
 		$("#query-search>table")									.css("visibility",	"visible");
-		$("#query-search>table").fadeIn(600);
+		$("#query-search>table").fadeIn(600, function(){
+			jQuery("#query-input").focus();
+		});
 		
 		this.initResponsiveUtility();
 		this.addQueryFocus();

@@ -25,6 +25,8 @@
 	
 	var initCarousels = function(){
 
+//alert("initCarousels   1");
+
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 		Galleria.configure({
 				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
@@ -40,8 +42,9 @@
 				popupLinks:		true,
 				debug:			false
 		});
-			
 
+//alert("initCarousels   2");
+		
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");
 		$("#carousel-1").imagesLoaded(
 			function() {
@@ -73,7 +76,8 @@
 				}
 		});
 		
-	
+//alert("initCarousels   3");
+		
 		// Make sections collapsible
 		jQuery("#section-blog").Collapsible({
 			headingSelector:	"#collapse-header-1",
@@ -85,6 +89,8 @@
 			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 		
+//alert("initCarousels   4");
+
 		jQuery("#section-featured-content").Collapsible({
 			headingSelector:	"#collapse-header-2",
 			iconSelector:		".collapse-icon",
@@ -101,6 +107,8 @@
 			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 
+//alert("initCarousels   5");
+		
 		jQuery("#section-pinterest").Collapsible({
 			headingSelector:	"#collapse-header-3",
 			iconSelector:		".collapse-icon",
@@ -137,7 +145,6 @@
 			
 			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
-
 	};
 	
 	var initAddThis = function(){
@@ -246,9 +253,6 @@ return;
 	};
 	
 	var init = function() {
-		
-		jQuery("#query-input").focus();
-		
 		js.loader.loadScripts([{
 			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
