@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/${branding}/css/header.css" />
 <link rel="stylesheet" href="/${branding}/css/menu-main.css" />
 <link rel="stylesheet" href="/${branding}/css/menu-right.css" />
-<link rel="stylesheet" href="/${branding}/css/menu-styling.css" />
+<%--link rel="stylesheet" href="/${branding}/css/menu-styling.css" /--%>
 <link rel="stylesheet" href="/${branding}/css/responsive-grid.css" />
 
 
@@ -82,7 +82,6 @@
 	</c:when>
 
 	<c:when test="${model.pageName == 'full-doc.html'}">
-		<link rel="stylesheet" href="/${branding}/css/carousel.css" />
 		<link rel="stylesheet" href="/${branding}/css/fulldoc.css" />
 		<link rel="stylesheet" href="/${branding}/css/lightbox.css" />
 		<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
@@ -117,10 +116,10 @@
 	<c:when test="${model.pageName == 'search.html'}">
 		<link rel="stylesheet" href="/${branding}/css/search.css" />
 		<link rel="stylesheet" href="/${branding}/css/search-navigation.css" />
-		<link rel="stylesheet" href="/${branding}/css/search-icons.css" />
+		<%--link rel="stylesheet" href="/${branding}/css/search-icons.css" /--%>
 		<link rel="stylesheet" href="/${branding}/css/search-pagination.css" />
 		<link rel="stylesheet" href="/${branding}/css/sidebar-facets.css" />
-		<link rel="stylesheet" href="/${branding}/css/sidebar-legend.css" />
+		<%--link rel="stylesheet" href="/${branding}/css/sidebar-legend.css" /--%>
 		<c:if test="${model.embedded}">
 			<link rel="stylesheet" href="/${branding}/css/search-embed.css" />
 		</c:if>
