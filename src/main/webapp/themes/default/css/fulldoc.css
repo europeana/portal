@@ -86,11 +86,12 @@ a.action-link:hover{
 
 	
 .sidebar-right{
-	background-color:	#DFDFDF;
-	padding:			1em;
-	margin:				1em 0 1em 0;
-	border-radius:		5px;		/* TODO webkit etc  (look into sass) */
-		
+	background-color:		#DFDFDF;
+	padding:				1em;
+	margin:					1em 0 1em 0;
+	-moz-border-radius:		5px;
+	-webkit-border-radius:	5px;
+	border-radius:			5px;	
 }
 
 .sidebar-right strong{
