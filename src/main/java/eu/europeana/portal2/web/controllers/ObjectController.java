@@ -81,6 +81,11 @@ public class ObjectController {
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
+
+	public static final String V1_PATH = "/v1/record/";
+	public static final String SRW_EXT = ".srw";
+	public static final String JSON_EXT = ".json";
+
 	public static final Map<String, List<String>> seeAlsoFields = new LinkedHashMap<String, List<String>>() {
 		private static final long serialVersionUID = 1L;
 		{
@@ -170,8 +175,19 @@ public class ObjectController {
 		return page;
 	}
 
+	/**
+	 * Redirects to API's record JSON call
+	 * 
+	 * @param collectionId
+	 * @param recordId
+	 * @param wskey
+	 * @param callback
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.json", produces = MediaType.TEXT_HTML_VALUE)
-	public String redirect(
+	public String redirectJson(
 			@PathVariable String collectionId,
 			@PathVariable String recordId,
 			@RequestParam(value = "wskey", required = false) String wskey,
@@ -179,7 +195,34 @@ public class ObjectController {
 			HttpServletRequest request
 				) throws Exception {
 		StringBuilder sb = new StringBuilder(config.getApi2url());
-		sb.append("/v1/record/").append(collectionId).append("/").append(recordId).append(".json");
+		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(JSON_EXT);
+		if (!StringUtils.isBlank(request.getQueryString())) {
+			sb.append("?").append(request.getQueryString());
+		}
+		return "redirect:" + sb.toString();
+	}
+
+	/**
+	 * Redirects to API's record SRW call
+	 * 
+	 * @param collectionId
+	 * @param recordId
+	 * @param wskey
+	 * @param callback
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/record/{collectionId}/{recordId}.srw", produces = MediaType.TEXT_HTML_VALUE)
+	public String redirectSrw(
+			@PathVariable String collectionId,
+			@PathVariable String recordId,
+			@RequestParam(value = "wskey", required = false) String wskey,
+			@RequestParam(value = "callback", required = false) String callback,
+			HttpServletRequest request
+				) throws Exception {
+		StringBuilder sb = new StringBuilder(config.getApi2url());
+		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(SRW_EXT);
 		if (!StringUtils.isBlank(request.getQueryString())) {
 			sb.append("?").append(request.getQueryString());
 		}
