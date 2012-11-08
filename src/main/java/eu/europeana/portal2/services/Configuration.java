@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import eu.europeana.corelib.db.service.UserService;
@@ -96,6 +97,9 @@ public class Configuration {
 
 	@Value("#{europeanaProperties['portal.rowLimit']}")
 	private String rowLimit;
+
+	@Value("#{europeanaProperties['debug']}")
+	private String debug;
 
 	/////////////////////////////// generated properties
 
@@ -191,6 +195,10 @@ public class Configuration {
 
 	public int getRowLimit() {
 		return Integer.parseInt(rowLimit);
+	}
+
+	public boolean getDebugMode() {
+		return StringUtils.isBlank(debug) || Boolean.getBoolean(debug);
 	}
 
 	public Map<String, String> getSeeAlsoTranslations() {

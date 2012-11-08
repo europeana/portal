@@ -117,6 +117,7 @@
 		<constructor-arg type="java.lang.Class" value="eu.europeana.corelib.db.entity.relational.ApiKeyImpl" />
 	</bean>
 
-	<import resource="../portal2-context.xml"/>
+	<bean id="exceptionResolver" class="eu.europeana.portal2.exception.ExceptionResolver" />
 
+	<import resource="../portal2-context.xml"/>
 </beans>

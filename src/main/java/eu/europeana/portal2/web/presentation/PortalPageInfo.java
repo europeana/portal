@@ -40,6 +40,11 @@ import eu.europeana.corelib.web.model.PageInfo;
  */
 public enum PortalPageInfo implements PageInfo {
 
+	// Exceptions
+	EXCEPTION("exception.html", "Europeana - Exception", "exception/exception"),
+	ERROR("exception.html","error/error"),
+
+	// Administration-related things
 	ADMIN(null, "admin/admin"),
 	API_CONCOLE("api/console.html", "Europeana - API console", "api/console"),
 	API_REQUEST("api/registration.html", "Europeana - API register", "api/request"),
@@ -47,6 +52,7 @@ public enum PortalPageInfo implements PageInfo {
 	API_REGISTER_SUCCESS("api/registration-success.html", "api/register-api-success"),
 	ADMIN_LIMIT_APIKEY("admin/limitApiKey.html", "Europeana - Limit API key", "admin/limit-apikey"),
 
+	// general views
 	AJAX(null, "ajax/ajax"),
 	AJAX_SUGGESTION(null, "ajax/suggestions"),
 

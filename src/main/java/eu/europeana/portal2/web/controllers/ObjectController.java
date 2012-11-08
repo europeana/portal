@@ -42,10 +42,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
+import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
@@ -115,7 +117,7 @@ public class ObjectController {
 
 			HttpServletRequest request,
 			HttpServletResponse response, 
-			Locale locale) {
+			Locale locale) throws EuropeanaQueryException {
 
 		long t0 = (new Date()).getTime();
 
@@ -142,6 +144,10 @@ public class ObjectController {
 
 		long tgetFullBean0 = (new Date()).getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
+		if (fullBean == null) {
+			throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
+		}
+
 		long tgetFullBean1 = (new Date()).getTime();
 		log.info("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
