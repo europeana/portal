@@ -46,12 +46,16 @@
 					</span>
 				</c:when>
 				<c:otherwise>
+					<%-- Please, do not delete this comment! 
+						(Un)comment this to restore/hide myeuropeana link --%>
+					<%-- 
 					<a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
 						target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
 						title="<spring:message code="main_menu_myeuropeana_a_title_t"/>"
 						class="white left">
 						<spring:message code="main_menu_myeuropeana_a_text_t"/>
 					</a>
+					--%>
 				</c:otherwise>
 			</c:choose>
 
@@ -66,11 +70,15 @@
 						href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
 				</li>
 
+				<%-- Please, do not delete this comment!
+					(Un)comment this to restore/hide myeuropeana link --%>
+				<%-- 
 				<li class="item icon-logo">
 					<a	class="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
 						target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
 						href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
 				</li>
+				--%>
 
 				<%-- language options --%>
 				<li class="item lang">
