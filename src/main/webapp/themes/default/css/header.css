@@ -157,6 +157,8 @@ table, tr, td{
 */
 table, tr{
 	width:100%;
+	
+	
 }
 
 td{
@@ -168,6 +170,28 @@ td{
 tr td:first-child, tr td:last-child{
 	width:	auto;
 }
+
+
+/*******************/
+#search-menu{
+	padding-left:1em;
+	padding-right:1em;
+}
+
+tr td.menu-cell:first-child{
+	width:	20%;
+	text-align:	center;	
+}
+
+tr td.query-cell{
+	width:	80%;		
+}
+
+
+table{
+	table-layout:fixed;
+}
+/*******************/
 
 
 
@@ -187,7 +211,11 @@ table tr:first-child{
 	border-top:			1px solid #E4E4E4;
 	border-bottom:		1px solid #E4E4E4;
 	border-left:		1px solid #E4E4E4;
+	
+	text-align:				center;
 }
+
+
 
 .query-cell{
 	-moz-border-radius:		0 0.5em 0.5em 0;
@@ -222,6 +250,16 @@ table tr:first-child{
 		border-radius:			0;	
 		border:					0;
 	}	
+	
+
+
+	table{
+		table-layout:	auto;
+	}
+	tr td.menu-cell:first-child, tr td.query-cell{
+		width:	auto;
+	}
+	
 }	
 
 	
@@ -462,11 +500,6 @@ table tr:first-child{
 	padding:				0.5em;
 }
 
-
-#search-menu{
-	padding-left:		1em	!important;	
-	padding-right:		1em	!important;
-}
 
 @media only screen and ( min-width:48em ){
 
