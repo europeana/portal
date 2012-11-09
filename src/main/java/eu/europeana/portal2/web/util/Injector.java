@@ -1,9 +1,9 @@
 package eu.europeana.portal2.web.util;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Logger;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,18 +31,20 @@ public class Injector {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	private Locale locale;
+	// private Locale locale;
+	private long start;
 
 	public Injector() {
 		log.info("create injector(): " + (config == null));
 	}
 
 	public Injector(HttpServletRequest request, HttpServletResponse response, Locale locale) {
-		log.info("create injector(...): " + (config == null));
+		start = new Date().getTime();
+		// log.info("create injector(" + start + "): " + (config == null));
 		this.request = request;
 		this.response = response;
-		this.locale = locale;
-		log.info("locale: " + locale.getLanguage());
+		// this.locale = locale;
+		// log.info("locale: " + locale.getLanguage());
 		localeChangeInterceptor.preHandle(request, response, this);
 	}
 
@@ -67,5 +69,12 @@ public class Injector {
 				(configInterceptor != null), (request != null), (response != null), (object != null), (page != null)));
 			e.printStackTrace();
 		}
+		logTime(object.getClass().getSimpleName());
+	}
+
+	public void logTime(String type) {
+		long end = new Date().getTime();
+		log.info(type + " compare: " + end + " vs " + start);
+		ControllerUtil.logTime(type, (end - start));
 	}
 }
