@@ -7,11 +7,14 @@
 			<spring:message code='latest_on_pinterest_t'/>
 		</span>
 		<span class="icon-pinterest left"></span>
-		<span class="collapse-icon"></span>
-		<!-- a class="icon-rss feed-link" href="http://pinterest.europeana.eu.feed" target="_blank" title="RSS Feed"></a-->		
+		<span class="collapse-icon"></span>		
 	</h3>
 
 	<div class="collapse-content">
+	
+		<%--
+		
+	
 		<c:if test='${not empty model.pinterestItems}'>
 		
 		    <script type="text/javascript">
@@ -31,7 +34,7 @@
 			</script>
 			
 			
-			<%-- div id="carousel-3-header" class="europeana-header"></div --%>
+
 			
 			<div id="carousel-3" class="europeana-carousel">
 				<c:forEach var="item" items="${model.pinterestItems}">
@@ -46,10 +49,14 @@
 				</c:forEach>
 			</div>
 			
-			<%-- div id="carousel-3-footer" class="europeana-footer"></div  --%>
+
 			
 					
 		</c:if>	
+		
+		 --%>
+		 
+		 
 	</div>
 </div>
 

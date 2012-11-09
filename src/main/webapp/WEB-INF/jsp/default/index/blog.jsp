@@ -15,7 +15,7 @@
 	</h3>
 	
 	<div class="row collapse-content">
-		
+		<%-- 			
 		<c:choose>
 			<c:when test='${not empty model.feedEntries}'>
 				<c:forEach items="${model.feedEntries}" var="entry" varStatus="status">
@@ -63,10 +63,10 @@
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-			  <%--
+			  <!--
 			    fallback content in case the blog feed is not working
 			    # or if the portal server blog feed cache is cleared after a server restart
-			  --%>
+			  -->
 			  <h3><a href="<spring:message code='notranslate_blog-item-1_a_url'/>" target="<spring:message code='notranslate_blog-item-1_a_target'/>"><spring:message code='notranslate_blog-item-1_h3'/></a></h3> 
 			  <p><spring:message code='notranslate_blog-item-1_p'/></p>
 			  <h3><a href="<@spring.message 'notranslate_blog-item-2_a_url'/>" target="<spring:message code='notranslate_blog-item-2_a_target'/>"><spring:message code='notranslate_blog-item-2_h3'/></a></h3> 
@@ -75,6 +75,7 @@
 			  <p><spring:message code='notranslate_blog-item-3_p'/></p>
 			</c:otherwise>
 		</c:choose>
+		--%>
 	</div>
 </div>
 	

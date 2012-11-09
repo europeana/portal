@@ -23,12 +23,12 @@ $.fn.Collapsible = function() {
         var $header 	= $this.find(ops.headingSelector);
         var $body		= $this.find(ops.bodySelector);
         var $icon		= ops.iconSelector		?  $this.find(ops.iconSelector)		: null;
-        var $follower	= ops.followerSelector	?  $this.find(ops.followerSelector)	: null;
+        var $follower	= ops.followerSelector;
 
         var up = function(fast){
 			$body.slideUp(fast);
 			if($follower){
-				$follower.slideUp(fast);
+				$this.find($follower).slideUp(fast);
 			}
         };
         
@@ -36,21 +36,20 @@ $.fn.Collapsible = function() {
         	$body.slideDown(fast,
 	        	function(){
 	            	if(!ops.beenOpened && ops.fireFirstOpen){
-	            		log("fire first open....");
 	            		ops.beenOpened = true;
 	            		ops.fireFirstOpen();
 	            	}
 	            	else{
 	            		var eventElements = [$this[0]];
-	            		if($follower){
-	            			eventElements[1] = $follower[0]; 
+	            		if($follower){ 
+	            			eventElements[1] = $this.find($follower)[0]; 
 	            		}
 	            	   	$(window).trigger('collapsibleExpanded', [eventElements] );        		
 	            	}
 	        	}
         	);
         	if($follower){
-        		$follower.slideDown(fast);
+        		$this.find($follower).slideDown(fast);
         	}
         };
         

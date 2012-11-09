@@ -10,7 +10,7 @@
  
 	<div class="collapse-content">
 	
-	
+		<%--
 		<c:if test="${!empty model.featuredItem}">
 		
 			<div class="fi-block-spacer">
@@ -48,12 +48,12 @@
 			</div>
 
 		</c:if>
-
+		--%>
 	</div>
 </div>
 
 
-
+<%--
 <div class="six columns" id="section-featured-partner">
 
 
@@ -112,15 +112,6 @@
 					</a>
 				</li>
 
-				<%--
-				<li>
-					<a	href	= "/${model.portalName}/<spring:message code="notranslate_featured-partner-view_link_t" />"
-						target	= "<spring:message code="notranslate_featured-partner-view_target_t" />"
-						class	= "europeana">
-						<spring:message code="featured-partner-view_text_t" />
-					</a>
-				</li>
-				 --%>
 
 			</ul>
 
@@ -130,3 +121,4 @@
 	
 </div>
 
+ --%>
