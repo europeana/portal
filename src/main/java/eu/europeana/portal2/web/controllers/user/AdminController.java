@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.controllers.user;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -167,8 +168,8 @@ public class AdminController {
 
 		StringBuilder sb = new StringBuilder();
 		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
-			"id", "First name", "Last name", "Email", "Company", "Country",
-			"Address", "Phone", "Website", "Number of keys", "Keys (limit)"
+			"id", "Date of registration", "First name", "Last name", "Email", "Company", "Country",
+			"Address", "Phone", "Website", "Field of work", "Number of keys", "Keys (limit)"
 		));
 		sb.append(csvEncodeRecord(fieldNames));
 		for (User user : users.values()) {
@@ -185,6 +186,7 @@ public class AdminController {
 	private List<String> csvEncodeUser(User user) {
 		List<String> fields = new LinkedList<String>();
 		fields.add(user.getId().toString());
+		fields.add(csvEncodeField(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate())));
 		fields.add(csvEncodeField(user.getFirstName()));
 		fields.add(csvEncodeField(user.getLastName()));
 		fields.add(csvEncodeField(user.getEmail()));
@@ -193,6 +195,7 @@ public class AdminController {
 		fields.add(csvEncodeField(user.getAddress()));
 		fields.add(csvEncodeField(user.getPhone()));
 		fields.add(csvEncodeField(user.getWebsite()));
+		fields.add(csvEncodeField(user.getFieldOfWork()));
 		fields.add(String.valueOf(user.getApiKeys().size()));
 		List<String> keys = new LinkedList<String>();
 		for (ApiKey key : user.getApiKeys()) {

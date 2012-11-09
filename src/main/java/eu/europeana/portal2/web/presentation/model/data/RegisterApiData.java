@@ -8,6 +8,11 @@ public class RegisterApiData extends SearchPageData {
 	protected boolean failureExists = false;
 	protected boolean success = false;
 
+	private String[] fieldOfWorks = new String[]{
+		"Gallery", "Library", "Archive", "Museum", "Research/Education", 
+		"Individual developer", "Commercial company", "Non profit organization/Government"
+	};
+
 	private String token;
 	private String email;
 	private String userName;
@@ -22,6 +27,7 @@ public class RegisterApiData extends SearchPageData {
 	private String address;
 	private String website;
 	private String requestedAction;
+	private String fieldOfWork;
 
 	public String getToken() {
 		return token;
@@ -157,5 +163,17 @@ public class RegisterApiData extends SearchPageData {
 
 	public void setSuccess(boolean success) {
 		this.success = success;
+	}
+
+	public String getFieldOfWork() {
+		return fieldOfWork;
+	}
+
+	public void setFieldOfWork(String fieldOfWork) {
+		this.fieldOfWork = fieldOfWork;
+	}
+
+	public String[] getFieldOfWorks() {
+		return fieldOfWorks;
 	}
 }

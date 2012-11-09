@@ -40,6 +40,19 @@
         </tr>
         <tr>
           <td>
+            <label for="fieldOfWork"><spring:message code="registration_fieldOfWork_t" />:</label><br/>
+            <sf:select path="fieldOfWork">
+              <sf:option value=""><spring:message code="registration_pleaseSelect_t" /></sf:option>
+              <c:forEach items="${model.fieldOfWorks}" var="item">
+                <sf:option value="${item}">${item}</sf:option>
+              </c:forEach>
+            </sf:select>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
             <label for="company"><spring:message code="registration_company_t" /></label><br/>
             <sf:input id="company" path="company" />
             <em><sf:errors path="company" cssClass="error"/></em>
@@ -68,7 +81,8 @@
             <sf:input id="website" path="website" />
             <em><sf:errors path="website" cssClass="error"/></em>
           </td>
-          <td></td>
+          <td>
+          </td>
         </tr>
         <tr>
           <td>

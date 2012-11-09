@@ -173,7 +173,8 @@ public class RegisterApiPageController {
 				model.getEmail(), model.getApiKey(), model.getPrivateKey(),
 				DEFAULT_USAGE_LIMIT, model.getEmail(), // use email for username
 				model.getCompany(), model.getCountry(), model.getFirstName(),
-				model.getLastName(), model.getWebsite(), model.getAddress(), model.getPhone());
+				model.getLastName(), model.getWebsite(), model.getAddress(), 
+				model.getPhone(), model.getFieldOfWork());
 			ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 
 			log.info("User: " + user);
