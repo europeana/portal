@@ -32,7 +32,7 @@
 			<%-- previous arrow --%>
 			<li class="nav-prev">
 				<c:if test="${model.briefBeanView.pagination.previous}">
-					<a href="${fn:replace(model.previousPageUrl, "\"", "&quot;")}" title="<spring:message code="AltPreviousPage_t" />"> &lt; &nbsp; </a>
+					<a href="${fn:replace(model.previousPageUrl, "\"", "&quot;")}" title="<spring:message code="AltPreviousPage_t" />">&nbsp; &lt; &nbsp; </a>
 				</c:if>
 			</li>
 
@@ -57,7 +57,7 @@
 			<%-- next arrow --%>
 			<li class="nav-next">
 				<c:if test="${model.briefBeanView.pagination.next}">
-					<a href="${fn:replace(model.nextPageUrl, "\"", "&quot;")}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; </a>
+					<a href="${fn:replace(model.nextPageUrl, "\"", "&quot;")}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; &nbsp;</a>
 				</c:if>
 			</li>
 			
