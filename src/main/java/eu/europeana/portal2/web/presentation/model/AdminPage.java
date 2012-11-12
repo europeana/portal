@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.presentation.model;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.web.presentation.model.data.AdminData;
@@ -9,6 +10,8 @@ import eu.europeana.portal2.web.presentation.model.data.AdminData;
 public class AdminPage extends AdminData {
 
 	private List<User> users;
+
+	private Map<String, Integer> usage;
 
 	/**
 	 * Returns the total amount of memory in the Java virtual machine. The value 
@@ -49,5 +52,13 @@ public class AdminPage extends AdminData {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public Map<String, Integer> getUsage() {
+		return usage;
+	}
+
+	public void setUsage(Map<String, Integer> usage) {
+		this.usage = usage;
 	}
 }

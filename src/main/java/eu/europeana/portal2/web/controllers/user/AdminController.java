@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.db.logging.api.ApiLogger;
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
@@ -52,8 +54,10 @@ public class AdminController {
 
 	@Resource private ClickStreamLogger clickStreamLogger;
 
+	@Resource private ApiLogger apiLogger;
+
 	private final Logger log = Logger.getLogger(getClass().getName());
-	
+
 	private static final String RECORD_SEPARATOR = "\n";
 	private static final String FIELD_SEPARATOR = ",";
 
@@ -72,9 +76,11 @@ public class AdminController {
 
 		long t0 = new Date().getTime();
 		// model.setUsers(userService.findAll());
+		Map<String, Integer> usage = new HashMap<String, Integer>();
 		List<User> users = new ArrayList<User>();
 		List<ApiKey> apiKeys = apiKeyService.findAll();
 		for (ApiKey apiKey : apiKeys) {
+			usage.put(apiKey.getId(), apiLogger.getRequestNumber(apiKey.getId()));
 			User user = apiKey.getUser();
 			if (!users.contains(user)) {
 				users.add(user);
@@ -83,6 +89,8 @@ public class AdminController {
 		long t = (new Date().getTime() - t0);
 		log.info("get users took " + t);
 		model.setUsers(users);
+		model.setUsage(usage);
+		log.info("usage: " + usage);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN);
 		injector.postHandle(this, page);

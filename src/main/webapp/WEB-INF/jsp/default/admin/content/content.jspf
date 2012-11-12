@@ -1,6 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<style type="text/css">
+.row p.note {
+  font-size: 80%;
+}
+</style>
 <div class="row">
 
 <table>
@@ -19,7 +24,7 @@
       <th><spring:message code="admin_Registration_t" /></th>
       <th><spring:message code="myeuropeana_UserRole_t" /></th>
       <th><spring:message code="Actions_t" /></th>
-      <th><spring:message code="myeuropeana_ApiKeys_t" /></th>
+      <th><spring:message code="myeuropeana_ApiKeys_t" />*</th>
     </tr>
   </thead>
   <tbody>
@@ -52,7 +57,7 @@
             <c:param name="apiKey" value="${apiKey.id}" />
           </c:url>
           <tr>
-            <td width="70%"><code>${apiKey.id}</code> / <code>${apiKey.privateKey}</code> / ${apiKey.usageLimit}</td>
+            <td width="70%"><code>${apiKey.id}</code> / <code>${apiKey.privateKey}</code> / ${apiKey.usageLimit} (${model.usage[apiKey.id]})</td>
             <td width="30%">
                 <a href="${removeApiKey}"><spring:message code="Remove_t" /></a>
               | <a href="${limitApiKey}"><spring:message code="admin_limitApiKey_t" /></a>
@@ -71,5 +76,7 @@
   </tr>
   </tbody>
 </table>
+
+<p class="note">* Structure of the API Keys column: API key / private key / usage limit (current usage)</p>
 
 </div>
