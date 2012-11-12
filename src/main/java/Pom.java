@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-
 public class Pom {
 
 	private final String root		= "/src/main/webapp/themes/default/";
