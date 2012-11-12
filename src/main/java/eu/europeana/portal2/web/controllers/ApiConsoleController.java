@@ -64,7 +64,6 @@ public class ApiConsoleController {
 
 		ApiConsolePage model = new ApiConsolePage();
 		injector.injectProperties(model);
-		log.info("/injectProperties");
 
 		if (!model.getSupportedFunctions().contains(function)) {
 			function = SEARCH;
@@ -96,8 +95,6 @@ public class ApiConsoleController {
 		model.setCallback(callback);
 
 		ApiWrapper api = new ApiWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
-		
-		log.info("get apiResult");
 		ApiResult apiResult = null;
 		if (function.equals("search") && !StringUtils.isBlank(query)) {
 			apiResult = api.getSearchResult(query, refinements, profile, start, rows, sort, callback);
@@ -108,21 +105,15 @@ public class ApiConsoleController {
 		} else if (function.equals("suggestions") && !StringUtils.isBlank(query)) {
 			apiResult = api.getSuggestions(query, rows, phrases, callback);
 		}
-		log.info("/get apiResult");
 
 		if (apiResult != null) {
-			log.info("format JSON");
 			String rawJsonString = apiResult.getContent();
 			String niceJsonString = rawJsonString;
 			niceJsonString = JsonFormatter.format(rawJsonString);
-			log.info("/format JSON");
 
-			log.info("adding to model");
 			model.setJsonString(niceJsonString);
 			model.setApiUrl(api.getUrl());
 			model.setHttpStatusCode(apiResult.getHttpStatusCode());
-			log.info("/adding to model");
-			log.info("API URL: " + model.getApiUrl());
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);
