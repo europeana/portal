@@ -25,4 +25,4 @@ do
   fi;
 done
 
-echo local=$LOCAL, skipApi=$SKIP_API, skipPortal=$SKIP_PORTAL, skipCorelib=$SKIP_CORELIB, debug==$DEBUG
+echo local=$LOCAL, skipApi=$SKIP_API, skipPortal=$SKIP_PORTAL, skipCorelib=$SKIP_CORELIB, debug=$DEBUG
