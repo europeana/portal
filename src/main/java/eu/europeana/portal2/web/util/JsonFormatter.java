@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 public class JsonFormatter {
 
@@ -26,7 +27,7 @@ public class JsonFormatter {
 	 * @return
 	 *   The pretty printed JSON string
 	 */
-	public static String format(String rawJsonString) {
+	public static String format(String rawJsonString) throws JsonSyntaxException {
 		JsonElement element = parser.parse(rawJsonString);
 		return gson.toJson(element).replace("  ", " &nbsp;").replace("\n", "<br/>\n");
 	}

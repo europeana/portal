@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonSyntaxException;
+
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.ApiResult;
 import eu.europeana.portal2.web.controllers.utils.ApiWrapper;
@@ -109,7 +111,13 @@ public class ApiConsoleController {
 		if (apiResult != null) {
 			String rawJsonString = apiResult.getContent();
 			String niceJsonString = rawJsonString;
-			niceJsonString = JsonFormatter.format(rawJsonString);
+			if (StringUtils.isBlank(callback)) {
+				try {
+					niceJsonString = JsonFormatter.format(rawJsonString);
+				} catch (JsonSyntaxException e) {
+					log.severe("JSON formatting exception: " + e.getMessage());
+				}
+			}
 
 			model.setJsonString(niceJsonString);
 			model.setApiUrl(api.getUrl());
