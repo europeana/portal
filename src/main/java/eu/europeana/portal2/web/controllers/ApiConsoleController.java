@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -107,11 +106,7 @@ public class ApiConsoleController {
 		}
 
 		String niceJsonString = rawJsonString;
-		try {
-			niceJsonString = JsonFormatter.format(rawJsonString);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		niceJsonString = JsonFormatter.format(rawJsonString);
 
 		model.setJsonString(niceJsonString);
 		model.setApiUrl(api.getUrl());
