@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.web.controllers.utils.ApiResult;
 import eu.europeana.portal2.web.controllers.utils.ApiWrapper;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ApiConsolePage;
@@ -94,22 +95,26 @@ public class ApiConsoleController {
 		model.setCallback(callback);
 
 		ApiWrapper api = new ApiWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
-		String rawJsonString = "";
+		
+		ApiResult apiResult = null;
+		// "";
 		if (function.equals("search") && !StringUtils.isBlank(query)) {
-			rawJsonString = api.getSearchResult(query, refinements, profile, start, rows, sort, callback);
+			apiResult = api.getSearchResult(query, refinements, profile, start, rows, sort, callback);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			rawJsonString = api.getObject(collectionId, recordId, profile, callback);
+			apiResult = api.getObject(collectionId, recordId, profile, callback);
 		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			rawJsonString = api.getObject(recordId, profile, callback);
+			apiResult = api.getObject(recordId, profile, callback);
 		} else if (function.equals("suggestions") && !StringUtils.isBlank(query)) {
-			rawJsonString = api.getSuggestions(query, rows, phrases, callback);
+			apiResult = api.getSuggestions(query, rows, phrases, callback);
 		}
 
+		String rawJsonString = apiResult.getContent();
 		String niceJsonString = rawJsonString;
 		niceJsonString = JsonFormatter.format(rawJsonString);
 
 		model.setJsonString(niceJsonString);
 		model.setApiUrl(api.getUrl());
+		model.setHttpStatusCode(apiResult.getHttpStatusCode());
 		log.info("API URL: " + model.getApiUrl());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);

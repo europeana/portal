@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
@@ -53,6 +52,8 @@ public class ApiWrapper {
 	private static final String QF_PARAM = "&qf=";
 	private static final String PHRASES_PARAM = "&phrases=";
 	private static final String HEADER = "{\"apikey\":\"";
+	private static final String WSKEY = "wskey=";
+	private static final String UTM_CAMPAIGN = "utm_campaign=";
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -65,6 +66,10 @@ public class ApiWrapper {
 	protected String wskeyReplacement;
 	protected String headerApiKey;
 	protected String headerApiKeyReplacement;
+	protected String wskeyInstance;
+	protected String wskeyInstanceReplacement;
+	protected String utmCampaign;
+	protected String utmCampaignReplacement;
 
 	public ApiWrapper(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		this.apiUrl = apiUrl;
@@ -74,9 +79,15 @@ public class ApiWrapper {
 		wskeyReplacement = api2key.replaceAll(".", "x");
 		headerApiKey = HEADER + api2key + "\",";
 		headerApiKeyReplacement = HEADER + wskeyReplacement + "\",";
+
+		wskeyInstance = WSKEY + api2key;
+		wskeyInstanceReplacement = WSKEY + wskeyReplacement;
+
+		utmCampaign = UTM_CAMPAIGN + api2key;
+		utmCampaignReplacement = UTM_CAMPAIGN + wskeyReplacement;
 	}
 
-	public String getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort, String callback) {
+	public ApiResult getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(SEARCH_PATH);
 		url.append(WSKEY_PARAM).append(api2key);
@@ -100,11 +111,11 @@ public class ApiWrapper {
 		return getJsonResponse(url.toString());
 	}
 
-	public String getObject(String collectionId, String recordId, String profile, String callback) {
+	public ApiResult getObject(String collectionId, String recordId, String profile, String callback) {
 		return getObject(collectionId, recordId + "/" + profile, callback);
 	}
 
-	public String getObject(String recordId, String profile, String callback) {
+	public ApiResult getObject(String recordId, String profile, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(RECORD_PATH);
 		url.append(recordId).append(RECORD_EXT);
@@ -119,7 +130,7 @@ public class ApiWrapper {
 		return getJsonResponse(url.toString());
 	}
 
-	public String getSuggestions(String query, int rows, boolean phrases, String callback) {
+	public ApiResult getSuggestions(String query, int rows, boolean phrases, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(SUGGESTIONS_PATH);
 		url.append(SUGGESTION_ROWS_PARAM).append(rows);
@@ -134,28 +145,38 @@ public class ApiWrapper {
 		return getJsonResponse(url.toString());
 	}
 
-	public String getJsonResponse(String url) {
+	public ApiResult getJsonResponse(String url) {
 		lastUrl = url;
 		String jsonResponse = null;
+		int statusCode = -1;
 		try {
 			HttpClient client = new HttpClient();
 			GetMethod method = new GetMethod(url);
 			log.info("get URL: " + method.getURI().toString());
-			int statusCode = client.executeMethod(method);
+			statusCode = client.executeMethod(method);
+			/*
 			if (statusCode != HttpStatus.SC_OK) {
 				log.severe("Method failed: " + method.getStatusLine());
 			}
+			*/
 
 			// Read the response body.
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(method.getResponseBodyAsStream(), writer, "UTF-8");
 			jsonResponse = writer.toString();
+
 		} catch (IOException e) {
 			log.severe(e.getMessage());
 			e.printStackTrace();
 		}
 
-		return jsonResponse.replace(headerApiKey, headerApiKeyReplacement);
+		return new ApiResult(
+			statusCode,
+			jsonResponse
+				.replace(headerApiKey, headerApiKeyReplacement)
+				.replace(wskeyInstance, wskeyInstanceReplacement)
+				.replace(utmCampaign, utmCampaignReplacement)
+		);
 	}
 
 	protected String getSessionID() {

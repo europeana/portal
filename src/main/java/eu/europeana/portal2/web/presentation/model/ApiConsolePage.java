@@ -15,6 +15,7 @@ public class ApiConsolePage extends ApiData {
 	private String function;
 	private String jsonString;
 	private String apiUrl;
+	private int httpStatusCode;
 
 	// search parameters
 	private String query;
@@ -156,5 +157,13 @@ public class ApiConsolePage extends ApiData {
 
 	public void setCallback(String callback) {
 		this.callback = callback;
+	}
+
+	public int getHttpStatusCode() {
+		return httpStatusCode;
+	}
+
+	public void setHttpStatusCode(int httpStatusCode) {
+		this.httpStatusCode = httpStatusCode;
 	}
 }
