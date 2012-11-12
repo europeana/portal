@@ -110,18 +110,20 @@ public class ApiConsoleController {
 		}
 		log.info("/get apiResult");
 
-		log.info("format JSON");
-		String rawJsonString = apiResult.getContent();
-		String niceJsonString = rawJsonString;
-		niceJsonString = JsonFormatter.format(rawJsonString);
-		log.info("/format JSON");
+		if (apiResult != null) {
+			log.info("format JSON");
+			String rawJsonString = apiResult.getContent();
+			String niceJsonString = rawJsonString;
+			niceJsonString = JsonFormatter.format(rawJsonString);
+			log.info("/format JSON");
 
-		log.info("adding to model");
-		model.setJsonString(niceJsonString);
-		model.setApiUrl(api.getUrl());
-		model.setHttpStatusCode(apiResult.getHttpStatusCode());
-		log.info("/adding to model");
-		log.info("API URL: " + model.getApiUrl());
+			log.info("adding to model");
+			model.setJsonString(niceJsonString);
+			model.setApiUrl(api.getUrl());
+			model.setHttpStatusCode(apiResult.getHttpStatusCode());
+			log.info("/adding to model");
+			log.info("API URL: " + model.getApiUrl());
+		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);
 		injector.postHandle(this, page);
