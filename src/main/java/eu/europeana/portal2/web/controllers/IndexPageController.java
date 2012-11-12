@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
+import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -70,6 +72,8 @@ public class IndexPageController {
 
 	@Resource(name="configurationService") private Configuration config;
 
+	private static final List<String> freaments = Arrays.asList("blog", "featuredContent", "pinterest");
+
 	private final Logger log = Logger.getLogger(getClass().getName());
 	
 	private static List<FeedEntry> feedEntries;
@@ -83,6 +87,7 @@ public class IndexPageController {
 	public ModelAndView indexHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
+			@RequestParam(value = "fragment", required = false) String fragment,
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Locale locale) {
@@ -103,7 +108,17 @@ public class IndexPageController {
 
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
-		final ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.INDEX);
+		PageInfo view = PortalPageInfo.INDEX;
+		if (freaments.contains(fragment)) {
+			if (fragment.equals("blog")) {
+				view = PortalPageInfo.INDEX_BLOG;
+			} else if (fragment.equals("featuredContent")) {
+				view = PortalPageInfo.INDEX_FEATUREDCONTENT;
+			} else if (fragment.equals("pinterest")) {
+				view = PortalPageInfo.INDEX_PINTEREST;
+			}
+		}
+		final ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 		injector.postHandle(this, page);
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.INDEXPAGE, page);
 
