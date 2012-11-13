@@ -276,11 +276,11 @@
 	text-shadow:	0 0 1px #000;
 }
 
-.galleria-image-nav-left.icon-arrow-4, .galleria-image-nav-right.icon-arrow-2{	
-	filter:				progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=45, strength=2)
-						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135, strength=2)
-						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=225, strength=2)
-						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=315, strength=2);
+.galleria-image-nav-left.icon-arrow-4, .galleria-image-nav-right.icon-arrow-2{
+	filter: Shadow(Color=#000, Direction=45, Strength=2),
+			Shadow(Color=#000, Direction=135, Strength=2),
+			Shadow(Color=#000, Direction=225, Strength=2),
+			Shadow(Color=#000, Direction=315, Strength=2);
 	background-clip:	text;
 }
 
@@ -374,11 +374,12 @@
 }
 
 .europeana-carousel .galleria-thumb-nav-left:before,
-.europeana-carousel .galleria-thumb-nav-right:before{	
-	filter:				progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=45, strength=2)
-						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135, strength=2)
-						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=225, strength=2)
-						progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=315, strength=2);
+.europeana-carousel .galleria-thumb-nav-right:before{
+	filter: Shadow(Color=#000, Direction=45, Strength=2),
+			Shadow(Color=#000, Direction=135, Strength=2),
+			Shadow(Color=#000, Direction=225, Strength=2),
+			Shadow(Color=#000, Direction=315, Strength=2);
+
 	background-clip:	text;
 }
 	
