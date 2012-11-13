@@ -175,7 +175,7 @@ eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
 </c:when>
 
 <c:when test="${model.pageName == 'full-doc.html'}">
-eu.europeana.vars.msg.translate_with = '${translate_with}';
+eu.europeana.vars.msg.translate_with = '${fn:escapeXml(translate_with)}';
 eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
 eu.europeana.vars.msg.more = '${see_more}';
 eu.europeana.vars.msg.less = '${see_less}';
