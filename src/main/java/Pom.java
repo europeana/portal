@@ -11,13 +11,16 @@ public class Pom {
 	private final String webAppTgt	= "src/main/webapp/themes/default/";
 	private final String pomName	= "pom-generated.xml";
 	private final String cleanup	= "cleanup-minified.sh";
-
+	private int count = 0;
+	
 	private final String[] includes = {
 			"css/",
 			"js/com/gmtplusone",
+			"js/com/",
+			"js/scottjehl-iOS-Orientationchange-Fix-99c9c99",
 			"js/eu",
 			"js/galleria/themes",
-			"js/js"			
+			"js/js/"			
 	};
 	private final String[] excludes = {			
 			"css/behaviour/",
@@ -83,7 +86,7 @@ public class Pom {
 		tgtDir += "/min";
 
 		writeToFile("<execution>");
-		writeToFile(	"\t<id>minify-" + name + "</id>");
+		writeToFile(	"\t<id>minify-" + count + "-" + name + "</id>");
 		writeToFile(	"\t<phase>process-resources</phase>");
 		writeToFile(	"\t<configuration>");
 		
@@ -105,6 +108,7 @@ public class Pom {
 		writeToFile("</execution>");
 		
 		writeToCleanup(webAppTgt + tgtDir);
+		count ++;
 	}
 	
 	private void openXml(){
