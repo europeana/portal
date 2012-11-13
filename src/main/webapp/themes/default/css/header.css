@@ -24,10 +24,16 @@
 	padding-bottom:	0;
 }
 #lang-menu ul{
-	right:	0;
+	right:		0;
+	font-size:	1.25em;
 }
 #lang-menu .item {
 	padding-right:	1em;
+}
+
+
+.icon-mobilemenu{
+	font-size:	2em;
 }
 
 	
@@ -41,6 +47,10 @@
 #logo h1{
 	display:	block;
 	width:		100%; 
+}
+
+#logo h1 a{	
+	display:	table-cell;
 }
 
 #logo-and-search{
@@ -116,6 +126,11 @@
 	#logo-and-search{
 		padding-top:		1.5em;
 		padding-bottom:	1.5em;
+	}
+	
+	#lang-menu>ul>li.item.icon-home,
+	#lang-menu>ul>li.item.icon-logo{
+		display	:none !important;
 	}
 	
 }
@@ -395,75 +410,17 @@ table tr:first-child{
 	float:		right;	/* chrome lines form left */
 }
 
-#lang-menu,
-#mobile-menu{
+#lang-menu{
 	position:	relative;
 	float:		right;
 	z-index:	3;	
 }
 
-#mobile-menu{
-	font-size:	2em;
-}
 
 #lang-menu{	
 	margin-right:	0 !important;
 }
 	
-
-/* eu menu overrides */
-	
-#mobile-menu ul{
-	font-size:	0.5em;
-	position:	absolute;
-	right:		-1px;		
-}
-	
-#mobile-menu ul li{
-	font-size:	1.2em;			
-}
-
-
-	/* user-bar */
-	/*
-	#user-bar {
-		position:	absolute;
-		top:		20px;
-		right:		20px;
-		padding:	5px;
-		width:		927px;
-		text-align:	right;
-		z-index:	100;
-	}
-	
-	
-	#box_search, #box_search_refine{
-		margin-left: 14px;
-	}
-	*/
-	
-	
-	/*	
-	#refine-search,
-	#save-search,
-	.search-help {
-		position: absolute;
-		top: 28px;
-	}
-	*/
-	/*
-	#refine-search {
-		left: 0;
-	}
-		
-	#refine-search.disabled {
-		display: none;
-	}
-	
-	#save-search {
-		right: 233px;
-	}
-	*/
  
 .submit-cell{
 	height:			100%;
@@ -605,7 +562,7 @@ a.ui-state-hover {
 	}
 	
 			
-	#header-strip span{		/* structural fix for vertical align */
+	#header-strip span:not(.icon-mobilemenu){		/* structural fix for vertical align */
 		display:			table-cell !important;
 		vertical-align:		middle;
 	}
