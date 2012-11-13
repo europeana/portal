@@ -87,15 +87,10 @@
 			executeDefaultClick: true,
 			toggleFn: function(){return $("#mobile-menu").is(":visible");},
 			fireFirstOpen:		function(){
-				
-				
 				jQuery.ajax({
-					url: 'index.html?blog=true',
-					//dataType: 'json',
+					url: 'index.html?fragment=blog',
+					dataType: 'json',
 					success: function(data){
-						data = data.replace(/(\r\n|\n|\r)/gm, ' ');
-						data = data.replace(/\t/g, ' ');
-						data = $.parseJSON( data );
 						$("#section-blog .collapse-content").html(data.markup);
 					},
 					error: function(x, status, e){
@@ -117,12 +112,9 @@
 			collapsedClass:		'icon-arrow-3',
 			fireFirstOpen:		function(){
 				jQuery.ajax({
-					url: 'index.html?featuredItem=true',
-					//dataType: 'json',
+					url: 'index.html?fragment=featuredContent',
+					dataType: 'json',
 					success: function(data){
-						data = data.replace(/(\r\n|\n|\r)/gm, ' ');
-						data = data.replace(/\t/g, ' ');
-						data = $.parseJSON( data );
 						$("#section-featured-content .collapse-content").html(data.markup);
 						$("#collapse-header-2").parent().after(data.markup2);
 					},
@@ -143,17 +135,10 @@
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
 			fireFirstOpen:		function(){
-				
-        		
 				jQuery.ajax({
-						url: 'index.html?pinterest=true',
-						//dataType: 'json',
+						url: 'index.html?fragment=pinterest',
+						dataType: 'json',
 						success: function(data){
-
-							data = data.replace(/(\r\n|\n|\r)/gm, ' ');
-							data = data.replace(/\t/g, ' ');
-							data = $.parseJSON( data );
-							
 							$("#section-pinterest .collapse-content").html(data.markup);
 							
 							var carousel3Data = data.data.carousel3Data;
