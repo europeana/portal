@@ -1,7 +1,7 @@
 <html>
 	<head>
 
-		<script type="text/javascript" src="themes/default/js/jquery/jquery-1.8.1.min.js"></script>
+		<script type="text/javascript" src="themes/default/js/jquery/min/jquery-1.8.1.min.js"></script>
 	
 		<link rel="stylesheet" href="themes/default/css/html.css" />
 		<link rel="stylesheet" href="themes/default/css/common.css" />
