@@ -61,6 +61,9 @@ public class AdminController {
 	private static final String RECORD_SEPARATOR = "\n";
 	private static final String FIELD_SEPARATOR = ",";
 
+	private static final String ACTUAL = "actual";
+	private static final String TOTAL = "total";
+
 	@RequestMapping("/admin.html")
 	public ModelAndView adminHandler(
 			HttpServletRequest request,
@@ -76,11 +79,17 @@ public class AdminController {
 
 		long t0 = new Date().getTime();
 		// model.setUsers(userService.findAll());
-		Map<String, Integer> usage = new HashMap<String, Integer>();
+		Map<String, Map<String, Integer>> usage = new HashMap<String, Map<String, Integer>>(){
+			private static final long serialVersionUID = 1L;
+		{
+			put(ACTUAL, new HashMap<String, Integer>());
+			put(TOTAL, new HashMap<String, Integer>());
+		}};
 		List<User> users = new ArrayList<User>();
 		List<ApiKey> apiKeys = apiKeyService.findAll();
 		for (ApiKey apiKey : apiKeys) {
-			usage.put(apiKey.getId(), apiLogger.getRequestNumber(apiKey.getId()));
+			usage.get(ACTUAL).put(apiKey.getId(), apiLogger.getRequestNumber(apiKey.getId()));
+			usage.get(TOTAL).put(apiKey.getId(), apiLogger.getTotalRequestNumber(apiKey.getId()));
 			User user = apiKey.getUser();
 			if (!users.contains(user)) {
 				users.add(user);

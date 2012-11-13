@@ -51,7 +51,6 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
-import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;

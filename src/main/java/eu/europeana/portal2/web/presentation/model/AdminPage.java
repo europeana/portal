@@ -11,7 +11,7 @@ public class AdminPage extends AdminData {
 
 	private List<User> users;
 
-	private Map<String, Integer> usage;
+	private Map<String, Map<String, Integer>> usage;
 
 	/**
 	 * Returns the total amount of memory in the Java virtual machine. The value 
@@ -54,11 +54,11 @@ public class AdminPage extends AdminData {
 		this.users = users;
 	}
 
-	public Map<String, Integer> getUsage() {
+	public Map<String, Map<String, Integer>> getUsage() {
 		return usage;
 	}
 
-	public void setUsage(Map<String, Integer> usage) {
+	public void setUsage(Map<String, Map<String, Integer>> usage) {
 		this.usage = usage;
 	}
 }

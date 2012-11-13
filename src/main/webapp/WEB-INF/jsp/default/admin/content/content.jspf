@@ -57,7 +57,8 @@
             <c:param name="apiKey" value="${apiKey.id}" />
           </c:url>
           <tr>
-            <td width="70%"><code>${apiKey.id}</code> / <code>${apiKey.privateKey}</code> / ${apiKey.usageLimit} (${model.usage[apiKey.id]})</td>
+            <td width="70%"><code>${apiKey.id}</code> / <code>${apiKey.privateKey}</code> / ${apiKey.usageLimit} 
+              (${model.usage['total'][apiKey.id]}/${model.usage['actual'][apiKey.id]})</td>
             <td width="30%">
                 <a href="${removeApiKey}"><spring:message code="Remove_t" /></a>
               | <a href="${limitApiKey}"><spring:message code="admin_limitApiKey_t" /></a>
@@ -77,6 +78,6 @@
   </tbody>
 </table>
 
-<p class="note">* Structure of the API Keys column: API key / private key / usage limit (current usage)</p>
+<p class="note">* Structure of the API Keys column: API key / private key / usage limit (total/current usage)</p>
 
 </div>
