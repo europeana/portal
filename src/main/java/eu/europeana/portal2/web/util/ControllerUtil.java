@@ -207,6 +207,7 @@ public class ControllerUtil {
 				.replaceAll(",", " ")
 				.replaceAll(":", " ")
 				.replaceAll("\\s+", " ");
+
 		Matcher m;
 		for (Pattern pattern : SEE_ALSO_PATTERNS) {
 			m = pattern.matcher(value);
@@ -215,6 +216,8 @@ public class ControllerUtil {
 				m = pattern.matcher(value);
 			}
 		}
+
+		value = value.replaceAll("\\/", "\\\\/");
 
 		return value;
 	}

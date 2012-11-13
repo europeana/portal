@@ -24,6 +24,7 @@ public class SeeAlsoSuggestions {
 		String fieldValue = parts[1]
 				.replaceAll("^\"", "")
 				.replaceAll("\"$", "");
+
 		Field field;
 		if (fields.containsKey(fieldName)) {
 			field = fields.get(fieldName);
@@ -31,12 +32,14 @@ public class SeeAlsoSuggestions {
 			field = new Field(fieldName, seeAlsoTranslations.get(fieldName));
 			fields.put(fieldName, field);
 		}
+
 		String extendedQuery;
 		if (fieldName.equals("PROVIDER")) {
 			extendedQuery = query;
 		} else {
 			extendedQuery = fieldName + ":(" + ControllerUtil.clearSeeAlso(fieldValue) + ")";
 		}
+
 		field.addSuggestion(new Suggestion(extendedQuery, fieldValue, count));
 	}
 
