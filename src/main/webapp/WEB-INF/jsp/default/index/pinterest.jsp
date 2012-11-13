@@ -11,57 +11,5 @@
 	</h3>
 
 	<div class="collapse-content">
-	
-		<%--
-		
-	
-		<c:if test='${not empty model.pinterestItems}'>
-		
-		    <script type="text/javascript">
-		    
-	            var carousel3Data = [];
-				<c:forEach var="item" items="${model.pinterestItems}">
-				
-					carousel3Data[carousel3Data.length] = {
-						thumb:			'${item.images[0].src}',
-						title:			'${fn:escapeXml(item.plainDescription)}',
-						link:			'${item.link}',
-						linkTarget:		'_new'
-					};
-					
-				</c:forEach>
-
-			</script>
-			
-			
-
-			
-			<div id="carousel-3" class="europeana-carousel">
-				<c:forEach var="item" items="${model.pinterestItems}">
-				
-					<a href="${item.link}" class="hidden">
-						<img	src		= "${item.images[0].src}"
-								alt		= "${fn:escapeXml(item.plainDescription)}"
-								title	= "${fn:escapeXml(item.plainDescription)}"
-						/>	
-					</a>
-					
-				</c:forEach>
-			</div>
-			
-
-			
-					
-		</c:if>	
-		
-		 --%>
-		 
-		 
 	</div>
 </div>
-
-
-<%--
-<h2><spring:message code='recent_pinterest_activities_t'/>&nbsp;<a href="http://www.pinterest.com/europeana" target="_blank"><img src="/${model.portalName}/themes/common/images/logos/Pinterest_Logo.png" width="70" height="18" alt="Follow Me on Pinterest" /></a></h2>
-<div id="pinterest" class="rssFeed"></div>
- --%>

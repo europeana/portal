@@ -8,9 +8,6 @@
 	<%@ include file="/WEB-INF/jsp/default/index/featured-item.jsp" %>
 </div>
 
-<%--
---%>
-
 <div class="row active" id="section-pinterest">
 	<%@ include file="/WEB-INF/jsp/default/index/pinterest.jsp" %>
 </div>

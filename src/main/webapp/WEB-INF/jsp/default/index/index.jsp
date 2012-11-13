@@ -3,11 +3,11 @@
 <%@ include file="/WEB-INF/jsp/_common/tag-libraries.jsp" %>
 
 
-<c:choose>
-
-
-
- 	<c:when test="${not empty param.blog}">
+	<c:choose>
+	
+	
+	
+	 	<c:when test="${not empty param.blog}">
  		{
  			"markup":"
  				<c:choose>

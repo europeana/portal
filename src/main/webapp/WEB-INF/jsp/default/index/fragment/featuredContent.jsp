@@ -1,2 +1,88 @@
 <%@ include file="/WEB-INF/jsp/default/_common/include-json.jspf" %>
-{"fragment":"featuredContent"}
+
+     {
+       "markup":"<%--
+         --%><c:if test="${!empty model.featuredItem}"><%--
+           --%><div class='fi-block-spacer'><%--
+             --%><h4 class='show-on-phones'><%--
+               --%><a  href  = '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
+                 --%>title  = '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
+                 --%>target  = '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
+                 --%>class  = 'europeana'><%--
+                 --%><spring:message code="${model.featuredItem.heading}" /><%--  
+               --%></a><%--
+             --%></h4><%--
+             --%><a  href=  '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
+             --%>title=  '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
+             --%>target=  '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
+             --%>class=  'image'><%--
+             --%><img  src=  '/${model.portalName}<spring:message code="${model.featuredItem.imgUrl}" />'<%--
+               --%>alt=  '<spring:message code="${model.featuredItem.imgAlt}" />'<%--
+               --%>/><%--
+             --%></a><%--
+             --%><h4 class='hide-on-phones'><%--
+               --%><a  href  = '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
+               --%>title  = '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
+               --%>target  = '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
+               --%>class  = 'europeana'><%--
+               --%><spring:message code="${model.featuredItem.heading}" /><%--  
+             --%></a><%--
+           --%></h4><%--
+           --%><spring:message code="${model.featuredItem.p}" /><%--
+         --%></div><%--
+       --%></c:if><%--
+     --%>",<%--
+     --%>"markup2" : "<%--
+       --%><div class='six columns' id='section-featured-partner'><%--
+       --%><c:if test="${!empty model.featuredPartner}"><%--
+            collapsible header
+         --%><div class='row'><%--
+           --%><div class='twelve columns' id='featured-partner-header-wrapper'><%--
+             --%><div id='partner-section-heading' class='fi-block-spacer'><%--
+               --%><h3 id='section-header-featured-partner' class='collapse-header-text'><spring:message code='featured-partner-title_t' /></h3><%--
+             --%></div><%--
+           --%></div><%--
+         --%></div><%--
+       --%><div class='fi-block-spacer'><%--
+         --%><h4 class='show-on-phones'><%--
+           --%><a  href  = '/${model.portalName}<spring:message code="${model.featuredPartner.anchorUrl}" />'<%--
+             --%>title  = '<spring:message  code="${model.featuredPartner.anchorTitle}" />'<%--
+             --%>target  = '<spring:message  code="${model.featuredPartner.anchorTarget}" />'<%--
+             --%>class  = 'europeana'><%--
+             --%><spring:message code="${model.featuredPartner.heading}" /><%--  
+           --%></a><%--
+         --%></h4><%--
+         --%><a  href=  '/${model.portalName}<spring:message code="${model.featuredPartner.anchorUrl}" />'<%--
+           --%>title=  '<spring:message code="${model.featuredPartner.anchorTitle}" />'<%--
+           --%>target=  '<spring:message code="${model.featuredPartner.anchorTarget}" />'<%--
+           --%>class=  'image'><%--
+           --%><img  src=  '/${model.portalName}<spring:message code="${model.featuredPartner.imgUrl}" />'<%--
+           --%>alt=  '<spring:message code="${model.featuredPartner.imgAlt}" />'<%--
+           --%>/><%--
+         --%></a><%--
+         --%><h4 class='hide-on-phones'><%--
+           --%><a  href  = '/${model.portalName}<spring:message  code="${model.featuredPartner.anchorUrl}" />'<%--
+             --%>title  = '<spring:message  code="${model.featuredPartner.anchorTitle}" />'<%--
+             --%>target  = '<spring:message  code="${model.featuredPartner.anchorTarget}" />'<%--
+             --%>class  = 'europeana'><%--
+             --%><spring:message code="${model.featuredPartner.heading}" /><%--
+           --%></a><%--
+         --%></h4><%--
+       --%><spring:message code="${model.featuredPartner.p}" /><%--
+         --%><ul class='featured-partner-links featured-text'><%--
+           --%><li><%--
+             --%><a href='<spring:message code="${model.featuredPartner.visitLink}"  />'<%--
+               --%>target='<spring:message code="notranslate_featured-partner-visit_target_t" />'<%--
+               --%>rel='nofollow'<%--
+               --%>class='icon-external-right europeana'><%--
+               --%><spring:message code="featured-partner-visit_text_t"/>&nbsp;<%--
+               --%><spring:message code="featured-partner-visit_name_t"/><%--
+               --%></a><%--
+             --%></li><%--
+           --%></ul><%--
+         --%></div><%--
+       --%></c:if><%--
+     --%></div><%--
+   --%>"<%--
+ --%>}
+ 
