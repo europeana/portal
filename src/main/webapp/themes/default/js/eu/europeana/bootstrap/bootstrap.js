@@ -46,9 +46,9 @@ var europeana_bootstrap = function(){
 	
 	// array of scripts needed for all pages
 	var scripts = [
-	  {	name  : 'jquery',			file : 'jquery-1.8.1.min.js',													path : eu.europeana.vars.branding + '/js/jquery/'	},
+	  {	name  : 'jquery',			file : 'jquery-1.8.1.min.js',													path : eu.europeana.vars.branding + '/js/jquery/min/'	},
 
-	  { name : 'jquery-ui',			file : 'jquery-ui-1.9.0.custom.min.js',											path : eu.europeana.vars.branding + '/js/jquery/',															dependencies : [ 'jquery' ]	},
+	  { name : 'jquery-ui',			file : 'jquery-ui-1.9.0.custom.min.js',											path : eu.europeana.vars.branding + '/js/jquery/min/',															dependencies : [ 'jquery' ]	},
 	  
 	  {	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui' ]	},
 	  

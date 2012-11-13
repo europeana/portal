@@ -15,8 +15,6 @@ eu.europeana.header = {
 	
 	init : function() {
 
-		//$("#query-search table").removeClass("no-show");
-
 		$('.submit-cell').css("width",	$('.submit-cell button')	.outerWidth(true) + "px"); 
 		$('.menu-cell').css("width",	$('#search-menu')			.outerWidth(true) + "px");
 		
@@ -39,8 +37,6 @@ eu.europeana.header = {
 		//this.enableTimelineLink();
 		
 		this.setupResultSize();
-		
-		this.setupMobileMenu();
 		this.setupSearchMenu();
 		this.setupLanguageMenu();
 		
@@ -49,21 +45,17 @@ eu.europeana.header = {
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
 		
+		$(window).bind("resize", function(){
+			
+			if(window.showingPhone()){
+				console.log("showing on phone");
+			}
+			else{
+				console.log("NOT showing on phone");				
+			}
 
+		});
 	},
-
-	/*
-	setupNewsletterForm : function(){
-		if(typeof(signupFormObj) != "undefined" && typeof(jQuery) != "undefined"  ){
-			$('#e2ma_signup_submit_button').attr('value',		window.emma.submitLabel);
-			$('#id_email').attr('placeholder',	window.emma.placeholder);
-			$('#id_email').attr('title',		window.emma.placeholder);
-		}
-		else{
-			setTimeout(eu.europeana.header.setupNewsletterForm , 1000);
-		}
-	},
-	*/
 	
 	initResponsiveUtility : function(){
 		window.showingPhone = function(){ return $("#mobile-menu").is(":visible"); };
@@ -117,27 +109,6 @@ eu.europeana.header = {
 		}
 	},
 	
-	setupMobileMenu: function(){
-
-		var menu = new EuMenu(
-			$("#mobile-menu"),
-			{
-				"fn_item": function(self){
-					if(self.getActiveItem().hasClass("lang")){
-						var active = self.getActive();
-						if(active){
-							$("input[name=embeddedlang]").val(self.getActive());							
-							$("#language-selector").submit();
-						}
-						return;
-					}
-					window.location = self.getActive();
-				}
-			}
-		);
-		menu.init();
-	},
-
 	setupLanguageMenu: function(){
 
 		var menu = new EuMenu(
@@ -146,11 +117,12 @@ eu.europeana.header = {
 				"fn_item": function(self){
 					$("input[name=embeddedlang]").val(self.getActive());
 					$("#language-selector").submit();
-				}			
+				}
 			}
 		);
 		menu.setActive("choose");
 		menu.init();
+
 	},
 	
 	setupSearchMenu:function(){
@@ -220,9 +192,6 @@ eu.europeana.header = {
 						'background-color' : '#000',
 						'background-position' : 'right -189px'
 					});
-					
-				
-				
 			})
 			
 			.focusout(function() {
@@ -251,7 +220,6 @@ eu.europeana.header = {
 	addQueryFocus : function() {
 		
 		var exceptions = [
-			//'full-doc.html',
 			'login.html',
 			'forgotPassword.html',
 			'register-success.html'
@@ -274,18 +242,14 @@ eu.europeana.header = {
 		
 		jQuery('#query-input').focus(function(){
 			$("#query-full table tr:first-child .query-cell").addClass("glow");
-			//$("#query-full table").addClass("glow");
 		});
 		jQuery('#query-input').blur(function(){
 			$("#query-full table tr:first-child .query-cell").removeClass("glow");
-			//$("#query-full table").removeClass("glow");
 		});
 		
 		
 		if ( input_focus ) {
-			
 			jQuery('#query-input').focus();
-			
 		}
 		
 	},
@@ -311,11 +275,7 @@ eu.europeana.header = {
 				minLength : 3,
 				
 				delay : 200,
-				
-				//dataType : 'text',
-				
-				//define callback to format results
-				
+								
 				source: function( request, response ) {
 					
 					var filter = eu.europeana.header.searchMenu.getActive();
