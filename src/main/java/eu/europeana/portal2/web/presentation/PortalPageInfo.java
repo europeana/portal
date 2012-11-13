@@ -46,6 +46,8 @@ public enum PortalPageInfo implements PageInfo {
 
 	// Administration-related things
 	ADMIN(null, "admin/admin"),
+	ADMIN_STATISTICS("admin/statistics.html", "Europeana - statistics", "admin/statistics"),
+
 	API_CONCOLE("api/console.html", "Europeana - API console", "api/console"),
 	API_REQUEST("api/registration.html", "Europeana - API register", "api/request"),
 	API_REGISTER_FORM("api/registration.html", "Europeana - Registration", "api/register-api"),

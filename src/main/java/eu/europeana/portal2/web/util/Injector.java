@@ -31,20 +31,16 @@ public class Injector {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	// private Locale locale;
 	private long start;
 
 	public Injector() {
-		log.info("create injector(): " + (config == null));
+		// log.info("create injector(): " + (config == null));
 	}
 
 	public Injector(HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		start = new Date().getTime();
-		// log.info("create injector(" + start + "): " + (config == null));
 		this.request = request;
 		this.response = response;
-		// this.locale = locale;
-		// log.info("locale: " + locale.getLanguage());
 		localeChangeInterceptor.preHandle(request, response, this);
 	}
 
@@ -74,7 +70,6 @@ public class Injector {
 
 	public void logTime(String type) {
 		long end = new Date().getTime();
-		log.info(type + " compare: " + end + " vs " + start);
 		ControllerUtil.logTime(type, (end - start));
 	}
 }

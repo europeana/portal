@@ -30,7 +30,6 @@ import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ChangePasswordPage;
-import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.presentation.model.validation.ChangePasswordPageValidator;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
