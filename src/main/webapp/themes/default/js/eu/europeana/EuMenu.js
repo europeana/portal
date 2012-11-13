@@ -83,7 +83,6 @@ var EuMenu = function(cmpIn, options){
 			}
 		},
 		"setActive":function(val, highlight){
-			console.log("MENUU SET ACTIVE TO >" + val + "<" );
 			self.setActive(val);
 		},
 		"getActive":function(){
