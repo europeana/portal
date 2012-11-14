@@ -73,6 +73,7 @@
     <td colspan="6">
         <a href="<c:url value="/admin/exportApiKeys.html" />"><spring:message code="admin_exportApiKeys_t" /></a>
       | <a href="<c:url value="/admin/exportUsers.html" />"><spring:message code="admin_exportUsers_t" /></a>
+      | <a href="<c:url value="/admin/statistics.html" />"><spring:message code="admin_statistics_t" /></a>
     </td>
   </tr>
   </tbody>
