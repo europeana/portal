@@ -42,6 +42,11 @@
 	float: left;
 }
 
+.newsletter-description{
+	font-size:	0.7em;
+}
+
+
 /* #container { */
 #social-links {
 	text-align:			justify;
