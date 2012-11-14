@@ -5,14 +5,9 @@
 
 <c:set var="inLightbox" scope="request" value="false"/>  
 
-<%--#macro displayRights inLightbox --%>
-<c:if test="${!empty model[rightsOption]}">
-
+<c:if test="${!empty model.rightsOption}">
 
   <a
-  	<%--
-  	href="${model.rightsOption.rightsUrl}"
-  	 --%>
   	href="${model.edmRights}"
     title="${model.rightsOption.rightsText}"
     class="item-metadata rights-badge" target="_blank"
@@ -41,38 +36,6 @@
 			<span class="icon-external-right"></span>
 		</c:if>
 		
-
-		
-		<%--
-		<c:forEach items="${rightsIcons}" var="rightsIcon" varStatus="status">
-			
-	      	<span title="${model.rightsOption.rightsText}" class="${rightsIcon}">
-	      		<c:if test="${status.last}">${model.rightsOption.rightsText}</c:if>
-	      	</span>
-	      	
-		</c:forEach>
-		 --%>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-      	<%--
-	      	<span title="${model.rightsOption.rightsText}" class="${model.rightsOption.rightsIcon}">${model.rightsOption.rightsText}</span>
-      	 --%>
-
-
-      
-      	<%--
-      	  <img
-          src="/${branding}/images/rights/${model.rightsOption.rightsIcon}"
-          alt="${model.rightsOption.rightsText}" />
-      	 --%>
-          
       </c:otherwise>
     </c:choose>
   </a>
