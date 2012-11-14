@@ -116,9 +116,9 @@
 		
 		<%-- Citation link --%>
 		
-	 	<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
-	 		<span class="action-title"><spring:message code="Cite_Button_t" /></span>
-	 	</a>
+		<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
+			<span class="action-title"><spring:message code="Cite_Button_t" /></span>
+		</a>
 		
 		<div id="citation">
 			<c:if test="${not empty model['citeStyles']}">
@@ -143,11 +143,11 @@
 		
 		<%-- Embed link --%>
 		<%--
-	 	<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
-	 		<span class="action-title"><spring:message code="embed_t" /></span>
-	 	</a>
-	 	--%>
-		 	
+		<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
+			<span class="action-title"><spring:message code="embed_t" /></span>
+		</a>
+		--%>
+			
 		<%--
 		<div id="embed-link-wrapper">
 			<a href="${model.embedRecordUrl}" id="item-embed" class="block-link bold" target="_blank" rel="nofollow"><spring:message code="embed_t" /></a>
@@ -188,7 +188,7 @@
 						<span>
 							<input type="submit" class="submit-button deans-button-1" value="<spring:message code="Add_t" />" />
 						</span>
-					</div>					
+					</div>
 					
 				</fieldset>
 			</form>
@@ -206,18 +206,18 @@
 		</c:choose>
 	
 		<%-- Format labels --%>
-	 	<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
-	 		<span class="action-title">${switchlabelTitle}</span>
-	 	</a>
-		 	
-	 	<span class="stretch"></span>
-		 	
-	 	<div class="clear"></div>
-		 	
- 	</div>
- 	
- 	
- 	<div id="translate-container">
+		<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
+			<span class="action-title">${switchlabelTitle}</span>
+		</a>
+			
+		<span class="stretch"></span>
+			
+		<div class="clear"></div>
+			
+	</div>
+	
+	
+	<div id="translate-container">
 	
  		<!-- translate services -->
 		<a href="" id="translate-item" class="bold">
@@ -225,7 +225,5 @@
 			<span class="iconP"></span>
 		</a>
 	</div>
-	 	
+
 </div>
-
-
