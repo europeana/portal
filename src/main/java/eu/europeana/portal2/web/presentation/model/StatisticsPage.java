@@ -6,11 +6,21 @@ import eu.europeana.portal2.web.presentation.model.data.AdminData;
 
 public class StatisticsPage extends AdminData {
 
+	private String type;
+
 	private Map<String, Integer> dateStatistics;
 
 	private Map<String, Integer> userStatistics;
 
-	private Map typeStatistics;
+	private Map<String, Map<String, Integer>> typeStatistics;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public Map<String, Integer> getDateStatistics() {
 		return dateStatistics;
@@ -20,11 +30,11 @@ public class StatisticsPage extends AdminData {
 		this.dateStatistics = dateStatistics;
 	}
 
-	public Map getTypeStatistics() {
+	public Map<String, Map<String, Integer>> getTypeStatistics() {
 		return typeStatistics;
 	}
 
-	public void setTypeStatistics(Map typeStatistics) {
+	public void setTypeStatistics(Map<String, Map<String, Integer>> typeStatistics) {
 		this.typeStatistics = typeStatistics;
 	}
 
