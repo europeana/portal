@@ -2,11 +2,9 @@
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
-<c:set var="inLightbox" scope="request" value="false"/>  
+<c:set var="inLightbox" scope="request" value="false"/>
 
 <c:if test="${!empty model.rightsOption}">
-
   <a
   	href="${model.edmRights}"
     title="${model.rightsOption.rightsText}"
