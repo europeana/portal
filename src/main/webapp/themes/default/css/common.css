@@ -24,7 +24,7 @@
 
 .underline { text-decoration: underline; }
 .clear { clear: both; }
-.small { font-size: 90%; }
+.small { font-size: 0.7em; }
 	
 
 
@@ -42,9 +42,6 @@
 	float: left;
 }
 
-.newsletter-description{
-	font-size:	0.7em;
-}
 
 
 /* #container { */

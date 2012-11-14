@@ -62,7 +62,7 @@
 					
 					<h3><spring:message code="news_letter_signup_t" /></h3>
 					
-					<span class="newsletter-description"><spring:message code="news_letter_description_t" /></span>
+					<span class="small"><spring:message code="news_letter_description_t" /></span>
 
 					<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; width:100%;" id="footer-iframe" src="/${model.portalName}/newsletter.html"></iframe>
 					
