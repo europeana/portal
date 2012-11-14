@@ -87,11 +87,13 @@
 			executeDefaultClick: true,
 			toggleFn: function(){return $("#mobile-menu").is(":visible");},
 			fireFirstOpen:		function(){
+    			eu.europeana.vars.suppresResize = true;
 				jQuery.ajax({
 					url: 'index.html?fragment=blog',
 					dataType: 'json',
 					success: function(data){
 						$("#section-blog .collapse-content").html(data.markup);
+		    			eu.europeana.vars.suppresResize = false;
 					},
 					error: function(x, status, e){
 						alert("error = " + JSON.stringify(e));
@@ -111,12 +113,14 @@
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
 			fireFirstOpen:		function(){
+				eu.europeana.vars.suppresResize = true;
 				jQuery.ajax({
 					url: 'index.html?fragment=featuredContent',
 					dataType: 'json',
 					success: function(data){
 						$("#section-featured-content .collapse-content").html(data.markup);
 						$("#collapse-header-2").parent().after(data.markup2);
+		    			eu.europeana.vars.suppresResize = false;
 					},
 					error: function(x, status, e){
 						alert("error = " + JSON.stringify(e));
@@ -135,12 +139,12 @@
 			expandedClass:		'icon-arrow',
 			collapsedClass:		'icon-arrow-3',
 			fireFirstOpen:		function(){
+				eu.europeana.vars.suppresResize = false;
 				jQuery.ajax({
 						url: 'index.html?fragment=pinterest',
 						dataType: 'json',
 						success: function(data){
 							$("#section-pinterest .collapse-content").html(data.markup);
-							
 							var carousel3Data = data.data.carousel3Data;
 							
 							jQuery('#carousel-3').galleria({
@@ -162,6 +166,7 @@
 									};
 
 									$(this).ready(function(e) {
+										eu.europeana.vars.suppresResize = false;
 										setTimeout(doEllipsis, 1000);
 									});
 								} 
@@ -321,17 +326,23 @@ return;
 				initCarousels();
 			}
 		}]);
-//		initCarousels();
 		
 		initResponsiveImages();
-		
-		
 		
 		js.loader.loadScripts([{
 			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 			callback : function() {
 				initAddThis();
+			}
+		}]);
+		
+		
+		js.loader.loadScripts([{
+			file : 'respond.min.js',
+			path : eu.europeana.vars.branding + '/js/scottjehl-respond/min/',
+			callback : function() {
+				
 			}
 		}]);
 		
