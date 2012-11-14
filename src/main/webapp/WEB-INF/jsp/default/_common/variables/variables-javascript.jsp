@@ -219,10 +219,10 @@ eu.europeana.vars.timeline = {};
 	</c:when>
 
 	<c:when test="${model.pageName == 'search.html'}">
-		eu.europeana.vars.msg.required = '${required_field}';
-		eu.europeana.vars.msg.close = '${close}';
-		eu.europeana.vars.msg.search_saved = '${search_saved}';
-		eu.europeana.vars.msg.search_save_failed = '${search_save_failed}';
+		eu.europeana.vars.msg.required = '${fn:escapeXml(required_field)}';
+		eu.europeana.vars.msg.close = '${fn:escapeXml(close)}';
+		eu.europeana.vars.msg.search_saved = '${fn:escapeXml(search_saved)}';
+		eu.europeana.vars.msg.search_save_failed = '${fn:escapeXml(search_save_failed)}';
 	</c:when>
 
 	<c:when test="${model.pageName == 'map.html'}">
