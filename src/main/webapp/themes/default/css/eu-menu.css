@@ -18,7 +18,7 @@
 
 .eu-menu{
 	cursor:					pointer;
-	display:				inline-block !important;
+	display:				inline-block;/* !important;*/
 	float:					none;
 	padding-left:			0.15em;
 	padding-bottom:			0.18em;
