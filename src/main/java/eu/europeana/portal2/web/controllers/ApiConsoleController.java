@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +59,12 @@ public class ApiConsoleController {
 			@RequestParam(value = "collectionId", required = false) String collectionId,
 			@RequestParam(value = "recordId", required = false) String recordId,
 			@RequestParam(value = "phrases", required = false, defaultValue="false") boolean phrases, // 0, no, false, 1 yes, true
+			@RequestParam(value = "latMin", required = false) String latMin, // spatial search values
+			@RequestParam(value = "latMax", required = false) String latMax,
+			@RequestParam(value = "longMin", required = false) String longMin,
+			@RequestParam(value = "longMax", required = false) String longMax,
+			@RequestParam(value = "yearMin", required = false) String yearMin, // temporal search values
+			@RequestParam(value = "yearMax", required = false) String yearMax,
 			HttpServletRequest request,
 			HttpServletResponse response, 
 			Locale locale) {
@@ -95,10 +102,49 @@ public class ApiConsoleController {
 		model.setRecordId(recordId);
 		model.setPhrases(phrases);
 		model.setCallback(callback);
+		model.setLatMin(latMin);
+		model.setLatMax(latMax);
+		model.setLongMin(longMin);
+		model.setLongMax(longMax);
+		model.setYearMin(yearMin);
+		model.setYearMax(yearMax);
+
+		if (function.equals(SEARCH)) {
+			if (!StringUtils.isBlank(latMin) || !StringUtils.isBlank(latMax)) {
+				if (StringUtils.isBlank(latMin)) {
+					latMin = "*";
+				}
+				if (StringUtils.isBlank(latMax)) {
+					latMax = "*";
+				}
+				refinements = (String[])ArrayUtils.add(refinements, "pl_wgs84_pos_lat:[" + checkSpatial(latMin) + " TO " + checkSpatial(latMax) + "]");
+			}
+			if (!StringUtils.isBlank(longMin) || !StringUtils.isBlank(longMax)) {
+				if (StringUtils.isBlank(longMin)) {
+					longMin = "*";
+				}
+				if (StringUtils.isBlank(longMax)) {
+					longMax = "*";
+				}
+				refinements = (String[])ArrayUtils.add(refinements, "pl_wgs84_pos_long:[" + checkSpatial(longMin) + " TO " + checkSpatial(longMax) + "]");
+			}
+			if (!StringUtils.isBlank(yearMin) || !StringUtils.isBlank(yearMax)) {
+				if (StringUtils.isBlank(yearMin)) {
+					yearMin = "*";
+				}
+				if (StringUtils.isBlank(yearMax)) {
+					yearMax = "*";
+				}
+				refinements = (String[])ArrayUtils.add(refinements, "YEAR:[" + checkSpatial(yearMin) + " TO " + checkSpatial(yearMax) + "]");
+			}
+			if (!ArrayUtils.isEmpty(refinements) && StringUtils.isBlank(query)) {
+				query = "*:*";
+			}
+		}
 
 		ApiWrapper api = new ApiWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
 		ApiResult apiResult = null;
-		if (function.equals("search") && !StringUtils.isBlank(query)) {
+		if (function.equals(SEARCH) && !StringUtils.isBlank(query)) {
 			apiResult = api.getSearchResult(query, refinements, profile, start, rows, sort, callback);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
 			apiResult = api.getObject(collectionId, recordId, profile, callback);
@@ -149,5 +195,16 @@ public class ApiConsoleController {
 			}
 		}
 		return cleared.toArray(new String[cleared.size()]);
+	}
+	
+	private String checkSpatial(String spatial) {
+		return spatial;
+		/*
+		final Pattern pattern = Pattern.compile("^-?\\d(\\d*(\\.\\d+)?)?$");
+		if (pattern.matcher(spatial).matches()) {
+			return spatial;
+		}
+		return "*";
+		*/
 	}
 }

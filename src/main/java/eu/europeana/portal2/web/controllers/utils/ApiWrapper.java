@@ -101,6 +101,7 @@ public class ApiWrapper {
 				}
 			}
 		}
+
 		url.append(START_PARAM).append(start);
 		url.append(ROWS_PARAM).append(rows);
 		url.append(PROFILE_PARAM).append(profile);

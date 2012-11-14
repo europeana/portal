@@ -25,6 +25,12 @@ public class ApiConsolePage extends ApiData {
 	private int rows;
 	private String sort;
 	private String callback;
+	private String latMin;
+	private String latMax;
+	private String longMin;
+	private String longMax;
+	private String yearMin;
+	private String yearMax;
 
 	// record parameters
 	private String collectionId;
@@ -165,5 +171,53 @@ public class ApiConsolePage extends ApiData {
 
 	public void setHttpStatusCode(Integer httpStatusCode) {
 		this.httpStatusCode = httpStatusCode;
+	}
+
+	public String getLatMin() {
+		return latMin;
+	}
+
+	public void setLatMin(String latMin) {
+		this.latMin = latMin;
+	}
+
+	public String getLatMax() {
+		return latMax;
+	}
+
+	public void setLatMax(String latMax) {
+		this.latMax = latMax;
+	}
+
+	public String getLongMin() {
+		return longMin;
+	}
+
+	public void setLongMin(String longMin) {
+		this.longMin = longMin;
+	}
+
+	public String getLongMax() {
+		return longMax;
+	}
+
+	public void setLongMax(String longMax) {
+		this.longMax = longMax;
+	}
+
+	public String getYearMin() {
+		return yearMin;
+	}
+
+	public void setYearMin(String yearMin) {
+		this.yearMin = yearMin;
+	}
+
+	public String getYearMax() {
+		return yearMax;
+	}
+
+	public void setYearMax(String yearMax) {
+		this.yearMax = yearMax;
 	}
 }
