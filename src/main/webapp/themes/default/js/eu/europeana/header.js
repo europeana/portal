@@ -45,16 +45,6 @@ eu.europeana.header = {
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
 		
-		$(window).bind("resize", function(){
-			
-			if(window.showingPhone()){
-				console.log("showing on phone");
-			}
-			else{
-				console.log("NOT showing on phone");				
-			}
-
-		});
 	},
 	
 	initResponsiveUtility : function(){
