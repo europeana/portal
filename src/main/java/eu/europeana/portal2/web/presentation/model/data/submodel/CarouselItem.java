@@ -17,15 +17,19 @@
 
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.web.model.PageData;
+import eu.europeana.portal2.web.util.ResponsiveImageUtils;
 
 public class CarouselItem {
 
 	private int i;
 	private String url;
 	private PageData model;
+	private Map<String, String> responsiveImages;
 
 	public CarouselItem(PageData model, int i, String url) {
 		this.model = model;
@@ -85,5 +89,13 @@ public class CarouselItem {
 
 	public int getId() {
 		return i;
+	}
+
+	public Map<String, String> getResponsiveImages() {
+		return responsiveImages;
+	}
+
+	public void setResponsiveImages(String imgUrl) {
+		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false);
 	}
 }

@@ -42,6 +42,7 @@ import org.xml.sax.SAXException;
 
 import eu.europeana.corelib.utils.ImageUtils;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
+import eu.europeana.portal2.web.util.ResponsiveImageUtils;
 
 public class RSSFeedParser {
 
@@ -56,9 +57,6 @@ public class RSSFeedParser {
 	static final String PUB_DATE = "pubDate";
 	static final String GUID = "guid";
 
-	int[] responsiveWidths;
-	String[] fNames;
-
 	boolean useNormalImageFormat = true;
 	private final URL url;
 
@@ -72,93 +70,18 @@ public class RSSFeedParser {
 
 	private int itemLimit;
 
-	public RSSFeedParser(String feedUrl, int itemLimit, String[] fNames, int[] responsiveWidths) {
+	public RSSFeedParser(String feedUrl, int itemLimit) {
 		try {
 			this.url = new URL(feedUrl);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
 		this.itemLimit = itemLimit;
-		this.fNames = fNames;
-		this.responsiveWidths = responsiveWidths;
 	}
 
-	public RSSFeedParser(String feedUrl, int itemLimit, boolean useNormalImageFormat, String[] fNames, int[] responsiveWidths) {
-		this(feedUrl, itemLimit, fNames, responsiveWidths);
+	public RSSFeedParser(String feedUrl, int itemLimit, boolean useNormalImageFormat) {
+		this(feedUrl, itemLimit);
 		this.useNormalImageFormat = useNormalImageFormat;
-	}
-
-	private Map<String, String> createResponsiveImage(String location) {
-
-		Map<String, String> responsiveImages = new HashMap<String, String>();
-
-		String directory = staticPagePath + "/sp/rss-blog-cache/";
-		File dir = new File(directory);
-		if (!dir.exists()) {
-			dir.mkdir();
-		}
-
-		String extension = location.substring(location.lastIndexOf(".") + 1);
-		String nameWithoutExt = location.substring(0, location.lastIndexOf(".") - 1);
-		String toFS = nameWithoutExt.replace("/", "-").replace(":", "-").replace(".", "-");
-		BufferedImage orig = null;
-		try {
-			orig = ImageIO.read(new URL(location));
-		} catch (MalformedURLException e) {
-			log.severe("MalformedURLException during reading in location: " + e.getLocalizedMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			log.severe("IOException during reading in location: " + e.getLocalizedMessage());
-			e.printStackTrace();
-		}
-
-		if (orig == null) {
-			return responsiveImages;
-		}
-
-		for (int i = 0, l = responsiveWidths.length; i<l; i++){
-			String fileName = toFS + fNames[i] + "." + extension;
-
-			// work out new image name 
-			String fileUrl = "/sp/rss-blog-cache/" + fileName;
-			String filePath = directory + fileName; 
-
-			log.info(String.format("new file is %s, url is %s, old file is %s, ", filePath, fileUrl, location));
-			BufferedImage responsive = null;
-			try {
-				int height = (int)Math.ceil((responsiveWidths[i] * orig.getHeight()) / orig.getWidth());
-				responsive = ImageUtils.scale(orig, responsiveWidths[i], height);
-			} catch (IOException e) {
-				log.severe("IOException during scaling image: " + e.getLocalizedMessage());
-				e.printStackTrace();
-			}
-			if (responsive == null) {
-				continue;
-			}
-			responsiveImages.put(fNames[i], fileUrl);
-
-			File outputfile = new File(filePath);
-			if (!outputfile.exists()) {
-				boolean created = false;
-				try {
-					created = outputfile.createNewFile();
-				} catch (IOException e) {
-					log.severe("IOException during create new file: " + e.getLocalizedMessage());
-					e.printStackTrace();
-				}
-
-				if (created) {
-					try {
-						ImageIO.write(responsive, extension, outputfile);
-					} catch (IOException e) {
-						log.severe("IOException during writing new file: " + e.getLocalizedMessage());
-						e.printStackTrace();
-					}
-					log.info("created");
-				}
-			}
-		}
-		return responsiveImages;
 	}
 
 	public List<FeedEntry> readFeed() {
@@ -189,7 +112,7 @@ public class RSSFeedParser {
 				}
 				// now we have the image URLs
 				for (RSSImage image : message.getImages()){
-					Map<String, String> responsiveFileNames = createResponsiveImage(image.getSrc());
+					Map<String, String> responsiveFileNames = ResponsiveImageUtils.createResponsiveImage(image.getSrc());
 					image.setResponsiveFileNames(responsiveFileNames);
 				}
 				message.setGuid(getElementValue(element, GUID));

@@ -101,11 +101,15 @@ public class Configuration {
 	@Value("#{europeanaProperties['debug']}")
 	private String debug;
 
-	/////////////////////////////// generated properties
+	/////////////////////////////// generated/derivated properties
 
 	private Map<String, String> seeAlsoTranslations;
 
 	private String portalUrl;
+
+	private String[] responsiveImageLabels;
+
+	private Integer[] responsiveImageWidths;
 
 	///////////////////////////////// getters and setters
 
@@ -224,5 +228,28 @@ public class Configuration {
 			portalUrl = sb.toString();
 		}
 		return portalUrl;
+	}
+
+	public String[] getResponsiveImageLabels() {
+		if (responsiveImageLabels == null) {
+			responsiveImageLabels = responsiveImageLabelString.split(",");
+		}
+		return responsiveImageLabels;
+	}
+
+	public Integer[] getResponsiveImageWidths(){
+		log.info("getResponsiveImageWidths()");
+		if (responsiveImageWidths == null) {
+			String[] imageWidths = responsiveImageWidthString.split(",");
+			responsiveImageWidths = new Integer[imageWidths.length];
+
+			for (int i=0, len=imageWidths.length; i<len; i++) {
+				responsiveImageWidths[i] = Integer.parseInt(imageWidths[i]);
+			}
+			log.info("responsiveImageWidths: " + responsiveImageWidths);
+		}
+		log.info("responsiveImageWidths: " + responsiveImageWidths);
+
+		return responsiveImageWidths;
 	}
 }

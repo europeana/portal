@@ -69,12 +69,10 @@ public class RSSImageExtractor {
 							? IMG_PATTERN.matcher(text)
 							: ESCAPED_IMG_PATTERN.matcher(text);
 		Map<Param, Pattern> patterns = new HashMap<Param, Pattern>(){
-			private static final long serialVersionUID = 1L;
-			{
-				put(Param.SRC, SRC_PATTERN);
-				put(Param.TITLE, TITLE_PATTERN);
-			}
-		};
+			private static final long serialVersionUID = 1L; {
+			put(Param.SRC, SRC_PATTERN);
+			put(Param.TITLE, TITLE_PATTERN);
+		}};
 
 		while (imgMatcher.find()) {
 			String imageHTML = imgMatcher.group();

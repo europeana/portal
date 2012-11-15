@@ -119,5 +119,7 @@
 
 	<bean id="exceptionResolver" class="eu.europeana.portal2.exception.ExceptionResolver" />
 
+	<bean id="responsiveImageUtils" class="eu.europeana.portal2.web.util.ResponsiveImageUtils" />
+
 	<import resource="../portal2-context.xml"/>
 </beans>

@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
 import eu.europeana.portal2.web.controllers.utils.RSSImage;
@@ -16,6 +19,8 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
  * 
  * @author peter.kiraly@kb.nl
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
 public class PinterestTest {
 	
 	// TODO: use it later, to test something else
@@ -28,7 +33,7 @@ public class PinterestTest {
 
 	@Before
 	public void runBeforeEveryTests() {
-		parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue(), new String[0], new int[0]);
+		parser = new RSSFeedParser(pintFeedUrl, pintItemLimit.intValue());
 	}
 
 	/**

@@ -184,9 +184,8 @@ public class ControllerUtil {
 		Object principal = (Object)authentication.getPrincipal();
 		if (principal instanceof Portal2UserDetails) {
 			user = userService.findByEmail(((Portal2UserDetails)principal).getUsername());
-			log.info("User: " + user.toString());
 		} else {
-			log.warning("Principal is not Portal2UserDetails: " + principal.toString());
+			// log.warning("Principal is not Portal2UserDetails: " + principal.toString());
 			// TODO: it is not a logged-in-user, do we need to get default information?
 			/*
 			try {
