@@ -18,7 +18,7 @@
 	
 	<link rel="stylesheet" href="/${branding}/css/europeana-font-face.css" />
 	
-	<!-- responsive image breakpoints -->
+	<!-- responsive image breakpoints 
 	<style>
 		@media all and (min-width: 20em){
 			.euresponsive {
@@ -54,8 +54,62 @@
 			}
 		}
 	</style>
-	<!-- end responsive image breakpoints -->
+	 end responsive image breakpoints -->
+
+	<style>
 	
+		@media all and (min-width: 20em){
+			.euresponsive {
+				width: 0px;
+			}
+		}
+	
+		@media all and (min-width:30em){
+			.euresponsive {
+				width: 1px;
+			}
+		}
+		
+		@media all and (min-width:47em){
+			.euresponsive {
+				width: 2px;
+			}
+		}
+	
+		@media all and (min-width:49em){
+			.euresponsive {
+				width: 3px;
+			}
+		}
+	
+	
+	
+		@media all and (min-width: 20em){
+			.euresponsive_half_screen {
+				width: 0px;
+			}
+		}
+	
+		@media all and (min-width:30em){
+			.euresponsive_half_screen {
+				width: 1px;
+			}
+		}
+		
+		@media all and (min-width:47em){
+			.euresponsive_half_screen {
+				width: 2px;
+			}
+		}
+	
+		@media all and (min-width:49em){
+			.euresponsive_half_screen {
+				width: 3px;
+			}
+		}
+		
+	
+	</style>	
 	
 	
 	<c:if test="${!empty model.announceMsg}">
