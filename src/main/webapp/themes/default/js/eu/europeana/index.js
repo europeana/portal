@@ -5,27 +5,22 @@
 	var initResponsiveImages = function(){
 
 		var setup = function(){
-			var initialSuffix = '_1.'; // smallest by default
-			if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
-				initialSuffix = '_4.'; // largest by default
+			var initialSuffix = '_1'; // smallest by default
+			if($.browser.msie  && ( parseInt($.browser.version, 10) === 7 || parseInt($.browser.version, 10) === 8 )  ){
+				initialSuffix = '_4'; // largest by default
 			}
-			new responsiveGallery({
-				imgSelector		: '.responsive',
-				initialSuffix	: initialSuffix,
-				suffixes: {
-					'1': '_1.',
-					'2': '_2.',
-					'3': '_3.',
-					'4': '_4.'
-				}
+			
+			new euResponsive({
+				"galleryName"	:	"euresponsive_half_screen",
+				"selector"		:	".responsive_half",
+				"initialSuffix"	:	initialSuffix
 			});
+			
 		};
 		setup();
 	};
 	
 	var initCarousels = function(){
-
-//alert("initCarousels   1");
 
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 		Galleria.configure({
@@ -43,8 +38,6 @@
 				debug:			false
 		});
 
-//alert("initCarousels   2");
-		
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");
 		$("#carousel-1").imagesLoaded(
 			function() {
@@ -67,7 +60,32 @@
 				
 				jQuery('#carousel-1').galleria({
 					dataSource:carouselData,
-					autoplay:17000
+					autoplay:17000,
+					/*
+					extend: function(e){
+						$(this).ready(function(e) {
+							
+							function setUpResponsive(){
+								var initialSuffix = '_1'; // smallest by default
+								if($.browser.msie  && ( parseInt($.browser.version, 10) === 7 || parseInt($.browser.version, 10) === 8 )  ){
+									initialSuffix = '_4'; // largest by default
+								}
+
+								new euResponsive({
+									"galleryName"	:	"euresponsive_full_screen",
+									"selector"		:	"#carousel-1 .galleria-stage .galleria-images .galleria-image img",
+									"initialSuffix"	:	initialSuffix
+								});								
+							}
+
+							$(this).ready(function(e) {
+								setTimeout(setUpResponsive, 2000);
+							});
+							
+
+						});
+					}
+					*/
 				});
 			
 			}).each(function() {
@@ -94,13 +112,12 @@
 					success: function(data){
 						$("#section-blog .collapse-content").html(data.markup);
 		    			eu.europeana.vars.suppresResize = false;
+		    			window.euResponsiveTriggerRespond();
 					},
 					error: function(x, status, e){
 						alert("error = " + JSON.stringify(e));
 					}
 				});
-
-				
 			}
 		});
 		
@@ -121,6 +138,7 @@
 						$("#section-featured-content .collapse-content").html(data.markup);
 						$("#collapse-header-2").parent().after(data.markup2);
 		    			eu.europeana.vars.suppresResize = false;
+		    			window.euResponsiveTriggerRespond();
 					},
 					error: function(x, status, e){
 						alert("error = " + JSON.stringify(e));

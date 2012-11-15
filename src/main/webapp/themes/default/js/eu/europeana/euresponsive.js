@@ -1,133 +1,82 @@
 
-		(function() {
-
-			function escapeRegex(text) {
-				return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-			}
-
-			function hasClass(elm, className) {
-				return (' ' + elm.className + ' ').indexOf( className ) != -1;
-			}
-
-			function addListener(elm, type, callback) {
-				if (elm.addEventListener){
-					elm.addEventListener(type, callback, false);
-				}
-				else if (elm.attachEvent) {
-					elm.attachEvent('on' + type, callback);
-				}
-			}
-
-			function Gallery(elIn, modeIn) {
-				this.el = elIn;
-				this.mode = modeIn;
-			}
-
-			Gallery.prototype.changeLayout = function(escapedInitialSuffix, newSuffix, ieSuffixes) {
-				
-				if(this.mode == "img"){
-					var newHtmlStr = this.el.attr("src").replace(escapedInitialSuffix, newSuffix);
+(function() {
 	
-	//console.log("change from  " + this.el.attr("src") + " to " + newHtmlStr + "\n   - newSuffix " + newSuffix);
-					
-					// media queries don't work in IE - revert to biggest (last) image size
-					if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
-						newHtmlStr = newHtmlStr.replace(ieSuffixes[0], ieSuffixes[ieSuffixes.length-1]);
-					}
+	var galleries = [];
+	var self = null;
 	
-					// don't show what was hidden...
-					var display		= this.el.css("display");
-					var visibility	= this.el.css("visibility");
+	window.euResponsiveTriggerRespond = function(){
+		for(var i=0; i<galleries.length; i++){
+			galleries[i].respond();
+		}
+	};
 	
-					this.el.attr("src", newHtmlStr);
-	
-	//console.log("el.src is now  " + this.el.attr("src")  );
+	window.euResponsive = function(args) {
+		self = this;
+		self.ops= args ? args : {};
 		
-					this.el.css("display", display);
-					this.el.css("visibility", visibility);
-				
-				}
-				else{
-					
-					var bgImg = this.el.css("background-image");
-					
-					//console.log("background-image =  " + bgImg );
-					
-					bgImg = bgImg.replace(escapedInitialSuffix, newSuffix);
-					
-					// media queries don't work in IE - revert to biggest (last) image size
-					if(jQuery.browser.msie  && ( parseInt(jQuery.browser.version, 10) === 7 || parseInt(jQuery.browser.version, 10) === 8 )  ){
-						bgImg = bgImg.replace(ieSuffixes[0], ieSuffixes[ieSuffixes.length-1]);
-					}
-
-					// don't show what was hidden...
-					var display		= this.el.css("display");
-					var visibility	= this.el.css("visibility");
-
-					
-					this.el.css("background-image", bgImg);
-
-					//console.log("el.background-image is now  " + this.el.css("background-image")  );
-					
-					this.el.css("display", display);
-					this.el.css("visibility", visibility);
-				}
-			};
+		if(typeof self.ops.selector == "undefined"){
+			self.ops.selector = ".responsive";				/* default class for responsive images unless otherwise specified */
+		}
+		if(typeof self.ops.initialSuffix == "undefined"){
+			self.ops.initialSuffix = "_1";					/* default initial suffix unless otherwise specified */
+		}
+		if(typeof self.ops.suffixes == "undefined"){
+			self.ops.suffixes = ["_1", "_2", "_3", "_4"];	/* default suffixes unless otherwise specified */
+		}
+		
+		var measureDivClassName = self.ops.galleryName ? self.ops.galleryName : 'euresponsive';
+		
+		if(! $('.' + measureDivClassName)[0] ){
 			
+	console.log("eu responsive: create the measure div");
 			
-			window.responsiveGallery = function(args) {
-				
-				/* *
-				 * testDiv:			used to measure the window width
-				 * lastSuffix:		stores the last applied suffix
-				 * 
-				 * */
-				
-				var self = this;
-				
-				self.ops					= args ? args : {};
-				self.testDiv				= document.createElement( 'div' ),
-				self.lastSuffix				= null,
-				self.escapedInitialSuffix	= self.ops.initialSuffix;
-				self.galleries				= [];
-				
-				// Add the test div to the page
-				self.testDiv.className 		= self.ops.galleryName ? self.ops.galleryName : 'euresponsive';
-				self.testDiv.style.cssText	= 'position:absolute;top:-100em';
-				document.body.insertBefore(self.testDiv, document.body.firstChild);
+			self.measureDiv					= document.createElement( 'div' );
+			self.measureDiv.style.cssText	= 'position:absolute;top:-100em';
+			self.measureDiv.className		= measureDivClassName;
+			
+			document.body.insertBefore(self.measureDiv, document.body.firstChild);
+		}
+		
+	console.log("eu responsive created, selector = " + self.ops.selector + ", image count = " + $(self.ops.selector).length );
+		self.lastSuffix				= self.ops.initialSuffix;
+		self.respond();
+		galleries.push(self);
 
-				// Init galleries
-				$(self.ops.imgSelector).each(function(i, ob){
-					self.galleries.push( new Gallery( $(ob), 
-						typeof self.ops.mode == 'undefined' ? 'img' : self.ops.mode
-					) );
-				});
-
-
-				function respond() {
-					var newSuffix = self.ops.suffixes[self.testDiv.offsetWidth] || self.ops.initialSuffix;
-					
-					//console.log("size " + newSuffix + ", num to update = " + self.galleries.length );
-					
-					if (newSuffix === self.lastSuffix) {
-						
-						//console.log("returning");
-
-						return;
-					}
-					
-					for (var i = self.galleries.length; i--;) {
-						self.galleries[i].changeLayout(self.lastSuffix ? self.lastSuffix : self.escapedInitialSuffix, newSuffix,
-								[self.ops.suffixes[0], self.ops.suffixes[self.ops.suffixes.length-1]]
-						);
-					}
-					
-					self.lastSuffix = newSuffix;
-				}
-				respond();
-				addListener(window, 'resize', respond);
-			};
-		})();
+	};
+	
+	euResponsive.prototype.respond = function(){
+	
+		var galleryImages = $(self.ops.selector);
+		var gallerySuffix = self.ops.suffixes[self.measureDiv.offsetWidth] || self.ops.initialSuffix;
+		var changed = false;
 		
 		
-		
+		if(gallerySuffix != self.lastSuffix){
+			
+			for(var i=0; i<galleryImages.length; i++){
+				var galleryImage = galleryImages[i];
+				var newSrc = $(galleryImage).attr("src").replace(self.lastSuffix + ".", gallerySuffix + ".");
+
+	console.log("eu responsive updates image " + $(galleryImage).attr('src') + " to " + newSrc);
+				
+				$(galleryImage).attr('src', newSrc);
+				
+	console.log("self.measureDiv.offsetWidth =  " + self.measureDiv.offsetWidth + "   suffix becomes " + gallerySuffix + " (was " + self.lastSuffix + ")");
+				
+				changed = true;
+			}
+		}
+		if(changed){
+			self.lastSuffix	= gallerySuffix;			
+		}
+	};
+	
+	$(window).bind("resize", function(){
+		for(var i=0; i<galleries.length; i++){
+			galleries[i].respond();
+		}
+	});
+	
+	
+})();
+

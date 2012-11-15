@@ -24,6 +24,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
 
 
+
 <div class="row carousel-row">
 
 	<c:if test='${!empty model.carouselItems}'>
@@ -34,11 +35,13 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 	
 			<c:forEach var="item" items="${model.carouselItems}">
 
+			
 				carouselData[carouselData.length] = {
-					image:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
-					title:			"<spring:message code='${item.anchorTitle}'/>",
-					description:	"<spring:message code='${item.description}'/>",
-					link:			"${item.url}"
+					image:				"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
+					responsiveImage:	"/${model.portalName}${item.responsiveImages['_1']}",
+					title:				"<spring:message code='${item.anchorTitle}'/>",
+					description:		"<spring:message code='${item.description}'/>",
+					link:				"${item.url}"
 				};
 				
 				<%-- NOT USED 
@@ -48,40 +51,6 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				--%>
 				
 			</c:forEach>
-			
-/* fix for home
- 
-	        carouselData = [];   
-
-			carouselData[0] = {
-					image:			"http://upload.wikimedia.org/wikipedia/commons/5/5f/Chicago_Downtown_Panorama.jpg",
-					title:			"Chicago Downtown Panorama",
-					description:	"Description of image",
-					link:			"http://www.google.co.uk"
-			};
- 				
-			carouselData[1] = {
-					image:			"http://www.fromparis.com/panoramas_quicktime_vr/louvre_museum_pyramid/louvre_museum_pyramid.jpg",
-					title:			"The Louvre in Paris",
-					description:	"Description of image",
-					link:			"http://www.google.co.uk"
-			};
- 				
-			carouselData[0] = {
-					image:			"http://1.bp.blogspot.com/-msOcdMpdrcI/TgSQMuMU8CI/AAAAAAAAAm4/qcK5Alsvrqo/s1600/sunrise-panorama-v2.jpg",
-					title:			"Sunrise",
-					description:	"Description of image",
-					link:			"http://www.google.co.uk"
-			};
- 				
-			carouselData[0] = {
-					image:			"http://parkerlab.bio.uci.edu/pictures/photography%20pictures/2008_12_19_select/Untitled_Panorama1.jpg",
-					title:			"Rocks Reflected in a Lake",
-					description:	"Description of image",
-					link:			"http://www.google.co.uk"
-			};
-*/
-
 		</script>
 		
 
