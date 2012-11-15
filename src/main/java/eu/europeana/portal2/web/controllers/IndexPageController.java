@@ -64,7 +64,6 @@ import eu.europeana.portal2.web.util.Injector;
 public class IndexPageController {
 
 	// @Resource private ProposedSearchTermSampler proposedSearchTermSampler;
-
 	@Resource private ClickStreamLogger clickStreamLogger;
 
 	@Resource private ReloadableResourceBundleMessageSource messageSource;
@@ -183,7 +182,9 @@ public class IndexPageController {
 				String label = String.format("notranslate_featured-item-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
-					featuredItems.add(new FeaturedItem(i));
+					FeaturedItem item = new FeaturedItem(i);
+					item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+					featuredItems.add(item);
 					i++;
 				} else {
 					keepFetching = false;
@@ -215,7 +216,9 @@ public class IndexPageController {
 				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
-					featuredPartners.add(new FeaturedPartner(i));
+					FeaturedPartner item = new FeaturedPartner(i);
+					item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+					featuredPartners.add(item);
 					i++;
 				} else {
 					keepFetching = false;

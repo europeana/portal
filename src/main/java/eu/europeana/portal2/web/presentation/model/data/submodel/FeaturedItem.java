@@ -17,6 +17,10 @@
 
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
+import java.util.Map;
+
+import eu.europeana.portal2.web.util.ResponsiveImageUtils;
+
 /**
  * Placeholder objects for featured items.
  * 
@@ -35,6 +39,7 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 public class FeaturedItem {
 
 	private int i;
+	private Map<String, String> responsiveImages;
 
 	public FeaturedItem(int i) {
 		this.i = i;
@@ -74,5 +79,13 @@ public class FeaturedItem {
 	/** Gets the message key for p tag */
 	public String getP() {
 		return String.format("featured-item-%d_p_t", i);
+	}
+
+	public Map<String, String> getResponsiveImages() {
+		return responsiveImages;
+	}
+
+	public void setResponsiveImages(String imgUrl) {
+		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, false);
 	}
 }

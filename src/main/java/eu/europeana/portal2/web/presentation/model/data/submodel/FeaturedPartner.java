@@ -17,6 +17,10 @@
 
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
+import java.util.Map;
+
+import eu.europeana.portal2.web.util.ResponsiveImageUtils;
+
 /**
  * Placeholder object for featured partners.
  * 
@@ -35,6 +39,7 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 public class FeaturedPartner extends StaticFeaturedPartner {
 
 	private int i;
+	private Map<String, String> responsiveImages;
 
 	public FeaturedPartner(int i) {
 		super(i);
@@ -85,4 +90,12 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 		//return String.format("featured-partner-%d_name_t", i);
 	}
 	*/
+
+	public Map<String, String> getResponsiveImages() {
+		return responsiveImages;
+	}
+
+	public void setResponsiveImages(String imgUrl) {
+		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, false);
+	}
 }
