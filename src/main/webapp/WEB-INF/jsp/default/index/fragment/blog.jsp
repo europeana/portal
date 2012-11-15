@@ -24,7 +24,7 @@
                         --%>title='${entry.title}'<%--
                         --%>target='_self'<%--
                         --%>class='image'><%--
-                        --%><img class='responsive' src='/${model.portalName}${entry.images[0].responsiveFileNames['_1']}' alt='${entry.title}' /><%--
+                        --%><img class='responsive_half' src='/${model.portalName}${entry.images[0].responsiveFileNames['_1']}' alt='${entry.title}' /><%--
                      --%></a><%--
       
                      --%><h4 class='hide-on-phones'><%--
