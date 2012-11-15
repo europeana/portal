@@ -66,8 +66,14 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.responsive.widths']}")
 	private String responsiveImageWidthString;
 
+	@Value("#{europeanaProperties['portal.responsive.carousel.widths']}")
+	private String responsiveCarouselImageWidthString;
+
 	@Value("#{europeanaProperties['portal.responsive.labels']}")
 	private String responsiveImageLabelString;
+
+	@Value("#{europeanaProperties['portal.responsive.carousel.labels']}")
+	private String responsiveCarouselImageLabelString;
 
 	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
 	private String[] shownAtProviderOverride;
@@ -109,7 +115,11 @@ public class Configuration {
 
 	private String[] responsiveImageLabels;
 
+	private String[] responsiveCarouselImageLabels;
+
 	private Integer[] responsiveImageWidths;
+
+	private Integer[] responsiveCarouselImageWidths;
 
 	///////////////////////////////// getters and setters
 
@@ -251,5 +261,25 @@ public class Configuration {
 		log.info("responsiveImageWidths: " + responsiveImageWidths);
 
 		return responsiveImageWidths;
+	}
+
+	public String[] getResponsiveCarouselImageLabels() {
+		if (responsiveCarouselImageLabels == null) {
+			responsiveCarouselImageLabels = responsiveCarouselImageLabelString.split(",");
+		}
+		return responsiveCarouselImageLabels;
+	}
+
+	public Integer[] getResponsiveCarouselImageWidths(){
+		if (responsiveCarouselImageWidths == null) {
+			String[] imageWidths = responsiveImageWidthString.split(",");
+			responsiveCarouselImageWidths = new Integer[imageWidths.length];
+
+			for (int i=0, len=imageWidths.length; i<len; i++) {
+				responsiveCarouselImageWidths[i] = Integer.parseInt(imageWidths[i]);
+			}
+		}
+
+		return responsiveCarouselImageWidths;
 	}
 }

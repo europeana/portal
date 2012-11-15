@@ -1,4 +1,4 @@
-2012-10-25
+==== 2012-10-25
 remove displayPageUrl
 
 new properties:
@@ -21,10 +21,26 @@ description: Location of opt-out list, used by both api and portal. It should po
 example:
 api.optOutList=/home/peterkiraly/workspace/europeana/trunk/api/opt-out.list.txt
 
-2012-10-29
+==== 2012-10-29
 
 new property:
 register-api.to
 
 example:
 register-api.to = api@europeana.eu
+
+==== 2012-11-15
+
+new properties:
+
+1) portal.responsive.carousel.widths
+description: comma separated list of the widths of responsive images for the carousel images in the index page
+
+example:
+portal.responsive.carousel.widths=200,400,800,1200
+
+2) portal.responsive.carousel.labels
+description: comma separated list of the suffixes of responsive images for the carousel images in the index page
+
+example:
+portal.responsive.carousel.labels=_1,_2,_3,_4

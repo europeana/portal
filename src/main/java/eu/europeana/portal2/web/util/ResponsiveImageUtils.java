@@ -15,8 +15,6 @@ import eu.europeana.corelib.utils.ImageUtils;
 
 public class ResponsiveImageUtils {
 
-	// @Resource(name="configurationService") private static Configuration config;
-
 	private static final Logger log = Logger.getLogger("ResponsiveImageUtils");
 
 	private static String staticPagePath = Beans.getConfig().getStaticPagePath();
@@ -24,6 +22,10 @@ public class ResponsiveImageUtils {
 	private static Integer[] responsiveWidths = Beans.getConfig().getResponsiveImageWidths();
 
 	private static String[] responsiveLabels = Beans.getConfig().getResponsiveImageLabels();
+
+	private static Integer[] responsiveCarouselWidths = Beans.getConfig().getResponsiveCarouselImageWidths();
+
+	private static String[] responsiveCarouselLabels = Beans.getConfig().getResponsiveCarouselImageLabels();
 
 	final private static String CACHEDIR = "/sp/rss-blog-cache/";
 
@@ -33,10 +35,22 @@ public class ResponsiveImageUtils {
 	public ResponsiveImageUtils(){}
 
 	public static Map<String, String> createResponsiveImage(String location) {
-		return createResponsiveImage(location, true);
+		return createResponsiveImage(location, true, false);
 	}
 
-	public static Map<String, String> createResponsiveImage(String location, boolean isURL) {
+	/**
+	 * Creates responsive images
+	 *
+	 * @param location
+	 *   The file's URL or path
+	 * @param isURL
+	 *   Whether the file is an URL or not
+	 * @param useCarousel
+	 *   Flag if use carousel's with and suffixes or the standard ones
+	 *
+	 * @return
+	 */
+	public static Map<String, String> createResponsiveImage(String location, boolean isURL, boolean useCarousel) {
 		Map<String, String> responsiveImages = new HashMap<String, String>();
 
 		if (staticPagePath.endsWith("/")) {
@@ -74,8 +88,18 @@ public class ResponsiveImageUtils {
 			return responsiveImages;
 		}
 
-		for (int i = 0, l = responsiveWidths.length; i<l; i++){
-			String fileName = toFS + responsiveLabels[i] + "." + extension;
+		Integer[] widths;
+		String[] labels;
+		if (useCarousel) {
+			widths = responsiveCarouselWidths;
+			labels = responsiveCarouselLabels;
+		} else {
+			widths = responsiveWidths;
+			labels = responsiveLabels;
+		}
+
+		for (int i = 0, l = widths.length; i<l; i++){
+			String fileName = toFS + labels[i] + "." + extension;
 
 			// work out new image name 
 			String fileUrl = "/sp/rss-blog-cache/" + fileName;
@@ -86,8 +110,8 @@ public class ResponsiveImageUtils {
 			if (!outputfile.exists()) {
 				log.info(String.format("new file is %s, url is %s, old file is %s, ", filePath, fileUrl, location));
 				try {
-					int height = (int)Math.ceil((responsiveWidths[i] * orig.getHeight()) / orig.getWidth());
-					responsive = ImageUtils.scale(orig, responsiveWidths[i], height);
+					int height = (int)Math.ceil((widths[i] * orig.getHeight()) / orig.getWidth());
+					responsive = ImageUtils.scale(orig, widths[i], height);
 				} catch (IOException e) {
 					log.severe("IOException during scaling image: " + e.getLocalizedMessage());
 					e.printStackTrace();
@@ -96,7 +120,7 @@ public class ResponsiveImageUtils {
 					continue;
 				}
 			}
-			responsiveImages.put(responsiveLabels[i], fileUrl);
+			responsiveImages.put(labels[i], fileUrl);
 
 			if (!outputfile.exists()) {
 				boolean created = false;

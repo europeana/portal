@@ -96,6 +96,6 @@ public class CarouselItem {
 	}
 
 	public void setResponsiveImages(String imgUrl) {
-		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false);
+		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, true);
 	}
 }
