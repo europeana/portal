@@ -29,9 +29,9 @@ public class AbstractSearchResults extends ApiResponse {
 	public long itemsCount;
 
 	public long totalResults;
-	
+
 	public List<? extends BriefBean> items;
-	
+
 	public AbstractSearchResults(String action) {
 		super(null, action);
 	}
@@ -39,7 +39,7 @@ public class AbstractSearchResults extends ApiResponse {
 	public AbstractSearchResults() {
 		super();
 	}
-	
+
 	public List<? extends BriefBean> getItems() {
 		return items;
 	}

@@ -9,12 +9,12 @@ import java.util.Map;
  * @author peter.kiraly@kb.nl
  */
 public class Element {
-	
+
 	/**
 	 * Namespace
 	 */
 	private Namespace namespace;
-	
+
 	/**
 	 * Element name
 	 */

@@ -24,11 +24,11 @@ import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 public class FullBean4Json extends FullBeanImpl {
 
 	private String id;
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getId() {
 		return id;
 	}

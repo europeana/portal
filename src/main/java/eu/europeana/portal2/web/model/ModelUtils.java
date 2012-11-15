@@ -33,11 +33,11 @@ import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  */
 public class ModelUtils {
-	
+
 	private ModelUtils() {
 		// Constructor must be private
 	}
-	
+
 	public static List<Facet> conventFacetList(List<FacetField> facetFields) {
 		if ((facetFields != null) && !facetFields.isEmpty()) {
 			List<Facet> facets = new ArrayList<Facet>();
@@ -59,7 +59,7 @@ public class ModelUtils {
 		}
 		return null;
 	}
-	
+
 	public static SpellCheck convertSpellCheck(SpellCheckResponse response) {
 		if (response != null) {
 			SpellCheck spellCheck = new SpellCheck();
@@ -76,5 +76,4 @@ public class ModelUtils {
 		}
 		return null;
 	}
-
 }

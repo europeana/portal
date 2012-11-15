@@ -51,7 +51,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected SearchPageEnum returnTo = SearchPageEnum.getDefault();
 
 	protected String[] shownAtProviderOverride;
-	
+
 	protected FullBeanDecorator decorator;
 
 	protected List<BriefBeanDecorator> moreLikeThis;
@@ -106,7 +106,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	public void setShownAtProviderOverride(String[] shownAtProviderOverride) {
 		this.shownAtProviderOverride = shownAtProviderOverride;
 	}
-	
+
 	public FullBeanShortcut getShourtcut() {
 		return shortcut;
 	}

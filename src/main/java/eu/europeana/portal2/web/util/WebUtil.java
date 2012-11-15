@@ -64,7 +64,7 @@ public class WebUtil {
 		log.info("resulted apiSession: " + apiSession);
 		return apiSession;
 	}
-	
+
 	public static String getApiSession(String apiUrl, String api2key, String api2secret) {
 		String apiSession = null;
 		HttpClient client = new HttpClient();
@@ -83,9 +83,9 @@ public class WebUtil {
 		log.info("resulted apiSession: " + apiSession);
 		return apiSession;
 	}
-	
+
 	private Response getOrPost(Request request) {
-		
+
 		String mErrorMessage = null;
 		HttpURLConnection conn = null;
 		Response response = null;
@@ -125,7 +125,7 @@ public class WebUtil {
 		}
 		return response;
 	}
-	
+
 	private static byte[] readStream(InputStream in) throws IOException {
 		byte[] buf = new byte[1024];
 		int count = 0;

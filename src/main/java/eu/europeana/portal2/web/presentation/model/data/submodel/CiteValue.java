@@ -67,20 +67,20 @@ public class CiteValue {
 				citeStyleText.append("{{cite web | url=");
 				citeStyleText.append(model.getDocument().getId());
 				citeStyleText.append("|title=");
-				
+
 				if( StringArrayUtils.isNotBlank(model.getDocument().getTitle())){
 					citeStyleText.append( model.getDocument().getTitle()[0]);
 				}
 				else{
 					citeStyleText.append(model.getPageTitle().replace("|", ""));
 				}
-				
+
 				if (StringUtils.isNotBlank(authorNames)) {
 					citeStyleText.append("|author=" + authorNames);
 				}
-	
+
 				citeStyleText.append("|accessdate=");
-				citeStyleText.append(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));	
+				citeStyleText.append(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
 				citeStyleText.append(" |publisher=Europeana}}");
 				break;
 			case HARVARD:

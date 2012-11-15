@@ -23,12 +23,11 @@ import eu.europeana.portal2.web.model.abstracts.ApiResponse;
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  */
 public class ApiError extends ApiResponse {
-	
+
 	public boolean success = false;
-	
+
 	public ApiError(String action, String error) {
 		super(null, action);
 		this.error = error;
 	}
-
 }

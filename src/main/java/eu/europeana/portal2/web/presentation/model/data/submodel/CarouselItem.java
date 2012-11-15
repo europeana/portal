@@ -66,7 +66,7 @@ public class CarouselItem {
 	public String getDescription() {
 		return String.format("carousel-item-%d_a_description_t", i);
 	}
-	
+
 	public String getAnchorTarget() {
 		return String.format("notranslate_carousel-item-%d_a_target_t", i);
 	}

@@ -164,7 +164,7 @@ public class FullBeanShortcut {
 				add("EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
 			}
 		}
-		
+
 		if (document.getEuropeanaAggregation() != null) {
 			EuropeanaAggregation aggregation = document.getEuropeanaAggregation();
 			add("EdmCountry", aggregation.getEdmCountry()); // Map - EuropeanaAggregation/edm:country

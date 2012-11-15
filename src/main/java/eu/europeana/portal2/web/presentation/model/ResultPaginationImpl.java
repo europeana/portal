@@ -16,9 +16,9 @@ import eu.europeana.portal2.web.util.QueryUtil;
  */
 
 public class ResultPaginationImpl implements ResultPagination {
-	
+
 	private final Logger log = Logger.getLogger(getClass().getName());
-	
+
 	private static final String FACET_PROMPT = "&qf=";
 	private static final int MARGIN = 3;
 	private static final int PAGE_NUMBER_THRESHOLD = 5;
@@ -42,16 +42,16 @@ public class ResultPaginationImpl implements ResultPagination {
 	public ResultPaginationImpl(int start, int rows, int numFound, Query query, List<BreadCrumb> breadcrumbs) {
 		this.numFound = numFound;
 		this.rows = rows;
-		
+
 		int totalPages = numFound / rows;
 		lastPage = numFound - (numFound % rows);
 		firstPage = 1;
-		
+
 		if (numFound % rows != 0) {
 			totalPages++;
 		}
 		this.numberOfPages = totalPages;
-		
+
 		this.start = 1;
 		if (start != 0) {
 			this.start = start;
@@ -124,7 +124,7 @@ public class ResultPaginationImpl implements ResultPagination {
 	public int getLastPage() {
 		return lastPage;
 	}
-	
+
 	@Override
 	public int getFirstPage() {
 		return firstPage;
@@ -144,7 +144,7 @@ public class ResultPaginationImpl implements ResultPagination {
 	public boolean isFirst() {
 		return isFirst;
 	}
-	
+
 	@Override
 	public boolean isLast() {
 		return isLast;
@@ -154,7 +154,7 @@ public class ResultPaginationImpl implements ResultPagination {
 	public boolean isNext() {
 		return isNext;
 	}
-	
+
 	@Override
 	public int getNextPage() {
 		return nextPage;
@@ -169,7 +169,7 @@ public class ResultPaginationImpl implements ResultPagination {
 	public int getNumFound() {
 		return numFound;
 	}
-	
+
 	@Override
 	public int getNumberOfPages() {
 		return numberOfPages;

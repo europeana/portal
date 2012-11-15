@@ -146,7 +146,7 @@ public class BriefBeanDecorator implements BriefBean {
 	public String getIcon() {
 		return getThumbnail("TINY"); 
 	}
-	
+
 	public String getIconJSON() { 
 		return StringUtils.replace(getIcon(), "&amp;", "&");
 	}
@@ -295,7 +295,6 @@ public class BriefBeanDecorator implements BriefBean {
 
 	@Override
 	public String[] getEdmPreview() {
-		
 		return briefBean.getEdmPreview();
 	}
 }

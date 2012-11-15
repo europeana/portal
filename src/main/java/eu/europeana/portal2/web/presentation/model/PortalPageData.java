@@ -17,9 +17,9 @@ public abstract class PortalPageData extends PageData {
 	private String theme = "default";
 
 	private String googlePlusPublisherId;
-	
+
 	private List<String> messages = null;
-	
+
 	private boolean useCache = true;
 
 	public String getTheme() {
@@ -37,7 +37,7 @@ public abstract class PortalPageData extends PageData {
 	public String getGooglePlusPublisherId() {
 		return googlePlusPublisherId;
 	}
-	
+
 	public void addMessage(String message) {
 		if (messages == null) {
 			messages = new ArrayList<String>();

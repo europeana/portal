@@ -105,7 +105,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	@SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject"})
 	static int getFullDocInt(Map<String, String[]> httpParameters,
 			Query query, DocIdWindowPagerImpl pager) {
-		
+
 		pager.fullDocUri = fetchParameter(httpParameters, "start", "1");
 		if (pager.fullDocUri.isEmpty()) {
 			// TODO: a better exception

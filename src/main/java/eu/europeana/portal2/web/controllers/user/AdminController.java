@@ -105,7 +105,7 @@ public class AdminController {
 		injector.postHandle(this, page);
 		return page;
 	}
-	
+
 	@RequestMapping("/admin/removeUser.html")
 	public String removeUserHandler(
 			@RequestParam(value = "id", required = true) long id,
@@ -221,7 +221,7 @@ public class AdminController {
 		fields.add(csvEncodeField(StringUtils.join(keys, ", ")));
 		return fields;
 	}
-	
+
 	/**
 	 * Encode a field for usage in CSV
 	 * @param field

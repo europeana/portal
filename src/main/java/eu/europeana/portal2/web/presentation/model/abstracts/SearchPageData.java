@@ -89,7 +89,7 @@ public abstract class SearchPageData extends PortalPageData {
 	public int getStart() {
 		return start;
 	}
-	
+
 	public String getImageLocale() {
 		PortalLanguage current = PortalLanguage.safeValueOf(getLocale());
 		if (!current.hasImageSupport()) {

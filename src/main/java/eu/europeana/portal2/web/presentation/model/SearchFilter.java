@@ -16,7 +16,7 @@ public class SearchFilter {
 	private SearchLabel label;
 
 	private String url = null;
-	
+
 	private String urlFull = null; // Andy
 
 	public SearchFilter(SearchLabel label, String url, String urlFull) {

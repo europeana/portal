@@ -51,7 +51,7 @@ public class Json2FullBean {
 	private static final String AGENTS = "agents";
 	private static final String TIMESPANS = "timespans";
 	private static final String CONCEPTS = "concepts";
-	
+
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static ObjectMapper mapper = new ObjectMapper();
@@ -67,7 +67,7 @@ public class Json2FullBean {
 			"what", "where", "when", "dctermsIsPartOf", // List -> String[]
 			"europeanaCompleteness" // Integer -> int
 	}));
-	
+
 	public Json2FullBean(File file) {
 		isFileSouce = true;
 		this.file = file;
@@ -134,7 +134,7 @@ public class Json2FullBean {
 			fields.put(prefix, localFields);
 		}
 	}
-	
+
 	public FullBean extractFullBean() throws JsonParseException, JsonMappingException, IOException {
 		if (setters == null) {
 			initializeSetters();
@@ -178,7 +178,7 @@ public class Json2FullBean {
 					log.severe(field + ": " + value.getClass().getName() + " is not fit for "+ setter.getParameterTypes()[0].getCanonicalName());
 				}
 			}
-			
+
 			set(fullBean, setter, value);
 		}
 
@@ -188,7 +188,7 @@ public class Json2FullBean {
 
 		return fullBean;
 	}
-	
+
 	public static String fileToString(String file) {
 		String result = null;
 		DataInputStream in = null;
@@ -222,7 +222,7 @@ public class Json2FullBean {
 		myList.toArray(myArray);
 		return myArray;
 	}
-	
+
 	private boolean isListToArray(Object value, Method setter) {
 		return (value.getClass().getName().equals("java.util.ArrayList") 
 				&& setter.getParameterTypes()[0].getCanonicalName().equals("java.lang.String[]"));

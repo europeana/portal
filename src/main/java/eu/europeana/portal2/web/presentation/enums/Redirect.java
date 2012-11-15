@@ -40,17 +40,17 @@ public enum Redirect {
 	THOUGHT_LAB_HTML("http://pro.europeana.eu/reuse/thoughtlab"),
 	THOUGHTLAB_HTML("http://pro.europeana.eu/reuse/thoughtlab"),
 	DATA_USAGE_GUIDE_HTML("http://pro.europeana.eu/usage-guidelines");
-	
+
 	private String redirect;
-	
+
 	private Redirect(String redirect) {
 		this.redirect = redirect;
 	}
-	
+
 	public String getRedirect() {
 		return redirect;
 	}
-	
+
 	/**
 	 * Prepares and cleans the given page url to match one of the enumaration values.
 	 * And try to match it, if there is no match, it gives back NULL.

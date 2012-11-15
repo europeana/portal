@@ -15,19 +15,19 @@ public enum RightsOption {
 
 	//CC_BY("http://creativecommons.org/licenses/by/", "CC BY", "cc_by.png"),
 	CC_BY("http://creativecommons.org/licenses/by/", "CC BY", "icon-cc icon-by",  true),
-	
+
 	//CC_BY_SA("http://creativecommons.org/licenses/by-sa/", "CC BY-SA", "cc_by_sa.png"),
 	CC_BY_SA("http://creativecommons.org/licenses/by-sa/", "CC BY-SA", "icon-cc icon-by icon-sa", true),
-	
+
 	//CC_BY_NC_SA("http://creativecommons.org/licenses/by-nc-sa/", "CC BY-NC-SA", "cc_by_nc_sa.png"),
 	CC_BY_NC_SA("http://creativecommons.org/licenses/by-nc-sa/", "CC BY-NC-SA", "icon-cc icon-by icon-nc icon-sa", true),
-	
+
 	//CC_BY_ND("http://creativecommons.org/licenses/by-nd/", "CC BY-ND", "cc_by_nd.png"),
 	CC_BY_ND("http://creativecommons.org/licenses/by-nd/", "CC BY-ND", "icon-cc icon-by icon-nd", true),
-	
+
 	//CC_BY_NC("http://creativecommons.org/licenses/by-nc/", "CC BY-NC", "cc_by_nc.png"),
 	CC_BY_NC("http://creativecommons.org/licenses/by-nc/", "CC BY-NC", "icon-cc icon-by icon-nc", true),
-	
+
 	//CC_BY_NC_ND("http://creativecommons.org/licenses/by-nc-nd/", "CC BY-NC-ND", "cc_by_nc_nd.png"),
 	CC_BY_NC_ND("http://creativecommons.org/licenses/by-nc-nd/", "CC BY-NC-ND", "icon-cc icon-by icon-nc icon-nd", true),
 

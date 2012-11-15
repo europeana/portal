@@ -77,7 +77,7 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 	public String getP() {
 		return String.format("featured-partner-%d_p_t", i);
 	}
-	
+
 	/** Gets the message key for name tag  */
 	/*
 	public String getName() {

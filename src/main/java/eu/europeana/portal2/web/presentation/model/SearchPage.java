@@ -36,7 +36,7 @@ import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 public class SearchPage extends SearchPreparation {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
-	
+
 	@Override
 	public boolean isIndexable() {
 		return false;
@@ -149,7 +149,7 @@ public class SearchPage extends SearchPreparation {
 	public String getNextPageUrl() throws UnsupportedEncodingException {
 		return createNavigationUrl(briefBeanView.getPagination().getNextPage());
 	}
-	
+
 	/**
 	 * Returns the URL to go back to the previous page of results
 	 * 
@@ -174,7 +174,6 @@ public class SearchPage extends SearchPreparation {
 		return createNavigationUrl(briefBeanView.getPagination().getFirstPage());
 	}
 
-	
 	/**
 	 * Returns the URL to navigate to the last page of results
 	 * 
@@ -214,14 +213,14 @@ public class SearchPage extends SearchPreparation {
 		}
 		return briefBeanView.getPagination().getNumberOfPages();
 	}
-	
+
 	public int getPageNumber(){
 		if (briefBeanView == null) {
 			return 0;
 		}
 		return briefBeanView.getPagination().getPageNumber();
 	}
-	
+
 	public List<String> getProvidersForInclusion() {
 		List<String> providersForInclusion = new ArrayList<String>();
 		if (getRefinements() != null) {

@@ -41,7 +41,7 @@ public class BreadcrumbDecorator extends BreadCrumb {
 		}
 		this.model = model;
 	}
-	
+
 	@Override
 	public String getDisplay() {
 		String display = super.getDisplay();
@@ -79,9 +79,8 @@ public class BreadcrumbDecorator extends BreadCrumb {
 		url.append(model.getPageName()).append("?").append(getHref());
 		return model.getPortalFormattedUrl(new UrlBuilder(url.toString())).toString();
 	}
-	
+
 	public boolean getIsLast() {
 		return isLast();
 	}
-
 }

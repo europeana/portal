@@ -47,7 +47,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 	private static final Logger log2 = Logger.getLogger("ClickStreamLoggerImpl");
 
 	private static String VERSION = "2.0";
-	
+
 	@Override
 	public void logUserAction(HttpServletRequest request, UserAction action, ModelAndView page) {
 		log.info(MessageFormat.format("[action={0}, view={1}, {2}]", action, page.getViewName(), printLogAffix(request, page)));
@@ -159,7 +159,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 	private static String printLogAffix(HttpServletRequest request) {
 		return printLogAffix(request, null);
 	}
-	
+
 	private static String printLogAffix(HttpServletRequest request, ModelAndView page) {
 		DateTime date = new DateTime();
 		String ip = request.getRemoteAddr();

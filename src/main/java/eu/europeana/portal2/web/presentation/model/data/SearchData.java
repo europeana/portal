@@ -30,7 +30,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.lists.Breadcr
 public abstract class SearchData extends UrlAwareData<BriefBean> {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
-	
+
 	protected List<BreadCrumb> breadcrumbs;
 
 	protected BriefBeanViewDecorator briefBeanView;

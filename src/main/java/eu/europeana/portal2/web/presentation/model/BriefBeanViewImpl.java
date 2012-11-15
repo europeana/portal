@@ -93,7 +93,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		return briefDoc;
 	}
 	*/
-	
+
 	public void setFacetLogs(List<FacetField> facetFieldList) {
 		this.facetLogs = createFacetLogs(facetFieldList);
 	}

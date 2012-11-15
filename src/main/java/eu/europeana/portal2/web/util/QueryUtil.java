@@ -114,7 +114,7 @@ public class QueryUtil {
 			return encode('"' + value + '"');
 		}
 	}
-	
+
 	public static String encode(String value) {
 		try {
 			value = URLEncoder.encode(value, "UTF-8");

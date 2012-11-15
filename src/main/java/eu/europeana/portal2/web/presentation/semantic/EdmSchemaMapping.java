@@ -17,7 +17,7 @@ public class EdmSchemaMapping {
 
 	private static Map<String, List<FieldInfo>> fieldMap = new LinkedHashMap<String, List<FieldInfo>>();
 	private static List<FieldInfo> topLevelTypes;
-	
+
 	public static List<String> getMapNames() {
 		return mapNames;
 	}
@@ -28,7 +28,7 @@ public class EdmSchemaMapping {
 		}
 		return fieldMap;
 	}
-	
+
 	public static List<FieldInfo> getTopLevel() {
 		if (topLevelTypes == null) {
 			topLevelTypes = new LinkedList<FieldInfo>(Arrays.asList(

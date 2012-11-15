@@ -25,22 +25,22 @@ import java.util.List;
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  */
 public class Facet {
-	
+
 	public String name;
-	
+
 	// set false
 	public boolean selected = false;
-	
+
 	public List<LabelFrequency> fields = new ArrayList<LabelFrequency>();
-	
+
 	public List<LabelFrequency> getFields() {
 		return fields;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public boolean isSelected() {
 		return selected;
 	}

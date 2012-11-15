@@ -111,9 +111,7 @@ public class ObjectController {
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			@RequestParam(value = "source", required = false, defaultValue="corelib") String source,
-			
 			@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
-
 			HttpServletRequest request,
 			HttpServletResponse response, 
 			Locale locale) throws EuropeanaQueryException {
@@ -243,7 +241,7 @@ public class ObjectController {
 		}
 		return fullBean;
 	}
-	
+
 	/**
 	 * Get FullBean through API2 calls
 	 * @param collectionId
@@ -367,7 +365,7 @@ public class ObjectController {
 
 		return seeAlsoSuggestions;
 	}
-	
+
 	private String clearSeeAlso(String value) {
 		while (value.matches(" \\([^\\(\\)]+\\)\\s*$")) {
 			value = value.replaceAll(" \\([^\\(\\)]+\\)\\s*$", "");

@@ -49,7 +49,7 @@ public class FieldInfo {
 	 * The Java data type
 	 */
 	private String type;
-	
+
 	private String parent;
 
 	/**

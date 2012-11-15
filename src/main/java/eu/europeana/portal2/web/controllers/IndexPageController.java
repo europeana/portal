@@ -74,7 +74,7 @@ public class IndexPageController {
 	private static final List<String> freaments = Arrays.asList("blog", "featuredContent", "pinterest");
 
 	private final Logger log = Logger.getLogger(getClass().getName());
-	
+
 	private static List<FeedEntry> feedEntries;
 	private static Calendar feedAge;
 	private List<CarouselItem> carouselItems;
@@ -148,7 +148,6 @@ public class IndexPageController {
 			} catch (NoSuchMessageException e) {
 				keepFetching = false;
 			}
-			
 		}
 		return i;
 	}
@@ -167,7 +166,6 @@ public class IndexPageController {
 			} catch (NoSuchMessageException e) {
 				keepFetching = false;
 			}
-			
 		}
 		return i;
 	}

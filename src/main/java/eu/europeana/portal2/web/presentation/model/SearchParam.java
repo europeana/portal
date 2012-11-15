@@ -57,6 +57,4 @@ public class SearchParam {
 			return false;
 		return true;
 	}
-	
-	
 }

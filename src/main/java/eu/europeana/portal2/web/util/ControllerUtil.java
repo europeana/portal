@@ -54,7 +54,7 @@ import eu.europeana.portal2.web.security.Portal2UserDetails;
 public class ControllerUtil {
 
 	private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[_A-Za-z0-9-]+)";
-	
+
 	private static final Pattern[] SEE_ALSO_PATTERNS = new Pattern[]{
 		Pattern.compile("\\s*\\(.*?\\)\\s*$"),
 		Pattern.compile("\\s*\\[.*?\\]\\s*$"),
@@ -71,7 +71,7 @@ public class ControllerUtil {
 	// private static String defaultTheme;
 
 	private static Logger log = Logger.getLogger(ControllerUtil.class.getName());
-	
+
 	public static Locale getLocale(HttpServletRequest request) {
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		return localeResolver.resolveLocale(request);
@@ -173,7 +173,7 @@ public class ControllerUtil {
 		}
 		return theme;
 	}
-	
+
 	public static User getUser(UserService userService) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null) {

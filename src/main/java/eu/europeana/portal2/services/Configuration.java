@@ -85,7 +85,7 @@ public class Configuration {
 	// Schema.org maping
 	@Value("#{europeanaProperties['schema.org.mapping']}")
 	private String schemaOrgMappingFile;
-	
+
 	@Value("#{europeanaProperties['imageCacheUrl']}")
 	private String imageCacheUrl;
 
@@ -217,7 +217,7 @@ public class Configuration {
 		}
 		return seeAlsoTranslations;
 	}
-	
+
 	public String getPortalUrl() {
 		if (portalUrl == null) {
 			StringBuilder sb = new StringBuilder(portalServer);

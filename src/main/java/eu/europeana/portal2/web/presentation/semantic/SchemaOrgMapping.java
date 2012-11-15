@@ -16,7 +16,7 @@ import java.util.Map;
 public class SchemaOrgMapping {
 
 	private static Map<String, SchemaOrgElement> edm2schemaOrg;
-	
+
 	private static void initialize() {
 		edm2schemaOrg = new HashMap<String, SchemaOrgElement>(){
 			private static final long serialVersionUID = 1L; {
@@ -83,7 +83,7 @@ public class SchemaOrgMapping {
 	public static SchemaOrgElement get(Element edmElement) {
 		return get(edmElement.getQualifiedName());
 	}
-	
+
 	public static void initialize(String filename) {
 		edm2schemaOrg = new HashMap<String, SchemaOrgElement>();
 		Map<String, SchemaOrgElement> mapping = readFromProperty(filename);

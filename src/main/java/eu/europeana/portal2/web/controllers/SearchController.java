@@ -35,7 +35,7 @@ import eu.europeana.portal2.web.util.SearchUtils;
 public class SearchController {
 
 	@Resource private SearchService searchService;
-	
+
 	@Resource private InternalResourceViewResolver viewResolver;
 
 	@Resource(name="configurationService") private Configuration config;

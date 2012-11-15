@@ -24,7 +24,7 @@ public class SearchLabel {
 
 	/** The human readable value */
 	String label;
-	
+
 	private static Map<String, String> fieldCodeMap = Collections.unmodifiableMap(new HashMap<String, String>() {
 		private static final long serialVersionUID = 1L;
 		{

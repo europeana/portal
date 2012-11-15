@@ -8,7 +8,7 @@ public class ThemeChecker {
 	public static final String DEFAULT_THEME = "default";
 
 	private static List<String> registeredThemes = new ArrayList<String>();
-	
+
 	/**
 	 * The registry of themes. If you want to accept a new theme, please register here.
 	 */
@@ -35,7 +35,7 @@ public class ThemeChecker {
 		if (registeredThemes.contains(theme)) {
 			return theme;
 		}
-		
+
 		if (defaultTheme != null) {
 			return defaultTheme;
 		} else {

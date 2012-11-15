@@ -128,7 +128,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			fieldsEnrichment.put("enrichment_category_where_t", where);
 		}
 		*/
-		
+
 		if (document.getPlaces() != null) {
 			for (Place place : document.getPlaces()) {
 				addField(where, Field.ENRICHMENT_PLACE_TERM, new String[]{place.getAbout()});

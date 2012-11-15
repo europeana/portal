@@ -22,7 +22,7 @@ import eu.europeana.portal2.web.presentation.enums.fieldutils.FieldValueProcesso
 import eu.europeana.portal2.web.presentation.enums.fieldutils.Wordcapitalizer;
 
 public enum Field {
-	
+
 	// Who for dc:creator and dc:contributor, 
 	// What for dc:type and dc:subject
 	// When for dc:date, dc:created, dcterms:temportal, dc:created, dc:publsihed
@@ -96,7 +96,7 @@ public enum Field {
 		ExternalService.WIKIPEDIA, ExternalService.INTERNETARCHIVE, ExternalService.SMITHSONIAN,
 		ExternalService.GOOGLE, ExternalService.GOOGLEMAPS, ExternalService.YOUTUBE,
 		ExternalService.IMDB, ExternalService.FLICKR, ExternalService.GOOGLEBOOKS,
-		ExternalService.WORLDCAT),	
+		ExternalService.WORLDCAT),
 	EUROPEANA_COLLECTIONNAME("europeana:collectionName", "europeana_collectionName_t", "europeana_collectionName:%s"),
 	EUROPEANA_ISSHOWNAT("europeana:isShownAt", null),
 	EUROPEANA_ISSHOWNBY("europeana:isShownBy", null),
@@ -112,7 +112,7 @@ public enum Field {
 		ExternalService.WORLDCAT, ExternalService.FLICKR, ExternalService.AMAZON,
 		ExternalService.YOUTUBE, ExternalService.IMDB),
 	EUROPEANA_UGC("europeana:UGC", null),
-	
+
 	// ENRICHMENT
 	ENRICHMENT_PLACE_TERM("enrichment:place_term", "place_term_t"),
 	ENRICHMENT_PLACE_LABEL("enrichment:place_label", "place_label_t"),
@@ -135,9 +135,8 @@ public enum Field {
 	ENRICHMENT_AGENT_LABEL("enrichment:agent_label", "agent_label_t"),
 
 	EDM_ISNEXTINSEQUENCE("edm:isNextInSequence", "edm_isNextInSequence_t"),
-	
 	;
-	
+
 	private String fieldName;
 	private String fieldLabel;
 	private String searchOn;

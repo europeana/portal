@@ -23,7 +23,7 @@ public class SearchFilterUtil {
 	 */
 	public static List<SearchParam> getExistingValues(Query query) {
 		List<SearchParam> existingValues = new ArrayList<SearchParam>();
-		
+
 		existingValues.add(new SearchParam("query", query.getQuery()));
 		if (query.getRefinements() != null) {
 			for (String qf : query.getRefinements()) {

@@ -28,17 +28,17 @@ import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  */
 public class SearchResults extends AbstractSearchResults {
-	
+
 	public List<BreadCrumb> breadCrumbs;
-	
+
 	public List<Facet> facets;
-	
+
 	public SpellCheck spellcheck;
-	
+
 	public SearchResults(String action) {
 		super(action);
 	}
-	
+
 	public List<Facet> getFacets() {
 		return facets;
 	}

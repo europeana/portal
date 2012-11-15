@@ -20,7 +20,7 @@ public class BeanUtil {
 		extract(object, builder, indent);
 		return object.getClass().getSimpleName() + " [\n" + builder.toString() + "]";
 	}
-	
+
 	private static StringBuilder extract(Object parent, StringBuilder builder, String indent) {
 		Method[] methods = parent.getClass().getMethods();
 		for (Method method : methods) {
@@ -67,7 +67,7 @@ public class BeanUtil {
 		}
 		return builder;
 	}
-	
+
 	private static boolean isEmptyValue(String returnType, Object o) {
 		if (o == null) {
 			return true;
@@ -80,7 +80,7 @@ public class BeanUtil {
 		}
 		return false;
 	}
-	
+
 	private static Method getProxyMethod(String function) {
 		final Method[] methods = Proxy.class.getMethods();
 		for (Method method : methods) {

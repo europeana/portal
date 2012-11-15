@@ -15,9 +15,9 @@ import eu.europeana.corelib.definitions.users.Role;
 public class Portal2UserDetails implements UserDetails {
 
 	private static final long serialVersionUID = -925096405395777537L;
-	
+
 	private User user;
-	
+
 	public Portal2UserDetails(User user) {
 		this.user = user;
 	}

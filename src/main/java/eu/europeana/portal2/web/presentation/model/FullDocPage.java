@@ -100,7 +100,7 @@ public class FullDocPage extends FullDocPreparation {
 	public ExternalService[] getExternalSearchServices() {
 		return ExternalService.values();
 	}
-	
+
 	public String getEdmRights(){
 		return Arrays.asList(shortcut.get("EdmRights")).isEmpty() ? null : shortcut.get("EdmRights")[0];
 	}
@@ -237,7 +237,7 @@ public class FullDocPage extends FullDocPreparation {
 		addMetaField(fields, Field.DC_TYPE, getDocument().getDcType());
 
 		addMetaField(fields, Field.EUROPEANA_COMPLETENESS, Integer.toString(document.getEuropeanaCompleteness()));
-		
+
 		/*
 		addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, getDocument().getEnrichmentPlaceTerm());
 		addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, document.getEnrichmentPlaceLabel());
@@ -482,7 +482,7 @@ public class FullDocPage extends FullDocPreparation {
 
 		return StringUtils.left(title.toString(), 250);
 	}
-	
+
 	private String getBaseTitle() {
 		String dcTitle = "";
 		if (document == null) {

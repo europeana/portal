@@ -12,7 +12,7 @@ public class Pom {
 	private final String pomName	= "pom-generated.xml";
 	private final String cleanup	= "cleanup-minified.sh";
 	private int count = 0;
-	
+
 	private final String[] includes = {
 			"css/",
 			"js/com/gmtplusone",
@@ -20,14 +20,14 @@ public class Pom {
 			"js/scottjehl-iOS-Orientationchange-Fix-99c9c99",
 			"js/eu",
 			"js/galleria/themes",
-			"js/js/"			
+			"js/js/"
 	};
-	private final String[] excludes = {			
+	private final String[] excludes = {
 			"css/behaviour/",
 			"/min",
 			"/galleria/themes/classic"
 	};
-	
+
 	public static void main(String[] args) {
 		try{
 			new Pom();
@@ -36,22 +36,21 @@ public class Pom {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Pom() throws IOException{
-		
+
 		File f = new File(pomName);
 		if(f.exists()){
 			f.delete();
 		}
-		f.createNewFile();			
+		f.createNewFile();
 
 		f = new File(cleanup);
 		if(f.exists()){
 			f.delete();
 		}
 		f.createNewFile();
-		
-		
+
 		File folder = new File(new java.io.File( "." ).getCanonicalPath() + root);
 	    
 		openXml();
@@ -68,16 +67,16 @@ public class Pom {
 		System.out.println("Now run maven with the command:");
 		System.out.println("\t\tmvn -f " + pomName + "  minify:minify package");
 	}
-	
+
 	private void makePomEntry(String path, String name, String suffix){
 
 		suffix = suffix.replace(".", "");
 		String srcDir = path.substring(path.indexOf("webapp") + "webapp".length(), path.length()).replace("/" + name, "");
 		String tgtDir = "";
-		
+
 		if( srcDir.indexOf("/" + suffix) < 0 ){
 			if(suffix == "css"){
-				tgtDir = srcDir.substring(	srcDir.indexOf("/css") + 1 );				
+				tgtDir = srcDir.substring(	srcDir.indexOf("/css") + 1 );
 			}
 		}
 		else{
@@ -89,7 +88,7 @@ public class Pom {
 		writeToFile(	"\t<id>minify-" + count + "-" + name + "</id>");
 		writeToFile(	"\t<phase>process-resources</phase>");
 		writeToFile(	"\t<configuration>");
-		
+
 		writeToFile(		"\t\t<webappTargetDir>" + webAppTgt + "</webappTargetDir>");
 		writeToFile(		"\t\t<warSourceExcludes>" + name + "</warSourceExcludes>");
 		writeToFile(		"\t\t<" + suffix + "SourceDir>" + srcDir + "</" + suffix + "SourceDir>");
@@ -99,18 +98,17 @@ public class Pom {
 
 		writeToFile(		"\t\t<" + suffix + "TargetDir>" + tgtDir + "</" + suffix + "TargetDir>");
 		writeToFile(		"\t\t<" + suffix + "FinalFile>" + name + "</" + suffix + "FinalFile>");
-        
-        
+
 		writeToFile(	"\t</configuration>");
 		writeToFile(	"\t<goals>");
 		writeToFile(		"\t\t<goal>minify</goal>");
 		writeToFile(	"\t</goals>");
 		writeToFile("</execution>");
-		
+
 		writeToCleanup(webAppTgt + tgtDir);
 		count ++;
 	}
-	
+
 	private void openXml(){
 		writeToFile("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		writeToFile("<project");
@@ -187,8 +185,7 @@ public class Pom {
 		writeToFile(                "\t\t\t\t<version>1.5.2</version>");
 		writeToFile(                "\t\t\t\t<executions>");
 	}
-	
-	
+
 	private void closeXml(){
 		writeToFile(				"\t\t\t\t</executions>");
 		writeToFile(			"\t\t\t</plugin>");
@@ -203,9 +200,8 @@ public class Pom {
 		writeToFile(		"\t\t</properties>");
 		writeToFile(	"\t</project>");
 	}
-	
 
-	private void writeToCleanup(String s){		
+	private void writeToCleanup(String s){
 		try {
 		    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(cleanup, true)));
 		    out.println("rm -rf " + s);
@@ -223,53 +219,51 @@ public class Pom {
 		    e.printStackTrace();
 		}
 	}
-	
-    private void search(File dir, String suffix) throws IOException {
 
-    	File[] files = dir.listFiles();
-    	
-    	for (int i=0; i < files.length; i++) { 	
+	private void search(File dir, String suffix) throws IOException {
 
-    		File f = files[i];
-    		
-    		if(!f.isHidden()){
-	    		if(f.isDirectory()){
-		    		if(f.getName() != "min"){
-		    			search(f, suffix);
-		    		}
-	        	}
-	        	else{
-	        		if(f.getName().endsWith(suffix)){ // check in includes
-	        			
-	        			String path = f.getCanonicalPath();
-	        			boolean cleared = false;
-	        			for(int j=0; j < includes.length; j++){
-	        				if(path.indexOf(root + includes[j]) > -1 ){
-	        					cleared = true;
-	        				}
-	        			}
-	        			if(cleared){  // check not in excludes
-	        				
-		        			boolean blocked = false;
-		        			for(int j=0; j < excludes.length; j++){
-		        				//if(path.indexOf(root + excludes[j]) > -1 ){
-		        				if(path.indexOf(excludes[j]) > -1 ){
-		        					blocked = true;
-		        				}
-		        			}
-		        			
-		        			if(!blocked){
-		        				
-		        				if(!path.endsWith(".min" + suffix)){ 					
-					        		System.out.println("RESULT: " + path + "   " );
-					        		makePomEntry(path, f.getName(), suffix);
-		        				}
-		        			}
-	        			}
-	        		}
-	        	}
-    		}
-    	}
+		File[] files = dir.listFiles();
 
-    }
+		for (int i=0; i < files.length; i++) {
+
+			File f = files[i];
+
+			if(!f.isHidden()){
+				if(f.isDirectory()){
+					if(f.getName() != "min"){
+						search(f, suffix);
+					}
+				}
+				else{
+					if(f.getName().endsWith(suffix)){ // check in includes
+
+						String path = f.getCanonicalPath();
+						boolean cleared = false;
+						for(int j=0; j < includes.length; j++){
+							if(path.indexOf(root + includes[j]) > -1 ){
+								cleared = true;
+							}
+						}
+						if(cleared){  // check not in excludes
+
+							boolean blocked = false;
+							for(int j=0; j < excludes.length; j++){
+								//if(path.indexOf(root + excludes[j]) > -1 ){
+								if(path.indexOf(excludes[j]) > -1 ){
+									blocked = true;
+								}
+							}
+
+							if(!blocked){
+								if(!path.endsWith(".min" + suffix)){
+									System.out.println("RESULT: " + path + "   " );
+									makePomEntry(path, f.getName(), suffix);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

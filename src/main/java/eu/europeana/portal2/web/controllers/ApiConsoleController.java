@@ -196,7 +196,7 @@ public class ApiConsoleController {
 		}
 		return cleared.toArray(new String[cleared.size()]);
 	}
-	
+
 	private String checkSpatial(String spatial) {
 		return spatial;
 		/*

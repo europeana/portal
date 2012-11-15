@@ -97,7 +97,7 @@ public interface ClickStreamLogger {
 
 		// static pages
 		STATICPAGE, CONTACT_PAGE, FEEDBACK_SEND, FEEDBACK_SEND_FAILURE, INDEXPAGE,
-		
+
 		// other
 		NEWSLETTER;
 

@@ -83,6 +83,4 @@ public class SchemaOrgElement {
 			return false;
 		return true;
 	}
-	
-	
 }
