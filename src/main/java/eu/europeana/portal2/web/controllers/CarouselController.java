@@ -65,7 +65,9 @@ public class CarouselController {
 					&& !StringUtils.equals(label, url)) {
 					total = i;
 					if (i >= start && carouselItems.size() < rows) {
-						carouselItems.add(new CarouselItem(model, i, url));
+						CarouselItem item = new CarouselItem(model, i, url);
+						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+						carouselItems.add(item);
 					}
 				} else {
 					keepFetching = false;
