@@ -16,19 +16,18 @@
 	</c:otherwise>
 </c:choose>
 
-
 <li>
 	<h3>
 		<a href="" class="${classAttr}" rel="nofollow">
 			<c:choose>
-				<c:when test="${facettype == 'country'}"		><spring:message code="ByCountry_t" /></c:when>
-				<c:when test="${facettype == 'completeness'}"	>By Record Size</c:when>
-				<c:when test="${facettype == 'language'}"		><spring:message code="ByLanguage_t" /></c:when>
-		        <c:when test="${facettype == 'provider'}"		><spring:message code="ByProvider_t" /></c:when>
-				<c:when test="${facettype == 'data_provider'}"	><spring:message code="ByDataProvider_t" /></c:when>
-				<c:when test="${facettype == 'rights'}"			><spring:message code="byCopyright_t" /></c:when>
-				<c:when test="${facettype == 'type'}"			><spring:message code="ByMediatype_t" /></c:when>
-				<c:when test="${facettype == 'year'}"			><spring:message code="Bydate_t" /></c:when>
+				<c:when test="${facettype == 'country'}"      ><spring:message code="ByCountry_t" /></c:when>
+				<c:when test="${facettype == 'completeness'}" >By Record Size</c:when>
+				<c:when test="${facettype == 'language'}"     ><spring:message code="ByLanguage_t" /></c:when>
+				<c:when test="${facettype == 'provider'}"     ><spring:message code="ByProvider_t" /></c:when>
+				<c:when test="${facettype == 'data_provider'}"><spring:message code="ByDataProvider_t" /></c:when>
+				<c:when test="${facettype == 'rights'}"       ><spring:message code="byCopyright_t" /></c:when>
+				<c:when test="${facettype == 'type'}"         ><spring:message code="ByMediatype_t" /></c:when>
+				<c:when test="${facettype == 'year'}"         ><spring:message code="Bydate_t" /></c:when>
 			</c:choose>
 		</a>
 	</h3>

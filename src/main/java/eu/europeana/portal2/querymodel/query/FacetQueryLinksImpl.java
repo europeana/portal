@@ -74,16 +74,18 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 							continue;
 						}
 						boolean doAppend = true;
-						String comparableQf = qfValue;
 						if (qfField.equalsIgnoreCase(facetField.getName())) {
-							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(comparableQf)
-								|| comparableQf.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
+							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(qfValue)
+								|| qfValue.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
 								remove = true;
 								facetSelected = true;
 								doAppend = false;
 							}
 						}
 						if (doAppend) {
+							if (qfField.equals(RIGHTS_FACET) && !qfValue.endsWith("*") && !qfValue.endsWith("\"")) {
+								qfValue = '"' + qfValue + '"';
+							}
 							url.append(FACET_PROMPT).append(qfField).append(':')
 								.append(QueryUtil.createPhraseValue(qfField, qfValue));
 						}

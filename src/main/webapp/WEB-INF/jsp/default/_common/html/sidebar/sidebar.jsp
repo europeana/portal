@@ -3,17 +3,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="facets-actions" class="sidebar">
-	
+
 	<!-- breaadcrumbs -->
 
 	<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/filters.jspf" %>
 
 	<!-- facets -->
 	<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
-	
+
 		<h2><spring:message code="RefineYourSearch_t" />:</h2>
 
-				
 		<ul id="filter-search">
 			<li>
 				<h3>
@@ -23,15 +22,12 @@
 				</h3>
 
 				<form id="refine-search-form" method="get" action="${query_action}" onsubmit="return eu.europeana.search.checkKeywordSupplied()">
-				
 					<input type="hidden" name="query" value="<c:out value="${model.query}"/>"/>
-					
 					<input type="hidden" name="rows" id="rows" value="${model.rows}"/>
-					
 					<c:forEach var="refinement" items="${model.refinements}">
 						<input type="hidden" name="qf" value="${refinement}"/>
 					</c:forEach>
-					
+
 					<ul id="refinements">
 						<li>
 							<input id="newKeyword" type="text" name="qf"/>
@@ -40,31 +36,28 @@
 							</span>
 						</li>
 					</ul>
-					
+
 				</form>
 			</li>
-		
-		
+
 			<c:set var="rowsParam" value=""/>
 			<c:if test="${!empty model.rows}">
 				<c:set var="rowsParam" value="&rows=${model.rows}"/>
 			</c:if>
-			
+
 			<%--
 			<c:set var="startParam" value=""/>
 			<c:if test="${!empty model.rows}">
 				<c:set var="startParam" value="&start=${model.start}"/>
 			</c:if>
 			--%>
-			
+
 			<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
 				<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 			</c:forEach>
-	
-	
+
 			<li class="ugc-li">
 				<h3>
-				
 				<%--
 					<c:set var="ugcClassName">
 						<c:choose>
@@ -77,50 +70,44 @@
 						<spring:message code="IncludeUGC_t" />
 					</a>
 				 --%>
-					
+
 					<c:set var="checkedValue" value='checked="checked"' />
-					
 					<c:choose>
 						<c:when test="${model.UGCFilter}">
 							<c:set var="checkedValue" value='' />
 						</c:when>
 					</c:choose>
-					
-					
+
 					<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"/>
-					
+
 					<a  href="${model.UGCUrl}"
 						title="${model.UGCUrl}" rel="nofollow">
 						<label for="cb-ugc" style="display:inline"> &nbsp;<spring:message code="IncludeUGC_t" /></label>
 					</a>
-					
-					
-					
+
 				</h3>
 			</li>
 		</ul>
-		
+		<!-- /facets -->
+
 		<h2>Share and Subscribe:</h2>
-		
 		<ul id="share-subscribe">
 			<c:if test="${!empty model.user}">
-
 				<li>
 					<a id="save-search" class="share-section" rel="nofollow">
 						<span class="icon-saveditem"></span>
 						<spring:message code="SaveToMyEuropeana_t" />
 					</a>
-					
+
 					<c:if test="${!empty model.briefBeanView}">
 						<input type="hidden" id="query-to-save" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}"/>
 					</c:if>
 					<c:if test="${!empty model.query}">
 						<input type="hidden" id="query-string-to-save" value="${fn:escapeXml(model.query)}"/>
-					</c:if>					
+					</c:if>
 				</li>
-				
 			</c:if>
-			
+
 			<%--
 			<li>
 				<a class="share-section icon-print">
@@ -149,11 +136,8 @@
 			 --%>
 			<li class="stretch"></li>
 		</ul>
-		
 	</c:if>
-	<!-- /facets -->
-	
-	
+
 	<!-- legend -->
 	<%--
 	<h2 id="legend"><spring:message code="Legend_t" />:</h2>

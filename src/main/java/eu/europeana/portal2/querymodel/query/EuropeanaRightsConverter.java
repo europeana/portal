@@ -86,8 +86,8 @@ public final class EuropeanaRightsConverter {
 	 */
 	private static License tryEuropeanaLicenses(Matcher matcher) {
 		StringBuilder result = new StringBuilder();
-		for (int walk = 1; walk < matcher.groupCount(); walk++) {
-			result.append(matcher.group(walk).toUpperCase()).append(" ");
+		for (int i = 1, max = matcher.groupCount(); i < max; i++) {
+			result.append(matcher.group(i).toUpperCase()).append(" ");
 		}
 		result.append(matcher.group(matcher.groupCount()));
 		return new License(matcher.group(), String.format("%s", EUROPEANA_RIGHTS_MAP.get(result.toString())));
