@@ -43,15 +43,13 @@
 						<%-- data for carousel --%>
 						var carousel2Data = [];
 						<c:forEach items="${model.moreLikeThis}" var="doc">
-							<c:set var="objectTitle">${fn:join(doc.title, ' ')}</c:set> 
+							<c:set var="objectTitle">${fn:join(doc.title, ' ')}</c:set>
 							carousel2Data[carousel2Data.length] = {
-								image:			decodeURI("${doc.thumbnail}").replace(/&amp;/g, '&'),
+								image:			decodeURI( "${fn:escapeXml(doc.thumbnail)}" ).replace(/&amp;/g, '&').replace(/&amp;/g, '&'),
 								title:			'${fn:escapeXml(objectTitle)}',
 								link:			'/${model.portalName}/${doc.fullDocUrl}'
 							};
-							
 						</c:forEach>
-						
 					</script>
 					
 					<%-- markup for carousel --%>
