@@ -186,6 +186,13 @@
 	border-top:		1px solid #E4E4E4;
 }
 
+#collapse-header-3 span,
+#collapse-header-2 span,
+#collapse-header-1 span{
+	cursor:	pointer;
+}
+
+
 #featured-partner-header-wrapper{
 	border-bottom:	1px solid #E4E4E4;
 }
