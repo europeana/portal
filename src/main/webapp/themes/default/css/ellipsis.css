@@ -1,12 +1,8 @@
-	.ellipsis{
-		overflow:	hidden;
-		position:	relative;
-		line-height:1em;
-	}
-	.ellipsis-inner{
-		position:relative;
-	}
-	.ellipsis-inner span{
-		xxline-height:0.9em;
-		xxfont-size:0.9em;
-	}
+.ellipsis{
+	overflow:	hidden;
+	position:	relative;
+	line-height:1em;
+}
+.ellipsis-inner{
+	position:relative;
+}
