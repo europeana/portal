@@ -128,7 +128,6 @@
 @media only screen and ( min-width:48em ){
 	
 	#section-blog .six:first-child .fi-block-spacer{
-
 		padding-right:	2em;
 	}
 	
@@ -138,16 +137,12 @@
 	
 	
 	#section-featured-content .six:first-child .fi-block-spacer{
-		
 		padding-right:	2em;
 	}
 	
 	#section-featured-content .six:last-child .fi-block-spacer{
-	
 		padding-left:	2em;
-		
 	}
-	
 	
 	.fi-block-spacer h4 a{
 		text-align:		left;
@@ -161,12 +156,7 @@
 		width:			35%;	
 		max-width:		35%;	
 	}
-	
 }
-
-
-/* end new */
-
 
 
 
@@ -246,7 +236,6 @@ h3 a span{
 
 
 @media only screen and ( min-width:48em ){
-
 	ul.featured-partner-links{
 		margin-top:		2em;
 	}
@@ -254,11 +243,9 @@ h3 a span{
 	ul.featured-partner-links li{
 		padding-top:		0em;
 		padding-bottom:		0em;
-		
 	}
-
-	
 }
+
 /* End dynamic content classes */
 
 
@@ -279,26 +266,16 @@ h3 a span{
 @media only screen and ( min-width:48em ){
 	.feed-link {
 		float:			left;
-		margin-left:	0.4em;
-				
+		margin-left:	0.4em;				
 		padding-top:	0.5em;
 		padding-bottom:	0.5em;
 	}
-
 
 	.collapse-header-text,
 	.icon-pinterest{
 		padding-top:	0.5em !important;
 		padding-bottom:	0.5em !important;
 	}
-	
-}
-	
-}
-
-.ie8 .feed-link {
-	float:			left;
-	margin-left:	0.4em;
 }
 
 
@@ -318,9 +295,7 @@ p.featured-text{
 }
 
 
-
 /* pinterest */
-
 
 .rssBody ul {
 	list-style: none;
@@ -331,11 +306,10 @@ p.featured-text{
 }
 
 .rssBody li {
-        width:		100%;
-        height:		auto;
-		float:		left;
-        margin-bottom:		12px;
-
+	width:			100%;
+	height:			auto;
+	float:			left;
+	margin-bottom:	12px;
 }
 
 
@@ -372,8 +346,6 @@ li.rssRow p{
 	padding-top:	10px;
 	padding-bottom:	10px;
 }
-
-
 
 .rssRow img{
 	padding-top:	8px;
