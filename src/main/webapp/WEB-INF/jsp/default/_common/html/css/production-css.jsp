@@ -1,5 +1,5 @@
-<!-- debug-css -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link rel="stylesheet" href="/${branding}/css/min/common.min.css" />
 
 <c:if test="${!empty model.announceMsg}">

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.samaxes.maven</groupId>
+	<artifactId>minify-maven-plugin-demo</artifactId>
+	<version>1.5.2</version>
+	<packaging>pom</packaging>
+	<name>Minify Europeana Resources</name>
+	<url>https://github.com/samaxes/minify-maven-plugin</url>
+	<!-- mvn -f pom-minify.xml minify:minify package -->
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+		
+	<build>
+	
+		<plugins>
+			
+			<plugin><!-- START MINIFY-MAVEN-PLUGIN -->
+			
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>1.5.2</version>
+				
+				<executions>
+					
+					<!-- CSS FILES -->
+					<!-- COMMON: Move common css files to (src)css/min/common.min.css (see WEB-INF/jsp/default/_common/html/links.jsp) -->
+					<execution>
+						<id>minify-common.css</id>
+						<phase>process-resources</phase>
+						<configuration>							
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>common.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+                            <cssSourceIncludes>                            
+								<cssSourceInclude>html.css</cssSourceInclude>
+								<cssSourceInclude>common.css</cssSourceInclude>
+								<cssSourceInclude>ajax.css</cssSourceInclude>
+								<cssSourceInclude>header.css</cssSourceInclude>
+								<cssSourceInclude>menu-main.css</cssSourceInclude>
+								<cssSourceInclude>menu-right.css</cssSourceInclude>
+								<cssSourceInclude>responsive-grid.css</cssSourceInclude>
+								<cssSourceInclude>eu-menu.css</cssSourceInclude>
+								<cssSourceInclude>ellipsis.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-icons.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>								
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+                    
+                    <execution>
+						<id>minify-index.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>index.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>index.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+                    <execution>
+						<id>minify-galleria.europeanax.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/js/galleria/themes/europeanax</webappTargetDir>
+							<cssSourceDir>/themes/default/js/galleria/themes/europeanax</cssSourceDir>
+							<cssFinalFile>galleria.europeanax.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>							
+							<cssSourceIncludes>
+								<cssSourceInclude>galleria.europeanax.css</cssSourceInclude>
+							</cssSourceIncludes>							
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+                        
+					
+				</executions>
+				
+			</plugin><!-- END MINIFY-MAVEN-PLUGIN -->
+			
+		</plugins>
+		
+	</build>
+
+</project>
