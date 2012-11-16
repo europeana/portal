@@ -6,11 +6,6 @@
 	right:				20px;		/* pixel value to cancel out responsive container's padding */
 	padding-bottom:		0.5em;
 	padding-top:		0.5em;
-	
-	/*
-	width:50%;
-	display:block;
-	*/
 }
 
 #header-strip>div{
@@ -18,24 +13,22 @@
 	width:		100%;
 }
 
-
-
 #lang-menu.eu-menu{
 	padding-bottom:	0;
 }
+
 #lang-menu ul{
 	right:		0;
 	font-size:	1.25em;
 }
+
 #lang-menu .item {
 	padding-right:	1em;
 }
 
-
 .icon-mobilemenu{
 	font-size:	2em;
 }
-
 	
 /* outer layout */
 
@@ -59,12 +52,6 @@
 	margin:			0;
 	border-bottom:	1px solid #E4E4E4;	
 }
-
-/*
-#logo-and-search h1 a{
-	z-index:	4;
-}
-*/
 
 #query-full{
 	display:		block;
@@ -252,6 +239,7 @@ table tr:first-child{
 }
 
 @media only screen and ( min-width:48em ){
+	
 	table{
 		border:					1px solid #e4e4e4 !important;
 		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
@@ -273,17 +261,16 @@ table tr:first-child{
 		-webkit-border-radius:	0;
 		border-radius:			0;	
 		border:					0;
-	}	
-	
-
+	}
 
 	table{
 		table-layout:	auto;
 	}
+	
 	tr td.menu-cell:first-child, tr td.query-cell{
 		width:	auto;
 	}
-	
+
 }	
 
 	
@@ -320,44 +307,9 @@ table tr:first-child{
 	overflow:		hidden;
 }
 
-
-
 .glow{
-	/*
-   -webkit-box-shadow:	0 0 4px rgba(153, 0, 255, 0.3);
-   -moz-box-shadow:		0 0 4px rgba(153, 0, 255, 0.3),		0 0 0 rgba(153, 0, 255, 0.3), 	0 0 0 rgba(153, 0, 255, 0.3), 	0 0 4px rgba(153, 0, 255, 0.3);
-   -webkit-animation:	pulse 1.5s infinite ease-in-out;
-   box-shadow:			0 0 4px rgba(153, 0, 255, 0.3),		0 0 0 rgba(153, 0, 255, 0.3),	0 0 0 rgba(153, 0, 255, 0.3),	0 0 4px rgba(153, 0, 255, 0.3);
-   */
-
-/*
-       box-shadow:
-         0px 11px 4px -10px rgba(153, 0, 255, 0.3),
-         0px -11px 4px -10px rgba(153, 0, 255, 0.3); 
-
-
-
-       box-shadow:
-         -8px 11px 4px -10px rgba(153, 0, 255, 0.3),
-         -8px -11px 4px -10px rgba(153, 0, 255, 0.3);
-         
-         */ 
-
 	box-shadow:	inset	0 0 4px #4C7ECF;
-         
-
 }
-
-
-
-#query-search input[type="text"]:focus {
-}
-
-
-
-
-
-
 
 #submit-query{
 	height:		1.48em;
@@ -380,7 +332,6 @@ table tr:first-child{
 	
 	#query-input{
 		width:					100%;
-																xxbackground-color:red;
 		-moz-border-radius:		0 0 0 0;
 		-webkit-border-radius:	0 0 0 0;
 		border-radius:			0 0 0 0;
@@ -405,12 +356,6 @@ table tr:first-child{
 #query-input:-ms-input-placeholder{
 	color: #999;
 }
-
-/*
-.container{
-	position:relative;
-}
-*/
 
 
 /* Mobile Menu */
@@ -586,12 +531,13 @@ a.ui-state-hover {
 		margin-left:		0;	
 	}
 	
-	@media only screen and ( max-width:68em ){	/* the header strip wants to wrap here if the user is logged in - reduce the text size */
+	/*
+	@media only screen and ( max-width:68em ){
 		#header-strip{
 			font-size:		1em;	
 		}
 	}
-	@media only screen and ( max-width:58em ){	/* the header strip wants to wrap here if the user is logged in - reduce the text size */
+	@media only screen and ( max-width:58em ){
 		#header-strip{
 			font-size:		0.9em;
 		}
@@ -602,6 +548,7 @@ a.ui-state-hover {
 			margin-left:	0.25em;
 		}
 	}
+	*/
 	
 	/* form */
 	#query{
