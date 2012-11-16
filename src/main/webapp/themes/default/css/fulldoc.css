@@ -154,24 +154,6 @@ a.action-link span{
 	display:		none;
 }
 
-/*
-@media only screen and ( min-width:28em ){
-	a.action-link {
-		float:			none;
-		display:		block;
-		margin-left:	0;
-	}
-	#urlRefIsShownAt{
-		display:	inline;
-	}
-	
-	.action-title{
-		display:		inline;
-	}
-}
-*/
-
-
 #excerpt{
 	padding-left:	0;
 	padding-top:	1.5em;
