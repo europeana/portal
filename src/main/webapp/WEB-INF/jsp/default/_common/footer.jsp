@@ -152,6 +152,6 @@
 				<spring:message code="footer_menu_sitemap_text_t"/>
 		</a>
 
-		<span class="footer-funded-by"><spring:message code="FundedBy_t"/><span class="icon-euflag"></span>
+		<span class="footer-funded-by"><spring:message code="FundedBy_t"/><span class="icon-euflag"></span></span>
 	</div>
 </div>
