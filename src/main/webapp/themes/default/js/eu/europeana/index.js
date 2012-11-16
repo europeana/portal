@@ -11,11 +11,18 @@
 			}
 			
 			new euResponsive({
-				"galleryName"	:	"euresponsive_half_screen",
-				"selector"		:	".responsive_half",
+				"galleryName"	:	"euresponsive",
+				"selector"		:	"#section-blog .responsive_half",
 				"initialSuffix"	:	initialSuffix
 			});
 			
+			new euResponsive({
+				"galleryName"	:	"euresponsive",
+				"selector"		:	"#section-featured-content .responsive_half",
+				"initialSuffix"	:	initialSuffix
+			});
+			
+
 		};
 		setup();
 	};
@@ -354,16 +361,6 @@ return;
 				initAddThis();
 			}
 		}]);
-		
-		
-		js.loader.loadScripts([{
-			file : 'respond.min.js',
-			path : eu.europeana.vars.branding + '/js/scottjehl-respond/min/',
-			callback : function() {
-				
-			}
-		}]);
-		
 	};
 	
 	jQuery(document).ready(function(){

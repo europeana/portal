@@ -79,32 +79,6 @@
 				width: 3px;
 			}
 		}
-	
-	
-	
-		@media all and (min-width: 20em){
-			.euresponsive_half_screen {
-				width: 0px;
-			}
-		}
-	
-		@media all and (min-width:30em){
-			.euresponsive_half_screen {
-				width: 1px;
-			}
-		}
-		
-		@media all and (min-width:47em){
-			.euresponsive_half_screen {
-				width: 2px;
-			}
-		}
-	
-		@media all and (min-width:49em){
-			.euresponsive_half_screen {
-				width: 3px;
-			}
-		}
 		
 	
 	</style>	
