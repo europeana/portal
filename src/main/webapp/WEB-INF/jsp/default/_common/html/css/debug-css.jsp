@@ -7,8 +7,6 @@
 	<link rel="stylesheet" href="/${branding}/css/ajax.css" />
 	<link rel="stylesheet" href="/${branding}/css/header.css" />
 	<link rel="stylesheet" href="/${branding}/css/menu-main.css" />
-	<link rel="stylesheet" href="/${branding}/css/menu-right.css" />
-	<%--link rel="stylesheet" href="/${branding}/css/menu-styling.css" /--%>
 	<link rel="stylesheet" href="/${branding}/css/responsive-grid.css" />
 	
 	
@@ -215,6 +213,10 @@
 	<!--[if lte IE 8]><link rel="stylesheet" href="/${branding}/css/ie8.css" /><![endif]-->
 	<noscript><link rel="stylesheet" href="/${branding}/css/noscript.css" /></noscript>
 	<!-- debug-css -->
+
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="/${branding}/css/ie8.css"/>
+	<![endif]-->
 
 </c:if>
 	
