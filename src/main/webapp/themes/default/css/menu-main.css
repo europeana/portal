@@ -7,12 +7,8 @@
 }
 
 .footer, .footer-bottom-links{
-
 	background-image:	url('../images/dust.png');
-	
 }
-
-
 
 @media all and (-webkit-min-device-pixel-ratio: 2) {
 	.footer{
@@ -27,7 +23,6 @@
 .footer-wrapper{
 	margin-left:	1em;
 	margin-right:	1em;
-	xxxpadding-top:	1em;
 	padding-bottom:	1em;
 }
 
@@ -46,9 +41,6 @@ ul.menu a{
 	color:					inherit;
 }
 
-
-/** DESKTOP **/
-/** This breakpoint not wrapped in media selector for the sake of IE8 **/
 
 ul.menu{							/* centering */
 	width:				100%;
