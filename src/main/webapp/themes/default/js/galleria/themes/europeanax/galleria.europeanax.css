@@ -68,11 +68,6 @@
 	}
 }
 
-.ie8 .galleria-stage {
-		bottom: 	60px;	/* thumbnails (50) + margin */
-}
-
-
 
 .galleria-thumbnails-container {
 	position:	absolute;
@@ -102,19 +97,11 @@
 	right:		0px;
 }
 
-
 @media only screen and ( min-width:767px ){
-
 	.galleria-thumbnails-container {
 		display:	block;
 	}
-
 }
-
-.ie8 .galleria-thumbnails-container {
-	height:		50px;
-}
-
 
 .europeana-bordered .galleria-thumbnails-container {			/* B */
 	bottom:	0px;
@@ -124,24 +111,18 @@
 	height: 100%;
 }
 
-
 .europeana-carousel .europeana-carousel-info{
 	opacity:			1 !important;
 	background-color:	rgba(0, 0, 0, 0.698);
 	color:				#FFF;
-
 	position:			absolute;
-
 	padding:			0.2em;
 	-moz-box-sizing:	border-box;
 	-webkit-box-sizing:	border-box;
 	box-sizing:			border-box;
 
-	/* NEW */
 	overflow:			hidden;
-
 	bottom:				0;
-
 	line-height:		1.1em;
 	height:				2.6em;
 	max-height:			2.6em;
@@ -163,7 +144,6 @@
     margin-right:	-9px;        
 }
 
-
 .galleria-thumbnails .galleria-image {
     height:		80px;
     width:		120px;
@@ -174,20 +154,12 @@
     cursor:		pointer;
 }
 
-
-
 @media only screen and ( min-width:767px ){
 	.galleria-thumbnails .galleria-image {
 	    height:		40px;
 	    width:		60px;
 	}
 }
-
-.ie8 .galleria-thumbnails .galleria-image {
-    height:		40px;
-    width:		60px;
-}
-
 
 .europeana-carousel .galleria-thumbnails .galleria-image {
 	background:	#DFDFDF;
@@ -196,17 +168,14 @@
 }
 
 	
-
 .galleria-thumbnails{	/* centre the film strip in the default gallery */
 	margin:	auto;
 }
-
 
 .europeana-carousel .galleria-thumbnails .galleria-image img{	/* centre the images within their containers */
 	position:	relative !important;
 	margin:		auto !important;
 }
-
 
 .galleria-counter {
     position: absolute;
@@ -253,12 +222,9 @@
     opacity: 0.6;
     filter: alpha(opacity=60);
     cursor: pointer;
-    
     font-size:	5em;
-
     position: absolute;
     left: -0.15em;
-
     visibility:hidden;
     margin-left:-10px;
     z-index: 2;
@@ -310,22 +276,16 @@
 .galleria-thumb-nav-left,
 .galleria-thumb-nav-right {
     cursor:					pointer;
-
     position:				absolute;		/* custom styling of nav arrows */
     left:					0;
-    
     top:					4px;
-    
     height:					100px;
     width:					23px;
     width:					17px;
     z-index:				3;
     opacity:				.8;
     filter:					alpha(opacity=80);
-    
     margin-left:			-14px;
-    
-    
 	font-size:				3em;
 	color:					white;	
 	text-shadow:			0 0 1px #000;
@@ -338,7 +298,6 @@
     left:			auto;
     margin-right:	17px;
     margin-left:	0px;
-    
 }
 
 
@@ -359,16 +318,12 @@
 
 .europeana-carousel .galleria-thumb-nav-left,
 .europeana-carousel .galleria-thumb-nav-right {
-	
     width:				auto;
     height:				auto;
     font-size:			6em;
-    
     background-color:	transparent !important;
-    
    	color:				white;
 	text-shadow:		0 0 10px #000;
-	
 	left:				0px;
 	right:				auto;
 }
@@ -386,9 +341,7 @@
 .europeana-carousel .galleria-thumb-nav-right {
     left:				auto;
     right:				-0.3em;
-    xxxright:				0;
 }
-
 
 @media only screen and ( min-width:767px ){
 	
@@ -417,8 +370,6 @@
     opacity: 1;
     filter: alpha(opacity=100);
 }
-
-
 
 .touch .galleria-thumb-nav-left:active,
 .touch .galleria-thumb-nav-right:active {
@@ -473,7 +424,6 @@
         bottom:				auto;
         margin-bottom:		0;
 	}
-
 }
 
 .europeana-bordered .galleria-info,
@@ -493,9 +443,6 @@
 
 .galleria-info-description,
 .galleria-info-title{
-    zzzzfont:			bold 12px/1.1 arial,sans-serif;
-    
-    
     margin:			0;
     color: 			#fff;
     opacity:		1 !important;
@@ -523,15 +470,6 @@
 
 @media only screen and ( min-width:767px ){
 	
-	/*
-	.galleria-info-title{
-		font-size:	1.2em;
-	}
-	.galleria-info-description{
-		font-size:	0.8em;
-	}
-	*/
-	
 	.galleria-info {
 	    top:				1em;
 	    left:				1em;
@@ -543,5 +481,4 @@
 	.galleria-info-description{
 		display:	block !important;
 	}
-
 }
