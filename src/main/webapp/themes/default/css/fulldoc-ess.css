@@ -1,158 +1,132 @@
-/* external-services */
+/* citation */
 
-	/* citation */
-	
-	#citation {
-		display:	none;
-		position:	relative;
-		width:		100%;		/* to aid centering of ess container */
-	}
-	
-	#citation .external-services-container {
-		display:	block;
-		height:		auto;
-		
-		left:		20px;	/* centering */
-		right:		20px;
-		top:		-2em;
-		position:	absolute;		
-	}
+#citation {
+	display:	none;
+	position:	relative;
+	width:		100%;		/* to aid centering of ess container */
+}
 
-	#citetabs{
-		padding: 1em;
-	}
-	#citation h3 {
-		font-size: 100%;
-		xxxpadding: 20px 0 0 20px;
-	}
+#citation .external-services-container {
+	display:	block;
+	height:		auto;
 	
-	#citation p {
-		overflow: auto;
-		padding: 20px;
-	}
+	left:		20px;	/* centering */
+	right:		20px;
+	top:		-2em;
+	position:	absolute;		
+}
+
+#citetabs{
+	padding: 1em;
+}
+
+#citation h3 {
+	font-size: 100%;
+}
+
+#citation p {
+	overflow: auto;
+	padding: 20px;
+}
+
+#citation .header {
+	font-weight: normal;
+	padding: 10px 30px 10px 10px;
+}
+
+/* end citation */
+
+
+.external-services-container {
+	position:			absolute;
+	top:				0;
+	left:				0;
+	z-index:			200;
+	height:				auto;
+	background-color:	#fff;
+	border-radius:		5px;
+	display:			none;
+	-moz-box-shadow:	3px 3px 8px #dfdfdf;
+	-webkit-box-shadow:	3px 3px 8px #dfdfdf;
+	box-shadow:			3px 3px 8px #dfdfdf;
+	overflow:			hidden;
+	border:				1px solid black;
+	padding-top:		4px;
+}
+
+#citestyle1, #citestyle2{
+	margin:		4px;
+	word-wrap:	break-word;
+}
+
+.external-services-container p {
+	   overflow:			hidden;
+	   word-wrap:			break-word;
+}
+
+
+.external-services-container .header {
+	border-radius:		5px 5px 0px 0px;
+	position:			relative;
 	
-	#citation .header {
-		font-weight: normal;
-		padding: 10px 30px 10px 10px;
-	}
+	border-top: 1px solid black;
 	
-	/* end citation */
+	height:				25px;
+	width:				auto;
+	   overflow:			hidden;
+}
+
+.external-services-container a.close-button {
+	position:			absolute;
+	top:				0.25em;
+	right:				0.25em;
+	color:				#DADADA;
+}
 	
-	/*
-	a.external-services.toggle-menu-icon {
-		position: relative;
-		display: inline-block;
-	}
-	*/
-	
-	.external-services-container {
-		position:			absolute;
-		top:				0;
-		left:				0;
-		z-index:			200;
-		
-		
-		/*
-			width:				175px;
-		*/
-		
-		height:				auto;
-		background-color:	#fff;
-		border-radius:		5px;
-		display:			none;
-		-moz-box-shadow:	3px 3px 8px #dfdfdf;
-        -webkit-box-shadow:	3px 3px 8px #dfdfdf;
-        box-shadow:			3px 3px 8px #dfdfdf;
-        overflow:			hidden;
-		border:				1px solid black;
-        
-        padding-top:		4px;
-	}
-	
-	#citestyle1, #citestyle2{
-		margin:		4px;
-		word-wrap:	break-word;
-	}
-	
-	.external-services-container p {
-        overflow:			hidden;
-        word-wrap:			break-word;
-	}
-	
-	
-	.external-services-container .header {
-		border-radius:		5px 5px 0px 0px;
-		position:			relative;
-		
-		border-top: 1px solid black;
-		
-		height:				25px;
-		width:				auto;
-        overflow:			hidden;
-	}
-	
-	.external-services-container a.close-button {
-		position:			absolute;
-		top:				0.25em;
-		right:				0.25em;
-		color:				#DADADA;
-	}
-		
-	.external-services-container a.close-button:hover {
-		color:				#A0A0A0;
-	}
-	
-	
-	.external-services-container .heading {
-		padding: 	2px 0 0 7px;
-		z-index:	200;
-	}
-	
-	.external-services-container .services {
-		padding: 10px 0 10px 10px;
-	}
-	
-	.external-services-container .service {
-		display: block;
-	}
+.external-services-container a.close-button:hover {
+	color:				#A0A0A0;
+}
+
+
+.external-services-container .heading {
+	padding: 	2px 0 0 7px;
+	z-index:	200;
+}
+
+.external-services-container .services {
+	padding: 10px 0 10px 10px;
+}
+
+.external-services-container .service {
+	display: block;
+}
 
 
 
 @media only screen and ( min-width:48em ){
-
-	/*
-	a.external-services.toggle-menu-icon {
-		position: relative;
-		display: inline-block;
-	}
-	*/
 	
 	.external-services-container {
 		position:			fixed !important;
-
 		width:				456px;
 		margin-left:		-228px;
 		margin-top:			-30px;
 		left:				50% !important;
 		top:				50% !important;
-		
 	}
 	
 	.external-services-container p {
-        overflow:			hidden;
-        word-wrap:			break-word;
+		overflow:			hidden;
+		word-wrap:			break-word;
 	}
 	
 	
 	.external-services-container .header {
 		border-radius:		5px 5px 0px 0px;
 		position:			relative;
-		
 		border-top: 		1px solid black;
-		
 		height:				25px;
 		width:				auto;
-        overflow:			hidden;
+		overflow:			hidden;
 	}
 	
 	.external-services-container .heading {
