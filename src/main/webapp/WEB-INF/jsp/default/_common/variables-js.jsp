@@ -172,6 +172,15 @@ eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
 eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
 eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
 </c:if>
+eu.europeana.vars.galleria = {};
+<c:choose>
+<c:when test="${!empty model.minify && model.minify}">
+eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
+</c:when>
+<c:otherwise>
+eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+</c:otherwise>
+</c:choose>
 </c:when>
 
 <c:when test="${model.pageName == 'full-doc.html'}">

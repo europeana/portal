@@ -14,7 +14,7 @@
 Galleria.addTheme({
     name: 'europeanax',
     author: 'Andy MacLean',
-    css: 'galleria.europeanax.css',
+    css: eu.europeana.vars.galleria.css,
     defaults: {
         transition: 'slide',
         thumbCrop:  'height',
