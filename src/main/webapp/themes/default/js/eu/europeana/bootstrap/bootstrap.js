@@ -87,7 +87,8 @@ var europeana_bootstrap = function(){
 	  {
 		  	name: 'euresponsive',
 			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'jquery' ]
 	  }
 	  
 	  
