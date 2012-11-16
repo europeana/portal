@@ -108,7 +108,6 @@
 
 @media all and (max-width: 30em) {
 	
-	
 	#items>div.li{
 		width:			49%;
 		max-width:		49%;
@@ -146,17 +145,10 @@
 
 /* tablet & bigger */
 @media all and (min-width: 48em) {
-
 	.action-title{
 		display:	inline;
 	}
-	
-	
 }
-	
-
-
-
 
 /* meta-data */
 
