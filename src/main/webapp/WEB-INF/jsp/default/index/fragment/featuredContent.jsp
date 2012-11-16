@@ -16,12 +16,11 @@
              --%>title=  '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
              --%>target=  '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
              --%>class=  'image'><%--
-             --%><img  src=  '/${model.portalName}<spring:message code="${model.featuredItem.imgUrl}" />'<%--
-               --%>alt=  '<spring:message code="${model.featuredItem.imgAlt}" />'<%--
-               --%>/><%--
+             --%><c:set var="altText"><spring:message code="${model.featuredItem.imgAlt}" /></c:set><%-- 
+             --%><img class='responsive_half' src='/${model.portalName}${model.featuredItem.responsiveImages["_1"]}' alt='${fn:escapeXml(altText)}'/><%--
              --%></a><%--
              --%><h4 class='hide-on-phones'><%--
-               --%><a  href  = '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
+               --%><a href='/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
                --%>title  = '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
                --%>target  = '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
                --%>class  = 'europeana'><%--
@@ -56,8 +55,9 @@
            --%>title=  '<spring:message code="${model.featuredPartner.anchorTitle}" />'<%--
            --%>target=  '<spring:message code="${model.featuredPartner.anchorTarget}" />'<%--
            --%>class=  'image'><%--
-           --%><img  src=  '/${model.portalName}<spring:message code="${model.featuredPartner.imgUrl}" />'<%--
-           --%>alt=  '<spring:message code="${model.featuredPartner.imgAlt}" />'<%--
+			--%><c:set var="altText"><spring:message code="${model.featuredPartner.imgAlt}" /></c:set><%--
+           --%><img class='responsive_half' src='/${model.portalName}${model.featuredPartner.responsiveImages['_1']}'<%--
+           --%>alt='${fn:escapeXml(altText)}'<%--
            --%>/><%--
          --%></a><%--
          --%><h4 class='hide-on-phones'><%--
