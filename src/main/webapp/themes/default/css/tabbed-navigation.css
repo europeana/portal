@@ -39,13 +39,9 @@
 
   	
 @media only screen and ( min-width:48em ){
-  	
 	.tab-navigation li {
 		margin-right: 		1em;
 	}
-	
-
-	
 }
   	
 .tab-navigation h3 a.active,
