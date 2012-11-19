@@ -50,6 +50,7 @@
 				padding:0;
 				margin-right:1em;  /* allow the shadow to show */
 				width:	100%;
+				max-width:100%;
 			}
 			
 			
@@ -62,6 +63,45 @@
 	#footer-subscribe.phone input[type=submit]{
 		top:				4em;
 	}			
+			
+			
+<!--[if IE 8]>
+
+			#footer-subscribe.phone input[type=text],
+			#footer-subscribe.phone input[type=email],
+			#footer-subscribe.phone input[type=submit]{
+				display:	none;
+			}
+		
+			#footer-subscribe #id_email{
+				position:			absolute;
+				width:				46% !important;
+				left:				0;
+				margin-top:			1em;
+				padding:			0.3em;
+				margin-top:			1.5em;				
+			}
+
+			#footer-subscribe input[type=submit]{
+				width:					46% !important;
+				position:				absolute;
+				right:					0;
+				padding:				0.3em;
+				background-color:		#0048FF;
+				color:					white;
+			}
+			
+			#e2ma_signup_submit_button{
+				width:					46% !important;
+				right:					2em;
+				position:				absolute;
+				background-color:		#0048FF;
+				margin-top				1em;
+				color:					white !important;
+			}
+			
+<![endif]-->
+			
 			
 		</style>
 	</head>
