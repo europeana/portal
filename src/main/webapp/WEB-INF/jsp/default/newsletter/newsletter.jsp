@@ -64,8 +64,11 @@
 		top:				4em;
 	}			
 			
-			
-<!--[if IE 8]>
+		</style>
+		
+		
+		<!--[if IE 8]>
+		<style type="text/css">
 
 			#footer-subscribe.phone input[type=text],
 			#footer-subscribe.phone input[type=email],
@@ -99,11 +102,10 @@
 				margin-top				1em;
 				color:					white !important;
 			}
+		</style>
 			
 <![endif]-->
-			
-			
-		</style>
+		
 	</head>
 	<body>
 
