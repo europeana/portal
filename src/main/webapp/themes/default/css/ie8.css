@@ -142,14 +142,18 @@ table{
 	-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 	-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 	border-radius:			0.5em 0.5em 0.5em 0.5em;
+	
+	behavior: url(/portal2/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 }
 
-table tr:first-child{
+.menu-cell{
 	border:					none !important;
 	-moz-border-radius:		0;
 	-webkit-border-radius:	0;
 	border-radius:			0;
 	font-size:				1em;
+	
+	behavior: url(/portal2/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 }
 
 .menu-cell,
@@ -198,19 +202,37 @@ tr td.menu-cell:first-child, tr td.query-cell{
 	padding-left:			0.25em;
 	font-size:				1em;
 	
-	-moz-border-radius:		0 0.5em 0.5em 0;
-	-webkit-border-radius:	0 0.5em 0.5em 0;
-	border-radius:			0 0.5em 0.5em 0;
+	border-radius:			0 10px 10px 0;
 	width:					auto;
+	
+	xxbehavior: url(/portal2/themes/default/css/behaviour/PIE-1.0beta5/PIE.htc);
+		
+}
+
+.submit-cell{
+	border-radius:			0 10px 10px 0;
+	behavior: url(/portal2/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);	
+}
+
+#header-strip{
+
+	border-radius: 10px 10px 10px 10px;
+	xxzoom:1;
+	xxposition:relative;
+	
+	xxbehavior: url(/portal2/themes/default/css/behaviour/PIE-1.0beta5/PIE.htc);
+	xxxxbehavior: url(/portal2/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 }
 
 #search-menu {
 	padding-left:			0.5em;
 	padding-right:			0.5em;
-	background-color:		white;
+	xbackground-color:		white !important;
+	zbackground-color:		#000;
 	-moz-border-radius:		0.5em 0 0 0.5em;
 	-webkit-border-radius:	0.5em 0 0 0.5em;
 	border-radius:			0.5em 0 0 0.5em;
+	behavior: url(/portal2/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 }
 
 
@@ -228,9 +250,12 @@ tr td.menu-cell:first-child, tr td.query-cell{
 }
 
 		
-#header-strip span:not(.icon-mobilemenu){		/* structural fix for vertical align */
+#header-strip span{		/* structural fix for vertical align */
 	display:			table-cell !important;
 	vertical-align:		middle;
+}
+#header-strip .icon-mobilemenu{
+	display:	none!important;
 }
 
 #header-strip .white{
@@ -338,10 +363,10 @@ ul.menu > li{
 }
 
 .container>.row{
-	xbackground-color:	white;
+	background-color:	white;
 }
 .footer{
-	xbackground-color:	transparent;
+	background-color:	transparent;
 }
 
 
@@ -473,7 +498,7 @@ ul.featured-partner-links li{
 	right:				auto;
 	max-width:			45%;
 	bottom:				auto;
-	margin-bottom:		0;
+	margin-bottom:		0;	
 }
 
 	
