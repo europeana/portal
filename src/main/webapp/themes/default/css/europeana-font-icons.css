@@ -50,7 +50,6 @@
 
 
 
-
 .icon-logo:before {
 	content: "\61";
 }
@@ -314,4 +313,11 @@
 }
 .icon-euflag:before {
 	content: "\2b";
+}
+
+.icon-lockicon:before {
+	content: "\31";
+}
+.icon-euroicon:before {
+	content: "\32";
 }
