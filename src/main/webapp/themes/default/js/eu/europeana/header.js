@@ -130,7 +130,7 @@ eu.europeana.header = {
 						var searchType = $(ob).attr("class");
 						if(searchTerm.indexOf(searchType) == 0){
 							self.setLabel(searchType);
-							input.val(	searchTerm.substr( searchType.length, searchTerm.length) );
+							input.val( searchTerm.substr( searchType.length, searchTerm.length) );
 							self.setActive(searchType);
 						}
 					});
@@ -292,10 +292,14 @@ eu.europeana.header = {
 					
 				},
 				
-				select : function(e) {
-					
+				select : function(event, ui) {
+
 					switch ( this.id ) {
 						case 'query-input' :
+							
+							if(completionTranslations[ui.item.field]){
+								eu.europeana.header.searchMenu.setActive(completionTranslations[ui.item.field] + ":");
+							}
 							setTimeout( function() { jQuery('#query-search').submit(); }, 10 );
 							break;
 							
@@ -315,8 +319,6 @@ eu.europeana.header = {
 				if(!item.label){
 					item.label = item.term;
 				}
-				
-				//ul.css('padding-left', '-0.25em');
 				
 				item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 				item.label +=  " (" + item.frequency + ")";
@@ -370,7 +372,7 @@ eu.europeana.header = {
 
 	
 	handleSearchSubmit : function( e ) {
-		
+
 		var emptySearch = jQuery('#query-input').val().length < 1 || (eu.europeana.header.searchMenu.getActive() == jQuery('#query-input').val());
 		if ( emptySearch ) {
 			
