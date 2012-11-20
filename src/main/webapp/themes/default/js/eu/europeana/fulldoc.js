@@ -176,7 +176,12 @@ eu.europeana.fulldoc = {
 			'#explore-further',
 			{ callbacks : { opened : eu.europeana.fulldoc.tabFeedback }	}
 		);
-		eu.europeana.tabs.explore.init( eu.europeana.fulldoc.addCarousels );
+		
+		var helloAndy = function(){
+			//alert("hello Andy");
+		};
+		
+		eu.europeana.tabs.explore.init( helloAndy );
 	},
 	
 	openTab : function() {
@@ -467,7 +472,7 @@ eu.europeana.fulldoc = {
 	},
 	
 	initLightbox : function(url, gallery){
-			return;
+
 			var NavOb = function(){
 				
 				var nav = function(direction){
@@ -536,27 +541,35 @@ eu.europeana.fulldoc = {
 	
 	loadLightboxJS : function(gallery){
 		
+		alert("loadLightboxJS");
+		
+		
 		js.loader.loadScripts([{
 			name: 'jquery-tools',
 			file : 'jquery.tools.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/',
+			path : eu.europeana.vars.branding + '/js/jquery/min/',
 			dependencies : [ 'jquery' ]
 		}]);
-			
+
+		/*
 		js.loader.loadScripts([{
 			name : 'jwplayer',
 			file : 'jwplayer.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'					
 		}]);
+		*/
 		
 		if(!window.showingPhone()){
 			
 			js.loader.loadScripts([{
 				file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-				dependencies : [ 'jquery-tools', 'jwplayer'],
+//				dependencies : [ 'jquery-tools', 'jwplayer'],
+				dependencies : [ 'jquery-tools'],
+				
 				callback: function(){
 					
+					alert("loaded ligthbox");
 
 					if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 						$('#carousel-1-img-measure' ).append(
@@ -624,7 +637,7 @@ eu.europeana.fulldoc = {
 		}
 		*/
 		// end mock lightbox data
-
+alert("init top carousel");
 		jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarousel1Height() + "px");	// set height to max height that will be needed
 			
 		thisGallery = Galleria.run('#carousel-1', {
@@ -668,6 +681,7 @@ eu.europeana.fulldoc = {
 	
 				this.bind("image", function(e) {	// lightbox trigger
 					var gallery = this;
+			
 					eu.europeana.fulldoc.lightboxable = gallery._options.dataSource[e.index].lightboxable;
 					//var lightboxable = gallery._options.dataSource[e.index].lightboxable;
 					if(eu.europeana.fulldoc.lightboxable && eu.europeana.fulldoc.lightboxable.url.length>0){
@@ -705,42 +719,39 @@ eu.europeana.fulldoc = {
    			jQuery('#carousel-2').css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
    			
    			Galleria.run('#carousel-2', {
-					transition:		'fadeslide',
-					carousel:		true,
-					carouselSpeed:	1200,
-					carouselSteps:	1,
-					easing:			'galleriaOut',
-					imageCrop:		false,
-					imagePan:		false,
-					lightbox:		true,
-					responsive:		true,
-					dataSource:		carousel2Data,
-					thumbnails: 	true,
-					extend: function(e){
-						var doEllipsis = function(){
-							var ellipsisObjects = [];
-							jQuery('#carousel-2 .europeana-carousel-info').each(
-								function(i, ob){
-									ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-								}
-							);
-							$(window).bind('resize', function(){
-								if(eu.europeana.vars.suppresResize){
-									return;
-								}
-								for(var i=0; i<ellipsisObjects.length; i++ ){
-									ellipsisObjects[i].respond();
-								}
-							});
-						};
-						$(this).ready(function(e) {
-							setTimeout(doEllipsis, 1000);
+				transition:		'fadeslide',
+				carousel:		true,
+				carouselSpeed:	1200,
+				carouselSteps:	1,
+				easing:			'galleriaOut',
+				imageCrop:		false,
+				imagePan:		false,
+				lightbox:		true,
+				responsive:		true,
+				dataSource:		carousel2Data,
+				thumbnails: 	true,
+				extend: function(e){
+					var doEllipsis = function(){
+						var ellipsisObjects = [];
+						jQuery('#carousel-2 .europeana-carousel-info').each(
+							function(i, ob){
+								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
+							}
+						);
+						$(window).bind('resize', function(){
+							if(eu.europeana.vars.suppresResize){
+								return;
+							}
+							for(var i=0; i<ellipsisObjects.length; i++ ){
+								ellipsisObjects[i].respond();
+							}
 						});
-					}
-					
-					
+					};
+					$(this).ready(function(e) {
+						setTimeout(doEllipsis, 1000);
+					});
+				}
 	   		});
-	   		   				
 		}
 	},
 	
@@ -751,6 +762,10 @@ eu.europeana.fulldoc = {
 
 			
 		$("#carousel-1-img-measure img").imagesLoaded( function(){
+			
+			
+			//alert("carouselData.length = " + carouselData.length);
+			//carouselData[carouselData.length] = carouselData[carouselData.length-1];
 			
 			if(carouselData.length>1){ // we only need a carousel if there's more than one image to show
 				
