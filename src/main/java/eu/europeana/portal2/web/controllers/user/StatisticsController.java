@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.controllers.user;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -12,7 +13,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.httpclient.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +44,7 @@ public class StatisticsController {
 
 	@Resource private ApiLogger apiLogger;
 
-	private static final List<String> TYPES = Arrays.asList(new String[]{"date", "type", "user"});
+	private static final List<String> TYPES = Arrays.asList(new String[]{"month", "date", "type", "user"});
 
 	@RequestMapping("/admin/statistics.html")
 	public ModelAndView statisticsHandler(
@@ -111,6 +114,20 @@ public class StatisticsController {
 				stat.put(wskey, item.getInt("count"));
 			}
 			model.setUserStatistics(stat);
+
+		} else if (type.equals("month")) {
+			SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+			DateTime now = new DateTime();
+			Map<String, Integer> stat = new LinkedHashMap<String, Integer>();
+			DateInterval interval;
+			for (int i = 1, max = now.getMonthOfYear(); i <= max; i++) {
+				interval = DateUtils.getMonth(max - i);
+				int count = apiLogger.getCountByInterval(interval);
+				String key = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
+				stat.put(key, count);
+			}
+			model.setDateStatistics(stat);
+
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_STATISTICS);

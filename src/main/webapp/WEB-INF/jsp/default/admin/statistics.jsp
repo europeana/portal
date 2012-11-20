@@ -7,6 +7,9 @@
 <div class="container">
   <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
   <div class="row">
+    <c:url var="byMonth" value="/admin/statistics.html">
+      <c:param name="type">month</c:param>
+    </c:url>
     <c:url var="byDate" value="/admin/statistics.html">
       <c:param name="type">date</c:param>
     </c:url>
@@ -17,11 +20,12 @@
       <c:param name="type">type</c:param>
     </c:url>
 
-    <p>
-      <a href="${byDate}"><spring:message code="apistat_by_date_t" /></a>
-       - <a href="${byUser}"><spring:message code="apistat_by_user_t" /></a>
-       - <a href="${byType}"><spring:message code="apistat_by_type_t" /></a>
-    </p>
+    <ul>
+      <li><a href="${byMonth}"><spring:message code="apistat_by_month_t" /></a></li>
+      <li><a href="${byDate}"><spring:message code="apistat_by_date_t" /></a></li>
+      <li><a href="${byUser}"><spring:message code="apistat_by_user_t" /></a></li>
+      <li><a href="${byType}"><spring:message code="apistat_by_type_t" /></a></li>
+    </ul>
     <c:choose>
       <c:when test="${empty model.type || model.type == 'date'}">
         <h3><spring:message code="apistat_by_date_t" /></h3>
@@ -60,6 +64,15 @@
         <h3><spring:message code="apistat_by_user_t" /></h3>
         <table>
           <c:forEach items="${model.userStatistics}" var="stat">
+            <tr><td>${stat.key}</td><td>${stat.value}</td></tr>
+          </c:forEach>
+        </table>
+      </c:when>
+
+      <c:when test="${model.type == 'month'}">
+        <h3><spring:message code="apistat_by_month_t" /></h3>
+        <table>
+          <c:forEach items="${model.dateStatistics}" var="stat">
             <tr><td>${stat.key}</td><td>${stat.value}</td></tr>
           </c:forEach>
         </table>
