@@ -4,32 +4,27 @@
 <div id="search-results">
 	<c:choose>
 		<c:when test="${model.hasResults}">
-		
 			<c:set var="position_class" value="nav-top"/>
-
+			<%--
+			<%@ include file="/WEB-INF/jsp/default/search/content/results/doYouMean.jsp" %>
+			--%>
 
 			<div class="search-results-navigation notranslate">
 				<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/pagination.jsp" %>
 			</div>
-
-
 
 			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid.jsp" %>
 
 			<c:set var="position_class" value="nav-bottom"/>
-
-
-
 			<div class="search-results-navigation notranslate">
 				<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/pagination.jsp" %>
 			</div>
-
 
 		</c:when>
 		<c:otherwise>
 			<!-- model.hasResults: 0 -->
 			<c:choose>
-        		<c:when test="${model.briefBeanView != null}">
+				<c:when test="${model.briefBeanView != null}">
 					<h2><spring:message code="NoItemsFound_t" /></h2>
 				</c:when>
 				<c:otherwise>
