@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div id="items">
-	
+
 	<c:set var="results" value="${model.briefBeanView.briefBeans}" />
 
 	<c:forEach var="cell" items="${results}" varStatus="x"><div class="li"><!-- whitespace breaks layout - keep li elements together tight -->

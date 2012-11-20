@@ -43,7 +43,6 @@ import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.StringArrayUtils;
-import eu.europeana.portal2.querymodel.query.RightsOption;
 import eu.europeana.portal2.web.controllers.ObjectController;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
@@ -74,6 +73,8 @@ public class FullDocPage extends FullDocPreparation {
 	private String schemaOrgMappingFile;
 
 	private String[] allImages = null;
+
+	private List<Image> imagesToShow;
 
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
@@ -380,10 +381,38 @@ public class FullDocPage extends FullDocPreparation {
 		return getImageToShow("FULL_DOC");
 	}
 
+	public List<Image> getAllImages() {
+		if (imagesToShow == null) {
+			imagesToShow = new LinkedList<Image>();
+			String docType = getDocument().getEdmType();
+			String[] images = getImages();
+			for (String imageUrl : images) {
+				String imageType = docType;
+				if (imageUrl.toLowerCase().endsWith(".mp3")) {
+					imageType = DocType.SOUND.name();
+				} else if (imageUrl.toLowerCase().endsWith(".mpg")) {
+					imageType = DocType.VIDEO.name();
+				}
+				Image img = new Image(
+						createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
+						createImageUrl(imageUrl, imageType, "FULL_DOC"),
+						imageType
+				);
+				log.info("img " + img);
+				imagesToShow.add(img);
+			}
+		}
+		log.info("imagesToShow: " + imagesToShow);
+		log.info("imageList: " + imagesToShow.size());
+
+		return imagesToShow;
+	}
+
 	private List<String> getImageToShow(String size) {
 		List<String> imageList = new LinkedList<String>();
 		String docType = getDocument().getEdmType();
-		for (String image : getImages()) {
+		String[] images = getImages();
+		for (String image : images) {
 			String imageType = docType;
 			if (image.toLowerCase().endsWith(".mp3")) {
 				imageType = DocType.SOUND.name();
@@ -392,6 +421,8 @@ public class FullDocPage extends FullDocPreparation {
 			}
 			imageList.add(createImageUrl(image, imageType, size));
 		}
+		log.info("imageList: " + imageList.size());
+
 		return imageList;
 	}
 
@@ -414,7 +445,7 @@ public class FullDocPage extends FullDocPreparation {
 			for (String imageField : IMAGE_FIELDS) {
 				if (shortcut.get(imageField) != null && shortcut.get(imageField).length > 0) {
 					for (String image : shortcut.get(imageField)) {
-						if (!StringUtils.isBlank(image) && !isShownAt.contains(image)) {
+						if (!StringUtils.isBlank(image)) {// && !isShownAt.contains(image)) {
 							images.add(image);
 						}
 					}
@@ -422,6 +453,7 @@ public class FullDocPage extends FullDocPreparation {
 			}
 			allImages = images.toArray(new String[images.size()]);
 		}
+		log.info("all images: " + allImages.length + " " + StringUtils.join(allImages, ", "));
 
 		return allImages;
 	}
