@@ -236,6 +236,14 @@ h3 a span{
 
 
 @media only screen and ( min-width:48em ){
+	
+	#collapse-header-3 span,
+	#collapse-header-2 span,
+	#collapse-header-1 span{
+		cursor:	default;
+	}
+		
+	
 	ul.featured-partner-links{
 		margin-top:		2em;
 	}

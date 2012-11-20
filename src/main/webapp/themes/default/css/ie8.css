@@ -440,6 +440,13 @@ ul.featured-partner-links li{
 	padding-bottom:	0.5em !important;
 }
 
+#collapse-header-3 span,
+#collapse-header-2 span,
+#collapse-header-1 span{
+	cursor:	default;
+}
+
+
 
 
 /*	override galleria.europeanax.css			*/
