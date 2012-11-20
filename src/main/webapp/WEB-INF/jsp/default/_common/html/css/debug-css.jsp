@@ -149,10 +149,9 @@
 	<!--[if IE]><link rel="stylesheet" href="/${branding}/css/ie.css" /><![endif]-->
 	<!--[if lte IE 7]><link rel="stylesheet" href="/${branding}/css/ie7.css" /><![endif]-->
 	<!--[if lte IE 8]><link rel="stylesheet" href="/${branding}/css/ie8.css" /><![endif]-->
-	<!--[if lte IE 8]><script type="text/javascript src="/${branding}/css/behaviour/PIE-1.0beta5/PIE.js"></script><![endif]-->
 	
 	<noscript><link rel="stylesheet" href="/${branding}/css/noscript.css" /></noscript>
-	<noscript><link rel="stylesheet" href="/${branding}/css/noscript.css" /></noscript>
+
 	<!-- debug-css -->
 
 	<!--[if lt IE 9]>
