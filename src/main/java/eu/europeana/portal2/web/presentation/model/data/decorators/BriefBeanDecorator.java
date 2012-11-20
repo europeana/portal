@@ -36,6 +36,9 @@ import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class BriefBeanDecorator implements BriefBean {
 
+	final static private String PATH = "record";
+	final static private String EXTENTION = ".html";
+
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	protected BriefBean briefBean;
@@ -75,7 +78,14 @@ public class BriefBeanDecorator implements BriefBean {
 	}
 
 	public String getFullDocUrl() {
-		String url = "record/" + briefBean.getId().replace("#", "") + ".html";
+		String id = briefBean.getId();
+		if (!id.startsWith("/")) {
+			id = "/" + id;
+		}
+		if (id.indexOf("#") > -1) {
+			id = id.replace("#", "");
+		}
+		String url = PATH + id + EXTENTION;
 		UrlBuilder builder = new UrlBuilder(url);
 
 		builder.addParam("start", Integer.toString(getIndex()), true);
