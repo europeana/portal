@@ -10,4 +10,12 @@ public class SpellCheck {
 	public boolean correctlySpelled;
 
 	public List<LabelFrequency> suggestions = new ArrayList<LabelFrequency>();
+
+	public boolean isCorrectlySpelled() {
+		return correctlySpelled;
+	}
+
+	public List<LabelFrequency> getSuggestions() {
+		return suggestions;
+	}
 }
