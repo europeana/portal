@@ -63,4 +63,8 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
+    <mime-mapping>  
+        <extension>htc</extension>  
+        <mime-type>text/x-component</mime-type>  
+    </mime-mapping>  
 </web-app>
