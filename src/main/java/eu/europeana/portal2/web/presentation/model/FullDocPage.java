@@ -64,7 +64,10 @@ import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
 
-	private static final String[] IMAGE_FIELDS = new String[]{"EdmObject", "EdmIsShownBy", "WebResourceAbout", "EdmHasView"};
+	/**
+	 * 
+	 */
+	private static final String[] IMAGE_FIELDS = new String[]{"EdmObject", "EdmIsShownBy", "EdmHasView"}; // "WebResourceAbout", 
 
 	private RightsValue rightsOption = null;
 
