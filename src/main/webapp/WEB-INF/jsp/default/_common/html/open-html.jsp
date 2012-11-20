@@ -7,8 +7,8 @@
 		xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 		xmlns:europeana="http://www.europeana.eu/schemas/ese/"
 		xmlns:cc="http://creativecommons.org/ns#"
-		xmlns:marcrel="http://id.loc.gov/vocabulary/relators/"
-		xmlns:foaf="http://xmlns.com/foaf/0.1/"
+
+
 		xmlns:enrichment="http://www.europeana.eu/schemas/ese/enrichment/"
 		xmlns:dc="http://purl.org/dc/elements/1.1/"
 	</c:when>
