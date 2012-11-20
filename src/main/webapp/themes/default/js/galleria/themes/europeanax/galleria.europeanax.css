@@ -112,7 +112,7 @@
 }
 
 .europeana-carousel .europeana-carousel-info{
-	opacity:			1 !important;
+	xxxopacity:			1 !important;
 	background-color:	rgba(0, 0, 0, 0.698);
 	color:				#FFF;
 	position:			absolute;
@@ -129,6 +129,7 @@
 	width:				100%;
 	z-index:			1;
 	
+	behavior: url(/portal2/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);	
 }
 
 
