@@ -47,6 +47,7 @@ public class Injector {
 	public void injectProperties(PortalPageData model) {
 		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(config.getPortalGooglePlusPublisherId()));
 		model.setTheme(getTheme(request));
+		model.setDebug(config.getDebugMode());
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
 	}

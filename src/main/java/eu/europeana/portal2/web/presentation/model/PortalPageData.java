@@ -22,6 +22,8 @@ public abstract class PortalPageData extends PageData {
 
 	private boolean useCache = true;
 
+	private boolean debug = false;
+
 	public String getTheme() {
 		return theme;
 	}
@@ -63,5 +65,13 @@ public abstract class PortalPageData extends PageData {
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 }
