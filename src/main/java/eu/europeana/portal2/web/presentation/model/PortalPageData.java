@@ -24,6 +24,8 @@ public abstract class PortalPageData extends PageData {
 
 	private boolean debug = false;
 
+	private boolean minify = false;
+
 	public String getTheme() {
 		return theme;
 	}
@@ -73,5 +75,13 @@ public abstract class PortalPageData extends PageData {
 
 	public void setDebug(boolean debug) {
 		this.debug = debug;
+	}
+
+	public boolean isMinify() {
+		return minify;
+	}
+
+	public void setMinify(boolean minify) {
+		this.minify = minify;
 	}
 }

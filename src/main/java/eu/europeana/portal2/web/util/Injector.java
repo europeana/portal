@@ -48,6 +48,8 @@ public class Injector {
 		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(config.getPortalGooglePlusPublisherId()));
 		model.setTheme(getTheme(request));
 		model.setDebug(config.getDebugMode());
+		// TODO: change it later!!!!
+		model.setMinify(false);
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
 	}
