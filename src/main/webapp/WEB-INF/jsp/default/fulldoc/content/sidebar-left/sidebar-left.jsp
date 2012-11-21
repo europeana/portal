@@ -12,7 +12,7 @@
 
 	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
 		
-	<%-- hidden seo images --%>
+	<%-- hidden seo image --%>
 	
 	<div id="carousel-1-img-measure">
 	
@@ -38,61 +38,67 @@
 				data-type	= "${dataType}"
 				class		= "no-show"/>
 	</div>
+
+	<%--"dataType":		"${fn:toLowerCase(model.document.edmType)}"--%>
 		
 	<div id="carousel-1" class="europeana-bordered">
 		<script type="text/javascript">
 			var carouselData = [];
-			carouselData[0] = {
-				"image":		decodeURI("${thumbnail}").replace(/&amp;/g, '&'),
-				"title":		('${fn:escapeXml(model.objectTitle)}'),
-				"dataType":		"${fn:toLowerCase(dataType)}"
+			<c:if test="${!empty model.allImages}">
+			
+				<%-- single img (other than thumbnail) used to test if we can create a carousel --%>
+				<c:if test="${fn:length(model.allImages) > 1}">
+					var carouselTest = [
+						{"src": decodeURI("${model.allImages[0].full}").replace(/&amp;/g, '&')},
+						{"src": decodeURI("${model.allImages[1].full}").replace(/&amp;/g, '&')}
+					];
+				</c:if>
+			
+				<c:forEach items="${model.allImages}" var="image">
+					carouselData[carouselData.length] = {
+						"image":		decodeURI("${image.full}").replace(/&amp;/g, '&'),
+						"title":		('${fn:escapeXml(model.objectTitle)}'),
+						"dataType":		"${fn:toLowerCase(dataType)}"
+					};
+					
+					<c:if test="${image.full != model.thumbnailUrl}">
+						carouselData[carouselData.length-1].lightboxable = {
+							"url" 	: "${image.full}",
+							"type"	: "${fn:toLowerCase(image.type)}"
+						}
+					</c:if>
+						
+<%-- double data to test carousel init--%>					
 				
-				/*
-				,"lightboxable": {
-					"url" 	: "http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg",
-					"type"	: "image"
-				}
-				*/
-			};
-				
-				<%--				
-			<c:if test="${!empty model.thumbnails && fn:length(model.thumbnails) > 0 }">
-				<c:forEach items="${model.thumbnails}" var="thumbnail">
-						carouselData[carouselData.length] = {
-							"image":		decodeURI("${thumbnail}").replace(/&amp;/g, '&'),
-							"title":		('${fn:escapeXml(model.objectTitle)}'),
-							"dataType":		"${fn:toLowerCase(model.document.edmType)}"
-							
-							,"lightboxable": {
-								"url" 	: "http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg",
-								"type"	: "image"
-							}
-							
-						};
+<%--					
+var carouselTest = [
+					{"src": decodeURI("${model.allImages[0].full}").replace(/&amp;/g, '&')},
+					{"src": decodeURI("${model.allImages[1].full}").replace(/&amp;/g, '&')}
+				];
+						
+carouselData[carouselData.length] = {
+	"image":		decodeURI("${image.full}").replace(/&amp;/g, '&'),
+	"title":		('${fn:escapeXml(model.objectTitle)}'),
+	"dataType":		"${fn:toLowerCase(dataType)}"
+	
+};
+
+<c:if test="${image.full != model.thumbnailUrl}">
+	carouselData[carouselData.length-1].lightboxable = {
+		"url" 	: "${image.full}",
+		"type"	: "${fn:toLowerCase(image.type)}"
+	}
+	
+</c:if>
+	--%>
+
 				</c:forEach>
 			</c:if>
-				--%>
-			
-					
-			<c:if test="${!empty model.fullImages && fn:length(model.fullImages) > 0 }">
-			
-				//alert("we have full images");
-				
-				carouselData[0].lightboxable = {
-						"url" 	: "${model.fullImages[0]}",
-						"type"	: "image"						
-				};
-			</c:if>
-			
-			/*
-			carouselData[1] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
-			carouselData[2] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
-			carouselData[3] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
-			carouselData[4] = {"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC","title":"Stadsvy"},{"image":"http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fmedia1.vgregion.se%2Fvastarvet%2FVGM%2FFotobilder%2FBilder+3%2F18%2F1M16_B145142_572.jpg&size=FULL_DOC?x=y","title":"StadsvyXXX"};
-			*/
-			
+	
 		</script>
 	</div>
+
+		
 		
 	<div class="original-context">
 	
@@ -209,9 +215,11 @@
 		</c:choose>
 	
 		<%-- Format labels --%>
-		<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
-			<span class="action-title">${switchlabelTitle}</span>
-		</a>
+		<c:if test="${model.debug}">		
+			<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
+				<span class="action-title">${switchlabelTitle}</span>
+			</a>
+		</c:if>
 			
 		<span class="stretch"></span>
 			
