@@ -112,10 +112,16 @@ public class ChangePasswordController {
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_FAILURE);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
 		}
+
 		// token is validated in handleRequestInternal
-		Token token = tokenService.findByID(model.getToken()); 
+		Token token = tokenService.findByID(model.getToken());
+		if (token == null) {
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
+			throw new RuntimeException("Expected to find token.");
+		}
+
 		// don't use email from the form. use token.
-		User user = userService.findByEmail(token.getEmail()); 
+		User user = userService.findByEmail(token.getEmail());
 		if (user == null) {
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find user for " + token.getEmail());
