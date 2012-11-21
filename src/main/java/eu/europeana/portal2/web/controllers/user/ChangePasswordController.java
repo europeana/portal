@@ -120,7 +120,7 @@ public class ChangePasswordController {
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find user for " + token.getEmail());
 		}
-		user.setPassword(model.getPassword());
+
 		// remove token. it can not be used any more.
 		tokenService.remove(token);
 		// now update the user

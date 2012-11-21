@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.db.service.TokenService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -132,6 +133,7 @@ public class LoginPageController {
 	}
 
 	private boolean emailExists(String email) {
-		return userService.findByEmail(email) != null;
+		User user = userService.findByEmail(email);
+		return (user != null);
 	}
 }
