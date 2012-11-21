@@ -5,65 +5,62 @@ eu.europeana.fulldoc = {
 	// provides priority order for which tab to open when no hash is given
 	// provides a list of accepted hash values for validation
 	tab_priority : [ '#related-items','#similar-content','#map-view' ],
-
+	
 	more_icon_class : "icon-arrow-6-right",
-
+	
 	less_icon_class : "icon-arrow-7-right",
 
 	init : function() {
 
 		this.loadComponents();
 		this.addAutoTagHandler();
-
+		
 		jQuery('#item-save-tag').bind('submit', this.handleSaveTagSubmit );
 		jQuery('#item-save').bind('click', this.handleSaveItemClick );
 		jQuery('#item-embed').bind('click', this.handleEmbedClick );
-
+		
 		jQuery('#urlRefIsShownBy').bind('click', this.handleRedirectIsShownByClick );
-
+		
 		jQuery('#urlRefIsShownAt').bind('click', this.handleRedirectIsShownAtClick );
-
+		
 		jQuery('#urlRefIsShownByImg').bind('click', this.handleRedirectIsShownByImgClick );
-
+		
 		jQuery('#urlRefIsShownAtImg').bind('click', this.handleRedirectIsShownAtImgClick );
-
+		
 		jQuery('#urlRefIsShownByPlay').bind('click', this.handleRedirectIsShownByPlayClick );
-
+		
 		jQuery('#lightbox_href').bind('click', this.handleRedirectIsShownByImgClick );
 	},
 
+	
 	loadComponents : function() {
-
+		
 		var self = eu.europeana.fulldoc;
-
+		
 		// dependency group - external search services
+			
 		js.loader.loadScripts([{
 			name : 'external-search-services',
 			file : 'external-search-services' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			callback : function() { eu.europeana.ess.init(); }
 		}]);
-
+		
+		
 		// dependency group - embed click functionality
-
+		
 		js.loader.loadScripts([{
 			file: 'window-open' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/js/' + js.min_directory
-		}]);
+		}]);		
+
 
 		// dependency group - carousel, tabs and truncate content functionality (+citation)
-
-		js.loader.loadScripts([{
-			name : 'carousel',
-			file : 'carousel' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory
-		}]);
 
 		js.loader.loadScripts([{
 			name : 'tabs',
 			file : 'tabs' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory,
-			dependencies : [ 'carousel' ],
 			callback : function() {self.addTabs();}
 		}]);
 
@@ -97,7 +94,7 @@ eu.europeana.fulldoc = {
 			file: 'translation-services' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			callback : function() {eu.europeana.translation_services.init(
-
+			
 				// Andy: this callback within a callback expands the link to the service and triggers the loading of the microsoft translate scripts
 				// comment out this line to save 300 - 385 milliseconds of initial load time
 				// leave this line in place to have the translator automatically opened 
@@ -115,16 +112,23 @@ eu.europeana.fulldoc = {
 				}
 			);}
 		}]);
-
+		
 		js.loader.loadScripts([{
 			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			callback : function() {
-				self.initCarousels();
+				
+				
+				var x = function(){
+					self.initCarousels();	
+				};
+				setTimeout(x, 4000);//, 'x');
+				
 			}
 		}]);
 	},
 
+	
 	handleRedirectIsShownByClick: function ( e ) {
 		com.google.analytics.europeanaEventTrack('IsShownBy', 'Europeana Redirects');
 	},
@@ -132,62 +136,56 @@ eu.europeana.fulldoc = {
 	handleRedirectIsShownAtClick: function ( e ) {
 		com.google.analytics.europeanaEventTrack('IsShownAt', 'Europeana Redirects');
 	},
-
+	
 	handleRedirectIsShownByImgClick: function ( e ) {
 		com.google.analytics.europeanaEventTrack('IsShownBy Img', 'Europeana Redirects');
 	},
-
+	
 	handleRedirectIsShownAtImgClick: function ( e ) {
 		com.google.analytics.europeanaEventTrack('IsShownAt Img', 'Europeana Redirects');
 	},
-
+	
 	handleRedirectIsShownByPlayClick: function ( e ) {
 		com.google.analytics.europeanaEventTrack('IsShownBy Play', 'Europeana Redirects');
 	},
-
+	
 	handleEmbedClick : function ( e ) {
 		e.preventDefault();
-
+		
 		js.open.openWindow({
 			url : jQuery(this).attr('href'),
 			specs : {
 				width : 960,
-				height : 600,
+				height : 600,				
 				left : ( window.screen.width - 960 ) / 2,
 				top : ( window.screen.height - 600 ) / 2,
 				scrollbars:"yes"
 			}
 		});
-
+		
 	},
-
-
+	
+	
 	addTabs : function() {
 		if($('#explore-further').length==0){
 			return;
 		}
 		eu.europeana.tabs = {};
 		eu.europeana.tabs.explore = new com.gmtplusone.tabs(
-			'#explore-further',
-			{ callbacks : { opened : eu.europeana.fulldoc.tabFeedback }	}
+			'#explore-further'
 		);
-
-		var helloAndy = function(){
-			//alert("hello Andy");
-		};
-
-		eu.europeana.tabs.explore.init( helloAndy );
+		eu.europeana.tabs.explore.init();
 	},
-
+	
 	openTab : function() {
 		if(typeof eu.europeana.tabs == "undefined"){
 			return;
 		}
-
+		
 		var	tab_priority = eu.europeana.fulldoc.tab_priority,
 			tab_to_open = '',
 			menu_ids = eu.europeana.tabs.explore.options.menu_ids,
-			hash = window.location.hash,
+			hash = window.location.hash,	
 			priority_found = false,
 			i,
 			ii = menu_ids.length,
@@ -340,40 +338,40 @@ eu.europeana.fulldoc = {
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 
 	},
-
-
+	
+	
 	addAutoTagHandler : function() {
-
+		
 		var self = this;
-
+		
 		jQuery('#fields-enrichment h3 a, #fields-enrichment h4 a').each(function( key, value ) {
-
+			
 			jQuery(value).bind('click', self.handleAutoTagClick );
 			jQuery(value).addClass(eu.europeana.fulldoc.more_icon_class);
 		});
-
+		
 	},
-
+	
 	handleAutoTagClick : function( e ) {
-
+		
 		e.preventDefault();
 		var $elm = jQuery(this);
-
+		
 		$elm.parent().next().slideToggle();
 		//$elm = $elm.find('.icon');
-
+		
 		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {
-
+			
 			$elm.removeClass(eu.europeana.fulldoc.more_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.less_icon_class);
 		} else {
-
+			
 			$elm.removeClass(eu.europeana.fulldoc.less_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.more_icon_class);
 		}
-
+		
 	},
-
+	
 	addThis : function() {
 		var url = jQuery('head link[rel="canonical"]').attr('href'),
 			title = jQuery('head title').html(),
@@ -385,10 +383,10 @@ eu.europeana.fulldoc = {
 				data_ga_social : true,
 				data_track_clickback: true,
 				ui_use_css : true});
-
+		
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes
-
+		
 		var addThisHtml = com.addthis.getToolboxHtml_ANDY({
 			html_class : '',
 			url : url,
@@ -398,23 +396,23 @@ eu.europeana.fulldoc = {
 				compact : {}
 			},
 			link_html : $('#shares-link').html()
-
+		
 		});
 
 		jQuery('#shares-link').html(
 			addThisHtml
 		);
-
-
+		
+		
 		jQuery('#shares-link').hide();
 		com.addthis.init( null, true, false );
-
+		
 		setTimeout( function() {
 			jQuery('#shares-link').fadeIn(function(){
 				$(this).css("display", "inline-block");
 			}); },
 			600 );
-
+		
 		/*
 
 		jQuery('#lightbox-addthis').append(
@@ -433,12 +431,12 @@ eu.europeana.fulldoc = {
 				})
 		);
 		 */
-
+		
 	},
-
+	
 	showLightboxTrigger : function(show, gallery){
 		if(show){
-
+			
 			var marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
 			$('.lb-trigger').css("margin-left", marginTrigger + "px");
 			
@@ -468,73 +466,66 @@ eu.europeana.fulldoc = {
 	
 	initLightbox : function(url, gallery){
 
-			var NavOb = function(){
+		var NavOb = function(){
+			var nav = function(direction){
+				var currentUrl = $("#lightbox_image").attr("src");
+				var submodel = [];
+				var submodelActive = 0;
 				
-				var nav = function(direction){
-					var currentUrl = $("#lightbox_image").attr("src");
-					var submodel = [];
-					var submodelActive = 0;
-					
-					for(var i=0; i<carouselData.length; i++){
-						if(carouselData[i].lightboxable){
-							if(carouselData[i].lightboxable.url == currentUrl){
-								submodelActive = submodel.length;
-							}
-							submodel[submodel.length] = carouselData[i].lightboxable;
+				for(var i=0; i<carouselData.length; i++){
+					if(carouselData[i].lightboxable){
+						if(carouselData[i].lightboxable.url == currentUrl){
+							submodelActive = submodel.length;
+							console.log("active for lightbox: " + i);
 						}
+						submodel[submodel.length] = carouselData[i].lightboxable;
 					}
-					
-					var newActive = submodelActive + direction;
-					if(newActive<0){
-						newActive = submodel.length -1;
-					}
-					else if(newActive >= submodel.length){
-						newActive = 0;
-					}
-					
-					$("#hidden_img").unbind( '.imagesLoaded' );
-					$("#hidden_img").remove();
-					$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
-						function(){
-							var zoomed = false;
-							if(  $("#zoomedImg").is(":visible")){
-								eu.europeana.lightbox.closeZoom();
-								zoomed = true;
-							}
-							$("#lightbox_image").attr("src", submodel[newActive].url);
-							eu.europeana.lightbox.layout();
-							if(zoomed){
-								eu.europeana.lightbox.zoomImg();
-							}
-						}
-					);
-				};
-				this.prev = function(){
-					nav(-1);
-				};
-				this.next = function(){
-					nav(1);
-				};
-			};
-			
-			var lightboxableCount = 0;
-			for(var i=0; i<carouselData.length; i++){
-				if(carouselData[i].lightboxable){
-					lightboxableCount++;
 				}
-			}
-			//alert(carouselData.length + "   " + lightboxableCount);
-			
-			if(typeof (eu.europeana.lightbox) != "undefined"){
-				eu.europeana.lightbox.init(url, lightboxableCount > 1 ? new NavOb() : null);
-				eu.europeana.fulldoc.showLightboxTrigger(true, gallery);
-			}
+				
+				var newActive = submodelActive + direction;
+				if(newActive<0){
+					newActive = submodel.length -1;
+				}
+				else if(newActive >= submodel.length){
+					newActive = 0;						
+				}
+				
+				$("#hidden_img").unbind( '.imagesLoaded' );
+				$("#hidden_img").remove();
+				$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
+					function(){
+						var zoomed = false;
+						if(  $("#zoomedImg").is(":visible")){
+							eu.europeana.lightbox.closeZoom();
+							zoomed = true;
+						}
+						$("#lightbox_image").attr("src", submodel[newActive].url);
+						eu.europeana.lightbox.layout();
+						if(zoomed){
+							eu.europeana.lightbox.zoomImg();
+						}
+					}
+				);
+			};
+			this.prev = function(){
+				nav(-1);
+			};
+			this.next = function(){
+				nav(1);
+			};
+		};
+		
+		if(typeof (eu.europeana.lightbox) != "undefined"){
+			eu.europeana.lightbox.init(url, eu.europeana.fulldoc.getLightboxableCount() > 1 ? new NavOb() : null);
+			eu.europeana.fulldoc.showLightboxTrigger(true, gallery);
+		}
 	
 		$('#lightbox_image').attr('src', url);
 		
 	},
 	
 	loadLightboxJS : function(gallery){
+
 		js.loader.loadScripts([{
 			name: 'jquery-tools',
 			file : 'jquery.tools.min.js' + js.cache_helper,
@@ -542,25 +533,17 @@ eu.europeana.fulldoc = {
 			dependencies : [ 'jquery' ]
 		}]);
 
-		/*
-		js.loader.loadScripts([{
-			name : 'jwplayer',
-			file : 'jwplayer.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jwplayer/mediaplayer-5.8/'
-		}]);
-		*/
-
+		
 		if(!window.showingPhone()){
-
+			
 			js.loader.loadScripts([{
 				file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-//				dependencies : [ 'jquery-tools', 'jwplayer'],
 				dependencies : [ 'jquery-tools'],
 				
 				callback: function(){
-
-					if (typeof(eu.europeana.fulldoc.triggerPanel) == "undefined") {
+					
+					if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 						$('#carousel-1-img-measure' ).append(
 								'<div class="lb-trigger" >'
 								+ '<span rel="#lightbox" title="' + triggerLabels[eu.europeana.fulldoc.lightboxable.type]
@@ -571,63 +554,40 @@ eu.europeana.fulldoc = {
 						);
 						eu.europeana.fulldoc.triggerPanel = $('#carousel-1-img-measure' ).find('.lb-trigger');
 						eu.europeana.fulldoc.triggerPanel.hide();
-						//eu.europeana.fulldoc.loadLightboxJS(gallery);
 					}
-
+					
+					
 					eu.europeana.fulldoc.initLightbox(eu.europeana.fulldoc.lightboxable.url, gallery);
-
+					
 					jsLoaded = true;
 
 					$(window).on("resize", function(){
 						if(eu.europeana.lightbox.layout){
-							eu.europeana.lightbox.layout();
+							eu.europeana.lightbox.layout();												
 						}
 					});
-
+					
+					
 					$(window).on( "orientationchange",
 						function(){
-							if (eu.europeana.lightbox.layout) {
-								eu.europeana.lightbox.layout();
+							if(eu.europeana.lightbox.layout){
+								eu.europeana.lightbox.layout();												
 							}
 						},
 					false);
 
 				}
-			}]);
+			}]);									
 		}
 	},
 	
 	
 	initTopCarousel : function(){
-		
-		// mock some lightbox data
-		/*
-		var lightboxImages = [
-		    'http://godsofart.com/wp-content/uploads/2012/01/Star_Wars_Tales_by_UdonCrew.jpg',
-			'http://garytymon.files.wordpress.com/2011/05/starwars_art_vader-thumb-500x368-16957.jpg',
-			'http://0.tqn.com/d/animatedtv/1/0/T/x/fGuy_BlueHarvest_sc459_0034f.jpg',
-			'http://garytymon.files.wordpress.com/2011/05/02.jpg',
-			'http://3.bp.blogspot.com/-BwELLLI2HuQ/TjzWsDBc-EI/AAAAAAAAAeM/p5_LAtteZws/s1600/millenium-falcon.jpg',
-			'http://1.bp.blogspot.com/-Em5hSysjkFo/TsVKcZ-uHZI/AAAAAAAAETQ/YcRPI26OiLo/s1600/111711d.jpg'
-		];
 
-		var lightboxImgCount = 0;
-
-		for(var i=0; i<carouselData.length; i++){
-			if(i%2==0){
-				carouselData[i].lightboxable = {
-						type	: 'image',
-						url		: lightboxImages[lightboxImgCount]
-				};
-				lightboxImgCount ++;
-			}
-		}
-		*/
-		// end mock lightbox data
-alert("init top carousel");
 		jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarousel1Height() + "px");	// set height to max height that will be needed
 			
 		thisGallery = Galleria.run('#carousel-1', {
+			debug:				js.debug,
 			transition:			'fadeslide',
 			carousel:			true,
 			carouselSpeed:		1200,
@@ -646,7 +606,7 @@ alert("init top carousel");
 					var ellipsisObjects = [];
 					jQuery('#carousel-1 .europeana-carousel-info').each(
 						function(i, ob){
-							ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));
+							ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 						}
 					);
 					$(window).bind('resize', function(){
@@ -700,12 +660,14 @@ alert("init top carousel");
 	},
 	
 	initBottomCarousel : function(){
+
 		if(typeof carousel2Data != 'undefined'){
 			
 			// 150 too small for iphone: make min height 200
-   			jQuery('#carousel-2').css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
+   			$('#carousel-2').css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
    			
    			Galleria.run('#carousel-2', {
+   				debug:			js.debug,
 				transition:		'fadeslide',
 				carousel:		true,
 				carouselSpeed:	1200,
@@ -722,7 +684,7 @@ alert("init top carousel");
 						var ellipsisObjects = [];
 						jQuery('#carousel-2 .europeana-carousel-info').each(
 							function(i, ob){
-								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));
+								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 							}
 						);
 						$(window).bind('resize', function(){
@@ -741,44 +703,102 @@ alert("init top carousel");
 	   		});
 		}
 	},
-
-
-	initCarousels: function(){
-
-		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
-
-		$("#carousel-1-img-measure img").imagesLoaded( function(){
-			
-			
-			//alert("carouselData.length = " + carouselData.length);
-			//carouselData[carouselData.length] = carouselData[carouselData.length-1];
-			
-			if(carouselData.length>1){ // we only need a carousel if there's more than one image to show
-				
-				eu.europeana.fulldoc.getCarousel1Height = function(){
-					
-					var tallestImageH = $("#carousel-1-img-measure").height();
-					
-					var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
-					if( window.showingPhone() ){
-						galleriaOffsetY	= 120;
-					}
-					
-					return tallestImageH + galleriaOffsetY;
-				};
-				eu.europeana.fulldoc.initTopCarousel();
+	
+	getLightboxableCount:function(){
+		var lightboxableCount = 0;
+		for(var i=0; i<carouselData.length; i++){
+			if(carouselData[i].lightboxable){
+				lightboxableCount++;
 			}
-			else{
+		}
+		return lightboxableCount;
+	},
+	
+	sanitiseData: function(carouselData){
+
+		var newCarouselData = [];
+		$(carouselData).each(function(i, ob){
+			var disqualified = false;
+			
+			if(ob.image == "http://catalogue.nli.ie/Record/L_CAB_08689?loadLightbox=yes" ){
+				disqualified = true;
+			}
+			if(ob.lightboxable){
+				if(ob.lightboxable.url == "http://catalogue.nli.ie/Record/L_CAB_08689?loadLightbox=yes"){
+					disqualified = true;					
+				}
+				if(ob.image == ob.lightboxable.url){
+				//	disqualified = true;
+				}
+			}
+			if(!disqualified){
+				newCarouselData[newCarouselData.length] = ob;
+			}
+		});
+		return newCarouselData;
+	},
+
+	
+	initCarousels: function(){
+//		carouselData = eu.europeana.fulldoc.sanitiseData(carouselData);
+		
+		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
+			
+		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
+
+			// this is where we go when images don't load
+			var initNoCarousel = function(){
 				$("#carousel-1-img-measure img").removeClass("no-show");
 				$("#carousel-1-img-measure").css("position",	"relative");
 				$("#carousel-1-img-measure").css("text-align",	"center");
 				$("#additional-info").css("padding-top", "1em");
 				
-
 				if(carouselData[0].lightboxable){
 					eu.europeana.fulldoc.lightboxable = carouselData[0].lightboxable;
 					eu.europeana.fulldoc.loadLightboxJS();
-				}
+				}				
+			};
+			//alert($proper.length);
+			//initNoCarousel();return;
+			//alert(JSON.stringify(carouselData))
+			
+			console.log("carouselTest = " + (typeof carouselTest)  );
+			
+			if(typeof carouselTest == 'object'){ // we only need a carousel if there's more than one image to show
+				$(	'<img src="' + carouselTest[0].src + '" style="display:none">'
+						+
+					'<img src="' + carouselTest[1].src + '" style="display:none">')
+				.appendTo('body').imagesLoaded(
+					function($images, $proper, $broken){
+						
+						if($proper.length==carouselTest.length){
+							console.log("carousel test passed: src was " +  $($proper[0]).attr("src")   );
+							eu.europeana.fulldoc.getCarousel1Height = function(){
+								var tallestImageH = $("#carousel-1-img-measure").height();
+								var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
+								if( window.showingPhone() ){
+									galleriaOffsetY	= 120;	
+								}
+								return tallestImageH + galleriaOffsetY;
+							};
+							eu.europeana.fulldoc.initTopCarousel();
+						}
+						else{
+							var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
+							for(var i=0; i<$broken.length; i++){
+								msgFailed += "\n  " + $($broken[0]).attr("src")
+							}
+
+							console.log("carousel test failed: " + msgFailed);
+							initNoCarousel();
+						}
+					}
+				);
+			}
+			else{
+				console.log("no carousel test to run");
+				
+				initNoCarousel();
 			}
 		});
 		
@@ -789,18 +809,17 @@ alert("init top carousel");
 				$("#carousel-2-img-measure img").css("display", "inline-block");
   				var tallestImageH = $("#carousel-2-img-measure").height();
   				
-  				$("#carousel-2-img-measure img").css("display", "block");
+  				$("#carousel-2-img-measure img").css("display", "block");  				
   				var widestImageW = $("#carousel-2-img-measure").width();
   				
-  				console.log("getCarousel2Dimensions returns {w:" + widestImageW + ", h:" + tallestImageH + "}");
+  				//console.log("getCarousel2Dimensions returns {w:" + widestImageW + ", h:" + tallestImageH + "}");
   				
   				return {w:widestImageW, h:tallestImageH};
 			};
 			
 			eu.europeana.fulldoc.initBottomCarousel();
 		});
-		
-		
+
 	},
 	
 };
