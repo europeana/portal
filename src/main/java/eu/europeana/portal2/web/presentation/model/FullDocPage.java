@@ -394,8 +394,8 @@ public class FullDocPage extends FullDocPreparation {
 					imageType = DocType.VIDEO.name();
 				}
 				Image img = new Image(
-						createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
-						createImageUrl(imageUrl, imageType, "FULL_DOC"),
+						imageUrl, // createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
+						imageUrl, // createImageUrl(imageUrl, imageType, "FULL_DOC"),
 						imageType
 				);
 				log.info("img " + img);
