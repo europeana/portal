@@ -11,21 +11,6 @@
 	
 		<span id="nav-prev" class="icon-arrow-4"></span>
 		<span id="nav-next" class="icon-arrow-2"></span>
-		<span id="nav-prev-zoomed" class="icon-arrow-4"></span>
-		<span id="nav-next-zoomed" class="icon-arrow-2"></span>
-	
-		<!--	Note: the anchor style is used to size the media player (see eu.europeana.lightbox.playerOps for more info)
-				the same width attributes need copied into the div element to keep the lightbox centred in IE7.								 
-		-->
-		
-		<div class="playerDiv" style="display:block;width:0px;height:0px;">
-		
-			<%--a	href="/portal/.media?europeanaUri=${model.document.id}&recordId=${model.recordId}&lightboxRef=${lightboxRef}"
-				style="display:block;width:500px;height:350px;"
-				id="player"></a--%>
-				
-			<a href="${lightboxRef}" style="display:block; width:500px; height:350px;" id="player"></a>
-		</div>
 
 		<img id="lightbox_image" class="content-image" style="display:none" src=""/>
 		
