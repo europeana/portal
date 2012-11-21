@@ -42,7 +42,7 @@
 				responsive:		true,
 				idleMode:		true,
 				popupLinks:		true,
-				debug:			false
+				debug:			js.debug
 		});
 
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");
