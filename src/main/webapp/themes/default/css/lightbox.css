@@ -95,7 +95,7 @@ html, body{
 
 
 .info .info-open{
-	margin:			0px 10px 0px 10px;
+	margin:			1em;
 }
 
 .info .info-open .item-metadata{
@@ -261,8 +261,6 @@ div.lb-trigger span.icon-magplus{
 	text-shadow:	0 0 2px #000000;
 }
 
-#nav-next-zoomed,
-#nav-prev-zoomed,
 #nav-next,
 #nav-prev{
 	position:		absolute;
@@ -273,20 +271,13 @@ div.lb-trigger span.icon-magplus{
 	display:		none;
 }
 
-#nav-prev-zoomed,
 #nav-prev{
 	left:	0px;
 	right:	auto;
 }
 
-#nav-next-zoomed,
 #nav-next{
 	left:	auto;
 	right:	0px;
-}
-
-#nav-next-zoomed,
-#nav-prev-zoomed{
-	display:	none;
 }
 
