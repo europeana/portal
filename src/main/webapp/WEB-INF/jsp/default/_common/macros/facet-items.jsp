@@ -18,10 +18,10 @@
 
 	<li>
 		<h4>
-			<input type="checkbox" ${checkedValue} id="cb-${label}" name="cb-${label}"/>
+			<input type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
 			<a href="/${model.portalName}/${model.pageName}?query=${fn:replace(model.query, '"', '&quot;')}${fn:replace(facet_item.url, '"', '&quot;')}${rowsParam}"
 				title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-				<label for="cb-${label}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
+				<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 			</a>
 		</h4>
 	</li>
