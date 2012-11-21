@@ -271,6 +271,9 @@ public class ObjectController {
 		try {
 			String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
 			fullBean = searchService.findById(europeanaId);
+			if (fullBean == null) {
+				fullBean = searchService.resolve(europeanaId);
+			}
 		} catch (SolrTypeException e) {
 			log.severe("Solr Type Exception: " + e.getMessage());
 			e.printStackTrace();
