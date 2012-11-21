@@ -122,7 +122,6 @@ window.js = {
 if ( !window.console ) { window.console = js.empty_console; }
 js.console = js.empty_console;
 
-
 <c:if test="${model.debug}">
 	js.debug = true;
 	js.cache_helper = '?' + new Date().getTime();
@@ -134,7 +133,6 @@ js.console = js.empty_console;
 	js.min_directory = 'min/';
 </c:if>
 
-
 eu.europeana.vars.portal_name = '${model.portalName}';
 eu.europeana.vars.page_name = '${model.pageName}';
 eu.europeana.vars.branding = '/${branding}';
@@ -143,7 +141,6 @@ eu.europeana.vars.locale = '${model.locale}';
 eu.europeana.vars.msg.search_error = '${search_error}';
 eu.europeana.vars.addthis_pubid = '${search_addthis_pubid}';
 eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
-
 
 // url variables to check for timeline / map content 
 eu.europeana.vars.timeline = {};
@@ -154,7 +151,6 @@ eu.europeana.vars.timeline = {};
 <c:if test="${model[jsonUrlTimeline]}">
 	eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 </c:if>
-
 
 <c:choose>
 	<c:when test="${model.pageName == 'index.html'}">
@@ -181,7 +177,7 @@ eu.europeana.vars.timeline = {};
 
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
-		
+
 		eu.europeana.vars.galleria = {};
 		<c:choose>
 			<c:when test="${!empty model.minify && model.minify}">
@@ -191,7 +187,7 @@ eu.europeana.vars.timeline = {};
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:otherwise>
 		</c:choose>
-		
+
 		<c:if test="${model[document.positionAvailable]}">
 			eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
 		</c:if>
