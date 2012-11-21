@@ -118,7 +118,8 @@ public class SearchController {
 						.setRefinements(qf)
 						.setPageSize(rows)
 						.setStart(start-1) // Solr starts from 0
-						.setParameter("f.YEAR.facet.mincount", "1")
+						.setParameter("facet.mincount", "1")
+						// .setParameter("f.YEAR.facet.mincount", "1")
 						.setParameter("sort", sort)
 						.setProduceFacetUnion(true);
 		Class<? extends BriefBean> clazz = BriefBean.class;
@@ -130,6 +131,9 @@ public class SearchController {
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
+			for (BriefBean bean : briefBeanView.getBriefBeans()) {
+				log.info(bean.getId() + " " + (bean.getType() == null));
+			}
 		} catch (SolrTypeException e) {
 			log.severe("SolrTypeException: " + e.getMessage());
 			// return new ApiError("search.json", e.getMessage());
