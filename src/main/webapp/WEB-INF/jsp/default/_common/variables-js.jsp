@@ -163,25 +163,25 @@ eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 </c:if>
 
 <c:choose>
-<c:when test="${model.pageName == 'index.html'}">
-eu.europeana.vars.pinterest = {};
-eu.europeana.vars.pinterest.item = {};
-eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
-<c:if test="${!empty model[pinterestItem]}">
-eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
-eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
-eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
-</c:if>
-eu.europeana.vars.galleria = {};
-<c:choose>
-<c:when test="${!empty model.minify && model.minify}">
-eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
-</c:when>
-<c:otherwise>
-eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
-</c:otherwise>
-</c:choose>
-</c:when>
+	<c:when test="${model.pageName == 'index.html'}">
+		eu.europeana.vars.pinterest = {};
+		eu.europeana.vars.pinterest.item = {};
+		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
+		<c:if test="${!empty model[pinterestItem]}">
+		eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
+		eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
+		eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
+		</c:if>
+		eu.europeana.vars.galleria = {};
+		<c:choose>
+			<c:when test="${!empty model.minify && model.minify}">
+				eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
+			</c:when>
+			<c:otherwise>
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+			</c:otherwise>
+		</c:choose>
+	</c:when>
 
 <c:when test="${model.pageName == 'full-doc.html'}">
 eu.europeana.vars.msg.translate_with = '${fn:escapeXml(translate_with)}';

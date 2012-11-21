@@ -182,7 +182,15 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
 		
-		
+		eu.europeana.vars.galleria = {};
+		<c:choose>
+			<c:when test="${!empty model.minify && model.minify}">
+				eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
+			</c:when>
+			<c:otherwise>
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+			</c:otherwise>
+		</c:choose>
 		
 		<c:if test="${model[document.positionAvailable]}">
 			eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
