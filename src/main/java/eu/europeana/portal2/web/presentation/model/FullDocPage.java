@@ -75,6 +75,8 @@ public class FullDocPage extends FullDocPreparation {
 	private String[] allImages = null;
 
 	private List<Image> imagesToShow;
+	
+	private boolean schemaOrgMappingInitialized = false;
 
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
@@ -187,19 +189,19 @@ public class FullDocPage extends FullDocPreparation {
 
 		addMetaField(fields, Field.EUROPEANA_URI, document.getId());
 		addMetaField(fields, Field.EDM_COUNTRY, getDocument().getEdmCountry());
-		addMetaField(fields, Field.EUROPEANA_PROVIDER, shortcut.get("EdmProvider"));
-		addMetaField(fields, Field.EUROPEANA_COLLECTIONNAME, document.getEuropeanaCollectionName());
-		addMetaField(fields, Field.EUROPEANA_ISSHOWNAT, shortcut.get("EdmIsShownAt"));
-		addMetaField(fields, Field.EUROPEANA_ISSHOWNBY, shortcut.get("EdmIsShownBy"));
+		addMetaField(fields, Field.EDM_PROVIDER, shortcut.get("EdmProvider"));
+		addMetaField(fields, Field.EDM_COLLECTIONNAME, document.getEuropeanaCollectionName());
+		addMetaField(fields, Field.EDM_ISSHOWNAT, shortcut.get("EdmIsShownAt"));
+		addMetaField(fields, Field.EDM_ISSHOWNBY, shortcut.get("EdmIsShownBy"));
 		// addMetaField(fields, Field.EUROPEANA_OBJECT, document.getThumbnails());
-		addMetaField(fields, Field.EUROPEANA_OBJECT, shortcut.get("EdmObject"));
-		addMetaField(fields, Field.EUROPEANA_LANGUAGE, getDocument().getEdmLanguage());
+		addMetaField(fields, Field.EDM_OBJECT, shortcut.get("EdmObject"));
+		addMetaField(fields, Field.EDM_LANGUAGE, getDocument().getEdmLanguage());
 		// addMetaField(fields, Field.EUROPEANA_TYPE, document.getType().toString());
 		// addMetaField(fields, Field.EUROPEANA_USERTAG, document.getEdmUserTag());
 		// addMetaField(fields, Field.EUROPEANA_YEAR, getDocument().getEdmYear());
-		addMetaField(fields, Field.EUROPEANA_RIGHTS, shortcut.get("EdmRights"));
-		addMetaField(fields, Field.EUROPEANA_DATAPROVIDER, getDocument().getEdmDataProvider());
-		addMetaField(fields, Field.EUROPEANA_UGC, shortcut.get("EdmUGC"));
+		addMetaField(fields, Field.EDM_RIGHTS, shortcut.get("EdmRights"));
+		addMetaField(fields, Field.EDM_DATAPROVIDER, getDocument().getEdmDataProvider());
+		addMetaField(fields, Field.EDM_UGC, shortcut.get("EdmUGC"));
 
 		addMetaField(fields, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
 		addMetaField(fields, Field.DCTERMS_CONFORMSTO, shortcut.get("DctermsConformsTo"));
@@ -360,6 +362,7 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		// TODO: check isUseCache()
 		// if (isUseCache()) {
+		/*
 		boolean useCache = true;
 		if (useCache) {
 			UrlBuilder url = new UrlBuilder(getCacheUrl());
@@ -368,6 +371,7 @@ public class FullDocPage extends FullDocPreparation {
 			url.addParam("type", getDocument().getEdmType(), true);
 			return prepareFullDocUrl(url).toString();
 		}
+		*/
 		return thumbnail;
 	}
 
@@ -728,8 +732,11 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public Map<String, SchemaOrgElement> getSchemaOrgMapping() {
-		if (schemaOrgMappingFile != null && new File(schemaOrgMappingFile).exists()) {
-			SchemaOrgMapping.initialize(schemaOrgMappingFile);
+		if (!schemaOrgMappingInitialized) {
+			if (schemaOrgMappingFile != null && new File(schemaOrgMappingFile).exists()) {
+				SchemaOrgMapping.initialize(schemaOrgMappingFile);
+			}
+			schemaOrgMappingInitialized = true;
 		}
 		return SchemaOrgMapping.getMap();
 	}
