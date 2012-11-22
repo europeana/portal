@@ -39,14 +39,29 @@
 
 <c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
   <c:set var="item_id" value="" />
-  <c:if test='${"dc:description"  == data.fieldName}'><c:set var="item_id" value=' id="item-description" ' /></c:if>
-  <c:if test='${"dc:subject"    == data.fieldName}'><c:set var="item_id" value=' id="item-subject" ' /></c:if>
+  <c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id" value=' id="item-description" ' /></c:if>
+  <c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id" value=' id="item-subject" ' /></c:if>
 
   <c:set var="item_class" value=""/>
   <c:if test='${"dc:rights" == data.fieldName}'><c:set var="item_class" value=' item-moreless' /></c:if>
 
   <%-- If the content is UGC we skip the dc:source display --%>
   <c:if test="${!('dc:source' == data.fieldName && ugc)}">
+    <%-- Semantic attributes --%>
+    <c:set var="semanticAttributes" value="" />
+    <c:set var="semanticUrl" value="false" />
+    <c:if test="${model.schemaOrgMapping[data.fieldName] != null}">
+      <c:set var="schemaOrgMapping" value="${model.schemaOrgMapping[data.fieldName]}" />
+      <c:set var="schemaOrgElement" value="${schemaOrgMapping.element}" />
+      <c:set var="edmElement" value="${schemaOrgMapping.edmElement}" />
+      <c:set var="semanticAttributes">
+        ${"property=\""}${schemaOrgElement.elementName}${" "}${edmElement.fullQualifiedURI}${"\""}
+      </c:set>
+      <c:if test="${schemaOrgElement.qualifiedName == 'schema:url'}">
+        <c:set var="semanticUrl" value="false" />
+      </c:if>
+    </c:if>
+
     <<c:out value="${wrapper}"/> <c:out value="${item_id}" /> class="item-metadata${item_class}">
       <%-- field's label --%>
       <span class="bold notranslate"><spring:message code="${data.fieldLabel}" />:</span>
@@ -80,19 +95,19 @@
         <c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
 
         <c:choose>
-           <c:when test="${value.searchOn}">
-            <a href="${value.searchOn}" target="_top" ${translatable} rel="nofollow">${value.value}</a>${separator}
+          <c:when test="${value.searchOn}">
+            <a href="${value.searchOn}" target="_top" ${translatable} <c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
           </c:when>
           <c:when test="${value.url}">
-            <a href="${value.value}" target="_blank" ${translatable} rel="nofollow">${value.value}</a>${separator}
+            <a href="${value.value}" target="_blank" ${translatable} <c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
           </c:when>
           <c:otherwise>
-            <span ${translatable}>
+            <span ${translatable}<c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if><c:if test="${semanticUrl}">${" href=\""}${value.value}${"\""}</c:if>>
               <c:out value="${value.value}" />
               <c:if test="${value.value == '3D PDF'}">
                 <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
               </c:if>
-            </span><c:out value="${separator}" />
+            <c:out value="${separator}" />
           </c:otherwise>
         </c:choose>
         <c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
