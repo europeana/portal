@@ -106,6 +106,8 @@
 
 
 <script type="text/javascript">
+
+
 <!--
 window.eu = { europeana : { vars : { msg : { cite:{} }, item : {}, mapview : {} } } };
 window.js = {
@@ -188,6 +190,15 @@ eu.europeana.vars.timeline = {};
 			</c:otherwise>
 		</c:choose>
 
+		<%-- Translation data for lightbox triggers: map lightboxble type to message --%>
+		eu.europeana.vars.triggerLabels = {
+				'image'		:	'<spring:message code="view_t"		/>',
+				'play'		:	'<spring:message code="play_t"		/>',
+				'download'	:	'<spring:message code="download_t"	/>',
+				'read'		:	'<spring:message code="read_t"		/>'
+		};
+		
+		
 		<c:if test="${model[document.positionAvailable]}">
 			eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
 		</c:if>
