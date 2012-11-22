@@ -81,9 +81,9 @@ public class MetaDataFieldPresentation {
 
 		StringBuilder property = new StringBuilder();
 
-		if (field == Field.EUROPEANA_DATAPROVIDER) {
+		if (field == Field.EDM_DATAPROVIDER) {
 			property.append(getFieldName()).append(" ").append(MARCEL_DTC_PROPERTY);
-		} else if (field == Field.EUROPEANA_PROVIDER) {
+		} else if (field == Field.EDM_PROVIDER) {
 			property.append(getFieldName()).append(" ").append(MARCEL_DTC_PROPERTY);
 		} else if (field == Field.DC_CREATOR) {
 			property.append(getFieldName()).append(" ").append(DC_CREATOR_PROPERTY);
