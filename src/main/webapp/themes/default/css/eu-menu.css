@@ -17,7 +17,6 @@
 
 
 .eu-menu{
-	cursor:					pointer;
 	display:				inline-block;/* !important;*/
 	float:					none;
 	padding-left:			0.15em;
@@ -31,6 +30,7 @@
 .eu-menu a {
 	text-decoration:	none;
 	color:				#444444;
+	cursor:				pointer;
 }
 
 .eu-menu span{
@@ -72,9 +72,6 @@
 	z-index:	200;
 }
 
-.eu-menu .item a{
-	cursor:	pointer;
-}
 
 .eu-menu.active .item {		/* shown items */
 	display:			block !important;
