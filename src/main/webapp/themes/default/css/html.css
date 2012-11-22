@@ -46,7 +46,12 @@ h1, h2, h3, h4, h5, h6 {
 
 
 img { border: none; }
-		
+
+input[type="submit"]{
+	cursor:	pointer;
+}
+
+
 			
 /* links */
 a { text-decoration: none; color: #0075ff; outline: 0; }
