@@ -59,8 +59,8 @@ public abstract class FullDocPreparation extends FullDocData {
 
 			addField(fieldsLightbox, Field.DC_CREATOR, shortcut.get("DcCreator"));
 			addField(fieldsLightbox, Field.DC_RIGHTS, shortcut.get("EdmRights"));
-			addField(fieldsLightbox, Field.EUROPEANA_DATAPROVIDER, shortcut.get("DataProvider"));
-			addField(fieldsLightbox, Field.EUROPEANA_PROVIDER, document.getProvider(),
+			addField(fieldsLightbox, Field.EDM_DATAPROVIDER, shortcut.get("DataProvider"));
+			addField(fieldsLightbox, Field.EDM_PROVIDER, document.getProvider(),
 					Field.EDM_COUNTRY.getValues(document.getCountry()));
 		}
 		return fieldsLightbox;
@@ -291,8 +291,8 @@ public abstract class FullDocPreparation extends FullDocData {
 			addField(fields, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
 			addField(fields, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
 			addField(fields, Field.DC_SOURCE, shortcut.get("DcSource"));
-			addField(fields, Field.EUROPEANA_DATAPROVIDER, shortcut.get("DataProvider"));
-			addField(fields, Field.EUROPEANA_PROVIDER, shortcut.get("EdmProvider"));
+			addField(fields, Field.EDM_DATAPROVIDER, shortcut.get("DataProvider"));
+			addField(fields, Field.EDM_PROVIDER, shortcut.get("EdmProvider"));
 			addField(fields, Field.EDM_COUNTRY, Field.EDM_COUNTRY.getValues(shortcut.get("EdmCountry")));
 		}
 		return fields;
