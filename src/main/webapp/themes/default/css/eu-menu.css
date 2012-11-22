@@ -69,10 +69,11 @@
 	border:				1px solid #e4e4e4;
 	background-color:	#F5F5F5;
 	white-space:		nowrap;
-	cursor:				pointer;
-
-
 	z-index:	200;
+}
+
+.eu-menu .item a{
+	cursor:	pointer;
 }
 
 .eu-menu.active .item {		/* shown items */
