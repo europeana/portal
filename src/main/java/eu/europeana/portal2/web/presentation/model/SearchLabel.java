@@ -32,7 +32,7 @@ public class SearchLabel {
 			// put("completeness", "?????");
 			put("LANGUAGE", "ByLanguage_t");
 			put("PROVIDER", "ByProvider_t");
-			put("DATA_PROVIDER", "ByProvider_t");
+			put("DATA_PROVIDER", "ByDataProvider_t");
 			put("RIGHTS", "byCopyright_t");
 			put("TYPE", "ByMediatype_t");
 			put("YEAR", "Bydate_t");
