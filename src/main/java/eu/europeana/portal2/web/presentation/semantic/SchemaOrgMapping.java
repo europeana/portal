@@ -18,7 +18,7 @@ public class SchemaOrgMapping {
 	private static Map<String, SchemaOrgElement> edm2schemaOrg;
 
 	private static void initialize() {
-		edm2schemaOrg = new HashMap<String, SchemaOrgElement>(){
+		edm2schemaOrg = new HashMap<String, SchemaOrgElement>() {
 			private static final long serialVersionUID = 1L; {
 			put("edm:country", new SchemaOrgElement("schema:addressCountry", new String[]{"schema:Thing"}));
 			put("edm:dataProvider", new SchemaOrgElement("schema:provider", new String[]{"schema:CreativeWork"}));
@@ -121,7 +121,7 @@ public class SchemaOrgMapping {
 					String[] schemaParts = schema.split("/", 2);
 					String schemaParent = schemaParts[0];
 					String schemaElementName = schemaParts[1];
-					schemaElement = new SchemaOrgElement(schemaElementName, new String[]{schemaParent});
+					schemaElement = new SchemaOrgElement(schemaElementName, new String[]{schemaParent}, edmElementName);
 				}
 				mapping.put(edmElementName, schemaElement);
 			}
