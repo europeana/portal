@@ -183,7 +183,7 @@ public class SearchPage extends SearchPreparation {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getLastPageUrl() throws UnsupportedEncodingException {
-		return createNavigationUrl(briefBeanView.getPagination().getLastPage());
+		return createNavigationUrl(briefBeanView.getPagination().getLastPage() + 1);
 	}
 
 	/**
