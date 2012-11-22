@@ -22,25 +22,16 @@
 			</div>
 			
 		</div>
-		
+
+			
 		<c:if test="${!empty model.moreLikeThis}">
 
 			<div class="row">
 				<div class="twelve columns">
 
+					<%-- data for carousel --%>
 					<script type="text/javascript">
-					
-						<%-- Translation data for lightbox triggers: map lightboxble type to message 
-						
-						--%>
-						var triggerLabels = {
-								'image'		:	'<spring:message code="view_t"		/>',
-								'play'		:	'<spring:message code="play_t"		/>',	// todo - base the label on the lightboxable type
-								'download'	:	'<spring:message code="download_t"	/>',	// todo
-								'read'		:	'<spring:message code="read_t"		/>'		// todo
-						};
-					
-						<%-- data for carousel --%>
+
 						var carousel2Data = [];
 						<c:forEach items="${model.moreLikeThis}" var="doc">
 							<c:set var="objectTitle">${fn:join(doc.title, ' ')}</c:set>
