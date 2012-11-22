@@ -496,9 +496,14 @@ ul.featured-partner-links li{
 	right:				auto;
 	max-width:			45%;
 	bottom:				auto;
-	margin-bottom:		0;	
+	margin-bottom:		0;
+
+	filter:				progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);	
 }
 
+.europeana-carousel-info{
+	filter:				progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);		
+}
 	
 .galleria-info {
 	top:				1em;

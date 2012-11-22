@@ -128,8 +128,6 @@
 	max-height:			2.6em;
 	width:				100%;
 	z-index:			1;
-	
-	behavior: url(/portal2/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);	
 }
 
 
@@ -379,10 +377,6 @@
     background-color: #111;
 }
 
-.europeana-carousel .touch .galleria-thumb-nav-left:active,
-.europeana-carousel .touch .galleria-thumb-nav-right:active {
-    xxxxxbackground-color: green;
-}
 
 .notouch .galleria-thumbnails-container .disabled:hover {
     opacity: .2;
@@ -399,7 +393,6 @@
 
 .galleria-info {
     position:			absolute;
-    background-color:	#111;
     background-color:	rgba(0, 0, 0, 0.5);
 
     z-index:			1;
