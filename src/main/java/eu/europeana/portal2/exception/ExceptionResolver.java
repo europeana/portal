@@ -38,6 +38,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		}
 
 		String stackTrace = ExceptionUtils.getFullStackTrace(exception);
+		log.severe(stackTrace);
 
 		switch (problem.getAction()) {
 		case MAIL :
