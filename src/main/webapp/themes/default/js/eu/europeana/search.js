@@ -6,6 +6,13 @@ eu.europeana.search = {
 	init : function() {
 		
 		this.loadComponents();
+
+		// fix firefox' habit of creating invalid form states by remembering old checked values on refresh & page back 
+		$('#filter-search li ul li input:checkbox').each(function(i, ob){
+			if( ob.checked && !ob.getAttribute("checked")){
+				ob.checked = false;
+			}
+		});
 		
 		// make facet sections collapsible
 		$("#filter-search li").not(".ugc-li").Collapsible(
