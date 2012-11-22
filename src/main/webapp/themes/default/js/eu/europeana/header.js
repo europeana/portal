@@ -45,6 +45,7 @@ eu.europeana.header = {
 		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
 		
+		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
 	},
 	
 	initResponsiveUtility : function(){
