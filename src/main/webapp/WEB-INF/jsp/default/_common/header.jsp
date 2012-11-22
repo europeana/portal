@@ -25,6 +25,13 @@
 			completionTranslations['Time/Period']	= "<spring:message code='FieldedSearchWhen_t' />";
 			completionTranslations['Subject']		= "<spring:message code='FieldedSearchWhat_t' />";
 			completionTranslations['Creator']		= "<spring:message code='FieldedSearchWho_t' />";			
+			
+			var completionClasses = {};
+			completionClasses['Title']			= "title:";
+			completionClasses['Place']			= "where:";
+			completionClasses['Time/Period']	= "when:";
+			completionClasses['Subject']		= "what:";
+			completionClasses['Creator']		= "who:";
 		</script>
 		
 		<%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>

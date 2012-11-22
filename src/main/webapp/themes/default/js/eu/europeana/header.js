@@ -296,9 +296,9 @@ eu.europeana.header = {
 
 					switch ( this.id ) {
 						case 'query-input' :
-							
-							if(completionTranslations[ui.item.field]){
-								eu.europeana.header.searchMenu.setActive(completionTranslations[ui.item.field] + ":");
+
+							if(completionClasses[ui.item.field]){
+								eu.europeana.header.searchMenu.setActive(completionClasses[ui.item.field]);
 							}
 							setTimeout( function() { jQuery('#query-search').submit(); }, 10 );
 							break;
