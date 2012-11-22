@@ -546,9 +546,12 @@ eu.europeana.fulldoc = {
 					if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 						$('#carousel-1-img-measure' ).append(
 								'<div class="lb-trigger" >'
-								+ '<span rel="#lightbox" title="' + triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+								+ '<span rel="#lightbox" title="' + eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
 								+ '" class="icon-magplus">'
-								+ triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+
+//								+ eu.europeana.fulldoc.lightboxable.type
+//								+ ' -> label '
+								+ eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
 								+ '</span>'
 								+ '</div>'
 						);
@@ -635,9 +638,12 @@ eu.europeana.fulldoc = {
 						if(!eu.europeana.fulldoc.triggerPanel){
 							this.$( 'container' ).find('.galleria-images').after(
 									'<div class="lb-trigger" >'
-										+ '<span rel="#lightbox" title="' + triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+										+ '<span rel="#lightbox" title="' + eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
 													+ '" class="icon-magplus">'
-													+ triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+													
+//													+ ' A-N-D-Y '
+													
+													+ eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
 										+ '</span>'
 									+ '</div>'
 							);
@@ -754,6 +760,9 @@ eu.europeana.fulldoc = {
 				$("#additional-info").css("padding-top", "1em");
 				
 				if(carouselData[0].lightboxable){
+					
+//					alert("no carousel, set the lightboxable label to map entry " + JSON.stringify(carouselData[0].lightboxable) );
+					
 					eu.europeana.fulldoc.lightboxable = carouselData[0].lightboxable;
 					eu.europeana.fulldoc.loadLightboxJS();
 				}				

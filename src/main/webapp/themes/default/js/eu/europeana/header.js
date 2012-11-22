@@ -25,17 +25,13 @@ eu.europeana.header = {
 		$("#query-search>table").fadeIn(600, function(){
 			jQuery("#query-input").focus();
 		});
-		
+
 		this.initResponsiveUtility();
 		this.addQueryFocus();
 		this.addLanguageChangeHandler();
 		this.addRefineSearchClickHandler();		
 		this.addAjaxMethods();
 		this.addMenuFocusTriggers();
-		
-		//this.enableMapLink();
-		//this.enableTimelineLink();
-		
 		this.setupResultSize();
 		this.setupSearchMenu();
 		this.setupLanguageMenu();
