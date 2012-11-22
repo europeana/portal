@@ -10,7 +10,7 @@
 
 <div id="additional-info" class="sidebar" about="${about}">
 
-	<h1 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h1>
+	<h2 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h2>
 		
 	<%-- hidden seo image --%>
 	

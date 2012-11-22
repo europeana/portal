@@ -18,7 +18,7 @@
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
 		</div>			
 	
-		<h1 class="hide-on-phones">${model.objectTitle}</h1>
+		<h2 class="hide-on-phones">${model.objectTitle}</h2>
 		
 		
 		<c:forEach items="${model.document.dcTitle}" var="title">
