@@ -106,7 +106,8 @@ a.action-link:hover{
 .sidebar-right li{
 	list-style-type:	none;
 	padding-left:		0;
-	margin:				0;	
+	margin:				0;
+	word-break:			break-word;		
 }
 
 
