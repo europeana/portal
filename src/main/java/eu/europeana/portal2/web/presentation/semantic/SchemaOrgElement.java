@@ -9,6 +9,7 @@ public class SchemaOrgElement {
 
 	private Element element;
 	private List<Element> parents;
+	private Element edmElement;
 
 	public SchemaOrgElement(String element) {
 		this(element, new String[]{});
@@ -22,6 +23,11 @@ public class SchemaOrgElement {
 				this.parents.add(NamespaceResolver.createElement(parent));
 			}
 		}
+	}
+
+	public SchemaOrgElement(String element, String[] parents, String edmElement) {
+		this(element, parents);
+		this.edmElement = NamespaceResolver.createElement(edmElement);
 	}
 
 	public Element getElement() {
@@ -53,6 +59,14 @@ public class SchemaOrgElement {
 		this.parents = parents;
 	}
 
+	public Element getEdmElement() {
+		return edmElement;
+	}
+
+	public void setEdmElement(Element edmElement) {
+		this.edmElement = edmElement;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,6 +94,11 @@ public class SchemaOrgElement {
 			if (other.parents != null)
 				return false;
 		} else if (!parents.equals(other.parents))
+			return false;
+		if (edmElement == null) {
+			if (other.edmElement != null)
+				return false;
+		} else if (!edmElement.equals(other.edmElement))
 			return false;
 		return true;
 	}
