@@ -7,12 +7,12 @@
 }
 
 .footer, .footer-bottom-links{
-	background-image:	url('../images/dust.png');
+	background-image:	url('/portal2/themes/default/images/dust.png');
 }
 
 @media all and (-webkit-min-device-pixel-ratio: 2) {
 	.footer{
-		background-image:	url('../images/dust_@2X.png');
+		background-image:	url('/portal2/themes/default/images/dust_@2X.png');
 	}
 }
 

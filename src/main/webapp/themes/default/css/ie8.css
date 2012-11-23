@@ -100,7 +100,7 @@ body{
 /*	override header.css							*/
 
 .responsive-logo{
-	background-image:	url('../images/europeana-logo-2.png');
+	background-image:	url('/portal2/themes/default/images/europeana-logo-2.png');
 	width:				206px;
 	height:				120px;
 	margin-top:			0;
