@@ -47,8 +47,6 @@
 
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");
 		
-		
-		
 		var carouselInitialSuffix	= '_1';
 		var carouselSelector		= '#carousel-1 img';
 		var carosuelEuResponsive = new euResponsive({
@@ -59,16 +57,11 @@
 		});
 		
 		var src = $($(carouselSelector)[0]).attr("src");
-		
-		//alert("src = " +  src + ", index of initial suffix =   " + src.indexOf( carouselInitialSuffix + "." ) );
-		
-		// we're bigger than a mobile: update all image urls to the full size
 		if( src.indexOf( carouselInitialSuffix + "." ) == -1 ){
-			// so what size are we using???
-			var lastSuffix = carosuelEuResponsive.getLastSuffix();
-			
+			// we're bigger than a mobile: update all image urls in the carousel data to appropriate size
+			var lastSuffix = carosuelEuResponsive.getLastSuffix();	
 			$(carouselData).each(function(i, ob){
-				ob.image = ob.fullSize;//image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
+				ob.image = ob.image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
 				$($("#carousel-1 img")[i]).attr("src", ob.fullSize);
 			});
 			
@@ -77,13 +70,9 @@
 		
 		$("#carousel-1").imagesLoaded(
 			function($images, $proper, $broken) {
-
-				
 				
 				var imgW			= $(this).find("img").width();
 				var imgH			= $(this).find("img").height();
-				
-				
 				
 				var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
 				for(var i=0; i<$broken.length; i++){
