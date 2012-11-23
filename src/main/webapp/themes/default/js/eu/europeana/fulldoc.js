@@ -757,7 +757,7 @@ eu.europeana.fulldoc = {
 		
 //carouselData = eu.europeana.fulldoc.sanitiseData(carouselData);
 		
-		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
+		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 			
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
 

@@ -29,7 +29,7 @@
 	
 	var initCarousels = function(){
 
-		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
+		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 		Galleria.configure({
 				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
 				carousel:		true,
