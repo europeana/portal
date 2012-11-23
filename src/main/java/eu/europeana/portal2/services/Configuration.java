@@ -279,7 +279,7 @@ public class Configuration {
 
 	public Integer[] getResponsiveCarouselImageWidths(){
 		if (responsiveCarouselImageWidths == null) {
-			String[] imageWidths = responsiveImageWidthString.split(",");
+			String[] imageWidths = responsiveCarouselImageWidthString.split(",");
 			responsiveCarouselImageWidths = new Integer[imageWidths.length];
 
 			for (int i=0, len=imageWidths.length; i<len; i++) {
