@@ -27,18 +27,35 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 
 <div class="row carousel-row">
 
+<%--
+<c:forEach var="item" items="${model.carouselItems}">
+	url = 	${item.imgUrl} 
+	<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <spring:message code='${item.imgUrl}'/> 
+	<br/>
+	
+	<c:forEach var="ri" items="${item.responsiveImages}">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		${ri}
+	<br/>
+		
+	</c:forEach>
+	<br/>
+	<br/>
+</c:forEach>
+
+--%>
+
 	<c:if test='${!empty model.carouselItems}'>
 	
 	    <script type="text/javascript">
 	        var carouselData = [];   
  
-	
 			<c:forEach var="item" items="${model.carouselItems}">
-
-			
+				
 				carouselData[carouselData.length] = {
-					image:				"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
-					responsiveImage:	"/${model.portalName}${item.responsiveImages['_1']}",
+					image:				"/${model.portalName}${item.responsiveImages['_1']}",
+					fullSize:			"/${model.portalName}<spring:message code='${item.imgUrl}'/>",
 					title:				"<spring:message code='${item.anchorTitle}'/>",
 					description:		"<spring:message code='${item.description}'/>",
 					link:				"${item.url}"
@@ -60,7 +77,11 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			<c:forEach var="item" items="${model.carouselItems}">
 			
 				<a href="${item.url}">
-					<img	src		= "/${model.portalName}<spring:message code='${item.imgUrl}'/>"
+					<img
+					<%--
+							src		= "/${model.portalName}<spring:message code='${item.imgUrl}'/>"
+					--%>
+							src		= "/${model.portalName}${item.responsiveImages['_1']}",
 							title	= "<spring:message code='${item.anchorTitle}'/>"
 							alt		= "<spring:message code='${item.imgAlt}'/>"
 							class	= "hidden"
