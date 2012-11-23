@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link rel="shortcut icon" href="/${model.portalName}/favicon.ico" />
+<link rel="canonical" href="${model.metaCanonicalUrl}" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://api.europeana.eu/api/opensearch.xml" title="Europeana Search" />
 
 <c:choose>
