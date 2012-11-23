@@ -104,7 +104,7 @@ js.loader = {
 			
 		}
 		
-		js.console.log( 'load : ' + script.file + ', ' + script.path );
+//		js.console.log( 'load : ' + script.file + ', ' + script.path );
 		
 	},
 	
@@ -177,7 +177,7 @@ js.loader = {
 			
 		}
 		
-		js.console.log( 'loaded : ' + script.name );
+//		js.console.log( 'loaded : ' + script.name );
 		this.loader_status[ script.name ].script_loaded = true;
 		if ( typeof script.callback != 'undefined') {
 			script.callback.call(); 				
