@@ -3,6 +3,10 @@
 	position: relative;
 }
 
+.ui-helper-hidden-accessible{
+	display:none;
+}
+
 #shareicons {
 	position: absolute;
 	bottom: 0;
