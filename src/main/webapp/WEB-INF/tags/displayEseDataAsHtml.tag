@@ -107,7 +107,7 @@
               <c:if test="${value.value == '3D PDF'}">
                 <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
               </c:if>
-            <c:out value="${separator}" />
+            </span><c:out value="${separator}" />
           </c:otherwise>
         </c:choose>
         <c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
