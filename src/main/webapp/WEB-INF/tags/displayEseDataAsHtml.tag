@@ -1,4 +1,3 @@
-<!-- displayEseDataAsHtml -->
 <%@ tag trimDirectiveWhitespaces="true" %>
 
 <%-- parameters --%>
@@ -102,8 +101,7 @@
             <a href="${value.value}" target="_blank" ${translatable} <c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
           </c:when>
           <c:otherwise>
-            <span ${translatable}<c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if><c:if test="${semanticUrl}">${" href=\""}${value.value}${"\""}</c:if>>
-              <c:out value="${value.value}" />
+            <span ${translatable}<c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if><c:if test="${semanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:out value="${value.value}" />
               <c:if test="${value.value == '3D PDF'}">
                 <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
               </c:if>
@@ -139,4 +137,3 @@
     </${wrapper}>
   </c:if>
 </c:forEach>
-<!-- /displayEseDataAsHtml -->
