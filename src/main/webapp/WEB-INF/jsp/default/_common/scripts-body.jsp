@@ -9,6 +9,13 @@
 	<%@ include file="/WEB-INF/jsp/default/_common/variables/variables-javascript.jsp" %>
 	 --%>
 	
-	<script src="/${model.portalName}/themes/default/js/eu/europeana/bootstrap/bootstrap.js"></script>
+	<c:choose>
+	<c:when test="${!empty model.debug && !model.debug}">
+		<script src="/${model.portalName}/themes/default/js/eu/europeana/bootstrap/min/bootstrap.min.js"></script>
+	</c:when>
+	<c:otherwise>
+		<script src="/${model.portalName}/themes/default/js/eu/europeana/bootstrap/bootstrap.js"></script>
+	</c:otherwise>
+</c:choose>
 
 </c:if>

@@ -124,13 +124,13 @@ window.js = {
 if ( !window.console ) { window.console = js.empty_console; }
 js.console = js.empty_console;
 
-<c:if test="${model.debug}">
+<c:if test="${!empty model.debug && model.debug}">
 	js.debug = true;
 	js.cache_helper = '?' + new Date().getTime();
 	js.console = window.console;
 </c:if>
 
-<c:if test="${!empty model.minify && model.minify}">
+<c:if test="${!empty model.debug && !model.debug}">
 	js.min_suffix = '.min';
 	js.min_directory = 'min/';
 </c:if>
