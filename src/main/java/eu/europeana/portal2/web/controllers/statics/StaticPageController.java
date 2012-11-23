@@ -68,6 +68,8 @@ public class StaticPageController {
 
 	private StaticPageCache staticPageCache = new StaticPageCache();
 
+	private StaticPageCache responsiveCache = new StaticPageCache();
+
 	private ClickStreamLogger clickStreamLogger = new ClickStreamLoggerImpl();
 
 	private final Logger log = Logger.getLogger(getClass().getName());
@@ -173,6 +175,7 @@ public class StaticPageController {
 	 * w/o language for verbatim pages
 	 */
 	private String makePageFileName(String pageNamePrefix, String pageName) {
+		log.info("pageNamePrefix: " + pageNamePrefix + ", pageName: " + pageName);
 		String pageFileName = (pageNamePrefix == null ? "" : pageNamePrefix)
 				+ (pageName == null ? "" : pageName);
 		return pageFileName;
@@ -239,7 +242,7 @@ public class StaticPageController {
 	@RequestMapping("/rss-blog-cache/**/*.jpg")
 	public void fetchRssJpg(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("image/jpeg");
-		fetchVerbatimPage(request, response);
+		fetchResponsiveImage(request, response);
 	}
 
 	/**
@@ -262,7 +265,7 @@ public class StaticPageController {
 	@RequestMapping("/rss-blog-cache/**/*.png")
 	public void fetchRssPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("image/png");
-		fetchVerbatimPage(request, response);
+		fetchResponsiveImage(request, response);
 	}
 
 	/**
@@ -285,7 +288,7 @@ public class StaticPageController {
 	@RequestMapping("/rss-blog-cache/**/*.gif")
 	public void fetchRssGif(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("image/gif");
-		fetchVerbatimPage(request, response);
+		fetchResponsiveImage(request, response);
 	}
 
 	private void fetchVerbatimPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -294,6 +297,20 @@ public class StaticPageController {
 		try {
 			String pageFileName = makePageFileName(request.getServletPath(), request.getPathInfo());
 			staticPageCache.writeBinaryPage(pageFileName, out);
+		} catch (Exception e) {
+			log.severe("Exception during fetchVerbatimPage: " + e.getLocalizedMessage());
+		} finally {
+			out.flush();
+			out.close();
+		}
+	}
+
+	private void fetchResponsiveImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		responsiveCache.setStaticPagePath(config.getResponsiveCache());
+		OutputStream out = response.getOutputStream();
+		try {
+			String pageFileName = request.getPathInfo().replace("/rss-blog-cache", "");
+			responsiveCache.writeBinaryPage(pageFileName, out);
 		} catch (Exception e) {
 			log.severe("Exception during fetchVerbatimPage: " + e.getLocalizedMessage());
 		} finally {

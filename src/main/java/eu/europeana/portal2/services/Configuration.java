@@ -107,6 +107,9 @@ public class Configuration {
 	@Value("#{europeanaProperties['debug']}")
 	private String debug;
 
+	@Value("#{europeanaProperties['portal.responsive.cache']}")
+	private String responsiveCache;
+
 	/////////////////////////////// generated/derivated properties
 
 	private Map<String, String> seeAlsoTranslations;
@@ -213,6 +216,10 @@ public class Configuration {
 
 	public boolean getDebugMode() {
 		return StringUtils.isBlank(debug) || Boolean.getBoolean(debug);
+	}
+
+	public String getResponsiveCache() {
+		return responsiveCache;
 	}
 
 	public Map<String, String> getSeeAlsoTranslations() {

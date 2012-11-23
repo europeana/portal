@@ -27,6 +27,8 @@ public class ResponsiveImageUtils {
 
 	private static String[] responsiveCarouselLabels = Beans.getConfig().getResponsiveCarouselImageLabels();
 
+	private static String responsiveCache = Beans.getConfig().getResponsiveCache();
+
 	final private static String CACHEDIR = "/sp/rss-blog-cache/";
 
 	private static String directory;
@@ -58,8 +60,8 @@ public class ResponsiveImageUtils {
 		}
 
 		if (dir == null) {
-			directory = staticPagePath + CACHEDIR;
-			File dir = new File(directory);
+			directory = (responsiveCache != null) ? responsiveCache : staticPagePath + CACHEDIR;
+			dir = new File(directory);
 			if (!dir.exists()) {
 				dir.mkdir();
 			}
