@@ -433,11 +433,18 @@ eu.europeana.fulldoc = {
 		 */
 		
 	},
-	
+
+	/**
+	 * 
+	 * @gallery galleria instance
+	 * @show true / false - false if we're changing the trigger from within a carousel
+	 * 
+	 * */
 	showLightboxTrigger : function(show, gallery){
+		
 		if(show){
-			
 			var marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
+			
 			$('.lb-trigger').css("margin-left", marginTrigger + "px");
 			
 			$('.lb-trigger').fadeIn(500);
@@ -445,7 +452,6 @@ eu.europeana.fulldoc = {
 		else{
 			$('.lb-trigger').css('display', 'none');
 		}
-		
 		
 		
 		if(gallery){
@@ -719,7 +725,7 @@ eu.europeana.fulldoc = {
 		}
 		return lightboxableCount;
 	},
-	
+	/*
 	sanitiseData: function(carouselData){
 
 		var newCarouselData = [];
@@ -743,30 +749,58 @@ eu.europeana.fulldoc = {
 		});
 		return newCarouselData;
 	},
-
+	*/
+	
+	
 	
 	initCarousels: function(){
-//		carouselData = eu.europeana.fulldoc.sanitiseData(carouselData);
+		
+//carouselData = eu.europeana.fulldoc.sanitiseData(carouselData);
 		
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/galleria.europeanax.js');
 			
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
 
+			// measurement broken if img doesn't load but alt text is present
+			$("#carousel-1-img-measure img").each(function(i, ob){
+				$(ob).data.alt = $(ob).attr("alt");
+				$(ob).attr("alt", "");
+			});
+			
+
+			
+			console.log("measured carousel 1 images: div width is " + $("#carousel-1-img-measure").width() );
+
+			
+			
 			// this is where we go when images don't load
 			var initNoCarousel = function(){
+				
+				// if the thumbnail loaded then show it, otherwise restore the alt text (but prevent it from breaking the layout)
+				if($("#carousel-1-img-measure").width()>0){
+					
+					if(carouselData[0].lightboxable){
+	//					alert("no carousel, set the lightboxable label to map entry " + JSON.stringify(carouselData[0].lightboxable) );
+						
+						eu.europeana.fulldoc.lightboxable = carouselData[0].lightboxable;
+						eu.europeana.fulldoc.loadLightboxJS();
+					}	
+				}
+				else{
+					$('#carousel-1-img-measure').css('white-space',		'normal');
+					$('#carousel-1-img-measure').css('word-break',		'break-all');
+					$("#carousel-1-img-measure img").each(function(i, ob){
+						$(ob).attr("alt", $(ob).data.alt);
+					});
+				}
+				// show either the thumbnail or the alt text
 				$("#carousel-1-img-measure img").removeClass("no-show");
 				$("#carousel-1-img-measure").css("position",	"relative");
 				$("#carousel-1-img-measure").css("text-align",	"center");
 				$("#additional-info").css("padding-top", "1em");
-				
-				if(carouselData[0].lightboxable){
-					
-//					alert("no carousel, set the lightboxable label to map entry " + JSON.stringify(carouselData[0].lightboxable) );
-					
-					eu.europeana.fulldoc.lightboxable = carouselData[0].lightboxable;
-					eu.europeana.fulldoc.loadLightboxJS();
-				}				
 			};
+			
+			
 			//alert($proper.length);
 			//initNoCarousel();return;
 			//alert(JSON.stringify(carouselData))
@@ -795,7 +829,10 @@ eu.europeana.fulldoc = {
 						else{
 							var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
 							for(var i=0; i<$broken.length; i++){
-								msgFailed += "\n  " + $($broken[0]).attr("src")
+								msgFailed += "\n  broke: " + $($broken[0]).attr("src")
+							}
+							for(var i=0; i<$proper.length; i++){
+								msgFailed += "\n  proper: " + $($proper[0]).attr("src")
 							}
 
 							console.log("carousel test failed: " + msgFailed);
@@ -810,6 +847,9 @@ eu.europeana.fulldoc = {
 				initNoCarousel();
 			}
 		});
+		
+		
+
 		
 		$("#carousel-2-img-measure img").imagesLoaded( function(){
 			

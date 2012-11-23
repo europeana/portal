@@ -59,7 +59,15 @@
 			}
 		};
 		self.respond();
-		window.galleries.push(self);
+		
+		if(!self.ops.oneOff){
+			window.galleries.push(self);			
+		}
+		else{
+			self.getLastSuffix = function(){
+				return self.lastSuffix;
+			};
+		}
 	};
 	
 	$(window).bind("resize", function(){

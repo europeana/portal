@@ -46,17 +46,63 @@
 		});
 
 		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");
+		
+		
+		
+		var carouselInitialSuffix	= '_1';
+		var carouselSelector		= '#carousel-1 img';
+		var carosuelEuResponsive = new euResponsive({
+			"galleryName"	:	"euresponsive",
+			"selector"		:	carouselSelector,
+			"initialSuffix"	:	carouselInitialSuffix,
+			"oneOff"		:	true
+		});
+		
+		var src = $($(carouselSelector)[0]).attr("src");
+		
+		//alert("src = " +  src + ", index of initial suffix =   " + src.indexOf( carouselInitialSuffix + "." ) );
+		
+		// we're bigger than a mobile: update all image urls to the full size
+		if( src.indexOf( carouselInitialSuffix + "." ) == -1 ){
+			// so what size are we using???
+			var lastSuffix = carosuelEuResponsive.getLastSuffix();
+			
+			$(carouselData).each(function(i, ob){
+				ob.image = ob.fullSize;//image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
+				$($("#carousel-1 img")[i]).attr("src", ob.fullSize);
+			});
+			
+		}
+		 
+		
 		$("#carousel-1").imagesLoaded(
-			function() {
+			function($images, $proper, $broken) {
 
-				var imgW			= $(this).width();
-				var imgH			= $(this).height();
+				
+				
+				var imgW			= $(this).find("img").width();
+				var imgH			= $(this).find("img").height();
+				
+				
+				
+				var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
+				for(var i=0; i<$broken.length; i++){
+					msgFailed += "\n  broke: " + $($broken[0]).attr("src")
+				}
+				for(var i=0; i<$proper.length; i++){
+					msgFailed += "\n  proper: " + $($proper[0]).attr("src")
+				}
+
+			//	alert("loaded images, height is " + imgH + "\n\n\n\n" + msgFailed);
+
+				
 				
 				$("#carousel-1 img").remove();
 
 				var carousel		= jQuery("#carousel-1");
 				var parentWidth		= carousel.width();
 				
+
 				var ratio			= imgW / imgH;
 				var thumb			= jQuery('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
 				
