@@ -44,3 +44,13 @@ description: comma separated list of the suffixes of responsive images for the c
 
 example:
 portal.responsive.carousel.labels=_1,_2,_3,_4
+
+==== 2012-11-23
+
+new property:
+portal.responsive.cache
+
+Description: the absolute path of the responsive images generated in the index page.
+
+example:
+portal.responsive.cache = /home/peterkiraly/Development/portal2/responsive-cache/
