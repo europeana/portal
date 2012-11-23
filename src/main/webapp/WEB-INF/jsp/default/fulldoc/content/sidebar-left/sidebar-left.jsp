@@ -12,8 +12,14 @@
 
 	<h2 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h2>
 		
-	<%-- hidden seo image --%>
+	<%-- thumbnail (hidden seo image) --%>
 	
+	
+	<%-- 
+		model.thumbnailUrl = ${model.thumbnailUrl} 
+	--%>
+	
+		
 	<div id="carousel-1-img-measure">
 	
 		<!-- TODO: make sure all item images are listed here -->
@@ -21,8 +27,14 @@
 		<c:set var="dataType"	value=""/>
 		<c:set var="alt"		value=""/>
 		
+		
+		
 		<c:if test="${not empty model['thumbnailUrl']}">
-			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
+			<%--c:set var="thumbnail" value="${model.thumbnailUrl}"/--%>
+			<c:set var="thumbnail" value="${fn:escapeXml(model.thumbnailUrl)}"/>
+			
+									
+									
 		</c:if>
 
 		<c:if test="${not empty model.document['edmType']}">
