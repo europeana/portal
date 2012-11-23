@@ -133,8 +133,10 @@ public abstract class FullDocPreparation extends FullDocData {
 			for (Place place : document.getPlaces()) {
 				addField(where, Field.ENRICHMENT_PLACE_TERM, new String[]{place.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
-				for (String key : place.getPrefLabel().keySet()) {
-					labels.add(place.getPrefLabel().get(key) + " (" + key + ")");
+				if (place.getPrefLabel() != null) {
+					for (String key : place.getPrefLabel().keySet()) {
+						labels.add(place.getPrefLabel().get(key) + " (" + key + ")");
+					}
 				}
 				addField(where, Field.ENRICHMENT_PLACE_LABEL, StringArrayUtils.toArray(labels));
 
@@ -158,8 +160,10 @@ public abstract class FullDocPreparation extends FullDocData {
 			for (Agent agent : document.getAgents()) {
 				addField(who, Field.ENRICHMENT_AGENT_TERM, new String[]{agent.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
-				for (String key : agent.getPrefLabel().keySet()) {
-					labels.add(agent.getPrefLabel().get(key) + " (" + key + ")");
+				if (agent.getPrefLabel() != null) {
+					for (String key : agent.getPrefLabel().keySet()) {
+						labels.add(agent.getPrefLabel().get(key) + " (" + key + ")");
+					}
 				}
 				addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
 			}
@@ -178,8 +182,10 @@ public abstract class FullDocPreparation extends FullDocData {
 			for (Concept concept : document.getConcepts()) {
 				addField(what, Field.ENRICHMENT_CONCEPT_TERM, new String[]{concept.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
-				for (String key : concept.getPrefLabel().keySet()) {
-					labels.add(concept.getPrefLabel().get(key) + " (" + key + ")");
+				if (concept.getPrefLabel() != null) {
+					for (String key : concept.getPrefLabel().keySet()) {
+						labels.add(concept.getPrefLabel().get(key) + " (" + key + ")");
+					}
 				}
 				addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
 				addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, concept.getBroader());
@@ -207,8 +213,10 @@ public abstract class FullDocPreparation extends FullDocData {
 			for (Timespan timespan : document.getTimespans()) {
 				addField(when, Field.ENRICHMENT_PERIOD_TERM, new String[]{timespan.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
-				for (String key : timespan.getPrefLabel().keySet()) {
-					labels.add(timespan.getPrefLabel().get(key) + " (" + key + ")");
+				if (timespan.getPrefLabel() != null) {
+					for (String key : timespan.getPrefLabel().keySet()) {
+						labels.add(timespan.getPrefLabel().get(key) + " (" + key + ")");
+					}
 				}
 				addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
 				if (timespan.getBegin() != null) {
