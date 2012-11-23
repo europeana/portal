@@ -68,7 +68,7 @@ public class ResponsiveImageUtils {
 		}
 
 		String extension = location.substring(location.lastIndexOf(".") + 1);
-		String nameWithoutExt = location.substring(0, location.lastIndexOf(".") - 1);
+		String nameWithoutExt = location.substring(0, location.lastIndexOf("."));
 		String toFS = nameWithoutExt.replace("/", "-").replace(":", "-").replace(".", "-");
 
 		BufferedImage orig = null;

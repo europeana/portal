@@ -175,7 +175,6 @@ public class StaticPageController {
 	 * w/o language for verbatim pages
 	 */
 	private String makePageFileName(String pageNamePrefix, String pageName) {
-		log.info("pageNamePrefix: " + pageNamePrefix + ", pageName: " + pageName);
 		String pageFileName = (pageNamePrefix == null ? "" : pageNamePrefix)
 				+ (pageName == null ? "" : pageName);
 		return pageFileName;
