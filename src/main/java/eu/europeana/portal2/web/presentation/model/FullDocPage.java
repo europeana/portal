@@ -66,7 +66,7 @@ public class FullDocPage extends FullDocPreparation {
 	/**
 	 * 
 	 */
-	private static final String[] IMAGE_FIELDS = new String[]{"EdmObject", "EdmIsShownBy", "EdmHasView"}; // "WebResourceAbout", 
+	private static final String[] IMAGE_FIELDS = new String[]{"EdmIsShownBy", "EdmHasView"}; // "EdmObject", "WebResourceAbout", 
 
 	private RightsValue rightsOption = null;
 
@@ -75,7 +75,7 @@ public class FullDocPage extends FullDocPreparation {
 	private String[] allImages = null;
 
 	private List<Image> imagesToShow;
-	
+
 	private boolean schemaOrgMappingInitialized = false;
 
 	@Override
@@ -394,12 +394,14 @@ public class FullDocPage extends FullDocPreparation {
 				String imageType = docType;
 				if (imageUrl.toLowerCase().endsWith(".mp3")) {
 					imageType = DocType.SOUND.name();
+				} else if (imageUrl.toLowerCase().endsWith(".pdf")) {
+					imageType = DocType.TEXT.name();
 				} else if (imageUrl.toLowerCase().endsWith(".mpg")) {
 					imageType = DocType.VIDEO.name();
 				}
 				Image img = new Image(
-						imageUrl, // createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
-						imageUrl, // createImageUrl(imageUrl, imageType, "FULL_DOC"),
+						createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
+						createImageUrl(imageUrl, imageType, "FULL_DOC"),
 						imageType
 				);
 				log.info("img " + img);
@@ -438,6 +440,10 @@ public class FullDocPage extends FullDocPreparation {
 		return prepareFullDocUrl(url).toString();
 	}
 
+	public String getIsShownBy() {
+		return shortcut.get("EdmIsShownBy")[0];
+	}
+
 	private String[] getImages() {
 		if (allImages == null) {
 			Set<String> isShownAt = new HashSet<String>();
@@ -450,7 +456,9 @@ public class FullDocPage extends FullDocPreparation {
 				if (shortcut.get(imageField) != null && shortcut.get(imageField).length > 0) {
 					for (String image : shortcut.get(imageField)) {
 						if (!StringUtils.isBlank(image)) {// && !isShownAt.contains(image)) {
-							images.add(image);
+							if (!image.equals(getIsShownBy())) {
+								images.add(image);
+							}
 						}
 					}
 				}
