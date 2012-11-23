@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-		
+	
 	<build>
 	
 		<plugins>
@@ -26,17 +26,18 @@
 				
 				<executions>
 					
-					<!-- CSS FILES -->
-					<!-- COMMON: Move common css files to (src)css/min/common.min.css (see WEB-INF/jsp/default/_common/html/links.jsp) -->
+					<!-- @see WEB-INF/jsp/default/_common/html/css/debug-css.jsp -->
+					<!-- @see WEB-INF/jsp/default/_common/html/css/production-css.jsp -->
+					<!-- COMBINED CSS FILES -->
 					<execution>
 						<id>minify-common.css</id>
 						<phase>process-resources</phase>
-						<configuration>							
+						<configuration>
 							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>common.css</cssFinalFile>
 							<cssTargetDir>min</cssTargetDir>
-                            <cssSourceIncludes>                            
+							<cssSourceIncludes>
 								<cssSourceInclude>html.css</cssSourceInclude>
 								<cssSourceInclude>common.css</cssSourceInclude>
 								<cssSourceInclude>ajax.css</cssSourceInclude>
@@ -47,15 +48,217 @@
 								<cssSourceInclude>eu-menu.css</cssSourceInclude>
 								<cssSourceInclude>ellipsis.css</cssSourceInclude>
 								<cssSourceInclude>europeana-font-icons.css</cssSourceInclude>
-								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>								
+								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
 							</cssSourceIncludes>
 						</configuration>
 						<goals>
 							<goal>minify</goal>
 						</goals>
 					</execution>
-                    
-                    <execution>
+					
+					<execution>
+						<id>minify-fulldoc.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>fulldoc.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+                            <cssSourceIncludes>
+								<cssSourceInclude>fulldoc.css</cssSourceInclude>
+								<cssSourceInclude>lightbox.css</cssSourceInclude>
+								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
+								<cssSourceInclude>fulldoc-excerpt.css</cssSourceInclude>
+								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
+								<cssSourceInclude>tabbed-navigation.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-map.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>map.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>search-navigation.css</cssSourceInclude>
+								<cssSourceInclude>search-icons.css</cssSourceInclude>
+								<cssSourceInclude>search-pagination.css</cssSourceInclude>
+								<cssSourceInclude>map.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-myeuropeana.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>myeuropeana.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>myeuropeana.css</cssSourceInclude>
+								<cssSourceInclude>tabbed-navigation.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-search.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>search.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>search.css</cssSourceInclude>
+								<cssSourceInclude>search-navigation.css</cssSourceInclude>
+								<cssSourceInclude>search-pagination.css</cssSourceInclude>
+								<cssSourceInclude>sidebar-facets.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					<!-- END COMBINED CSS FILES -->
+					
+					
+					<!-- INDIVIDUAL CSS FILES -->
+					<execution>
+						<id>minify-announce.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>announce.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>announce.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-contact.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>contact.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>contact.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-embed.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>embed.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>embed.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-galleria.europeanax.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/js/galleria/themes/europeanax</webappTargetDir>
+							<cssSourceDir>/themes/default/js/galleria/themes/europeanax</cssSourceDir>
+							<cssFinalFile>galleria.europeanax.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>galleria.europeanax.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-ie.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-ie7.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie7.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie7.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-ie8.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie8.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie8.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
 						<id>minify-index.css</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -72,27 +275,113 @@
 						</goals>
 					</execution>
 					
-                    <execution>
-						<id>minify-galleria.europeanax.css</id>
+					<execution>
+						<id>minify-login.css</id>
 						<phase>process-resources</phase>
 						<configuration>
-							<webappTargetDir>src/main/webapp/themes/default/js/galleria/themes/europeanax</webappTargetDir>
-							<cssSourceDir>/themes/default/js/galleria/themes/europeanax</cssSourceDir>
-							<cssFinalFile>galleria.europeanax.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>							
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>login.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
 							<cssSourceIncludes>
-								<cssSourceInclude>galleria.europeanax.css</cssSourceInclude>
-							</cssSourceIncludes>							
+								<cssSourceInclude>login.css</cssSourceInclude>
+							</cssSourceIncludes>
 						</configuration>
 						<goals>
 							<goal>minify</goal>
 						</goals>
 					</execution>
-                        
+					
+					<execution>
+						<id>minify-noscript.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>noscript.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>noscript.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-providers.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>providers.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>providers.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-register.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>register.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>register.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-search-embed.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>search-embed.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>search-embed.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-staticpages.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>staticpages.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>staticpages.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					<!-- END INDIVIDUAL CSS FILES -->
 					
 				</executions>
 				
-			</plugin><!-- END MINIFY-MAVEN-PLUGIN -->
+			</plugin>
+			<!-- END MINIFY-MAVEN-PLUGIN -->
 			
 		</plugins>
 		

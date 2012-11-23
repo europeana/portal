@@ -7,6 +7,7 @@
 </c:if>
 
 <c:choose>
+
 	<c:when test="${model.pageName == 'contact.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/contact.min.css" />
 	</c:when>
@@ -40,7 +41,6 @@
 
 	<c:when test="${model.pageName == 'myeuropeana.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana.min.css" />
-		<link rel="stylesheet" href="/${branding}/css/min/tabbed-navigation.min.css" />
 	</c:when>
 
 	<c:when test="${model.pageName == 'register.html'}">
@@ -61,23 +61,7 @@
 	<c:when test="${model.pageName == 'staticpage.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/staticpages.min.css" />
 	</c:when>
-
-	<c:when test="${model.pageName == 'map.html'}">
-		<link rel="stylesheet" href="/${branding}/css/min/search.min.css" />
-		<link rel="stylesheet" href="/${branding}/css/map.css" />
-		<link rel="stylesheet" href="/${branding}/css/min/timeline.min.css" />
-		<link rel="stylesheet" href="/${branding}/js/sti/e4D-javascript/Sti.css" />
-		<%--
-			could not lazy load, so put it here for the moment
-			@link http://www.google.nl/search?aq=f&gcx=w&sourceid=chrome&ie=UTF-8&q=G_PHYSICAL_MAP+is+not+defined
-		--%>
-		<%-- <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=${model.googleMapsId}"></script> --%>
-	</c:when>
-
-	<c:when test="${model.pageName == 'timeline.html'}">
-		<link rel="stylesheet" href="/${branding}/css/min/timeline.min.css" />
-		<!--[if IE6]><link rel="stylesheet" href="/${branding}/js/simile-widgets/ajax-2.2.2/styles/graphics-ie6.css" /><![endif]-->
-	</c:when>
+	
 </c:choose>
 
 <!--[if IE]><link rel="stylesheet" href="/${branding}/css/min/ie.min.css" /><![endif]-->
