@@ -104,6 +104,8 @@
 #search-filter {
 	overflow:		hidden;
 	padding-bottom:	0.5em;
+	word-break: break-all;
+	word-wrap: break-word;
 }
 
 #search-filter .icon-remove{
