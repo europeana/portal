@@ -195,7 +195,7 @@ eu.europeana.vars.timeline = {};
 				'image'		:	'<spring:message code="view_t"		/>',
 				'play'		:	'<spring:message code="play_t"		/>',
 				'download'	:	'<spring:message code="download_t"	/>',
-				'read'		:	'<spring:message code="read_t"		/>'
+				'pdf'		:	'<spring:message code="read_t"		/>'
 		};
 		
 		
