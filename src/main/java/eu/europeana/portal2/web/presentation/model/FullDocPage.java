@@ -394,18 +394,18 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	private String getImageType(String imageUrl, String docType){
-		
 		String imageType = docType;
-		if (imageUrl.toLowerCase().endsWith(".mp3")) {
-			imageType = DocType.SOUND.name();
+		if(imageUrl != null){
+			if (imageUrl.toLowerCase().endsWith(".mp3")) {
+				imageType = DocType.SOUND.name();
+			}
+			else if (imageUrl.toLowerCase().endsWith(".pdf")) {
+				imageType = DocType.TEXT.name();
+			}
+			else if (imageUrl.toLowerCase().endsWith(".mpg")) {
+				imageType = DocType.VIDEO.name();
+			}			
 		}
-		else if (imageUrl.toLowerCase().endsWith(".pdf")) {
-			imageType = DocType.TEXT.name();
-		}
-		else if (imageUrl.toLowerCase().endsWith(".mpg")) {
-			imageType = DocType.VIDEO.name();
-		}
-		
 		return imageType;
 	}
 	
