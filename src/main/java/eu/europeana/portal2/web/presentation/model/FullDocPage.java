@@ -375,7 +375,12 @@ public class FullDocPage extends FullDocPreparation {
 			return prepareFullDocUrl(url).toString();
 		}
 		*/
-		return thumbnail;
+		UrlBuilder url = new UrlBuilder(getCacheUrl());
+		url.addParam("uri", thumbnail, true);
+		url.addParam("size", "FULL_DOC", true);
+		url.addParam("type", getDocument().getEdmType(), true);
+		return prepareFullDocUrl(url).toString();
+		//return thumbnail;
 	}
 
 	public List<String> getThumbnails() {
@@ -388,20 +393,46 @@ public class FullDocPage extends FullDocPreparation {
 		return getImageToShow("FULL_DOC");
 	}
 
-	public List<Image> getAllImages() {
+	private String getImageType(String imageUrl, String docType){
+		
+		String imageType = docType;
+		if (imageUrl.toLowerCase().endsWith(".mp3")) {
+			imageType = DocType.SOUND.name();
+		}
+		else if (imageUrl.toLowerCase().endsWith(".pdf")) {
+			imageType = DocType.TEXT.name();
+		}
+		else if (imageUrl.toLowerCase().endsWith(".mpg")) {
+			imageType = DocType.VIDEO.name();
+		}
+		
+		return imageType;
+	}
+	
+	/**
+	 * will always have one entry - even if that's just a one-entry containing a default thumbnail 
+	 * */
+	public List<Image> getAllImages() throws UnsupportedEncodingException {
 		if (imagesToShow == null) {
 			imagesToShow = new LinkedList<Image>();
+
 			String docType = getDocument().getEdmType();
+			String thumbnailUrl = this.getThumbnailUrl();
+			String isShownByUrl = getLightboxRef();
+			
+			String firstImageType = getImageType(isShownByUrl, docType);
+			
+			Image firstImage = new Image(
+				thumbnailUrl,
+				isShownByUrl,
+				//createImageUrl(imageUrl, firstImageType, "FULL_DOC"),
+				firstImageType
+			);
+			imagesToShow.add(firstImage);
+
 			String[] images = getImages();
 			for (String imageUrl : images) {
-				String imageType = docType;
-				if (imageUrl.toLowerCase().endsWith(".mp3")) {
-					imageType = DocType.SOUND.name();
-				} else if (imageUrl.toLowerCase().endsWith(".pdf")) {
-					imageType = DocType.TEXT.name();
-				} else if (imageUrl.toLowerCase().endsWith(".mpg")) {
-					imageType = DocType.VIDEO.name();
-				}
+				String imageType = getImageType(imageUrl, docType);
 				Image img = new Image(
 						createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
 						createImageUrl(imageUrl, imageType, "FULL_DOC"),
