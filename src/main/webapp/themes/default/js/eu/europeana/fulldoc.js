@@ -15,21 +15,17 @@ eu.europeana.fulldoc = {
 		this.loadComponents();
 		this.addAutoTagHandler();
 		
-		jQuery('#item-save-tag').bind('submit', this.handleSaveTagSubmit );
-		jQuery('#item-save').bind('click', this.handleSaveItemClick );
-		jQuery('#item-embed').bind('click', this.handleEmbedClick );
+		$('#item-save-tag')			.bind('submit', this.handleSaveTagSubmit );
+		$('#item-save')				.bind('click', this.handleSaveItemClick );
+		$('#item-embed')			.bind('click', this.handleEmbedClick );
+		$('#urlRefIsShownBy')		.bind('click', this.handleRedirectIsShownByClick );
+		$('#urlRefIsShownAt')		.bind('click', this.handleRedirectIsShownAtClick );
+		$('#urlRefIsShownByImg')	.bind('click', this.handleRedirectIsShownByImgClick );
+		$('#urlRefIsShownAtImg')	.bind('click', this.handleRedirectIsShownAtImgClick );
+		$('#urlRefIsShownByPlay')	.bind('click', this.handleRedirectIsShownByPlayClick );
+		$('#lightbox_href')			.bind('click', this.handleRedirectIsShownByImgClick );
 		
-		jQuery('#urlRefIsShownBy').bind('click', this.handleRedirectIsShownByClick );
-		
-		jQuery('#urlRefIsShownAt').bind('click', this.handleRedirectIsShownAtClick );
-		
-		jQuery('#urlRefIsShownByImg').bind('click', this.handleRedirectIsShownByImgClick );
-		
-		jQuery('#urlRefIsShownAtImg').bind('click', this.handleRedirectIsShownAtImgClick );
-		
-		jQuery('#urlRefIsShownByPlay').bind('click', this.handleRedirectIsShownByPlayClick );
-		
-		jQuery('#lightbox_href').bind('click', this.handleRedirectIsShownByImgClick );
+		console.log(JSON.stringify(carouselData));
 	},
 
 	
@@ -47,7 +43,7 @@ eu.europeana.fulldoc = {
 		}]);
 		
 		
-		// dependency group - embed click functionality
+		// dependency group - embed functionality
 		
 		js.loader.loadScripts([{
 			file: 'window-open' + js.min_suffix + '.js' + js.cache_helper,
@@ -216,14 +212,8 @@ eu.europeana.fulldoc = {
 		}
 		eu.europeana.tabs.explore.toggleTab( tab_to_open );
 	},
-	
-	
-	tabFeedback : function( id ) {
-
-	},
-	
-	adjustDescription : function() {
 		
+	adjustDescription : function() {
 		
 		var description_truncate = new com.gmtplusone.truncate(
 			'#item-description',
@@ -434,43 +424,9 @@ eu.europeana.fulldoc = {
 		
 	},
 
-	/**
-	 * 
-	 * @gallery galleria instance
-	 * @show true / false - false if we're changing the trigger from within a carousel
-	 * 
-	 * */
-	showLightboxTrigger : function(show, gallery){
-		
-		if(show){
-			var marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
-			
-			$('.lb-trigger').css("margin-left", marginTrigger + "px");
-			
-			$('.lb-trigger').fadeIn(500);
-		}
-		else{
-			$('.lb-trigger').css('display', 'none');
-		}
-		
-		
-		if(gallery){
-			var imageNav	= gallery.$('container').find('.galleria-image-nav');
-			
-			imageNav.css("margin-top", "0px");
-			imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
-			
-			var stage		= gallery.$('container').find('.galleria-stage');
-			var imageNavR	= gallery.$('container').find('.galleria-image-nav-right');
-			var heightDiff	= stage.height() - imageNavR.height();
-			var stageTopMargin	= parseInt(gallery.$('container').find('.galleria-stage').css("margin-top")  );
-			
-			imageNav.css("top", ((heightDiff/2) + stageTopMargin) + "px");
-		}
-		
-	},
-	
-	initLightbox : function(url, gallery){
+
+	initLightbox : function(url){
+		console.log("initLightbox");
 
 		var NavOb = function(){
 			var nav = function(direction){
@@ -479,15 +435,15 @@ eu.europeana.fulldoc = {
 				var submodelActive = 0;
 				
 				for(var i=0; i<carouselData.length; i++){
-					if(carouselData[i].lightboxable){
-						if(carouselData[i].lightboxable.url == currentUrl){
+					if(carouselData[i].external && carouselData[i].external.type == "image"){
+						if(carouselData[i].external.url == currentUrl){
 							submodelActive = submodel.length;
-							console.log("active for lightbox: " + i);
+							js.console.log("active for lightbox: " + i);
 						}
-						submodel[submodel.length] = carouselData[i].lightboxable;
+						submodel[submodel.length] = carouselData[i].external;
 					}
 				}
-				
+
 				var newActive = submodelActive + direction;
 				if(newActive<0){
 					newActive = submodel.length -1;
@@ -495,13 +451,20 @@ eu.europeana.fulldoc = {
 				else if(newActive >= submodel.length){
 					newActive = 0;						
 				}
+
+				console.log("submodel is now " + JSON.stringify(submodel)  );
+
 				
 				$("#hidden_img").unbind( '.imagesLoaded' );
 				$("#hidden_img").remove();
+				
+				
+				// style & id??? TODO: tidy this selctor
+				
 				$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
 					function(){
 						var zoomed = false;
-						if(  $("#zoomedImg").is(":visible")){
+						if($("#zoomedImg").is(":visible")){
 							eu.europeana.lightbox.closeZoom();
 							zoomed = true;
 						}
@@ -521,16 +484,96 @@ eu.europeana.fulldoc = {
 			};
 		};
 		
-		if(typeof (eu.europeana.lightbox) != "undefined"){
-			eu.europeana.lightbox.init(url, eu.europeana.fulldoc.getLightboxableCount() > 1 ? new NavOb() : null);
-			eu.europeana.fulldoc.showLightboxTrigger(true, gallery);
-		}
+		eu.europeana.lightbox.init(url, eu.europeana.fulldoc.getLightboxableCount() > 1 ? new NavOb() : null);
 	
 		$('#lightbox_image').attr('src', url);
 		
 	},
 	
-	loadLightboxJS : function(gallery){
+	
+	
+	initTriggerPanel: function(type, index, gallery){
+		
+		console.log('initTriggerPanel type= ' + type + ", index = " + index);
+		
+		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
+			eu.europeana.fulldoc.triggerPanel = $('<div class="lb-trigger" >'
+					+ '<span rel="#lightbox" title="'
+					+ '" class="icon-magplus label">'
+					+ '</span>'
+					+ '</div>'
+			).appendTo($('#carousel-1-img-measure'));
+			
+			eu.europeana.fulldoc.triggerPanel.hide();
+		}
+		var triggerSpan = eu.europeana.fulldoc.triggerPanel.find('.label');
+		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
+		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
+		
+		
+		// action handling
+		
+		eu.europeana.fulldoc.triggerPanel.unbind('click');
+		triggerSpan.unbind('click');
+		triggerSpan.removeData('overlay');
+
+		if(carouselData[index ? index : 0].external.type == 'image'){
+			eu.europeana.fulldoc.loadLightboxJS(
+				function(){
+					eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);						
+				}
+			);
+		}
+		else{
+			eu.europeana.fulldoc.triggerPanel.bind('click', function(){
+				if(carouselData[index ? index : 0].external.type == 'pdf'){
+        			window.open(carouselData[index ? index : 0].external.url, '_new');
+        		}
+				else{
+					alert('lightbox binding belongs here');
+				}
+			});
+		}
+		eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
+	},
+	
+	
+	/**
+	 * 
+	 * @gallery galleria instance
+	 * @show true / false - false if we're changing the trigger from within a carousel
+	 * 
+	 * */
+	showExternalTrigger : function(show, type, gallery){
+		
+		if(show){
+			//var marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
+			var marginTrigger = 0;
+			
+			if(gallery){				
+				marginTrigger = ( $("#carousel-1").width() - $(gallery.getActiveImage()).width() ) / 2;
+				
+				eu.europeana.fulldoc.triggerPanel.css("bottom", "-0.75em"); 
+			}
+			else{
+				marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
+			}
+			
+
+			js.console.log('w measure ' +  $("#carousel-1-img-measure").width());
+			js.console.log('w measure img' +  $("#carousel-1-img-measure img:first").width());
+
+			js.console.log('set margin-trigger to ' + marginTrigger);
+			
+			eu.europeana.fulldoc.triggerPanel.css("margin-left", marginTrigger + "px");
+			eu.europeana.fulldoc.triggerPanel.fadeIn(500);
+		}
+		else{
+			eu.europeana.fulldoc.triggerPanel.css('display', 'none');
+		}
+	},
+	
+	loadLightboxJS : function(callbackLoad, gallery, delteThisAndGalleryAndy){
 
 		js.loader.loadScripts([{
 			name: 'jquery-tools',
@@ -542,41 +585,29 @@ eu.europeana.fulldoc = {
 		
 		if(!window.showingPhone()){
 			
+			var lightboxJsFile = 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper;
+			
+			if( js.loader.loader_status[lightboxJsFile ]){
+				if(callbackLoad){
+					callbackLoad();					
+				}
+				return;
+			}
+			
 			js.loader.loadScripts([{
-				file : 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper,
+				file : lightboxJsFile,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'jquery-tools'],
 				
 				callback: function(){
-					
-					if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
-						$('#carousel-1-img-measure' ).append(
-								'<div class="lb-trigger" >'
-								+ '<span rel="#lightbox" title="' + eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
-								+ '" class="icon-magplus">'
-
-//								+ eu.europeana.fulldoc.lightboxable.type
-//								+ ' -> label '
-								+ eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
-								+ '</span>'
-								+ '</div>'
-						);
-						eu.europeana.fulldoc.triggerPanel = $('#carousel-1-img-measure' ).find('.lb-trigger');
-						eu.europeana.fulldoc.triggerPanel.hide();
-					}
-					
-					
-					eu.europeana.fulldoc.initLightbox(eu.europeana.fulldoc.lightboxable.url, gallery);
-					
-					jsLoaded = true;
-
 					$(window).on("resize", function(){
 						if(eu.europeana.lightbox.layout){
 							eu.europeana.lightbox.layout();												
 						}
 					});
 					
-					
+					// lightbox disabled in phone
+					/*
 					$(window).on( "orientationchange",
 						function(){
 							if(eu.europeana.lightbox.layout){
@@ -584,7 +615,11 @@ eu.europeana.fulldoc = {
 							}
 						},
 					false);
-
+					*/
+					
+					if(callbackLoad){
+						callbackLoad();
+					}
 				}
 			}]);									
 		}
@@ -595,7 +630,7 @@ eu.europeana.fulldoc = {
 
 		jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarousel1Height() + "px");	// set height to max height that will be needed
 			
-		thisGallery = Galleria.run('#carousel-1', {
+		eu.europeana.fulldoc.carousel1 = Galleria.run('#carousel-1', {
 			debug:				js.debug,
 			transition:			'fadeslide',
 			carousel:			true,
@@ -633,37 +668,48 @@ eu.europeana.fulldoc = {
 				});
 				
 	
-				var jsLoaded		= false;
-	
 				this.bind("image", function(e) {	// lightbox trigger
 					var gallery = this;
-			
-					eu.europeana.fulldoc.lightboxable = gallery._options.dataSource[e.index].lightboxable;
+					console.log("galleria lightbox trigger updating disabled: do this in the navOb");
+					
+					// update trigger ( and show lightboxable )
+					// OR hide trigger	
+					
+					var external = gallery._options.dataSource[e.index].external;
+					
+					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
+
+					
+					/*
+					eu.europeana.fulldoc.lightboxable = gallery._options.dataSource[e.index].external;
+
+					alert("gallery._options.dataSource[e.index].external " + gallery._options.dataSource[e.index].external);
+					
 					//var lightboxable = gallery._options.dataSource[e.index].lightboxable;
 					if(eu.europeana.fulldoc.lightboxable && eu.europeana.fulldoc.lightboxable.url.length>0){
 						if(!eu.europeana.fulldoc.triggerPanel){
 							this.$( 'container' ).find('.galleria-images').after(
 									'<div class="lb-trigger" >'
-										+ '<span rel="#lightbox" title="' + eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+										+ '<span rel="#lightbox" title="' + eu.europeana.vars.external.triggers.labels[eu.europeana.fulldoc.lightboxable.type]
 													+ '" class="icon-magplus">'
-													
-//													+ ' A-N-D-Y '
-													
-													+ eu.europeana.vars.triggerLabels[eu.europeana.fulldoc.lightboxable.type]
+													+ eu.europeana.vars.external.triggers.labels[eu.europeana.fulldoc.lightboxable.type]
 										+ '</span>'
 									+ '</div>'
 							);
 							eu.europeana.fulldoc.triggerPanel = this.$( 'container' ).find('.lb-trigger');
 							eu.europeana.fulldoc.triggerPanel.hide();
-							eu.europeana.fulldoc.loadLightboxJS(gallery);
+							eu.europeana.fulldoc.loadLightboxJS(null, gallery);
 						}
 						else{
 							eu.europeana.fulldoc.initLightbox(eu.europeana.fulldoc.lightboxable.url, gallery);
 						}
 					}
 					else{
-						eu.europeana.fulldoc.showLightboxTrigger(false, gallery);
+						eu.europeana.fulldoc.showExternalTrigger(false, eu.europeana.fulldoc.lightboxable.type, gallery);
 					}
+					*/
+
+					
 				}); // end bind image
 			
 			} // end extend
@@ -719,10 +765,14 @@ eu.europeana.fulldoc = {
 	getLightboxableCount:function(){
 		var lightboxableCount = 0;
 		for(var i=0; i<carouselData.length; i++){
-			if(carouselData[i].lightboxable){
+			if(carouselData[i].external && carouselData[i].external.type == 'image'){
+				
+				console.log("\t\tlightboxable " + carouselData[i].external.url);
+
 				lightboxableCount++;
 			}
 		}
+		console.log("getLightboxableCount returns " + lightboxableCount);
 		return lightboxableCount;
 	},
 	/*
@@ -776,14 +826,25 @@ eu.europeana.fulldoc = {
 			// this is where we go when images don't load
 			var initNoCarousel = function(){
 				
+				// show either the thumbnail or the alt text
+				console.log("CHANGE CSS in initnocarousel");
+				
+				$("#carousel-1-img-measure img").removeClass("no-show");
+				$("#carousel-1-img-measure").css("position",	"relative");
+				$("#carousel-1-img-measure").css("text-align",	"center");
+				$("#additional-info").css("padding-top", "1em");
+				
+				console.log("CHANGED CSS in initnocarousel");
+
+				
 				// if the thumbnail loaded then show it, otherwise restore the alt text (but prevent it from breaking the layout)
 				if($("#carousel-1-img-measure").width()>0){
 					
-					if(carouselData[0].lightboxable){
-	//					alert("no carousel, set the lightboxable label to map entry " + JSON.stringify(carouselData[0].lightboxable) );
+					if(carouselData[0].external){
+	//					alert("no carousel, set the external label to map entry " + JSON.stringify(carouselData[0].external) );
 						
-						eu.europeana.fulldoc.lightboxable = carouselData[0].lightboxable;
-						eu.europeana.fulldoc.loadLightboxJS();
+						eu.europeana.fulldoc.lightboxable = carouselData[0].external;
+						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 					}	
 				}
 				else{
@@ -793,29 +854,25 @@ eu.europeana.fulldoc = {
 						$(ob).attr("alt", $(ob).data.alt);
 					});
 				}
-				// show either the thumbnail or the alt text
-				$("#carousel-1-img-measure img").removeClass("no-show");
-				$("#carousel-1-img-measure").css("position",	"relative");
-				$("#carousel-1-img-measure").css("text-align",	"center");
-				$("#additional-info").css("padding-top", "1em");
+
+				
+				
 			};
 			
-			
-			//alert($proper.length);
-			//initNoCarousel();return;
-			//alert(JSON.stringify(carouselData))
-			
-			console.log("carouselTest = " + (typeof carouselTest)  );
-			
-			if(typeof carouselTest == 'object'){ // we only need a carousel if there's more than one image to show
-				$(	'<img src="' + carouselTest[0].src + '" style="display:none">'
-						+
-					'<img src="' + carouselTest[1].src + '" style="display:none">')
-				.appendTo('body').imagesLoaded(
-					function($images, $proper, $broken){
+			// Run carousel test and init if successful
+			if(typeof carouselTest == 'object'){
+				
+				var testHtml = '';
+				
+				$(carouselTest).each(function(i, ob){
+					testHtml += '<img src="' + carouselTest[i].src + '" style="display:none"/>';
+				});
+								
+				$(testHtml).appendTo('body').imagesLoaded(
 						
+					function($images, $proper, $broken){			
 						if($proper.length==carouselTest.length){
-							console.log("carousel test passed: src was " +  $($proper[0]).attr("src")   );
+							console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
 							eu.europeana.fulldoc.getCarousel1Height = function(){
 								var tallestImageH = $("#carousel-1-img-measure").height();
 								var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
