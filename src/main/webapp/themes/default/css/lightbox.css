@@ -252,8 +252,7 @@ div.lb-trigger{
 	bottom:		0;
 	left:		0.25em;
 	cursor:		pointer;
-	z-index:	1;
-	z-index:30;							/* ANDY - this won't be needed once put in place.....  */
+	z-index:	30;
 }
 
 div.lb-trigger span.icon-magplus{
