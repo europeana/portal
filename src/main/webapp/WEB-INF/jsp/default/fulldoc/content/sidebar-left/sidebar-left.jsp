@@ -1,3 +1,5 @@
+<%@ page import="java.net.URLDecoder"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -13,12 +15,6 @@
 	<h2 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h2>
 		
 	<%-- thumbnail (hidden seo image) --%>
-	
-	
-	<%-- 
-		model.thumbnailUrl = ${model.thumbnailUrl} 
-	--%>
-	
 		
 	<div id="carousel-1-img-measure">
 	
@@ -28,14 +24,10 @@
 		<c:set var="alt"		value=""/>
 		
 		
-		
 		<c:if test="${not empty model['thumbnailUrl']}">
-			<%--c:set var="thumbnail" value="${model.thumbnailUrl}"/--%>
-			<c:set var="thumbnail" value="${fn:escapeXml(model.thumbnailUrl)}"/>
-			
-									
-									
+			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
 		</c:if>
+
 
 		<c:if test="${not empty model.document['edmType']}">
 			<c:set var="dataType" value="${fn:toLowerCase(model.document.edmType)}"/>
@@ -45,6 +37,7 @@
 			<c:set var="alt" value="${fn:escapeXml(model.pageTitle)}"/>
 		</c:if>
 
+	
 		<img	src			= "${thumbnail}"
 				alt			= "${alt}"
 				data-type	= "${dataType}"
@@ -67,46 +60,66 @@
 				</c:if>
 			
 				<c:forEach items="${model.allImages}" var="image">
+					
+					
 					carouselData[carouselData.length] = {
-						"image":		decodeURI("${image.full}").replace(/&amp;/g, '&'),
+						"image":		decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
 						"title":		('${fn:escapeXml(model.objectTitle)}'),
 						"dataType":		"${fn:toLowerCase(dataType)}"
 					};
-					
-					<c:if test="${image.full != model.thumbnailUrl}">
-						carouselData[carouselData.length-1].lightboxable = {
+
+					<c:if test="${fn:length(image.full) > 0}">
+						carouselData[carouselData.length-1].external = {
 							"url" 	: "${image.full}",
 							"type"	: "${fn:toLowerCase(image.type)}"
 						}
 					</c:if>
-						
-<%-- double data to test carousel init--%>					
 				
-<%--					
-var carouselTest = [
-					{"src": decodeURI("${model.allImages[0].full}").replace(/&amp;/g, '&')},
-					{"src": decodeURI("${model.allImages[1].full}").replace(/&amp;/g, '&')}
-				];
 						
+// js manipulation pdf:
+/*
+if( carouselData[carouselData.length-1].image == "http://europeanastatic.eu/api/image?uri=http://hdl.handle.net/10978/F475B1DF-116F-4723-AC7A-26A5FEB48367?locatt=view:level2&size=FULL_DOC"   ){
+	carouselData[carouselData.length-1].external = {
+			"url" 	: "http://cgil.maas.ccr.it/cgil/AJAXAttachment.ashx?resource=cgilcongenealogia/pdf/001065.pdf",
+			"type"	: "pdf"
+	}
+}
+*/
+    		   
+    		   
+    		   
+    		   
+
+<%-- double data to test carousel init--%>									
+<%--
+var carouselTest = [
+	{"src": decodeURI("${model.allImages[0].full}").replace(/&amp;/g, '&')},
+];
+
 carouselData[carouselData.length] = {
-	"image":		decodeURI("${image.full}").replace(/&amp;/g, '&'),
+	"image":		"http://content6.flixster.com/question/65/91/23/6591236_std.jpg",
 	"title":		('${fn:escapeXml(model.objectTitle)}'),
 	"dataType":		"${fn:toLowerCase(dataType)}"
-	
 };
 
-<c:if test="${image.full != model.thumbnailUrl}">
-	carouselData[carouselData.length-1].lightboxable = {
-		"url" 	: "${image.full}",
+<c:if test="${fn:length(image.full) > 0}">
+	carouselData[carouselData.length-1].external = {
+		"url" 	: "http://content6.flixster.com/question/65/91/23/6591236_std.jpg",
 		"type"	: "${fn:toLowerCase(image.type)}"
 	}
-	
 </c:if>
-	--%>
+--%>
+<%-- end double data to test carousel init--%>									
 
 				</c:forEach>
 			</c:if>
-	
+
+			
+// js manipulation alternative lightbox:
+     
+
+//carouselData[0].external.type = 'pdf';
+
 		</script>
 	</div>
 
