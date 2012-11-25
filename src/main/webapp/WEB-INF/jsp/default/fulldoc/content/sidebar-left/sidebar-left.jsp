@@ -78,14 +78,13 @@
 						
 // js manipulation pdf:
 /*
-if( carouselData[carouselData.length-1].image == "http://europeanastatic.eu/api/image?uri=http://hdl.handle.net/10978/F475B1DF-116F-4723-AC7A-26A5FEB48367?locatt=view:level2&size=FULL_DOC"   ){
-	carouselData[carouselData.length-1].external = {
-			"url" 	: "http://cgil.maas.ccr.it/cgil/AJAXAttachment.ashx?resource=cgilcongenealogia/pdf/001065.pdf",
-			"type"	: "pdf"
+	if( carouselData[carouselData.length-1].image == "http://europeanastatic.eu/api/image?uri=http://hdl.handle.net/10978/F475B1DF-116F-4723-AC7A-26A5FEB48367?locatt=view:level2&size=FULL_DOC"   ){
+		carouselData[carouselData.length-1].external = {
+				"url" 	: "http://cgil.maas.ccr.it/cgil/AJAXAttachment.ashx?resource=cgilcongenealogia/pdf/001065.pdf",
+				"type"	: "pdf"
+		}
 	}
-}
-*/
-    		   
+*/	   
     		   
     		   
     		   
@@ -108,6 +107,7 @@ carouselData[carouselData.length] = {
 		"type"	: "${fn:toLowerCase(image.type)}"
 	}
 </c:if>
+
 --%>
 <%-- end double data to test carousel init--%>									
 
