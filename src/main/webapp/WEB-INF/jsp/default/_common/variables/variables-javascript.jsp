@@ -191,11 +191,17 @@ eu.europeana.vars.timeline = {};
 		</c:choose>
 
 		<%-- Translation data for lightbox triggers: map lightboxble type to message --%>
-		eu.europeana.vars.triggerLabels = {
-				'image'		:	'<spring:message code="view_t"		/>',
-				'play'		:	'<spring:message code="play_t"		/>',
-				'download'	:	'<spring:message code="download_t"	/>',
-				'pdf'		:	'<spring:message code="read_t"		/>'
+		
+		
+		eu.europeana.vars.external = {
+			triggers: {
+				labels : {
+					'image'		:	'<spring:message code="view_t"		/>',
+					'play'		:	'<spring:message code="play_t"		/>',
+					'download'	:	'<spring:message code="download_t"	/>',
+					'pdf'		:	'<spring:message code="read_t"		/>'
+				}
+			}
 		};
 		
 		
