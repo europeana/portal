@@ -526,4 +526,16 @@ h1 {
 	display: none;
 }
 
-	
+
+div.lb-trigger{
+	position:	absolute;
+	bottom:		0;
+	left:		0.25em;
+	cursor:		pointer;
+	z-index:	30;
+}
+
+div.lb-trigger span.icon-magplus{
+	color:			white;
+	text-shadow:	0 0 2px #000000;
+}
