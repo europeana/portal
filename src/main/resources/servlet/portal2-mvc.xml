@@ -94,6 +94,7 @@
 	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
 
 	<bean id="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />
+	<bean id="responsiveImageCache" class="eu.europeana.portal2.web.util.ResponsiveImageCache" />
 
 	<bean id="beans" class="eu.europeana.portal2.web.util.Beans">
 		<property name="userService" ref="corelib_db_userService" />

@@ -26,9 +26,13 @@
 
 	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
 
-	<bean id="staticPageController"
-		class="eu.europeana.portal2.web.controllers.statics.StaticPageController" />
-	<bean name="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />
+	<bean id="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />
+	<bean id="responsiveImageCache" class="eu.europeana.portal2.web.util.ResponsiveImageCache" />
+
+	<bean id="staticPageController" class="eu.europeana.portal2.web.controllers.statics.StaticPageController">
+		<property name="staticPageCache" ref="staticPageCache" />
+		<property name="responsiveImageCache" ref="responsiveImageCache" />
+	</bean>
 	<bean name="clickStreamLogger" class="eu.europeana.portal2.web.util.ClickStreamLoggerImpl" />
 
 	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
