@@ -294,7 +294,7 @@
 				'type' : 'image',
 				'class' : this.options.nav_button_size,
 				'alt' : 'previous',
-				'src' : '/portal2/themes/common/images/icons/carousel-arrow-left.png',
+				'src' : '/portal/themes/common/images/icons/carousel-arrow-left.png',
 				'style' : 'display: none;',
 				'data-dir' : 'prev'
 			});
@@ -303,7 +303,7 @@
 				'type' : 'image',
 				'class' : this.options.nav_button_size,
 				'alt' : 'next',
-				'src' : '/portal2/themes/common/images/icons/carousel-arrow-right.png',
+				'src' : '/portal/themes/common/images/icons/carousel-arrow-right.png',
 				'style' : 'display: none;',
 				'data-dir' : 'next'
 			});
