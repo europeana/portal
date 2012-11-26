@@ -47,7 +47,7 @@
 
 	<!-- Added for jetty -->
 	<build>
-		<finalName>portal2</finalName>
+		<finalName>portal</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
