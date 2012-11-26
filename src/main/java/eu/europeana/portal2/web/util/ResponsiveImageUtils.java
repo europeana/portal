@@ -61,6 +61,9 @@ public class ResponsiveImageUtils {
 
 		if (dir == null) {
 			directory = (responsiveCache != null) ? responsiveCache : staticPagePath + CACHEDIR;
+			if (!directory.endsWith("/")) {
+				directory += "/";
+			}
 			dir = new File(directory);
 			if (!dir.exists()) {
 				dir.mkdir();
@@ -107,7 +110,6 @@ public class ResponsiveImageUtils {
 			// work out new image name 
 			String fileUrl = "/sp/rss-blog-cache/" + fileName;
 			String filePath = directory + fileName;
-			log.info("File path: " + filePath);
 
 			File outputfile = new File(filePath);
 			BufferedImage responsive = null;
