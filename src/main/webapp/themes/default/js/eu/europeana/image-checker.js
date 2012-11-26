@@ -33,7 +33,7 @@ eu.europeana.image_checker = {
 				var type = ( jQuery(this).attr('data-type') );
 				
 				if ( type ) {
-					this.src = '/portal/branding/portal2/images/icons/' + jQuery(this).attr('data-type') + '.png';
+					this.src = eu.europeana.vars.branding + '/images/icons/' + jQuery(this).attr('data-type') + '.png';
 				}
 				
 			}
