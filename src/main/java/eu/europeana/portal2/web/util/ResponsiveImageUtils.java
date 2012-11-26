@@ -87,6 +87,7 @@ public class ResponsiveImageUtils {
 		}
 
 		if (orig == null) {
+			log.severe(String.format("The original image (%s) is null", location));
 			return responsiveImages;
 		}
 
@@ -105,7 +106,8 @@ public class ResponsiveImageUtils {
 
 			// work out new image name 
 			String fileUrl = "/sp/rss-blog-cache/" + fileName;
-			String filePath = directory + fileName; 
+			String filePath = directory + fileName;
+			log.info("File path: " + filePath);
 
 			File outputfile = new File(filePath);
 			BufferedImage responsive = null;
