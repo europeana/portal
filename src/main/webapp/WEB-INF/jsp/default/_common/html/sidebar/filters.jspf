@@ -7,35 +7,41 @@
 	
 	<ul id="search-filter" class="notranslate">
 		<c:forEach items="${model.briefBeanView.searchFilters}" var="filter">
-			<c:set var="linkLabel">
-				<c:choose>
-					<c:when test="${!empty filter.fieldCode}">
-						<spring:message code="${filter.fieldCode}" />:
-					</c:when>
-					<c:when test="${!empty filter.field}">
-						${filter.field}:
-					</c:when>
+		
+			<c:set var="skip" value="false"/>
+			<c:if test="${filter.field == '*' && filter.label == '*' }">
+				<c:set var="skip" value="true"/>
+			</c:if>
 
-					<c:otherwise></c:otherwise>
-
-				</c:choose>
-				${filter.label}
-			</c:set>
-
-			<li>
-				<c:choose>
-					<c:when test="${!empty filter.url}">
-
-					<a href="${fn:escapeXml(filter.url)}">
-						<span class="icon-remove"></span>
-					</a>
-					
-					<a href="${fn:escapeXml(filter.urlFull)}">${linkLabel}</a>
-						<!-- a href="${fn:escapeXml(filter.url)}">${linkLabel}</a-->
-					</c:when>
-					<c:otherwise>${linkLabel}</c:otherwise>
-				</c:choose>
-			</li>
+			<c:if test="${!skip}">
+				<c:set var="linkLabel">
+					<c:choose>
+						<c:when test="${!empty filter.fieldCode}">
+							<spring:message code="${filter.fieldCode}" />:
+						</c:when>
+						<c:when test="${!empty filter.field}">
+							${filter.field}:
+						</c:when>
+						<c:otherwise></c:otherwise>
+					</c:choose>
+					${filter.label}
+				</c:set>
+				<li>
+					<c:choose>
+						<c:when test="${!empty filter.url}">
+	
+						<a href="${fn:escapeXml(filter.url)}">
+							<span class="icon-remove"></span>
+						</a>
+						
+						<a href="${fn:escapeXml(filter.urlFull)}">${linkLabel}</a>
+							<!-- a href="${fn:escapeXml(filter.url)}">${linkLabel}</a-->
+						</c:when>
+						<c:otherwise>${linkLabel}</c:otherwise>
+					</c:choose>
+				</li>
+			</c:if>
+			
 		</c:forEach>
 	</ul>
 </c:if>
