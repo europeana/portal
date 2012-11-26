@@ -122,9 +122,11 @@ eu.europeana.header = {
 
 				"fn_init": function(self){
 					var input		= $('#query-input');
-					var searchTerm	= input.val().replace("*:*", "");
+					var searchTerm	= input.attr("valueForBackButton").replace("*:*", "");
 					self.cmp.find(".item a").each(function(i, ob){
 						var searchType = $(ob).attr("class");
+						console.log("find  " + searchType + " in " + searchTerm);
+						
 						if(searchTerm.indexOf(searchType) == 0){
 							self.setLabel(searchType);
 							input.val( searchTerm.substr( searchType.length, searchTerm.length) );
