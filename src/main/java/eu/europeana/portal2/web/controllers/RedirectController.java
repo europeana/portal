@@ -45,7 +45,7 @@ public class RedirectController {
 				response.sendRedirect(urilc);
 			}
 		} else {
-			response.sendRedirect(config.getPortalServer() + config.getPortalName());
+			response.sendRedirect(config.getPortalUrl());
 		}
 	}
 

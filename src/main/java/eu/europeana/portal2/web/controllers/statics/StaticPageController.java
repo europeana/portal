@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,8 @@ import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.ResponsiveImageCache;
+import eu.europeana.portal2.web.util.StaticCache;
 import eu.europeana.portal2.web.util.StaticPageCache;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.enums.Redirect;
@@ -66,9 +69,9 @@ public class StaticPageController {
 
 	private static final String AFFIX_TEMPLATE_VAR_FOR_TITLE = "title";
 
-	private StaticPageCache staticPageCache = new StaticPageCache();
+	@Resource(name="staticPageCache") private StaticPageCache staticPageCache;
 
-	private StaticPageCache responsiveCache = new StaticPageCache();
+	@Resource(name="responsiveImageCache") private ResponsiveImageCache responsiveImageCache;
 
 	private ClickStreamLogger clickStreamLogger = new ClickStreamLoggerImpl();
 
@@ -305,13 +308,14 @@ public class StaticPageController {
 	}
 
 	private void fetchResponsiveImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		responsiveCache.setStaticPagePath(config.getResponsiveCache());
+		responsiveImageCache.setStaticPagePath(config.getResponsiveCache());
 		OutputStream out = response.getOutputStream();
 		try {
 			String pageFileName = request.getPathInfo().replace("/rss-blog-cache", "");
-			responsiveCache.writeBinaryPage(pageFileName, out);
+			responsiveImageCache.writeBinaryPage(pageFileName, out, true);
 		} catch (Exception e) {
-			log.severe("Exception during fetchVerbatimPage: " + e.getLocalizedMessage());
+			log.severe("Exception during fetchResponsiveImage: " + e.getLocalizedMessage());
+			log.info(ExceptionUtils.getFullStackTrace(e));
 		} finally {
 			out.flush();
 			out.close();
@@ -331,5 +335,9 @@ public class StaticPageController {
 
 	public void setStaticPageCache(StaticPageCache staticPageCache) {
 		this.staticPageCache = staticPageCache;
+	}
+
+	public void setResponsiveImageCache(ResponsiveImageCache responsiveImageCache) {
+		this.responsiveImageCache = responsiveImageCache;
 	}
 }

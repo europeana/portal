@@ -38,6 +38,9 @@ public class Configuration {
 	@Value("#{europeanaProperties['static.page.path']}")
 	private String staticPagePath;
 
+	@Value("#{europeanaProperties['static.page.checkFrequencyInMinute']}")
+	private Integer staticPageCheckFrequencyInMinute;
+
 	// blog settings
 	@Value("#{europeanaProperties['portal.blog.url']}")
 	private String blogUrl;
@@ -109,6 +112,9 @@ public class Configuration {
 
 	@Value("#{europeanaProperties['portal.responsive.cache']}")
 	private String responsiveCache;
+	
+	@Value("#{europeanaProperties['portal.responsive.cache.checkFrequencyInMinute']}")
+	private Integer responsiveCacheCheckFrequencyInMinute;
 
 	/////////////////////////////// generated/derivated properties
 
@@ -220,6 +226,14 @@ public class Configuration {
 
 	public String getResponsiveCache() {
 		return responsiveCache;
+	}
+
+	public Integer getStaticPageCheckFrequencyInMinute() {
+		return staticPageCheckFrequencyInMinute;
+	}
+
+	public Integer getResponsiveCacheCheckFrequencyInMinute() {
+		return responsiveCacheCheckFrequencyInMinute;
 	}
 
 	public Map<String, String> getSeeAlsoTranslations() {

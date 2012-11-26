@@ -40,14 +40,14 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.SitemapEntry;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.IngestionUtils;
-import eu.europeana.portal2.web.util.StaticPageCache;
+import eu.europeana.portal2.web.util.StaticCache;
 
 @Controller
 public class SitemapController {
 
 	@Resource(name = "configurationService") private Configuration config;
 
-	@Resource private StaticPageCache staticPageCache;
+	@Resource private StaticCache staticPageCache;
 
 	@Resource private SearchService searchService;
 
