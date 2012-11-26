@@ -83,6 +83,8 @@ public class ObjectController {
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
+	private final static String RESOLVE_PREFIX = "http://www.europeana.eu/resolve/record";
+
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
@@ -272,7 +274,7 @@ public class ObjectController {
 			String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
 			fullBean = searchService.findById(europeanaId);
 			if (fullBean == null) {
-				fullBean = searchService.resolve(europeanaId);
+				fullBean = searchService.resolve(RESOLVE_PREFIX + europeanaId);
 			}
 		} catch (SolrTypeException e) {
 			log.severe("Solr Type Exception: " + e.getMessage());
