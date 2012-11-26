@@ -1,9 +1,9 @@
 @font-face {
 	font-family: 'europeana';
-	src: url('/portal2/themes/default/images/europeana-font-files/europeana.eot?#') format('eot'),
-		url('/portal2/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'),
-		url('/portal2/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
-		url('/portal2/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
+	src: url('/portal/themes/default/images/europeana-font-files/europeana.eot?#') format('eot'),
+		url('/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'),
+		url('/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
+		url('/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	color:red !important;
