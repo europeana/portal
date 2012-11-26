@@ -30,7 +30,7 @@ public class Portal2Starter {
 		System.err.println("Webapp path = " + webapp);
 
 		try {
-			WebAppContext wac = new WebAppContext(webapp, "/portal2");
+			WebAppContext wac = new WebAppContext(webapp, "/portal");
 			server.setHandler(wac);
 		} catch (Exception e) {
 			e.printStackTrace();
