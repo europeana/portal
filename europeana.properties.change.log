@@ -54,3 +54,19 @@ Description: the absolute path of the responsive images generated in the index p
 
 example:
 portal.responsive.cache = /home/peterkiraly/Development/portal2/responsive-cache/
+
+==== 2012-11-26
+
+New properties:
+
+1) static.page.checkFrequencyInMinute
+description: after N minute the static page cache will be rechecked against new/deleted files. This property set the interval in minutes.
+
+example:
+static.page.checkFrequencyInMinute = 5
+
+2) portal.responsive.cache.checkFrequencyInMinute
+description: after N minute the responsive image cache will be rechecked against new/deleted files. This property set the interval in minutes.
+
+example:
+portal.responsive.cache.checkFrequencyInMinute = 5
