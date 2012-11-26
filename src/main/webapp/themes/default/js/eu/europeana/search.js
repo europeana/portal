@@ -199,8 +199,8 @@ eu.europeana.search = {
 				data_ga_property: eu.europeana.vars.gaId,
 				data_ga_social : true,
 				data_track_clickback: true,
-				ui_use_css : true
-				
+				ui_use_css : true,
+				ui_click: true		// disable hover
 			});
 			
 			url = jQuery('head meta[property="og:url"]').attr('content');
