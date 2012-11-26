@@ -1,19 +1,28 @@
+<%@ include file="/WEB-INF/jsp/devel/_common/variables/variables.jsp"%>
+
 <html>
 	<head>
-
 		<script type="text/javascript" src="themes/default/js/jquery/min/jquery-1.8.1.min.js"></script>
-	
-		<link rel="stylesheet" href="themes/default/css/html.css" />
-		<link rel="stylesheet" href="themes/default/css/common.css" />
-	
-		<link rel="stylesheet" href="themes/default/css/header.css" />
-		<link rel="stylesheet" href="themes/default/css/menu-main.css" />
+		<c:choose>	
+			<c:when test="${!empty model.debug && !model.debug}">
+				<link rel="stylesheet" href="themes/default/css/min/html.min.css" />
+				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
+				<link rel="stylesheet" href="themes/default/css/min/header.min.css" />
+				<link rel="stylesheet" href="themes/default/css/min/menu-main.min.css" />
+				<link rel="stylesheet" href="themes/default/css/min/europeana-font-face.min.css" />
+				<link rel="stylesheet" href="themes/default/css/min/menu-styling.min.css" />
+				<script>alert("prod");</script>
+			</c:when>
+			<c:otherwise>
+				<link rel="stylesheet" href="themes/default/css/html.css" />
+				<link rel="stylesheet" href="themes/default/css/common.css" />
+				<link rel="stylesheet" href="themes/default/css/header.css" />
+				<link rel="stylesheet" href="themes/default/css/menu-main.css" />
+				<link rel="stylesheet" href="themes/default/css/europeana-font-face.css" />
+				<link rel="stylesheet" href="themes/default/css/menu-styling.css" />
+			</c:otherwise>
+		</c:choose>
 
-		<link rel="stylesheet" href="themes/default/css/europeana-font-face.css" />
-		
-		<link rel="stylesheet" href="themes/default/css/menu-styling.css" />
-		
-		
 		<style type="text/css">
 			#e2ma_signup{
 			}
@@ -108,7 +117,6 @@
 		
 	</head>
 	<body>
-
 		<div id="footer-subscribe">	
 			
 			<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
