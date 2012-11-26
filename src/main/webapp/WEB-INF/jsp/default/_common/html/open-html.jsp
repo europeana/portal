@@ -8,9 +8,14 @@
 <!--[if IE 8]>
 <html  ${xmlns} class="ie ie8" lang="${lang}">
 <![endif]-->
-<!--[if !IE 8]> -->
-<html ${xmlns} lang="${lang}" >
-<!-- <![endif]-->
+
+<!--[if IE 9]>
+	<html ${xmlns} class="ie ie9" lang="${lang}" >
+<![endif]-->
+
+<!--[if !IE]>-->
+<html ${xmlns} lang="${lang}">
+<!--<![endif]-->
 	
 <head>
 	<meta charset="utf-8" />

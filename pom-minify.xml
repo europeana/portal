@@ -259,6 +259,23 @@
 					</execution>
 					
 					<execution>
+						<id>minify-ie9.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie9.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie9.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
 						<id>minify-index.css</id>
 						<phase>process-resources</phase>
 						<configuration>

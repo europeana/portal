@@ -107,10 +107,8 @@
 		<c:when test="${model.pageName == 'search.html'}">
 			<link rel="stylesheet" href="/${branding}/css/search.css" />
 			<link rel="stylesheet" href="/${branding}/css/search-navigation.css" />
-			<%--link rel="stylesheet" href="/${branding}/css/search-icons.css" /--%>
 			<link rel="stylesheet" href="/${branding}/css/search-pagination.css" />
 			<link rel="stylesheet" href="/${branding}/css/sidebar-facets.css" />
-			<%--link rel="stylesheet" href="/${branding}/css/sidebar-legend.css" /--%>
 			<c:if test="${model.embedded}">
 				<link rel="stylesheet" href="/${branding}/css/search-embed.css" />
 			</c:if>
@@ -121,9 +119,8 @@
 		</c:when>
 	</c:choose>
 
-	<!--[if IE]><link rel="stylesheet" href="/${branding}/css/ie.css" /><![endif]-->
-	<!--[if lte IE 7]><link rel="stylesheet" href="/${branding}/css/ie7.css" /><![endif]-->
-	<!--[if lte IE 8]><link rel="stylesheet" href="/${branding}/css/ie8.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" href="/${branding}/css/ie8.css" /><![endif]-->
+	<!--[if IE 9]><link rel="stylesheet" href="/${branding}/css/ie9.css" /><![endif]-->
 	<noscript><link rel="stylesheet" href="/${branding}/css/noscript.css" /></noscript>
 
 	<!-- debug-css -->
