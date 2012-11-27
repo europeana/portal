@@ -43,6 +43,7 @@
 					<input
 						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
 						value="<c:out value="${model.query}"/>"
+						valueForBackButton="<c:out value="${model.query}"/>"
 						/>							
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
