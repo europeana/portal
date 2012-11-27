@@ -59,16 +59,16 @@ eu.europeana.citation = {
 		this.options.html = '' 
 			+	'<div class="external-services-container">'
 			+		'<a rel="nofollow" title="Close" class="close-button icon-remove" href="">&nbsp;</a>' 
-			+		'<div class="nav" id="citation-tabs">'
-			+			'<div class="section">'
-			+				'<a href="#citestyle1">Citation</a>'
+			+		'<div class="accordion-tabs" id="citation-tabs">'
+			+			'<div class="section" id="citestyle1">'
+			+				'<a href="#">Citation</a>'
 			+				'<div class="content">'
 			+					'Copy and paste the wiki-markup below:'
 			+					'{{cite web | url=5099b038e4b05dd5e3ba8b69|title=Kniender Stifter|accessdate=2012-11-27 |publisher=Europeana}}'
 			+				'</div>'
 			+			'</div>'
-			+			'<div class="section">'
-			+				'<a href="#citestyle2">Footnote</a>'
+			+			'<div class="section" id="citestyle2">'
+			+				'<a href="#">Footnote</a>'
 			+				'<div class="content">'
 			+					'Copy and paste the wiki-markup below:'
 			+					'<br />'
@@ -86,42 +86,19 @@ eu.europeana.citation = {
 	
 	
 	handleCitationClick : function( e ) {
-		
+
+		com.google.analytics.europeanaEventTrack("Wikipedia Citation");
+
 		e.preventDefault();
 		
 		var self = e.data.self;
-		//alert("handleCitationClick\n" + self.options.html);
-		
 		
 		if(!self.options.placed){
-			
 			$(self.options.container).html(self.options.html);
 			$(self.options.container + ' ' + self.options.close_button).bind('click', { self : self }, self.toggleCitation);
 			self.options.placed = true;
-		
 		}
-		
-		self.toggleCitation( e );
-		
-		/*
-		com.google.analytics.europeanaEventTrack("Wikipedia Citation");
-
-		var self = e.data.self;
-		e.preventDefault();
-		
-		if ( !self.options.placed ) {
-			
-			jQuery( self.options.container )
-				.html( self.options.html )
-				.addClass( self.options.active );
-			
-			jQuery( self.options.container + ' ' + self.options.close_button )
-				.bind( 'click', { self : self }, self.toggleCitation );
-			
-			self.options.placed = true;
-		}
-		self.toggleCitation( e );
-		*/
+		self.toggleCitation(e);
 	},
 
 	
@@ -160,18 +137,19 @@ eu.europeana.citation = {
 	addTheTabs : function(){
 		
 		if(!eu.europeana.citation.options.tabbed){
-			
-			
-			
-			
+
 			eu.europeana.citation.options.tabbed = true;
 			
-			var callback = function(){
-				js.console.log("in callback");
-				eu.europeana.citation.selectElementContents( $('#citation .tab_content')[0]  );
+			var callback = function(index, id){
+				if($("#mobile-menu").is(":visible") ){
+					eu.europeana.citation.selectElementContents(  $('#citation .section.active>.content.is-open')[0]   );					
+				}
+				else{
+					eu.europeana.citation.selectElementContents($('#citation .tab_content')[0]);					
+				}
 			};
 			
-			eu.europeana.citation.tabs = new Tabs( $('#citation-tabs'), callback );
+			eu.europeana.citation.tabs = new AccordionTabs( $('#citation-tabs'), callback );
 			
 			
 			/*

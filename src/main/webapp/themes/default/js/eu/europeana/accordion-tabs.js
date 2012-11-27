@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var Tab = function (elIn, parentIn, indexIn) {
+	var AccordionTab = function (elIn, parentIn, indexIn) {
 		var self	= this;
 		self.el		= elIn;
 		self.a		= self.el.find("a");
@@ -12,13 +12,14 @@
 		var open = function () {
 			if(!self.el.hasClass('active')){
 				self.parent.el.find('.is-open').removeClass('is-open');
+				//self.parent.el.find('.section>.is-open').removeClass('is-open');
+
 				self.a.next().toggleClass('is-open');
 				self.parent.el.find('.active').removeClass('active');
 				self.el.addClass('active');
 				self.parent.el.find('.tab_content').html(self.a.next().html());
-				
 			 
-				self.parent.selectionMade(self.index, self.el.attr('id'));
+				self.parent.selectionMade(self.index, self.el.attr('id') );//children('a').attr('href'));
 			}
 			else{
 				self.parent.el.find('.is-open').removeClass('is-open');
@@ -38,7 +39,7 @@
 		};
 	};
 	
-	window.Tabs = function(elIn, callbackIn){
+	window.AccordionTabs = function(elIn, callbackIn){
 		var self		= this;
 		var firstTab	= null;
 		self.el			= elIn;
@@ -46,7 +47,6 @@
 		self.callback	= callbackIn;
 
 		self.selectionMade = function(index, id){
-			
 			self.activeId = id;
 			if(self.callback){
 				self.callback(index, id);
@@ -54,7 +54,7 @@
 		};
 
 		self.el.find('.section').each(function (i, ob) {
-			var tab = new Tab($(ob), self, i);
+			var tab = new AccordionTab($(ob), self, i);
 			if(i==0){
 				firstTab = tab;
 			}
