@@ -139,13 +139,7 @@ eu.europeana.fulldoc = {
 			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			callback : function() {
-				
-				
-				var x = function(){
-					self.initCarousels();	
-				};
-				setTimeout(x, 4000);//, 'x');
-				
+				self.initCarousels();	
 			}
 		}]);
 	},
@@ -398,7 +392,9 @@ eu.europeana.fulldoc = {
 				data_ga_property: eu.europeana.vars.gaId,
 				data_ga_social : true,
 				data_track_clickback: true,
-				ui_use_css : true});
+				ui_use_css : true,
+				ui_click: true		// disable hover
+			});
 		
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes
