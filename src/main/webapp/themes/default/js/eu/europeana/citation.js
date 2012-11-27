@@ -39,8 +39,9 @@ eu.europeana.citation = {
 			contents = jQuery( this.options.contents ).html(),
 			heading = jQuery( this.options.heading ).html();
 
+		/*
 		this.options.html =
-			'<div class="external-services-container">' +
+			'<div class="external-services-container">' + 
 					'<div id="citetabs">' +				
 						'<h3><a href="#citestyle1" class="active"	onClick="javascript:return false;">' + eu.europeana.vars.msg.cite.citation + '</a></h3>' + 
 						'<h3><a href="#citestyle2"  				onClick="javascript:return false;">' + eu.europeana.vars.msg.cite.footnote + '</a></h3>' + heading ;
@@ -54,11 +55,55 @@ eu.europeana.citation = {
  					self.options.html += '<div class="' + clss + '" ' + style + ' id="citestyle' + (index+1) + '">' + item.innerHTML + '</div>';
  				});
 		this.options.html += '</div></div>';
+		*/
+		this.options.html = '' 
+			+	'<div class="external-services-container">'
+			+		'<a rel="nofollow" title="Close" class="close-button icon-remove" href="">&nbsp;</a>' 
+			+		'<div class="nav" id="citation-tabs">'
+			+			'<div class="section">'
+			+				'<a href="#citestyle1">Citation</a>'
+			+				'<div class="content">'
+			+					'Copy and paste the wiki-markup below:'
+			+					'{{cite web | url=5099b038e4b05dd5e3ba8b69|title=Kniender Stifter|accessdate=2012-11-27 |publisher=Europeana}}'
+			+				'</div>'
+			+			'</div>'
+			+			'<div class="section">'
+			+				'<a href="#citestyle2">Footnote</a>'
+			+				'<div class="content">'
+			+					'Copy and paste the wiki-markup below:'
+			+					'<br />'
+			+					'&lt;ref&gt;{{cite web | url=5099b038e4b05dd5e3ba8b69|title=Kniender Stifter|accessdate=2012-11-27 |publisher=Europeana}}&lt;/ref&gt;'
+			+				'</div>'
+			+			'</div>'
+			+		'</div>'
+			+	'</div>';
+		
+		
+		//alert("html = \n\n" + this.options.html);
+		
 		jQuery( this.options.link ).bind( 'click', { self : self }, this.handleCitationClick );
 	},
 	
 	
 	handleCitationClick : function( e ) {
+		
+		e.preventDefault();
+		
+		var self = e.data.self;
+		//alert("handleCitationClick\n" + self.options.html);
+		
+		
+		if(!self.options.placed){
+			
+			$(self.options.container).html(self.options.html);
+			$(self.options.container + ' ' + self.options.close_button).bind('click', { self : self }, self.toggleCitation);
+			self.options.placed = true;
+		
+		}
+		
+		self.toggleCitation( e );
+		
+		/*
 		com.google.analytics.europeanaEventTrack("Wikipedia Citation");
 
 		var self = e.data.self;
@@ -76,16 +121,17 @@ eu.europeana.citation = {
 			self.options.placed = true;
 		}
 		self.toggleCitation( e );
+		*/
 	},
 
 	
 	toggleCitation : function( e ) {
 		e.preventDefault();
-		jQuery( e.data.self.options.container ).toggle('slow', function(){
+		$(e.data.self.options.container).toggle('slow', function(){
 			eu.europeana.citation.addTheTabs();
-		} );
-		
+		});
 	},
+	
 	
 	selectElementContents : function(el) {
 	    var range;
@@ -112,7 +158,23 @@ eu.europeana.citation = {
 	},
 	
 	addTheTabs : function(){
+		
 		if(!eu.europeana.citation.options.tabbed){
+			
+			
+			
+			
+			eu.europeana.citation.options.tabbed = true;
+			
+			var callback = function(){
+				js.console.log("in callback");
+				eu.europeana.citation.selectElementContents( $('#citation .tab_content')[0]  );
+			};
+			
+			eu.europeana.citation.tabs = new Tabs( $('#citation-tabs'), callback );
+			
+			
+			/*
 			eu.europeana.tabsCitation = {};
 			eu.europeana.tabsCitation.tabs = new com.gmtplusone.tabs(
 			'#citetabs',
@@ -135,14 +197,20 @@ eu.europeana.citation = {
 						eu.europeana.citation.selectElementContents(document.getElementById("citestyle1"));
 					}		
 			);
+			
+			*/
+			
 		}
 		else{
-			var openTab = com.gmtplusone.tabs.prototype.getOpenTabId();
-			if(openTab){
-				eu.europeana.citation.selectElementContents(document.getElementById(openTab));				
-			}
+			
+			
+			eu.europeana.citation.selectElementContents( $('#citation .tab_content')[0]  );
+					
+									
+	
 		}
 	}
+	
 };
 
 
