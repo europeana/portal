@@ -138,6 +138,24 @@ carouselData[carouselData.length] = {
 		<div class="clear"></div>
 		
 	</div>
+	
+	
+	<div id="citation">
+		<c:if test="${not empty model['citeStyles']}">
+			<div id="citations">
+				<c:forEach items="${model.citeStyles}" var="citeStyle"  varStatus="status">
+					<c:if test="${status.first}">
+						<div class="citation">
+							${citeStyle.citeText}
+						</div>
+						<div class="citation">
+							&lt;ref&gt;${citeStyle.citeText}&lt;/ref&gt;
+						</div>
+					</c:if>
+				</c:forEach>
+			</div>
+		</c:if>
+	</div>
 		
 	<div class="actions">	
 		
@@ -153,27 +171,6 @@ carouselData[carouselData.length] = {
 		<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
 			<span class="action-title"><spring:message code="Cite_Button_t" /></span>
 		</a>
-		
-		<div id="citation">
-			<c:if test="${not empty model['citeStyles']}">
-				<c:forEach items="${model.citeStyles}" var="citeStyle">
-					<div class="header">
-						<div class="heading"><spring:message code="Cite_Header_t" />
-							<a href="" class="close-button icon-remove" title="<spring:message code="Close_Button_t" />" rel="nofollow">&nbsp;</a>
-						</div>
-					</div>
-				
-					<div id="citations">
-						<div class="citation">
-							${citeStyle.citeText}
-						</div>
-						<div class="citation">
-							&lt;ref&gt;${citeStyle.citeText}&lt;/ref&gt;
-						</div>
-					</div>
-				</c:forEach>
-			</c:if>
-		</div>
 		
 		<%-- Embed link --%>
 		<%--
