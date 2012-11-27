@@ -9,10 +9,8 @@
 #citation .external-services-container {
 	display:	block;
 	height:		auto;
-	
 	left:		20px;	/* centering */
 	right:		20px;
-	top:		-2em;
 	position:	absolute;		
 }
 
@@ -109,15 +107,24 @@
 	border-right:	none;
 }
 
+#citation-link{
+	outline:	0;
+	border:		0;	
+}
+
+#citation-tabs .tab_content .copy,
+#citation-tabs .section .copy{
+	display:	block;	
+}
+
 @media only screen and ( min-width:48em ){
 	
 	.external-services-container {
 		position:			fixed !important;
 		width:				456px;
 		margin-left:		-228px;
-		margin-top:			-30px;
 		left:				50% !important;
-		top:				50% !important;
+		top:				40% !important;
 		padding:			0 1em 0 1em;
 	}
 	
