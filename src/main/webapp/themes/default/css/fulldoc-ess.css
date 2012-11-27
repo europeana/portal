@@ -34,7 +34,9 @@
 	padding: 10px 30px 10px 10px;
 }
 
+
 /* end citation */
+
 
 
 .external-services-container {
@@ -50,12 +52,11 @@
 	-webkit-box-shadow:	3px 3px 8px #dfdfdf;
 	box-shadow:			3px 3px 8px #dfdfdf;
 	overflow:			hidden;
-	border:				1px solid black;
-	padding-top:		4px;
+	border:				1px solid #333;
+	padding-top:		1em;
 }
 
 #citestyle1, #citestyle2{
-	margin:		4px;
 	word-wrap:	break-word;
 }
 
@@ -81,6 +82,7 @@
 	top:				0.25em;
 	right:				0.25em;
 	color:				#DADADA;
+	z-index:			1;
 }
 	
 .external-services-container a.close-button:hover {
@@ -102,6 +104,10 @@
 }
 
 
+#citation-tabs  > .section > .content, #citation-tabs  > .section > a{
+	border-left:	none;
+	border-right:	none;
+}
 
 @media only screen and ( min-width:48em ){
 	
@@ -112,6 +118,7 @@
 		margin-top:			-30px;
 		left:				50% !important;
 		top:				50% !important;
+		padding:			0 1em 0 1em;
 	}
 	
 	.external-services-container p {
@@ -135,7 +142,7 @@
 	}
 	
 	.external-services-container .services {
-		padding: 10px 0 10px 10px;
+		padding: 0.75em 0 0.75em 0.75em;
 	}
 	
 	.external-services-container .service {

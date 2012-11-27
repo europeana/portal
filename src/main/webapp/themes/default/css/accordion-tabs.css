@@ -1,27 +1,26 @@
 
-.nav{
-	margin:			1em auto;
-	xxxxxwidth:			95%;
-	position:		relative;
-	padding:		0;
+.accordion-tabs{
+	margin:				1em auto;
+	position:			relative;
+	padding:			0;
 	background-color:	#fff;
 }
 
 
-.nav>.section>a{
+.accordion-tabs>.section>a{
 	border:		1px solid #a0a0a0;
 }
-.nav>.section:not(:first-child)>a{
+.accordion-tabs>.section:not(:first-child)>a{
 	border-top:	none;
 }
 
-.nav>.section>.content{
+.accordion-tabs>.section>.content{
 	border:		1px solid #a0a0a0;
 	border-top:	none;
 }
 
 
-.nav .section a{
+.accordion-tabs .section a{
 	display:		block;
 	padding:		0.25em 1em;
 	text-decoration:	none;
@@ -29,17 +28,15 @@
 	outline:		0;
 }
 
-
-
-.nav .section a:hover{
+.accordion-tabs .section a:hover{
 	text-decoration:	underline;
 }
 
-.nav .section a:hover, .nav .section.active a{
+.accordion-tabs .section a:hover, .accordion-tabs .section.active a{
 	color:		#666666;
 }
 
-.nav .content{
+.accordion-tabs .content{
 	display:	none;
 	overflow:	hidden; 
 	padding:	1em;
@@ -56,19 +53,9 @@
 }
 
 
-@media only screen and (min-width: 60em) { 
+@media only screen and ( min-width:48em ){
 
-	.nav{
-		xxxxxwidth:		40%;
-	}
-
-
-	.nav>.section>a, .nav>.section>.content{
-		border:		none;
-	}
-
-
-	.nav .section{
+	.accordion-tabs .section{
 		display:				inline-block;
 
 		-moz-border-radius-topleft:		5px;
@@ -82,26 +69,30 @@
 	}
 
 
-	.nav .section{
+	.accordion-tabs .section{
 		border:		1px solid #a0a0a0;
 	}
 
-	.nav .tab_content{
+	.accordion-tabs .tab_content{
 		border-top:	1px solid #a0a0a0;
 	}
 
-	.nav .section.active{
+	.accordion-tabs .section.active{
 		border-bottom:	1px solid #fff;
 	}
 
 
-	.nav .tab_content{
+	.accordion-tabs .tab_content{
 		display:	block;
 		padding:	1em;
 	}
 
 	.is-open{
 		display:	none !important;
+	}
+	
+	.accordion-tabs>.section>a{
+		border:		none;
 	}
 
 }
