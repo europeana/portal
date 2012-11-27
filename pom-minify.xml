@@ -56,6 +56,26 @@
 						</goals>
 					</execution>
 					
+					
+					<!-- separate file for newsletter -->
+					<execution>
+						<id>minify-europeana-font-face.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>europeana-font-face.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					
 					<execution>
 						<id>minify-fulldoc.css</id>
 						<phase>process-resources</phase>
