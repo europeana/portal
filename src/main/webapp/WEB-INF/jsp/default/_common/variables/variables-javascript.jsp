@@ -64,8 +64,15 @@
 <c:set var="timeline_result_limit_exceeded"><spring:message code="timelineDisclaimer_t" /></c:set>
 
 <%-- Citation (fulldoc) --%>
+
+<%-- Andy: these two no longer in use: --%>
 <c:set var="citation_tab_citation"><spring:message code="Cite_Tab_Title_Citation_t" /></c:set>
 <c:set var="citation_tab_footnote"><spring:message code="Cite_Tab_Title_Footnote_t" /></c:set>
+
+<%-- Andy: these two are in use: --%>
+<c:set var="citation_header"><spring:message code="Cite_Header_t" /></c:set>
+
+
 
 <%-- Map Controls --%>
 <c:set var="mapview_zoom"><spring:message code="mapview_zoom_t" /></c:set>
@@ -153,7 +160,6 @@ eu.europeana.vars.timeline = {};
 <c:if test="${model[jsonUrlTimeline]}">
 	eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 </c:if>
-
 <c:choose>
 	<c:when test="${model.pageName == 'index.html'}">
 		eu.europeana.vars.pinterest = {};
@@ -180,6 +186,9 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
 
+		eu.europeana.vars.msg.cite.citation_header	= '${fn:escapeXml(citation_header)}';
+		eu.europeana.vars.msg.cite.close			= '${fn:escapeXml(close)}';
+		
 		eu.europeana.vars.galleria = {};
 		<c:choose>
 			<c:when test="${!empty model.minify && model.minify}">
