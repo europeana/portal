@@ -12,14 +12,11 @@
 		var open = function () {
 			if(!self.el.hasClass('active')){
 				self.parent.el.find('.is-open').removeClass('is-open');
-				//self.parent.el.find('.section>.is-open').removeClass('is-open');
-
 				self.a.next().toggleClass('is-open');
 				self.parent.el.find('.active').removeClass('active');
-				self.el.addClass('active');
+				self.el.addClass('active');	
 				self.parent.el.find('.tab_content').html(self.a.next().html());
-			 
-				self.parent.selectionMade(self.index, self.el.attr('id') );//children('a').attr('href'));
+				self.parent.selectionMade(self.index, self.el.attr('id') );
 			}
 			else{
 				self.parent.el.find('.is-open').removeClass('is-open');

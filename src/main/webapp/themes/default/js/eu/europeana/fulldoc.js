@@ -42,64 +42,33 @@ eu.europeana.fulldoc = {
 			callback : function() { eu.europeana.ess.init(); }
 		}]);
 		
-		
-		// dependency group - embed functionality
-		
 		js.loader.loadScripts([{
 			file: 'window-open' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/js/' + js.min_directory
-		}]);		
-
-
-		// dependency group - carousel, tabs and truncate content functionality (+citation)
-
-/*
-		js.loader.loadScripts([{
-			name : 'tabs',
-			file : 'tabs' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory,
-			callback : function() {self.addTabs();}
 		}]);
-		js.loader.loadScripts([{
-			file : 'citation' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'tabs' ],
-			callback: function(){eu.europeana.citation.init();}
-		}]);
-*/
 		
 		js.loader.loadScripts([{
 			name : 'accordion-tabs',
 			file : 'accordion-tabs' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
-			//,callback : function() {self.addTabs();}
 		}]);
-
 		
 		js.loader.loadScripts([{
 			file : 'citation' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			//dependencies : [ 'tabs' ],
 			dependencies : [ 'accordion-tabs' ],
 			callback: function(){
-				try{					
-					eu.europeana.citation.init();
-				}
-				catch(e){
-					alert(JSON.stringify(e));
-				}
+				eu.europeana.citation.init();
 			}
 		}]);
 
-		/*
 		js.loader.loadScripts([{
 			name : 'truncate-content',
 			file : 'truncate-content' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory,
-			callback: function() { self.adjustDescription(); },
-			dependencies : ['tabs']
+			callback: function() { self.adjustDescription(); }
 		}]);
-		*/
+		
 			
 		// dependency group - addthis functionality
 			
