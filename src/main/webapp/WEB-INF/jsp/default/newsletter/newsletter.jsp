@@ -11,7 +11,6 @@
 				<link rel="stylesheet" href="themes/default/css/min/menu-main.min.css" />
 				<link rel="stylesheet" href="themes/default/css/min/europeana-font-face.min.css" />
 				<link rel="stylesheet" href="themes/default/css/min/menu-styling.min.css" />
-				<script>alert("prod");</script>
 			</c:when>
 			<c:otherwise>
 				<link rel="stylesheet" href="themes/default/css/html.css" />
