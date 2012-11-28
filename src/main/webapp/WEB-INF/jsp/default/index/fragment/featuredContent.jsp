@@ -76,7 +76,7 @@
                --%>rel='nofollow'<%--
                --%>class='icon-external-right europeana'><%--
                --%><spring:message code="featured-partner-visit_text_t"/>&nbsp;<%--
-               --%><spring:message code="featured-partner-visit_name_t"/><%--
+               --%><spring:message code="${model.featuredPartner.anchorTitle}"/><%--
                --%></a><%--
              --%></li><%--
            --%></ul><%--
