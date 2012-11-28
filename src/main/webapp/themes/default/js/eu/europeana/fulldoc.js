@@ -150,18 +150,6 @@ eu.europeana.fulldoc = {
 		
 	},
 	
-	
-	addTabs : function() {
-		if($('#explore-further').length==0){
-			return;
-		}
-		eu.europeana.tabs = {};
-		eu.europeana.tabs.explore = new com.gmtplusone.tabs(
-			'#explore-further'
-		);
-		eu.europeana.tabs.explore.init();
-	},
-	
 	openTab : function() {
 		if(typeof eu.europeana.tabs == "undefined"){
 			return;
@@ -709,13 +697,15 @@ eu.europeana.fulldoc = {
 	},
 	
 	initBottomCarousel : function(){
-
+		
 		if(typeof carousel2Data != 'undefined'){
 			
+			var carousel2selector = $('#carousel-2-tabbed').is(":visible") ? '#carousel-2-tabbed' : '#carousel-2'; 
+			
 			// 150 too small for iphone: make min height 200
-   			$('#carousel-2').css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
+   			$(carousel2selector).css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
    			
-   			Galleria.run('#carousel-2', {
+   			Galleria.run(carousel2selector, {
    				debug:			js.debug,
 				transition:		'fadeslide',
 				carousel:		true,
@@ -731,7 +721,7 @@ eu.europeana.fulldoc = {
 				extend: function(e){
 					var doEllipsis = function(){
 						var ellipsisObjects = [];
-						jQuery('#carousel-2 .europeana-carousel-info').each(
+						jQuery(carousel2selector + ' .europeana-carousel-info').each(
 							function(i, ob){
 								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 							}
@@ -757,46 +747,17 @@ eu.europeana.fulldoc = {
 		var lightboxableCount = 0;
 		for(var i=0; i<carouselData.length; i++){
 			if(carouselData[i].external && carouselData[i].external.type == 'image'){
-				
-				console.log("\t\tlightboxable " + carouselData[i].external.url);
-
+				//js.console.log("\t\tlightboxable " + carouselData[i].external.url);
 				lightboxableCount++;
 			}
 		}
-		console.log("getLightboxableCount returns " + lightboxableCount);
+		//js.console.log("getLightboxableCount returns " + lightboxableCount);
 		return lightboxableCount;
 	},
-	/*
-	sanitiseData: function(carouselData){
-
-		var newCarouselData = [];
-		$(carouselData).each(function(i, ob){
-			var disqualified = false;
-			
-			if(ob.image == "http://catalogue.nli.ie/Record/L_CAB_08689?loadLightbox=yes" ){
-				disqualified = true;
-			}
-			if(ob.lightboxable){
-				if(ob.lightboxable.url == "http://catalogue.nli.ie/Record/L_CAB_08689?loadLightbox=yes"){
-					disqualified = true;					
-				}
-				if(ob.image == ob.lightboxable.url){
-				//	disqualified = true;
-				}
-			}
-			if(!disqualified){
-				newCarouselData[newCarouselData.length] = ob;
-			}
-		});
-		return newCarouselData;
-	},
-	*/
-	
 	
 	
 	initCarousels: function(){
 		
-//carouselData = eu.europeana.fulldoc.sanitiseData(carouselData);
 		
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 			
@@ -808,32 +769,22 @@ eu.europeana.fulldoc = {
 				$(ob).attr("alt", "");
 			});
 			
-
-			
-			console.log("measured carousel 1 images: div width is " + $("#carousel-1-img-measure").width() );
-
+			js.console.log("measured carousel 1 images: div width is " + $("#carousel-1-img-measure").width() );
 			
 			
 			// this is where we go when images don't load
 			var initNoCarousel = function(){
 				
 				// show either the thumbnail or the alt text
-				console.log("CHANGE CSS in initnocarousel");
 				
 				$("#carousel-1-img-measure img").removeClass("no-show");
 				$("#carousel-1-img-measure").css("position",	"relative");
 				$("#carousel-1-img-measure").css("text-align",	"center");
 				$("#additional-info").css("padding-top", "1em");
 				
-				console.log("CHANGED CSS in initnocarousel");
-
-				
 				// if the thumbnail loaded then show it, otherwise restore the alt text (but prevent it from breaking the layout)
 				if($("#carousel-1-img-measure").width()>0){
-					
 					if(carouselData[0].external){
-	//					alert("no carousel, set the external label to map entry " + JSON.stringify(carouselData[0].external) );
-						
 						eu.europeana.fulldoc.lightboxable = carouselData[0].external;
 						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 					}	
@@ -845,9 +796,6 @@ eu.europeana.fulldoc = {
 						$(ob).attr("alt", $(ob).data.alt);
 					});
 				}
-
-				
-				
 			};
 			
 			// Run carousel test and init if successful
@@ -900,7 +848,7 @@ eu.europeana.fulldoc = {
 
 		
 		$("#carousel-2-img-measure img").imagesLoaded( function(){
-			
+
 			eu.europeana.fulldoc.getCarousel2Dimensions = function(){
 
 				$("#carousel-2-img-measure img").css("display", "inline-block");
@@ -909,12 +857,15 @@ eu.europeana.fulldoc = {
   				$("#carousel-2-img-measure img").css("display", "block");  				
   				var widestImageW = $("#carousel-2-img-measure").width();
   				
-  				//console.log("getCarousel2Dimensions returns {w:" + widestImageW + ", h:" + tallestImageH + "}");
-  				
   				return {w:widestImageW, h:tallestImageH};
 			};
-			
-			eu.europeana.fulldoc.initBottomCarousel();
+	
+			new AccordionTabs( $('#explore-further'),
+				function(){
+					eu.europeana.fulldoc.initBottomCarousel();
+				}
+			);
+
 		});
 
 	},

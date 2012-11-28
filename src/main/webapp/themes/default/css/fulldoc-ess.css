@@ -54,7 +54,9 @@
 	padding-top:		1em;
 }
 
-#citestyle1, #citestyle2{
+#citestyle1,
+#citestyle2,
+#citation-tabs .tab_content{
 	word-wrap:	break-word;
 }
 

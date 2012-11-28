@@ -15,7 +15,16 @@
 				self.a.next().toggleClass('is-open');
 				self.parent.el.find('.active').removeClass('active');
 				self.el.addClass('active');	
-				self.parent.el.find('.tab_content').html(self.a.next().html());
+				
+				var contentToClone = self.a.next().find(">:first-child");
+				if(contentToClone){
+					var nextId =  contentToClone.attr("id");
+					self.parent.el.find('.tab_content').html(contentToClone[0].outerHTML);
+					self.parent.el.find('.tab_content').find("#" + nextId).attr("id", nextId + "-tabbed");
+				}
+				else{
+					self.parent.el.find('.tab_content').html(self.a.next().html());
+				}
 				self.parent.selectionMade(self.index, self.el.attr('id') );
 			}
 			else{
@@ -42,7 +51,7 @@
 		self.el			= elIn;
 		self.activeId	= '';
 		self.callback	= callbackIn;
-
+		
 		self.selectionMade = function(index, id){
 			self.activeId = id;
 			if(self.callback){

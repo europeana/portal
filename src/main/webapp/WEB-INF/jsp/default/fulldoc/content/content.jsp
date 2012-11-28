@@ -43,26 +43,27 @@
 						</c:forEach>
 					</script>
 					
-					<%-- markup for carousel --%>
-					<div id="explore-further">
-						<h3><a href="#similar-content"><spring:message code="SimilarContent_t" /></a></h3>
+					<%--
+						markup for carousel:
+						SEO friendly html rendering of images used as an image dimension measuring utility: has to live outside of the initially hidden #similar-content div
+					--%>
 
-						<%-- SEO friendly html rendering of images used as an image dimension measuring utility: has to live outside of the initially hidden #similar-content div --%>
-
-						<div id="carousel-2-img-measure">
-							<c:forEach var="similar" items="${model.moreLikeThis}">
-								<img	src			= "${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
-										alt			= "${fn:join(similar.title, ' ') }"
-										title		= "${fn:join(similar.title, ' ') }"
-										data-type	= "${fn:toLowerCase(similar.type)}"
-										class		= "no-show"/>
-							</c:forEach>
-						</div>
-
-						<div id="similar-content">
-
-							<div id="carousel-2" about="${model.document.id}" class="europeana-carousel"></div>
-							
+					<div id="carousel-2-img-measure">
+						<c:forEach var="similar" items="${model.moreLikeThis}">
+							<img	src			= "${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
+									alt			= "${fn:join(similar.title, ' ') }"
+									title		= "${fn:join(similar.title, ' ') }"
+									data-type	= "${fn:toLowerCase(similar.type)}"
+									class		= "no-show"/>
+						</c:forEach>
+					</div>
+					
+					<div id="explore-further" class="accordion-tabs">
+						<div class="section">
+							<a href="#"><spring:message code="SimilarContent_t" /></a>
+							<div class="content">
+								<div id="carousel-2" about="${model.document.id}" class="europeana-carousel"></div>
+							</div>
 						</div>
 					</div>
 
