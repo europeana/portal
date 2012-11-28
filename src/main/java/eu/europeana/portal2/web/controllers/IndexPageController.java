@@ -197,8 +197,7 @@ public class IndexPageController {
 		if (i > 1) {
 			int index = 0;
 			if (featuredItems.size() > 1) {
-				int max = featuredItems.size() - 1;
-				index = RandomUtils.nextInt(max);
+				index = RandomUtils.nextInt(featuredItems.size());
 			}
 			model.setFeaturedItem(featuredItems.get(index));
 		}
@@ -214,6 +213,7 @@ public class IndexPageController {
 		while (keepFetching) {
 			try {
 				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
+				log.info("label: " + label);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 					FeaturedPartner item = new FeaturedPartner(i);
@@ -223,6 +223,7 @@ public class IndexPageController {
 				} else {
 					keepFetching = false;
 				}
+				log.info("featuredPartners: " + featuredPartners.size());
 			} catch (NoSuchMessageException e) {
 				keepFetching = false;
 			}
@@ -231,8 +232,7 @@ public class IndexPageController {
 		if (featuredPartners.size() > 0) {
 			int index = 0;
 			if (featuredPartners.size() > 1) {
-				int max = featuredPartners.size() - 1;
-				index = RandomUtils.nextInt(max);
+				index = RandomUtils.nextInt(featuredPartners.size());
 			}
 			model.setFeaturedPartner(featuredPartners.get(index));
 		}
@@ -290,7 +290,7 @@ public class IndexPageController {
 		}
 		if ((pinterestEntries != null) && !pinterestEntries.isEmpty()) {
 			model.setPinterestItems(pinterestEntries);
-			model.setPinterestItem(pinterestEntries.get(RandomUtils.nextInt(pinterestEntries.size() - 1)));
+			model.setPinterestItem(pinterestEntries.get(RandomUtils.nextInt(pinterestEntries.size())));
 		} else {
 			model.setPinterestItem(null);
 		}
