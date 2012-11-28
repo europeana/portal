@@ -107,6 +107,7 @@ eu.europeana.fulldoc = {
 		js.loader.loadScripts([{
 			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			dependencies : [ 'accordion-tabs' ],
 			callback : function() {
 				self.initCarousels();	
 			}
@@ -657,37 +658,6 @@ eu.europeana.fulldoc = {
 					var external = gallery._options.dataSource[e.index].external;
 					
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
-
-					
-					/*
-					eu.europeana.fulldoc.lightboxable = gallery._options.dataSource[e.index].external;
-
-					alert("gallery._options.dataSource[e.index].external " + gallery._options.dataSource[e.index].external);
-					
-					//var lightboxable = gallery._options.dataSource[e.index].lightboxable;
-					if(eu.europeana.fulldoc.lightboxable && eu.europeana.fulldoc.lightboxable.url.length>0){
-						if(!eu.europeana.fulldoc.triggerPanel){
-							this.$( 'container' ).find('.galleria-images').after(
-									'<div class="lb-trigger" >'
-										+ '<span rel="#lightbox" title="' + eu.europeana.vars.external.triggers.labels[eu.europeana.fulldoc.lightboxable.type]
-													+ '" class="icon-magplus">'
-													+ eu.europeana.vars.external.triggers.labels[eu.europeana.fulldoc.lightboxable.type]
-										+ '</span>'
-									+ '</div>'
-							);
-							eu.europeana.fulldoc.triggerPanel = this.$( 'container' ).find('.lb-trigger');
-							eu.europeana.fulldoc.triggerPanel.hide();
-							eu.europeana.fulldoc.loadLightboxJS(null, gallery);
-						}
-						else{
-							eu.europeana.fulldoc.initLightbox(eu.europeana.fulldoc.lightboxable.url, gallery);
-						}
-					}
-					else{
-						eu.europeana.fulldoc.showExternalTrigger(false, eu.europeana.fulldoc.lightboxable.type, gallery);
-					}
-					*/
-
 					
 				}); // end bind image
 			

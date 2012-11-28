@@ -87,6 +87,7 @@
 							<cssSourceIncludes>
 								<cssSourceInclude>fulldoc.css</cssSourceInclude>
 								<cssSourceInclude>lightbox.css</cssSourceInclude>
+								<cssSourceInclude>accordion-tabs.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-excerpt.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
@@ -946,6 +947,9 @@
 						</goals>
 					</execution>
 					
+					
+					<!-- TODO: tabs is beiong phased out: this execution will shortly be deleted -->
+					
 					<execution>
 						<id>minify-tabs.js</id>
 						<phase>process-resources</phase>
@@ -956,6 +960,23 @@
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
 								<jsSourceInclude>tabs.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-accordion-tabs.js</id>
+						<phase>process-resources</phase>
+						<configuration>						
+							<webappTargetDir>src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>accordion-tabs.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>accordion-tabs.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
