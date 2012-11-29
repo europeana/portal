@@ -20,7 +20,7 @@
 		<c:set var="semanticAttributes">
 			${"property=\""}${schemaOrgElement.elementName}${" "}${edmElement.fullQualifiedURI}${"\""}
 		</c:set>
-		<h2 class="hide-on-phones" ${semanticAttributes}>${model.objectTitle}</h2>
+		<h1 class="hide-on-phones" ${semanticAttributes}>${model.objectTitle}</h1>
 
 		<c:forEach items="${model.document.dcTitle}" var="title">
 			<c:if test="${title != model.objectTitle }">
