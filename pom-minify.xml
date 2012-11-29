@@ -108,7 +108,6 @@
 							<cssFinalFile>map.css</cssFinalFile>
 							<cssTargetDir>min</cssTargetDir>
 							<cssSourceIncludes>
-								<cssSourceInclude>search-navigation.css</cssSourceInclude>
 								<cssSourceInclude>search-icons.css</cssSourceInclude>
 								<cssSourceInclude>search-pagination.css</cssSourceInclude>
 								<cssSourceInclude>map.css</cssSourceInclude>
