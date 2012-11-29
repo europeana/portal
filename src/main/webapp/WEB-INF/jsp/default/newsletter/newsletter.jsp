@@ -5,11 +5,7 @@
 		<script type="text/javascript" src="themes/default/js/jquery/min/jquery-1.8.1.min.js"></script>
 		<c:choose>	
 			<c:when test="${!empty model.debug && !model.debug}">
-				<link rel="stylesheet" href="themes/default/css/min/html.min.css" />
 				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
-				<link rel="stylesheet" href="themes/default/css/min/header.min.css" />
-				<link rel="stylesheet" href="themes/default/css/min/menu-main.min.css" />
-				<link rel="stylesheet" href="themes/default/css/min/europeana-font-face.min.css" />
 				<link rel="stylesheet" href="themes/default/css/min/menu-styling.min.css" />
 			</c:when>
 			<c:otherwise>
