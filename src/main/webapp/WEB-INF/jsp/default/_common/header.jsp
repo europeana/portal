@@ -6,15 +6,16 @@
 	
 		<div id="logo">
 			
-			<h1 title="<spring:message code='AltLogoEuropeana_t' />">
-			
+			<c:set var="logoWrapperTag" value="h1"/>
+			<c:if test="${model.pageName == 'full-doc.html'}">
+				<c:set var="logoWrapperTag" value="div"/>
+			</c:if>
+				
+			<${logoWrapperTag} title="<spring:message code='AltLogoEuropeana_t' />">
 				<a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
-				
 					<span class="responsive-logo" alt="<spring:message code='AltLogoEuropeana_t' />"></span>
-
 				</a>
-				
-			</h1>
+			</${logoWrapperTag}>
 
 		</div>
 		
