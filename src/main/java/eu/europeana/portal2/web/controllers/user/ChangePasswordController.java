@@ -110,7 +110,9 @@ public class ChangePasswordController {
 		if (result.hasErrors()) {
 			log.info("The change password form has errors");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_FAILURE);
-			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
+			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
+			injector.postHandle(this, page);
+			return page;
 		}
 
 		// token is validated in handleRequestInternal

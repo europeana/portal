@@ -37,7 +37,7 @@ public class ChangePasswordPageValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password2", "password2.required", "Repeat Password is required");
 
 		if (!form.getPassword().equals(form.getPassword2())) {
-			errors.rejectValue("password", "password.mismatch", "Passwords do not match");
+			errors.rejectValue("password2", "password.mismatch", "Passwords do not match");
 		}
 	}
 }
