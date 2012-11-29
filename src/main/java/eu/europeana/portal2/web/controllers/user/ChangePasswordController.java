@@ -3,13 +3,13 @@ package eu.europeana.portal2.web.controllers.user;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,7 +34,6 @@ import eu.europeana.portal2.web.presentation.model.validation.ChangePasswordPage
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
-
 
 /**
  * This Controller allows people to change their passwords
@@ -108,7 +107,7 @@ public class ChangePasswordController {
 		log.info("=========== change-password.html POST =================");
 		injector.injectProperties(model);
 		if (result.hasErrors()) {
-			log.info("The change password form has errors");
+			log.severe("The change password form has errors");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_FAILURE);
 			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
 			injector.postHandle(this, page);
@@ -118,6 +117,7 @@ public class ChangePasswordController {
 		// token is validated in handleRequestInternal
 		Token token = tokenService.findByID(model.getToken());
 		if (token == null) {
+			log.severe("Expected to find token.");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find token.");
 		}
@@ -125,6 +125,7 @@ public class ChangePasswordController {
 		// don't use email from the form. use token.
 		User user = userService.findByEmail(token.getEmail());
 		if (user == null) {
+			log.severe("Expected to find the user.");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find user for " + token.getEmail());
 		}
@@ -132,6 +133,7 @@ public class ChangePasswordController {
 		// remove token. it can not be used any more.
 		tokenService.remove(token);
 		// now update the user
+		log.info("pw: " + user.getPassword());
 		userService.changePassword(user.getId(), user.getPassword(), model.getPassword());
 		// userService.store(user); 
 		sendNotificationEmail(user);
@@ -150,7 +152,7 @@ public class ChangePasswordController {
 			// notifyEmailSender.sendEmail(model);
 			// emailService.sendFeedback(email, feedback)
 		} catch (Exception e) {
-			log.warn("Unable to send email to " + user.getEmail() + ": " + e.getLocalizedMessage());
+			log.warning("Unable to send email to " + user.getEmail() + ": " + e.getLocalizedMessage());
 		}
 	}
 }
