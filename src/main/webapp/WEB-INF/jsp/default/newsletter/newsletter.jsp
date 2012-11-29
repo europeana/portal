@@ -13,7 +13,6 @@
 				<link rel="stylesheet" href="themes/default/css/header.css" />
 				<link rel="stylesheet" href="themes/default/css/menu-main.css" />
 				<link rel="stylesheet" href="themes/default/css/europeana-font-face.css" />
-				<link rel="stylesheet" href="themes/default/css/menu-styling.css" />
 			</c:otherwise>
 		</c:choose>
 
