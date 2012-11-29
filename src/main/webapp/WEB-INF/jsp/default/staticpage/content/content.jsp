@@ -7,24 +7,16 @@
   
   
     <c:when test="${!empty model.bodyContent}">
-    
-    
 		<c:choose>
 	    	<c:when test="${!empty model.leftContent}">
-	    
-	    		<div class="eight columns">
-	    			<div style="padding-left:1em;">
-	    				${model.bodyContent}
-	    			</div>
-	    		</div>
+    			<div>
+    				${model.bodyContent}
+    			</div>
 	    	</c:when>
 		    <c:otherwise>
-			    
 				${model.bodyContent}
-	
 		    </c:otherwise>
     	</c:choose>
-    	
     </c:when>
     
     
@@ -32,6 +24,14 @@
     	<h2>Unable to find content for this page.</h2>
     </c:otherwise>
   </c:choose>
+  
+  
+  	<div class="show-on-phones">
+		<div>
+  			${model.leftContent}
+  		</div>
+  	</div>
+  	
   
   
 </div>
