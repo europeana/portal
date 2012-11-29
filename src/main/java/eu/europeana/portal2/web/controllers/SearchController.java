@@ -131,9 +131,6 @@ public class SearchController {
 			model.setBriefBeanView(briefBeanView);
 			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
-			for (BriefBean bean : briefBeanView.getBriefBeans()) {
-				log.info(bean.getId() + " " + (bean.getType() == null));
-			}
 		} catch (SolrTypeException e) {
 			log.severe("SolrTypeException: " + e.getMessage());
 			// return new ApiError("search.json", e.getMessage());
