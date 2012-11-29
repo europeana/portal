@@ -191,7 +191,7 @@ eu.europeana.vars.timeline = {};
 		
 		eu.europeana.vars.galleria = {};
 		<c:choose>
-			<c:when test="${!empty model.minify && model.minify}">
+			<c:when test="${!empty model.debug && model.debug}">
 				eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
 			</c:when>
 			<c:otherwise>
