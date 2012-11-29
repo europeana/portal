@@ -175,47 +175,53 @@ eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 		eu.europeana.vars.galleria = {};
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
-				eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+				eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
 			</c:otherwise>
 		</c:choose>
 	</c:when>
 
+
+
+<%--
+
 <c:when test="${model.pageName == 'full-doc.html'}">
-eu.europeana.vars.msg.translate_with = '${fn:escapeXml(translate_with)}';
-eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
-eu.europeana.vars.msg.more = '${see_more}';
-eu.europeana.vars.msg.less = '${see_less}';
-eu.europeana.vars.msg.select_language = '${select_language}';
 
-<c:if test="${model[googleTranslateId]}">
-eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
-</c:if>
-
-eu.europeana.vars.bing_translate_key = '${model.bingTranslateId}';
-eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
-eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
-
-<c:if test="${model[document.positionAvailable]}">
-eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
-</c:if>
-
-<c:if test="${!empty model.user}">
-eu.europeana.vars.msg.error_occurred = '${error_occurred}';
-eu.europeana.vars.msg.saved_item = '${saved_item}';
-eu.europeana.vars.msg.save_item_failed = '${save_item_failed}';
-eu.europeana.vars.msg.saved_tag = '${saved_tag}'; 
-eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
-eu.europeana.vars.item.uri = '${model.document.about}';
-</c:if>
-
-<c:if test="${model[lightboxRef]}">
-eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
-eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
-</c:if>
+	eu.europeana.vars.msg.translate_with = '${fn:escapeXml(translate_with)}';
+	eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
+	eu.europeana.vars.msg.more = '${see_more}';
+	eu.europeana.vars.msg.less = '${see_less}';
+	eu.europeana.vars.msg.select_language = '${select_language}';
+	
+	<c:if test="${model[googleTranslateId]}">
+	eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
+	</c:if>
+	
+	eu.europeana.vars.bing_translate_key = '${model.bingTranslateId}';
+	eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
+	eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
+	
+	<c:if test="${model[document.positionAvailable]}">
+	eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
+	</c:if>
+	
+	<c:if test="${!empty model.user}">
+	eu.europeana.vars.msg.error_occurred = '${error_occurred}';
+	eu.europeana.vars.msg.saved_item = '${saved_item}';
+	eu.europeana.vars.msg.save_item_failed = '${save_item_failed}';
+	eu.europeana.vars.msg.saved_tag = '${saved_tag}'; 
+	eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
+	eu.europeana.vars.item.uri = '${model.document.about}';
+	</c:if>
+	
+	<c:if test="${model[lightboxRef]}">
+	eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
+	eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
+	</c:if>
 </c:when>
+--%>
 
 <c:when test="${model.pageName == 'myeuropeana.html'}">
 <c:if test="${!empty model.user}">

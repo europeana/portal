@@ -179,7 +179,7 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.msg.less = '${see_less}';
 		eu.europeana.vars.msg.select_language = '${select_language}';
 		<c:if test="${model[googleTranslateId]}">
-		eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
+			eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
 		</c:if>
 		eu.europeana.vars.bing_translate_key = '${model.bingTranslateId}';
 
@@ -190,12 +190,13 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.msg.cite.close			= '${fn:escapeXml(close)}';
 		
 		eu.europeana.vars.galleria = {};
+		
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
-				eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+				eu.europeana.vars.galleria.css = 'min/galleria.europeanax.min.css';
 			</c:otherwise>
 		</c:choose>
 
