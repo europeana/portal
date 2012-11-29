@@ -6,15 +6,17 @@
 
 }
 
+body.iframe-newsletter,
 .footer, .footer-bottom-links{
 	background-image:	url('/portal/themes/default/images/dust.png');
 }
-
+/*
 @media all and (-webkit-min-device-pixel-ratio: 2) {
 	.footer{
-		background-image:	url('/portal/themes/default/images/dust_@2X.png');
+		background-image:	url('/portal/themes/default/images/dust.png');
 	}
 }
+*/
 
 .footer h3 a{
 	color:	#333;

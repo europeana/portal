@@ -47,7 +47,6 @@
 			
 			
 			body{
-				background-image: url("themes/default/images/dust.png");
 				margin:0;
 				padding:0;
 				margin-right:1em;  /* allow the shadow to show */
@@ -109,7 +108,7 @@
 <![endif]-->
 		
 	</head>
-	<body>
+	<body class="iframe-newsletter">
 		<div id="footer-subscribe">	
 			
 			<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
