@@ -17,9 +17,7 @@
 	<build>
 	
 		<plugins>
-			
 			<plugin><!-- START MINIFY-MAVEN-PLUGIN -->
-			
 				<groupId>com.samaxes.maven</groupId>
 				<artifactId>minify-maven-plugin</artifactId>
 				<version>1.5.2</version>
@@ -421,7 +419,7 @@
 					<execution>
 						<id>minify-addthis.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/addthis</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/addthis</jsSourceDir>
 							<jsFinalFile>addthis.js</jsFinalFile>
@@ -438,7 +436,7 @@
 					<execution>
 						<id>minify-ajax.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>ajax.js</jsFinalFile>
@@ -455,7 +453,7 @@
 					<execution>
 						<id>minify-analytics.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/google/analytics</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/google/analytics</jsSourceDir>
 							<jsFinalFile>analytics.js</jsFinalFile>
@@ -472,7 +470,7 @@
 					<execution>
 						<id>minify-bootstrap.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/bootstrap</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana/bootstrap</jsSourceDir>
 							<jsFinalFile>bootstrap.js</jsFinalFile>
@@ -489,7 +487,7 @@
 					<execution>
 						<id>minify-carousel.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/gmtplusone</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/gmtplusone</jsSourceDir>
 							<jsFinalFile>carousel.js</jsFinalFile>
@@ -506,7 +504,7 @@
 					<execution>
 						<id>minify-citation.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>citation.js</jsFinalFile>
@@ -523,7 +521,7 @@
 					<execution>
 						<id>minify-collapsible.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>collapsible.js</jsFinalFile>
@@ -540,7 +538,7 @@
 					<execution>
 						<id>minify-contact.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>contact.js</jsFinalFile>
@@ -557,7 +555,7 @@
 					<execution>
 						<id>minify-ellipsis.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>ellipsis.js</jsFinalFile>
@@ -574,7 +572,7 @@
 					<execution>
 						<id>minify-embed.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>embed.js</jsFinalFile>
@@ -591,7 +589,7 @@
 					<execution>
 						<id>minify-EuMenu.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>EuMenu.js</jsFinalFile>
@@ -608,7 +606,7 @@
 					<execution>
 						<id>minify-euresponsive.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>euresponsive.js</jsFinalFile>
@@ -625,7 +623,7 @@
 					<execution>
 						<id>minify-external-search-services.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>external-search-services.js</jsFinalFile>
@@ -642,7 +640,7 @@
 					<execution>
 						<id>minify-forgot-password.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>forgot-password.js</jsFinalFile>
@@ -659,7 +657,7 @@
 					<execution>
 						<id>minify-fulldoc.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>fulldoc.js</jsFinalFile>
@@ -676,7 +674,7 @@
 					<execution>
 						<id>minify-fulldoc-embed.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>fulldoc-embed.js</jsFinalFile>
@@ -693,7 +691,7 @@
 					<execution>
 						<id>minify-fulldoc-lightbox.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>fulldoc-lightbox.js</jsFinalFile>
@@ -710,7 +708,7 @@
 					<execution>
 						<id>minify-galleria.europeanax.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/galleria/themes/europeanax</webappTargetDir>
 							<jsSourceDir>/themes/default/js/galleria/themes/europeanax</jsSourceDir>
 							<jsFinalFile>galleria.europeanax.js</jsFinalFile>
@@ -727,7 +725,7 @@
 					<execution>
 						<id>minify-header.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>header.js</jsFinalFile>
@@ -744,7 +742,7 @@
 					<execution>
 						<id>minify-image-checker.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>image-checker.js</jsFinalFile>
@@ -761,7 +759,7 @@
 					<execution>
 						<id>minify-index.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>index.js</jsFinalFile>
@@ -778,7 +776,7 @@
 					<execution>
 						<id>minify-ios-orientationchange-fix.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/scottjehl-iOS-Orientationchange-Fix-99c9c99</webappTargetDir>
 							<jsSourceDir>/themes/default/js/scottjehl-iOS-Orientationchange-Fix-99c9c99</jsSourceDir>
 							<jsFinalFile>ios-orientationchange-fix.js</jsFinalFile>
@@ -795,7 +793,7 @@
 					<execution>
 						<id>minify-js.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/js</webappTargetDir>
 							<jsSourceDir>/themes/default/js/js</jsSourceDir>
 							<jsFinalFile>js.js</jsFinalFile>
@@ -812,7 +810,7 @@
 					<execution>
 						<id>minify-loader.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/js</webappTargetDir>
 							<jsSourceDir>/themes/default/js/js</jsSourceDir>
 							<jsFinalFile>loader.js</jsFinalFile>
@@ -829,7 +827,7 @@
 					<execution>
 						<id>minify-login.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>login.js</jsFinalFile>
@@ -846,7 +844,7 @@
 					<execution>
 						<id>minify-map.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>map.js</jsFinalFile>
@@ -863,7 +861,7 @@
 					<execution>
 						<id>minify-myeuropeana.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>myeuropeana.js</jsFinalFile>
@@ -880,7 +878,7 @@
 					<execution>
 						<id>minify-providers.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>providers.js</jsFinalFile>
@@ -897,7 +895,7 @@
 					<execution>
 						<id>minify-register-success.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>register-success.js</jsFinalFile>
@@ -914,7 +912,7 @@
 					<execution>
 						<id>minify-search.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>search.js</jsFinalFile>
@@ -931,7 +929,7 @@
 					<execution>
 						<id>minify-search-widget.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>search-widget.js</jsFinalFile>
@@ -951,7 +949,7 @@
 					<execution>
 						<id>minify-tabs.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/gmtplusone</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/gmtplusone</jsSourceDir>
 							<jsFinalFile>tabs.js</jsFinalFile>
@@ -968,7 +966,7 @@
 					<execution>
 						<id>minify-accordion-tabs.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>accordion-tabs.js</jsFinalFile>
@@ -985,7 +983,7 @@
 					<execution>
 						<id>minify-timeline.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>timeline.js</jsFinalFile>
@@ -1002,7 +1000,7 @@
 					<execution>
 						<id>minify-translation-services.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>translation-services.js</jsFinalFile>
@@ -1019,7 +1017,7 @@
 					<execution>
 						<id>minify-translator-google.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/google/translator</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/google/translator</jsSourceDir>
 							<jsFinalFile>translator.js</jsFinalFile>
@@ -1036,7 +1034,7 @@
 					<execution>
 						<id>minify-translator-microsoft.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/microsoft</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/microsoft</jsSourceDir>
 							<jsFinalFile>translator.js</jsFinalFile>
@@ -1053,7 +1051,7 @@
 					<execution>
 						<id>minify-translator-widget.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/microsoft</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/microsoft</jsSourceDir>
 							<jsFinalFile>translator-widget.js</jsFinalFile>
@@ -1070,7 +1068,7 @@
 					<execution>
 						<id>minify-truncate-content.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/gmtplusone</webappTargetDir>
 							<jsSourceDir>/themes/default/js/com/gmtplusone</jsSourceDir>
 							<jsFinalFile>truncate-content.js</jsFinalFile>
@@ -1104,7 +1102,7 @@
 					<execution>
 						<id>minify-window-open.js</id>
 						<phase>process-resources</phase>
-						<configuration>						
+						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/js</webappTargetDir>
 							<jsSourceDir>/themes/default/js/js</jsSourceDir>
 							<jsFinalFile>window-open.js</jsFinalFile>
@@ -1124,22 +1122,21 @@
 			<!-- END MINIFY-MAVEN-PLUGIN -->
 			
 			<plugin>
-			    <artifactId>maven-antrun-plugin</artifactId>
-			    <executions>
-			        <execution>
-			            <phase>compile</phase>
-			            <goals>
-			                <goal>run</goal>
-			            </goals>
-			            <configuration>
-			                <tasks>
-			                    <echo>Hello Peter!</echo>
-			                    <echo>This pom will create minified assets in ${basedir}/src/main/webapp/themes/default/css/min/</echo>
-			                    <echo>and min directories within the sub-directories of ${basedir}/src/main/webapp/themes/default/js/</echo>
-			                </tasks>
-			            </configuration>
-			        </execution>
-			    </executions>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>This pom will create minified assets in ${basedir}/src/main/webapp/themes/default/css/min/</echo>
+								<echo>and min directories within the sub-directories of ${basedir}/src/main/webapp/themes/default/js/</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		
