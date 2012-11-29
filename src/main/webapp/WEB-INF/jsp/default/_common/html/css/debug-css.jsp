@@ -110,8 +110,8 @@
 	
 		<c:when test="${model.pageName == 'search.html'}">
 			<link rel="stylesheet" href="/${branding}/css/search.css" />
-			<link rel="stylesheet" href="/${branding}/css/search-navigation.css" />
 			<link rel="stylesheet" href="/${branding}/css/search-pagination.css" />
+			
 			<link rel="stylesheet" href="/${branding}/css/sidebar-facets.css" />
 			<c:if test="${model.embedded}">
 				<link rel="stylesheet" href="/${branding}/css/search-embed.css" />
