@@ -213,7 +213,6 @@ public class IndexPageController {
 		while (keepFetching) {
 			try {
 				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
-				log.info("label: " + label);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 					FeaturedPartner item = new FeaturedPartner(i);
@@ -223,7 +222,6 @@ public class IndexPageController {
 				} else {
 					keepFetching = false;
 				}
-				log.info("featuredPartners: " + featuredPartners.size());
 			} catch (NoSuchMessageException e) {
 				keepFetching = false;
 			}

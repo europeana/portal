@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -133,9 +134,10 @@ public class ChangePasswordController {
 		// remove token. it can not be used any more.
 		tokenService.remove(token);
 		// now update the user
-		log.info("pw: " + user.getPassword());
-		userService.changePassword(user.getId(), user.getPassword(), model.getPassword());
-		// userService.store(user); 
+		String oldPw = (StringUtils.isBlank(user.getPassword())) ? model.getPassword() : user.getPassword();
+		log.info("pw: " + oldPw);
+		userService.changePassword(user.getId(), oldPw, model.getPassword());
+		// userService.store(user);
 		sendNotificationEmail(user);
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_SUCCESS);

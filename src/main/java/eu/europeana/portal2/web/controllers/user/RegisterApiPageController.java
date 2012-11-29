@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -199,6 +200,7 @@ public class RegisterApiPageController {
 			emailService.sendRegisterApiNotifyAdmin(user);
 		} catch (Exception e) {
 			log.severe("Unable to send email to sys: " + e.getLocalizedMessage());
+			log.severe(ExceptionUtils.getFullStackTrace(e));
 		}
 	}
 

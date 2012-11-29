@@ -99,7 +99,6 @@ public class AdminController {
 		log.info("get users took " + t);
 		model.setUsers(users);
 		model.setUsage(usage);
-		log.info("usage: " + usage);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN);
 		injector.postHandle(this, page);

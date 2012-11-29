@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +59,6 @@ public class LoginPageController {
 		injector.injectProperties(model);
 
 		model.setEmail(email);
-		log.info("email: " + email);
 		log.info("requestedAction: " + requestedAction);
 
 		if (email != null) {
@@ -73,8 +73,6 @@ public class LoginPageController {
 				} else {
 					Token token = tokenService.create(email);
 					String url = baseUrl + "/register.html";
-					log.info("token: " + token);
-					log.info("registerUri: " + url);
 					emailService.sendToken(token, url);
 					model.setSuccess(true);
 				}
@@ -89,8 +87,6 @@ public class LoginPageController {
 //				} else {
 					Token token = tokenService.create(email);
 					String url = baseUrl + "/register-api.html";
-					log.info("token: " + token);
-					log.info("registerUri: " + url);
 					emailService.sendToken(token, url);
 					model.setSuccess(true);
 //				}
@@ -105,7 +101,6 @@ public class LoginPageController {
 				} else {
 					Token token = tokenService.create(email);
 					String url = baseUrl + "/change-password.html?token=" + token.getToken();
-					log.info("change-password url: " + url);
 					if (model.getUser() != null) {
 						emailService.sendForgotPassword(model.getUser(), url);
 					} else {
@@ -134,6 +129,6 @@ public class LoginPageController {
 
 	private boolean emailExists(String email) {
 		User user = userService.findByEmail(email);
-		return (user != null);
+		return (user != null && !StringUtils.isBlank(user.getPassword()));
 	}
 }

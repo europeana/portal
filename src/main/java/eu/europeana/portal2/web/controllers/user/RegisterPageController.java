@@ -112,7 +112,17 @@ public class RegisterPageController {
 			return page;
 		}
 
-		User user = userService.create(model.getToken(), model.getUserName(), model.getPassword());
+		Token token = tokenService.findByID(model.getToken());
+		if (token == null) {
+			throw new DatabaseException(ProblemType.TOKEN_INVALID);
+		}
+
+		User user = userService.findByEmail(token.getEmail());
+		if (user == null) {
+			user = userService.create(model.getToken(), model.getUserName(), model.getPassword());
+		} else {
+			user = userService.registerApiUserForMyEuropeana(user.getId(), model.getUserName(), model.getPassword());
+		}
 		sendNotificationEmail(user);
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_SUCCESS);
