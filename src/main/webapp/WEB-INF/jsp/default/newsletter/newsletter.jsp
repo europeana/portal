@@ -6,7 +6,6 @@
 		<c:choose>	
 			<c:when test="${!empty model.debug && !model.debug}">
 				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
-				<link rel="stylesheet" href="themes/default/css/min/menu-styling.min.css" />
 			</c:when>
 			<c:otherwise>
 				<link rel="stylesheet" href="themes/default/css/html.css" />
