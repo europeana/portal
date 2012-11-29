@@ -6,11 +6,15 @@
 	<div>
 		<span class="hide-on-phones">
 
-			<a	href="/${model.portalName}/"
-				target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" 
-				title="<spring:message code="main_menu_home_a_title_t"/>"
-				class="white left"><spring:message code="main_menu_home_a_text_t"
-			/></a>
+			<c:if test="${empty model.user}">
+
+				<a	href="/${model.portalName}/"
+					target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" 
+					title="<spring:message code="main_menu_home_a_title_t"/>"
+					class="white left"><spring:message code="main_menu_home_a_text_t"
+				/></a>
+				
+			</c:if>
 
 			<c:choose>
 				<c:when test="${!empty model.user}">
