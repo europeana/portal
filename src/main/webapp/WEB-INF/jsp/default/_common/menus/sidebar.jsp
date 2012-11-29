@@ -1,9 +1,12 @@
 <c:if test="${!empty model.leftContent}">
 
-	<div class="four columns">
-		<div style="padding-right:1em;">
+
+	<div class="hide-on-phones">
+		<div>
   			${model.leftContent}
   		</div>
   	</div>
+  	
+  	
 </c:if>
 
