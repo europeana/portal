@@ -118,6 +118,7 @@ public class ResponsiveImageUtils {
 				try {
 					int height = (int)Math.ceil((widths[i] * orig.getHeight()) / orig.getWidth());
 					responsive = ImageUtils.scale(orig, widths[i], height);
+					// responsive = ImageUtils.compress(responsive, 0.8f);
 				} catch (IOException e) {
 					log.severe("IOException during scaling image: " + e.getLocalizedMessage());
 					e.printStackTrace();
@@ -139,6 +140,7 @@ public class ResponsiveImageUtils {
 
 				if (created) {
 					try {
+						// compressAndShow
 						ImageIO.write(responsive, extension, outputfile);
 					} catch (IOException e) {
 						log.severe("IOException during writing new file: " + e.getLocalizedMessage());
