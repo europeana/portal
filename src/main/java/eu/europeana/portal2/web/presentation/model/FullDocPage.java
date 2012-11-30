@@ -354,33 +354,23 @@ public class FullDocPage extends FullDocPreparation {
 
 	public String getThumbnailUrl() throws UnsupportedEncodingException {
 		String thumbnail = "";
-		/*
 		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
 			thumbnail = URLEncoder.encode(
 				StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], ""), 
 				"utf-8"
 			);
 		}
-		*/
-		thumbnail = shortcut.get("EdmObject")[0];
-		// TODO: check isUseCache()
-		// if (isUseCache()) {
+		
+		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
+
 		/*
-		boolean useCache = true;
-		if (useCache) {
-			UrlBuilder url = new UrlBuilder(getCacheUrl());
-			url.addParam("uri", thumbnail, true);
-			url.addParam("size", "FULL_DOC", true);
-			url.addParam("type", getDocument().getEdmType(), true);
-			return prepareFullDocUrl(url).toString();
-		}
-		*/
 		UrlBuilder url = new UrlBuilder(getCacheUrl());
 		url.addParam("uri", thumbnail, true);
 		url.addParam("size", "FULL_DOC", true);
 		url.addParam("type", getDocument().getEdmType(), true);
+
 		return prepareFullDocUrl(url).toString();
-		//return thumbnail;
+		*/
 	}
 
 	public List<String> getThumbnails() {
@@ -471,6 +461,7 @@ public class FullDocPage extends FullDocPreparation {
 		url.addParam("uri", image, true);
 		url.addParam("size", size, true);
 		url.addParam("type", docType, true);
+
 		return prepareFullDocUrl(url).toString();
 	}
 
