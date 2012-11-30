@@ -45,7 +45,9 @@
 				debug:			js.debug
 		});
 
-		$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");
+		if(carouselData && carouselData.length>0){
+			$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");			
+		}
 		
 		var carouselInitialSuffix	= '_1';
 		var carouselSelector		= '#carousel-1 img';
@@ -59,12 +61,13 @@
 		var src = $($(carouselSelector)[0]).attr("src");
 		if( src.indexOf( carouselInitialSuffix + "." ) == -1 ){
 			// we're bigger than a mobile: update all image urls in the carousel data to appropriate size
-			var lastSuffix = carosuelEuResponsive.getLastSuffix();	
-			$(carouselData).each(function(i, ob){
-				ob.image = ob.image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
-				$($("#carousel-1 img")[i]).attr("src", ob.fullSize);
-			});
-			
+			var lastSuffix = carosuelEuResponsive.getLastSuffix();
+			if(carouselData && carouselData.length>0){
+				$(carouselData).each(function(i, ob){
+					ob.image = ob.image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
+					$($("#carousel-1 img")[i]).attr("src", ob.fullSize);
+				});
+			}			
 		}
 		 
 		
