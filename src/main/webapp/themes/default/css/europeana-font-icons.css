@@ -148,6 +148,7 @@
 }
 .icon-share:before {
 	content: "\35";
+	cursor: pointer;
 }
 .icon-twitter:before {
 	content: "\36";

@@ -135,7 +135,7 @@ div.actions{
 	text-align:		justify;
 }
 
-a.action-link{
+a.action-link, span.icon-share {
 	font-size:		2em;
 	display:		inline-block;
 }	
@@ -250,7 +250,7 @@ a.action-link span{
 		text-align:		left;
 	}
 
-	a.action-link {
+	a.action-link, span.icon-share {
 		float:			none;
 		display:		block;
 		margin-left:	0;
