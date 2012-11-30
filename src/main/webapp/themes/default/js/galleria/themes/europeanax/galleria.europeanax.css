@@ -410,13 +410,16 @@
 
 @media only screen and ( min-width:767px ){
 	.galleria-info {
-	    top:				1em;
-	    left:				1em;
-	    
-	    right:				auto;
-	    max-width:			45%;
-        bottom:				auto;
-        margin-bottom:		0;
+	    top:					1em;
+	    left:					3em;
+	    right:					auto;
+		max-width:				45%;
+		max-height:				20em;
+        bottom:					auto;
+        margin-bottom:			0;
+        -moz-border-radius:		0.8em;
+		-webkit-border-radius:	0.8em;
+		border-radius:			0.8em;
 	}
 }
 
@@ -470,6 +473,7 @@
 	    
 	    right:				auto;
 	    max-width:			50%;
+	    /* ANDY */
 	}
 	
 	.galleria-info-description{
