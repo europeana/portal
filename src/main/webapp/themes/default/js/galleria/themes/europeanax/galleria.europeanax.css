@@ -407,7 +407,7 @@
     margin-bottom:		5px;
 	max-height:			45%;
 }
-
+/*
 @media only screen and ( min-width:767px ){
 	.galleria-info {
 	    top:					1em;
@@ -421,7 +421,13 @@
 		-webkit-border-radius:	0.8em;
 		border-radius:			0.8em;
 	}
+	
+	.galleria-info-description{
+		display:	block !important;
+	}
+	
 }
+*/
 
 .europeana-bordered .galleria-info,
 .europeana-carousel .galleria-info{
@@ -466,6 +472,27 @@
 }
 
 @media only screen and ( min-width:767px ){
+	.galleria-info {
+	    top:					1em;
+	    left:					3em;
+	    right:					auto;
+		max-width:				45%;
+		max-height:				20em;
+        bottom:					auto;
+        margin-bottom:			0;
+        -moz-border-radius:		0.8em;
+		-webkit-border-radius:	0.8em;
+		border-radius:			0.8em;
+	}
+	
+	.galleria-info-description{
+		display:	block !important;
+	}
+	
+}
+
+/*
+@media only screen and ( min-width:767px ){
 	
 	.galleria-info {
 	    top:				1em;
@@ -473,10 +500,10 @@
 	    
 	    right:				auto;
 	    max-width:			50%;
-	    /* ANDY */
 	}
 	
 	.galleria-info-description{
 		display:	block !important;
 	}
 }
+*/
