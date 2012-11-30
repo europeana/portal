@@ -827,8 +827,11 @@ eu.europeana.fulldoc = {
   				$("#carousel-2-img-measure img").css("display", "block");  				
   				var widestImageW = $("#carousel-2-img-measure").width();
   				
+  				$("#carousel-2-img-measure img").css("display", "none");
+  				
   				return {w:widestImageW, h:tallestImageH};
 			};
+			$("#carousel-2-img-measure img").css("display", "none");
 	
 			new AccordionTabs( $('#explore-further'),
 				function(){
