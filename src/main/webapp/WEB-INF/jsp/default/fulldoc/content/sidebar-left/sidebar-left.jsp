@@ -162,9 +162,9 @@ carouselData[carouselData.length] = {
 		
 		<%-- Shares link --%>
 		
-		<a id="shares-link" class="icon-share action-link" rel="nofollow">
-			<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
-		</a>
+		<div id="shares-link" class="action-link">
+			<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"> <span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
+		</div>
 		
 		<%-- Citation link --%>
 		
