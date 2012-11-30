@@ -25,6 +25,15 @@ public abstract class StaticData extends SearchPageData {
 	private String headerContent;
 	private String bodyContent;
 	private String leftContent;
+	private boolean tc;
+
+	public boolean getTc() {
+		return tc;
+	}
+
+	public void setTc(boolean tc) {
+		this.tc = tc;
+	}
 
 	public void setHeaderContent(String content) {
 		this.headerContent = content;

@@ -146,6 +146,10 @@ public class StaticPageController {
 
 		// generate static page
 		StaticPage model = new StaticPage();
+		
+		model.setTc(pageName.indexOf("rights")>-1);
+		
+		
 		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, locale));
 		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, locale));
 		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
