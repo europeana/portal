@@ -97,6 +97,7 @@ public class ObjectController {
 			put("what", Arrays.asList(new String[]{"DcType", "DcSubject", "DcFormat"}));
 			// put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated", "DctermsTemporal"}));
 			// put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
+			put("DATA_PROVIDER", Arrays.asList(new String[]{"DataProvider"}));
 			put("PROVIDER", Arrays.asList(new String[]{"EdmProvider"}));
 		}
 	};
@@ -300,8 +301,10 @@ public class ObjectController {
 
 	private List<BriefBeanDecorator> prepareMoreLikeThis(List<? extends BriefBean> result, UrlAwareData<?> model) {
 		List<BriefBeanDecorator> moreLikeThis = new ArrayList<BriefBeanDecorator>();
-		for (BriefBean bean : result) {
-			moreLikeThis.add(new BriefBeanDecorator(model, bean));
+		if (result != null) {
+			for (BriefBean bean : result) {
+				moreLikeThis.add(new BriefBeanDecorator(model, bean));
+			}
 		}
 
 		return moreLikeThis;
@@ -360,7 +363,8 @@ public class ObjectController {
 				seeAlsoParams.put(metaField, fieldValues);
 			}
 		}
-		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations());
+
+		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations(), config.getSeeAlsoAggregations());
 		Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
 		if (seeAlsoResponse != null) {
 			for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {
