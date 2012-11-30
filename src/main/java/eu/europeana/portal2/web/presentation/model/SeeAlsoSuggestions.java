@@ -36,7 +36,7 @@ public class SeeAlsoSuggestions {
 		if (fields.containsKey(aggregatedFieldName)) {
 			field = fields.get(aggregatedFieldName);
 		} else {
-			field = new Field(aggregatedFieldName, seeAlsoTranslations.get(fieldName));
+			field = new Field(aggregatedFieldName, seeAlsoTranslations.get(aggregatedFieldName));
 			fields.put(aggregatedFieldName, field);
 		}
 
