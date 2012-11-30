@@ -358,8 +358,12 @@ h1 {
 .item-metadata h2 {
 	display: inline;
 	font-size: 100%;
-	color: #fff;
+	color: #333;
 	font-weight: normal;
+}
+
+#lightbox .item-metadata h2 {
+	color: #fff;
 }
 
 	
