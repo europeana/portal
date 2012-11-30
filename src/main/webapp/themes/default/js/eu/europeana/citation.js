@@ -24,9 +24,10 @@ eu.europeana.citation = {
 		var self = this;
 		
 		this.options.html = '' 
-			+	'<div class="external-services-container">'
-			+		'<a rel="nofollow" title="' + eu.europeana.vars.msg.cite.close + '" class="close-button icon-remove" href="">&nbsp;</a>' 
-			+		'<div id="citation-tabs">';
+			+	'<div class="external-services-container-wrapper">'
+			+		'<div class="external-services-container">'
+			+			'<a rel="nofollow" title="' + eu.europeana.vars.msg.cite.close + '" class="close-button icon-remove" href="">&nbsp;</a>' 
+			+			'<div id="citation-tabs">';
 			
 			var html = '';
 			$( "#citations .citation").each(function(i, ob){
@@ -46,8 +47,9 @@ eu.europeana.citation = {
 			});
 			
 			this.options.html += html
+			+				'</div>'
 			+			'</div>'
-			+		'</div>'
+			+		'</div>';
 			+	'</div>';
 
 		jQuery('#citation-link').bind( 'click', { self : self }, this.handleCitationClick );
@@ -93,7 +95,8 @@ eu.europeana.citation = {
 		        	sel.addRange(range);
 		        }catch(e){}
 	        }
-	    } else if (document.body && document.body.createTextRange) {
+	    }
+	    else if (document.body && document.body.createTextRange) {
 	    	try{
 		        range = document.body.createTextRange();
 		        range.moveToElementText(el);

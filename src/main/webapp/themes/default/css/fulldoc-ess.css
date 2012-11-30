@@ -6,12 +6,17 @@
 	width:		100%;		/* to aid centering of ess container */
 }
 
+#citation .external-services-container-wrapper {
+	position:	fixed;
+	top:		30%;
+	left:		0;
+	width:		100%;
+}
+
 #citation .external-services-container {
-	display:	block;
-	height:		auto;
-	left:		20px;	/* centering */
-	right:		20px;
-	position:	absolute;		
+	margin:		auto;
+	position:	relative;
+	width:		70%;
 }
 
 #citetabs{
@@ -38,14 +43,10 @@
 
 
 .external-services-container {
-	position:			absolute;
-	top:				0;
-	left:				0;
 	z-index:			200;
 	height:				auto;
 	background-color:	#fff;
 	border-radius:		5px;
-	display:			none;
 	-moz-box-shadow:	3px 3px 8px #dfdfdf;
 	-webkit-box-shadow:	3px 3px 8px #dfdfdf;
 	box-shadow:			3px 3px 8px #dfdfdf;
@@ -61,20 +62,18 @@
 }
 
 .external-services-container p {
-	   overflow:			hidden;
-	   word-wrap:			break-word;
+   overflow:			hidden;
+   word-wrap:			break-word;
 }
 
 
 .external-services-container .header {
 	border-radius:		5px 5px 0px 0px;
 	position:			relative;
-	
-	border-top: 1px solid black;
-	
+	border-top: 		1px solid black;
 	height:				25px;
 	width:				auto;
-	   overflow:			hidden;
+	overflow:			hidden;
 }
 
 .external-services-container a.close-button {
@@ -121,12 +120,12 @@
 
 @media only screen and ( min-width:48em ){
 	
-	.external-services-container {
-		position:			fixed !important;
-		width:				456px;
-		margin-left:		-228px;
-		left:				50% !important;
-		top:				40% !important;
+	.external-services-container-wrapper {
+		top:		40%;	
+	}
+	
+	.external-services-container{
+		width:				40% !important;
 		padding:			0 1em 0 1em;
 	}
 	
@@ -134,7 +133,6 @@
 		overflow:			hidden;
 		word-wrap:			break-word;
 	}
-	
 	
 	.external-services-container .header {
 		border-radius:		5px 5px 0px 0px;
@@ -146,7 +144,7 @@
 	}
 	
 	.external-services-container .heading {
-		padding: 2px 0 0 7px;
+		padding:	2px 0 0 7px;
 		z-index:	200;
 	}
 	
