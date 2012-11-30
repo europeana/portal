@@ -26,7 +26,7 @@ eu.europeana.citation = {
 		this.options.html = '' 
 			+	'<div class="external-services-container">'
 			+		'<a rel="nofollow" title="' + eu.europeana.vars.msg.cite.close + '" class="close-button icon-remove" href="">&nbsp;</a>' 
-			+		'<div class="accordion-tabs" id="citation-tabs">';
+			+		'<div id="citation-tabs">';
 			
 			var html = '';
 			$( "#citations .citation").each(function(i, ob){

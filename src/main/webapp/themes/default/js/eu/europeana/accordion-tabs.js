@@ -17,7 +17,7 @@
 				self.el.addClass('active');	
 				
 				var contentToClone = self.a.next().find(">:first-child");
-				if(contentToClone){
+				if(contentToClone.length>0){
 					var nextId =  contentToClone.attr("id");
 					self.parent.el.find('.tab_content').html(contentToClone[0].outerHTML);
 					self.parent.el.find('.tab_content').find("#" + nextId).attr("id", nextId + "-tabbed");
@@ -52,6 +52,7 @@
 		self.activeId	= '';
 		self.callback	= callbackIn;
 		
+		self.el.addClass('accordion-tabs');
 		self.selectionMade = function(index, id){
 			self.activeId = id;
 			if(self.callback){

@@ -58,7 +58,7 @@
 						</c:forEach>
 					</div>
 					
-					<div id="explore-further" class="accordion-tabs">
+					<div id="explore-further">
 						<div class="section">
 							<a href="#"><spring:message code="SimilarContent_t" /></a>
 							<div class="content">
