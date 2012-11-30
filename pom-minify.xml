@@ -8,6 +8,9 @@
 	<packaging>pom</packaging>
 	<name>Minify Europeana Resources</name>
 	<url>https://github.com/samaxes/minify-maven-plugin</url>
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
 	<!-- mvn -f pom-minify.xml minify:minify package -->
 	
 	<properties>
