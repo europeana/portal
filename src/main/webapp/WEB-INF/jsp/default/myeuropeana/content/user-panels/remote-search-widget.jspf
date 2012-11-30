@@ -2,15 +2,19 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:if test="${model.user.role != 'ROLE_USER'}">
-  <h3>
-    <a href="#remote-search-widget"><spring:message code="myEuropeana_RSW_link_t" /></a>
-  </h3>
 
-  <div id="remote-search-widget">
-    <h3><spring:message code="myEuropeana_RSW_title_t" /></h3>
-    <p><spring:message code="myEuropeana_RSW_intro_t" /></p>
-    <a href="/portal/action/search-widget.html" title="<spring:message code="myEuropeana_RSW_link_t" />" target="_blank">
-      <spring:message code="myEuropeana_RSW_link_t" />
-    </a>
-  </div>
+	<div class="section">
+		<a href="#remote-search-widget"><spring:message code="myEuropeana_RSW_link_t" /></a>
+		
+		<div class="content">
+			<div id="remote-search-widget">
+
+				<p><spring:message code="myEuropeana_RSW_intro_t" /></p>
+				<a href="/portal/action/search-widget.html" title="<spring:message code="myEuropeana_RSW_link_t" />" target="_blank">
+					<spring:message code="myEuropeana_RSW_link_t" />
+				</a>
+			</div>
+		</div>
+	</div>
+  
 </c:if>

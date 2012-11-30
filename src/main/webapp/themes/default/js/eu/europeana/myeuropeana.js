@@ -3,20 +3,16 @@
  *
  *  @package	eu.europeana
  *  @author		dan entous <contact@gmtpluosone.com>
+ *  @author		andy maclean
  *  @created	2011-07-11 18:07 GMT +1
- *  @version	2011-10-20 08:26 GMT +1
+ *  @version	2012-11-30 08:26 GMT +1
  */
 
-/**
- *  @package	eu.europeana
- *  @author		dan entous <contact@gmtplusone.com>
- */
 js.utils.registerNamespace( 'eu.europeana.myeuropeana' );
 
 eu.europeana.myeuropeana = {
 	
 	init : function() {
-		
 		this.loadComponents();
 		this.addUserBarListeners();		
 		this.addUserPanelListeners();
@@ -24,78 +20,52 @@ eu.europeana.myeuropeana = {
 		this.addItemHighlight();
 	},
 	
-	
 	loadComponents : function() {
 		var self = eu.europeana.myeuropeana;
 		js.loader.loadScripts([{
 			file: 'tabs' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory,
 			callback: function(){
-				self.addTabs();
-				self.openTab();
+				self.addAccordionTabs();
 			}
 		}]);
-		
 	},
 	
-	
-	
-	addTabs : function() {
-		
-		eu.europeana.tabs = {};
-		eu.europeana.tabs.user_panels = new com.gmtplusone.tabs( '#user-panels', { menu_item : 'h3' } );		
-		eu.europeana.tabs.user_panels.init();
-	},
-	
-	
-	openTab : function() {
-		
-		var menu_ids = eu.europeana.tabs.user_panels.options.menu_ids,
-			i = 0,
-			ii = menu_ids.length,
-			hash = window.location.hash;
-		
-		if ( hash ) {
-			
-			for ( i = 0; i < ii; i += 1) {
-				
-				if ( menu_ids[i] === hash ) {
-					
-					jQuery('a[href="' + hash + '"]').trigger('click');
-					
-				}
-
+	addAccordionTabs:function(){
+		js.loader.loadScripts([{
+			name : 'accordion-tabs',
+			file : 'accordion-tabs' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			callback:function(){
+				eu.europeana.myeuropeana.accordionTabs = new AccordionTabs( $('#user-panels'),
+					function(i, id, hash){
+						window.location.hash = hash;
+					},
+					window.location.hash
+				);
 			}
-			
-		} else {
-			
-			jQuery('a[href="#user-information"]').trigger('click');
-			
-		}
-		
+		}]);
 	},
-	
+
+	openTab : function() {
+		var hash = window.location.hash ? window.location.hash : '#user-information';
+		eu.europeana.myeuropeana.accordionTabs.openTab(hash);
+	},
 	
 	addUserBarListeners : function() {
-	
 		if ( 'myeuropeana.html' == eu.europeana.vars.page_name ) {
-			
 			var self = this;
-			
 			jQuery('#saved-items-count, #saved-searches-count, #saved-tags-count')
-				.click( function() { setTimeout( function(e) { self.openTab(); }, 100 ); });
-			
+				.click( function() { setTimeout( function(e) {
+					self.openTab();
+				}, 100 ); });
 		}
-		
 	},
 	
-	
 	addUserPanelListeners : function() {
-		
-		jQuery('.remove-saved-search').bind('click', { type : 'SavedSearch' }, this.handleRemoveUserPanelItem );
-		jQuery('.remove-saved-item').bind('click', { type : 'SavedItem' }, this.handleRemoveUserPanelItem );
-		jQuery('.remove-saved-tag').bind('click', { type : 'SocialTag' }, this.handleRemoveUserPanelItem );
-		
+		$('.remove-saved-search').live('click', { type : 'SavedSearch' }, this.handleRemoveUserPanelItem );
+		$('.remove-saved-item').live('click', { type : 'SavedItem' }, this.handleRemoveUserPanelItem );
+		$('.remove-saved-tag').live('click', { type : 'SocialTag' }, this.handleRemoveUserPanelItem );
 	},
 	
 	addHashListener : function() {
@@ -105,10 +75,9 @@ eu.europeana.myeuropeana = {
 	},	
 	
 	handleRemoveUserPanelItem : function( e ) {
-		
-		e.preventDefault();
-		
-		var $elm = jQuery(this),
+		e.preventDefault();		
+		var type = e.data.type,
+			$elm = jQuery(this),
 			ajax_feedback,
 			ajax_data,
 			item = {
@@ -124,7 +93,7 @@ eu.europeana.myeuropeana = {
 					eu.europeana.vars.msg.item_not_removed + 
 				'</span>';
 		
-		switch ( e.data.type ) {
+		switch(type){
 			
 			case 'SavedSearch' :
 				item.$count = jQuery('#saved-searches-count');
@@ -146,84 +115,61 @@ eu.europeana.myeuropeana = {
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_tag_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_tags;
 				break;
-		
 		}
 		
-		
 		ajax_feedback = {
-			
 			count : item.count,
 			$count : item.$count,
-				
 			success : function() {
-				
 				eu.europeana.ajax.methods.addFeedbackContent( item.feedback_html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
 				
 				ajax_feedback.count = parseInt( ajax_feedback.$count.html(), 10 );
 				ajax_feedback.$count.html( ajax_feedback.count - 1 );
 				
-				if ( 'SocialTag' !== e.data.type ) {
-					
+				if ( 'SocialTag' !== type ) {
 					$elm.parent().remove();
-					
-				} else {
-					
-					if ( $elm.parent().parent().children().length === 1 ) {
-						
+				}
+				else{
+					if ( $elm.parent().parent().children().length === 1 ){
 						$elm.parent().parent().parent().remove();
-						
-					} else {
-						
-						$elm.parent().remove();
-						
 					}
-					
+					else{
+						$elm.parent().remove();
+					}
 				}
-				
 				if ( ( ajax_feedback.count - 1 ) == 0 ) {
-					
 					item.$panel.append( item.no_saved_msg );
-					
-				}
-				
+				}				
 			},
-			
 			failure : function() {
-				
 				eu.europeana.ajax.methods.addFeedbackContent( error_feedback_html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
-				
 			}
-		
 		};
 			
 		ajax_data = {
-			
-			className : e.data.type,
+			className : type,
 			id : parseInt( $elm.attr('id'), 10 )
-			
 		};
 		eu.europeana.ajax.methods.user_panel( 'remove', ajax_data, ajax_feedback );
 	},
 	
-	
 	addItemHighlight : function() {
-		
-		jQuery('.saved-item, .saved-search, .saved-tag').hover(
-				
-			function(e) {
-				jQuery(this).css('background-color', '#f5f5f5');
-			},
-			
-			function(e) {
-				jQuery(this).css('background-color', '#fff');
-			}
-			
+		$('.saved-item, .saved-search, .saved-tag').live(
+				'mouseenter',
+					function(){
+						$(this).css('background-color', '#f5f5f5');
+			         }
 		);
-		
+
+		$('.saved-item, .saved-search, .saved-tag').live(
+				'mouseleave',
+					function(){
+						$(this).css('background-color', '#fff');
+					}
+		);
 	}
-	
 	
 };
 

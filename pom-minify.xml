@@ -128,7 +128,7 @@
 							<cssTargetDir>min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>myeuropeana.css</cssSourceInclude>
-								<cssSourceInclude>tabbed-navigation.css</cssSourceInclude>
+								<cssSourceInclude>accordion-tabs.css</cssSourceInclude>
 							</cssSourceIncludes>
 						</configuration>
 						<goals>

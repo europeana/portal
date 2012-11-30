@@ -1,34 +1,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<h3>
-  <%-- onclick="euQuery.cookie('ui-tabs-3', '0', { expires: 1 });" --%>
-  <a href="#user-information" title="<spring:message code="UserInformation_t" />"><spring:message code="UserInformation_t" /></a>
-</h3>
 
-<!-- ${model.user} -->
-<div id="user-information">
-  <strong><spring:message code="Username_t" />:</strong><br/>
-  ${model.user.userName}<br/>
-  <br/>
 
-  <strong><spring:message code="EmailAddress_t" />:</strong><br/>
-  ${model.user.email}<br/>
-  <br/>
-
-  <c:if test="${model.user[firstName] != null}">
-    <strong><spring:message code="FirstName_t" />:</strong><br/>
-    ${model.user.firstName}<br/>
-    <br/>
-  </c:if>
-
-  <c:if test="${model.user[lastName] != null}">
-    <strong><spring:message code="lastName_t" />:</strong><br/>
-    ${model.user.lastName}
-  </c:if>
-
-  <c:if test="${model.user.role == 'ROLE_GOD'}">
-    <c:url var="adminPage" value="/admin.html" />
-    <a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
-  </c:if>
-
+<div class="section">
+	<a href="#user-information" title="<spring:message code="UserInformation_t" />"><spring:message code="UserInformation_t" /></a>
+	<div class="content">
+		<div id="user-information">
+		  <strong><spring:message code="Username_t" />:</strong><br/>
+		  ${model.user.userName}<br/>
+		  <br/>
+		
+		  <strong><spring:message code="EmailAddress_t" />:</strong><br/>
+		  ${model.user.email}<br/>
+		  <br/>
+		
+		  <c:if test="${model.user[firstName] != null}">
+		    <strong><spring:message code="FirstName_t" />:</strong><br/>
+		    ${model.user.firstName}<br/>
+		    <br/>
+		  </c:if>
+		
+		  <c:if test="${model.user[lastName] != null}">
+		    <strong><spring:message code="lastName_t" />:</strong><br/>
+		    ${model.user.lastName}
+		  </c:if>
+		
+		  <c:if test="${model.user.role == 'ROLE_GOD'}">
+		    <c:url var="adminPage" value="/admin.html" />
+		    <a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
+		  </c:if>
+		
+		</div>
+	</div>
 </div>

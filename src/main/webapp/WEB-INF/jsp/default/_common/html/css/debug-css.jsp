@@ -96,7 +96,7 @@
 	
 		<c:when test="${model.pageName == 'myeuropeana.html'}">
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
-			<link rel="stylesheet" href="/${branding}/css/tabbed-navigation.css" />
+			<link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" />
 		</c:when>
 	
 		<c:when test="${model.pageName == 'register.html'}">
