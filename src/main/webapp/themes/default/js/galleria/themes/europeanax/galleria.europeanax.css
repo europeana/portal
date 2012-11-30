@@ -441,7 +441,8 @@
 }
 
 .galleria-info{
-	cursor:	pointer;
+	cursor:		pointer;
+    padding:	1em 1em 1em 1em;
 }
 
 .galleria-info-description,
@@ -450,14 +451,11 @@
     color: 			#fff;
     opacity:		1 !important;
 	filter:			alpha(opacity=100)  !important;
-    padding:		0.5em 0.5em 1em 0.5em;
+
 	float:			left;
 	line-height:	1.48em;
 }
 
-.galleria-info-title{
-	font-weight:	bold;
-}
 
 /* footer */
 
@@ -487,7 +485,14 @@
 	
 	.galleria-info-description{
 		display:	block !important;
+		padding-top:	1em;
 	}
+	
+	.galleria-info-title{
+		font-weight:	600;
+		font-size:		1.75em;
+	}
+	
 	
 }
 
