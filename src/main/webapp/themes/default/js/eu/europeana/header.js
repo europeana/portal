@@ -113,7 +113,10 @@ eu.europeana.header = {
 	},
 	
 	setupSearchMenu:function(){
-
+		
+		if($("#search-menu").length==0){	// terms and conditions have no search fields
+			return;
+		}
 		var menu = new EuMenu( 
 			$("#search-menu"),
 			{

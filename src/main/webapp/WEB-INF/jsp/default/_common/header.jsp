@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 
 <div id="header" role="banner" class="row">
@@ -10,10 +11,15 @@
 			<c:if test="${model.pageName == 'full-doc.html'}">
 				<c:set var="logoWrapperTag" value="div"/>
 			</c:if>
-				
+
+			<c:set var="logoClass" value="responsive-logo"/>
+			<c:if test="${model.pageName == 'staticpage.html' && model.tc}">
+				<c:set var="logoClass" value="responsive-logo-t-and-c"/>
+			</c:if>
+			
 			<${logoWrapperTag} title="<spring:message code='AltLogoEuropeana_t' />">
 				<a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
-					<span class="responsive-logo" alt="<spring:message code='AltLogoEuropeana_t' />"></span>
+					<span class="${logoClass}" alt="<spring:message code='AltLogoEuropeana_t' />"></span>
 				</a>
 			</${logoWrapperTag}>
 
@@ -34,8 +40,12 @@
 			completionClasses['Subject']		= "what:";
 			completionClasses['Creator']		= "who:";
 		</script>
+
+
+		<c:if test="${!(model.pageName == 'staticpage.html' && model.tc)}">
+			<%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>
+		</c:if>
 		
-		<%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>
 		
 	</div>
 
