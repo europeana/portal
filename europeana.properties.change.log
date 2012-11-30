@@ -70,3 +70,17 @@ description: after N minute the responsive image cache will be rechecked against
 
 example:
 portal.responsive.cache.checkFrequencyInMinute = 5
+
+==== 2012-11-30
+
+New property:
+portal.seeAlso.aggregation.N
+description: Comma separated list of fields, which will be displayed under the same label in the see also 
+suggestion block. The first field's label will be displayed, and it will be the "collector", under which 
+the rest of the fields will be listed under. N should be a count number, it let you allow to create 
+multiple aggregations. 
+
+example:
+portal.seeAlso.aggregation.1 = PROVIDER,DATA_PROVIDER
+
+It means, that the links to provider and data provider searches will be listed under the label of "Provider".

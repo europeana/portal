@@ -12,10 +12,13 @@ public class SeeAlsoSuggestions {
 
 	private Map<String, String> seeAlsoTranslations;
 
+	private Map<String, String> seeAlsoAggregations;
+
 	private Map<String, Field> fields = new LinkedHashMap<String, Field>();
 
-	public SeeAlsoSuggestions(Map<String, String> seeAlsoTranslations) {
+	public SeeAlsoSuggestions(Map<String, String> seeAlsoTranslations, Map<String, String> seeAlsoAggregations) {
 		this.seeAlsoTranslations = seeAlsoTranslations;
+		this.seeAlsoAggregations = seeAlsoAggregations;
 	}
 
 	public void add(String query, Integer count) {
@@ -25,16 +28,20 @@ public class SeeAlsoSuggestions {
 				.replaceAll("^\"", "")
 				.replaceAll("\"$", "");
 
+		String aggregatedFieldName = (seeAlsoAggregations.containsKey(fieldName))
+				? seeAlsoAggregations.get(fieldName) 
+				: fieldName;
+
 		Field field;
-		if (fields.containsKey(fieldName)) {
-			field = fields.get(fieldName);
+		if (fields.containsKey(aggregatedFieldName)) {
+			field = fields.get(aggregatedFieldName);
 		} else {
-			field = new Field(fieldName, seeAlsoTranslations.get(fieldName));
-			fields.put(fieldName, field);
+			field = new Field(aggregatedFieldName, seeAlsoTranslations.get(fieldName));
+			fields.put(aggregatedFieldName, field);
 		}
 
 		String extendedQuery;
-		if (fieldName.equals("PROVIDER")) {
+		if (fieldName.equals("PROVIDER") || fieldName.equals("DATA_PROVIDER")) {
 			extendedQuery = query;
 		} else {
 			extendedQuery = fieldName + ":(" + ControllerUtil.clearSeeAlso(fieldValue) + ")";

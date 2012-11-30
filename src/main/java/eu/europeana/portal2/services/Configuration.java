@@ -120,6 +120,8 @@ public class Configuration {
 
 	private Map<String, String> seeAlsoTranslations;
 
+	private Map<String, String> seeAlsoAggregations;
+
 	private String portalUrl;
 
 	private String[] responsiveImageLabels;
@@ -247,6 +249,22 @@ public class Configuration {
 			}
 		}
 		return seeAlsoTranslations;
+	}
+
+	public Map<String, String> getSeeAlsoAggregations() {
+		if (seeAlsoAggregations == null) {
+			seeAlsoAggregations = new HashMap<String, String>();
+			int i = 1;
+			String key = "portal.seeAlso.aggregation.";
+			while (europeanaProperties.containsKey(key + i)) {
+				String[] parts = europeanaProperties.getProperty(key + i).split(",");
+				for (int j = 1, l = parts.length; j < l; j++) {
+					seeAlsoAggregations.put(parts[j], parts[0]);
+				}
+				i++;
+			}
+		}
+		return seeAlsoAggregations;
 	}
 
 	public String getPortalUrl() {
