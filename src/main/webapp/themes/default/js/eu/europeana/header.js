@@ -38,7 +38,15 @@ eu.europeana.header = {
 		
 		this.addAutocompleteHandler();
 
-		jQuery('#save-search').bind('click', this.handleSaveSearchClick );
+		
+		// TODO: use class-switch and move this from header to search.js
+		if( $('#save-search').find('.icon-unsaveditem').length>0){
+			$('#save-search').bind('click', this.handleSaveSearchClick );			
+		}
+		else{
+			$('#save-search').css('cursor', 'default');
+		}		
+		
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
 		
 		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
