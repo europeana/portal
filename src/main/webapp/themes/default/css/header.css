@@ -378,6 +378,8 @@ table tr:first-child{
 
 #lang-menu{	
 	margin-right:	0 !important;
+	white-space:	nowrap;
+	padding-left:	1em;
 }
 	
  
