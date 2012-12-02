@@ -94,8 +94,17 @@
 		<ul id="share-subscribe">
 			<c:if test="${!empty model.user}">
 				<li>
+				
+					<c:set var="savedIcon" value="icon-unsaveditem" />
+				
+					<c:forEach items="${model.user.savedSearches}" var="item">
+						<c:if test="${model.query == item.query}">
+							<c:set var="savedIcon" value="icon-saveditem" />
+						</c:if>
+					</c:forEach>
+				
 					<a id="save-search" class="share-section" rel="nofollow">
-						<span class="icon-saveditem"></span>
+						<span class="${savedIcon}"></span>
 						<spring:message code="SaveToMyEuropeana_t" />
 					</a>
 
