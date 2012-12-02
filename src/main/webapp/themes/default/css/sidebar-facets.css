@@ -148,6 +148,10 @@ cb-ugc{
 	padding-left:	0;
 }
 
+.share-section{
+	cursor: pointer;	
+}
+
 .share-section,
 .share-section .addthis_button{
 	color:					#333;
