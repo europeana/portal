@@ -135,12 +135,12 @@ div.actions{
 	text-align:		justify;
 }
 
-a.action-link, span.icon-share {
-	font-size:		2em;
-	display:		inline-block;
-}	
+a.action-link,
+span.icon-share{
+	font-size:	2em;
+	display:	inline-block;
+}
 
-	
 a.action-link span{
 	width:			auto !important;
 	font-size:		1.5em;

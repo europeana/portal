@@ -671,8 +671,8 @@ a.action-link span{
 	
 #user-information,
 .saved-items,
-#saved-searches,
-#saved-tags,
+.saved-searches,
+.saved-tags,
 #remote-search-widget {
 	border-top:		1px solid #a0a0a0;
 }		

@@ -10,29 +10,22 @@
 		self.parent = parentIn;
 
 		var open = function () {
-			if(!self.el.hasClass('active')){
-				self.parent.el.find('.is-open').removeClass('is-open');
-				self.a.next().toggleClass('is-open');
-				self.parent.el.find('.active').removeClass('active');
-				self.el.addClass('active');	
-				
-				var contentToClone = self.a.next().find(">:first-child");
-				if(contentToClone.length>0){
-					
-					var nextId =  contentToClone.attr("id");
-					
-					self.parent.el.find('.tab_content').html(contentToClone[0].outerHTML);
-					self.parent.el.find('.tab_content').find("#" + nextId).attr("id", nextId + "-tabbed");
-				}
-				else{
-					self.parent.el.find('.tab_content').html(self.a.next().html());
-				}
-				self.parent.selectionMade(self.index, self.el.attr('id'), self.a.attr('href') );
+			self.parent.el.find('.is-open').removeClass('is-open');
+			self.parent.el.find('.active').removeClass('active');
+			self.a.next().addClass('is-open');
+			self.el.addClass('active');	
+			
+			var contentToClone = self.a.next().find(">:first-child");
+			if(contentToClone.length>0){
+				var nextId =  contentToClone.attr("id");
+				self.parent.el.find('.tab_content').html(contentToClone[0].outerHTML);
+				self.parent.el.find('.tab_content').find("#" + nextId).attr("id", nextId + "-tabbed");
+				self.parent.el.find('.tab_content').find('.is-open').removeClass('is-open');
 			}
 			else{
-				self.parent.el.find('.is-open').removeClass('is-open');
-				self.el.removeClass('active');
+				self.parent.el.find('.tab_content').html(self.a.next().html());
 			}
+			self.parent.selectionMade(self.index, self.el.attr('id'), self.a.attr('href') );
 		};
 
 		self.a.on('click', function (e) {

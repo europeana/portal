@@ -5,39 +5,25 @@
 	margin-bottom:	1em; 
 }
 
-/*
-#user-panels h3 {
-	display:		block;
-	font-size:		1em;
-	font-weight:	normal;
-	margin-right:	0;
-}
 
-#user-information,
-.saved-items,
-#saved-searches,
-#saved-tags,
-#remote-search-widget {
-	margin:			-1px 0 0 0;
-	padding-top:	1em;
-}
-*/
-	
 #user-panels a.active {
 	text-decoration: none;
 	color: #666;
 }
 
 .saved-items img,
-#saved-tags img {
+.saved-tags img {
 	float: left;
 	margin-right: 0.5em;
 }
 	 	
-#saved-tags li {
+.saved-tags ul {
 	list-style: none;
-	margin-bottom: 15px;
 	overflow: auto;
+}
+
+li.saved-tags{
+	margin-bottom: 1em;
 }
 	 	
 .saved-item,
