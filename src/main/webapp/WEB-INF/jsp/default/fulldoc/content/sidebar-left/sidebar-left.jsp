@@ -190,15 +190,21 @@ carouselData[carouselData.length] = {
 		<c:if test="${!empty model.user}">
 		
 			<c:set var="savedIcon" value="icon-unsaveditem" />
+			<c:set var="savedText">
+				<spring:message code="SaveToMyEuropeana_t" />
+			</c:set>
 					
 			<c:forEach items="${model.user.savedItems}" var="item">
 				<c:if test="${model.document.about == item.europeanaUri}">
 					<c:set var="savedIcon" value="icon-saveditem" />
+					<c:set var="savedText">
+						<spring:message code="ItemSaved_t" />
+					</c:set>
 				</c:if>
 			</c:forEach>
 		
-			<a href="" id="item-save" rel="nofollow" class="${savedIcon} action-link">
-				<span class="action-title"><spring:message code="SaveToMyEuropeana_t" /></span>
+			<a href="#" id="item-save" rel="nofollow" class="${savedIcon} action-link">
+				<span class="action-title">${savedText}</span>
 			</a>
 			
 		</c:if>

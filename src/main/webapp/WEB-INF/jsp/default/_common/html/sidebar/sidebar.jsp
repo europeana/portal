@@ -58,19 +58,6 @@
 
 			<li class="ugc-li">
 				<h3>
-				<%--
-					<c:set var="ugcClassName">
-						<c:choose>
-							<c:when test="${model.UGCFilter}">icon-yes</c:when>
-							<c:otherwise>icon-no</c:otherwise>
-						</c:choose>
-					</c:set>
-					
-					<a class="facet-ugc ${ugcClassName}" rel="nofollow" href="${model.UGCUrl}">
-						<spring:message code="IncludeUGC_t" />
-					</a>
-				 --%>
-
 					<c:set var="checkedValue" value='checked="checked"' />
 					<c:choose>
 						<c:when test="${model.UGCFilter}">
@@ -94,7 +81,6 @@
 		<ul id="share-subscribe">
 			<c:if test="${!empty model.user}">
 				<li>
-				
 					<c:set var="savedIcon" value="icon-unsaveditem" />
 					<c:set var="savedText"><spring:message code="SaveToMyEuropeana_t" /></c:set>
 				
@@ -102,7 +88,6 @@
 						<c:if test="${model.query == item.query}">
 							<c:set var="savedIcon" value="icon-saveditem" />
 							<c:set var="savedText"><spring:message code='SearchSaved_t' /></c:set>
-							 
 						</c:if>
 					</c:forEach>
 				
@@ -114,9 +99,11 @@
 					<c:if test="${!empty model.briefBeanView}">
 						<input type="hidden" id="query-to-save" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}"/>
 					</c:if>
+					
 					<c:if test="${!empty model.query}">
 						<input type="hidden" id="query-string-to-save" value="${fn:escapeXml(model.query)}"/>
 					</c:if>
+					
 				</li>
 			</c:if>
 

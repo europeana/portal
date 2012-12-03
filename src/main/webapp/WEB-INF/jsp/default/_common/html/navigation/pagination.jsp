@@ -7,7 +7,7 @@
 	<div class="${position_class} nav">
 	
 	
-		<div class="menu">
+		<div class="menu show-on-22">
 		
 			<span><spring:message code="ResultsPerPage_t" />:</span>
 			
@@ -24,14 +24,14 @@
 	
 	
 		<div class="count">
-			<span class="hide-on-phones">
+			<span>
 				<spring:message code="Results_t" />&nbsp;
-				${model.briefBeanView.pagination.start} - ${model.briefBeanView.pagination.lastViewableRecord}
+				${model.briefBeanView.pagination.start}<span class="spaced">-</span>${model.briefBeanView.pagination.lastViewableRecord}
 	
 				<span class="of"> <spring:message code="Of_t" /> </span>
-				<span class="of-value of-bracket">
-					<fmt:formatNumber value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0" />
-				</span>		
+				<span class="of-bracket"><fmt:formatNumber 
+															value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0"
+				/></span>		
 			</span>
 		</div>
 	
@@ -62,7 +62,7 @@
 						
 						<input type="text" id="start-page" value="${model.pageNumber}" xxxxxpattern="[0-9]*" />
 						<span class="of"> <spring:message code="Of_t" /> </span>
-						<span class="of-value of-bracket">
+						<span class="of-bracket">
 							${model.numberOfPages}
 						</span>
 						

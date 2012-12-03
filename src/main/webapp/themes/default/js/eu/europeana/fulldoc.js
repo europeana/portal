@@ -16,7 +16,6 @@ eu.europeana.fulldoc = {
 		this.addAutoTagHandler();
 		
 		$('#item-save-tag')			.bind('submit', this.handleSaveTagSubmit );
-		$('#item-save')				.bind('click', this.handleSaveItemClick );
 		$('#item-embed')			.bind('click', this.handleEmbedClick );
 		$('#urlRefIsShownBy')		.bind('click', this.handleRedirectIsShownByClick );
 		$('#urlRefIsShownAt')		.bind('click', this.handleRedirectIsShownAtClick );
@@ -24,6 +23,13 @@ eu.europeana.fulldoc = {
 		$('#urlRefIsShownAtImg')	.bind('click', this.handleRedirectIsShownAtImgClick );
 		$('#urlRefIsShownByPlay')	.bind('click', this.handleRedirectIsShownByPlayClick );
 		$('#lightbox_href')			.bind('click', this.handleRedirectIsShownByImgClick );
+		
+		if( $('#item-save').hasClass('icon-unsaveditem') ){
+			$('#item-save').bind('click', this.handleSaveItemClick );			
+		}
+		else{
+			$('#item-save').css('cursor', 'default');
+		}
 		
 		console.log(JSON.stringify(carouselData));
 	},
@@ -273,10 +279,13 @@ eu.europeana.fulldoc = {
 	},
 	
 	handleSaveItemClick : function( e ) {
+		
+		
 		e.preventDefault();
 		var ajax_feedback = {
 			saved_items_count : 0,
-			$saved_items : jQuery('#saved-items-count'),
+			$itemSave : $('#item-save'),
+			$saved_items : $('#saved-items-count'),
 			success : function() {
 				var html =
 					'<span id="save-item-feedback">' +
@@ -286,9 +295,11 @@ eu.europeana.fulldoc = {
 				eu.europeana.ajax.methods.showFeedbackContainer();
 				ajax_feedback.saved_items_count = parseInt( ajax_feedback.$saved_items.html(), 10 );
 				ajax_feedback.$saved_items.html( ajax_feedback.saved_items_count + 1 );
-				
-				$("#item-save").removeClass("icon-unsaveditem");
-				$("#item-save").addClass("icon-saveditem");
+				ajax_feedback.$itemSave.removeClass("icon-unsaveditem");
+				ajax_feedback.$itemSave.addClass("icon-saveditem");
+				ajax_feedback.$itemSave.find('.action-title').html(eu.europeana.vars.msg.saved_item);
+				ajax_feedback.$itemSave.css('cursor', 'default');
+				ajax_feedback.$itemSave.unbind('click');
 			},
 			failure : function() {
 				var html =

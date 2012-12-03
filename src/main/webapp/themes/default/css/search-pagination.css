@@ -25,11 +25,10 @@
 	float:			none;	
 	margin:			0;
 	width:			100%;
-	padding-left:		0;
+	padding-left:	0;
 	display:		table;
-	table-layout:		fixed;
+	table-layout:	fixed;
 	font-size:		1.5em;
-	
 	clear:			both;
 	position:		relative;
 	z-index:		1;	
@@ -38,9 +37,12 @@
 .result-pagination li{
 	list-style: 	none;
 	display:		table-cell;
-	vertical-align:	middle;
+	vertical-align:	top;
 }
 
+.jump-to-page{
+	margin-top:	2em;
+}
 
 
 #start-page {
@@ -54,7 +56,7 @@ a {
 }
 
 .nav .eu-menu{
-	display:	inline-block;
+	display:		inline-block;
 	border:			1px solid #e4e4e4;
 	margin-left:	0.5em;
 	padding-left:	0.25em;
@@ -78,9 +80,9 @@ a {
 	padding:			.25em 0;
 	-moz-box-sizing:	border-box;
 	display:			inline-table;
-	
 	width:				100%;	/* needed for safari */
 }
+
 
 .nav>div{
 	display:	block;
@@ -90,12 +92,7 @@ a {
 
 
 
-.nav>.count{
-	width:		100%;
-}
-
-.menu, .pagination{
-	width:		1px;
+.nav>div.menu, .nav>div.pagination{
 	white-space:	nowrap;
 }
 
@@ -117,6 +114,15 @@ a {
 	display:	block;
 }
 
+.nav .spaced:before{
+	content:'';
+}
+
+.nav .spaced:after{
+	content:'';
+}
+
+
 
 
 /* data showing / hiding rules */
@@ -135,13 +141,40 @@ a {
 		display:inline;
 	}
 
+	
 }
 
 
+@media only screen and (min-width: 48em) {
+	.nav .spaced:before{
+		content:' ';
+	}
+	
+	.nav .spaced:after{
+		content:' ';
+	}
+	
+	.result-pagination li{
+		vertical-align:	middle;
+	}
+	
+	.jump-to-page{
+		margin-top:	0;
+	}
+}
+
+
+@media only screen and (max-width: 55em) {
+	.nav>div.show-on-22{
+		display:none;
+	}
+}
 
 /* Desktop general */
 @media only screen and (min-width: 55em) {
 
+	.show-on-22{display:table-cell !important;}
+	
 	.result-pagination{
 		float:		right;
 		width:		auto;	
@@ -149,11 +182,17 @@ a {
 		width:		auto;
 	}
 
-
+/*
+.nav>div.menu, .nav>div.pagination{
+	width:			1px;
+	white-space:	nowrap;
+	zzzzzdisplay:		table-cell;
+}
+*/
 
 	/* flex-box rules */
 	.nav>div{
-		display:	table-cell;
+		display:		table-cell;
 		vertical-align:	middle;
 	}
 
