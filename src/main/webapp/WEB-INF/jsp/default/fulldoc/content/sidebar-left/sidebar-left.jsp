@@ -209,29 +209,6 @@ carouselData[carouselData.length] = {
 			
 		</c:if>
 	
-		<%-- Add tag --%>
-		
-		<c:if test="${!empty model.user}">
-			<form id="item-save-tag">
-				<fieldset>
-					<label for="add-tag" class="icon-tag">
-						<span class="action-title"><spring:message code="AddATag_t" /></span>
-					</label>
-					
-					<br />
-					
-					<div style="display:table">
-						<input type="text" id="item-tag" maxlength="50" />
-						<span>
-							<input type="submit" class="submit-button deans-button-1" value="<spring:message code="Add_t" />" />
-						</span>
-					</div>
-					
-				</fieldset>
-			</form>
-		</c:if>
-	
-	
 		<%-- Format labels --%>
 		<c:if test="${model.debug}">
 			<c:choose>
@@ -267,6 +244,30 @@ carouselData[carouselData.length] = {
 			
 		<div class="clear"></div>
 			
+	</div>
+	
+	<%-- Add tag --%>
+	<div class="actions">	
+		
+		<c:if test="${!empty model.user}">
+			<form id="item-save-tag">
+				<fieldset>
+					<label for="add-tag" class="icon-tag">
+						<span class="action-title"><spring:message code="AddATag_t" /></span>
+					</label>
+					
+					<br />
+					
+					<div style="display:table">
+						<input type="text" id="item-tag" maxlength="50" />
+						<span>
+							<input type="submit" class="submit-button deans-button-1" value="<spring:message code="Add_t" />" />
+						</span>
+					</div>
+					
+				</fieldset>
+			</form>
+		</c:if>
 	</div>
 	
 	
