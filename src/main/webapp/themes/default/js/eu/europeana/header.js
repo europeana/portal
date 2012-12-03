@@ -38,15 +38,6 @@ eu.europeana.header = {
 		
 		this.addAutocompleteHandler();
 
-		
-		// TODO: use class-switch and move this from header to search.js
-		if( $('#save-search').find('.icon-unsaveditem').length>0){
-			$('#save-search').bind('click', this.handleSaveSearchClick );			
-		}
-		else{
-			$('#save-search').css('cursor', 'default');
-		}		
-		
 		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
 		
 		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
@@ -394,58 +385,8 @@ eu.europeana.header = {
 			jQuery('#query-input').val("");
 		}
 		
-	},
-	
-	
-	handleSaveSearchClick : function( e ) {
-		
-		e.preventDefault();
-		
-		var ajax_feedback = {
-			
-			saved_searches_count : 0,
-			$saved_searches : jQuery('#saved-searches-count'),
-				
-			success : function() {
-				
-				var html =
-					'<span>' +
-						eu.europeana.vars.msg.search_saved +
-					'</span>';
-				
-				eu.europeana.ajax.methods.addFeedbackContent( html );
-				eu.europeana.ajax.methods.showFeedbackContainer();
-				
-				ajax_feedback.saved_searches_count = parseInt( ajax_feedback.$saved_searches.html(), 10 );
-				ajax_feedback.$saved_searches.html( ajax_feedback.saved_searches_count + 1 );
-				
-			},
-			
-			failure : function() {
-				
-				var html =
-					'<span id="save-search-feedback" class="error">' +
-						eu.europeana.vars.msg.search_save_failed +
-					'</span>';
-				
-				eu.europeana.ajax.methods.addFeedbackContent( html );
-				eu.europeana.ajax.methods.showFeedbackContainer();
-				
-			}
-			
-		},
-		
-		ajax_data = {
-				
-			className : "SavedSearch",
-			query : jQuery('#query-to-save').val(),
-			queryString : jQuery('#query-string-to-save').val()
-			
-		};
-		
-		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-		
 	}
+	
 };
 
 

@@ -32,6 +32,13 @@ eu.europeana.search = {
 		this.setupEllipsis();
 		this.setupPageJump();
 		
+		if( $('#save-search').find('.icon-unsaveditem').length>0){
+			$('#save-search').bind('click', this.handleSaveSearchClick );			
+		}
+		else{
+			$('#save-search').css('cursor', 'default');
+		}		
+
 	},
 	
 	loadComponents : function() {
@@ -183,7 +190,6 @@ eu.europeana.search = {
 		menuTop.init();
 		menuBottom.init();
 	},
-
 	
 	addThis : function() {
 		
@@ -262,6 +268,44 @@ eu.europeana.search = {
 			$('#newKeyword').addClass('error-border');
 			return false;
 		}	
+	},
+	
+	handleSaveSearchClick : function( e ) {
+		
+		e.preventDefault();
+		
+		var ajax_feedback = {
+			
+			saved_searches_count : 0,
+			$saved_searches : $('#saved-searches-count'),
+			$saveSearch : $('#save-search'),
+			success : function() {
+				var html = '<span>' + eu.europeana.vars.msg.search_saved + '</span>';
+				
+				eu.europeana.ajax.methods.addFeedbackContent( html );
+				eu.europeana.ajax.methods.showFeedbackContainer();
+				
+				ajax_feedback.saved_searches_count = parseInt( ajax_feedback.$saved_searches.html(), 10 );
+				ajax_feedback.$saved_searches.html( ajax_feedback.saved_searches_count + 1 );
+				ajax_feedback.$saveSearch.children('.icon-unsaveditem').removeClass('icon-unsaveditem').addClass('icon-saveditem');
+				ajax_feedback.$saveSearch.children('.save-label').html(eu.europeana.vars.msg.search_saved);
+				ajax_feedback.$saveSearch.css('cursor', 'default');
+				ajax_feedback.$saveSearch.unbind('click');
+			},
+			
+			failure : function() {	
+				var html = '<span id="save-search-feedback" class="error">' + eu.europeana.vars.msg.search_save_failed + '</span>';
+				
+				eu.europeana.ajax.methods.addFeedbackContent(html);
+				eu.europeana.ajax.methods.showFeedbackContainer();
+			}
+		},
+		ajax_data = {
+			className : "SavedSearch",
+			query : jQuery('#query-to-save').val(),
+			queryString : jQuery('#query-string-to-save').val()
+		};
+		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	}
 
 };

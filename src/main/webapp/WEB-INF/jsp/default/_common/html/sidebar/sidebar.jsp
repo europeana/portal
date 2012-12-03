@@ -96,16 +96,19 @@
 				<li>
 				
 					<c:set var="savedIcon" value="icon-unsaveditem" />
+					<c:set var="savedText"><spring:message code="SaveToMyEuropeana_t" /></c:set>
 				
 					<c:forEach items="${model.user.savedSearches}" var="item">
 						<c:if test="${model.query == item.query}">
 							<c:set var="savedIcon" value="icon-saveditem" />
+							<c:set var="savedText"><spring:message code='SearchSaved_t' /></c:set>
+							 
 						</c:if>
 					</c:forEach>
 				
 					<a id="save-search" class="share-section" rel="nofollow">
 						<span class="${savedIcon}"></span>
-						<spring:message code="SaveToMyEuropeana_t" />
+						<span class="save-label">${savedText}</span>
 					</a>
 
 					<c:if test="${!empty model.briefBeanView}">
