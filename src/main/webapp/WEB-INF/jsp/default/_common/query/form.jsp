@@ -41,7 +41,7 @@
 				</td>
 				<td class="query-cell">
 					<input
-						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" placeholder="<spring:message code="query_heading_t"/>"
+						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175"
 						value="<c:out value="${model.query}"/>"
 						valueForBackButton="<c:out value="${model.query}"/>"
 						/>							
