@@ -1,14 +1,11 @@
 /* html */
 
 html{
-	zzzposition:		relative;
 	font-size:		100%; 
-	zzzfont-family:	sans-serif;
 	z-index:		1;
 }
 
 body {
-	zzzposition: relative;
 	z-index: 1;
 	margin: 0 auto;
 	padding: 0;
@@ -54,8 +51,8 @@ input[type="submit"]{
 
 			
 /* links */
-a { text-decoration: none; color: #0075ff; outline: 0; }
-a:visited { color: #0075ff; }
+a { text-decoration: none; color: #2A85E8; outline: 0; }
+a:visited { color: #2A85E8; }
 a:not(.social-link):hover: { color: #ff00c2; }
 
 
