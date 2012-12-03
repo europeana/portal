@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +57,7 @@ public class SitemapController {
 
 	@Resource private ThumbnailService thumbnailService;
 
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = Logger.getLogger(this.getClass().getName());
 
 	private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
 
@@ -75,7 +75,7 @@ public class SitemapController {
 		// latitude and longitude should be added together, so a second check
 		// for longitude would just overload the
 		// server
-		return " AND enrichment_place_latitude:* ";
+		return "pl_wgs84_pos_lat:*"; // enrichment_place_latitude:*
 	}
 
 	@RequestMapping("/europeana-sitemap-index-hashed.xml")
@@ -136,18 +136,23 @@ public class SitemapController {
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			out.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:geo=\"http://www.google.com/geo/schemas/sitemap/1.0\">");
 
-			String queryForPlaces = "";
+			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps());
+			Query query = new Query("id3hash:" + prefix)
+							.setRefinements(queryString)
+							.setPageSize(20000)
+							.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
+
 			if (isPlaceSitemap) {
-				queryForPlaces = solrQueryClauseToIncludePlaces();
+				String queryForPlaces = solrQueryClauseToIncludePlaces();
+				if (!StringUtils.isBlank(queryForPlaces)) {
+					query = query.addRefinement(queryForPlaces);
+				}
 			}
-			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps())
-					+ " AND europeana_id:/" + prefix + "*"
-					+ queryForPlaces;
-			Query query = new Query(queryString).setParameter("rows", "20000");
-			log.info("queryString: " + queryString);
-			List<? extends BriefBean> resultSet = null;
+
+			log.info("queryString: " + query.toString());
+			List<BriefBean> resultSet = null;
 			try {
-				resultSet = searchService.search(BriefBean.class, query).getResults();
+				resultSet = searchService.sitemap(BriefBean.class, query).getResults();
 			} catch (SolrTypeException e) {
 				e.printStackTrace();
 			}
@@ -155,10 +160,14 @@ public class SitemapController {
 			if (resultSet != null) {
 				for (BriefBean bean : resultSet) {
 					BriefBeanDecorator docId = new BriefBeanDecorator(model, bean);
-					SitemapEntry entry = new SitemapEntry(
-						convertEuropeanaUriToCanonicalUrl(docId.getId()),
-						docId.getThumbnail(), docId.getTitle()[0],
-						docId.getEuropeanaCompleteness());
+
+					String title = "";
+					if (docId.getTitle() != null) {
+						title = docId.getTitle()[0];
+					} else {
+						log.info("no title");
+					}
+					SitemapEntry entry = new SitemapEntry(convertEuropeanaUriToCanonicalUrl(docId.getId()), docId.getThumbnail(), title, docId.getEuropeanaCompleteness());
 					out.println("<url>");
 					String url = entry.getLoc();
 					if (isPlaceSitemap) {
@@ -209,7 +218,7 @@ public class SitemapController {
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			out.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:video=\"http://www.google.com/schemas/sitemap-video/1.1\">");
 
-			String queryString = "*:* AND TYPE:VIDEO";
+			String queryString = "TYPE:VIDEO";
 			Query query = new Query(queryString)
 								.setParameter("rows", String.valueOf(VIDEO_SITEMAP_VOLUME_SIZE))
 								.setStart(volume * VIDEO_SITEMAP_VOLUME_SIZE);
@@ -320,7 +329,7 @@ public class SitemapController {
 					contributorItem.setDataProviders(dataProviders);
 					entries.add(contributorItem);
 				} catch (UnsupportedEncodingException e) {
-					log.warn(e.getMessage() + " on " + provider.getName());
+					log.warning(e.getMessage() + " on " + provider.getName());
 				}
 			}
 		} catch (SolrTypeException e1) {

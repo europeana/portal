@@ -133,16 +133,11 @@ public class BriefBeanDecorator implements BriefBean {
 				tn = StringUtils.defaultIfBlank(briefBean.getEdmObject()[0], "");
 			}
 			UrlBuilder url = null;
-			// TODO: redo this
-			// if (isUseCache()) {
-				// url = new UrlBuilder(model.getCacheUrl());
-				url = new UrlBuilder("http://europeanastatic.eu/api/image");
-				url.addParam("uri", URLEncoder.encode(tn, "UTF-8"), true);
-				url.addParam("size", size, true);
-				url.addParam("type", getType().toString(), true);
-				// } else {
-				// url = new UrlBuilder(tn.replace(" ", "%20"));
-				// 			}
+			url = new UrlBuilder("http://europeanastatic.eu/api/image");
+			url.addParam("uri", URLEncoder.encode(tn, "UTF-8"), true);
+			url.addParam("size", size, true);
+			url.addParam("type", getType().toString(), true);
+
 			return model.getPortalFormattedUrl(url).toString();
 		} catch (UnsupportedEncodingException e) {
 			return e.getMessage();
