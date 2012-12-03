@@ -225,19 +225,33 @@ carouselData[carouselData.length] = {
 			</form>
 		</c:if>
 	
-		<c:choose>
-			<c:when test="${fn:contains(model.currentUrl, '&format=label')}">
-				<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '&format=label', '')}</c:set>
-				<c:set var="switchlabelTitle">Normal format</c:set>
-			</c:when>
-			<c:otherwise>
-				<c:set var="switchlabelLink">${model.currentUrl}&format=label</c:set>
-				<c:set var="switchlabelTitle">Label format</c:set>
-			</c:otherwise>
-		</c:choose>
 	
 		<%-- Format labels --%>
-		<c:if test="${model.debug}">		
+		<c:if test="${model.debug}">
+			<c:choose>
+				<c:when test="${fn:contains(model.currentUrl, '&format=label')} || ${fn:contains(model.currentUrl, '?format=label')}">
+					<c:choose>
+						<c:when test="${fn:contains(model.currentUrl, '&format=label')}">
+							<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '&format=label', '')}</c:set>
+						</c:when>
+						<c:otherwise>
+							<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '?format=label', '')}</c:set>
+						</c:otherwise>
+					</c:choose>
+					<c:set var="switchlabelTitle">Normal format</c:set>
+				</c:when>
+				<c:otherwise>			
+					<c:choose>
+						<c:when test="${fn:contains(model.currentUrl, '?')}">
+							<c:set var="switchlabelLink">${model.currentUrl}&format=label</c:set>
+						</c:when>
+						<c:otherwise>
+							<c:set var="switchlabelLink">${model.currentUrl}?format=label</c:set>
+						</c:otherwise>
+					</c:choose>
+					<c:set var="switchlabelTitle">Label format</c:set>
+				</c:otherwise>
+			</c:choose>
 			<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
 				<span class="action-title">${switchlabelTitle}</span>
 			</a>
