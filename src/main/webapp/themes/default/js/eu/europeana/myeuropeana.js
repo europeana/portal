@@ -63,9 +63,9 @@ eu.europeana.myeuropeana = {
 	},
 	
 	addUserPanelListeners : function() {
-		$('.remove-saved-search').live('click', { type : 'SavedSearch' }, this.handleRemoveUserPanelItem );
-		$('.remove-saved-item').live('click', { type : 'SavedItem' }, this.handleRemoveUserPanelItem );
-		$('.remove-saved-tag').live('click', { type : 'SocialTag' }, this.handleRemoveUserPanelItem );
+		$('.remove-saved-search').live('click', { type : 'SavedSearch' },	this.handleRemoveUserPanelItem );
+		$('.remove-saved-item').live('click', { type : 'SavedItem' },		this.handleRemoveUserPanelItem );
+		$('.remove-saved-tag').live('click', { type : 'SocialTag' },		this.handleRemoveUserPanelItem );
 	},
 	
 	addHashListener : function() {
@@ -76,8 +76,10 @@ eu.europeana.myeuropeana = {
 	
 	handleRemoveUserPanelItem : function( e ) {
 		e.preventDefault();		
+		
+		
 		var type = e.data.type,
-			$elm = jQuery(this),
+			$elm = $(this),
 			ajax_feedback,
 			ajax_data,
 			item = {
@@ -100,13 +102,15 @@ eu.europeana.myeuropeana = {
 				item.$panel = jQuery('#saved-searches');
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_search_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_searches;
+				item.removeSelector = '.saved-searches .saved-search.' + $(this).attr('id'); 
 				break;
 				
 			case 'SavedItem' :
-				item.$count = jQuery('#saved-items-count');
-				item.$panel = jQuery('#saved-items');
+				item.$count = $('#saved-items-count');
+				item.$panel = $('.saved-items');
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_item_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_items;
+				item.removeSelector = '.saved-items .saved-item.' + $(this).attr('id'); 
 				break;
 				
 			case 'SocialTag' :
@@ -114,6 +118,7 @@ eu.europeana.myeuropeana = {
 				item.$panel = jQuery('#saved-tags');
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_tag_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_tags;
+				item.removeSelector = '.saved-tags .saved-tag.' + $(this).attr('id'); 
 				break;
 		}
 		
@@ -121,14 +126,25 @@ eu.europeana.myeuropeana = {
 			count : item.count,
 			$count : item.$count,
 			success : function() {
+				
 				eu.europeana.ajax.methods.addFeedbackContent( item.feedback_html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
 				
 				ajax_feedback.count = parseInt( ajax_feedback.$count.html(), 10 );
 				ajax_feedback.$count.html( ajax_feedback.count - 1 );
-				
+
+				if(item.removeSelector){
+					$(item.removeSelector).each(function(i, ob){
+						$(ob).remove();
+					});
+				}
+				/*
 				if ( 'SocialTag' !== type ) {
-					$elm.parent().remove();
+					if(item.removeSelector){
+						$(item.removeSelector).each(function(i, ob){
+							$(ob).remove();
+						});
+					}
 				}
 				else{
 					if ( $elm.parent().parent().children().length === 1 ){
@@ -138,6 +154,7 @@ eu.europeana.myeuropeana = {
 						$elm.parent().remove();
 					}
 				}
+				*/
 				if ( ( ajax_feedback.count - 1 ) == 0 ) {
 					item.$panel.append( item.no_saved_msg );
 				}				
@@ -153,6 +170,7 @@ eu.europeana.myeuropeana = {
 			id : parseInt( $elm.attr('id'), 10 )
 		};
 		eu.europeana.ajax.methods.user_panel( 'remove', ajax_data, ajax_feedback );
+		
 	},
 	
 	addItemHighlight : function() {

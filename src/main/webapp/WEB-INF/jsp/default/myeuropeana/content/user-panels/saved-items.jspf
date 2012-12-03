@@ -11,7 +11,7 @@
 	
 	<div class="content">
 
-		<div id="saved-items">
+		<div class="saved-items">
 			<c:choose>
 				<c:when test="${fn:length(model.user.savedItems) < 1 }">
 					<spring:message code="NoSavedItems_t" />
@@ -19,7 +19,7 @@
 				<c:otherwise>
 					<%-- Iterate over Saved Items --%>
 					<c:forEach items="${model.user.savedItems}" var="item">
-						<div class="saved-item">
+						<div class="saved-item ${item.id}">
 						
 							<%-- Item Image --%>
 							<%-- Determine fallback image for this item --%>

@@ -14,7 +14,7 @@
 }
 
 #user-information,
-#saved-items,
+.saved-items,
 #saved-searches,
 #saved-tags,
 #remote-search-widget {
@@ -28,7 +28,7 @@
 	color: #666;
 }
 
-#saved-items img,
+.saved-items img,
 #saved-tags img {
 	float: left;
 	margin-right: 0.5em;
@@ -71,7 +71,7 @@
  	}
  	
  	#user-information,
-		#saved-items,
+		.saved-items,
 		#saved-searches,
 		#saved-tags,
 		#remote-search-widget {

@@ -8,7 +8,7 @@
 	<a	href="#saved-tags"><spring:message code="SavedTags_t" /></a>
 
 	<div class="content">
-		<div id="saved-tags">
+		<div class="saved-tags">
 			<c:choose>
 				<c:when test="${fn:length(model.user.socialTags) < 1}">
 					<spring:message code="NoSavedTags_t" />
@@ -18,7 +18,7 @@
 					<ul>
 						<c:forEach items="${model.user.socialTags}" var="tag">
 							<li>
-								<div class="saved-tag">
+								<div class="saved-tag ${tag.id}">
 									<%-- nr of items with this tag --%>
 									<c:set var="tagQuery" value='europeana_uri:("${tag.europeanaUri}")' />
 									<span class="bold">${tag.tag}</span><br/>
