@@ -77,6 +77,7 @@
                --%>class='icon-external-right europeana'><%--
                --%><spring:message code="featured-partner-visit_text_t"/>&nbsp;<%--
                --%><spring:message code="${model.featuredPartner.anchorTitle}"/><%--
+               --%><a class='new-content-link europeana' href='newcontent2.html'><spring:message code="featured-partner-view_text_t"/></a><%--
                --%></a><%--
              --%></li><%--
            --%></ul><%--

@@ -188,7 +188,9 @@
 }
 
 
-
+.featured-text .new-content-link{
+	display:	block;
+}
 
 ul.featured-partner-links{
 	margin-left:	0;
