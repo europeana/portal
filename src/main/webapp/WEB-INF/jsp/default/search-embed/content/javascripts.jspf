@@ -1,6 +1,10 @@
 <%@ include file="/WEB-INF/jsp/default/_common/html/no-js.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/search-embed/variables/variables-javascript.jspf" %>
 
+<script>
+//alert("${model.pageName}  embedded = ${model.embedded}");
+</script>
+
 
 <c:choose>
   <c:when test="${!empty model.debug && model.debug}">

@@ -1,3 +1,6 @@
-<div id="content">
-  <%@ include file="/WEB-INF/jsp/default/search-embed/content/results/results.jspf" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div class="row" id="content">
+	<div class="twelve columns">
+		<%@ include file="/WEB-INF/jsp/default/search/content/results/results.jsp" %>
+	</div>
 </div>
