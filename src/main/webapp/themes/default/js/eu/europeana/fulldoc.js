@@ -97,11 +97,11 @@ eu.europeana.fulldoc = {
 				// leave this line in place to have the translator automatically opened 
 				function(){
 					if(! $("#mobile-menu").is(":visible") ){
-						jQuery("#translate-item").trigger('click');
-						jQuery("#translate-item").unbind('click');
-						jQuery("#translate-item").bind('click', function(e){e.preventDefault();});
-						jQuery("#translate-item").addClass('disabled');
-						jQuery("#translate-item span")
+						$("#translate-item").trigger('click');
+						$("#translate-item").unbind('click');
+						$("#translate-item").bind('click', function(e){e.preventDefault();});
+						$("#translate-item").addClass('disabled');
+						$("#translate-item span")
 						.removeClass(eu.europeana.translation_services.more_icon_class)
 						.removeClass(eu.europeana.translation_services.less_icon_class)
 						.removeClass(eu.europeana.translation_services.more_icon_class_phone);
@@ -477,6 +477,10 @@ eu.europeana.fulldoc = {
 	
 	
 	initTriggerPanel: function(type, index, gallery){
+		
+		if($("#mobile-menu").is(":visible") ){
+			return;
+		}
 		
 		console.log('initTriggerPanel type= ' + type + ", index = " + index);
 		
