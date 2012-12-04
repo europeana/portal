@@ -433,25 +433,25 @@ Galleria.addTheme({
     		/* non-carousel non-bordered (index page) */
 			thisGallery._options.responsive = false;
 
-			var title		= thisGallery.$( 'container' ).find(".galleria-info-title");
-			var description	= thisGallery.$( 'container' ).find(".galleria-info-description");
-			
+			var title			= thisGallery.$( 'container' ).find(".galleria-info-title");
+			var description		= thisGallery.$( 'container' ).find(".galleria-info-description");
 			
     		if(dataSource.length > 1){ // will always be the case on index page for this type of galleria
     			stage.after(info);
     			info.append(title);
     			info.append(description);
 
-
-	    			
 	    		info.click(function(){
 	    			var i = thisGallery.getIndex();
-        			window.open(dataSource[i].link, "_new");
-        			
+	    			
+	    			if(dataSource[i].external){
+	    				window.open(dataSource[i].link, "_new");	    				
+	    			}
+	    			else{	    				
+	    				window.location.href = dataSource[i].link;	    				
+	    			}
 	    		});
-    			
 
-     			
         		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
        				var imgShows = false;
        				thisGallery.$( 'container' ).find(".galleria-images .galleria-image").each(function(i, ob){
