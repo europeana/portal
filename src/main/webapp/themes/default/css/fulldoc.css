@@ -137,9 +137,11 @@ span.icon-share{
 	display:	block;				/* another override   */
 }
 
+.icon-translate,
 label.icon-tag{
 	font-size:	2em;	
 }
+
 
 /* action-title*/
 
@@ -150,6 +152,11 @@ a.action-link span,
 	font-size:	.5em;
 	position:	relative;
 	top:		-.5em;
+}
+
+#translate-item{
+	position:	relative;
+	top:		-.5em;	
 }
 
 
@@ -244,6 +251,10 @@ a.action-link span,
 		text-align:		left;
 	}
 
+	.icon-translate{
+		font-size:		1em;		
+	}
+	
 	a.action-link, span.icon-share {
 		float:			none;
 		display:		block;
@@ -257,6 +268,10 @@ a.action-link span,
 	a.action-link span{
 		font-size:		1em;
 		top:	0;
+	}
+	
+	#translate-item{
+		top:	0;	
 	}
 	
 	
@@ -454,7 +469,7 @@ h1 {
 /* translation-services */
 
 #translate-container{
-	padding-top:		1em;
+	xxxxxpadding-top:		1em;
 	padding-bottom:		1em;	
 }
 
