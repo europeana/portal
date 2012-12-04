@@ -251,13 +251,13 @@ eu.europeana.fulldoc = {
 			return;
 		}
 		
-		
+		/*
 		alert(
 				"val:  " +  jQuery('#item-tag').val()  
 			+	"\n\nencoded: " + encodeURIComponent( jQuery('#item-tag').val() ) 
 			+	"\n\nuri = " + eu.europeana.vars.item.uri
 				);
-		
+		*/
 		
 		var ajax_feedback = {
 			saved_tags_count : 0,
@@ -478,6 +478,9 @@ eu.europeana.fulldoc = {
 	
 	initTriggerPanel: function(type, index, gallery){
 		
+		
+		//alert("initTriggerPanel type = " + type);
+		
 		if($("#mobile-menu").is(":visible") ){
 			return;
 		}
@@ -498,6 +501,7 @@ eu.europeana.fulldoc = {
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
 		
+		//alert("should have set type to " + eu.europeana.vars.external.triggers.labels[type])
 		
 		// action handling
 		
@@ -514,11 +518,19 @@ eu.europeana.fulldoc = {
 		}
 		else{
 			eu.europeana.fulldoc.triggerPanel.bind('click', function(){
-				if(carouselData[index ? index : 0].external.type == 'pdf'){
+				
+				var type = carouselData[index ? index : 0].external.type; 
+				if(type == 'pdf'){
         			window.open(carouselData[index ? index : 0].external.url, '_new');
         		}
+				else if(type == 'sound'){
+					window.open(carouselData[index ? index : 0].external.url, '_new');
+				}
+				else if(type == 'video'){
+					window.open(carouselData[index ? index : 0].external.url, '_new');
+				}
 				else{
-					alert('lightbox binding belongs here');
+					//alert('lightbox binding belongs here: ' + type   );					
 				}
 			});
 		}
