@@ -1,0 +1,7 @@
+<html lang="${model.locale}">
+<head>
+<meta charset="utf-8"/>
+<title>${model.pageTitle}</title>
+<%@ include file="/WEB-INF/jsp/default/search-embed/content/links.jspf" %>
+</head>
+<body class="locale-${model.locale}">

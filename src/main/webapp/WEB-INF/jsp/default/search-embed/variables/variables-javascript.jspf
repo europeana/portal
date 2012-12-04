@@ -1,0 +1,37 @@
+<%--
+	escape all localized messages from the message.properties file
+	in order to make sure they do not break the javascript strings
+--%>
+
+<script>
+window.eu = { europeana : { vars : { msg : {} } } };
+window.js = {};
+
+window.js = {
+	min_suffix		: '.min',
+	min_directory	: 'min/',
+	cache_helper	: '',
+	empty_console	: {
+		log		: function() {},
+		error	: function() {},
+		info	: function() {}
+	}
+};
+
+if ( !window.console ) { window.console = js.empty_console; }
+js.console = js.empty_console;
+
+<c:if test="${model[debug] && model.debug}">
+	js.debug = true;
+	js.min_suffix = '';
+	js.min_directory = '';
+	js.cache_helper = '?' + new Date().getTime();
+	js.console = window.console;
+</c:if>
+
+eu.europeana.vars.portal_name = '${model.portalName}';
+eu.europeana.vars.branding = '/${branding}';
+eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
+eu.europeana.vars.locale = '${model.locale}';
+eu.europeana.vars.portal_server = '${model.portalServer}';
+</script>
