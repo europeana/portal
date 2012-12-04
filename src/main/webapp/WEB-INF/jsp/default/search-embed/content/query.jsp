@@ -2,13 +2,11 @@
 
 <div id="query-full">
 	
-<%-- query action --%>
-<%-- query value --%>
 
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
 <c:set var="query_value" value=""/>
-<c:if test="${not empty model.query}">
-	<c:set var="query_value" value="${model.query}"/>
+<c:if test="${not empty model.rswDefqry}">
+	<c:set var="query_value" value="${model.rswDefqry}"/>
 </c:if>
 
 
@@ -55,35 +53,23 @@
 			</tr>
 			
 		</table>
-			
-		
-		
-		<%-- map search link --%>
 
-		<c:if test="${model.debug} && 'map.html' == ${model.pageName}">
-			<input type="checkbox" id="box_search"/>
-			<label for="box_search"><spring:message code='MapBoxedSearch_t'/></label>
-		</c:if>
 
 		<%-- embedded search --%>
+		<input type="hidden" name="embedded" value="${model.embeddedString}"/>
+		<input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}"/>
+		<input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}"/>
+		<input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}"/>
+		<input type="hidden" name="rswUserId" value="${model.rswUserId}"/>
+		<input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/>
+		<input type="hidden" name="lang" value="${model.locale}"/>
 
-		<c:if test="${model.embedded}">
-			<input type="hidden" name="embedded" value="${model.embeddedString}"/>
-			<input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}"/>
-			<input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}"/>
-			<input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}"/>
-			<input type="hidden" name="rswUserId" value="${model.rswUserId}"/>
-			<input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/>
-			<input type="hidden" name="lang" value="${model.locale}"/>
-		</c:if>
-		
 		<input type="hidden" name="rows" id="rows" value="${model.rows}" />
 		
 	</form>	
 
 	<%--"did you mean" suggestion. nb: how to handle for embedded widget - might be best to have the backend create the url	--%>
 	
-
 
 </div>
 
