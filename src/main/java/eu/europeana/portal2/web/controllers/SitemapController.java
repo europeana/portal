@@ -221,11 +221,12 @@ public class SitemapController {
 			String queryString = "TYPE:VIDEO";
 			Query query = new Query(queryString)
 								.setParameter("rows", String.valueOf(VIDEO_SITEMAP_VOLUME_SIZE))
-								.setStart(volume * VIDEO_SITEMAP_VOLUME_SIZE);
+								.setStart(volume * VIDEO_SITEMAP_VOLUME_SIZE)
+								.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
 
 			List<? extends BriefBean> resultSet = null;
 			try {
-				resultSet = searchService.search(BriefBean.class, query).getResults();
+				resultSet = searchService.sitemap(BriefBean.class, query).getResults();
 			} catch (SolrTypeException e) {
 				e.printStackTrace();
 			}
