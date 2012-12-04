@@ -55,6 +55,7 @@ public class SuggestionController {
 		log.info("============== START SUGGESTIONS ==============");
 
 		List<Term> suggestions = new ArrayList<Term>();
+		term = term.trim().replaceAll("[\"']", "");
 		if (term.length() >= 3 && term.indexOf(":") == -1) {
 			try {
 				suggestions = searchService.suggestions(term, size, field);
