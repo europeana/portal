@@ -117,7 +117,16 @@ eu.europeana.search = {
 					var fixed	= $(ob).find('.fixed');
 					var html	= fixed.html();
 					fixed.remove();
-					ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob), {fixed:	'<span class="fixed">' + html + '</span>'} );					
+					ellipsisObjects[ellipsisObjects.length] = new Ellipsis(
+								$(ob),
+								{fixed:	'<span class="fixed">' + html + '</span>'},
+								function($ob){
+									var imgThumb = $(ob).parent().prev();
+									imgThumb.css('border-style', 'solid solid none');
+									imgThumb.css('border-width', '1px 1px medium');
+									$ob.show();
+								}
+							);					
 				}
 		);
 		$(window).bind('resize', function(){

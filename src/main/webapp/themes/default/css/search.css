@@ -45,35 +45,71 @@
 
 
 
-.thumb-frame, .ellipsis{
+.thumb-frame,
+.ellipsis{
 	margin-left:	0.5em;
 	margin-right:	0.5em;
 	padding-bottom:	3px;
-	border-bottom:	1px dotted #A0A0A0;
 }
 
 .thumb-frame{
-	background-color:	#999;
-	height:				8em;
-	line-height:		8em;
-	text-align:			center;
+	background-color:		#FCFCFC;
+	height:					8em;
+	line-height:			8em;
+	text-align:				center;
+	
+	border-right:			1px solid #c9c9c9;
+  	border-top:				1px solid #efefef;
+  	border-left:			1px solid #efefef;
+  	border-bottom:			1px solid #efefef;
+	
+	/*
+	 -moz-use-text-color #EFEFEF;
+	*/
+	border-style:			solid;
+	border-width:			1px;
+
+	
+	
+	-moz-border-radius:		8px 8px 0 0;
+	-webkit-border-radius:	8px 8px 0 0;
+	border-radius:			8px 8px 0 0;
+	
+	
+	-webkit-transition: background-color 1s ease-in-out;
+  	-moz-transition: background-color 1s ease-in-out;
+  	-o-transition: background-color 1s ease-in-out;
+  	-ms-transition: background-color 1s ease-in-out;
+  	transition: background-color 1s ease-in-out;
 }
 
-.ellipsis{
+.thumb-frame:hover{
+	background-color: #e3e3e3;
+}
 
+
+.ellipsis{
 	height:			2em;
 	max-height:		2em;
 	min-height:		2em;
 	
 	line-height:	1em;
+	margin-top:		0;
+	border-bottom:	1px solid #E3E3E3;
+	border-left:	1px dotted #E3E3E3;
+	border-radius:	0 0 8px 8px;
+	border-right:	1px solid #C9C9C9;
 	
-	margin-top:		0.25em;
+	padding-left:	0.5em;
+	padding-right:	0.5em;
+	
+	display:		none;
 }
 
 
 
 #items .ellipsis-inner{
-	min-height:			2em;		/* force height to keep icon in bottom corner */
+	min-height:		2em;		/* force height to keep icon in bottom corner */
 }
 
 	
@@ -96,10 +132,9 @@
 	margin-top:			0.5em;
 	text-align:			left;
 	position:			relative;
-	xxxborder-bottom:		1px dotted #a0a0a0;
 	overflow-x:			hidden;
 	display:			inline-block;
-	float:				left!important;	/* chrome / webkit fix */
+	float:				left !important;	/* chrome / webkit fix */
 }
 
 
