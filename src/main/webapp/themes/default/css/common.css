@@ -35,8 +35,11 @@
 /* sidebar */
 
 .sidebar {
-	position: relative;
-	background-color: #dfdfdf;
+	position:			relative;
+	background-color:	#fff;
+	border-radius:		8px 8px 8px 8px;
+	border:				1px solid #C9C9C9;
+	box-shadow:			3px 3px 4px #C3C3C3;
 }
 
 
