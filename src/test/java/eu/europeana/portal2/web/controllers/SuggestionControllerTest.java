@@ -13,7 +13,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter;
 import org.springframework.context.ApplicationContext;
@@ -39,6 +38,27 @@ public class SuggestionControllerTest {
 	private SuggestionController controller;
 
 	@Test
+	public void escapingTest() {
+		String[] terms = new String[]{"'baking in bavaria", "\"baking in bavaria", "(baking in bavaria", "(baking in bavaria)"};
+		for (String term : terms) {
+			term = clearSuggestionTerm(term);
+			assertEquals("baking in bavaria", term);
+		}
+
+		terms = new String[]{"text/image"};
+		for (String term : terms) {
+			term = clearSuggestionTerm(term);
+			assertEquals("text\\/image", term);
+		}
+
+	}
+	private String clearSuggestionTerm(String term) {
+		term = term.replaceAll("[\"'()]", "").replace("/", "\\/");
+
+		return term;
+	}
+
+	// @Test
 	public void suggestionServiceTest() {
 		try {
 			List<Term> suggestions = searchService.suggestions("pari", 10);

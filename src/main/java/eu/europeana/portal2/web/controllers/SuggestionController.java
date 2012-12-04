@@ -55,7 +55,7 @@ public class SuggestionController {
 		log.info("============== START SUGGESTIONS ==============");
 
 		List<Term> suggestions = new ArrayList<Term>();
-		term = term.trim().replaceAll("[\"']", "");
+		term = clearSuggestionTerm(term);
 		if (term.length() >= 3 && term.indexOf(":") == -1) {
 			try {
 				suggestions = searchService.suggestions(term, size, field);
@@ -74,4 +74,10 @@ public class SuggestionController {
 		injector.postHandle(this, page);
 		return page;
 	}
+	
+	private String clearSuggestionTerm(String term) {
+		term = term.trim().replaceAll("[\"'()]", "").replace("/", "\\/");
+		return term;
+	}
+
 }
