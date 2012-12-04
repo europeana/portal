@@ -178,7 +178,7 @@ eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = '../min/galleria.europeanax.min.css';
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.min.css';
 			</c:otherwise>
 		</c:choose>
 	</c:when>
