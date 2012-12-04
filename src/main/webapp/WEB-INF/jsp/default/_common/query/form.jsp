@@ -2,14 +2,7 @@
 
 
 <%-- query action --%>
-
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
-<c:if test="'map.html' == ${model.pageName}">
-	<c:set var="query_value" value="/${model.portalName}/map.html"/>
-</c:if>
-<c:if test="'timeline.html' == ${model.pageName}">
-	<c:set var="query_value" value="/${model.portalName}/timeline.html"/>
-</c:if>
 
 <%-- query value --%>
 
@@ -61,17 +54,8 @@
 					</button>
 				</td>
 			</tr>
-			
 		</table>
 			
-		
-		
-		<%-- map search link --%>
-
-		<c:if test="${model.debug} && 'map.html' == ${model.pageName}">
-			<input type="checkbox" id="box_search"/>
-			<label for="box_search"><spring:message code='MapBoxedSearch_t'/></label>
-		</c:if>
 
 		<%-- embedded search --%>
 
@@ -84,36 +68,7 @@
 			<input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/>
 			<input type="hidden" name="lang" value="${model.locale}"/>
 		</c:if>
-	
-		
-		<%-- additional feature links for the search box --%>
-		
-		<c:if test="${not model.embedded}">
-		
-			<%--
-			<!-- refine search link -->
-			
-	 		<c:set var="refinedEnabled" value=" disabled" />
-			<c:if test="${!empty model.enableRefinedSearch && model.enableRefinedSearch}">
-				<c:set var="refinedEnabled" value="" />
-			</c:if>
-	
-			<a href="" id="refine-search" class="nofollow${refinedEnabled}"><spring:message code="RefineYourSearch_t" /></a>
-	
-			<!-- save search link -->
-	 	
-			<c:if test="${!empty model.user} && 'search.html' == ${model.pageName}">
-				<spring:message code='SaveToMyEuropeana_t'/>
-				<c:if test="${model.briefBeanView}">
-					<input type="text" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}"/>
-				</c:if>
-				<c:if test="${model.query}">
-					<input type="text" value="${model.query}"/>
-				</c:if>
-			 </c:if>
-			 --%>
-	
-		</c:if>
+
 		
 		<input type="hidden" name="rows" id="rows" value="${model.rows}" />
 		
