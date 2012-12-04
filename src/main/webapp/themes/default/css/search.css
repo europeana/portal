@@ -217,8 +217,7 @@
 	
 	box-shadow: 0 0 8px #333;
 	-moz-box-shadow: 0 0 8px #333;
-       -webkit-box-shadow: 0 0 8px #333;
-       
+    -webkit-box-shadow: 0 0 8px #333;
 }
 
 .meta-data.last {
