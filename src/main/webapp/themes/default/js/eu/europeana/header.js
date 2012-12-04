@@ -101,6 +101,10 @@ eu.europeana.header = {
 			$("#lang-menu"),
 			{
 				"fn_item": function(self){
+					if( ['myeuropeana.html', '/portal/'].indexOf(self.getActive()) > -1 ){
+						window.location.href = self.getActive();
+						return;
+					}
 					$("input[name=embeddedlang]").val(self.getActive());
 					$("#language-selector").submit();
 				}
