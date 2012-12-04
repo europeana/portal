@@ -4,6 +4,13 @@
 <div id="items">
 
 	<c:set var="results" value="${model.briefBeanView.briefBeans}" />
+	
+	<%-- Determine whether or not the search widget is active and set target as appropriate --%>
+	
+	<c:set var="targetArg" value="" />
+	<c:if test="${model.embedded}">
+		<c:set var="targetArg" value='target="_blank"' />
+	</c:if>
 
 	<c:forEach var="cell" items="${results}" varStatus="x"><div class="li"><!-- whitespace breaks layout - keep li elements together tight -->
 	
@@ -17,7 +24,7 @@
 		</div>
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
-		<a href="${fn:replace(cell.fullDocUrl, "\"", "&quot;")}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}">
+		<a href="${fn:replace(cell.fullDocUrl, "\"", "&quot;")}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}" ${targetArg} rel="nofollow">
 			<div class="ellipsis">
 				<c:choose>
 					<c:when test="${!empty cell.title}">${title}</c:when>
