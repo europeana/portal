@@ -128,22 +128,28 @@ a.disabled:hover{
 
 
 div.actions{
-	padding-left:	1em;
-	padding-right:	1em;
-	padding-bottom:	1em;
-	max-height:		3em;
-	text-align:		justify;
+	padding:		2.5em 1em 1em 1em;
 }
 
 a.action-link,
 span.icon-share{
 	font-size:	2em;
-	display:	inline-block;
+	display:	block;				/* another override   */
 }
 
-a.action-link span{
-	width:			auto !important;
-	font-size:		1.5em;
+label.icon-tag{
+	font-size:	2em;	
+}
+
+/* action-title*/
+
+label.icon-tag span,
+a.action-link span,
+.action-title{
+	width:		auto !important;
+	font-size:	.5em;
+	position:	relative;
+	top:		-.5em;
 }
 
 
@@ -151,9 +157,6 @@ a.action-link span{
 	margin-left:	0;
 }
 
-.action-title{
-	display:		none;
-}
 
 #excerpt{
 	padding-left:	0;
@@ -175,6 +178,11 @@ a.action-link span{
 }
 
 
+#item-save-tag div{
+	display:	table;
+	width:		100%;
+	
+}
 
 #item-save-tag input{
 	outline-width:			0;
@@ -212,27 +220,13 @@ a.action-link span{
 	border-bottom-left-radius:			0;
 }
 
-#item-save-tag li span,
-#item-save-tag span {
+
+#item-save-tag div span {
 	display: table-cell;
 	white-space: nowrap;
 	width: 1px;
 }
 
-/*
-#item-save-tag input[type="submit"]{
-  border: 1px solid #A0A0A0;
-  display: table-cell;
-  width: 100%;
-}
-
-#refinements input[type="text"] {
-  border: 1px solid #A0A0A0;
-  display: table-cell;
-  width: 100%;
-}
-
-*/
 
 @media only screen and ( min-width:48em ){
 
@@ -245,7 +239,7 @@ a.action-link span{
 	/* links */
 
 	div.actions{
-		padding:		0;
+		padding:		.5em 0 1.5em 0;
 		max-height:		none;
 		text-align:		left;
 	}
@@ -257,9 +251,15 @@ a.action-link span{
 		font-size:		1em;
 	}
 
+	label.icon-tag,
+	label.icon-tag span,
+	.action-title,
 	a.action-link span{
 		font-size:		1em;
+		top:	0;
 	}
+	
+	
 	
 
 	#urlRefIsShownAt{
@@ -410,7 +410,6 @@ h1 {
 
 .rights-badge span.rights-icon{
 	float:			left;
-	xxxmargin-top:	-0.1em;
 	margin-bottom:	-0.2em;	/* stop rights text line-wrapping */
 	margin-right:	0.25em;
 	margin-top:		0.25em;
@@ -439,7 +438,8 @@ h1 {
 	margin: 0;
 	padding: 0;
 }
-   
+
+/*
 #item-save-tag input[type=text] {
 	margin: 2px 0;
 	width: 180px;
@@ -449,6 +449,7 @@ h1 {
 	margin-bottom: 4px;
 }
 
+*/
 
 /* translation-services */
 
@@ -472,13 +473,14 @@ h1 {
 
 #google-translate-element,
 #microsoft-translate-element {
-	margin-bottom: 7px;
+	margin-bottom: 0.75em;
 }
 
 #microsoft-translate-element select {
-	display:		block;
 	margin:			0;
 	margin-bottom:	1em;
+	width:			100%;
+	font-size:		1.25em;
 }
 	
 
@@ -499,6 +501,12 @@ h1 {
 
 	#additional-info .original-context{
 		margin-bottom:		1em;
+	}
+	
+	#microsoft-translate-element select {
+		width:		auto;
+		font-size:	0.8em;
+		display:	block;
 	}
 
 }

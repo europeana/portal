@@ -247,7 +247,18 @@ eu.europeana.fulldoc = {
 	
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
-		if ( jQuery('#item-tag').val() < 1 ) { return; }
+		if ( jQuery('#item-tag').val() < 1 ){
+			return;
+		}
+		
+		
+		alert(
+				"val:  " +  jQuery('#item-tag').val()  
+			+	"\n\nencoded: " + encodeURIComponent( jQuery('#item-tag').val() ) 
+			+	"\n\nuri = " + eu.europeana.vars.item.uri
+				);
+		
+		
 		var ajax_feedback = {
 			saved_tags_count : 0,
 			$saved_tags : jQuery('#saved-tags-count'),
@@ -270,6 +281,7 @@ eu.europeana.fulldoc = {
 				eu.europeana.ajax.methods.showFeedbackContainer();
 			}
 		},
+		
 		ajax_data = {
 			className : "SocialTag",
 			tag : encodeURIComponent( jQuery('#item-tag').val() ),
@@ -384,34 +396,15 @@ eu.europeana.fulldoc = {
 			addThisHtml
 		);
 		
-		
 		jQuery('#shares-link').hide();
 		com.addthis.init( null, true, false );
 		
-		setTimeout( function() {
-			jQuery('#shares-link').fadeIn(function(){
-				$(this).css("display", "inline-block");
-			}); },
-			600 );
-		
-		/*
-
-		jQuery('#lightbox-addthis').append(
-				com.addthis.getToolboxHtml({
-
-					html_class : 'addthis',
-					url : url,
-					title : title,
-					description : description,
-					services : {
-						compact : {},
-						twitter : {},
-						google_plusone : { count : 'false' },
-						facebook_like : {}
-					}
-				})
+		setTimeout( 
+			function(){
+				jQuery('#shares-link').fadeIn();
+			},
+			600
 		);
-		 */
 		
 	},
 

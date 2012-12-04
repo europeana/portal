@@ -240,23 +240,14 @@ carouselData[carouselData.length] = {
 			</a>
 		</c:if>
 			
-		<span class="stretch"></span>
-			
-		<div class="clear"></div>
-			
-	</div>
-	
-	<%-- Add tag --%>
-	<div class="actions">	
+
 		
 		<c:if test="${!empty model.user}">
 			<form id="item-save-tag">
 				<fieldset>
-					<label for="add-tag" class="icon-tag">
+					<label for="add-tag" class="icon-tag action-link">
 						<span class="action-title"><spring:message code="AddATag_t" /></span>
 					</label>
-					
-					<br />
 					
 					<div style="display:table">
 						<input type="text" id="item-tag" maxlength="50" />
