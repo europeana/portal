@@ -14,7 +14,6 @@
 					<spring:message code="NoSavedTags_t" />
 				</c:when>
 				<c:otherwise>
-					<%-- Iterate over Saved Tags --%>
 					<ul>
 						<c:forEach items="${model.user.socialTags}" var="tag">
 							<li>

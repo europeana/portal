@@ -37,9 +37,9 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				carouselData[carouselData.length] = {
 					image:				"/${model.portalName}${item.responsiveImages['_1']}",
 					title:				"<spring:message code='${item.anchorTitle}'/>",
-					description:		"<spring:message code='${item.description}'/>",
-					linkDescription:	"<spring:message code='${item.linkDescription}'/>",
-					link:				"${item.url}"
+					description:		"<spring:message code='${item.description}'/><div class='action'><a href='${item.url}' target='" + (${item.externalLink} ? "_new" : "_self") + "'><spring:message code='${item.linkDescription}'/></a></div>",
+					link:				"${item.url}",
+					external:			${item.externalLink}
 				};
 				
 			</c:forEach>
@@ -53,9 +53,6 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			
 				<a href="${item.url}">
 					<img
-					<%--
-							src		= "/${model.portalName}<spring:message code='${item.imgUrl}'/>"
-					--%>
 							src		= "/${model.portalName}${item.responsiveImages['_1']}",
 							title	= "<spring:message code='${item.anchorTitle}'/>"
 							alt		= "<spring:message code='${item.imgAlt}'/>"
