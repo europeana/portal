@@ -409,9 +409,9 @@ public class FullDocPage extends FullDocPreparation {
 			String docType = getDocument().getEdmType();
 			String thumbnailUrl = this.getThumbnailUrl();
 			String isShownByUrl = getLightboxRef();
-			
+
 			String firstImageType = getImageType(isShownByUrl, docType);
-			
+
 			Image firstImage = new Image(
 				thumbnailUrl,
 				isShownByUrl,
@@ -423,11 +423,16 @@ public class FullDocPage extends FullDocPreparation {
 			String[] images = getImages();
 			for (String imageUrl : images) {
 				String imageType = getImageType(imageUrl, docType);
-				Image img = new Image(
+				Image img;
+				if (imageType.equals("IMAGE")) {
+					img = new Image(
 						createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
 						createImageUrl(imageUrl, imageType, "FULL_DOC"),
 						imageType
-				);
+					);
+				} else {
+					img = new Image(imageUrl, imageUrl, imageType);
+				}
 				log.info("img " + img);
 				imagesToShow.add(img);
 			}
