@@ -67,6 +67,10 @@ public class CarouselItem {
 		return String.format("carousel-item-%d_a_description_t", i);
 	}
 
+	public String getLinkDescription() {
+		return String.format("carousel-item-%d_a_linkdescription_t", i);
+	}
+	
 	public String getAnchorTarget() {
 		return String.format("notranslate_carousel-item-%d_a_target_t", i);
 	}

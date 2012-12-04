@@ -33,19 +33,14 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 	        var carouselData = [];   
  
 			<c:forEach var="item" items="${model.carouselItems}">
-				
+
 				carouselData[carouselData.length] = {
 					image:				"/${model.portalName}${item.responsiveImages['_1']}",
 					title:				"<spring:message code='${item.anchorTitle}'/>",
 					description:		"<spring:message code='${item.description}'/>",
+					linkDescription:	"<spring:message code='${item.linkDescription}'/>",
 					link:				"${item.url}"
 				};
-				
-				<%-- NOT USED 
-					${item.anchorTarget}
-					${item.imgWidth}
-					${item.imgHeight}					
-				--%>
 				
 			</c:forEach>
 		</script>
