@@ -1,4 +1,3 @@
-<%@page import="java.util.Enumeration"%>
 <%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 
 <div id="header" role="banner" class="row">
