@@ -353,9 +353,6 @@ Galleria.addTheme({
     		
     		thisGallery._options.responsive = false;
     		
-    		// Doesn't seem to matter
-    		//alert(    			thisGallery._options.responsive )
-    		
     		var thumbsC	= thisGallery.$( 'container' ).find('.galleria-thumbnails-container');
     		
     		if(dataSource.length == 1){
@@ -440,17 +437,27 @@ Galleria.addTheme({
     			stage.after(info);
     			info.append(title);
     			info.append(description);
+    			info.append('<button class="linkButton europeana-button-1"></button>');
 
-	    		info.click(function(){
+    			var fnClick = function(){
 	    			var i = thisGallery.getIndex();
-	    			
 	    			if(dataSource[i].external){
 	    				window.open(dataSource[i].link, "_new");	    				
 	    			}
-	    			else{	    				
+	    			else{
 	    				window.location.href = dataSource[i].link;	    				
 	    			}
-	    		});
+	            };
+	            
+	            info.click(function(){
+	            	fnClick();
+	            });
+	            
+	            info.find("button").click(function(){
+	            	fnClick();
+	            });
+
+    			
 
         		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
        				var imgShows = false;
@@ -515,12 +522,6 @@ Galleria.addTheme({
 				this.addIdleState( this.get('galleria-thumb-nav-right'), { right:-50 });
 			}			
 		}
-		else{
-			//alert("touch")
-		}
-
-		
-		
 		
 		
         this.bind('thumbnail', function(e) {

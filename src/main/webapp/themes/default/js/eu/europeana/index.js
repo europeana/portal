@@ -106,6 +106,14 @@
 				jQuery('#carousel-1').galleria({
 					dataSource:carouselData,
 					autoplay:17000,
+					extend: function(e){
+						this.bind("image", function(e) {	// lightbox trigger
+							var gallery = this;
+							$("#carousel-1 .linkButton").html(carouselData[e.index].linkDescription);
+						});
+					}			
+				
+					
 					/*
 					extend: function(e){
 						$(this).ready(function(e) {

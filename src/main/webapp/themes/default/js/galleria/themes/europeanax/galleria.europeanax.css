@@ -456,9 +456,34 @@
 	line-height:	1.48em;
 }
 
-.galleria-info-description .action{
-	margin-top:	1.5em;
-	text-align:	right;
+.galleria-info button{
+	margin-top:			2em;
+	text-align:			right;
+	display:			block;
+	float:				right;
+	cursor:				pointer;
+	font-size:			1em;
+	background-color:	#0048ff;
+	color:				white !important;
+	
+	color: #ffffff;
+	background: -moz-linear-gradient(
+		top,
+		#0048ff 0%,
+		#4c7ecf);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#0048ff),
+		to(#4c7ecf));
+	-moz-box-shadow:
+		3px 3px 13px rgba(51,51,51,0.5),
+		inset 0px 0px 0px rgba(255,255,255,0);
+	-webkit-box-shadow:
+		3px 3px 13px rgba(51,51,51,0.5),
+		inset 0px 0px 0px rgba(255,255,255,0);
+	box-shadow:
+		3px 3px 13px rgba(51,51,51,0.5),
+		inset 0px 0px 0px rgba(255,255,255,0);
 }
 
 /* footer */
