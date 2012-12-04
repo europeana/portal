@@ -1,4 +1,4 @@
-var Ellipsis = function(cmp, ops) {
+var Ellipsis = function(cmp, ops, onShow) {
 
 	var $cmp	= $(cmp);
     var $inner 	= $cmp.find('.ellipsis-inner');
@@ -73,10 +73,14 @@ var Ellipsis = function(cmp, ops) {
 			$fixed.css("position",	"absolute");
 			$fixed.css("right",		"0px");
 			$fixed.css("bottom",	"0px");
-			//$fixed.css("float",	"right");
+		}
+		if(typeof(onShow)!='undefined'){
+			onShow($cmp);
+		}
+		else{
+			$cmp.show();
 		}
 		
-		// end new
 		
 		
 		/*
@@ -160,7 +164,7 @@ var Ellipsis = function(cmp, ops) {
 		"respond":function(){
 			respond();
 		}
-	}
+	};
 };
 
 
