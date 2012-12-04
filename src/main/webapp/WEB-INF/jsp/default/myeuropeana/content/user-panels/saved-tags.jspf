@@ -22,12 +22,10 @@
 									<%-- nr of items with this tag --%>
 									<c:set var="tagQuery" value='europeana_uri:("${tag.europeanaUri}")' />
 									<span class="bold">${tag.tag}</span><br/>
-		
+
 									<%-- Item Image --%>
 									<%-- Determine fallback image for this tag --%>
 									<c:set var="imgtoshow" value="item-image.gif" />
-									
-									
 									<c:set var="iconClass" value="item-image.gif" />
 									<c:set var="docType" value="${tag.docType}" />
 									<c:choose>
@@ -48,23 +46,19 @@
 											<c:set var="docType" value="3d" />
 										</c:when>
 									</c:choose>
-									
-									
-									
-									
-		
+
 									<%-- Place Image --%>
 									<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
 										<c:choose>
 											<c:when test="${!empty tag.europeanaObject}">
-												<img src="${model.cacheUrl}uri=${fn:escapeXml(tag.europeanaObject)}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
+												<img src="${model.cacheUrl}uri=${tag.europeanaObject}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
 											</c:when>
 											<c:otherwise>
 												<span class="${iconClass}"></span>
 											</c:otherwise>
 										</c:choose>
 									</a>
-									
+
 									<%-- item info --%>
 									<%-- !tag.europeanaId.orphan> --%>
 									<a class="bold" href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>

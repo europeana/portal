@@ -4,11 +4,9 @@
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <div class="section">
 
 	<a href="#saved-items"><spring:message code="SavedItems_t" /></a>
-	
 	<div class="content">
 
 		<div class="saved-items">
@@ -20,12 +18,10 @@
 					<%-- Iterate over Saved Items --%>
 					<c:forEach items="${model.user.savedItems}" var="item">
 						<div class="saved-item ${item.id}">
-						
+
 							<%-- Item Image --%>
 							<%-- Determine fallback image for this item --%>
-							        
 							<c:set var="iconClass" value="item-image.gif" />
-							
 							<c:set var="docType" value="${item.docType}" />
 							<c:choose>
 								<c:when test="${docType == 'IMAGE'}">
@@ -45,25 +41,23 @@
 									<c:set var="docType" value="3d" />
 								</c:when>
 							</c:choose>
-							
-							
+
 							<%-- Place Image --%>
 							<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
 								<c:choose>
 									<c:when test="${!empty item.europeanaObject}">
-										<img src="${model.cacheUrl}uri=${fn:escapeXml(item.europeanaObject)}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
+										<img src="${model.cacheUrl}uri=${item.europeanaObject}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
 									</c:when>
 									<c:otherwise>
-										<span class="${iconClass}"  alt="${item.title}"></span>
+										<span class="${iconClass}" alt="${item.title}"></span>
 									</c:otherwise>
 								</c:choose>
 							</a>
-							
+
 							<%-- Item Info --%>
 							<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold"><europeana:stringLimiter theStr="${item.title}" size="50"/></a><br/>
 							<spring:message code="Creator_t" />: <em>${item.author}</em><br/>
 							<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
-							
 							<%-- Delete Saved Item button --%>
 							<button id="${item.id}" class="remove-saved-item deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
 						</div>
