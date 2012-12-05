@@ -47,7 +47,7 @@
 	 -->
 
 	<bean id="localeChangeInterceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor">
-		<property name="paramName" value="embeddedlang"/>
+		<property name="paramName" value="lang" />
 	</bean>
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">

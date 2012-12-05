@@ -105,7 +105,7 @@ eu.europeana.header = {
 						window.location.href = self.getActive();
 						return;
 					}
-					$("input[name=embeddedlang]").val(self.getActive());
+					$("input[name=lang]").val(self.getActive());
 					$("#language-selector").submit();
 				}
 			}
@@ -336,37 +336,27 @@ eu.europeana.header = {
 	        };
 		});
 	},
-	
-	
+
 	addLanguageChangeHandler : function() {
-		
-		jQuery('#embeddedlang').change( function() {
-			
+		jQuery('#lang').change( function() {
 			jQuery('#language-selector').submit();
-			
 		});
-		
 	},
-	
-	
+
 	addRefineSearchClickHandler : function() {
 		jQuery('#refine-search').click(function(e) {
 			e.preventDefault();
 			jQuery('#refine-search-form').fadeIn();
 			jQuery('#qf').focus();
-			
 		});
 		
 		jQuery('#close-refine-search').click(function(e) {
-			
 			e.preventDefault();
 			jQuery('#refine-search-form').fadeOut();
 			
 		});
-		
 	},
-	
-	
+
 	addAjaxMethods : function() {
 		
 		eu.europeana.ajax.methods = new eu.europeana.ajax();
@@ -374,8 +364,6 @@ eu.europeana.header = {
 		
 	},
 
-
-	
 	handleSearchSubmit : function( e ) {
 
 		var emptySearch = jQuery('#query-input').val().length < 1 || (eu.europeana.header.searchMenu.getActive() == jQuery('#query-input').val());

@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,6 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.corelib.web.interceptor.LocaleInterceptor;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -63,7 +63,7 @@ public class SearchController {
 		@RequestParam(value = "embeddedLogo", required = false) String embeddedLogo,
 		@RequestParam(value = "embeddedBgColor", required = false) String embeddedBgColor,
 		@RequestParam(value = "embeddedForeColor", required = false) String embeddedForeColor,
-		@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
+		@RequestParam(value = "lang", required = false) String embeddedLang, // embeddedLang -> lang
 		@RequestParam(value = "qf", required = false) String[] qf,
 		@RequestParam(value = "rswUserId", required = false) String rswUserId,
 		@RequestParam(value = "rswDefqry", required = false) String rswDefqry,
@@ -72,6 +72,7 @@ public class SearchController {
 		@RequestParam(value = "sort", required = false, defaultValue="") String sort,
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
 		@RequestParam(value = "theme", required = false, defaultValue="") String theme,
+		// @RequestParam(value = "bt", required = false) String bt,
 		HttpServletRequest request, 
 		HttpServletResponse response,
 		Locale locale
@@ -89,8 +90,6 @@ public class SearchController {
 		model.setEmbeddedForeColor(embeddedForeColor);
 		model.setEmbedded(embedded);
 		model.setEmbeddedLang(embeddedLang);
-		log.info("set embedded language to " + embeddedLang);
-
 		model.setEmbeddedLogo(embeddedLogo);
 		model.setRswUserId(rswUserId);
 		model.setRswDefqry(rswDefqry);
@@ -100,7 +99,12 @@ public class SearchController {
 		}
 		model.setStart(start);
 		model.setRows(rows);
+
+		if (!StringUtils.isBlank(rswDefqry)) {
+			q = rswDefqry;
+		}
 		model.setQuery(q);
+
 		if (!sortValues.contains(sort)) {
 			sort = DEFAULT_SORT;
 		}
