@@ -441,11 +441,12 @@ Galleria.addTheme({
 
     			var fnClick = function(){
 	    			var i = thisGallery.getIndex();
-	    			if(dataSource[i].external){
-	    				window.open(dataSource[i].link, "_new");	    				
+	    			
+	    			if(dataSource[i].external == "_self"){
+	    				window.location.href = dataSource[i].link;	    				
 	    			}
 	    			else{
-	    				window.location.href = dataSource[i].link;	    				
+	    				window.open(dataSource[i].link, dataSource[i].external);	    				
 	    			}
 	            };
 	            

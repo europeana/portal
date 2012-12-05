@@ -40,7 +40,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					description:		"<spring:message code='${item.description}'/>",
 					linkDescription:	"<spring:message code='${item.linkDescription}'/>",
 					link:				"${item.url}",
-					external:			${item.externalLink}
+					external:			"<spring:message code='${item.anchorTarget}'/>"
 				};
 				
 			</c:forEach>
