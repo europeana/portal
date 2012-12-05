@@ -188,7 +188,6 @@ cb-ugc{
 }
 
 #filter-search h4 a {
-	xxxxxxxxdisplay:				block;
 	color:					#333;
 }
 	
@@ -200,6 +199,18 @@ cb-ugc{
 		text-align:	left;
 		font-size:	1em;
 		max-height:	none;
+	}
+
+	#share-subscribe .icon-share{
+		font-size:	2em;
+	}
+	#share-subscribe .action-title{
+		position:	relative;
+		top:		-.5em;
+	}
+	
+	#share-subscribe .icon-share{
+	
 	}
 	
 	#share-subscribe li{
