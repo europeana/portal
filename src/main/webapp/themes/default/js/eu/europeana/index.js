@@ -7,19 +7,21 @@
 		var setup = function(){
 			var initialSuffix = '_1'; // smallest by default
 			if($.browser.msie  && ( parseInt($.browser.version, 10) === 7 || parseInt($.browser.version, 10) === 8 )  ){
-				initialSuffix = '_4'; // largest by default
+				initialSuffix = '_3'; // largest by default
 			}
 			
 			new euResponsive({
 				"galleryName"	:	"euresponsive",
 				"selector"		:	"#section-blog .responsive_half",
-				"initialSuffix"	:	initialSuffix
+				"initialSuffix"	:	initialSuffix,
+				"suffixes"		:	["_1", "_2", "_3", "_2"]
 			});
 			
 			new euResponsive({
 				"galleryName"	:	"euresponsive",
 				"selector"		:	"#section-featured-content .responsive_half",
-				"initialSuffix"	:	initialSuffix
+				"initialSuffix"	:	initialSuffix,
+				"suffixes"		:	["_1", "_2", "_3", "_2"]
 			});
 			
 
