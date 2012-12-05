@@ -47,8 +47,6 @@
 
 .thumb-frame,
 .ellipsis{
-	margin-left:	0.5em;
-	margin-right:	0.5em;
 	padding-bottom:	3px;
 }
 
@@ -103,7 +101,7 @@
 	padding-left:	0.5em;
 	padding-right:	0.5em;
 	
-	display:		none;
+	visibility:		hidden;
 }
 
 

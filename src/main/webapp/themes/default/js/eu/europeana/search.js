@@ -124,7 +124,7 @@ eu.europeana.search = {
 									var imgThumb = $(ob).parent().prev();
 									imgThumb.css('border-style', 'solid solid none');
 									imgThumb.css('border-width', '1px 1px medium');
-									$ob.show();
+									$ob.css('visibility', 'visible');
 								}
 							);					
 				}

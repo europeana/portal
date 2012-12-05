@@ -78,7 +78,8 @@ var Ellipsis = function(cmp, ops, onShow) {
 			onShow($cmp);
 		}
 		else{
-			$cmp.show();
+			$cmp.css('visibility', 'visible');
+			//$cmp.show();
 		}
 		
 		
