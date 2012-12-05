@@ -186,7 +186,7 @@
 }
 
 
-@media only screen and ( max-width:62em ){
+@media only screen and (min-width: 48em) and ( max-width:62em ){
 	#items>div.li{
 		width:				33%;
 	}
