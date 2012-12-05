@@ -17,8 +17,19 @@ eu.europeana.search = {
 		// make facet sections collapsible
 		$("#filter-search li").not(".ugc-li").Collapsible(
 			{
-				headingSelector:"h3 a",
+				headingSelector: "h3 a",
 				bodySelector: "ul"
+			}
+		);
+		
+		$(window).bind('collapsibleExpanded',
+			function(event, elements){
+				var providerFacet = $('#filter-search>li.provider')[0];
+				$(elements).each(function(i, ob){
+					if(providerFacet == ob){
+						$('#filter-search>li.data-provider').show();
+					}
+				});
 			}
 		);
 		
