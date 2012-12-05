@@ -12,7 +12,6 @@
 		</div>
 
 		<div class="row">
-
 			<div class="three-cols-fulldoc-sidebar">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/sidebar-left.jsp" %>
 			</div>
@@ -20,10 +19,8 @@
 			<div class="nine-cols-fulldoc" id="main-fulldoc-area">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
 			</div>
-			
 		</div>
 
-			
 		<c:if test="${!empty model.moreLikeThis}">
 
 			<div class="row">
