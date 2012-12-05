@@ -17,7 +17,6 @@
 	<c:set var="initial_rows" value="${RequestParameters.initial_rows}" />
 </c:if>
 <c:set var="item_not_removed"><spring:message code="ItemNotRemoved_t" /></c:set>
-<c:set var="mapview_noresults"><spring:message code="MapViewNoResults_t" /></c:set>
 <c:set var="matches"><spring:message code='MatchesFor_t' /></c:set>
 <c:set var="no_saved_items"><spring:message code='NoSavedItems_t' /></c:set>
 <c:set var="no_saved_searches"><spring:message code='NoSavedSearches_t' /></c:set>
@@ -61,7 +60,7 @@
 	<c:set var="startFrom" value="${RequestParameters.startFrom}" />
 </c:if>
 <c:set var="translate_with"><spring:message code="essTranslateWith_t" /></c:set>
-<c:set var="timeline_result_limit_exceeded"><spring:message code="timelineDisclaimer_t" /></c:set>
+
 
 <%-- Citation (fulldoc) --%>
 
@@ -72,38 +71,6 @@
 <%-- Andy: these two are in use: --%>
 <c:set var="citation_header"><spring:message code="Cite_Header_t" /></c:set>
 
-
-
-<%-- Map Controls --%>
-<c:set var="mapview_zoom"><spring:message code="mapview_zoom_t" /></c:set>
-<c:set var="mapview_zoomIn"><spring:message code="mapview_zoomIn_t" /></c:set>
-<c:set var="mapview_zoomOut"><spring:message code="mapview_zoomOut_t" /></c:set>
-<c:set var="mapview_zoomToSel"><spring:message code="mapview_zoomIntoSelection_t" /></c:set>
-<c:set var="mapview_chooseMapType"><spring:message code="mapview_chooseMapType_t" /></c:set>
-<c:set var="mapview_navigateMap"><spring:message code="mapview_navigateMap_t" /></c:set>
-<c:set var="mapview_freeForm"><spring:message code="mapview_freeForm_t" /></c:set>
-<c:set var="mapview_noresult_1"><spring:message code="NoMapItemsFound1_t" /></c:set>
-<c:set var="mapview_noresult_2"><spring:message code="NoMapItemsFound2_t" /></c:set>
-
-
-<c:if test="${model[maxMapResults] != null}">
-	<c:set var="map_limit">${model[maxMapResults]}</c:set>
-	<c:set var="map_limit_array" value="${map_limit}" />
-	<c:set var="mapview_result_limit_exceeded"><@spring.messageArgs "MapDisclaimer_t" map_limit_array/></c:set>
-</c:if>
-
-
-
-<c:set var="mapview_no_place_available"><spring:message code="MapNoPlaceAvailable_t" /></c:set>
-<c:set var="mapview_layers_tiles_attribution"><spring:message code="mapview_tiles_attribution_t" /></c:set>
-
-<%-- Map Layers --%>
-<c:set var="mapview_layers_google_satellite"><spring:message code="mapview_layer_google_satellite_t" /></c:set>
-<c:set var="mapview_layers_google_hybrid"><spring:message code="mapview_layer_google_hybrid_t" /></c:set>
-<c:set var="mapview_layers_google_street"><spring:message code="mapview_layer_google_street_t" /></c:set>
-<c:set var="mapview_layers_google_physical"><spring:message code="mapview_layer_google_physical_t" /></c:set>
-<c:set var="mapview_layers_osm_tiles"><spring:message code="mapview_layer_osm_tiles_t" /></c:set>
-
 <c:set var="search_addthis_pubid">
 	<c:choose>
 		<c:when test="${!empty model.addThisId}">${model.addThisId}</c:when>
@@ -113,10 +80,8 @@
 
 
 <script type="text/javascript">
-
-
 <!--
-window.eu = { europeana : { vars : { msg : { cite:{} }, item : {}, mapview : {} } } };
+window.eu = { europeana : { vars : { msg : { cite:{} }, item : {}, suppresResize: false } } };
 window.js = {
 	min_suffix      : '',
 	min_directory   : '',
@@ -151,15 +116,6 @@ eu.europeana.vars.msg.search_error = '${search_error}';
 eu.europeana.vars.addthis_pubid = '${search_addthis_pubid}';
 eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 
-// url variables to check for timeline / map content 
-eu.europeana.vars.timeline = {};
-
-<c:if test="${model[mapJsonUrl]}">
-	eu.europeana.vars.mapview.json_url = '${model.mapJsonUrl}';
-</c:if>
-<c:if test="${model[jsonUrlTimeline]}">
-	eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
-</c:if>
 <c:choose>
 	<c:when test="${model.pageName == 'index.html'}">
 		eu.europeana.vars.pinterest = {};
@@ -170,8 +126,17 @@ eu.europeana.vars.timeline = {};
 			eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
 			eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
 		</c:if>
+		eu.europeana.vars.galleria = {};
+		<c:choose>
+			<c:when test="${!empty model.debug && model.debug}">
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+			</c:when>
+			<c:otherwise>
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.min.css';
+			</c:otherwise>
+		</c:choose>
 	</c:when>
-
+	
 	<c:when test="${model.pageName == 'full-doc.html'}">
 		eu.europeana.vars.msg.translate_with = '${fn:escapeXml(translate_with)}';
 		eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
@@ -182,13 +147,10 @@ eu.europeana.vars.timeline = {};
 			eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
 		</c:if>
 		eu.europeana.vars.bing_translate_key = '${model.bingTranslateId}';
-
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
-
 		eu.europeana.vars.msg.cite.citation_header	= '${fn:escapeXml(citation_header)}';
 		eu.europeana.vars.msg.cite.close			= '${fn:escapeXml(close)}';
-		
 		eu.europeana.vars.galleria = {};
 		
 		<c:choose>
@@ -217,10 +179,6 @@ eu.europeana.vars.timeline = {};
 		};
 		
 		
-		<c:if test="${model[document.positionAvailable]}">
-			eu.europeana.vars.mapview.kml_url = '${model.document.urlKml}';
-		</c:if>
-
 		<c:if test="${!empty model.user}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.saved_item = '${saved_item}';
@@ -235,17 +193,15 @@ eu.europeana.vars.timeline = {};
 			eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
 		</c:if>
 	</c:when>
+	
 	<c:when test="${model.pageName == 'myeuropeana.html'}">
 		<c:if test="${!empty model.user}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.item_not_removed = '${item_not_removed}';
-
 			eu.europeana.vars.msg.saved_search_removed = '${saved_search_removed}';
 			eu.europeana.vars.msg.no_saved_searches = '${no_saved_searches}';
-
 			eu.europeana.vars.msg.saved_item_removed = '${saved_item_removed}';
 			eu.europeana.vars.msg.no_saved_items = '${no_saved_items}';
-
 			eu.europeana.vars.msg.saved_tag_removed = '${saved_tag_removed}';
 			eu.europeana.vars.msg.no_saved_tags = '${no_saved_tags}';
 		</c:if>
@@ -258,72 +214,13 @@ eu.europeana.vars.timeline = {};
 		eu.europeana.vars.msg.search_save_failed = '${fn:escapeXml(search_save_failed)}';
 	</c:when>
 
-	<c:when test="${model.pageName == 'map.html'}">
-		<%-- localisation of results and map controls --%>
-		eu.europeana.vars.msg.results = '${results}';
-
-		eu.europeana.vars.mapview.noresults1				= '${mapview_noresult_1}';
-		eu.europeana.vars.mapview.noresults2				= '${mapview_noresult_2}';
-		eu.europeana.vars.google_maps_key					= '${model.googleMapsId}';
-		eu.europeana.vars.msg.zoom							= '${mapview_zoom}';
-		eu.europeana.vars.msg.zoomIn						= '${mapview_zoomIn}';
-		eu.europeana.vars.msg.zoomOut						= '${mapview_zoomOut}';
-		eu.europeana.vars.msg.zoomToSel						= '${mapview_zoomToSel}';
-		eu.europeana.vars.msg.chooseMapType	 				= '${mapview_chooseMapType}';
-		eu.europeana.vars.msg.navigateMap	 				= '${mapview_navigateMap}';
-		eu.europeana.vars.msg.freeForm		 				= '${mapview_freeForm}';
-		eu.europeana.vars.msg.matches						= '${matches}';
-
-		eu.europeana.vars.mapview.limit						= parseInt("${map_limit}".replace(",", ""));
-		eu.europeana.vars.mapview.limit_exceeded			= '${mapview_result_limit_exceeded}';
-		eu.europeana.vars.mapview.no_place					= '${mapview_no_place_available}';
-		eu.europeana.vars.mapview.tiles_attribution			= '${mapview_layers_tiles_attribution}';
-
-		var labels											= {};
-		var mapping											= {};
-		labels.googleSatellite								= 'Google Satellite'; 
-		labels.googleHybrid									= 'Google Hybrid';
-		labels.googleStreet									= 'Google Streets';
-		labels.googlePhysical								= 'Google Physical';
-		labels.openStreetMapTiles							= 'OSM Tiles@Home';
-
-		mapping[labels.googleSatellite]						= '${mapview_layers_google_satellite}';
-		mapping[labels.googleHybrid]						= '${mapview_layers_google_hybrid}';
-		mapping[labels.googleStreet]						= '${mapview_layers_google_street}';
-		mapping[labels.googlePhysical]						= '${mapview_layers_google_physical}';
-		mapping[labels.openStreetMapTiles]					= '${mapview_layers_osm_tiles}';
-
-		eu.europeana.vars.mapview.layers					= {'mapping':mapping, 'labels':labels};
-
-		<c:choose>
-			<c:when test="${!empty model.mapJsonUrl && 'true' != sample_map_data}">
-				eu.europeana.vars.mapview.json_url = '${model.mapJsonUrl}';
-				eu.europeana.vars.mapview.json_noresult1 = '${mapview_noresult_1}';
-				eu.europeana.vars.mapview.json_noresult2 = '${mapview_noresult_2}';
-			</c:when>
-			<c:otherwise>
-				eu.europeana.vars.mapview.json_url  = '/${branding}/js/sti/e4D-javascript/krucifix.json';
-			</c:otherwise>
-		</c:choose>
-	</c:when>
-
-	<c:when test="${model.pageName == 'timeline.html'}">
-		eu.europeana.vars.msg.ajax_data_retrieval_error = '${ajax_date_retrieval_error}';
-		eu.europeana.vars.limit_exceeded			= '${timeline_result_limit_exceeded}';
-		eu.europeana.vars.event_source_url = '${model.jsonUrlTimeline}';
-		eu.europeana.vars.msg.results = '${results}';
-		eu.europeana.vars.msg.matches = '${matches}';
-		eu.europeana.vars.msg.date = '${date}';
-		eu.europeana.vars.startFrom = '${startFrom}';
-
-		eu.europeana.vars.initial_rows = '${initial_rows}';
-	</c:when>
 </c:choose>
-//-->
 
 eu.europeana.vars.rows = '${rows}';
 
 <%-- 'for share-this' --%>
 var switchTo5x = true;
 if ( window.stLight ) { stLight.options({publisher : '${model.shareThisId}'}); }
+
+//-->
 </script>
