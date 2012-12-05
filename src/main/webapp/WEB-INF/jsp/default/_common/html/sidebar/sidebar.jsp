@@ -77,7 +77,7 @@
 		</ul>
 		<!-- /facets -->
 
-		<h2>Share and Subscribe:</h2>
+		<h2><spring:message code="Share_section_header_t" />:</h2>
 		<ul id="share-subscribe">
 			<c:if test="${!empty model.user}">
 				<li>
