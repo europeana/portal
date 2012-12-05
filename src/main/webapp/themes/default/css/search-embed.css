@@ -1,3 +1,4 @@
+/*
 html {
 	position: static;
 }
@@ -6,79 +7,49 @@ body {
 	width: 680px;
 }
 
-/* header */
-	
-	#header {
-		width: 680px;
-	}
 
 
-/* language-selector */
+#header {
+	width: 680px;
+}
 
-	#language-selector {
-		text-align: right;
-	}
+
+
+
+#language-selector {
+	text-align: right;
+}
 	
-	
-/* query */
-	
-	#query {
-		padding: 0 0 0 105px;
-	}	
-	
-	#additional-feedback {
-		top: 50px;
-		left: 105px;
-	}
 	
 
-/* search results */
-/*	
-	#content {
-		width: 680px;
-		margin-bottom: 0;
-	}
+
+#query {
+	padding: 0 0 0 105px;
+}	
+
+#additional-feedback {
+	top: 50px;
+	left: 105px;
+}
+
+
+#search-results {
+	float: none;
+	margin: auto;
+}
+
+
+#footer {
+	overflow: auto;
+}
+
+#europeana-logo {
+	float: left;
+}
+
+#european-union {
+	float: right;
+	margin-top: 6px;
+}
+
 */
-	#search-results {
-		float: none;
-		margin: auto;
-	}
-
-
-/* footer */
-	
-	#footer {
-		overflow: auto;
-	}
-	
-	#europeana-logo {
-		float: left;
-	}
-	
-	#european-union {
-		float: right;
-		margin-top: 6px;
-	}
-
-/*
-	#header {
-		width: 680px;
-	}
-	
-	#content {
-		width: 680px;
-	}
-	
-	#search-results {
-		margin: 0;
-	}
-	
-	#query {
-		padding: 30px 0px 30px 80px;
-	}
-
-	#query form {
-	    margin: 0;
-	}	
-	
-	*/
