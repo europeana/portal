@@ -77,8 +77,8 @@ html, body{
 	opacity:		0.8;
 	background:		#333333;
 	border:			1px solid #666666;
- 		color:			#FFFFFF;
-	font-size:		12px;
+ 	color:			#FFFFFF;
+	font-size:		1em;
 	position:		relative;
 	overflow:		auto;
 	text-align:		left;
