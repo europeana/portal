@@ -58,7 +58,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			fieldsLightbox = new ArrayList<FieldPresentation>();
 
 			addField(fieldsLightbox, Field.DC_CREATOR, shortcut.get("DcCreator"));
-			addField(fieldsLightbox, Field.DC_RIGHTS, shortcut.get("EdmRights"));
+			addField(fieldsLightbox, Field.DC_RIGHTS, shortcut.get("DcRights"));
 			addField(fieldsLightbox, Field.EDM_DATAPROVIDER, shortcut.get("DataProvider"));
 			addField(fieldsLightbox, Field.EDM_PROVIDER, document.getProvider(),
 					Field.EDM_COUNTRY.getValues(document.getCountry()));
