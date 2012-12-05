@@ -12,10 +12,6 @@ $.fn.Collapsible = function() {
 		ops[attrname] = opsIn[attrname];
 	}
 
-	var log = function(x){
-		console.log(x);
-	};
-
 	eu.europeana.vars.suppresResize = false;
 	
 	return this.each(function(){
