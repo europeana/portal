@@ -103,6 +103,9 @@
 
 
 <script>
+
+alert("inside variables-js.jsp");
+
 window.eu = {
 	europeana : {
 		vars : {

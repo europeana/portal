@@ -13,4 +13,10 @@
 	<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
 </div>
 
+<%--
 <%@ include file="/WEB-INF/jsp/default/_common/html-close.jsp" %>
+ --%>
+
+<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
+<%@ include file="/WEB-INF/jsp/default/_common/html/close-html.jsp" %>
+
