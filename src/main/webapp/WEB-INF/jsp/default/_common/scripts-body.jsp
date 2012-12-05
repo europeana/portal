@@ -8,12 +8,6 @@
 	<%--
 	<%@ include file="/WEB-INF/jsp/default/_common/variables/variables-javascript.jsp" %>
 	 --%>
-	
-	<script>
-		alert("inside scripts-body.jsp");
-	</script>
-	
-	
 	<c:choose>
 	<c:when test="${!empty model.debug && !model.debug}">
 		<script src="/${model.portalName}/themes/default/js/eu/europeana/bootstrap/min/bootstrap.min.js"></script>
