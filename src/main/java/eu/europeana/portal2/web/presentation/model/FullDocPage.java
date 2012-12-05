@@ -433,12 +433,9 @@ public class FullDocPage extends FullDocPreparation {
 				} else {
 					img = new Image(imageUrl, imageUrl, imageType);
 				}
-				log.info("img " + img);
 				imagesToShow.add(img);
 			}
 		}
-		log.info("imagesToShow: " + imagesToShow);
-		log.info("imageList: " + imagesToShow.size());
 
 		return imagesToShow;
 	}
@@ -456,7 +453,6 @@ public class FullDocPage extends FullDocPreparation {
 			}
 			imageList.add(createImageUrl(image, imageType, size));
 		}
-		log.info("imageList: " + imageList.size());
 
 		return imageList;
 	}
@@ -495,7 +491,6 @@ public class FullDocPage extends FullDocPreparation {
 			}
 			allImages = images.toArray(new String[images.size()]);
 		}
-		log.info("all images: " + allImages.length + " " + StringUtils.join(allImages, ", "));
 
 		return allImages;
 	}
