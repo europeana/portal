@@ -14,9 +14,6 @@
 
 		<img id="lightbox_image" class="content-image" style="display:none" src=""/>
 		
-		<div class="lightbox-rights" id="rights-collapsed">
-			<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
-		</div>
 		<div class="info">
 			<div class="hide_show_meta">
 				<a class="showMeta"><spring:message code="see_details_t"/></a>
@@ -33,6 +30,9 @@
 				</c:if>
 				<div class="original-context">
 					<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
+				</div>
+				<div class="lightbox-rights" id="rights-collapsed">
+					<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 				</div>
 			</div>
 			
