@@ -15,7 +15,15 @@
 	</c:otherwise>
 </c:choose>
 
-<li>
+<c:set var="sectionClass" value="" />
+<c:if test="${facettype == 'data_provider'}">
+	<c:set var="sectionClass" value=" class=\"data-provider\"" />
+</c:if>
+<c:if test="${facettype == 'provider'}">
+	<c:set var="sectionClass" value=" class=\"provider\"" />
+</c:if>
+
+<li ${sectionClass}>
 	<h3>
 		<a href="" class="${classAttr}" rel="nofollow">
 			<c:choose>
@@ -31,9 +39,12 @@
 		</a>
 	</h3>
 	<ul>
-		<c:if test="${facettype == 'rights'}">
+		<%--
+		<c:if test="${ == 'rights'}">
 			<li id="rights-info"><spring:message code="rightsNotice_t" /></li>
 		</c:if>
+		--%>
+		
 		<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-items.jsp" %>
 	</ul>
 </li>
