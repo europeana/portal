@@ -42,7 +42,7 @@
 			</c:forEach>
 			
 		</ul>
-		<input type="hidden" name="embeddedlang" value="" style="margin:0;padding:0;"/>
+		<input type="hidden" name="lang" value="" style="margin:0;padding:0;"/>
 	</div>
 </form>
   

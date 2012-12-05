@@ -290,7 +290,7 @@ eu.europeana.header = {
 	
 	addLanguageChangeHandler : function() {
 		
-		jQuery('#embeddedlang').change( function() {
+		jQuery('#lang').change( function() {
 			
 			jQuery('#language-selector').submit();
 			
