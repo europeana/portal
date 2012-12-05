@@ -25,3 +25,8 @@
 	
 </head>
 <body class="locale-${model.locale}">
+
+	<c:if test="${model.pageName == 'index.html' }">
+		<c:if test="${not empty model.announceMsg}">${model.announceMsg}</c:if>
+	</c:if>
+
