@@ -23,9 +23,5 @@
 	<%@ include file="/WEB-INF/jsp/default/_common/html/links.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/html/meta.jsp" %>
 	
-	
-	<script type="text/javascript">
-		alert("in opne-html");
-	</script>
 </head>
 <body class="locale-${model.locale}">
