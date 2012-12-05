@@ -452,6 +452,9 @@ eu.europeana.fulldoc = {
 							eu.europeana.lightbox.closeZoom();
 							zoomed = true;
 						}
+						
+						console.log("Andy: TODO check here if the width > 200 before proceeding");
+						
 						$("#lightbox_image").attr("src", submodel[newActive].url);
 						eu.europeana.lightbox.layout();
 						if(zoomed){
