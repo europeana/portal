@@ -117,6 +117,9 @@ public class ApiWrapper {
 	}
 
 	public ApiResult getObject(String recordId, String profile, String callback) {
+		if (recordId.startsWith("/")) {
+			recordId = recordId.substring(1);
+		}
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(RECORD_PATH);
 		url.append(recordId).append(RECORD_EXT);

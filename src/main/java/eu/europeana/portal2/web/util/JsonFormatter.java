@@ -29,6 +29,13 @@ public class JsonFormatter {
 	 */
 	public static String format(String rawJsonString) throws JsonSyntaxException {
 		JsonElement element = parser.parse(rawJsonString);
-		return gson.toJson(element).replace("  ", " &nbsp;").replace("\n", "<br/>\n");
+		return gson.toJson(element)
+				.replace("  ", " &nbsp;")
+				.replace("\n", "<br/>\n")
+				.replace("\\u003d", "=")
+				.replace("\\u0026", "&")
+				.replace("\\u003c", "&lt;")
+				.replace("\\u003e", "&gt;")
+				;
 	}
 }
