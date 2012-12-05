@@ -1,9 +1,4 @@
 <c:set var="xmlns" value='' />
-<c:choose>
-	<c:when test="${model.pageName == 'full-doc.html' }">
-		<c:set var="xmlns" value='xmlns:cc="http://creativecommons.org/ns#"'/>
-	</c:when>
-</c:choose>
 
 <!--[if IE 8]>
 <html  ${xmlns} class="ie ie8" lang="${lang}">
