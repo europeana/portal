@@ -185,6 +185,14 @@
 	}
 }
 
+
+@media only screen and ( max-width:62em ){
+	#items>div.li{
+		width:				33%;
+	}
+}
+
+
 /* meta-data */
 
 .meta-data {
