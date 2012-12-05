@@ -10,8 +10,10 @@
 	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/index/content.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
+	<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
 </div>
-<%@ include file="/WEB-INF/jsp/default/_common/html-close.jsp" %>
+
+<%@ include file="/WEB-INF/jsp/default/_common/html/close-html.jsp" %>
 
 
 
