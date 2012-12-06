@@ -139,7 +139,8 @@ html, body{
 
 
 #rights-collapsed{
- 	margin-left:		0px !important;
+ 	margin-left:	0px !important;
+ 	margin-top:		1em;
 }
 
 
@@ -158,34 +159,8 @@ div a.hideMeta{
 	text-transform:	capitalize;
 }
 
-
-#lightbox-addthis{
-	position:		absolute;
-	bottom:			9px;
-	left:			2px;
-}
-
-#lightbox-addthis .addthis {
-    min-width:			125px;
-    width:				125px;	/* This is for IE7's benefit */
-
-    left:				0px;
-    bottom:				0px;
-
-    float:				left !important;
-    right:				auto;
-    top:				auto;
-    z-index:			200;
-    
-    text-align:			left;
-}
-
-#lightbox-addthis a.addthis_button_facebook_like iframe {
-    width:			50px !important;
-}
-
-#lightbox-addthis .addthis .addthis_button_compact{
-	margin-top:		0px;
+.addthis_toolbox.addthis_default_style span{
+	line-height:	1.4em !important;
 }
 
 .item-metadata .rights-badge img{
