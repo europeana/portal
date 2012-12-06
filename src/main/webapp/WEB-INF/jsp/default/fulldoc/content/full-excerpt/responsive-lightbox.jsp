@@ -3,9 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
-
-
-<!--Include div for lightbox -->
 <div class="simple_overlay" id="lightbox">
 	<div class="content-wrap">
 	
