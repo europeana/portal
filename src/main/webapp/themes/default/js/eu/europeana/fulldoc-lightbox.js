@@ -73,8 +73,8 @@ eu.europeana.lightbox = {
 		    },
 		    "width":{
 		     	"portrait":{
-		     		"expanded":		250,
-		     		"contracted":	250
+		     		"expanded":		265,
+		     		"contracted":	265
 		     	},
 		     	"landscape":{
 		     		"expanded":		0,
@@ -415,8 +415,8 @@ eu.europeana.lightbox = {
 			contentInfo.css("left",			"-1px");
 			
 			// pin "original context" to bottom of info panel - there's room for it there and it looks better
-			contentInfo.find('.original-context').css('position', 'absolute');
-			contentInfo.find('.original-context').css('bottom', '25px');
+			//contentInfo.find('.original-context').css('position', 'absolute');
+			//contentInfo.find('.original-context').css('bottom', '25px');
 		}
 
 		// set metadata visibility and view-control options
