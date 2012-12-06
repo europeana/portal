@@ -8,7 +8,7 @@ eu.europeana.lightbox = {
 	carouselData: null,
 	
 	showMetadata:function(){
-		$(".content-wrap .info-open").show();
+		$(".content-wrap .info-open").css("display", "table");
 		eu.europeana.lightbox.metaDataToggled();				
 	},
 
@@ -420,8 +420,8 @@ eu.europeana.lightbox = {
 		}
 
 		// set metadata visibility and view-control options
-		if(stats.showMeta == "expanded"){					
-			$(".content-wrap .info-open").show();
+		if(stats.showMeta == "expanded"){
+			$(".content-wrap .info-open").css("display", "table");
 		}
 		else{
 			$(".content-wrap .info-open").hide();
@@ -430,7 +430,7 @@ eu.europeana.lightbox = {
 		// if collapsed/expanded metadata occupies the exact same space them show the metadata and remove the ability to toggle its display 
 		if(stats.metaSameSize){
 			eu.europeana.lightbox.hideMetadataCtrls();
-			$(".content-wrap .info-open").show();
+			$(".content-wrap .info-open").css("display", "table");
 		}
 		else{
 			eu.europeana.lightbox.showMetadataCtrls();
