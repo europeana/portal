@@ -52,6 +52,9 @@ img{-ms-interpolation-mode:bicubic;}
 }
 
 
+#content{
+	padding-bottom:	1em;
+}
 
 /* full-doc special grid styling */
 .three-cols-fulldoc-sidebar{
