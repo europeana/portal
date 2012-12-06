@@ -4,9 +4,9 @@
 
 <div id="excerpt">
 	<c:set var="about" value=""/>
-
 	<c:if test="${not empty model['document']}">
-		<c:set var="about" value="${model.document.about}"/>
+	<c:url var="aboutUrl" value="/record${model.document.about}.html" />
+		<c:set var="about" value="${aboutUrl}" />
 	</c:if>
 
 	<div id="item-details" about="${about}" vocab="http://schema.org/" typeof="CreativeWork">
@@ -25,9 +25,8 @@
 		<c:forEach items="${model.document.dcTitle}" var="title">
 			<c:if test="${title != model.objectTitle }">
 				<div class="item-metadata">
-					<span class="bold notranslate">
-						<spring:message code="dc_title_t" />:</span>
-						<span class="translate" ${semanticAttributes}>${title}</span>
+					<span class="bold notranslate"><spring:message code="dc_title_t" />:</span>
+					<span class="translate" ${semanticAttributes}>${title}</span>
 				</div>
 			</c:if>
 		</c:forEach>
