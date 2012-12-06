@@ -34,7 +34,7 @@ public enum PortalLanguage {
 
 	ET(true, "Eesti (est)", "estonian_t"),
 
-	FIN(true, "Suomi (fin)", "finnish_t"),  // added
+	FI(true, "Suomi (fin)", "finnish_t"), 
 
 	FR(true, "Fran&#231;ais (fre)", "french_t"), 
 
@@ -70,10 +70,9 @@ public enum PortalLanguage {
 
 	SV(true, "Svenska (sve/swe)", "swedish_t"),
 
-	UK(true, "Ukrainian (ukr)", "ukrainian_t", false);
+	UK(true, "Ukrainian (ukr)", "ukrainian_t", false),
 
 	// UNSUPPORTED LANGUAGES (BUT OCCURS IN FACETS):
-	/*
 	MUL(false, "Multilingue (mul)",null, false),
 	AUS(false, "Australian (aus)", null, false),
 	BE(false, "Belarusian (bel)", null, false),
@@ -86,8 +85,8 @@ public enum PortalLanguage {
 	SWE(false, "Swedish (swe)","swedish_t", false),
 	TR(false, "Turkish (tr)", "turkish_t", false),
 	YI(false, "Yiddish (yi)", "yiddish_t", false);
-	*/
-/*
+
+	/*
 croatian_t=Croatian (hrv)
 luxemburgish_t=Luxemburgish (ltz)
 

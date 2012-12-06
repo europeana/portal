@@ -25,7 +25,7 @@ import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 
 public class SchemaOrMappingTest {
 
-	@Test
+	// @Test
 	public void test() {
 		// fail("Not yet implemented");
 		String mappingFile = "/home/peterkiraly/workspace/europeana/trunk/schema.org.mapping.properties";
@@ -33,5 +33,32 @@ public class SchemaOrMappingTest {
 		assertTrue(new File(mappingFile).exists());
 		SchemaOrgMapping.initialize(mappingFile);
 		assertEquals(new SchemaOrgElement("schema:addressCountry", new String[]{}), SchemaOrgMapping.get("edm:country"));
+	}
+
+	@Test
+	public void testTypes() {
+		Object[] vars = new Object[]{
+				"hello", 
+				new String[]{"hello"}, 
+				new HashMap<String, String>(){{put("hello", "hello");}}, 
+				new HashMap<Integer, String>(){{put(1, "hello");}}};
+
+		for (Object obj : vars) {
+			if (obj instanceof String) {
+				System.out.println(obj + " is a String");
+			}
+			if (obj instanceof String[]) {
+				System.out.println(obj + " is a String[]");
+			}
+			if (obj instanceof Map) {
+				System.out.println(obj + " is a Map");
+			}
+			if (obj instanceof HashMap<?,?>) {
+				System.out.println(obj + " is a HashMap<>");
+			}
+			if (obj instanceof Map<?,?>) {
+					System.out.println(obj + " is a Map<>");
+			}
+		}
 	}
 }

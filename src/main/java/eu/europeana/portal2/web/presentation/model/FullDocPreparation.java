@@ -43,6 +43,7 @@ public abstract class FullDocPreparation extends FullDocData {
 
 	// caching fields
 	private List<FieldPresentation> fields;
+	private Map<Field, FieldPresentation> fieldsMap;
 	private List<FieldPresentation> fieldsLightbox;
 	private List<FieldPresentation> fieldsAdditional;
 	private Map<String, List<FieldPresentation>> fieldsEnrichment;
@@ -248,28 +249,31 @@ public abstract class FullDocPreparation extends FullDocData {
 	 * @return collection of fields
 	 */
 	public List<FieldPresentation> getFields() throws Exception {
+
 		if (fields == null) {
 
-			fields = new ArrayList<FieldPresentation>();
+			Map<Field, FieldPresentation> fieldMap = new HashMap<Field, FieldPresentation>();
 
-			addField(fields, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
-			addField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription(),
+			addFieldMap(fieldMap, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
+			addFieldMap(fieldMap, Field.DC_DESCRIPTION,
+					getDocument().getDcDescription(),
 					shortcut.get("DctermsTableOfContents"));
-			addField(fields, Field.DC_CREATOR, shortcut.get("DcCreator"));
-			addField(fields, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
-			addField(fields, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
-			addField(fields, Field.DCTERMS_SPATIAL, shortcut.get("DctermsSpatial"));
-			addField(fields, Field.DC_DATE, getDocument().getDcDate());
-			addField(fields, Field.DCTERMS_TEMPORAL, shortcut.get("DctermsTemporal"));
-			addField(fields, Field.DCTERMS_ISSUED, shortcut.get("DctermsIssued"));
-			addField(fields, Field.DCTERMS_CREATED, shortcut.get("DctermsCreated"));
-			addField(fields, Field.DC_TYPE, getDocument().getDcType());
-			addField(fields, Field.DC_FORMAT, shortcut.get("DcFormat"), 
+			addFieldMap(fieldMap, Field.DC_CREATOR, shortcut.get("DcCreator"));
+			addFieldMap(fieldMap, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
+			addFieldMap(fieldMap, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
+			addFieldMap(fieldMap, Field.DCTERMS_SPATIAL, shortcut.get("DctermsSpatial"));
+			addFieldMap(fieldMap, Field.DC_DATE, getDocument().getDcDate());
+			addFieldMap(fieldMap, Field.DCTERMS_TEMPORAL, shortcut.get("DctermsTemporal"));
+			addFieldMap(fieldMap, Field.DCTERMS_ISSUED, shortcut.get("DctermsIssued"));
+			addFieldMap(fieldMap, Field.DCTERMS_CREATED, shortcut.get("DctermsCreated"));
+			addFieldMap(fieldMap, Field.DC_TYPE, getDocument().getDcType());
+			addFieldMap(fieldMap, Field.DC_FORMAT, shortcut.get("DcFormat"), 
 					shortcut.get("DctermsExtent"),
 					shortcut.get("DctermsMedium"));
-			addField(fields, Field.DC_SUBJECT, getDocument().getDcSubject());
-			addField(fields, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
-			addField(fields, Field.DC_RELATION, shortcut.get("DcRelation"),
+			addFieldMap(fieldMap, Field.DC_SUBJECT, getDocument().getDcSubject());
+			addFieldMap(fieldMap, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
+			addFieldMap(fieldMap, Field.DC_RELATION, new Object[]{
+					shortcut.get("DcRelation"),
 					shortcut.get("DctermsReferences"),
 					shortcut.get("DctermsIsReferencedBy"),
 					shortcut.get("DctermsIsReplacedBy"),
@@ -282,26 +286,38 @@ public abstract class FullDocPreparation extends FullDocData {
 					shortcut.get("DctermsHasFormat"),
 					getDocument().getDctermsIsFormatOf(),
 					shortcut.get("EdmHasMet"),
-					shortcut.get("EdmHasType"),
+					new HashMap<Field, String[]>(){{put(Field.EDM_HASTYPE, shortcut.get("EdmHasType"));}},
 					shortcut.get("EdmIncorporates"),
 					shortcut.get("EdmIsDerivativeOf"),
-					shortcut.get("EdmIsRelatedTo"),
-					shortcut.get("EdmIsRepresentationOf"),
+					new HashMap<Field, String[]>(){{put(Field.EDM_ISRELATEDTO, shortcut.get("EdmIsRelatedTo"));}},
+					new HashMap<Field, String[]>(){{put(Field.EDM_ISREPRESENTATIONOF, shortcut.get("EdmIsRepresentationOf"));}},
 					shortcut.get("EdmIsSimilarTo"),
 					shortcut.get("EdmIsSuccessorOf"),
-					shortcut.get("EdmRealizes")
+					shortcut.get("EdmRealizes")}
 			);
-			addField(fields, Field.DCTERMS_ISPARTOF, shortcut.get("DctermsIsPartOf"));
-			addField(fields, Field.DCTERMS_HASPART, shortcut.get("DctermsHasPart"));
-			addField(fields, Field.EDM_ISNEXTINSEQUENCE, shortcut.get("EdmIsNextInSequence"));
-			addField(fields, Field.DC_LANGUAGE, shortcut.get("DcLanguage"));
-			addField(fields, Field.DC_RIGHTS, shortcut.get("DcRights"));
-			addField(fields, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
-			addField(fields, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
-			addField(fields, Field.DC_SOURCE, shortcut.get("DcSource"));
-			addField(fields, Field.EDM_DATAPROVIDER, shortcut.get("DataProvider"));
-			addField(fields, Field.EDM_PROVIDER, shortcut.get("EdmProvider"));
-			addField(fields, Field.EDM_COUNTRY, Field.EDM_COUNTRY.getValues(shortcut.get("EdmCountry")));
+			addFieldMap(fieldMap, Field.DCTERMS_ISPARTOF, shortcut.get("DctermsIsPartOf"));
+			addFieldMap(fieldMap, Field.DCTERMS_HASPART, shortcut.get("DctermsHasPart"));
+			addFieldMap(fieldMap, Field.EDM_ISNEXTINSEQUENCE, shortcut.get("EdmIsNextInSequence"));
+			addFieldMap(fieldMap, Field.DC_LANGUAGE, shortcut.get("DcLanguage"));
+			addFieldMap(fieldMap, Field.DC_RIGHTS, shortcut.get("DcRights"));
+			addFieldMap(fieldMap, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
+			addFieldMap(fieldMap, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
+			addFieldMap(fieldMap, Field.DC_SOURCE, shortcut.get("DcSource"));
+			addFieldMap(fieldMap, Field.EDM_DATAPROVIDER, shortcut.get("DataProvider"));
+			addFieldMap(fieldMap, Field.EDM_PROVIDER, shortcut.get("EdmProvider"));
+			addFieldMap(fieldMap, Field.EDM_COUNTRY, Field.EDM_COUNTRY.getValues(shortcut.get("EdmCountry")));
+
+			log.info("DC_RELATION: " + fieldMap.get(Field.DC_RELATION));
+			log.info("EdmHasType: " + StringUtils.join(shortcut.get("EdmHasType"), ", "));
+			log.info("EdmIsRelatedTo: " + StringUtils.join(shortcut.get("EdmIsRelatedTo"), ", "));
+			log.info("EdmIsRepresentationOf: " + StringUtils.join(shortcut.get("EdmIsRepresentationOf"), ", "));
+
+			fields = new LinkedList<FieldPresentation>();
+			for (FieldPresentation fieldPresentation : fieldMap.values()) {
+				if (fieldPresentation.getFieldValues() != null && fieldPresentation.getFieldValues().size() > 0) {
+					fields.add(fieldPresentation);
+				}
+			}
 		}
 		return fields;
 	}
@@ -317,6 +333,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			return;
 		}
 
+		FieldPresentation fieldPresentation = new FieldPresentation(fieldInfo);
 		List<String> fieldValues = new LinkedList<String>();
 		for (String[] fieldValueArray : fieldValuesArrays) {
 			if (fieldValueArray == null) {
@@ -345,5 +362,71 @@ public abstract class FullDocPreparation extends FullDocData {
 				log.info("for Field:  " + fieldInfo.getFieldLabel());
 			}
 		}
+	}
+
+	private FieldPresentation getFieldPresentation(Map<Field, FieldPresentation> fields, Field fieldInfo) {
+		FieldPresentation fieldPresentation = null;
+		if (fields.containsKey(fieldInfo)) {
+			fieldPresentation = fields.get(fieldInfo);
+		} else {
+			fieldPresentation = new FieldPresentation(fieldInfo);
+			fields.put(fieldInfo, fieldPresentation);
+		}
+		return fieldPresentation;
+	}
+
+	private void extractAllFieldValues(FieldPresentation fieldPresentation, Field fieldInfo, Object[]... fieldValuesArrays) {
+		for (Object fieldValueArray : fieldValuesArrays) {
+			if (fieldValueArray == null) {
+				continue;
+			}
+			if (fieldValueArray instanceof String[]) {
+				extractFieldValues(fieldPresentation, fieldInfo, (String[])fieldValueArray);
+			} else if (fieldValueArray instanceof Map[]) {
+				Map<Field, String[]> map = (Map<Field, String[]>)fieldValueArray;
+				fieldPresentation.addMap(this, map);
+			}
+		}
+	}
+
+	private void extractFieldValues(FieldPresentation fieldPresentation, Field fieldInfo, String[] values) {
+		for (String value : values) {
+			if (StringUtils.isNotBlank(value) && !value.equals("0000")) {
+				if (fieldInfo.getMaxLength() == -1) {
+					fieldPresentation.add(this, value);
+				} else {
+					String shortValue = StringUtils.abbreviate(value, fieldInfo.getMaxLength() + 3);
+					fieldPresentation.add(this, shortValue);
+				}
+			}
+		}
+	}
+
+	private void addFieldMap(Map<Field, FieldPresentation> fields, Field fieldInfo,
+			Object[]... fieldValuesArrays) {
+		if ((fieldValuesArrays == null) || (fieldInfo.getFieldLabel() == null)) {
+			log.info(String.format("fieldInfo: %s, %s", fieldInfo.getFieldName(), fieldInfo.getFieldLabel()));
+			return;
+		}
+
+		FieldPresentation fieldPresentation = getFieldPresentation(fields, fieldInfo);
+
+		extractAllFieldValues(fieldPresentation, fieldInfo, fieldValuesArrays);
+
+		/*
+		if (fieldInfo.doSortValues()) {
+			Collections.sort(fieldValues);
+		}
+
+		if (!fieldValues.isEmpty()) {
+			try {
+				fieldPresentation.add(this, fieldValues);
+				// fields.add(new FieldPresentation(this, fieldInfo, fieldValues));
+			} catch (NullPointerException npe) {
+				log.info("Failed to add field in fullDocPresentationImpl");
+				log.info("for Field:  " + fieldInfo.getFieldLabel());
+			}
+		}
+		*/
 	}
 }

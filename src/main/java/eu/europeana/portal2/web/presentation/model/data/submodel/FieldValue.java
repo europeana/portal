@@ -90,18 +90,14 @@ public class FieldValue {
 		if ((field.getSearchOn() != null) && StringUtils.isNotBlank(getValue())) {
 			String value = getValue();
 			// clean up value first
-			value = value.replaceAll("[\\<({\\[].*?[})\\>\\]]", ""); // (..)
-																		// [..]
-																		// <..>
-																		// {..}
-			value = StringUtils.strip(value, ",."); // strip , or . from begin
-													// or end
-			value = StringUtils.trim(value);// strip spaces
-			value = StringUtils.replace(value, " and ", " \\and "); // prevent
-																	// and word
-																	// from
-																	// breaking
-																	// search
+			// (..) [..] <..> {..}
+			value = value.replaceAll("[\\<({\\[].*?[})\\>\\]]", ""); 
+			// strip , or . from begin or end
+			value = StringUtils.strip(value, ",."); 
+			// strip spaces
+			value = StringUtils.trim(value);
+			// prevent 'and' word from breaking search
+			value = StringUtils.replace(value, " and ", " \\and "); 
 			// return search string if still not empty
 			if (StringUtils.isNotBlank(value)) {
 				try {
@@ -116,4 +112,8 @@ public class FieldValue {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "FieldValue [value=" + value + "]";
+	}
 }

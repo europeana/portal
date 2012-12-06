@@ -19,7 +19,11 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
+
+import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
@@ -54,9 +58,18 @@ public class FieldPresentation {
 	 * @param externalServices
 	 *            - External Services associated with the field
 	 */
-	public FieldPresentation(UrlAwareData<?> model, Field field, List<String> fieldValues) {
+	public FieldPresentation(Field field) {
 		this.field = field;
-		init(model, fieldValues);
+	}
+
+	public FieldPresentation(UrlAwareData<?> model, Field field, List<String> fieldValues) {
+		this(field);
+		add(model, fieldValues);
+	}
+
+	public FieldPresentation(UrlAwareData<?> model, Field field, Map<Field, String[]> fieldValues) {
+		this(field);
+		addMap(model, fieldValues);
 	}
 
 	/**
@@ -73,11 +86,32 @@ public class FieldPresentation {
 	 * @param externalServices
 	 *            - External services associate with the field
 	 */
-	private void init(UrlAwareData<?> model, List<String> fieldValues) {
+	public void add(UrlAwareData<?> model, List<String> fieldValues) {
 		if (fieldValues != null) {
-			this.fieldValues = new ArrayList<FieldValue>();
 			for (String value : fieldValues) {
 				this.fieldValues.add(new FieldValue(model, field, value));
+			}
+		}
+	}
+
+	public void add(UrlAwareData<?> model, String fieldValue) {
+		if (!StringUtils.isBlank(fieldValue)) {
+			if (this.fieldValues == null) {
+				this.fieldValues = new ArrayList<FieldValue>();
+			}
+			this.fieldValues.add(new FieldValue(model, field, fieldValue));
+		}
+	}
+
+	public void addMap(UrlAwareData<?> model, Map<Field, String[]> fieldValues) {
+		if (fieldValues != null) {
+			if (this.fieldValues == null) {
+				this.fieldValues = new ArrayList<FieldValue>();
+			}
+			for (Entry<Field, String[]> fieldValue : fieldValues.entrySet()) {
+				for (String value : fieldValue.getValue()) {
+					this.fieldValues.add(new FieldValue(model, fieldValue.getKey(), value));
+				}
 			}
 		}
 	}
@@ -145,16 +179,7 @@ public class FieldPresentation {
 		StringBuilder sb = new StringBuilder();
 		sb.append("FieldPresentation[name: ").append(getFieldName());
 		sb.append(", label: ").append(getFieldLabel());
-		sb.append(", values: ");
-		boolean isFirst = true;
-		for (FieldValue fieldValue : fieldValues) {
-			if (isFirst) {
-				isFirst = false;
-			} else {
-				sb.append(", ");
-			}
-			sb.append(fieldValue.getValue());
-		}
+		sb.append(", values: [").append(StringUtils.join(fieldValues, ", ")).append("]");
 		sb.append("]");
 		log.info(sb.toString());
 		return sb.toString();
