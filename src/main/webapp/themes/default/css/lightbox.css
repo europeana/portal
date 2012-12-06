@@ -112,7 +112,7 @@ html, body{
 
 .info .original-context{
  	float:				left;
- 	height:				40px;
+ 	xxxxxxxheight:				40px;
 }
 
 
@@ -120,6 +120,7 @@ html, body{
 	font-weight:		bold;		
 }
 
+/*
 .direct-download{
 	position:			absolute;
 	right:				5px;
@@ -131,6 +132,7 @@ html, body{
 .direct-download a{
 	float:right;
 }
+*/
 
 .info .spacer{
 	width:				100%;
@@ -143,9 +145,13 @@ html, body{
 }
 
 .lightbox-rights{
+	/*
 	position:			absolute;
 	bottom:				10px;
 	right:				5px;
+	*/
+	float:		right;
+	text-align:	right;
 }
 
 
@@ -203,12 +209,15 @@ div a.hideMeta{
 	border:				none;
 }
 
-.rights-badge{
-	text-decoration:	none !important;
+#lightbox .rights-badge{
+	border-bottom:	none;
+	margin-bottom:	0;
+	padding-bottom:	0;
+	font-size:		1em;
 }
 
-img.trigger{
 
+img.trigger{
 	cursor:	pointer;
 }
 

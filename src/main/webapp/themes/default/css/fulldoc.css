@@ -40,7 +40,8 @@
 	max-width:			220px;		/* max thumbanil size plus galleria stage offset (2 * 10) */
 	width:				220px;
 	min-with:			220px;
-	background-color:	#d0d0d0;
+	/* background-color:	#d0d0d0; */
+	background-color:	#fff;
 	margin:				auto;
 }
 
@@ -431,7 +432,6 @@ h1 {
 	border-bottom:	1px solid #AAAAAA;
 	margin-bottom:	1em;
 	padding-bottom:	1em;
-	
 }
 
 .rights-badge span.rights-icon{
