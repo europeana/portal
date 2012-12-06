@@ -42,8 +42,11 @@
 			
 			<%--js target div--%>
 			<div id="lightbox-addthis"></div>
+			
+			<%--
 			<div class="direct-download">
 			</div>
+			--%>
 		</div>
 	</div>
 </div>
