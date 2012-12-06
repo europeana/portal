@@ -383,20 +383,20 @@ eu.europeana.fulldoc = {
 			services : {
 				compact : {}
 			},
-			link_html : $('#shares-link').html()
+			link_html : $('.shares-link').html()
 		
 		});
 
-		jQuery('#shares-link').html(
+		jQuery('.shares-link').html(
 			addThisHtml
 		);
 		
-		jQuery('#shares-link').hide();
+		jQuery('.shares-link').hide();
 		com.addthis.init( null, true, false );
 		
 		setTimeout( 
 			function(){
-				jQuery('#shares-link').fadeIn();
+				jQuery('.shares-link').fadeIn();
 			},
 			600
 		);
