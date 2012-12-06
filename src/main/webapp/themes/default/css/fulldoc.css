@@ -60,11 +60,11 @@ a.action-link {
 	font-size:		1em;
 }
 
-#shares-link{
+.shares-link{
 	display: none;
 }
 
-#shares-link .addthis_button{
+.shares-link .addthis_button{
 	color:			#333;
 }
 
