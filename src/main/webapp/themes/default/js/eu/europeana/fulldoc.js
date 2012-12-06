@@ -68,12 +68,14 @@ eu.europeana.fulldoc = {
 			}
 		}]);
 
+		/*
 		js.loader.loadScripts([{
 			name : 'truncate-content',
 			file : 'truncate-content' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory,
 			callback: function() { self.adjustDescription(); }
 		}]);
+		*/
 		
 			
 		// dependency group - addthis functionality
@@ -156,7 +158,7 @@ eu.europeana.fulldoc = {
 		});
 		
 	},
-	
+	/*
 	openTab : function() {
 		if(typeof eu.europeana.tabs == "undefined"){
 			return;
@@ -196,7 +198,8 @@ eu.europeana.fulldoc = {
 		}
 		eu.europeana.tabs.explore.toggleTab( tab_to_open );
 	},
-		
+	*/
+	/*
 	adjustDescription : function() {
 		
 		var description_truncate = new com.gmtplusone.truncate(
@@ -243,22 +246,14 @@ eu.europeana.fulldoc = {
 		// callback sent to truncate content to be run after truncation is complete
 		rights_truncate.init(eu.europeana.fulldoc.openTab);
 	},
-	
+	*/
 	
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
 		if ( jQuery('#item-tag').val() < 1 ){
 			return;
 		}
-		
-		/*
-		alert(
-				"val:  " +  jQuery('#item-tag').val()  
-			+	"\n\nencoded: " + encodeURIComponent( jQuery('#item-tag').val() ) 
-			+	"\n\nuri = " + eu.europeana.vars.item.uri
-				);
-		*/
-		
+
 		var ajax_feedback = {
 			saved_tags_count : 0,
 			$saved_tags : jQuery('#saved-tags-count'),
@@ -453,7 +448,7 @@ eu.europeana.fulldoc = {
 							zoomed = true;
 						}
 						
-						console.log("Andy: TODO check here if the width > 200 before proceeding");
+						//console.log("Andy: TODO check here if the width > 200 before proceeding");
 						
 						$("#lightbox_image").attr("src", submodel[newActive].url);
 						eu.europeana.lightbox.layout();
@@ -482,7 +477,8 @@ eu.europeana.fulldoc = {
 	initTriggerPanel: function(type, index, gallery){
 		
 		
-		//alert("initTriggerPanel type = " + type);
+		console.log("initTriggerPanel type = " + type);
+		
 		
 		if($("#mobile-menu").is(":visible") ){
 			return;
@@ -764,6 +760,9 @@ eu.europeana.fulldoc = {
 			
 			js.console.log("measured carousel 1 images: div width is " + $("#carousel-1-img-measure").width() );
 			
+			var secondaryTriggerFn = function(){
+				eu.europeana.fulldoc.triggerPanel.find('.label').click();
+			};
 			
 			// this is where we go when images don't load
 			var initNoCarousel = function(){
@@ -789,6 +788,10 @@ eu.europeana.fulldoc = {
 						$(ob).attr("alt", $(ob).data.alt);
 					});
 				}
+				
+				// img trigger bind	
+				$('#carousel-1-img-measure img').bind('click', secondaryTriggerFn);
+
 			};
 			
 			// Run carousel test and init if successful
@@ -801,8 +804,7 @@ eu.europeana.fulldoc = {
 				});
 								
 				$(testHtml).appendTo('body').imagesLoaded(
-						
-					function($images, $proper, $broken){			
+					function($images, $proper, $broken){
 						if($proper.length==carouselTest.length){
 							console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
 							eu.europeana.fulldoc.getCarousel1Height = function(){
@@ -814,6 +816,7 @@ eu.europeana.fulldoc = {
 								return tallestImageH + galleriaOffsetY;
 							};
 							eu.europeana.fulldoc.initTopCarousel();
+							$('#carousel-1 .galleria-stage .galleria-image img').live('click', secondaryTriggerFn);		
 						}
 						else{
 							var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
@@ -832,12 +835,9 @@ eu.europeana.fulldoc = {
 			}
 			else{
 				console.log("no carousel test to run");
-				
 				initNoCarousel();
 			}
 		});
-		
-		
 
 		
 		$("#carousel-2-img-measure img").imagesLoaded( function(){
