@@ -287,7 +287,6 @@ eu.europeana.fulldoc = {
 	
 	handleSaveItemClick : function( e ) {
 		
-		
 		e.preventDefault();
 		var ajax_feedback = {
 			saved_items_count : 0,
@@ -322,7 +321,6 @@ eu.europeana.fulldoc = {
 			europeanaUri : eu.europeana.vars.item.uri
 		};
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-
 	},
 	
 	
@@ -514,7 +512,9 @@ eu.europeana.fulldoc = {
 					+ carouselData[index ? index : 0].external.url
 					+ '" style="visibility:hidden"/>')
 					.appendTo('body').imagesLoaded(
+							
 						function($images, $proper, $broken){
+						
 							if($proper.length==1 && $proper.width() > 200){
 								eu.europeana.fulldoc.loadLightboxJS(
 										function(){
@@ -524,6 +524,7 @@ eu.europeana.fulldoc = {
 								);
 							}
 						}
+						
 			);
 		}
 		else{
