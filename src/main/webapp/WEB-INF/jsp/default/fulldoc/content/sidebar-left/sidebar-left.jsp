@@ -96,7 +96,7 @@ var carouselTest = [
 ];
 
 carouselData[carouselData.length] = {
-	"image":		"http://content6.flixster.com/question/65/91/23/6591236_std.jpg",
+	"image":		"http://www.2fort.cz/wp-content/forum-avatars/stewie_evil%20%283%29.jpg",
 	"title":		('${fn:escapeXml(model.objectTitle)}'),
 	"dataType":		"${fn:toLowerCase(dataType)}"
 };
@@ -107,7 +107,6 @@ carouselData[carouselData.length] = {
 		"type"	: "${fn:toLowerCase(image.type)}"
 	}
 </c:if>
-
 --%>
 <%-- end double data to test carousel init--%>									
 
