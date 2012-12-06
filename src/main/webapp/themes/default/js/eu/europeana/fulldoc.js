@@ -523,6 +523,7 @@ eu.europeana.fulldoc = {
 										}
 								);
 							}
+							$(this).remove();
 						}
 						
 			);
@@ -558,7 +559,6 @@ eu.europeana.fulldoc = {
 	showExternalTrigger : function(show, type, gallery){
 		
 		if(show){
-			//var marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
 			var marginTrigger = 0;
 			
 			if(gallery){				
