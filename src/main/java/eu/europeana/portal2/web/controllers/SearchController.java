@@ -126,6 +126,12 @@ public class SearchController {
 						// .setParameter("f.YEAR.facet.mincount", "1")
 						.setParameter("sort", sort)
 						.setProduceFacetUnion(true);
+
+		if (model.isEmbedded()) {
+			query.setAllowFacets(false);
+			query.setAllowSpellcheck(false);
+		}
+
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
 		log.info("query: " + query);
