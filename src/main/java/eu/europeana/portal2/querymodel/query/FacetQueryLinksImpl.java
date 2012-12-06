@@ -56,6 +56,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			}
 		}
 
+		String[] queryRefinements = query.getRefinements(false);
 		for (LabelFrequency item : facetField.getFields()) {
 			if (isTemporarilyPreventYear0000(this.type, item.getLabel())) {
 				continue;
@@ -64,7 +65,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			boolean remove = false;
 			StringBuilder url = new StringBuilder(baseUrl.toString());
 			// iterating over actual qf values
-			if (query.getRefinements() != null) {
+			if (queryRefinements != null) {
 				for (String qfTerm : refinements.get(QueryUtil.FACETS)) {
 					if (!qfTerm.equals("-TYPE:Wikipedia")) {
 						String[] parts = qfTerm.split(":", 2);

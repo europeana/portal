@@ -26,7 +26,7 @@ public class QueryUtil {
 	private static final Logger log = Logger.getLogger(QueryUtil.class.getName());
 
 	public static Map<String, List<String>> getFilterQueriesWithoutPhrases(Query solrQuery) {
-		String[] filterQueries = solrQuery.getRefinements();
+		String[] filterQueries = solrQuery.getRefinements(false);
 		if (filterQueries == null) {
 			return null;
 		}
