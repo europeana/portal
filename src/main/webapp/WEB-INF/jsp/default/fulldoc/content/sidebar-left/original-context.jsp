@@ -13,8 +13,8 @@
 
 
 <c:set var="urlRefId" value="urlRefIsShownAt" />
-<c:if test="${model['urlRefIsShownBy']}">
-  <c:set var="urlRefId" value="urlRefIsShownBy}" />
+<c:if test="${model.urlRefIsShownBy}">
+  <c:set var="urlRefId" value="urlRefIsShownBy" />
 </c:if>
 
 
