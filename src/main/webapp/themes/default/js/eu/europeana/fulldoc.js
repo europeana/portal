@@ -500,7 +500,6 @@ eu.europeana.fulldoc = {
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
 		
-		//alert("should have set type to " + eu.europeana.vars.external.triggers.labels[type])
 		
 		// action handling
 		
@@ -509,10 +508,22 @@ eu.europeana.fulldoc = {
 		triggerSpan.removeData('overlay');
 
 		if(carouselData[index ? index : 0].external.type == 'image'){
-			eu.europeana.fulldoc.loadLightboxJS(
-				function(){
-					eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);						
-				}
+			
+			// if the image is wider than 200 px initialise the lightbox and show the trigger panel
+			$('<img src="' 
+					+ carouselData[index ? index : 0].external.url
+					+ '" style="visibility:hidden"/>')
+					.appendTo('body').imagesLoaded(
+						function($images, $proper, $broken){
+							if($proper.length==1 && $proper.width() > 200){
+								eu.europeana.fulldoc.loadLightboxJS(
+										function(){
+											eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);
+											eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
+										}
+								);
+							}
+						}
 			);
 		}
 		else{
@@ -532,8 +543,8 @@ eu.europeana.fulldoc = {
 					//alert('lightbox binding belongs here: ' + type   );					
 				}
 			});
+			eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 		}
-		eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 	},
 	
 	
@@ -572,7 +583,7 @@ eu.europeana.fulldoc = {
 		}
 	},
 	
-	loadLightboxJS : function(callbackLoad, gallery, delteThisAndGalleryAndy){
+	loadLightboxJS : function(callbackLoad){
 
 		js.loader.loadScripts([{
 			name: 'jquery-tools',
@@ -586,7 +597,7 @@ eu.europeana.fulldoc = {
 			
 			var lightboxJsFile = 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper;
 			
-			if( js.loader.loader_status[lightboxJsFile ]){
+			if( js.loader.loader_status[lightboxJsFile]){
 				if(callbackLoad){
 					callbackLoad();					
 				}
@@ -604,18 +615,6 @@ eu.europeana.fulldoc = {
 							eu.europeana.lightbox.layout();												
 						}
 					});
-					
-					// lightbox disabled in phone
-					/*
-					$(window).on( "orientationchange",
-						function(){
-							if(eu.europeana.lightbox.layout){
-								eu.europeana.lightbox.layout();												
-							}
-						},
-					false);
-					*/
-					
 					if(callbackLoad){
 						callbackLoad();
 					}
