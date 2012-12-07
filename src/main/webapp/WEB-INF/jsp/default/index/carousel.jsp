@@ -64,6 +64,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			</c:forEach>
 						
 		</div>
+		<div id="carousel-1-external-info"></div>
 				
 
 		
