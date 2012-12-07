@@ -263,7 +263,7 @@ carouselData[carouselData.length] = {
 		<div id="translate-container">
 			<span class="icon-translate"></span>
 				<!-- translate services -->
-			<a href="" id="translate-item" class="bold">
+			<a href="" id="translate-item">
 				<spring:message code="TranslateDetails_t" />
 				<span class="iconP icon-arrow-6"></span>
 			</a>
