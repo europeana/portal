@@ -98,7 +98,7 @@ public class StaticPageController {
 					throws Exception {
 		Injector injector = new Injector(request, response, locale);
 
-		pageName = "/" + pageName + ".html";
+		pageName = "/" + pageName + getSuffix(pageName) + ".html";
 
 		ModelAndView page = doFetchStaticPage(injector, pageName, response, locale);
 
@@ -115,11 +115,39 @@ public class StaticPageController {
 					throws Exception {
 		Injector injector = new Injector(request, response, locale);
 
-		pageName = "/rights/" + pageName + ".html";
+		pageName = "/rights/" + pageName + getSuffix(pageName) + ".html";
 
 		ModelAndView page = doFetchStaticPage(injector, pageName, response, locale);
 
 		return page;
+	}
+
+	/**
+	 * Adds suffix which can be used by adding page name. It distinguises portal1 and portal2 static pages.
+	 * 
+	 * @param pageName The page name
+	 * @return
+	 *   The suffix
+	 */
+	private String getSuffix(String pageName) {
+		String suffix = config.getStaticPageSuffix();
+
+		if (StringUtils.isBlank(suffix)) {
+			return "";
+		}
+
+		if (pageName.endsWith(suffix)) {
+			if (!config.getStaticPageInVersions().contains(pageName.substring(0, pageName.length() - suffix.length()))) {
+				log.warning("pageName not registered in the StaticPageInVersions property: " + pageName);
+			}
+			return "";
+		}
+
+		if (!config.getStaticPageInVersions().contains(pageName)) {
+			return "";
+		}
+
+		return suffix;
 	}
 
 	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response, Locale locale) {

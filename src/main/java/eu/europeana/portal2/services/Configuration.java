@@ -1,6 +1,8 @@
 package eu.europeana.portal2.services;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -40,6 +42,12 @@ public class Configuration {
 
 	@Value("#{europeanaProperties['static.page.checkFrequencyInMinute']}")
 	private Integer staticPageCheckFrequencyInMinute;
+
+	@Value("#{europeanaProperties['static.page.suffix']}")
+	private String staticPageSuffix;
+
+	@Value("#{europeanaProperties['static.page.in.versions']}")
+	private String staticPageInVersionsString;
 
 	// blog settings
 	@Value("#{europeanaProperties['portal.blog.url']}")
@@ -132,6 +140,8 @@ public class Configuration {
 
 	private Integer[] responsiveCarouselImageWidths;
 
+	private List<String> staticPageInVersions;
+
 	///////////////////////////////// getters and setters
 
 	public String getPortalName() {
@@ -192,6 +202,10 @@ public class Configuration {
 
 	public String getStaticPagePath() {
 		return staticPagePath;
+	}
+
+	public String getStaticPageSuffix() {
+		return staticPageSuffix;
 	}
 
 	public String getResponsiveImageWidthString() {
@@ -320,5 +334,12 @@ public class Configuration {
 		}
 
 		return responsiveCarouselImageWidths;
+	}
+	
+	public List<String> getStaticPageInVersions() {
+		if (staticPageInVersions == null) {
+			staticPageInVersions = Arrays.asList(staticPageInVersionsString.split(","));
+		}
+		return staticPageInVersions;
 	}
 }
