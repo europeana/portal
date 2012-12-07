@@ -34,7 +34,7 @@
 						type="text" name="rswDefqry" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175"
 						value="<c:out value="${model.rswDefqry}"/>"
 						valueForBackButton="<c:out value="${model.rswDefqry}"/>"
-						/>							
+						/>
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
 					<button class="icon-mag deans-button-1" type="submit">
@@ -67,8 +67,8 @@
 		<input type="hidden" name="lang" value="${model.locale}"/>
 
 		<input type="hidden" name="rows" id="rows" value="${model.rows}" />
-		
-	</form>	
+
+	</form>
 
 	<%--"did you mean" suggestion. nb: how to handle for embedded widget - might be best to have the backend create the url	--%>
 	

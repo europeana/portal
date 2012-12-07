@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<script type="text/javascript" src="themes/default/js/jquery/min/jquery-1.8.1.min.js"></script>
-		<c:choose>	
+		<c:choose>
 			<c:when test="${!empty model.debug && !model.debug}">
 				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
 			</c:when>
@@ -109,7 +109,7 @@
 		
 	</head>
 	<body class="iframe-newsletter">
-		<div id="footer-subscribe">	
+		<div id="footer-subscribe">
 			
 			<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
 				<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
@@ -266,4 +266,4 @@
 		</script>
 
 	</body>
-</html>	
+</html>
