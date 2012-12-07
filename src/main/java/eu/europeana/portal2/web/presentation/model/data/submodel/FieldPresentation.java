@@ -89,7 +89,7 @@ public class FieldPresentation {
 	public void add(UrlAwareData<?> model, List<String> fieldValues) {
 		if (fieldValues != null) {
 			for (String value : fieldValues) {
-				this.fieldValues.add(new FieldValue(model, field, value));
+				add(model, value);
 			}
 		}
 	}
@@ -109,8 +109,13 @@ public class FieldPresentation {
 				this.fieldValues = new ArrayList<FieldValue>();
 			}
 			for (Entry<Field, String[]> fieldValue : fieldValues.entrySet()) {
+				if (fieldValue.getValue() == null) {
+					continue;
+				}
 				for (String value : fieldValue.getValue()) {
-					this.fieldValues.add(new FieldValue(model, fieldValue.getKey(), value));
+					if (!StringUtils.isBlank(value)) {
+						this.fieldValues.add(new FieldValue(model, fieldValue.getKey(), value));
+					}
 				}
 			}
 		}
@@ -181,7 +186,6 @@ public class FieldPresentation {
 		sb.append(", label: ").append(getFieldLabel());
 		sb.append(", values: [").append(StringUtils.join(fieldValues, ", ")).append("]");
 		sb.append("]");
-		log.info(sb.toString());
 		return sb.toString();
 	}
 }

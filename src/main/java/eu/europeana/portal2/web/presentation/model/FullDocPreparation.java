@@ -18,8 +18,10 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
@@ -252,12 +255,13 @@ public abstract class FullDocPreparation extends FullDocData {
 
 		if (fields == null) {
 
-			Map<Field, FieldPresentation> fieldMap = new HashMap<Field, FieldPresentation>();
+			Map<Field, FieldPresentation> fieldMap = new LinkedHashMap<Field, FieldPresentation>();
 
 			addFieldMap(fieldMap, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
-			addFieldMap(fieldMap, Field.DC_DESCRIPTION,
+			addFieldMap(fieldMap, Field.DC_DESCRIPTION, 
 					getDocument().getDcDescription(),
-					shortcut.get("DctermsTableOfContents"));
+					map(Field.DCTERMS_TABLEOFCONTENTS, shortcut.get("DctermsTableOfContents"))
+			);
 			addFieldMap(fieldMap, Field.DC_CREATOR, shortcut.get("DcCreator"));
 			addFieldMap(fieldMap, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
 			addFieldMap(fieldMap, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
@@ -272,7 +276,7 @@ public abstract class FullDocPreparation extends FullDocData {
 					shortcut.get("DctermsMedium"));
 			addFieldMap(fieldMap, Field.DC_SUBJECT, getDocument().getDcSubject());
 			addFieldMap(fieldMap, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
-			addFieldMap(fieldMap, Field.DC_RELATION, new Object[]{
+			addFieldMap(fieldMap, Field.DC_RELATION,
 					shortcut.get("DcRelation"),
 					shortcut.get("DctermsReferences"),
 					shortcut.get("DctermsIsReferencedBy"),
@@ -286,14 +290,14 @@ public abstract class FullDocPreparation extends FullDocData {
 					shortcut.get("DctermsHasFormat"),
 					getDocument().getDctermsIsFormatOf(),
 					shortcut.get("EdmHasMet"),
-					new HashMap<Field, String[]>(){{put(Field.EDM_HASTYPE, shortcut.get("EdmHasType"));}},
+					map(Field.EDM_HASTYPE, shortcut.get("EdmHasType")),
 					shortcut.get("EdmIncorporates"),
 					shortcut.get("EdmIsDerivativeOf"),
-					new HashMap<Field, String[]>(){{put(Field.EDM_ISRELATEDTO, shortcut.get("EdmIsRelatedTo"));}},
-					new HashMap<Field, String[]>(){{put(Field.EDM_ISREPRESENTATIONOF, shortcut.get("EdmIsRepresentationOf"));}},
+					map(Field.EDM_ISRELATEDTO, shortcut.get("EdmIsRelatedTo")),
+					map(Field.EDM_ISREPRESENTATIONOF, shortcut.get("EdmIsRepresentationOf")),
 					shortcut.get("EdmIsSimilarTo"),
 					shortcut.get("EdmIsSuccessorOf"),
-					shortcut.get("EdmRealizes")}
+					shortcut.get("EdmRealizes")
 			);
 			addFieldMap(fieldMap, Field.DCTERMS_ISPARTOF, shortcut.get("DctermsIsPartOf"));
 			addFieldMap(fieldMap, Field.DCTERMS_HASPART, shortcut.get("DctermsHasPart"));
@@ -307,10 +311,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			addFieldMap(fieldMap, Field.EDM_PROVIDER, shortcut.get("EdmProvider"));
 			addFieldMap(fieldMap, Field.EDM_COUNTRY, Field.EDM_COUNTRY.getValues(shortcut.get("EdmCountry")));
 
-			log.info("DC_RELATION: " + fieldMap.get(Field.DC_RELATION));
-			log.info("EdmHasType: " + StringUtils.join(shortcut.get("EdmHasType"), ", "));
-			log.info("EdmIsRelatedTo: " + StringUtils.join(shortcut.get("EdmIsRelatedTo"), ", "));
-			log.info("EdmIsRepresentationOf: " + StringUtils.join(shortcut.get("EdmIsRepresentationOf"), ", "));
+			log.info("=================");
 
 			fields = new LinkedList<FieldPresentation>();
 			for (FieldPresentation fieldPresentation : fieldMap.values()) {
@@ -320,6 +321,12 @@ public abstract class FullDocPreparation extends FullDocData {
 			}
 		}
 		return fields;
+	}
+
+	public static Map map(Field field, String[] values) {
+		Map map = new HashMap<Field, String[]>();
+		map.put(field, values);
+		return map;
 	}
 
 	private void addField(List<FieldPresentation> fields, Field fieldInfo, String fieldValue) {
@@ -358,8 +365,8 @@ public abstract class FullDocPreparation extends FullDocData {
 			try {
 				fields.add(new FieldPresentation(this, fieldInfo, fieldValues));
 			} catch (NullPointerException npe) {
-				log.info("Failed to add field in fullDocPresentationImpl");
-				log.info("for Field:  " + fieldInfo.getFieldLabel());
+				log.warning("Failed to add field in fullDocPresentationImpl for: " + fieldInfo.getFieldLabel());
+				log.severe(ExceptionUtils.getFullStackTrace(npe));
 			}
 		}
 	}
@@ -375,16 +382,20 @@ public abstract class FullDocPreparation extends FullDocData {
 		return fieldPresentation;
 	}
 
-	private void extractAllFieldValues(FieldPresentation fieldPresentation, Field fieldInfo, Object[]... fieldValuesArrays) {
+	private void extractAllFieldValues(FieldPresentation fieldPresentation, Field fieldInfo, Object... fieldValuesArrays) {
 		for (Object fieldValueArray : fieldValuesArrays) {
 			if (fieldValueArray == null) {
 				continue;
 			}
-			if (fieldValueArray instanceof String[]) {
+
+			if (fieldValueArray instanceof String) {
+				extractFieldValues(fieldPresentation, fieldInfo, new String[]{(String)fieldValueArray});
+			} else if (fieldValueArray instanceof String[]) {
 				extractFieldValues(fieldPresentation, fieldInfo, (String[])fieldValueArray);
-			} else if (fieldValueArray instanceof Map[]) {
-				Map<Field, String[]> map = (Map<Field, String[]>)fieldValueArray;
-				fieldPresentation.addMap(this, map);
+			} else if (fieldValueArray instanceof Map) {
+				fieldPresentation.addMap(this, (Map<Field, String[]>)fieldValueArray);
+			} else {
+				log.warning("Unhandled data type in addFieldMap(): " + fieldValueArray.getClass());
 			}
 		}
 	}
@@ -403,30 +414,15 @@ public abstract class FullDocPreparation extends FullDocData {
 	}
 
 	private void addFieldMap(Map<Field, FieldPresentation> fields, Field fieldInfo,
-			Object[]... fieldValuesArrays) {
-		if ((fieldValuesArrays == null) || (fieldInfo.getFieldLabel() == null)) {
-			log.info(String.format("fieldInfo: %s, %s", fieldInfo.getFieldName(), fieldInfo.getFieldLabel()));
+			Object... fieldValuesArrays) {
+		if (fieldValuesArrays == null) {
 			return;
 		}
-
+		if (fieldInfo.getFieldLabel() == null) {
+			log.warning(String.format("No field label for fieldInfo: %s, %s", fieldInfo.getFieldName(), fieldInfo.getFieldLabel()));
+			return;
+		}
 		FieldPresentation fieldPresentation = getFieldPresentation(fields, fieldInfo);
-
 		extractAllFieldValues(fieldPresentation, fieldInfo, fieldValuesArrays);
-
-		/*
-		if (fieldInfo.doSortValues()) {
-			Collections.sort(fieldValues);
-		}
-
-		if (!fieldValues.isEmpty()) {
-			try {
-				fieldPresentation.add(this, fieldValues);
-				// fields.add(new FieldPresentation(this, fieldInfo, fieldValues));
-			} catch (NullPointerException npe) {
-				log.info("Failed to add field in fullDocPresentationImpl");
-				log.info("for Field:  " + fieldInfo.getFieldLabel());
-			}
-		}
-		*/
 	}
 }
