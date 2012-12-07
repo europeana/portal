@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="meta-data${li_class}">
-	<c:if test="${!empty cell.title}">	
+	<c:if test="${!empty cell.title}">
 		<h4>${title}</h4>
 	</c:if>
 	
