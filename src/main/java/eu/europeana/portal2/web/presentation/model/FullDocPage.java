@@ -394,7 +394,7 @@ public class FullDocPage extends FullDocPreparation {
 			}
 			else if (imageUrl.toLowerCase().endsWith(".mpg")) {
 				imageType = DocType.VIDEO.name();
-			}			
+			}
 		}
 		return imageType;
 	}
@@ -431,7 +431,7 @@ public class FullDocPage extends FullDocPreparation {
 						imageType
 					);
 				} else {
-					img = new Image(imageUrl, imageUrl, imageType);
+					img = new Image(createImageUrl("", imageType, "BRIEF_DOC"), imageUrl, imageType);
 				}
 				imagesToShow.add(img);
 			}
