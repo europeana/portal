@@ -126,10 +126,5 @@
 	<!--[if IE 9]><link rel="stylesheet" href="/${branding}/css/ie9.css" /><![endif]-->
 	<noscript><link rel="stylesheet" href="/${branding}/css/noscript.css" /></noscript>
 
-	<!-- debug-css -->
-
-	<!--[if lt IE 9]>
-	<link rel="stylesheet" type="text/css" href="/${branding}/css/ie8.css"/>
-	<![endif]-->
 
 </c:if>
