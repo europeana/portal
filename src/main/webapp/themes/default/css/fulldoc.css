@@ -166,6 +166,11 @@ a.action-link span,
 	top:		-.5em;
 }
 
+.icon-share .action-title{
+	color:#333;
+}
+
+
 #translate-item{
 	position:	relative;
 	top:		-.5em;	

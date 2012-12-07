@@ -114,6 +114,14 @@ html, body{
 	color:				#fff;	
 }
 
+.info a .icon-share{
+	color:			green;	
+}
+
+.info .icon-share .action-title{
+	color:#fff;
+}
+
 .info .original-context{
  	float:				left;
 }
