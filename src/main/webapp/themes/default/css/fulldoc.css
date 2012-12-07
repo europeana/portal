@@ -173,7 +173,8 @@ a.action-link span,
 
 #translate-item{
 	position:	relative;
-	top:		-.5em;	
+	top:		-.5em;
+	color:		#333;	
 }
 
 

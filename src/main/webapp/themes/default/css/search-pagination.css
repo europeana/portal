@@ -78,7 +78,11 @@ a {
 
 .nav{
 	padding:			.25em 0;
+	
+	box-sizing:			border-box;
 	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
+
 	display:			inline-table;
 	width:				100%;	/* needed for safari */
 }

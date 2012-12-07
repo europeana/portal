@@ -11,6 +11,10 @@ body{
 
 /*	override common.css							*/
 
+#carousel-1-external-info{
+	display:	none;
+}
+
 #shareicons {
 	left: auto;
 	right: 10px;
@@ -205,7 +209,7 @@ tr td.menu-cell:first-child, tr td.query-cell{
 	border-radius:			0 10px 10px 0;
 	width:					auto;
 	
-	xxbehavior: url(/portal/themes/default/css/behaviour/PIE-1.0beta5/PIE.htc);
+	xxbehavior: url(/portal/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 		
 }
 
@@ -533,13 +537,89 @@ ul.featured-partner-links li{
 }
 
 /*	override search-pagination.css				*/
+.nav{
+	width:100%;	
+}
+
+.nav .of-bracket:before{
+	content:'';
+}
+
+.nav .of-bracket:after{
+	content:'';
+}
+
+.nav .of,
+.nav .of-value{
+	display:inline;
+}
+
+.nav .spaced:before{
+	content:' ';
+}
+
+.nav .spaced:after{
+	content:' ';
+}
+
+.result-pagination li{
+	vertical-align:	middle;
+}
+
+.jump-to-page{
+	margin-top:	0;
+}
+.show-on-22{display:table-cell !important;}
 
 .result-pagination{
-	float:		right;
-	width:		auto;	
 	font-size:	1em;
-	margin-top:	0.2em;
+	width:	auto !important;
 }
+
+.nav>div.count,
+.nav>div{
+	display:		table-cell;
+	vertical-align:	middle;
+}
+
+.nav>.menu{
+	width:	auto !important;
+}
+
+.nav>div.pagination{
+	position:	absolute;
+	top:		0.5em;
+	right:		1em;
+	width:		auto !important;
+}
+
+
+
+.nav{
+	padding:			.25em 0;
+	display:			block !important;
+	width:				100%;	/* needed for safari */
+}
+
+
+.nav>.count{
+	width:		auto !important;
+	text-align:	center;
+}
+
+.nav-numbers{	
+	font-size:	1em;
+	width:		auto;
+}
+
+.nav>.menu{
+	text-align:	left;
+}
+
+.nav>.pagination{
+	text-align:	right;
+}
+
 
 /*	override sidebar-facets.css					*/
 
