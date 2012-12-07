@@ -1,13 +1,29 @@
 
-#carousel-1{
-	margin-bottom:		1em;
+#carousel-1 .galleria-info{
+	display:	none;
+}
+
+#carousel-1-external-info{
+	margin-bottom:	1em;
+	position:		relative;
+	top:			-6px;
+	z-index:		10;
 }
 
 @media only screen and ( min-width:48em ){
 	#carousel-1{
 		margin-bottom:	0;
-		margin-top:		1em;	
+		margin-top:		1em;
 	}
+	
+	#carousel-1-external-info{
+		display:	none;
+	}
+	
+	#carousel-1 .galleria-info{
+		display:	block;
+	}
+	
 }
 	
 	

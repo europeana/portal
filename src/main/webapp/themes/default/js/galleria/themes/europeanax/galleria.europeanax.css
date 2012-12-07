@@ -445,6 +445,7 @@
     padding:	1em 1em 1em 1em;
 }
 
+#carousel-1-external-info,
 .galleria-info-description,
 .galleria-info-title{
     margin:			0;
@@ -454,6 +455,13 @@
 
 	float:			left;
 	line-height:	1.48em;
+}
+
+#carousel-1-external-info{
+	float:		none;	
+	padding:	1em 1em 1em 1em;
+	background-color:	#000;
+	xxxbackground-color:	rgba(0, 0, 0, 0.7);
 }
 
 .galleria-info button{
@@ -528,6 +536,18 @@
 	}
 	
 	
+}
+
+
+@media only screen and (min-width: 48em) and ( max-width:62em ){
+	.galleria-info button{
+		display:		none;
+	}
+	
+	.galleria-info-title{
+		font-weight:	600;
+		font-size:		1em;
+	}
 }
 
 /*

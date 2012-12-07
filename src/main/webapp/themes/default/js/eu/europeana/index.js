@@ -38,8 +38,10 @@
 				carouselSpeed:	1200,				/* transition speed */
 				carouselSteps:	2,
 				easing:			'galleriaOut',
-				imageCrop:		false,				/* if true, make pan true */
+				
+				imageCrop:		false,				/* if true, make pan true (custom logic in galleria theme overrides this setting) */
 				imagePan:		false,
+				
 				lightbox:		true,
 				responsive:		true,
 				idleMode:		true,
@@ -86,61 +88,35 @@
 				for(var i=0; i<$proper.length; i++){
 					msgFailed += "\n  proper: " + $($proper[0]).attr("src")
 				}
-
-			//	alert("loaded images, height is " + imgH + "\n\n\n\n" + msgFailed);
-
-				
 				
 				$("#carousel-1 img").remove();
 
-				var carousel		= jQuery("#carousel-1");
+				var carousel		= $("#carousel-1");
 				var parentWidth		= carousel.width();
 				
 
 				var ratio			= imgW / imgH;
-				var thumb			= jQuery('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
+				var thumb			= $('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
 				
 				carousel.css("height",  (parentWidth/ratio) + thumb.height() + 5 + "px");
-				
 				carousel.css("width",	"100%");
+				
 				thumb.remove();
 				
-				jQuery('#carousel-1').galleria({
+				$('#carousel-1').galleria({
 					dataSource:carouselData,
 					autoplay:17000,
 					extend: function(e){
 						this.bind("image", function(e) {	// lightbox trigger
 							var gallery = this;
 							$("#carousel-1 .linkButton").html(carouselData[e.index].linkDescription);
+							
+							$("#carousel-1-external-info").html( $("#carousel-1 .galleria-info-title").html() );
+
 						});
+						
 					}			
 				
-					
-					/*
-					extend: function(e){
-						$(this).ready(function(e) {
-							
-							function setUpResponsive(){
-								var initialSuffix = '_1'; // smallest by default
-								if($.browser.msie  && ( parseInt($.browser.version, 10) === 7 || parseInt($.browser.version, 10) === 8 )  ){
-									initialSuffix = '_4'; // largest by default
-								}
-
-								new euResponsive({
-									"galleryName"	:	"euresponsive_full_screen",
-									"selector"		:	"#carousel-1 .galleria-stage .galleria-images .galleria-image img",
-									"initialSuffix"	:	initialSuffix
-								});								
-							}
-
-							$(this).ready(function(e) {
-								setTimeout(setUpResponsive, 2000);
-							});
-							
-
-						});
-					}
-					*/
 				});
 			
 			}).each(function() {
@@ -151,7 +127,7 @@
 		
 		
 		// Make sections collapsible
-		jQuery("#section-blog").Collapsible({
+		$("#section-blog").Collapsible({
 			headingSelector:	"#collapse-header-1",
 			iconSelector:		".collapse-icon",
 			bodySelector:		".collapse-content",
@@ -161,7 +137,7 @@
 			toggleFn: function(){return $("#mobile-menu").is(":visible");},
 			fireFirstOpen:		function(){
     			eu.europeana.vars.suppresResize = true;
-				jQuery.ajax({
+				$.ajax({
 					url: 'index.html?fragment=blog',
 					dataType: 'json',
 					success: function(data){
@@ -177,7 +153,7 @@
 		});
 		
 
-		jQuery("#section-featured-content").Collapsible({
+		$("#section-featured-content").Collapsible({
 			headingSelector:	"#collapse-header-2",
 			iconSelector:		".collapse-icon",
 			bodySelector:		".collapse-content",
@@ -186,7 +162,7 @@
 			collapsedClass:		'icon-arrow-3',
 			fireFirstOpen:		function(){
 				eu.europeana.vars.suppresResize = true;
-				jQuery.ajax({
+				$.ajax({
 					url: 'index.html?fragment=featuredContent',
 					dataType: 'json',
 					success: function(data){
@@ -204,7 +180,7 @@
 		});
 
 		
-		jQuery("#section-pinterest").Collapsible({
+		$("#section-pinterest").Collapsible({
 			headingSelector:	"#collapse-header-3",
 			iconSelector:		".collapse-icon",
 			bodySelector:		".collapse-content",
@@ -213,20 +189,20 @@
 			collapsedClass:		'icon-arrow-3',
 			fireFirstOpen:		function(){
 				eu.europeana.vars.suppresResize = false;
-				jQuery.ajax({
+				$.ajax({
 						url: 'index.html?fragment=pinterest',
 						dataType: 'json',
 						success: function(data){
 							$("#section-pinterest .collapse-content").html(data.markup);
 							var carousel3Data = data.data.carousel3Data;
 							
-							jQuery('#carousel-3').galleria({
+							$('#carousel-3').galleria({
 								dataSource:carousel3Data,
 								extend: function(e){
 									// add ellipsis
 									var doEllipsis = function(){
 										var ellipsisObjects = [];
-										jQuery('.europeana-carousel-info').each(
+										$('.europeana-carousel-info').each(
 											function(i, ob){
 												ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 											}
@@ -251,35 +227,6 @@
 							alert("error = " + JSON.stringify(e));
 						}
 				});
-				
-        		
-
-        		/*
-				jQuery('#carousel-3').galleria({
-					dataSource:carousel3Data,
-					extend: function(e){
-						// add ellipsis
-						var doEllipsis = function(){
-							var ellipsisObjects = [];
-							jQuery('.europeana-carousel-info').each(
-								function(i, ob){
-									ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-								}
-							);
-							$(window).bind('resize', function(){
-								for(var i=0; i<ellipsisObjects.length; i++ ){
-									ellipsisObjects[i].respond();
-								}
-							});
-						};
-
-						$(this).ready(function(e) {
-							setTimeout(doEllipsis, 1000);
-						});
-					} 
-				});
-				*/
-				
 			},
 			
 			toggleFn: function(){return $("#mobile-menu").is(":visible");}
@@ -287,10 +234,10 @@
 	};
 	
 	var initAddThis = function(){
-return;
-		var url = jQuery('head link[rel="canonical"]').attr('href'),
-			title = jQuery('head title').html(),
-			description = jQuery('head meta[name="description"]').attr('content');
+		return;
+		var url = $('head link[rel="canonical"]').attr('href'),
+			title = $('head title').html(),
+			description = $('head meta[name="description"]').attr('content');
 			window.addthis_config = com.addthis.createConfigObject({
 				pubid : eu.europeana.vars.addthis_pubid,
 				ui_language: eu.europeana.vars.locale,
@@ -375,15 +322,15 @@ return;
 		
 		//alert("addThisHtml = " + addThisHtml);
 		
-		jQuery('#shares-link').html(
+		$('#shares-link').html(
 			addThisHtml
 		);
 		
-		jQuery('#shares-link').hide();
+		$('#shares-link').hide();
 		com.addthis.init( null, true, false );
 		
 		setTimeout( function() {
-			jQuery('#shares-link').fadeIn(function(){
+			$('#shares-link').fadeIn(function(){
 				$(this).css("display", "inline-block");
 			}); },
 			600 );
@@ -411,7 +358,7 @@ return;
 		}]);
 	};
 	
-	jQuery(document).ready(function(){
+	$(document).ready(function(){
 		init();
 	});
 	
