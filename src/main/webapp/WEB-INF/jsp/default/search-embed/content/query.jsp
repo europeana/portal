@@ -54,13 +54,15 @@
 			
 		</table>
 
-
 		<%-- embedded search --%>
 		<input type="hidden" name="embedded" value="${model.embeddedString}"/>
 		<input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}"/>
 		<input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}"/>
 		<input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}"/>
 		<input type="hidden" name="rswUserId" value="${model.rswUserId}"/>
+		<c:forEach items="${model.refinements}" var="qf">
+		  <input type="hidden" name="qf" value="${qf}"/>
+		</c:forEach>
 		<%--input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/--%>
 		<input type="hidden" name="lang" value="${model.locale}"/>
 
