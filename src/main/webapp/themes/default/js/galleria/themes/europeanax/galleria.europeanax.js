@@ -20,7 +20,7 @@ Galleria.addTheme({
         thumbCrop:  'height',
 
         // set this to false if you want to show the caption all the time:
-        _toggleInfo: false
+        _toggleInfo: true
     },
     init: function(options) {
         Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
@@ -482,6 +482,7 @@ Galleria.addTheme({
         			
         			images.css("width",		images.eq(0).parent().css("width") );
         			images.css("height",	"auto");
+        			
         			images.css("display",	"block");
         			images.css("left",		"0px");
         			images.removeAttr("width");
