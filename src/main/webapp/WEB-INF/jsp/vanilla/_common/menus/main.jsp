@@ -33,7 +33,7 @@
     <li><a href="<spring:message code="notranslate_menu-main-4-3_a_url_t"/>" target="<spring:message code="notranslate_menu-main-4-3_a_target_t"/>" title="<spring:message code="menu-main-4-3_a_title_t"/>"><spring:message code="menu-main-4-3_a_text_t"/></a></li>
     <li><a href="<spring:message code="notranslate_menu-main-4-4_a_url_t"/>" target="<spring:message code="notranslate_menu-main-4-4_a_target_t"/>" title="<spring:message code="menu-main-4-4_a_title_t"/>"><spring:message code="menu-main-4-4_a_text_t"/></a></li>
     </ul>
-  </li>	
+  </li>
   <%-- Follow Us --%>
   <li>
     <a href="<spring:message code="notranslate_menu-main-5_a_url_t"/>" target="<spring:message code="notranslate_menu-main-5_a_target_t"/>" title="<spring:message code="menu-main-5_a_title_t"/>"><spring:message code="menu-main-5_a_text_t"/></a>
@@ -43,7 +43,7 @@
       <li><a href="<spring:message code="notranslate_menu-main-5-3_a_url_t"/>" target="<spring:message code="notranslate_menu-main-5-3_a_target_t"/>" title="<spring:message code="menu-main-5-3_a_title_t"/>"><spring:message code="menu-main-5-3_a_text_t"/></a></li>
       <li><a href="<spring:message code="notranslate_menu-main-5-4_a_url_t"/>" target="<spring:message code="notranslate_menu-main-5-4_a_target_t"/>" title="<spring:message code="menu-main-5-4_a_title_t"/>"><spring:message code="menu-main-5-4_a_text_t"/></a></li>
     </ul>
-  </li>	
+  </li>
   <%-- My Europeana --%>
   <li><a href="<spring:message code="notranslate_menu-main-6_a_url_t"/>" target="<spring:message code="notranslate_menu-main-6_a_target_t"/>" title="<spring:message code="menu-main-6_a_title_t"/>"><spring:message code="menu-main-6_a_text_t"/></a></li>
   <%-- Choose a language --%>

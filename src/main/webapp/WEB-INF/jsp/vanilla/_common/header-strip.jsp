@@ -25,8 +25,8 @@
 <c:otherwise>
 <%-- uncomment this to restore myeuropeana link --%>
 <a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" title="<spring:message code="main_menu_myeuropeana_a_title_t"/>" class="white left"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
-</c:otherwise>		
-</c:choose>	
+</c:otherwise>
+</c:choose>
 </span>
 <%-- mobile menu links --%>
 <div id="mobile-menu" class="eu-menu icon-mobilemenu show-on-phones" aria-hidden="true">
