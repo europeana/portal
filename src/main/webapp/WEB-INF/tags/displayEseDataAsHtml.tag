@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="eu" tagdir="/WEB-INF/tags"%>
 <%--
  * display-ese-data-as-fields
  *
@@ -47,19 +48,13 @@
   <%-- If the content is UGC we skip the dc:source display --%>
   <c:if test="${!('dc:source' == data.fieldName && ugc)}">
     <%-- Semantic attributes --%>
-    <c:set var="semanticAttributes" value="" />
-    <c:set var="semanticUrl" value="false" />
-    <c:if test="${model.schemaOrgMapping[data.fieldName] != null}">
-      <c:set var="schemaOrgMapping" value="${model.schemaOrgMapping[data.fieldName]}" />
-      <c:set var="schemaOrgElement" value="${schemaOrgMapping.element}" />
-      <c:set var="edmElement" value="${schemaOrgMapping.edmElement}" />
-      <c:set var="semanticAttributes">
-        ${"property=\""}${schemaOrgElement.elementName}${" "}${edmElement.fullQualifiedURI}${"\""}
-      </c:set>
-      <c:if test="${schemaOrgElement.qualifiedName == 'schema:url'}">
-        <c:set var="semanticUrl" value="false" />
-      </c:if>
-    </c:if>
+    
+    <c:set var="semanticAttributes">
+      <eu:semanticAttributes field="${data.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+    </c:set>
+    <c:set var="semanticUrl">
+      <eu:semanticUrl field="${data.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+    </c:set>
 
     <<c:out value="${wrapper}"/> <c:out value="${item_id}" /> class="item-metadata${item_class}">
       <%-- field's label --%>
@@ -67,6 +62,17 @@
 
       <%-- iterate over possible values for the given label --%>
       <c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+
+        <c:set var="localSemanticAttributes" value="${semanticAttributes}" />
+        <c:set var="localSemanticUrl" value="${semanticUrl}" />
+        <c:if test="${value.fieldName != data.fieldName && model.schemaOrgMapping[value.fieldName]}">
+          <c:set var="localSemanticAttributes">
+            <eu:semanticAttributes field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+          </c:set>
+          <c:set var="localSemanticUrl">
+            <eu:semanticUrl field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+          </c:set>
+        </c:if>
 
         <%-- determine if value is translatable or not --%>
         <c:set var="translatable" value='class="notranslate"' />
@@ -95,13 +101,13 @@
 
         <c:choose>
           <c:when test="${value.searchOn}">
-            <a href="${value.searchOn}" target="_top" ${translatable} <c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
+            <a href="${value.searchOn}" target="_top" ${translatable} <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
           </c:when>
           <c:when test="${value.url}">
-            <a href="${value.value}" target="_blank" ${translatable} <c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
+            <a href="${value.value}" target="_blank" ${translatable} <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
           </c:when>
           <c:otherwise>
-            <span ${translatable}<c:if test="${semanticAttributes != ''}">${" "}${semanticAttributes}</c:if><c:if test="${semanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:out value="${value.value}" />
+            <span ${translatable}<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if><c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:out value="${value.value}" />
               <c:if test="${value.value == '3D PDF'}">
                 <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
               </c:if>

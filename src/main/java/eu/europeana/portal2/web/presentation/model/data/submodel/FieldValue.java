@@ -112,8 +112,12 @@ public class FieldValue {
 		return null;
 	}
 
+	public String getFieldName() {
+		return field.getFieldName();
+	}
+
 	@Override
 	public String toString() {
-		return "FieldValue [value=" + value + "]";
+		return "FieldValue [field=" + field + ", value=" + value + "]";
 	}
 }
