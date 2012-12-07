@@ -67,7 +67,7 @@ public class SchemaOrMappingTest {
 	@Test
 	public void testDescriptionIssue() {
 		Object[] vars = new Object[]{
-				new String[]{"Número perxa: 581", "Vestido s. XIX. Luisa Fernanda"},
+				new String[]{"Numero perxa: 581", "Vestido s. XIX. Luisa Fernanda"},
 				FullDocPreparation.map(Field.DCTERMS_TABLEOFCONTENTS, new String[]{"http://colleccions.cdmae.cat/u?/indu,3341"})
 		};
 		Field fieldInfo = Field.DC_DESCRIPTION;
