@@ -54,6 +54,8 @@
 		}
 		
 		var carouselInitialSuffix	= '_1';
+		
+    	
 		var carouselSelector		= '#carousel-1 img';
 		var carosuelEuResponsive = new euResponsive({
 			"galleryName"	:	"euresponsive",
@@ -63,9 +65,15 @@
 		});
 		
 		var src = $($(carouselSelector)[0]).attr("src");
-		if( src.indexOf( carouselInitialSuffix + "." ) == -1 ){
+		if( src.indexOf( carouselInitialSuffix + "." ) == -1 || $("html").hasClass('ie8') ){
+			
 			// we're bigger than a mobile: update all image urls in the carousel data to appropriate size
 			var lastSuffix = carosuelEuResponsive.getLastSuffix();
+			
+			if($("html").hasClass('ie8')){
+				lastSuffix = '_4';
+			}
+
 			if(carouselData && carouselData.length>0){
 				$(carouselData).each(function(i, ob){
 					ob.image = ob.image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
