@@ -54,8 +54,8 @@
 				<%-- single img (other than thumbnail) used to test if we can create a carousel --%>
 				<c:if test="${fn:length(model.allImages) > 1}">
 					var carouselTest = [
-						{"src": decodeURI("${model.allImages[0].full}").replace(/&amp;/g, '&')},
-						{"src": decodeURI("${model.allImages[1].full}").replace(/&amp;/g, '&')}
+						{"src": decodeURI("${model.allImages[0].thumbnail}").replace(/&amp;/g, '&')},
+						{"src": decodeURI("${model.allImages[1].thumbnail}").replace(/&amp;/g, '&')}
 					];
 				</c:if>
 			
