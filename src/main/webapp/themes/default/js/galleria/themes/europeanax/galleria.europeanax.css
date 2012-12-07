@@ -459,7 +459,7 @@
 .galleria-info button{
 	margin-top:			2em;
 	text-align:			right;
-	display:			block;
+	display:			none;
 	float:				right;
 	cursor:				pointer;
 	font-size:			1em;
@@ -499,6 +499,7 @@
 }
 
 @media only screen and ( min-width:767px ){
+	
 	.galleria-info {
 	    top:					1em;
 	    left:					3em;
@@ -511,7 +512,11 @@
 		-webkit-border-radius:	0.8em;
 		border-radius:			0.8em;
 	}
-	
+
+	.galleria-info button{
+		display:			block;
+	}
+
 	.galleria-info-description{
 		display:	block !important;
 		padding-top:	1em;

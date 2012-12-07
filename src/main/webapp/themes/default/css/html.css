@@ -13,6 +13,11 @@ body {
 	background-color: #fff;
 }
 
+form{
+	margin:0;
+	padding:0;
+}
+
 
 /* Basic fonts */
 

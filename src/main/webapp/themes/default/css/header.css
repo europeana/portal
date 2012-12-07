@@ -17,6 +17,7 @@
 	padding-bottom:	0;
 }
 
+
 #lang-menu ul{
 	right:		0;
 	font-size:	1.25em;
@@ -370,16 +371,13 @@ table tr:first-child{
 }
 
 #lang-menu{
-	position:	relative;
-	float:		right;
-	z-index:	3;	
-}
-
-
-#lang-menu{	
+	position:		relative;
+	float:			right;
+	z-index:		3;	
 	margin-right:	0 !important;
 	white-space:	nowrap;
 	padding-left:	1em;
+	cursor:			pointer;
 }
 	
  
@@ -402,7 +400,6 @@ table tr:first-child{
 	font-size:				1.2em;
 	margin-left:			0;	/* override chrome default */
 	margin-right:			0;	/* override chrome default */
-	height:					100%;	
 	
 	width:					80%;
 
@@ -439,6 +436,8 @@ table tr:first-child{
 		-webkit-border-radius:	0 0.5em 0.5em 0;
 		border-radius:			0 0.5em 0.5em 0;
 		width:					auto;
+		height:					100%;	
+		
 	}
 	
 	
