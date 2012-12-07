@@ -7,7 +7,7 @@
 			<spring:message code='latest_on_pinterest_t'/>
 		</span>
 		<span class="icon-pinterest left"></span>
-		<span class="collapse-icon"></span>		
+		<span class="collapse-icon"></span>
 	</h3>
 
 	<div class="collapse-content">

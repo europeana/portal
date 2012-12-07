@@ -5,6 +5,6 @@
 	</div>
 
 	<div class="three columns pull-nine">
-		<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/sidebar.jsp" %>	
+		<%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/sidebar.jsp" %>
 	</div>
 </div>

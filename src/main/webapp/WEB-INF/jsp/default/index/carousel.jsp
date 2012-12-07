@@ -45,13 +45,9 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				
 			</c:forEach>
 		</script>
-		
 
-			
 		<div id="carousel-1">
-		
 			<c:forEach var="item" items="${model.carouselItems}">
-			
 				<a href="${item.url}">
 					<img
 							src		= "/${model.portalName}${item.responsiveImages['_1']}",
@@ -60,15 +56,10 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 							class	= "hidden"
 					/>
 				</a>
-				
 			</c:forEach>
-						
 		</div>
 		<div id="carousel-1-external-info"></div>
-				
-
-		
-	</c:if>	
+	</c:if>
 
 </div>
 
