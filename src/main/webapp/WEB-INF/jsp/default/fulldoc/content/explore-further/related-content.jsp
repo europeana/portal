@@ -46,7 +46,7 @@
 								<img src="${child.thumbnail}"
 								alt="${child.title}"
 								width="70"
-								data-type="${fn:toLowerCase(child.type)}"/>							
+								data-type="${fn:toLowerCase(child.type)}"/>
 							</a>
 						</li>
 					</c:forEach>

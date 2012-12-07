@@ -1,16 +1,16 @@
-<form id="refine-search-form" method="get" action="${query_action}">		
+<form id="refine-search-form" method="get" action="${query_action}">
 		<fieldset>
 			<input type="text" name="qf" id="qf" value="" class="${className}" title="<spring:message code="RefineYourSearch_t"/>">
       		<input type="hidden" name="query" <c:if test="${!emptymodel.query}">value="${model.query}"</c:if>/>
 			<input type="submit" class="submit-button" value="<spring:message code="RefineYourSearch_t"/>" />
-      
-			<c:if test="${model.debug && model.pageName == 'map.html'}">      
+
+			<c:if test="${model.debug && model.pageName == 'map.html'}">
 				<input type="checkbox" id="box_search_refine"/>
 				<label for="box_search_refine"><spring:message code="MapBoxedSearch_t"/></label>
 			</c:if>
-					
+
 			<a href="" id="close-refine-search" rel="nofollow">Hide Refine Search</a>
-			
+
 			<%--
 		        @willem jan
 		        2011-09-21 13.46 GMT +1

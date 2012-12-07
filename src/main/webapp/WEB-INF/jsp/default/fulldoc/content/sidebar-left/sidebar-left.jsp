@@ -89,7 +89,7 @@
     		   
     		   
 
-<%-- double data to test carousel init--%>									
+<%-- double data to test carousel init--%>
 <%--
 var carouselTest = [
 	{"src": decodeURI("${model.allImages[0].full}").replace(/&amp;/g, '&')},
@@ -108,7 +108,7 @@ carouselData[carouselData.length] = {
 	}
 </c:if>
 --%>
-<%-- end double data to test carousel init--%>									
+<%-- end double data to test carousel init--%>
 
 				</c:forEach>
 			</c:if>
@@ -156,7 +156,7 @@ carouselData[carouselData.length] = {
 		</c:if>
 	</div>
 		
-	<div class="actions">	
+	<div class="actions">
 		
 		
 		<%-- Shares link --%>
@@ -181,7 +181,7 @@ carouselData[carouselData.length] = {
 		<%--
 		<div id="embed-link-wrapper">
 			<a href="${model.embedRecordUrl}" id="item-embed" class="block-link bold" target="_blank" rel="nofollow"><spring:message code="embed_t" /></a>
-		</div>		
+		</div>
 		--%>
 
 		<%-- Save page to myeuropeana --%>
@@ -222,7 +222,7 @@ carouselData[carouselData.length] = {
 					</c:choose>
 					<c:set var="switchlabelTitle">Normal format</c:set>
 				</c:when>
-				<c:otherwise>			
+				<c:otherwise>
 					<c:choose>
 						<c:when test="${fn:contains(model.currentUrl, '?')}">
 							<c:set var="switchlabelLink">${model.currentUrl}&format=label</c:set>
@@ -260,7 +260,7 @@ carouselData[carouselData.length] = {
 		</c:if>
 		
 		
-		<div id="translate-container">	
+		<div id="translate-container">
 			<span class="icon-translate"></span>
 				<!-- translate services -->
 			<a href="" id="translate-item" class="bold">
