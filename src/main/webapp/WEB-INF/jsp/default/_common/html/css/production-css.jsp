@@ -83,7 +83,7 @@
 			width: 1px;
 		}
 	}
-	
+
 	@media all and (min-width:47em){
 		.euresponsive {
 			width: 2px;
@@ -95,9 +95,8 @@
 			width: 3px;
 		}
 	}
-	
 
-</style>	
+</style>
 
 	
 <!--[if IE]><link rel="stylesheet" href="/${branding}/css/min/ie.min.css" /><![endif]-->

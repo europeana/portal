@@ -50,7 +50,7 @@
 					</div>
 				</div>
 				
-				<div id="newsletter-wrapper" class="six columns">		
+				<div id="newsletter-wrapper" class="six columns">
 				
 					
 					<script type="text/javascript">

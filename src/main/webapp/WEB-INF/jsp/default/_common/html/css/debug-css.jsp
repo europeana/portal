@@ -43,9 +43,7 @@
 				width: 3px;
 			}
 		}
-		
-	
-	</style>	
+	</style>
 	
 	
 	<c:if test="${!empty model.announceMsg}">

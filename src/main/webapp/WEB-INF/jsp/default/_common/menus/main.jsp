@@ -37,7 +37,7 @@
 				<li><a href="<spring:message code="notranslate_main_menu_about_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_about_3_a_target_t"/>" title="<spring:message code="main_menu_about_3_a_title_t"/>"><spring:message code="main_menu_about_3_a_text_t"/></a></li>
 				<li><a href="<spring:message code="notranslate_main_menu_about_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_about_4_a_target_t"/>" title="<spring:message code="main_menu_about_4_a_title_t"/>"><spring:message code="main_menu_about_4_a_text_t"/></a></li>
 			</ul>
-		</li>	
+		</li>
 		<%-- Follow Us --%>
 		<li>
 			<a href="<spring:message code="notranslate_main_menu_follow_a_url_t"/>" target="<spring:message code="notranslate_main_menu_follow_a_target_t"/>" title="<spring:message code="main_menu_follow_a_title_t"/>"><spring:message code="main_menu_follow_a_text_t"/></a>
