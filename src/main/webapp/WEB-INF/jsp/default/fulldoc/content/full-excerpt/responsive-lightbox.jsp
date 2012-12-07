@@ -28,19 +28,21 @@
 					<c:if test="${!empty model.fieldsLightbox && fn:length(model.fieldsLightbox) > 0}">
 						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false" />
 					</c:if>
-					
-					<div class="action-link shares-link">
-						<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />">
-							<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
-						</span>
+				
+					<div class="original-context">
+						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
 					</div>
 					
 				</div>
 					
 				<div class="info-bottom">
-					<div class="original-context">
-						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
+				
+					<div class="action-link shares-link">
+						<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />">
+							<span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
+						</span>
 					</div>
+
 					<div class="lightbox-rights" id="rights-collapsed">
 						<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 					</div>
