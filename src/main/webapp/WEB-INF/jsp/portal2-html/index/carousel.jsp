@@ -20,7 +20,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 --%>
 <div class="row carousel-row">
 <c:if test='${!empty model.carouselItems}'>
-<div id="carousel-1">		
+<div id="carousel-1">
 <c:forEach var="item" items="${model.carouselItems}">
 <a href="${item.url}"><img src="/${model.portalName}<spring:message code='${item.imgUrl}'/>" title="<spring:message code='${item.anchorTitle}'/>" alt="<spring:message code='${item.imgAlt}'/>" class="hidden"/></a>
 </c:forEach>

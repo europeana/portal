@@ -43,7 +43,7 @@
 </div>
 <div class="four columns">
 <h3><a class="europeana" href="/${model.portalName}/<spring:message code="notranslate_main_menu_api_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_a_target_t"/>" title="<spring:message code="main_menu_api_a_title_t"/>"><spring:message code="main_menu_api_a_text_t"/></a></h3>
-<ul class="footer-links">			
+<ul class="footer-links">
 <li><a class="europeana" href="<spring:message code="notranslate_main_menu_api_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_1_a_target_t"/>" title="<spring:message code="main_menu_api_1_a_title_t"/>"><spring:message code="main_menu_api_1_a_text_t"/></a></li>
 <li><a class="europeana" href="<spring:message code="notranslate_main_menu_api_2_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_2_a_target_t"/>" title="<spring:message code="main_menu_api_2_a_title_t"/>"><spring:message code="main_menu_api_2_a_text_t"/></a></li>
 <li><a class="europeana" href="<spring:message code="notranslate_main_menu_api_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_api_3_a_target_t"/>" title="<spring:message code="main_menu_api_3_a_title_t"/>"><spring:message code="main_menu_api_3_a_text_t"/></a></li>

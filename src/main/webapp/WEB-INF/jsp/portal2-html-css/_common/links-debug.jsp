@@ -77,7 +77,7 @@
 <link rel="stylesheet" href="/${theme_assets}/css/tabbed-navigation.css" />
 </c:when>
 <c:when test="${model.pageName == 'index.html'}">
-<link rel="stylesheet" href="/${theme_assets}/css/index.css" />		
+<link rel="stylesheet" href="/${theme_assets}/css/index.css" />
 <link rel="stylesheet" href="/${theme_assets}/js/galleria/themes/europeanax/galleria.europeanax.css" />
 </c:when>
 <c:when test="${model.pageName == 'login.html'}">

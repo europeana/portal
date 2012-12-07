@@ -1,4 +1,4 @@
-<form id="refine-search-form" method="get" action="${query_action}">		
+<form id="refine-search-form" method="get" action="${query_action}">
 		<fieldset>
 			<input type="text" name="qf" id="qf" value="" class="${className}" title="<spring:message code="RefineYourSearch_t"/>">
       		<input type="hidden" name="query" <c:if test="${!emptymodel.query}">value="${model.query}"</c:if>/>

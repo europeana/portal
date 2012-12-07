@@ -9,7 +9,7 @@
 </c:forEach>
 </div>
 <%-- div id="carousel-3-footer" class="europeana-footer"></div  --%>
-</c:if>	
+</c:if>
 </div>
 </div>
 <%--

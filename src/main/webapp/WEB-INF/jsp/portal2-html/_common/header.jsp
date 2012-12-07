@@ -23,5 +23,5 @@ value="<div id='shareicons'>
 <c:when test='${model.pageName == "fulldoc.html"}'>
 <c:out value="${sharethis}" escapeXml="false" />
 </c:when>
-</c:choose>	
+</c:choose>
 </div>

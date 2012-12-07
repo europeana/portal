@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/_common/tag-libraries.jsp" %>
 <div id="query-full">
-<%@ include file="/WEB-INF/jsp/portal2-html/_common/query-form.jsp" %>	
+<%@ include file="/WEB-INF/jsp/portal2-html/_common/query-form.jsp" %>
 <%-- <%@ include file="/WEB-INF/jsp/default/_common/query/refinement.jsp"%> --%>
 <%--"did you mean" suggestion. nb: how to handle for embedded widget - might be best to have the backend create the url	--%>
 <c:if test="${not model.embedded} && ${model.showDidYouMean}">
