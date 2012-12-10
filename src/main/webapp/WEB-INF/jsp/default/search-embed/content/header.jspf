@@ -4,18 +4,6 @@
 
 	<div id="logo-and-search">
 	
-		<div id="logo">
-			<c:set var="logoWrapperTag" value="h1"/>
-			<c:set var="logoClass" value="responsive-logo"/>
-
-			<${logoWrapperTag} title="<spring:message code='AltLogoEuropeana_t' />">
-				<a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
-					<span class="${logoClass}" alt="<spring:message code='AltLogoEuropeana_t' />"></span>
-				</a>
-			</${logoWrapperTag}>
-
-		</div>
-		
 		<script type="text/javascript">
 			var completionTranslations = {};
 			completionTranslations['Title']			= "<spring:message code='FieldedSearchTitle_t' />";
