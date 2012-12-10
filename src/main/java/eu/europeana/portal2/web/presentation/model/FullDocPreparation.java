@@ -289,6 +289,7 @@ public abstract class FullDocPreparation extends FullDocData {
 					shortcut.get("DctermsConformsTo"),
 					shortcut.get("DctermsHasFormat"),
 					getDocument().getDctermsIsFormatOf(),
+					map(Field.EDM_CURRENTLOCATION, shortcut.get("edm:currentLocation")),
 					shortcut.get("EdmHasMet"),
 					map(Field.EDM_HASTYPE, shortcut.get("EdmHasType")),
 					shortcut.get("EdmIncorporates"),

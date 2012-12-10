@@ -112,6 +112,7 @@ public enum Field {
 		ExternalService.WORLDCAT, ExternalService.FLICKR, ExternalService.AMAZON,
 		ExternalService.YOUTUBE, ExternalService.IMDB),
 	EDM_UGC("edm:UGC", null),
+	EDM_CURRENTLOCATION("edm:currentLocation", null),
 	EDM_HASTYPE("edm:hasType", null),
 	EDM_ISRELATEDTO("edm:isRelatedTo", null),
 	EDM_ISREPRESENTATIONOF("edm:isRepresentationOf", null),
