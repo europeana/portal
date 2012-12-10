@@ -18,17 +18,19 @@
 		<span class="icon-mobilemenu show-on-phones" id="mobile-menu"></span>
 
 		<ul title="<spring:message code='ChooseLanguage_t' />">
-			<li class="item icon-home show-on-phones">
-				<a	class="/${model.portalName}/"
-					target="<spring:message code="notranslate_main_menu_home_a_target_t"/>"
-					href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
-			</li>
-
-			<li class="item icon-logo show-on-phones">
-				<a	class="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
-					target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
-					href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
-			</li>
+		
+			<c:if test="${!model.embedded}">
+				<li class="item icon-home show-on-phones">
+					<a	class="/${model.portalName}/"
+						target="<spring:message code="notranslate_main_menu_home_a_target_t"/>"
+						href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
+				</li>
+				<li class="item icon-logo show-on-phones">
+					<a	class="<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"
+						target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>"
+						href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
+				</li>
+			</c:if>
 
 			<li class="item">
 				<a class="choose"><spring:message code='ChooseLanguage_t'/></a>
