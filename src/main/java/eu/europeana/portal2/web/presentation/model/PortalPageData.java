@@ -29,6 +29,8 @@ public abstract class PortalPageData extends PageData {
 
 	private Locale locale;
 
+	private String portalUrl;
+
 	public String getTheme() {
 		return theme;
 	}
@@ -94,5 +96,13 @@ public abstract class PortalPageData extends PageData {
 
 	public void setLocale(Locale locale) {
 		this.locale = locale;
+	}
+
+	public String getPortalUrl() {
+		return portalUrl;
+	}
+
+	public void setPortalUrl(String portalUrl) {
+		this.portalUrl = portalUrl;
 	}
 }

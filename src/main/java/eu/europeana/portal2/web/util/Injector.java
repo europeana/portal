@@ -53,6 +53,7 @@ public class Injector {
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
 		model.setLocale(response.getLocale());
+		model.setPortalUrl(config.getPortalUrl());
 	}
 
 	private String getTheme(HttpServletRequest request) {
