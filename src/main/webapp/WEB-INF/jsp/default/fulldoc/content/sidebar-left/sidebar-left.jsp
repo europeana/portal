@@ -109,10 +109,12 @@ carouselData[carouselData.length] = {
 			</c:if>
 
 			
-// js manipulation alternative lightbox:
-     
-
-//carouselData[0].external.type = 'pdf';
+			// termpporary fix until we get multiple thumbanils			
+			for(var i=1; i<carouselData.length; i++){
+				if(carouselData[i].external && carouselData[i].external.type=="image"){
+					carouselData[i].image = carouselData[i].external.url; 
+				}
+			}
 
 		</script>
 	</div>
