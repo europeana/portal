@@ -364,7 +364,10 @@ public class ObjectController {
 			}
 		}
 
-		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations(), config.getSeeAlsoAggregations());
+		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(
+			config.getSeeAlsoTranslations(),
+			config.getSeeAlsoAggregations()
+		);
 		Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
 		if (seeAlsoResponse != null) {
 			for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {

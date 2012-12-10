@@ -201,11 +201,12 @@ public class ControllerUtil {
 	}
 
 	public static String clearSeeAlso(String value) {
-
 		value = value.replaceAll("\n", " ")
 				.replaceAll(",", " ")
 				.replaceAll(":", " ")
-				.replaceAll("\\s+", " ");
+				.replaceAll("\\s+", " ")
+				.replaceAll("\"", "\\\"")
+		;
 
 		Matcher m;
 		for (Pattern pattern : SEE_ALSO_PATTERNS) {
