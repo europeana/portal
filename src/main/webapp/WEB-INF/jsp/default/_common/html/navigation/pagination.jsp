@@ -7,20 +7,20 @@
 	<div class="${position_class} nav">
 	
 	
-		<div class="menu show-on-22">
-		
-			<span><spring:message code="ResultsPerPage_t" />:</span>
-			
-			<div class="eu-menu" aria-hidden="true">
-				<span class="menu-label"></span>
-				<span class="icon-arrow-3 open-menu"></span>
-				<ul>
-					<c:forEach var="size" items="12,24,48,96">
-						<li class="${model.rows == size ? 'item active' : 'item'}">	<a href="" class="${size}">${size}</a></li>
-					</c:forEach>
-				</ul>
+		<c:if test="${!model.embedded}">
+			<div class="menu show-on-22">
+				<span><spring:message code="ResultsPerPage_t" />:</span>
+				<div class="eu-menu" aria-hidden="true">
+					<span class="menu-label"></span>
+					<span class="icon-arrow-3 open-menu"></span>
+					<ul>
+						<c:forEach var="size" items="12,24,48,96">
+							<li class="${model.rows == size ? 'item active' : 'item'}">	<a href="" class="${size}">${size}</a></li>
+						</c:forEach>
+					</ul>
+				</div>
 			</div>
-		</div>
+		</c:if>
 	
 	
 		<div class="count">
