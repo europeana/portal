@@ -1,55 +1,6 @@
-/*
-html {
-	position: static;
+
+@media only screen and (min-width: 55em) {
+	.nav > .count {
+		text-align:left;
+	}
 }
-
-body {
-	width: 680px;
-}
-
-
-
-#header {
-	width: 680px;
-}
-
-
-
-
-#language-selector {
-	text-align: right;
-}
-	
-	
-
-
-#query {
-	padding: 0 0 0 105px;
-}	
-
-#additional-feedback {
-	top: 50px;
-	left: 105px;
-}
-
-
-#search-results {
-	float: none;
-	margin: auto;
-}
-
-
-#footer {
-	overflow: auto;
-}
-
-#europeana-logo {
-	float: left;
-}
-
-#european-union {
-	float: right;
-	margin-top: 6px;
-}
-
-*/
