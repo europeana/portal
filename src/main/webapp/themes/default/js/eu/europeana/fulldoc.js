@@ -715,6 +715,20 @@ eu.europeana.fulldoc = {
 								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 							}
 						);
+						
+						// fix for tiny images in carousel
+						/*
+						$(this).ready(function(e) {
+							
+							var refreshTab = function(){
+								eu.europeana.fulldoc.bottomTabs.openTab('#');								
+							};
+							
+							setTimeout(400, refreshTab);
+							
+						});
+						*/
+
 						$(window).bind('resize', function(){
 							if(eu.europeana.vars.suppresResize){
 								return;
@@ -856,7 +870,7 @@ eu.europeana.fulldoc = {
 			};
 			$("#carousel-2-img-measure img").css("display", "none");
 	
-			new AccordionTabs( $('#explore-further'),
+			eu.europeana.fulldoc.bottomTabs =  new AccordionTabs( $('#explore-further'),
 				function(){
 					eu.europeana.fulldoc.initBottomCarousel();
 				}
