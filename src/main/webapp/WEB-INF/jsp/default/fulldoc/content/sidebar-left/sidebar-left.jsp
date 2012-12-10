@@ -4,8 +4,8 @@
 <%@ taglib prefix="eu" tagdir="/WEB-INF/tags"%>
 
 <c:set var="about" value=""/>
-<c:if test="${not empty model.document['id']}">
-	<c:set var="about" value="${model.document.id}"/>
+<c:if test="${not empty model.document['about']}">
+	<c:set var="about" value="${model.portalUrl}/record${model.document.about}.html"/>
 </c:if>
 
 <div id="additional-info" class="sidebar" about="${about}">
@@ -14,18 +14,16 @@
 		
 	<%-- thumbnail (hidden seo image) --%>
 		
-	<div id="carousel-1-img-measure" itemscope itemtype="http://schema.org/MediaObject">
-	
+	<div id="carousel-1-img-measure" vocab="http://schema.org/" typeof="MediaObject">
+
 		<!-- TODO: make sure all item images are listed here -->
 		<c:set var="thumbnail"	value=""/>
 		<c:set var="dataType"	value=""/>
 		<c:set var="alt"		value=""/>
-		
-		
+
 		<c:if test="${not empty model['thumbnailUrl']}">
 			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
 		</c:if>
-
 
 		<c:if test="${not empty model.document['edmType']}">
 			<c:set var="dataType" value="${fn:toLowerCase(model.document.edmType)}"/>
@@ -35,7 +33,7 @@
 			<c:set var="alt" value="${fn:escapeXml(model.pageTitle)}"/>
 		</c:if>
 
-	<c:set var="semanticAttributes"><eu:semanticAttributes field="edm:hasView" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
+		<c:set var="semanticAttributes"><eu:semanticAttributes field="edm:hasView" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
 		<img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
 	</div>
 
@@ -55,8 +53,7 @@
 				</c:if>
 			
 				<c:forEach items="${model.allImages}" var="image">
-					
-					
+
 					carouselData[carouselData.length] = {
 						"image":		decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
 						"title":		('${fn:escapeXml(model.objectTitle)}'),
@@ -69,8 +66,7 @@
 							"type"	: "${fn:toLowerCase(image.type)}"
 						}
 					</c:if>
-				
-						
+
 // js manipulation pdf:
 /*
 	if( carouselData[carouselData.length-1].image == "http://europeanastatic.eu/api/image?uri=http://hdl.handle.net/10978/F475B1DF-116F-4723-AC7A-26A5FEB48367?locatt=view:level2&size=FULL_DOC"   ){
@@ -79,10 +75,7 @@
 				"type"	: "pdf"
 		}
 	}
-*/	   
-    		   
-    		   
-    		   
+*/
 
 <%-- double data to test carousel init--%>
 <%--
@@ -108,7 +101,6 @@ carouselData[carouselData.length] = {
 				</c:forEach>
 			</c:if>
 
-			
 			// termpporary fix until we get multiple thumbanils			
 			for(var i=1; i<carouselData.length; i++){
 				if(carouselData[i].external && carouselData[i].external.type=="image"){
@@ -119,23 +111,20 @@ carouselData[carouselData.length] = {
 		</script>
 	</div>
 
-		
-		
 	<div class="original-context">
-	
+
 		<%-- Rights --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
-		
+
 		<%-- Original context link --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
-		
+
 		<br>
-		
+
 		<div class="clear"></div>
-		
+
 	</div>
-	
-	
+
 	<div id="citation">
 		<c:if test="${not empty model['citeStyles']}">
 			<div id="citations">
@@ -152,29 +141,29 @@ carouselData[carouselData.length] = {
 			</div>
 		</c:if>
 	</div>
-		
+
 	<div class="actions">
-		
-		
+
+
 		<%-- Shares link --%>
-		
+
 		<div class="action-link shares-link">
 			<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"> <span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
 		</div>
-		
+
 		<%-- Citation link --%>
-		
+
 		<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
 			<span class="action-title"><spring:message code="Cite_Button_t" /></span>
 		</a>
-		
+
 		<%-- Embed link --%>
 		<%--
 		<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
 			<span class="action-title"><spring:message code="embed_t" /></span>
 		</a>
 		--%>
-			
+
 		<%--
 		<div id="embed-link-wrapper">
 			<a href="${model.embedRecordUrl}" id="item-embed" class="block-link bold" target="_blank" rel="nofollow"><spring:message code="embed_t" /></a>
@@ -184,7 +173,6 @@ carouselData[carouselData.length] = {
 		<%-- Save page to myeuropeana --%>
 
 		<c:if test="${!empty model.user}">
-		
 			<c:set var="savedIcon" value="icon-unsaveditem" />
 			<c:set var="savedText">
 				<spring:message code="SaveToMyEuropeana_t" />
@@ -198,13 +186,12 @@ carouselData[carouselData.length] = {
 					</c:set>
 				</c:if>
 			</c:forEach>
-		
+
 			<a href="#" id="item-save" rel="nofollow" class="${savedIcon} action-link">
 				<span class="action-title">${savedText}</span>
 			</a>
-			
 		</c:if>
-	
+
 		<%-- Format labels --%>
 		<c:if test="${model.debug}">
 			<c:choose>
@@ -235,9 +222,7 @@ carouselData[carouselData.length] = {
 				<span class="action-title">${switchlabelTitle}</span>
 			</a>
 		</c:if>
-			
 
-		
 		<c:if test="${!empty model.user}">
 			<form id="item-save-tag">
 				<fieldset>
@@ -255,8 +240,7 @@ carouselData[carouselData.length] = {
 				</fieldset>
 			</form>
 		</c:if>
-		
-		
+
 		<div id="translate-container">
 			<span class="icon-translate"></span>
 				<!-- translate services -->
@@ -265,10 +249,5 @@ carouselData[carouselData.length] = {
 				<span class="iconP icon-arrow-6"></span>
 			</a>
 		</div>
-		
-		
 	</div>
-	
-	
-
 </div>
