@@ -138,8 +138,8 @@ public abstract class FullDocPreparation extends FullDocData {
 				addField(where, Field.ENRICHMENT_PLACE_TERM, new String[]{place.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
 				if (place.getPrefLabel() != null) {
-					for (String key : place.getPrefLabel().keySet()) {
-						labels.add(place.getPrefLabel().get(key) + " (" + key + ")");
+					for (String language : place.getPrefLabel().keySet()) {
+						labels.add(place.getPrefLabel().get(language) + " (" + language + ")");
 					}
 				}
 				addField(where, Field.ENRICHMENT_PLACE_LABEL, StringArrayUtils.toArray(labels));
@@ -165,8 +165,8 @@ public abstract class FullDocPreparation extends FullDocData {
 				addField(who, Field.ENRICHMENT_AGENT_TERM, new String[]{agent.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
 				if (agent.getPrefLabel() != null) {
-					for (String key : agent.getPrefLabel().keySet()) {
-						labels.add(agent.getPrefLabel().get(key) + " (" + key + ")");
+					for (String language : agent.getPrefLabel().keySet()) {
+						labels.add(agent.getPrefLabel().get(language) + " (" + language + ")");
 					}
 				}
 				addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
@@ -187,8 +187,8 @@ public abstract class FullDocPreparation extends FullDocData {
 				addField(what, Field.ENRICHMENT_CONCEPT_TERM, new String[]{concept.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
 				if (concept.getPrefLabel() != null) {
-					for (String key : concept.getPrefLabel().keySet()) {
-						labels.add(concept.getPrefLabel().get(key) + " (" + key + ")");
+					for (String language : concept.getPrefLabel().keySet()) {
+						labels.add(concept.getPrefLabel().get(language) + " (" + language + ")");
 					}
 				}
 				addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
@@ -218,8 +218,8 @@ public abstract class FullDocPreparation extends FullDocData {
 				addField(when, Field.ENRICHMENT_PERIOD_TERM, new String[]{timespan.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
 				if (timespan.getPrefLabel() != null) {
-					for (String key : timespan.getPrefLabel().keySet()) {
-						labels.add(timespan.getPrefLabel().get(key) + " (" + key + ")");
+					for (String language : timespan.getPrefLabel().keySet()) {
+						labels.add(timespan.getPrefLabel().get(language) + " (" + language + ")");
 					}
 				}
 				addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));

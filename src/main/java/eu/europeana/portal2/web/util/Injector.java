@@ -49,9 +49,10 @@ public class Injector {
 		model.setTheme(getTheme(request));
 		model.setDebug(config.getDebugMode());
 		// TODO: change it later!!!!
-		model.setMinify(false);
+		// model.setMinify(false);
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
+		model.setLocale(response.getLocale());
 	}
 
 	private String getTheme(HttpServletRequest request) {

@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.presentation.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,8 @@ public abstract class PortalPageData extends PageData {
 	private boolean debug = false;
 
 	private boolean minify = false;
+
+	private Locale locale;
 
 	public String getTheme() {
 		return theme;
@@ -83,5 +86,13 @@ public abstract class PortalPageData extends PageData {
 
 	public void setMinify(boolean minify) {
 		this.minify = minify;
+	}
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
 	}
 }
