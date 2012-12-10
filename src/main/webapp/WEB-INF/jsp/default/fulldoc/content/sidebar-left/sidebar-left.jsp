@@ -1,9 +1,7 @@
 <%@ page import="java.net.URLDecoder"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="eu" tagdir="/WEB-INF/tags"%>
 
 <c:set var="about" value=""/>
 <c:if test="${not empty model.document['id']}">
@@ -16,7 +14,7 @@
 		
 	<%-- thumbnail (hidden seo image) --%>
 		
-	<div id="carousel-1-img-measure">
+	<div id="carousel-1-img-measure" itemscope itemtype="http://schema.org/MediaObject">
 	
 		<!-- TODO: make sure all item images are listed here -->
 		<c:set var="thumbnail"	value=""/>
@@ -37,11 +35,8 @@
 			<c:set var="alt" value="${fn:escapeXml(model.pageTitle)}"/>
 		</c:if>
 
-	
-		<img	src			= "${thumbnail}"
-				alt			= "${alt}"
-				data-type	= "${dataType}"
-				class		= "no-show"/>
+    <c:set var="semanticAttributes"><eu:semanticAttributes field="edm:hasView" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
+		<img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
 	</div>
 
 	<%--"dataType":		"${fn:toLowerCase(model.document.edmType)}"--%>

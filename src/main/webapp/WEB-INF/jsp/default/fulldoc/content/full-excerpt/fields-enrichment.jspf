@@ -19,7 +19,6 @@
             <ul><europeana:displayEseDataAsHtml listCollection="${fieldEnrichment.value}" wrapper="li" ugc="false" ess="true" /></ul>
           </li>
         </c:forEach>
-        
       </ul>
     </li>
   </ul>

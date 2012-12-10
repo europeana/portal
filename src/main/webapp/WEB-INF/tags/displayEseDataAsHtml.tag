@@ -65,7 +65,7 @@
 
         <c:set var="localSemanticAttributes" value="${semanticAttributes}" />
         <c:set var="localSemanticUrl" value="${semanticUrl}" />
-        <c:if test="${value.fieldName != data.fieldName && model.schemaOrgMapping[value.fieldName]}">
+        <c:if test="${value.fieldName != data.fieldName && model.schemaOrgMapping[value.fieldName] != null}">
           <c:set var="localSemanticAttributes">
             <eu:semanticAttributes field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
           </c:set>
