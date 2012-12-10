@@ -91,7 +91,13 @@ public class ApiConsoleController {
 		}
 
 		if (!StringUtils.isBlank(recordId)) {
-			recordId = recordId.trim().replaceAll("[^0-9A-F/]", "");
+			recordId = recordId.trim();
+			if (recordId.startsWith("\"")) {
+				recordId = recordId.substring(1);
+			}
+			if (recordId.endsWith("\"")) {
+				recordId = recordId.substring(0, recordId.length() - 1);
+			}
 		}
 
 		model.setFunction(function);
