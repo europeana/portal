@@ -427,7 +427,7 @@ public class FullDocPage extends FullDocPreparation {
 				if (imageType.equals("IMAGE")) {
 					img = new Image(
 						createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
-						createImageUrl(imageUrl, imageType, "FULL_DOC"),
+						imageUrl, // createImageUrl(imageUrl, imageType, "FULL_DOC"),
 						imageType
 					);
 				} else {
