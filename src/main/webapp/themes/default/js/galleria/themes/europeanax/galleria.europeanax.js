@@ -179,9 +179,14 @@ Galleria.addTheme({
 					
 					/* Do this once only  */
 					thisGallery.updateCarousel();
-
+					
 					/* vertically centre the navigation icons */
 					var offsetTop = (containerHeight - Math.max( parseInt(thumbNavLeft.height()), parseInt(thumbNavRight.height()) ) ) / 2;
+
+					/* delays in icon loading can upset the previous calculation - hard-coded correction here */
+					if(offsetTop == (containerHeight/2)){
+						offsetTop = 25;
+					}
 					
 					thumbNavLeft.css	("top", offsetTop + "px");
 					thumbNavRight.css	("top", offsetTop + "px");
