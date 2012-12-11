@@ -693,7 +693,7 @@ eu.europeana.fulldoc = {
 			
 			// 150 too small for iphone: make min height 200
    			$(carousel2selector).css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
-   			
+   	
    			Galleria.run(carousel2selector, {
    				debug:			js.debug,
 				transition:		'fadeslide',
@@ -715,19 +715,6 @@ eu.europeana.fulldoc = {
 								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 							}
 						);
-						
-						// fix for tiny images in carousel
-						/*
-						$(this).ready(function(e) {
-							
-							var refreshTab = function(){
-								eu.europeana.fulldoc.bottomTabs.openTab('#');								
-							};
-							
-							setTimeout(400, refreshTab);
-							
-						});
-						*/
 
 						$(window).bind('resize', function(){
 							if(eu.europeana.vars.suppresResize){
