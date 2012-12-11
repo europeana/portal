@@ -117,6 +117,12 @@ public enum Field {
 	EDM_ISRELATEDTO("edm:isRelatedTo", null),
 	EDM_ISREPRESENTATIONOF("edm:isRepresentationOf", null),
 	EDM_LANDINGPAGE("edm:landingPage", null),
+	EDM_HASMET("edm:hasMet", null),
+	EDM_INCORPORATES("edm:incorporates", null),
+	EDM_ISDERIVATIVEOF("edm:isDerivativeOf", null),
+	EDM_ISSIMILARTO("edm:isSimilarTo", null),
+	EDM_ISSUCCESSOROF("edm:isSuccessorOf", null),
+	EDM_REALIZES("edm:realizes", null),
 
 	// ENRICHMENT
 	ENRICHMENT_PLACE_TERM("enrichment:place_term", "place_term_t"),

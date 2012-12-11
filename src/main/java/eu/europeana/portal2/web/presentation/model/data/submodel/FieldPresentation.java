@@ -68,7 +68,7 @@ public class FieldPresentation {
 		add(model, fieldValues);
 	}
 
-	public FieldPresentation(UrlAwareData<?> model, Field field, Map<Field, String[]> fieldValues) {
+	public FieldPresentation(UrlAwareData<?> model, Field field, Map<Field, List<String>> fieldValues) {
 		this(field);
 		addMap(model, fieldValues);
 	}
@@ -104,12 +104,12 @@ public class FieldPresentation {
 		}
 	}
 
-	public void addMap(UrlAwareData<?> model, Map<Field, String[]> fieldValues) {
+	public void addMap(UrlAwareData<?> model, Map<Field, List<String>> fieldValues) {
 		if (fieldValues != null) {
 			if (this.fieldValues == null) {
 				this.fieldValues = new ArrayList<FieldValue>();
 			}
-			for (Entry<Field, String[]> fieldValue : fieldValues.entrySet()) {
+			for (Entry<Field, List<String>> fieldValue : fieldValues.entrySet()) {
 				if (fieldValue.getValue() == null) {
 					continue;
 				}

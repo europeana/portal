@@ -194,6 +194,17 @@ public class FullBeanShortcut {
 		return null;
 	}
 
+	public List<String> getList(String property) {
+		if (values == null) {
+			initialize();
+		}
+
+		if (values.containsKey(property)) {
+			return values.get(property);
+		}
+		return null;
+	}
+
 	public void initializeFloats() {
 		floats = new HashMap<String, List<Float>>();
 		if (document.getPlaces() != null && document.getPlaces().size() > 0) {

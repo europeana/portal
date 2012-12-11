@@ -34,17 +34,13 @@ public class EdmSchemaMapping {
 	}
 
 	public static Map<String, Element> getEdmElements() {
-		log.info("getEdmElements");
 		if (edmElements == null) {
 			edmElements = new HashMap<String, Element>();
 			for (String mapName : mapNames) {
-				log.info("get map for " + mapName);
 				List<FieldInfo> fields = getMap(mapName);
 				if (fields != null) {
 					for (FieldInfo field : fields) {
-						log.info(field.getSchemaName());
 						if (field.getElement() != null) {
-							log.info(field.getElement().getFullQualifiedURI());
 							edmElements.put(field.getSchemaName(), field.getElement());
 						}
 					}

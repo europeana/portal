@@ -9,7 +9,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -42,6 +44,7 @@ public class SchemaOrMappingTest {
 		Object[] vars = new Object[]{
 				"hello", 
 				new String[]{"hello"}, 
+				Arrays.asList("hello"), 
 				new HashMap<String, String>(){{put("hello", "hello");}}, 
 				new HashMap<Integer, String>(){{put(1, "hello");}}};
 
@@ -51,6 +54,9 @@ public class SchemaOrMappingTest {
 			}
 			if (obj instanceof String[]) {
 				System.out.println(obj + " is a String[]");
+			}
+			if (obj instanceof List<?>) {
+				System.out.println(obj + " is a List<?>");
 			}
 			if (obj instanceof Map) {
 				System.out.println(obj + " is a Map");
@@ -68,7 +74,7 @@ public class SchemaOrMappingTest {
 	public void testDescriptionIssue() {
 		Object[] vars = new Object[]{
 				new String[]{"Numero perxa: 581", "Vestido s. XIX. Luisa Fernanda"},
-				FullDocPreparation.map(Field.DCTERMS_TABLEOFCONTENTS, new String[]{"http://colleccions.cdmae.cat/u?/indu,3341"})
+				FullDocPreparation.map(Field.DCTERMS_TABLEOFCONTENTS, Arrays.asList("http://colleccions.cdmae.cat/u?/indu,3341"))
 		};
 		Field fieldInfo = Field.DC_DESCRIPTION;
 
@@ -81,6 +87,8 @@ public class SchemaOrMappingTest {
 			}
 			if (fieldValueArray instanceof String[]) {
 				System.out.println("is String[]");
+			} else if (fieldValueArray instanceof List<?>) {
+					System.out.println("is String[]");
 				// extractFieldValues(fieldPresentation, fieldInfo, (String[])fieldValueArray);
 			} else if (fieldValueArray instanceof Map) {
 				System.out.println("is Map");
