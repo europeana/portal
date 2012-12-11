@@ -121,7 +121,6 @@ Galleria.addTheme({
 			var containerHeight	= parseInt( this.$( 'container' ).css("height") );
 			var containerWidth	= parseInt( this.$( 'container' ).css("width") );
 			
-			
 			/* Styling & info:
 			 * 
 			 * Size the images according to container width.
@@ -132,6 +131,7 @@ Galleria.addTheme({
 			var completedCallBackCount = 0;
 			
 			var setThumbStyle = function(thumb, thumbOb, index){	// called for each thumbnail once loaded
+				
 				var imgBoxW		= thisGallery._options.europeana.imgBoxW;
 				var tParent		= thumb.parent();
 				var imgBoxH		= containerHeight;
@@ -141,7 +141,6 @@ Galleria.addTheme({
 				
 				var imgMargin	= thisGallery._options.europeana.imgMargin;
 				tParent.css("margin",	"0 " + imgMargin + "px");
-
 				
 				// image sizing 
 				thumb.removeAttr('width');
@@ -234,26 +233,24 @@ Galleria.addTheme({
 				}
 
 		    	/* iterate thumbs & call setStyle on each */
-
+				 //expectedCallBackCount = 0;
+				 //completedCallBackCount = 0;
 		        $(thisGallery._thumbnails).each(function( i, thumb ) {
-
-		        	if(thumb.ready){
-
-			    		thisGallery.trigger({
-			    			type: Galleria.THUMBNAIL,
-			                      thumbTarget: thumb.image,
-			                      index: i,
-			                      galleriaData: dataSource
-			    		});
-		        	}
-		        	else{
-		        		expectedCallBackCount ++;
-		        		thisGallery.bind("thumbnail", function(e) {
-		        			if(e.index == i){
-		            	        setThumbStyle($(e.thumbTarget), thumb, i);
-		        			}
-		        	    });
-		        	}
+					expectedCallBackCount ++;
+					thisGallery.bind("thumbnail", function(e) {
+						if(e.index == i){
+					        setThumbStyle($(e.thumbTarget), thumb, i);
+						}
+					});
+					
+					if(thumb.ready){
+						thisGallery.trigger({
+							type: Galleria.THUMBNAIL,
+					              thumbTarget: thumb.image,
+					              index: i,
+					              galleriaData: dataSource
+						});
+					}
 		        });
 		    };
 		    calculateLayout();
