@@ -766,7 +766,6 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public Map<String, Element> getEdmElements() {
-		log.info("getEdmElements");
 		return EdmSchemaMapping.getEdmElements();
 	}
 
