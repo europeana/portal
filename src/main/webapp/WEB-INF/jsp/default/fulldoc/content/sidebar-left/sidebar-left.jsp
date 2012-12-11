@@ -20,7 +20,17 @@
 		<c:set var="thumbnail"	value=""/>
 		<c:set var="dataType"	value=""/>
 		<c:set var="alt"		value=""/>
+		<c:set var="id"			value=""/>
+<%--
+		<c:if test="${model.urlRefIsShownBy}">
+			<script>alert('assign id (by)');</script>
+			 
+			<c:set var="id" value="id=\"urlRefIsShownByImg\"" />
+		</c:if>
+			 --%>
+		
 
+		
 		<c:if test="${not empty model['thumbnailUrl']}">
 			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
 		</c:if>
@@ -34,7 +44,15 @@
 		</c:if>
 
 		<c:set var="semanticAttributes"><eu:semanticAttributes field="edm:hasView" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
+		
+		
+	<%--	
+		<img ${id} src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
+	
+			 --%>
 		<img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
+		
+		
 	</div>
 
 	<%--"dataType":		"${fn:toLowerCase(model.document.edmType)}"--%>
