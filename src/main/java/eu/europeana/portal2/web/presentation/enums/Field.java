@@ -116,6 +116,7 @@ public enum Field {
 	EDM_HASTYPE("edm:hasType", null),
 	EDM_ISRELATEDTO("edm:isRelatedTo", null),
 	EDM_ISREPRESENTATIONOF("edm:isRepresentationOf", null),
+	EDM_LANDINGPAGE("edm:landingPage", null),
 
 	// ENRICHMENT
 	ENRICHMENT_PLACE_TERM("enrichment:place_term", "place_term_t"),

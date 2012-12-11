@@ -52,6 +52,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.presentation.model.data.submodel.MetaDataFieldPresentation;
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.semantic.EdmSchemaMapping;
+import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgElement;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
@@ -762,6 +763,11 @@ public class FullDocPage extends FullDocPreparation {
 			}
 		}
 		return null;
+	}
+
+	public Map<String, Element> getEdmElements() {
+		log.info("getEdmElements");
+		return EdmSchemaMapping.getEdmElements();
 	}
 
 	public Map<String, SchemaOrgElement> getSchemaOrgMapping() {

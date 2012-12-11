@@ -1,13 +1,16 @@
 package eu.europeana.portal2.web.presentation.semantic;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+import java.util.logging.Logger;
 
 public class EdmSchemaMapping {
+
+	protected final static Logger log = Logger.getLogger("EdmSchemaMapping");
 
 	private static final List<String> mapNames = Arrays.asList(
 		new String[]{"ProvidedCHO", "WebResource", "Agent", "Place", "Timespan", 
@@ -17,6 +20,7 @@ public class EdmSchemaMapping {
 
 	private static Map<String, List<FieldInfo>> fieldMap = new LinkedHashMap<String, List<FieldInfo>>();
 	private static List<FieldInfo> topLevelTypes;
+	private static Map<String, Element> edmElements;
 
 	public static List<String> getMapNames() {
 		return mapNames;
@@ -27,6 +31,27 @@ public class EdmSchemaMapping {
 			getMap(mapName);
 		}
 		return fieldMap;
+	}
+
+	public static Map<String, Element> getEdmElements() {
+		log.info("getEdmElements");
+		if (edmElements == null) {
+			edmElements = new HashMap<String, Element>();
+			for (String mapName : mapNames) {
+				log.info("get map for " + mapName);
+				List<FieldInfo> fields = getMap(mapName);
+				if (fields != null) {
+					for (FieldInfo field : fields) {
+						log.info(field.getSchemaName());
+						if (field.getElement() != null) {
+							log.info(field.getElement().getFullQualifiedURI());
+							edmElements.put(field.getSchemaName(), field.getElement());
+						}
+					}
+				}
+			}
+		}
+		return edmElements;
 	}
 
 	public static List<FieldInfo> getTopLevel() {

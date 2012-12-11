@@ -36,8 +36,8 @@
  * @author Dan Entous <contact@pennlinepublishing.com>
  * @modified 2011-06-08 15:25 GMT+1
 --%>
-
 <c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
+  
   <c:set var="item_id" value="" />
   <c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id" value=' id="item-description" ' /></c:if>
   <c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id" value=' id="item-subject" ' /></c:if>
@@ -65,13 +65,20 @@
 
         <c:set var="localSemanticAttributes" value="${semanticAttributes}" />
         <c:set var="localSemanticUrl" value="${semanticUrl}" />
-        <c:if test="${value.fieldName != data.fieldName && model.schemaOrgMapping[value.fieldName] != null}">
-          <c:set var="localSemanticAttributes">
-            <eu:semanticAttributes field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
-          </c:set>
-          <c:set var="localSemanticUrl">
-            <eu:semanticUrl field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
-          </c:set>
+        <c:if test="${value.fieldName != data.fieldName}">
+          <c:choose>
+            <c:when test="${model.schemaOrgMapping[value.fieldName] != null}">
+              <c:set var="localSemanticAttributes">
+                <eu:semanticAttributes field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+              </c:set>
+              <c:set var="localSemanticUrl">
+                <eu:semanticUrl field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+              </c:set>
+            </c:when>
+            <c:otherwise>
+              <c:set var="localSemanticAttributes">${"property=\""}${model.edmElements[value.fieldName].fullQualifiedURI}${"\""}</c:set>
+            </c:otherwise>
+          </c:choose>
         </c:if>
 
         <%-- determine if value is translatable or not --%>

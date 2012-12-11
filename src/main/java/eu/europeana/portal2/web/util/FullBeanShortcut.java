@@ -170,6 +170,7 @@ public class FullBeanShortcut {
 			EuropeanaAggregation aggregation = document.getEuropeanaAggregation();
 			add("EdmCountry", aggregation.getEdmCountry()); // Map - EuropeanaAggregation/edm:country
 			add("EdmLanguage", aggregation.getEdmLanguage()); // Map
+			add("EdmLandingPage", aggregation.getEdmLandingPage()); // String
 		}
 
 	}

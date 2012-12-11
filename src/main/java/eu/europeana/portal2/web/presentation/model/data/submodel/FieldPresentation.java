@@ -43,6 +43,7 @@ public class FieldPresentation {
 
 	protected Field field;
 	protected List<FieldValue> fieldValues;
+	protected boolean isCombined = false;
 
 	/**
 	 * Constructor full
@@ -187,5 +188,13 @@ public class FieldPresentation {
 		sb.append(", values: [").append(StringUtils.join(fieldValues, ", ")).append("]");
 		sb.append("]");
 		return sb.toString();
+	}
+
+	public boolean isCombined() {
+		return isCombined;
+	}
+
+	public void setCombined(boolean isCombined) {
+		this.isCombined = isCombined;
 	}
 }

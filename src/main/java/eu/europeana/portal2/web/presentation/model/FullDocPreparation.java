@@ -311,6 +311,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			addFieldMap(fieldMap, Field.EDM_DATAPROVIDER, shortcut.get("DataProvider"));
 			addFieldMap(fieldMap, Field.EDM_PROVIDER, shortcut.get("EdmProvider"));
 			addFieldMap(fieldMap, Field.EDM_COUNTRY, Field.EDM_COUNTRY.getValues(shortcut.get("EdmCountry")));
+			addFieldMap(fieldMap, Field.EDM_LANDINGPAGE, Field.EDM_COUNTRY.getValues(shortcut.get("EdmLandingPage")));
 
 			fields = new LinkedList<FieldPresentation>();
 			for (FieldPresentation fieldPresentation : fieldMap.values()) {
@@ -422,6 +423,9 @@ public abstract class FullDocPreparation extends FullDocData {
 			return;
 		}
 		FieldPresentation fieldPresentation = getFieldPresentation(fields, fieldInfo);
+		if (fieldValuesArrays.length > 1) {
+			fieldPresentation.setCombined(true);
+		}
 		extractAllFieldValues(fieldPresentation, fieldInfo, fieldValuesArrays);
 	}
 }
