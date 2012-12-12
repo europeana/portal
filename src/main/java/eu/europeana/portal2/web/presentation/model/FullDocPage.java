@@ -19,8 +19,6 @@ package eu.europeana.portal2.web.presentation.model;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.FileNameMap;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -167,7 +165,7 @@ public class FullDocPage extends FullDocPreparation {
 				lightboxRef = shortcut.get("EdmIsShownAt")[0];
 				lightboxRefField = "edm:isShownAt";
 			} else {
-				log.info("checkMimeType false all");
+				log.warning("No EdmIsShownBy/EdmIsShownAt");
 			}
 
 			lightboxRefChecked = true;
@@ -414,9 +412,6 @@ public class FullDocPage extends FullDocPreparation {
 			String docType = getDocument().getEdmType();
 			String thumbnailUrl = this.getThumbnailUrl();
 			String isShownByUrl = getLightboxRef();
-			log.info("isShownByUrl: " + isShownByUrl);
-			log.info("getLightboxRefField: " + getLightboxRefField());
-
 			String firstImageType = getImageType(isShownByUrl, docType);
 
 			Image firstImage = new Image(
