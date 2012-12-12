@@ -4,11 +4,12 @@
 	display:	none;
 	position:	relative;
 	width:		100%;		/* to aid centering of ess container */
+	z-index:	200;		/* to avoid iphone transparency */
 }
 
 #citation .external-services-container-wrapper {
 	position:	fixed;
-	top:		30%;
+	top:		10%;
 	left:		0;
 	width:		100%;
 }
@@ -43,7 +44,6 @@
 
 
 .external-services-container {
-	z-index:			200;
 	height:				auto;
 	background-color:	#fff;
 	border-radius:		5px;
