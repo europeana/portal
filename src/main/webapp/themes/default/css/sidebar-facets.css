@@ -51,11 +51,16 @@
 	white-space:	nowrap;
 }
 
+/* fix for Opera (opera-condiotjnal css) */
+x:-o-prefocus, #refinements li span,
+x:-o-prefocus, #refinements input{
+	vertical-align:	bottom;
+}
+
 #refinements input{
 	outline-width:			0;
 	outline:				none;
 	border:					0;
-	
 	padding:				4px;
 	margin:					0;
 	font-size:				1.1em;
