@@ -24,6 +24,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,17 +68,25 @@ public class FullDocPage extends FullDocPreparation {
 	/**
 	 * 
 	 */
-	private static final String[] IMAGE_FIELDS = new String[]{"EdmIsShownBy", "EdmHasView"}; // "EdmObject", "WebResourceAbout", 
+	private static final Map<String, String> IMAGE_FIELDS = new HashMap<String, String>();
+	static {{
+		IMAGE_FIELDS.put("EdmIsShownBy", "edm:isShownBy");
+		IMAGE_FIELDS.put("EdmHasView", "edm:hasView");
+	}}; // "EdmObject", "WebResourceAbout",
 
 	private RightsValue rightsOption = null;
 
 	private String schemaOrgMappingFile;
 
-	private String[] allImages = null;
+	private Map<String, String> allImages = null;
 
 	private List<Image> imagesToShow;
 
 	private boolean schemaOrgMappingInitialized = false;
+
+	private String lightboxRef = null;
+	private boolean lightboxRefChecked = false;
+	private String lightboxRefField = null;
 
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
@@ -123,10 +132,6 @@ public class FullDocPage extends FullDocPreparation {
 			: shortcut.get("EdmIsShownAt")[0];
 	}
 
-
-	private String lightboxRef = null;
-	private boolean lightboxRefChecked = false;
-
 	/**
 	 * TODO: we need to allow for providers that haven't followed the guidelines
 	 * and haven't given us an "isShownBy" value. For example, the pdf here is
@@ -139,40 +144,39 @@ public class FullDocPage extends FullDocPreparation {
 	 * */
 	public String getLightboxRef() {
 		if (!lightboxRefChecked) {
-			if (StringArrayUtils.isBlank(shortcut.get("EdmIsShownBy"))
-					&& StringArrayUtils.isBlank(shortcut.get("EdmIsShownAt"))) {
+			boolean hasShownBy = !StringArrayUtils.isBlank(shortcut.get("EdmIsShownBy"));
+			boolean hasShownAt = !StringArrayUtils.isBlank(shortcut.get("EdmIsShownAt"));
+			if (!hasShownBy && !hasShownAt) {
 				lightboxRef = null;
 			}
-			String shownBy = shortcut.get("EdmIsShownBy")[0] != null
-					? StringUtils.substringBefore(shortcut.get("EdmIsShownBy")[0], "?")
-					: null;
-			String shownAt = shortcut.get("EdmIsShownAt")[0] != null
-					? StringUtils.substringBefore(shortcut.get("EdmIsShownAt")[0], "?")
-					: "";
+
+			/*
 			if (StringUtils.startsWith(shownBy, "mms")
 					&& StringUtils.startsWith(shownAt, "mms")) {
 				lightboxRef = null;
 			}
+			*/
 
-			FileNameMap fileNameMap = URLConnection.getFileNameMap();
+			// FileNameMap fileNameMap = URLConnection.getFileNameMap();
 
-			if (WebUtils.checkMimeType(shownBy) != null) {
-				lightboxRef = shownBy;
-				String type = fileNameMap.getContentTypeFor(shortcut.get("EdmIsShownBy")[0]);
-				if (WebUtils.checkMimeType(type) != null) {
-					lightboxRef = shortcut.get("EdmIsShownBy")[0];
-				}
-			} else if (WebUtils.checkMimeType(shownAt) != null) {
-				lightboxRef = shownAt;
-				String type = fileNameMap.getContentTypeFor(shortcut.get("EdmIsShownAt")[0]);
-				if (WebUtils.checkMimeType(type) != null) {
-					lightboxRef = shortcut.get("EdmIsShownAt")[0];
-				}
+			// if (WebUtils.checkMimeType(shownBy) != null) {
+			if (hasShownBy) {
+				lightboxRef = shortcut.get("EdmIsShownBy")[0];
+				lightboxRefField = "edm:isShownBy";
+			} else if (hasShownAt) {
+				lightboxRef = shortcut.get("EdmIsShownAt")[0];
+				lightboxRefField = "edm:isShownAt";
+			} else {
+				log.info("checkMimeType false all");
 			}
 
 			lightboxRefChecked = true;
 		}
 		return lightboxRef;
+	}
+
+	public String getLightboxRefField() {
+		return lightboxRefField;
 	}
 
 	public boolean isEuropeanaIsShownBy() {
@@ -410,6 +414,8 @@ public class FullDocPage extends FullDocPreparation {
 			String docType = getDocument().getEdmType();
 			String thumbnailUrl = this.getThumbnailUrl();
 			String isShownByUrl = getLightboxRef();
+			log.info("isShownByUrl: " + isShownByUrl);
+			log.info("getLightboxRefField: " + getLightboxRefField());
 
 			String firstImageType = getImageType(isShownByUrl, docType);
 
@@ -417,12 +423,15 @@ public class FullDocPage extends FullDocPreparation {
 				thumbnailUrl,
 				isShownByUrl,
 				//createImageUrl(imageUrl, firstImageType, "FULL_DOC"),
-				firstImageType
+				firstImageType,
+				getLightboxRefField()
 			);
 			imagesToShow.add(firstImage);
 
-			String[] images = getImages();
-			for (String imageUrl : images) {
+			Map<String, String> images = getImages();
+			String imageField;
+			for (String imageUrl : images.keySet()) {
+				imageField = images.get(imageUrl);
 				String imageType = getImageType(imageUrl, docType);
 				Image img;
 				if (imageType.equals("IMAGE")) {
@@ -444,8 +453,8 @@ public class FullDocPage extends FullDocPreparation {
 	private List<String> getImageToShow(String size) {
 		List<String> imageList = new LinkedList<String>();
 		String docType = getDocument().getEdmType();
-		String[] images = getImages();
-		for (String image : images) {
+		Map<String, String> images = getImages();
+		for (String image : images.keySet()) {
 			String imageType = docType;
 			if (image.toLowerCase().endsWith(".mp3")) {
 				imageType = DocType.SOUND.name();
@@ -471,26 +480,28 @@ public class FullDocPage extends FullDocPreparation {
 		return shortcut.get("EdmIsShownBy")[0];
 	}
 
-	private String[] getImages() {
+	private Map<String, String> getImages() {
 		if (allImages == null) {
 			Set<String> isShownAt = new HashSet<String>();
 			if (shortcut.get("EdmIsShownAt") != null) {
 				isShownAt.addAll(Arrays.asList(shortcut.get("EdmIsShownAt")));
 			}
-			Set<String> images = new HashSet<String>();
+			allImages = new HashMap<String, String>();
 
-			for (String imageField : IMAGE_FIELDS) {
+			for (String imageField : IMAGE_FIELDS.keySet()) {
 				if (shortcut.get(imageField) != null && shortcut.get(imageField).length > 0) {
 					for (String image : shortcut.get(imageField)) {
 						if (!StringUtils.isBlank(image)) {// && !isShownAt.contains(image)) {
 							if (!image.equals(getIsShownBy())) {
-								images.add(image);
+								if (!allImages.containsKey(image)) {
+									allImages.put(image, IMAGE_FIELDS.get(imageField));
+								}
 							}
 						}
 					}
 				}
 			}
-			allImages = images.toArray(new String[images.size()]);
+			// allImages = images.toArray(new String[images.size()]);
 		}
 
 		return allImages;

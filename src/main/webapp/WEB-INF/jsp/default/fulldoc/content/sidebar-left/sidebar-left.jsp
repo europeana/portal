@@ -14,7 +14,7 @@
 		
 	<%-- thumbnail (hidden seo image) --%>
 		
-	<div id="carousel-1-img-measure" vocab="http://schema.org/" typeof="MediaObject">
+	<div id="carousel-1-img-measure" vocab="http://schema.org/" typeof="CreativeWork">
 
 		<!-- TODO: make sure all item images are listed here -->
 		<c:set var="thumbnail"	value=""/>
@@ -28,9 +28,7 @@
 			<c:set var="id" value="id=\"urlRefIsShownByImg\"" />
 		</c:if>
 			 --%>
-		
 
-		
 		<c:if test="${not empty model['thumbnailUrl']}">
 			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
 		</c:if>
@@ -75,12 +73,14 @@
 					carouselData[carouselData.length] = {
 						"image":		decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
 						"title":		('${fn:escapeXml(model.objectTitle)}'),
-						"dataType":		"${fn:toLowerCase(dataType)}"
+						"dataType":		"${fn:toLowerCase(dataType)}",
+						"edmField": "${image.edmField}"
 					};
 
 					<c:if test="${fn:length(image.full) > 0}">
 						carouselData[carouselData.length-1].external = {
-							"url" 	: "${image.full}",
+							"unescaped_url" 	: "${image.full}",
+							"url" 	: "${image.escapedFull}",
 							"type"	: "${fn:toLowerCase(image.type)}"
 						}
 					</c:if>
@@ -166,7 +166,7 @@ carouselData[carouselData.length] = {
 		<%-- Shares link --%>
 
 		<div class="action-link shares-link">
-			<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"> <span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
+			<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"><span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span></span>
 		</div>
 
 		<%-- Citation link --%>

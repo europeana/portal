@@ -37,10 +37,10 @@
  * @modified 2011-06-08 15:25 GMT+1
 --%>
 <c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
-  
+
   <c:set var="item_id" value="" />
-  <c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id" value=' id="item-description" ' /></c:if>
-  <c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id" value=' id="item-subject" ' /></c:if>
+  <c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id"> id="item-description" </c:set></c:if>
+  <c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id"> id="item-subject" </c:set></c:if>
 
   <c:set var="item_class" value=""/>
   <c:if test='${"dc:rights" == data.fieldName}'><c:set var="item_class" value=' item-moreless' /></c:if>
@@ -56,7 +56,7 @@
       <eu:semanticUrl field="${data.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
     </c:set>
 
-    <<c:out value="${wrapper}"/> <c:out value="${item_id}" /> class="item-metadata${item_class}">
+    <<c:out value="${wrapper}"/>${' '}${item_id} class="item-metadata${item_class}">
       <%-- field's label --%>
       <span class="bold notranslate"><spring:message code="${data.fieldLabel}" />:</span>
 

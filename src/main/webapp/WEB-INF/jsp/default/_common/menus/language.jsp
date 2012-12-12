@@ -37,9 +37,7 @@
 			</li>
 
 			<c:forEach items="${model.portalLanguages}" var="language">
-				<li class="item">
-					<a class="${language.languageCode}">${language.languageName}</a>
-				</li>
+				<li class="item"><a class="${language.languageCode}">${language.languageName}</a></li>
 			</c:forEach>
 		</ul>
 		<input type="hidden" name="lang" value="" style="margin:0;padding:0;"/>
