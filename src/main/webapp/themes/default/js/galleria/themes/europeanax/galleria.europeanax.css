@@ -111,7 +111,6 @@
 }
 
 .europeana-carousel .europeana-carousel-info{
-	xxxopacity:			1 !important;
 	background-color:	rgba(0, 0, 0, 0.698);
 	color:				#FFF;
 	position:			absolute;
@@ -308,7 +307,7 @@
 	    height:			40px;
 	    width:			23px;
 	    font-size:		2em;
-	    margin-left:			-7px;
+	    margin-left:	-7px;
 	}
 	
 	.galleria-thumb-nav-right {
@@ -459,10 +458,9 @@
 }
 
 #carousel-1-external-info{
-	float:		none;	
-	padding:	1em 1em 1em 1em;
+	float:				none;	
+	padding:			1em 1em 1em 1em;
 	background-color:	#000;
-	xxxbackground-color:	rgba(0, 0, 0, 0.7);
 }
 
 .galleria-info button{
@@ -508,7 +506,6 @@
 }
 
 @media only screen and ( min-width:767px ){
-	
 	.galleria-info {
 	    top:					1em;
 	    left:					3em;
@@ -535,8 +532,6 @@
 		font-weight:	600;
 		font-size:		1.75em;
 	}
-	
-	
 }
 
 
