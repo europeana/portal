@@ -222,7 +222,8 @@ ul.featured-partner-links li{
 /* move content down from heder within collapsibel sections */
 #carousel-3,
 #section-featured-content div.featured-content{
-	margin-top:	1em;
+	margin-top:		1em;
+	margin-bottom:	1em;
 }
 
 .featured-frame{
