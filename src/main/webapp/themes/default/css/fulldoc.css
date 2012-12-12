@@ -30,7 +30,6 @@
 	-webkit-box-sizing:	border-box;
 }
 
-
 #similar-content{
 	width:			100%;
 }
@@ -151,7 +150,8 @@ span.icon-share{
 
 .icon-translate,
 label.icon-tag{
-	font-size:	2em;	
+	font-size:		2em;
+	margin-right:	4px;	
 }
 
 
@@ -270,30 +270,14 @@ a.action-link span,
 	}
 
 	.icon-translate{
-		font-size:		1em;		
+		xxxxxxxxfont-size:		1em;		
 	}
 	
 	a.action-link, span.icon-share {
 		float:			none;
 		display:		block;
 		margin-left:	0;
-		font-size:		1em;
 	}
-
-	label.icon-tag,
-	label.icon-tag span,
-	.action-title,
-	a.action-link span{
-		font-size:		1em;
-		top:	0;
-	}
-	
-	#translate-item{
-		top:	0;	
-	}
-	
-	
-	
 
 	#urlRefIsShownAt{
 		display:	inline;
@@ -306,6 +290,26 @@ a.action-link span,
 	#excerpt{
 		padding-left:	2em;
 		padding-top:	0;
+	}
+}
+
+/*
+from search.css:
+@media only screen and (min-width: 48em) and ( max-width:62em ){
+*/
+
+
+.hide-on-x	{display:none  !important;}		
+.show-on-x	{display:block !important;}
+
+@media only screen and ( min-width:	62em ){
+	
+	.hide-on-x	{
+		display:		block	!important;
+	}
+	
+	.show-on-x{
+		display:		none !important;
 	}
 	
 	.sidebar-right{
@@ -321,9 +325,10 @@ a.action-link span,
 	.sidebar-right ul li{
 		margin-bottom:	0; 
 	}
-	
-
+		
 }
+
+
 
 #phone-object-title{	/* title for phone only */
 	width:		100%;
