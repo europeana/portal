@@ -8,7 +8,12 @@
 
 <c:set var="href_attributes" value=""/>
 <c:if test="${not empty model['urlRef']}">
-	<c:set var="href_attributes">class="underline external item-metadata" target="_blank" rel="nofollow rdfs:seeAlso cc:attributionURL cc:morePermissions" resource="${model.urlRef}"</c:set>
+	<c:set var="href_attributes">target="_blank" rel="nofollow rdfs:seeAlso cc:attributionURL cc:morePermissions" resource="${model.urlRef}"</c:set>
+</c:if>
+
+<c:set var="classes" value="icon-external-right europeana"/>
+<c:if test="${not empty model['urlRef']}">
+  <c:set var="classes">${classes} underline external item-metadata</c:set>
 </c:if>
 
 <c:set var="urlRefId" value="urlRefIsShownAt" />
@@ -24,7 +29,7 @@
 
 	<div class="clear"><spring:message code="ViewItemAt_t" /></div>
 
-	<a id="${urlRefId}" class="icon-external-right europeana" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.about}" ${href_attributes} ${" "} ${property}>
+	<a id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.about}" ${href_attributes} ${" "} ${property}>
 		<c:choose>
 			<c:when test="${not empty model.document['dataProvider'][0]}">
 				  ${model.document['dataProvider'][0]}
