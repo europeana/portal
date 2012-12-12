@@ -44,6 +44,9 @@ public abstract class FullDocPreparation extends FullDocData {
 
 	protected final Logger log = Logger.getLogger(getClass().getName());
 
+	private static final String LANDING_PAGE_PREFIX = "http://www.europeana.eu/portal";
+	private static final String HTML_EXT = ".html";
+
 	// caching fields
 	private List<FieldPresentation> fields;
 	private Map<Field, FieldPresentation> fieldsMap;
@@ -406,6 +409,11 @@ public abstract class FullDocPreparation extends FullDocData {
 	private void extractFieldValues(FieldPresentation fieldPresentation, Field fieldInfo, List<String> values) {
 		for (String value : values) {
 			if (StringUtils.isNotBlank(value) && !value.equals("0000")) {
+				// modifying the landing page value
+				if (fieldInfo.equals(Field.EDM_LANDINGPAGE)) {
+					value = value.replace(LANDING_PAGE_PREFIX, getPortalUrl()) + HTML_EXT;
+				}
+
 				if (fieldInfo.getMaxLength() == -1) {
 					fieldPresentation.add(this, value);
 				} else {

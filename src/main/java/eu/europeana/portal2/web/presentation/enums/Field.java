@@ -116,7 +116,7 @@ public enum Field {
 	EDM_HASTYPE("edm:hasType", null),
 	EDM_ISRELATEDTO("edm:isRelatedTo", null),
 	EDM_ISREPRESENTATIONOF("edm:isRepresentationOf", null),
-	EDM_LANDINGPAGE("edm:landingPage", null),
+	EDM_LANDINGPAGE("edm:landingPage", "edm_landingPage_t"),
 	EDM_HASMET("edm:hasMet", null),
 	EDM_INCORPORATES("edm:incorporates", null),
 	EDM_ISDERIVATIVEOF("edm:isDerivativeOf", null),

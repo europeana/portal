@@ -25,16 +25,14 @@
 
 <c:set var="property"><eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes></c:set>
 
+<c:set var="provider">
+	<c:choose>
+		<c:when test="${not empty model.document['dataProvider'][0]}">${model.document['dataProvider'][0]}</c:when>
+		<c:otherwise>${model.shownAtProvider}</c:otherwise>
+	</c:choose>
+</c:set>
+
 <c:if test="${not empty model['urlRef']}">
 	<div class="clear"><spring:message code="ViewItemAt_t" /></div>
-	<a id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.about}" ${href_attributes} ${" "} ${property}>
-		<c:choose>
-			<c:when test="${not empty model.document['dataProvider'][0]}">
-				${model.document['dataProvider'][0]}
-			</c:when>
-			<c:otherwise>
-				${model.shownAtProvider}
-			</c:otherwise>
-		</c:choose>
-	</a>
+	<a id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${fn:escapeXml(provider)}&amp;id=${model.document.about}" ${href_attributes} ${" "} ${property}>${provider}</a>
 </c:if>
