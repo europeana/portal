@@ -106,6 +106,10 @@ a {
 	display:none;
 }
 
+.nav .of-bracket{
+	color:#333 !important;	/* fix for strange iphone bug (wanting to color this as a link) */
+}
+
 .nav .of-bracket:before{
 	content:'(';
 }
