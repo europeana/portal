@@ -125,7 +125,7 @@ carouselData[carouselData.length] = {
 					carouselData[i].image = carouselData[i].external.url; 
 				}
 			}
-
+			
 		</script>
 	</div>
 
@@ -208,7 +208,7 @@ carouselData[carouselData.length] = {
 		<%-- Format labels --%>
 		<c:if test="${model.debug}">
 			<c:choose>
-				<c:when test="${fn:contains(model.currentUrl, '&format=label')} || ${fn:contains(model.currentUrl, '?format=label')}">
+				<c:when test="${fn:contains(model.currentUrl, '&format=label') || fn:contains(model.currentUrl, '?format=label')}">
 					<c:choose>
 						<c:when test="${fn:contains(model.currentUrl, '&format=label')}">
 							<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '&format=label', '')}</c:set>
@@ -217,7 +217,7 @@ carouselData[carouselData.length] = {
 							<c:set var="switchlabelLink">${fn:replace(model.currentUrl, '?format=label', '')}</c:set>
 						</c:otherwise>
 					</c:choose>
-					<c:set var="switchlabelTitle">Normal format</c:set>
+					<c:set var="switchlabelTitle" value="Normal format" />
 				</c:when>
 				<c:otherwise>
 					<c:choose>
