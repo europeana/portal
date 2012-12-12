@@ -13,29 +13,27 @@
 
 <c:set var="classes" value="icon-external-right europeana"/>
 <c:if test="${not empty model['urlRef']}">
-  <c:set var="classes">${classes} underline external item-metadata</c:set>
+	<c:set var="classes">${classes} underline external item-metadata</c:set>
 </c:if>
 
 <c:set var="urlRefId" value="urlRefIsShownAt" />
 <c:set var="urlRefField" value="edm:isShownAt" />
 <c:if test="${model.urlRefIsShownBy}">
-  <c:set var="urlRefId" value="urlRefIsShownBy" />
-  <c:set var="urlRefField" value="edm:isShownBy" />
+	<c:set var="urlRefId" value="urlRefIsShownBy" />
+	<c:set var="urlRefField" value="edm:isShownBy" />
 </c:if>
 
 <c:set var="property"><eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes></c:set>
 
 <c:if test="${not empty model['urlRef']}">
-
 	<div class="clear"><spring:message code="ViewItemAt_t" /></div>
-
 	<a id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${model.document.dataProvider[0]}&amp;id=${model.document.about}" ${href_attributes} ${" "} ${property}>
 		<c:choose>
 			<c:when test="${not empty model.document['dataProvider'][0]}">
-				  ${model.document['dataProvider'][0]}
+				${model.document['dataProvider'][0]}
 			</c:when>
 			<c:otherwise>
-				  ${model.shownAtProvider}
+				${model.shownAtProvider}
 			</c:otherwise>
 		</c:choose>
 	</a>
