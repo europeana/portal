@@ -230,7 +230,7 @@ eu.europeana.fulldoc = {
 		
 		subject_truncate.init();
 
-		
+		/*
 		var rights_truncate = new com.gmtplusone.truncate(
 				'.item-moreless',
 				{
@@ -245,6 +245,7 @@ eu.europeana.fulldoc = {
 		
 		// callback sent to truncate content to be run after truncation is complete
 		rights_truncate.init();
+		*/
 	},
 	
 	
