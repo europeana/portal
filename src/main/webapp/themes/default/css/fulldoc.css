@@ -168,6 +168,7 @@ a.action-link span,
 
 .icon-share .action-title{
 	color:#333;
+	margin-left:	.5em;
 }
 
 
@@ -269,16 +270,13 @@ a.action-link span,
 		text-align:		left;
 	}
 
-	.icon-translate{
-		xxxxxxxxfont-size:		1em;		
-	}
 	
 	a.action-link, span.icon-share {
 		float:			none;
 		display:		block;
 		margin-left:	0;
 	}
-
+	
 	#urlRefIsShownAt{
 		display:	inline;
 	}
