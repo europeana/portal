@@ -64,6 +64,3 @@
 	</div>
 </div>
 
-<div class="sidebar-right show-on-phones">
-	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
-</div>
