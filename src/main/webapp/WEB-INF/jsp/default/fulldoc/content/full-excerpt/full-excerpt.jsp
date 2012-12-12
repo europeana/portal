@@ -10,7 +10,8 @@
 	</c:if>
 
 	<div id="item-details" about="${about}" vocab="http://schema.org/" typeof="CreativeWork">
-		<div class="sidebar-right hide-on-phones">
+		<div class="sidebar-right hide-on-x">
+		
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
 		</div>
 
@@ -64,6 +65,3 @@
 	</div>
 </div>
 
-<div class="sidebar-right show-on-phones">
-	<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
-</div>

@@ -21,6 +21,14 @@
 			</div>
 		</div>
 
+
+		<div class="row">
+			<div class="sidebar-right show-on-x">
+				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+			</div>
+		</div>
+
+
 		<c:if test="${!empty model.moreLikeThis}">
 
 			<div class="row">
