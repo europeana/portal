@@ -101,6 +101,12 @@ body{
 	color:		#999;
 }
 
+#e2ma_signup_submit_button,
+.deans-button-1{
+	filter:				progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0048ff,endColorstr=#FF4C7ECF);
+}
+
+
 /*	override header.css							*/
 
 .responsive-logo{
@@ -148,8 +154,12 @@ table{
 	border-radius:			0.5em 0.5em 0.5em 0.5em;
 	
 	behavior: url(/portal/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
+	font-size:	0.75em;
 }
 
+table tr{
+}
+	
 .menu-cell{
 	border:					none !important;
 	-moz-border-radius:		0;
@@ -209,8 +219,7 @@ tr td.menu-cell:first-child, tr td.query-cell{
 	border-radius:			0 10px 10px 0;
 	width:					auto;
 	
-	xxbehavior: url(/portal/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
-		
+	filter:				progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0048ff,endColorstr=#FF4C7ECF);
 }
 
 .submit-cell{
@@ -372,13 +381,23 @@ ul.menu > li{
 
 
 .three-cols-fulldoc-sidebar{
-	width:	25%;	
-	float:	left;
+	width:		25%;	
+	float:		left;
 }
 
+
+#item-details .sidebar-right.hide-on-x{
+	display:	block !important;
+}
+
+.row .sidebar-right.show-on-x{
+	display:	none !important;
+}
+
+
 .nine-cols-fulldoc{
-	width:			75%;
-	float:left;
+	width:			70%;
+	float:			left;
 }
 
 .hide-on-phones			{display:block			!important;}	
@@ -443,11 +462,20 @@ ul.menu > li{
 
 
 /*	override index.css							*/
-
+	
 #carousel-1{
 	margin-bottom:	0;
-	margin-top:		1em;	
+	margin-top:		1em;
 }
+
+#carousel-1-external-info{
+	display:	none;
+}
+
+#carousel-1 .galleria-info{
+	display:	block;
+}	
+
 
 #section-blog .six:first-child .fi-block-spacer{
 	padding-right:	2em;
@@ -519,7 +547,6 @@ ul.featured-partner-links li{
 
 .galleria-thumbnails-container {
 	display:	block;
-	height:		50px;
 }
 
 .galleria-thumbnails .galleria-image {
@@ -551,31 +578,41 @@ ul.featured-partner-links li{
     right:				-0.3em;
 }
 
-.galleria-info {
-	top:				1em;
-	left:				1em;
-	right:				auto;
-	max-width:			45%;
-	bottom:				auto;
-	margin-bottom:		0;
-
-	filter:				progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);	
+#carousel-1 .galleria-info {
+    top:					1em;
+    left:					3em;
+    right:					auto;
+	max-width:				45%;
+	max-height:				20em;
+    bottom:					auto;
+    margin-bottom:			0;
+    -moz-border-radius:		0.8em;
+	-webkit-border-radius:	0.8em;
+	border-radius:			0.8em;
+	filter:					progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);		
 }
 
-.europeana-carousel-info{
-	filter:				progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);		
-}
-	
-.galleria-info {
-	top:				1em;
-	left:				1em;
-	right:				auto;
-	max-width:			50%;
+#carousel-1 .galleria-info button{
+	display:			block;
+	filter:				progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0048ff,endColorstr=#FF4C7ECF);
 }
 
-.galleria-info-description{
-	display:	block !important;
+
+#carousel-1 .galleria-info-description{
+	display:		block !important;
+	padding-top:	1em;
 }
+
+
+.galleria-info-title{
+	font-weight:	600;
+	font-size:		1em;
+}
+
+.europeana-carousel .europeana-carousel-info{
+	background-color:	black;
+}
+
 
 
 /*	css for search.html							*/
@@ -679,6 +716,10 @@ ul.featured-partner-links li{
 
 
 /*	override sidebar-facets.css					*/
+
+#facets-actions, .search-results-navigation{
+	font-size:	.75em;
+}
 
 #share-subscribe{
 	text-align:	left;
@@ -803,55 +844,11 @@ a.action-link span{
 
 
 
-
-/*
-div.actions{
-	padding:		0;
-	max-height:		none;
-	text-align:		left;
-}
-
-a.action-link {
-	float:			none;
-	display:		block;
-	margin-left:	0;
-	font-size:		1em;
-}
-
-a.action-link span{
-	font-size:		1em;
-}
-
-
-#urlRefIsShownAt{
-	display:	inline;
-}
-
-.action-title{
-	display:		inline;
-}
-
-#excerpt{
-	padding-left:	2em;
-	padding-top:	0;
-}
-
-.sidebar-right{
-	float:			right;
-	margin:			0 0 1em 1em;
-	max-width:		30%;
-}
-
-.sidebar-right ul{
-	padding-top:	0;
-}	
-
-.sidebar-right ul li{
-	margin-bottom:	0; 
-}
-*/
-
 /*	override fulldoc-ess.css				*/
+
+#additional-info, #main-fulldoc-area{
+	font-size:	.75em;
+}
 
 .external-services-container {
 	position:			fixed !important;
