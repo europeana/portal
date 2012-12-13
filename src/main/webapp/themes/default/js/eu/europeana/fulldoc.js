@@ -81,15 +81,6 @@ eu.europeana.fulldoc = {
 		}]);
 
 		
-		js.loader.loadScripts([{
-			name : 'truncate-content',
-			file : 'truncate-content' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory,
-			callback: function() { self.adjustDescription(); }
-		}]);
-		
-		
-			
 		// dependency group - addthis functionality
 			
 		js.loader.loadScripts([{
