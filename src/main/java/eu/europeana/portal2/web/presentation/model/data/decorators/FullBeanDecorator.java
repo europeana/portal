@@ -160,6 +160,10 @@ public class FullBeanDecorator implements FullBean {
 		return shortcut.get("EdmLanguage");
 	}
 
+	public String[] getEdmLandingPage() {
+		return shortcut.get("EdmLandingPage");
+	}
+
 	public String[] getEdmDataProvider() {
 		return shortcut.get("EdmDataProvider");
 	}
