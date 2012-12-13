@@ -164,7 +164,6 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 
 		<%-- Translation data for lightbox triggers: map lightboxble type to message --%>
 		
-		
 		eu.europeana.vars.external = {
 			triggers: {
 				labels : {
@@ -174,6 +173,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 					'pdf'		:	'<spring:message code="read_t"		/>',
 					'sound'		:	'<spring:message code="play_t"		/>',
 					'video'		:	'<spring:message code="play_t"		/>',
+					'text'		:	'<spring:message code="read_t"		/>',
 				}
 			}
 		};
