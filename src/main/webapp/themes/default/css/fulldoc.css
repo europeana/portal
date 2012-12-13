@@ -353,6 +353,11 @@ img.trigger{
 }
 	
 
+#item-details h1,
+#additional-info h2{
+	margin-bottom:	.75em;
+}
+
 	
 /* pagination */
 
