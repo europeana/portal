@@ -541,13 +541,19 @@ ul.featured-partner-links li{
 }
 
 .galleria-thumbnails-container {
-	display:	block;
+	display:	block !important;
 }
 
 .galleria-thumbnails .galleria-image {
     height:		40px;
     width:		60px;
 }
+
+#carousel-1 .galleria-thumbnails .galleria-image {
+    height:		40px  !important;
+    width:		120px !important;
+}
+
 
 .galleria-thumb-nav-left,
 .galleria-thumb-nav-right {
