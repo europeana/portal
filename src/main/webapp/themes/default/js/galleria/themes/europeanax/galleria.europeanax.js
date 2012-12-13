@@ -168,8 +168,9 @@ Galleria.addTheme({
 				thumbOb.outerWidth = tParent.outerWidth(true);
 
 				/* Vertical centering of individual images */
-				if(imgBoxH > thumb.height()){
-					var top = (imgBoxH - parseFloat(thumb.css("height")) ) / 2;
+				
+				if(imgBoxH > thumb.height()+2){
+					var top = (imgBoxH - thumb.height() ) / 2;
 					thumb.css("top", top + "px");
 				}
 
