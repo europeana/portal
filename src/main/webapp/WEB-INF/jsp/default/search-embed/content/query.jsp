@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="query-full">
-	
 
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
 <c:set var="query_value" value=""/>
@@ -30,16 +30,10 @@
 					</div>
 				</td>
 				<td class="query-cell">
-					<input
-						type="text" name="rswDefqry" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175"
-						value="<c:out value="${model.rswDefqry}"/>"
-						valueForBackButton="<c:out value="${model.rswDefqry}"/>"
-						/>
+					<input type="text" name="rswDefqry" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" value="<c:out value="${model.rswDefqry}"/>" valueForBackButton="<c:out value="${model.rswDefqry}"/>" />
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
-					<button class="icon-mag deans-button-1" type="submit">
-						<spring:message code='Search_t'/>
-					</button>
+					<button class="icon-mag deans-button-1" type="submit"><spring:message code='Search_t'/></button>
 				</td>
 			</tr>
 			
