@@ -104,6 +104,7 @@ html, body{
 
 .info .info-open .item-metadata{
 	line-height:	1.4em;
+	word-break:		normal;	
 }
 
 .info a{
