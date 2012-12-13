@@ -1,27 +1,29 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="eu" tagdir="/WEB-INF/tags" %>
 <meta name="description" content="${model.pageTitle}"/>
 <link rel="author" href="/humans.txt" />
 
 <c:if test="${not model.indexable}">
-<c:choose>
-<c:when test="${model.indexingBlocked}">
-  <meta name="robots" content="noindex,nofollow"/>
-</c:when>
-<c:otherwise>
-   <meta name="robots" content="noindex,follow"/>
-</c:otherwise>
-</c:choose>
+  <c:choose>
+    <c:when test="${model.indexingBlocked}">
+      <meta name="robots" content="noindex,nofollow"/>
+    </c:when>
+    <c:otherwise>
+       <meta name="robots" content="noindex,follow"/>
+    </c:otherwise>
+  </c:choose>
 </c:if>
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<c:if test='${model.pageName == "fulldoc.html"}'>
+<c:if test='${model.pageName == "fulldoc.html" || model.pageName == "full-doc.html"}'>
   <%@ include file="/WEB-INF/jsp/_common/meta-facebook.jsp" %>
   <%@ include file="/WEB-INF/jsp/_common/meta-open-graph.jsp" %>
   <%-- @todo make sure model.formatLabels exists and that esemeta fields are displayed --%>
   <c:if test="${not model.formatLabels}">
-  format
-  <!-- <@displayEseDataAsMeta model.metaDataFields false/> -->
+    <%-- eu:displayEseDataAsMeta metaDataFields="${model.metaDataFields}" showFieldName="false" /--%>
   </c:if>
+  <meta content="${model.document.edmLandingPage[0]}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
 </c:if>
 <c:if test='${model.pageName == "index.html"}'>
   <%@ include file="/WEB-INF/jsp/_common/meta-facebook.jsp" %>

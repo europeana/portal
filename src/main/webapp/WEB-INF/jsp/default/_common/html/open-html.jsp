@@ -6,16 +6,23 @@
 	</c:when>
 </c:choose>
 
+<c:set var="schemaOrgAttributes" value="" />
+<c:if test="${model.pageName == 'full-doc.html'}">
+  <c:url var="aboutUrl" value="/record${model.document.about}.html" />
+  <c:set var="about" value="${aboutUrl}" />
+  <c:set var="schemaOrgAttributes"> about="${about}" vocab="http://schema.org/" typeof="CreativeWork"</c:set>
+</c:if>
+
 <!--[if IE 8]>
-<html  ${xmlns} class="ie ie8" lang="${lang}">
+<html  ${xmlns} class="ie ie8" lang="${lang}"<c:if test="${schemaOrgAttributes != ''}">${" "}${schemaOrgAttributes}</c:if>>
 <![endif]-->
 
 <!--[if IE 9]>
-	<html ${xmlns} class="ie ie9" lang="${lang}" >
+	<html ${xmlns} class="ie ie9" lang="${lang}"<c:if test="${schemaOrgAttributes != ''}">${" "}${schemaOrgAttributes}</c:if>>
 <![endif]-->
 
 <!--[if !IE]>-->
-<html ${xmlns} lang="${lang}">
+<html ${xmlns} lang="${lang}"<c:if test="${schemaOrgAttributes != ''}">${" "}${schemaOrgAttributes}</c:if>>
 <!--<![endif]-->
 	
 <head>
@@ -26,6 +33,6 @@
 </head>
 <body class="locale-${model.locale}">
 
-<c:if test="${model.pageName == 'index.html' }">
+<c:if test="${model.pageName == 'index.html'}">
 	<c:if test="${not empty model.announceMsg}">${model.announceMsg}</c:if>
 </c:if>
