@@ -70,9 +70,10 @@ com.google.analytics = {
 	 * */
 	europeanaEventTrack : function(action, category, url) {
 		
-		
 		if(js.debug){
-//			alert("Track Event:\n\naction =\t\t" + action + "\ncategory = \t" + category);
+			alert("Track Event:\n\naction =\t\t" + action + "\ncategory = \t\t" + category + "\nurl = \t\t" 
+					+ (url || jQuery('head link[rel="canonical"]').attr('href'))
+			);
 		}
 		
 		category = category || 'Europeana Portal';
