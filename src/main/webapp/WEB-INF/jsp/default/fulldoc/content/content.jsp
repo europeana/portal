@@ -53,11 +53,7 @@
 
 					<div id="carousel-2-img-measure">
 						<c:forEach var="similar" items="${model.moreLikeThis}">
-							<img	src			= "${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
-									alt			= "${fn:join(similar.title, ' ') }"
-									title		= "${fn:join(similar.title, ' ') }"
-									data-type	= "${fn:toLowerCase(similar.type)}"
-									class		= "no-show"/>
+							<img src="${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}" alt="${fn:join(similar.title, ' ') }" title="${fn:join(similar.title, ' ') }" data-type="${fn:toLowerCase(similar.type)}" class="no-show" />
 						</c:forEach>
 					</div>
 					
@@ -75,6 +71,3 @@
 		</c:if>
 	</div>
 </div>
-
-
-
