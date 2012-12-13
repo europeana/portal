@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 <h3>Schema display</h3>
-<table vocab="http://schema.org/" typeof="CreativeWork" style="table-layout:fixed;">
+<table style="table-layout:fixed;">
   <c:forEach items="${model.topLevelSchemaMap}" var="topField">
     <c:choose>
       <c:when test="${topField.propertyName == 'fullBean'}">

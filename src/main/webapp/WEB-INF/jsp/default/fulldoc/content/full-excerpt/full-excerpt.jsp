@@ -3,13 +3,7 @@
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
 <div id="excerpt">
-	<c:set var="about" value=""/>
-	<c:if test="${not empty model['document']}">
-	<c:url var="aboutUrl" value="/record${model.document.about}.html" />
-		<c:set var="about" value="${aboutUrl}" />
-	</c:if>
-
-	<div id="item-details" about="${about}" vocab="http://schema.org/" typeof="CreativeWork">
+	<div id="item-details">
 		<div class="sidebar-right hide-on-x">
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
 		</div>
