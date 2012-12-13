@@ -6,6 +6,7 @@ var EuMenu = function(cmpIn, options){
 	self.label		= self.cmp.find(".menu-label").html();
 	self.options	= options;
 	self.val		= null;
+	self.href		= null;
 	
 	self.cmp.click(function(e){
 		$('.eu-menu' ).not(self.cmp).removeClass("active");
@@ -30,6 +31,10 @@ var EuMenu = function(cmpIn, options){
 	
 	self.getActive = function(){
 		return self.val;
+	};
+	
+	self.getActiveHref = function(){
+		return self.href;
 	};
 	
 	self.setActive = function(val){
@@ -62,6 +67,7 @@ var EuMenu = function(cmpIn, options){
 	self.cmp.find(".item a").click(
 		function(e){
 			var selected = $(this).attr("class");
+			self.href = $(this).attr("href");
 			self.setActive(selected);
 			e.stopPropagation();
 			if(self.options.fn_item){

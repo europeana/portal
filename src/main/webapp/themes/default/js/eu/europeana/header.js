@@ -101,12 +101,13 @@ eu.europeana.header = {
 			$("#lang-menu"),
 			{
 				"fn_item": function(self){
-					if( ['myeuropeana.html', '/portal/'].indexOf(self.getActive()) > -1 ){
-						window.location.href = self.getActive();
-						return;
+					if( self.getActive() == 'treat-as-link'){
+						window.location.href = self.getActiveHref();
 					}
-					$("input[name=lang]").val(self.getActive());
-					$("#language-selector").submit();
+					else{
+						$("input[name=lang]").val(self.getActive());
+						$("#language-selector").submit();
+					}
 				}
 			}
 		);

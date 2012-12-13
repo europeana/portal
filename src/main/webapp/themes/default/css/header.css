@@ -138,6 +138,7 @@
 	}
 	
 	#lang-menu>ul>li.item.icon-home,
+	#lang-menu>ul>li.item.icon-info,
 	#lang-menu>ul>li.item.icon-logo{
 		display	:none !important;
 	}
@@ -326,11 +327,6 @@ table tr:first-child{
 	position:	relative;
 }
 
-.search-help{
-	margin-top:		1em;
-	margin-bottom:	1em;
-}
-	
 
 @media only screen and ( min-width:48em ){
 
@@ -343,11 +339,6 @@ table tr:first-child{
 		-moz-border-radius:		0 0 0 0;
 		-webkit-border-radius:	0 0 0 0;
 		border-radius:			0 0 0 0;
-	}
-	
-	.search-help{
-		margin-top:		0;
-		margin-bottom:	0;
 	}
 	
 }
@@ -389,6 +380,7 @@ table tr:first-child{
 	text-align:		center;
 	position:		relative;
 	padding-bottom:	2em;
+	padding-top:	2em;
 }
 
 .submit-cell button{
