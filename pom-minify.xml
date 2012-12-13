@@ -1068,23 +1068,6 @@
 					</execution>
 					
 					<execution>
-						<id>minify-truncate-content.js</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/gmtplusone</webappTargetDir>
-							<jsSourceDir>/themes/default/js/com/gmtplusone</jsSourceDir>
-							<jsFinalFile>truncate-content.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
-							<jsSourceIncludes>
-								<jsSourceInclude>truncate-content.js</jsSourceInclude>
-							</jsSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-					
-					<execution>
 						<id>minify-utils.js</id>
 						<phase>process-resources</phase>
 						<configuration>
