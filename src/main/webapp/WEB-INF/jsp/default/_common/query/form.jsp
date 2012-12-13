@@ -42,7 +42,6 @@
 			</tr>
 			<tr>
 				<td colspan="3" class="submit-cell show-cell-on-phones">
-					<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
 					<button class="icon-mag deans-button-1" type="submit">
 						<spring:message code='Search_t'/>
 					</button>
