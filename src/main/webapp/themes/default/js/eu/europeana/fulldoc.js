@@ -15,15 +15,15 @@ eu.europeana.fulldoc = {
 		this.loadComponents();
 		this.addAutoTagHandler();
 		
-		$('#item-save-tag')			.bind('submit', this.handleSaveTagSubmit );
-		$('#item-embed')			.bind('click', this.handleEmbedClick );
-		$('#urlRefIsShownBy')		.bind('click', this.handleRedirectIsShownByClick );
-		$('#urlRefIsShownAt')		.bind('click', this.handleRedirectIsShownAtClick );
-		$('#urlRefIsShownByImg')	.bind('click', this.handleRedirectIsShownByImgClick );
-		$('#urlRefIsShownAtImg')	.bind('click', this.handleRedirectIsShownAtImgClick );
-		$('#urlRefIsShownByPlay')	.bind('click', this.handleRedirectIsShownByPlayClick );
-		$('#lightbox_href')			.bind('click', this.handleRedirectIsShownByImgClick );
+		$('#item-save-tag')	.bind('submit', this.handleSaveTagSubmit );
+		$('#item-embed')	.bind('click', this.handleEmbedClick );
 		
+		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
+			function(){
+				eu.europeana.fulldoc.trackedClick('link');
+			}
+		);
+
 		if( $('#item-save').hasClass('icon-unsaveditem') ){
 			$('#item-save').bind('click', this.handleSaveItemClick );			
 		}
@@ -31,9 +31,21 @@ eu.europeana.fulldoc = {
 			$('#item-save').css('cursor', 'default');
 		}
 		
-		console.log(JSON.stringify(carouselData));
+		js.console.log(JSON.stringify(carouselData));
 	},
 
+	trackedClick : function(src){		/* src = img, magnify or link; */
+		if(src == 'img'){
+			if(typeof eu.europeana.fulldoc.triggerPanel != 'undefined' && eu.europeana.fulldoc.triggerPanel.is(":visible")){
+				eu.europeana.fulldoc.triggerPanel.find('.label').click();		/* will recurse back to here with src 'magnify' */				
+			}
+		}
+		else{
+			var clickSrc	= src == 'magnify' ? 'img' : src;
+			var action		= src == 'link' ? 'Europeana Redirect' : (eu.europeana.fulldoc.triggerPanel.data['type']  == 'image' ? 'Europeana Lightbox' : 'Europeana Redirect');
+			com.google.analytics.europeanaEventTrack('External (' + clickSrc + ')', action);			
+		}
+	},
 	
 	loadComponents : function() {
 		
@@ -122,27 +134,6 @@ eu.europeana.fulldoc = {
 		}]);
 	},
 
-	
-	handleRedirectIsShownByClick: function ( e ) {
-		com.google.analytics.europeanaEventTrack('IsShownBy', 'Europeana Redirects');
-	},
-
-	handleRedirectIsShownAtClick: function ( e ) {
-		com.google.analytics.europeanaEventTrack('IsShownAt', 'Europeana Redirects');
-	},
-	
-	handleRedirectIsShownByImgClick: function ( e ) {
-		com.google.analytics.europeanaEventTrack('IsShownBy Img', 'Europeana Redirects');
-	},
-	
-	handleRedirectIsShownAtImgClick: function ( e ) {
-		com.google.analytics.europeanaEventTrack('IsShownAt Img', 'Europeana Redirects');
-	},
-	
-	handleRedirectIsShownByPlayClick: function ( e ) {
-		com.google.analytics.europeanaEventTrack('IsShownBy Play', 'Europeana Redirects');
-	},
-	
 	handleEmbedClick : function ( e ) {
 		e.preventDefault();
 		
@@ -404,7 +395,7 @@ eu.europeana.fulldoc = {
 
 
 	initLightbox : function(url){
-		console.log("initLightbox");
+		js.console.log("initLightbox");
 
 		var NavOb = function(){
 			var nav = function(direction){
@@ -430,14 +421,10 @@ eu.europeana.fulldoc = {
 					newActive = 0;						
 				}
 
-				console.log("submodel is now " + JSON.stringify(submodel)  );
-
+				js.console.log("submodel is now " + JSON.stringify(submodel)  );
 				
 				$("#hidden_img").unbind( '.imagesLoaded' );
 				$("#hidden_img").remove();
-				
-				
-				// style & id??? TODO: tidy this selctor
 				
 				$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
 					function(){
@@ -446,8 +433,6 @@ eu.europeana.fulldoc = {
 							eu.europeana.lightbox.closeZoom();
 							zoomed = true;
 						}
-						
-						//console.log("Andy: TODO check here if the width > 200 before proceeding");
 						
 						$("#lightbox_image").attr("src", submodel[newActive].url);
 						eu.europeana.lightbox.layout();
@@ -476,14 +461,13 @@ eu.europeana.fulldoc = {
 	initTriggerPanel: function(type, index, gallery){
 		
 		
-		console.log("initTriggerPanel type = " + type);
-		
+		js.console.log("initTriggerPanel type = " + type);
 		
 		if($("#mobile-menu").is(":visible") ){
 			return;
 		}
 		
-		console.log('initTriggerPanel type= ' + type + ", index = " + index);
+		js.console.log('initTriggerPanel type= ' + type + ", index = " + index);
 		
 		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 			eu.europeana.fulldoc.triggerPanel = $('<div class="lb-trigger" >'
@@ -492,13 +476,13 @@ eu.europeana.fulldoc = {
 					+ '</span>'
 					+ '</div>'
 			).appendTo($('#carousel-1-img-measure'));
-			
 			eu.europeana.fulldoc.triggerPanel.hide();
 		}
+		eu.europeana.fulldoc.triggerPanel.data['type'] = type; /* used for google analytics category */
+		
 		var triggerSpan = eu.europeana.fulldoc.triggerPanel.find('.label');
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
-		
 		
 		// action handling
 		
@@ -506,6 +490,11 @@ eu.europeana.fulldoc = {
 		triggerSpan.unbind('click');
 		triggerSpan.removeData('overlay');
 
+		$(eu.europeana.fulldoc.triggerPanel).bind('click', function(){
+			eu.europeana.fulldoc.trackedClick('magnify', type);
+		});
+
+		
 		if(carouselData[index ? index : 0].external.type == 'image'){
 			
 			// if the image is wider than 200 px initialise the lightbox and show the trigger panel
@@ -523,6 +512,9 @@ eu.europeana.fulldoc = {
 											eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 										}
 								);
+							}
+							else{
+								js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[index ? index : 0].external.url + ")")); 
 							}
 							$(this).remove();
 						}
@@ -542,8 +534,8 @@ eu.europeana.fulldoc = {
 				else if(type == 'video'){
 					window.open(carouselData[index ? index : 0].external.url, '_new');
 				}
-				else{
-					//alert('lightbox binding belongs here: ' + type   );					
+				else if(type == 'text'){
+					window.open(carouselData[index ? index : 0].external.url, '_new');
 				}
 			});
 			eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
@@ -558,7 +550,6 @@ eu.europeana.fulldoc = {
 	 * 
 	 * */
 	showExternalTrigger : function(show, type, gallery){
-		
 		if(show){
 			var marginTrigger = 0;
 			
@@ -570,13 +561,6 @@ eu.europeana.fulldoc = {
 			else{
 				marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
 			}
-			
-
-			js.console.log('w measure ' +  $("#carousel-1-img-measure").width());
-			js.console.log('w measure img' +  $("#carousel-1-img-measure img:first").width());
-
-			js.console.log('set margin-trigger to ' + marginTrigger);
-			
 			eu.europeana.fulldoc.triggerPanel.css("margin-left", marginTrigger + "px");
 			eu.europeana.fulldoc.triggerPanel.fadeIn(500);
 		}
@@ -670,7 +654,7 @@ eu.europeana.fulldoc = {
 	
 				this.bind("image", function(e) {	// lightbox trigger
 					var gallery = this;
-					console.log("galleria lightbox trigger updating disabled: do this in the navOb");
+					js.console.log("galleria lightbox trigger updating disabled: do this in the navOb");
 					
 					// update trigger ( and show lightboxable )
 					// OR hide trigger	
@@ -738,11 +722,9 @@ eu.europeana.fulldoc = {
 		var lightboxableCount = 0;
 		for(var i=0; i<carouselData.length; i++){
 			if(carouselData[i].external && carouselData[i].external.type == 'image'){
-				//js.console.log("\t\tlightboxable " + carouselData[i].external.url);
 				lightboxableCount++;
 			}
 		}
-		//js.console.log("getLightboxableCount returns " + lightboxableCount);
 		return lightboxableCount;
 	},
 	
@@ -762,11 +744,7 @@ eu.europeana.fulldoc = {
 			
 			js.console.log("measured carousel 1 images: div width is " + $("#carousel-1-img-measure").width() );
 			
-			var secondaryTriggerFn = function(){
-				eu.europeana.fulldoc.triggerPanel.find('.label').click();
-			};
-			
-			// this is where we go when images don't load
+			// this is where we go when carousel test images don't load
 			var initNoCarousel = function(){
 				
 				// show either the thumbnail or the alt text
@@ -791,9 +769,12 @@ eu.europeana.fulldoc = {
 					});
 				}
 				
-				// img trigger bind	
-				$('#carousel-1-img-measure img').bind('click', secondaryTriggerFn);
-
+				// img trigger bind
+				$('#carousel-1-img-measure img').bind('click',
+					function(){
+						eu.europeana.fulldoc.trackedClick('img');
+					}
+				);
 			};
 			
 			// Run carousel test and init if successful
@@ -808,7 +789,7 @@ eu.europeana.fulldoc = {
 				$(testHtml).appendTo('body').imagesLoaded(
 					function($images, $proper, $broken){
 						if($proper.length==carouselTest.length){
-							console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
+							js.console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
 							eu.europeana.fulldoc.getCarousel1Height = function(){
 								var tallestImageH = $("#carousel-1-img-measure").height();
 								var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
@@ -818,7 +799,11 @@ eu.europeana.fulldoc = {
 								return tallestImageH + galleriaOffsetY;
 							};
 							eu.europeana.fulldoc.initTopCarousel();
-							$('#carousel-1 .galleria-stage .galleria-image img').live('click', secondaryTriggerFn);		
+							$('#carousel-1 .galleria-stage .galleria-image img').live('click', 
+								function(){
+									eu.europeana.fulldoc.trackedClick('img');
+								}
+							);		
 						}
 						else{
 							var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
@@ -829,14 +814,14 @@ eu.europeana.fulldoc = {
 								msgFailed += "\n  proper: " + $($proper[0]).attr("src")
 							}
 
-							console.log("carousel test failed: " + msgFailed);
+							js.console.log("carousel test failed: " + msgFailed);
 							initNoCarousel();
 						}
 					}
 				);
 			}
 			else{
-				console.log("no carousel test to run");
+				js.console.log("no carousel test to run");
 				initNoCarousel();
 			}
 		});
