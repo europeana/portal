@@ -89,7 +89,6 @@
 								<cssSourceInclude>lightbox.css</cssSourceInclude>
 								<cssSourceInclude>accordion-tabs.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
-								<cssSourceInclude>fulldoc-excerpt.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
 								<cssSourceInclude>tabbed-navigation.css</cssSourceInclude>
 							</cssSourceIncludes>

@@ -78,7 +78,6 @@
 			<link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" />
 			
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
-			<link rel="stylesheet" href="/${branding}/css/fulldoc-excerpt.css" />
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-explore-further.css" />
 			<link rel="stylesheet" href="/${branding}/css/tabbed-navigation.css" />
 		</c:when>

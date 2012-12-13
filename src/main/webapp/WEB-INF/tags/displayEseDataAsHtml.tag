@@ -43,7 +43,6 @@
   <c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id"> id="item-subject" </c:set></c:if>
 
   <c:set var="item_class" value=""/>
-  <%--c:if test='${"dc:rights" == data.fieldName}'><c:set var="item_class" value=' item-moreless' /></c:if --%>
 
   <%-- If the content is UGC we skip the dc:source display --%>
   <c:if test="${!('dc:source' == data.fieldName && ugc)}">
