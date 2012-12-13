@@ -37,7 +37,7 @@
         </p>
       </c:when>
       <c:otherwise>
-        <meta about="${model.document.id}" property="${metaDataField.property}" content="${value.valueXML}" />
+        <meta about="${model.document.about}" property="${metaDataField.property}" content="${value.valueXML}" />
       </c:otherwise>
     </c:choose>
   </c:forEach>
