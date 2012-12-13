@@ -14,7 +14,7 @@
 		
 	<%-- thumbnail (hidden seo image) --%>
 		
-	<div id="carousel-1-img-measure" vocab="http://schema.org/" typeof="CreativeWork">
+	<div id="carousel-1-img-measure">
 
 		<!-- TODO: make sure all item images are listed here -->
 		<c:set var="thumbnail"	value=""/>
