@@ -732,6 +732,11 @@ ul.featured-partner-links li{
 	display:	block;
 }
 
+#share-subscribe .action-title{
+	position:relative;
+	top:-0.5em;
+}
+
 
 /*	css for full-doc.html						*/
 
@@ -753,14 +758,13 @@ div.actions{
 }
 
 .icon-translate{
-	font-size:		1em;		
+	font-size:		2em;		
 }
 
 a.action-link, span.icon-share {
 	float:			none;
-	display:		block;
 	margin-left:	0;
-	font-size:		1em;
+	font-size:		2em;
 }
 
 label.icon-tag,
