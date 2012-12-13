@@ -1,11 +1,8 @@
 <%@ include file="/WEB-INF/jsp/default/_common/header-strip.jsp" %>
 
 <div id="header" role="banner" class="row">
-
 	<div id="logo-and-search">
-	
 		<div id="logo">
-			
 			<c:set var="logoWrapperTag" value="h1"/>
 			<c:if test="${model.pageName == 'full-doc.html'}">
 				<c:set var="logoWrapperTag" value="div"/>
@@ -21,9 +18,8 @@
 					<span class="${logoClass}" alt="<spring:message code='AltLogoEuropeana_t' />"></span>
 				</a>
 			</${logoWrapperTag}>
-
 		</div>
-		
+
 		<script type="text/javascript">
 			var completionTranslations = {};
 			completionTranslations['Title']			= "<spring:message code='FieldedSearchTitle_t' />";
@@ -31,7 +27,7 @@
 			completionTranslations['Time/Period']	= "<spring:message code='FieldedSearchWhen_t' />";
 			completionTranslations['Subject']		= "<spring:message code='FieldedSearchWhat_t' />";
 			completionTranslations['Creator']		= "<spring:message code='FieldedSearchWho_t' />";			
-			
+
 			var completionClasses = {};
 			completionClasses['Title']			= "title:";
 			completionClasses['Place']			= "where:";
@@ -40,12 +36,9 @@
 			completionClasses['Creator']		= "who:";
 		</script>
 
-
 		<c:if test="${!(model.pageName == 'staticpage.html' && model.tc)}">
 			<%@ include file="/WEB-INF/jsp/default/_common/query/query.jsp" %>
 		</c:if>
-		
-		
 	</div>
 
 <c:set var="sharethis" value="
@@ -57,15 +50,14 @@
 </div>
 "/>
 <c:choose>
-<c:when test='${model.pageName == "index.html"}'>
-	<c:out value="${sharethis}" escapeXml="false" />
-</c:when>
-<c:when test='${model.pageName == "search.html"}'>
-	<c:out value="${sharethis}" escapeXml="false" />
-</c:when>
-<c:when test='${model.pageName == "fulldoc.html"}'>
-	<c:out value="${sharethis}" escapeXml="false" />
-</c:when>
+  <c:when test='${model.pageName == "index.html"}'>
+	  <c:out value="${sharethis}" escapeXml="false" />
+  </c:when>
+  <c:when test='${model.pageName == "search.html"}'>
+  	<c:out value="${sharethis}" escapeXml="false" />
+  </c:when>
+  <c:when test='${model.pageName == "fulldoc.html"}'>
+  	<c:out value="${sharethis}" escapeXml="false" />
+  </c:when>
 </c:choose>
-	
 </div>

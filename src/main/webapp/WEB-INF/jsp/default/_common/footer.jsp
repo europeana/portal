@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div class="row footer" role="contentinfo">
 	<div class="twelve columns">
 		<div class="footer-wrapper">
@@ -8,77 +9,36 @@
 					
 					<div id="social-links">
 						<span></span><!-- Andy: empty span needed to stop 1st item appearing smaller in firefox -->
-						
-						<a class	="social-link"
-							title	="<spring:message code="europeana-facebook-title_t" />"
-							href	="<spring:message code="europeana-facebook-url" />"
-							target	="<spring:message code="europeana-facebook-target" />"
-							rel		="me"
-							>
-							<span class="social-link icon-facebook"><span class="text"><spring:message code="europeana-facebook_t" /></span></span>
-						</a>
-							
-						<a class	="social-link"
-							title	="<spring:message code="europeana-twitter-title_t" />"
-							href	="<spring:message code="europeana-twitter-url" />"
-							target	="<spring:message code="europeana-twitter-target" />"
-							rel		="me"
-							>
-							<span class="social-link icon-twitter"><span class="text"><spring:message code="europeana-twitter_t" /></span></span>
-						</a>
-
-						<a class	="social-link"
-							title	="<spring:message code="europeana-pinterest-title_t" />"
-							href	="<spring:message code="europeana-pinterest-url" />"
-							target	="<spring:message code="europeana-pinterest-target" />"
-							rel		="me"
-							>
-							<span class="social-link icon-pinterest-2"><span class="text"><spring:message code="europeana-pinterest_t" /></span></span>
-						</a>
-						
-						
-						<a class	="social-link"
-							title	="<spring:message code="europeana-google-title_t" />"
-							href	="<spring:message code="europeana-google-url" />"
-							target	="<spring:message code="europeana-google-target" />"
-							>
-							<span class="social-link icon-google"><span class="text"><spring:message code="europeana-google_t" /></span></span>
-						</a>
-						
-						
+						<a class="social-link" title="<spring:message code="europeana-facebook-title_t" />" href="<spring:message code="europeana-facebook-url" />" target="<spring:message code="europeana-facebook-target" />" rel="me"><span class="social-link icon-facebook"><span class="text"><spring:message code="europeana-facebook_t" /></span></span></a>
+						<a class="social-link" title	="<spring:message code="europeana-twitter-title_t" />" href="<spring:message code="europeana-twitter-url" />" target="<spring:message code="europeana-twitter-target" />" rel="me"><span class="social-link icon-twitter"><span class="text"><spring:message code="europeana-twitter_t" /></span></span></a>
+						<a class="social-link" title	="<spring:message code="europeana-pinterest-title_t" />" href="<spring:message code="europeana-pinterest-url" />" target="<spring:message code="europeana-pinterest-target" />" rel="me"><span class="social-link icon-pinterest-2"><span class="text"><spring:message code="europeana-pinterest_t" /></span></span></a>
+						<a class="social-link" title="<spring:message code="europeana-google-title_t" />" href="<spring:message code="europeana-google-url" />" target="<spring:message code="europeana-google-target" />"><span class="social-link icon-google"><span class="text"><spring:message code="europeana-google_t" /></span></span></a>
 						<span class="stretch"></span>
 					</div>
 				</div>
-				
+
 				<div id="newsletter-wrapper" class="six columns">
-				
-					
 					<script type="text/javascript">
 						window.emma = {
 							"placeholder" : "<spring:message code='news_letter_email_hint_t' />",
 							"submitLabel" : "<spring:message code='news_letter_signup_button_t' />"
 						};
 					</script>
-					
+
 					<h3><spring:message code="news_letter_signup_t" /></h3>
-					
 					<span class="small"><spring:message code="news_letter_description_t" /></span>
-					
+
 					<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; width:100%;" id="footer-iframe" src="about:blank"></iframe>
 
 				</div>
 			</div>
 
-
 			<div class="row" id="footer-links-all">
-			
 				<div class="four columns">
-				
 					<%-- Explore --%>
 					<h3>
 						<a class="europeana" href="<spring:message code="notranslate_main_menu_explore_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_a_target_t"/>" title="<spring:message code="main_menu_explore_a_title_t"/>"><spring:message code="main_menu_explore_a_text_t"/></a>
 					</h3>
-					
 
 					<ul class="footer-links with-icons">
 						<li><span class="icon-logo" id="link-logo-1"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_1_a_target_t"/>" title="<spring:message code="main_menu_explore_1_a_title_t"/>"><spring:message code="main_menu_explore_1_a_text_t"/></a></li>
@@ -123,35 +83,10 @@
 
 <div class="row footer-bottom-links">
 	<div class="twelve columns">
-
-		<a class="europeana footer-bottom-link"
-			href="/${model.portalName}/<spring:message code="footer_menu_about_us_url_t"/>"
-			target="<spring:message code="footer_menu_about_us_target_t"/>"
-			title="<spring:message code="footer_menu_about_us_title_t"/>">
-				<spring:message code="footer_menu_about_us_text_t"/>
-		</a>
-
-		<a class="europeana footer-bottom-link"
-			href="/${model.portalName}/<spring:message code="footer_menu_tou_url_t"/>"
-			target="<spring:message code="footer_menu_tou_target_t"/>"
-			title="<spring:message code="footer_menu_tou_title_t"/>">
-				<spring:message code="footer_menu_tou_text_t"/>
-		</a>
-
-		<a class="europeana footer-bottom-link"
-			href="/${model.portalName}/<spring:message code="footer_menu_contact_us_url_t"/>"
-			target="<spring:message code="footer_menu_contact_us_target_t"/>"
-			title="<spring:message code="footer_menu_contact_us_title_t"/>">
-				<spring:message code="footer_menu_contact_us_text_t"/>
-		</a>
-
-		<a class="europeana footer-bottom-link"
-			href="/${model.portalName}/<spring:message code="footer_menu_sitemap_url_t"/>"
-			target="<spring:message code="footer_menu_sitemap_target_t"/>"
-			title="<spring:message code="footer_menu_sitemap_title_t"/>">
-				<spring:message code="footer_menu_sitemap_text_t"/>
-		</a>
-
+		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_about_us_url_t"/>" target="<spring:message code="footer_menu_about_us_target_t"/>" title="<spring:message code="footer_menu_about_us_title_t"/>"><spring:message code="footer_menu_about_us_text_t"/></a>
+		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_tou_url_t"/>" target="<spring:message code="footer_menu_tou_target_t"/>" title="<spring:message code="footer_menu_tou_title_t"/>"><spring:message code="footer_menu_tou_text_t"/></a>
+		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_contact_us_url_t"/>" target="<spring:message code="footer_menu_contact_us_target_t"/>" title="<spring:message code="footer_menu_contact_us_title_t"/>"><spring:message code="footer_menu_contact_us_text_t"/></a>
+		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_sitemap_url_t"/>" target="<spring:message code="footer_menu_sitemap_target_t"/>" title="<spring:message code="footer_menu_sitemap_title_t"/>"><spring:message code="footer_menu_sitemap_text_t"/></a>
 		<span class="footer-funded-by"><spring:message code="FundedBy_t"/><span class="icon-euflag"></span></span>
 	</div>
 </div>

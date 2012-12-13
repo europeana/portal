@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%-- query action --%>
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
@@ -28,23 +29,16 @@
 					</div>
 				</td>
 				<td class="query-cell">
-					<input
-						type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175"
-						value="<c:out value="${model.query}"/>"
-						valueForBackButton="<c:out value="${model.query}"/>"
-						/>
+					<input type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" value="<c:out value="${model.query}"/>" valueForBackButton="<c:out value="${model.query}"/>" />
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
-					<button class="icon-mag deans-button-1" type="submit">
-						<spring:message code='Search_t'/>
-					</button>
+					<button class="icon-mag deans-button-1" type="submit"><spring:message code='Search_t'/></button>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="3" class="submit-cell show-cell-on-phones">
-					<button class="icon-mag deans-button-1" type="submit">
-						<spring:message code='Search_t'/>
-					</button>
+					<a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+					<button class="icon-mag deans-button-1" type="submit"><spring:message code='Search_t'/></button>
 				</td>
 			</tr>
 		</table>
