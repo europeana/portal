@@ -338,11 +338,6 @@ eu.europeana.lightbox = {
 			return;
 		}
 		
-		if(!eu.europeana.lightbox.tracked){
-			eu.europeana.lightbox.tracked = true;
-			com.google.analytics.europeanaEventTrack("Lightbox View");			
-		}
-		
 		var contentWrap = $(overlay.find(".content-wrap"));
 		var contentInfo = $(overlay.find(".info"));
 		var borderWidth = $(contentInfo).outerWidth(false) - $(contentInfo).innerWidth();
