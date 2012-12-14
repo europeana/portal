@@ -11,7 +11,7 @@
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/navigation/navigation.jsp" %>
 		</div>
 
-    <c:url var="aboutUrl" value="/record${model.document.about}.html" />
+		<c:url var="aboutUrl" value="/record${model.document.about}.html" />
 		<div class="row" about="${aboutUrl}" vocab="http://schema.org/" typeof="CreativeWork">
 			<div class="three-cols-fulldoc-sidebar">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/sidebar-left.jsp" %>
