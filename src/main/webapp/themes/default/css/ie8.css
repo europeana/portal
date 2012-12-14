@@ -700,6 +700,8 @@ ul.featured-partner-links li{
 .nav>.count{
 	width:		auto !important;
 	text-align:	center;
+	position:relative;
+	left:1em;
 }
 
 .nav-numbers{	
@@ -734,7 +736,7 @@ ul.featured-partner-links li{
 
 #share-subscribe .action-title{
 	position:relative;
-	top:-0.5em;
+	top:		-.3em;
 }
 
 
@@ -767,12 +769,23 @@ a.action-link, span.icon-share {
 	font-size:		2em;
 }
 
+/*
 label.icon-tag,
 label.icon-tag span,
 .action-title,
 a.action-link span{
 	font-size:		1em;
 	top:	0;
+}
+*/
+
+
+#additional-info label.icon-tag,
+#additional-info label.icon-tag span,
+#additional-info .action-title,
+#additional-info a.action-link span{
+	font-size:		0.75em;
+	top:			-0.2em;
 }
 
 #translate-item{
@@ -789,6 +802,22 @@ a.action-link span{
 .action-title{
 	display:		inline;
 }
+
+/* sidebar icons */
+.sidebar #share-subscribe .action-title{
+	font-size:	1.25em;
+	top:		-.3em;
+}
+
+.sidebar a.action-link span{
+	top:	-.2em;
+}
+#translate-item{
+	font-size:	1.5em;
+	top:		-.2em;
+}
+
+
 
 #excerpt{
 	padding-left:	2em;
