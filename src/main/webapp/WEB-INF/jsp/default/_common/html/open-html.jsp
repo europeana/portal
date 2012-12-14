@@ -6,23 +6,16 @@
 	</c:when>
 </c:choose>
 
-<c:set var="schemaOrgAttributes" value="" />
-<c:if test="${model.pageName == 'full-doc.html'}">
-  <c:url var="aboutUrl" value="/record${model.document.about}.html" />
-  <c:set var="about" value="${aboutUrl}" />
-  <c:set var="schemaOrgAttributes"> about="${about}" vocab="http://schema.org/" typeof="CreativeWork"</c:set>
-</c:if>
-
 <!--[if IE 8]>
-<html  ${xmlns} class="ie ie8" lang="${lang}"<c:if test="${schemaOrgAttributes != ''}">${" "}${schemaOrgAttributes}</c:if>>
+<html  ${xmlns} class="ie ie8" lang="${lang}">
 <![endif]-->
 
 <!--[if IE 9]>
-	<html ${xmlns} class="ie ie9" lang="${lang}"<c:if test="${schemaOrgAttributes != ''}">${" "}${schemaOrgAttributes}</c:if>>
+	<html ${xmlns} class="ie ie9" lang="${lang}">
 <![endif]-->
 
 <!--[if !IE]>-->
-<html ${xmlns} lang="${lang}"<c:if test="${schemaOrgAttributes != ''}">${" "}${schemaOrgAttributes}</c:if>>
+<html ${xmlns} lang="${lang}">
 <!--<![endif]-->
 	
 <head>
