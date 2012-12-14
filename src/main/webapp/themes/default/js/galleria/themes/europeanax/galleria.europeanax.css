@@ -54,6 +54,12 @@
     display:	none;
 }
 
+/* additional hide rule needed for Opera (object page) */
+.europeana-carousel .galleria-stage .galleria-image img{
+    display:	none;
+    visibility:	hidden;	
+}
+
 @media only screen and ( min-width:767px ){
 	
 	/*
