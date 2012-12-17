@@ -19,7 +19,14 @@ eu.europeana.fulldoc = {
 		$('#item-embed')	.bind('click', this.handleEmbedClick );
 		
 		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
-			function(){
+			function(e){			
+				if( $(this).data && $(this).data['realSrc'] ){
+					eu.europeana.fulldoc.triggerPanel.data['type'] = $(this).data['realSrc'];
+				}
+				else{
+					eu.europeana.fulldoc.triggerPanel.data['type'] = 'link';
+				}
+				
 				eu.europeana.fulldoc.trackedClick('link');
 			}
 		);
@@ -40,9 +47,16 @@ eu.europeana.fulldoc = {
 				eu.europeana.fulldoc.triggerPanel.find('.label').click();		/* will recurse back to here with src 'magnify' */				
 			}
 		}
+		else if(src == 'broken-img'){
+			var cmp = $('#urlRefIsShownAt').length>0 ? $('#urlRefIsShownAt') : $('#urlRefIsShownBy');
+			cmp.data['realSrc'] = 'broken-img';
+			cmp[0].click();
+			cmp.data['realSrc'] = null;
+		}
 		else{
-			var clickSrc	= src == 'magnify' ? 'img' : src;
+			var clickSrc	= src == 'magnify' ? 'image' : eu.europeana.fulldoc.triggerPanel.data['type'];
 			var action		= src == 'link' ? 'Europeana Redirect' : (eu.europeana.fulldoc.triggerPanel.data['type']  == 'image' ? 'Europeana Lightbox' : 'Europeana Redirect');
+			
 			com.google.analytics.europeanaEventTrack('External (' + clickSrc + ')', action);			
 		}
 	},
@@ -469,6 +483,7 @@ eu.europeana.fulldoc = {
 			).appendTo($('#carousel-1-img-measure'));
 			eu.europeana.fulldoc.triggerPanel.hide();
 		}
+		
 		eu.europeana.fulldoc.triggerPanel.data['type'] = type; /* used for google analytics category */
 		
 		var triggerSpan = eu.europeana.fulldoc.triggerPanel.find('.label');
@@ -505,7 +520,28 @@ eu.europeana.fulldoc = {
 								);
 							}
 							else{
-								js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[index ? index : 0].external.url + ")")); 
+								js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[index ? index : 0].external.url + ")"));
+								
+								// if the lightbox test fails then attach a click handler to the image
+								
+								/*
+								$('#carousel-1-img-measure img').bind('click',
+									{param:'broken-img'},
+									function(){
+										eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
+										eu.europeana.fulldoc.trackedClick('broken-img');
+									}
+								);
+								*/
+								$('#carousel-1-img-measure img').click(
+										{param:'broken-img'},
+										function(){
+											eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
+											eu.europeana.fulldoc.trackedClick('broken-img');
+										}
+								);
+
+								
 							}
 							$(this).remove();
 						}
