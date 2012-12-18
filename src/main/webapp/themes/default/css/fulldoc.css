@@ -437,9 +437,7 @@ h1 {
 
 .rights-badge span.rights-icon{
 	float:			left;
-	margin-bottom:	-0.2em;	/* stop rights text line-wrapping */
 	margin-right:	0.25em;
-	margin-top:		0.25em;
 }
 
 .rights-badge span.icon-external-right{
