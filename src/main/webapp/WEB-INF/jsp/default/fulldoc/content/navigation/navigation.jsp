@@ -4,13 +4,20 @@
 
 <c:choose>
 	<c:when test="${true || !empty model.fullBeanView.docIdWindowPager}">
-		<ul id="navigation" class="navigation notranslate hide-on-phones">
+	
+		<c:set var="navClass" value=" hidden"/>
+		<c:if test="${!empty model.fullBeanView.docIdWindowPager.returnToResults 
+	        &&	model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl != null}">
+			<c:set var="navClass" value=""/>        
+		</c:if>
+
+		<ul id="navigation" class="navigation notranslate hide-on-phones ${navClass}">
 	
 			<%-- return --%>
 			
 			<c:if test="${!empty model.fullBeanView.docIdWindowPager.returnToResults 
-          && model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl != null
-          && !model.embedded}">
+        		&& model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl != null
+        		&& !model.embedded}">
 				<li>
 					<a href="${fn:replace(model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl, "\"", "&quot;")}" rel="nofollow"><spring:message code="ReturnToSearchResults_t" /></a>
 				</li>
@@ -32,6 +39,7 @@
 				</li>
 			</c:if>
 		</ul>
+			
 	</c:when>
 </c:choose>
 <!-- /navigation -->
