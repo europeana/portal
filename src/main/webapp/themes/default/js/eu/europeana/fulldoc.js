@@ -427,7 +427,7 @@ eu.europeana.fulldoc = {
 								// if the lightbox test fails then attach a click handler to the image
 								$('#carousel-1-img-measure img').css('cursor', 'pointer');
 								$('#carousel-1-img-measure img').click(
-										{param:'broken-img'},
+//										{param:'broken-img'},
 										function(){
 											eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
 											eu.europeana.fulldoc.trackedClick('broken-img');
