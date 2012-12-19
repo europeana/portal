@@ -168,9 +168,9 @@ Galleria.addTheme({
 				thumbOb.outerWidth = tParent.outerWidth(true);
 
 				/* Vertical centering of individual images */
-				
-				if(imgBoxH > thumb.height()+2){
-					var top = (imgBoxH - thumb.height() ) / 2;
+				var infoHeight = tParent.find('.europeana-carousel-info').height();
+				if( (imgBoxH - infoHeight) > thumb.height()+2){
+					var top = (imgBoxH - infoHeight - thumb.height() ) / 2;
 					thumb.css("top", top + "px");
 				}
 
