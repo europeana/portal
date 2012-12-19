@@ -19,14 +19,8 @@ eu.europeana.fulldoc = {
 		$('#item-embed')	.bind('click', this.handleEmbedClick );
 		
 		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
-			function(e){			
-				if( $(this).data && $(this).data['realSrc'] ){
-					eu.europeana.fulldoc.triggerPanel.data['type'] = $(this).data['realSrc'];
-				}
-				else{
-					eu.europeana.fulldoc.triggerPanel.data['type'] = 'link';
-				}
-				
+			function(e){
+				eu.europeana.fulldoc.triggerPanel.data['type'] = 'link';
 				eu.europeana.fulldoc.trackedClick('link');
 			}
 		);
@@ -48,10 +42,8 @@ eu.europeana.fulldoc = {
 			}
 		}
 		else if(src == 'broken-img'){
-			var cmp = $('#urlRefIsShownAt').length>0 ? $('#urlRefIsShownAt') : $('#urlRefIsShownBy');
-			cmp.data['realSrc'] = 'broken-img';
-			cmp[0].click();
-			cmp.data['realSrc'] = null;
+			com.google.analytics.europeanaEventTrack('External (' + src + ')', 'Europeana Lightbox');
+			window.open(carouselData[0].external.url, '_new');
 		}
 		else{
 			var clickSrc	= src == 'magnify' ? 'image' : eu.europeana.fulldoc.triggerPanel.data['type'];
@@ -154,97 +146,7 @@ eu.europeana.fulldoc = {
 		});
 		
 	},
-	/*
-	openTab : function() {
-		if(typeof eu.europeana.tabs == "undefined"){
-			return;
-		}
-		
-		var	tab_priority = eu.europeana.fulldoc.tab_priority,
-			tab_to_open = '',
-			menu_ids = eu.europeana.tabs.explore.options.menu_ids,
-			hash = window.location.hash,	
-			priority_found = false,
-			i,
-			ii = menu_ids.length,
-			x,
-			xx = tab_priority.length;
-		
-	
-		// find the prioritized tab that exists on the page
-		for ( x = 0; x < xx; x += 1 ) {
-			for ( i = 0; i < ii; i += 1 ) {
-				if ( menu_ids[i] === tab_priority[x] ) {
-					tab_to_open = tab_priority[x];
-					priority_found = true;
-					break;
-				}
-			}
-			if ( priority_found ) { break; }
-		}
-		
-		// if hash is present see if its valid, in the tab_priority array
-		if ( hash ) {
-			for ( i = 0; i < ii; i += 1 ) {
-				if ( menu_ids[i] === hash ) {
-					tab_to_open = hash;
-					break;
-				}
-			}
-		}
-		eu.europeana.tabs.explore.toggleTab( tab_to_open );
-	},
-	*/
-	
-	adjustDescription : function() {
-		
-		var description_truncate = new com.gmtplusone.truncate(
-			'#item-description',
-			{
-				toggle_html : {
-					more : eu.europeana.vars.msg.more,
-					less : eu.europeana.vars.msg.less,
-					more_class : 'more toggle-menu-icon',
-					less_class : 'less toggle-menu-icon active'
-				}
-			}
-		);
-		
-		description_truncate.init();
-		
-		var subject_truncate = new com.gmtplusone.truncate(
-				'#item-subject',
-				{
-					toggle_html : {
-						more : eu.europeana.vars.msg.more,
-						less : eu.europeana.vars.msg.less,
-						more_class : 'more toggle-menu-icon',
-						less_class : 'less toggle-menu-icon active'
-					}
-				}
-			);
-		
-		subject_truncate.init();
 
-		/*
-		var rights_truncate = new com.gmtplusone.truncate(
-				'.item-moreless',
-				{
-					toggle_html : {
-						more : eu.europeana.vars.msg.more,
-						less : eu.europeana.vars.msg.less,
-						more_class : 'more toggle-menu-icon',
-						less_class : 'less toggle-menu-icon active'
-					}
-				}
-		);
-		
-		// callback sent to truncate content to be run after truncation is complete
-		rights_truncate.init();
-		*/
-	},
-	
-	
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
 		if ( jQuery('#item-tag').val() < 1 ){
@@ -503,10 +405,10 @@ eu.europeana.fulldoc = {
 		
 		if(carouselData[index ? index : 0].external.type == 'image'){
 			
-			// if the image is wider than 200 px initialise the lightbox and show the trigger panel
-			$('<img src="' 
-					+ carouselData[index ? index : 0].external.url
-					+ '" style="visibility:hidden"/>')
+			/* if the image is wider than 200 px initialise the lightbox and show the trigger panel,
+			 * if not bind the image to open the mapped url in a seaparate window
+			 */
+			$('<img src="'+ carouselData[index ? index : 0].external.url + '" style="visibility:hidden"/>')
 					.appendTo('body').imagesLoaded(
 							
 						function($images, $proper, $broken){
@@ -523,16 +425,7 @@ eu.europeana.fulldoc = {
 								js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[index ? index : 0].external.url + ")"));
 								
 								// if the lightbox test fails then attach a click handler to the image
-								
-								/*
-								$('#carousel-1-img-measure img').bind('click',
-									{param:'broken-img'},
-									function(){
-										eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
-										eu.europeana.fulldoc.trackedClick('broken-img');
-									}
-								);
-								*/
+								$('#carousel-1-img-measure img').css('cursor', 'pointer');
 								$('#carousel-1-img-measure img').click(
 										{param:'broken-img'},
 										function(){
@@ -590,9 +483,11 @@ eu.europeana.fulldoc = {
 			}
 			eu.europeana.fulldoc.triggerPanel.css("margin-left", marginTrigger + "px");
 			eu.europeana.fulldoc.triggerPanel.fadeIn(500);
+			$('#carousel-1-img-measure img').css('cursor', 'pointer');
 		}
 		else{
 			eu.europeana.fulldoc.triggerPanel.css('display', 'none');
+			$('#carousel-1-img-measure img').css('cursor', 'default');
 		}
 	},
 	
