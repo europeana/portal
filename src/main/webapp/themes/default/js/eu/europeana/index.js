@@ -106,7 +106,8 @@
 				var ratio			= imgW / imgH;
 				var thumb			= $('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
 				
-				carousel.css("height",  (parentWidth/ratio) + thumb.height() + 5 + "px");
+				//carousel.css("height",  (parentWidth/ratio) + thumb.height() + 5 + "px");
+				carousel.css("height",  (parentWidth/ratio) + "px");
 				carousel.css("width",	"100%");
 				
 				thumb.remove();
