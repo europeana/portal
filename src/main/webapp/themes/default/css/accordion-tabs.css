@@ -8,14 +8,14 @@
 
 
 .accordion-tabs>.section>a{
-	border:		1px solid #a0a0a0;
+	border:		1px solid #d6d6d6;
 }
 .accordion-tabs>.section:not(:first-child)>a{
 	border-top:	none;
 }
 
 .accordion-tabs>.section>.content{
-	border:		1px solid #a0a0a0;
+	border:		1px solid #d6d6d6;
 	border-top:	none;
 }
 
@@ -72,11 +72,11 @@
 
 
 	.accordion-tabs .section{
-		border:		1px solid #a0a0a0;
+		border:		1px solid #d6d6d6;
 	}
 
 	.accordion-tabs .tab_content{
-		border-top:	1px solid #a0a0a0;
+		border-top:	1px solid #d6d6d6;
 	}
 
 	.accordion-tabs .section.active{
