@@ -54,8 +54,8 @@
 
 .thumb-frame{
 	background-color:		#FCFCFC;
-	height:					8em;
-	line-height:			8em;
+	height:					10em;
+	line-height:			10em;
 	text-align:				center;
 	
 	border-right:			1px solid #c9c9c9;
@@ -89,11 +89,11 @@
 
 
 .ellipsis{
-	height:			2em;
-	max-height:		2em;
-	min-height:		2em;
+	height:			2.6em;
+	max-height:		2.6em;
+	min-height:		2.6em;
 	
-	line-height:	1em;
+	line-height:	1.3em;
 	margin-top:		0;
 	border-bottom:	1px solid #E3E3E3;
 	border-left:	1px dotted #E3E3E3;
