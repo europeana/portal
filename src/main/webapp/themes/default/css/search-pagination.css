@@ -9,7 +9,6 @@
 .nav-numbers{
 	text-align:		center;
 	white-space:	nowrap;
-	width:			40%;
 	font-size:		0.75em;
 }
 
@@ -147,13 +146,12 @@ a {
 	.nav .of,
 	.nav .of-value{
 		display:inline;
-	}
-
-	
+	}	
 }
 
 
 @media only screen and (min-width: 48em) {
+	
 	.nav .spaced:before{
 		content:' ';
 	}
