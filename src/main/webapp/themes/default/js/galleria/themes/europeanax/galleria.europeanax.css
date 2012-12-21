@@ -7,6 +7,7 @@
 	overflow:visible !important;
 }
 
+
 .galleria-container {
     position:	relative;
     overflow:	visible;
@@ -181,7 +182,24 @@
 	box-sizing:			border-box;
 	-moz-box-sizing:	border-box;
 	-webkit-box-sizing:	border-box;	
+	
+	-webkit-transition: background-color 1s ease-in-out;
+  	-moz-transition: background-color 1s ease-in-out;
+  	-o-transition: background-color 1s ease-in-out;
+  	-ms-transition: background-color 1s ease-in-out;
+  	transition: background-color 1s ease-in-out;
+	
 }
+
+.europeana-carousel .galleria-thumbnails .galleria-image:hover{
+	background-color: #e3e3e3;
+	-webkit-transition: background-color 1s ease-in-out;
+  	-moz-transition: background-color 1s ease-in-out;
+  	-o-transition: background-color 1s ease-in-out;
+  	-ms-transition: background-color 1s ease-in-out;
+  	transition: background-color 1s ease-in-out;	
+}
+
 
 .galleria-thumbnails{	/* centre the film strip in the default gallery */
 	margin:	auto;
