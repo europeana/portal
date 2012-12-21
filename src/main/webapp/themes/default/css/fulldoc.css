@@ -146,7 +146,7 @@ a.disabled:hover{
 
 
 div.actions{
-	padding:		2.5em 1em 1em 1em;
+	padding:		0.5em 1em 1em 1em;
 }
 
 a.action-link,
@@ -273,7 +273,7 @@ a.action-link span,
 	/* links */
 
 	div.actions{
-		padding:		.5em 0 0.5em 0;
+		padding:		0 0 0.5em 0;
 		max-height:		none;
 		text-align:		left;
 	}

@@ -24,6 +24,20 @@
 	padding: 1em;
 }
 
+/* accordion tabs override */
+#citation-tabs.accordion-tabs{
+	border-radius:	0;
+	box-shadow:		none;	
+}
+#citation-tabs.accordion-tabs>.section>.content{
+	border-radius:	0;
+	box-shadow:		none;	
+}
+#citation-tabs.accordion-tabs>.section>a{
+	border-radius:	0;
+}
+/* end accordion tabs override */
+
 #citation h3 {
 	font-size: 100%;
 }
