@@ -107,6 +107,24 @@
 }
 
 
+.ellipsis .icon-text{
+	font-size:	1.2em;	
+}
+
+.ellipsis .icon-image,
+.ellipsis .icon-video,
+.ellipsis .icon-sound{
+	font-size:	1.1em;
+}
+
+.ellipsis .icon-text,
+.ellipsis .icon-image,
+.ellipsis .icon-video,
+.ellipsis .icon-sound{
+	position:	relative;
+	top:		0.1em;
+}
+
 
 #items .ellipsis-inner{
 	min-height:		2.6em;		/* force height to keep icon in bottom corner */
