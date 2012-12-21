@@ -362,13 +362,13 @@
 	
 	.europeana-carousel .galleria-thumb-nav-left,
 	.europeana-carousel .galleria-thumb-nav-right {
-		left:				-0.2em;
+		left:				-0.1em;
 		right:				auto;
 	}
 	
 	.europeana-carousel .galleria-thumb-nav-right {
 	    left:				auto;
-	    right:				-0.3em;
+	    right:				-0.2em;
 	}
 	
 }
