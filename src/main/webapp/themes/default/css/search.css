@@ -109,7 +109,7 @@
 
 
 #items .ellipsis-inner{
-	min-height:		2em;		/* force height to keep icon in bottom corner */
+	min-height:		2.6em;		/* force height to keep icon in bottom corner */
 }
 
 	
