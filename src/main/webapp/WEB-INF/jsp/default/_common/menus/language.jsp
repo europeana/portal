@@ -17,7 +17,7 @@
 		<span class="icon-arrow-3 open-menu hide-on-phones"></span>
 		<span class="icon-mobilemenu show-on-phones" id="mobile-menu"></span>
 
-		<ul title="<spring:message code='ChooseLanguage_t' />">
+		<ul title="<spring:message code='ChooseLanguage_t' />" tabindex="1" onkeypress="$('#lang-menu').click();">
 			<c:if test="${!model.embedded}">
 				<li class="item icon-home show-on-phones">
 					<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
