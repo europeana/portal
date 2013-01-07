@@ -14,6 +14,13 @@ var EuMenu = function(cmpIn, options){
 		e.stopPropagation();
 	});
 	
+
+	self.cmp.keypress(function(e){
+		if(e.keyCode == 13){
+			self.cmp.find(".item:focus a").click();
+		}
+	});
+
 	
 	self.setLabel = function(val){
 		self.cmp.find(".menu-label").html(  self.label + " " + val );
