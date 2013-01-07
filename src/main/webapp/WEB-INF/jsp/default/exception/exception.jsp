@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/_common/tag-libraries.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/variables/variables.jsp" %>
-<%@ include file="/WEB-INF/jsp/default/_common/html-open.jsp" %>
+<%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
 
 <div class="container">
   <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
