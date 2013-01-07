@@ -8,7 +8,6 @@
 'use strict';
 
 
-
 var europeana_bootstrap = function(){
 	
 	if ( !window.eu ) { throw new Error( 'window.eu was not defined before bootstrap' ); }
@@ -19,6 +18,7 @@ var europeana_bootstrap = function(){
 	
 	// loads the loader which then loads the scripts
 	function loadScripts(scripts){
+		
 		var script = document.createElement('script');
 		script.src = eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
 		
@@ -93,7 +93,7 @@ var europeana_bootstrap = function(){
 	  
 	  
    	];
-
+	
 	if(eu.europeana.vars.page_name == 'api/console.html'){
 		loadScripts(scripts);
 	}
@@ -122,6 +122,9 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
+		loadScripts(scripts);
+	}
+	else if(eu.europeana.vars.page_name == 'exception.html'){
 		loadScripts(scripts);
 	}
 	else if(eu.europeana.vars.page_name == 'forgotPassword.html'){
