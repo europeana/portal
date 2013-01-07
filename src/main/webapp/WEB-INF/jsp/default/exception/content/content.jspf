@@ -9,52 +9,63 @@
     </c:when>
     <c:when test="${model.problem == 'RECORD_NOT_FOUND'}">
       <div>
-        <span class="bold">Alert:</span> Unable to find the requested Europeana Record. <span class="bold">Please</span> try another search.
+      	<span class="bold"><spring:message code="ErrorAttention_t" /></span>
+      	<spring:message code="ErrorRecordNotFound_t" />
+      	<spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'RECORD_REVOKED'}">
       <div>
-        <span class="bold">Attention:</span> This item has been withdrawn by the provider. <span class="bold">Please</span> try another search.
+        <span class="bold"><spring:message code="ErrorAttention_t" /></span>
+        <spring:message code="ErrorRecordRevoked_t" />
+        <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'RECORD_NOT_INDEXED'}">
       <div>
-        <span class="bold">Attention:</span> Requested Europeana Record is yet indexed. <span class="bold">Please</span> try another search.
+        <span class="bold"><spring:message code="ErrorAttention_t" /></span>
+        <spring:message code="ErrorRecordNotIndexed_t" />
+        <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'TOKEN_EXPIRED' || model.problem == 'UNKNOWN_TOKEN'}">
       <div>
-        The link you used to complete registration is invalid or has expired.
-        Please <a href="/${model.portalName}/login.html">register your email again</a> to finish registration.
+        <spring:message code="ErrorTokenError_t" />
+        <a href="/${model.portalName}/login.html"><spring:message code="ErrorTokenErrorLinkText_t" /></a>&nbsp;<spring:message code="ErrorTokenErrorTail_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'MALFORMED_URL'}">
       <div>
-        Unable to fullfill your request due to malformed query parameters.
-        <span class="bold">Please</span> try another search.
+        <spring:message code="ErrorMalformedUrl_t" />
+        <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'SOLR_UNREACHABLE'}">
       <div>
-        <span class="bold">Alert:</span> Unable to get a response from the Search Engine. <span class="bold">Please</span> try another search later.
+        <span class="bold"><spring:message code="ErrorAttention_t" /></span>
+		<spring:message code="ErrorSolrUnreachable_t" />
+        <spring:message code="ErrorTryAnotherSearchLater_t" />        
       </div>
     </c:when>
     <c:when test="${model.problem == 'MALFORMED_QUERY'}">
       <div>
-        Unable to fulfill your request due to a malformed query syntax.
-        <span class="bold">Please</span> try another search.
+        <span class="bold"><spring:message code="ErrorAttention_t" /></span>
+        <spring:message code="ErrorMalformedQuery_t" />
+        <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'UNABLE_TO_CHANGE_LANGUAGE'}">
       <div>
-        We are unable to change the interface to the requested language.
-        <span class="bold">Please</span> try a language from the dropdown list.
+        <span class="bold"><spring:message code="ErrorAttention_t" /></span>
+        <spring:message code="ErrorUnableToChangeLanguage_t" />
+        <spring:message code="ErrorTryAnotherLanguage_t"/>
       </div>
     </c:when>
     <c:otherwise>
       <div>
-        Something went wrong! An email has been sent to inform our technical staff.
-        <span class="bold">Please</span> try another search.
+        <spring:message code="ErrorHeading_t"/>
+        <spring:message code="ErrorEmailSent_t"/>
+        <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
       <c:if test="${model[debug] && model.debug}">
         <h1>${model.problem}</h1>
