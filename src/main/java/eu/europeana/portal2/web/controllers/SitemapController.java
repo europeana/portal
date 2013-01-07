@@ -361,9 +361,9 @@ public class SitemapController {
 		model.setResults(records);
 		model.setShowImages(false);
 
-		ModelAndView mavPage = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.SITEMAP);
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SITE_MAP_XML, mavPage);
-		return mavPage;
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.SITEMAP);
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SITE_MAP_XML, page);
+		return page;
 	}
 
 	public static String convertProviderToUrlParameter(String provider)
