@@ -37,7 +37,8 @@
 	line-height:	inherit;
 }
 
-.eu-menu a:hover{
+.eu-menu a:hover,
+.eu-menu .item:focus a{
 	text-decoration:	underline;
 }
 
