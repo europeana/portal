@@ -45,7 +45,7 @@
 							<%-- Place Image --%>
 							<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
 								<c:choose>
-									<c:when test="${!empty item.europeanaObject}">
+									<c:when test="${item.europeanaObject && !empty item.europeanaObject}">
 										<img src="${model.cacheUrl}uri=${item.europeanaObject}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
 									</c:when>
 									<c:otherwise>
