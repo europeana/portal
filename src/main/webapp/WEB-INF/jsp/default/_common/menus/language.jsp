@@ -17,16 +17,17 @@
 		<span class="icon-arrow-3 open-menu hide-on-phones"></span>
 		<span class="icon-mobilemenu show-on-phones" id="mobile-menu"></span>
 
-		<ul title="<spring:message code='ChooseLanguage_t' />" tabindex="1" onkeypress="$('#lang-menu').click();">
+		<ul title="<spring:message code='ChooseLanguage_t' />" tabindex="3" onfocus="$('#lang-menu').click();">
+	
 			<c:if test="${!model.embedded}">
 				<li class="item icon-home show-on-phones">
-					<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
+					<a class="treat-as-link" tabindex="1" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
 				</li>
 				<li class="item icon-logo show-on-phones">
-					<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
+					<a class="treat-as-link" tabindex="2" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
 				</li>
 				<li class="item icon-info show-on-phones">
-					<a class="treat-as-link" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+					<a class="treat-as-link" tabindex="3" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
 				</li>
 			</c:if>
 
@@ -34,8 +35,8 @@
 				<a class="choose"><spring:message code='ChooseLanguage_t'/></a>
 			</li>
 
-			<c:forEach items="${model.portalLanguages}" var="language">
-				<li class="item"><a class="${language.languageCode}">${language.languageName}</a></li>
+			<c:forEach items="${model.portalLanguages}" var="language" varStatus="status">
+				<li class="item" tabindex="${3+status.index}"><a class="${language.languageCode}">${language.languageName}</a></li>
 			</c:forEach>
 		</ul>
 		<input type="hidden" name="lang" value="" style="margin:0;padding:0;"/>
