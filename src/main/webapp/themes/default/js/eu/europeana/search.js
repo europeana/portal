@@ -65,9 +65,8 @@ eu.europeana.search = {
 	},
 	
 	setupPageJump : function(){
-		
-		jQuery('.jump-to-page').bind('submit', 					this.jumpToPageSubmit );
-		jQuery('.jump-to-page #start-page').bind('keypress',	this.validateJumpToPage);
+		$('.jump-to-page').bind('submit', 					this.jumpToPageSubmit );
+		$('.jump-to-page #start-page').bind('keypress',	this.validateJumpToPage);
 	},
 	
 	jumpToPageSubmit : function( e ){
@@ -123,7 +122,7 @@ eu.europeana.search = {
 	setupEllipsis : function(){
 		// add ellipsis
 		var ellipsisObjects = [];
-		jQuery('.ellipsis').each(
+		$('.ellipsis').each(
 				function(i, ob){
 					var fixed	= $(ob).find('.fixed');
 					var html	= fixed.html();
@@ -214,9 +213,9 @@ eu.europeana.search = {
 	addThis : function() {
 		
 		
-		var url = jQuery('head link[rel="canonical"]').attr('href'),
-			title = jQuery('head title').html(),
-			description = jQuery('head meta[name="description"]').attr('content');
+		var url = $('head link[rel="canonical"]').attr('href'),
+			title = $('head title').html(),
+			description = $('head meta[name="description"]').attr('content');
 		
 			window.addthis_config = com.addthis.createConfigObject({
 				
@@ -229,7 +228,7 @@ eu.europeana.search = {
 				ui_click: true		// disable hover
 			});
 			
-			url = jQuery('head meta[property="og:url"]').attr('content');
+			url = $('head meta[property="og:url"]').attr('content');
 			window.addthis_share = com.addthis.createShareObject({
 				// nb: twitter templates will soon be deprecated, no date is given
 				// @link http://www.addthis.com/help/client-api#configuration-sharing-templates
@@ -248,18 +247,18 @@ eu.europeana.search = {
 			
 			});
 			
-			jQuery('#shares-link').html(
+			$('#shares-link').html(
 				addThisHtml
 			);
 			
 			com.addthis.init( null, true, false );
 			
 			setTimeout( function() {
-				jQuery('#shares-link').fadeIn(); },
+				$('#shares-link').fadeIn(); },
 				600 );
 			
 		/*
-		jQuery('.search-results-navigation').append(
+		$('.search-results-navigation').append(
 			com.addthis.getToolboxHtml({
 				html_class : 'addthis',
 				url : url,
@@ -274,9 +273,9 @@ eu.europeana.search = {
 			})
 		);
 
-		jQuery('.addthis').hide();
+		$('.addthis').hide();
 		com.addthis.init( null, true, false );
-		setTimeout( function() { jQuery('.addthis').fadeIn(); }, 600 );
+		setTimeout( function() { $('.addthis').fadeIn(); }, 600 );
 		*/
 	},
 	
@@ -322,8 +321,8 @@ eu.europeana.search = {
 		},
 		ajax_data = {
 			className : "SavedSearch",
-			query : jQuery('#query-to-save').val(),
-			queryString : jQuery('#query-string-to-save').val()
+			query : $('#query-to-save').val(),
+			queryString : $('#query-string-to-save').val()
 		};
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	}
