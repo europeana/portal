@@ -5325,7 +5325,7 @@ Galleria.log = function() {
             });
         }
     } else {
-        return window.alert( args.join('<br>') );
+        //return window.alert( args.join('<br>') );
     }
 };
 
