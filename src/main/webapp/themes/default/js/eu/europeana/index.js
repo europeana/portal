@@ -155,7 +155,7 @@
 		    			window.euResponsiveTriggerRespond();
 					},
 					error: function(x, status, e){
-						alert("error = " + JSON.stringify(e));
+						js.console.log("error = " + JSON.stringify(e));
 					}
 				});
 			}
@@ -181,7 +181,7 @@
 		    			window.euResponsiveTriggerRespond();
 					},
 					error: function(x, status, e){
-						alert("error = " + JSON.stringify(e));
+						js.console.log("error = " + JSON.stringify(e));
 					}
 				});				
 			},
@@ -233,7 +233,7 @@
 							
 						},
 						error: function(x, status, e){
-							alert("error = " + JSON.stringify(e));
+							js.console.log("error = " + JSON.stringify(e));
 						}
 				});
 			},
@@ -288,7 +288,7 @@
 		});
 
 		$("#addthis_new").html(addThisHtml);
-		alert("done: " + $("#addthis_new").length + "    \n\n\n" + addThisHtml   );
+		js.console.log("done: " + $("#addthis_new").length + "    \n\n\n" + addThisHtml   );
 		
 		$('#addthis_new .addthis_button')					.html('+')
 		$('#addthis_new .addthis_button_tweet')				.html('T')
@@ -303,7 +303,7 @@
 			}
 		);
 		
-		//alert("addThisHtml = " + addThisHtml);
+		//js.console.log("addThisHtml = " + addThisHtml);
 		
 		$('#shares-link').html(
 			addThisHtml
@@ -321,6 +321,7 @@
 	 */
 	
 	var init = function() {
+		
 		js.loader.loadScripts([{
 			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
