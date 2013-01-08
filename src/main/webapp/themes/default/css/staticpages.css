@@ -56,7 +56,7 @@ aside h4 {
 */
 
 
-li.zero{
+ul.zero{
 	list-style: none;
 	margin: 0;
 	padding: 0;
