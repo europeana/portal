@@ -21,13 +21,6 @@
 		<c:set var="dataType"	value=""/>
 		<c:set var="alt"		value=""/>
 		<c:set var="id"			value=""/>
-<%--
-		<c:if test="${model.urlRefIsShownBy}">
-			<script>alert('assign id (by)');</script>
-			 
-			<c:set var="id" value="id=\"urlRefIsShownByImg\"" />
-		</c:if>
-			 --%>
 
 		<c:if test="${not empty model['thumbnailUrl']}">
 			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
