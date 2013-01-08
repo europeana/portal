@@ -365,8 +365,7 @@ table tr:first-child{
 
 #lang-menu{
 	position:		relative;
-	float:			right;
-	z-index:		11;	
+	float:			right;	
 	margin-right:	0 !important;
 	white-space:	nowrap;
 	padding-left:	1em;
