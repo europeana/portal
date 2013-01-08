@@ -1,0 +1,14 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div class="row" id="content">
+  <c:if test="${model.leftContent}">
+    <%@ include file="/WEB-INF/jsp/default/_common/html/sidebar/sidebar.jsp" %>
+    <div id="content-main" class="with-sidebar">
+  </c:if>
+
+  <%@ include file="/WEB-INF/jsp/default/providers/content/providers.jspf" %>
+  <%@ include file="/WEB-INF/jsp/default/sitemap/incl_browse-all-table.jspf" %>
+
+  <c:if test="${model.leftContent}">
+    </div>
+  </c:if>
+</div>
