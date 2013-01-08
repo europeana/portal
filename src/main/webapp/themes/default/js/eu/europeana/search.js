@@ -235,7 +235,7 @@ eu.europeana.search = {
 				templates: { twitter: title + ': ' + url + ' #europeana' }
 			});
 		
-			var addThisHtml = com.addthis.getToolboxHtml_ANDY({
+			var addThisHtml = com.addthis.getToolboxHtml({
 				html_class : '',
 				url : url,
 				title : title,

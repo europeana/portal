@@ -242,8 +242,8 @@
 		});
 	};
 	
+	/*
 	var initAddThis = function(){
-		return;
 		var url = $('head link[rel="canonical"]').attr('href'),
 			title = $('head title').html(),
 			description = $('head meta[name="description"]').attr('content');
@@ -259,7 +259,7 @@
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes
 		
-		var addThisHtml = com.addthis.getToolboxHtml_ANDY({
+		var addThisHtml = com.addthis.getToolboxHtml({
 			html_class : '',
 			url : url,
 			title : title,
@@ -270,19 +270,7 @@
 			link_html : $('#shares-link').html()
 		});
 
-		
-		/*
-		<span style="width:100%;" title="get the title" class="addthis_toolbox addthis_default_style" addthis:title="Europeana - Homepage" addthis:description="Europeana - Homepage">
-			<a class="addthis_button">
-				<span title="Share item on facebook, twitter, etc.">
-					<span aria-hidden="true" class="icon-share">
-					</span>
-				</span>
-			</a>
-		</span>	
-		*/
-
-		var addThisHtml = com.addthis.getToolboxHtml_ANDY({
+		var addThisHtml = com.addthis.getToolboxHtml({
 			html_class : '',
 			url : url,
 			title : title,
@@ -299,8 +287,6 @@
 			//, link_html : $('#shares-link').html()
 		});
 
-		
-		
 		$("#addthis_new").html(addThisHtml);
 		alert("done: " + $("#addthis_new").length + "    \n\n\n" + addThisHtml   );
 		
@@ -309,25 +295,13 @@
 		$('#addthis_new .addthis_button_google_plusone')	.html('G')
 		$('#addthis_new .addthis_button_facebook_like')		.html('F')
 		
-		
-//		alert("com.addthis.loaded = " + com.addthis.loaded  );
-		
-		
 		//addthis.addEventListener('addthis.ready' );
 		
 		com.addthis.init( null, true, false,
 			function(){
-				alert("add this has loaded..... rerork the dom");
-				
-//				$('#addthis_new .addthis_button_facebook_like')		.html('<span class="icon-facebook"></span>');
-
-				
+				//				$('#addthis_new .addthis_button_facebook_like')		.html('<span class="icon-facebook"></span>');
 			}
 		);
-		
-		return;
-		
-		
 		
 		//alert("addThisHtml = " + addThisHtml);
 		
@@ -343,9 +317,8 @@
 				$(this).css("display", "inline-block");
 			}); },
 			600 );
-
-		
 	};
+	 */
 	
 	var init = function() {
 		js.loader.loadScripts([{
@@ -358,6 +331,7 @@
 		
 		initResponsiveImages();
 		
+		/*
 		js.loader.loadScripts([{
 			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
@@ -365,6 +339,7 @@
 				initAddThis();
 			}
 		}]);
+		*/
 	};
 	
 	$(document).ready(function(){

@@ -272,7 +272,7 @@ eu.europeana.fulldoc = {
 		// nb: tweet does not accept twitter templates, it only accepts html attributes
 		// @see /js/com/addthis/addthis.js for those attributes
 		
-		var addThisHtml = com.addthis.getToolboxHtml_ANDY({
+		var addThisHtml = com.addthis.getToolboxHtml({
 			html_class : '',
 			url : url,
 			title : title,
