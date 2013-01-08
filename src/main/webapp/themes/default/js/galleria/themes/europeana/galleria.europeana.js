@@ -201,7 +201,7 @@ Galleria.addTheme({
 
 			
 			ctrlLB.click(function(){
-				alert( dataSource[thisGallery.getIndex()].lb   );
+				//alert( dataSource[thisGallery.getIndex()].lb   );
 				thisGallery.openLightbox();
 			});
 			ctrlPlay.click(function(){
@@ -266,7 +266,7 @@ Galleria.addTheme({
     		}
     		else{
     			/* we're showing a single image */
-    			alert("IS THIS EVER USED?")
+    			//alert("IS THIS EVER USED?")
 				
 				//var thumbs	=	this.$( 'container' ).find(".galleria-thumbnails-container");
 				//var info 	=	this.$( 'container' ).find(".galleria-info");
