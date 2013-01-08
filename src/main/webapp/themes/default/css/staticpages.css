@@ -4,18 +4,18 @@
 
 /* positioning  */
 
-
 .sidebar{
 	margin-bottom:	1.5em;
 	padding:	0 0 0 2em;
 }
 
+/*
 .sidebar ul {
 	list-style:	none;
 	margin:		0;
 	padding:	0 0 1em 0;
 }
-
+*/
 
 #staticmenu li a {
 	display: block;
@@ -39,6 +39,7 @@ aside h4 {
 	margin-bottom:	2em;
 }
 
+/*
 #content-main  ul,
 .static-content ul {
 	list-style: none;
@@ -46,11 +47,28 @@ aside h4 {
 	padding: 0;
 }
 
+
 #content-main  ul li,
 .static-content ul li {
 	list-style: none;
 	padding-bottom: 1em;
 }
+*/
+
+
+li.zero{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+#content-main  ul li,
+.static-content ul li {
+	padding-bottom: 1em;
+}
+
 
 
 
