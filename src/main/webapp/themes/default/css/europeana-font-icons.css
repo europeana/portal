@@ -28,26 +28,25 @@
 }
 
 
-			/* Andy: modification */
-		
-			[data-icon]:after {
-				font-family: 'europeana';
-				content: attr(data-icon);
-				speak: none;
-				font-weight: normal;
-				-webkit-font-smoothing: antialiased;
-			}
-			
-			/* Use the following CSS code if you want to have a class per icon */
-			[class^="icon-"]:after,
-			[class*=" icon-"]:after {
-				font-family: 'europeana';
-				font-style: normal;
-				speak: none;
-				font-weight: normal;
-				-webkit-font-smoothing: antialiased;
-			}
+/* modified to use :after */
 
+[data-icon]:after {
+	font-family: 'europeana';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
+			
+/* Use the following CSS code if you want to have a class per icon */
+[class^="icon-"]:after,
+[class*=" icon-"]:after {
+	font-family: 'europeana';
+	font-style: normal;
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
 
 
 .icon-logo:before {
@@ -76,24 +75,18 @@
 }
 
 
-
-/* Andy: modification */
+/* modified to use :after */
 .icon-arrow-6-right:after {
 	content: "\69";
 }
-
 
 .icon-arrow-7:before {
 	content: "\6a";
 }
 
-
-
 .icon-arrow-7-right:after {
 	content: "\6a";
 }
-
-
 
 
 .icon-arrow-8:before {
@@ -214,13 +207,11 @@
 	content: "\50";
 }
 
-
-/* Andy: modification */
-.icon-external-right:after {
+/* modified to use after */
+.icon-external-right:after{
 	content:		"\50";
 	margin-left:	0.4em;
 }
-
 
 .icon-download:before {
 	content: "\51";
