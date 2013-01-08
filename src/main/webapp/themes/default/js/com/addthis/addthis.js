@@ -127,53 +127,40 @@ com.addthis = {
 	 *		description : {string}
 	 *		services : {object}
 	 */
+	
+	
+	/*
 	getToolboxHtml : function( options ) {
-		
 		options.html_class = options.html_class || 'addthis_toolbox addthis_default_style';
-		
 		var html =
 			'<div class="' + options.html_class + '"' +
 				( options.url ? ' addthis:url="' + options.url + '"' : '' ) +
 				( options.title ? ' addthis:title="' + options.title + '"' : '' ) +
 				( options.description ? ' addthis:description="' + options.description + '"' : '' ) +
 			'>' +
-				
 				( ( options.services ) ? this.getButtons( options.services ) : '' ) +
 				'<div style="clear:both;"></div>' +
-				
 			'</div>';
-		
 		return html;
-		
 	},
-	
+	*/
 	
 
 	
-	getToolboxHtml_ANDY : function( options ) {
-		
+	getToolboxHtml : function( options ) {
 		options.html_class = options.html_class || 'addthis_toolbox addthis_default_style';
-		
-		
 		var html =
-			
 			'<span '								+
 			'style="width:100%;" '					+
 			'title="get the title" '				+
 			'class="' + options.html_class + '"'	+
-
 			( options.url			? ' addthis:url="'			+ options.url + '"' : '' ) +
 			( options.title			? ' addthis:title="'		+ options.title + '"' : '' ) +
 			( options.description	? ' addthis:description="'	+ options.description + '"' : '' ) +
-			
 			'>' + 
-			
 			( ( options.services )	? this.getButtons( options.services, options.link_html ) : '' ) +
-			
 			'</span>';	
-		
 		return html;
-		
 	},
 	
 	
