@@ -56,14 +56,16 @@ public class ContributorItem {
 		return !dataProviders.isEmpty();
 	}
 
-	private String getLocDataProvider(String dataProviderName) {
+	private String getLocDataProvider(String providerName, String dataProviderName) {
 		try {
+			StringBuilder pToEncode = new StringBuilder("PROVIDER:\"").append(providerName).append("\"");
+
 			String dp = StringUtils.replace(dataProviderName, " and ", " \\and ");
-			StringBuilder toEncode = new StringBuilder("europeana_dataProvider:\"");
-			toEncode.append(dp).append("\"");
+			StringBuilder dpToEncode = new StringBuilder("DATA_PROVIDER:\"").append(dp).append("\"");
 
 			StringBuilder sb = new StringBuilder(portalServer);
-			sb.append("/search.html?query=").append(URLEncoder.encode(toEncode.toString(), "UTF-8"));
+			sb.append("/search.html?query=").append(URLEncoder.encode(dpToEncode.toString(), "UTF-8"));
+			sb.append("&qf=").append(URLEncoder.encode(pToEncode.toString(), "UTF-8"));
 			return sb.toString();
 
 		} catch (UnsupportedEncodingException e) {
@@ -105,7 +107,7 @@ public class ContributorItem {
 		}
 
 		public String getLoc() {
-			return parent.getLocDataProvider(name);
+			return parent.getLocDataProvider(parent.name, name);
 		}
 	}
 }

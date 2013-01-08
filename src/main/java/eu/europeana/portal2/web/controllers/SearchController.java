@@ -73,7 +73,7 @@ public class SearchController {
 		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
 		@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 		// @RequestParam(value = "bt", required = false) String bt,
-		HttpServletRequest request, 
+		HttpServletRequest request,
 		HttpServletResponse response,
 		Locale locale
 	) {

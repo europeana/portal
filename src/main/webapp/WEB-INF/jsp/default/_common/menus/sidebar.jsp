@@ -1,12 +1,7 @@
 <c:if test="${!empty model.leftContent}">
-
-
 	<div class="hide-on-phones">
 		<div>
-  			${model.leftContent}
-  		</div>
-  	</div>
-  	
-  	
+			${model.leftContent}
+		</div>
+	</div>
 </c:if>
-

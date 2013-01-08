@@ -86,6 +86,7 @@ public class BriefBeanDecorator implements BriefBean {
 			id = id.replace("#", "");
 		}
 		String url = PATH + id + EXTENTION;
+
 		UrlBuilder builder = new UrlBuilder(url);
 
 		builder.addParam("start", Integer.toString(getIndex()), true);
@@ -94,6 +95,7 @@ public class BriefBeanDecorator implements BriefBean {
 		} catch (UnsupportedEncodingException e) {
 			log.severe("UnsupportedEncodingException while enrich url: " + e.getLocalizedMessage());
 		}
+
 		return builder.toString();
 	}
 

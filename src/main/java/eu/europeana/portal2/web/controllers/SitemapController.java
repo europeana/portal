@@ -40,6 +40,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.SitemapEntry;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.IngestionUtils;
+import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.StaticCache;
 
 @Controller
@@ -68,7 +69,7 @@ public class SitemapController {
 	}
 
 	public static String solrQueryClauseToIncludeRecordsToPromoteInSitemaps(int min) {
-		return "COMPLETENESS:[" + min + " TO *] ";
+		return "COMPLETENESS:[" + min + " TO *]";
 	}
 
 	public static String solrQueryClauseToIncludePlaces() {
@@ -296,18 +297,22 @@ public class SitemapController {
 	}
 
 	@RequestMapping("/europeana-providers.html")
-	public ModelAndView handleListOfContributors(HttpServletRequest request,
-			Locale locale) throws EuropeanaQueryException {
+	public ModelAndView handleListOfContributors(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale)
+					throws EuropeanaQueryException {
+		Injector injector = new Injector(request, response, locale);
 
-		String portalServer = new StringBuilder(config.getPortalServer())
-									.append(config.getPortalName()).toString();
+		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
 
 		// sitemap index - collections overview
 		List<ContributorItem> entries = new ArrayList<ContributorItem>();
 		List<Count> providers;
 		try {
-			providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*");
+			providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
 			for (Count provider : providers) {
+				log.info("provider: " + provider.getName());
 				try {
 					String query = StringEscapeUtils.escapeXml(String.format(
 							"%s/search.html?query=*:*&qf=PROVIDER:%s",
@@ -317,13 +322,12 @@ public class SitemapController {
 
 					List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 
-					List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService, "DATA_PROVIDER", 
-							"*:* AND PROVIDER:\"" + provider.getName() + "\"");
+					List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService, "DATA_PROVIDER",
+							"*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
 					for (Count dataProvider : rawDataProviders) {
 						if (dataProvider.getCount() > 0) {
-							dataProviders.add(contributorItem.new DataProviderItem(
-									contributorItem, dataProvider.getName(),
-									dataProvider.getCount()));
+							log.info("dataProvider: " + dataProvider.getName());
+							dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider.getName(), dataProvider.getCount()));
 						}
 					}
 
@@ -341,14 +345,15 @@ public class SitemapController {
 		SitemapPage<ContributorItem> model = new SitemapPage<ContributorItem>();
 		model.setResults(entries);
 		model.setPrefix("");
-		model.setLeftContent(getStaticPagePart("/newcontent.html",
-				StaticPageController.AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
+		model.setLeftContent(getStaticPagePart("/newcontent.html", StaticPageController.AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
+		injector.injectProperties(model);
 
-		ModelAndView mavPage = ControllerUtil.createModelAndViewPage(model,
-				locale, PortalPageInfo.PROVIDERS);
-		clickStreamLogger.logUserAction(request,
-				ClickStreamLogger.UserAction.SITE_MAP_XML, mavPage);
-		return mavPage;
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.PROVIDERS);
+
+		injector.postHandle(this, page);
+		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SITE_MAP_XML, page);
+
+		return page;
 	}
 
 	@RequestMapping("/europeana-sitemap-static.xml")

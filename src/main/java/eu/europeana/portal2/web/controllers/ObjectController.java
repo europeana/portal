@@ -152,7 +152,6 @@ public class ObjectController {
 		log.info("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
-			log.info("fullBean: " + (fullBean == null));
 			Query query = new Query(queryString).setRefinements(qf);
 
 			// full bean view

@@ -27,103 +27,101 @@ import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
 
 public class PaginationDecorator implements ResultPagination {
-    
-    SearchData model;
-    ResultPagination pagination;
 
-    public PaginationDecorator(SearchData model, ResultPagination pagination) {
-        this.model = model;
-        this.pagination = pagination;
-    }
+	SearchData model;
+	ResultPagination pagination;
 
-    @Override
-    public boolean isPrevious() {
-        return pagination.isPrevious();
-    }
+	public PaginationDecorator(SearchData model, ResultPagination pagination) {
+		this.model = model;
+		this.pagination = pagination;
+	}
 
-    @Override
-    public boolean isNext() {
-        return pagination.isNext();
-    }
-    
-    @Override
-    public boolean isFirst() {
-    	return pagination.isFirst();
-    }
+	@Override
+	public boolean isPrevious() {
+		return pagination.isPrevious();
+	}
 
-    @Override
-    public boolean isLast() {
-    	return pagination.isLast();
-    }
-    
-    @Override
-    public int getPreviousPage() {
-        return pagination.getPreviousPage();
-    }
+	@Override
+	public boolean isNext() {
+		return pagination.isNext();
+	}
 
-    @Override
-    public int getNextPage() {
-        return pagination.getNextPage();
-    }
+	@Override
+	public boolean isFirst() {
+		return pagination.isFirst();
+	}
 
-    @Override
-    public int getFirstPage() {
-    	return pagination.getFirstPage();
-    }
-    
-    @Override
-    public int getLastPage() {
-    	return pagination.getLastPage();
-    }
-    
-    @Override
-    public int getNumberOfPages() {
-    	return pagination.getNumberOfPages();
-    }
-    
-    @Override
-    public int getLastViewableRecord() {
-        return pagination.getLastViewableRecord();
-    }
+	@Override
+	public boolean isLast() {
+		return pagination.isLast();
+	}
 
+	@Override
+	public int getPreviousPage() {
+		return pagination.getPreviousPage();
+	}
 
-    @Override
-    public int getRows() {
-        return pagination.getRows();
-    }
+	@Override
+	public int getNextPage() {
+		return pagination.getNextPage();
+	}
 
-    @Override
-    public int getStart() {
-        return pagination.getStart();
-    }
+	@Override
+	public int getFirstPage() {
+		return pagination.getFirstPage();
+	}
 
-    @Override
-    public List<PageLink> getPageLinks() {
-        List<PageLink> decoList = new ArrayList<PageLink>();
-        for (PageLink pageLink : pagination.getPageLinks()) {
-            decoList.add(new PageLinkDecorator(model, pageLink));
-        }
-        return decoList;
-    }
+	@Override
+	public int getLastPage() {
+		return pagination.getLastPage();
+	}
 
-    @Override
-    public List<BreadCrumb> getBreadcrumbs() {
-        return pagination.getBreadcrumbs();
-    }
+	@Override
+	public int getNumberOfPages() {
+		return pagination.getNumberOfPages();
+	}
 
-    @Override
-    public PresentationQuery getPresentationQuery() {
-        return pagination.getPresentationQuery();
-    }
+	@Override
+	public int getLastViewableRecord() {
+		return pagination.getLastViewableRecord();
+	}
 
-    @Override
-    public int getPageNumber() {
-        return pagination.getPageNumber();
-    }
+	@Override
+	public int getRows() {
+		return pagination.getRows();
+	}
 
-    @Override
-    public int getNumFound() {
-    	return pagination.getNumFound();
-    }
-    
+	@Override
+	public int getStart() {
+		return pagination.getStart();
+	}
+
+	@Override
+	public List<PageLink> getPageLinks() {
+		List<PageLink> decoList = new ArrayList<PageLink>();
+		for (PageLink pageLink : pagination.getPageLinks()) {
+			decoList.add(new PageLinkDecorator(model, pageLink));
+		}
+		return decoList;
+	}
+
+	@Override
+	public List<BreadCrumb> getBreadcrumbs() {
+		return pagination.getBreadcrumbs();
+	}
+
+	@Override
+	public PresentationQuery getPresentationQuery() {
+		return pagination.getPresentationQuery();
+	}
+
+	@Override
+	public int getPageNumber() {
+		return pagination.getPageNumber();
+	}
+
+	@Override
+	public int getNumFound() {
+		return pagination.getNumFound();
+	}
 }

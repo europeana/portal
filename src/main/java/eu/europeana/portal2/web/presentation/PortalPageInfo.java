@@ -100,7 +100,7 @@ public enum PortalPageInfo implements PageInfo {
 	SITEMAP_BROWSE_LANDING(null, "sitemap/browse-all-landing-page"),
 
 	SIWAMENU(null, "fulldoc/siwa-menu-with-services"),
-	STATICPAGE("staticpage.html", "Europeana page", "staticpage/staticpage"),
+	STATICPAGE("staticpage.html", "Europeana Page", "staticpage/staticpage"),
 
 	TIMELINE("timeline.html", "Europeana - Timeline", "timeline/timeline"),
 	TIMELINE_JSON("search.json", "timeline/timeline-json");

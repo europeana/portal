@@ -46,14 +46,17 @@ public class IngestionUtils {
 
 	@Resource private SearchService searchService;
 
-	public static List<FacetField.Count> getCollectionsFromSolr(SearchService searchService, String facetFieldName, String queryString) 
+	public static List<FacetField.Count> getCollectionsFromSolr(SearchService searchService, String facetFieldName, 
+			String queryString, String[] fq) 
 			throws SolrTypeException {
 		Query query = new Query(queryString)
 							.setParameter("rows", "0")
 							.setParameter("facet", "true")
-							.setParameter("addFacetField", facetFieldName)
+							.setRefinements(fq)
+							// .setParameter("addFacetField", facetFieldName)
 							.setParameter("facet.mincount", "1")
-							.setParameter("facet.limit", "750");
+							.setParameter("facet.limit", "750")
+							.setAllowSpellcheck(false);
 		final ResultSet<BriefBean> response = searchService.search(BriefBean.class, query);
 		List<FacetField.Count> facetFieldCount = null;
 		for (FacetField facetField : response.getFacetFields()) {
