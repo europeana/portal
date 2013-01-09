@@ -18,7 +18,7 @@
     <c:when test="${model.problem == 'PAGE_NOT_FOUND'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorPageNotFound_t" /><br/>
+        <spring:message code="ErrorPageNotFound_t" />${" "}
         <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
@@ -51,14 +51,14 @@
     <c:when test="${model.problem == 'SOLR_UNREACHABLE'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorSolrUnreachable_t" />${" "}
+    <spring:message code="ErrorSolrUnreachable_t" />${" "}
         <spring:message code="ErrorTryAnotherSearchLater_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'MALFORMED_QUERY'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorMalformedQuery_t" />${" "}
+        <spring:message code="ErrorMalformedQuery_t" />
         <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>

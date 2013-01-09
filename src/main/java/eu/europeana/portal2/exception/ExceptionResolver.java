@@ -18,6 +18,7 @@ import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ExceptionPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.Injector;
 
 public class ExceptionResolver implements HandlerExceptionResolver {
 
@@ -30,6 +31,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request,
 			HttpServletResponse response, Object object, Exception exception) {
+		Injector injector = new Injector(request, response, null);
 
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		ProblemType problem = ProblemType.NONE;
@@ -41,45 +43,50 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		log.severe(stackTrace);
 
 		switch (problem.getAction()) {
-		case MAIL :
-			try {
-				StringBuilder message = new StringBuilder();
-				message.append("hostName: ").append(request.getServerName()).append("\n");
-				message.append("request: ").append(ControllerUtil.formatFullRequestUrl(request)).append("\n");
-				message.append("stackTrace: ").append(stackTrace).append("\n");
-				// model.put("cacheUrl", imageCacheUrl);
-				message.append("portalName: ").append(config.getPortalName()).append("\n");
-				message.append("agent: ").append(request.getHeader("User-Agent")).append("\n");
-				message.append("referer: ").append(request.getHeader("referer")).append("\n");
-				message.append("date: ").append(new DateTime()).append("\n");
+			case MAIL :
+				try {
+					StringBuilder message = new StringBuilder();
+					message.append("hostName: ").append(request.getServerName()).append("\n");
+					message.append("request: ").append(ControllerUtil.formatFullRequestUrl(request)).append("\n");
+					message.append("stackTrace: ").append(stackTrace).append("\n");
+					// model.put("cacheUrl", imageCacheUrl);
+					message.append("portalName: ").append(config.getPortalName()).append("\n");
+					message.append("agent: ").append(request.getHeader("User-Agent")).append("\n");
+					message.append("referer: ").append(request.getHeader("referer")).append("\n");
+					message.append("date: ").append(new DateTime()).append("\n");
 
-				if (!config.getDebugMode()) {
-					emailService.sendException(problem.getMessage(), message.toString());
+					if (!config.getDebugMode()) {
+						emailService.sendException(problem.getMessage(), message.toString());
+					}
+					else {
+						log.severe(stackTrace);
+					}
 				}
-				else {
-					log.severe(stackTrace);
+				catch (Exception e) {
+					log.warning("Unable to send exception email to system admin. " + e);
 				}
-			}
-			catch (Exception e) {
-				log.warning("Unable to send exception email to system admin. " + e);
-			}
-			break;
-		case LOG:
-			log.warning(problem.getMessage() + "\n" + stackTrace);
-			break;
-		// ignore
-		case IGNORE:
-			break;
+				break;
+			case LOG:
+				log.warning(problem.getMessage() + "\n" + stackTrace);
+				break;
+				// ignore
+			case IGNORE:
+				break;
 		}
 
 		ExceptionPage model = new ExceptionPage();
+		log.info("problem.name: " + problem.name());
 		model.setException(exception);
 		model.setProblem(problem);
 		model.setStackTrace(stackTrace);
 		model.setPortalName(config.getPortalName());
 		// model.setCacheUrl(imageCacheUrl);
 		model.setDebug(config.getDebugMode());
+		injector.injectProperties(model);
 
-		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);
+		injector.postHandle(this, page);
+
+		return page;
 	}
 }

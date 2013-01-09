@@ -34,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.definitions.exception.ProblemType;
+import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.model.CorePageInfo;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
@@ -174,10 +176,7 @@ public class StaticPageController {
 
 		// generate static page
 		StaticPage model = new StaticPage();
-		
 		model.setTc(pageName.indexOf("rights")>-1);
-		
-		
 		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, locale));
 		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, locale));
 		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
@@ -185,6 +184,7 @@ public class StaticPageController {
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
+
 		injector.injectProperties(model);
 
 		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
@@ -354,14 +354,19 @@ public class StaticPageController {
 		}
 	}
 
-	/*
-	 * freemarker Template not loadable from database
-	 */
+	@RequestMapping("/page-not-found.html")
+	public ModelAndView pageNotFoundHandler(HttpServletRequest request, Locale locale) throws Exception {
+		log.info("====== page-not-found.html ======");
+		throw new EuropeanaQueryException(ProblemType.PAGE_NOT_FOUND);
+	}
 
 	@RequestMapping("/error.html")
 	public ModelAndView errorPageHandler(HttpServletRequest request, Locale locale) throws Exception {
-		CorePageInfo pageType = CorePageInfo.ERROR;
+		log.info("====== error.html ======");
+		CorePageInfo pageType = CorePageInfo.EXCEPTION;
+
 		clickStreamLogger.logStaticPageView(request, pageType);
+		
 		return ControllerUtil.createModelAndViewPage(new EmptyModelPage(), locale, pageType);
 	}
 
