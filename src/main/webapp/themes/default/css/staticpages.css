@@ -9,14 +9,6 @@
 	padding:	0 0 0 2em;
 }
 
-/*
-.sidebar ul {
-	list-style:	none;
-	margin:		0;
-	padding:	0 0 1em 0;
-}
-*/
-
 #staticmenu li a {
 	display: block;
 	padding: 0;
@@ -105,9 +97,9 @@ h1{
 	
 	.sidebar {
 		width:			25%;
-		float:			left;
-		padding:		0 1em 1em 2em;
-		margin:			0.5em 2em 1em 0;
+		float:			right;
+		padding:		0 2em 1em 1em;
+		margin:			0.5em 0 1em 2em;
 	}
 	
 	
