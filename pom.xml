@@ -45,6 +45,13 @@
 		<version.springSecurityOauth>1.0.0.M6a</version.springSecurityOauth>
 	</properties>
 
+	<scm>
+		<connection>scm:svn:http://europeanalabs.eu/svn/europeana</connection>
+		<developerConnection>scm:svn:http://europeanalabs.eu/svn/europeana</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://europeanalabs.eu/svn/europeana</url>
+	</scm>
+
 	<!-- Added for jetty -->
 	<build>
 		<finalName>portal</finalName>
@@ -72,6 +79,40 @@
 				<configuration>
 					<mainClass>eu.europeana.Portal2Starter</mainClass>
 					<classpathScope>test</classpathScope>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<providerImplementations>
+						<svn>javasvn</svn>
+					</providerImplementations>
+					<timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/main/resources</directory>
+							<filtering>true</filtering>
+							<includes>
+								<include>**/build.txt</include>
+							</includes>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -179,10 +220,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-	<groupId>commons-httpclient</groupId>
-	<artifactId>commons-httpclient</artifactId>
-	<version>3.1</version>
-</dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
 		<!-- Added logging for jetty in Portal2Starter -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
