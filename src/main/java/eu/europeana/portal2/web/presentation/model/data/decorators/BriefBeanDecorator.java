@@ -78,6 +78,10 @@ public class BriefBeanDecorator implements BriefBean {
 	}
 
 	public String getFullDocUrl() {
+		return getFullDocUrl(true);
+	}
+
+	public String getFullDocUrl(boolean addParams) {
 		String id = briefBean.getId();
 		if (!id.startsWith("/")) {
 			id = "/" + id;
@@ -86,6 +90,10 @@ public class BriefBeanDecorator implements BriefBean {
 			id = id.replace("#", "");
 		}
 		String url = PATH + id + EXTENTION;
+
+		if (!addParams) {
+			return url;
+		}
 
 		UrlBuilder builder = new UrlBuilder(url);
 

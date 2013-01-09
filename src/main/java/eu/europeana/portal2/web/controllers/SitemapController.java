@@ -64,6 +64,12 @@ public class SitemapController {
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
+	private static final String europeanaUriPrefix = "http://www.europeana.eu/resolve/";
+	private static final String europeanaUriInfix = "/resolve/";
+	private static final String canonicalUrlPrefix = "http://www.europeana.eu/portal/";
+	private static final String canonicalUrlInfix = "/portal/";
+	private static String portalUrl;
+
 	public static String solrQueryClauseToIncludeRecordsToPromoteInSitemaps() {
 		return solrQueryClauseToIncludeRecordsToPromoteInSitemaps(MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES);
 	}
@@ -90,20 +96,19 @@ public class SitemapController {
 		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		out.println("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 
+		String prefix;
+		String urlPath = "europeana-sitemap-hashed.xml?prefix=";
+		String paramImages = "&images=";
+		String paramPlaces = "&places=";
 		for (String ab : makeHexLetterPairs()) {
 			for (String cd : makeHexLetters()) {
-				String sitemap = ab + cd;
+				prefix = ab + cd;
 				StringBuilder sb = new StringBuilder();
-				sb.append(config.getPortalServer()).append(config.getPortalName()).append("/");
-				sb.append("europeana-sitemap-hashed.xml?prefix=");
-				sb.append(sitemap);
-				sb.append("&images=");
-				sb.append(StringUtils.contains(images, "true"));
-				sb.append("&places=");
-				sb.append(StringUtils.contains(places, "true"));
+				sb.append(getPortalUrl()).append(urlPath).append(prefix);
+				sb.append(paramImages).append(StringUtils.contains(images, "true"));
+				sb.append(paramPlaces).append(StringUtils.contains(places, "true"));
 				out.println("<sitemap>");
-				out.println("  <loc>"
-						+ StringEscapeUtils.escapeXml(sb.toString()) + "</loc>");
+				out.println("  <loc>" + StringEscapeUtils.escapeXml(sb.toString()) + "</loc>");
 				out.println("</sitemap>");
 			}
 		}
@@ -168,13 +173,18 @@ public class SitemapController {
 					} else {
 						log.info("no title");
 					}
-					SitemapEntry entry = new SitemapEntry(convertEuropeanaUriToCanonicalUrl(docId.getId()), docId.getThumbnail(), title, docId.getEuropeanaCompleteness());
+					SitemapEntry entry = new SitemapEntry(
+							getPortalUrl() + convertEuropeanaUriToCanonicalUrl(docId.getFullDocUrl(false), false), 
+							docId.getThumbnail(), title, docId.getEuropeanaCompleteness());
 					out.println("<url>");
+
 					String url = entry.getLoc();
+
 					if (isPlaceSitemap) {
 						url = StringUtils.replace(url, ".html", ".kml");
 					}
 					out.println("  <loc>" + url + "</loc>");
+
 					if (isImageSitemap && docId.getType() == DocType.IMAGE) {
 						out.println("  <image:image>");
 						out.println("    <image:loc>" + config.getImageCacheUrl() + "uri="
@@ -236,7 +246,7 @@ public class SitemapController {
 				for (BriefBean bean : resultSet) {
 					BriefBeanDecorator docId = new BriefBeanDecorator(model, bean);
 					SitemapEntry entry = new SitemapEntry(
-							convertEuropeanaUriToCanonicalUrl(docId.getId()),
+							getPortalUrl() + convertEuropeanaUriToCanonicalUrl(docId.getFullDocUrl(false), false),
 							docId.getThumbnail(), docId.getTitle()[0],
 							docId.getEuropeanaCompleteness());
 					out.println("<url>");
@@ -285,15 +295,25 @@ public class SitemapController {
 	 * @return
 	 */
 	public static String convertEuropeanaUriToCanonicalUrl(String europeanaUri) {
-		final String europeanaUriPrefix = "http://www.europeana.eu/resolve/";
-		final String canonicalUrlPrefix = "http://www.europeana.eu/portal/";
-		return europeanaUri.replace(europeanaUriPrefix, canonicalUrlPrefix) + ".html";
+		return convertEuropeanaUriToCanonicalUrl(europeanaUri, true);
+	}
+
+	public static String convertEuropeanaUriToCanonicalUrl(String europeanaUri, boolean usePrefix) {
+		if (usePrefix) {
+			return europeanaUri.replace(europeanaUriPrefix, canonicalUrlPrefix) + ".html";
+		}
+		return europeanaUri.replace(europeanaUriInfix, canonicalUrlInfix);
 	}
 
 	static String convertCanonicalUrlToEuropeanaUri(String canonicalUrl) {
-		final String europeanaUriPrefix = "http://www.europeana.eu/resolve/";
-		final String canonicalUrlPrefix = "http://www.europeana.eu/portal/";
-		return StringUtils.removeEnd(canonicalUrl.replace(canonicalUrlPrefix, europeanaUriPrefix), ".html");
+		return convertCanonicalUrlToEuropeanaUri(canonicalUrl, true);
+	}
+
+	static String convertCanonicalUrlToEuropeanaUri(String canonicalUrl, boolean usePrefix) {
+		if (usePrefix) {
+			return StringUtils.removeEnd(canonicalUrl.replace(canonicalUrlPrefix, europeanaUriPrefix), ".html");
+		}
+		return StringUtils.removeEnd(canonicalUrl.replace(canonicalUrlInfix, europeanaUriInfix), ".html");
 	}
 
 	@RequestMapping("/europeana-providers.html")
@@ -397,5 +417,12 @@ public class SitemapController {
 
 	public static List<String> makeHexLetters() {
 		return Arrays.asList(SitemapPage.HEX);
+	}
+	
+	private String getPortalUrl() {
+		if (portalUrl == null) {
+			portalUrl = config.getPortalServer() + config.getPortalName() + "/";
+		}
+		return portalUrl;
 	}
 }

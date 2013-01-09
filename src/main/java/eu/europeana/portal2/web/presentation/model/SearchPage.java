@@ -82,8 +82,10 @@ public class SearchPage extends SearchPreparation {
 	@Override
 	public UrlBuilder enrichFullDocUrl(UrlBuilder builder) throws UnsupportedEncodingException {
 
-		builder.addParamsFromURL(getBriefBeanView().getPagination().getPresentationQuery().getQueryForPresentation());
-		builder.addParam("startPage", Integer.toString(getBriefBeanView().getPagination().getStart()), true);
+		if (getBriefBeanView() != null) {
+			builder.addParamsFromURL(getBriefBeanView().getPagination().getPresentationQuery().getQueryForPresentation());
+			builder.addParam("startPage", Integer.toString(getBriefBeanView().getPagination().getStart()), true);
+		}
 		builder = getPortalFormattedUrl(builder);
 
 		if (isEmbedded()) {
