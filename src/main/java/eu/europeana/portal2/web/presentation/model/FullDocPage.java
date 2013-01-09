@@ -158,10 +158,10 @@ public class FullDocPage extends FullDocPreparation {
 			// FileNameMap fileNameMap = URLConnection.getFileNameMap();
 
 			// if (WebUtils.checkMimeType(shownBy) != null) {
-			if (hasShownBy) {
+			if (hasShownBy && !StringUtils.isBlank(shortcut.get("EdmIsShownBy")[0])) {
 				lightboxRef = shortcut.get("EdmIsShownBy")[0];
 				lightboxRefField = "edm:isShownBy";
-			} else if (hasShownAt) {
+			} else if (hasShownAt && !StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])) {
 				lightboxRef = shortcut.get("EdmIsShownAt")[0];
 				lightboxRefField = "edm:isShownAt";
 			} else {
@@ -411,22 +411,19 @@ public class FullDocPage extends FullDocPreparation {
 
 			String docType = getDocument().getEdmType();
 			String thumbnailUrl = this.getThumbnailUrl();
-			String isShownByUrl = getLightboxRef();
-			String firstImageType = getImageType(isShownByUrl, docType);
+			String lightboxRef = getLightboxRef();
+			String firstImageType = getImageType(lightboxRef, docType);
 
 			Image firstImage = new Image(
 				thumbnailUrl,
-				isShownByUrl,
-				//createImageUrl(imageUrl, firstImageType, "FULL_DOC"),
+				lightboxRef,
 				firstImageType,
 				getLightboxRefField()
 			);
 			imagesToShow.add(firstImage);
 
 			Map<String, String> images = getImages();
-			String imageField;
 			for (String imageUrl : images.keySet()) {
-				imageField = images.get(imageUrl);
 				String imageType = getImageType(imageUrl, docType);
 				Image img;
 				if (imageType.equals("IMAGE")) {
