@@ -414,12 +414,7 @@ public class FullDocPage extends FullDocPreparation {
 			String lightboxRef = getLightboxRef();
 			String firstImageType = getImageType(lightboxRef, docType);
 
-			Image firstImage = new Image(
-				thumbnailUrl,
-				lightboxRef,
-				firstImageType,
-				getLightboxRefField()
-			);
+			Image firstImage = new Image(thumbnailUrl, lightboxRef, firstImageType, getLightboxRefField());
 			imagesToShow.add(firstImage);
 
 			Map<String, String> images = getImages();
@@ -427,11 +422,7 @@ public class FullDocPage extends FullDocPreparation {
 				String imageType = getImageType(imageUrl, docType);
 				Image img;
 				if (imageType.equals("IMAGE")) {
-					img = new Image(
-						createImageUrl(imageUrl, imageType, "BRIEF_DOC"),
-						imageUrl, // createImageUrl(imageUrl, imageType, "FULL_DOC"),
-						imageType
-					);
+					img = new Image(createImageUrl(imageUrl, imageType, "BRIEF_DOC"), imageUrl, imageType);
 				} else {
 					img = new Image(createImageUrl("", imageType, "BRIEF_DOC"), imageUrl, imageType);
 				}

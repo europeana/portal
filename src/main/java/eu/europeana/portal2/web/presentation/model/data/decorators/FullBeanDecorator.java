@@ -40,11 +40,15 @@ import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.web.util.Beans;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
+
+	private Configuration config = Beans.getConfig();
 
 	private FullBean fulldoc;
 
@@ -145,6 +149,11 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public int getEuropeanaCompleteness() {
 		return fulldoc.getEuropeanaCompleteness();
+	}
+
+	public String getCannonicalUrl() {
+		// return config.getPortalUrl() + "/resolve/record" + fulldoc.getAbout();
+		return "http://www.europeana.eu/resolve/record" + fulldoc.getAbout();
 	}
 
 	@Override

@@ -6,13 +6,12 @@
 <div id="content" class="row">
 
 	<div class="twelve columns">
-	
+
 		<div class="row">
 			<%@ include file="/WEB-INF/jsp/default/fulldoc/content/navigation/navigation.jsp" %>
 		</div>
 
-		<c:url var="aboutUrl" value="/record${model.document.about}.html" />
-		<div class="row" about="${aboutUrl}" vocab="http://schema.org/" typeof="CreativeWork">
+		<div class="row" about="${model.document.cannonicalUrl}" vocab="http://schema.org/" typeof="CreativeWork">
 			<div class="three-cols-fulldoc-sidebar">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/sidebar-left.jsp" %>
 			</div>
@@ -54,7 +53,7 @@
 
 					<div id="carousel-2-img-measure">
 						<c:forEach var="similar" items="${model.moreLikeThis}">
-							<img src="${ fn:replace(  fn:escapeXml(similar.thumbnail), '&amp;', '&')}" alt="${fn:join(similar.title, ' ') }" title="${fn:join(similar.title, ' ') }" data-type="${fn:toLowerCase(similar.type)}" class="no-show" />
+							<img src="${fn:replace(fn:escapeXml(similar.thumbnail), '&amp;', '&')}" alt="${fn:join(similar.title, ' ')}" title="${fn:join(similar.title, ' ')}" data-type="${fn:toLowerCase(similar.type)}" class="no-show" />
 						</c:forEach>
 					</div>
 					
