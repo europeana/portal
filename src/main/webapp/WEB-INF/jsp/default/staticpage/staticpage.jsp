@@ -8,7 +8,6 @@
 	<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/staticpage/content/content.jsp" %>
 	<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
-	<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
 </div>
 
 <%--
