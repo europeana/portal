@@ -14,25 +14,19 @@
 		<intercept-url pattern="/myeuropeana.html" access="ROLE_USER" />
 		<form-login login-page="/login.html" authentication-failure-url="/login.html?error=1" />
 		<logout logout-url="/logout.html" logout-success-url="/logout-success.html" />
+		<!-- 
+		<remember-me services-ref="rememberMeServices" key="europeanaKey"/>
+		 -->
 	</http>
 
 <!-- 
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider>
-			<user-service>
-				<user authorities="ROLE_USER" name="guest" password="test" />
-			</user-service>
-		</authentication-provider>
-	</authentication-manager>
+	<beans:bean id="rememberMeServices" class="eu.europeana.portal2.services.RememberMeServices">
+		<beans:property name="userDetailsService" ref="portal2_userDetailsService"/>
+		<beans:property name="tokenRepository" ref="tokenRepositoryService" />
+		<beans:property name="key" value="europeanaKey"/>
+	</beans:bean>
+-->
 
-	<http auto-config="true">
-		<http-basic />
-		<intercept-url pattern="/myeuropeana.html" access="ROLE_USER" />
-		<form-login login-page="/login.html" authentication-failure-url="/login.html?error=1" />
-		<logout logout-url="/logout.html" logout-success-url="/logout-success.html" />
-	</http>
-
- -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="portal2_userDetailsService">
 			<password-encoder hash="sha"/>
