@@ -96,10 +96,8 @@ h1{
 @media only screen and ( min-width:	48em ){
 	
 	.sidebar {
-		width:			25%;
-		float:			right;
-		padding:		0 2em 1em 1em;
-		margin:			0.5em 0 1em 2em;
+		padding:		0 1em 1em 2em;
+		margin:			1em 2em 1em 0;
 	}
 	
 	
