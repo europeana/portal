@@ -2,7 +2,7 @@
 
 <%-- parameters --%>
 <%@ attribute name="schemaOrgMapping" required="true" type="java.lang.Object" %>
-<%@ attribute name="field" required="true"%>
+<%@ attribute name="field" required="true" %>
 
 <%-- tag libs --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
