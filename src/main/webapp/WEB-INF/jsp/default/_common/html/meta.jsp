@@ -23,7 +23,6 @@
   <c:if test="${not model.formatLabels}">
     <%-- eu:displayEseDataAsMeta metaDataFields="${model.metaDataFields}" showFieldName="false" /--%>
   </c:if>
-  <meta content="${model.document.edmLandingPage[0]}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
 </c:if>
 <c:if test='${model.pageName == "index.html"}'>
   <%@ include file="/WEB-INF/jsp/_common/meta-facebook.jsp" %>
