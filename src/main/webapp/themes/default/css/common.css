@@ -131,11 +131,25 @@
 	background-color:	#fff;
 }
 
+#newsletter-trigger{
+	font-size:		1em;
+	display:		block;
+	margin:			1em auto;
+	position:		static;
+	width:			80%;	
+}
+
 
 @media only screen and ( min-width:48em ){
 	#newsletter-overlay{
 		width:	40%;
 	}
+	
+	#newsletter-trigger{
+		margin:			1em auto;
+		width:			auto;	
+	}
+		
 }
 
 
@@ -161,8 +175,7 @@
 	margin-bottom:	1em;	
 }
 
-#newsletter-wrapper span,
-#newsletter-wrapper button{
+#newsletter-wrapper span{
 	display:		block;
 	text-align:		center;
 	margin-left:	auto;
@@ -347,7 +360,6 @@
 	
 	.footer-funded-by{
 		right:		0;
-		xxxxtop:		-0.2em;
 		bottom:		auto;
 		position:	relative;
 		float:		right;
@@ -370,11 +382,13 @@
 		
 	}
 	
-	#newsletter-wrapper span,
-	#newsletter-wrapper button{
-		margin-left:	0;
-		margin-right:	0;
+	#newsletter-wrapper span{
 		display:		inline;
+	}
+	
+	#newsletter-wrapper span,
+	#newsletter-trigger{
+		margin:			1em 0;
 		text-align:		left;
 	}
 } 
