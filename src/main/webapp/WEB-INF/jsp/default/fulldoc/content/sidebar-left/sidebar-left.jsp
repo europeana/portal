@@ -5,7 +5,7 @@
 
 <c:set var="about" value=""/>
 <c:if test="${not empty model.document['about']}">
-	<c:set var="about" value="${model.portalUrl}/record${model.document.about}.html"/>
+	<c:set var="about" value="${model.document.cannonicalUrl}" />
 </c:if>
 
 <div id="additional-info" class="sidebar" about="${about}">
