@@ -17,13 +17,9 @@
 </c:if>
 
 <c:set var="urlRefId" value="urlRefIsShownAt" />
-<c:set var="urlRefField" value="edm:isShownAt" />
 <c:if test="${model.urlRefIsShownBy}">
 	<c:set var="urlRefId" value="urlRefIsShownBy" />
-	<c:set var="urlRefField" value="edm:isShownBy" />
 </c:if>
-
-<c:set var="property"><eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes></c:set>
 
 <c:set var="provider">
 	<c:choose>
@@ -34,5 +30,5 @@
 
 <c:if test="${not empty model['urlRef']}">
 	<div class="clear"><spring:message code="ViewItemAt_t" /></div>
-	<a id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${fn:escapeXml(provider)}&amp;id=${model.document.about}" ${href_attributes} ${" "} ${property}>${provider}</a>
+	<a id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${fn:escapeXml(provider)}&amp;id=${model.document.about}" ${href_attributes}>${provider}</a>
 </c:if>

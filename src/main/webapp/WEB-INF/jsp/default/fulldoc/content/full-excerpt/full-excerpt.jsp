@@ -51,7 +51,12 @@
 		</c:if>
 
 		<meta content="${model.document.edmLandingPage[0]}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
-		<meta content="${model.urlRef}" <eu:semanticAttributes field="edm:isShownBy" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
+
+		<c:set var="urlRefField" value="edm:isShownAt" />
+		<c:if test="${model.urlRefIsShownBy}">
+			<c:set var="urlRefField" value="edm:isShownBy" />
+		</c:if>
+		<meta content="${model.urlRef}" <eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
 
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
