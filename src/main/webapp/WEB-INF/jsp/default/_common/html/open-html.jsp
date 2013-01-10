@@ -16,12 +16,7 @@
 <html ${xmlns} lang="${lang}">
 <!--<![endif]-->
 
-<c:set var="schemaOrgAttributes" value="" />
-<c:if test="${model.pageName == 'full-doc.html'}">
-  <c:set var="schemaOrgAttributes"> about="${model.document.cannonicalUrl}" vocab="http://schema.org/" typeof="CreativeWork"</c:set>
-</c:if>
-
-<head<c:if test="${schemaOrgAttributes != ''}">${" "}${schemaOrgAttributes}</c:if>>
+<head>
   <meta charset="utf-8" />
   <title>${model.pageTitle}</title>
   <%@ include file="/WEB-INF/jsp/default/_common/html/links.jsp" %>
