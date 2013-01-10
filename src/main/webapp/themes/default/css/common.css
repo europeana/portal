@@ -135,7 +135,7 @@
 	font-size:		1em;
 	display:		block;
 	margin:			1em auto;
-	position:		static;
+	position:		relative;
 	width:			80%;	
 }
 
