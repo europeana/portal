@@ -23,7 +23,7 @@ eu.europeana.header = {
 		$("#query-search>table")									.css("display",		"none");
 		$("#query-search>table")									.css("visibility",	"visible");
 		$("#query-search>table").fadeIn(600, function(){
-			jQuery("#query-input").focus();
+			$("#query-input").focus();
 		});
 
 		this.initResponsiveUtility();
@@ -37,8 +37,9 @@ eu.europeana.header = {
 		this.setupLanguageMenu();
 		
 		this.addAutocompleteHandler();
-
-		jQuery('#query-search').bind('submit', this.handleSearchSubmit );
+		this.setupNewsletter();
+		
+		$('#query-search').bind('submit', this.handleSearchSubmit );
 		
 		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
 	},
@@ -172,17 +173,17 @@ eu.europeana.header = {
 	 */
 	addMenuFocusTriggers : function() {
 		
-		jQuery('#menu-main li ul li a')
+		$('#menu-main li ul li a')
 		
 			.focusin(function() {
 				
-				jQuery(this).parent().parent()
+				$(this).parent().parent()
 					.css({
 						'margin-top' : 0,
 						'opacity' : 1
 					});
 				
-				jQuery(this).parent().parent().prev().children().eq(0)
+				$(this).parent().parent().prev().children().eq(0)
 					.css({
 						'color' : '#fff',
 						'background-color' : '#000',
@@ -192,13 +193,13 @@ eu.europeana.header = {
 			
 			.focusout(function() {
 				
-				jQuery(this).parent().parent()
+				$(this).parent().parent()
 					.css({
 						'margin-top' : -499,
 						'opacity' : 0
 					});
 				
-				jQuery(this).parent().parent().prev().children().eq(0)
+				$(this).parent().parent().prev().children().eq(0)
 				.css({
 					'color' : '#000',
 					'background-color' : '#fff',
@@ -236,16 +237,16 @@ eu.europeana.header = {
 		}
 		
 		
-		jQuery('#query-input').focus(function(){
+		$('#query-input').focus(function(){
 			$("#query-full table tr:first-child .query-cell").addClass("glow");
 		});
-		jQuery('#query-input').blur(function(){
+		$('#query-input').blur(function(){
 			$("#query-full table tr:first-child .query-cell").removeClass("glow");
 		});
 		
 		
 		if ( input_focus ) {
-			jQuery('#query-input').focus();
+			$('#query-input').focus();
 		}
 		
 	},
@@ -253,13 +254,13 @@ eu.europeana.header = {
 	
 	addAutocompleteHandler : function() {
 		
-		jQuery('#query-input, #qf').each(function(i, id){
+		$('#query-input, #qf').each(function(i, id){
 			
 			$(id).autocomplete({
 				
 			    open: function(event, ui) {
-			        var oldLeft		= jQuery(".ui-autocomplete").offset().left;
-			        var oldWidth	= jQuery(".ui-autocomplete").width();
+			        var oldLeft		= $(".ui-autocomplete").offset().left;
+			        var oldWidth	= $(".ui-autocomplete").width();
 			        var newLeft 	= oldLeft	- parseInt( $(id).parent().css('padding-left') );
 			        var newWidth	= oldWidth	- parseInt( $(id).parent().css('padding-left') );
 	                $(".ui-autocomplete").css("left",		newLeft + "px");
@@ -280,13 +281,13 @@ eu.europeana.header = {
 						request.field = filter;
 					}
 					
-					jQuery.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
+					$.getJSON( '/' + eu.europeana.vars.portal_name + '/suggestions.json', request, function(data) {
 						
 						//create array for response objects
 						var suggestions = [];
 						
 						//process response
-						jQuery.each( data.suggestions, function(i, val) {
+						$.each( data.suggestions, function(i, val) {
 							val.label = val.term;
 							suggestions.push( val );
 						});
@@ -306,12 +307,12 @@ eu.europeana.header = {
 							if(completionClasses[ui.item.field]){
 								eu.europeana.header.searchMenu.setActive(completionClasses[ui.item.field]);
 							}
-							setTimeout( function() { jQuery('#query-search').submit(); }, 10 );
+							setTimeout( function() { $('#query-search').submit(); }, 10 );
 							break;
 							
 						case 'qf' :
 							
-							setTimeout( function() { jQuery('#refine-search-form').submit(); }, 10 );
+							setTimeout( function() { $('#refine-search-form').submit(); }, 10 );
 							break;
 					}
 					
@@ -339,21 +340,21 @@ eu.europeana.header = {
 	},
 
 	addLanguageChangeHandler : function() {
-		jQuery('#lang').change( function() {
-			jQuery('#language-selector').submit();
+		$('#lang').change( function() {
+			$('#language-selector').submit();
 		});
 	},
 
 	addRefineSearchClickHandler : function() {
-		jQuery('#refine-search').click(function(e) {
+		$('#refine-search').click(function(e) {
 			e.preventDefault();
-			jQuery('#refine-search-form').fadeIn();
-			jQuery('#qf').focus();
+			$('#refine-search-form').fadeIn();
+			$('#qf').focus();
 		});
 		
-		jQuery('#close-refine-search').click(function(e) {
+		$('#close-refine-search').click(function(e) {
 			e.preventDefault();
-			jQuery('#refine-search-form').fadeOut();
+			$('#refine-search-form').fadeOut();
 			
 		});
 	},
@@ -367,16 +368,52 @@ eu.europeana.header = {
 
 	handleSearchSubmit : function( e ) {
 
-		var emptySearch = jQuery('#query-input').val().length < 1 || (eu.europeana.header.searchMenu.getActive() == jQuery('#query-input').val());
+		var emptySearch = $('#query-input').val().length < 1 || (eu.europeana.header.searchMenu.getActive() == $('#query-input').val());
 		if ( emptySearch ) {
 			
 			e.preventDefault();
-			jQuery('#query-input').addClass('error-border');
-			jQuery('#additional-feedback')
+			$('#query-input').addClass('error-border');
+			$('#additional-feedback')
 				.addClass('error')
 				.html(eu.europeana.vars.msg.search_error);
-			jQuery('#query-input').val("");
+			$('#query-input').val("");
 		}
+		
+	},
+	
+	
+	setupNewsletter: function(){
+		
+		$("#newsletter-trigger").click(function(){
+			
+			$("#newsletter-trigger").unbind('click');
+			
+			js.loader.loadScripts([{
+				name: 'jquery-tools',
+				file : 'jquery.tools.min.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/jquery/min/',
+				dependencies : [ 'jquery' ],
+				callback : function() {
+					$("#newsletter-trigger").overlay({
+						mask: {
+							color: '#ffffff',
+							loadSpeed: 200,
+							opacity: 0.9
+						},
+						onLoad:function(){
+							$("#newsletter-overlay .iframe-wrap").html('<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; width:100%;" id="footer-iframe" src="' + window.emma.iframeUrl + '" />');
+							var screenW			= $(window).width();
+							var screenH			= $(window).height();
+							$("#newsletter-overlay").css("left",	(screenW - $("#newsletter-overlay").width()) /2);
+							$("#newsletter-overlay").css("top",		(screenH - $("#newsletter-overlay").height()) /2);
+						}
+					});
+					$("#newsletter-trigger").click();
+					
+				}
+			}]);
+			
+		});
 		
 	}
 	

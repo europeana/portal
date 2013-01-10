@@ -334,6 +334,34 @@
 		
 		/*
 		js.loader.loadScripts([{
+			name: 'jquery-tools',
+			file : 'jquery.tools.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/min/',
+			dependencies : [ 'jquery' ],
+			callback : function() {
+				$("#newsletter-trigger").overlay({
+					mask: {
+						color: '#ffffff',
+						loadSpeed: 200,
+						opacity: 0.9
+					},
+					onLoad:function(){
+						//alert(  $("#newsletter-overlay").html()  )
+						$("#newsletter-overlay .iframe-wrap").html('<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; width:100%;" id="footer-iframe" src="' + window.emma.iframeUrl + '" />');
+						var screenW			= $(window).width();
+						var screenH			= $(window).height();
+						$("#newsletter-overlay").css("left",	(screenW - $("#newsletter-overlay").width()) /2);
+						$("#newsletter-overlay").css("top",		(screenH - $("#newsletter-overlay").height()) /2);
+					}
+				});
+				
+			}
+		}]);
+		*/
+
+		
+		/*
+		js.loader.loadScripts([{
 			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 			callback : function() {
