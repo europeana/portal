@@ -50,6 +50,8 @@
 			<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
 		</c:if>
 
+		<meta content="${model.document.edmLandingPage[0]}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
+
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
 		<c:if test="${model.formatLabels}">
