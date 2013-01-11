@@ -56,6 +56,35 @@ body{
 	margin-top:	0;
 }
 
+
+#newsletter-overlay{
+	width:	40%;
+}
+
+#newsletter-trigger{
+	margin:			1em auto;
+	width:			auto;	
+}
+
+#newsletter-wrapper{
+	position:	relative;
+	left:		1em;
+	margin-top:	0;
+	
+}
+
+#newsletter-wrapper span{
+	display:		inline;
+}
+
+#newsletter-wrapper span,
+#newsletter-trigger{
+	margin:			1em 0;
+	text-align:		left;
+}
+
+
+
 #footer-links-all{
 	margin-top:	2em;	
 }
