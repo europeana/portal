@@ -12,19 +12,18 @@
 		<maven>2.2.1</maven>
 	</prerequisites>
 	<!-- mvn -f pom-minify.xml minify:minify package -->
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<build>
-	
 		<plugins>
 			<plugin><!-- START MINIFY-MAVEN-PLUGIN -->
 				<groupId>com.samaxes.maven</groupId>
 				<artifactId>minify-maven-plugin</artifactId>
 				<version>1.5.2</version>
-				
+
 				<executions>
 					<!-- @see WEB-INF/jsp/default/_common/html/css/debug-css.jsp -->
 					<!-- @see WEB-INF/jsp/default/_common/html/css/production-css.jsp -->
@@ -55,8 +54,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
-					
+
 					<!-- separate file for newsletter -->
 					<execution>
 						<id>minify-newsletter.css</id>
@@ -74,9 +72,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
-					
-					
+
 					<execution>
 						<id>minify-europeana-font-face.css</id>
 						<phase>process-resources</phase>
@@ -93,8 +89,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
-					
+
 					<execution>
 						<id>minify-fulldoc.css</id>
 						<phase>process-resources</phase>
@@ -116,7 +111,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-map.css</id>
 						<phase>process-resources</phase>
@@ -135,7 +130,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-myeuropeana.css</id>
 						<phase>process-resources</phase>
@@ -153,7 +148,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-search.css</id>
 						<phase>process-resources</phase>
@@ -174,8 +169,7 @@
 						</goals>
 					</execution>
 					<!-- END COMBINED CSS FILES -->
-					
-					
+
 					<!-- INDIVIDUAL CSS FILES -->
 					<execution>
 						<id>minify-announce.css</id>
@@ -193,7 +187,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-contact.css</id>
 						<phase>process-resources</phase>
@@ -210,7 +204,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-embed.css</id>
 						<phase>process-resources</phase>
@@ -227,7 +221,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-galleria.europeanax.css</id>
 						<phase>process-resources</phase>
@@ -244,7 +238,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-ie.css</id>
 						<phase>process-resources</phase>
@@ -261,7 +255,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-ie7.css</id>
 						<phase>process-resources</phase>
@@ -278,7 +272,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-ie8.css</id>
 						<phase>process-resources</phase>
@@ -295,7 +289,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-ie9.css</id>
 						<phase>process-resources</phase>
@@ -312,7 +306,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-index.css</id>
 						<phase>process-resources</phase>
@@ -329,7 +323,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-login.css</id>
 						<phase>process-resources</phase>
@@ -346,7 +340,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-noscript.css</id>
 						<phase>process-resources</phase>
@@ -363,7 +357,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-providers.css</id>
 						<phase>process-resources</phase>
@@ -380,7 +374,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-register.css</id>
 						<phase>process-resources</phase>
@@ -397,7 +391,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-search-embed.css</id>
 						<phase>process-resources</phase>
@@ -414,7 +408,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-staticpages.css</id>
 						<phase>process-resources</phase>
@@ -432,8 +426,7 @@
 						</goals>
 					</execution>
 					<!-- END INDIVIDUAL CSS FILES -->
-					
-					
+
 					<!-- @see WEB-INF/jsp/default/_common/html/css/debug-css.jsp -->
 					<!-- @see WEB-INF/jsp/default/_common/html/css/production-css.jsp -->
 					<!-- INDIVIDUAL JS FILES -->
@@ -453,7 +446,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-ajax.js</id>
 						<phase>process-resources</phase>
@@ -470,7 +463,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-analytics.js</id>
 						<phase>process-resources</phase>
@@ -487,7 +480,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-bootstrap.js</id>
 						<phase>process-resources</phase>
@@ -504,7 +497,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-carousel.js</id>
 						<phase>process-resources</phase>
@@ -521,7 +514,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-citation.js</id>
 						<phase>process-resources</phase>
@@ -538,7 +531,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-collapsible.js</id>
 						<phase>process-resources</phase>
@@ -555,7 +548,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-contact.js</id>
 						<phase>process-resources</phase>
@@ -572,7 +565,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-ellipsis.js</id>
 						<phase>process-resources</phase>
@@ -606,7 +599,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-										
+
 					<execution>
 						<id>minify-embed.js</id>
 						<phase>process-resources</phase>
@@ -623,7 +616,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-EuMenu.js</id>
 						<phase>process-resources</phase>
@@ -640,7 +633,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-euresponsive.js</id>
 						<phase>process-resources</phase>
@@ -657,7 +650,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-external-search-services.js</id>
 						<phase>process-resources</phase>
@@ -674,7 +667,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-forgot-password.js</id>
 						<phase>process-resources</phase>
@@ -691,7 +684,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-fulldoc.js</id>
 						<phase>process-resources</phase>
@@ -708,7 +701,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-fulldoc-embed.js</id>
 						<phase>process-resources</phase>
@@ -725,7 +718,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-fulldoc-lightbox.js</id>
 						<phase>process-resources</phase>
@@ -742,7 +735,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-galleria.europeanax.js</id>
 						<phase>process-resources</phase>
@@ -759,7 +752,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-header.js</id>
 						<phase>process-resources</phase>
@@ -776,7 +769,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-image-checker.js</id>
 						<phase>process-resources</phase>
@@ -793,7 +786,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-index.js</id>
 						<phase>process-resources</phase>
@@ -810,7 +803,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-ios-orientationchange-fix.js</id>
 						<phase>process-resources</phase>
@@ -827,7 +820,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-js.js</id>
 						<phase>process-resources</phase>
@@ -844,7 +837,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-loader.js</id>
 						<phase>process-resources</phase>
@@ -861,7 +854,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-login.js</id>
 						<phase>process-resources</phase>
@@ -878,7 +871,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-map.js</id>
 						<phase>process-resources</phase>
@@ -895,7 +888,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-myeuropeana.js</id>
 						<phase>process-resources</phase>
@@ -912,7 +905,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-providers.js</id>
 						<phase>process-resources</phase>
@@ -929,7 +922,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-register-success.js</id>
 						<phase>process-resources</phase>
@@ -946,7 +939,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-search.js</id>
 						<phase>process-resources</phase>
@@ -963,7 +956,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-search-widget.js</id>
 						<phase>process-resources</phase>
@@ -980,10 +973,8 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
-					
+
 					<!-- TODO: tabs is beiong phased out: this execution will shortly be deleted -->
-					
 					<execution>
 						<id>minify-tabs.js</id>
 						<phase>process-resources</phase>
@@ -1017,7 +1008,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-timeline.js</id>
 						<phase>process-resources</phase>
@@ -1034,7 +1025,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-translation-services.js</id>
 						<phase>process-resources</phase>
@@ -1051,7 +1042,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-translator-google.js</id>
 						<phase>process-resources</phase>
@@ -1068,7 +1059,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-translator-microsoft.js</id>
 						<phase>process-resources</phase>
@@ -1085,7 +1076,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-translator-widget.js</id>
 						<phase>process-resources</phase>
@@ -1102,7 +1093,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-utils.js</id>
 						<phase>process-resources</phase>
@@ -1119,7 +1110,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-window-open.js</id>
 						<phase>process-resources</phase>
@@ -1138,10 +1129,9 @@
 					</execution>
 					<!-- END INIDVIDUAL JS FILES -->
 				</executions>
-				
 			</plugin>
 			<!-- END MINIFY-MAVEN-PLUGIN -->
-			
+
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -1160,7 +1150,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-		
 	</build>
-
 </project>
