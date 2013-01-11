@@ -59,6 +59,25 @@
 					
 					<!-- separate file for newsletter -->
 					<execution>
+						<id>minify-newsletter.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>newsletter.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>newsletter.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					
+					
+					<execution>
 						<id>minify-europeana-font-face.css</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -570,7 +589,24 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
+					<execution>
+						<id>minify-emma.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/e2ma/</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/e2ma</jsSourceDir>
+							<jsFinalFile>emma.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>emma.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+										
 					<execution>
 						<id>minify-embed.js</id>
 						<phase>process-resources</phase>
