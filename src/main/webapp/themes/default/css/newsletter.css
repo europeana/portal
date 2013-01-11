@@ -21,33 +21,38 @@ body{
 	display:	none;
 }
 
+#e2ma_signup_form_container{
+	padding:	1em 0;	
+}
+
 .e2ma_signup_form_button_row,
 .e2ma_signup_form_row{
 	width:		100%;
 	position:	relative;
 }
 
+.e2ma_signup_form_button_row{
+	margin:		1em 0 0 0;
+}
+
+
 input{
-	margin-top:			0.8em;
-	margin-bottom:		2em;
-	padding:			2px 0px;
+	box-sizing:			content-box;
 	color:				#333;
 	border:				1px solid #a0a0a0;
 	font-size:			1.2em;
 	width:				100%;		
 }
 
-input[type=text],
-input[type=email]{
-	width:				80%;
-	margin:				1em 10% 0.5em 10%;
-	padding:			0.3em;
-}
 
-input[type=submit]{
-	width:					80%;
-	margin:					0.5em 10% 1em 10% !important;
-	padding:				0.3em;
+#e2ma_signup input[type=submit],
+#e2ma_signup input[type=text],
+#e2ma_signup input[type=email]{
+	width:				80%;
+	margin:				0 auto 0 auto;
+	padding:			0.3em;
+	position:			relative;
+	display:			block;
 }
 
 

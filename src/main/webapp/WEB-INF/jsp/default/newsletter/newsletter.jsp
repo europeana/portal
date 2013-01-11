@@ -1,18 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <%@ include file="/WEB-INF/jsp/default/_common/variables/variables.jsp"%>
 
-<%--
+<!doctype html>
 
-FOR THE CSS TIDY - DELETED STUFF:
-
-
-	<body class="iframe-newsletter">
-		<div id="footer-subscribe">
-
-
-
- --%>
-
- 
 <html>
 	<head>
 		<script type="text/javascript" src="/${branding}/js/jquery/min/jquery-1.8.1.min.js"></script>
@@ -30,76 +23,21 @@ FOR THE CSS TIDY - DELETED STUFF:
 			<c:otherwise>
 				<script type="text/javascript" src="/${branding}/js/js/min/loader.min.js"></script>
 				
-				
-				<link rel="stylesheet" href="themes/default/css/html.css" />
-				<link rel="stylesheet" href="themes/default/css/common.css" />
-				<link rel="stylesheet" href="themes/default/css/header.css" />
-				<link rel="stylesheet" href="themes/default/css/menu-main.css" />
-				<link rel="stylesheet" href="themes/default/css/europeana-font-face.css" />
-				
-				
-				<link rel="stylesheet" href="themes/default/css/min/newsletter.min.css" />		
-			</c:otherwise>
-		</c:choose>
-
-
-	<%--
-		<c:choose>
-			<c:when test="${!empty model.debug && !model.debug}">
 				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
-			</c:when>
-			<c:otherwise>
-				<link rel="stylesheet" href="themes/default/css/html.css" />
-				<link rel="stylesheet" href="themes/default/css/common.css" />
-				<link rel="stylesheet" href="themes/default/css/header.css" />
-				<link rel="stylesheet" href="themes/default/css/menu-main.css" />
-				<link rel="stylesheet" href="themes/default/css/europeana-font-face.css" />
+				<link rel="stylesheet" href="themes/default/css/min/newsletter.min.css" />
+				
 			</c:otherwise>
 		</c:choose>
-	 --%>
-
-
-
-	
 		
 		<!--[if IE 8]>
 		<style type="text/css">
-
-			#footer-subscribe.phone input[type=text],
-			#footer-subscribe.phone input[type=email],
-			#footer-subscribe.phone input[type=submit]{
-				display:	none;
-			}
-		
-			#footer-subscribe #id_email{
-				position:			absolute;
-				width:				46% !important;
-				left:				0;
-				margin-top:			1em;
-				padding:			0.3em;
-				margin-top:			1.5em;				
-			}
-
-			#footer-subscribe input[type=submit]{
-				width:					46% !important;
-				position:				absolute;
-				right:					0;
-				padding:				0.3em;
-				background-color:		#0048FF;
-				color:					white;
-			}
-			
 			#e2ma_signup_submit_button{
-				width:					46% !important;
-				right:					2em;
-				position:				absolute;
-				background-color:		#0048FF;
-				margin-top				1em;
+				filter:					progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0048ff,endColorstr=#FF4C7ECF);
 				color:					white !important;
 			}
 		</style>
+		<![endif]-->
 			
-<![endif]-->
 		
 	</head>
 	<body class="iframe-newsletter">
@@ -109,52 +47,35 @@ FOR THE CSS TIDY - DELETED STUFF:
 		</div>
 		
 		<div id="footer-subscribe">
-						
+			<script type="text/javascript">
+				window.emma = {
+					"placeholder"	: "<spring:message code='news_letter_email_hint_t' />",
+					"submitLabel"	: "<spring:message code='news_letter_signup_button_t' />"
+				};
+			</script>
+											
 			<script type="text/javascript">
 			
 				$(document).ready(function(){
 
-					document._oldGetElementById = document.getElementById;
-					document.getElementById = function(id){
-						if(id=='load_check'){
-							return {"style":""};
-						}
-						return document._oldGetElementById(id);
-					};
-					
-					
 					js.loader.loadScripts([{
 						name: 'emma',
 						file : '?v=a',
-						path : 'https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/1403149/',
+						xxxpath : 'https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/1403149/',
+						xxxpath : '/${branding}/js/com/e2ma/emma.js',
+						path : '/${branding}/js/com/e2ma/min/emma.min.js',
+						
 						callback : function() {
-							
-							var cssImports = [];
-							$('head').find('link').each(function(i, ob){
-								cssImports[cssImports.length] = ob;
-							});
 
-							signupFormObj.drawForm();
-							
-							$("body").html($("body").html().replace(/[&]nbsp[;]/gi, '') );
+							signupFormObj.drawForm();				
 
-							document.close(); // stop page loading wheel of firefox
-
-							$(cssImports).each(function(i, ob){
-								$('<link rel="stylesheet" href="' + $(ob).attr('href') + '" />').appendTo( $('head') );
-							});
-
-							
-				            $('.e2ma_signup_form  form')[0].onsubmit = function(){
-					            return signupFormObj.checkForm(this);			            	
-				            };
-
-							window.emma = window.parent.emma;
+							//window.emma = window.parent.emma;
 							document.getElementById('e2ma_signup_submit_button').setAttribute('value',	window.emma.submitLabel);
 							document.getElementById('id_email').setAttribute('placeholder',				window.emma.placeholder);
 							document.getElementById('id_email').setAttribute('title',					window.emma.placeholder);
 
-				            var heightVal = $('.e2ma_signup_form_container').height() + 'px';
+
+				            var heightVal = $('body').height() + 'px';
 				            
 				            $('.e2ma_signup_form, html, body').css('height',  heightVal);
             				$("#footer-iframe, .iframe-wrap", window.parent.document).css('height', heightVal);
@@ -162,41 +83,11 @@ FOR THE CSS TIDY - DELETED STUFF:
 						}
 					}]);
 
-					return;
-					
 				});
 			
-				/*
-				window.emma = window.parent.emma;
-				signupFormObj.drawForm();
-				document.getElementById('e2ma_signup_submit_button').setAttribute('value',		window.emma.submitLabel);
-				document.getElementById('id_email').setAttribute('placeholder',	window.emma.placeholder);
-				document.getElementById('id_email').setAttribute('title',		window.emma.placeholder);
-				*/
 			</script>
 			
 		</div>
-
-		<%--
-		<script type="text/javascript">
-			var toggleFn = function(){
-				if(  $("#mobile-menu", window.parent.document).is(":visible")  ){
-					$("#footer-subscribe").addClass("phone");
-				}
-				else{					
-					$("#footer-subscribe").removeClass("phone");
-				}
-			};
-		
-			$(document).ready(function(){
-				toggleFn();
-			});
-			
-			$(window).resize( function() {
-				toggleFn();
-		     });
-		</script>
-		--%>
 
 	</body>
 </html>

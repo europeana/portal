@@ -31,8 +31,6 @@
 				<div id="newsletter-wrapper" class="six columns">
 					<script type="text/javascript">
 						window.emma = {
-							"placeholder"	: "<spring:message code='news_letter_email_hint_t' />",
-							"submitLabel"	: "<spring:message code='news_letter_signup_button_t' />",
 							"iframeUrl"		: "/${model.portalName}/newsletter.html"
 						};
 					</script>
@@ -40,16 +38,9 @@
 					<h3><spring:message code="news_letter_signup_t" /></h3>
 					<span class="small"><spring:message code="news_letter_description_t" /></span>
 					
-					<%-- TODO: remove inline styles --%>
-					<button id="newsletter-trigger"  rel="#newsletter-overlay" class="deans-button-1 europeana-button-1" style="font-size:1em; display:block; margin-top:1em; margin-bottom: 1em;">
+					<button id="newsletter-trigger"  rel="#newsletter-overlay" class="deans-button-1 europeana-button-1">
 						<spring:message code="news_letter_popup_button_t"/>
 					</button>
-					
-
-<%--
-					<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; width:100%;" id="footer-iframe" src="about:blank"></iframe>
- --%>
-
 				</div>
 			</div>
 
