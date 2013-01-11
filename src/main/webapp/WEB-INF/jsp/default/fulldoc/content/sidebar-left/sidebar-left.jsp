@@ -15,12 +15,11 @@
 	<%-- thumbnail (hidden seo image) --%>
 		
 	<div id="carousel-1-img-measure">
-
-		<!-- TODO: make sure all item images are listed here -->
-		<c:set var="thumbnail"	value=""/>
-		<c:set var="dataType"	value=""/>
-		<c:set var="alt"		value=""/>
-		<c:set var="id"			value=""/>
+		<%-- TODO: make sure all item images are listed here --%>
+		<c:set var="thumbnail" value=""/>
+		<c:set var="dataType" value=""/>
+		<c:set var="alt" value=""/>
+		<c:set var="id" value=""/>
 
 		<c:if test="${not empty model['thumbnailUrl']}">
 			<c:set var="thumbnail" value="${model.thumbnailUrl}"/>
@@ -36,13 +35,13 @@
 
 		<c:set var="semanticAttributes"><eu:semanticAttributes field="edm:preview" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
 
-	<%--	
+<%--
 		<img ${id} src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
-			 --%>
+--%>
 		<img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
 	</div>
 
-	<%--"dataType":		"${fn:toLowerCase(model.document.edmType)}"--%>
+	<%-- "dataType": "${fn:toLowerCase(model.document.edmType)}" --%>
 	<div id="carousel-1" class="europeana-bordered">
 		<script type="text/javascript">
 			var carouselData = [];
