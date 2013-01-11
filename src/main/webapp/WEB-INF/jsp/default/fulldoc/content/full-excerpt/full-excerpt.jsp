@@ -50,7 +50,7 @@
 			<europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
 		</c:if>
 
-		<meta content="${model.document.edmLandingPage[0]}.html" property="url http://www.europeana.eu/schemas/edm/landingPage" />
+		<meta content="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
 
 		<c:set var="urlRefField" value="edm:isShownAt" />
 		<c:if test="${model.urlRefIsShownBy}">

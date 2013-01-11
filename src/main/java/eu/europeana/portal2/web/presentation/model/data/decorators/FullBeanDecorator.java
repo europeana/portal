@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
@@ -171,6 +172,17 @@ public class FullBeanDecorator implements FullBean {
 
 	public String[] getEdmLandingPage() {
 		return shortcut.get("EdmLandingPage");
+	}
+
+	public String getCheckedEdmLandingPage() {
+		if (ArrayUtils.isEmpty(shortcut.get("EdmLandingPage"))) {
+			return null;
+		}
+		String landingPage = shortcut.get("EdmLandingPage")[0];
+		if (!landingPage.endsWith(".html")) {
+			landingPage += ".html";
+		}
+		return landingPage;
 	}
 
 	public String[] getEdmDataProvider() {
