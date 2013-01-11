@@ -140,6 +140,10 @@ public class FieldPresentation {
 		return field.getFieldLabel();
 	}
 
+	public String getContextualEntity() {
+		return field.getContextualEntity();
+	}
+
 	/**
 	 * Getter for fieldValue
 	 * 

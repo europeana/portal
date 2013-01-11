@@ -47,13 +47,16 @@
   <%-- If the content is UGC we skip the dc:source display --%>
   <c:if test="${!('dc:source' == data.fieldName && ugc)}">
     <%-- Semantic attributes --%>
-    
+
     <c:set var="semanticAttributes">
-      <eu:semanticAttributes field="${data.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+      <eu:semanticAttributes field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
     </c:set>
     <c:set var="semanticUrl">
-      <eu:semanticUrl field="${data.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+      <eu:semanticUrl field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
     </c:set>
+    <c:if test="${data.fieldName == 'dcterms:isPartOf'}">
+      ${data.fieldName} -- ${data.fieldLabel} -- ${data.contextualEntity} -- ${semanticUrl}
+    </c:if>
 
     <<c:out value="${wrapper}"/>${' '}${item_id} class="item-metadata${item_class}">
       <%-- field's label --%>
@@ -68,10 +71,10 @@
           <c:choose>
             <c:when test="${model.schemaOrgMapping[value.fieldName] != null}">
               <c:set var="localSemanticAttributes">
-                <eu:semanticAttributes field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+                <eu:semanticAttributes field="${value.fieldName}" contextualEntity="${value.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
               </c:set>
               <c:set var="localSemanticUrl">
-                <eu:semanticUrl field="${value.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" />
+                <eu:semanticUrl field="${value.fieldName}" contextualEntity="${value.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
               </c:set>
             </c:when>
             <c:otherwise>

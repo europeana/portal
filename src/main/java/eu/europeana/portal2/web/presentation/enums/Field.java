@@ -21,6 +21,13 @@ import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.FieldValueProcessor;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.Wordcapitalizer;
 
+/**
+ * Definition and properties of EDM fields.
+ * 
+ * The properties are: field name, translation key of label, parent entity, search pattern, 
+ * sort values, whether it has seperate lines, translatable, external services, maxLength, 
+ * processor
+ */
 public enum Field {
 
 	// Who for dc:creator and dc:contributor, 
@@ -53,7 +60,7 @@ public enum Field {
 		ExternalService.WIKIPEDIA, ExternalService.GOOGLE, ExternalService.GOOGLEBOOKS,
 		ExternalService.WORLDCAT, ExternalService.FLICKR, ExternalService.AMAZON,
 		ExternalService.YOUTUBE, ExternalService.IMDB),
-	DC_DESCRIPTION("dc:description", "Description_t", null, null, true, true, 800, true, ExternalService.none()),
+	DC_DESCRIPTION("dc:description", "Description_t", null, null, null, true, true, 800, true, ExternalService.none()),
 	DC_LANGUAGE("dc:language", "languageDropDownList_t", false, false, false, ExternalService.none()),
 	DC_FORMAT("dc:format", "dc_format_t", false, true, true, ExternalService.none()),
 	DC_SOURCE("dc:source", "dc_source_t", false, true, false, 
@@ -62,7 +69,7 @@ public enum Field {
 		ExternalService.IMDB, ExternalService.FLICKR, ExternalService.GOOGLEBOOKS,
 			ExternalService.WORLDCAT),
 	DC_RIGHTS("dc:rights", "dc_rights_t", true, false, true, ExternalService.none()),
-	DC_CONTRIBUTOR("dc:contributor", "dc_contributor_t", "who:%s"),
+	DC_CONTRIBUTOR("dc:contributor", "dc_contributor_t", "edm:Proxy", "who:%s"),
 
 	// DCTERMS
 	DCTERMS_ALTERNATIVE("dcterms:alternative", "dcterms_alternative_t", false, false, true, ExternalService.none()),
@@ -74,6 +81,8 @@ public enum Field {
 	DCTERMS_HASVERSION("dcterms:hasVersion", null),
 	DCTERMS_ISFORMATOF("dcterms:isFormatOf", null),
 	DCTERMS_ISPARTOF("dcterms:isPartOf", "dcterms_isPartOf_t"),
+	PROXY_DCTERMS_ISPARTOF("dcterms:isPartOf", "dcterms_isPartOf_t", "edm:Proxy"),
+	PLACE_DCTERMS_ISPARTOF("dcterms:isPartOf", "dcterms_isPartOf_t", "edm:Place"),
 	DCTERMS_ISREFERENCEDBY("dcterms:isReferencedBy", null),
 	DCTERMS_ISREPLACEDBY("dcterms:isReplacedBy", null),
 	DCTERMS_ISREQUIREDBY("dcterms:isRequiredBy", null),
@@ -97,7 +106,7 @@ public enum Field {
 		ExternalService.GOOGLE, ExternalService.GOOGLEMAPS, ExternalService.YOUTUBE,
 		ExternalService.IMDB, ExternalService.FLICKR, ExternalService.GOOGLEBOOKS,
 		ExternalService.WORLDCAT),
-	EDM_COLLECTIONNAME("edm:collectionName", "europeana_collectionName_t", "europeana_collectionName:%s"),
+	EDM_COLLECTIONNAME("edm:collectionName", "europeana_collectionName_t", null, "europeana_collectionName:%s"),
 	EDM_ISSHOWNAT("edm:isShownAt", null),
 	EDM_ISSHOWNBY("edm:isShownBy", null),
 	EDM_OBJECT("edm:object", null),
@@ -150,6 +159,7 @@ public enum Field {
 
 	private String fieldName;
 	private String fieldLabel;
+	private String contextualEntity;
 	private String searchOn;
 	private boolean sortValues;
 	protected boolean seperateLines;
@@ -159,33 +169,38 @@ public enum Field {
 	private FieldValueProcessor processor;
 
 	private Field(String name, String label) {
-		this(name, label, null, null, false, false, -1, false, ExternalService.none());
+		this(name, label, null, null, null, false, false, -1, false, ExternalService.none());
 	}
 
 	private Field(String name, String label, FieldValueProcessor processor) {
-		this(name, label, processor, null, false, false, -1, false, ExternalService.none());
+		this(name, label, null, processor, null, false, false, -1, false, ExternalService.none());
 	}
 
-	private Field(String name, String label, String searchOn) {
-		this(name, label, null, searchOn, false, false, -1, false, ExternalService.none());
+	private Field(String name, String label, String contextualEntity) {
+		this(name, label, contextualEntity, null, null, false, false, -1, false, ExternalService.none());
+	}
+
+	private Field(String name, String label, String contextualEntity, String searchOn) {
+		this(name, label, contextualEntity, null, searchOn, false, false, -1, false, ExternalService.none());
 	}
 
 	private Field(String name, String label, boolean seperateLines,
 			boolean sortValues, boolean translatable, ExternalService... externalServices) {
-		this(name, label, null, null, seperateLines, sortValues, -1, translatable, externalServices);
+		this(name, label, null, null, null, seperateLines, sortValues, -1, translatable, externalServices);
 	}
 
 	private Field(String name, String label, String searchOn,
 			boolean seperateLines, boolean sortValues, boolean translatable,
 			ExternalService... externalServices) {
-		this(name, label, null, searchOn, seperateLines, sortValues, -1, translatable, externalServices);
+		this(name, label, null, null, searchOn, seperateLines, sortValues, -1, translatable, externalServices);
 	}
 
-	private Field(String name, String label, FieldValueProcessor processor,
+	private Field(String name, String label, String contextualEntity, FieldValueProcessor processor,
 			String searchOn, boolean seperateLines, boolean sortValues,
 			int maxLength, boolean translatable, ExternalService... externalServices) {
 		fieldName = name;
 		fieldLabel = label;
+		this.contextualEntity = contextualEntity;
 		this.processor = processor;
 		this.searchOn = searchOn;
 		this.seperateLines = seperateLines;
@@ -201,6 +216,10 @@ public enum Field {
 
 	public String getFieldLabel() {
 		return fieldLabel;
+	}
+
+	public String getContextualEntity() {
+		return contextualEntity;
 	}
 
 	public boolean isSeperateLines() {

@@ -10,6 +10,7 @@ public class SchemaOrgElement {
 	private Element element;
 	private List<Element> parents;
 	private Element edmElement;
+	private Element edmParent;
 
 	public SchemaOrgElement(String element) {
 		this(element, new String[]{});
@@ -28,6 +29,11 @@ public class SchemaOrgElement {
 	public SchemaOrgElement(String element, String[] parents, String edmElement) {
 		this(element, parents);
 		this.edmElement = NamespaceResolver.createElement(edmElement);
+	}
+
+	public SchemaOrgElement(String element, String[] parents, String edmElement, String edmParent) {
+		this(element, parents, edmElement);
+		this.edmParent = NamespaceResolver.createElement(edmParent);
 	}
 
 	public Element getElement() {
@@ -106,6 +112,6 @@ public class SchemaOrgElement {
 	@Override
 	public String toString() {
 		return "SchemaOrgElement [element=" + element + ", parents=" + parents
-				+ ", edmElement=" + edmElement + "]";
+				+ ", edmElement=" + edmElement + ", edmParent=" + edmParent + "]";
 	}
 }

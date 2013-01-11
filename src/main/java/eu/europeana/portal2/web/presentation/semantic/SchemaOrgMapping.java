@@ -124,6 +124,7 @@ public class SchemaOrgMapping {
 					schemaElement = new SchemaOrgElement(schemaElementName, new String[]{schemaParent}, edmElementName);
 				}
 				mapping.put(edmElementName, schemaElement);
+				mapping.put(edmParentName + "/" + edmElementName, schemaElement);
 			}
 		} catch (Exception e){
 			e.printStackTrace();

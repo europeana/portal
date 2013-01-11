@@ -43,11 +43,16 @@ public class FullBeanShortcut {
 	 * @param _values
 	 *   The array of values
 	 */
-	private void add(String property, String[] _values) {
+	private void add(String parent, String property, String[] _values) {
 		if (!values.containsKey(property)) {
 			values.put(property, new ArrayList<String>());
 		}
+		String qualifiedProperty = parent + "/" + property;
+		if (!values.containsKey(qualifiedProperty)) {
+			values.put(qualifiedProperty, new ArrayList<String>());
+		}
 		StringArrayUtils.addToList(values.get(property), _values);
+		StringArrayUtils.addToList(values.get(qualifiedProperty), _values);
 	}
 
 	/**
@@ -58,14 +63,19 @@ public class FullBeanShortcut {
 	 * @param value
 	 *   The value
 	 */
-	private void add(String property, String value) {
+	private void add(String parent, String property, String value) {
 		if (!values.containsKey(property)) {
 			values.put(property, new ArrayList<String>());
 		}
+		String qualifiedProperty = parent + "/" + property;
+		if (!values.containsKey(qualifiedProperty)) {
+			values.put(qualifiedProperty, new ArrayList<String>());
+		}
 		values.get(property).add(value);
+		values.get(qualifiedProperty).add(value);
 	}
 
-	private void add(String property, Map<String, List<String>> value) {
+	private void add(String parent, String property, Map<String, List<String>> value) {
 		if (value == null) {
 			return;
 		}
@@ -73,23 +83,40 @@ public class FullBeanShortcut {
 		if (!values.containsKey(property)) {
 			values.put(property, new ArrayList<String>());
 		}
+		String qualifiedProperty = parent + "/" + property;
+		if (!values.containsKey(qualifiedProperty)) {
+			values.put(qualifiedProperty, new ArrayList<String>());
+		}
 
+		List<String> propertyValues = values.get(property);
+		List<String> qPropertyValues = values.get(qualifiedProperty);
 		for (Entry<String, List<String>> entry : value.entrySet()) {
-			values.get(property).addAll(entry.getValue()); // adding only the value, not the language
+			// adding only the value, not the language
+			propertyValues.addAll(entry.getValue());
+			qPropertyValues.addAll(entry.getValue());
 		}
 
 		// saving it into mapValues as well
 		if (!mapValues.containsKey(property)) {
 			mapValues.put(property, new ArrayList<Map<String, List<String>>>());
 		}
+		if (!mapValues.containsKey(qualifiedProperty)) {
+			mapValues.put(qualifiedProperty, new ArrayList<Map<String, List<String>>>());
+		}
 		mapValues.get(property).add(value);
+		mapValues.get(qualifiedProperty).add(value);
 	}
 
-	private void addFloat(String property, Float value) {
+	private void addFloat(String parent, String property, Float value) {
 		if (!floats.containsKey(property)) {
 			floats.put(property, new ArrayList<Float>());
 		}
+		String qualifiedProperty = parent + "/" + property;
+		if (!floats.containsKey(qualifiedProperty)) {
+			floats.put(qualifiedProperty, new ArrayList<Float>());
+		}
 		floats.get(property).add(value);
+		floats.get(qualifiedProperty).add(value);
 	}
 
 	/**
@@ -99,81 +126,85 @@ public class FullBeanShortcut {
 		values = new HashMap<String, List<String>>();
 		mapValues = new HashMap<String, List<Map<String, List<String>>>>();
 
+		String parent = null;
 		if (document.getAggregations() != null) {
+			parent = "Aggregation";
 			for (AggregationImpl aggregation : document.getAggregations()) {
-				add("EdmIsShownBy", aggregation.getEdmIsShownBy());
-				add("EdmIsShownAt", aggregation.getEdmIsShownAt());
-				add("EdmRights", aggregation.getEdmRights()); // Map
-				add("EdmProvider", aggregation.getEdmProvider()); // Map - Aggregation/edm:provider
-				add("EdmObject", aggregation.getEdmObject());
-				add("EdmUGC", aggregation.getEdmUgc());
-				add("DataProvider", aggregation.getEdmDataProvider()); // Map - Aggregation/edm:dataProvider
-				add("AggregationDcRights", aggregation.getDcRights()); // Map
-				add("EdmHasView", aggregation.getHasView()); // Map
+				add(parent, "EdmIsShownBy", aggregation.getEdmIsShownBy());
+				add(parent, "EdmIsShownAt", aggregation.getEdmIsShownAt());
+				add(parent, "EdmRights", aggregation.getEdmRights()); // Map
+				add(parent, "EdmProvider", aggregation.getEdmProvider()); // Map - Aggregation/edm:provider
+				add(parent, "EdmObject", aggregation.getEdmObject());
+				add(parent, "EdmUGC", aggregation.getEdmUgc());
+				add(parent, "DataProvider", aggregation.getEdmDataProvider()); // Map - Aggregation/edm:dataProvider
+				add(parent, "AggregationDcRights", aggregation.getDcRights()); // Map
+				add(parent, "EdmHasView", aggregation.getHasView()); // Map
 				for (WebResource webResource : aggregation.getWebResources()) {
-					add("WebResourceAbout", webResource.getAbout()); // Map
+					add(parent, "WebResourceAbout", webResource.getAbout()); // Map
 				}
 			}
 		}
 
 		if (document.getProxies() != null) {
+			parent = "Proxy";
 			for (Proxy proxy : document.getProxies()) {
-				add("DcContributor", proxy.getDcContributor()); // Map
-				add("DcCoverage", proxy.getDcCoverage()); // Map
-				add("DcCreator", proxy.getDcCreator()); // Map
-				add("DcDate", proxy.getDcDate()); // Map
-				add("DcDescription", proxy.getDcDescription()); // Map - Proxy/dc:description
-				add("DcFormat", proxy.getDcFormat()); // Map
-				add("DcIdentifier", proxy.getDcIdentifier()); // Map
-				add("DcLanguage", proxy.getDcLanguage()); // Map
-				add("DcPublisher", proxy.getDcPublisher()); // Map
-				add("DcRelation", proxy.getDcRelation()); // Map - Proxy/dc:relation
-				add("DcRights", proxy.getDcRights()); // Map
-				add("DcSource", proxy.getDcSource()); // Map
-				add("DcSubject", proxy.getDcSubject()); // Map - Proxy/dc:subject
-				add("DcTitle", proxy.getDcTitle()); // Map
-				add("DcType", proxy.getDcType()); // Map - Proxy/dc:type
-				add("DctermsAlternative", proxy.getDctermsAlternative()); // Map
-				add("DctermsConformsTo", proxy.getDctermsConformsTo()); // Map - Proxy/dcterms:conformsTo
-				add("DctermsCreated", proxy.getDctermsCreated()); // Map
-				add("DctermsExtent", proxy.getDctermsExtent()); // Map
-				add("DctermsHasFormat", proxy.getDctermsHasFormat()); // Map - Proxy/dcterms:hasFormat
-				add("DctermsHasPart", proxy.getDctermsHasPart()); // Map - Proxy/dcterms:hasPart
-				add("DctermsHasVersion", proxy.getDctermsHasVersion()); // Map - Proxy/dcterms:hasVersion
-				add("DctermsIsFormatOf", proxy.getDctermsIsFormatOf()); // Map - Proxy/dcterms:isFormatOf
-				add("DctermsIsPartOf", proxy.getDctermsIsPartOf()); // Map - Proxy/dcterms:isPartOf
-				add("DctermsIsReferencedBy", proxy.getDctermsIsReferencedBy()); // Map - Proxy/dcterms:isReferencedBy
-				add("DctermsIsReplacedBy", proxy.getDctermsIsReplacedBy()); // Map - Proxy/dcterms:isReplacedBy
-				add("DctermsIsRequiredBy", proxy.getDctermsIsRequiredBy()); // Map - Proxy/dcterms:isRequiredBy
-				add("DctermsIssued", proxy.getDctermsIssued()); // Map
-				add("DctermsIsVersionOf", proxy.getDctermsIsVersionOf()); // Map - Proxy/dcterms:isVersionOf
-				add("DctermsMedium", proxy.getDctermsMedium()); // Map
-				add("DctermsProvenance", proxy.getDctermsProvenance()); // Map
-				add("DctermsReferences", proxy.getDctermsReferences()); // Map - Proxy/dcterms:references
-				add("DctermsReplaces", proxy.getDctermsReplaces()); // Map - Proxy/dcterms:replaces
-				add("DctermsRequires", proxy.getDctermsRequires()); // Map - Proxy/dcterms:requires
-				add("DctermsSpatial", proxy.getDctermsSpatial()); // Map - Proxy/dcterms:spatial
-				add("DctermsTableOfContents", proxy.getDctermsTOC()); // Map - Proxy/dcterms:tableOfContents
-				add("DctermsTemporal", proxy.getDctermsTemporal()); // Map - Proxy/dcterms:temporal
-				add("EdmCurrentLocation", proxy.getEdmCurrentLocation());
-				add("EdmHasMet", proxy.getEdmHasMet()); // Map - Proxy/dcterms:temporal
-				add("EdmHasType", proxy.getEdmHasType());
-				add("EdmIncorporates", proxy.getEdmIncorporates());
-				add("EdmIsDerivativeOf", proxy.getEdmIsDerivativeOf());
-				add("EdmIsRelatedTo", proxy.getEdmIsRelatedTo());
-				add("EdmIsRepresentationOf", proxy.getEdmIsRepresentationOf());
-				add("EdmIsSimilarTo", proxy.getEdmIsSimilarTo());
-				add("EdmIsSuccessorOf", proxy.getEdmIsSuccessorOf());
-				add("EdmRealizes", proxy.getEdmRealizes());
-				add("EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
+				add(parent, "DcContributor", proxy.getDcContributor()); // Map
+				add(parent, "DcCoverage", proxy.getDcCoverage()); // Map
+				add(parent, "DcCreator", proxy.getDcCreator()); // Map
+				add(parent, "DcDate", proxy.getDcDate()); // Map
+				add(parent, "DcDescription", proxy.getDcDescription()); // Map - Proxy/dc:description
+				add(parent, "DcFormat", proxy.getDcFormat()); // Map
+				add(parent, "DcIdentifier", proxy.getDcIdentifier()); // Map
+				add(parent, "DcLanguage", proxy.getDcLanguage()); // Map
+				add(parent, "DcPublisher", proxy.getDcPublisher()); // Map
+				add(parent, "DcRelation", proxy.getDcRelation()); // Map - Proxy/dc:relation
+				add(parent, "DcRights", proxy.getDcRights()); // Map
+				add(parent, "DcSource", proxy.getDcSource()); // Map
+				add(parent, "DcSubject", proxy.getDcSubject()); // Map - Proxy/dc:subject
+				add(parent, "DcTitle", proxy.getDcTitle()); // Map
+				add(parent, "DcType", proxy.getDcType()); // Map - Proxy/dc:type
+				add(parent, "DctermsAlternative", proxy.getDctermsAlternative()); // Map
+				add(parent, "DctermsConformsTo", proxy.getDctermsConformsTo()); // Map - Proxy/dcterms:conformsTo
+				add(parent, "DctermsCreated", proxy.getDctermsCreated()); // Map
+				add(parent, "DctermsExtent", proxy.getDctermsExtent()); // Map
+				add(parent, "DctermsHasFormat", proxy.getDctermsHasFormat()); // Map - Proxy/dcterms:hasFormat
+				add(parent, "DctermsHasPart", proxy.getDctermsHasPart()); // Map - Proxy/dcterms:hasPart
+				add(parent, "DctermsHasVersion", proxy.getDctermsHasVersion()); // Map - Proxy/dcterms:hasVersion
+				add(parent, "DctermsIsFormatOf", proxy.getDctermsIsFormatOf()); // Map - Proxy/dcterms:isFormatOf
+				add(parent, "DctermsIsPartOf", proxy.getDctermsIsPartOf()); // Map - Proxy/dcterms:isPartOf
+				add(parent, "DctermsIsReferencedBy", proxy.getDctermsIsReferencedBy()); // Map - Proxy/dcterms:isReferencedBy
+				add(parent, "DctermsIsReplacedBy", proxy.getDctermsIsReplacedBy()); // Map - Proxy/dcterms:isReplacedBy
+				add(parent, "DctermsIsRequiredBy", proxy.getDctermsIsRequiredBy()); // Map - Proxy/dcterms:isRequiredBy
+				add(parent, "DctermsIssued", proxy.getDctermsIssued()); // Map
+				add(parent, "DctermsIsVersionOf", proxy.getDctermsIsVersionOf()); // Map - Proxy/dcterms:isVersionOf
+				add(parent, "DctermsMedium", proxy.getDctermsMedium()); // Map
+				add(parent, "DctermsProvenance", proxy.getDctermsProvenance()); // Map
+				add(parent, "DctermsReferences", proxy.getDctermsReferences()); // Map - Proxy/dcterms:references
+				add(parent, "DctermsReplaces", proxy.getDctermsReplaces()); // Map - Proxy/dcterms:replaces
+				add(parent, "DctermsRequires", proxy.getDctermsRequires()); // Map - Proxy/dcterms:requires
+				add(parent, "DctermsSpatial", proxy.getDctermsSpatial()); // Map - Proxy/dcterms:spatial
+				add(parent, "DctermsTableOfContents", proxy.getDctermsTOC()); // Map - Proxy/dcterms:tableOfContents
+				add(parent, "DctermsTemporal", proxy.getDctermsTemporal()); // Map - Proxy/dcterms:temporal
+				add(parent, "EdmCurrentLocation", proxy.getEdmCurrentLocation());
+				add(parent, "EdmHasMet", proxy.getEdmHasMet()); // Map - Proxy/dcterms:temporal
+				add(parent, "EdmHasType", proxy.getEdmHasType());
+				add(parent, "EdmIncorporates", proxy.getEdmIncorporates());
+				add(parent, "EdmIsDerivativeOf", proxy.getEdmIsDerivativeOf());
+				add(parent, "EdmIsRelatedTo", proxy.getEdmIsRelatedTo());
+				add(parent, "EdmIsRepresentationOf", proxy.getEdmIsRepresentationOf());
+				add(parent, "EdmIsSimilarTo", proxy.getEdmIsSimilarTo());
+				add(parent, "EdmIsSuccessorOf", proxy.getEdmIsSuccessorOf());
+				add(parent, "EdmRealizes", proxy.getEdmRealizes());
+				add(parent, "EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
 			}
 		}
 
 		if (document.getEuropeanaAggregation() != null) {
+			parent = "EuropeanaAggregation";
 			EuropeanaAggregation aggregation = document.getEuropeanaAggregation();
-			add("EdmCountry", aggregation.getEdmCountry()); // Map - EuropeanaAggregation/edm:country
-			add("EdmLanguage", aggregation.getEdmLanguage()); // Map
-			add("EdmLandingPage", aggregation.getEdmLandingPage()); // String
+			add(parent, "EdmCountry", aggregation.getEdmCountry()); // Map - EuropeanaAggregation/edm:country
+			add(parent, "EdmLanguage", aggregation.getEdmLanguage()); // Map
+			add(parent, "EdmLandingPage", aggregation.getEdmLandingPage()); // String
 		}
 
 	}
@@ -197,6 +228,10 @@ public class FullBeanShortcut {
 		return null;
 	}
 
+	public String[] get(String property, String parent) {
+		return get(parent + "/" + property);
+	}
+
 	public List<String> getList(String property) {
 		if (values == null) {
 			initialize();
@@ -208,13 +243,18 @@ public class FullBeanShortcut {
 		return null;
 	}
 
+	public List<String> getList(String property, String parent) {
+		return getList(parent + "/" + property);
+	}
+
 	public void initializeFloats() {
 		floats = new HashMap<String, List<Float>>();
 		if (document.getPlaces() != null && document.getPlaces().size() > 0) {
+			String parent = "Place";
 			for (PlaceImpl place : document.getPlaces()) {
-				addFloat("EdmPlaceLatitude", place.getLatitude());
-				addFloat("EdmPlaceLongitude", place.getLongitude());
-				addFloat("EdmPlaceAltitude", place.getAltitude());
+				addFloat(parent, "EdmPlaceLatitude", place.getLatitude());
+				addFloat(parent, "EdmPlaceLongitude", place.getLongitude());
+				addFloat(parent, "EdmPlaceAltitude", place.getAltitude());
 			}
 		}
 	}
@@ -228,6 +268,10 @@ public class FullBeanShortcut {
 			floats.get(property).toArray(new Float[floats.get(property).size()]);
 		}
 		return null;
+	}
+
+	public Float[] getFloat(String property, String parent) {
+		return getFloat(parent + "/" + property);
 	}
 
 	public Float[] getEdmPlaceLatitude() {

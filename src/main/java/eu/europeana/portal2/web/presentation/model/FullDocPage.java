@@ -410,11 +410,13 @@ public class FullDocPage extends FullDocPreparation {
 			imagesToShow = new LinkedList<Image>();
 
 			String docType = getDocument().getEdmType();
-			String thumbnailUrl = this.getThumbnailUrl();
-			String lightboxRef = getLightboxRef();
-			String firstImageType = getImageType(lightboxRef, docType);
+			// it gets from EdmObject
+			String firstImageThumbnailUrl = this.getThumbnailUrl();
+			// it gets from EdmIsShownBy or EdmIsShownAt (only if EdmIsShownBy does not exists)
+			String firstImageFull = getLightboxRef();
+			String firstImageType = getImageType(firstImageFull, docType);
 
-			Image firstImage = new Image(thumbnailUrl, lightboxRef, firstImageType, getLightboxRefField());
+			Image firstImage = new Image(firstImageThumbnailUrl, firstImageFull, firstImageType, getLightboxRefField());
 			imagesToShow.add(firstImage);
 
 			Map<String, String> images = getImages();
@@ -771,6 +773,10 @@ public class FullDocPage extends FullDocPreparation {
 			schemaOrgMappingInitialized = true;
 		}
 		return SchemaOrgMapping.getMap();
+	}
+
+	public SchemaOrgElement getSchemaOrgMapping(String edmElement, String parent) {
+		return SchemaOrgMapping.get(edmElement);
 	}
 
 	public String getSchemaOrgMappingFile() {

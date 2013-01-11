@@ -304,7 +304,7 @@ public abstract class FullDocPreparation extends FullDocData {
 					map(Field.EDM_ISSUCCESSOROF, shortcut.getList("EdmIsSuccessorOf")),
 					map(Field.EDM_REALIZES, shortcut.getList("EdmRealizes"))
 			);
-			addFieldMap(fieldMap, Field.DCTERMS_ISPARTOF, shortcut.getList("DctermsIsPartOf"));
+			addFieldMap(fieldMap, Field.PROXY_DCTERMS_ISPARTOF, shortcut.getList("DctermsIsPartOf", "Proxy")); // place vs proxy
 			addFieldMap(fieldMap, Field.DCTERMS_HASPART, shortcut.getList("DctermsHasPart"));
 			addFieldMap(fieldMap, Field.EDM_ISNEXTINSEQUENCE, shortcut.getList("EdmIsNextInSequence"));
 			addFieldMap(fieldMap, Field.DC_LANGUAGE, shortcut.getList("DcLanguage"));
