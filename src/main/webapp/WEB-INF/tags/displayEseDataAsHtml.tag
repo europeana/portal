@@ -54,9 +54,6 @@
     <c:set var="semanticUrl">
       <eu:semanticUrl field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
     </c:set>
-    <c:if test="${data.fieldName == 'dcterms:isPartOf'}">
-      ${data.fieldName} -- ${data.fieldLabel} -- ${data.contextualEntity} -- ${semanticUrl}
-    </c:if>
 
     <<c:out value="${wrapper}"/>${' '}${item_id} class="item-metadata${item_class}">
       <%-- field's label --%>
