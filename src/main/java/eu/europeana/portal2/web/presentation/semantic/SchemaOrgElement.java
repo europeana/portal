@@ -102,4 +102,10 @@ public class SchemaOrgElement {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "SchemaOrgElement [element=" + element + ", parents=" + parents
+				+ ", edmElement=" + edmElement + "]";
+	}
 }

@@ -283,6 +283,7 @@ public class EdmSchemaMapping {
 					new FieldInfo("edm:isShownBy", "edmIsShownBy", "String", mapName),
 					new FieldInfo("edm:landingPage", "edmLandingPage", "String", mapName),
 					new FieldInfo("edm:language", "edmLanguage", "Map<String,List<String>>", mapName),
+					new FieldInfo("edm:preview", "edmPreview", "String", mapName),
 					new FieldInfo("edm:rights", "edmRights", "Map<String,List<String>>", mapName),
 					new FieldInfo("ore:aggregates", "aggregates", "String[]", mapName),
 					new FieldInfo("edm:WebResource", "webResources", "List<WebResourceImpl>", mapName),

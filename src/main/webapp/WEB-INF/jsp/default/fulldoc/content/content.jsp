@@ -56,7 +56,6 @@
 							<img src="${fn:replace(fn:escapeXml(similar.thumbnail), '&amp;', '&')}" alt="${fn:join(similar.title, ' ')}" title="${fn:join(similar.title, ' ')}" data-type="${fn:toLowerCase(similar.type)}" class="no-show" />
 						</c:forEach>
 					</div>
-					
 					<div id="explore-further">
 						<div class="section">
 							<a href="#"><spring:message code="SimilarContent_t" /></a>
@@ -65,7 +64,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</c:if>
