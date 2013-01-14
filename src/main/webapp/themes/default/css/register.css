@@ -52,6 +52,11 @@ input[type='checkbox']{
 }
 
 
+
+#register-success{
+	text-align:	center;
+}
+
 @media only screen and ( min-width:48em ){
 
 	#register-form input[type='text'], #register-form label, #register-form select{
@@ -63,13 +68,4 @@ input[type='checkbox']{
 		top:		1.3em;
 	}
 	
-}
-
-#api-keys-tabbed td{
-	text-align:center;
-}
-
-
-#register-success{
-	text-align:	center;
 }

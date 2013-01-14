@@ -45,6 +45,12 @@ li.saved-tags{
 	margin-top: 0.5em;
 }
 
+
+
+#api-keys-tabbed table{
+	text-align:	center;
+}
+
 	 	
 	 	
 @media only screen and ( min-width:48em ){
