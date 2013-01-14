@@ -80,6 +80,19 @@ com.google.analytics = {
 	 */
 	trackEvent : function( category, action, opt_label, opt_value, opt_noninteraction ) {
 		
+		if ( js.debug ) {
+			            
+			 js.console.log(
+			 	"Track Event:\n\n" +
+			 	"action =\t\t" + action + "\n" +
+			 	"category = \t\t" + category + "\n" + 
+			 	"opt_label = \t\t" + opt_label + "\n" +
+			 	"opt_value = \t\t" + opt_value + "\n" +
+			 	"opt_noninteraction = \t\t" + opt_noninteraction
+			 )
+			 
+		}
+		
 		_gaq.push(['_trackEvent', category, action, opt_label, opt_value, opt_noninteraction ]);
 		
 	},
