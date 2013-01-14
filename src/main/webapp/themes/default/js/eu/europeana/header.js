@@ -38,6 +38,8 @@ eu.europeana.header = {
 		
 		this.addAutocompleteHandler();
 		this.setupNewsletter();
+		this.setupPinterestAnalytics();
+		
 		
 		$('#query-search').bind('submit', this.handleSearchSubmit );
 		
@@ -415,7 +417,14 @@ eu.europeana.header = {
 			
 		});
 		
+	},
+	
+	setupPinterestAnalytics : function(){
+		$('.icon-pinterest-2').click(function(){
+			com.google.analytics.trackEvent("Pinterest Activity", "pinterest site");
+		});
 	}
+
 	
 };
 
