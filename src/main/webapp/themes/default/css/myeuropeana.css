@@ -40,7 +40,8 @@ li.saved-tags{
 
 .saved-item button,
 .saved-search button,
-.saved-tag button {
+.saved-tag button,
+.api-request-button {
 	margin-top: 0.5em;
 }
 
@@ -55,14 +56,15 @@ li.saved-tags{
 	#user-panels a.active {
  		font-weight: bold;
  	}
- 	
+ 	/*
  	#user-information,
 		.saved-items,
 		#saved-searches,
 		#saved-tags,
 		#remote-search-widget {
  		border-top:		1px solid #a0a0a0;
- 	}		 	
+ 	}
+ 	*/		 	
 }
 	 	
 	 	
