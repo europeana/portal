@@ -90,6 +90,12 @@
 		<c:when test="${model.pageName == 'login.html'}">
 			<link rel="stylesheet" href="/${branding}/css/login.css" />
 		</c:when>
+
+		<c:when test="${model.pageName == 'api/registration.html'}">
+			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
+			<link rel="stylesheet" href="/${branding}/css/login.css" />
+		</c:when>
+
 	
 		<c:when test="${model.pageName == 'myeuropeana.html'}">
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
