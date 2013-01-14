@@ -10,12 +10,12 @@
 	<div class="content">
 		<div class="saved-tags">
 			<c:choose>
-				<c:when test="${fn:length(model.user.socialTags) < 1}">
+				<c:when test="${fn:length(model.socialTags) < 1}">
 					<spring:message code="NoSavedTags_t" />
 				</c:when>
 				<c:otherwise>
 					<ul>
-						<c:forEach items="${model.user.socialTags}" var="tag">
+						<c:forEach items="${model.socialTags}" var="tag">
 							<li>
 								<div class="saved-tag ${tag.id}">
 									<%-- nr of items with this tag --%>

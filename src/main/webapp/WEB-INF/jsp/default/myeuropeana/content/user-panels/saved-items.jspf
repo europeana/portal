@@ -11,12 +11,12 @@
 
 		<div class="saved-items">
 			<c:choose>
-				<c:when test="${fn:length(model.user.savedItems) < 1 }">
+				<c:when test="${fn:length(model.savedItems) < 1 }">
 					<spring:message code="NoSavedItems_t" />
 				</c:when>
 				<c:otherwise>
 					<%-- Iterate over Saved Items --%>
-					<c:forEach items="${model.user.savedItems}" var="item">
+					<c:forEach items="${model.savedItems}" var="item">
 						<div class="saved-item ${item.id}">
 
 							<%-- Item Image --%>
