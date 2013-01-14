@@ -208,6 +208,9 @@
 							$('#carousel-3').galleria({
 								dataSource:carousel3Data,
 								extend: function(e){
+									
+							    	var thisGallery		= this;
+									
 									// add ellipsis
 									var doEllipsis = function(){
 										var ellipsisObjects = [];
@@ -223,6 +226,31 @@
 										});
 									};
 
+									var infoSelector = '#carousel-3 .galleria-thumbnails .galleria-image .europeana-carousel-info';
+									var imgSelector = '#carousel-3 .galleria-thumbnails .galleria-image img';
+									
+									$(infoSelector).live('click', 
+										function(){
+											var clicked	= this;
+											$(infoSelector).each(function(i, ob){
+												if(ob == clicked){
+													com.google.analytics.trackEvent("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
+												}
+											});
+										}
+									);
+									
+									$(imgSelector).live('click', 
+										function(){
+											var clicked	= this;
+											$(imgSelector).each(function(i, ob){
+												if(ob == clicked){
+													com.google.analytics.trackEvent("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
+												}
+											});
+										}
+									);
+									
 									$(this).ready(function(e) {
 										eu.europeana.vars.suppresResize = false;
 										setTimeout(doEllipsis, 1000);
@@ -332,33 +360,6 @@
 		
 		initResponsiveImages();
 		
-		/*
-		js.loader.loadScripts([{
-			name: 'jquery-tools',
-			file : 'jquery.tools.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/min/',
-			dependencies : [ 'jquery' ],
-			callback : function() {
-				$("#newsletter-trigger").overlay({
-					mask: {
-						color: '#ffffff',
-						loadSpeed: 200,
-						opacity: 0.9
-					},
-					onLoad:function(){
-						//alert(  $("#newsletter-overlay").html()  )
-						$("#newsletter-overlay .iframe-wrap").html('<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; width:100%;" id="footer-iframe" src="' + window.emma.iframeUrl + '" />');
-						var screenW			= $(window).width();
-						var screenH			= $(window).height();
-						$("#newsletter-overlay").css("left",	(screenW - $("#newsletter-overlay").width()) /2);
-						$("#newsletter-overlay").css("top",		(screenH - $("#newsletter-overlay").height()) /2);
-					}
-				});
-				
-			}
-		}]);
-		*/
-
 		
 		/*
 		js.loader.loadScripts([{
