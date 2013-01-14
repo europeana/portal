@@ -16,7 +16,10 @@ js.utils.registerNamespace( 'com.google.analytics' );
 
 com.google.analytics = {
 
-
+	
+	gaId : 'UA-XXXXXXXX-1',
+	
+		
 	/* Custom event tracking.
 	 * 
 	 * action: name of action to log
@@ -99,9 +102,10 @@ com.google.analytics = {
 	},
 	
 	
-	setAccountId : function() {
+	setAccountId : function( gaId ) {
 		
-		_gaq.push(['_setAccount', eu.europeana.vars.gaId]);
+		gaId = gaId || this.gaId;
+		_gaq.push(['_setAccount', gaId]);
 		
 	},
 	
@@ -122,7 +126,7 @@ com.google.analytics = {
 	init : function() {
 		
 		this.createAnalyticsArray();
-		this.setAccountId();
+		this.setAccountId( eu.europeana.vars.gaId );
 		this.trackPageView();
 		this.loadApi();
 		
