@@ -88,7 +88,7 @@ com.google.analytics = {
 			 	"opt_label = \t\t" + opt_label + "\n" +
 			 	"opt_value = \t\t" + opt_value + "\n" +
 			 	"opt_noninteraction = \t\t" + opt_noninteraction
-			 )
+			 );
 			 
 		}
 		
