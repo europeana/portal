@@ -42,13 +42,13 @@ eu.europeana.fulldoc = {
 			}
 		}
 		else if(src == 'broken-img'){
-			com.google.analytics.trackEvent("Europeana Portal", 'External (' + src + ')', 'Europeana Lightbox');
+			com.google.analytics.trackEvent("Europeana Portal", 'Europeana Lightbox', 'External (' + src + ')');
 			window.open(carouselData[0].external.url, '_new');
 		}
 		else{
 			var clickSrc	= src == 'magnify' ? 'image' : eu.europeana.fulldoc.triggerPanel.data['type'];
 			var action		= src == 'link' ? 'Europeana Redirect' : (eu.europeana.fulldoc.triggerPanel.data['type']  == 'image' ? 'Europeana Lightbox' : 'Europeana Redirect');
-			com.google.analytics.trackEvent("Europeana Portal", 'External (' + clickSrc + ')', action );
+			com.google.analytics.trackEvent("Europeana Portal", action, 'External (' + clickSrc + ')');
 		}
 	},
 	
