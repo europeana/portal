@@ -66,6 +66,7 @@
 	<c:when test="${model.pageName == 'api/registration.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana.min.css" />
 		<link rel="stylesheet" href="/${branding}/css/min/login.min.css" />
+		<link rel="stylesheet" href="/${branding}/css/min/register.min.css" />
 	</c:when>
 	
 </c:choose>

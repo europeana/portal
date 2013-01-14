@@ -92,6 +92,7 @@
 		</c:when>
 
 		<c:when test="${model.pageName == 'api/registration.html'}">
+			<link rel="stylesheet" href="/${branding}/css/register.css" />
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
 			<link rel="stylesheet" href="/${branding}/css/login.css" />
 		</c:when>
