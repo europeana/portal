@@ -5,107 +5,210 @@
 <div class="row" id="registration-content">
   <h1><spring:message code="RegisterAPI_t" /></h1>
 
-  <div class="twelve columns">
+
+  <div class="twelve columns" id="register-form">
     <c:url var="action" value="/api/registration.html" />
     <sf:form modelAttribute="model" method="POST" action="${action}">
       <sf:hidden path="token" />
       <sf:input type="hidden" path="requestedAction" value="RegisterAPI" />
+			<div class="row">
+				<div class="six columns">
 
-      <table>
-        <tr>
-          <td>
-            <div>
-              <label for="firstName"><spring:message code="FirstName_t" />&nbsp;<span class="error">*</span></label><br/>
-              <sf:input id="firstName" path="firstName" />
-              <em><sf:errors path="firstName" cssClass="error"/></em>
-            </div>
-          </td>
-          <td>
-            <div>
-              <label for="lastName"><spring:message code="lastName_t" />&nbsp;<span class="error">*</span></label><br/>
-              <sf:input id="lastName" path="lastName" />
-              <em><sf:errors path="lastName" cssClass="error"/></em>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div>
-              <label for="email"><spring:message code="EmailAddress_t" />&nbsp;<span class="error">*</span></label><br/>
-              <sf:input id="email" path="email" readonly="true" />
-              <em><sf:errors path="email" cssClass="error"/></em>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>
-            <label for="fieldOfWork"><spring:message code="registration_fieldOfWork_t" />:</label><br/>
-            <sf:select path="fieldOfWork">
-              <sf:option value=""><spring:message code="registration_pleaseSelect_t" /></sf:option>
-              <c:forEach items="${model.fieldOfWorks}" var="item">
-                <sf:option value="${item}">${item}</sf:option>
-              </c:forEach>
-            </sf:select>
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="company"><spring:message code="registration_company_t" /></label><br/>
-            <sf:input id="company" path="company" />
-            <em><sf:errors path="company" cssClass="error"/></em>
-          </td>
-          <td>
-            <label for="country"><spring:message code="Country_t" /></label><br/>
-            <sf:input id="country" path="country" />
-            <em><sf:errors path="country" cssClass="error"/></em>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="phone"><spring:message code="registration_phone_t" /></label><br/>
-            <sf:input id="phone" path="phone" />
-            <em><sf:errors path="phone" cssClass="error"/></em>
-          </td>
-          <td>
-            <label for="address"><spring:message code="registration_address_t" /></label><br/>
-            <sf:input id="address" path="address" />
-            <em><sf:errors path="address" cssClass="error"/></em>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="website"><spring:message code="registration_website_t" /></label><br/>
-            <sf:input id="website" path="website" />
-            <em><sf:errors path="website" cssClass="error"/></em>
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="apiKey"><spring:message code="myeuropeana_ApiKey_t" /></label><br/>
-            <sf:input id="apiKey" path="apiKey" readonly="true" />
-            <i><sf:errors path="apiKey" cssClass="error"/></i>
-          </td>
-          <td>
-            <label for="privateKey"><spring:message code="myeuropeana_PrivateKey_t" /></label><br/>
-            <sf:input id="privateKey" path="privateKey" readonly="true" />
-            <i><sf:errors path="privateKey" cssClass="error"/></i>
-          </td>
-        </tr>
-      </table>
+					<!-- NAME -->
+					<div class="row">
+						<div class="five columns">
+							<label for="firstName"><spring:message code="FirstName_t" />&nbsp;<span class="error">*</span></label>
+						</div>
+						<div class="six columns">
+							<sf:input id="firstName" path="firstName" />
+							<em><sf:errors path="firstName" cssClass="error" /></em>
+						</div>
+					</div>
+					
+					<!-- SURNAME -->
+					<div class="row">
+					
+						<div class="five columns">
+							<label for="lastName"><spring:message code="lastName_t" />&nbsp;<span class="error">*</span></label>
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="lastName" path="lastName" />
+							<em><sf:errors path="lastName" cssClass="error" /></em>
+						</div>
+						
+					</div>
 
-      <div id="agree">
-        <c:url var="tou" value="/rights/api-terms-of-use.html" />
-        <sf:checkbox path="disclaimer" id="disclaimer"/>
-        <label for="disclaimer"><spring:message code="registration_confirm_api_tou_t" /> &nbsp;<a href="${tou}" target="blank" class="europeana icon-external-right"><spring:message code="termsOfUse_t" /></a></label>
-        <em><sf:errors path="disclaimer" cssClass="error"/></em>
-      </div>
 
-      <input id="submit_registration" type="submit" name="submit_registration" value="<spring:message code="FinishRegistration_t" /> &raquo;" class="submit-button"/>
-    </sf:form>
+					<!-- EMAIL -->
+					<div class="row">
+					
+						<div class="five columns">
+							<label for="email"><spring:message code="EmailAddress_t" />&nbsp;<span class="error">*</span></label>
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="email" path="email" readonly="true" />
+							<em><sf:errors path="email" cssClass="error" /></em>
+						</div>
+						
+					</div>
+					
+				</div>
+				
+				<div class="six columns">
+				
+					<!-- Telephone -->
+					<div class="row">
+					
+						<div class="five columns">
+							<label for="phone"><spring:message code="registration_phone_t" /></label>
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="phone" path="phone" />
+							<em><sf:errors path="phone" cssClass="error" /></em>
+						</div>
+						
+					</div>
+
+					<!-- Address -->
+					<div class="row">
+					
+						<div class="five columns">
+							<label for="address"><spring:message code="registration_address_t" /></label>
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="address" path="address" />
+							<em><sf:errors path="address" cssClass="error" /></em>						
+						</div>
+						
+					</div>
+
+					<!-- Website -->
+					<div class="row">
+					
+						<div class="five columns">
+							<label for="website"><spring:message code="registration_website_t" /></label>
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="website" path="website" />
+							<em><sf:errors path="website" cssClass="error" /></em>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="six columns">
+				
+					<!-- Company -->
+					<div class="row">
+					
+						<div class="five columns">
+							<label for="company"><spring:message code="registration_company_t" /></label>						
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="company" path="company" /> <em><sf:errors path="company" cssClass="error" /></em>
+						</div>
+					</div>
+
+
+					<!-- Country -->
+					<div class="row">
+						<div class="five columns">
+							<label for="country"><spring:message code="Country_t" /></label>
+						</div>
+						<div class="six columns">
+							<sf:input id="country" path="country" />
+							<em><sf:errors path="country" cssClass="error" /></em>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="six columns">
+				
+					<!-- api key -->
+					<div class="row">
+						<div class="five columns">
+							<label for="apiKey"><spring:message code="myeuropeana_ApiKey_t" /></label>
+						</div>
+						<div class="six columns">
+							<sf:input id="apiKey" path="apiKey" readonly="true" /> 
+							<i><sf:errors path="apiKey" cssClass="error" /></i>
+						</div>
+					</div>
+				
+					<!-- private key -->
+					<div class="row">
+						<div class="five columns">
+							<label for="privateKey"><spring:message code="myeuropeana_PrivateKey_t" /></label>
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="privateKey" path="privateKey" readonly="true" />
+							<i><sf:errors path="privateKey" cssClass="error" /></i>
+						</div>						
+					</div>				
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="six columns">
+					<div class="row">
+									<!-- FIELD OF WORK -->
+					
+						<div class="five columns">
+							<label for="fieldOfWork"><spring:message code="registration_fieldOfWork_t" />:</label>
+						</div>
+						
+						<div class="six columns">
+							 <sf:select path="fieldOfWork">
+								<sf:option value="">
+									<spring:message code="registration_pleaseSelect_t" />
+								</sf:option>
+								<c:forEach items="${model.fieldOfWorks}" var="item">
+									<sf:option value="${item}">${item}</sf:option>
+								</c:forEach>
+							</sf:select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+			<div class="row">
+				<div id="agree" class="twelve columns">
+					
+					<c:url var="tou" value="/rights/api-terms-of-use.html" />
+					<sf:checkbox path="disclaimer" id="disclaimer" />
+					<label for="disclaimer"  id="disclaimer-label">
+					
+						<spring:message code="registration_confirm_api_tou_t" />
+						<a href="${tou}" target="blank" class="europeana icon-external-right">
+							<spring:message code="termsOfUse_t" />
+						</a>
+					</label>
+					<br/>
+					<br/>
+					<em><sf:errors path="disclaimer" cssClass="error" /></em>
+					
+				</div>
+			</div>
+			
+			<div class="row" id="submit-row">
+					<input	id="submit_registration"
+							type="submit"
+							name="submit_registration"
+							value="<spring:message code="FinishRegistration_t" />&raquo;"
+							class="submit-button europeana-button-1 deans-button-1" />				
+			</div>
+			
+		</sf:form>
   </div>
 </div>
