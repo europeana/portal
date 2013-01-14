@@ -58,7 +58,7 @@ eu.europeana.citation = {
 	
 	handleCitationClick : function( e ) {
 
-		com.google.analytics.europeanaEventTrack("Wikipedia Citation");
+		com.google.analytics.trackEvent("Europeana Portal", "Wikipedia Citation", $('head link[rel="canonical"]').attr('href') );
 
 		e.preventDefault();
 		
