@@ -14,60 +14,56 @@
 					<spring:message code="NoSavedTags_t" />
 				</c:when>
 				<c:otherwise>
-					<ul>
-						<c:forEach items="${model.socialTags}" var="tag">
-							<li>
-								<div class="saved-tag ${tag.id}">
-									<%-- nr of items with this tag --%>
-									<c:set var="tagQuery" value='europeana_uri:("${tag.europeanaUri}")' />
-									<span class="bold">${tag.tag}</span><br/>
+					<c:forEach items="${model.socialTags}" var="tag">
+						<div class="saved-tag ${tag.id}">
+							<%-- nr of items with this tag --%>
+							<c:set var="tagQuery" value='europeana_uri:("${tag.europeanaUri}")' />
+							<span class="bold">${tag.tag}</span><br/>
 
-									<%-- Item Image --%>
-									<%-- Determine fallback image for this tag --%>
-									<c:set var="imgtoshow" value="item-image.gif" />
-									<c:set var="iconClass" value="item-image.gif" />
-									<c:set var="docType" value="${tag.docType}" />
-									<c:choose>
-										<c:when test="${docType == 'IMAGE'}">
-											<c:set var="iconClass" value="icon-image" />
-										</c:when>
-										<c:when test="${docType == 'VIDEO'}">
-											<c:set var="iconClass" value="icon-video" />
-										</c:when>
-										<c:when test="${docType == 'SOUND'}">
-											<c:set var="iconClass" value="icon-sound" />
-										</c:when>
-										<c:when test="${docType == 'TEXT'}">
-											<c:set var="iconClass" value="icon-text" />
-										</c:when>
-										<c:when test="${docType == '_3D'}">
-											<c:set var="iconClass" value="icon-3d" />
-											<c:set var="docType" value="3d" />
-										</c:when>
-									</c:choose>
+							<%-- Item Image --%>
+							<%-- Determine fallback image for this tag --%>
+							<c:set var="imgtoshow" value="item-image.gif" />
+							<c:set var="iconClass" value="item-image.gif" />
+							<c:set var="docType" value="${tag.docType}" />
+							<c:choose>
+								<c:when test="${docType == 'IMAGE'}">
+									<c:set var="iconClass" value="icon-image" />
+								</c:when>
+								<c:when test="${docType == 'VIDEO'}">
+									<c:set var="iconClass" value="icon-video" />
+								</c:when>
+								<c:when test="${docType == 'SOUND'}">
+									<c:set var="iconClass" value="icon-sound" />
+								</c:when>
+								<c:when test="${docType == 'TEXT'}">
+									<c:set var="iconClass" value="icon-text" />
+								</c:when>
+								<c:when test="${docType == '_3D'}">
+									<c:set var="iconClass" value="icon-3d" />
+									<c:set var="docType" value="3d" />
+								</c:when>
+							</c:choose>
 
-									<%-- Place Image --%>
-									<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
-										<c:choose>
-											<c:when test="${!empty tag.europeanaObject}">
-												<img src="${model.cacheUrl}uri=${tag.europeanaObject}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
-											</c:when>
-											<c:otherwise>
-												<span class="${iconClass}"></span>
-											</c:otherwise>
-										</c:choose>
-									</a>
+							<%-- Place Image --%>
+							<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
+								<c:choose>
+									<c:when test="${!empty tag.europeanaObject}">
+										<img src="${model.cacheUrl}uri=${tag.europeanaObject}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
+									</c:when>
+									<c:otherwise>
+										<span class="${iconClass}"></span>
+									</c:otherwise>
+								</c:choose>
+							</a>
 
-									<%-- item info --%>
-									<%-- !tag.europeanaId.orphan> --%>
-									<a class="bold" href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>
-									<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${tag.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
-									<%-- delete tag button --%>
-									<button id="${tag.id}" class="remove-saved-tag submit-button deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
-								</div>
-							</li>
-						</c:forEach>
-					</ul>
+							<%-- item info --%>
+							<%-- !tag.europeanaId.orphan> --%>
+							<a class="bold" href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>
+							<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${tag.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
+							<%-- delete tag button --%>
+							<button id="${tag.id}" class="remove-saved-tag submit-button deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
+						</div>
+					</c:forEach>
 				</c:otherwise>
 			</c:choose>
 		</div>
