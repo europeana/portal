@@ -58,6 +58,18 @@ input[type='checkbox']{
 		font-size:	1em;
 		margin-top: 0.5em;
 	}
-		
 	
+	input[type='checkbox']{
+		top:		1.3em;
+	}
+	
+}
+
+#api-keys-tabbed td{
+	text-align:center;
+}
+
+
+#register-success{
+	text-align:	center;
 }
