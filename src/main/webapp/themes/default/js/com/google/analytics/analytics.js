@@ -81,7 +81,6 @@ com.google.analytics = {
 	trackEvent : function( category, action, opt_label, opt_value, opt_noninteraction ) {
 		
 		if ( js.debug ) {
-			            
 			 js.console.log(
 			 	"Track Event:\n\n" +
 			 	"action =\t\t" + action + "\n" +
