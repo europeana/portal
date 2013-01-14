@@ -1,5 +1,8 @@
 package eu.europeana.portal2.web.controllers.user;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -17,6 +20,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
+import eu.europeana.portal2.web.presentation.model.MyEuropeanaPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
@@ -41,11 +45,24 @@ public class UserManagementController {
 					throws Exception {
 		log.info("===== myeuropeana.html =======");
 		Injector injector = new Injector(request, response, locale);
-		EmptyModelPage model = new EmptyModelPage();
+		MyEuropeanaPage model = new MyEuropeanaPage();
 		injector.injectProperties(model);
 
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
+
+		List savedItems = new ArrayList(user.getSavedItems());
+		Collections.sort(savedItems);
+		model.setSavedItems(savedItems);
+
+		List savedsearches = new ArrayList(user.getSavedSearches());
+		Collections.sort(savedsearches);
+		model.setSavedSearches(savedsearches);
+
+		List socialTags = new ArrayList(user.getSocialTags());
+		Collections.sort(socialTags);
+		model.setSocialTags(socialTags);
+
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU);
 		injector.postHandle(this, page);
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.MY_EUROPEANA);
