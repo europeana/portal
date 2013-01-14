@@ -97,6 +97,11 @@ var europeana_bootstrap = function(){
 	if(eu.europeana.vars.page_name == 'api/console.html'){
 		loadScripts(scripts);
 	}
+
+	if(eu.europeana.vars.page_name == 'api/registration.html'){
+		loadScripts(scripts);
+	}
+
 	
 	if(eu.europeana.vars.page_name == 'contact.html'){
 		scripts.push({
