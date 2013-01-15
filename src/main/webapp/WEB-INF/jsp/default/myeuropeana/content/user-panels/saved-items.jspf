@@ -16,7 +16,7 @@
 				</c:when>
 				<c:otherwise>
 					<%-- Iterate over Saved Items --%>
-					<c:forEach items="${model.savedItems}" var="item">
+					<c:forEach items="${model.savedItems}" var="item" varStatus="status">
 						<div class="saved-item ${item.id}">
 
 							<%-- Item Image --%>
@@ -45,14 +45,17 @@
 							<%-- Place Image --%>
 							
 							<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
-								<c:choose>
-									<c:when test="${item[europeanaObject] && !empty item.europeanaObject}">
-										<img src="${model.cacheUrl}uri=${item.europeanaObject}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
-									</c:when>
-									<c:otherwise>
-										<span class="${iconClass}" alt="${item.title}"></span>
-									</c:otherwise>
-								</c:choose>
+							    <c:set var="imageWritten" value="" />
+							    <c:catch var="exception">
+							    	<c:if test="${item.europeanaObject && !empty item.europeanaObject}"></c:if>
+							    	<c:set var="imageWritten" value="true" />
+							    </c:catch>
+							    <c:if test="${!empty imageWritten}" >
+							    	<img src="${model.cacheUrl}uri=${item.europeanaObject}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
+							    </c:if>
+							    <c:if test="${empty imageWritten}" >
+							    	<span class="${iconClass}" alt="${item.title}"></span>
+							    </c:if>
 							</a>
 
 							<%-- Item Info --%>
