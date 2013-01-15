@@ -62,9 +62,9 @@ public enum PortalLanguage {
 
 	RU(true, "&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;", "russian_t"),
 
-	SK(true, "Slovensk&#253;", "slovak_t"),
-
 	SL(true, "Sloven&#353;&#269;ina", "slovenian_t"),
+
+	SK(true, "Slovensk&#253;", "slovak_t"),
 
 	FI(true, "Suomi", "finnish_t"), 
 
