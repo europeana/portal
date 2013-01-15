@@ -14,63 +14,63 @@ import org.apache.commons.lang.StringUtils;
  */
 public enum PortalLanguage {
 
-	EN(true, "English (eng)","english_t"), 
+	EN(true, "English","english_t"), 
 
-	EU(true, "Basque (eus)", "basque_t"),
+	EU(true, "Basque", "basque_t"),
 
-	BG(true, "&#x0411;&#x044a;&#x043b;&#x0433;&#x0430;&#x0440;&#x0441;&#x043a;&#x0438; (bul)", "bulgarian_t"),
+	BG(true, "&#x0411;&#x044a;&#x043b;&#x0433;&#x0430;&#x0440;&#x0441;&#x043a;&#x0438;", "bulgarian_t"),
 
-	CA(true, "Catal&#224; (ca)", null),
+	CA(true, "Catal&#224;", null),
 
-	CS(true, "&#268;e&#353;tina (cze/cse)", "czechlanguage_t"),
+	CS(true, "&#268;e&#353;tina", "czechlanguage_t"),
 
-	DA(true, "Dansk (dan)", "danish_t"),
+	DA(true, "Dansk", "danish_t"),
 
-	DE(true, "Deutsch (deu)", "german_t"), 
+	DE(true, "Deutsch", "german_t"), 
 
-	EL(true, "&#917;&#955;&#955;&#951;&#957;&#953;&#954;&#940; (ell/gre)", "greek_t"),
+	EL(true, "&#917;&#955;&#955;&#951;&#957;&#953;&#954;&#940;", "greek_t"),
 
-	ES(true, "Espa&#241;ol (esp)", "spanish_t"), 
+	ES(true, "Espa&#241;ol", "spanish_t"), 
 
-	ET(true, "Eesti (est)", "estonian_t"),
+	ET(true, "Eesti", "estonian_t"),
 
-	FI(true, "Suomi (fin)", "finnish_t"), 
+	FR(true, "Fran&#231;ais", "french_t"), 
 
-	FR(true, "Fran&#231;ais (fre)", "french_t"), 
+	GA(true, "Gaeilge", "irish_t"),
 
-	GA(true, "Irish (gle)", "irish_t"),
+	IS(true, "&#205;slenska", "icelandic_t"),
 
-	HU(true, "Magyar (hun)", "hungarian_t", false),
+	IT(true, "Italiano","italian_t"),
 
-	IS(true, "&#205;slenska (ice)", "icelandic_t"),
+	LT(true, "Lietuvi&#371;", "lithuanian_t"),
 
-	IT(true, "Italiano (ita)","italian_t"),
+	LV(true, "Latvie&#353;u","latvian_t"),
 
-	LT(true, "Lietuvi&#371; (lit)", "lithuanian_t"),
+	HU(true, "Magyar", "hungarian_t", false),
 
-	LV(true, "Latvie&#353;u (lav)","latvian_t"),
+	MT(true, "Malti", "maltese_t", false),
 
-	MT(true, "Malti (mlt)", "maltese_t", false),
+	NL(true, "Nederlands", "dutch_t"),
 
-	NL(true, "Nederlands (dut)", "dutch_t"),
+	NO(true, "Norsk", "norwegian_t"),
 
-	NO(true, "Norsk (nor)", "norwegian_t"),
+	PL(true, "Polski", "polish_t"),
 
-	PL(true, "Polski (pol)", "polish_t"),
+	PT(true, "Portugu&#234;s", "portuguese_t"),
 
-	PT(true, "Portugu&#234;s (por)", "portuguese_t"),
+	RO(true, "Rom&#226;n&#259;", "romanian_t", false),
 
-	RO(true, "Rom&#226;n&#259; (rom)", "romanian_t", false),
+	RU(true, "&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;", "russian_t"),
 
-	RU(true, "Russian (rus)", "russian_t"),
+	SK(true, "Slovensk&#253;", "slovak_t"),
 
-	SK(true, "Slovensk&#253; (slo)", "slovak_t"),
+	SL(true, "Sloven&#353;&#269;ina", "slovenian_t"),
 
-	SL(true, "Sloven&#353;&#269;ina (slv)", "slovenian_t"),
+	FI(true, "Suomi", "finnish_t"), 
 
-	SV(true, "Svenska (sve/swe)", "swedish_t"),
+	SV(true, "Svenska", "swedish_t"),
 
-	UK(true, "Ukrainian (ukr)", "ukrainian_t", false),
+	UK(true, "&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;", "ukrainian_t", false),
 
 	// UNSUPPORTED LANGUAGES (BUT OCCURS IN FACETS):
 	MUL(false, "Multilingue (mul)",null, false),
