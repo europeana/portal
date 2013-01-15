@@ -13,11 +13,11 @@
 
 <form action="${language_menu_action}" method="POST" id="language-selector" style="display:table-cell; vertical-align:middle;">
 	<div class="eu-menu no-highlight white" id="lang-menu">
-		<span class="menu-label hide-on-phones"></span>
+		<span class="menu-label hide-on-phones" tabindex="3"></span>
 		<span class="icon-arrow-3 open-menu hide-on-phones"></span>
 		<span class="icon-mobilemenu show-on-phones" id="mobile-menu"></span>
 
-		<ul title="<spring:message code='ChooseLanguage_t' />" tabindex="3" onfocus="$('#lang-menu').click();">
+		<ul title="<spring:message code='ChooseLanguage_t' />">
 	
 			<c:if test="${!model.embedded}">
 				<li class="item icon-home show-on-phones">
