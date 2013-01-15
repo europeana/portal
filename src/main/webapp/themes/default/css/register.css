@@ -1,14 +1,14 @@
 
-#register-form{
+#registration-content{
 	padding-top:	1em;
 	padding-bottom:	2em;
 }
 
-#register-form input{
+#registration-content input{
 	border: 1px solid #e4e4e4;	
 }
 
-#register-form label{
+#registration-content label{
 	display:	block;
 }
 
@@ -16,56 +16,85 @@
 	padding-top:	1em;
 }
 
-#agree{
+#registration-content h1{
+	xxpadding-bottom:	1em;
+}
+
+#registration-content h4{
 	padding-top:	1em;
-	padding-bottom:	1em;
+}
+
+
+
+#agree{
+	padding-top:	2em;
+	padding-bottom:	0em;
+	text-align:		center;
 }
 
 #submit-row{
-	padding-top:	1em;
-	padding-bottom:	1em;
 	text-align:		center;
 }
 
 #submit_registration{
 	font-size:	1em;
+	display:	inline;
+	margin-top:	1.5em;
 }
 
-#register-form input[type='text'], #register-form label, #register-form select{
+#registration-content input[type='text'], #registration-content input[type='password'], #registration-content label, #registration-content select{
 	font-size:	1.4em;
 	margin-top: 0.7em;
 }
 
 
-input[type='text'], input[type='select']{
+input[type='text'], input[type='select'], input[type='password']{
 	width:	100%;
 }
 
 input[type='checkbox']{
 	position:	relative;
-	top:		0.6em;
 }
 
 #disclaimer, #disclaimer-label{
-	display:	inline;
-	float:		left;
+	display:	inline !important;
 }
 
 
-
-#register-success{
+#register-success, .agree-wrapper{
 	text-align:	center;
 }
 
+
+#registration-content .info{
+	padding-top:	0.5em;	
+}
+
+#registration-content .error{
+	font-style:		italic;
+	font-size:		0.75em;
+}
+
+#registration-content .help{
+	padding-top:	1em;	
+	padding-bottom:	0.5em;
+	font-size:		0.75em;
+	font-style:		italic;
+}
+
+
+@media only screen and ( min-width:48em ){
+	#registration-content fieldset{
+		padding-top:	1.5em;
+	}
+}
+
+
 @media only screen and ( min-width:48em ){
 
-	#register-form input[type='text'], #register-form label, #register-form select{
+	#registration-content input[type='text'], #registration-content input[type='password'], #registration-content label, #registration-content select{
 		font-size:	1em;
 		margin-top: 0.5em;
-	}
-	
-	input[type='checkbox']{
-		top:		1.3em;
 	}
 	
 }

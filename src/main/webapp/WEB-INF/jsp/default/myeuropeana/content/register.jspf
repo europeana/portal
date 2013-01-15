@@ -6,16 +6,140 @@
 	<h1><spring:message code="Register_t" /></h1>
 	
 	<div class="twelve columns">
-	
 
 		<sf:form modelAttribute="model" action="register.html" method="POST">
 			<sf:hidden path="token" />
-			<%-- sf:hidden path="email" / --%>
-	
-			<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/register/email-details.jspf" %>
-			<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/register/login-details.jspf" %>
-			<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/register/password.jspf" %>
-			<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/register/submit.jspf" %>
+
+			<div class="row">
+					
+				<!-- EMAIL -->
+				<div class="five columns">
+				
+					<div class="row info">
+						<div class="help"><spring:message code="EmailUse_t" />.</div>
+					</div>
+				
+					<div class="row">
+						<div class="five columns">
+							<label for="email"><spring:message code="EmailAddress_t" /></label>
+						</div>
+						
+						<div class="six columns">
+							<sf:input id="email" path="email" disabled="disabled" />
+							<br/>
+						</div>
+						
+					</div>
+					
+					<div class="row">
+						<div class="six columns push-five">
+							<sf:errors path="email" cssClass="error"/>
+						</div>
+					</div>
+					
+					
+				</div>
+				
+				<div class="five columns push-two">
+				
+					<!-- USERNAME -->
+					<div class="row info">
+						<div class="help"><spring:message code="UserNameExplain_t" />.</div>
+					</div>
+					
+					<div class="row">
+						<div class="five columns">
+							<label for="userName">Username</label>
+						</div>
+						<div class="six columns">
+							<sf:input path="userName"/>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="six columns push-five">
+							<sf:errors path="userName" cssClass="error"/>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			
+			
+			
+			<div class="row">
+				
+				<div class="five columns">
+				
+					<div class="row info">
+						<div class="help"><spring:message code="PasswordExplain_t" />.</div>
+					</div>
+				
+					<div class="row">
+					
+						<!-- PASSWORD -->
+						<div class="five columns">
+							<label for="password"><spring:message code="Password_t" /></label>
+						</div>
+						<div class="six columns">
+							<sf:password path="password"/>
+							<br/>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="six columns push-five">
+							<sf:errors path="password" cssClass="error"/>
+						</div>
+					</div>
+				</div>
+				<div class="five columns push-two">
+
+					<div class="row info">
+						<div class="help">&nbsp;</div>
+					</div>
+
+					<!-- CONFIRM -->
+					<div class="row">
+						<div class="five columns">
+							<label for="password2">
+								<spring:message code="RepeatPassword_t" />
+							</label>
+						</div>
+						<div class="six columns">
+							<sf:password path="password2" />
+							<br/>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="six columns push-five">
+							<sf:errors path="password2" cssClass="error" />
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div>
+				<h4>Agree to terms</h4>
+				<fieldset>
+					<!--legend>Step 4  : Submit form</legend-->
+				
+					<div id="disclaimer_text"><spring:message code="MyCodeOfConduct_t" /></div>
+				
+					<div id="agree">
+						<sf:checkbox path="disclaimer" id="disclaimer"/>
+						<label for="disclaimer" id="disclaimer-label"><spring:message code="IAgree_t" /></label>
+						<br/>
+						<em><sf:errors path="disclaimer" cssClass="error"/></em>
+					</div>
+					
+					<div class="agree-wrapper">
+						<input id="submit_registration" type="submit" name="submit_registration" value="<spring:message code="FinishRegistration_t" /> &raquo;" class="submit-button europeana-button-1 deans-button-1"/>
+					</div>
+				</fieldset>			
+			</div>
 	
 		</sf:form>
 		
