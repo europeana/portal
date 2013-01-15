@@ -46,14 +46,20 @@
 
 							<%-- Place Image --%>
 							<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
-								<c:choose>
-									<c:when test="${!empty tag.europeanaObject}">
-										<img src="${model.cacheUrl}uri=${tag.europeanaObject}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
-									</c:when>
-									<c:otherwise>
-										<span class="${iconClass}"></span>
-									</c:otherwise>
-								</c:choose>
+							    <c:set var="objectPresent" value="" />
+							    <c:catch var="exception">
+							    	<c:if test="${tag.europeanaObject && !empty tag.europeanaObject}"></c:if>
+							    	<c:set var="objectPresent" value="true" />
+							    </c:catch>
+							    
+							    <c:choose>
+								    <c:when test="${!empty objectPresent}" >
+								    	<img src="${model.cacheUrl}uri=${tag.europeanaObject}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
+								    </c:when>
+								    <c:otherwise>
+								    	<span class="${iconClass}"></span>
+								    </c:otherwise>
+							    </c:choose>
 							</a>
 
 							<%-- item info --%>
