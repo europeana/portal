@@ -96,7 +96,7 @@
 				<div class="five columns push-two">
 
 					<div class="row info">
-						<div class="help">&nbsp;</div>
+						<div class="help hide-on-phones">&nbsp;</div>
 					</div>
 
 					<!-- CONFIRM -->
@@ -122,8 +122,9 @@
 			</div>
 
 			<div>
-				<h4>Agree to terms</h4>
 				<fieldset>
+					<h3>Agree to terms</h3>
+					
 					<!--legend>Step 4  : Submit form</legend-->
 				
 					<div id="disclaimer_text"><spring:message code="MyCodeOfConduct_t" /></div>

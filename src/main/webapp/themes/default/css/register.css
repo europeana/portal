@@ -16,12 +16,10 @@
 	padding-top:	1em;
 }
 
-#registration-content h1{
-	xxpadding-bottom:	1em;
-}
 
-#registration-content h4{
-	padding-top:	1em;
+#registration-content h3{
+	padding-bottom:	1em;
+	padding-top:	1.5em;
 }
 
 
@@ -83,10 +81,16 @@ input[type='checkbox']{
 }
 
 
-@media only screen and ( min-width:48em ){
+@media all and (min-width: 48em) {
+	
 	#registration-content fieldset{
 		padding-top:	1.5em;
 	}
+	
+	#registration-content h3{
+		padding-top:	0.25em !important;
+	}
+	
 }
 
 
