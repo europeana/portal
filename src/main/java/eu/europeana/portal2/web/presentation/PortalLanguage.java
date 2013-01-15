@@ -55,7 +55,6 @@ public enum PortalLanguage {
 	NL(true, "Nederlands (dut)", "dutch_t"),
 
 	NO(true, "Norsk (nor)", "norwegian_t"),
-	NB(true, "Norsk (nor)", "norwegian_t"),
 
 	PL(true, "Polski (pol)", "polish_t"),
 
