@@ -109,7 +109,11 @@ a.action-link:hover{
 	
 	box-shadow:				3px 3px 4px #C3C3C3;
 	-moz-box-shadow:		3px 3px 4px #C3C3C3;
-    -webkit-box-shadow:		3px 3px 4px #C3C3C3;		
+    -webkit-box-shadow:		3px 3px 4px #C3C3C3;
+    
+	word-wrap:		break-word;
+
+    		
 }
 
 .sidebar-right strong{
@@ -124,8 +128,7 @@ a.action-link:hover{
 .sidebar-right li{
 	list-style-type:	none;
 	padding-left:		0;
-	margin:				0;
-	word-break:			break-word;		
+	margin:				0;		
 }
 
 
@@ -382,10 +385,6 @@ img.trigger{
 	word-break:		break-all;
 }
 
-.item-metadata a{
-	xxxword-break:		break-word;
-}
-
 .external.item-metadata {
 	display : block;
 }
@@ -511,10 +510,10 @@ h1 {
 }
 	
 
-#additional-info .original-context{
+#additional-info .original-context {
 	margin-top:		1em;
+	word-wrap:		break-word;
 }
-
 
 @media only screen and ( min-width:48em ){
 	
