@@ -57,7 +57,7 @@ public class EdmSchemaMapping {
 				new FieldInfo("edm:ProvidedCHO", "providedCHOs", "ProvidedCHO"),
 				new FieldInfo("edm:Agent", "agents", "Agent"),
 				new FieldInfo("edm:Place", "places", "Place"),
-				new FieldInfo("edm:TimeSpan", "timespans", "TimeSpan"),
+				new FieldInfo("edm:TimeSpan", "timespans", "Timespan"),
 				new FieldInfo("skos:Concept", "concepts", "Concept"),
 				new FieldInfo("ore:Aggregation", "aggregations", "Aggregation"),
 				new FieldInfo("edm:Proxy", "proxies", "Proxy"),
@@ -111,6 +111,7 @@ public class EdmSchemaMapping {
 					new FieldInfo("@rdf:about", "about", "String", mapName),
 					new FieldInfo("skos:prefLabel", "prefLabel", "Map<String,List<String>>", mapName),
 					new FieldInfo("skos:altLabel", "altLabel", "Map<String,List<String>>", mapName),
+					new FieldInfo("skos:hiddenLabel", "hiddenLabel", "Map<String,List<String>>", mapName),
 					new FieldInfo("skos:note", "note", "Map<String,List<String>>", mapName),
 					new FieldInfo("dc:date", "dcDate", "Map<String,List<String>>", mapName),
 					new FieldInfo("dc:identifier", "dcIdentifier", "Map<String,List<String>>", mapName),
@@ -140,6 +141,7 @@ public class EdmSchemaMapping {
 					new FieldInfo("wgs84_pos:alt", "altitude", "float", mapName),
 					new FieldInfo("skos:prefLabel", "prefLabel", "Map<String,List<String>>", mapName),
 					new FieldInfo("skos:altLabel", "altLabel", "Map<String,List<String>>", mapName),
+					new FieldInfo("skos:hiddenLabel", "hiddenLabel", "Map<String,List<String>>", mapName),
 					new FieldInfo("skos:note", "note", "Map<String,List<String>>", mapName),
 					new FieldInfo("dcterms:hasPart", "dcTermsHasPart", "Map<String,List<String>>", mapName),
 					new FieldInfo("dcterms:isPartOf", "isPartOf", "Map<String,List<String>>", mapName),
@@ -148,19 +150,20 @@ public class EdmSchemaMapping {
 				)));
 			}
 
-			else if (mapName.equals("TimeSpan")) {
+			else if (mapName.equals("Timespan")) {
 				fieldMap.put(mapName, new LinkedList<FieldInfo>(Arrays.asList(
 					new FieldInfo("@rdf:about", "about", "String", mapName),
-					new FieldInfo("skos:prefLabel", "prefLabel", "Map<String,List<String>>", mapName),
-					new FieldInfo("skos:altLabel", "altLabel", "Map<String,List<String>>", mapName),
-					new FieldInfo("skos:note", "note", "Map<String,List<String>>", mapName),
-					new FieldInfo("dcterms:hasPart", "dcTermsHasPart", "Map<String,List<String>>", mapName),
-					new FieldInfo("dcterms:isPartOf", "isPartOf", "Map<String,List<String>>", mapName),
 					new FieldInfo("edm:begin", "begin", "Map<String,List<String>>", mapName),
 					new FieldInfo("edm:end", "end", "Map<String,List<String>>", mapName),
 					new FieldInfo("owl:sameAs", "owlSameAs", "String[]", mapName),
-					new FieldInfo("[crmP79FBeginningIsQualifiedBy]", "crmP79FBeginningIsQualifiedBy", "String[]", mapName),
-					new FieldInfo("[crmP80FEndIsQualifiedBy]", "crmP80FEndIsQualifiedBy", "String[]", mapName),
+					new FieldInfo("dcterms:isPartOf", "isPartOf", "Map<String,List<String>>", mapName),
+					new FieldInfo("dcterms:hasPart", "dctermsHasPart", "Map<String,List<String>>", mapName),
+					new FieldInfo("skos:prefLabel", "prefLabel", "Map<String,List<String>>", mapName),
+					new FieldInfo("skos:altLabel", "altLabel", "Map<String,List<String>>", mapName),
+					new FieldInfo("skos:hiddenLabel", "hiddenLabel", "Map<String,List<String>>", mapName),
+					new FieldInfo("skos:note", "note", "Map<String,List<String>>", mapName),
+					// new FieldInfo("[crmP79FBeginningIsQualifiedBy]", "crmP79FBeginningIsQualifiedBy", "String[]", mapName),
+					// new FieldInfo("[crmP80FEndIsQualifiedBy]", "crmP80FEndIsQualifiedBy", "String[]", mapName),
 					new FieldInfo("[id]", "id", "ObjectId", mapName)
 				)));
 			}
@@ -170,6 +173,7 @@ public class EdmSchemaMapping {
 					new FieldInfo("@rdf:about", "about", "String", mapName),
 					new FieldInfo("skos:prefLabel", "prefLabel", "Map<String,List<String>>", mapName),
 					new FieldInfo("skos:altLabel", "altLabel", "Map<String,List<String>>", mapName),
+					new FieldInfo("skos:hiddenLabel", "hiddenLabel", "Map<String,List<String>>", mapName),
 					new FieldInfo("skos:broader", "broader", "String[]", mapName),
 					new FieldInfo("skos:narrower", "narrower", "String[]", mapName),
 					new FieldInfo("skos:related", "related", "String[]", mapName),
