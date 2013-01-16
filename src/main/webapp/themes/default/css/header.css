@@ -526,10 +526,13 @@ a.ui-state-hover {
 		margin-left:		0;	
 	}
 
-	#header-strip .white:focus, #header-strip .white a:focus{
+	#header-strip .white:focus, #header-strip .white a:focus, .pseudo-focus{
 		outline:			1px dotted #fff;
 	}
 
+	.focus-access, .focus-access:focus{
+		outline:			none;
+	}
 
 	/*
 	@media only screen and ( max-width:68em ){
