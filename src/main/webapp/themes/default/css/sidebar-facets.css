@@ -182,6 +182,11 @@ cb-ugc{
 	display:		none;
 }
 
+#filter-search #refinements{
+	overflow:	hidden;	
+}
+
+
 #filter-search li.data-provider{
 	display:	none;
 }
