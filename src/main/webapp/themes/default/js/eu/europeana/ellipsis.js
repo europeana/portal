@@ -18,7 +18,7 @@ var Ellipsis = function(cmp, ops, onShow) {
 
 
 	var fn = function(){
-		return ( $inner[0].offsetHeight > $cmp.height()+1 );/* chrome +1 for border */
+		return ( $inner[0].offsetHeight > $cmp.height()+3 );/* chrome +3 for border */
 	};
 
 	
@@ -52,6 +52,7 @@ var Ellipsis = function(cmp, ops, onShow) {
 				newGuess = guess - newBite;
 			}			
 		}
+		
 		return locateMax(newGuess, newBite, newHone);
 	};
 	
