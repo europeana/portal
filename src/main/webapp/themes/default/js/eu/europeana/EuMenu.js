@@ -84,10 +84,14 @@ var EuMenu = function(cmpIn, options){
 		}
 	);
 
-	self.cmp.find('.focus_access').focus(function(e){
+	self.cmp.find('.focus-access').focus(function(e){
+		self.cmp.addClass("pseudo-focus");
 		self.cmp.find('ul').click();
 	});
 
+	self.cmp.find('.focus-access').blur(function(e){
+		self.cmp.removeClass("pseudo-focus");
+	});
 	
 	return {
 		"init" : function(){
