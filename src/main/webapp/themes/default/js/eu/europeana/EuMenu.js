@@ -84,7 +84,7 @@ var EuMenu = function(cmpIn, options){
 		}
 	);
 
-	self.cmp.find('.menu-label').focus(function(){
+	self.cmp.find('.focus_access').focus(function(e){
 		self.cmp.find('ul').click();
 	});
 
