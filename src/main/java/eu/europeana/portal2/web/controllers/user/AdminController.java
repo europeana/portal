@@ -67,11 +67,10 @@ public class AdminController {
 	@RequestMapping("/admin.html")
 	public ModelAndView adminHandler(
 			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
+			HttpServletResponse response)
 					throws Exception {
 		log.info("==== admin.html ====");
-		Injector injector = new Injector(request, response, locale);
+		Injector injector = new Injector(request, response, null);
 
 		AdminPage model = new AdminPage();
 		model.setTheme("devel");
@@ -100,7 +99,7 @@ public class AdminController {
 		model.setUsers(users);
 		model.setUsage(usage);
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.ADMIN);
 		injector.postHandle(this, page);
 		return page;
 	}

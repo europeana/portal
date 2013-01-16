@@ -83,7 +83,9 @@ public class ControllerUtil {
 	 */
 	public static ModelAndView createModelAndViewPage(PortalPageData model, Locale locale, PageInfo view) {
 		// adjust model
-		model.setLocale(locale);
+		if (locale != null && model.getLocale() == null) {
+			model.setLocale(locale);
+		}
 		model.setPageInfo(view);
 		model.setPageTitle(view.getPageTitle());
 

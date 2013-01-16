@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
@@ -31,6 +32,7 @@ public class Injector {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private Locale locale;
 	private long start;
 
 	public Injector() {
@@ -42,6 +44,7 @@ public class Injector {
 		this.request = request;
 		this.response = response;
 		localeChangeInterceptor.preHandle(request, response, this);
+		this.locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 	}
 
 	public void injectProperties(PortalPageData model) {
@@ -52,8 +55,9 @@ public class Injector {
 		// model.setMinify(false);
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
-		model.setLocale(response.getLocale());
+		model.setLocale(locale);
 		model.setPortalUrl(config.getPortalUrl());
+		log.info("model.locale: " + model.getLocale());
 	}
 
 	private String getTheme(HttpServletRequest request) {
@@ -76,5 +80,9 @@ public class Injector {
 	public void logTime(String type) {
 		long end = new Date().getTime();
 		ControllerUtil.logTime(type, (end - start));
+	}
+
+	public Locale getLocale() {
+		return locale;
 	}
 }

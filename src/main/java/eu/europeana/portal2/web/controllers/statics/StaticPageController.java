@@ -43,7 +43,6 @@ import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.ResponsiveImageCache;
-import eu.europeana.portal2.web.util.StaticCache;
 import eu.europeana.portal2.web.util.StaticPageCache;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.enums.Redirect;
@@ -95,14 +94,13 @@ public class StaticPageController {
 			@PathVariable String pageName,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, 
-			HttpServletResponse response,
-			Locale locale) 
+			HttpServletResponse response) 
 					throws Exception {
-		Injector injector = new Injector(request, response, locale);
+		Injector injector = new Injector(request, response, null);
 
 		pageName = "/" + pageName + getSuffix(pageName) + ".html";
 
-		ModelAndView page = doFetchStaticPage(injector, pageName, response, locale);
+		ModelAndView page = doFetchStaticPage(injector, pageName, response);
 
 		return page;
 	}
@@ -112,14 +110,13 @@ public class StaticPageController {
 			@PathVariable String pageName,
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
 			HttpServletRequest request, 
-			HttpServletResponse response,
-			Locale locale) 
+			HttpServletResponse response) 
 					throws Exception {
-		Injector injector = new Injector(request, response, locale);
+		Injector injector = new Injector(request, response, null);
 
 		pageName = "/rights/" + pageName + getSuffix(pageName) + ".html";
 
-		ModelAndView page = doFetchStaticPage(injector, pageName, response, locale);
+		ModelAndView page = doFetchStaticPage(injector, pageName, response);
 
 		return page;
 	}
@@ -152,7 +149,7 @@ public class StaticPageController {
 		return suffix;
 	}
 
-	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response, Locale locale) {
+	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response) {
 		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		staticPageCache.setStaticPagePath(config.getStaticPagePath());
@@ -177,19 +174,18 @@ public class StaticPageController {
 		// generate static page
 		StaticPage model = new StaticPage();
 		model.setTc(pageName.indexOf("rights")>-1);
-		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, locale));
-		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, locale));
-		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
-		model.setTitleContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_TITLE, locale));
+		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, injector.getLocale()));
+		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, injector.getLocale()));
+		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, injector.getLocale()));
+		model.setTitleContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_TITLE, injector.getLocale()));
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
-
 		injector.injectProperties(model);
 
 		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.STATICPAGE);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.STATICPAGE);
 		injector.postHandle(this, page);
 
 		return page;
