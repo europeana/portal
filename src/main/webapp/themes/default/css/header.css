@@ -505,11 +505,7 @@ a.ui-state-hover {
 	#header-strip{
 		background-color:	#333;
 		width:				100%;
-		
 		position:			static;
-	
-		xdisplay:			table;
-		
 		font-size:			1.1em;
 		font-size:			1em;
 	}
@@ -529,7 +525,12 @@ a.ui-state-hover {
 	#header-strip .white:first-child {
 		margin-left:		0;	
 	}
-	
+
+	#header-strip .white:focus, #header-strip .white a:focus{
+		outline:			1px dotted #fff;
+	}
+
+
 	/*
 	@media only screen and ( max-width:68em ){
 		#header-strip{

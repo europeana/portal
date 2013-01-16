@@ -6,42 +6,52 @@
 	<div>
 		<span class="hide-on-phones">
 
+			<c:set var="nextTabIndex" value="1"/>
+
 			<c:if test="${empty model.user}">
-				<a href="/${model.portalName}/" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" title="<spring:message code="main_menu_home_a_title_t"/>" class="white left"><spring:message code="main_menu_home_a_text_t"/></a>
+				<a tabIndex="1" href="/${model.portalName}/" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" title="<spring:message code="main_menu_home_a_title_t"/>" class="white left"><spring:message code="main_menu_home_a_text_t"/></a>
+				
+				<%-- [Home] [My Europeana] --%>
+				<c:set var="nextTabIndex" value="3"/>
 			</c:if>
 
 			<c:choose>
 				<c:when test="${!empty model.user}">
 					<span class="white">
 						<spring:message code="LoggedInAs_t"/>:
-						<a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#user-information" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" title="<spring:message code="main_menu_myeuropeana_a_title_t"/>"><b>${fn:escapeXml(model.user.userName)}</b></a>
+						<a tabIndex="1" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#user-information" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" title="<spring:message code="main_menu_myeuropeana_a_title_t"/>"><b>${fn:escapeXml(model.user.userName)}</b></a>
+						<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
 						
 						<c:if test="${!empty model.user.savedItems}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedItems_t"/>:
-							<a id="saved-items-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-items">${fn:length(model.user.savedItems)}</a>
+							<a tabIndex="${nextTabIndex}" id="saved-items-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-items">${fn:length(model.user.savedItems)}</a>
+							<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
 						</c:if>
 						
 						<c:if test="${!empty model.user.savedSearches}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedSearches_t"/>:
-							<a id="saved-searches-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-searches">${fn:length(model.user.savedSearches)}</a>
+							<a tabIndex="${nextTabIndex}" id="saved-searches-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-searches">${fn:length(model.user.savedSearches)}</a>
+							<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
 						</c:if>
 
 						<c:if test="${!empty model.user.savedSearches}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedTags_t"/>:
-							<a id="saved-tags-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-tags">${fn:length(model.user.socialTags)}</a>
+							<a tabIndex="${nextTabIndex}" id="saved-tags-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>#saved-tags">${fn:length(model.user.socialTags)}</a>
+							<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
 						</c:if>
 
 						&nbsp;|&nbsp;
-						<a href="/${model.portalName}/logout.html"><spring:message code="LogOut_t"/></a>
+						<a tabIndex="${nextTabIndex}" href="/${model.portalName}/logout.html"><spring:message code="LogOut_t"/></a>
+						<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
 					</span>
 				</c:when>
 				<c:otherwise>
 					<%-- Please, do not delete this comment! 
 						(Un)comment this to restore/hide myeuropeana link --%>
-					<a href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" title="<spring:message code="main_menu_myeuropeana_a_title_t"/>" class="white left"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
+					<a tabIndex="2" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" title="<spring:message code="main_menu_myeuropeana_a_title_t"/>" class="white left"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
 				</c:otherwise>
 			</c:choose>
 		</span>
