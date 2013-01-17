@@ -526,13 +526,29 @@ a.ui-state-hover {
 		margin-left:		0;	
 	}
 
-	#header-strip .white:focus, #header-strip .white a:focus, .pseudo-focus{
+	/* move to common  */
+	
+	.white:focus,
+	.white a:focus,
+	.pseudo-focus{
 		outline:			1px dotted #fff;
 	}
+	
+	#logo a:focus{
+		outline:			1px dotted #e4e4e4;
+	}
+	
 
-	.focus-access, .focus-access:focus{
+	/* referes to span in language.jsp that takes the focus for the menu */
+	.focus-access,
+	.focus-access:focus{
 		outline:			none;
 	}
+
+
+
+
+
 
 	/*
 	@media only screen and ( max-width:68em ){

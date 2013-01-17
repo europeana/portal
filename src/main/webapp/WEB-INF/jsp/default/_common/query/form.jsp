@@ -29,7 +29,15 @@
 					</div>
 				</td>
 				<td class="query-cell">
-					<input type="text" name="query" role="search" id="query-input" title="<spring:message code='SearchTerm_t'/>" maxlength="175" value="<c:out value="${model.query}"/>" valueForBackButton="<c:out value="${model.query}"/>" />
+					<input	type="text"
+							name="query"
+							role="search"
+							id="query-input"
+							maxlength="175"
+							tabIndex="1"
+							title="<spring:message code='SearchTerm_t'/>"
+							value="<c:out value="${model.query}"/>"
+							valueForBackButton="<c:out value="${model.query}"/>" />
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
 					<button class="icon-mag deans-button-1" type="submit"><spring:message code='Search_t'/></button>
