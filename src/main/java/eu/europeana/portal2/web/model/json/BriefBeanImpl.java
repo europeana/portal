@@ -25,8 +25,8 @@ public class BriefBeanImpl implements BriefBean {
 	private String[] dcContributor;
 	private String[] edmPlace;
 	private List<Map<String, String>> edmPlacePrefLabel;
-	private Float edmPlaceLatitude;
-	private Float edmPlaceLongitude;
+	private List<String> edmPlaceLatitude;
+	private List<String> edmPlaceLongitude;
 	private String[] edmTimespan;
 	private List<Map<String, String>> edmTimespanLabel;
 	private String[] edmTimespanBegin;
@@ -166,19 +166,19 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmPlacePrefLabel = edmPlacePrefLabel;
 	}
 
-	public Float getEdmPlaceLatitude() {
+	public List<String> getEdmPlaceLatitude() {
 		return edmPlaceLatitude;
 	}
 
-	public void setEdmPlaceLatitude(Float edmPlaceLatitude) {
+	public void setEdmPlaceLatitude(List<String> edmPlaceLatitude) {
 		this.edmPlaceLatitude = edmPlaceLatitude;
 	}
 
-	public Float getEdmPlaceLongitude() {
+	public List<String> getEdmPlaceLongitude() {
 		return edmPlaceLongitude;
 	}
 
-	public void setEdmPlaceLongitude(Float edmPlaceLongitude) {
+	public void setEdmPlaceLongitude(List<String> edmPlaceLongitude) {
 		this.edmPlaceLongitude = edmPlaceLongitude;
 	}
 

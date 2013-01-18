@@ -225,12 +225,12 @@ public class BriefBeanDecorator implements BriefBean {
 	}
 
 	@Override
-	public Float getEdmPlaceLatitude() {
+	public List<String> getEdmPlaceLatitude() {
 		return briefBean.getEdmPlaceLatitude();
 	}
 
 	@Override
-	public Float getEdmPlaceLongitude() {
+	public List<String> getEdmPlaceLongitude() {
 		return briefBean.getEdmPlaceLongitude();
 	}
 
