@@ -38,7 +38,8 @@
 }
 
 .eu-menu a:hover,
-.eu-menu .item:focus a{
+.eu-menu .item:focus a,
+.eu-menu .item a:focus{
 	text-decoration:	underline;
 }
 

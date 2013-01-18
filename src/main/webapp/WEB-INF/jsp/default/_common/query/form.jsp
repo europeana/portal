@@ -16,15 +16,41 @@
 			<tr>
 				<td class="menu-cell">
 					<div id="search-menu" class="eu-menu" aria-hidden="true">
+					
+						<span class="focus-access" tabindex="3"></span>
+		
 						<span class="hide-ilb-on-phones menu-label">Search</span>
 						<span class="icon-arrow-3 open-menu"></span>
 						<ul>
-							<li class="item">	<a href="" class=""			><spring:message code='FieldedSearchAllFields_t' /></a></li>
-							<li class="item">	<a href="" class="title:"	><spring:message code='FieldedSearchTitle_t' /></a></li>
-							<li class="item">	<a href="" class="who:"		><spring:message code='FieldedSearchWho_t' /></a></li>
-							<li class="item">	<a href="" class="what:"	><spring:message code='FieldedSearchWhat_t' /></a></li>
-							<li class="item">	<a href="" class="when:"	><spring:message code='FieldedSearchWhen_t' /></a></li>
-							<li class="item">	<a href="" class="where:"	><spring:message code='FieldedSearchWhere_t' /></a></li>
+							<li class="item">
+								<a	href=""
+									tabIndex="4"><spring:message code='FieldedSearchAllFields_t' /></a>
+							</li>
+							<li class="item">
+								<a	href=""
+									tabIndex="5"
+									class="title:"><spring:message code='FieldedSearchTitle_t' /></a>
+							</li>
+							<li class="item">
+								<a	href=""
+									tabIndex="6"
+									class="who:"><spring:message code='FieldedSearchWho_t' /></a>
+							</li>
+							<li class="item">
+								<a	href=""
+									tabIndex="7"
+									class="what:"><spring:message code='FieldedSearchWhat_t' /></a>
+							</li>
+							<li class="item">
+								<a	href=""
+									tabIndex="8"
+									class="when:"><spring:message code='FieldedSearchWhen_t' /></a>
+							</li>
+							<li class="item">
+								<a	href=""
+									tabIndex="9"
+									class="where:"><spring:message code='FieldedSearchWhere_t' /></a>
+							</li>
 						</ul>
 					</div>
 				</td>
@@ -40,13 +66,15 @@
 							valueForBackButton="<c:out value="${model.query}"/>" />
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
-					<button class="icon-mag deans-button-1" type="submit"><spring:message code='Search_t'/></button>
+					<button	class="icon-mag deans-button-1"
+							tabIndex="2"
+							type="submit"><spring:message code='Search_t'/></button>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="3" class="submit-cell show-cell-on-phones">
-					<%--a class="show-on-phones search-help" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a--%>
-					<button class="icon-mag deans-button-1" type="submit"><spring:message code='Search_t'/></button>
+					<button	class="icon-mag deans-button-1"
+							type="submit"><spring:message code='Search_t'/></button>
 				</td>
 			</tr>
 		</table>

@@ -6,7 +6,7 @@
 	<div>
 		<span class="hide-on-phones">
 
-			<c:set var="nextTabIndex" value="2"/>
+			<c:set var="nextTabIndex" value="11"/>
 
 			<c:choose>
 				<c:when test="${empty model.user}">

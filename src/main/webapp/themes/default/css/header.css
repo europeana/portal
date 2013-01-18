@@ -534,8 +534,13 @@ a.ui-state-hover {
 		outline:			1px dotted #fff;
 	}
 	
+	
 	#logo a:focus{
 		outline:			1px dotted #e4e4e4;
+	}
+	
+	a.search-help:focus{
+		outline:			1px dotted #4C7ECF;
 	}
 	
 

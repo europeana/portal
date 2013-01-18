@@ -42,8 +42,9 @@
 				<a class="choose"><spring:message code='ChooseLanguage_t'/></a>
 			</li>
 
-			<c:forEach items="${model.portalLanguages}" var="language" varStatus="status">
-				<li class="item" tabindex="${nextTabIndex + status.index}"><a class="${language.languageCode}">${language.languageName}</a></li>
+			<c:forEach items="${model.portalLanguages}" var="language">
+				<li class="item" tabIndex="${nextTabIndex}"><a class="${language.languageCode}">${language.languageName}</a></li>
+				<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
 			</c:forEach>
 		</ul>
 		<input type="hidden" name="lang" value="" style="margin:0;padding:0;"/>

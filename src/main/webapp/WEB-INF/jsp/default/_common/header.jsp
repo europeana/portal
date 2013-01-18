@@ -14,9 +14,13 @@
 			</c:if>
 			
 			<${logoWrapperTag} title="<spring:message code='AltLogoEuropeana_t' />">
-				<a href="/${model.portalName}/" title="<spring:message code='AltLogoEuropeana_t' />">
-					<span class="${logoClass}" alt="<spring:message code='AltLogoEuropeana_t' />"></span>
+				<a	href="/${model.portalName}/"
+					tabIndex="10"
+					title="<spring:message code='AltLogoEuropeana_t' />">
+					<span	class="${logoClass}"
+							alt="<spring:message code='AltLogoEuropeana_t' />"></span>
 				</a>
+				
 			</${logoWrapperTag}>
 		</div>
 
