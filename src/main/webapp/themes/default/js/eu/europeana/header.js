@@ -40,10 +40,51 @@ eu.europeana.header = {
 		this.setupNewsletter();
 		this.setupPinterestAnalytics();
 		
+		// setup tabs
+		this.setupTabbing();
+		
+		
 		
 		$('#query-search').bind('submit', this.handleSearchSubmit );
 		
 		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
+	},
+	
+	
+	setupTabbing : function(){
+		
+		var nextTabIndex = 1;
+
+		function setTabIndex(ob){
+			ob.attr('tabIndex', nextTabIndex);
+			nextTabIndex+=1;
+		}
+		
+		setTabIndex($('#query-input'));
+		setTabIndex($('.submit-cell.hide-cell-on-phones button'));
+		setTabIndex($('#search-menu .focus-access'));
+		
+		
+		$('#search-menu a').each(function(i, ob){
+			setTabIndex($(ob));
+		});
+			
+		setTabIndex($('#logo a'));
+		
+		$('#header-strip a.white').each(function(i, ob){
+			setTabIndex($(ob));
+		});
+
+		$('#header-strip .white a').each(function(i, ob){
+			setTabIndex($(ob));
+		});
+		
+		setTabIndex($('#language-selector .focus-access'));
+		
+		$('#language-selector .item.lang').each(function(i, ob){
+			setTabIndex($(ob));
+		});
+		
 	},
 	
 	initResponsiveUtility : function(){

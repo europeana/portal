@@ -16,8 +16,7 @@
 		<span class="menu-label hide-on-phones"></span>
 		<span class="icon-arrow-3 open-menu hide-on-phones"></span>
 		
-		<span class="focus-access" tabindex="${nextTabIndex}"></span>
-		<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
+		<span class="focus-access"></span>
 		
 		<span class="icon-mobilemenu show-on-phones" id="mobile-menu"></span>
 
@@ -43,8 +42,7 @@
 			</li>
 
 			<c:forEach items="${model.portalLanguages}" var="language">
-				<li class="item" tabIndex="${nextTabIndex}"><a class="${language.languageCode}">${language.languageName}</a></li>
-				<c:set var="nextTabIndex" value="${nextTabIndex+1}"/>
+				<li class="item lang"><a class="${language.languageCode}">${language.languageName}</a></li>
 			</c:forEach>
 		</ul>
 		<input type="hidden" name="lang" value="" style="margin:0;padding:0;"/>
