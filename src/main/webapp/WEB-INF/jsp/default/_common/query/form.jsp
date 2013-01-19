@@ -16,9 +16,7 @@
 			<tr>
 				<td class="menu-cell">
 					<div id="search-menu" class="eu-menu" aria-hidden="true">
-					
-						<span class="focus-access"></span>
-		
+	
 						<span class="hide-ilb-on-phones menu-label">Search</span>
 						<span class="icon-arrow-3 open-menu"></span>
 						<ul>

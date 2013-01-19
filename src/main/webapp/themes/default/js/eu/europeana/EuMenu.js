@@ -84,15 +84,89 @@ var EuMenu = function(cmpIn, options){
 		}
 	);
 
-	self.cmp.find('.focus-access').focus(function(e){
-		self.cmp.addClass("pseudo-focus");
-		self.cmp.find('ul').click();
+
+	/* accessibility */
+	console.log("key bind " + self.cmp.find(".item a").length + " items");
+	
+	self.cmp.find(".item a").add(self.cmp).bind('keypress', function(e){
+		var tabIndex = parseInt($(e.target).attr('tabIndex'));
+
+		if([39, 40].indexOf(e.keyCode)>-1){
+			/* left, up  */
+			tabIndex += 1;
+		}
+		else if([37, 38].indexOf(e.keyCode)>-1){
+			/* right, down */
+			tabIndex -= 1;
+		}
+		else if(e.keyCode == 13){
+			/* return */
+			e.target.click();
+			self.cmp.focus();
+			return;
+		}
+		else{
+			var key		= window.event ? e.keyCode : e.which;
+			if(key==0){
+				/* esc */
+				self.cmp.removeClass("active");
+				self.cmp.focus();
+				return;
+			}
+			if ( key < 48 || key > 57 ) {		
+				
+				/* alphabet */
+				var val = String.fromCharCode(key).toUpperCase();
+				
+				var allWithName = self.cmp.find('.item a').filter(function(){
+					return $(this).is(':visible') && ($(this).html().charAt(0) + '').toUpperCase() == val;
+				});
+				
+				var nextWithName = allWithName.filter(function() {
+					var thisTabIndex = parseInt($(this).attr("tabIndex"));
+				    return thisTabIndex > tabIndex;
+				});
+
+				if(nextWithName[0]){
+					nextWithName[0].focus();
+				}
+				else{
+					var prevWithName = allWithName.filter(function() {
+					    return parseInt($(this).attr("tabIndex")) < tabIndex;
+					});
+					if(prevWithName[0]){
+						prevWithName[0].focus();
+					}
+				}
+				
+				if(! $(e.target).is(':focus') ){
+					if(!e.ctrlKey ){
+						return;
+					}
+				}
+			}
+		}
+				
+		if(!self.cmp.find('ul').is(':visible') ){
+			self.cmp.find('ul').click();
+		}
+		var target = $('*[tabIndex=' + tabIndex + ']');
+			
+		if(target[0]){
+			target.focus();
+		}				
+		
+		if(!e.ctrlKey){
+			e.preventDefault();			
+		}
+		
 	});
 
-	self.cmp.find('.focus-access').blur(function(e){
-		self.cmp.removeClass("pseudo-focus");
-	});
 	
+
+
+	
+	/* exposed functionality */
 	return {
 		"init" : function(){
 			if(self.options.fn_init){

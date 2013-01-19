@@ -15,9 +15,6 @@
 	<div class="eu-menu no-highlight white" id="lang-menu">
 		<span class="menu-label hide-on-phones"></span>
 		<span class="icon-arrow-3 open-menu hide-on-phones"></span>
-		
-		<span class="focus-access"></span>
-		
 		<span class="icon-mobilemenu show-on-phones" id="mobile-menu"></span>
 
 		<ul title="<spring:message code='ChooseLanguage_t' />">

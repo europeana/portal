@@ -9,7 +9,12 @@
 .eu-menu.selected .item.active{
 	box-shadow:			inset 0 0 4px #4C7ECF;
 }
-
+.eu-menu:focus{
+	outline:		none;
+}
+.eu-menu:focus .menu-label{
+	text-decoration:underline;
+}
 
 .eu-menu.no-highlight .item.active{
 	box-shadow:			none;

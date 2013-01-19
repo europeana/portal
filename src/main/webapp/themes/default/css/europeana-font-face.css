@@ -85,8 +85,8 @@ a.europeana{
 	text-decoration: none;
 }
 
-a.europeana:hover {
-	/*background-color:#d9efff;*/
+a.europeana:hover,
+a.europeana:focus {
 	color:#11639D; /*#2382c5;*/
 	border-bottom:1px dotted #9dc425;
 }

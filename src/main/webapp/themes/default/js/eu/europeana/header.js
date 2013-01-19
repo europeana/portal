@@ -40,13 +40,11 @@ eu.europeana.header = {
 		this.setupNewsletter();
 		this.setupPinterestAnalytics();
 		
-		// setup tabs
-		this.setupTabbing();
-		
-		
-		
 		$('#query-search').bind('submit', this.handleSearchSubmit );
 		
+		// setup tabs
+		this.setupTabbing();
+
 		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
 	},
 	
@@ -62,8 +60,7 @@ eu.europeana.header = {
 		
 		setTabIndex($('#query-input'));
 		setTabIndex($('.submit-cell.hide-cell-on-phones button'));
-		setTabIndex($('#search-menu .focus-access'));
-		
+		setTabIndex($('#search-menu'));
 		
 		$('#search-menu a').each(function(i, ob){
 			setTabIndex($(ob));
@@ -75,13 +72,13 @@ eu.europeana.header = {
 			setTabIndex($(ob));
 		});
 
-		$('#header-strip .white a').each(function(i, ob){
+		$('#header-strip white>a, #header-strip a.white').each(function(i, ob){
 			setTabIndex($(ob));
 		});
 		
-		setTabIndex($('#language-selector .focus-access'));
+		setTabIndex($('#lang-menu'));
 		
-		$('#language-selector .item.lang').each(function(i, ob){
+		$('#lang-menu .item.lang a').each(function(i, ob){
 			setTabIndex($(ob));
 		});
 		

@@ -231,7 +231,11 @@
 	border-radius:			0.5em 0.5em 0.5em 0.5em;
 }
 
-		
+.deans-button-1:focus,
+.europeana-button-1:focus{
+	outline:			none !important;
+	text-decoration:	underline;	
+}
 
 #id_email::-webkit-input-placeholder{
 	color: #999;

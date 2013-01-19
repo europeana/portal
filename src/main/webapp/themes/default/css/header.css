@@ -190,7 +190,6 @@ tr td:first-child, tr td:last-child{
 }
 
 
-/*******************/
 #search-menu{
 	padding-left:1em;
 	padding-right:1em;
@@ -209,10 +208,6 @@ tr td.query-cell{
 table{
 	table-layout:fixed;
 }
-/*******************/
-
-
-
 
 
 table tr:first-child{
@@ -536,24 +531,13 @@ a.ui-state-hover {
 	
 	
 	#logo a:focus{
-		outline:			1px dotted #e4e4e4;
+		outline:	1px dotted #4C7ECF;
 	}
 	
 	a.search-help:focus{
 		outline:			1px dotted #4C7ECF;
 	}
 	
-
-	/* referes to span in language.jsp that takes the focus for the menu */
-	.focus-access,
-	.focus-access:focus{
-		outline:			none;
-	}
-
-
-
-
-
 
 	/*
 	@media only screen and ( max-width:68em ){
@@ -573,8 +557,7 @@ a.ui-state-hover {
 		}
 	}
 	*/
-	
-	/* form */
+
 	#query{
 		text-align:	center;
 	}
