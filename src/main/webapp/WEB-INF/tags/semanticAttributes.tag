@@ -12,7 +12,7 @@
 <c:set var="semanticAttributes" value="${model.edmElements[field].fullQualifiedURI}" />
 
 <c:set var="schemaKey" value="${field}" />
-<c:if test="${contextualEntity != null}">
+<c:if test="${contextualEntity != null && contextualEntity != ''}">
   <c:set var="schemaKey" value="${contextualEntity}/${field}" />
 </c:if>
 
