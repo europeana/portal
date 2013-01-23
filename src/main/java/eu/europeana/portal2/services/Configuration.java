@@ -34,6 +34,9 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.server']}")
 	private String portalServer;
 
+	@Value("#{europeanaProperties['portal.server.canonical']}")
+	private String cannonicalPortalServer;
+
 	@Value("#{europeanaProperties['portal.theme']}")
 	private String defaultTheme;
 
@@ -132,6 +135,8 @@ public class Configuration {
 
 	private String portalUrl;
 
+	private String canonicalUrl;
+
 	private String[] responsiveImageLabels;
 
 	private String[] responsiveCarouselImageLabels;
@@ -150,6 +155,10 @@ public class Configuration {
 
 	public String getPortalServer() {
 		return portalServer;
+	}
+
+	public String getCannonicalPortalServer() {
+		return cannonicalPortalServer;
 	}
 
 	public String[] getShownAtProviderOverride() {
@@ -291,6 +300,18 @@ public class Configuration {
 			portalUrl = sb.toString();
 		}
 		return portalUrl;
+	}
+
+	public String getCanonicalUrl() {
+		if (canonicalUrl == null) {
+			StringBuilder sb = new StringBuilder(cannonicalPortalServer);
+			if (!cannonicalPortalServer.endsWith("/") && !portalName.startsWith("/")) {
+				sb.append("/");
+			}
+			sb.append(portalName);
+			canonicalUrl = sb.toString();
+		}
+		return canonicalUrl;
 	}
 
 	public String[] getResponsiveImageLabels() {

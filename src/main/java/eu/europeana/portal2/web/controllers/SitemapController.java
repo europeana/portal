@@ -421,7 +421,10 @@ public class SitemapController {
 
 	private String getPortalUrl() {
 		if (portalUrl == null) {
-			portalUrl = config.getPortalServer() + config.getPortalName() + "/";
+			portalUrl = config.getCannonicalPortalServer() + config.getPortalName();
+			if (!portalUrl.endsWith("/")) {
+				portalUrl = portalUrl + "/";
+			}
 		}
 		return portalUrl;
 	}

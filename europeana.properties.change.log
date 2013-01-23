@@ -104,3 +104,15 @@ suffix in the URL
 
 example:
 static.page.in.versions = aboutus,sitemap,newcontent
+
+==== 2013-01-23
+
+New properties:
+
+1) portal.server.canonical
+
+description: provides a canonical name for portal server
+
+example:
+portal.server.canonical = http://www.europeana.eu/
+
