@@ -418,7 +418,7 @@ public class SitemapController {
 	public static List<String> makeHexLetters() {
 		return Arrays.asList(SitemapPage.HEX);
 	}
-	
+
 	private String getPortalUrl() {
 		if (portalUrl == null) {
 			portalUrl = config.getPortalServer() + config.getPortalName() + "/";
