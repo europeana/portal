@@ -28,7 +28,6 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 <div class="row carousel-row">
 
 	<c:if test='${!empty model.carouselItems}'>
-	
 	    <script type="text/javascript">
 	        var carouselData = [];   
  
@@ -42,6 +41,14 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					link:				"${item.url}",
 					external:			"<spring:message code='${item.anchorTarget}'/>"
 				};
+
+				<c:if test='${!empty item.translatableUrls}'>
+					<c:forEach var="lang" items="${item.translatableUrls}" varStatus="status">
+						<c:if test="${model.locale == lang.key}" >
+							carouselData[carouselData.length-1].link = "${lang.value}";
+						</c:if>
+					</c:forEach>
+				</c:if>
 				
 			</c:forEach>
 		</script>

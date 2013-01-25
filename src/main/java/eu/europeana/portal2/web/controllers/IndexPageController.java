@@ -21,8 +21,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -248,6 +250,29 @@ public class IndexPageController {
 						&& !StringUtils.equals(label, url)) {
 					CarouselItem item = new CarouselItem(model, i, url);
 					item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+					
+					
+					Map<String, String> translatableUrls = new HashMap<String, String>();
+					boolean keepFetchingLanguages = true;
+					int j = 1;		
+					while(keepFetchingLanguages){
+						String key = "";
+						try{
+							key = String.format("notranslate_carousel-item-%d_a_url_lang_%d", i, j);
+							String[] langUrl =  messageSource.getMessage( key, null, null ).split(",");
+							translatableUrls.put(langUrl[0], langUrl[1]);
+						}
+						catch(NoSuchMessageException e){
+							
+							System.err.println( "Couldn't read language " + key);
+							
+							keepFetchingLanguages = false;
+						}
+						j++;
+					}
+					item.setTranslatableUrls(translatableUrls);
+
+					
 					carouselItems.add(item);
 				} else {
 					keepFetching = false;

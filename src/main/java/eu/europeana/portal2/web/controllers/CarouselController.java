@@ -1,8 +1,10 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -54,11 +56,13 @@ public class CarouselController {
 		injector.injectProperties(model);
 
 		List<CarouselItem> carouselItems = new ArrayList<CarouselItem>();
+		
 		boolean keepFetching = true;
 		int i = 1;
 		int total = 0;
 		while (keepFetching) {
 			try {
+				
 				String label = String.format("notranslate_carousel-item-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url)
@@ -67,6 +71,26 @@ public class CarouselController {
 					if (i >= start && carouselItems.size() < rows) {
 						CarouselItem item = new CarouselItem(model, i, url);
 						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+
+						Map<String, String> translatableUrls = new HashMap<String, String>();
+						boolean keepFetchingLanguages = true;
+						int j = 1;		
+						while(keepFetchingLanguages){
+							String key = "";
+							try{
+								key = String.format("notranslate_carousel-item-%d_a_url_lang_%d", i, j);
+								String[] langUrl =  messageSource.getMessage( key, null, null ).split(",");
+								translatableUrls.put(langUrl[0], langUrl[1]);
+							}
+							catch(NoSuchMessageException e){
+								
+								System.err.println( "Couldn't read language " + key);
+								
+								keepFetchingLanguages = false;
+							}
+							j++;
+						}
+						item.setTranslatableUrls(translatableUrls);
 						carouselItems.add(item);
 					}
 				} else {

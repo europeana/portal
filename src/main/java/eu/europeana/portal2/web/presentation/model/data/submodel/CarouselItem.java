@@ -30,6 +30,7 @@ public class CarouselItem {
 	private String url;
 	private PageData model;
 	private Map<String, String> responsiveImages;
+	private Map<String, String> translatableUrls;
 
 	public CarouselItem(PageData model, int i, String url) {
 		this.model = model;
@@ -102,4 +103,14 @@ public class CarouselItem {
 	public void setResponsiveImages(String imgUrl) {
 		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, true);
 	}
+	
+	public Map<String, String> getTranslatableUrls() {
+		return translatableUrls;
+	}
+
+	public void setTranslatableUrls(Map<String, String> translatableUrls) {
+		this.translatableUrls = translatableUrls;
+	}
+
+
 }
