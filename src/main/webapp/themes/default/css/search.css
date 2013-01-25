@@ -83,7 +83,8 @@
   	transition: background-color 1s ease-in-out;
 }
 
-.thumb-frame:hover{
+.thumb-frame:hover,
+.thumb-frame:focus{
 	background-color: #e3e3e3;
 }
 
