@@ -102,7 +102,6 @@
 }
 
 
-
 .fi-block-spacer{
 	margin-top:		2em;
 	margin-bottom:	2em;
@@ -117,11 +116,12 @@
 
 .fi-block-spacer h4{
 	margin-bottom:	1em;
+	text-align:		center;
 }
 
 .fi-block-spacer h4 a{
 	text-align:		center;
-	display:		block;
+	xxxxxxxxxxxxxxxxxxxxxdisplay:		block;
 }
 
 .fi-block-spacer img{
@@ -130,6 +130,11 @@
 	margin-bottom:	1em;
 }
 
+.fi-block-spacer a:focus img{
+	outline:	1px dashed #4C7ECF;	/* blue like buttons */
+	outline:	1px dashed #9DC425;	/* green like links */
+	outline:	1px dotted #9DC425;	/* green like links */
+}
 
 
 @media only screen and ( min-width:48em ){
@@ -151,6 +156,10 @@
 		padding-left:	2em;
 	}
 	
+	.fi-block-spacer h4{
+		text-align:		left;
+	}
+			
 	.fi-block-spacer h4 a{
 		text-align:		left;
 		display:		inline;
@@ -194,9 +203,19 @@
 	border-bottom:	1px solid #E4E4E4;
 }
 
+/*
+
+TODO: this commented rule needs copied to ie8.css
 
 .featured-text .new-content-link{
 	display:	block;
+}
+
+*/
+
+.featured-text .new-content-link:before{
+    content:		"\a";
+    white-space:	pre;
 }
 
 ul.featured-partner-links{
@@ -240,9 +259,24 @@ h3 a span{
 	margin:		auto;	/* required to centre block */
 }
 
+
+a.icon-rss.feed-link:focus{
+	text-decoration:	underline !important;
+	border:				solid 1px #fff;			/* border not visible, but used as a hack to force firefox to remove the text-decoration following a blur. */
+}
+
+a.icon-rss.feed-link{
+	text-decoration:	none !important;
+	color:				orange !important;
+	border:				none;
+	box-sizing:			border-box;
+}
+
+/*
 .icon-rss:before{
 	color: 	orange !important;
 }
+*/
 
 
 @media only screen and ( min-width:48em ){
@@ -341,6 +375,10 @@ p.featured-text{
 	color:			#910101;
 	margin-left:	0.3em;
 	margin-top:		-1px;
+}
+
+.icon-pinterest:focus{
+	outline:	solid 4px red;
 }
 
 .pinterest-button{

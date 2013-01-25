@@ -85,37 +85,79 @@ var EuMenu = function(cmpIn, options){
 	);
 
 
-	/* accessibility */
-	console.log("key bind " + self.cmp.find(".item a").length + " items");
 	
-	self.cmp.find(".item a").add(self.cmp).bind('keypress', function(e){
+	/* accessibility */
+	
+	var keyHandler = new EuAccessibility(
+			self.cmp,			
+			function(){
+				return self.cmp.find('.item a');
+			}			
+	);
+	
+	self.cmp.find(".item a").add(self.cmp).bind('keydown', keyHandler.keyPress
+			
+	/*
+	function(e){
+		
+		if(e.ctrlKey || e.metaKey){
+			// ctrl or cmd
+			return;
+		}
+		
 		var tabIndex = parseInt($(e.target).attr('tabIndex'));
 
 		if([39, 40].indexOf(e.keyCode)>-1){
-			/* left, up  */
+			// left, up 
+			
 			tabIndex += 1;
 		}
 		else if([37, 38].indexOf(e.keyCode)>-1){
-			/* right, down */
-			tabIndex -= 1;
+			// right, down
+			
+			if(e.target == self.cmp[0]){
+				self.cmp.removeClass("active");
+				e.preventDefault();
+				return;
+			}
+			else{
+				tabIndex -= 1;
+				
+			}
 		}
 		else if(e.keyCode == 13){
-			/* return */
+			// return
+			
 			e.target.click();
 			self.cmp.focus();
 			return;
 		}
+		else if(e.keyCode == 9){
+			// tab
+			
+			// jump to next / prev component and close the menu
+			var targetTabIndex = e.shiftKey ? parseInt(self.cmp.attr("tabIndex")) - 1 : parseInt(self.cmp.find('.item:last a').attr("tabIndex")) + 1;
+			var target = $('*[tabIndex=' + targetTabIndex + ']');
+			if(target[0]){
+				target.focus();				
+			}
+			self.cmp.removeClass("active");
+			e.preventDefault();
+			return;
+		}
 		else{
-			var key		= window.event ? e.keyCode : e.which;
-			if(key==0){
-				/* esc */
+			var key	= window.event ? e.keyCode : e.which;
+			
+			if(key==27){
+				// esc
+				
 				self.cmp.removeClass("active");
 				self.cmp.focus();
 				return;
 			}
-			if ( key < 48 || key > 57 ) {		
+			if ( key < 48 || key > 57 ) {						
+				// alphabet
 				
-				/* alphabet */
 				var val = String.fromCharCode(key).toUpperCase();
 				
 				var allWithName = self.cmp.find('.item a').filter(function(){
@@ -140,9 +182,7 @@ var EuMenu = function(cmpIn, options){
 				}
 				
 				if(! $(e.target).is(':focus') ){
-					if(!e.ctrlKey ){
-						return;
-					}
+					return;
 				}
 			}
 		}
@@ -156,11 +196,10 @@ var EuMenu = function(cmpIn, options){
 			target.focus();
 		}				
 		
-		if(!e.ctrlKey){
-			e.preventDefault();			
-		}
-		
-	});
+		e.preventDefault();			
+	}
+	*/
+	);
 
 	
 

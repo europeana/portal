@@ -288,6 +288,11 @@ eu.europeana.lightbox = {
 			},
 			onLoad:function(){
 				eu.europeana.lightbox.layout();
+				
+				$("#exposeMask, #lightbox, .content-wrap").click(function(){
+					$("#at15s").hide();
+				});
+				
 			},
 			onBeforeClose: function(){
 				var closeBtn = eu.europeana.lightbox.overlay.find(".close");
@@ -301,6 +306,7 @@ eu.europeana.lightbox = {
 
 			}
 		});
+				
 		
 		$(".showMeta").click(function(){
 			eu.europeana.lightbox.showMetadata();

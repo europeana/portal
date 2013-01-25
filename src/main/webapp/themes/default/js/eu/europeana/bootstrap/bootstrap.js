@@ -55,12 +55,20 @@ var europeana_bootstrap = function(){
 	  
 	  {	name : 'analytics',			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,					path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,							dependencies : [ 'utils' ]	},
 	  {	name : 'ajax',				file : 'ajax' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'utils' ]	},
+
+	  
+	  
+	  {
+		  name : 'EuAccessibility',
+		  file : 'EuAccessibility' + js.min_suffix + '.js' + js.cache_helper,
+		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory		  
+	  },
 	  
 	  {
 		  name : 'EuMenu',
 		  file : 'EuMenu' + js.min_suffix + '.js' + js.cache_helper,
 		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-		  dependencies : [ 'utils' ]
+		  dependencies : [ 'utils', 'EuAccessibility' ]
 	  },
 
 	  {	name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
@@ -180,7 +188,7 @@ var europeana_bootstrap = function(){
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils' ]
+			dependencies : [ 'utils', 'EuAccessibility' ]
 		});
 
 		scripts.push({
@@ -269,7 +277,7 @@ var europeana_bootstrap = function(){
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils' ]
+			dependencies : [ 'utils', 'EuAccessibility' ]
 		});
 		
 		scripts.push({

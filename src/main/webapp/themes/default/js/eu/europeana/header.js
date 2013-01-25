@@ -15,6 +15,15 @@ eu.europeana.header = {
 	
 	init : function() {
 
+		if (!Array.prototype.indexOf) {	/* IE 8 */
+			Array.prototype.indexOf = function(obj, start) {
+				 for (var i = (start || 0), j = this.length; i < j; i++) {
+					 if (this[i] === obj) { return i; }
+				 }
+				 return -1;
+			};
+		}
+		
 		$('.submit-cell').css("width",	$('.submit-cell button')	.outerWidth(true) + "px"); 
 		$('.menu-cell').css("width",	$('#search-menu')			.outerWidth(true) + "px");
 		
@@ -53,34 +62,48 @@ eu.europeana.header = {
 		
 		var nextTabIndex = 1;
 
-		function setTabIndex(ob){
-			ob.attr('tabIndex', nextTabIndex);
-			nextTabIndex+=1;
+		function setTabIndex(selectorOrObject){
+			var selected = typeof selectorOrObject == 'string' ? $(selectorOrObject) : selectorOrObject; 
+			if(selected.length==1){
+				selected.attr('tabIndex', nextTabIndex);
+				nextTabIndex+=1;
+			}
+			else if(selected.length>1){
+				selected.each(function(i, ob){
+					$(ob).attr('tabIndex', nextTabIndex);
+					nextTabIndex+=1;
+				});
+			}
 		}
 		
-		setTabIndex($('#query-input'));
-		setTabIndex($('.submit-cell.hide-cell-on-phones button'));
-		setTabIndex($('#search-menu'));
+		/* header */
+		setTabIndex( '#query-input' );
+		setTabIndex( '.submit-cell.hide-cell-on-phones button' );
+		setTabIndex( '#search-menu' );
+		setTabIndex( '#search-menu a' );
+		setTabIndex( '#logo a' );
+		setTabIndex( '#header-strip white>a, #header-strip a.white' );
+		setTabIndex( '#lang-menu' );
+		setTabIndex( '#lang-menu .item.lang a');
+		setTabIndex( '#query-info .search-help' );
 		
-		$('#search-menu a').each(function(i, ob){
-			setTabIndex($(ob));
-		});
+		/* search */
+		setTabIndex('#search-filter a');
+		
+		$('#filter-search a.facet-section').each(function(i, ob){
 			
-		setTabIndex($('#logo a'));
-		
-		$('#header-strip a.white').each(function(i, ob){
-			setTabIndex($(ob));
-		});
+			setTabIndex( $(ob) );
+			if(i==0){
+				setTabIndex( $(ob).parent().next('form').find('input[type!="hidden"]') );
+			}
+			else{				
+				setTabIndex( $(ob).parent().next('ul').find('a') );
+			}
 
-		$('#header-strip white>a, #header-strip a.white').each(function(i, ob){
-			setTabIndex($(ob));
+
 		});
 		
-		setTabIndex($('#lang-menu'));
-		
-		$('#lang-menu .item.lang a').each(function(i, ob){
-			setTabIndex($(ob));
-		});
+	
 		
 	},
 	

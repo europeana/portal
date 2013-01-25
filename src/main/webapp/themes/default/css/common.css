@@ -61,7 +61,6 @@
 	
 #social-links .social-link{
 	float:		none;
-	xxxxxxxxxcolor:		#0075FF;
 	display:	inline-block;
 	*display:	inline;
 	zoom:		1;
@@ -83,8 +82,9 @@
 	color:		#db4a39;
 }
  
-
-
+a:focus .social-link .text{
+	text-decoration:	underline;
+}
 
 
 #social-links .social-link span.text{

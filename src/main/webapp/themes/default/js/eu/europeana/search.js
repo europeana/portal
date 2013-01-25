@@ -15,12 +15,38 @@ eu.europeana.search = {
 		});
 		
 		// make facet sections collapsible
-		$("#filter-search li").not(".ugc-li").Collapsible(
-			{
-				headingSelector: "h3 a",
-				bodySelector: "ul"
-			}
-		);
+		
+		$("#filter-search>li").not(".ugc-li").each(function(i, ob){
+
+			var headingSelector = "h3 a";
+			var headingSelected = $(ob).find(headingSelector);
+
+			var accessibility =  new EuAccessibility(
+				headingSelected,
+				
+				/* function to get the tabbable items */
+		    	function(){
+					if( headingSelected.parent().next('form').length ){
+						// Add keywords
+						return headingSelected.parent().next('form').find('input[type!="hidden"]');
+					}
+					else{
+						// Other facets
+						return headingSelected.parent().next('ul').first().find('a');
+					}							
+				}
+			);
+				
+			$(ob).Collapsible(
+				{
+					"headingSelector"	: "h3 a",
+					"bodySelector"		: "ul",
+					"keyHandler"		: accessibility
+				}
+			);
+		});
+		
+		
 		
 		$(window).bind('collapsibleExpanded',
 			function(event, elements){
@@ -83,7 +109,9 @@ eu.europeana.search = {
 		var $this		= $(this);
 		var $jumpToPage	= $(this).parent();
 		
-		if (!Array.prototype.indexOf) {	/* IE 8 */
+		/* IE 8 */
+		/*
+		if (!Array.prototype.indexOf) {
 			Array.prototype.indexOf = function(obj, start) {
 				 for (var i = (start || 0), j = this.length; i < j; i++) {
 					 if (this[i] === obj) { return i; }
@@ -91,6 +119,7 @@ eu.europeana.search = {
 				 return -1;
 			};
 		}
+		*/
 
 		var key		= window.event ? e.keyCode : e.which;
 		var maxRows	= parseInt($jumpToPage.find("#max-rows").val());

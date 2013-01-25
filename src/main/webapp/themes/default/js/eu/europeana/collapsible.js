@@ -1,6 +1,7 @@
 (function( $ ) {
 $.fn.Collapsible = function() {
 	
+	
 	var ops	= {
 			expandedClass		:	'icon-arrow-7',
 			collapsedClass		:	'icon-arrow-6',
@@ -11,6 +12,7 @@ $.fn.Collapsible = function() {
 	for (var attrname in opsIn){
 		ops[attrname] = opsIn[attrname];
 	}
+
 
 	eu.europeana.vars.suppresResize = false;
 	
@@ -110,7 +112,34 @@ $.fn.Collapsible = function() {
     		setClasses();    		
     	}
         
-        
+
+    	//console.log("make binding for " + ops.headingSelector + ": " + $(ops.headingSelector).html()   )
+    	
+    	if(ops.keyHandler){
+    		ops.keyHandler.fnGetItems().add($header).bind('keydown', ops.keyHandler.keyPress);
+    	}
+
+    	/*
+    	$header.bind('click', function(e){
+    		
+    		//console.log("header keypress");
+
+    		// ctr | meta | ignore
+    		
+    		
+    		// up left   ||  right down
+    		
+    		// return = restore default (click)
+    		
+    		// tab
+    		
+    		// key find
+    		
+    		// escape
+    		
+    	});
+    	*/
+    	
     	$header.bind('click', function(e){
     		 
     		//awaitingOpen = true;

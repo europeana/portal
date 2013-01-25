@@ -137,6 +137,14 @@ x:-o-prefocus, #refinements input{
 #search-filter ul{
 	list-style: none;
 }
+/*
+#search-filter a:focus{
+	border:	1px dotted;
+}
+*/
+#search-filter a:focus .icon-remove{
+	text-decoration: underline;
+}
 
 #share-subscribe h3,
 #filter-search h3 {
@@ -153,6 +161,19 @@ a.facet-ugc{
 	background-image:		none;
 	background-repeat:		no-repeat;
 }
+
+/* ANDY - new - to style */
+#filter-search a.facet-section:focus{
+	outline:	1px dotted #4C7ECF;
+}
+#filter-search ul a:focus{
+	text-decoration:underline;
+}
+/* END ANDY - new - to style */
+
+
+
+
 
 .ugc-li label{
 	color:	#333;

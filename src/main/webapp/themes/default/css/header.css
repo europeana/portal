@@ -21,6 +21,7 @@
 #lang-menu ul{
 	right:		0;
 	font-size:	1.25em;
+	outline:	none;
 }
 
 #lang-menu .item {

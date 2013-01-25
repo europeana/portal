@@ -30,12 +30,12 @@
 					<c:choose>
 						<c:when test="${!empty filter.url}">
 	
-						<a href="${fn:escapeXml(filter.url)}">
-							<span class="icon-remove"></span>
-						</a>
-						
-						<a href="${fn:escapeXml(filter.urlFull)}">${linkLabel}</a>
-							<!-- a href="${fn:escapeXml(filter.url)}">${linkLabel}</a-->
+							<a href="${fn:escapeXml(filter.urlFull)}" class="europeana">${linkLabel}</a>
+							
+							<a href="${fn:escapeXml(filter.url)}">
+								<span class="icon-remove"></span>
+							</a>
+
 						</c:when>
 						<c:otherwise>${linkLabel}</c:otherwise>
 					</c:choose>
