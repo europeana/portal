@@ -258,7 +258,7 @@ public class IndexPageController {
 					while(keepFetchingLanguages){
 						String key = "";
 						try{
-							key = String.format("notranslate_carousel-item-%d_a_url_lang_%d", i, j);
+							key = String.format("notranslate_carousel-item-%d_a_url_lang_%d_t", i, j);
 							String[] langUrl =  messageSource.getMessage( key, null, null ).split(",");
 							translatableUrls.put(langUrl[0], langUrl[1]);
 						}
