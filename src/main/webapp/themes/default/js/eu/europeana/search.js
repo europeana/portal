@@ -96,7 +96,7 @@ eu.europeana.search = {
 	},
 	
 	setupPageJump : function(){
-		$('.jump-to-page').bind('submit', 					this.jumpToPageSubmit );
+		$('.jump-to-page').bind('submit', 				this.jumpToPageSubmit );
 		$('.jump-to-page #start-page').bind('keypress',	this.validateJumpToPage);
 	},
 	
@@ -113,25 +113,8 @@ eu.europeana.search = {
 		
 		var $this		= $(this);
 		var $jumpToPage	= $(this).parent();
-		
-		/* IE 8 */
-		/*
-		if (!Array.prototype.indexOf) {
-			Array.prototype.indexOf = function(obj, start) {
-				 for (var i = (start || 0), j = this.length; i < j; i++) {
-					 if (this[i] === obj) { return i; }
-				 }
-				 return -1;
-			};
-		}
-		*/
-
-		var key		= window.event ? e.keyCode : e.which;
-		var maxRows	= parseInt($jumpToPage.find("#max-rows").val());
-
-		var underMax = function(){
-			return parseInt( $this.val() + String.fromCharCode(key) ) <= maxRows; 
-		};
+		var key			= window.event ? e.keyCode : e.which;
+		var maxRows		= parseInt($jumpToPage.find("#max-rows").val());
 
 		if([8, 46, 37, 38, 39, 40].indexOf(e.keyCode)>-1){
 			/* delete, backspace, left, up, right, down */
@@ -148,7 +131,24 @@ eu.europeana.search = {
 		}
 		else{
 			/* number */
-			return underMax();
+			
+			var val = parseInt( $this.val() + String.fromCharCode(key), 10 );
+			
+			var overwrite;
+			
+			if(!val>0){
+				overwrite = 1;
+			}
+			else if(val > maxRows){
+				overwrite = maxRows;
+			}
+			
+			if(overwrite){
+				$(e.target).val(overwrite);
+				e.preventDefault();
+			}
+			
+			return true;
 		}
 		
 	},
