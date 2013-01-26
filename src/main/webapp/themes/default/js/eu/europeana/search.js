@@ -15,35 +15,40 @@ eu.europeana.search = {
 		});
 		
 		// make facet sections collapsible
-		
-		$("#filter-search>li").not(".ugc-li").each(function(i, ob){
+		$("#filter-search>li").each(function(i, ob){
 
-			var headingSelector = "h3 a";
-			var headingSelected = $(ob).find(headingSelector);
-
+			var headingSelector		= "h3 a";
+			var headingSelected		= $(ob).find(headingSelector);
+			var fnGetItems			= function(){
+				
+				// function to get the tabbable items
+				if( headingSelected.parent().next('form').length ){
+					// Add keywords
+					return headingSelected.parent().next('form').find('input[type!="hidden"]');
+				}
+				else{
+					// Other facets
+					return headingSelected.parent().next('ul').first().find('a');
+				}							
+			};
+			
 			var accessibility =  new EuAccessibility(
 				headingSelected,
-				
-				/* function to get the tabbable items */
-		    	function(){
-					if( headingSelected.parent().next('form').length ){
-						// Add keywords
-						return headingSelected.parent().next('form').find('input[type!="hidden"]');
+				fnGetItems
+			);
+			
+			if($(ob).hasClass('ugc-li')){
+				$(ob).bind('keypress', accessibility.keyPress);
+			}
+			else{
+				$(ob).Collapsible(
+					{
+						"headingSelector"	: "h3 a",
+						"bodySelector"		: "ul",
+						"keyHandler"		: accessibility
 					}
-					else{
-						// Other facets
-						return headingSelected.parent().next('ul').first().find('a');
-					}							
-				}
-			);
-				
-			$(ob).Collapsible(
-				{
-					"headingSelector"	: "h3 a",
-					"bodySelector"		: "ul",
-					"keyHandler"		: accessibility
-				}
-			);
+				);				
+			}
 		});
 		
 		

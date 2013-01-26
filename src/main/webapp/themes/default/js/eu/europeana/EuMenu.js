@@ -84,7 +84,6 @@ var EuMenu = function(cmpIn, options){
 		}
 	);
 
-
 	
 	/* accessibility */
 	
@@ -92,119 +91,13 @@ var EuMenu = function(cmpIn, options){
 			self.cmp,			
 			function(){
 				return self.cmp.find('.item a');
-			}			
+			},
+			true
 	);
 	
-	self.cmp.find(".item a").add(self.cmp).bind('keydown', keyHandler.keyPress
-			
-	/*
-	function(e){
-		
-		if(e.ctrlKey || e.metaKey){
-			// ctrl or cmd
-			return;
-		}
-		
-		var tabIndex = parseInt($(e.target).attr('tabIndex'));
-
-		if([39, 40].indexOf(e.keyCode)>-1){
-			// left, up 
-			
-			tabIndex += 1;
-		}
-		else if([37, 38].indexOf(e.keyCode)>-1){
-			// right, down
-			
-			if(e.target == self.cmp[0]){
-				self.cmp.removeClass("active");
-				e.preventDefault();
-				return;
-			}
-			else{
-				tabIndex -= 1;
-				
-			}
-		}
-		else if(e.keyCode == 13){
-			// return
-			
-			e.target.click();
-			self.cmp.focus();
-			return;
-		}
-		else if(e.keyCode == 9){
-			// tab
-			
-			// jump to next / prev component and close the menu
-			var targetTabIndex = e.shiftKey ? parseInt(self.cmp.attr("tabIndex")) - 1 : parseInt(self.cmp.find('.item:last a').attr("tabIndex")) + 1;
-			var target = $('*[tabIndex=' + targetTabIndex + ']');
-			if(target[0]){
-				target.focus();				
-			}
-			self.cmp.removeClass("active");
-			e.preventDefault();
-			return;
-		}
-		else{
-			var key	= window.event ? e.keyCode : e.which;
-			
-			if(key==27){
-				// esc
-				
-				self.cmp.removeClass("active");
-				self.cmp.focus();
-				return;
-			}
-			if ( key < 48 || key > 57 ) {						
-				// alphabet
-				
-				var val = String.fromCharCode(key).toUpperCase();
-				
-				var allWithName = self.cmp.find('.item a').filter(function(){
-					return $(this).is(':visible') && ($(this).html().charAt(0) + '').toUpperCase() == val;
-				});
-				
-				var nextWithName = allWithName.filter(function() {
-					var thisTabIndex = parseInt($(this).attr("tabIndex"));
-				    return thisTabIndex > tabIndex;
-				});
-
-				if(nextWithName[0]){
-					nextWithName[0].focus();
-				}
-				else{
-					var prevWithName = allWithName.filter(function() {
-					    return parseInt($(this).attr("tabIndex")) < tabIndex;
-					});
-					if(prevWithName[0]){
-						prevWithName[0].focus();
-					}
-				}
-				
-				if(! $(e.target).is(':focus') ){
-					return;
-				}
-			}
-		}
-				
-		if(!self.cmp.find('ul').is(':visible') ){
-			self.cmp.find('ul').click();
-		}
-		var target = $('*[tabIndex=' + tabIndex + ']');
-			
-		if(target[0]){
-			target.focus();
-		}				
-		
-		e.preventDefault();			
-	}
-	*/
-	);
-
-	
+	self.cmp.find(".item a").add(self.cmp).bind('keydown', keyHandler.keyPress);
 
 
-	
 	/* exposed functionality */
 	return {
 		"init" : function(){

@@ -91,19 +91,43 @@ eu.europeana.header = {
 		setTabIndex('#search-filter a');
 		
 		$('#filter-search a.facet-section').each(function(i, ob){
-			
 			setTabIndex( $(ob) );
 			if(i==0){
 				setTabIndex( $(ob).parent().next('form').find('input[type!="hidden"]') );
 			}
-			else{				
+			else{
 				setTabIndex( $(ob).parent().next('ul').find('a') );
 			}
-
-
 		});
 		
-	
+		/* fixed facet bugs:
+		 * 
+		 * - can't tab back from "Add keyword" (because )
+		 * - can't tab fwd from "provider" (because data provider is hidden)
+		 * - can't collapse media type facet (or any other) when landing there backwards from another collapsible
+		 * - is the behaviour right?  Backwards tabbing through items cumbersome.  Root detection & up better?
+		 * - alphabet opens menu but doesn't go to item
+		 *  
+		 * */
+
+		/* outstanding facet bugs:
+		 * 
+		 * 	- can down-arrow off menu onto help link (and off top)
+		 *  
+		 * */
+		
+		/* remaining TASKS:
+		 * 
+		 * - ctrl r needs to work on result size menu 
+		 * - tabIndex++ improvement using (selector).length
+		 * 
+		 * */
+		
+		
+		setTabIndex('#cb-ugc');
+		setTabIndex('.nav-top .eumenu');
+		setTabIndex('.nav-top .eumenu .item');
+		setTabIndex('.thumb-frame');
 		
 	},
 	
@@ -196,7 +220,6 @@ eu.europeana.header = {
 					var searchTerm	= input.attr("valueForBackButton").replace("*:*", "");
 					self.cmp.find(".item a").each(function(i, ob){
 						var searchType = $(ob).attr("class");
-						console.log("find  " + searchType + " in " + searchTerm);
 						
 						if(searchTerm.indexOf(searchType) == 0){
 							self.setLabel(searchType);

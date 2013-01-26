@@ -1,7 +1,6 @@
 (function( $ ) {
 $.fn.Collapsible = function() {
 	
-	
 	var ops	= {
 			expandedClass		:	'icon-arrow-7',
 			collapsedClass		:	'icon-arrow-6',
@@ -112,37 +111,25 @@ $.fn.Collapsible = function() {
     		setClasses();    		
     	}
         
-
-    	//console.log("make binding for " + ops.headingSelector + ": " + $(ops.headingSelector).html()   )
-    	
+    	/* accessibility stuff */
     	if(ops.keyHandler){
-    		ops.keyHandler.fnGetItems().add($header).bind('keydown', ops.keyHandler.keyPress);
+    		
+    		var items = ops.keyHandler.fnGetItems();
+    		
+    		// assign keyboard handling...
+    		items.add($header).bind('keydown', ops.keyHandler.keyPress);
+
+    		// ...and if we tab in to an item, jump focus to header
+    		items.bind('focus', function(e){
+        		if(e.tab){
+        			e.preventDefault();
+        			$header.focus();
+        		}
+        	});
     	}
-
-    	/*
-    	$header.bind('click', function(e){
-    		
-    		//console.log("header keypress");
-
-    		// ctr | meta | ignore
-    		
-    		
-    		// up left   ||  right down
-    		
-    		// return = restore default (click)
-    		
-    		// tab
-    		
-    		// key find
-    		
-    		// escape
-    		
-    	});
-    	*/
     	
     	$header.bind('click', function(e){
     		 
-    		//awaitingOpen = true;
     		eu.europeana.vars.suppresResize = true;
     		var finishedOpen = function(){
     			eu.europeana.vars.suppresResize = false;    			
@@ -156,7 +143,7 @@ $.fn.Collapsible = function() {
     		if(getTarget().is(':visible')){    			
     			setClasses(true);
     		}
-    			//return false;
+    		
 		});
     });
 };
