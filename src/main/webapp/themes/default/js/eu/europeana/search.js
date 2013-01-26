@@ -132,7 +132,7 @@ eu.europeana.search = {
 		else{
 			/* number */
 			
-			var val = parseInt( $this.val() + String.fromCharCode(key), 10 );
+			var val = parseInt( $this.val() + String.fromCharCode(key) );
 			
 			var overwrite;
 			
