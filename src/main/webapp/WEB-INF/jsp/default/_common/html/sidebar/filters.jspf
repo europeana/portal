@@ -32,7 +32,7 @@
 	
 							<a href="${fn:escapeXml(filter.urlFull)}" class="europeana">${linkLabel}</a>
 							
-							<a href="${fn:escapeXml(filter.url)}">
+							<a href="${fn:escapeXml(filter.url)}">&nbsp;
 								<span class="icon-remove"></span>
 							</a>
 
