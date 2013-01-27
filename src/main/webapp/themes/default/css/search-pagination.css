@@ -50,8 +50,8 @@
 	text-align:center;
 }
 
-a {
-    text-decoration: none;
+.result-pagination a:focus{
+    border-bottom: 1px dotted #4C7ECF;
 }
 
 .nav .eu-menu{
