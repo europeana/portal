@@ -110,6 +110,11 @@ eu.europeana.search = {
 	},
 	
 	validateJumpToPage : function(e){
+
+		if(e.ctrlKey || e.metaKey || e.keyCode == 9){
+			// ctrl or cmd or tab
+			return;
+		}
 		
 		var $this		= $(this);
 		var $jumpToPage	= $(this).parent();
@@ -238,6 +243,7 @@ eu.europeana.search = {
 				window.location.href = eu.europeana.search.urlAlterParam("rows", selected);
 			}
 		};
+		
 		var menuTop = new EuMenu( $(".nav-top .eu-menu"), config);
 		var menuBottom = new EuMenu( $(".nav-bottom .eu-menu"), config);
 		menuTop.init();

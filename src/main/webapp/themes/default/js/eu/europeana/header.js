@@ -63,17 +63,17 @@ eu.europeana.header = {
 		var nextTabIndex = 1;
 
 		function setTabIndex(selectorOrObject){
-			var selected = typeof selectorOrObject == 'string' ? $(selectorOrObject) : selectorOrObject; 
+			var selected = typeof selectorOrObject == 'string' ? $(selectorOrObject) : selectorOrObject;
+			
 			if(selected.length==1){
-				selected.attr('tabIndex', nextTabIndex);
-				nextTabIndex+=1;
+				selected.attr('tabIndex', nextTabIndex);					
 			}
 			else if(selected.length>1){
 				selected.each(function(i, ob){
 					$(ob).attr('tabIndex', nextTabIndex);
-					nextTabIndex+=1;
 				});
 			}
+			nextTabIndex += selected.length;
 		}
 		
 		/* header */
@@ -99,35 +99,28 @@ eu.europeana.header = {
 				setTabIndex( $(ob).parent().next('ul').find('a') );
 			}
 		});
-		
-		/* fixed facet bugs:
-		 * 
-		 * - can't tab back from "Add keyword" (because )
-		 * - can't tab fwd from "provider" (because data provider is hidden)
-		 * - can't collapse media type facet (or any other) when landing there backwards from another collapsible
-		 * - is the behaviour right?  Backwards tabbing through items cumbersome.  Root detection & up better?
-		 * - alphabet opens menu but doesn't go to item
-		 *  
-		 * */
 
-		/* outstanding facet bugs:
-		 * 
-		 * 	- can down-arrow off menu onto help link (and off top)
-		 *  
-		 * */
-		
-		/* remaining TASKS:
-		 * 
-		 * - ctrl r needs to work on result size menu 
-		 * - tabIndex++ improvement using (selector).length
-		 * 
-		 * */
-		
-		
 		setTabIndex('#cb-ugc');
-		setTabIndex('.nav-top .eumenu');
-		setTabIndex('.nav-top .eumenu .item');
-		setTabIndex('.thumb-frame');
+		setTabIndex('.nav-top .eu-menu');
+		setTabIndex('.nav-top .eu-menu .item');
+		
+		setTabIndex('.nav-top .nav-first a');
+		setTabIndex('.nav-top .nav-prev a');
+		setTabIndex('.nav-top #start-page');
+		setTabIndex('.nav-top .nav-next a');
+		setTabIndex('.nav-top .nav-last a');
+		
+		setTabIndex('.thumb-frame');		
+	
+		setTabIndex('.nav-bottom .eu-menu');
+		setTabIndex('.nav-bottom .eu-menu .item');
+		setTabIndex('.nav-bottom .nav-first a');
+		setTabIndex('.nav-bottom .nav-prev a');
+		
+		setTabIndex('.nav-bottom #start-page');
+		setTabIndex('.nav-bottom .nav-next a');
+		setTabIndex('.nav-bottom .nav-last a');
+
 		
 	},
 	
