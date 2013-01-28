@@ -17,7 +17,7 @@
 				<td class="menu-cell">
 					<div id="search-menu" class="eu-menu" aria-hidden="true">
 	
-						<span class="hide-ilb-on-phones menu-label">Search</span>
+						<span class="hide-ilb-on-phones menu-label"><spring:message code='Search_t'/></span>
 						<span class="icon-arrow-3 open-menu"></span>
 						<ul>
 							<li class="item">
