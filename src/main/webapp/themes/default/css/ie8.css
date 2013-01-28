@@ -138,7 +138,7 @@ body{
 
 /*	override header.css							*/
 
-.responsive-logo{
+.logo{
 	background-image:	url('/portal/themes/default/images/europeana-logo-2.png');
 	width:				206px;
 	height:				120px;
