@@ -45,7 +45,7 @@ eu.europeana.header = {
 		this.setupSearchMenu();
 		this.setupLanguageMenu();
 		
-		this.addAutocompleteHandler();
+//		this.addAutocompleteHandler();
 		this.setupNewsletter();
 		this.setupPinterestAnalytics();
 		
@@ -67,13 +67,14 @@ eu.europeana.header = {
 			
 			if(selected.length==1){
 				selected.attr('tabIndex', nextTabIndex);					
+				nextTabIndex ++;
 			}
 			else if(selected.length>1){
 				selected.each(function(i, ob){
 					$(ob).attr('tabIndex', nextTabIndex);
+					nextTabIndex ++;
 				});
-			}
-			nextTabIndex += selected.length;
+			}			
 		}
 		
 		/* header */
