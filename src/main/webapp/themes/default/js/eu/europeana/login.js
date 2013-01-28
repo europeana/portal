@@ -6,7 +6,7 @@
 	function init(){
 		addListeners();	
 		addHashListener();
-		showBox( window.location.hash ? window.location.hash : "#login");
+		showBox( window.location.hash ?  (eu.europeana.vars.user ? window.location.hash : "#login")    : "#login");
 	}
 	
 	
@@ -64,7 +64,6 @@
 	}
 
 	function showBox( hash ) {
-		
 		var i,
 			ii = login_boxes.length,
 			$target = login_boxes[0];

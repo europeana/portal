@@ -194,17 +194,37 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		</c:if>
 	</c:when>
 	
+	
+	<c:when test="${model.pageName == 'login.html'}">
+		<c:choose>
+			<c:when test="${!empty model.user}">
+				eu.europeana.vars.user = true;
+			</c:when>
+			<c:otherwise>
+				eu.europeana.vars.user = false;
+			</c:otherwise>
+		</c:choose>
+	</c:when>
+	
+	
 	<c:when test="${model.pageName == 'myeuropeana.html'}">
-		<c:if test="${!empty model.user}">
-			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
-			eu.europeana.vars.msg.item_not_removed = '${item_not_removed}';
-			eu.europeana.vars.msg.saved_search_removed = '${saved_search_removed}';
-			eu.europeana.vars.msg.no_saved_searches = '${no_saved_searches}';
-			eu.europeana.vars.msg.saved_item_removed = '${saved_item_removed}';
-			eu.europeana.vars.msg.no_saved_items = '${no_saved_items}';
-			eu.europeana.vars.msg.saved_tag_removed = '${saved_tag_removed}';
-			eu.europeana.vars.msg.no_saved_tags = '${no_saved_tags}';
-		</c:if>
+		<c:choose>
+			<c:when test="${!empty model.user}">
+				eu.europeana.vars.user = true;
+				eu.europeana.vars.msg.error_occurred = '${error_occurred}';
+				eu.europeana.vars.msg.item_not_removed = '${item_not_removed}';
+				eu.europeana.vars.msg.saved_search_removed = '${saved_search_removed}';
+				eu.europeana.vars.msg.no_saved_searches = '${no_saved_searches}';
+				eu.europeana.vars.msg.saved_item_removed = '${saved_item_removed}';
+				eu.europeana.vars.msg.no_saved_items = '${no_saved_items}';
+				eu.europeana.vars.msg.saved_tag_removed = '${saved_tag_removed}';
+				eu.europeana.vars.msg.no_saved_tags = '${no_saved_tags}';
+			</c:when>
+			<c:otherwise>
+				eu.europeana.vars.user = false;
+			</c:otherwise>
+		</c:choose>
+
 	</c:when>
 
 	<c:when test="${model.pageName == 'search.html'}">
