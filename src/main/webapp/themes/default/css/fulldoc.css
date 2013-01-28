@@ -444,7 +444,8 @@ h1 {
 
 .rights-badge span.rights-icon{
 	float:			left;
-	margin-right:	0.25em;
+	margin-right:	0.25em;	
+	color:			#888;
 }
 
 .rights-badge span.icon-external-right{
