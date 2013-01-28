@@ -8,15 +8,15 @@
 				<c:set var="logoWrapperTag" value="div"/>
 			</c:if>
 
-			<c:set var="logoClass" value="responsive-logo"/>
+			<c:set var="logoClass" value="logo"/>
 			<c:if test="${model.pageName == 'staticpage.html' && model.tc}">
-				<c:set var="logoClass" value="responsive-logo-t-and-c"/>
+				<c:set var="logoClass" value="logo-t-and-c"/>
 			</c:if>
 			
 			<${logoWrapperTag} title="<spring:message code='AltLogoEuropeana_t' />">
 				<a	href="/${model.portalName}/"
 					title="<spring:message code='AltLogoEuropeana_t' />">
-					<span	class="${logoClass}"
+					<span	class="${logoClass} &nbsp; ${model.locale}"
 							alt="<spring:message code='AltLogoEuropeana_t' />"></span>
 				</a>
 				
