@@ -10,7 +10,7 @@
 		<c:if test="${!model.embedded}">
 			<div class="menu show-on-22">
 				<span><spring:message code="ResultsPerPage_t" />:</span>
-				<div class="eu-menu" aria-hidden="true">
+				<div class="eu-menu" aria-hidden="true"   title="<spring:message code="ResultsPerPageTooltip_t" />">
 					<span class="menu-label"></span>
 					<span class="icon-arrow-3 open-menu"></span>
 					<ul>
@@ -30,7 +30,7 @@
 	
 				<span class="of"> <spring:message code="Of_t" /> </span>
 				<span class="of-bracket"><fmt:formatNumber 
-															value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0"
+											value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0"
 				/></span>
 			</span>
 		</div>
