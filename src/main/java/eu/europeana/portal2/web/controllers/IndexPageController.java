@@ -263,9 +263,10 @@ public class IndexPageController {
 							translatableUrls.put(langUrl[0], langUrl[1]);
 						}
 						catch(NoSuchMessageException e){
-							
-							System.err.println( "Couldn't read language " + key);
-							
+							keepFetchingLanguages = false;
+						}
+						catch(ArrayIndexOutOfBoundsException e){
+							log.severe("misconfigured language: " + key + " - expected format \"code,url\"");
 							keepFetchingLanguages = false;
 						}
 						j++;
