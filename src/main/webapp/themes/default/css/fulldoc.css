@@ -88,10 +88,6 @@ a.action-link:hover{
 }
 
 #format-link-wrapper{
-	/*
-	background-image:	url('http://icons.iconarchive.com/icons/saki/nuoveXT-2/16/Actions-format-indent-more-icon.png');
-	background-repeat:	no-repeat;
-	*/
 	padding-left:		18px;
 }
 
@@ -111,9 +107,9 @@ a.action-link:hover{
 	-moz-box-shadow:		3px 3px 4px #C3C3C3;
     -webkit-box-shadow:		3px 3px 4px #C3C3C3;
     
-	word-wrap:		break-word;
-
-    		
+    z-index:				2;
+    position:				relative;
+	word-wrap:				break-word;
 }
 
 .sidebar-right strong{
