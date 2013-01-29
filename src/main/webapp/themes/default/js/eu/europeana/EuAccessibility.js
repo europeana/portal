@@ -43,6 +43,10 @@ var EuAccessibility = function(cmpIn, fnGetItems, removeActive){
 		else if(e.keyCode == 13){
 			// carriage return
 			
+			if( e.target.nodeName.toUpperCase() === 'INPUT' ){
+				return;
+			}
+			
 			e.preventDefault();
 			e.target.click();
 			self.cmp.focus();
@@ -91,6 +95,11 @@ var EuAccessibility = function(cmpIn, fnGetItems, removeActive){
 			if( key < 48 || key > 57){
 				
 				/* alphabet */
+				
+				if( e.target.nodeName.toUpperCase() === 'INPUT' ){
+					return;
+				}
+			
 				
 				var val		= String.fromCharCode(key).toUpperCase();
 				var items	= self.fnGetItems();
