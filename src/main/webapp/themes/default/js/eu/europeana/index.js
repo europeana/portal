@@ -115,6 +115,7 @@
 				$('#carousel-1').galleria({
 					dataSource:carouselData,
 					autoplay:17000,
+					debug:js.debug,
 					extend: function(e){
 						this.bind("image", function(e) {	// lightbox trigger
 							var gallery = this;
