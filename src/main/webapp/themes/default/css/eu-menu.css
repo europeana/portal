@@ -38,6 +38,11 @@
 	cursor:				pointer;
 }
 
+.eu-menu .menu-label,
+.eu-menu .open-menu{
+	cursor:				pointer;
+}
+
 .eu-menu span{
 	line-height:	inherit;
 }
