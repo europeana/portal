@@ -60,7 +60,7 @@
 						<input type="number" id="start-page" value="${model.pageNumber}" min="1" max="${model.numberOfPages}" pattern="[0-9]*" /> of ${model.numberOfPages}
 						 --%>
 						
-						<input type="text" id="start-page" value="${model.pageNumber}" xxxxxpattern="[0-9]*" />
+						<input type="text" id="start-page" value="${model.pageNumber}"/>
 						<span class="of"> <spring:message code="Of_t" /> </span>
 						<span class="of-bracket">
 							${model.numberOfPages}
@@ -85,7 +85,7 @@
 				<%-- last arrow --%>
 				<li class="nav-last">
 					<c:if test="${!model.briefBeanView.pagination.last}">
-						<a href="${fn:replace(model.lastPageUrl, "\"", "&quot;")}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt; &gt;</a>
+						<a href="${fn:replace(model.lastPageUrl, "\"", "&quot;")}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt;&gt;</a>
 					</c:if>
 				</li>
 
