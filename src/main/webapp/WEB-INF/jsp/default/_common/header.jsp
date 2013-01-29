@@ -8,18 +8,28 @@
 				<c:set var="logoWrapperTag" value="div"/>
 			</c:if>
 
-			<c:set var="logoClass" value="logo"/>
-			<c:if test="${model.pageName == 'staticpage.html' && model.tc}">
-				<c:set var="logoClass" value="logo-t-and-c"/>
-			</c:if>
+			<c:set var="logoClass"	value="logo"/>
+			<c:set var="logoBg"		value=""/>
+
+			<c:choose>			
+				<c:when test="${model.pageName == 'staticpage.html' && model.tc}">
+					<c:set var="logoClass" value="logo-t-and-c"/>
+				</c:when>
+				<c:otherwise>
+					<c:set var="logoBg" value="europeana-logo-${model.locale}.png"/>
+				</c:otherwise>
+			</c:choose>
 			
 			<${logoWrapperTag} title="<spring:message code='AltLogoEuropeana_t' />">
 				<a	href="/${model.portalName}/"
 					title="<spring:message code='AltLogoEuropeana_t' />">
-					<span	class="${logoClass} &nbsp; ${model.locale}"
+					
+					<span	class="${logoClass}"
+							<c:if test="${!empty logoBg}">
+							style="background-image:url('/${model.portalName}/sp/img/${logoBg}')"
+							</c:if>
 							alt="<spring:message code='AltLogoEuropeana_t' />"></span>
-				</a>
-				
+				</a>				
 			</${logoWrapperTag}>
 		</div>
 
