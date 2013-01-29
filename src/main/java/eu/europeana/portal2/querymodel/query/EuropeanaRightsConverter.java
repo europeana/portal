@@ -35,11 +35,11 @@ public final class EuropeanaRightsConverter {
 	private static final Map<String, String> EUROPEANA_RIGHTS_MAP = new HashMap<String, String>();
 
 	static {
-		EUROPEANA_RIGHTS_MAP.put("rr-p", "Paid Access - rights reserved");
-		EUROPEANA_RIGHTS_MAP.put("rr-f", "Free Access - rights reserved");
-		EUROPEANA_RIGHTS_MAP.put("rr-r", "Restricted Access - rights reserved");
+		EUROPEANA_RIGHTS_MAP.put("rr-p", "Europeana - Rights Reserved - Paid Access");
+		EUROPEANA_RIGHTS_MAP.put("rr-f", "Europeana - Rights reserved - Free access");
+		EUROPEANA_RIGHTS_MAP.put("rr-r", "Europeana - Rights Reserved - Restricted Access");
 		EUROPEANA_RIGHTS_MAP.put("pd", "Public Domain");
-		EUROPEANA_RIGHTS_MAP.put("unknown", "Unknown copyright status");
+		EUROPEANA_RIGHTS_MAP.put("unknown", "Europeana - Unknown copyright status");
 	}
 
 	/**
