@@ -115,6 +115,10 @@ html, body{
 	color:				#fff;	
 }
 
+.info .rights-badge span.rights-icon{
+	color:				#fff;
+}
+
 .info a .icon-share{
 	color:			green;	
 }

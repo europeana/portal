@@ -82,6 +82,10 @@
 *
 * This jQuery plugin will only run on devices running Mobile Webkit based browsers (iOS 2.0+, android 2.2+)
 */
+
+
+if( ! $("html").hasClass('ie8')   ){
+			
 (function ($) {
 
 	//Constants
@@ -690,3 +694,5 @@
 	}
 
 })(jQuery);
+
+}

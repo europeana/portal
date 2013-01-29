@@ -265,6 +265,22 @@ eu.europeana.lightbox = {
 
 		if(navOb){
 			$('#nav-next, #nav-prev').css('display', 'block');
+			
+			$('#lightbox_image' ).swipe({
+				swipeStatus:function(event, phase, direction, distance, fingerCount) {
+					if(phase=="end"){
+						if(direction == "left"){
+							$('#nav-next').click();
+						}
+						else if(direction == "right"){
+							$('#nav-prev').click();
+						}
+					}
+				},
+				triggerOnTouchEnd:false,
+				threshold:100
+				}
+			);
 		}
 
 		$(".lb-trigger span").overlay({

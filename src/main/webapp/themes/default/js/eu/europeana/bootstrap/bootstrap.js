@@ -83,7 +83,7 @@ var europeana_bootstrap = function(){
 			name : 'touchswipe',
 			file : 'touch-swipe' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
-			dependencies : [ 'utils' ]
+			dependencies : [ 'utils', 'jquery' ]
 	  },
 	  {
 		  name : 'ellipsis',
@@ -194,8 +194,8 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'galleria',
 			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/galleria/',
-			dependencies : [ 'jquery' ]
+			path : eu.europeana.vars.branding + '/js/galleria/',			
+			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
 
 		scripts.push({

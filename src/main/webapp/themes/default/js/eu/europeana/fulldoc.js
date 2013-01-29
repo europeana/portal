@@ -499,7 +499,13 @@ eu.europeana.fulldoc = {
 			dependencies : [ 'jquery' ]
 		}]);
 
-		
+		js.loader.loadScripts([{
+				name : 'touchswipe',
+				file : 'touch-swipe.min.js' + js.cache_helper,
+				path : eu.europeana.vars.branding + '/js/jquery/',
+				callback: function(){ alert('loaded touch swipe'); }
+		}]);		  
+		  
 		if(!window.showingPhone()){
 			
 			var lightboxJsFile = 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper;
@@ -514,7 +520,7 @@ eu.europeana.fulldoc = {
 			js.loader.loadScripts([{
 				file : lightboxJsFile,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-				dependencies : [ 'jquery-tools'],
+				dependencies :  $("html").hasClass('ie8') ? [ 'jquery-tools'] : [ 'jquery-tools', 'touchswipe'],
 				
 				callback: function(){
 					$(window).on("resize", function(){
