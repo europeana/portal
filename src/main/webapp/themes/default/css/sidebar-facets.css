@@ -18,27 +18,19 @@
 
 #search-filter,
 #filter-search,
-#filter-search ul,
-#share-subscribe,
-#share-subscribe ul
- {
+#filter-search ul{
 	list-style:		none;
 	margin:			0;
 	padding:		0;
 }
 
-
 #share-subscribe{
-	padding-bottom:	0.5em;
-	text-align:		justify;
-	font-size:		2em;
-	max-height:		1.5em;
+	padding:	0.5em 1em 1em;
 }
 
-#share-subscribe li{
-	display:	inline-block;
+div.actions{
+	padding:		0 1em 1em 1em;
 }
-
 
 #refinements li{
 	width:		100%;
@@ -119,8 +111,8 @@ x:-o-prefocus, #refinements input{
 #search-filter {
 	overflow:		hidden;
 	padding-bottom:	0.5em;
-	word-break: break-all;
-	word-wrap: break-word;
+	word-break:		break-all;
+	word-wrap:		break-word;
 }
 
 #search-filter .icon-remove{
@@ -133,20 +125,15 @@ x:-o-prefocus, #refinements input{
 }
 
 
-
 #search-filter ul{
 	list-style: none;
 }
-/*
-#search-filter a:focus{
-	border:	1px dotted;
-}
-*/
+
 #search-filter a:focus .icon-remove{
 	text-decoration: underline;
 }
 
-#share-subscribe h3,
+#actions,
 #filter-search h3 {
 	font-size:		1em;
 	margin-bottom:	0.5em;
@@ -162,17 +149,13 @@ a.facet-ugc{
 	background-repeat:		no-repeat;
 }
 
-/* ANDY - new - to style */
+
 #filter-search a.facet-section:focus{
-	outline:	1px dotted #4C7ECF;
+	outline:			1px dotted #4C7ECF;
 }
 #filter-search ul a:focus{
-	text-decoration:underline;
+	text-decoration:	underline;
 }
-/* END ANDY - new - to style */
-
-
-
 
 
 .ugc-li label{
@@ -184,14 +167,35 @@ cb-ugc{
 	padding-left:	0;
 }
 
-.share-section{
-	cursor: pointer;	
+a.action-link {
+	color:			#333;	
+	line-height:	1.5;
+}
+a.action-link:hover{
+	color:			#444;	
 }
 
-.share-section,
-.share-section .addthis_button{
-	color:	#333;
+
+a.action-link,
+span.icon-share{
+	font-size:		2em;
+	cursor:			pointer;
 }
+
+
+a.action-link span,
+.action-title{
+	width:		auto !important;
+	font-size:	.5em;
+	position:	relative;
+	top:		-.5em;
+}
+
+.icon-share .action-title{
+	color:			#333;
+	margin-left:	.6em;
+}
+
 
 
 /* facet section items */
@@ -218,35 +222,22 @@ cb-ugc{
 }
 
 #filter-search h4 a {
-	color:					#333;
+	color:			#333;
 }
 	
 
 
 @media all and (min-width: 48em) {
 
+	div.actions{
+		padding:		0 0 0.5em 0;
+		max-height:		none;
+	}
+	
 	#share-subscribe{
-		text-align:	left;
-		font-size:	1em;
-		max-height:	none;
-	}
-
-	#share-subscribe .icon-share{
-		font-size:	2em;
-	}
-	#share-subscribe .action-title{
-		position:	relative;
-		top:		-.5em;
+		padding:	0em 0em 0.5em 0em;
 	}
 	
-	#share-subscribe .icon-share{
-	
-	}
-	
-	#share-subscribe li{
-		display:	block;
-	}
-
 }
 
 

@@ -283,11 +283,11 @@ eu.europeana.fulldoc = {
 		
 		});
 
-		jQuery('.shares-link').html(
+		$('.shares-link').html(
 			addThisHtml
 		);
 		
-		jQuery('.shares-link').hide();
+		$('.shares-link').hide();
 		com.addthis.init( null, true, false );
 		
 		setTimeout( 

@@ -65,6 +65,9 @@ a.action-link {
 	line-height:	1.5;
 	font-size:		1em;
 }
+a.action-link:hover{
+	color:			#444;	
+}
 
 .shares-link{
 	display: none;
@@ -75,9 +78,6 @@ a.action-link {
 }
 
 
-a.action-link:hover{
-	color:			#444;	
-}
 
 #embed-link-wrapper{
 	/*
@@ -155,7 +155,12 @@ div.actions{
 a.action-link,
 span.icon-share{
 	font-size:	2em;
-	display:	block;				/* another override   */
+}
+
+a.action-link:after,
+span.icon-share:after{
+    content:		"\a";
+    white-space:	pre;
 }
 
 .icon-translate,
@@ -177,7 +182,7 @@ a.action-link span,
 }
 
 .icon-share .action-title{
-	color:#333;
+	color:			#333;
 	margin-left:	.5em;
 }
 
@@ -278,7 +283,6 @@ a.action-link span,
 	div.actions{
 		padding:		0 0 0.5em 0;
 		max-height:		none;
-		text-align:		left;
 	}
 
 	

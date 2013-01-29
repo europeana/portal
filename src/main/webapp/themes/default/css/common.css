@@ -96,6 +96,7 @@ a:focus .social-link .text{
 	margin-left:	0.25em;
 }
 	
+/* used for social share icons in the footer */
 .stretch {
 	width:			100%;
 	display:		inline-block;

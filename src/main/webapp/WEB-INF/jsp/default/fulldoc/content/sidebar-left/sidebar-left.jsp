@@ -35,9 +35,6 @@
 
 		<c:set var="semanticAttributes"><eu:semanticAttributes field="edm:preview" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
 
-<%--
-		<img ${id} src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
---%>
 		<img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
 	</div>
 
@@ -150,10 +147,12 @@ carouselData[carouselData.length] = {
 		</div>
 
 		<%-- Citation link --%>
-		<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
-			<span class="action-title"><spring:message code="Cite_Button_t" /></span>
-		</a>
-
+		<div>
+			<a href="" id="citation-link" class="icon-cite action-link" title="<spring:message code="AltCiteInfo_t" />" rel="nofollow">
+				<span class="action-title"><spring:message code="Cite_Button_t" /></span>
+			</a>
+		</div>
+		
 		<%-- Embed link --%>
 		<%--
 		<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
@@ -183,9 +182,11 @@ carouselData[carouselData.length] = {
 				</c:if>
 			</c:forEach>
 
-			<a href="#" id="item-save" rel="nofollow" class="${savedIcon} action-link">
-				<span class="action-title">${savedText}</span>
-			</a>
+			<div>
+				<a href="#" id="item-save" rel="nofollow" class="${savedIcon} action-link">
+					<span class="action-title">${savedText}</span>
+				</a>
+			</div>
 		</c:if>
 
 		<%-- Format labels --%>
@@ -214,9 +215,11 @@ carouselData[carouselData.length] = {
 					<c:set var="switchlabelTitle">Label format</c:set>
 				</c:otherwise>
 			</c:choose>
-			<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
-				<span class="action-title">${switchlabelTitle}</span>
-			</a>
+			<div>
+				<a href="${switchlabelLink}" id="format-link" class="icon-info action-link" title="${switchlabelTitle}" rel="nofollow">
+					<span class="action-title">${switchlabelTitle}</span>
+				</a>
+			</div>
 		</c:if>
 
 		<c:if test="${!empty model.user}">

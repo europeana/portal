@@ -80,12 +80,25 @@
 			<!-- /facets -->
 	
 			<h2><spring:message code="Share_section_header_t" />:</h2>
+			
+			<!-- 
 			<ul id="share-subscribe">
+			 -->
+			<div id="share-subscribe">
+			
+			
 				<c:if test="${!empty model.user}">
+				
+					<%--
 					<li>
+					 --%>
+					<div class="action-link">
+					
+						<!-- determine icon -->
+						
 						<c:set var="savedIcon" value="icon-unsaveditem" />
 						<c:set var="savedText"><spring:message code="SaveToMyEuropeana_t" /></c:set>
-					
+						
 						<c:forEach items="${model.user.savedSearches}" var="item">
 							<c:if test="${model.query == item.query}">
 								<c:set var="savedIcon" value="icon-saveditem" />
@@ -93,11 +106,14 @@
 							</c:if>
 						</c:forEach>
 					
-						<a id="save-search" class="share-section" rel="nofollow">
-							<span class="${savedIcon}"></span>
+						<a id="save-search" class="action-link  ${savedIcon}" rel="nofollow">
+							<%--span class="${savedIcon}"></span--%>
 							<span class="save-label">${savedText}</span>
 						</a>
 	
+	
+						<%-- hidden form fields --%>
+						
 						<c:if test="${!empty model.briefBeanView}">
 							<input type="hidden" id="query-to-save" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}"/>
 						</c:if>
@@ -106,7 +122,11 @@
 							<input type="hidden" id="query-string-to-save" value="${fn:escapeXml(model.query)}"/>
 						</c:if>
 						
+					<%--
 					</li>
+					 --%>
+					 </div>
+					 
 				</c:if>
 	
 				<%--
@@ -123,9 +143,23 @@
 					</a>
 				</li>
 				 --%>
+				 
+				<%--
 				<li id="shares-link" class="share-section">
-					<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"> </span><span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span>
+				 --%> 
+				
+				
+				<div class="action-link shares-link">
+					<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"><span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span></span>
+				</div>
+				
+								
+				<%--
 				</li>
+				 --%> 
+				
+				
+				
 				<%--
 				<li>
 					<a class="share-section icon-mail">
@@ -133,8 +167,11 @@
 					</a>
 				</li>
 				 --%>
+				 <%--
 				<li class="stretch"></li>
-			</ul>
+				  --%>
+				
+			</div>
 		</c:if>
 	</div>
 </c:if>

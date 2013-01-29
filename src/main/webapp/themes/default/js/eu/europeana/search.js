@@ -74,7 +74,7 @@ eu.europeana.search = {
 		this.setupEllipsis();
 		this.setupPageJump();
 		
-		if( $('#save-search').find('.icon-unsaveditem').length>0){
+		if( $('#save-search').hasClass('icon-unsaveditem')){
 			$('#save-search').bind('click', this.handleSaveSearchClick );			
 		}
 		else{
@@ -283,40 +283,22 @@ eu.europeana.search = {
 				services : {
 					compact : {}
 				},
-				link_html : $('#shares-link').html()
-			
+				
+				link_html : $('.shares-link').html()			
 			});
 			
-			$('#shares-link').html(
+			$('.shares-link').html(
 				addThisHtml
 			);
+			
+			$('.shares-link').hide();
 			
 			com.addthis.init( null, true, false );
 			
 			setTimeout( function() {
-				$('#shares-link').fadeIn(); },
+				$('.shares-link').fadeIn(); },
 				600 );
 			
-		/*
-		$('.search-results-navigation').append(
-			com.addthis.getToolboxHtml({
-				html_class : 'addthis',
-				url : url,
-				title : title,
-				description : description,
-				services : {
-					compact : {},
-					twitter : {},
-					google_plusone : { count : 'false' },
-					facebook_like : { layout : 'button_count', width : '51' }
-				}
-			})
-		);
-
-		$('.addthis').hide();
-		com.addthis.init( null, true, false );
-		setTimeout( function() { $('.addthis').fadeIn(); }, 600 );
-		*/
 	},
 	
 	checkKeywordSupplied : function(){
