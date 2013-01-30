@@ -38,8 +38,8 @@
 					<h3><spring:message code="news_letter_signup_t" /></h3>
 					<span class="small"><spring:message code="news_letter_description_t" /></span>
 					
-					<button id="newsletter-trigger"  rel="#newsletter-overlay" class="deans-button-1 europeana-button-1">
-						<spring:message code="news_letter_popup_button_t"/>
+					<button id="newsletter-trigger"  rel="#newsletter-overlay" class="deans-button-1 europeana-button-1"  title="<spring:message code="news_letter_description_t" />"    >
+						<spring:message code="news_letter_popup_button_t" />
 					</button>
 				</div>
 			</div>
