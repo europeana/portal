@@ -203,6 +203,10 @@
 	border-bottom:	1px solid #E4E4E4;
 }
 
+#section-pinterest .icon-pinterest{
+	cursor:	pointer;
+}
+
 /*
 
 TODO: this commented rule needs copied to ie8.css

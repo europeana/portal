@@ -191,13 +191,13 @@
 
 		
 		$("#section-pinterest").Collapsible({
-			headingSelector:	"#collapse-header-3",
-			iconSelector:		".collapse-icon",
-			bodySelector:		".collapse-content",
-
-			expandedClass:		'icon-arrow',
-			collapsedClass:		'icon-arrow-3',
-			fireFirstOpen:		function(){
+			headingSelector:		"#collapse-header-3",
+			iconSelector:			".collapse-icon",
+			bodySelector:			".collapse-content",
+			executeDefaultClick:	true,
+			expandedClass:			'icon-arrow',
+			collapsedClass:			'icon-arrow-3',
+			fireFirstOpen:			function(){
 				eu.europeana.vars.suppresResize = false;
 				$.ajax({
 						url: 'index.html?fragment=pinterest',
