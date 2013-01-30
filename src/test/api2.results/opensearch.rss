@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rss xmlns:enrichment="http://www.europeana.eu/schemas/ese/enrichment/"
+		xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" 
+		xmlns:dc="http://purl.org/dc/elements/1.1/"
+		xmlns:dcterms="http://purl.org/dc/terms/" 
+		xmlns:europeana="http://www.europeana.eu"
+		xmlns:atom="http://www.w3.org/2005/Atom" 
+		version="2.0">
+		<channel>
+				<title>Europeana Open Search</title>
+				<link>http://www.europeana.eu</link>
+				<description>Europeana Open Search results</description>
+				<opensearch:totalResults>1287587</opensearch:totalResults>
+				<opensearch:startIndex>1</opensearch:startIndex>
+				<opensearch:itemsPerPage>12</opensearch:itemsPerPage>
+				<atom:link href="" rel="search" type="application/rss+xml" />
+				<opensearch:Query role="request" searchTerms="paris"
+						startPage="1" />
+				<image>
+						<title>Europeana Open Search</title>
+						<link>http://europeana.eu</link>
+						<url>http://www.europeana.eu/portal/sp/img/europeana-logo-en.png</url>
+				</image>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_SMS_MM_X5474.html</guid>
+						<title>Harmoniumpiano</title>
+						<link>http://www.europeana.eu/portal/record/09102/_SMS_MM_X5474.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_SMS_MM_M777.html</guid>
+						<title>Basklarinett</title>
+						<link>http://www.europeana.eu/portal/record/09102/_SMS_MM_M777.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_SMS_MM_M866.html</guid>
+						<title>Lyragitarr</title>
+						<link>http://www.europeana.eu/portal/record/09102/_SMS_MM_M866.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0852490.html</guid>
+						<title>Mélophone</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0852490.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0852518.html</guid>
+						<title>Mélophone</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0852518.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0852554.html</guid>
+						<title>Mélophone</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0852554.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0159765.html</guid>
+						<title>Piano bureau</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0159765.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0130291.html</guid>
+						<title>Piano armoire</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0130291.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0156102.html</guid>
+						<title>Piano</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0156102.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0157290.html</guid>
+						<title>Piano droit</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0157290.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0158967.html</guid>
+						<title>Piano</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0158967.html</link>
+				</item>
+				<item>
+						<guid>http://www.europeana.eu/portal/record/09102/_CM_0160604.html</guid>
+						<title>Melophone</title>
+						<link>http://www.europeana.eu/portal/record/09102/_CM_0160604.html</link>
+				</item>
+		</channel>
+</rss>
