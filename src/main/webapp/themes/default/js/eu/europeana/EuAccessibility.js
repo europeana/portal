@@ -40,8 +40,9 @@ var EuAccessibility = function(cmpIn, fnGetItems, removeActive){
 				tabIndex -= 1;
 			}
 		}
-		else if(e.keyCode == 13){
-			// carriage return
+		else if(e.keyCode == 13 || e.keyCode == 32){
+			
+			// carriage return or space
 			
 			if( e.target.nodeName.toUpperCase() === 'INPUT' ){
 				return;
