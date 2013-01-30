@@ -363,7 +363,7 @@ public class FullDocPage extends FullDocPreparation {
 				"utf-8"
 			);
 		}
-		
+
 		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
 
 		/*
@@ -401,7 +401,7 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		return imageType;
 	}
-	
+
 	/**
 	 * will always have one entry - even if that's just a one-entry containing a default thumbnail 
 	 * */

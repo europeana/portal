@@ -123,7 +123,7 @@ public class Configuration {
 
 	@Value("#{europeanaProperties['portal.responsive.cache']}")
 	private String responsiveCache;
-	
+
 	@Value("#{europeanaProperties['portal.responsive.cache.checkFrequencyInMinute']}")
 	private Integer responsiveCacheCheckFrequencyInMinute;
 
@@ -356,7 +356,7 @@ public class Configuration {
 
 		return responsiveCarouselImageWidths;
 	}
-	
+
 	public List<String> getStaticPageInVersions() {
 		if (staticPageInVersions == null) {
 			staticPageInVersions = Arrays.asList(staticPageInVersionsString.split(","));

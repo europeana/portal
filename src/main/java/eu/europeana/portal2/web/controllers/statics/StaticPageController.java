@@ -362,7 +362,6 @@ public class StaticPageController {
 		CorePageInfo pageType = CorePageInfo.EXCEPTION;
 
 		clickStreamLogger.logStaticPageView(request, pageType);
-		
 		return ControllerUtil.createModelAndViewPage(new EmptyModelPage(), locale, pageType);
 	}
 

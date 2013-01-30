@@ -74,10 +74,9 @@ public class SuggestionController {
 		injector.postHandle(this, page);
 		return page;
 	}
-	
+
 	private String clearSuggestionTerm(String term) {
 		term = term.trim().replaceAll("[\"'()]", "").replace("/", "\\/");
 		return term;
 	}
-
 }

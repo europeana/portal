@@ -103,7 +103,7 @@ public class CarouselItem {
 	public void setResponsiveImages(String imgUrl) {
 		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, true);
 	}
-	
+
 	public Map<String, String> getTranslatableUrls() {
 		return translatableUrls;
 	}
@@ -111,6 +111,4 @@ public class CarouselItem {
 	public void setTranslatableUrls(Map<String, String> translatableUrls) {
 		this.translatableUrls = translatableUrls;
 	}
-
-
 }

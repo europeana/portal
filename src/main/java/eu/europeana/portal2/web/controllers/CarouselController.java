@@ -56,13 +56,12 @@ public class CarouselController {
 		injector.injectProperties(model);
 
 		List<CarouselItem> carouselItems = new ArrayList<CarouselItem>();
-		
+
 		boolean keepFetching = true;
 		int i = 1;
 		int total = 0;
 		while (keepFetching) {
 			try {
-				
 				String label = String.format("notranslate_carousel-item-%d_a_url_t", i);
 				String url = messageSource.getMessage(label, null, locale);
 				if (StringUtils.isNotEmpty(url)
@@ -74,18 +73,16 @@ public class CarouselController {
 
 						Map<String, String> translatableUrls = new HashMap<String, String>();
 						boolean keepFetchingLanguages = true;
-						int j = 1;		
-						while(keepFetchingLanguages){
+						int j = 1;
+						while (keepFetchingLanguages) {
 							String key = "";
 							try{
 								key = String.format("notranslate_carousel-item-%d_a_url_lang_%d", i, j);
 								String[] langUrl =  messageSource.getMessage( key, null, null ).split(",");
 								translatableUrls.put(langUrl[0], langUrl[1]);
 							}
-							catch(NoSuchMessageException e){
-								
+							catch (NoSuchMessageException e) {
 								System.err.println( "Couldn't read language " + key);
-								
 								keepFetchingLanguages = false;
 							}
 							j++;
