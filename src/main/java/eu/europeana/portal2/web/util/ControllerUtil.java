@@ -240,6 +240,6 @@ public class ControllerUtil {
 	}
 
 	public static void logTime(String type, long time) {
-		log.info(String.format("elapsed time (%s): %d", type, time));
+		log.fine(String.format("elapsed time (%s): %d", type, time));
 	}
 }

@@ -57,7 +57,6 @@ public class Injector {
 		model.setUser(user);
 		model.setLocale(locale);
 		model.setPortalUrl(config.getPortalUrl());
-		log.info("model.locale: " + model.getLocale());
 	}
 
 	private String getTheme(HttpServletRequest request) {

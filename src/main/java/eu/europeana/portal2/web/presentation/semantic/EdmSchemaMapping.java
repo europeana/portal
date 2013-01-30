@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class EdmSchemaMapping {
 
-	protected final static Logger log = Logger.getLogger("EdmSchemaMapping");
+	protected final static Logger log = Logger.getLogger(EdmSchemaMapping.class.getCanonicalName());
 
 	private static final List<String> mapNames = Arrays.asList(
 		new String[]{"ProvidedCHO", "WebResource", "Agent", "Place", "Timespan", 

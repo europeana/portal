@@ -15,7 +15,7 @@ import eu.europeana.corelib.utils.ImageUtils;
 
 public class ResponsiveImageUtils {
 
-	private static final Logger log = Logger.getLogger("ResponsiveImageUtils");
+	private static final Logger log = Logger.getLogger(ResponsiveImageUtils.class.getCanonicalName());
 
 	private static String staticPagePath = Beans.getConfig().getStaticPagePath();
 
