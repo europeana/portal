@@ -346,26 +346,26 @@ public class SuggestionControllerTest {
 	}
 
 	private String[] getWords() {
-		String text = "Toutes nos notions, toute la science, toute la vie pratique elle-même sont fondées sur la représentation"
-				+ " que nous nous faisons des aspects successifs des choses. Notre esprit, aidé par nos sens, classe avant tout"
+		String text = "Toutes nos notions, toute la science, toute la vie pratique elle-meme sont fondees sur la representation"
+				+ " que nous nous faisons des aspects successifs des choses. Notre esprit, aide par nos sens, classe avant tout"
 				+ " celles-ci dans le temps et dans l'espace, qui sont les deux cadres où nous fixons d'abord ce qui nous est"
-				+ " sensible dans le monde extérieur. Écrivons-nous une lettre: nous mettons en suscription le lieu et la date."
-				+ " Ouvrons-nous un journal: ce sont ces indications qui y précèdent toutes les dépêches. Il en est de même en"
-				+ " tout et pour tout. Le temps et l'espace, la situation des choses et leur époque apparaissent ainsi comme les"
-				+ " piliers jumeaux de toute connaissance, les deux colonnes sur lesquelles repose l'édifice de l'entendement humain."
-				+ " Leconte de Lisle l'a bien senti, lorsque avec sa profonde et philosophique intelligence il écrivait, "
-				+ " s'adressant pathétiquement à la divine mort:"
-				+ " Délivre-nous du temps, du nombre et de l'espace Et rends-nous le repos que la vie a troublé. Le nombre"
-				+ " n'est ici que pour définir quantitativement le temps et l'espace, et Leconte de Lisle a bien exprimé,"
-				+ " dans ces vers magnifiques et célèbres, que ce qui existe pour nous dans le vaste monde, ce que nous y savons,"
-				+ " voyons, tout l'ineffable et trouble écoulement des phénomènes ne nous présente un aspect défini, une forme"
-				+ " précise qu'après avoir traversé ces deux filtres superposés que notre entendement interpose: le temps et"
+				+ " sensible dans le monde exterieur. ecrivons-nous une lettre: nous mettons en suscription le lieu et la date."
+				+ " Ouvrons-nous un journal: ce sont ces indications qui y precedent toutes les depeches. Il en est de meme en"
+				+ " tout et pour tout. Le temps et l'espace, la situation des choses et leur epoque apparaissent ainsi comme les"
+				+ " piliers jumeaux de toute connaissance, les deux colonnes sur lesquelles repose l'edifice de l'entendement humain."
+				+ " Leconte de Lisle l'a bien senti, lorsque avec sa profonde et philosophique intelligence il ecrivait, "
+				+ " s'adressant pathetiquement a la divine mort:"
+				+ " Delivre-nous du temps, du nombre et de l'espace Et rends-nous le repos que la vie a trouble. Le nombre"
+				+ " n'est ici que pour definir quantitativement le temps et l'espace, et Leconte de Lisle a bien exprime,"
+				+ " dans ces vers magnifiques et celebres, que ce qui existe pour nous dans le vaste monde, ce que nous y savons,"
+				+ " voyons, tout l'ineffable et trouble ecoulement des phenomenes ne nous presente un aspect defini, une forme"
+				+ " precise qu'apres avoir traverse ces deux filtres superposes que notre entendement interpose: le temps et"
 				+ " l'espace."
-				+ " Ce qui donne aux travaux d'Einstein leur importance, c'est qu'il a montré, comme nous allons voir, que l'idée que nous nous faisions du temps et de l'espace doit être complètement revisée. Si cela est, la science tout entière,—et avec elle la psychologie,—doit être refondue. Telle est la première partie de l'œuvre d'Einstein. Mais là ne s'est pas bornée l'action de son profond génie. Si elle n'était que cela, elle n'eût été que négative."
-				+ " Après avoir démoli, après avoir déblayé nos connaissances de ce qu'on croyait en être le piédestal inébranlable et qui n'était, selon lui, qu'un échafaudage fragile masquant les harmonieuses proportions de l'édifice, il a reconstruit. Il a creusé dans le monument de vastes fenêtres qui permettent maintenant de jeter un regard émerveillé sur les trésors qu'il recèle. En un mot, Einstein a d'une part montré, avec une acuité et une profondeur étonnantes, que la base de nos connaissances semble n'être pas ce qu'on a cru et doit être refaite avec un nouveau ciment. D'autre part, il a, sur cette base, renouvelé, rebâti l'édifice démoli dans ses fondements mêmes, et lui a donné une forme hardie dont la beauté et l'unité sont grandioses."
-				+ " Il me reste maintenant à tâcher de préciser, d'une manière concrète et aussi exacte que possible, ces généralités. Mais je dois insister d'abord sur un point qui a une signification considérable: si Einstein s'était borné à la première partie de son œuvre,—telle que je viens de l'esquisser,—celle qui ébranle les notions classiques de temps et d'espace, il n'aurait point, dans le monde de la pensée, la gloire qui, dès aujourd'hui, auréole son nom."
-				+ " La chose est d'importance, car la plupart de ceux qui,—en dehors des spécialistes purs,—ont écrit sur Einstein, ont insisté surtout, et souvent exclusivement, sur ce côté en quelque sorte «démolisseur» de son intervention. Or, on va voir qu'à ce point de vue, Einstein n'a pas été le premier ni le seul. Il n'a fait qu'aiguiser davantage et enfoncer un peu plus, entre les blocs mal joints de la science classique, le burin que d'autres avant lui, et surtout le grand Henri Poincaré, y avaient dès longtemps porté. Ensuite il me restera à expliquer, si je puis, le grand, l'immortel titre d'Einstein à la reconnaissance des hommes, qui est, sur cette œuvre critique, d'avoir reconstruit, réédifié par ses propres forces quelque chose de magnifique et de neuf: et ici, sa gloire est sans partage.";
-		text = text.replaceAll("—", " ").replaceAll("-", " ").replace(".", " ")
+				+ " Ce qui donne aux travaux d'Einstein leur importance, c'est qu'il a montre, comme nous allons voir, que l'idee que nous nous faisions du temps et de l'espace doit etre completement revisee. Si cela est, la science tout entiere,-et avec elle la psychologie,-doit etre refondue. Telle est la premiere partie de l'oeuvre d'Einstein. Mais la ne s'est pas bornee l'action de son profond genie. Si elle n'etait que cela, elle n'eut ete que negative."
+				+ " Apres avoir demoli, apres avoir deblaye nos connaissances de ce qu'on croyait en etre le piedestal inebranlable et qui n'etait, selon lui, qu'un echafaudage fragile masquant les harmonieuses proportions de l'edifice, il a reconstruit. Il a creuse dans le monument de vastes fenetres qui permettent maintenant de jeter un regard emerveille sur les tresors qu'il recele. En un mot, Einstein a d'une part montre, avec une acuite et une profondeur etonnantes, que la base de nos connaissances semble n'etre pas ce qu'on a cru et doit etre refaite avec un nouveau ciment. D'autre part, il a, sur cette base, renouvele, rebâti l'edifice demoli dans ses fondements memes, et lui a donne une forme hardie dont la beaute et l'unite sont grandioses."
+				+ " Il me reste maintenant a tâcher de preciser, d'une maniere concrete et aussi exacte que possible, ces generalites. Mais je dois insister d'abord sur un point qui a une signification considerable: si Einstein s'etait borne a la premiere partie de son oeuvre,-telle que je viens de l'esquisser,-celle qui ebranle les notions classiques de temps et d'espace, il n'aurait point, dans le monde de la pensee, la gloire qui, des aujourd'hui, aureole son nom."
+				+ " La chose est d'importance, car la plupart de ceux qui,-en dehors des specialistes purs,-ont ecrit sur Einstein, ont insiste surtout, et souvent exclusivement, sur ce cote en quelque sorte demolisseur de son intervention. Or, on va voir qu'a ce point de vue, Einstein n'a pas ete le premier ni le seul. Il n'a fait qu'aiguiser davantage et enfoncer un peu plus, entre les blocs mal joints de la science classique, le burin que d'autres avant lui, et surtout le grand Henri Poincare, y avaient des longtemps porte. Ensuite il me restera a expliquer, si je puis, le grand, l'immortel titre d'Einstein a la reconnaissance des hommes, qui est, sur cette oeuvre critique, d'avoir reconstruit, reedifie par ses propres forces quelque chose de magnifique et de neuf: et ici, sa gloire est sans partage.";
+		text = text.replaceAll("-", " ").replaceAll("-", " ").replace(".", " ")
 				.replaceAll(",", " ").replaceAll(":", " ").replace(" ", " ")
 				.replaceAll("d'", " ").replaceAll("l'", " ").replaceAll("s'", " ")
 				.replaceAll("  ", " ")
@@ -375,7 +375,7 @@ public class SuggestionControllerTest {
 	}
 
 	private List<String> randomWords(int count) {
-		
+
 		List<String> queries = null;
 		try {
 			queries = FileUtils.readLines(new File("/home/peterkiraly/words.txt"));
@@ -401,6 +401,45 @@ public class SuggestionControllerTest {
 	}
 
 	private String[] topWords() {
-		return new String[]{"http", "th", "centuri", "века", "го", "of", "www", "eu", "right", "europeana", "rr", "the", "de", "20", "f", "e", "httpwwweuropeanaeurightsrrf", "org", "1", "0", "creativecommon", "earli", "siècl", "начало", "quarter", "quart", "я", "четверть", "10", "imag", "a", "publicdomain", "foto", "3", "4", "mark", "in", "text", "httpcreativecommonsorgpublicdomainmark", "en", "fotograf", "bild", "document", "dokument", "19", "documentazion", "photograph", "dokumentasjon", "photo", "dokumentacja", "documentati", "la", "dokumentálá", "documentación", "τεκμηρίωση", "documentação", "dokumentácia", "dokumentacija", "документация", "documentaţi", "asiakirja", "aineisto", "dokumentatsioon", "dokumentointi", "asiakirjaaineisto", "dokumentac", "документиране", "dokumentazio", "dokümantasyon", "dokumentazzjoni", "dokumentācija", "dokumentatz", "fotografi", "fotografija", "fotografia", "fotografía", "φωτογραφία", "фотография", "immagin", "nuotrauka", "fénykép", "снимка", "imagem", "изображение", "valokuva", "фотографско", "2", "o", "21", "by", "s", "p", "an", "d", "public", "bilimi", "par", "stillimag", "scienc", "franc", "i", "l", "tal", "за", "ciência", "vedi", "scienz", "moksla", "humain", "xjenza", "zinātn", "επιστήμες", "vede", "human", "ştiinţă", "о", "zientziak", "spa", "videnskab", "vědi", "науки", "umană", "човека", "tieteet", "uman", "insan", "nauki", "społeczn", "humaniora", "humana", "giza", "žmogaus", "humanistisk", "cilvēku", "bniedem", "talbniedem", "humanidad", "společenské", "človeku", "человеке", "menswetenschappen", "ανθρωπιστικές", "människovetenskap", "humánn", "humántudománi", "humanistiset", "inimteadus", "humanwissenschaften", "des", "still", "licens", "nation", "et", "r", "30", "der", "01", "na", "deutsch", "domain", "republ", "und", "for", "04", "mid", "physic", "02", "середина", "du", "n", "httpwwweuropeanaeurightsrrp", "h", "and", "from", "y", "print", "national", "bibliothèqu", "materi", "fre", "art", "españa", "sa", "18", "inform", "nr", "número", "standort", "aufbewahrung", "aufbewahrungstandort", "record", "pari", "languag", "dede", "imprimé", "11", "proprietà", "12", "og", "für", "number", "nederland", "di", "architectur", "yn", "late", "it", "yr", "van", "cultura", "object", "voor", "конец", "archéologi", "archaeolog", "archiv", "deutschland", "architektur", "museum", "germani", "type", "kingdom", "librari", "monograph", "1911", "singl", "arkeolog", "product", "hous", "del", "archäologi", "feder", "archeologia", "arheologi", "arqueología", "httpcreativecommonsorglicensesbysa", "archeologi", "arqueologia", "régészet", "αρχαιολογία", "arkæolog", "arkeologia", "археология", "arheologija", "arheoloogia", "archeológia", "archeologija", "архиология", "no", "to", "ireland", "objekt", "httpwwweuropeanaeurightsrrr", "serial", "den", "año", "série", "date", "2004", "allemagn", "duitsland", "niemci", "alemania", "germania", "tyskland", "bundesrepublik", "saksa", "nemecko", "saksamaa", "германия", "németország", "γερμανία", "alemanha", "jerman", "německo", "nemčija", "vokietija", "німеччина", "duitschland", "physicalobject", "építészet", "item", "kulturhistoria", "von", "17", "resid", "герман", "vācija", "alemanya", "almanya", "alemaña", "nemačka", "almayn", "germanio", "njemačka", "germània", "giriman", "jarmal", "siaman", "gjermani", "jámánì", "dútslân", "gjermania", "jėrman", "alamagn", "немачка", "almaen", "нямеччына", "германи", "alimaniya", "ġermanja", "tôitšhi", "германија", "германія", "алмания", "udachi", "alimanya", "ӂермания", "almaniya", "ghearmailt", "däitschland", "ghermaan", "олмония", "olmoniya", "đức", "týskland", "ujerumani", "deutän", "tiamana", "ghearmáin", "олмон", "germanujo", "duiska", "jarmalka", "ijalimani", "duutsjlandj", "heremani", "þýskaland", "alémani", "census", "duiskka", "alémanyi", "éireann", "héireann", "19110402", "cartlann", "náisiúnta", "département", "el", "with", "m", "bildarchiv", "architektura", "architettura", "het", "sn", "05", "v", "arquitectura", "2005", "arkitektur", "cultur", "αρχιτεκτονική", "architectuur", "arhitectură", "architektūra", "arhitektura", "architektúra", "архитектура", "arhitektuur", "arkkitehtuuri", "fysisk", "provid", "not", "digit", "druck", "w", "c", "16", "carta", "06", "le", "madrid", "j", "ou", "kunstgeschicht", "digital", "nl", "projekt", "cart", "marburg", "herstellung", "dokumentationszentrum", "zero", "propiedad", "is", "httpcreativecommonsorgpublicdomainzero", "okänd", "03", "09", "nc", "this", "specimen", "08", "à", "druk", "física", "physiqu", "geografia", "φυσικές", "properti", "fyzikální", "5", "fizică", "physikalisch", "common", "15", "pain", "fizikai", "fisiko", "füüsikalin", "fiziksel", "fysisch", "fysikaliska", "07", "propriété", "kenngröß", "fiżika", "trykk", "fisich", "av", "физическо", "качество", "fizikalna", "fyzikálna", "fizikāla", "egenskap", "propriedad", "propriet", "fizyczna", "ιδιότητες", "omadus", "egenskab", "savybė", "ominaisuudet", "właściwość", "fizinė"};
+		return new String[]{"http", "th", "centuri", "го", "of", "www", "eu", "right", "europeana", "rr", "the", "de", "20", "f", 
+			"e", "httpwwweuropeanaeurightsrrf", "org", "1", "0", "creativecommon", "earli", "siecl", "quarter", "quart", 
+			"10", "imag", "a", "publicdomain", "foto", "3", "4", "mark", "in", "text", "httpcreativecommonsorgpublicdomainmark", 
+			"en", "fotograf", "bild", "document", "dokument", "19", "documentazion", "photograph", "dokumentasjon", "photo", "dokumentacja", 
+			"documentati", "la", "dokumentala", "documentacion", "documentacao", "dokumentacia", "dokumentacija", 
+			"documentati", "asiakirja", "aineisto", "dokumentatsioon", "dokumentointi", "asiakirjaaineisto", "dokumentac", 
+			"dokumentazio", "dokumantasyon", "dokumentazzjoni", "dokumentacija", "dokumentatz", "fotografi", "fotografija", "fotografia", 
+			"fotografia", "immagin", "nuotrauka", "fenykep", "imagem", "valokuva",
+			"2", "o", "21", "by", "s", "p", "an", "d", "public", "bilimi", "par", "stillimag", "scienc", "franc", "i", "l", 
+			"tal", "ciencia", "vedi", "scienz", "moksla", "humain", "xjenza", "zinatn", "vede", "human", "stiinta", "о",
+			"zientziak", "spa", "videnskab", "vedi", "umana", "tieteet", "uman", "insan", "nauki", "spoleczn", "humaniora",
+			"humana", "giza", "humanistisk", "cilveku", "bniedem", "talbniedem", "humanidad", "spolecenske", "cloveku", 
+			"menswetenschappen", "manniskovetenskap", "humann", "humantudomani", "humanistiset", "inimteadus", 
+			"humanwissenschaften", "des", "still", "licens", "nation", "et", "r", "30", "der", "01", "na", "deutsch", "domain", "republ", 
+			"und", "for", "04", "mid", "physic", "02", "du", "n", "httpwwweuropeanaeurightsrrp", "h", "and", "from", "y", 
+			"print", "national", "bibliothequ", "materi", "fre", "art", "espana", "sa", "18", "inform", "nr", "número", "standort", 
+			"aufbewahrung", "aufbewahrungstandort", "record", "pari", "languag", "dede", "imprime", "11", "proprieta", "12", "og", "fur", 
+			"number", "nederland", "di", "architectur", "yn", "late", "it", "yr", "van", "cultura", "object", "voor", "archeologi",
+			"archaeolog", "archiv", "deutschland", "architektur", "museum", "germani", "type", "kingdom", "librari", "monograph", "1911", 
+			"singl", "arkeolog", "product", "hous", "del", "archaologi", "feder", "archeologia", "arheologi", "arqueologia", 
+			"httpcreativecommonsorglicensesbysa", "archeologi", "arqueologia", "regeszet", "arkaeolog", "arkeologia", 
+			"arheologija", "arheoloogia", "archeologia", "archeologija", "no", "to", "ireland", "objekt", 
+			"httpwwweuropeanaeurightsrrr", "serial", "den", "ano", "serie", "date", "2004", "allemagn", "duitsland", "niemci", "alemania", 
+			"germania", "tyskland", "bundesrepublik", "saksa", "nemecko", "saksamaa", "nemetorszag", "alemanha", 
+			"jerman", "nemecko", "nemcija", "vokietija", "duitschland", "physicalobject", "epiteszet", "item", "kulturhistoria", 
+			"von", "17", "resid", "vacija", "alemanya", "almanya", "alemana", "nemacka", "almayn", "germanio", "njemacka", 
+			"germania", "giriman", "jarmal", "siaman", "gjermani", "jamanì", "dútslân", "gjermania", "jerman", "alamagn", "almaen", 
+			"alimaniya", "germanja", "toitshi", "udachi", "alimanya",
+			"almaniya", "ghearmailt", "daitschland", "ghermaan", "olmoniya", "duc", "tyskland", "ujerumani", "deutan",
+			"tiamana", "ghearmain", "germanujo", "duiska", "jarmalka", "ijalimani", "duutsjlandj", "heremani", "þyskaland", "alemani", 
+			"census", "duiskka", "alemanyi", "eireann", "heireann", "19110402", "cartlann", "naisiúnta", "departement", "el", "with", "m", 
+			"bildarchiv", "architektura", "architettura", "het", "sn", "05", "v", "arquitectura", "2005", "arkitektur", "cultur", 
+			"architectuur", "arhitectura", "architektūra", "arhitektura", "architektúra", "arhitektuur", "arkkitehtuuri", "fysisk", 
+			"provid", "not", "digit", "druck", "w", "c", "16", "carta", "06", "le", "madrid", "j", "ou", "kunstgeschicht", "digital", "nl", 
+			"projekt", "cart", "marburg", "herstellung", "dokumentationszentrum", "zero", "propiedad", "is", 
+			"httpcreativecommonsorgpublicdomainzero", "okand", "03", "09", "nc", "this", "specimen", "08", "a", "druk", "fisica", "physiqu",
+			"geografia", "properti", "fyzikalni", "5", "fizica", "physikalisch", "common", "15", "pain", "fizikai", "fisiko", 
+			"fuusikalin", "fiziksel", "fysisch", "fysikaliska", "07", "propriete", "kenngross", "fizika", "trykk", "fisich", "av", 
+			"fizikalna", "fyzikalna", "fizikala", "egenskap", "propriedad", "propriet", "fizyczna",  
+			"omadus", "egenskab", "savybe", "ominaisuudet", "wlasciwosc", "fizine"};
 	}
 }
