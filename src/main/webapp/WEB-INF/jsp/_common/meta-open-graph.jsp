@@ -2,7 +2,8 @@
   set og_image_url
 --%>
 <c:set var="og_image_url" value="${model.portalServer}${model.portalName}/sp/img/europeana-logo-en.png"/>
-<c:if test="fulldoc.html' == ${model.pageName}">
+
+<c:if test="${model.pageName=='full-doc.html'}">
   <c:set var="og_image_url" value="${model.thumbnailUrl}"/>
 </c:if>
 <%--
