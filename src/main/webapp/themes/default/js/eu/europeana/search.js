@@ -81,6 +81,18 @@ eu.europeana.search = {
 			$('#save-search').css('cursor', 'default');
 		}		
 
+		
+		// accessibility for grid
+		
+		$('#items .thumb-frame').bind('keypress', 
+			function(e){
+				if(e.keyCode == 13){
+					$(e.target).find('a')[0].click();
+				}
+			}
+		);
+		
+		
 	},
 	
 	loadComponents : function() {
