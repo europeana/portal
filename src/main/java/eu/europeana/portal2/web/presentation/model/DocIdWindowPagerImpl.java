@@ -30,7 +30,7 @@ import eu.europeana.portal2.web.util.QueryUtil;
 
 public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
-	private static final Logger log = Logger.getLogger("DocIdWindowPagerImpl");
+	private static final Logger log = Logger.getLogger(DocIdWindowPagerImpl.class.getCanonicalName());
 
 	private DocIdWindow docIdWindow;
 	private boolean hasNext;
@@ -74,13 +74,16 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		DocIdWindowPagerImpl pager = new DocIdWindowPagerImpl();
 		pager.query = query.getQuery();
 		int fullDocUriInt = getFullDocInt(httpParameters, query, pager);
-		log.info("fullDocUriInt: " + fullDocUriInt);
 
 		// negative parameters should return null so no pager is rendered
-		if (fullDocUriInt < 1 || Integer.parseInt(fetchParameter(httpParameters, "startPage", "1")) < 1) {
+		if (fullDocUriInt < 1 
+				|| Integer.parseInt(fetchParameter(httpParameters, "startPage", "1")) < 1
+				|| StringUtils.isBlank(query.getQuery())) {
 			return null;
 		}
 		int solrStartRow = getSolrStart(pager, fullDocUriInt);
+		// query.setAllowSpellcheck(false);
+		// query.setAllowFacets(false);
 		ResultSet<? extends BriefBean> queryResponse = getQueryResponse(query, searchService, pager, solrStartRow, clazz);
 
 		// if no results are found return null to signify that docIdPage can be created.
@@ -278,6 +281,9 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
 	// TODO: it filters out the normal refinements and rows as well!!!
 	private void setQueryStringForPaging(Query solrQuery, String startPage) {
+		if (solrQuery.getQuery() == null) {
+			return;
+		}
 		StringBuilder out = new StringBuilder();
 		out.append("query=").append(encode(solrQuery.getQuery()));
 		final List<String> facetQueries = QueryUtil.getFilterQueriesWithoutPhrases(solrQuery).get(QueryUtil.FACETS);
