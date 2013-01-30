@@ -45,6 +45,10 @@ input{
 }
 
 
+#e2ma_signup input[type=submit]{
+	cursor:			pointer;	
+}
+
 #e2ma_signup input[type=submit],
 #e2ma_signup input[type=text],
 #e2ma_signup input[type=email]{

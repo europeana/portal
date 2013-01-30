@@ -137,7 +137,8 @@ a:focus .social-link .text{
 	display:		block;
 	margin:			1em auto;
 	position:		relative;
-	width:			80%;	
+	width:			80%;
+	cursor:			pointer;	
 }
 
 
