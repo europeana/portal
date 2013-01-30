@@ -52,7 +52,7 @@ public class FeedEntry {
 
 	public String getDescription() {
 		if (StringUtils.length(description) > 160) {
-			return StringUtils.abbreviate(description, 160);
+			return StringUtils.abbreviate(description, 320);
 		}
 		return description;
 	}
