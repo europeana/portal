@@ -69,7 +69,10 @@
 
 							signupFormObj.drawForm();				
 
+							   
 							//window.emma = window.parent.emma;
+							document.getElementById('e2ma_signup_submit_button').setAttribute('title',	"<spring:message code="news_letter_description_t" />" );
+							
 							document.getElementById('e2ma_signup_submit_button').setAttribute('value',	window.emma.submitLabel);
 							document.getElementById('id_email').setAttribute('placeholder',				window.emma.placeholder);
 							document.getElementById('id_email').setAttribute('title',					window.emma.placeholder);
