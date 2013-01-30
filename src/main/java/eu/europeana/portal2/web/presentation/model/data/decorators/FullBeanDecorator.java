@@ -110,7 +110,16 @@ public class FullBeanDecorator implements FullBean {
 		return (shortcut.getEdmPlaceLatitude() != null && shortcut.getEdmPlaceLatitude()[0] != 0)
 				|| (shortcut.getEdmPlaceLongitude() != null && shortcut.getEdmPlaceLongitude()[0] != 0);
 	}
+	
+	
+	public Float[] getEdmPlaceLatitude(){
+		return shortcut.getEdmPlaceLatitude();
+	}
 
+	public Float[] getEdmPlaceLongitude(){
+		return shortcut.getEdmPlaceLongitude();
+	}
+	
 	@Override
 	public String[] getTitle() {
 		return fulldoc.getTitle();

@@ -247,7 +247,19 @@ public class FullDocPage extends FullDocPreparation {
 
 		addMetaField(fields, Field.EUROPEANA_COMPLETENESS, Integer.toString(document.getEuropeanaCompleteness()));
 
+		
+		Float[] longitudes = shortcut.getEdmPlaceLongitude();
+		for(Float longitude:longitudes){
+			addMetaField(fields, Field.EDM_PLACE_LONGITUDE,	longitude.toString());
+		}
+		
+		Float[] latitudes = shortcut.getEdmPlaceLatitude();
+		for(Float latitude:latitudes){
+			addMetaField(fields, Field.EDM_PLACE_LATITUDE,	latitude.toString());
+		}
+		
 		/*
+		addMetaField(fields, Field.EDM_PLACE_LATITUDE,	shortcut.getEdmPlaceLongitude()[0].toString());
 		addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, getDocument().getEnrichmentPlaceTerm());
 		addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, document.getEnrichmentPlaceLabel());
 		if ((document.getEnrichmentPlaceLatitude() != 0)
@@ -257,7 +269,12 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_TERM, document.getEnrichmentPlaceBroaderTerm());
 		addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_LABEL, document.getEnrichmentPlaceBroaderLabel());
-		*/
+		
+*/
+		
+		
+		
+		
 		if (document.getPlaces() != null) {
 			for (Place place : document.getPlaces()) {
 				addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, place.getAbout());
