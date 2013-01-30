@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
-import org.eclipse.jetty.util.log.Log;
-
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
@@ -24,6 +22,8 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  */
 public class FullBeanShortcut {
 
+	private final Logger log = Logger.getLogger(FullBeanShortcut.class.getCanonicalName());
+
 	private FullBeanImpl document;
 
 	public FullBeanShortcut(FullBeanImpl document) {
@@ -35,6 +35,8 @@ public class FullBeanShortcut {
 	private Map<String, List<Map<String, List<String>>>> mapValues;
 
 	private Map<String, List<Float>> floats;
+
+	private Map<String, Float[]> floatArrays;
 
 	/**
 	 * Adds multiple values
@@ -249,6 +251,7 @@ public class FullBeanShortcut {
 
 	public void initializeFloats() {
 		floats = new HashMap<String, List<Float>>();
+		floatArrays = new HashMap<String, Float[]>();
 		if (document.getPlaces() != null && document.getPlaces().size() > 0) {
 			String parent = "Place";
 			for (PlaceImpl place : document.getPlaces()) {
@@ -265,7 +268,10 @@ public class FullBeanShortcut {
 		}
 
 		if (floats.containsKey(property)) {
-			floats.get(property).toArray(new Float[floats.get(property).size()]);
+			if (!floatArrays.containsKey(property)) {
+				floatArrays.put(property, floats.get(property).toArray(new Float[floats.get(property).size()]));
+			}
+			return floatArrays.get(property);
 		}
 		return null;
 	}
