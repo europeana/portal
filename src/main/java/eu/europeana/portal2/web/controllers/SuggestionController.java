@@ -52,7 +52,7 @@ public class SuggestionController {
 			throw new EuropeanaQueryException(ProblemType.MALFORMED_QUERY);
 		}
 
-		log.info("============== START SUGGESTIONS ==============");
+		// log.fine("============== START SUGGESTIONS ==============");
 
 		List<Term> suggestions = new ArrayList<Term>();
 		term = clearSuggestionTerm(term);
@@ -65,7 +65,7 @@ public class SuggestionController {
 			}
 		}
 
-		log.info("number of suggestions: " + suggestions.size());
+		// log.fine("number of suggestions: " + suggestions.size());
 		SuggestionsPage model = new SuggestionsPage();
 		model.setResults(suggestions);
 		injector.injectProperties(model);
