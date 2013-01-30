@@ -31,12 +31,18 @@ eu.europeana.header = {
 		
 		$("#query-search>table")									.css("display",		"none");
 		$("#query-search>table")									.css("visibility",	"visible");
+		
+		
+		/*
 		$("#query-search>table").fadeIn(600, function(){
 			$("#query-input").focus();
 		});
+		*/
+		
+		$("#query-search>table").fadeIn(600);
+		
 
 		this.initResponsiveUtility();
-		this.addQueryFocus();
 		this.addLanguageChangeHandler();
 		this.addRefineSearchClickHandler();		
 		this.addAjaxMethods();
@@ -53,7 +59,8 @@ eu.europeana.header = {
 		
 		// setup tabs
 		this.setupTabbing();
-
+		this.addQueryFocus();
+		
 		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
 	},
 	
@@ -76,6 +83,14 @@ eu.europeana.header = {
 				});
 			}			
 		}
+
+		
+		if(eu.europeana.vars.page_name == 'login.html'){
+			setTabIndex( '#j_username' );
+			setTabIndex( '#j_password' );
+			setTabIndex( '#login input[type=submit]' );
+			setTabIndex( '#login a' );
+		}
 		
 		/* header */
 		setTabIndex( '#query-input' );
@@ -89,38 +104,51 @@ eu.europeana.header = {
 		setTabIndex( '#query-info .search-help' );
 		
 		/* search */
-		setTabIndex('#search-filter a');
 		
-		$('#filter-search a.facet-section').each(function(i, ob){
-			setTabIndex( $(ob) );
-			if(i==0){
-				setTabIndex( $(ob).parent().next('form').find('input[type!="hidden"]') );
-			}
-			else{
-				setTabIndex( $(ob).parent().next('ul').find('a') );
-			}
-		});
+		if(eu.europeana.vars.page_name == 'search.html'){
+			
+			setTabIndex('#search-filter a');
+			
+			$('#filter-search a.facet-section').each(function(i, ob){
+				setTabIndex( $(ob) );
+				if(i==0){
+					setTabIndex( $(ob).parent().next('form').find('input[type!="hidden"]') );
+				}
+				else{
+					setTabIndex( $(ob).parent().next('ul').find('a') );
+				}
+			});
 
-		setTabIndex('#cb-ugc');
-		setTabIndex('.nav-top .eu-menu');
-		setTabIndex('.nav-top .eu-menu .item');
+			setTabIndex('#cb-ugc');
+			setTabIndex('.nav-top .eu-menu');
+			setTabIndex('.nav-top .eu-menu .item');
+			
+			setTabIndex('.nav-top .nav-first a');
+			setTabIndex('.nav-top .nav-prev a');
+			setTabIndex('.nav-top #start-page');
+			setTabIndex('.nav-top .nav-next a');
+			setTabIndex('.nav-top .nav-last a');
+			
+			setTabIndex('.thumb-frame');		
 		
-		setTabIndex('.nav-top .nav-first a');
-		setTabIndex('.nav-top .nav-prev a');
-		setTabIndex('.nav-top #start-page');
-		setTabIndex('.nav-top .nav-next a');
-		setTabIndex('.nav-top .nav-last a');
+			setTabIndex('.nav-bottom .eu-menu');
+			setTabIndex('.nav-bottom .eu-menu .item');
+			setTabIndex('.nav-bottom .nav-first a');
+			setTabIndex('.nav-bottom .nav-prev a');
+			
+			setTabIndex('.nav-bottom #start-page');
+			setTabIndex('.nav-bottom .nav-next a');
+			setTabIndex('.nav-bottom .nav-last a');			
+		}
 		
-		setTabIndex('.thumb-frame');		
-	
-		setTabIndex('.nav-bottom .eu-menu');
-		setTabIndex('.nav-bottom .eu-menu .item');
-		setTabIndex('.nav-bottom .nav-first a');
-		setTabIndex('.nav-bottom .nav-prev a');
-		
-		setTabIndex('.nav-bottom #start-page');
-		setTabIndex('.nav-bottom .nav-next a');
-		setTabIndex('.nav-bottom .nav-last a');
+		else if(eu.europeana.vars.page_name == 'myeuropeana.html'){
+			
+		//	alert("my e");
+		}
+		else if(eu.europeana.vars.page_name == 'login.html'){
+		//	alert("login ");
+		}
+
 
 		
 	},
@@ -296,27 +324,6 @@ eu.europeana.header = {
 	 */
 	addQueryFocus : function() {
 		
-		var exceptions = [
-			'login.html',
-			'forgotPassword.html',
-			'register-success.html'
-		],
-		i,
-		ii = exceptions.length,
-		input_focus = true;
-		
-		for ( i = 0; i < ii; i += 1 ) {
-			
-			if ( exceptions[i] === eu.europeana.vars.page_name ) {
-				
-				input_focus = false;
-				break;
-				
-			}
-			
-		}
-		
-		
 		$('#query-input').focus(function(){
 			$("#query-full table tr:first-child .query-cell").addClass("glow");
 		});
@@ -324,10 +331,8 @@ eu.europeana.header = {
 			$("#query-full table tr:first-child .query-cell").removeClass("glow");
 		});
 		
-		
-		if ( input_focus ) {
-			$('#query-input').focus();
-		}
+		var inputFocus = ['login.html', 'forgotPassword.html', 'register-success.html'].indexOf(eu.europeana.vars.page_name) >=0 ? $('#j_username') : $('#query-input');
+		inputFocus.focus();
 		
 	},
 	

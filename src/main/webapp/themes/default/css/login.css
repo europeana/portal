@@ -16,6 +16,10 @@
     	text-align:		left;
     }
     
+    .login-box a:focus{
+    	outline:	1px dotted #4C7ECF;
+    }
+    
     .login-box fieldset {
     	background-color:	#F3F3F3;
         padding:			1.5em;
