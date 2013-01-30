@@ -47,7 +47,7 @@ import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	private final Logger log = Logger.getLogger(FullBeanDecorator.class.getCanonicalName());
 
 	private Configuration config = Beans.getConfig();
 
@@ -93,15 +93,7 @@ public class FullBeanDecorator implements FullBean {
 
 	public String getUrlKml() {
 		if (isPositionAvailable()) {
-			String fullDocUrl = getId();
-
-			if (fullDocUrl.indexOf("?") > -1) {
-				fullDocUrl = fullDocUrl.substring(0, fullDocUrl.indexOf(".html"));
-			}
-
-			fullDocUrl = fullDocUrl.replace("/resolve/", "/portal/");
-			fullDocUrl = fullDocUrl + ".kml";
-			return fullDocUrl;
+			return "record" + getAbout() + ".kml";
 		}
 		return null;
 	}
@@ -110,8 +102,7 @@ public class FullBeanDecorator implements FullBean {
 		return (shortcut.getEdmPlaceLatitude() != null && shortcut.getEdmPlaceLatitude()[0] != 0)
 				|| (shortcut.getEdmPlaceLongitude() != null && shortcut.getEdmPlaceLongitude()[0] != 0);
 	}
-	
-	
+
 	public Float[] getEdmPlaceLatitude(){
 		return shortcut.getEdmPlaceLatitude();
 	}
@@ -119,7 +110,7 @@ public class FullBeanDecorator implements FullBean {
 	public Float[] getEdmPlaceLongitude(){
 		return shortcut.getEdmPlaceLongitude();
 	}
-	
+
 	@Override
 	public String[] getTitle() {
 		return fulldoc.getTitle();
