@@ -152,7 +152,7 @@ public class ObjectController {
 		log.info("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
-			Query query = new Query(queryString).setRefinements(qf);
+			Query query = new Query(queryString).setRefinements(qf).setAllowFacets(false).setAllowSpellcheck(false);
 
 			// full bean view
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
