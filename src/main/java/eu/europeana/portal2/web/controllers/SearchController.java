@@ -125,7 +125,8 @@ public class SearchController {
 						.setParameter("facet.mincount", "1")
 						// .setParameter("f.YEAR.facet.mincount", "1")
 						.setParameter("sort", sort)
-						.setProduceFacetUnion(true);
+						.setProduceFacetUnion(true)
+						.setAllowSpellcheck(false);
 
 		if (model.isEmbedded()) {
 			query.setAllowFacets(false);
