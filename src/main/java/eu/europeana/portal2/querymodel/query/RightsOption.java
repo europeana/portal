@@ -34,21 +34,30 @@ public enum RightsOption {
 	//NOC("http://creativecommons.org/publicdomain/mark/", "Public Domain marked", "noc.png"),
 	NOC("http://creativecommons.org/publicdomain/mark/", "Public Domain marked", "icon-pd", true),
 
+	
+	
+	// Andy: this is not present as a web page or an option in the style guide - disabling
 	//EU_PD("http://www.europeana.eu/rights/pd/", "Public Domain", "eu_public_domain.jpg", "eu_public_domain-transparent.png"), // +transparent
-	EU_PD("http://www.europeana.eu/rights/pd/", "Public Domain", "icon-pd", false), // +transparent 
+	//EU_PD("http://www.europeana.eu/rights/pd/", "Public Domain", "icon-pd", false), // +transparent 
 
+	
+	
+	
 	//EU_RR_F("http://www.europeana.eu/rights/rr-f/", "Free Access - Rights Reserved", "eu_free_access.jpg", "eu_free_access.png"), // +transparent
 	EU_RR_F("http://www.europeana.eu/rights/rr-f/", "Free Access - Rights Reserved", "icon-copyright", false),
-
+	
+	
 	//EU_RR_P("http://www.europeana.eu/rights/rr-p/", "Paid Access - Rights Reserved", "eu_paid_access.jpg", "eu_paid_access.png"), // +transparent
 	EU_RR_P("http://www.europeana.eu/rights/rr-p/", "Paid Access - Rights Reserved", "icon-copyright", false),
-
+	
 	//EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "eu_restricted_access.jpg", "cc-restrictedaccess.png"), // +transparent
 	EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "icon-copyright", false),
-
+	
+	
 	//EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "eu_unknown.jpg", "cc-unknown.png"); // +transparent
 	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false);
-
+	
+	
 	private String url = null;
 	private String rightsText = null;
 	private String rightsIcon = null;
