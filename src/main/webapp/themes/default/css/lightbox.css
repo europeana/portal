@@ -2,6 +2,10 @@ html, body{
 	height:		100%;
 }
 
+#lightbox{
+	font-size:	0.9em;
+}
+
 /* the overlayed element */
 .simple_overlay {
 	z-index:			10000;
