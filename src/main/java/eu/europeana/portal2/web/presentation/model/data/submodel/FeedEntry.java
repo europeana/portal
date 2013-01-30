@@ -30,6 +30,8 @@ import eu.europeana.portal2.web.controllers.utils.RSSImage;
 
 public class FeedEntry {
 
+	private static final int DESCRIPTION_LENGTH = 320;
+
 	private String title;
 	private String description;
 	private String link;
@@ -51,8 +53,8 @@ public class FeedEntry {
 	}
 
 	public String getDescription() {
-		if (StringUtils.length(description) > 160) {
-			return StringUtils.abbreviate(description, 320);
+		if (StringUtils.length(description) > DESCRIPTION_LENGTH) {
+			return StringUtils.abbreviate(description, DESCRIPTION_LENGTH);
 		}
 		return description;
 	}
