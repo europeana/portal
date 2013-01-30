@@ -26,8 +26,9 @@
 					<form id="refine-search-form" method="get" action="${query_action}" onsubmit="return eu.europeana.search.checkKeywordSupplied()">
 						<input type="hidden" name="query" value="<c:out value="${model.query}"/>"/>
 						<input type="hidden" name="rows" id="rows" value="${model.rows}"/>
+						
 						<c:forEach var="refinement" items="${model.refinements}">
-							<input type="hidden" name="qf" value="${refinement}"/>
+							<input type="hidden" name="qf" value="<c:out value="${refinement}"/>"/>
 						</c:forEach>
 	
 						<ul id="refinements">
