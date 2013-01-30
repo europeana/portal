@@ -111,6 +111,8 @@ public enum Field {
 	EDM_ISSHOWNBY("edm:isShownBy", null),
 	EDM_OBJECT("edm:object", null),
 	EDM_LANGUAGE("edm:language", null),
+	EDM_PLACE_LONGITUDE("wgs84_pos:lat", "edm_place_longitude_t"),
+	EDM_PLACE_LATITUDE("wgs84_pos:long", "edm_place_latitude_t"),
 	EDM_TYPE("edm:type", null),
 	EDM_USERTAG("edm:userTag", null),
 	EDM_YEAR("edm:year", null),
