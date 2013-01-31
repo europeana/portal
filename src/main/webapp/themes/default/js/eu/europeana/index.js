@@ -46,6 +46,7 @@
 				responsive:		true,
 				idleMode:		true,
 				popupLinks:		true,
+				fullscreenDoubleTap:	false,
 				debug:			js.debug
 		});
 
