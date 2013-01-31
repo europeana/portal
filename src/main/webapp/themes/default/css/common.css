@@ -458,11 +458,12 @@ a:focus .social-link .text{
 		display:		inline;
 	}
 	
-	#footer-subscribe{
+	#iframe-newsletter{
+		background-color:red !important;
 		margin-top:			0;
 	}
 	
-	#footer-subscribe input{
+	#iframe-newsletter input{
 		width:				45%;
 		max-width:			45%;
 		
@@ -475,14 +476,14 @@ a:focus .social-link .text{
 		font-size:			1.2em;		
 
 	}
-	#footer-subscribe input[type=text],
-	#footer-subscribe input[type=email]{
+	#iframe-newsletter input[type=text],
+	#iframe-newsletter input[type=email]{
 		float:				left;
 		margin-top:			1em;
 		padding:			0.3em;
 	}
 	
-	#footer-subscribe span{
+	#iframe-newsletter span{
 		display:	block;
 		clear:		both;
 		font-size:	0.75em;

@@ -40,11 +40,32 @@
 			
 		
 	</head>
-	<body class="iframe-newsletter">
+	<body class="iframe-newsletter" id="e2ma_signup">
 	
-		<div id="load_check" class="signup_form_message" >This form needs Javascript to display, which your browser doesn't support.
-			<a href="https://app.e2ma.net/app2/audience/signup/1722088/1403149/?v=a"> Sign up here</a> instead 
+		<div class="e2ma_signup_form" id="e2ma_signup_form">
+		
+			<div class="e2ma_signup_message" id="e2ma_signup_message"></div>
+			
+			<div class="e2ma_signup_form_container" id="e2ma_signup_form_container">
+
+				<form method="post" id="signup" name="signup" onSubmit="return checkForm()" action="https://app.e2ma.net/app2/audience/signup/1730327/1403149/?v=a" target="_new">
+
+					<input type="text" name="email" id="id_email">
+					         
+					<div class="cb">
+						<input type="checkbox" name="group_1293" id="id_group_1293"><label for="id_group_1293">English</label>
+					</div>
+					<div class="cb">
+						<input type="checkbox" name="group_519437" id="id_group_519437"><label for="id_group_519437">French</label>
+					</div>
+					
+					<input type="submit" name="Submit" value="Submit" id="e2ma_signup_submit_button">
+
+				</form>
+                        
+			</div>
 		</div>
+
 		
 		<div id="footer-subscribe">
 			<script type="text/javascript">
@@ -56,38 +77,41 @@
 											
 			<script type="text/javascript">
 			
-				$(document).ready(function(){
 
-					js.loader.loadScripts([{
-						name: 'emma',
-						file : '?v=a',
-						xxxpath : 'https://app.e2ma.net/app2/audience/tts_signup/1722088/1c99e86abb6bc30f8e24592a87471334/1403149/',
-						xxxpath : '/${branding}/js/com/e2ma/emma.js',
-						path : '/${branding}/js/com/e2ma/min/emma.min.js',
-						
-						callback : function() {
+			var checkForm = function(form_obj) {
 
-							signupFormObj.drawForm();				
+				//now handle required field validation
 
-							   
-							//window.emma = window.parent.emma;
-							document.getElementById('e2ma_signup_submit_button').setAttribute('title',	"<spring:message code="news_letter_description_t" />" );
-							
-							document.getElementById('e2ma_signup_submit_button').setAttribute('value',	window.emma.submitLabel);
-							document.getElementById('id_email').setAttribute('placeholder',				window.emma.placeholder);
-							document.getElementById('id_email').setAttribute('title',					window.emma.placeholder);
+				var why = "";
+				var email = $('#id_email');
+				var filter=/^[a-z0-9_\-\.\+]+@[a-z0-9_\-\.]+\.[a-z]{2,4}$/i;
 
+				if( email.val().length==0){
+					why += "Email must be specified\n";
+				}
+				else if(!filter.test(email.val())){
+					why += "Email must be a valid email address.\n";
+				}
+				
+				if( !$('#id_group_1293').is(':checked') && !$('#id_group_519437').is(':checked')){
+					why += "A language must be specified.\n";
+				}
 
-				            var heightVal = $('body').height() + 'px';
-				            
-				            $('.e2ma_signup_form, html, body').css('height',  heightVal);
-            				$("#footer-iframe, .iframe-wrap", window.parent.document).css('height', heightVal);
-				            
-						}
-					}]);
-
-				});
+				if (why != "") {
+					alert(why);
+					return false;
+				} 
+				return true;	 
+				
+			};
 			
+				$(document).ready(function(){
+					document.getElementById('e2ma_signup_submit_button').setAttribute('title',	"<spring:message code="news_letter_description_t" />" );				
+					document.getElementById('e2ma_signup_submit_button').setAttribute('value',	window.emma.submitLabel);
+					document.getElementById('id_email').setAttribute('placeholder',				window.emma.placeholder);
+					document.getElementById('id_email').setAttribute('title',					window.emma.placeholder);
+				});
+
 			</script>
 			
 		</div>

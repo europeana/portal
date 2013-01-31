@@ -22,32 +22,36 @@ body{
 }
 
 #e2ma_signup_form_container{
-	padding:	1em 0;	
-}
-
-.e2ma_signup_form_button_row,
-.e2ma_signup_form_row{
-	width:		100%;
-	position:	relative;
-}
-
-.e2ma_signup_form_button_row{
-	margin:		1em 0 0 0;
+	zzpadding:	1em 0;	
 }
 
 
+label{
+	position:relative;
+	top:0.15em;
+	left:0.5em;
+}
+	
 input{
 	box-sizing:			content-box;
 	color:				#333;
 	border:				1px solid #a0a0a0;
-	font-size:			1.2em;
-	width:				100%;		
+	font-size:			1.2em;		
 }
 
 
 #e2ma_signup input[type=submit]{
 	cursor:			pointer;	
 }
+
+#e2ma_signup .cb{
+	margin:	0.5em;
+}
+
+#e2ma_signup input[type=checkbox]{
+	margin-left:	35%;
+}
+
 
 #e2ma_signup input[type=submit],
 #e2ma_signup input[type=text],

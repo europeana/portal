@@ -486,7 +486,7 @@ eu.europeana.header = {
 							opacity: 0.9
 						},
 						onLoad:function(){
-							$("#newsletter-overlay .iframe-wrap").html('<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; width:100%;" id="footer-iframe" src="' + window.emma.iframeUrl + '" />');
+							$("#newsletter-overlay .iframe-wrap").html('<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; height:100%; width:100%; padding:1em 0;" id="footer-iframe" src="' + window.emma.iframeUrl + '" />');
 							var screenW			= $(window).width();
 							var screenH			= $(window).height();
 							$("#newsletter-overlay").css("left",	(screenW - $("#newsletter-overlay").width()) /2);
