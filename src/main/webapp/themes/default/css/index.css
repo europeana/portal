@@ -346,7 +346,8 @@ h3.featured-text{
 }
 
 p.featured-text{
-	max-height:		5.92em;	/*		4 x 1.48		*/
+	/*
+	max-height:		5.92em;*/	/*		4 x 1.48		*/
 	overflow:		hidden;
 }
 
