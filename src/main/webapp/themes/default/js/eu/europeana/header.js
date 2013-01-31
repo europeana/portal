@@ -51,7 +51,7 @@ eu.europeana.header = {
 		this.setupSearchMenu();
 		this.setupLanguageMenu();
 		
-//		this.addAutocompleteHandler();
+		this.addAutocompleteHandler();
 		this.setupNewsletter();
 		this.setupPinterestAnalytics();
 		
