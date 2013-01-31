@@ -553,6 +553,7 @@ eu.europeana.fulldoc = {
 			lightbox:			false,
 			responsive:			true,
 			dataSource:			carouselData,
+			fullscreenDoubleTap:	false,
 			thumbnails: 		carouselData.length>1,
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find) 
 			extend: function(e){
