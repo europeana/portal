@@ -119,7 +119,7 @@ eu.europeana.header = {
 
 			setTabIndex('#cb-ugc');
 			setTabIndex('.nav-top .eu-menu');
-			setTabIndex('.nav-top .eu-menu .item');
+			setTabIndex('.nav-top .eu-menu .item a');
 			
 			setTabIndex('.nav-top .nav-first a');
 			setTabIndex('.nav-top .nav-prev a');
@@ -130,7 +130,7 @@ eu.europeana.header = {
 			setTabIndex('.thumb-frame');		
 		
 			setTabIndex('.nav-bottom .eu-menu');
-			setTabIndex('.nav-bottom .eu-menu .item');
+			setTabIndex('.nav-bottom .eu-menu .item a');
 			setTabIndex('.nav-bottom .nav-first a');
 			setTabIndex('.nav-bottom .nav-prev a');
 			
