@@ -8,24 +8,20 @@
 
 <html>
 	<head>
+		<link rel="stylesheet" href="/${branding}/css/europeana-font-face.css" />
+		
 		<script type="text/javascript" src="/${branding}/js/jquery/min/jquery-1.8.1.min.js"></script>
 		<script type="text/javascript">
 			window.js={};
 		</script>
 		<c:choose>
-			<c:when test="${!empty model.debug && model.debug}">
-				<script type="text/javascript" src="/${branding}/js/js/loader.js"></script>
-				
+			<c:when test="${!empty model.debug && model.debug}">				
 				<link rel="stylesheet" href="themes/default/css/common.css" />
 				<link rel="stylesheet" href="themes/default/css/newsletter.css" />
-				
 			</c:when>
-			<c:otherwise>
-				<script type="text/javascript" src="/${branding}/js/js/min/loader.min.js"></script>
-				
+			<c:otherwise>				
 				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
 				<link rel="stylesheet" href="themes/default/css/min/newsletter.min.css" />
-				
 			</c:otherwise>
 		</c:choose>
 		
@@ -37,11 +33,9 @@
 			}
 		</style>
 		<![endif]-->
-			
-		
+
 	</head>
 	<body class="iframe-newsletter" id="e2ma_signup">
-	
 		<div class="e2ma_signup_form" id="e2ma_signup_form">
 		
 			<div class="e2ma_signup_message" id="e2ma_signup_message"></div>

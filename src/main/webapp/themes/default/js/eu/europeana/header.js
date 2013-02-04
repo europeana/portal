@@ -60,8 +60,6 @@ eu.europeana.header = {
 		// setup tabs
 		this.setupTabbing();
 		this.addQueryFocus();
-		
-		$("#footer-iframe").attr("src", "/" + eu.europeana.vars.portal_name + '/newsletter.html');
 	},
 	
 	
@@ -468,36 +466,24 @@ eu.europeana.header = {
 	
 	
 	setupNewsletter: function(){
-		
 		$("#newsletter-trigger").click(function(){
-			
-			$("#newsletter-trigger").unbind('click');
-			
-			js.loader.loadScripts([{
-				name: 'jquery-tools',
-				file : 'jquery.tools.min.js' + js.cache_helper,
-				path : eu.europeana.vars.branding + '/js/jquery/min/',
-				dependencies : [ 'jquery' ],
-				callback : function() {
-					$("#newsletter-trigger").overlay({
-						mask: {
-							color: '#ffffff',
-							loadSpeed: 200,
-							opacity: 0.9
-						},
-						onLoad:function(){
-							$("#newsletter-overlay .iframe-wrap").html('<iframe marginheight="0" marginwidth="0" frameborder="0" style="margin:0; height:100%; width:100%; padding:1em 0;" id="footer-iframe" src="' + window.emma.iframeUrl + '" />');
-							var screenW			= $(window).width();
-							var screenH			= $(window).height();
-							$("#newsletter-overlay").css("left",	(screenW - $("#newsletter-overlay").width()) /2);
-							$("#newsletter-overlay").css("top",		(screenH - $("#newsletter-overlay").height()) /2);
-						}
-					});
-					$("#newsletter-trigger").click();
-					
-				}
-			}]);
-			
+			if(!$(".iframe-wrap").html().length){
+				$(".iframe-wrap").html(
+						'<iframe marginheight="0" '
+							+	'marginwidth="0" '
+							+	'frameborder="0" '
+							+	'src="' + window.emma.iframeUrl + '"/>'
+							+ 	'<div class="close"></div>'
+				);
+
+				$(".overlaid-content, .iframe-wrap .close").click(function(){
+					$(".overlaid-content").css('visibility', 'hidden');
+				});
+				$(".iframe-wrap").click(function(e){
+					e.stopPropagation();
+				});
+			}
+			$(".overlaid-content").css('visibility', 'visible');
 		});
 		
 	},

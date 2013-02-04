@@ -119,17 +119,36 @@ a:focus .social-link .text{
 }
 
 
-#newsletter-overlay{
-	display:	none;
-	width:		80%;
-	z-index:	200;
-	box-shadow:	0 0 90px 5px #000000;
-	border:		1px solid #666666;
+.overlaid-content{
+	
+	/* Andy: TODO: ie8
+		(see here: http://robertnyman.com/2010/01/11/css-background-transparency-without-affecting-child-elements-through-rgba-and-filters/ )
+	*/
+	background: rgb(255, 255, 255);
+	background: rgba(255, 255, 255, 0.9);
+	
+	height:				100%;
+	padding-top:		20%;
+	position:			fixed;
+	text-align:			center;
+	top:				0;
+	visibility:			hidden;
+	width:				100%;
+	z-index:			12;
 }
 
-#newsletter-overlay .iframe-wrap{
-	width:				100%;
-	background-color:	#fff;
+.iframe-wrap{
+	display:	inline-block;
+	position:	relative;
+	z-index:	12;
+}
+
+.iframe-wrap iframe{
+	box-shadow:			0 0 90px 5px #000000;
+	border:				1px solid #666666;
+	margin:				0 auto;
+	padding:			1em 0 1em 0;
+	background-color:	white;
 }
 
 #newsletter-trigger{
@@ -143,9 +162,6 @@ a:focus .social-link .text{
 
 
 @media only screen and ( min-width:48em ){
-	#newsletter-overlay{
-		width:	40%;
-	}
 	
 	#newsletter-trigger{
 		margin:			1em auto;
@@ -154,8 +170,7 @@ a:focus .social-link .text{
 		
 }
 
-
-#newsletter-overlay .close {
+.iframe-wrap .close {
     background-image:	url("/portal/themes/default/images/icons/close-lightbox.png");
     position:			absolute;
     right:				-20px;
@@ -164,7 +179,6 @@ a:focus .social-link .text{
     height:				35px;
     width:				35px;
 }
-
 
 
 #newsletter-wrapper{

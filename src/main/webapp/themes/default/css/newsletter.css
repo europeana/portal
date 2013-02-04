@@ -1,3 +1,4 @@
+
 html{
 	overflow:	hidden;
 }
@@ -21,22 +22,13 @@ body{
 	display:	none;
 }
 
-#e2ma_signup_form_container{
-	zzpadding:	1em 0;	
-}
-
-
-label{
-	position:relative;
-	top:0.15em;
-	left:0.5em;
-}
 	
 input{
 	box-sizing:			content-box;
 	color:				#333;
 	border:				1px solid #a0a0a0;
-	font-size:			1.2em;		
+	font-size:			1.2em;
+	outline:			none;
 }
 
 
@@ -58,7 +50,9 @@ input{
 #e2ma_signup input[type=email]{
 	width:				80%;
 	margin:				0 auto 0 auto;
+	/*
 	padding:			0.3em;
+	*/
 	position:			relative;
 	display:			block;
 }
