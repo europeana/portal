@@ -118,6 +118,13 @@ eu.europeana.header = {
 			});
 
 			setTabIndex('#cb-ugc');
+			
+			setTabIndex('#share-subscribe .icon-share');
+			
+			// controls not initiated yet... .we have a problem
+			//alert( $('#at15s_inner a').length  )
+			//setTabIndex('#at15s_inner a');
+			
 			setTabIndex('.nav-top .eu-menu');
 			setTabIndex('.nav-top .eu-menu .item a');
 			
@@ -138,7 +145,7 @@ eu.europeana.header = {
 			setTabIndex('.nav-bottom .nav-next a');
 			setTabIndex('.nav-bottom .nav-last a');
 			
-			$("#filter-search input[type=checkbox]").attr("tabindex", "-1");
+			$("#filter-search input[type=checkbox]").not('#cb-ugc').attr("tabindex", "-1");
 			$("#items .li a").attr("tabindex", "-1");
 		}
 		

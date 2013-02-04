@@ -307,6 +307,15 @@ eu.europeana.search = {
 			
 			com.addthis.init( null, true, false );
 			
+			$('#share-subscribe .icon-share').bind('keypress', function(e){
+				if(e.keyCode == 13 || e.keyCode == 32){
+					// carriage return or space
+					e.preventDefault();
+					$(e.target).closest('a').click();
+					return;			
+				}
+			});
+			
 			setTimeout( function() {
 				$('.shares-link').fadeIn(); },
 				600 );
