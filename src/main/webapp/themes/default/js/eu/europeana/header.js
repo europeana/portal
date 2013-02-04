@@ -136,7 +136,10 @@ eu.europeana.header = {
 			
 			setTabIndex('.nav-bottom #start-page');
 			setTabIndex('.nav-bottom .nav-next a');
-			setTabIndex('.nav-bottom .nav-last a');			
+			setTabIndex('.nav-bottom .nav-last a');
+			
+			$("#filter-search input[type=checkbox]").attr("tabindex", "-1");
+			$("#items .li a").attr("tabindex", "-1");
 		}
 		
 		else if(eu.europeana.vars.page_name == 'myeuropeana.html'){
