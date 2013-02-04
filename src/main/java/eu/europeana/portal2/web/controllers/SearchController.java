@@ -21,6 +21,7 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -103,6 +104,7 @@ public class SearchController {
 		if (!StringUtils.isBlank(rswDefqry)) {
 			q = rswDefqry;
 		}
+		q = SolrUtils.translateQuery(q);
 		model.setQuery(q);
 
 		if (!sortValues.contains(sort)) {

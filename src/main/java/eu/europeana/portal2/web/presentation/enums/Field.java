@@ -134,6 +134,7 @@ public enum Field {
 	EDM_ISSIMILARTO("edm:isSimilarTo", null),
 	EDM_ISSUCCESSOROF("edm:isSuccessorOf", null),
 	EDM_REALIZES("edm:realizes", null),
+	EDM_ISNEXTINSEQUENCE("edm:isNextInSequence", "edm_isNextInSequence_t"),
 
 	// ENRICHMENT
 	ENRICHMENT_PLACE_TERM("enrichment:place_term", "place_term_t"),
@@ -156,7 +157,6 @@ public enum Field {
 	ENRICHMENT_AGENT_TERM("enrichment:agent_term", "agent_term_t"),
 	ENRICHMENT_AGENT_LABEL("enrichment:agent_label", "agent_label_t"),
 
-	EDM_ISNEXTINSEQUENCE("edm:isNextInSequence", "edm_isNextInSequence_t"),
 	;
 
 	private String fieldName;
