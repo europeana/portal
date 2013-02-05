@@ -266,9 +266,17 @@ Galleria.addTheme({
 	        
 	    	this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 	    		$(ob).unbind('click');
-	    		$(ob).bind("click", function(){
+	    		$(ob).bind("click", function(e){
+	    			
+	    			
+	    			if( $(e.target).closest('#explore-further').length ){
+	    				com.google.analytics.europeanaEventTrack("Similar_Items", "Carousel_Clicks");
+	    			}
+	    			
+	    			
+	    			
 	    			if(dataSource[i].linkTarget){
-	        			window.open(dataSource[i].link, dataSource[i].linkTarget);    				
+	        			window.open(dataSource[i].link, dataSource[i].linkTarget);
 	    			}
 	    			else{
 	        			window.location = dataSource[i].link;
@@ -432,7 +440,7 @@ Galleria.addTheme({
     			var fnClick = function(){
 	    			var i = thisGallery.getIndex();
 	    		
-	    			com.google.analytics.europeanaEventTrack("Carousel_Click_Through");
+	    			com.google.analytics.europeanaEventTrack("Main_Index_Carousel", "Carousel_Clicks");
 	    			
 	    			if(dataSource[i].external == "_self"){
 	    				window.location.href = dataSource[i].link;	    				
@@ -452,9 +460,7 @@ Galleria.addTheme({
 
 	            
 	            thisGallery.$( 'container' ).find(".galleria-stage").click(function(){
-	            	
-	    			com.google.analytics.europeanaEventTrack("Carousel_Click_Through");
-
+	            	com.google.analytics.europeanaEventTrack("Main_Index_Carousel", "Carousel_Clicks");
 				});
 
     			

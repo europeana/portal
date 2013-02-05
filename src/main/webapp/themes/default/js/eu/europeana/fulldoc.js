@@ -607,7 +607,7 @@ eu.europeana.fulldoc = {
 			// 150 too small for iphone: make min height 200
    			$(carousel2selector).css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
    	
-   			Galleria.run(carousel2selector, {
+   			var x = Galleria.run(carousel2selector, {
    				debug:			js.debug,
 				transition:		'fadeslide',
 				carousel:		true,
@@ -623,7 +623,7 @@ eu.europeana.fulldoc = {
 				extend: function(e){
 					var doEllipsis = function(){
 						var ellipsisObjects = [];
-						jQuery(carousel2selector + ' .europeana-carousel-info').each(
+						$(carousel2selector + ' .europeana-carousel-info').each(
 							function(i, ob){
 								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 							}
@@ -643,6 +643,7 @@ eu.europeana.fulldoc = {
 					});
 				}
 	   		});
+   			
 		}
 	},
 	
