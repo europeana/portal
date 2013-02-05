@@ -81,9 +81,9 @@ public class MoreLikeThisSpeedTest {
 					e.printStackTrace();
 				}
 			}
-			printStatistics(stat1);
+			SpeedTestUtils.printStatistics(stat1);
 			if (stat2.getN() > 0) {
-				printStatistics(stat2);
+				SpeedTestUtils.printStatistics(stat2);
 			}
 
 			double[] values = stat1.getSortedValues();
@@ -91,25 +91,7 @@ public class MoreLikeThisSpeedTest {
 			for (int j=1; j<values.length-1; j++) {
 				stat3.addValue(values[j]);
 			}
-			printStatistics(stat3);
-		}
-	}
-
-	private void printStatistics(DescriptiveStatistics stat) {
-		System.out.print(String.format("%5d ms (%2d occurences)", (int)stat.getSum(), stat.getN()));
-		System.out.print(String.format(", mean: %4d (%4d-%5d)", (int)stat.getMean(), (int)stat.getMin(), (int)stat.getMax()));
-		System.out.print(String.format(", median: %4d", (int)stat.getPercentile(50)));
-		System.out.print(String.format(", deviation: %4d (%4d%%)", (int)stat.getStandardDeviation(),
-				(int)(stat.getStandardDeviation()*100/stat.getMean())));
-
-		System.out.print(", Percentiles: ");
-		for (int i=1; i <= 10; i++) {
-			System.out.print(String.format("%3d", (int)(stat.getPercentile(i * 10) * 100 / stat.getMean())));
-			if (i < 10) {
-				System.out.print("-");
-			} else {
-				System.out.println();
-			}
+			SpeedTestUtils.printStatistics(stat3);
 		}
 	}
 

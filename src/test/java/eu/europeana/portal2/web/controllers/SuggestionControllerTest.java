@@ -2,13 +2,6 @@ package eu.europeana.portal2.web.controllers;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,7 +10,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -36,6 +28,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import eu.europeana.corelib.definitions.solr.model.Term;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.web.controllers.speed.SpeedTestUtils;
 import eu.europeana.portal2.web.controllers.speed.TermProvider;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -226,7 +219,7 @@ public class SuggestionControllerTest {
 			String url = String.format(baseUrl, words.get(i));
 			// System.out.println(url);
 			t1 = new Date().getTime();
-			getWebContent(url);
+			SpeedTestUtils.getWebContent(url);
 			t3 = (new Date().getTime() - t1);
 			if (t3 > 1000) {
 				slowQueries.add(words.get(i) + " (" + t3 + ")");
@@ -263,7 +256,7 @@ public class SuggestionControllerTest {
 			for (String params : urls) {
 				String url = baseUrl + path + params + words.get(i);
 				// System.out.println(url);
-				getWebContent(url);
+				SpeedTestUtils.getWebContent(url);
 			}
 		}
 		long time = (new Date().getTime() - t);
@@ -286,7 +279,7 @@ public class SuggestionControllerTest {
 			for (String params : urls) {
 				String url = baseUrl + params + words.get(i);
 				// System.out.println(url);
-				getWebContent(url);
+				SpeedTestUtils.getWebContent(url);
 			}
 		}
 		long time = (new Date().getTime() - t);
@@ -315,33 +308,6 @@ public class SuggestionControllerTest {
 			// TODO Auto-generated catch block
 			fail(e1.getMessage());
 			e1.printStackTrace();
-		}
-	}
-
-	private void getWebContent(String _url) {
-		URL url;
-		InputStream is = null;
-		DataInputStream dis;
-		String line;
-
-		try {
-			url = new URL(_url);
-			is = url.openStream();  // throws an IOException
-			dis = new DataInputStream(new BufferedInputStream(is));
-
-			while ((line = dis.readLine()) != null) {
-				// System.out.println(line);
-			}
-		} catch (MalformedURLException mue) {
-			mue.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} finally {
-			try {
-				is.close();
-			} catch (IOException ioe) {
-				// nothing to see here
-			}
 		}
 	}
 }
