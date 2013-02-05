@@ -63,16 +63,20 @@ public class AdminController {
 
 	private static final String ACTUAL = "actual";
 	private static final String TOTAL = "total";
+	private static final int LIMIT = 50;
 
 	@RequestMapping("/admin.html")
 	public ModelAndView adminHandler(
+			@RequestParam(value = "page", required = false, defaultValue="1") int pageNr,
 			HttpServletRequest request,
 			HttpServletResponse response)
 					throws Exception {
 		log.info("==== admin.html ====");
 		Injector injector = new Injector(request, response, null);
 
+		int offset = ((pageNr-1) * LIMIT) + 1;
 		AdminPage model = new AdminPage();
+		model.setPageNr(pageNr);
 		model.setTheme("devel");
 		injector.injectProperties(model);
 
@@ -84,8 +88,12 @@ public class AdminController {
 			put(ACTUAL, new HashMap<String, Integer>());
 			put(TOTAL, new HashMap<String, Integer>());
 		}};
+
 		List<User> users = new ArrayList<User>();
-		List<ApiKey> apiKeys = apiKeyService.findAll();
+		long count = apiKeyService.countAll();
+		model.setApiKeyCount(count);
+
+		List<ApiKey> apiKeys = apiKeyService.findAll("userid desc", offset, LIMIT);
 		for (ApiKey apiKey : apiKeys) {
 			usage.get(ACTUAL).put(apiKey.getId(), apiLogger.getRequestNumber(apiKey.getId()));
 			usage.get(TOTAL).put(apiKey.getId(), apiLogger.getTotalRequestNumber(apiKey.getId()));
@@ -98,6 +106,11 @@ public class AdminController {
 		log.info("get users took " + t);
 		model.setUsers(users);
 		model.setUsage(usage);
+		List<Integer> pageNumbers = new ArrayList<Integer>();
+		for (int i = 1; ((i-1)*LIMIT)+1 < count; i++) {
+			pageNumbers.add(i);
+		}
+		model.setPageNumbers(pageNumbers);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.ADMIN);
 		injector.postHandle(this, page);

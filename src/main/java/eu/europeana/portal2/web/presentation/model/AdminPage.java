@@ -13,6 +13,12 @@ public class AdminPage extends AdminData {
 
 	private Map<String, Map<String, Integer>> usage;
 
+	private long apiKeyCount;
+
+	private int pageNr;
+
+	private List<Integer> pageNumbers;
+
 	/**
 	 * Returns the total amount of memory in the Java virtual machine. The value 
 	 * returned by this method may vary over time, depending on the host environment.
@@ -60,5 +66,29 @@ public class AdminPage extends AdminData {
 
 	public void setUsage(Map<String, Map<String, Integer>> usage) {
 		this.usage = usage;
+	}
+
+	public int getPageNr() {
+		return pageNr;
+	}
+
+	public void setPageNr(int pageNr) {
+		this.pageNr = pageNr;
+	}
+
+	public List<Integer> getPageNumbers() {
+		return pageNumbers;
+	}
+
+	public void setPageNumbers(List<Integer> pageNumbers) {
+		this.pageNumbers = pageNumbers;
+	}
+
+	public long getApiKeyCount() {
+		return apiKeyCount;
+	}
+
+	public void setApiKeyCount(long apiKeyCount) {
+		this.apiKeyCount = apiKeyCount;
 	}
 }
