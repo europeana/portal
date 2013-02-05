@@ -32,6 +32,14 @@ eu.europeana.fulldoc = {
 			$('#item-save').css('cursor', 'default');
 		}
 		
+		// analytics
+		
+		$('.sidebar-right a').click(function(e){
+			com.google.analytics.europeanaEventTrack("Search_Also_For");
+		});
+		
+
+		
 		js.console.log(JSON.stringify(carouselData));
 	},
 
