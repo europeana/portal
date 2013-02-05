@@ -44,7 +44,7 @@
 
 				<form method="post" id="signup" name="signup" onSubmit="return checkForm()" action="https://app.e2ma.net/app2/audience/signup/1730327/1403149/?v=a" target="_new">
 
-					<input type="text" name="email" id="id_email">
+					<input type="email" name="email" id="id_email">
 					         
 					<div class="cb">
 						<input type="checkbox" name="group_1293" id="id_group_1293"><label for="id_group_1293">English</label>
