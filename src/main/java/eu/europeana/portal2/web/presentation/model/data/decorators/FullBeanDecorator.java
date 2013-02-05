@@ -99,8 +99,14 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public boolean isPositionAvailable() {
-		return (shortcut.getEdmPlaceLatitude() != null && shortcut.getEdmPlaceLatitude()[0] != 0)
-				|| (shortcut.getEdmPlaceLongitude() != null && shortcut.getEdmPlaceLongitude()[0] != 0);
+		return (shortcut.getEdmPlaceLatitude() != null
+				&& shortcut.getEdmPlaceLatitude().length > 0
+				&& shortcut.getEdmPlaceLatitude()[0] != null 
+				&& shortcut.getEdmPlaceLatitude()[0] != 0)
+			|| (shortcut.getEdmPlaceLongitude() != null 
+				&& shortcut.getEdmPlaceLongitude().length > 0
+				&& shortcut.getEdmPlaceLongitude()[0] != null 
+				&& shortcut.getEdmPlaceLongitude()[0] != 0);
 	}
 
 	public Float[] getEdmPlaceLatitude(){
