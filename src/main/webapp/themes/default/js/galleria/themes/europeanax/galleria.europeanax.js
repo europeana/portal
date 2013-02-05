@@ -431,6 +431,8 @@ Galleria.addTheme({
 
     			var fnClick = function(){
 	    			var i = thisGallery.getIndex();
+	    		
+	    			com.google.analytics.europeanaEventTrack("Carousel_Click_Through");
 	    			
 	    			if(dataSource[i].external == "_self"){
 	    				window.location.href = dataSource[i].link;	    				
@@ -447,6 +449,13 @@ Galleria.addTheme({
 	            info.find("button").click(function(){
 	            	fnClick();
 	            });
+
+	            
+	            thisGallery.$( 'container' ).find(".galleria-stage").click(function(){
+	            	
+	    			com.google.analytics.europeanaEventTrack("Carousel_Click_Through");
+
+				});
 
     			
 
