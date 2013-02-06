@@ -116,6 +116,10 @@ public class FieldValue {
 		return field.getFieldName();
 	}
 
+	public String getContextualEntity() {
+		return field.getContextualEntity();
+	}
+
 	@Override
 	public String toString() {
 		return "FieldValue [field=" + field + ", value=" + value + "]";

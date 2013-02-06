@@ -47,7 +47,6 @@
   <%-- If the content is UGC we skip the dc:source display --%>
   <c:if test="${!('dc:source' == data.fieldName && ugc)}">
     <%-- Semantic attributes --%>
-
     <c:set var="semanticAttributes">
       <eu:semanticAttributes field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
     </c:set>
