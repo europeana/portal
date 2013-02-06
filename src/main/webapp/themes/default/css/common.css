@@ -121,9 +121,6 @@ a:focus .social-link .text{
 
 .overlaid-content{
 	
-	/* Andy: TODO: ie8
-		(see here: http://robertnyman.com/2010/01/11/css-background-transparency-without-affecting-child-elements-through-rgba-and-filters/ )
-	*/
 	background: rgb(255, 255, 255);
 	background: rgba(255, 255, 255, 0.9);
 	

@@ -776,6 +776,13 @@ ul.featured-partner-links li{
 }
 
 
+.overlaid-content{
+	background: transparent;
+	-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5FFFFFF,endColorstr=#E5FFFFFF);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5FFFFFF,endColorstr=#E5FFFFFF);
+}
+
+
 /* links */
 
 div.actions{
