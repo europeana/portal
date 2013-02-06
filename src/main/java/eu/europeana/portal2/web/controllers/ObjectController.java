@@ -353,7 +353,8 @@ public class ObjectController {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
 					for (String value : values) {
-						fieldValues.add(value);
+						if (!StringUtils.isBlank(value))
+							fieldValues.add(value);
 						// fieldValues.add(ControllerUtil.clearSeeAlso(value));
 					}
 				}
@@ -370,7 +371,9 @@ public class ObjectController {
 		Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
 		if (seeAlsoResponse != null) {
 			for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {
-				seeAlsoSuggestions.add(entry.getKey(), entry.getValue());
+				if (entry.getValue() > 0) {
+					seeAlsoSuggestions.add(entry.getKey(), entry.getValue());
+				}
 			}
 		}
 
