@@ -477,22 +477,25 @@ eu.europeana.header = {
 	
 	setupNewsletter: function(){
 		$("#newsletter-trigger").click(function(){
-			if(!$(".iframe-wrap").html().length){
-				$(".iframe-wrap").html(
-						'<iframe marginheight="0" '
-							+	'marginwidth="0" '
-							+	'frameborder="0" '
-							+	'src="' + window.emma.iframeUrl + '"/>'
-							+ 	'<div class="close"></div>'
-				);
+			
+			$(".iframe-wrap").html(
+					'<iframe marginheight="0" '
+						+	'marginwidth="0" '
+						+	'frameborder="0" '
+						+	'src="' + window.emma.iframeUrl + '"/>'
+						+ 	'<div class="close"></div>'
+			);
 
-				$(".overlaid-content, .iframe-wrap .close").click(function(){
-					$(".overlaid-content").css('visibility', 'hidden');
-				});
-				$(".iframe-wrap").click(function(e){
-					e.stopPropagation();
-				});
-			}
+			$(".overlaid-content, .iframe-wrap .close").unbind("click");
+			$(".overlaid-content, .iframe-wrap .close").click(function(){
+				$(".overlaid-content").css('visibility', 'hidden');
+			});
+			
+			$(".iframe-wrap").unbind("click");
+			$(".iframe-wrap").click(function(e){
+				e.stopPropagation();
+			});
+			
 			$(".overlaid-content").css('visibility', 'visible');
 		});
 		

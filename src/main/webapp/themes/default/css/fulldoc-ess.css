@@ -2,23 +2,16 @@
 
 #citation {
 	display:	none;
-	position:	relative;
-	width:		100%;		/* to aid centering of ess container */
-	z-index:	200;		/* to avoid iphone transparency */
 }
 
-#citation .external-services-container-wrapper {
-	position:	fixed;
-	top:		10%;
-	left:		0;
-	width:		100%;
+
+.overlaid-content .external-services-container-wrapper {
+	text-align: left;
+	margin:		0 auto;
+	position:	relative;
+	max-width:	90%;
 }
 
-#citation .external-services-container {
-	margin:		auto;
-	position:	relative;
-	width:		70%;
-}
 
 #citetabs{
 	padding: 1em;
@@ -134,12 +127,11 @@
 
 @media only screen and ( min-width:48em ){
 	
-	.external-services-container-wrapper {
-		top:		40%;	
+	.external-services-container-wrapper {	
+		width:		40% !important;
 	}
 	
 	.external-services-container{
-		width:				40% !important;
 		padding:			0 1em 0 1em;
 	}
 	

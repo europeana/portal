@@ -131,13 +131,14 @@ a:focus .social-link .text{
 	top:				0;
 	visibility:			hidden;
 	width:				100%;
-	z-index:			12;
+	z-index:			31;
 }
 
 .iframe-wrap{
 	display:	inline-block;
 	position:	relative;
-	z-index:	12;
+	text-align:	left;
+	max-width:	100%;
 }
 
 .iframe-wrap iframe{

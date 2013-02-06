@@ -13,16 +13,14 @@ js.utils.registerNamespace( 'eu.europeana.citation' );
 eu.europeana.citation = {
 	
 	options : {
-		container : '#citation',
-		placed : false,
-		tabbed : false,
+		container : '.iframe-wrap',
 		html : ''
 	},
 	
 	init : function() {
 		
 		var self = this;
-		
+	
 		this.options.html = '' 
 			+	'<div class="external-services-container-wrapper">'
 			+		'<div class="external-services-container">'
@@ -64,20 +62,19 @@ eu.europeana.citation = {
 		
 		var self = e.data.self;
 		
-		if(!self.options.placed){
-			$(self.options.container).html(self.options.html);
-			$(self.options.container + ' .close-button').bind('click', { self : self }, self.toggleCitation);
-			self.options.placed = true;
-		}
+		$(self.options.container).html(self.options.html);
+		$(self.options.container + ' .close-button').bind('click', { self : self }, self.toggleCitation);
+		
 		self.toggleCitation(e);
 	},
 
 	
 	toggleCitation : function( e ) {
 		e.preventDefault();
-		$(e.data.self.options.container).toggle('slow', function(){
-			eu.europeana.citation.addTheTabs();
-		});
+		
+		$(".overlaid-content").css('visibility', 'visible');
+
+		eu.europeana.citation.addTheTabs(e);
 	},
 	
 	
@@ -106,25 +103,29 @@ eu.europeana.citation = {
 	    }
 	},
 	
-	addTheTabs : function(){
+	addTheTabs : function(e){
 		
-		if(!eu.europeana.citation.options.tabbed){
-
-			eu.europeana.citation.options.tabbed = true;
-			
-			var callback = function(index, id){
-				if($("#mobile-menu").is(":visible") ){
-					eu.europeana.citation.selectElementContents(  $('#citation .section.active>.content.is-open>.copy')[0]   );					
-				}
-				else{
-					eu.europeana.citation.selectElementContents($('#citation .tab_content>.copy')[0]);
-				}
-			};
-			eu.europeana.citation.tabs = new AccordionTabs( $('#citation-tabs'), callback );			
-		}
-		else{
-			eu.europeana.citation.selectElementContents( $('#citation .tab_content')[0]  );
-		}
+		var self = e.data.self;
+		
+		var callback = function(index, id){
+			if($("#mobile-menu").is(":visible") ){
+				eu.europeana.citation.selectElementContents(   $(self.options.container).find('.section.active>.content.is-open>.copy')[0]   );					
+			}
+			else{
+				eu.europeana.citation.selectElementContents($(self.options.container).find('.tab_content>.copy')[0]);
+			}
+		};
+		eu.europeana.citation.tabs = new AccordionTabs( $('#citation-tabs'), callback );			
+		
+		$(".overlaid-content, .close-button.icon-remove").unbind("click");
+		$(".overlaid-content, .close-button.icon-remove").click(function(){
+			$(".overlaid-content").css('visibility', 'hidden');
+		});
+		
+		$(".iframe-wrap").unbind("click");
+		$(".iframe-wrap").click(function(e){
+			e.stopPropagation();
+		});
 		
 	}
 };
