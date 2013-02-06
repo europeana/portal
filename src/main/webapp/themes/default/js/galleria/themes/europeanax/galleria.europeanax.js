@@ -438,8 +438,6 @@ Galleria.addTheme({
 
     			var fnClick = function(e){
 	    			var i = thisGallery.getIndex();
-	    		
-	    			alert( "non stage"  )
 	    			
 	    			com.google.analytics.europeanaEventTrack("Main_Index_Carousel", "Carousel_Clicks");
 	    			
@@ -467,7 +465,7 @@ Galleria.addTheme({
 	            // stop normal slideshow navigation from triggering google analytics
 	            $('.galleria-image-nav-right, .galleria-image-nav-left').click(function(e){
 	            	e.stopPropagation();
-	            })
+	            });
 	            
 
         		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
