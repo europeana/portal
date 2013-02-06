@@ -45,7 +45,6 @@ Galleria.addTheme({
 		var thumbNavLeft	= thisGallery.$( 'container' ).find(".galleria-thumb-nav-left");
 		var thumbNavRight	= thisGallery.$( 'container' ).find(".galleria-thumb-nav-right");
 		
-
 		
 		/* custom styling of nav arrows */
 		navLeft	.addClass("icon-arrow-4");
@@ -437,9 +436,11 @@ Galleria.addTheme({
     			info.append(description);
     			info.append('<button class="linkButton europeana-button-1"></button>');
 
-    			var fnClick = function(){
+    			var fnClick = function(e){
 	    			var i = thisGallery.getIndex();
 	    		
+	    			alert( "non stage"  )
+	    			
 	    			com.google.analytics.europeanaEventTrack("Main_Index_Carousel", "Carousel_Clicks");
 	    			
 	    			if(dataSource[i].external == "_self"){
@@ -463,7 +464,11 @@ Galleria.addTheme({
 	            	com.google.analytics.europeanaEventTrack("Main_Index_Carousel", "Carousel_Clicks");
 				});
 
-    			
+	            // stop normal slideshow navigation from triggering google analytics
+	            $('.galleria-image-nav-right, .galleria-image-nav-left').click(function(e){
+	            	e.stopPropagation();
+	            })
+	            
 
         		thisGallery.bind('transitionend webkitTransitionEnd', function(e) {
        				var imgShows = false;
