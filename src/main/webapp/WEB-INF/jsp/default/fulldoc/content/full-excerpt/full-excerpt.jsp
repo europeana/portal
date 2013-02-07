@@ -50,13 +50,13 @@
       <europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
     </c:if>
 
-    <meta content="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
 
     <c:set var="urlRefField" value="edm:isShownAt" />
     <c:if test="${model.urlRefIsShownBy}">
       <c:set var="urlRefField" value="edm:isShownBy" />
     </c:if>
-    <meta content="${model.urlRef}" <eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
+    <meta resource="${model.urlRef}" <eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
+    <meta resource="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
 
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
