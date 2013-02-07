@@ -113,6 +113,7 @@ a.action-link:hover{
 
 .sidebar-right a{
 	word-break:		break-all;
+	word-wrap:		break-word;	/* IE9 */
 } 
 
 
