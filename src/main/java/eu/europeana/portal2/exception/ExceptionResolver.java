@@ -47,6 +47,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 				try {
 					StringBuilder message = new StringBuilder();
 					message.append("hostName: ").append(request.getServerName()).append("\n");
+					message.append("portal: ").append(config.getPortalUrl()).append("\n");
 					message.append("request: ").append(ControllerUtil.formatFullRequestUrl(request)).append("\n");
 					message.append("stackTrace: ").append(stackTrace).append("\n");
 					// model.put("cacheUrl", imageCacheUrl);
