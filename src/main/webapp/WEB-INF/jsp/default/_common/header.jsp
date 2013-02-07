@@ -28,7 +28,7 @@
 							<c:if test="${!empty logoBg}">
 							style="background-image:url('/${model.portalName}/sp/img/${logoBg}')"
 							</c:if>
-							alt="<spring:message code='AltLogoEuropeana_t' />"></span>
+					></span>
 				</a>				
 			</${logoWrapperTag}>
 		</div>
