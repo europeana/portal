@@ -359,7 +359,6 @@ eu.europeana.header = {
 	                $(".ui-autocomplete").css("left",		newLeft + "px");
 	                $(".ui-autocomplete").css("width",		newWidth + "px");
 	                $(".ui-autocomplete").css("z-index",	2);
-
 			    },
 			    
 				minLength : 3,
@@ -382,12 +381,10 @@ eu.europeana.header = {
 						//process response
 						$.each( data.suggestions, function(i, val) {
 							val.label = val.term;
+							val.frequency = '<span dir="ltr">' + val.frequency + '</span>';
 							suggestions.push( val );
 						});
-						
-						//pass array to callback
 						response( suggestions );
-						
 					});
 					
 				},

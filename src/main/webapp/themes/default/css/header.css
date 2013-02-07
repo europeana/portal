@@ -469,8 +469,8 @@ a.ui-corner-all {
 	color: #666;
 	background-color: #f5f5f5;
 	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	-webkit-border-radius:	5px;
+	border-radius:			5px;
 }
 
 a.ui-corner-all:hover,
