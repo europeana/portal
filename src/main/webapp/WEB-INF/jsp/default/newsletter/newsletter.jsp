@@ -66,7 +66,7 @@
 				"placeholder"	: "<spring:message code='news_letter_email_hint_t' />",
 				"submitLabel"	: "<spring:message code='news_letter_signup_button_t' />"
 			};
-			
+		
 
 			var checkForm = function(form_obj) {
 
@@ -100,6 +100,9 @@
 				$('#e2ma_signup_submit_button').attr('value',	window.emma.submitLabel);
 				$('#id_email').attr('placeholder',				window.emma.placeholder);
 				$('#id_email').attr('title',					window.emma.placeholder);
+				
+				
+				//top.resizeTo( $( window.parent ).width(), $( window.parent ).height()+1 );
 			});
 
 		</script>
