@@ -109,7 +109,8 @@ public enum Field {
 	EDM_COLLECTIONNAME("edm:collectionName", "europeana_collectionName_t", null, "europeana_collectionName:%s"),
 	EDM_ISSHOWNAT("edm:isShownAt", null),
 	EDM_ISSHOWNBY("edm:isShownBy", null),
-	EDM_OBJECT("edm:object", null),
+	EDM_OBJECT("edm:object", null, true),
+	EDM_PREVIEW("edm:preview", null, true),
 	EDM_LANGUAGE("edm:language", null),
 	EDM_PLACE_LONGITUDE("wgs84_pos:lat", "edm_place_longitude_t"),
 	EDM_PLACE_LATITUDE("wgs84_pos:long", "edm_place_latitude_t"),
@@ -125,6 +126,7 @@ public enum Field {
 	EDM_UGC("edm:UGC", null),
 	EDM_CURRENTLOCATION("edm:currentLocation", null),
 	EDM_HASTYPE("edm:hasType", null),
+	EDM_HASVIEW("edm:hasView", null),
 	EDM_ISRELATEDTO("edm:isRelatedTo", null),
 	EDM_ISREPRESENTATIONOF("edm:isRepresentationOf", null),
 	EDM_LANDINGPAGE("edm:landingPage", "edm_landingPage_t"),
@@ -135,6 +137,18 @@ public enum Field {
 	EDM_ISSUCCESSOROF("edm:isSuccessorOf", null),
 	EDM_REALIZES("edm:realizes", null),
 	EDM_ISNEXTINSEQUENCE("edm:isNextInSequence", "edm_isNextInSequence_t"),
+	
+	SKOS_PREFLABEL("skos:prefLabel", null),
+	SKOS_NOTE("skos:note", null),
+
+	FOAF_NAME("foaf:name", null),
+
+	RDA_BIOGRAPHICALINFORMATION("rdaGr2:biographicalInformation", null),
+	RDA_DATEOFBIRTH("rdaGr2:dateOfBirth", null),
+	RDA_DATEOFDEATH("rdaGr2:dateOfDeath", null),
+	RDA_DATEOFESTABLISHMENT("rdaGr2:dateOfEstablishment", null),
+	RDA_GENDER("rdaGr2:gender", null),
+	RDA_PROFESSIONOROCCUPATION("rdaGr2:professionOrOccupation", null),
 
 	// ENRICHMENT
 	ENRICHMENT_PLACE_TERM("enrichment:place_term", "place_term_t"),
@@ -169,9 +183,16 @@ public enum Field {
 	private ExternalService[] externalServices;
 	private int maxLength;
 	private FieldValueProcessor processor;
+	private boolean optOutAware = false;
+
 
 	private Field(String name, String label) {
 		this(name, label, null, null, null, false, false, -1, false, ExternalService.none());
+	}
+
+	private Field(String name, String label, boolean optOutAware) {
+		this(name, label, null, null, null, false, false, -1, false, ExternalService.none());
+		this.optOutAware = optOutAware;
 	}
 
 	private Field(String name, String label, FieldValueProcessor processor) {
@@ -250,6 +271,10 @@ public enum Field {
 
 	public FieldValueProcessor getProcessor() {
 		return processor;
+	}
+
+	public boolean isOptOutAware() {
+		return optOutAware;
 	}
 
 	public String[] getValues(String[] values) {

@@ -27,6 +27,5 @@ public abstract class UrlAwareData<T> extends ResultPageData<T> {
 
 	abstract public UrlBuilder enrichFullDocUrl(UrlBuilder url) throws UnsupportedEncodingException;
 
-	abstract public UrlBuilder createSearchUrl(String searchTerm, String[] qf,
-			String start) throws UnsupportedEncodingException;
+	abstract public UrlBuilder createSearchUrl(String searchTerm, String[] qf, String start) throws UnsupportedEncodingException;
 }

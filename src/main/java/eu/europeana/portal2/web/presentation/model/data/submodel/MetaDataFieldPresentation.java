@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.enums.Field;
-import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
+import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.util.WebUtils;
 
 /**
@@ -45,7 +45,7 @@ public class MetaDataFieldPresentation {
 	 * @param value
 	 *            - value of meta data field
 	 */
-	public MetaDataFieldPresentation(UrlAwareData<?> model, Field field, String value) {
+	public MetaDataFieldPresentation(FullDocPage model, Field field, String value) {
 		this.field = field;
 		fieldValues.add(new FieldValue(model, field, WebUtils.clean(value)));
 	}
@@ -58,8 +58,7 @@ public class MetaDataFieldPresentation {
 	 * @param value
 	 *            - value of meta data field
 	 */
-	public MetaDataFieldPresentation(UrlAwareData<?> model, Field field,
-			String[] value) {
+	public MetaDataFieldPresentation(FullDocPage model, Field field, String[] value) {
 		this.field = field;
 		for (String string : value) {
 			if (StringUtils.isNotBlank(string) && !string.equals("0000")) {

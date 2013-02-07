@@ -47,12 +47,16 @@
   <%-- If the content is UGC we skip the dc:source display --%>
   <c:if test="${!('dc:source' == data.fieldName && ugc)}">
     <%-- Semantic attributes --%>
-    <c:set var="semanticAttributes">
-      <eu:semanticAttributes field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
-    </c:set>
-    <c:set var="semanticUrl">
-      <eu:semanticUrl field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
-    </c:set>
+    <c:set var="semanticAttributes" value="" />
+    <c:set var="semanticUrl" value="" />
+    <c:if test="${!data.optedOut}">
+      <c:set var="semanticAttributes">
+        <eu:semanticAttributes field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
+      </c:set>
+      <c:set var="semanticUrl">
+        <eu:semanticUrl field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
+      </c:set>
+    </c:if>
 
     <<c:out value="${wrapper}"/>${' '}${item_id} class="item-metadata${item_class}">
       <%-- field's label --%>
@@ -63,7 +67,7 @@
 
         <c:set var="localSemanticAttributes" value="${semanticAttributes}" />
         <c:set var="localSemanticUrl" value="${semanticUrl}" />
-        <c:if test="${value.fieldName != data.fieldName}">
+        <c:if test="${value.fieldName != data.fieldName && !value.optedOut}">
           <c:choose>
             <c:when test="${model.schemaOrgMapping[value.fieldName] != null}">
               <c:set var="localSemanticAttributes">

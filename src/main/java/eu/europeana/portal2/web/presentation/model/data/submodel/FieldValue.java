@@ -25,14 +25,15 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
+import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 public class FieldValue {
 
-	private UrlAwareData<?> model;
+	private FullDocData model;
 	private Field field;
 	private String value;
 
-	public FieldValue(UrlAwareData<?> model, Field field, String value) {
+	public FieldValue(FullDocData model, Field field, String value) {
 		this.model = model;
 		this.field = field;
 		this.value = value;
@@ -101,9 +102,7 @@ public class FieldValue {
 			// return search string if still not empty
 			if (StringUtils.isNotBlank(value)) {
 				try {
-					return model.createSearchUrl(
-							StringUtils.replace(field.getSearchOn(), "%s",
-									value), null, null).toString();
+					return model.createSearchUrl(StringUtils.replace(field.getSearchOn(), "%s", value), null, null).toString();
 				} catch (UnsupportedEncodingException e) {
 					// ignore, will never happen
 				}
@@ -118,6 +117,10 @@ public class FieldValue {
 
 	public String getContextualEntity() {
 		return field.getContextualEntity();
+	}
+
+	public boolean isOptedOut() {
+		return field.isOptOutAware() && model.isOptedOut();
 	}
 
 	@Override

@@ -33,10 +33,13 @@
 			<c:set var="alt" value="${fn:escapeXml(model.pageTitle)}"/>
 		</c:if>
 
-		<c:set var="semanticAttributes"><eu:semanticAttributes field="edm:preview" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
+    <c:set var="semanticAttributes" value="" />
+    <c:if test="${!model.optedOut}">
+      <c:set var="semanticAttributes"><eu:semanticAttributes field="edm:preview" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
+    </c:if>
 
-		<img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
-	</div>
+    <img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
+  </div>
 
 	<%-- "dataType": "${fn:toLowerCase(model.document.edmType)}" --%>
 	<div id="carousel-1" class="europeana-bordered">

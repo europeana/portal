@@ -673,11 +673,9 @@ public class FullDocPage extends FullDocPreparation {
 	 *            - Any values associated with the field
 	 * @return
 	 */
-	private void addMetaField(List<MetaDataFieldPresentation> metaDataFields,
-			Field field, String... values) {
+	private void addMetaField(List<MetaDataFieldPresentation> metaDataFields, Field field, String... values) {
 		if ((values != null) && (field.getFieldName() != null)) {
-			MetaDataFieldPresentation metaDataField = new MetaDataFieldPresentation(
-					this, field, values);
+			MetaDataFieldPresentation metaDataField = new MetaDataFieldPresentation(this, field, values);
 			if (!metaDataField.isEmpty()) {
 				metaDataFields.add(metaDataField);
 			}

@@ -58,6 +58,8 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	protected SeeAlsoSuggestions seeAlsoSuggestions;
 
+	private boolean isOptedOut = false;
+
 	public void setFormat(String format) {
 		this.format = format;
 	}
@@ -125,5 +127,13 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public void setSeeAlsoSuggestions(SeeAlsoSuggestions seeAlsoSuggestions) {
 		this.seeAlsoSuggestions = seeAlsoSuggestions;
+	}
+
+	public boolean isOptedOut() {
+		return isOptedOut;
+	}
+
+	public void setOptedOut(boolean isOptedOut) {
+		this.isOptedOut = isOptedOut;
 	}
 }

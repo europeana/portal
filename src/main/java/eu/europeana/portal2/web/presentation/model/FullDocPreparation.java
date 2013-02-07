@@ -344,7 +344,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			return;
 		}
 
-		FieldPresentation fieldPresentation = new FieldPresentation(fieldInfo);
+		FieldPresentation fieldPresentation = new FieldPresentation(this, fieldInfo);
 		List<String> fieldValues = new LinkedList<String>();
 		for (String[] fieldValueArray : fieldValuesArrays) {
 			if (fieldValueArray == null) {
@@ -380,7 +380,7 @@ public abstract class FullDocPreparation extends FullDocData {
 		if (fields.containsKey(fieldInfo)) {
 			fieldPresentation = fields.get(fieldInfo);
 		} else {
-			fieldPresentation = new FieldPresentation(fieldInfo);
+			fieldPresentation = new FieldPresentation(this, fieldInfo);
 			fields.put(fieldInfo, fieldPresentation);
 		}
 		return fieldPresentation;

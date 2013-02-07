@@ -51,6 +51,7 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
+import eu.europeana.corelib.utils.OptOutDatasetsUtil;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -141,6 +142,7 @@ public class ObjectController {
 		injector.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
+		OptOutDatasetsUtil.setOptOutDatasets(config.getOptOutList());
 
 		long tgetFullBean0 = (new Date()).getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
@@ -152,6 +154,7 @@ public class ObjectController {
 		log.info("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
+			model.setOptedOut(OptOutDatasetsUtil.checkById(fullBean.getAbout()));
 			Query query = new Query(queryString).setRefinements(qf).setAllowFacets(false).setAllowSpellcheck(false);
 
 			// full bean view

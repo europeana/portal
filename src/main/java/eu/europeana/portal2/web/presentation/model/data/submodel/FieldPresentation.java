@@ -27,7 +27,7 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
-import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
+import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 /**
  * Class used to represent a field on the fullViewPage
@@ -41,6 +41,7 @@ public class FieldPresentation {
 
 	public static final String FIELD_ID_PREFIX = "fpfn_";
 
+	protected FullDocData model;
 	protected Field field;
 	protected List<FieldValue> fieldValues;
 	protected boolean isCombined = false;
@@ -59,17 +60,18 @@ public class FieldPresentation {
 	 * @param externalServices
 	 *            - External Services associated with the field
 	 */
-	public FieldPresentation(Field field) {
+	public FieldPresentation(FullDocData model, Field field) {
+		this.model = model;
 		this.field = field;
 	}
 
-	public FieldPresentation(UrlAwareData<?> model, Field field, List<String> fieldValues) {
-		this(field);
+	public FieldPresentation(FullDocData model, Field field, List<String> fieldValues) {
+		this(model, field);
 		add(model, fieldValues);
 	}
 
-	public FieldPresentation(UrlAwareData<?> model, Field field, Map<Field, List<String>> fieldValues) {
-		this(field);
+	public FieldPresentation(FullDocData model, Field field, Map<Field, List<String>> fieldValues) {
+		this(model, field);
 		addMap(model, fieldValues);
 	}
 
@@ -87,7 +89,7 @@ public class FieldPresentation {
 	 * @param externalServices
 	 *            - External services associate with the field
 	 */
-	public void add(UrlAwareData<?> model, List<String> fieldValues) {
+	public void add(FullDocData model, List<String> fieldValues) {
 		if (fieldValues != null) {
 			for (String value : fieldValues) {
 				add(model, value);
@@ -95,7 +97,7 @@ public class FieldPresentation {
 		}
 	}
 
-	public void add(UrlAwareData<?> model, String fieldValue) {
+	public void add(FullDocData model, String fieldValue) {
 		if (!StringUtils.isBlank(fieldValue)) {
 			if (this.fieldValues == null) {
 				this.fieldValues = new ArrayList<FieldValue>();
@@ -104,7 +106,7 @@ public class FieldPresentation {
 		}
 	}
 
-	public void addMap(UrlAwareData<?> model, Map<Field, List<String>> fieldValues) {
+	public void addMap(FullDocData model, Map<Field, List<String>> fieldValues) {
 		if (fieldValues != null) {
 			if (this.fieldValues == null) {
 				this.fieldValues = new ArrayList<FieldValue>();
@@ -196,6 +198,10 @@ public class FieldPresentation {
 
 	public boolean isCombined() {
 		return isCombined;
+	}
+
+	public boolean isOptedOut() {
+		return field.isOptOutAware() && model.isOptedOut();
 	}
 
 	public void setCombined(boolean isCombined) {

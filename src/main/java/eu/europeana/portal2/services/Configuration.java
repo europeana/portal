@@ -127,6 +127,9 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.responsive.cache.checkFrequencyInMinute']}")
 	private Integer responsiveCacheCheckFrequencyInMinute;
 
+	@Value("#{europeanaProperties['api.optOutList']}")
+	private String optOutList;
+
 	/////////////////////////////// generated/derivated properties
 
 	private Map<String, String> seeAlsoTranslations;
@@ -362,5 +365,9 @@ public class Configuration {
 			staticPageInVersions = Arrays.asList(staticPageInVersionsString.split(","));
 		}
 		return staticPageInVersions;
+	}
+
+	public String getOptOutList() {
+		return optOutList;
 	}
 }
