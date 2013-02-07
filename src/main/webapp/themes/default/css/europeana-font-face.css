@@ -83,6 +83,10 @@ a {
 a.europeana{
 	padding:			0 1px;
 	text-decoration:	none;
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
+	
 }
 
 a.europeana:hover,
