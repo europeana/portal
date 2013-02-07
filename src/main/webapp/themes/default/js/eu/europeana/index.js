@@ -30,7 +30,6 @@
 	};
 	
 	var initCarousels = function(){
-
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 		Galleria.configure({
 				transition:		'fadeslide',		/* fade, slide, flash, fadeslide, pulse */
@@ -135,7 +134,98 @@
 					$(this).load();
 				}
 		});
+
+	};
+	
+	/*
+	var initAddThis = function(){
+		var url = $('head link[rel="canonical"]').attr('href'),
+			title = $('head title').html(),
+			description = $('head meta[name="description"]').attr('content');
+			window.addthis_config = com.addthis.createConfigObject({
+				pubid : eu.europeana.vars.addthis_pubid,
+				ui_language: eu.europeana.vars.locale,
+				data_ga_property: eu.europeana.vars.gaId,
+				data_ga_social : true,
+				data_track_clickback: true,
+				ui_click: true,		// disable hover
+				ui_use_css : true});
 		
+		// nb: tweet does not accept twitter templates, it only accepts html attributes
+		// @see /js/com/addthis/addthis.js for those attributes
+		
+		var addThisHtml = com.addthis.getToolboxHtml({
+			html_class : '',
+			url : url,
+			title : title,
+			description : description,
+			services : {
+				compact : {}
+			},
+			link_html : $('#shares-link').html()
+		});
+
+		var addThisHtml = com.addthis.getToolboxHtml({
+			html_class : '',
+			url : url,
+			title : title,
+			description : description,
+			services : {
+				compact			:	{},
+				tweet			:	{},
+				google_plusone	:	{},
+				facebook_like	:	{},
+				email			:	{},
+				pinterest		:	{}
+
+			}
+			//, link_html : $('#shares-link').html()
+		});
+
+		$("#addthis_new").html(addThisHtml);
+		js.console.log("done: " + $("#addthis_new").length + "    \n\n\n" + addThisHtml   );
+		
+		$('#addthis_new .addthis_button')					.html('+')
+		$('#addthis_new .addthis_button_tweet')				.html('T')
+		$('#addthis_new .addthis_button_google_plusone')	.html('G')
+		$('#addthis_new .addthis_button_facebook_like')		.html('F')
+		
+		//addthis.addEventListener('addthis.ready' );
+		
+		com.addthis.init( null, true, false,
+			function(){
+				//				$('#addthis_new .addthis_button_facebook_like')		.html('<span class="icon-facebook"></span>');
+			}
+		);
+		
+		//js.console.log("addThisHtml = " + addThisHtml);
+		
+		$('#shares-link').html(
+			addThisHtml
+		);
+		
+		$('#shares-link').hide();
+		com.addthis.init( null, true, false );
+		
+		setTimeout( function() {
+			$('#shares-link').fadeIn(function(){
+				$(this).css("display", "inline-block");
+			}); },
+			600 );
+	};
+	 */
+	
+	var init = function() {
+		
+		js.loader.loadScripts([{
+			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			callback : function() {
+				initCarousels();
+			}
+		}]);
+		
+		initResponsiveImages();
 		
 		// Make sections collapsible
 		$("#section-blog").Collapsible({
@@ -270,98 +360,6 @@
 			
 			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
-	};
-	
-	/*
-	var initAddThis = function(){
-		var url = $('head link[rel="canonical"]').attr('href'),
-			title = $('head title').html(),
-			description = $('head meta[name="description"]').attr('content');
-			window.addthis_config = com.addthis.createConfigObject({
-				pubid : eu.europeana.vars.addthis_pubid,
-				ui_language: eu.europeana.vars.locale,
-				data_ga_property: eu.europeana.vars.gaId,
-				data_ga_social : true,
-				data_track_clickback: true,
-				ui_click: true,		// disable hover
-				ui_use_css : true});
-		
-		// nb: tweet does not accept twitter templates, it only accepts html attributes
-		// @see /js/com/addthis/addthis.js for those attributes
-		
-		var addThisHtml = com.addthis.getToolboxHtml({
-			html_class : '',
-			url : url,
-			title : title,
-			description : description,
-			services : {
-				compact : {}
-			},
-			link_html : $('#shares-link').html()
-		});
-
-		var addThisHtml = com.addthis.getToolboxHtml({
-			html_class : '',
-			url : url,
-			title : title,
-			description : description,
-			services : {
-				compact			:	{},
-				tweet			:	{},
-				google_plusone	:	{},
-				facebook_like	:	{},
-				email			:	{},
-				pinterest		:	{}
-
-			}
-			//, link_html : $('#shares-link').html()
-		});
-
-		$("#addthis_new").html(addThisHtml);
-		js.console.log("done: " + $("#addthis_new").length + "    \n\n\n" + addThisHtml   );
-		
-		$('#addthis_new .addthis_button')					.html('+')
-		$('#addthis_new .addthis_button_tweet')				.html('T')
-		$('#addthis_new .addthis_button_google_plusone')	.html('G')
-		$('#addthis_new .addthis_button_facebook_like')		.html('F')
-		
-		//addthis.addEventListener('addthis.ready' );
-		
-		com.addthis.init( null, true, false,
-			function(){
-				//				$('#addthis_new .addthis_button_facebook_like')		.html('<span class="icon-facebook"></span>');
-			}
-		);
-		
-		//js.console.log("addThisHtml = " + addThisHtml);
-		
-		$('#shares-link').html(
-			addThisHtml
-		);
-		
-		$('#shares-link').hide();
-		com.addthis.init( null, true, false );
-		
-		setTimeout( function() {
-			$('#shares-link').fadeIn(function(){
-				$(this).css("display", "inline-block");
-			}); },
-			600 );
-	};
-	 */
-	
-	var init = function() {
-		
-		js.loader.loadScripts([{
-			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
-			callback : function() {
-				initCarousels();
-			}
-		}]);
-		
-		initResponsiveImages();
-		
 		
 		/*
 		js.loader.loadScripts([{
