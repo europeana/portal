@@ -109,8 +109,12 @@ a.action-link:hover{
     
     z-index:				2;
     position:				relative;
-	word-wrap:				break-word;
 }
+
+.sidebar-right a{
+	word-break:		break-all;
+} 
+
 
 .sidebar-right strong{
 	font-size:			0.875em;	
