@@ -284,7 +284,9 @@ table tr:first-child{
 #query-input{
 	font-weight:		400;
 	font-size:			inherit;
-	line-height:		1.48;
+	line-height:		1.48em;
+	max-height:			1.48em;
+	height:				1.48em;
 	color:				#333;
 
 	outline:						none;						/* firefox */
