@@ -15,7 +15,7 @@
           <c:param name="query" value="${suggestion.query}"/>
           <c:param name="rows" value="${model.rows}"/>
         </c:url>
-        <li><a class="europeana" href="${url}">${suggestion.value}</a> (${suggestion.count})</li>
+        <li><a class="europeana" dir="ltr" href="${url}">${suggestion.value}</a> (${suggestion.count})</li>
       </c:forEach>
     </ul>
   </c:forEach>
