@@ -48,8 +48,7 @@
 					         
 					<div class="cb">
 						<input type="checkbox" name="group_1293" id="id_group_1293"><label for="id_group_1293">English</label>
-					</div>
-					<div class="cb">
+						<br/>
 						<input type="checkbox" name="group_519437" id="id_group_519437"><label for="id_group_519437">French</label>
 					</div>
 					
@@ -61,15 +60,12 @@
 		</div>
 
 		
-		<div id="footer-subscribe">
-			<script type="text/javascript">
-				window.emma = {
-					"placeholder"	: "<spring:message code='news_letter_email_hint_t' />",
-					"submitLabel"	: "<spring:message code='news_letter_signup_button_t' />"
-				};
-			</script>
-											
-			<script type="text/javascript">
+
+		<script type="text/javascript">
+			window.emma = {
+				"placeholder"	: "<spring:message code='news_letter_email_hint_t' />",
+				"submitLabel"	: "<spring:message code='news_letter_signup_button_t' />"
+			};
 			
 
 			var checkForm = function(form_obj) {
@@ -99,16 +95,13 @@
 				
 			};
 			
-				$(document).ready(function(){
-					document.getElementById('e2ma_signup_submit_button').setAttribute('title',	"<spring:message code="news_letter_description_t" />" );				
-					document.getElementById('e2ma_signup_submit_button').setAttribute('value',	window.emma.submitLabel);
-					document.getElementById('id_email').setAttribute('placeholder',				window.emma.placeholder);
-					document.getElementById('id_email').setAttribute('title',					window.emma.placeholder);
-				});
+			$(document).ready(function(){
+				$('#e2ma_signup_submit_button').attr('title',	"<spring:message code="news_letter_description_t" />" );				
+				$('#e2ma_signup_submit_button').attr('value',	window.emma.submitLabel);
+				$('#id_email').attr('placeholder',				window.emma.placeholder);
+				$('#id_email').attr('title',					window.emma.placeholder);
+			});
 
-			</script>
-			
-		</div>
-
+		</script>
 	</body>
 </html>
