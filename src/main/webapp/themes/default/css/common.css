@@ -129,6 +129,7 @@ a:focus .social-link .text{
 	position:			fixed;
 	text-align:			center;
 	top:				0;
+	left:				0;
 	visibility:			hidden;
 	width:				100%;
 	z-index:			31;
@@ -139,14 +140,17 @@ a:focus .social-link .text{
 	position:	relative;
 	text-align:	left;
 	max-width:	100%;
+	xxxheight:		50%;
+	height:	14em;
 }
 
 .iframe-wrap iframe{
 	box-shadow:			0 0 90px 5px #000000;
 	border:				1px solid #666666;
 	margin:				0 auto;
-	padding:			1em 0 1em 0;
+	padding:			.5em 0 0 0;
 	background-color:	white;
+	height:				100%;
 }
 
 #newsletter-trigger{

@@ -1,21 +1,18 @@
 
-html{
-	overflow:	hidden;
-}
-
 html,
 body{
 	padding:0;
 	margin:0;
+	height:	100%;
+	overflow:hidden;
 }
 
-.e2ma_signup_form{
-	height:	100%;
-}
+
 
 #e2ma_signup{
 	padding:0;
 	margin:0;
+	text-align:center;
 }
 
 #load_check{
@@ -24,7 +21,6 @@ body{
 
 	
 input{
-	box-sizing:			content-box;
 	color:				#333;
 	border:				1px solid #a0a0a0;
 	font-size:			1.2em;
@@ -37,22 +33,33 @@ input{
 }
 
 #e2ma_signup .cb{
-	margin:	0.5em;
+	margin:				1em auto;
+	position:			relative;
+	display:			inline-block;
+	text-align:			left;
 }
 
-#e2ma_signup input[type=checkbox]{
-	margin-left:	35%;
+
+#id_group_1293,
+#id_group_519437{
+	margin-bottom:	.5em;
+	margin-top:		.5em;
 }
 
+input[type=checkbox], label{
+	display:	inline-block;
+}
+
+label{
+	position:	relative;
+	top:		0.12em;
+}
 
 #e2ma_signup input[type=submit],
 #e2ma_signup input[type=text],
 #e2ma_signup input[type=email]{
 	width:				80%;
-	margin:				0 auto 0 auto;
-	/*
-	padding:			0.3em;
-	*/
+	margin:				0.5em auto 0 auto;
 	position:			relative;
 	display:			block;
 }
