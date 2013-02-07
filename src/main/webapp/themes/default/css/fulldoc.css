@@ -386,8 +386,11 @@ img.trigger{
 
 .item-metadata {
 	margin-bottom:	0.5em;
-	word-break:		break-all;	/* delete to expose chrome bug */
 }
+
+.item-metadata a{
+	word-break:		break-all;
+} 
 
 .external.item-metadata {
 	display : block;
