@@ -65,7 +65,9 @@ x:-o-prefocus, #refinements input{
 	
 	-moz-border-radius:		0.5em 0 0 0.5em;
 	-webkit-border-radius:	0.5em 0 0 0.5em;
-	border-radius:			0.5em 0 0 0.5em;	
+	border-radius:			0.5em 0 0 0.5em;
+	
+	margin-bottom:	1px;	/* chrome at certain zoom levels cuts bottom edge off input - this fixes */
 }
 
 #refinements input[type='submit']{
