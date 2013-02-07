@@ -50,7 +50,6 @@
       <europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
     </c:if>
 
-
     <c:set var="urlRefField" value="edm:isShownAt" />
     <c:if test="${model.urlRefIsShownBy}">
       <c:set var="urlRefField" value="edm:isShownBy" />
