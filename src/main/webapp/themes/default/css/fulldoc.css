@@ -222,7 +222,8 @@ a.action-link span,
 }
 
 #navigation li, .navigation li a{
-	max-height:	1.48em;	/* stop link hover underline pushing content around */
+	max-height:		1.48em;	/* stop link hover underline pushing content around */
+	line-height:	1.48em;
 }
 
 #item-save-tag div{
