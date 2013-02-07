@@ -395,6 +395,7 @@ img.trigger{
 
 .item-metadata a{
 	word-break:		break-all;
+	display:		inline-block;
 } 
 
 .external.item-metadata {
