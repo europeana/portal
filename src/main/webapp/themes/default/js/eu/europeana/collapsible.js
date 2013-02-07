@@ -5,7 +5,9 @@ $.fn.Collapsible = function() {
 			expandedClass		:	'icon-arrow-7',
 			collapsedClass		:	'icon-arrow-6',
 			beenOpened			:	false,
-			executeDefaultClick	:	false
+			executeDefaultClick	:	false,
+	        size				:	{'w': $(window).width(), 'h': $(window).height()}
+
 	},
 	opsIn	= arguments[0] || {};
 	for (var attrname in opsIn){
@@ -23,6 +25,7 @@ $.fn.Collapsible = function() {
         var $follower	= ops.followerSelector;
 
         var up = function(fast){
+        	
 			$body.slideUp(fast);
 			if($follower){
 				$this.find($follower).slideUp(fast);
@@ -57,7 +60,7 @@ $.fn.Collapsible = function() {
         /* called on setup (@set = false) and following a click (@set = true)  */
         var setClasses = function(set){
         	var $target = getTarget();
-        	
+
         	if( $target.hasClass('active') ){
         		if(!set){        			
         			$target.addClass	(ops.expandedClass);
@@ -89,7 +92,16 @@ $.fn.Collapsible = function() {
         /* collapse on small size and show expand/collapse icons, show on big size and hide expand/collapse icons */
     	if(ops.toggleFn){
     		
-    		var fnResize = function(){
+    		var fnResize = function(force){
+    			
+    			if( force===true ||  (ops.size.w != $(window).width()) || (ops.size.h != $(window).height())  ){
+    				ops.size.w = $(window).width();
+    				ops.size.h = $(window).height();
+    			}
+    			else{
+    				return;
+    			}
+    			
     			if(eu.europeana.vars.suppresResize){
     				return;
     			}
@@ -105,7 +117,7 @@ $.fn.Collapsible = function() {
     			setClasses();
     		};
     		$(window).bind('resize', fnResize);
-    		fnResize();
+    		fnResize(true);
     	}
     	else{
     		setClasses();    		
