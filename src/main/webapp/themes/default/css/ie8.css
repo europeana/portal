@@ -795,11 +795,13 @@ div.actions{
 	font-size:		2em;		
 }
 
-a.action-link, span.icon-share {
+a.action-link,
+span.icon-share {
 	float:			none;
 	margin-left:	0;
 	font-size:		2em;
 }
+
 
 /*
 label.icon-tag,
@@ -837,8 +839,8 @@ a.action-link span{
 
 /* sidebar icons */
 .sidebar #share-subscribe .action-title{
-	font-size:	1.25em;
-	top:		-.3em;
+	font-size:	0.5em;
+	top:		-0.5em;
 }
 
 .sidebar a.action-link span{
