@@ -119,8 +119,6 @@ x:-o-prefocus, #refinements input{
 	float:			right;
 	clear:			both;
 	margin-left:	0.25em;
-	position:		relative;
-	bottom:			0.2em;
 	color:			red;
 }
 
