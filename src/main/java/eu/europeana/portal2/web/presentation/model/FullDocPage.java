@@ -477,21 +477,27 @@ public class FullDocPage extends FullDocPreparation {
 		return shortcut.get("EdmIsShownBy")[0];
 	}
 
+	/**
+	 * Get map of image URLs and EDM fields
+	 * @return
+	 */
 	private Map<String, String> getImages() {
 		if (allImages == null) {
+			/*
 			Set<String> isShownAt = new HashSet<String>();
 			if (shortcut.get("EdmIsShownAt") != null) {
 				isShownAt.addAll(Arrays.asList(shortcut.get("EdmIsShownAt")));
 			}
+			*/
 			allImages = new HashMap<String, String>();
 
 			for (String imageField : IMAGE_FIELDS.keySet()) {
 				if (shortcut.get(imageField) != null && shortcut.get(imageField).length > 0) {
-					for (String image : shortcut.get(imageField)) {
-						if (!StringUtils.isBlank(image)) {// && !isShownAt.contains(image)) {
-							if (!image.equals(getIsShownBy())) {
-								if (!allImages.containsKey(image)) {
-									allImages.put(image, IMAGE_FIELDS.get(imageField));
+					for (String imageUrl : shortcut.get(imageField)) {
+						if (!StringUtils.isBlank(imageUrl)) {// && !isShownAt.contains(image)) {
+							if (!imageUrl.equals(getIsShownBy())) {
+								if (!allImages.containsKey(imageUrl)) {
+									allImages.put(imageUrl, IMAGE_FIELDS.get(imageField));
 								}
 							}
 						}
