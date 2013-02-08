@@ -8,10 +8,10 @@
 				<c:set var="logoWrapperTag" value="div"/>
 			</c:if>
 
-			<c:set var="logoClass"	value="logo"/>
-			<c:set var="logoBg"		value=""/>
+			<c:set var="logoClass" value="logo"/>
+			<c:set var="logoBg" value=""/>
 
-			<c:choose>			
+			<c:choose>
 				<c:when test="${model.pageName == 'staticpage.html' && model.tc}">
 					<c:set var="logoClass" value="logo-t-and-c"/>
 				</c:when>
@@ -20,26 +20,26 @@
 				</c:otherwise>
 			</c:choose>
 			
-			<${logoWrapperTag} title="<spring:message code='AltLogoEuropeana_t' />">
+			<${logoWrapperTag} title="<spring:message code="AltLogoEuropeana_t" />">
 				<a	href="/${model.portalName}/"
-					title="<spring:message code='AltLogoEuropeana_t' />">
+					title="<spring:message code="AltLogoEuropeana_t" />">
 					
 					<span	class="${logoClass}"
 							<c:if test="${!empty logoBg}">
 							style="background-image:url('/${model.portalName}/sp/img/${logoBg}')"
 							</c:if>
 					></span>
-				</a>				
+				</a>
 			</${logoWrapperTag}>
 		</div>
 
 		<script type="text/javascript">
 			var completionTranslations = {};
-			completionTranslations['Title']			= "<spring:message code='FieldedSearchTitle_t' />";
-			completionTranslations['Place']			= "<spring:message code='FieldedSearchWhere_t' />";
-			completionTranslations['Time/Period']	= "<spring:message code='FieldedSearchWhen_t' />";
-			completionTranslations['Subject']		= "<spring:message code='FieldedSearchWhat_t' />";
-			completionTranslations['Creator']		= "<spring:message code='FieldedSearchWho_t' />";			
+			completionTranslations['Title']			= "<spring:message code="FieldedSearchTitle_t" />";
+			completionTranslations['Place']			= "<spring:message code="FieldedSearchWhere_t" />";
+			completionTranslations['Time/Period']	= "<spring:message code="FieldedSearchWhen_t" />";
+			completionTranslations['Subject']		= "<spring:message code="FieldedSearchWhat_t" />";
+			completionTranslations['Creator']		= "<spring:message code="FieldedSearchWho_t" />";
 
 			var completionClasses = {};
 			completionClasses['Title']			= "title:";
