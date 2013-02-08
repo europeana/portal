@@ -50,23 +50,11 @@
       <europeana:displayEseDataAsHtml listCollection="${model.fieldsAdditional}" wrapper="div" ugc="${model.document.userGeneratedContent}" ess="true" />
     </c:if>
 
-    <c:set var="urlRefField" value="edm:isShownAt" />
-    <c:if test="${model.urlRefIsShownBy}">
-      <c:set var="urlRefField" value="edm:isShownBy" />
-    </c:if>
-    <meta resource="${model.urlRef}" <eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
     <meta resource="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
     <meta resource="${model.shortcut.get('EdmCurrentLocation')[0]}" <eu:semanticAttributes field="edm:currentLocation" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
-    <c:set var="edmObject" value="${model.shortcut.get('EdmObject')[0]}"/>
-    <meta resource="${edmObject}" <eu:semanticAttributes field="edm:object" schemaOrgMapping="${model.schemaOrgMapping}" /> />
-    <c:choose>
-      <c:when test="${model.allImages[0].edmField == 'edm:isShownBy'}">
-        <meta resource="${edmObject}" <eu:semanticAttributes field="edm:isShownAt" schemaOrgMapping="${model.schemaOrgMapping}" /> />
-      </c:when>
-      <c:otherwise>
-        <meta resource="${edmObject}" <eu:semanticAttributes field="edm:isShownBy" schemaOrgMapping="${model.schemaOrgMapping}" /> />
-      </c:otherwise>
-    </c:choose>
+    <meta resource="${model.shortcut.get('EdmObject')[0]}" <eu:semanticAttributes field="edm:object" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+    <meta resource="${model.shortcut.get('EdmIsShownAt')[0]}" <eu:semanticAttributes field="edm:isShownAt" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+    <meta resource="${model.shortcut.get('EdmIsShownBy')[0]}" <eu:semanticAttributes field="edm:isShownBy" schemaOrgMapping="${model.schemaOrgMapping}" /> />
 
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
