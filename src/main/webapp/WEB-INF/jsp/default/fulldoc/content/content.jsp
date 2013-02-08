@@ -2,9 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-
 <div id="content" class="row">
-
 	<div class="twelve columns">
 
 		<div class="row">
@@ -34,6 +32,7 @@
 
 					<%-- data for carousel --%>
 					<script type="text/javascript">
+
 						var carousel2Data = [];
 						<c:forEach items="${model.moreLikeThis}" var="doc">
 							<c:set var="objectTitle">${fn:join(doc.title, ' ')}</c:set>
@@ -55,11 +54,8 @@
 
 					<div id="carousel-2-img-measure">
 						<c:forEach var="similar" items="${model.moreLikeThis}">
-							<img	src="${fn:replace(fn:escapeXml(similar.thumbnail), '&amp;', '&')}"
-									alt="${ fn:escapeXml(   fn:join(similar.title, ' ')   )}"
-									title="${ fn:escapeXml(   fn:join(similar.title, ' ')   )}"
-									data-type="${fn:toLowerCase(similar.type)}"
-									class="no-show"/>
+							<c:set var="title" value="${fn:escapeXml(fn:join(similar.title, ' '))}" />
+							<img src="${fn:replace(fn:escapeXml(similar.thumbnail), '&amp;', '&')}" alt="${title}" title="${title}" data-type="${fn:toLowerCase(similar.type)}" class="no-show" />
 						</c:forEach>
 					</div>
 					<div id="explore-further">
