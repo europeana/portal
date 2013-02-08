@@ -142,7 +142,7 @@ eu.europeana.fulldoc = {
 		e.preventDefault();
 		
 		js.open.openWindow({
-			url : jQuery(this).attr('href'),
+			url : $(this).attr('href'),
 			specs : {
 				width : 960,
 				height : 600,				
@@ -156,13 +156,13 @@ eu.europeana.fulldoc = {
 
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
-		if ( jQuery('#item-tag').val() < 1 ){
+		if ( $('#item-tag').val() < 1 ){
 			return;
 		}
 
 		var ajax_feedback = {
 			saved_tags_count : 0,
-			$saved_tags : jQuery('#saved-tags-count'),
+			$saved_tags : $('#saved-tags-count'),
 			success : function() {
 				var html =
 					'<span id="save-tag-feedback">' +
@@ -185,7 +185,7 @@ eu.europeana.fulldoc = {
 		
 		ajax_data = {
 			className : "SocialTag",
-			tag : encodeURIComponent( jQuery('#item-tag').val() ),
+			tag : encodeURIComponent( $('#item-tag').val() ),
 			europeanaUri : eu.europeana.vars.item.uri
 		};
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
@@ -234,10 +234,10 @@ eu.europeana.fulldoc = {
 		
 		var self = this;
 		
-		jQuery('#fields-enrichment h3 a, #fields-enrichment h4 a').each(function( key, value ) {
+		$('#fields-enrichment h3 a, #fields-enrichment h4 a').each(function( key, value ) {
 			
-			jQuery(value).bind('click', self.handleAutoTagClick );
-			jQuery(value).addClass(eu.europeana.fulldoc.more_icon_class);
+			$(value).bind('click', self.handleAutoTagClick );
+			$(value).addClass(eu.europeana.fulldoc.more_icon_class);
 		});
 		
 	},
@@ -245,7 +245,7 @@ eu.europeana.fulldoc = {
 	handleAutoTagClick : function( e ) {
 		
 		e.preventDefault();
-		var $elm = jQuery(this);
+		var $elm = $(this);
 		
 		$elm.parent().next().slideToggle();
 		//$elm = $elm.find('.icon');
@@ -263,9 +263,9 @@ eu.europeana.fulldoc = {
 	},
 	
 	addThis : function() {
-		var url = jQuery('head link[rel="canonical"]').attr('href'),
-			title = jQuery('head title').html(),
-			description = jQuery('head meta[name="description"]').attr('content');
+		var url = $('head link[rel="canonical"]').attr('href'),
+			title = $('head title').html(),
+			description = $('head meta[name="description"]').attr('content');
 			window.addthis_config = com.addthis.createConfigObject({
 				pubid : eu.europeana.vars.addthis_pubid,
 				ui_language: 'en', // eu.europeana.vars.locale,
@@ -300,7 +300,7 @@ eu.europeana.fulldoc = {
 		
 		setTimeout( 
 			function(){
-				jQuery('.shares-link').fadeIn();
+				$('.shares-link').fadeIn();
 			},
 			600
 		);
@@ -547,7 +547,7 @@ eu.europeana.fulldoc = {
 	
 	initTopCarousel : function(){
 
-		jQuery('#carousel-1').css("height", eu.europeana.fulldoc.getCarousel1Height() + "px");	// set height to max height that will be needed
+		$('#carousel-1').css("height", eu.europeana.fulldoc.getCarousel1Height() + "px");	// set height to max height that will be needed
 			
 		eu.europeana.fulldoc.carousel1 = Galleria.run('#carousel-1', {
 			debug:				js.debug,
@@ -568,7 +568,7 @@ eu.europeana.fulldoc = {
 				
 				var doEllipsis = function(){
 					var ellipsisObjects = [];
-					jQuery('#carousel-1 .europeana-carousel-info').each(
+					$('#carousel-1 .europeana-carousel-info').each(
 						function(i, ob){
 							ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 						}
