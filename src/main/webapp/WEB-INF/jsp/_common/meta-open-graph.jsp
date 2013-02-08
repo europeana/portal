@@ -4,7 +4,7 @@
 <c:set var="og_image_url" value="${model.portalServer}${model.portalName}/sp/img/europeana-logo-en.png"/>
 
 <c:if test="${model.pageName=='full-doc.html'}">
-  <c:set var="og_image_url" value="${model.thumbnailUrl}"/>
+  <c:set var="og_image_url" value="${fn:replace(model.thumbnailUrl, '&amp;', '&')}"/>
 </c:if>
 <%--
   add og metadata
@@ -13,7 +13,9 @@
   @link http://developers.facebook.com/docs/beta/opengraph/internationalization/
   @link http://developers.facebook.com/tools/debug
 --%>
+
 <%-- required --%>
+
 <meta property="og:title" content="${model.pageTitle}"/>
 <meta property="og:type" content="website"/>
 <meta property="og:image" content="${og_image_url}"/>
