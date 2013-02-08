@@ -38,7 +38,7 @@
          --%><div class='row'><%--
            --%><div class='twelve columns' id='featured-partner-header-wrapper'><%--
              --%><div id='partner-section-heading' class='fi-block-spacer'><%--
-               --%><h3 id='section-header-featured-partner' class='collapse-header-text'><spring:message code='featured-partner-title_t' /></h3><%--
+               --%><h3 id='section-header-featured-partner' class='collapse-header-text'><spring:message code="featured-partner-title_t" /></h3><%--
              --%></div><%--
            --%></div><%--
          --%></div><%--
