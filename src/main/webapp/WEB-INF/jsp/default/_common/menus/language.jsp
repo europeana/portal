@@ -17,25 +17,25 @@
 		<span class="icon-arrow-3 open-menu hide-on-phones"></span>
 		<span class="icon-mobilemenu show-on-phones" id="mobile-menu"></span>
 
-		<ul title="<spring:message code='ChooseLanguage_t' />">
+		<ul title="<spring:message code="ChooseLanguage_t" />">
 	
 			<c:if test="${!model.embedded}">
 				<li class="item icon-home show-on-phones">
-					<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_home_a_target_t"/>" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t"/></a>
+					<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_home_a_target_t" />" href="/${model.portalName}/"><spring:message code="main_menu_home_a_text_t" /></a>
 
 				</li>
 				<li class="item icon-logo show-on-phones">
-					<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t"/>" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t"/>"><spring:message code="main_menu_myeuropeana_a_text_t"/></a>
+					<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t" />" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t" />"><spring:message code="main_menu_myeuropeana_a_text_t" /></a>
 
 				</li>
 				<li class="item icon-info show-on-phones">
-					<a class="treat-as-link" href="/${model.portalName}/usingeuropeana.html"><spring:message code='rswHelp_t'/></a>
+					<a class="treat-as-link" href="/${model.portalName}/usingeuropeana.html"><spring:message code="rswHelp_t" /></a>
 
 				</li>
 			</c:if>
 
 			<li class="item">
-				<a class="choose"><spring:message code='ChooseLanguage_t'/></a>
+				<a class="choose"><spring:message code="ChooseLanguage_t" /></a>
 			</li>
 
 			<c:forEach items="${model.portalLanguages}" var="language">

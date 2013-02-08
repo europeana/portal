@@ -2,7 +2,7 @@
 <link rel="shortcut icon" href="/${model.portalName}/favicon.ico" />
 <link rel="canonical" href="${model.metaCanonicalUrl}" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://api.europeana.eu/api/opensearch.xml" title="Europeana Search" />
-<link rel="publisher" href="<spring:message code="europeana-google-url"/>">
+<link rel="publisher" href="<spring:message code="europeana-google-url" />">
 
 <c:choose>
 	<c:when test="${!empty model.debug && !model.debug}">

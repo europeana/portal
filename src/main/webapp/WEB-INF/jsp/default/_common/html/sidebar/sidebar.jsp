@@ -103,7 +103,7 @@
 						<c:forEach items="${model.user.savedSearches}" var="item">
 							<c:if test="${model.query == item.query}">
 								<c:set var="savedIcon" value="icon-saveditem" />
-								<c:set var="savedText"><spring:message code='SearchSaved_t' /></c:set>
+								<c:set var="savedText"><spring:message code="SearchSaved_t" /></c:set>
 							</c:if>
 						</c:forEach>
 					
