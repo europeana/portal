@@ -5,7 +5,7 @@
 <li><h1>Andy: Delete this jsp - it's unreferenced. </h1></li>
 <c:choose>
 	<c:when test='${!query?starts_with("europeana_uri:")}'>
-		<li><spring:message code='MatchesFor_t' />:</li>
+		<li><spring:message code="MatchesFor_t" />:</li>
 		<c:forEach items="${model.fullBeanView.docIdWindowPager.breadcrumbs}" var="crumb">
 			<c:choose>
 				<c:when test="${!crumb.last}">
