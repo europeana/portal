@@ -5,7 +5,9 @@
 
 <c:if test="${model.pageName=='full-doc.html'}">
   <c:set var="og_image_url" value="${fn:replace(model.thumbnailUrl, '&amp;', '&')}"/>
+  <%--
   <c:set var="og_image_url" value="http://europeanastatic.eu/api/image?type=IMAGE&uri=http%3A%2F%2Fresolver.kb.nl%2Fresolve%3Furn%3DBYVANCKB%3Amimi_74g27%3A069r_min%26role%3Dthumbnail&size=FULL_DOC&fbrefresh=1"/>
+   --%>
 </c:if>
 <%--
   add og metadata
