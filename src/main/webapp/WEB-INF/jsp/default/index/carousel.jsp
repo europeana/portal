@@ -35,18 +35,18 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 
 				carouselData[carouselData.length] = {
 					image:				"/${model.portalName}${item.responsiveImages['_1']}",
-					title:				"<spring:message code='${item.anchorTitle}'/>",
-					description:		"<spring:message code='${item.description}'/>",
-					linkDescription:	"<spring:message code='${item.linkDescription}'/>",
+					title:				"<spring:message code="${item.anchorTitle}" />",
+					description:		"<spring:message code="${item.description}" />",
+					linkDescription:	"<spring:message code="${item.linkDescription}" />",
 					europeanaLink:		"${item.url}",
-					external:			"<spring:message code='${item.anchorTarget}'/>"
+					external:			"<spring:message code="${item.anchorTarget}" />"
 				};
 
 				<c:if test='${!empty item.translatableUrls}'>
 					<c:forEach var="lang" items="${item.translatableUrls}" varStatus="status">
 						<c:if test="${model.locale == lang.key}" >
 							//carouselData[carouselData.length-1].link = "${lang.value}";
-							carouselData[carouselData.length-1].europeanaLink = "${lang.value}";
+							carouselData[carouselData.length-1].link = "${lang.value}";
 						</c:if>
 					</c:forEach>
 				</c:if>
@@ -59,8 +59,8 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				<a href="${item.url}">
 					<img
 							src		= "/${model.portalName}${item.responsiveImages['_1']}",
-							title	= "<spring:message code='${item.anchorTitle}'/>"
-							alt		= "<spring:message code='${item.imgAlt}'/>"
+							title	= "<spring:message code="${item.anchorTitle}" />"
+							alt		= "<spring:message code="${item.imgAlt}" />"
 							class	= "hidden"
 					/>
 				</a>
