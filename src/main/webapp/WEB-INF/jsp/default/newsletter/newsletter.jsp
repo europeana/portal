@@ -53,37 +53,31 @@
 					</div>
 					
 					<input type="submit" name="Submit" value="Submit" id="e2ma_signup_submit_button">
-
 				</form>
-                        
 			</div>
 		</div>
 
-		
-
 		<script type="text/javascript">
 			window.emma = {
-				"placeholder"	: "<spring:message code='news_letter_email_hint_t' />",
-				"submitLabel"	: "<spring:message code='news_letter_signup_button_t' />"
+				"placeholder": "<spring:message code="news_letter_email_hint_t" />",
+				"submitLabel": "<spring:message code="news_letter_signup_button_t" />"
 			};
-		
 
 			var checkForm = function(form_obj) {
 
 				//now handle required field validation
-
 				var why = "";
 				var email = $('#id_email');
 				var filter=/^[a-z0-9_\-\.\+]+@[a-z0-9_\-\.]+\.[a-z]{2,4}$/i;
 
-				if( email.val().length==0){
+				if (email.val().length==0) {
 					why += "Email must be specified\n";
 				}
-				else if(!filter.test(email.val())){
+				else if (!filter.test(email.val())) {
 					why += "Email must be a valid email address.\n";
 				}
 				
-				if( !$('#id_group_1293').is(':checked') && !$('#id_group_519437').is(':checked')){
+				if (!$('#id_group_1293').is(':checked') && !$('#id_group_519437').is(':checked')) {
 					why += "A language must be specified.\n";
 				}
 
@@ -92,19 +86,14 @@
 					return false;
 				} 
 				return true;	 
-				
 			};
-			
 			$(document).ready(function(){
 				$('#e2ma_signup_submit_button').attr('title',	"<spring:message code="news_letter_description_t" />" );				
 				$('#e2ma_signup_submit_button').attr('value',	window.emma.submitLabel);
 				$('#id_email').attr('placeholder',				window.emma.placeholder);
 				$('#id_email').attr('title',					window.emma.placeholder);
-				
-				
 				//top.resizeTo( $( window.parent ).width(), $( window.parent ).height()+1 );
 			});
-
 		</script>
 	</body>
 </html>
