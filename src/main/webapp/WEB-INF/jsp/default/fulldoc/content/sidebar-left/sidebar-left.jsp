@@ -9,11 +9,8 @@
 </c:if>
 
 <div id="additional-info" class="sidebar" about="${about}">
-
 	<h2 id="phone-object-title" class="show-on-phones" aria-hidden="true">${model.objectTitle}</h2>
-		
 	<%-- thumbnail (hidden seo image) --%>
-		
 	<div id="carousel-1-img-measure">
 		<%-- TODO: make sure all item images are listed here --%>
 		<c:set var="thumbnail" value=""/>
@@ -106,23 +103,20 @@ carouselData[carouselData.length] = {
 				</c:forEach>
 			</c:if>
 
-			// termpporary fix until we get multiple thumbanils			
+			// temporary fix until we get multiple thumbanils
 			for(var i=1; i<carouselData.length; i++){
 				if(carouselData[i].external && carouselData[i].external.type=="image"){
 					carouselData[i].image = carouselData[i].external.url; 
 				}
 			}
-			
 		</script>
 	</div>
 
 	<div class="original-context">
 		<%-- Rights --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
-
 		<%-- Original context link --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
-
 		<div class="clear"></div>
 	</div>
 
@@ -155,7 +149,6 @@ carouselData[carouselData.length] = {
 				<span class="action-title"><spring:message code="Cite_Button_t" /></span>
 			</a>
 		</div>
-		
 		<%-- Embed link --%>
 		<%--
 		<a href="" id="item-embed" class="icon-embed action-link" title="<spring:message code="embed_t" />" rel="nofollow">
@@ -175,7 +168,7 @@ carouselData[carouselData.length] = {
 			<c:set var="savedText">
 				<spring:message code="SaveToMyEuropeana_t" />
 			</c:set>
-					
+
 			<c:forEach items="${model.user.savedItems}" var="item">
 				<c:if test="${model.document.about == item.europeanaUri}">
 					<c:set var="savedIcon" value="icon-saveditem" />
