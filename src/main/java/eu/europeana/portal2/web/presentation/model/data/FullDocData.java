@@ -18,7 +18,6 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.List;
-import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
@@ -109,7 +108,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 		this.shownAtProviderOverride = shownAtProviderOverride;
 	}
 
-	public FullBeanShortcut getShourtcut() {
+	public FullBeanShortcut getShortcut() {
 		return shortcut;
 	}
 

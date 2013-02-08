@@ -29,7 +29,7 @@ import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 public class CiteValue {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	private final Logger log = Logger.getLogger(CiteValue.class.getCanonicalName());
 
 	private FullDocData model;
 
@@ -59,7 +59,7 @@ public class CiteValue {
 	 * @return - Citation in format of users locale
 	 */
 	public String getCiteText() {
-		String authorNames = StringArrayUtils.formatList(model.getShourtcut().get("DcCreator"));
+		String authorNames = StringArrayUtils.formatList(model.getShortcut().get("DcCreator"));
 		StringBuilder citeStyleText = new StringBuilder();
 
 		switch (value) {

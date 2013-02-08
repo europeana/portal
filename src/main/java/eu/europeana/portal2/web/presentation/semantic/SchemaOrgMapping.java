@@ -113,6 +113,9 @@ public class SchemaOrgMapping {
 				// TODO: handle edmParentName
 				String edmParentName = edmParts[0];
 				String edmElementName = edmParts[1];
+				if (edmParentName.equals("edm:ProvidedCHO")) {
+					edmParentName = "edm:Proxy";
+				}
 
 				SchemaOrgElement schemaElement;
 				if (schema.indexOf("/") == -1) {

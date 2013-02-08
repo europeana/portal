@@ -56,6 +56,17 @@
     </c:if>
     <meta resource="${model.urlRef}" <eu:semanticAttributes field="${urlRefField}" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
     <meta resource="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
+    <meta resource="${model.shortcut.get('EdmCurrentLocation')[0]}" <eu:semanticAttributes field="edm:currentLocation" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
+    <c:set var="edmObject" value="${model.shortcut.get('EdmObject')[0]}"/>
+    <meta resource="${edmObject}" <eu:semanticAttributes field="edm:object" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+    <c:choose>
+      <c:when test="${model.allImages[0].edmField == 'edm:isShownBy'}">
+        <meta resource="${edmObject}" <eu:semanticAttributes field="edm:isShownAt" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+      </c:when>
+      <c:otherwise>
+        <meta resource="${edmObject}" <eu:semanticAttributes field="edm:isShownBy" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+      </c:otherwise>
+    </c:choose>
 
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
