@@ -9,20 +9,20 @@
 	as the ?js_string won't apply to returned macro strings
 --%>
 <c:set var="ajax_date_retrieval_error"><spring:message code="AjaxDataRetrievalError_t" /></c:set>
-<c:set var="close"><spring:message code='Close_Button_t' /></c:set>
-<c:set var="date"><spring:message code='dc_date_t' /></c:set>
+<c:set var="close"><spring:message code="Close_Button_t" /></c:set>
+<c:set var="date"><spring:message code="dc_date_t" /></c:set>
 <c:set var="error_occurred"><spring:message code="AnErrorOccurred_t" /></c:set>
 <c:set var="initial_rows" value='' />
 <c:if test="${!empty RequestParameters.initial_rows}">
 	<c:set var="initial_rows" value="${RequestParameters.initial_rows}" />
 </c:if>
 <c:set var="item_not_removed"><spring:message code="ItemNotRemoved_t" /></c:set>
-<c:set var="matches"><spring:message code='MatchesFor_t' /></c:set>
-<c:set var="no_saved_items"><spring:message code='NoSavedItems_t' /></c:set>
-<c:set var="no_saved_searches"><spring:message code='NoSavedSearches_t' /></c:set>
-<c:set var="no_saved_tags"><spring:message code='NoSavedTags_t' /></c:set>
-<c:set var="required_field"><spring:message code='RequiredField_t' /></c:set>
-<c:set var="results"><spring:message code='Results_t' /></c:set>
+<c:set var="matches"><spring:message code="MatchesFor_t" /></c:set>
+<c:set var="no_saved_items"><spring:message code="NoSavedItems_t" /></c:set>
+<c:set var="no_saved_searches"><spring:message code="NoSavedSearches_t" /></c:set>
+<c:set var="no_saved_tags"><spring:message code="NoSavedTags_t" /></c:set>
+<c:set var="required_field"><spring:message code="RequiredField_t" /></c:set>
+<c:set var="results"><spring:message code="Results_t" /></c:set>
 <c:set var="return_to_language"><spring:message code="ReturnToOriginalLanguage_t" /></c:set>
 <c:set var="rows" value='' />
 
@@ -50,8 +50,8 @@
 <c:set var="saved_tag"><spring:message code="SavedTags_t" /></c:set>
 <c:set var="saved_tag_removed"><spring:message code="SavedTagRemoved_t" /></c:set>
 <c:set var="search_error"><spring:message code="ErrorTryAnotherSearch_t" /></c:set>
-<c:set var="search_saved"><spring:message code='SearchSaved_t' /></c:set>
-<c:set var="search_save_failed"><spring:message code='SearchSavedFailed_t' /></c:set>
+<c:set var="search_saved"><spring:message code="SearchSaved_t" /></c:set>
+<c:set var="search_save_failed"><spring:message code="SearchSavedFailed_t" /></c:set>
 <c:set var="see_less"><spring:message code="SeeLess_t" /></c:set>
 <c:set var="see_more"><spring:message code="SeeMore_t" /></c:set>
 <c:set var="select_language"><spring:message code="SelectLanguage_t" /></c:set>
