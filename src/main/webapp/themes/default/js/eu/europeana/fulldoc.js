@@ -10,6 +10,8 @@ eu.europeana.fulldoc = {
 	
 	less_icon_class : "icon-arrow-7-right",
 
+	setupAnalytics : false,
+	
 	init : function() {
 
 		this.loadComponents();
@@ -35,10 +37,8 @@ eu.europeana.fulldoc = {
 		// analytics
 		
 		$('.sidebar-right a').click(function(e){
-			com.google.analytics.europeanaEventTrack("Search_Also_For");
+			com.google.analytics.europeanaEventTrack("Click-link " + $(e.target).attr('href'), "Search-Also-For");
 		});
-		
-
 		
 		js.console.log(JSON.stringify(carouselData));
 	},
@@ -416,36 +416,32 @@ eu.europeana.fulldoc = {
 			 * if not bind the image to open the mapped url in a seaparate window
 			 */
 			$('<img src="'+ carouselData[index ? index : 0].external.url + '" style="visibility:hidden"/>')
-					.appendTo('body').imagesLoaded(
+			.appendTo('body').imagesLoaded(
 							
-						function($images, $proper, $broken){
+				function($images, $proper, $broken){
+				
+					if($proper.length==1 && $proper.width() > 200){
+						eu.europeana.fulldoc.loadLightboxJS(
+								function(){
+									eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);
+									eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
+								}
+						);
+					}
+					else{
+						js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[index ? index : 0].external.url + ")"));
 						
-							if($proper.length==1 && $proper.width() > 200){
-								eu.europeana.fulldoc.loadLightboxJS(
-										function(){
-											eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);
-											eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
-										}
-								);
+						// if the lightbox test fails then attach a click handler to the image
+						$('#carousel-1-img-measure img').css('cursor', 'pointer');
+						$('#carousel-1-img-measure img').click(
+							function(){
+								eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
+								eu.europeana.fulldoc.trackedClick('broken-img');
 							}
-							else{
-								js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[index ? index : 0].external.url + ")"));
-								
-								// if the lightbox test fails then attach a click handler to the image
-								$('#carousel-1-img-measure img').css('cursor', 'pointer');
-								$('#carousel-1-img-measure img').click(
-//										{param:'broken-img'},
-										function(){
-											eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
-											eu.europeana.fulldoc.trackedClick('broken-img');
-										}
-								);
-
-								
-							}
-							$(this).remove();
-						}
-						
+						);
+					}
+					$(this).remove();
+				}
 			);
 		}
 		else{
@@ -511,7 +507,9 @@ eu.europeana.fulldoc = {
 				name : 'touchswipe',
 				file : 'touch-swipe.min.js' + js.cache_helper,
 				path : eu.europeana.vars.branding + '/js/jquery/',
-				callback: function(){ alert('loaded touch swipe'); }
+				callback: function(){ 
+					//alert('loaded touch swipe');
+				}
 		}]);		  
 		  
 		if(!window.showingPhone()){
@@ -624,11 +622,14 @@ eu.europeana.fulldoc = {
 				easing:			'galleriaOut',
 				imageCrop:		false,
 				imagePan:		false,
-				lightbox:		true,
+				lightbox:		false,
 				responsive:		true,
 				dataSource:		carousel2Data,
 				thumbnails: 	true,
 				extend: function(e){
+					
+					var thisGallery = this;
+					
 					var doEllipsis = function(){
 						var ellipsisObjects = [];
 						$(carousel2selector + ' .europeana-carousel-info').each(
@@ -646,9 +647,60 @@ eu.europeana.fulldoc = {
 							}
 						});
 					};
+					
 					$(this).ready(function(e) {
 						setTimeout(doEllipsis, 1000);
 					});
+	
+					// Google Analytics
+					
+					this.bind("loadfinish", function(e) {
+						
+						if(!eu.europeana.fulldoc.setupAnalytics){
+							
+							var clicked = function(clickData){
+								com.google.analytics.europeanaEventTrack(
+									clickData.ga.action,
+									clickData.ga.category,
+									clickData.ga.url
+								);
+								if(clickData.open){
+									window.location = clickData.open;
+								}									
+							};
+							
+							$('#explore-further .galleria-thumb-nav-right,  #explore-further .galleria-thumb-nav-left').click(function(e){
+								clicked({
+									"open" : false,
+									"ga" : {
+										"action"	: "Navigate",
+										"category"	: "Similar-Items-Carousel",
+										"url"		: ""
+									}	
+								});
+							});
+							
+							var dataSource		= this._options.dataSource;
+			
+							$('#explore-further .galleria-thumbnails .galleria-image').each(function(i, ob){
+								$(ob).unbind('click');
+								$(ob).click(function(e){
+									clicked({
+										"open" : dataSource[i].europeanaLink,
+										"ga" : {
+											"action"	: "Click-Through (link index " + i + ")",
+											"category"	: "Similar-Items-Carousel",
+											"url"		: dataSource[i].europeanaLink
+										}	
+									});
+									e.stopPropagation();
+								});
+							});
+							eu.europeana.fulldoc.setupAnalytics = true;
+						}
+					});
+					
+					
 				}
 	   		});
    			
