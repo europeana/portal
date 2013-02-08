@@ -42,7 +42,6 @@
       ${!empty model.fields}
       ${fn:length(model.fields) > 0}
     --%>
-
     <c:if test="${!model.formatLabels && !empty model['fields'] && fn:length(model.fields) > 0}">
       <europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true" />
     </c:if>
@@ -51,10 +50,31 @@
     </c:if>
 
     <meta resource="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
-    <meta resource="${model.shortcut.get('EdmCurrentLocation')[0]}" <eu:semanticAttributes field="edm:currentLocation" schemaOrgMapping="${model.schemaOrgMapping}"></eu:semanticAttributes> />
-    <meta resource="${model.shortcut.get('EdmObject')[0]}" <eu:semanticAttributes field="edm:object" schemaOrgMapping="${model.schemaOrgMapping}" /> />
-    <meta resource="${model.shortcut.get('EdmIsShownAt')[0]}" <eu:semanticAttributes field="edm:isShownAt" schemaOrgMapping="${model.schemaOrgMapping}" /> />
-    <meta resource="${model.shortcut.get('EdmIsShownBy')[0]}" <eu:semanticAttributes field="edm:isShownBy" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+    <c:forEach items="${model.shortcut.get('EdmCurrentLocation')}" var="image">
+      <c:if test="${image != null && image != ''}">
+        <meta resource="${image}" <eu:semanticAttributes field="edm:currentLocation" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+      </c:if>
+    </c:forEach>
+    <c:forEach items="${model.shortcut.get('EdmObject')}" var="image">
+      <c:if test="${image != null && image != ''}">
+        <meta resource="${image}" <eu:semanticAttributes field="edm:object" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+      </c:if>
+    </c:forEach>
+    <c:forEach items="${model.shortcut.get('EdmIsShownAt')}" var="image">
+      <c:if test="${image != null && image != ''}">
+        <meta resource="${image}" <eu:semanticAttributes field="edm:isShownAt" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+      </c:if>
+    </c:forEach>
+    <c:forEach items="${model.shortcut.get('EdmIsShownBy')}" var="image">
+      <c:if test="${image != null && image != ''}">
+        <meta resource="${image}" <eu:semanticAttributes field="edm:isShownBy" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+      </c:if>
+    </c:forEach>
+    <c:forEach items="${model.shortcut.get('EdmHasView')}" var="image">
+      <c:if test="${image != null && image != ''}">
+        <meta resource="${image}" <eu:semanticAttributes field="edm:hasView" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+      </c:if>
+    </c:forEach>
 
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
