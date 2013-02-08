@@ -2,18 +2,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
 <div class="twelve columns">
-
-
 	<h3 id="collapse-header-1">
 		<span class="left collapse-header-text">
-			<spring:message code='from_the_blog_t'/>
+			<spring:message code="from_the_blog_t" />
 		</span>
 		<span class="collapse-icon"></span>
 		<a class="feed-link icon-rss" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>
 	</h3>
-	
 	<div class="row collapse-content">
 	</div>
 </div>
