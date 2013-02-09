@@ -386,6 +386,14 @@ public class FullDocPage extends FullDocPreparation {
 		*/
 	}
 
+	public String getThumbnailUrlUnescaped() throws UnsupportedEncodingException {
+		String thumbnail = "";
+		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
+			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], "");
+		}
+		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
+	}
+	
 	public List<String> getThumbnails() {
 		// TODO: use ThumbSize.TINY
 		return getImageToShow("BRIEF_DOC");

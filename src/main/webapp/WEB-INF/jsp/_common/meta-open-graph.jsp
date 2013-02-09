@@ -4,16 +4,17 @@
 <c:set var="og_image_url" value="${model.portalServer}${model.portalName}/sp/img/europeana-logo-en.png"/>
 
 <c:if test="${model.pageName=='full-doc.html'}">
+
+  <%--
   <c:set var="og_image_url" value="${fn:replace(model.thumbnailUrl, '&amp;', '&')}"/>
   
   <c:set var="og_image_url" value="${fn:replace(og_image_url, '%3A', ':')}"/>
   
   <c:set var="og_image_url" value="${fn:replace(og_image_url, '%2F', '/')}"/>
-  
-  
-  <%--
-   <c:set var="og_image_url" value="http://europeanastatic.eu/api/image?type=IMAGE&uri=http://www.mimo-db.eu/media/MF-NIC/IMAGE/MFIM000027173.jpg&size=FULL_DOC"/>
    --%>
+  
+  <c:set var="og_image_url" value="${fn:replace(model.thumbnailUrlUnescaped, '&amp;', '&')}"/>
+  
 
 </c:if>
 <%--
