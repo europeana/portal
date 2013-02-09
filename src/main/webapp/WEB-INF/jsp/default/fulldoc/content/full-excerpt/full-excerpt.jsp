@@ -50,32 +50,68 @@
     </c:if>
 
     <meta resource="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
-    <c:forEach items="${model.shortcut.get('EdmCurrentLocation')}" var="image">
-      <c:if test="${image != null && image != ''}">
-        <meta resource="${image}" <eu:semanticAttributes field="edm:currentLocation" schemaOrgMapping="${model.schemaOrgMapping}" /> />
-      </c:if>
-    </c:forEach>
-    <c:forEach items="${model.shortcut.get('EdmObject')}" var="image">
+    
+    <%--
+    <c:set var="EdmCurrentLocations" value="" />
+    <c:catch var="exception">
+    	<c:if test="${item.europeanaObject && !empty item.europeanaObject}"></c:if>
+    	<c:set var="imageWritten" value="true" />
+    </c:catch>
+    <c:if test="${!empty imageWritten}" >
+    	<img src="${model.cacheUrl}uri=${item.europeanaObject}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
+    </c:if>
+    --%>
+    
+    <c:catch var="exception">
+    
+	    <c:forEach items="${model.shortcut['EdmCurrentLocation']}" var="image">
+	      <c:if test="${image != null && image != ''}">
+	        <meta resource="${image}" <eu:semanticAttributes field="edm:currentLocation" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+	      </c:if>
+	    </c:forEach>
+	    
+    </c:catch>
+    
+    <c:catch var="exception">
+    
+    <c:forEach items="${model.shortcut['EdmObject']}" var="image">
       <c:if test="${image != null && image != ''}">
         <meta resource="${image}" <eu:semanticAttributes field="edm:object" schemaOrgMapping="${model.schemaOrgMapping}" /> />
       </c:if>
     </c:forEach>
-    <c:forEach items="${model.shortcut.get('EdmIsShownAt')}" var="image">
+    
+    </c:catch>
+    
+    <c:catch var="exception">
+    
+    <c:forEach items="${model.shortcut['EdmIsShownAt']}" var="image">
       <c:if test="${image != null && image != ''}">
         <meta resource="${image}" <eu:semanticAttributes field="edm:isShownAt" schemaOrgMapping="${model.schemaOrgMapping}" /> />
       </c:if>
     </c:forEach>
-    <c:forEach items="${model.shortcut.get('EdmIsShownBy')}" var="image">
+    
+    </c:catch>
+    
+    <c:catch var="exception">
+    
+    <c:forEach items="${model.shortcut['EdmIsShownBy']}" var="image">
       <c:if test="${image != null && image != ''}">
         <meta resource="${image}" <eu:semanticAttributes field="edm:isShownBy" schemaOrgMapping="${model.schemaOrgMapping}" /> />
       </c:if>
     </c:forEach>
-    <c:forEach items="${model.shortcut.get('EdmHasView')}" var="image">
-      <c:if test="${image != null && image != ''}">
-        <meta resource="${image}" <eu:semanticAttributes field="edm:hasView" schemaOrgMapping="${model.schemaOrgMapping}" /> />
-      </c:if>
-    </c:forEach>
+    
+    </c:catch>
+    
+    <c:catch var="exception">
+    
+	    <c:forEach items="${model.shortcut['EdmHasView']}" var="image">
+	      <c:if test="${image != null && image != ''}">
+	        <meta resource="${image}" <eu:semanticAttributes field="edm:hasView" schemaOrgMapping="${model.schemaOrgMapping}" /> />
+	      </c:if>
+	    </c:forEach>
 
+	</c:catch>
+    
     <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
 
     <c:if test="${model.formatLabels}">
