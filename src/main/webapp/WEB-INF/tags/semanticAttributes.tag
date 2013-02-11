@@ -27,7 +27,7 @@
   <%-- type: Element --%>
   <c:set var="edmElement" value="${elementMapping.edmElement}" />
   <c:set var="semanticAttributes">
-    ${schemaOrgElement.elementName}${" "}${edmElement.fullQualifiedURI}
+    ${edmElement.fullQualifiedURI}${" "}${schemaOrgElement.elementName}
   </c:set>
 </c:if>
 property="${semanticAttributes}"
