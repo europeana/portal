@@ -16,7 +16,7 @@
 <html ${xmlns} lang="${lang}">
 <!--<![endif]-->
 
-<head>
+<head<c:if test="${model.pageName == 'full-doc.html'}"> about="${model.document.cannonicalUrl}"</c:if>>
   <meta charset="utf-8" />
   <title>${model.pageTitle}</title>
   <%@ include file="/WEB-INF/jsp/default/_common/html/links.jsp" %>
