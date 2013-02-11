@@ -35,7 +35,7 @@
 
 						var carousel2Data = [];
 						<c:forEach items="${model.moreLikeThis}" var="doc">
-							<c:set var="objectTitle">${fn:join(doc.titleBidi, ' ')}</c:set>
+							<c:set var="objectTitle">${doc.titleJoined}</c:set>
 							carousel2Data[carousel2Data.length] = {
 								image:			decodeURI( "${fn:escapeXml(doc.thumbnail)}" ).replace(/&amp;/g, '&').replace(/&amp;/g, '&'),
 								title:			'${ objectTitle }',

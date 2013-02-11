@@ -122,7 +122,6 @@ public class BriefBeanDecorator implements BriefBean {
 	}
 
 	public String[] getTitleBidi() {
-		
 		String[] title = briefBean.getTitle();
 		String[] result = new String[title.length];
 		for(int i=0; i<title.length; i++){
@@ -131,9 +130,29 @@ public class BriefBeanDecorator implements BriefBean {
 			result[i] = s;
 		}
 		return result;
-		
 	}
 
+	public String getTitleJoined() {
+		String[] title = briefBean.getTitle();
+		String[] result = new String[title.length];
+		
+		for(int i=0; i<title.length; i++){
+			String s =  StringEscapeUtils.escapeXml(title[i]);
+			s = s.replaceAll("(\\d+$)", "&lrm;$1&lrm;");	// bi-directional fix for breaking yiddish texts ending with a year
+		
+			boolean duplicate = false;
+			for(String res : result){
+				if(s.equals(res)){
+					duplicate = true;
+				}
+			}
+			if(!duplicate){
+				result[i] = s;
+			}			
+		}
+		return StringUtils.join(result, ' ');
+	}
+	
 	public String getTitleJSON() {
 		String s = StringUtils.join(briefBean.getTitle(), ' ');
 		s = StringUtils.strip(s, "\\/");
