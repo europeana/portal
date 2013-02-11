@@ -30,5 +30,5 @@
 
 <c:if test="${not empty model['urlRef']}">
 	<div class="clear"><spring:message code="ViewItemAt_t" /></div>
-	<a id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${fn:escapeXml(provider)}&amp;id=${model.document.about}" ${href_attributes}>${provider}</a>
+	<a about="${model.document.cannonicalUrl}" id="${urlRefId}" class="${classes}" href="/${model.portalName}/redirect.html?shownAt=<eu:encode url="${model.urlRef}" />&amp;provider=${fn:escapeXml(provider)}&amp;id=${model.document.about}" ${href_attributes}>${provider}</a>
 </c:if>
