@@ -16,7 +16,7 @@
 	
 		<div class="thumb-frame">
 		
-			<c:set var="title" value="${cell.title[0]}" />
+			<c:set var="title" value="${cell.titleBidi[0]}" />
 			<c:set var="icon_class" value="icon-${fn:toLowerCase(cell.type)}" />
 			
 			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid/image.jsp" %>
@@ -24,10 +24,15 @@
 		</div>
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
-		<a href="${fn:replace(cell.fullDocUrl, "\"", "&quot;")}&rows=${model.rows}" title="${fn:escapeXml(cell.title[0])}" ${targetArg} rel="nofollow">
+		<a href="${fn:replace(cell.fullDocUrl, "\"", "&quot;")}&rows=${model.rows}"
+			<c:if test="${!empty cell.titleBidi}">
+				title="${title}"
+			</c:if>
+			 ${targetArg}
+			 rel="nofollow">
 			<div class="ellipsis">
 				<c:choose>
-					<c:when test="${!empty cell.title}">${title}</c:when>
+					<c:when test="${!empty cell.titleBidi}">${title}</c:when>
 					<c:otherwise></c:otherwise>
 				</c:choose>
 				<span class="fixed"><span aria-hidden="true" class="${icon_class}"></span></span>
