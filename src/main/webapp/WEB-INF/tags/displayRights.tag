@@ -1,21 +1,19 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
+
+<%-- parameters --%>
 <%@ attribute name="inLightbox" required="true" rtexprvalue="true" %>
+
+<!-- taglibs -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <c:if test="${model[rightsOption]}">
-  <a href="${model.rightsOption.rightsUrl}"
-    title="${model.rightsOption.rightsText}"
-    class="item-metadata rights-badge" target="_blank"
-    rel="license europeana:rights">
+  <a href="${model.rightsOption.rightsUrl}" title="${model.rightsOption.rightsText}" class="item-metadata rights-badge" target="_blank" rel="license http://www.europeana.eu/schemas/edm/rights">
     <c:choose>
       <c:when test="${inLightbox}">
-        <img
-          src="/${branding}/images/rights/${model.rightsOption.rightsIconLightbox}"
-          alt="${model.rightsOption.rightsText}" />
+        <img src="/${branding}/images/rights/${model.rightsOption.rightsIconLightbox}" alt="${model.rightsOption.rightsText}" />
       </c:when>
       <c:otherwise>
-        <img
-          src="/${branding}/images/rights/${model.rightsOption.rightsIcon}"
-          alt="${model.rightsOption.rightsText}" />
+        <img src="/${branding}/images/rights/${model.rightsOption.rightsIcon}" alt="${model.rightsOption.rightsText}" />
       </c:otherwise>
     </c:choose>
   </a>

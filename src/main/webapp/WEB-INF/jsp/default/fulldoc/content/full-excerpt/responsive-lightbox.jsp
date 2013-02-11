@@ -34,6 +34,7 @@
 						</span>
 					</div>
 					<div class="lightbox-rights" id="rights-collapsed">
+            <c:set var="inLightbox" scope="request" value="true"/>
 						<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="eu" tagdir="/WEB-INF/tags" %>
 
 <%--
 	escape all localized messages from the message.properties file
@@ -169,13 +170,13 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.external = {
 			triggers: {
 				labels : {
-					'image'		:	'<spring:message code="view_t"		/>',
-					'play'		:	'<spring:message code="play_t"		/>',
-					'download'	:	'<spring:message code="download_t"	/>',
-					'pdf'		:	'<spring:message code="read_t"		/>',
-					'sound'		:	'<spring:message code="play_t"		/>',
-					'video'		:	'<spring:message code="play_t"		/>',
-					'text'		:	'<spring:message code="read_t"		/>',
+					'image'		:	'<spring:message code="view_t" />',
+					'play'		:	'<spring:message code="play_t" />',
+					'download'	:	'<spring:message code="download_t" />',
+					'pdf'		:	'<spring:message code="read_t" />',
+					'sound'		:	'<spring:message code="play_t" />',
+					'video'		:	'<spring:message code="play_t" />',
+					'text'		:	'<spring:message code="read_t" />',
 				}
 			}
 		};
@@ -192,7 +193,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 
 		<c:if test="${model[lightboxRef]}">
 			eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
-			eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
+			eu.europeana.vars.lightbox_rights = '<eu:displayRights inLightbox="true" />';
 		</c:if>
 	</c:when>
 	

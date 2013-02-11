@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="eu" tagdir="/WEB-INF/tags"%>
 
 <%--
   escape all localized messages from the message.properties file
@@ -217,7 +217,7 @@ eu.europeana.vars.timeline.json_url = '${model.jsonUrlTimeline}';
 	
 	<c:if test="${model[lightboxRef]}">
 	eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
-	eu.europeana.vars.lightbox_rights = '<@displayRights true/>';
+	eu.europeana.vars.lightbox_rights = '<eu:displayRights inLightbox="true" />';
 	</c:if>
 </c:when>
 --%>

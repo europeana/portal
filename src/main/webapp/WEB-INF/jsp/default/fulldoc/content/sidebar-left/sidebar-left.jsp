@@ -114,6 +114,7 @@ carouselData[carouselData.length] = {
 
 	<div class="original-context">
 		<%-- Rights --%>
+    <c:set var="inLightbox" scope="request" value="false" />
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 		<%-- Original context link --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
