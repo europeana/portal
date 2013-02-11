@@ -21,7 +21,7 @@
 						</div>
 					</c:if>
 					<c:if test="${!empty model.fieldsLightbox && fn:length(model.fieldsLightbox) > 0}">
-						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false" />
+						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false" isInLightbox="true" />
 					</c:if>
 					<div class="original-context">
 						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
