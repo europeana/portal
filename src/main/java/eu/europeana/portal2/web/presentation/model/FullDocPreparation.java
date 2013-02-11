@@ -49,7 +49,7 @@ public abstract class FullDocPreparation extends FullDocData {
 
 	// caching fields
 	private List<FieldPresentation> fields;
-	private Map<Field, FieldPresentation> fieldsMap;
+	private Map<Field, List<String>> hiddenFields;
 	private List<FieldPresentation> fieldsLightbox;
 	private List<FieldPresentation> fieldsAdditional;
 	private Map<String, List<FieldPresentation>> fieldsEnrichment;
@@ -325,6 +325,20 @@ public abstract class FullDocPreparation extends FullDocData {
 			}
 		}
 		return fields;
+	}
+
+	public Map<Field, List<String>> getHiddenFields() throws Exception {
+		if (hiddenFields == null) {
+			hiddenFields = new LinkedHashMap<Field, List<String>>();
+
+			hiddenFields.put(Field.EDM_CURRENTLOCATION, shortcut.getList("EdmCurrentLocation"));
+			hiddenFields.put(Field.EDM_OBJECT, shortcut.getList("EdmObject"));
+			hiddenFields.put(Field.EDM_ISSHOWNAT, shortcut.getList("EdmIsShownAt"));
+			hiddenFields.put(Field.EDM_ISSHOWNBY, shortcut.getList("EdmIsShownBy"));
+			hiddenFields.put(Field.EDM_HASVIEW, shortcut.getList("EdmHasView"));
+
+		}
+		return hiddenFields;
 	}
 
 	public static Map<Field, List<String>> map(Field field, List<String> values) {
