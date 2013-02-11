@@ -185,7 +185,8 @@ public class UrlBuilder {
 			sb.append("?");
 			for (String key : params.keySet()) {
 				if (!first) {
-					sb.append("&amp;");
+					//sb.append("&amp;");
+					sb.append("&");
 				}
 				sb.append(key).append("=").append(params.get(key));
 				first = false;
@@ -193,7 +194,9 @@ public class UrlBuilder {
 			for (String key : multiParams.keySet()) {
 				for (String s : multiParams.get(key)) {
 					if (!first) {
-						sb.append("&amp;");
+						// TODO: check effect of this change
+						//sb.append("&amp;");
+						sb.append("&");
 					}
 					sb.append(key).append("=").append(s);
 					first = false;

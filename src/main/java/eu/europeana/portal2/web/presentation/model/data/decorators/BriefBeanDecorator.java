@@ -43,7 +43,7 @@ public class BriefBeanDecorator implements BriefBean {
 
 	protected BriefBean briefBean;
 	private UrlAwareData<?> model;
-	private int index;
+	private int index = 1;
 
 	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefBean, int index) {
 		this(model, briefBean);

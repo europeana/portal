@@ -47,7 +47,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	private String nextFullDocUrl;
 	private String previousFullDocUrl;
 	private String pageId;
-	private String siwa;
+	//private String siwa;
 	private List<BreadCrumb> breadcrumbs;
 	private int fullDocUriInt;
 
@@ -79,6 +79,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		if (fullDocUriInt < 1 
 				|| Integer.parseInt(fetchParameter(httpParameters, "startPage", "1")) < 1
 				|| StringUtils.isBlank(query.getQuery())) {
+			
 			return null;
 		}
 		int solrStartRow = getSolrStart(pager, fullDocUriInt);
@@ -116,7 +117,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		}
 		pager.startPage = fetchParameter(httpParameters, "startPage", "1");
 		pager.pageId = fetchParameter(httpParameters, "pageId", "");
-		pager.siwa = fetchParameter(httpParameters, "siwa", "");
+		//pager.siwa = fetchParameter(httpParameters, "siwa", "");
 		if (pager.pageId != null) {
 			pager.setReturnToResults(httpParameters);
 		}
@@ -237,9 +238,9 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 			// }
 		}
 		out.append("&start=").append(startPage);
-		if (!siwa.isEmpty()) {
-			out.append("&siwa=").append(siwa);
-		}
+		//if (!siwa.isEmpty()) {
+		//	out.append("&siwa=").append(siwa);
+		//}
 		out.append("&rtr=true");
 		returnToResults = out.toString();
 	}
@@ -257,9 +258,9 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		out.append("&start=").append(nextInt);
 		out.append("&startPage=").append(startPage);
 		out.append("&pageId=").append(pageId);
-		if (!siwa.isEmpty()) {
-			out.append("&siwa=").append(siwa);
-		}
+		//if (!siwa.isEmpty()) {
+		//	out.append("&siwa=").append(siwa);
+		//}
 		nextFullDocUrl = out.toString();
 	}
 
@@ -298,6 +299,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
 	private static String fetchParameter(Map<String, String[]> httpParameters, String key, String defaultValue) {
 		String[] array = httpParameters.get(key);
+		
 		if (array == null || array.length == 0) {
 			return defaultValue;
 		} else {
