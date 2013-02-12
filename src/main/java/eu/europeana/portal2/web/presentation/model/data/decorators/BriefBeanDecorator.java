@@ -123,34 +123,40 @@ public class BriefBeanDecorator implements BriefBean {
 
 	public String[] getTitleBidi() {
 		String[] title = briefBean.getTitle();
-		String[] result = new String[title.length];
-		for(int i=0; i<title.length; i++){
-			String s =  StringEscapeUtils.escapeXml(title[i]);
-			s = s.replaceAll("(\\d+$)", "&lrm;$1&lrm;");	// bi-directional fix for breaking yiddish texts ending with a year
-			result[i] = s;
+		if(title != null){
+			String[] result = new String[title.length];
+			for(int i=0; i<title.length; i++){
+				String s =  StringEscapeUtils.escapeXml(title[i]);
+				s = s.replaceAll("(\\d+$)", "&lrm;$1&lrm;");	// bi-directional fix for breaking yiddish texts ending with a year
+				result[i] = s;
+			}
+			return result;			
 		}
-		return result;
+		return null;
 	}
 
 	public String getTitleJoined() {
 		String[] title = briefBean.getTitle();
-		String[] result = new String[title.length];
-		
-		for(int i=0; i<title.length; i++){
-			String s =  StringEscapeUtils.escapeXml(title[i]);
-			s = s.replaceAll("(\\d+$)", "&lrm;$1&lrm;");	// bi-directional fix for breaking yiddish texts ending with a year
-		
-			boolean duplicate = false;
-			for(String res : result){
-				if(s.equals(res)){
-					duplicate = true;
+		if(title != null){
+			String[] result = new String[title.length];
+			
+			for(int i=0; i<title.length; i++){
+				String s =  StringEscapeUtils.escapeXml(title[i]);
+				s = s.replaceAll("(\\d+$)", "&lrm;$1&lrm;");	// bi-directional fix for breaking yiddish texts ending with a year
+			
+				boolean duplicate = false;
+				for(String res : result){
+					if(s.equals(res)){
+						duplicate = true;
+					}
 				}
+				if(!duplicate){
+					result[i] = s;
+				}			
 			}
-			if(!duplicate){
-				result[i] = s;
-			}			
+			return StringUtils.join(result, ' ');			
 		}
-		return StringUtils.join(result, ' ');
+		return null;
 	}
 	
 	public String getTitleJSON() {
