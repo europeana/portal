@@ -21,7 +21,7 @@
 <meta name="twitter:title"			content="${og_title}"/>
 <meta name="twitter:description"	content="${og_description}"/>
 <meta name="twitter:site"			content="@EuropeanaEU"/>
-
+<meta name="twitter:image"			content="${og_image_url}"/>
 
 <%--
   add og metadata
