@@ -1,20 +1,27 @@
+
 <%--
   set og_image_url
 --%>
 <c:set var="og_image_url"		value="${model.portalServer}${model.portalName}/sp/img/europeana-logo-en.png"/>
-
 <c:set var="og_title"			value="${model.pageTitle}"/>
-
 <c:set var="og_description"		value="${model.pageTitle}"/>
 
-
 <c:if test="${model.pageName=='full-doc.html'}">
-
-  <c:set var="og_image_url" value="${fn:replace(model.thumbnailUrlUnescaped, '&amp;', '&')}"/>
-  
-  <c:set var="og_description"		value="${fn:escapeXml( model.document.dcDescription[0] ) }"/>
-  
+  <c:set var="og_image_url" 	value="${fn:replace(model.thumbnailUrlUnescaped, '&amp;', '&')}"/>  
+  <c:set var="og_description"	value="${fn:escapeXml( model.document.dcDescription[0] ) }"/>
 </c:if>
+
+
+<%--
+  twitter card
+--%>
+
+<meta name="twitter:card"			content="summary"/>
+<meta name="twitter:url"			content="${model.metaCanonicalUrl}"/>
+<meta name="twitter:title"			content="${og_title}"/>
+<meta name="twitter:description"	content="${og_description}"/>
+<meta name="twitter:site"			content="@EuropeanaEU"/>
+
 
 <%--
   add og metadata
