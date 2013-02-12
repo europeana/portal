@@ -145,8 +145,8 @@
 										window.location = clickData.open;
 									}									
 								};
-								
-								$('#carousel-1 .galleria-thumbnails img, #carousel-1 .galleria-image-nav-right,  #carousel-1 .galleria-image-nav-left').click(function(e){
+
+								$('#carousel-1 .galleria-thumbnails img').add('#carousel-1 .galleria-image-nav-right').add('#carousel-1 .galleria-image-nav-left').click(function(e){
 									clicked({
 										"open" : false,
 										"ga" : {
