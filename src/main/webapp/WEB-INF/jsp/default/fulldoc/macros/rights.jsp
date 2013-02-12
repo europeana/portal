@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <c:if test="${!empty model.rightsOption}">
-  <a href="${model.edmRights}" title="${model.rightsOption.rightsText}" class="item-metadata rights-badge" target="_blank" <c:if test="${!inLightbox}">rel="license http://www.europeana.eu/schemas/edm/rights"</c:if>>
+  <a href="${model.edmRights}" title="${model.rightsOption.rightsText}" class="item-metadata rights-badge" target="_blank" <c:if test="${!inLightbox}">rel="xhv:license http://www.europeana.eu/schemas/edm/rights"</c:if>>
     <c:choose>
       <c:when test="${inLightbox}">
         <img src="/${branding}/images/rights/${model.rightsOption.rightsIcon}" alt="${model.rightsOption.rightsText}" />
