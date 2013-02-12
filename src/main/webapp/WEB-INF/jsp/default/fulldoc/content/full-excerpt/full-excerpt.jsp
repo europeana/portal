@@ -12,7 +12,7 @@
     <c:set var="schemaOrgElement" value="${schemaOrgMapping.element}" />
     <c:set var="edmElement" value="${schemaOrgMapping.edmElement}" />
     <c:set var="semanticAttributes">
-      ${"property=\""}${edmElement.fullQualifiedURI}${" "}${schemaOrgElement.elementName}${"\""}
+      ${"property=\""}${edmElement.fullQualifiedURI}${" "}${schemaOrgElement.elementName} dc:title${"\""}
     </c:set>
     <h1 class="hide-on-phones" ${semanticAttributes}>${model.objectTitle}</h1>
 

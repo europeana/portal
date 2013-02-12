@@ -30,4 +30,9 @@
     ${edmElement.fullQualifiedURI}${" "}${schemaOrgElement.elementName}
   </c:set>
 </c:if>
+<c:if test="${field == 'dc:title' || field == 'dc:publisher'}">
+  <c:set var="semanticAttributes">
+    ${semanticAttributes}${" "}${field}
+  </c:set>
+</c:if>
 property="${semanticAttributes}"
