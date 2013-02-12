@@ -412,6 +412,20 @@
 			toggleFn: function(){return $("#mobile-menu").is(":visible");}
 		});
 		
+		
+		// iphone now fires resize events on scroll, closing all opened content: this fixes
+		$(window).bind("touchmove", function(){
+			eu.europeana.vars.suppresResize = true;
+			$('#query-input').val("scrolling");		
+		});
+		$(window).bind("scroll", function(){
+			setTimeout(function(){
+				eu.europeana.vars.suppresResize = false;
+				$('#query-input').val("ended");				
+			}, 20)
+		});
+
+		
 		/*
 		js.loader.loadScripts([{
 			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,

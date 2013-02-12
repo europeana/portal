@@ -5,9 +5,7 @@ $.fn.Collapsible = function() {
 			expandedClass		:	'icon-arrow-7',
 			collapsedClass		:	'icon-arrow-6',
 			beenOpened			:	false,
-			executeDefaultClick	:	false,
-	        size				:	{'w': $(window).width(), 'h': $(window).height()}
-
+			executeDefaultClick	:	false
 	},
 	opsIn	= arguments[0] || {};
 	for (var attrname in opsIn){
@@ -91,17 +89,7 @@ $.fn.Collapsible = function() {
         
         /* collapse on small size and show expand/collapse icons, show on big size and hide expand/collapse icons */
     	if(ops.toggleFn){
-    		
-    		var fnResize = function(force){
-    			
-    			if( force===true ||  (ops.size.w != $(window).width()) || (ops.size.h != $(window).height())  ){
-    				ops.size.w = $(window).width();
-    				ops.size.h = $(window).height();
-    			}
-    			else{
-    				return;
-    			}
-    			
+    		var fnResize = function(){
     			if(eu.europeana.vars.suppresResize){
     				return;
     			}
@@ -117,7 +105,7 @@ $.fn.Collapsible = function() {
     			setClasses();
     		};
     		$(window).bind('resize', fnResize);
-    		fnResize(true);
+    		fnResize();
     	}
     	else{
     		setClasses();    		
