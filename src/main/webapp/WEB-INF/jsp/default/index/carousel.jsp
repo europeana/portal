@@ -57,7 +57,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			<c:forEach var="item" items="${model.carouselItems}">
 				<a href="${item.url}">
 					<img
-							src		= "/${model.portalName}${item.responsiveImages['_1']}",
+							src		= "/${model.portalName}${item.responsiveImages['_1']}"
 							title	= "<spring:message code="${item.anchorTitle}" />"
 							alt		= "<spring:message code="${item.imgAlt}" />"
 							class	= "hidden"
