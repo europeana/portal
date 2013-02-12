@@ -41,7 +41,7 @@ public class SeeAlsoSuggestions {
 		}
 
 		String extendedQuery;
-		if (fieldName.equals("PROVIDER") || fieldName.equals("DATA_PROVIDER")) {
+		if (fieldName.equals("title") || fieldName.equals("PROVIDER") || fieldName.equals("DATA_PROVIDER")) {
 			extendedQuery = query;
 		} else {
 			extendedQuery = fieldName + ":(" + ControllerUtil.clearSeeAlso(fieldValue) + ")";
