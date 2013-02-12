@@ -45,8 +45,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				<c:if test='${!empty item.translatableUrls}'>
 					<c:forEach var="lang" items="${item.translatableUrls}" varStatus="status">
 						<c:if test="${model.locale == lang.key}" >
-							//carouselData[carouselData.length-1].link = "${lang.value}";
-							carouselData[carouselData.length-1].link = "${lang.value}";
+							carouselData[carouselData.length-1].europeanaLink = "${lang.value}";
 						</c:if>
 					</c:forEach>
 				</c:if>
