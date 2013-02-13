@@ -195,7 +195,7 @@ eu.europeana.translation_services = {
 		self.to_locale = jQuery(this).val();
 		if ( self.to_locale.length < 1 ) { return; }
 		
-		com.google.analytics.trackEvent('Europeana Translation', self.to_locale, jQuery('head link[rel="canonical"]').attr('href'));
+		com.google.analytics.europeanaEventTrack('Europeana Translation', self.to_locale, jQuery('head link[rel="canonical"]').attr('href'));
 		
 		eu.europeana.translation_services[translator].options.to_locale = self.to_locale;
 				

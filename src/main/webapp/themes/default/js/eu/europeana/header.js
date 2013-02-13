@@ -500,7 +500,7 @@ eu.europeana.header = {
 	
 	setupPinterestAnalytics : function(){
 		$('.icon-pinterest-2').click(function(){
-			com.google.analytics.trackEvent("Pinterest Activity", "pinterest site");
+			com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest site");
 		});
 	}
 

@@ -377,7 +377,7 @@
 											var clicked	= this;
 											$(infoSelector).each(function(i, ob){
 												if(ob == clicked){
-													com.google.analytics.trackEvent("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
+													com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
 												}
 											});
 										}
@@ -388,7 +388,7 @@
 											var clicked	= this;
 											$(imgSelector).each(function(i, ob){
 												if(ob == clicked){
-													com.google.analytics.trackEvent("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
+													com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
 												}
 											});
 										}

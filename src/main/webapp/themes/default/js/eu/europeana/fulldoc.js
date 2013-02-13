@@ -44,19 +44,24 @@ eu.europeana.fulldoc = {
 	},
 
 	trackedClick : function(src){		/* src = img, magnify or link; */
+		
 		if(src == 'img'){
 			if(typeof eu.europeana.fulldoc.triggerPanel != 'undefined' && eu.europeana.fulldoc.triggerPanel.is(":visible")){
 				eu.europeana.fulldoc.triggerPanel.find('.label').click();		/* will recurse back to here with src 'magnify' */				
 			}
+			else{
+				com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Redirect', 'External (image)');
+				window.open(carouselData[0].external.url, '_new');
+			}
 		}
 		else if(src == 'broken-img'){
-			com.google.analytics.trackEvent("Europeana Portal", 'Europeana Lightbox', 'External (' + src + ')');
+			com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Lightbox', 'External (' + src + ')');
 			window.open(carouselData[0].external.url, '_new');
 		}
 		else{
 			var clickSrc	= src == 'magnify' ? 'image' : eu.europeana.fulldoc.triggerPanel.data['type'];
 			var action		= src == 'link' ? 'Europeana Redirect' : (eu.europeana.fulldoc.triggerPanel.data['type']  == 'image' ? 'Europeana Lightbox' : 'Europeana Redirect');
-			com.google.analytics.trackEvent("Europeana Portal", action, 'External (' + clickSrc + ')');
+			com.google.analytics.europeanaEventTrack("Europeana Portal", action, 'External (' + clickSrc + ')');
 		}
 	},
 	
@@ -374,7 +379,6 @@ eu.europeana.fulldoc = {
 	
 	initTriggerPanel: function(type, index, gallery){
 		
-		
 		js.console.log("initTriggerPanel type = " + type);
 		
 		if($("#mobile-menu").is(":visible") ){
@@ -384,6 +388,7 @@ eu.europeana.fulldoc = {
 		js.console.log('initTriggerPanel type= ' + type + ", index = " + index);
 		
 		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
+			// instantiate and hide
 			eu.europeana.fulldoc.triggerPanel = $('<div class="lb-trigger" >'
 					+ '<span rel="#lightbox" title="'
 					+ '" class="icon-magplus label">'
@@ -404,7 +409,7 @@ eu.europeana.fulldoc = {
 		eu.europeana.fulldoc.triggerPanel.unbind('click');
 		triggerSpan.unbind('click');
 		triggerSpan.removeData('overlay');
-
+		
 		$(eu.europeana.fulldoc.triggerPanel).bind('click', function(){
 			eu.europeana.fulldoc.trackedClick('magnify', type);
 		});
@@ -433,6 +438,7 @@ eu.europeana.fulldoc = {
 						
 						// if the lightbox test fails then attach a click handler to the image
 						$('#carousel-1-img-measure img').css('cursor', 'pointer');
+						$('#carousel-1-img-measure img').unbind('click');
 						$('#carousel-1-img-measure img').click(
 							function(){
 								eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
@@ -594,7 +600,6 @@ eu.europeana.fulldoc = {
 					// OR hide trigger	
 					
 					var external = gallery._options.dataSource[e.index].external;
-					
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
 					
 				}); // end bind image
@@ -746,8 +751,13 @@ eu.europeana.fulldoc = {
 				// if the thumbnail loaded then show it, otherwise restore the alt text (but prevent it from breaking the layout)
 				if($("#carousel-1-img-measure").width()>0){
 					if(carouselData[0].external){
-						eu.europeana.fulldoc.lightboxable = carouselData[0].external;
-						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
+						if(carouselData[0].external.type == '3d'){
+							$('#carousel-1-img-measure img').css('cursor', 'pointer');
+						}
+						else{
+							eu.europeana.fulldoc.lightboxable = carouselData[0].external;
+							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);							
+						}
 					}	
 				}
 				else{

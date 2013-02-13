@@ -78,10 +78,11 @@ com.google.analytics = {
 	 * @see https://developers.google.com/analytics/devguides/collection/gajs/methods/gaJSApiEventTracking
 	 * @see https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
 	 */
+	/*
 	trackEvent : function( category, action, opt_label, opt_value, opt_noninteraction ) {
 		
 		if ( js.debug ) {
-			 js.console.log(
+			 alert(
 			 	"Track Event:\n\n" +
 			 	"action =\t\t" + action + "\n" +
 			 	"category = \t\t" + category + "\n" + 
@@ -89,13 +90,12 @@ com.google.analytics = {
 			 	"opt_value = \t\t" + opt_value + "\n" +
 			 	"opt_noninteraction = \t\t" + opt_noninteraction
 			 );
-			 
 		}
 		
 		_gaq.push(['_trackEvent', category, action, opt_label, opt_value, opt_noninteraction ]);
 		
 	},
-	
+	*/
 	
 	trackPageView : function() {
 		
