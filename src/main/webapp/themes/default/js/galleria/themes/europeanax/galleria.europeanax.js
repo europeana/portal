@@ -266,9 +266,6 @@ Galleria.addTheme({
 			this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 				$(ob).unbind('click');
 				$(ob).bind("click", function(e){
-					
-					//alert("click " + dataSource[i].link + "\n" + dataSource[i].linkTarget  );
-					
 					if(dataSource[i].linkTarget){
 						window.open(dataSource[i].link, dataSource[i].linkTarget);
 					}
