@@ -416,12 +416,10 @@
 		// iphone now fires resize events on scroll, closing all opened content: this fixes
 		$(window).bind("touchmove", function(){
 			eu.europeana.vars.suppresResize = true;
-			$('#query-input').val("scrolling");		
 		});
 		$(window).bind("scroll", function(){
 			setTimeout(function(){
 				eu.europeana.vars.suppresResize = false;
-				$('#query-input').val("ended");				
 			}, 20)
 		});
 
