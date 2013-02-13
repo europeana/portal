@@ -9,6 +9,19 @@
 <c:if test="${model.pageName=='full-doc.html'}">
   <c:set var="og_image_url" 	value="${fn:replace(model.thumbnailUrlUnescaped, '&amp;', '&')}"/>  
   <c:set var="og_description"	value="${fn:escapeXml( model.document.dcDescription[0] ) }"/>
+  
+	<%-- if title is empty use the description --%>
+	
+	<c:if test="${empty model.pageTitle}">
+		<c:set var="og_title"	value="${fn:escapeXml(model.document.dcDescription[0])}"/>
+	</c:if>
+  
+	<%-- if description is empty use the title --%>
+	
+	<c:if test="${empty model.document.dcDescription[0]}">
+		<c:set var="og_description" 	value="${model.pageTitle}"/>
+	</c:if>
+  
 </c:if>
 
 
