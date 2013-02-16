@@ -5,7 +5,6 @@
 <%@ attribute name="wrapper" required="true" %>
 <%@ attribute name="ugc" required="true" %>
 <%@ attribute name="ess" required="true" %>
-<%@ attribute name="isInLightbox" required="false" %>
 
 <%-- tag libs --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -50,7 +49,7 @@
     <%-- Semantic attributes --%>
     <c:set var="semanticAttributes" value="" />
     <c:set var="semanticUrl" value="" />
-    <c:if test="${!isInLightbox && !data.optedOut}">
+    <c:if test="${!data.optedOut}">
       <c:set var="semanticAttributes">
         <eu:semanticAttributes field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
       </c:set>
@@ -59,16 +58,30 @@
       </c:set>
     </c:if>
 
+
     <<c:out value="${wrapper}"/>${' '}${item_id} class="item-metadata${item_class}">
       <%-- field's label --%>
-      <span class="bold notranslate"><spring:message code="${data.fieldLabel}" />:</span>
+      
+      
+	<c:set var="lightboxables" scope="request">europeana_dataProvider_t,Provider_t</c:set>
+	<c:set var="lightboxableNameClass" value=""/>
+	<c:set var="lightboxableValueClass" value=""/>
+	
+	<c:forEach items="${lightboxables}" var="lightboxable">
+		<c:if test="${lightboxable == data.fieldLabel}">
+			<c:set var="lightboxableNameClass" value="lbN"/>
+			<c:set var="lightboxableValueClass" value="lbV"/>
+		</c:if>
+	</c:forEach>
+
+      <span class="bold notranslate ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
 
       <%-- iterate over possible values for the given label --%>
       <c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
 
         <c:set var="localSemanticAttributes" value="${semanticAttributes}" />
         <c:set var="localSemanticUrl" value="${semanticUrl}" />
-        <c:if test="${!isInLightbox && value.fieldName != data.fieldName && !value.optedOut}">
+        <c:if test="${value.fieldName != data.fieldName && !value.optedOut}">
           <c:choose>
             <c:when test="${model.schemaOrgMapping[value.fieldName] != null}">
               <c:set var="localSemanticAttributes">
@@ -85,10 +98,12 @@
         </c:if>
 
         <%-- determine if value is translatable or not --%>
-        <c:set var="translatable" value='class="notranslate"' />
+        <c:set var="classAttr" value='notranslate' />
         <c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
-          <c:set var="translatable" value='class="translate"' />
+          <c:set var="classAttr" value='translate' />
         </c:if>
+        <c:set var="classAttr" value='${classAttr}${" "}${lightboxableValueClass}' />
+        
 
         <c:set var="separator" value='' />
         <c:if test="${!valueStatus.last}">
@@ -111,13 +126,14 @@
 
         <c:choose>
           <c:when test="${value.searchOn}">
-            <a href="${value.searchOn}" target="_top" ${translatable} <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
+            <a href="${value.searchOn}" target="_top" class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
           </c:when>
           <c:when test="${value.url}">
-            <a href="${value.value}" target="_blank" ${translatable} <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
+            <a href="${value.value}" target="_blank" class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
           </c:when>
           <c:otherwise>
-            <span ${translatable}<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if><c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:out value="${value.value}" />
+         
+            <span class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if><c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:out value="${value.value}" />
               <c:if test="${value.value == '3D PDF'}">
                 <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
               </c:if>
