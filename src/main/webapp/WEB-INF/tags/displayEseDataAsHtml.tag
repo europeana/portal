@@ -63,7 +63,7 @@
       <%-- field's label --%>
       
       
-	<c:set var="lightboxables" scope="request">europeana_dataProvider_t,Provider_t</c:set>
+	<c:set var="lightboxables" scope="request">Creator_t,europeana_dataProvider_t,Provider_t</c:set>
 	<c:set var="lightboxableNameClass" value=""/>
 	<c:set var="lightboxableValueClass" value=""/>
 	
