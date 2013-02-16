@@ -16,7 +16,7 @@
           <c:set var="fieldPresentations" value="${fieldEnrichment.value}" />
           <li>
             <h4><a href="" class="nofollow icon"><spring:message code="${fieldEnrichment.key}" /></a></h4>
-            <ul><europeana:displayEseDataAsHtml listCollection="${fieldEnrichment.value}" wrapper="li" ugc="false" ess="true" isInLightbox="false" /></ul>
+            <ul><europeana:displayEseDataAsHtml listCollection="${fieldEnrichment.value}" wrapper="li" ugc="false" ess="true"/></ul>
           </li>
         </c:forEach>
       </ul>
