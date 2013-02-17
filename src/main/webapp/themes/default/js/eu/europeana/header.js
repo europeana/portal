@@ -483,14 +483,12 @@ eu.europeana.header = {
 						+ 	'<div class="close"></div>'
 			);
 
-			$(".overlaid-content, .iframe-wrap .close").unbind("click");
-			$(".overlaid-content, .iframe-wrap .close").click(function(){
-				$(".overlaid-content").css('visibility', 'hidden');
-			});
-			
-			$(".iframe-wrap").unbind("click");
-			$(".iframe-wrap").click(function(e){
-				e.stopPropagation();
+			$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
+				$(ob).click(function(e){
+					if(e.target == ob){
+						$(".overlaid-content").css('visibility', 'hidden');					
+					}
+				});
 			});
 			
 			$(".overlaid-content").css('visibility', 'visible');

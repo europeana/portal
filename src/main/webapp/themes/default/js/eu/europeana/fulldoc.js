@@ -2,6 +2,8 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
 
+	lightboxOb :	null,
+	
 	// provides priority order for which tab to open when no hash is given
 	// provides a list of accepted hash values for validation
 	tab_priority : [ '#related-items','#similar-content','#map-view' ],
@@ -22,8 +24,7 @@ eu.europeana.fulldoc = {
 		
 		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
 			function(e){
-				eu.europeana.fulldoc.triggerPanel.data['type'] = 'link';
-				eu.europeana.fulldoc.trackedClick('link');
+				com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (link)");
 			}
 		);
 
@@ -43,7 +44,41 @@ eu.europeana.fulldoc = {
 		js.console.log(JSON.stringify(carouselData));
 	},
 
+	/*
+	 * tracks click data (category - action):
+	 * 	Redirect	(img, broken-img, link, magnify)
+	 *	Lightbox	()
+	 *
+	 *
+	 *	Tested:
+	 *		Redirect
+	 *			broken-img
+	 *				http://localhost:8081/portal/record/2020108/EC96CC5915FEA827AE650B0F3A993146F94C41FB.html?start=9585&query=provider_aggregation_edm_isShownAt%3A*.jpg&startPage=9577&rows=24
+	 *			link
+	 *				http://localhost:8081/portal/record/08520/39E3DADAFEC42684697AC5A4F557A49B8A19727C.html?start=2378&query=provider_aggregation_edm_isShownAt%3A*.jpg&startPage=2377&rows=24
+	 *		Lightbox
+	 *			img
+	 *				http://localhost:8081/portal/record/08520/39E3DADAFEC42684697AC5A4F557A49B8A19727C.html?start=2378&query=provider_aggregation_edm_isShownAt%3A*.jpg&startPage=2377&rows=24
+	 *
+	 *
+	 *
+	 *		example calls
+	 *
+	 *		
+	 *		eu.europeana.fulldoc.triggerPanel.data['type'] = 'link';
+	 *		eu.europeana.fulldoc.trackedClick('link');
+	 *			
+	 *		eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
+	 *		eu.europeana.fulldoc.trackedClick('broken-img');
+ 	 *
+	 *
+	 * */
+	
 	trackedClick : function(src){		/* src = img, magnify or link; */
+	
+		alert("track: src = " + src + ", type = " + eu.europeana.fulldoc.triggerPanel.data['type'] );
+		return;
+		
 		
 		if(src == 'img'){
 			if(typeof eu.europeana.fulldoc.triggerPanel != 'undefined' && eu.europeana.fulldoc.triggerPanel.is(":visible")){
@@ -313,79 +348,80 @@ eu.europeana.fulldoc = {
 	},
 
 
+	/**
+	 * Makes the one and only call to eu.europeana.lightbox.init
+	 * */
 	initLightbox : function(url){
 		js.console.log("initLightbox");
 
-		var NavOb = function(){
-			var nav = function(direction){
-				var currentUrl = $("#lightbox_image").attr("src");
-				var submodel = [];
-				var submodelActive = 0;
-				
-				for(var i=0; i<carouselData.length; i++){
-					if(carouselData[i].external && carouselData[i].external.type == "image"){
-						if(carouselData[i].external.url == currentUrl){
-							submodelActive = submodel.length;
-							js.console.log("active for lightbox: " + i);
-						}
-						submodel[submodel.length] = carouselData[i].external;
-					}
-				}
+		if(!eu.europeana.fulldoc.lightboxOb){
+			var cmp = $('<div id="lightbox">'	+ $('#lightbox-proxy').html() + '</div>');
+			$(".iframe-wrap").empty().append(cmp);
 
-				var newActive = submodelActive + direction;
-				if(newActive<0){
-					newActive = submodel.length -1;
+			
+			// copy title, meta and original context to the info panel
+			
+			// title
+			cmp.find('#lightbox_info li.title').append(
+				'&nbsp;' + $('#item-details h1').html().trim()
+			);
+			
+			// meta
+			$('#item-details .lbN').each(function(i, ob){
+				var next	 	= $(ob).next('.lbV');
+				if(!next.length){
+					next = $(ob).next('h2').find('.lbV').length ? $(ob).next('h2') : '';
 				}
-				else if(newActive >= submodel.length){
-					newActive = 0;						
+				var metaValue	= next.length ? next.html() : null;
+				
+				if(metaValue){
+					var metaLabel = $(ob).html();
+					cmp.find('#lightbox_info ul').append(
+						'<li><strong>' + metaLabel + '</strong>&nbsp;' + metaValue + '</li>'
+					);
 				}
+			});
+			
+			// original context
+			var ocLabel = $('.original-context div:not(:empty)');
+			ocLabel = ocLabel.length ? ocLabel.html() : '';
+			var ocValue = $('.original-context #urlRefIsShownAt');
+			ocValue = ocValue.length ? ocValue.clone().wrap('<p>').parent().html() : '';
+			
+			cmp.find('#lightbox_info ul').append(
+				'<li><strong>' + ocLabel + ':</strong>&nbsp;'
+				+ ocValue + '</li>'
+			);
 
-				js.console.log("submodel is now " + JSON.stringify(submodel)  );
-				
-				$("#hidden_img").unbind( '.imagesLoaded' );
-				$("#hidden_img").remove();
-				
-				$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
-					function(){
-						var zoomed = false;
-						if($("#zoomedImg").is(":visible")){
-							eu.europeana.lightbox.closeZoom();
-							zoomed = true;
-						}
-						
-						$("#lightbox_image").attr("src", submodel[newActive].url);
-						eu.europeana.lightbox.layout();
-						if(zoomed){
-							eu.europeana.lightbox.zoomImg();
-						}
-					}
-				);
-			};
-			this.prev = function(){
-				nav(-1);
-			};
-			this.next = function(){
-				nav(1);
-			};
-		};
-		
-		eu.europeana.lightbox.init(url, eu.europeana.fulldoc.getLightboxableCount() > 1 ? new NavOb() : null);
-	
-		$('#lightbox_image').attr('src', url);
-		
+			// rights
+			var rightsVal = $('.original-context .rights-badge').clone().wrap('<p>').parent().html();
+			if(rightsVal){
+				cmp.find('#lightbox_info ul').append(
+					'<li class="rights">' + rightsVal + '</li>'
+				);				
+			}
+			
+			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
+			eu.europeana.fulldoc.lightboxOb.init(
+					cmp,
+					url,
+					eu.europeana.fulldoc.getLightboxableCount() > 1 ? carouselData : null);
+		}
+		else{
+			eu.europeana.fulldoc.lightboxOb.switchImg(url);
+		}
 	},
 	
 	
 	
 	initTriggerPanel: function(type, index, gallery){
-		
-		js.console.log("initTriggerPanel type = " + type);
-		
+				
 		if($("#mobile-menu").is(":visible") ){
+			// Andy: ga set here?  then will not work for phones
 			return;
 		}
 		
-		js.console.log('initTriggerPanel type= ' + type + ", index = " + index);
+		alert('initTriggerPanel type= ' + type + ", index = " + index);
 		
 		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 			// instantiate and hide
@@ -398,39 +434,63 @@ eu.europeana.fulldoc = {
 			eu.europeana.fulldoc.triggerPanel.hide();
 		}
 		
-		eu.europeana.fulldoc.triggerPanel.data['type'] = type; /* used for google analytics category */
+		var triggerPanel = eu.europeana.fulldoc.triggerPanel;
 		
-		var triggerSpan = eu.europeana.fulldoc.triggerPanel.find('.label');
+		//triggerPanel.data['type'] = type; /* used for google analytics category */
+		
+		var triggerSpan = triggerPanel.find('.label');
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
 		
-		// action handling
+		// function for opening content in new window (broken img or non img)
 		
-		eu.europeana.fulldoc.triggerPanel.unbind('click');
-		triggerSpan.unbind('click');
-		triggerSpan.removeData('overlay');
-		
-		$(eu.europeana.fulldoc.triggerPanel).bind('click', function(){
-			eu.europeana.fulldoc.trackedClick('magnify', type);
-		});
-
+		var winOpen = function(){
+			window.open(carouselData[index ? index : 0].external.url, '_new');
+		};
 		
 		if(carouselData[index ? index : 0].external.type == 'image'){
-			
+
 			/* if the image is wider than 200 px initialise the lightbox and show the trigger panel,
-			 * if not bind the image to open the mapped url in a seaparate window
+			 * if not bind the image (url) to open the mapped url in a seaparate window
 			 */
 			$('<img src="'+ carouselData[index ? index : 0].external.url + '" style="visibility:hidden"/>')
+			
 			.appendTo('body').imagesLoaded(
 							
 				function($images, $proper, $broken){
-				
+
 					if($proper.length==1 && $proper.width() > 200){
+						
+						// Add the markup
+						//alert("image loaded:  eu.europeana.fulldoc.lightboxOb = " + eu.europeana.fulldoc.lightboxOb);
+
 						eu.europeana.fulldoc.loadLightboxJS(
-								function(){
-									eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);
-									eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
+							function(){								
+								var ev = $._data( $('#carousel-1-img-measure')[0], 'events');
+								if(! (ev && ev.click) ){
+					
+									$('#carousel-1-img-measure').click(function(){
+										
+										$(".iframe-wrap").empty().append(eu.europeana.fulldoc.lightboxOb.getCmp() );
+
+										$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
+											$(ob).click(function(e){
+												if(e.target == ob){
+													$(".overlaid-content").css('visibility', 'hidden');					
+												}
+											});
+										});
+										
+										eu.europeana.fulldoc.lightboxOb.showLightbox(function(){
+											$(".overlaid-content").css('visibility', 'visible');	
+										});
+												
+									});
 								}
+								// end new trigger (was previously in lightbox definition file)
+								eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);
+								eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
+							}
 						);
 					}
 					else{
@@ -438,35 +498,38 @@ eu.europeana.fulldoc = {
 						
 						// if the lightbox test fails then attach a click handler to the image
 						$('#carousel-1-img-measure img').css('cursor', 'pointer');
-						$('#carousel-1-img-measure img').unbind('click');
-						$('#carousel-1-img-measure img').click(
+						
+						eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click',
 							function(){
-								eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
-								eu.europeana.fulldoc.trackedClick('broken-img');
+								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (magnify)");
+								winOpen();
+							}
+						);
+						$('#carousel-1-img-measure img').unbind('click').bind('click',
+							function(){								
+								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (broken-img)");
+								winOpen();
 							}
 						);
 					}
 					$(this).remove();
 				}
+				// end image load test
 			);
 		}
 		else{
-			eu.europeana.fulldoc.triggerPanel.bind('click', function(){
-				
-				var type = carouselData[index ? index : 0].external.type; 
-				if(type == 'pdf'){
-        			window.open(carouselData[index ? index : 0].external.url, '_new');
-        		}
-				else if(type == 'sound'){
-					window.open(carouselData[index ? index : 0].external.url, '_new');
+			alert("NO LB data - maybe external data");
+			
+			eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click', function(){
+					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (magnify)");
+					winOpen();
 				}
-				else if(type == 'video'){
-					window.open(carouselData[index ? index : 0].external.url, '_new');
+			);
+			$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
+					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (img)");
+					winOpen();
 				}
-				else if(type == 'text'){
-					window.open(carouselData[index ? index : 0].external.url, '_new');
-				}
-			});
+			);
 			eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 		}
 	},
@@ -499,15 +562,12 @@ eu.europeana.fulldoc = {
 			$('#carousel-1-img-measure img').css('cursor', 'default');
 		}
 	},
-	
-	loadLightboxJS : function(callbackLoad){
 
-		js.loader.loadScripts([{
-			name: 'jquery-tools',
-			file : 'jquery.tools.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/min/',
-			dependencies : [ 'jquery' ]
-		}]);
+	
+	/**
+	 * @callbackLoad = fn handling overlay click binding / lighbtox init call / trigger update
+	 * */
+	loadLightboxJS : function(callbackLoad){
 
 		js.loader.loadScripts([{
 				name : 'touchswipe',
@@ -520,7 +580,8 @@ eu.europeana.fulldoc = {
 		  
 		if(!window.showingPhone()){
 			
-			var lightboxJsFile = 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper;
+//			var lightboxJsFile = 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper;
+			var lightboxJsFile = 'lightbox' + js.min_suffix + '.js' + js.cache_helper;
 			
 			if( js.loader.loader_status[lightboxJsFile]){
 				if(callbackLoad){
@@ -532,19 +593,22 @@ eu.europeana.fulldoc = {
 			js.loader.loadScripts([{
 				file : lightboxJsFile,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-				dependencies :  $("html").hasClass('ie8') ? [ 'jquery-tools'] : [ 'jquery-tools', 'touchswipe'],
+				dependencies :  $("html").hasClass('ie8') ? [ ] : ['touchswipe'],
 				
 				callback: function(){
 					$(window).on("resize", function(){
-						if(eu.europeana.lightbox.layout){
-							eu.europeana.lightbox.layout();												
+						if(eu.europeana.fulldoc.lightboxOb){
+							eu.europeana.fulldoc.lightboxOb.layoutNew();							
 						}
 					});
 					if(callbackLoad){
 						callbackLoad();
 					}
+					else{
+						alert("load lightbox called without callback...?");
+					}
 				}
-			}]);									
+			}]);
 		}
 	},
 	
@@ -756,7 +820,22 @@ eu.europeana.fulldoc = {
 						}
 						else{
 							eu.europeana.fulldoc.lightboxable = carouselData[0].external;
-							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);							
+							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
+
+
+							/*
+							 * maclean
+							eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click', function(){
+								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (magnify)");
+								winOpen();
+							});
+							$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
+								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (img)");
+								winOpen();
+							});
+							com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (img)");
+							*/
+							
 						}
 					}	
 				}
@@ -767,13 +846,7 @@ eu.europeana.fulldoc = {
 						$(ob).attr("alt", $(ob).data.alt);
 					});
 				}
-				
-				// img trigger bind
-				$('#carousel-1-img-measure img').bind('click',
-					function(){
-						eu.europeana.fulldoc.trackedClick('img');
-					}
-				);
+				alert("no carousel");
 			};
 			
 			// Run carousel test and init if successful
@@ -789,6 +862,8 @@ eu.europeana.fulldoc = {
 					function($images, $proper, $broken){
 						if($proper.length==carouselTest.length){
 							js.console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
+							
+							
 							eu.europeana.fulldoc.getCarousel1Height = function(){
 								var tallestImageH = $("#carousel-1-img-measure").height();
 								var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
@@ -797,10 +872,13 @@ eu.europeana.fulldoc = {
 								}
 								return tallestImageH + galleriaOffsetY;
 							};
+							
+							
 							eu.europeana.fulldoc.initTopCarousel();
 							$('#carousel-1 .galleria-stage .galleria-image img').live('click', 
 								function(){
-									eu.europeana.fulldoc.trackedClick('img');
+									alert("carousel track bind - disabled");
+									//eu.europeana.fulldoc.trackedClick('img from galleria');
 								}
 							);		
 						}

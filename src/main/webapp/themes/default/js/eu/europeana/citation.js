@@ -117,16 +117,16 @@ eu.europeana.citation = {
 		};
 		eu.europeana.citation.tabs = new AccordionTabs( $('#citation-tabs'), callback );			
 		
-		$(".overlaid-content, .close-button.icon-remove").unbind("click");
-		$(".overlaid-content, .close-button.icon-remove").click(function(){
-			$(".overlaid-content").css('visibility', 'hidden');
-		});
 		
-		$(".iframe-wrap").unbind("click");
-		$(".iframe-wrap").click(function(e){
-			e.stopPropagation();
+		$(".iframe-wrap, .close-button").unbind("click").each(function(i, ob){
+			$(ob).click(function(e){
+				if(e.target == ob){
+					$(".overlaid-content").css('visibility', 'hidden');					
+				}
+				e.preventDefault();
+			});
 		});
-		
+
 	}
 };
 

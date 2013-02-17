@@ -3,6 +3,38 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
+
+<div id="lightbox-proxy"><div class="lightbox_content_wrap">
+		<span id="nav-prev"	class="icon-arrow-4"></span>
+		<span id="nav-next"	class="icon-arrow-2"></span>
+		<span id="zoomIn"></span>
+		
+		<img
+		id="lightbox_image"
+		/><div id="lightbox_info">
+			<ul>
+				<li class="hide_show_meta">
+					<a class="showMeta"><spring:message code="see_details_t"/></a>
+					<a class="hideMeta"><spring:message code="hide_details_t"/></a>
+				</li>
+				
+				<c:if test="${!empty model.objectTitle}">
+					<li class="title"><strong><spring:message code="dc_title_t"/>:</strong></li>
+				</c:if>
+				<%--
+				 	<c:if test="${!empty model.fieldsLightbox && fn:length(model.fieldsLightbox) > 0}">
+						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false"/>
+					</c:if>
+					<div class="original-context">
+						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
+					</div>
+				--%>
+
+			</ul>
+		</div></div><div class="close"></div></div>
+
+
+<%--
 <div class="simple_overlay" id="lightbox">
 	<div class="content-wrap">
 		<span id="nav-prev" class="icon-arrow-4"></span>
@@ -21,7 +53,7 @@
 						</div>
 					</c:if>
 					<c:if test="${!empty model.fieldsLightbox && fn:length(model.fieldsLightbox) > 0}">
-						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false" isInLightbox="true" />
+						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false"/>
 					</c:if>
 					<div class="original-context">
 						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
@@ -42,3 +74,4 @@
 		</div>
 	</div>
 </div>
+--%>
