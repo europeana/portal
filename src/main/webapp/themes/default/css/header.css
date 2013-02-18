@@ -252,6 +252,9 @@ table tr:first-child{
 		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 		border-radius:			0.5em 0.5em 0.5em 0.5em;
+		table-layout:			auto;
+		position:				relative;
+		top:					-0.4em;
 	}
 	
 	table tr:first-child{
@@ -270,9 +273,6 @@ table tr:first-child{
 		border:					0;
 	}
 
-	table{
-		table-layout:	auto;
-	}
 	
 	tr td.menu-cell:first-child, tr td.query-cell{
 		width:	auto;
