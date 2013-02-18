@@ -168,7 +168,7 @@ var europeana_bootstrap = function(){
 			name : 'fulldoc',
 			file : 'fulldoc' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils', 'galleria' ]
+			dependencies : [ 'utils', 'galleria', 'EuMenu' ]
 		});
 
 
@@ -202,7 +202,7 @@ var europeana_bootstrap = function(){
 			name : 'index',
 			file : 'index' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : ['collapsible', 'utils', 'galleria']
+			dependencies : ['collapsible', 'utils', 'galleria', 'EuMenu']
 		});
 				
 		loadScripts(scripts);
