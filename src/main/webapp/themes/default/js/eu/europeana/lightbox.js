@@ -143,7 +143,7 @@ eu.europeana.lightbox = function(){
 			else{
 				return [projectedWidth, projectedHeight]
 			}
-		}
+		};
 		
 		var dim = testDimensions(imgW, imgH, 0);
 		
@@ -192,12 +192,23 @@ eu.europeana.lightbox = function(){
 		if(!self.zoomed){
 			var both	= self.cmp.find('.hide_show_meta');
 			
-			if(isRight){
+			var showBoth = function(){
+				both.show();
+				self.cmp.find('ul').addClass('collapsed');				
+			};
+
+			var hideBoth = function(){
 				both.hide();
+				self.cmp.find('ul').removeClass('collapsed');				
+			};
+			
+			
+			if(isRight){
+				hideBoth();
 				info.css('overflow-y', 'auto');
 			}
 			else{
-				both.show();
+				showBoth();
 				
 				var show	= self.cmp.find('.showMeta');
 				var hide	= self.cmp.find('.hideMeta');
@@ -252,7 +263,7 @@ eu.europeana.lightbox = function(){
 					
 					if(availHeight >= naturalHeight){
 						info.css('height', naturalHeight + 1);  // add the one to stop a .2 pixel height variation causing a scrollbar to appear 
-						both.hide();
+						hideBoth();
 					}
 					
 					show.unbind('click').click(function(){

@@ -52,7 +52,11 @@
 	table-layout:		fixed;	/* chrome fix overflowing table */
 	width:				100%;
 	max-width:			100%;
-}	
+}
+
+#lightbox_info ul.collapsed{
+	padding-top:		0;
+}
 
 #lightbox_info li{
 	display:	table-row;
@@ -74,7 +78,7 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 
 #lightbox_info li:after{
 	display:block;
-	margin:0.7em;
+	XXXXXXXXXXXXXXXmargin:0.7em;
 	content:		"\a";
 	white-space:	pre;
 	font-size:		0.25em;
@@ -116,18 +120,9 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 	color:	#fff;
 }
 
-
-
-
-
-
-.hide_show_meta:hover{
-	xxxxxxtext-decoration:	underline;	
-}
-
 .hide_show_meta{
 	
-	height:		30px;
+	height:		1em;
 	text-align:	right;
 	
 	xxxxxxxxxxxxxxxxxxxmargin-top:		-0.5em;
@@ -138,8 +133,10 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 a.showMeta,
 a.hideMeta{
 	cursor:		pointer;
-	position:	relative;
-	top:		-0.6em;
+	XXXXposition:	relative;
+	XXXXtop:		-0.6em;
+	
+	line-height:	2em;
 }
 
 
@@ -185,86 +182,3 @@ a.hideMeta{
 #zoomIn.active{
 	background-image:	url('/portal/themes/default/images/icons/lightbox-enlittle.png');
 }
-
-
-
-
-
-/*
-
-OLD STUFF
-
-
-.simple_overlay {
-	z-index:			10000;
-	display:			none;
-	background-color:	transparent;
-	border:				1px solid #666;	
-
-	box-shadow:			0 0 90px 5px #000;
-	-moz-box-shadow:	0 0 90px 5px #000;
-	-webkit-box-shadow:	0 0 90px #000;	
-}
-*/
-
-
-
-
-
-
-
-#lightbox-embed, #lightbox-download, #lightbox-embed:visited, #lightbox-download:visited{
-	text-transform:	capitalize;
-}
-
-.addthis_toolbox.addthis_default_style span{
-	line-height:	1.4em !important;
-}
-
-.item-metadata .rights-badge img{
-	border:				none;
-}
-
-
-
-
-img.trigger{
-	cursor:	pointer;
-}
-
-
-
-.trigger a{
-	color:					black;
-}
-	
-span.trigger,
-span.download,
-span.download_lightbox{
-	float:					left;
-	margin-left:			10px;
-	margin-top:				6px;
-	cursor:					pointer;
-	width:					20px;
-	height:					23px;
-}
-
-	
-span.view, span.read, span.play{	/* these are already triggers */
-	padding-left:			28px;
-	white-space:			nowrap;
-	padding-top:			1px;
-}
-	
-span.download{
-}
-
-span.play{
-}
-
-#lightbox-download span.download{
-	margin-right:		8px;
-	margin-top: 		0px;
-}
-
-
