@@ -547,7 +547,10 @@ eu.europeana.fulldoc = {
 				callback: function(){
 					$(window).on("resize", function(){
 						if(eu.europeana.fulldoc.lightboxOb){
-							eu.europeana.fulldoc.lightboxOb.layoutNew();							
+							if( $('.overlaid-content').css('visibility') == 'hidden' ){
+								return;
+							}
+							eu.europeana.fulldoc.lightboxOb.layout();							
 						}
 					});
 					if(callbackLoad){

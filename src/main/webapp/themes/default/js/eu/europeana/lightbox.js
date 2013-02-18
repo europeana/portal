@@ -79,7 +79,7 @@ eu.europeana.lightbox = function(){
 		self.origImgH = cmp.find('#lightbox_image').height();
 	};
 
-	var layoutNew = function(showMeta){
+	var layout = function(){
 		
 		/*	Strategy:
 		 * 
@@ -97,7 +97,7 @@ eu.europeana.lightbox = function(){
 		var	imgW	= self.origImgW,
 			imgH	= self.origImgH,
 			infoW	= self.infoW,
-			infoH	= showMeta ? showMeta : self.infoH,
+			infoH	= self.infoH,
 			infoHx	= self.infoHx;
 			brdr	= self.brdr;
 		
@@ -135,13 +135,14 @@ eu.europeana.lightbox = function(){
 			//js.console.log("projected " + projectedWidth + " / " + projectedHeight +  "   available = " + availableWidth + " x " + availableHeight );
 
 			if(rec > 30){
-				alert("recurse " + rec);
+				js.console.log('avoid infinite recursion');
+				return [projectedWidth, projectedHeight];
 			}
 			if(projectedHeight > availableHeight || projectedWidth > availableWidth){
 				return testDimensions(	w*0.9, h*0.9, rec+1);
 			}
 			else{
-				return [projectedWidth, projectedHeight]
+				return [projectedWidth, projectedHeight];
 			}
 		};
 		
@@ -276,13 +277,13 @@ eu.europeana.lightbox = function(){
 	};
 	
 	var showLightbox = function(callback){
-		layoutNew();
+		layout();
 		
 		self.cmp.find('#zoomIn').unbind().click(function(){
 			self.cmp.find('#zoomIn').toggleClass('active');
 			  
 			self.zoomed = !self.zoomed;
-			layoutNew();
+			layout();
 		});
 		
 		if(callback){
@@ -295,8 +296,8 @@ eu.europeana.lightbox = function(){
 			init(cmp, src, navOb);
 		},
 		
-		"layoutNew" : function(){
-			layoutNew();
+		"layout" : function(){
+			layout();
 		},
 		
 		"showLightbox" : function(callback){
@@ -337,7 +338,7 @@ eu.europeana.lightbox = function(){
 		
 		"switchImg" : function(url){
 			self.cmp.find("#lightbox_image").attr("src", url);
-			layoutNew();
+			layout();
 		},
 		
 		"getCmp" : function(callback){
