@@ -206,18 +206,20 @@ eu.europeana.lightbox = function(){
 						show.show();
 						hide.hide();
 						info.css('overflow-y', 'hidden');
-					}
+					};
+					
 					var showHide = function(){
 						hide.show();
 						show.hide();
 						info.css('overflow-y', 'auto');
-					}
+					};
+					
 					info.height() > self.infoH ? showHide() : showShow();
 
 					hide.unbind('click').click(function(){
 						info.css('height', self.infoH + 'px');
 						showShow();
-					})
+					});
 
 					var em = $('<div class="test" style="height:1em;">&nbsp;</div>').appendTo(info);
 					em = em.height();
@@ -240,20 +242,13 @@ eu.europeana.lightbox = function(){
 	//info.scrollTop();
 	//info.css('overflow-y', ref);
 	//alert( info.css('overflow-y') );
-
+					
+					if(availHeight >= naturalHeight){
+						info.css('height', naturalHeight + 1);  // add the one to stop a .2 pixel height variation causing a scrollbar to appear 
+					}
+					
 					show.unbind('click').click(function(){
-						info.css('height',
-							//Math.ceil(
-							//	parseInt(
-									Math.min(
-										naturalHeight > availHeight ? 
-												availHeight + 20 : availHeight,
-										naturalHeight + 1
-									)
-							//	)
-							//)
-							+ 'px'
-						);
+						info.css('height',	availHeight + em + 'px');
 						showHide();
 					});
 				}

@@ -44,62 +44,6 @@ eu.europeana.fulldoc = {
 		js.console.log(JSON.stringify(carouselData));
 	},
 
-	/*
-	 * tracks click data (category - action):
-	 * 	Redirect	(img, broken-img, link, magnify)
-	 *	Lightbox	()
-	 *
-	 *
-	 *	Tested:
-	 *		Redirect
-	 *			broken-img
-	 *				http://localhost:8081/portal/record/2020108/EC96CC5915FEA827AE650B0F3A993146F94C41FB.html?start=9585&query=provider_aggregation_edm_isShownAt%3A*.jpg&startPage=9577&rows=24
-	 *			link
-	 *				http://localhost:8081/portal/record/08520/39E3DADAFEC42684697AC5A4F557A49B8A19727C.html?start=2378&query=provider_aggregation_edm_isShownAt%3A*.jpg&startPage=2377&rows=24
-	 *		Lightbox
-	 *			img
-	 *				http://localhost:8081/portal/record/08520/39E3DADAFEC42684697AC5A4F557A49B8A19727C.html?start=2378&query=provider_aggregation_edm_isShownAt%3A*.jpg&startPage=2377&rows=24
-	 *
-	 *
-	 *
-	 *		example calls
-	 *
-	 *		
-	 *		eu.europeana.fulldoc.triggerPanel.data['type'] = 'link';
-	 *		eu.europeana.fulldoc.trackedClick('link');
-	 *			
-	 *		eu.europeana.fulldoc.triggerPanel.data['type'] = 'broken-img';
-	 *		eu.europeana.fulldoc.trackedClick('broken-img');
- 	 *
-	 *
-	 * */
-	
-	trackedClick : function(src){		/* src = img, magnify or link; */
-	
-		alert("track: src = " + src + ", type = " + eu.europeana.fulldoc.triggerPanel.data['type'] );
-		return;
-		
-		
-		if(src == 'img'){
-			if(typeof eu.europeana.fulldoc.triggerPanel != 'undefined' && eu.europeana.fulldoc.triggerPanel.is(":visible")){
-				eu.europeana.fulldoc.triggerPanel.find('.label').click();		/* will recurse back to here with src 'magnify' */				
-			}
-			else{
-				com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Redirect', 'External (image)');
-				window.open(carouselData[0].external.url, '_new');
-			}
-		}
-		else if(src == 'broken-img'){
-			com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Lightbox', 'External (' + src + ')');
-			window.open(carouselData[0].external.url, '_new');
-		}
-		else{
-			var clickSrc	= src == 'magnify' ? 'image' : eu.europeana.fulldoc.triggerPanel.data['type'];
-			var action		= src == 'link' ? 'Europeana Redirect' : (eu.europeana.fulldoc.triggerPanel.data['type']  == 'image' ? 'Europeana Lightbox' : 'Europeana Redirect');
-			com.google.analytics.europeanaEventTrack("Europeana Portal", action, 'External (' + clickSrc + ')');
-		}
-	},
-	
 	loadComponents : function() {
 		
 		var self = eu.europeana.fulldoc;
@@ -416,12 +360,10 @@ eu.europeana.fulldoc = {
 	
 	initTriggerPanel: function(type, index, gallery){
 				
-		if($("#mobile-menu").is(":visible") ){
+		//if($("#mobile-menu").is(":visible") ){
 			// Andy: ga set here?  then will not work for phones
-			return;
-		}
-		
-		alert('initTriggerPanel type= ' + type + ", index = " + index);
+		//	return;
+		//}
 		
 		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 			// instantiate and hide
@@ -462,7 +404,6 @@ eu.europeana.fulldoc = {
 					if($proper.length==1 && $proper.width() > 200){
 						
 						// Add the markup
-						//alert("image loaded:  eu.europeana.fulldoc.lightboxOb = " + eu.europeana.fulldoc.lightboxOb);
 
 						eu.europeana.fulldoc.loadLightboxJS(
 							function(){								
@@ -518,15 +459,13 @@ eu.europeana.fulldoc = {
 			);
 		}
 		else{
-			alert("NO LB data - maybe external data");
-			
 			eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click', function(){
 					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (magnify)");
 					winOpen();
 				}
 			);
 			$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
-					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (img)");
+					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (image)");
 					winOpen();
 				}
 			);
@@ -542,6 +481,11 @@ eu.europeana.fulldoc = {
 	 * 
 	 * */
 	showExternalTrigger : function(show, type, gallery){
+		
+		if($("#mobile-menu").is(":visible") ){
+			return;
+		}
+		
 		if(show){
 			var marginTrigger = 0;
 			
@@ -604,9 +548,9 @@ eu.europeana.fulldoc = {
 					if(callbackLoad){
 						callbackLoad();
 					}
-					else{
-						alert("load lightbox called without callback...?");
-					}
+					//else{
+					//	alert("load lightbox called without callback...?");
+					//}
 				}
 			}]);
 		}
@@ -822,19 +766,32 @@ eu.europeana.fulldoc = {
 							eu.europeana.fulldoc.lightboxable = carouselData[0].external;
 							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 
-
-							/*
-							 * maclean
-							eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click', function(){
-								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (magnify)");
-								winOpen();
-							});
-							$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
-								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (img)");
-								winOpen();
-							});
-							com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (img)");
-							*/
+							
+							
+							if($("#mobile-menu").is(":visible") ){
+								
+								if(carouselData[0].external.type == 'image'){
+								
+									// rewire from lightbox to redirect
+									
+									$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
+										com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (image)");
+										window.open(carouselData[0].external.url, '_new');
+									});
+										
+								}
+							}
+							else{
+								if(carouselData[0].external.type == 'image'){
+									$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
+										com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (image)");
+									});
+									
+									eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click', function(e){
+										com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (magnify)");
+									});
+								}								
+							}
 							
 						}
 					}	
@@ -846,7 +803,6 @@ eu.europeana.fulldoc = {
 						$(ob).attr("alt", $(ob).data.alt);
 					});
 				}
-				alert("no carousel");
 			};
 			
 			// Run carousel test and init if successful
@@ -877,8 +833,8 @@ eu.europeana.fulldoc = {
 							eu.europeana.fulldoc.initTopCarousel();
 							$('#carousel-1 .galleria-stage .galleria-image img').live('click', 
 								function(){
-									alert("carousel track bind - disabled");
-									//eu.europeana.fulldoc.trackedClick('img from galleria');
+									com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Lightbox', 'External (image)');
+									window.open(carouselData[0].external.url, '_new');
 								}
 							);		
 						}
