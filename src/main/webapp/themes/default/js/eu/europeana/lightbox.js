@@ -245,6 +245,7 @@ eu.europeana.lightbox = function(){
 					
 					if(availHeight >= naturalHeight){
 						info.css('height', naturalHeight + 1);  // add the one to stop a .2 pixel height variation causing a scrollbar to appear 
+						both.hide();
 					}
 					
 					show.unbind('click').click(function(){
