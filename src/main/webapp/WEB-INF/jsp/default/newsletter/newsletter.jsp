@@ -93,6 +93,17 @@
 				$('#id_email').attr('placeholder',				window.emma.placeholder);
 				$('#id_email').attr('title',					window.emma.placeholder);
 				//top.resizeTo( $( window.parent ).width(), $( window.parent ).height()+1 );
+				
+				
+				$(window).bind('keypress', function(e){
+					if(e.ctrlKey || e.metaKey){
+						return;
+					}
+					var key	= window.event ? e.keyCode : e.which;
+					if(key==27 || key ==0){
+						$(".overlaid-content", parent.document).css('visibility', 'hidden');
+					}
+				});
 			});
 		</script>
 	</body>

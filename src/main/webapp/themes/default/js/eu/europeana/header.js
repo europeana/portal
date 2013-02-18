@@ -483,6 +483,7 @@ eu.europeana.header = {
 						+ 	'<div class="close"></div>'
 			);
 
+			
 			$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
 				$(ob).click(function(e){
 					if(e.target == ob){
@@ -494,6 +495,17 @@ eu.europeana.header = {
 			$(".overlaid-content").css('visibility', 'visible');
 		});
 		
+		
+		$(window).add('.iframe-wrap').bind('keypress', function(e){
+			if(e.ctrlKey || e.metaKey){
+				return;
+			}
+			var key	= window.event ? e.keyCode : e.which;
+			if(key==27 || key ==0){
+				$(".overlaid-content").css('visibility', 'hidden');
+			}
+		});
+
 	},
 	
 	setupPinterestAnalytics : function(){
