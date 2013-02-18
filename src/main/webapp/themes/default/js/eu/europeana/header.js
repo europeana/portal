@@ -496,12 +496,10 @@ eu.europeana.header = {
 		});
 		
 		
-		$(window).add('.iframe-wrap').bind('keypress', function(e){
-			if(e.ctrlKey || e.metaKey){
-				return;
-			}
+
+		$(window).add('.iframe-wrap').bind('keydown', function(e){
 			var key	= window.event ? e.keyCode : e.which;
-			if(key==27 || key ==0){
+			if(key==27){
 				$(".overlaid-content").css('visibility', 'hidden');
 			}
 		});

@@ -580,6 +580,8 @@ eu.europeana.fulldoc = {
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find) 
 			extend: function(e){
 				
+				var thisGallery = $(this);	
+				
 				var doEllipsis = function(){
 					var ellipsisObjects = [];
 					$('#carousel-1 .europeana-carousel-info').each(
@@ -599,6 +601,35 @@ eu.europeana.fulldoc = {
 	
 				$(this).ready(function(e) {
 					setTimeout(doEllipsis, 1000);
+				});
+				
+				
+				$(window).add('.iframe-wrap').bind('keydown', function(e){
+					var key	= window.event ? e.keyCode : e.which;
+					if(key==39){
+						if( ($('.overlaid-content').css('visibility') == 'hidden') ){
+							if(eu.europeana.fulldoc.carousel1){
+								$('#carousel-1 .galleria-image-nav-right').click();
+							}
+						}
+						else{
+							if(eu.europeana.fulldoc.lightboxOb){
+								eu.europeana.fulldoc.lightboxOb.next();								
+							}
+						}
+					}
+					else if(key==37){
+						if( ($('.overlaid-content').css('visibility') == 'hidden') ){
+							if(eu.europeana.fulldoc.carousel1){
+								$('#carousel-1 .galleria-image-nav-left').click();
+							}
+						}
+						else{
+							if(eu.europeana.fulldoc.lightboxOb){
+								eu.europeana.fulldoc.lightboxOb.prev();								
+							}
+						}
+					}
 				});
 				
 				this.bind("image", function(e) {	// lightbox trigger

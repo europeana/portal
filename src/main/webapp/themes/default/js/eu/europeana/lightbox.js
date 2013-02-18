@@ -331,6 +331,18 @@ eu.europeana.lightbox = function(){
 		
 		"getCmp" : function(callback){
 			return self.cmp;
+		},
+		
+		"next" : function(){
+			if(self.navOb){
+				self.navOb.next();
+			}
+		},
+		
+		"prev" : function(){
+			if(self.navOb){
+				self.navOb.prev();
+			}
 		}
 		
 	};
