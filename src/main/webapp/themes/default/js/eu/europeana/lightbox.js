@@ -318,21 +318,28 @@ eu.europeana.lightbox = function(){
 				});
 
 				self.cmp.unbind('swipe');
-				self.cmp.swipe({
-					swipeStatus:function(event, phase, direction, distance, fingerCount) {
-						if(phase=="end"){
-							if(direction == "left"){
-								$('#nav-next').click();
+				
+				if(self.navOb){
+					
+					self.cmp.swipe({
+						swipeStatus:function(event, phase, direction, distance, fingerCount) {
+							if(phase=="end"){
+								if(direction == "left"){
+									self.navOb.next();
+								}
+								else if(direction == "right"){
+									self.navOb.prev();
+								}
 							}
-							else if(direction == "right"){
-								$('#nav-prev').click();
-							}
+						},
+						triggerOnTouchEnd:false,
+						threshold:100
 						}
-					},
-					triggerOnTouchEnd:false,
-					threshold:100
-					}
-				);
+					);
+					
+				}
+				
+				
 			}
 		},
 		
