@@ -357,6 +357,21 @@ eu.europeana.fulldoc = {
 	},
 	
 	
+	showLightbox : function(){
+		$(".iframe-wrap").empty().append(eu.europeana.fulldoc.lightboxOb.getCmp() );
+
+		$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
+			$(ob).click(function(e){
+				if(e.target == ob){
+					$(".overlaid-content").css('visibility', 'hidden');					
+				}
+			});
+		});
+		
+		eu.europeana.fulldoc.lightboxOb.showLightbox(function(){
+			$(".overlaid-content").css('visibility', 'visible');	
+		});											
+	},
 	
 	initTriggerPanel: function(type, index, gallery){
 				
@@ -376,7 +391,9 @@ eu.europeana.fulldoc = {
 			eu.europeana.fulldoc.triggerPanel.hide();
 		}
 		
+		
 		var triggerPanel = eu.europeana.fulldoc.triggerPanel;
+		triggerPanel.data['galleryIndex'] = index ? index : 0;
 		
 		//triggerPanel.data['type'] = type; /* used for google analytics category */
 		
@@ -412,19 +429,7 @@ eu.europeana.fulldoc = {
 					
 									$('#carousel-1-img-measure').click(function(){
 										
-										$(".iframe-wrap").empty().append(eu.europeana.fulldoc.lightboxOb.getCmp() );
-
-										$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
-											$(ob).click(function(e){
-												if(e.target == ob){
-													$(".overlaid-content").css('visibility', 'hidden');					
-												}
-											});
-										});
-										
-										eu.europeana.fulldoc.lightboxOb.showLightbox(function(){
-											$(".overlaid-content").css('visibility', 'visible');	
-										});
+										eu.europeana.fulldoc.showLightbox();
 												
 									});
 								}
@@ -548,9 +553,6 @@ eu.europeana.fulldoc = {
 					if(callbackLoad){
 						callbackLoad();
 					}
-					//else{
-					//	alert("load lightbox called without callback...?");
-					//}
 				}
 			}]);
 		}
@@ -599,14 +601,8 @@ eu.europeana.fulldoc = {
 					setTimeout(doEllipsis, 1000);
 				});
 				
-	
 				this.bind("image", function(e) {	// lightbox trigger
 					var gallery = this;
-					js.console.log("galleria lightbox trigger updating disabled: do this in the navOb");
-					
-					// update trigger ( and show lightboxable )
-					// OR hide trigger	
-					
 					var external = gallery._options.dataSource[e.index].external;
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
 					
@@ -766,8 +762,6 @@ eu.europeana.fulldoc = {
 							eu.europeana.fulldoc.lightboxable = carouselData[0].external;
 							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 
-							
-							
 							if($("#mobile-menu").is(":visible") ){
 								
 								if(carouselData[0].external.type == 'image'){
@@ -792,7 +786,6 @@ eu.europeana.fulldoc = {
 									});
 								}								
 							}
-							
 						}
 					}	
 				}
@@ -829,14 +822,23 @@ eu.europeana.fulldoc = {
 								return tallestImageH + galleriaOffsetY;
 							};
 							
-							
 							eu.europeana.fulldoc.initTopCarousel();
-							$('#carousel-1 .galleria-stage .galleria-image img').live('click', 
-								function(){
-									com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Lightbox', 'External (image)');
-									window.open(carouselData[0].external.url, '_new');
+							
+							$('#carousel-1 .galleria-stage .galleria-image img, #carousel-1-img-measure .lb-trigger').unbind('click').live('click', function(e){
+								
+								var clickSrc = $(e.target).parent().hasClass('lb-trigger') ? "magnify" : "image";
+							
+								if( $("#mobile-menu").is(":visible") ){
+									com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Redirect', 'External (' + clickSrc + ')');
+									window.open(carouselData[ eu.europeana.fulldoc.triggerPanel.data['galleryIndex'] ].external.url, '_new');
 								}
-							);		
+								else{
+									com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Lightbox', 'External (' + clickSrc + ')');
+									eu.europeana.fulldoc.showLightbox();										
+								}
+	
+							});
+							
 						}
 						else{
 							var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";

@@ -20,11 +20,14 @@ eu.europeana.lightbox = function(){
 			// create inner navigation object
 			
 			var NavOb = function(){
+				var self = this;
 				var currentUrl = $("#lightbox_image").attr("src");
 				var submodel = [];
 				var submodelActive = 0;
 
+				
 				var nav = function(direction){
+
 					for(var i=0; i<carouselData.length; i++){
 						if(carouselData[i].external && carouselData[i].external.type == "image"){
 							if(carouselData[i].external.url == currentUrl){
@@ -34,7 +37,7 @@ eu.europeana.lightbox = function(){
 						}
 					}
 
-					var newActive = submodelActive + direction;
+					var newActive		= submodelActive + direction;
 					if(newActive<0){
 						newActive = submodel.length -1;
 					}
@@ -57,11 +60,15 @@ eu.europeana.lightbox = function(){
 						}
 					);
 				};
-				this.prev = function(){
-					nav(-1);
-				};
-				this.next = function(){
-					nav(1);
+
+
+				return {
+					"prev" : function(){
+						nav(-1);
+					},
+					"next" : function(){
+						nav(1);
+					}
 				};
 			};
 			self.navOb = new NavOb();
@@ -128,7 +135,7 @@ eu.europeana.lightbox = function(){
 			//js.console.log("projected " + projectedWidth + " / " + projectedHeight +  "   available = " + availableWidth + " x " + availableHeight );
 
 			if(rec > 30){
-				alert(rec);
+				alert("recurse " + rec);
 			}
 			if(projectedHeight > availableHeight || projectedWidth > availableWidth){
 				return testDimensions(	w*0.9, h*0.9, rec+1);
@@ -325,5 +332,6 @@ eu.europeana.lightbox = function(){
 		"getCmp" : function(callback){
 			return self.cmp;
 		}
+		
 	};
 };
