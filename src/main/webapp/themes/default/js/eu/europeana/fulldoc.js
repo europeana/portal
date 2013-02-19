@@ -350,6 +350,7 @@ eu.europeana.fulldoc = {
 					cmp,
 					url,
 					eu.europeana.fulldoc.getLightboxableCount() > 1 ? carouselData : null);
+			$(".iframe-wrap").empty();
 		}
 		else{
 			eu.europeana.fulldoc.lightboxOb.switchImg(url);
@@ -497,12 +498,12 @@ eu.europeana.fulldoc = {
 			
 			if(gallery){				
 				marginTrigger = ( $("#carousel-1").width() - $(gallery.getActiveImage()).width() ) / 2;
-				
 				eu.europeana.fulldoc.triggerPanel.css("bottom", "-0.75em"); 
 			}
 			else{
 				marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
 			}
+			
 			eu.europeana.fulldoc.triggerPanel.css("margin-left", marginTrigger + "px");
 			eu.europeana.fulldoc.triggerPanel.fadeIn(500);
 			$('#carousel-1-img-measure img').css('cursor', 'pointer');
@@ -579,13 +580,14 @@ eu.europeana.fulldoc = {
 			lightbox:			false,
 			responsive:			true,
 			dataSource:			carouselData,
+			autoplay:			0,
 			fullscreenDoubleTap:	false,
 			thumbnails: 		carouselData.length>1,
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find) 
 			extend: function(e){
 				
 				var thisGallery = $(this);	
-				
+				/*
 				var doEllipsis = function(){
 					var ellipsisObjects = [];
 					$('#carousel-1 .europeana-carousel-info').each(
@@ -602,11 +604,12 @@ eu.europeana.fulldoc = {
 						}
 					});
 				};
+				 */
 	
-				$(this).ready(function(e) {
-					setTimeout(doEllipsis, 1000);
+				thisGallery.ready(function(e) {
+					//setTimeout(doEllipsis, 1000);
+					//thisGallery.pause();
 				});
-				
 				
 				$(window).add('.iframe-wrap').bind('keydown', function(e){
 					var key	= window.event ? e.keyCode : e.which;
@@ -636,13 +639,23 @@ eu.europeana.fulldoc = {
 					}
 				});
 				
+				
+				var currIndex = -1;
 				this.bind("image", function(e) {	// lightbox trigger
+					
+					if($('html').hasClass('ie8')){
+						this.pause();
+						if(e.index == currIndex){
+							return;
+						}
+					}
+					currIndex = e.index;
 					var gallery = this;
 					var external = gallery._options.dataSource[e.index].external;
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
 					
 				}); // end bind image
-			
+				
 			} // end extend
 		
 		}); // end Galleria.run
