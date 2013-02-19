@@ -151,12 +151,12 @@ a:focus .social-link .text{
 .iframe-wrap iframe{
 	box-shadow:			0 0 90px 5px #000000;
 	border:				1px solid #666666;
-	xxxxxxxxxxxxxxxxxxxxxmargin:				0 auto;
+	
 	padding:			.5em 0 0 0;
 	background-color:	white;
 	height:			14em;
-	
 }
+
 
 #newsletter-trigger{
 	font-size:		1em;

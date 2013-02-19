@@ -783,10 +783,9 @@ ul.featured-partner-links li{
 }
 
 div.lb-trigger .icon-magplus{
-	background-color:	#ddd;
-	margin:				0.5em;
+	background-color:	white !important;
+	color:				black !important;
 }
-
 
 
 /* links */
