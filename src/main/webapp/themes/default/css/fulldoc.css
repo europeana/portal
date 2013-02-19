@@ -20,6 +20,12 @@
 	white-space:	nowrap;
 }
 
+#carousel-1 .galleria-info{
+	display:none;
+	visibility:hidden;
+}
+
+
 
 /* end carousel pre-load height calculation */
 
@@ -584,7 +590,7 @@ div.lb-trigger{
 	z-index:	30;
 }
 
-div.lb-trigger span.icon-magplus{
+div.lb-trigger .icon-magplus{
 	color:			white;
 	text-shadow:	0 0 2px #000000;
 }

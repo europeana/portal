@@ -60,7 +60,6 @@
 
 #lightbox_info li{
 	display:	table-row;
-	
 	word-wrap:	break-word;	/* chrome fix overflowing table */
 	overflow:	hidden;		
 }
@@ -77,8 +76,7 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 */
 
 #lightbox_info li:after{
-	display:block;
-	XXXXXXXXXXXXXXXmargin:0.7em;
+	display:		block;
 	content:		"\a";
 	white-space:	pre;
 	font-size:		0.25em;
@@ -121,21 +119,13 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 }
 
 .hide_show_meta{
-	
 	height:		1em;
 	text-align:	right;
-	
-	xxxxxxxxxxxxxxxxxxxmargin-top:		-0.5em;
-	xxxxxxxxxxxxxxxxxxxxxmargin-bottom:	1em;
-	
 }
 
 a.showMeta,
 a.hideMeta{
-	cursor:		pointer;
-	XXXXposition:	relative;
-	XXXXtop:		-0.6em;
-	
+	cursor:			pointer;
 	line-height:	2em;
 }
 
@@ -151,6 +141,14 @@ a.hideMeta{
 	text-shadow:	0 0 2px #000000;
 	top:			50%;
 	margin-top:		-1em;
+	
+	
+	filter: Shadow(Color=#000, Direction=45, Strength=2),
+			Shadow(Color=#000, Direction=135, Strength=2),
+			Shadow(Color=#000, Direction=225, Strength=2),
+			Shadow(Color=#000, Direction=315, Strength=2);
+	background-clip:	text;
+		
 }
 
 #nav-prev{
