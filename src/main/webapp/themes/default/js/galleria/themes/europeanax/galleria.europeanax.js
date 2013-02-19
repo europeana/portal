@@ -470,6 +470,7 @@ Galleria.addTheme({
 		   			}
 				});
 			}
+			info.css("visibility", "visible");
 		}
 		
 		/* end europeana */
@@ -536,7 +537,7 @@ Galleria.addTheme({
 		});
 
 		
-		info.css("visibility", "visible");
+		//info.css("visibility", "visible");
 		navLeft.css("visibility", "visible");
 		navRight.css("visibility", "visible");
 		
