@@ -45,22 +45,18 @@ eu.europeana.lightbox = function(){
 						newActive = 0;						
 					}
 					submodelActive = newActive;
-					
+
 					$("#hidden_img").unbind( '.imagesLoaded' );
 					$("#hidden_img").remove();
 					
-					$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox_image').imagesLoaded(
+	
+					$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox').imagesLoaded(
 						function(){
-							var zoomed = false;
-							if($("#zoomedImg").is(":visible")){
-								eu.europeana.lightbox.closeZoom();
-								zoomed = true;
-							}		
+							$('#hidden_img').remove();
 							eu.europeana.fulldoc.lightboxOb.switchImg(submodel[newActive].url);
 						}
 					);
 				};
-
 
 				return {
 					"prev" : function(){
@@ -280,17 +276,19 @@ eu.europeana.lightbox = function(){
 	var showLightbox = function(callback){
 		layout();
 		
+		/*
 		self.cmp.find('#zoomIn').unbind().click(function(){
 			self.cmp.find('#zoomIn').toggleClass('active');
-			  
 			self.zoomed = !self.zoomed;
 			layout();
 		});
+		*/
 		
 		if(callback){
 			callback();
 		}
 	};
+
 	
 	return {
 		"init" : function(cmp, src, navOb){
@@ -303,25 +301,16 @@ eu.europeana.lightbox = function(){
 		
 		"showLightbox" : function(callback){
 			showLightbox(callback);
-
+			
 			if(self.navOb){
-				$('#nav-next, #nav-prev').css('display', 'block');
 				
 				var navNext		= self.cmp.find('#nav-next');
 				var navPrev		= self.cmp.find('#nav-prev');
 				
-				navNext.click(function(){
-					self.navOb.next();
-				});
-				
-				navPrev.click(function(){
-					self.navOb.prev();
-				});
-
+				navNext.add(navPrev).css('display', 'inline-block');
 				self.cmp.unbind('swipe');
 				
-				if(self.navOb){
-					
+				if(! $("html").hasClass("ie8")){
 					self.cmp.swipe({
 						swipeStatus:function(event, phase, direction, distance, fingerCount) {
 							if(phase=="end"){
@@ -337,9 +326,7 @@ eu.europeana.lightbox = function(){
 						threshold:100
 						}
 					);
-					
 				}
-				
 				
 			}
 		},
@@ -350,19 +337,22 @@ eu.europeana.lightbox = function(){
 		},
 		
 		"getCmp" : function(callback){
+			alert("returning cmp: " + self.cmp.html()  );
 			return self.cmp;
 		},
 		
 		"next" : function(){
-			if(self.navOb){
-				self.navOb.next();
-			}
+			self.navOb.next();
 		},
 		
 		"prev" : function(){
-			if(self.navOb){
-				self.navOb.prev();
-			}
+			self.navOb.prev();
+		},
+		
+		"zoom" : function(){
+			self.cmp.find('#zoomIn').toggleClass('active');
+			self.zoomed = !self.zoomed;
+			layout();
 		}
 		
 	};
