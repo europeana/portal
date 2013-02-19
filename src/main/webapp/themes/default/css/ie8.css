@@ -782,6 +782,12 @@ ul.featured-partner-links li{
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5FFFFFF,endColorstr=#E5FFFFFF);
 }
 
+div.lb-trigger .icon-magplus{
+	background-color:	#ddd;
+	margin:				0.5em;
+}
+
+
 
 /* links */
 
