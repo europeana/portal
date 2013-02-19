@@ -307,7 +307,7 @@ eu.europeana.fulldoc = {
 			
 			// title
 			cmp.find('#lightbox_info li.title').append(
-				'&nbsp;' + $('#item-details h1').html().trim()
+				'&nbsp;' + $('#item-details h1').html()
 			);
 			
 			// meta
@@ -363,7 +363,8 @@ eu.europeana.fulldoc = {
 		$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
 			$(ob).click(function(e){
 				if(e.target == ob){
-					$(".overlaid-content").css('visibility', 'hidden');					
+					$("#lightbox").remove();	// this is needed to stop ie8 making a black screen following closing of the lightbox.
+					$(".overlaid-content").css('visibility', 'hidden');
 				}
 			});
 		});

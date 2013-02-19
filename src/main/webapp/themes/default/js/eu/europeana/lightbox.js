@@ -150,7 +150,8 @@ eu.europeana.lightbox = function(){
 		
 		// set img
 		
-		img.css('width',	dim[0]);
+		img.css('width',		dim[0] + "px");
+		img.css('min-width',	dim[0] + "px");	/*	additional rule needed for ie8	*/
 		
 		// set meta
 		
