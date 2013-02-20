@@ -43,8 +43,12 @@ public class ResultPaginationImpl implements ResultPagination {
 		this.numFound = numFound;
 		this.rows = rows;
 
+		
 		int totalPages = numFound / rows;
-		lastPage = numFound - (numFound % rows);
+		
+		//lastPage = numFound - (numFound % rows);
+		lastPage = (  (  (numFound / rows) - (numFound % rows)  - 1 ) * rows  ) + 1;
+		
 		firstPage = 1;
 
 		if (numFound % rows != 0) {
