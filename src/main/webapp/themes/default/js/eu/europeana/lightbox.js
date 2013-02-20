@@ -337,7 +337,6 @@ eu.europeana.lightbox = function(){
 		},
 		
 		"getCmp" : function(callback){
-			alert("returning cmp: " + self.cmp.html()  );
 			return self.cmp;
 		},
 		
