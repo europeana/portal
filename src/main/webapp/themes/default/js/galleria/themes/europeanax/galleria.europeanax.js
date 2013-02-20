@@ -436,9 +436,9 @@ Galleria.addTheme({
 					if(!imgShows){
 						thisGallery.$( 'container' ).find(".galleria-images .galleria-image:first").css("opacity", "1");	   					
 					}
-					if(e.type == 'webkitTransitionEnd'){
-						$("#query-input").focus();
-					}
+					//if(e.type == 'webkitTransitionEnd'){
+						//$("#query-input").focus();
+					//}
 				});
 				
 				thisGallery.bind("loadfinish", function(e) {
