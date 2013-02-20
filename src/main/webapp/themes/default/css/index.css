@@ -179,8 +179,12 @@
 /* collapsible section headings */
 
 .collapse-header-text, .icon-pinterest{
+	/*
 	padding-top:	1em !important;
 	padding-bottom:	1em !important;
+	*/
+	margin-top:		1em;
+	margin-bottom:	1em;	
 }
 
 
@@ -198,6 +202,10 @@
 	cursor:	pointer;
 }
 
+
+#collapse-header-3 a:focus span{
+	border-bottom:	1px dotted #910101;
+}
 
 #featured-partner-header-wrapper{
 	border-bottom:	1px solid #E4E4E4;
@@ -329,8 +337,12 @@ a.icon-rss.feed-link{
 
 	.collapse-header-text,
 	.icon-pinterest{
+	/*
 		padding-top:	0.5em !important;
 		padding-bottom:	0.5em !important;
+		*/
+		margin-top:		0.5em;
+		margin-bottom:	0.5em;
 	}
 }
 
@@ -379,7 +391,6 @@ p.featured-text{
 .icon-pinterest{
 	color:			#910101;
 	margin-left:	0.3em;
-	margin-top:		-1px;
 }
 
 .icon-pinterest:focus{
