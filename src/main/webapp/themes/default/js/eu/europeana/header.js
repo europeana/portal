@@ -44,9 +44,9 @@ eu.europeana.header = {
 
 		this.initResponsiveUtility();
 		this.addLanguageChangeHandler();
-		this.addRefineSearchClickHandler();		
+		//this.addRefineSearchClickHandler();		
 		this.addAjaxMethods();
-		this.addMenuFocusTriggers();
+		//this.addMenuFocusTriggers();
 		this.setupResultSize();
 		this.setupSearchMenu();
 		this.setupLanguageMenu();
@@ -287,6 +287,7 @@ eu.europeana.header = {
 	/**
 	 *	js solution for tabbing through main menu
 	 */
+	/*
 	addMenuFocusTriggers : function() {
 		
 		$('#menu-main li ul li a')
@@ -325,6 +326,7 @@ eu.europeana.header = {
 			});
 		
 	},
+	*/
 	
 	
 	/**
@@ -335,11 +337,13 @@ eu.europeana.header = {
 		$('#query-input').focus(function(){
 			$("#query-full table tr:first-child .query-cell").addClass("glow");
 		});
+		
 		$('#query-input').blur(function(){
 			$("#query-full table tr:first-child .query-cell").removeClass("glow");
 		});
 		
 		var inputFocus = ['login.html', 'forgotPassword.html', 'register-success.html'].indexOf(eu.europeana.vars.page_name) >=0 ? $('#j_username') : $('#query-input');
+		
 		inputFocus.focus();
 		
 	},
@@ -434,7 +438,7 @@ eu.europeana.header = {
 			$('#language-selector').submit();
 		});
 	},
-
+/*
 	addRefineSearchClickHandler : function() {
 		$('#refine-search').click(function(e) {
 			e.preventDefault();
@@ -448,7 +452,7 @@ eu.europeana.header = {
 			
 		});
 	},
-
+*/
 	addAjaxMethods : function() {
 		
 		eu.europeana.ajax.methods = new eu.europeana.ajax();
