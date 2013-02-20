@@ -5,9 +5,11 @@
 
 
 <div id="lightbox-proxy"><div class="lightbox_content_wrap">
-		<span id="nav-prev"	class="icon-arrow-4"></span>
-		<span id="nav-next"	class="icon-arrow-2"></span>
-		<span id="zoomIn"></span>
+
+
+		<a id="nav-prev" class="icon-arrow-4" onClick="eu.europeana.fulldoc.lightboxOb.prev();" ></a>
+		<a id="nav-next" class="icon-arrow-2" onClick="eu.europeana.fulldoc.lightboxOb.next();" ></a>
+		<a id="zoomIn" onClick="eu.europeana.fulldoc.lightboxOb.zoom();"></a>
 		
 		<img
 		id="lightbox_image"
@@ -21,14 +23,6 @@
 				<c:if test="${!empty model.objectTitle}">
 					<li class="title"><strong><spring:message code="dc_title_t"/>:</strong></li>
 				</c:if>
-				<%--
-				 	<c:if test="${!empty model.fieldsLightbox && fn:length(model.fieldsLightbox) > 0}">
-						<europeana:displayEseDataAsHtml listCollection="${model.fieldsLightbox}" wrapper="div" ugc="false" ess="false"/>
-					</c:if>
-					<div class="original-context">
-						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
-					</div>
-				--%>
 
 			</ul>
 		</div></div><div class="close"></div></div>
