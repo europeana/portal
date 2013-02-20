@@ -21,7 +21,9 @@
 			self.ops.initialSuffix = "_1";					/* default initial suffix unless otherwise specified */
 		}
 		if(typeof self.ops.suffixes == "undefined"){
-			self.ops.suffixes = ["_1", "_2", "_3", "_4"];	/* default suffixes unless otherwise specified */
+			self.ops.suffixes = ["_1", "_2", "_3", "_4", "_4"];	/* default suffixes unless otherwise specified - extra added for chrome*/
+
+//			self.ops.suffixes = ["_1", "_2", "_3", "_4"];	/* default suffixes unless otherwise specified */
 		}
 		
 		var measureDivClassName = self.ops.galleryName ? self.ops.galleryName : 'euresponsive';
