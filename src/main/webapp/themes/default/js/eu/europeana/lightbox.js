@@ -53,6 +53,7 @@ eu.europeana.lightbox = function(){
 					$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox').imagesLoaded(
 						function(){
 							$('#hidden_img').remove();
+							com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (lightbox nav)");
 							eu.europeana.fulldoc.lightboxOb.switchImg(submodel[newActive].url);
 						}
 					);
