@@ -25,7 +25,7 @@
 				</c:if>
 
 			</ul>
-		</div></div><div class="close"></div></div>
+		</div></div><a class="close"></a></div>
 
 
 <%--
