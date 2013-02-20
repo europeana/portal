@@ -593,4 +593,11 @@ div.lb-trigger{
 div.lb-trigger .icon-magplus{
 	color:			white;
 	text-shadow:	0 0 2px #000000;
+	
+	filter: Shadow(Color=#000, Direction=45, Strength=2),
+			Shadow(Color=#000, Direction=135, Strength=2),
+			Shadow(Color=#000, Direction=225, Strength=2),
+			Shadow(Color=#000, Direction=315, Strength=2);
+	background-clip:	text;
+	
 }
