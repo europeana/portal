@@ -376,11 +376,6 @@ eu.europeana.fulldoc = {
 	},
 	
 	initTriggerPanel: function(type, index, gallery){
-				
-		//if($("#mobile-menu").is(":visible") ){
-			// Andy: ga set here?  then will not work for phones
-		//	return;
-		//}
 		
 		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 			// instantiate and hide
@@ -587,30 +582,7 @@ eu.europeana.fulldoc = {
 			extend: function(e){
 				
 				var thisGallery = $(this);	
-				/*
-				var doEllipsis = function(){
-					var ellipsisObjects = [];
-					$('#carousel-1 .europeana-carousel-info').each(
-						function(i, ob){
-							ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-						}
-					);
-					$(window).bind('resize', function(){
-						if(eu.europeana.vars.suppresResize){
-							return;
-						}
-						for(var i=0; i<ellipsisObjects.length; i++ ){
-							ellipsisObjects[i].respond();
-						}
-					});
-				};
-				 */
-	
-				thisGallery.ready(function(e) {
-					//setTimeout(doEllipsis, 1000);
-					//thisGallery.pause();
-				});
-				
+
 				$(window).add('.iframe-wrap').bind('keydown', function(e){
 					var key	= window.event ? e.keyCode : e.which;
 					if(key==39){
