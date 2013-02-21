@@ -737,15 +737,15 @@
 					</execution>
 
 					<execution>
-						<id>minify-fulldoc-lightbox.js</id>
+						<id>minify-lightbox.js</id>
 						<phase>process-resources</phase>
 						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>fulldoc-lightbox.js</jsFinalFile>
+							<jsFinalFile>lightbox.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
-								<jsSourceInclude>fulldoc-lightbox.js</jsSourceInclude>
+								<jsSourceInclude>lightbox.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
