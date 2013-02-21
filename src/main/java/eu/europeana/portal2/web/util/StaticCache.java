@@ -49,18 +49,12 @@ public abstract class StaticCache {
 
 	private static final String DOT = ".";
 
-	/**
-	 * The time of file last check
-	 */
-	private static Calendar lastCheck;
-
-	protected final Logger log = Logger.getLogger(getClass().getName());
+	protected final Logger log = Logger.getLogger(StaticCache.class.getCanonicalName());
 
 	protected static Configuration config = Beans.getConfig();
 
 	private Map<String, Page> pageMapCache = new ConcurrentHashMap<String, Page>();
 	private String staticPagePath;
-	private File staticPageDir;
 
 	@Value("#{europeanaProperties['static.page.path']}")
 	public void setStaticPagePath(String staticPagePath) {
@@ -155,7 +149,7 @@ public abstract class StaticCache {
 
 		if (pageMapCache.isEmpty()
 			|| getLastCheck() == null
-			|| getLastCheck().before(timeout)) {
+			|| getLastCheck().after(timeout)) {
 			if (staticPagePath == null) {
 				log.severe("staticPagePath is not set!");
 				throw new RuntimeException(staticPagePath + " is not set!");

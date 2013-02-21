@@ -286,8 +286,7 @@ public class StaticPageController {
 	 */
 
 	@RequestMapping("/img/**/*.png")
-	public void fetchMcPng(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void fetchMcPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("image/png");
 		fetchVerbatimPage(request, response);
 	}
