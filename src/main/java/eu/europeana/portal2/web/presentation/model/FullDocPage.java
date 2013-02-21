@@ -83,6 +83,7 @@ public class FullDocPage extends FullDocPreparation {
 	private String lightboxRef = null;
 	private boolean lightboxRefChecked = false;
 	private String lightboxRefField = null;
+	private String urlRef = null;
 
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
@@ -607,13 +608,20 @@ public class FullDocPage extends FullDocPreparation {
 	 * @return reference url
 	 */
 	public String getUrlRef() {
-		return StringUtils.defaultIfBlank(shortcut.get("EdmIsShownAt")[0],
-				StringUtils.defaultIfBlank(shortcut.get("EdmIsShownBy")[0], "#"));
+		if (urlRef == null) {
+			urlRef = "#";
+			if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt")) && !StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])) {
+				urlRef = shortcut.get("EdmIsShownAt")[0];
+			} else if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy")) && !StringUtils.isBlank(shortcut.get("EdmIsShownBy")[0])) {
+				urlRef = shortcut.get("EdmIsShownBy")[0];
+			}
+		}
+		return urlRef;
 	}
 
 	public boolean isUrlRefIsShownBy() {
-		return StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])
-				&& isEuropeanaIsShownBy();
+		return (!StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt")))
+			&& isEuropeanaIsShownBy();
 	}
 
 	public boolean isUrlRefMms() {
@@ -627,9 +635,10 @@ public class FullDocPage extends FullDocPreparation {
 	public String getShownAtProvider() {
 		if (isHasDataProvider() && !ArrayUtils.contains(shownAtProviderOverride, getCollectionId())) {
 			return getDocument().getEdmDataProvider()[0];
-		} else {
+		} else if (StringArrayUtils.isNotBlank(shortcut.get("EdmProvider"))) {
 			return shortcut.get("EdmProvider")[0];
 		}
+		return "";
 	}
 
 	/**
