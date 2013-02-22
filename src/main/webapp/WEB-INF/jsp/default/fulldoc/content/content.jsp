@@ -2,6 +2,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<% pageContext.setAttribute("newLineChar1", "\r"); %> 
+<% pageContext.setAttribute("newLineChar2", "\n"); %> 
+
+
 <div id="content" class="row">
 	<div class="twelve columns">
 
@@ -25,7 +29,7 @@
 			</div>
 		</div>
 
-		<c:if test="${!empty model.moreLikeThis}">
+		<c:if test="${model.moreLikeThis != null}">
 
 			<div class="row">
 				<div class="twelve columns">
@@ -35,10 +39,12 @@
 
 						var carousel2Data = [];
 						<c:forEach items="${model.moreLikeThis}" var="doc">
-							<c:set var="objectTitle">${doc.titleJoined}</c:set>
+						
+							<c:set var="objectTitle">${fn:replace(doc.titleJoined, newLineChar1, ' ')}</c:set>
+							
 							carousel2Data[carousel2Data.length] = {
 								image:			decodeURI( "${fn:escapeXml(doc.thumbnail)}" ).replace(/&amp;/g, '&').replace(/&amp;/g, '&'),
-								title:			'${ objectTitle }',
+								title:			'${  fn:replace(objectTitle, newLineChar2, ' ')  }',
 						        <c:url var="url" value="${model.portalName}/${doc.fullDocUrl}">
 						          <c:param name="rows" value="${model.rows}"/>
 						        </c:url>
