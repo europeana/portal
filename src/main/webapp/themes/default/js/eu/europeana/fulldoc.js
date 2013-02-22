@@ -339,11 +339,9 @@ eu.europeana.fulldoc = {
 
 			// rights
 			var rightsVal = $('.original-context .rights-badge').clone().wrap('<p>').parent().html();
-			if(rightsVal){
-				cmp.find('#lightbox_info ul').append(
-					'<li class="rights">' + rightsVal + '</li>'
-				);				
-			}
+			cmp.find('#lightbox_info ul').append(
+				'<li class="rights">' + (rightsVal ? rightsVal : '') + '</li>'
+			);				
 			
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
 			eu.europeana.fulldoc.lightboxOb.init(
