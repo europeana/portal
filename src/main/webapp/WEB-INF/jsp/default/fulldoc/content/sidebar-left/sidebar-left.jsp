@@ -3,6 +3,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="eu" tagdir="/WEB-INF/tags"%>
 
+<% pageContext.setAttribute("newLineChar1", "\r"); %> 
+<% pageContext.setAttribute("newLineChar2", "\n"); %> 
+
+
 <c:set var="about" value=""/>
 <c:if test="${not empty model.document['about']}">
 	<c:set var="about" value="${model.document.cannonicalUrl}" />
@@ -54,9 +58,12 @@
 			
 				<c:forEach items="${model.allImages}" var="image">
 
+					<c:set var="title">${fn:replace(model.objectTitle, newLineChar1, ' ')}</c:set>
+					<c:set var="title">${fn:replace(title, newLineChar2, ' ')}</c:set>
+				
 					carouselData[carouselData.length] = {
 						"image":		decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
-						"title":		('${fn:escapeXml(model.objectTitle)}'),
+						"title":		('${fn:escapeXml(title)}'),
 						"dataType":		"${fn:toLowerCase(dataType)}",
 						"edmField": "${image.edmField}"
 					};
