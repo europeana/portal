@@ -524,11 +524,15 @@ public class FullDocPage extends FullDocPreparation {
 	public String getKmlDescription() throws UnsupportedEncodingException, EuropeanaQueryException {
 		FullBeanDecorator doc = (FullBeanDecorator) getFullBeanView().getFullDoc();
 		String descr = doc.getDcDescriptionCombined();
+		
+		// ANDY: #352 (feature request) "dc:description is not shown in its full length. Please pull in the full lenght text from our database."
+		/*
 		if (StringUtils.length(descr) > 250) {
 			descr = descr.substring(0, 240);
 			descr = StringUtils.substringBeforeLast(descr, " ");
 			descr = descr + "(...)";
 		}
+		*/
 
 		// Andy added this - needs optimised
 		String sDate = "not available";
