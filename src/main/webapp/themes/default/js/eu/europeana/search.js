@@ -5,8 +5,6 @@ eu.europeana.search = {
 	facet_sections : [],
 	init : function() {
 		
-		this.loadComponents();
-
 		// fix firefox' habit of creating invalid form states by remembering old checked values on refresh & page back 
 		$('#filter-search li ul li input:checkbox').each(function(i, ob){
 			if( ob.checked && !ob.getAttribute("checked")){
@@ -93,18 +91,25 @@ eu.europeana.search = {
 		);
 		
 		
+		// add this
+		
+		this.loadComponents();
+		
 	},
 	
 	loadComponents : function() {
 		
 		var self = eu.europeana.search;
-		
-		js.loader.loadScripts([{
-			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
-			callback : function() { self.addThis(); }
-		}]);
-		
+
+			js.loader.loadScripts([{
+				
+				file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
+				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
+				callback : function() {
+					self.addThis(); 
+				}
+				
+			}]);
 	},
 	
 	setupPageJump : function(){
@@ -318,7 +323,7 @@ eu.europeana.search = {
 			
 			setTimeout( function() {
 				$('.shares-link').fadeIn(); },
-				600 );
+				100 );
 			
 	},
 	
