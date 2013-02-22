@@ -17,6 +17,7 @@
 
 package eu.europeana.portal2.web.presentation.model.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.search.SearchTerm;
@@ -69,7 +70,13 @@ public abstract class IndexData extends SearchPageData {
 	}
 
 	public void setCarouselItems(List<CarouselItem> carouselItems) {
-		this.carouselItems = carouselItems;
+		List<CarouselItem> carouselItemsUnique = new ArrayList<CarouselItem>();
+		for(CarouselItem carouselItem : carouselItems){
+			if(!carouselItemsUnique.contains(carouselItem)){
+				carouselItemsUnique.add(carouselItem);
+			}
+		}
+		this.carouselItems = carouselItemsUnique;
 	}
 
 	public List<CarouselItem> getCarouselItems() {
