@@ -41,3 +41,7 @@
   <%@ include file="/WEB-INF/jsp/_common/meta-open-graph.jsp" %>
 </c:if>
 
+<meta name="application-name" content="Europeana"/>
+<meta name="msapplication-TileColor" content="#8C0095"/>
+<meta name="msapplication-TileImage" content="${branding}/images/3af68e97-900f-4170-9a03-86ea73d68dcd.png"/>
+
