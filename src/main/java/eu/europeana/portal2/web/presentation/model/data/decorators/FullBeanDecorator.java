@@ -93,7 +93,8 @@ public class FullBeanDecorator implements FullBean {
 
 	public String getUrlKml() {
 		if (isPositionAvailable()) {
-			return "record" + getAbout() + ".kml";
+			//return "record" + getAbout() + ".kml";
+			return "";
 		}
 		return null;
 	}
