@@ -461,8 +461,8 @@ eu.europeana.fulldoc = {
 							}
 						);
 						$('#carousel-1-img-measure img').unbind('click').bind('click',
-							function(){								
-								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (broken-img)");
+							function(){
+								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", carouselDataIsBy ? "External (broken-img)" : "External (img)");
 								winOpen();
 							}
 						);
