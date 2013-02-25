@@ -48,13 +48,6 @@
 					<c:set var="rowsParam" value="&rows=${model.rows}"/>
 				</c:if>
 	
-				<%--
-				<c:set var="startParam" value=""/>
-				<c:if test="${!empty model.rows}">
-					<c:set var="startParam" value="&start=${model.start}"/>
-				</c:if>
-				--%>
-	
 				<c:forEach var="facet" items="${model.briefBeanView.facetQueryLinks}">
 					<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 				</c:forEach>
@@ -82,18 +75,19 @@
 	
 			<h2><spring:message code="Share_section_header_t" />:</h2>
 			
-			<!-- 
-			<ul id="share-subscribe">
-			 -->
 			<div id="share-subscribe">
-			
 			
 				<c:if test="${!empty model.user}">
 				
-					<%--
-					<li>
-					 --%>
 					<div class="action-link">
+					
+						<!-- determine search-to-save string -->
+						
+						<c:set var="refinementStr" value="" />
+						<c:forEach var="refinement" items="${model.refinements}">
+							<c:set var="refinementStr" value="${refinementStr}&qf=${refinement}" />
+						</c:forEach>
+						<c:set var="fullQueryStr" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}${refinementStr}" />
 					
 						<!-- determine icon -->
 						
@@ -101,31 +95,26 @@
 						<c:set var="savedText"><spring:message code="SaveToMyEuropeana_t" /></c:set>
 						
 						<c:forEach items="${model.user.savedSearches}" var="item">
-							<c:if test="${model.query == item.query}">
+							<c:if test="${fn:toUpperCase(fullQueryStr) == fn:toUpperCase(item.query)}">
 								<c:set var="savedIcon" value="icon-saveditem" />
 								<c:set var="savedText"><spring:message code="SearchSaved_t" /></c:set>
 							</c:if>
 						</c:forEach>
 					
 						<a id="save-search" class="action-link  ${savedIcon}" rel="nofollow">
-							<%--span class="${savedIcon}"></span--%>
 							<span class="save-label">${savedText}</span>
 						</a>
 	
 	
 						<%-- hidden form fields --%>
-						
 						<c:if test="${!empty model.briefBeanView}">
-							<input type="hidden" id="query-to-save" value="${model.briefBeanView.pagination.presentationQuery.queryToSave}"/>
+							<input type="hidden" id="query-to-save" value="${fullQueryStr}"/>
 						</c:if>
 						
 						<c:if test="${!empty model.query}">
-							<input type="hidden" id="query-string-to-save" value="${fn:escapeXml(model.query)}"/>
+							<input type="hidden" id="query-string-to-save" value="${fn:escapeXml(model.query)}${refinementStr}"/>
 						</c:if>
 						
-					<%--
-					</li>
-					 --%>
 					 </div>
 					 
 				</c:if>
@@ -153,24 +142,6 @@
 				<div class="action-link shares-link">
 					<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"><span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span></span>
 				</div>
-				
-								
-				<%--
-				</li>
-				 --%> 
-				
-				
-				
-				<%--
-				<li>
-					<a class="share-section icon-mail">
-						<span class="action-title">Mail</span>
-					</a>
-				</li>
-				 --%>
-				 <%--
-				<li class="stretch"></li>
-				  --%>
 				
 			</div>
 		</c:if>
