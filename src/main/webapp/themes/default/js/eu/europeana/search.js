@@ -439,7 +439,7 @@ eu.europeana.search = {
 				
 				ajax_feedback.saved_searches_count = parseInt( ajax_feedback.$saved_searches.html(), 10 );
 				ajax_feedback.$saved_searches.html( ajax_feedback.saved_searches_count + 1 );
-				ajax_feedback.$saveSearch.children('.icon-unsaveditem').removeClass('icon-unsaveditem').addClass('icon-saveditem');
+				ajax_feedback.$saveSearch.removeClass('icon-unsaveditem').addClass('icon-saveditem');
 				ajax_feedback.$saveSearch.children('.save-label').html(eu.europeana.vars.msg.search_saved);
 				ajax_feedback.$saveSearch.css('cursor', 'default');
 				ajax_feedback.$saveSearch.unbind('click');

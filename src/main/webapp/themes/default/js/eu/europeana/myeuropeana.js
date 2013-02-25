@@ -18,6 +18,23 @@ eu.europeana.myeuropeana = {
 		this.addUserPanelListeners();
 		this.addHashListener();
 		this.addItemHighlight();
+		this.fmtSavedSearches();
+	},
+	
+	fmtSavedSearches : function(){
+		if([].filter){
+			$('.saved-search .go').each(function(i, ob){
+				var html	=	$(ob).html();
+				var query	=	html.substr(0, html.indexOf('&'));
+				var fmted	=	html;
+				if(query.length){
+					var params = html.substr(html.indexOf('&'));
+					params = params.split("&amp;qf=").filter(function(e){return e ? e.trim() : e });
+					var fmted	= query + "&nbsp;&nbsp;[" + params.join(", ") + "]";
+				}
+				$(ob).html(fmted);
+			});
+		}
 	},
 	
 	loadComponents : function() {
@@ -98,8 +115,8 @@ eu.europeana.myeuropeana = {
 		switch(type){
 			
 			case 'SavedSearch' :
-				item.$count = jQuery('#saved-searches-count');
-				item.$panel = jQuery('#saved-searches');
+				item.$count = $('#saved-searches-count');
+				item.$panel = $('#saved-searches');
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_search_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_searches;
 				item.removeSelector = '.saved-searches .saved-search.' + $(this).attr('id'); 
