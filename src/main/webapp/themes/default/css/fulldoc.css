@@ -75,14 +75,9 @@ a.action-link:hover{
 	color:			#444;	
 }
 
-.shares-link{
-	display: none;
-}
-
 .shares-link .addthis_button{
 	color:			#333;
 }
-
 
 
 #embed-link-wrapper{

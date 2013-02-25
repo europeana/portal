@@ -79,15 +79,19 @@ eu.europeana.fulldoc = {
 
 		
 		// dependency group - addthis functionality
-			
+		self.addThis();
+		
+		
+		/*
 		js.loader.loadScripts([{
 			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 			callback : function() {
-				self.addThis();
 			}
 		}]);
-
+		*/
+		
+		
 		js.loader.loadScripts([{
 			name : 'translation-services',
 			file: 'translation-services' + js.min_suffix + '.js' + js.cache_helper,
@@ -247,50 +251,60 @@ eu.europeana.fulldoc = {
 	},
 	
 	addThis : function() {
-		var url = $('head link[rel="canonical"]').attr('href'),
-			title = $('head title').html(),
-			description = $('head meta[name="description"]').attr('content');
-			window.addthis_config = com.addthis.createConfigObject({
-				pubid : eu.europeana.vars.addthis_pubid,
-				ui_language: 'en', // eu.europeana.vars.locale,
-				data_ga_property: eu.europeana.vars.gaId,
-				data_ga_social : true,
-				data_track_clickback: true,
-				ui_use_css : true,
-				ui_click: true		// disable hover
-			});
-		
-		// nb: tweet does not accept twitter templates, it only accepts html attributes
-		// @see /js/com/addthis/addthis.js for those attributes
-		
-		var addThisHtml = com.addthis.getToolboxHtml({
-			html_class : '',
-			url : url,
-			title : title,
-			description : description,
-			services : {
-				compact : {}
-			},
-			link_html : $('.shares-link').html()
-		
+		$('.shares-link').click(function(){
+			js.loader.loadScripts([{
+				file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
+				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
+				callback : function() {
+
+					$('.shares-link').unbind('click');
+						
+					var url = $('head link[rel="canonical"]').attr('href'),
+					title = $('head title').html(),
+					description = $('head meta[name="description"]').attr('content');
+					window.addthis_config = com.addthis.createConfigObject({
+						pubid : eu.europeana.vars.addthis_pubid,
+						ui_language: 'en', // eu.europeana.vars.locale,
+						data_ga_property: eu.europeana.vars.gaId,
+						data_ga_social : true,
+						data_track_clickback: true,
+						ui_use_css : true,
+						ui_click: true		// disable hover
+					});
+				
+					// nb: tweet does not accept twitter templates, it only accepts html attributes
+					// @see /js/com/addthis/addthis.js for those attributes
+					
+					var addThisHtml = com.addthis.getToolboxHtml({
+						html_class : '',
+						url : url,
+						title : title,
+						description : description,
+						services : {
+							compact : {}
+						},
+						link_html : $('.shares-link').html()
+					
+					});
+	
+					$('.shares-link').html(
+						addThisHtml
+					);
+					
+					com.addthis.init( null, true, false );
+					
+					setTimeout(function() {
+						
+						$('.icon-share').click();
+					}, 100);
+
+				}
+			}]);
+			
 		});
-
-		$('.shares-link').html(
-			addThisHtml
-		);
-		
-		$('.shares-link').hide();
-		com.addthis.init( null, true, false );
-		
-		setTimeout( 
-			function(){
-				$('.shares-link').fadeIn();
-			},
-			600
-		);
-		
+		 
 	},
-
+	
 
 	/**
 	 * Makes the one and only call to eu.europeana.lightbox.init
