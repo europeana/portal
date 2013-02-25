@@ -56,6 +56,8 @@
 					];
 				</c:if>
 			
+				var carouselDataIsBy = 	${model.europeanaIsShownBy};
+				
 				<c:forEach items="${model.allImages}" var="image">
 
 					<c:set var="title">${fn:replace(model.objectTitle, newLineChar1, ' ')}</c:set>
