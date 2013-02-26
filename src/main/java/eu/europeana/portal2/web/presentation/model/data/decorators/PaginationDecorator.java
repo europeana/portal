@@ -17,11 +17,9 @@
 
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
-import eu.europeana.portal2.web.presentation.model.PageLink;
 import eu.europeana.portal2.web.presentation.model.PresentationQuery;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
@@ -94,15 +92,6 @@ public class PaginationDecorator implements ResultPagination {
 	@Override
 	public int getStart() {
 		return pagination.getStart();
-	}
-
-	@Override
-	public List<PageLink> getPageLinks() {
-		List<PageLink> decoList = new ArrayList<PageLink>();
-		for (PageLink pageLink : pagination.getPageLinks()) {
-			decoList.add(new PageLinkDecorator(model, pageLink));
-		}
-		return decoList;
 	}
 
 	@Override

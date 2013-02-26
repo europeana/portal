@@ -35,8 +35,6 @@ public interface ResultPagination {
 
 	int getStart();
 
-	List<PageLink> getPageLinks();
-
 	List<BreadCrumb> getBreadcrumbs();
 
 	PresentationQuery getPresentationQuery();

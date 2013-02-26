@@ -1,6 +1,5 @@
 package eu.europeana.portal2.web.presentation.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,8 +19,6 @@ public class ResultPaginationImpl implements ResultPagination {
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static final String FACET_PROMPT = "&qf=";
-	private static final int MARGIN = 3;
-	private static final int PAGE_NUMBER_THRESHOLD = 5;
 	private boolean isPrevious;
 	private int previousPage;
 	private boolean isFirst;
@@ -37,19 +34,15 @@ public class ResultPaginationImpl implements ResultPagination {
 	private int numFound;
 	private List<BreadCrumb> breadcrumbs;
 	private PresentationQueryImpl presentationQuery = new PresentationQueryImpl();
-	private List<PageLink> pageLinks = new ArrayList<PageLink>();
-
+	
+	
 	public ResultPaginationImpl(int start, int rows, int numFound, Query query, List<BreadCrumb> breadcrumbs) {
-		this.numFound = numFound;
-		this.rows = rows;
-
+		this.numFound	= numFound;
+		this.rows		= rows;
 		
 		int totalPages = numFound / rows;
-		
-		//lastPage = numFound - (numFound % rows);
-		lastPage = (  (  (numFound / rows) - (numFound % rows)  - 1 ) * rows  ) + 1;
-		
-		firstPage = 1;
+		lastPage		=    (  (numFound / rows) * rows ) +  ( numFound % rows > 0 ? 1 : (0-rows)+1 );
+		firstPage		= 1;
 
 		if (numFound % rows != 0) {
 			totalPages++;
@@ -61,29 +54,18 @@ public class ResultPaginationImpl implements ResultPagination {
 			this.start = start;
 		}
 		pageNumber = start / rows + 1;
-		int fromPage = 1;
-		int toPage = Math.min(totalPages, MARGIN * 2);
-		if (pageNumber > PAGE_NUMBER_THRESHOLD) {
-			fromPage = pageNumber - MARGIN;
-			toPage = Math.min(pageNumber + MARGIN - 1, totalPages);
-		}
-		if (toPage - fromPage < MARGIN * 2 - 1) {
-			fromPage = Math.max(1, toPage - MARGIN * 2 + 1);
-		}
-		this.isPrevious = start > 1;
-		this.previousPage = start - rows;
-		this.isFirst = pageNumber == 1;
-		this.isLast = pageNumber == totalPages;
-		this.isNext = totalPages > 1 && pageNumber < toPage;
-		this.nextPage = start + rows;
-		for (int page = fromPage; page <= toPage; page++) {
-			pageLinks.add(new PageLink(page, (page - 1) * rows + 1, pageNumber != page));
-		}
-		this.breadcrumbs = breadcrumbs; //BreadCrumb.createList(requestQueryString);
+		
+		this.isPrevious		= start > 1;
+		this.previousPage	= start - rows;
+		this.isFirst		= pageNumber == 1;
+		this.isLast			= pageNumber == totalPages;
+		this.isNext			= pageNumber < totalPages;
+		this.nextPage		= start + rows;
+		this.breadcrumbs	= breadcrumbs;
 
 		presentationQuery.queryForPresentation = createQueryForPresentation(query);
 		presentationQuery.queryToSave = query.getQuery();
-		presentationQuery.userSubmittedQuery = query.getQuery(); // solrQuery.getQuery();
+		presentationQuery.userSubmittedQuery = query.getQuery();
 		presentationQuery.typeQuery = removePresentationFilters(query.getQuery());
 	}
 
@@ -195,11 +177,6 @@ public class ResultPaginationImpl implements ResultPagination {
 	}
 
 	@Override
-	public List<PageLink> getPageLinks() {
-		return pageLinks;
-	}
-
-	@Override
 	public List<BreadCrumb> getBreadcrumbs() {
 		return breadcrumbs;
 	}
@@ -207,20 +184,6 @@ public class ResultPaginationImpl implements ResultPagination {
 	@Override
 	public PresentationQuery getPresentationQuery() {
 		return presentationQuery;
-	}
-
-	public String toString() {
-		StringBuilder out = new StringBuilder();
-		out.append(isPrevious ? "previous=" + previousPage : "no-previous");
-		out.append('\n');
-		for (PageLink link : pageLinks) {
-			out.append('\t');
-			out.append(link.toString());
-			out.append('\n');
-		}
-		out.append(isNext ? "next=" + previousPage : "no-next");
-		out.append('\n');
-		return out.toString();
 	}
 
 	private class PresentationQueryImpl implements PresentationQuery {
