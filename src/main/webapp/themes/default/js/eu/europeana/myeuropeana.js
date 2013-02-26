@@ -30,7 +30,7 @@ eu.europeana.myeuropeana = {
 				if(query.length){
 					var params = html.substr(html.indexOf('&'));
 					params = params.split("&amp;qf=").filter(function(e){return e ? e.trim() : e });
-					var fmted	= query + "&nbsp;&nbsp;[" + params.join(", ") + "]";
+					var fmted	= query + " &nbsp; &rarr; &nbsp;" + params.join("&nbsp; &rarr; &nbsp;");
 				}
 				$(ob).html(fmted);
 			});
