@@ -155,24 +155,6 @@ public class IndexPageController {
 	*/
 
 	/**
-	 * We assume that the English locale file has the same number of featured items / partners as all the other locale files 
-	 **/
-	/*
-	private int getMessageCount(String msg){
-		boolean keepFetching = true;
-		int i = 1;
-		while (keepFetching) {
-			try {
-				messageSource.getMessage(msg, null, Locale.ENGLISH);
-			} catch (NoSuchMessageException e) {
-				keepFetching = false;
-			}
-		}
-		return i;
-	}
-	*/
-
-	/**
 	 * Sets the featured items list and the highlighted parter
 	 */
 	private void updateFeaturedItem(IndexPage model, Locale locale) {
