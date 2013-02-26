@@ -77,6 +77,12 @@ public class SuggestionController {
 
 	private String clearSuggestionTerm(String term) {
 		term = term.trim().replaceAll("[\"'()]", "").replace("/", "\\/");
+		if (term.endsWith(" AND") || term.endsWith(" NOT")) {
+			term = term.substring(0, term.length()-4);
+		}
+		if (term.endsWith(" OR")) {
+			term = term.substring(0, term.length()-3);
+		}
 		return term;
 	}
 }
