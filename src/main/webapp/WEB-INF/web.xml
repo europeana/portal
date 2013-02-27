@@ -16,6 +16,11 @@
 
 	<display-name>Europeana Portal2</display-name>
 
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>eu.europeana.portal2.web.util.WebConfiguration</param-value>
+	</context-param>
+
 	<servlet>
 		<servlet-name>portal2</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
