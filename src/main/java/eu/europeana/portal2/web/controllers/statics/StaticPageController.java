@@ -221,19 +221,24 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 
-	@RequestMapping("/css/**/*.css")
+	// @RequestMapping("/css/**/*.css")
+	/*
 	public void fetchMcCss(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		log.info("serving css");
 		response.setContentType("text/css");
 		fetchVerbatimPage(request, response);
 	}
+	*/
 
-	@RequestMapping("/css/**/*.xml")
+	// @RequestMapping("/css/**/*.xml")
+	/*
 	public void fetchMcXml(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("application/rss+xml");
 		fetchVerbatimPage(request, response);
 	}
+	*/
 
 	/**
 	 * All sp/ js are served up from here
@@ -245,12 +250,14 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 
-	@RequestMapping("/js/**/*.js")
+	// @RequestMapping("/js/**/*.js")
+	/*
 	public void fetchMcJs(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("application/x-javascript");
 		fetchVerbatimPage(request, response);
 	}
+	*/
 
 	/**
 	 * All sp/ jpg are served up from here
@@ -262,12 +269,14 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 
-	@RequestMapping("/img/**/*.jpg")
+	// @RequestMapping("/img/**/*.jpg")
+	/*
 	public void fetchMcJpg(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("image/jpeg");
 		fetchVerbatimPage(request, response);
 	}
+	*/
 
 	@RequestMapping("/rss-blog-cache/**/*.jpg")
 	public void fetchRssJpg(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -285,11 +294,13 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 
-	@RequestMapping("/img/**/*.png")
+	// @RequestMapping("/img/**/*.png")
+	/*
 	public void fetchMcPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("image/png");
 		fetchVerbatimPage(request, response);
 	}
+	*/
 
 	@RequestMapping("/rss-blog-cache/**/*.png")
 	public void fetchRssPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -307,12 +318,15 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 
-	@RequestMapping("/img/**/*.gif")
+	
+	// @RequestMapping("/img/**/*.gif")
+	/*
 	public void fetchMcGif(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("image/gif");
 		fetchVerbatimPage(request, response);
 	}
+	*/
 
 	@RequestMapping("/rss-blog-cache/**/*.gif")
 	public void fetchRssGif(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -330,7 +344,7 @@ public class StaticPageController {
 			log.severe("Exception during fetchVerbatimPage: " + e.getLocalizedMessage());
 		} finally {
 			out.flush();
-			out.close();
+			// out.close();
 		}
 	}
 
@@ -345,7 +359,7 @@ public class StaticPageController {
 			log.info(ExceptionUtils.getFullStackTrace(e));
 		} finally {
 			out.flush();
-			out.close();
+			// out.close();
 		}
 	}
 
