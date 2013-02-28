@@ -17,8 +17,6 @@
 
 package eu.europeana.portal2.web.controllers.statics;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -27,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -209,158 +206,6 @@ public class StaticPageController {
 		String pageFileName = (pageNamePrefix == null ? "" : pageNamePrefix)
 				+ (pageName == null ? "" : pageName);
 		return pageFileName;
-	}
-
-	/**
-	 * All sp/ css are served up from here
-	 * 
-	 * @param request
-	 *            where we find locale
-	 * @return ModelAndView
-	 * @throws Exception
-	 *             something went wrong
-	 */
-
-	// @RequestMapping("/css/**/*.css")
-	/*
-	public void fetchMcCss(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		log.info("serving css");
-		response.setContentType("text/css");
-		fetchVerbatimPage(request, response);
-	}
-	*/
-
-	// @RequestMapping("/css/**/*.xml")
-	/*
-	public void fetchMcXml(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		response.setContentType("application/rss+xml");
-		fetchVerbatimPage(request, response);
-	}
-	*/
-
-	/**
-	 * All sp/ js are served up from here
-	 * 
-	 * @param request
-	 *            where we find locale
-	 * @return ModelAndView
-	 * @throws Exception
-	 *             something went wrong
-	 */
-
-	// @RequestMapping("/js/**/*.js")
-	/*
-	public void fetchMcJs(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		response.setContentType("application/x-javascript");
-		fetchVerbatimPage(request, response);
-	}
-	*/
-
-	/**
-	 * All sp/ jpg are served up from here
-	 * 
-	 * @param request
-	 *            where we find locale
-	 * @return ModelAndView
-	 * @throws Exception
-	 *             something went wrong
-	 */
-
-	// @RequestMapping("/img/**/*.jpg")
-	/*
-	public void fetchMcJpg(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		response.setContentType("image/jpeg");
-		fetchVerbatimPage(request, response);
-	}
-	*/
-
-	@RequestMapping("/rss-blog-cache/**/*.jpg")
-	public void fetchRssJpg(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("image/jpeg");
-		fetchResponsiveImage(request, response);
-	}
-
-	/**
-	 * All sp/ png are served up from here
-	 * 
-	 * @param request
-	 *            where we find locale
-	 * @return ModelAndView
-	 * @throws Exception
-	 *             something went wrong
-	 */
-
-	// @RequestMapping("/img/**/*.png")
-	/*
-	public void fetchMcPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("image/png");
-		fetchVerbatimPage(request, response);
-	}
-	*/
-
-	@RequestMapping("/rss-blog-cache/**/*.png")
-	public void fetchRssPng(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("image/png");
-		fetchResponsiveImage(request, response);
-	}
-
-	/**
-	 * All sp/ gif are served up from here
-	 * 
-	 * @param request
-	 *            where we find locale
-	 * @return ModelAndView
-	 * @throws Exception
-	 *             something went wrong
-	 */
-
-	
-	// @RequestMapping("/img/**/*.gif")
-	/*
-	public void fetchMcGif(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		response.setContentType("image/gif");
-		fetchVerbatimPage(request, response);
-	}
-	*/
-
-	@RequestMapping("/rss-blog-cache/**/*.gif")
-	public void fetchRssGif(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("image/gif");
-		fetchResponsiveImage(request, response);
-	}
-
-	private void fetchVerbatimPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		staticPageCache.setStaticPagePath(config.getStaticPagePath());
-		OutputStream out = response.getOutputStream();
-		try {
-			String pageFileName = makePageFileName(request.getServletPath(), request.getPathInfo());
-			staticPageCache.writeBinaryPage(pageFileName, out);
-		} catch (Exception e) {
-			log.severe("Exception during fetchVerbatimPage: " + e.getLocalizedMessage());
-		} finally {
-			out.flush();
-			// out.close();
-		}
-	}
-
-	private void fetchResponsiveImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		responsiveImageCache.setStaticPagePath(config.getResponsiveCache());
-		OutputStream out = response.getOutputStream();
-		try {
-			String pageFileName = request.getPathInfo().replace("/rss-blog-cache", "");
-			responsiveImageCache.writeBinaryPage(pageFileName, out, true);
-		} catch (Exception e) {
-			log.severe("Exception during fetchResponsiveImage: " + e.getLocalizedMessage());
-			log.info(ExceptionUtils.getFullStackTrace(e));
-		} finally {
-			out.flush();
-			// out.close();
-		}
 	}
 
 	@RequestMapping("/page-not-found.html")

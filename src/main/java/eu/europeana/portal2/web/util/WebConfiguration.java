@@ -1,7 +1,5 @@
 package eu.europeana.portal2.web.util;
 
-import java.util.logging.Logger;
-
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Configuration;
@@ -22,16 +20,18 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Resource(name="configurationService") private eu.europeana.portal2.services.Configuration config;
 
-	private final Logger log = Logger.getLogger(WebConfiguration.class.getCanonicalName());
-
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		String path = "file:" + config.getStaticPagePath();
 		path += (path.endsWith("/")) ? "sp" : "/sp";
 
-		// base path is /sp...
 		registry.addResourceHandler("/img/**").addResourceLocations(path + "/img/");
 		registry.addResourceHandler("/css/**").addResourceLocations(path + "/css/");
 		registry.addResourceHandler("/js/**").addResourceLocations(path + "/js/");
+
+		path = "file:" + config.getResponsiveCache();
+		path += (path.endsWith("/")) ? "" : "/";
+
+		registry.addResourceHandler("/rss-blog-cache/**").addResourceLocations(path);
 	}
 }
