@@ -14,6 +14,15 @@ import org.junit.Test;
 public class QueryUtilTest {
 
 	/**
+	 * Testing whether String.replace() replaces all instances
+	 */
+	@Test
+	public void testReplace() {
+		String input = "19\"8\"7";
+		String output = input.replace("\"", "\\\"");
+		assertEquals("19\\\"8\\\"7", output);
+	}
+	/**
 	 * Testing QueryUtil.SQUARE_BRACKET_PATTERN
 	 */
 	@Test
