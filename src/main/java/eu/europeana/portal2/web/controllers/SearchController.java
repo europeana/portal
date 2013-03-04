@@ -82,7 +82,7 @@ public class SearchController {
 
 		rows = Math.min(rows, config.getRowLimit());
 
-		log.info("============== START SEARCHING ==============");
+		log.fine("============== START SEARCHING ==============");
 		Map<String, String[]> params = request.getParameterMap();
 
 		SearchPage model = new SearchPage();
@@ -137,12 +137,12 @@ public class SearchController {
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
-		log.info("query: " + query);
+		log.fine("query: " + query);
 		BriefBeanView briefBeanView = null;
 		try {
 			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params);
 			model.setBriefBeanView(briefBeanView);
-			log.info("NumFound: " + briefBeanView.getPagination().getNumFound());
+			log.fine("NumFound: " + briefBeanView.getPagination().getNumFound());
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
 		} catch (SolrTypeException e) {
 			log.severe("SolrTypeException: " + e.getMessage());
