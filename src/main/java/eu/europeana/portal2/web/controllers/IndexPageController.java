@@ -78,10 +78,18 @@ public class IndexPageController {
 
 	private static List<FeedEntry> feedEntries;
 	private static Calendar feedAge;
-	private List<CarouselItem> carouselItems;
 
 	private static List<FeedEntry> pinterestEntries;
 	private static Calendar pinterestAge;
+	
+	private List<CarouselItem> carouselItems;
+	private static Calendar carouselAge;
+
+	private static Calendar featuredItemAge;
+	private ArrayList<FeaturedItem> featuredItems;
+
+	private static Calendar featuredPartnersAge;
+	private ArrayList<FeaturedPartner> featuredPartners;
 
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(
@@ -93,7 +101,7 @@ public class IndexPageController {
 			Locale locale) {
 		Injector injector = new Injector(request, response, locale);
 
-		log.info("===== index ====");
+		log.fine("===== index ====");
 
 		IndexPage model = new IndexPage();
 		// update dynamic items
@@ -158,27 +166,30 @@ public class IndexPageController {
 	 * Sets the featured items list and the highlighted parter
 	 */
 	private void updateFeaturedItem(IndexPage model, Locale locale) {
-		ArrayList<FeaturedItem> featuredItems = new ArrayList<FeaturedItem>();
-		boolean keepFetching = true;
-		int i = 1;
-		while (keepFetching) {
-			try {
-				String label = String.format("notranslate_featured-item-%d_a_url_t", i);
-				String url = messageSource.getMessage(label, null, locale);
-				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
-					FeaturedItem item = new FeaturedItem(i);
-					item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
-					featuredItems.add(item);
-					i++;
-				} else {
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
+		if ((featuredItemAge == null) || featuredItemAge.before(timeout)) {
+			featuredItems = new ArrayList<FeaturedItem>();
+			boolean keepFetching = true;
+			int i = 1;
+			while (keepFetching) {
+				try {
+					String label = String.format("notranslate_featured-item-%d_a_url_t", i);
+					String url = messageSource.getMessage(label, null, locale);
+					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
+						FeaturedItem item = new FeaturedItem(i);
+						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+						featuredItems.add(item);
+						i++;
+					} else {
+						keepFetching = false;
+					}
+				} catch (NoSuchMessageException e) {
 					keepFetching = false;
 				}
-			} catch (NoSuchMessageException e) {
-				keepFetching = false;
 			}
 		}
 		model.setFeaturedItems(featuredItems);
-		if (i > 1) {
+		if (featuredItems.size() > 0) {
 			int index = 0;
 			if (featuredItems.size() > 1) {
 				index = RandomUtils.nextInt(featuredItems.size());
@@ -191,23 +202,26 @@ public class IndexPageController {
 	 * Sets the featured partner list and the highlighted parter
 	 */
 	private void updateFeaturedPartner(IndexPage model, Locale locale) {
-		ArrayList<FeaturedPartner> featuredPartners = new ArrayList<FeaturedPartner>();
-		boolean keepFetching = true;
-		int i = 1;
-		while (keepFetching) {
-			try {
-				String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
-				String url = messageSource.getMessage(label, null, locale);
-				if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
-					FeaturedPartner item = new FeaturedPartner(i);
-					item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
-					featuredPartners.add(item);
-					i++;
-				} else {
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
+		if ((featuredPartnersAge == null) || featuredPartnersAge.before(timeout)) {
+			featuredPartners = new ArrayList<FeaturedPartner>();
+			boolean keepFetching = true;
+			int i = 1;
+			while (keepFetching) {
+				try {
+					String label = String.format("notranslate_featured-partner-%d_a_url_t", i);
+					String url = messageSource.getMessage(label, null, locale);
+					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
+						FeaturedPartner item = new FeaturedPartner(i);
+						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+						featuredPartners.add(item);
+						i++;
+					} else {
+						keepFetching = false;
+					}
+				} catch (NoSuchMessageException e) {
 					keepFetching = false;
 				}
-			} catch (NoSuchMessageException e) {
-				keepFetching = false;
 			}
 		}
 		model.setFeaturedPartners(featuredPartners);
@@ -221,45 +235,48 @@ public class IndexPageController {
 	}
 
 	private void updateCarousel(IndexPage model, Locale locale) {
-		carouselItems = new ArrayList<CarouselItem>();
-		boolean keepFetching = true;
-		int i = 1;
-		while (keepFetching) {
-			try {
-				String label = String.format("notranslate_carousel-item-%d_a_url_t", i);
-				String url = messageSource.getMessage(label, null, locale);
-				if (StringUtils.isNotEmpty(url)
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
+		if ((carouselAge == null) || carouselAge.before(timeout)) {
+			carouselItems = new ArrayList<CarouselItem>();
+			boolean keepFetching = true;
+			int i = 1;
+			while (keepFetching) {
+				try {
+					String label = String.format("notranslate_carousel-item-%d_a_url_t", i);
+					String url = messageSource.getMessage(label, null, locale);
+					if (StringUtils.isNotEmpty(url)
 						&& !StringUtils.equals(label, url)) {
-					CarouselItem item = new CarouselItem(model, i, url);
-					item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+						CarouselItem item = new CarouselItem(model, i, url);
+						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
 
-					Map<String, String> translatableUrls = new HashMap<String, String>();
-					boolean keepFetchingLanguages = true;
-					int j = 1;
-					while (keepFetchingLanguages) {
-						String key = "";
-						try {
-							key = String.format("notranslate_carousel-item-%d_a_url_lang_%d_t", i, j);
-							String[] langUrl =  messageSource.getMessage(key, null, null).split(",");
-							translatableUrls.put(langUrl[0], langUrl[1]);
+						Map<String, String> translatableUrls = new HashMap<String, String>();
+						boolean keepFetchingLanguages = true;
+						int j = 1;
+						while (keepFetchingLanguages) {
+							String key = "";
+							try {
+								key = String.format("notranslate_carousel-item-%d_a_url_lang_%d_t", i, j);
+								String[] langUrl =  messageSource.getMessage(key, null, null).split(",");
+								translatableUrls.put(langUrl[0], langUrl[1]);
+							}
+							catch (NoSuchMessageException e) {
+								keepFetchingLanguages = false;
+							}
+							catch (ArrayIndexOutOfBoundsException e) {
+								log.severe("misconfigured language: " + key + " - expected format \"code,url\"");
+								keepFetchingLanguages = false;
+							}
+							j++;
 						}
-						catch (NoSuchMessageException e) {
-							keepFetchingLanguages = false;
-						}
-						catch (ArrayIndexOutOfBoundsException e) {
-							log.severe("misconfigured language: " + key + " - expected format \"code,url\"");
-							keepFetchingLanguages = false;
-						}
-						j++;
+						item.setTranslatableUrls(translatableUrls);
+						carouselItems.add(item);
+					} else {
+						keepFetching = false;
 					}
-					item.setTranslatableUrls(translatableUrls);
-					carouselItems.add(item);
-				} else {
+					i++;
+				} catch (NoSuchMessageException e) {
 					keepFetching = false;
 				}
-				i++;
-			} catch (NoSuchMessageException e) {
-				keepFetching = false;
 			}
 		}
 		model.setCarouselItems(carouselItems);
