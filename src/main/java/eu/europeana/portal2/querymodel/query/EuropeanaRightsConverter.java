@@ -29,10 +29,13 @@ import java.util.regex.Pattern;
  */
 public final class EuropeanaRightsConverter {
 
-	private static final String EUROPEANA = "^.*europeana\\.eu/rights/([\\w-]+)[/\\w.]*$";
-	private static final String CREATIVE_COMMONS = "(^.*creativecommons\\.org/licenses/)([a-z\\-]+)/([0-9\\.]+)/?([a-z\\.]+?)?/?$";
-	private static final String CREATIVE_COMMONS_PD = "^.*creativecommons\\.org/publicdomain/mark/([0-9\\.]+)/.*$";
 	private static final Map<String, String> EUROPEANA_RIGHTS_MAP = new HashMap<String, String>();
+	private static final Pattern EUROPEANA_PATTERN = Pattern.compile(
+			"^.*europeana\\.eu/rights/([\\w-]+)[/\\w.]*$");
+	private static final Pattern CREATIVE_COMMONS_PATTERN = Pattern.compile(
+			"(^.*creativecommons\\.org/licenses/)([a-z\\-]+)/([0-9\\.]+)/?([a-z\\.]+?)?/?$");
+	private static final Pattern CREATIVE_COMMONS_PD_PATTERN = Pattern.compile(
+			"^.*creativecommons\\.org/publicdomain/mark/([0-9\\.]+)/.*$");
 
 	static {
 		EUROPEANA_RIGHTS_MAP.put("rr-p", "Europeana - Rights Reserved - Paid Access");
@@ -53,13 +56,13 @@ public final class EuropeanaRightsConverter {
 	 */
 	public static License convert(String uri) {
 		Matcher matcher;
-		if ((matcher = Pattern.compile(EUROPEANA).matcher(uri)).matches()) {
+		if ((matcher = EUROPEANA_PATTERN.matcher(uri)).matches()) {
 			return tryEuropeanaLicenses(matcher);
 		}
-		if ((matcher = Pattern.compile(CREATIVE_COMMONS).matcher(uri)).matches()) {
+		if ((matcher = CREATIVE_COMMONS_PATTERN.matcher(uri)).matches()) {
 			return tryCcLicenses(matcher);
 		}
-		if ((matcher = Pattern.compile(CREATIVE_COMMONS_PD).matcher(uri)).matches()) {
+		if ((matcher = CREATIVE_COMMONS_PD_PATTERN.matcher(uri)).matches()) {
 			return tryCcPublicDomain(matcher);
 		}
 		return new License(uri);
@@ -68,7 +71,7 @@ public final class EuropeanaRightsConverter {
 	public static String convertCc(String original) {
 		Matcher matcher;
 		License license;
-		if ((matcher = Pattern.compile(CREATIVE_COMMONS).matcher(original)).matches()) {
+		if ((matcher = CREATIVE_COMMONS_PATTERN.matcher(original)).matches()) {
 			license = tryCcLicenses(matcher);
 			return license.getModifiedURI();
 		}
