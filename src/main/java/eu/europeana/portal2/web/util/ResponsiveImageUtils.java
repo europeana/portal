@@ -74,26 +74,6 @@ public class ResponsiveImageUtils {
 		String nameWithoutExt = location.substring(0, location.lastIndexOf("."));
 		String toFS = nameWithoutExt.replace("/", "-").replace(":", "-").replace(".", "-");
 
-		BufferedImage orig = null;
-		try {
-			if (isURL) {
-				orig = ImageIO.read(new URL(location));
-			} else {
-				orig = ImageIO.read(new File(staticPagePath, location));
-			}
-		} catch (MalformedURLException e) {
-			log.severe("MalformedURLException during reading in location: " + e.getLocalizedMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			log.severe("IOException during reading in location: " + e.getLocalizedMessage());
-			e.printStackTrace();
-		}
-
-		if (orig == null) {
-			log.severe(String.format("The original image (%s) is null", location));
-			return responsiveImages;
-		}
-
 		Integer[] widths;
 		String[] labels;
 		if (useCarousel) {
@@ -104,6 +84,7 @@ public class ResponsiveImageUtils {
 			labels = responsiveLabels;
 		}
 
+		BufferedImage originalImage = null;
 		for (int i = 0, l = widths.length; i<l; i++){
 			String fileName = toFS + labels[i] + "." + extension;
 
@@ -112,18 +93,27 @@ public class ResponsiveImageUtils {
 			String filePath = directory + fileName;
 
 			File outputfile = new File(filePath);
-			BufferedImage responsive = null;
+			BufferedImage responsiveImage = null;
 			if (!outputfile.exists()) {
 				log.info(String.format("new file is %s, url is %s, old file is %s, ", filePath, fileUrl, location));
+				if (originalImage == null) {
+					originalImage = readOriginalImage(location, isURL);
+					if (originalImage == null) {
+						log.severe(String.format("The original image (%s) is not readable", location));
+						return responsiveImages;
+					}
+				}
+
 				try {
-					int height = (int)Math.ceil((widths[i] * orig.getHeight()) / orig.getWidth());
-					responsive = ImageUtils.scale(orig, widths[i], height);
+					int height = (int)Math.ceil((widths[i] * originalImage.getHeight()) / originalImage.getWidth());
+					responsiveImage = ImageUtils.scale(originalImage, widths[i], height);
 					// responsive = ImageUtils.compress(responsive, 0.8f);
 				} catch (IOException e) {
 					log.severe("IOException during scaling image: " + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
-				if (responsive == null) {
+
+				if (responsiveImage == null) {
 					continue;
 				}
 			}
@@ -141,7 +131,7 @@ public class ResponsiveImageUtils {
 				if (created) {
 					try {
 						// compressAndShow
-						ImageIO.write(responsive, extension, outputfile);
+						ImageIO.write(responsiveImage, extension, outputfile);
 					} catch (IOException e) {
 						log.severe("IOException during writing new file: " + e.getLocalizedMessage());
 						e.printStackTrace();
@@ -151,5 +141,23 @@ public class ResponsiveImageUtils {
 			}
 		}
 		return responsiveImages;
+	}
+	
+	private static BufferedImage readOriginalImage(String location, boolean isURL) {
+		BufferedImage originalImage = null;
+		try {
+			if (isURL) {
+				originalImage = ImageIO.read(new URL(location));
+			} else {
+				originalImage = ImageIO.read(new File(staticPagePath, location));
+			}
+		} catch (MalformedURLException e) {
+			log.severe("MalformedURLException during reading in location: " + e.getLocalizedMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			log.severe("IOException during reading in location: " + e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return originalImage;
 	}
 }
