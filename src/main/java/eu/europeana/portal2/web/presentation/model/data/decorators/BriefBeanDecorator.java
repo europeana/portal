@@ -44,6 +44,7 @@ public class BriefBeanDecorator implements BriefBean {
 	protected BriefBean briefBean;
 	private UrlAwareData<?> model;
 	private int index = 1;
+	private String fullDocUrl;
 
 	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefBean, int index) {
 		this(model, briefBean);
@@ -82,29 +83,31 @@ public class BriefBeanDecorator implements BriefBean {
 	}
 
 	public String getFullDocUrl(boolean addParams) {
-		String id = briefBean.getId();
-		if (!id.startsWith("/")) {
-			id = "/" + id;
-		}
-		if (id.indexOf("#") > -1) {
-			id = id.replace("#", "");
-		}
-		String url = PATH + id + EXTENTION;
+		if (fullDocUrl == null) {
+			String id = briefBean.getId();
+			if (!id.startsWith("/")) {
+				id = "/" + id;
+			}
+			if (id.indexOf("#") > -1) {
+				id = id.replace("#", "");
+			}
+			String url = PATH + id + EXTENTION;
 
-		if (!addParams) {
-			return url;
+			if (!addParams) {
+				fullDocUrl = url;
+			} else {
+				UrlBuilder builder = new UrlBuilder(url);
+				builder.addParam("start", Integer.toString(getIndex()), true);
+				try {
+					builder = model.enrichFullDocUrl(builder);
+				} catch (UnsupportedEncodingException e) {
+					log.severe("UnsupportedEncodingException while enrich url: " + e.getLocalizedMessage());
+				}
+				fullDocUrl = builder.toString();
+			}
 		}
 
-		UrlBuilder builder = new UrlBuilder(url);
-
-		builder.addParam("start", Integer.toString(getIndex()), true);
-		try {
-			builder = model.enrichFullDocUrl(builder);
-		} catch (UnsupportedEncodingException e) {
-			log.severe("UnsupportedEncodingException while enrich url: " + e.getLocalizedMessage());
-		}
-
-		return builder.toString();
+		return fullDocUrl;
 	}
 
 	public String getFullDocUrlJSON() {
@@ -177,8 +180,10 @@ public class BriefBeanDecorator implements BriefBean {
 	private String getThumbnail(String size) {
 		try {
 			String tn = "";
-			if (briefBean.getEdmObject() != null && briefBean.getEdmObject().length > 0) {
-				tn = StringUtils.defaultIfBlank(briefBean.getEdmObject()[0], "");
+			if (briefBean.getEdmObject() != null 
+				&& briefBean.getEdmObject().length > 0
+				&& !StringUtils.isBlank(briefBean.getEdmObject()[0])) {
+				tn = briefBean.getEdmObject()[0];
 			}
 			UrlBuilder url = null;
 			url = new UrlBuilder("http://europeanastatic.eu/api/image");
