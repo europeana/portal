@@ -125,7 +125,7 @@ public class ObjectController {
 		Injector injector = new Injector(request, response, locale);
 
 		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
-		log.info(String.format("=========== /%s/%s.html ============", collectionId, recordId));
+		log.fine(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 
 		FullDocPage model = new FullDocPage();
@@ -151,7 +151,7 @@ public class ObjectController {
 		}
 
 		long tgetFullBean1 = (new Date()).getTime();
-		log.info("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
+		log.fine("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
 			model.setOptedOut(OptOutDatasetsUtil.checkById(fullBean.getAbout()));
@@ -171,14 +171,14 @@ public class ObjectController {
 			long tSeeAlso0 = (new Date()).getTime();
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
 			long tSeeAlso1 = (new Date()).getTime();
-			log.info("see also takes: " + (tSeeAlso1 - tSeeAlso0));
+			log.fine("see also takes: " + (tSeeAlso1 - tSeeAlso0));
 			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView.getFullDoc().getAbout());
 		}
 
 		injector.postHandle(this, page);
 
 		long t1 = (new Date()).getTime();
-		log.info("object page takes: " + (t1 - t0));
+		log.fine("object page takes: " + (t1 - t0));
 
 		return page;
 	}
