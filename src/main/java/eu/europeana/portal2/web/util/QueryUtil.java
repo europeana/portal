@@ -20,6 +20,7 @@ public class QueryUtil {
 
 	public static final String FACETS = "facets";
 	public static final String REFINEMENTS = "refinements";
+	public static final String TYPE = "TYPE";
 
 	public static final Pattern SQUARE_BRACKET_PATTERN = Pattern.compile("^\\[(.*?)\\]$");
 
@@ -108,7 +109,7 @@ public class QueryUtil {
 	 * @return The URL encoded phrase
 	 */
 	public static String createPhraseValue(String fieldName, String value) {
-		if (fieldName.equals("TYPE") || !value.contains(" ")) {
+		if (fieldName.equals(TYPE) || value.indexOf(" ") == -1) {
 			return value;
 		} else {
 			return encode('"' + value + '"');
@@ -139,7 +140,7 @@ public class QueryUtil {
 	}
 
 	public static String escapeQuote(String text) {
-		return text.replaceAll("\"", "\\\\\"");
+		return text.replace("\"", "\\\"");
 	}
 
 	public static String escapeSquareBrackets(String text) {
