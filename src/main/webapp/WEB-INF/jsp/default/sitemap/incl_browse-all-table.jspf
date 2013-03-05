@@ -1,13 +1,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<table>
-  <tr>
-    <td colspan="16">Get to every Europeana object page in just three clicks. Clicks lead through randomly generated groups of pages. This feature is meant for crawlers rather than human users.</td>
-  </tr>
-<c:forEach items="${model.sitemapRows}" var="row">
-  <tr>
-<c:forEach items="${model.sitemapCols}" var="col">
-    <td><a href="browse-all.html?prefix=${model.prefix}${row}${col}" title="europeana_recordHashFirstSix:${model.prefix}${row}${col}*">${row}${col}</a></td>
-</c:forEach>
-  </tr>
-</c:forEach>
+
+
+<p>
+Get to every Europeana object page in just three clicks. Clicks lead through randomly generated groups of pages. This feature is meant for crawlers rather than human users.
+</p>
+
+<script type="text/javascript">
+
+eu_europeana_providers = {
+		
+		init: function(){
+			
+			$('.icon-arrow-2-after').click(function(e){
+				var innerList = $(this).parent().find('ul');
+				
+				if( innerList.is(':visible') ){
+					innerList.hide('slow');									
+				}
+				else{
+					innerList.show('slow');				
+				}
+				e.preventDefault();
+			});
+
+		}
+};
+
+
+</script>
+
+
+
+
+<table summary="Randomly generated Europeana object pages">
+
+	<c:forEach items="${model.sitemapRows}" var="row">
+		<tr>
+			<c:forEach items="${model.sitemapCols}" var="col">
+				<td>
+					<a href="browse-all.html?prefix=${model.prefix}${row}${col}" title="europeana_recordHashFirstSix:${model.prefix}${row}${col}*">${row}${col}</a>
+				</td>
+			</c:forEach>
+		</tr>
+	</c:forEach>
+	
 </table>

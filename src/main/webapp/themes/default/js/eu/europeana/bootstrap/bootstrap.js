@@ -133,7 +133,10 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			file : 'providers' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils' ]
+			dependencies : [ 'jquery', 'utils' ],
+			callback : function(){
+				eu_europeana_providers.init();
+			}
 		});
 		loadScripts(scripts);
 	}

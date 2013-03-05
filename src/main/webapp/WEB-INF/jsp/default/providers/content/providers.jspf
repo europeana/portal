@@ -5,18 +5,19 @@
   <h1><spring:message code="rswLabel_providers_t" /></h1>
   <c:if test="${model.hasResults}">
     <c:set var="toggle_providers" value=""/>
-    <ul>
+    <ul class="outer-list">
       <c:forEach items="${model.results}" var="entry">
         <c:choose>
           <c:when test="${entry.dataProvidersListed}">
-            <c:set var="toggle_providers" value=' class="toggle-menu-icon"'/>
+            <c:set var="toggle_providers" value=' class="icon-arrow-2-after"'/>
           </c:when>
           <c:otherwise>
-            <c:set var="toggle_providers" value=""/>
+            <c:set var="toggle_providers" value=' class="XXXX" '/>
           </c:otherwise>
         </c:choose>
         <li>
           <a href="${entry.loc}"${toggle_providers}>${entry.name} (${entry.count})</a>
+          
           <ul class="data-providers">
             <li><a href="${entry.loc}">${entry.name} (${entry.count})</a></li>
             <c:if test="${entry.dataProvidersListed}">

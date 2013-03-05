@@ -61,6 +61,12 @@
 .icon-arrow-2:before {
 	content: "\65";
 }
+
+.icon-arrow-2-after:after {
+	content: "\65";
+}
+
+
 .icon-arrow-3:before {
 	content: "\66";
 }

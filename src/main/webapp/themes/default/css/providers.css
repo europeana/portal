@@ -5,6 +5,10 @@
 		margin: 20px 0 20px 0;
 	}
 
+	#contributors .outer-list{
+		margin-top:	1em;
+	}
+
 	#content-main.with-sidebar #contributors {
 		margin: 0 0 20px 0;
 	}
@@ -20,7 +24,8 @@
 	}
 	
 	
-	#contributors li {
+	#contributors li,
+	#contributors ul{
 		list-style: none;
 		line-height: 1.5;
 	}
@@ -31,8 +36,9 @@
 	}
 	
 	#contributors .data-providers li {
-		list-style: disc;
-		margin-left: 25px;
+		list-style:		disc;
+		margin-left:	25px;
+		color:			#2A85E8;
 	}
 	
 	.data-providers {
