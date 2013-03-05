@@ -7,6 +7,7 @@
 
 	#contributors .outer-list{
 		margin-top:	1em;
+		display:	none;
 	}
 
 	#content-main.with-sidebar #contributors {
@@ -36,9 +37,8 @@
 	}
 	
 	#contributors .data-providers li {
-		list-style:		disc;
-		margin-left:	25px;
-		color:			#2A85E8;
+		list-style:		none;
+		margin-left:	1.5em;
 	}
 	
 	.data-providers {

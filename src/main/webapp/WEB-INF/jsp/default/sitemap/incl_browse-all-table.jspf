@@ -22,6 +22,8 @@ eu_europeana_providers = {
 				}
 				e.preventDefault();
 			});
+			
+			$('#contributors .outer-list').show();
 
 		}
 };
