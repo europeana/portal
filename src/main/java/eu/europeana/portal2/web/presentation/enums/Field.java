@@ -20,6 +20,7 @@ package eu.europeana.portal2.web.presentation.enums;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.FieldValueProcessor;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.Wordcapitalizer;
+import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 
 /**
  * Definition and properties of EDM fields.
@@ -276,6 +277,14 @@ public enum Field {
 
 	public boolean isOptOutAware() {
 		return optOutAware;
+	}
+
+	public String getSemanticAttributes() {
+		return SchemaOrgMapping.getSemanticAttributes(fieldName, contextualEntity);
+	}
+
+	public boolean isSemanticUrl() {
+		return SchemaOrgMapping.isSemanticUrl(fieldName, contextualEntity);
 	}
 
 	public String[] getValues(String[] values) {

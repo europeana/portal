@@ -24,7 +24,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.enums.Field;
-import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 public class FieldValue {
@@ -117,6 +116,14 @@ public class FieldValue {
 
 	public String getContextualEntity() {
 		return field.getContextualEntity();
+	}
+
+	public String getSemanticAttributes() {
+		return field.getSemanticAttributes();
+	}
+
+	public boolean isSemanticUrl() {
+		return field.isSemanticUrl();
 	}
 
 	public boolean isOptedOut() {

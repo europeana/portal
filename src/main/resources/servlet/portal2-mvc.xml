@@ -104,6 +104,8 @@
 		<property name="localeChangeInterceptor" ref="localeChangeInterceptor" />
 	</bean>
 
+	<bean id="schemaOrgMapping" class="eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping" />
+
 	<!-- a bean for storing configuration properties. -->
 	<bean id="runtimeConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">

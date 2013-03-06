@@ -124,7 +124,7 @@ public class ObjectController {
 
 		Injector injector = new Injector(request, response, locale);
 
-		log.info(String.format("=========== /record/{collectionId}/{recordId}.html ============", collectionId, recordId));
+		log.info(String.format("Thread %s =========== /record/%s/%s.html ============", Thread.currentThread().getName(), collectionId, recordId));
 		log.fine(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 
@@ -141,7 +141,7 @@ public class ObjectController {
 
 		injector.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
-		model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
+		// model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 		OptOutDatasetsUtil.setOptOutDatasets(config.getOptOutList());
 
 		long tgetFullBean0 = (new Date()).getTime();

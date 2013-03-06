@@ -799,7 +799,12 @@ public class FullDocPage extends FullDocPreparation {
 	public Map<String, Element> getEdmElements() {
 		return EdmSchemaMapping.getEdmElements();
 	}
+	
+	public String getSemanticTitle() {
+		return Field.DC_TITLE.getSemanticAttributes();
+	}
 
+	/*
 	public Map<String, SchemaOrgElement> getSchemaOrgMapping() {
 		if (!schemaOrgMappingInitialized) {
 			if (schemaOrgMappingFile != null && new File(schemaOrgMappingFile).exists()) {
@@ -821,4 +826,5 @@ public class FullDocPage extends FullDocPreparation {
 	public void setSchemaOrgMappingFile(String schemaOrgMappingFile) {
 		this.schemaOrgMappingFile = schemaOrgMappingFile;
 	}
+	*/
 }

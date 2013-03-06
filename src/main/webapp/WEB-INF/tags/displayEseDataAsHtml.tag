@@ -50,19 +50,13 @@
     <c:set var="semanticAttributes" value="" />
     <c:set var="semanticUrl" value="" />
     <c:if test="${!data.optedOut}">
-      <c:set var="semanticAttributes">
-        <eu:semanticAttributes field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
-      </c:set>
-      <c:set var="semanticUrl">
-        <eu:semanticUrl field="${data.fieldName}" contextualEntity="${data.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
-      </c:set>
+      <c:set var="semanticAttributes" value="${data.semanticAttributes}" />
+      <c:set var="semanticUrl" value="${data.semanticUrl}" />
     </c:if>
-
 
     <<c:out value="${wrapper}"/>${' '}${item_id} class="item-metadata${item_class}">
       <%-- field's label --%>
-      
-      
+
 	<c:set var="lightboxables" scope="request">Creator_t,europeana_dataProvider_t,Provider_t</c:set>
 	<c:set var="lightboxableNameClass" value=""/>
 	<c:set var="lightboxableValueClass" value=""/>
@@ -82,19 +76,8 @@
         <c:set var="localSemanticAttributes" value="${semanticAttributes}" />
         <c:set var="localSemanticUrl" value="${semanticUrl}" />
         <c:if test="${value.fieldName != data.fieldName && !value.optedOut}">
-          <c:choose>
-            <c:when test="${model.schemaOrgMapping[value.fieldName] != null}">
-              <c:set var="localSemanticAttributes">
-                <eu:semanticAttributes field="${value.fieldName}" contextualEntity="${value.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
-              </c:set>
-              <c:set var="localSemanticUrl">
-                <eu:semanticUrl field="${value.fieldName}" contextualEntity="${value.contextualEntity}" schemaOrgMapping="${model.schemaOrgMapping}" />
-              </c:set>
-            </c:when>
-            <c:otherwise>
-              <c:set var="localSemanticAttributes">${"property=\""}${model.edmElements[value.fieldName].fullQualifiedURI}${"\""}</c:set>
-            </c:otherwise>
-          </c:choose>
+          <c:set var="semanticAttributes" value="${value.semanticAttributes}" />
+          <c:set var="semanticUrl" value="${value.semanticUrl}" />
         </c:if>
 
         <%-- determine if value is translatable or not --%>

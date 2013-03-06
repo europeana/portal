@@ -146,6 +146,14 @@ public class FieldPresentation {
 		return field.getContextualEntity();
 	}
 
+	public String getSemanticAttributes() {
+		return field.getSemanticAttributes();
+	}
+
+	public boolean isSemanticUrl() {
+		return field.isSemanticUrl();
+	}
+
 	/**
 	 * Getter for fieldValue
 	 * 

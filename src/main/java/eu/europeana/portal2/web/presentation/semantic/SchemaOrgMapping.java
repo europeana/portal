@@ -7,6 +7,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
+
+import org.apache.commons.lang.StringUtils;
+
+import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.web.util.Beans;
 
 /**
  * Mapping of EDM elements and schema.org elements
@@ -15,9 +22,20 @@ import java.util.Map;
  */
 public class SchemaOrgMapping {
 
+	protected final Logger log = Logger.getLogger(getClass().getName());
+
+	private static Configuration config = Beans.getConfig();
+
 	private static Map<String, SchemaOrgElement> edm2schemaOrg;
+	private static Map<String, String> semanticAttributesMap = new ConcurrentHashMap<String, String>();
+	private static Map<String, Boolean> semanticUrlMap = new ConcurrentHashMap<String, Boolean>();
+
+	private static final String DC_TITLE = "dc:title";
+	private static final String DC_PUBLISHER = "dc:publisher";
 
 	private static void initialize() {
+		edm2schemaOrg = readFromProperty(config.getSchemaOrgMappingFile());
+		/*
 		edm2schemaOrg = new HashMap<String, SchemaOrgElement>() {
 			private static final long serialVersionUID = 1L; {
 			put("edm:country", new SchemaOrgElement("schema:addressCountry", new String[]{"schema:Thing"}));
@@ -61,7 +79,16 @@ public class SchemaOrgMapping {
 
 			// put("", new SchemaOrgElement("", new String[]{""}));
 		}};
+		*/
 	}
+
+	public SchemaOrgMapping() {
+		log.info("initializing SchemaOrgMapping");
+		log.info("file: " + config.getSchemaOrgMappingFile());
+		edm2schemaOrg = readFromProperty(config.getSchemaOrgMappingFile());
+		log.info("map size: " + edm2schemaOrg.size());
+	}
+
 
 	public static Map<String, SchemaOrgElement> getMap() {
 		if (edm2schemaOrg == null) {
@@ -85,16 +112,19 @@ public class SchemaOrgMapping {
 	}
 
 	public static void initialize(String filename) {
-		edm2schemaOrg = new HashMap<String, SchemaOrgElement>();
-		Map<String, SchemaOrgElement> mapping = readFromProperty(filename);
+		edm2schemaOrg = readFromProperty(filename);
+		/*
+		edm2schemaOrg = new ConcurrentHashMap<String, SchemaOrgElement>();
+		Map<String, SchemaOrgElement> mapping = readFromProperty(config.getSchemaOrgMappingFile());
 		for (Map.Entry<String, SchemaOrgElement> entry : mapping.entrySet()) {
 			// TODO: add more features to SchemaOrgElement later, like attributes, parents etc.
 			edm2schemaOrg.put(entry.getKey(), entry.getValue()); //new SchemaOrgElement(entry.getValue()));
 		}
+		*/
 	}
 
 	private static Map<String, SchemaOrgElement> readFromProperty(String file) {
-		Map<String, SchemaOrgElement> mapping = new HashMap<String, SchemaOrgElement>();
+		Map<String, SchemaOrgElement> mapping = new ConcurrentHashMap<String, SchemaOrgElement>();
 		DataInputStream in = null;
 		BufferedReader br = null;
 		try {
@@ -159,5 +189,48 @@ public class SchemaOrgMapping {
 			return true;
 		}
 		return false;
+	}
+
+	public static String getSemanticAttributes(String field, String contextualEntity) {
+		String schemaKey = field;
+		if (!StringUtils.isBlank(contextualEntity)) {
+			schemaKey = contextualEntity + '/' + field;
+		}
+
+		if (!semanticAttributesMap.containsKey(schemaKey)) {
+			Element element = EdmSchemaMapping.getEdmElements().get(field);
+			String semanticAttributes = element.getFullQualifiedURI();
+			if (edm2schemaOrg.containsKey(schemaKey)) {
+				SchemaOrgElement elementMapping = edm2schemaOrg.get(schemaKey);
+				Element schemaOrgElement = elementMapping.getElement();
+				Element edmElement = elementMapping.getEdmElement();
+				semanticAttributes = edmElement.getFullQualifiedURI() + " " + schemaOrgElement.getElementName();
+			}
+			if (field.equals(DC_TITLE) || field.equals(DC_PUBLISHER)) {
+				semanticAttributes = semanticAttributes + ' ' + field;
+			}
+			semanticAttributesMap.put(schemaKey, "property=\"" + semanticAttributes + "\"");
+		}
+		
+		return semanticAttributesMap.get(schemaKey);
+	}
+
+	public static Boolean isSemanticUrl(String schemaKey) {
+		if (!semanticUrlMap.containsKey(schemaKey)) {
+			boolean isSemanticUrl = false;
+			if (edm2schemaOrg.containsKey(schemaKey)) {
+				isSemanticUrl = edm2schemaOrg.get(schemaKey).isSemanticUrl();
+			}
+			semanticUrlMap.put(schemaKey, isSemanticUrl);
+		}
+		return semanticUrlMap.get(schemaKey);
+	}
+
+	public static Boolean isSemanticUrl(String field, String contextualEntity) {
+		String schemaKey = field;
+		if (!StringUtils.isBlank(contextualEntity)) {
+			schemaKey = contextualEntity + '/' + field;
+		}
+		return isSemanticUrl(schemaKey);
 	}
 }

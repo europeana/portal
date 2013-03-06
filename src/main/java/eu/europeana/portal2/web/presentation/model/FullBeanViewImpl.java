@@ -67,7 +67,7 @@ public class FullBeanViewImpl implements FullBeanView {
 		this.children = findChildren();
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
-		log.info("fullDoc is null? " + (fullDoc == null));
+		log.fine("fullDoc is null? " + (fullDoc == null));
 		this.docIdWindowPager = createPager(fullDoc.getAbout(), httpParameters, query, searchService, clazz);
 	}
 

@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 
 public class SchemaOrgElement {
 
+	private static final String SCHEMA_URL = "schema:url";
+
 	private Element element;
 	private List<Element> parents;
 	private Element edmElement;
@@ -67,6 +69,10 @@ public class SchemaOrgElement {
 
 	public Element getEdmElement() {
 		return edmElement;
+	}
+	
+	public boolean isSemanticUrl() {
+		return (element.getQualifiedName() == SCHEMA_URL);
 	}
 
 	public void setEdmElement(Element edmElement) {

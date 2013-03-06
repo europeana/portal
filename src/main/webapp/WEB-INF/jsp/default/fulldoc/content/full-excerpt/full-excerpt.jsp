@@ -8,13 +8,7 @@
       <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
     </div>
 
-    <c:set var="schemaOrgMapping" value="${model.schemaOrgMapping['dc:title']}" />
-    <c:set var="schemaOrgElement" value="${schemaOrgMapping.element}" />
-    <c:set var="edmElement" value="${schemaOrgMapping.edmElement}" />
-    <c:set var="semanticAttributes">
-      ${"property=\""}${edmElement.fullQualifiedURI}${" "}${schemaOrgElement.elementName} dc:title${"\""}
-    </c:set>
-    <h1 class="hide-on-phones" ${semanticAttributes}>${model.objectTitle}</h1>
+    <h1 class="hide-on-phones" ${model.semanticTitle}>${model.objectTitle}</h1>
 
     <c:forEach items="${model.document.dcTitle}" var="title">
       <c:if test="${title != model.objectTitle }">
@@ -51,7 +45,7 @@
 
     <meta resource="${model.document.checkedEdmLandingPage}" property="url http://www.europeana.eu/schemas/edm/landingPage" />
     <c:forEach items="${model.hiddenFields}" var="hiddenField" varStatus="fieldStatus">
-      <c:set var="prop"><eu:semanticAttributes field="${hiddenField.key.fieldName}" schemaOrgMapping="${model.schemaOrgMapping}" /></c:set>
+      <c:set var="prop" value="${hiddenField.key.semanticAttributes}" />
       <c:forEach items="${hiddenField.value}" var="value">
         <c:if test="${value != null && value != ''}"><meta resource="${value}" ${prop}/></c:if>
       </c:forEach>
