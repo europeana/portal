@@ -12,7 +12,7 @@
             <c:set var="toggle_providers" value=' class="icon-arrow-2-after"'/>
           </c:when>
           <c:otherwise>
-            <c:set var="toggle_providers" value=' class="XXXX" '/>
+            <c:set var="toggle_providers" value=''/>
           </c:otherwise>
         </c:choose>
         <li>
