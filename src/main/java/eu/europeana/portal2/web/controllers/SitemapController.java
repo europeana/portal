@@ -1,6 +1,7 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -11,6 +12,7 @@ import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -92,7 +94,7 @@ public class SitemapController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
-		PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		ServletOutputStream out = response.getOutputStream();
 		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		out.println("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 
@@ -114,7 +116,7 @@ public class SitemapController {
 		}
 		out.println("</sitemapindex>");
 		out.flush();
-		out.close();
+		// out.close();
 	}
 
 	String makeSitemapLocationUrl(String baseUrl, String provider, String images, int pageCounter) 
@@ -137,7 +139,8 @@ public class SitemapController {
 		SearchPage model = new SearchPage();
 
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		// PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		ServletOutputStream out = response.getOutputStream();
 		try {
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			out.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:geo=\"http://www.google.com/geo/schemas/sitemap/1.0\">");
@@ -208,7 +211,7 @@ public class SitemapController {
 			out.print("</urlset>");
 			out.flush();
 		} finally {
-			out.close();
+			// out.close();
 		}
 	}
 
@@ -221,7 +224,8 @@ public class SitemapController {
 
 		int volume = -1;
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		// PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		ServletOutputStream out = response.getOutputStream();
 		SearchPage model = new SearchPage();
 
 		try {
@@ -274,7 +278,7 @@ public class SitemapController {
 			out.print("</urlset>");
 			out.flush();
 		} finally {
-			out.close();
+			// out.close();
 		}
 	}
 
