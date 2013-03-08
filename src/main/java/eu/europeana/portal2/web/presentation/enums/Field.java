@@ -62,7 +62,7 @@ public enum Field {
 		ExternalService.WORLDCAT, ExternalService.FLICKR, ExternalService.AMAZON,
 		ExternalService.YOUTUBE, ExternalService.IMDB),
 	// DC_DESCRIPTION("dc:description", "Description_t", null, null, null, true, true, 800, true, ExternalService.none()),
-	DC_DESCRIPTION("dc:description", "Description_t"),
+	DC_DESCRIPTION("dc:description", "Description_t", true), // translatable
 	DC_LANGUAGE("dc:language", "languageDropDownList_t", false, false, false, ExternalService.none()),
 	DC_FORMAT("dc:format", "dc_format_t", false, true, true, ExternalService.none()),
 	DC_SOURCE("dc:source", "dc_source_t", false, true, false, 
@@ -111,8 +111,8 @@ public enum Field {
 	EDM_COLLECTIONNAME("edm:collectionName", "europeana_collectionName_t", null, "europeana_collectionName:%s"),
 	EDM_ISSHOWNAT("edm:isShownAt", null),
 	EDM_ISSHOWNBY("edm:isShownBy", null),
-	EDM_OBJECT("edm:object", null, true),
-	EDM_PREVIEW("edm:preview", null, true),
+	EDM_OBJECT("edm:object", null, true, false),
+	EDM_PREVIEW("edm:preview", null, true, false),
 	EDM_LANGUAGE("edm:language", null),
 	EDM_PLACE_LONGITUDE("wgs84_pos:lat", "edm_place_longitude_t"),
 	EDM_PLACE_LATITUDE("wgs84_pos:long", "edm_place_latitude_t"),
@@ -192,12 +192,17 @@ public enum Field {
 		this(name, label, null, null, null, false, false, -1, false, ExternalService.none());
 	}
 
-	private Field(String name, String label, boolean optOutAware) {
-		this(name, label, null, null, null, false, false, -1, false, ExternalService.none());
+	private Field(String name, String label, boolean translatable) {
+		this(name, label, null, null, null, false, false, -1, translatable, ExternalService.none());
+	}
+
+	private Field(String name, String label, boolean optOutAware, boolean translatable) {
+		this(name, label, null, null, null, false, false, -1, translatable, ExternalService.none());
 		this.optOutAware = optOutAware;
 	}
 
 	private Field(String name, String label, FieldValueProcessor processor) {
+		// name, label, contextualEntity, processor, searchOn, seperateLines, sortValues, maxLength, translatable, externalServices
 		this(name, label, null, processor, null, false, false, -1, false, ExternalService.none());
 	}
 
