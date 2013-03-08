@@ -22,7 +22,7 @@ import eu.europeana.portal2.web.util.Beans;
  */
 public class SchemaOrgMapping {
 
-	protected final Logger log = Logger.getLogger(getClass().getName());
+	protected final static Logger log = Logger.getLogger(SchemaOrgMapping.class.getCanonicalName());
 
 	private static Configuration config = Beans.getConfig();
 
@@ -199,19 +199,23 @@ public class SchemaOrgMapping {
 
 		if (!semanticAttributesMap.containsKey(schemaKey)) {
 			Element element = EdmSchemaMapping.getEdmElements().get(field);
-			String semanticAttributes = element.getFullQualifiedURI();
-			if (edm2schemaOrg.containsKey(schemaKey)) {
-				SchemaOrgElement elementMapping = edm2schemaOrg.get(schemaKey);
-				Element schemaOrgElement = elementMapping.getElement();
-				Element edmElement = elementMapping.getEdmElement();
-				semanticAttributes = edmElement.getFullQualifiedURI() + " " + schemaOrgElement.getElementName();
+			if (element == null) {
+				semanticAttributesMap.put(schemaKey, "");
+			} else {
+				String semanticAttributes = element.getFullQualifiedURI();
+				if (edm2schemaOrg.containsKey(schemaKey)) {
+					SchemaOrgElement elementMapping = edm2schemaOrg.get(schemaKey);
+					Element schemaOrgElement = elementMapping.getElement();
+					Element edmElement = elementMapping.getEdmElement();
+					semanticAttributes = edmElement.getFullQualifiedURI() + " " + schemaOrgElement.getElementName();
+				}
+				if (field.equals(DC_TITLE) || field.equals(DC_PUBLISHER)) {
+					semanticAttributes = semanticAttributes + ' ' + field;
+				}
+				semanticAttributesMap.put(schemaKey, "property=\"" + semanticAttributes + "\"");
 			}
-			if (field.equals(DC_TITLE) || field.equals(DC_PUBLISHER)) {
-				semanticAttributes = semanticAttributes + ' ' + field;
-			}
-			semanticAttributesMap.put(schemaKey, "property=\"" + semanticAttributes + "\"");
 		}
-		
+
 		return semanticAttributesMap.get(schemaKey);
 	}
 
