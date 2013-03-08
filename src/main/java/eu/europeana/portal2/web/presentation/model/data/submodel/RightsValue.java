@@ -83,7 +83,7 @@ public class RightsValue {
 	}
 
 	public boolean isNoc() {
-		return right == RightsOption.NOC;
+		return right == RightsOption.NOC || right == RightsOption.CC_ZERO;
 	}
 
 }
