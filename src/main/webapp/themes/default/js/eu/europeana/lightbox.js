@@ -12,8 +12,11 @@ eu.europeana.lightbox = function(){
 	self.zoomed		= false;
 	self.brdr		= 60;
 	
-	var init = function(cmp, src, carouselData) {
-		self.cmp = cmp;
+	var init = function(initOb) {
+		
+		var cmp				= self.cmp	= initOb.cmp;
+		var src				= initOb.src;
+		var carouselData	= initOb.data;
 		
 		if(carouselData){
 			
@@ -25,7 +28,6 @@ eu.europeana.lightbox = function(){
 				var submodel = [];
 				var submodelActive = 0;
 
-				
 				var nav = function(direction){
 
 					for(var i=0; i<carouselData.length; i++){
@@ -72,8 +74,9 @@ eu.europeana.lightbox = function(){
 		}
 		
 		cmp.find('#lightbox_image').attr('src', src);
-		self.origImgW = cmp.find('#lightbox_image').width();
-		self.origImgH = cmp.find('#lightbox_image').height();
+		
+		self.origImgW = initOb.w;// cmp.find('#lightbox_image').width();
+		self.origImgH = initOb.h;//cmp.find('#lightbox_image').height();
 	};
 
 	var layout = function(){
