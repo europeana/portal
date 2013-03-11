@@ -309,7 +309,7 @@ eu.europeana.fulldoc = {
 	/**
 	 * Makes the one and only call to eu.europeana.lightbox.init
 	 * */
-	initLightbox : function(url){
+	initLightbox : function(url, initialW, initialH){
 		js.console.log("initLightbox");
 
 		if(!eu.europeana.fulldoc.lightboxOb){
@@ -358,10 +358,18 @@ eu.europeana.fulldoc = {
 			);				
 			
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
+			
+			
 			eu.europeana.fulldoc.lightboxOb.init(
-					cmp,
-					url,
-					eu.europeana.fulldoc.getLightboxableCount() > 1 ? carouselData : null);
+				{	"cmp"	:	cmp,
+					"src"	:	url,
+					"w"		:	initialW,
+					"h"		:	initialH,
+					"data"	:	eu.europeana.fulldoc.getLightboxableCount() > 1 ?  carouselData : null
+				}
+				
+			);
+			
 			$(".iframe-wrap").empty();
 		}
 		else{
@@ -428,6 +436,11 @@ eu.europeana.fulldoc = {
 				function($images, $proper, $broken){
 
 					if($proper.length==1 && $proper.width() > 200){
+
+						// need to store the real widths here, because by the time fulldoc.js loads the tmp img element may have been removed.
+						
+						var properW = $proper.width();
+						var properH = $proper.height();
 						
 						// Add the markup
 
@@ -443,7 +456,10 @@ eu.europeana.fulldoc = {
 									});
 								}
 								// end new trigger (was previously in lightbox definition file)
-								eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url);
+								
+								//alert("proper " + properW+ " / " +  properH );
+								
+								eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url, properW, properH);
 								eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 							}
 						);
