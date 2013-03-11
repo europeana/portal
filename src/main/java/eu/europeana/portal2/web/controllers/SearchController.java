@@ -85,7 +85,7 @@ public class SearchController {
 		log.fine("============== START SEARCHING ==============");
 		Map<String, String[]> params = request.getParameterMap();
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
-		if (params.get("qf").length != qf.length) {
+		if (params.get("qf") != null && params.get("qf").length != qf.length) {
 			qf = params.get("qf");
 		}
 
