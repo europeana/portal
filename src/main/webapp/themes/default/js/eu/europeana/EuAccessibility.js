@@ -11,7 +11,11 @@ var EuAccessibility = function(cmpIn, fnGetItems, removeActive){
 			
 			return;
 		}
-			
+		
+		if(e.target.nodeName.toUpperCase() == "INPUT"){
+			return;
+		}
+		
 		var tabIndex = parseInt($(e.target).attr('tabIndex'));
 	
 		if([39, 40].indexOf(e.keyCode)>-1){
