@@ -53,6 +53,11 @@ public class TimelineController {
 			Locale locale)
 					throws Exception {
 		Injector injector = new Injector(request, response, locale);
+		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
+		String[] _qf = (String[]) request.getParameterMap().get("qf");
+		if (_qf.length != qf.length) {
+			qf = _qf;
+		}
 
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);

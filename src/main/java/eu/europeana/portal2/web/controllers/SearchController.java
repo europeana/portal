@@ -84,6 +84,10 @@ public class SearchController {
 
 		log.fine("============== START SEARCHING ==============");
 		Map<String, String[]> params = request.getParameterMap();
+		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
+		if (params.get("qf").length != qf.length) {
+			qf = params.get("qf");
+		}
 
 		SearchPage model = new SearchPage();
 		model.setRequest(request);
@@ -95,6 +99,8 @@ public class SearchController {
 		model.setRswUserId(rswUserId);
 		model.setRswDefqry(rswDefqry);
 		model.setRefinements(qf);
+		log.info("qf: [" + StringUtils.join(qf, "] [") + "]");
+
 		if (start < 1) {
 			start = 1;
 		}

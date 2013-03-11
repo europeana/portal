@@ -1,8 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -60,7 +58,7 @@ public class SitemapController {
 
 	@Resource private ThumbnailService thumbnailService;
 
-	private Logger log = Logger.getLogger(this.getClass().getName());
+	private static Logger log = Logger.getLogger(SitemapController.class.getCanonicalName());
 
 	private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
 
@@ -336,11 +334,14 @@ public class SitemapController {
 		try {
 			providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
 			for (Count provider : providers) {
-				log.info("provider: " + provider.getName());
+				// log.info("provider: " + provider.getName());
 				try {
 					String query = StringEscapeUtils.escapeXml(String.format(
 							"%s/search.html?query=*:*&qf=PROVIDER:%s",
 							portalServer, convertProviderToUrlParameter(provider.getName())));
+					if (query.indexOf("Saxon") > -1) {
+						log.info("query: " + query);
+					}
 					ContributorItem contributorItem = new ContributorItem(query,
 							provider.getName(), provider.getCount(), portalServer);
 
@@ -350,7 +351,7 @@ public class SitemapController {
 							"*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
 					for (Count dataProvider : rawDataProviders) {
 						if (dataProvider.getCount() > 0) {
-							log.info("dataProvider: " + dataProvider.getName());
+							// log.info("dataProvider: " + dataProvider.getName());
 							dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider.getName(), dataProvider.getCount()));
 						}
 					}
@@ -397,7 +398,11 @@ public class SitemapController {
 
 	public static String convertProviderToUrlParameter(String provider)
 			throws UnsupportedEncodingException {
-		return URLEncoder.encode(provider.replace("\"", "\\\""), "UTF-8");
+		String url = URLEncoder.encode(provider.replace("\"", "\\\"").replace("/", "\\/"), "UTF-8");
+		if (url.indexOf("Saxon") > -1) {
+			log.info(url);
+		}
+		return url;
 	}
 
 	private String getStaticPagePart(String fileName, String partName, Locale language) {

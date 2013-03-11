@@ -69,6 +69,11 @@ public class ApiConsoleController {
 			Locale locale) {
 		Injector injector = new Injector(request, response, locale);
 		log.info("===== /api/console.html =====");
+		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
+		String[] _qf = (String[]) request.getParameterMap().get("qf");
+		if (_qf.length != refinements.length) {
+			refinements = _qf;
+		}
 
 		ApiConsolePage model = new ApiConsolePage();
 		injector.injectProperties(model);

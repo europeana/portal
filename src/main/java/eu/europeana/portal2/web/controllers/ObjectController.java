@@ -121,8 +121,13 @@ public class ObjectController {
 			Locale locale) throws EuropeanaQueryException {
 
 		long t0 = (new Date()).getTime();
-
 		Injector injector = new Injector(request, response, locale);
+		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
+		String[] _qf = (String[]) request.getParameterMap().get("qf");
+		if (_qf.length != qf.length) {
+			qf = _qf;
+		}
+
 
 		log.info(String.format("Thread %s =========== /record/%s/%s.html ============", Thread.currentThread().getName(), collectionId, recordId));
 		log.fine(String.format("=========== /%s/%s.html ============", collectionId, recordId));
