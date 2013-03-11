@@ -59,7 +59,7 @@ eu.europeana.header = {
 		
 		// setup tabs
 		this.setupTabbing();
-		this.addQueryFocus();
+		this.setDefaultFocus();
 	},
 	
 	
@@ -89,6 +89,7 @@ eu.europeana.header = {
 			setTabIndex( '#login input[type=submit]' );
 			setTabIndex( '#login a' );
 		}
+		
 		
 		/* header */
 		setTabIndex( '#query-input' );
@@ -332,7 +333,7 @@ eu.europeana.header = {
 	/**
 	 *	adds focus to the search textbox
 	 */
-	addQueryFocus : function() {
+	setDefaultFocus : function() {
 		
 		$('#query-input').focus(function(){
 			$("#query-full table tr:first-child .query-cell").addClass("glow");
@@ -343,6 +344,21 @@ eu.europeana.header = {
 		});
 		
 		var inputFocus = ['login.html', 'forgotPassword.html', 'register-success.html'].indexOf(eu.europeana.vars.page_name) >=0 ? $('#j_username') : $('#query-input');
+
+		
+		if(eu.europeana.vars.page_name == 'search.html'){
+			inputFocus = window;
+		}
+		
+		else if(eu.europeana.vars.page_name == 'full-doc.html'){
+			var navigationLinks = $('#navigation a'); 
+			if(navigationLinks.length){
+				inputFocus = navigationLinks[0];
+			}
+			else{
+				inputFocus = window;				
+			}
+		}
 		
 		inputFocus.focus();
 		
