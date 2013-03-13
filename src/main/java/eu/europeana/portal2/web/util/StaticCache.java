@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -52,6 +53,7 @@ public abstract class StaticCache {
 	protected final Logger log = Logger.getLogger(StaticCache.class.getCanonicalName());
 
 	protected static Configuration config = Beans.getConfig();
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private Map<String, Page> pageMapCache = new ConcurrentHashMap<String, Page>();
 	private String staticPagePath;
@@ -145,11 +147,10 @@ public abstract class StaticCache {
 	}
 
 	private Map<String, Page> pageMap() {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), getCheckFrequency()));
-
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -getCheckFrequency()));
 		if (pageMapCache.isEmpty()
 			|| getLastCheck() == null
-			|| getLastCheck().after(timeout)) {
+			|| getLastCheck().before(timeout)) {
 			if (staticPagePath == null) {
 				log.severe("staticPagePath is not set!");
 				throw new RuntimeException(staticPagePath + " is not set!");
@@ -158,6 +159,9 @@ public abstract class StaticCache {
 			if (!root.isDirectory()) {
 				log.severe("staticPagePath: " + staticPagePath + " is not a directory!");
 				throw new RuntimeException(staticPagePath + " is not a directory!");
+			}
+			if (!pageMapCache.isEmpty()) {
+				pageMapCache.clear();
 			}
 			addToPageMap(root, root);
 			setLastCheck(Calendar.getInstance());

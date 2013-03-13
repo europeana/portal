@@ -44,6 +44,7 @@ import eu.europeana.portal2.web.util.StaticPageCache;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.enums.Redirect;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
+import eu.europeana.portal2.web.presentation.model.ExceptionPage;
 import eu.europeana.portal2.web.presentation.model.StaticPage;
 
 /**
@@ -96,8 +97,13 @@ public class StaticPageController {
 		Injector injector = new Injector(request, response, null);
 
 		pageName = "/" + pageName + getSuffix(pageName) + ".html";
+		StaticPage model = new StaticPage();
 
-		ModelAndView page = doFetchStaticPage(injector, pageName, response);
+		ModelAndView page = doFetchStaticPage(injector, pageName, response, model);
+
+		if (!model.isPageFound()) {
+			response.setStatus(404);
+		}
 
 		return page;
 	}
@@ -112,8 +118,13 @@ public class StaticPageController {
 		Injector injector = new Injector(request, response, null);
 
 		pageName = "/rights/" + pageName + getSuffix(pageName) + ".html";
+		StaticPage model = new StaticPage();
 
-		ModelAndView page = doFetchStaticPage(injector, pageName, response);
+		ModelAndView page = doFetchStaticPage(injector, pageName, response, model);
+
+		if (!model.isPageFound()) {
+			response.setStatus(404);
+		}
 
 		return page;
 	}
@@ -146,7 +157,7 @@ public class StaticPageController {
 		return suffix;
 	}
 
-	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response) {
+	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response, StaticPage model) {
 		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		staticPageCache.setStaticPagePath(config.getStaticPagePath());
@@ -169,15 +180,21 @@ public class StaticPageController {
 		// request.getPathInfo());
 
 		// generate static page
-		StaticPage model = new StaticPage();
-		model.setTc(pageName.indexOf("rights")>-1);
+		model.setTc(pageName.indexOf("rights") >- 1);
 		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, injector.getLocale()));
 		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, injector.getLocale()));
 		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, injector.getLocale()));
-		model.setTitleContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_TITLE, injector.getLocale()));
+		String titleContent = getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_TITLE, injector.getLocale());
+		model.setTitleContent(titleContent);
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
+		if (StringUtils.isBlank(model.getBodyContent()) 
+				&& StringUtils.isBlank(model.getHeaderContent()) 
+				&& StringUtils.isBlank(model.getLeftContent())
+				&& StringUtils.isBlank(titleContent)) {
+			model.setPageFound(false);
+		}
 		injector.injectProperties(model);
 
 		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
@@ -187,7 +204,6 @@ public class StaticPageController {
 
 		return page;
 	}
-
 
 	private String getStaticPagePart(String fileName, String partName, Locale language) {
 
@@ -200,7 +216,7 @@ public class StaticPageController {
 
 	/**
 	 * composed from servletPath and pathInfo that may be null and may be called
-	 * w/o language for verbatim pages
+	 * w/o language fo)r verbatim pages
 	 */
 	private String makePageFileName(String pageNamePrefix, String pageName) {
 		String pageFileName = (pageNamePrefix == null ? "" : pageNamePrefix)
@@ -215,12 +231,21 @@ public class StaticPageController {
 	}
 
 	@RequestMapping("/error.html")
-	public ModelAndView errorPageHandler(HttpServletRequest request, Locale locale) throws Exception {
+	public ModelAndView errorPageHandler(HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+		Injector injector = new Injector(request, response, null);
+
 		log.info("====== error.html ======");
-		CorePageInfo pageType = CorePageInfo.EXCEPTION;
+		CorePageInfo pageType = CorePageInfo.ERROR;
 
 		clickStreamLogger.logStaticPageView(request, pageType);
-		return ControllerUtil.createModelAndViewPage(new EmptyModelPage(), locale, pageType);
+		EmptyModelPage model = new EmptyModelPage();
+		model.setProblem(ProblemType.UNKNOWN);
+
+		injector.injectProperties(model);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, pageType);
+		injector.postHandle(this, page);
+
+		return page;
 	}
 
 	public void setStaticPageCache(StaticPageCache staticPageCache) {

@@ -26,6 +26,7 @@ public abstract class StaticData extends SearchPageData {
 	private String bodyContent;
 	private String leftContent;
 	private boolean tc;
+	private boolean pageFound = true;
 
 	public boolean getTc() {
 		return tc;
@@ -73,5 +74,13 @@ public abstract class StaticData extends SearchPageData {
 
 	public String getDefaultContent() {
 		return defaultContent;
+	}
+
+	public boolean isPageFound() {
+		return pageFound;
+	}
+
+	public void setPageFound(boolean pageFound) {
+		this.pageFound = pageFound;
 	}
 }

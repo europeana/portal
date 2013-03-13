@@ -17,8 +17,18 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
+import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 
 public class EmptyModelPage extends SearchPageData {
 
+	private ProblemType problem;
+
+	public ProblemType getProblem() {
+		return problem;
+	}
+
+	public void setProblem(ProblemType problem) {
+		this.problem = problem;
+	}
 }
