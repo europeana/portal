@@ -11,7 +11,7 @@
     <c:when test="${model.problem == 'RECORD_NOT_FOUND'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorRecordNotFound_t" />${" "}
+        <spring:message code="ErrorRecordNotFound_t" /><br/>
         <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
@@ -25,14 +25,14 @@
     <c:when test="${model.problem == 'RECORD_REVOKED'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorRecordRevoked_t" />${" "}
+        <spring:message code="ErrorRecordRevoked_t" /><br/>
         <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'RECORD_NOT_INDEXED'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorRecordNotIndexed_t" />${" "}
+        <spring:message code="ErrorRecordNotIndexed_t" /><br/>
         <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
@@ -44,28 +44,28 @@
     </c:when>
     <c:when test="${model.problem == 'MALFORMED_URL'}">
       <div>
-        <spring:message code="ErrorMalformedUrl_t" />${" "}
+        <spring:message code="ErrorMalformedUrl_t" /><br/>
         <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'SOLR_UNREACHABLE'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorSolrUnreachable_t" />${" "}
+        <spring:message code="ErrorSolrUnreachable_t" /><br/>
         <spring:message code="ErrorTryAnotherSearchLater_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'MALFORMED_QUERY'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorMalformedQuery_t" />${" "}
+        <spring:message code="ErrorMalformedQuery_t" /><br/>
         <spring:message code="ErrorTryAnotherSearch_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'UNABLE_TO_CHANGE_LANGUAGE'}">
       <div>
         <span class="bold"><spring:message code="ErrorAttention_t" /></span>
-        <spring:message code="ErrorUnableToChangeLanguage_t" />${" "}
+        <spring:message code="ErrorUnableToChangeLanguage_t" /><br/>
         <spring:message code="ErrorTryAnotherLanguage_t"/>
       </div>
     </c:when>
