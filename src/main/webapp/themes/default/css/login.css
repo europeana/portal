@@ -23,10 +23,19 @@
     .login-box fieldset {
     	background-color:	#F3F3F3;
         padding:			1.5em;
+        
+	 	box-sizing:			border-box;
+		-moz-box-sizing:	border-box;
+		-webkit-box-sizing:	border-box;
     }
     
     .login-box fieldset input{
     	border:	1px solid #A0A0A0;
+    	width:	100%;
+    }
+    
+    .login-box h2{
+    	margin-bottom:	0.75em;
     }
     
     .login-box label {
