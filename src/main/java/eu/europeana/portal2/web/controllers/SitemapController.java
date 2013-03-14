@@ -110,7 +110,8 @@ public class SitemapController {
 			throws IOException {
 		setSitemapCacheDir();
 
-		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + request.getQueryString().replaceAll("[^a-z0-9]", "-") + XML);
+		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9]", "-") : "";
+		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 			// generate file
 			FileWriter fstream = new FileWriter(cacheFile);
@@ -174,7 +175,8 @@ public class SitemapController {
 					throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 
-		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_HASHED + request.getQueryString().replaceAll("[^a-z0-9]", "-") + XML);
+		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9]", "-") : "";
+		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_HASHED + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 			// generate file
 
@@ -284,7 +286,8 @@ public class SitemapController {
 			throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 
-		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_VIDEO + request.getQueryString().replaceAll("[^a-z0-9]", "-") + XML);
+		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9]", "-") : "";
+		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_VIDEO + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 
 			int volume = -1;
