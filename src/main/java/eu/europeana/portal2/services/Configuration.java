@@ -130,6 +130,9 @@ public class Configuration {
 	@Value("#{europeanaProperties['api.optOutList']}")
 	private String optOutList;
 
+	@Value("#{europeanaProperties['portal.sitemap.cache']}")
+	private String sitemapCache;
+
 	/////////////////////////////// generated/derivated properties
 
 	private Map<String, String> seeAlsoTranslations;
@@ -369,5 +372,9 @@ public class Configuration {
 
 	public String getOptOutList() {
 		return optOutList;
+	}
+
+	public String getSitemapCache() {
+		return sitemapCache;
 	}
 }

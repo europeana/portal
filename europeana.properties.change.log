@@ -116,3 +116,12 @@ description: provides a canonical name for portal server
 example:
 portal.server.canonical = http://www.europeana.eu/
 
+==== 2013-03-14
+
+New properties:
+1) portal.sitemap.cache
+
+description: provides a cache for generated Sitemap files. It should be a file system path to directory which is writable/readable by the application.
+
+example:
+portal.sitemap.cache = /home/peterkiraly/Development/portal2/sitemap-cache/
