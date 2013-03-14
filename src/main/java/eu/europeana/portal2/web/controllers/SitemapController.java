@@ -76,7 +76,7 @@ public class SitemapController {
 	private static final String europeanaUriInfix = "/resolve/";
 	private static final String canonicalUrlPrefix = "http://www.europeana.eu/portal/";
 	private static final String canonicalUrlInfix = "/portal/";
-	private static final String SITEMAP_INDEX = "europeana-sitemap-index-hashed.xml";
+	private static final String SITEMAP_INDEX = "europeana-sitemap-index-hashed-";
 	private static final String SITEMAP_HASHED = "europeana-sitemap-hashed-";
 	private static final String SITEMAP_VIDEO = "europeana-video-sitemap-";
 	private static final String XML = ".xml";
@@ -109,46 +109,49 @@ public class SitemapController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		setSitemapCacheDir();
-		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX);
 
+		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + request.getQueryString().replaceAll("[^a-z0-9]", "-") + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 			// generate file
 			FileWriter fstream = new FileWriter(cacheFile);
 			BufferedWriter fout = new BufferedWriter(fstream);
 			ServletOutputStream out = response.getOutputStream();
-			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			out.println("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
+			try {
+				out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+				out.println("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 
-			fout.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-			fout.write("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
+				fout.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+				fout.write("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 
-			String prefix, line;
-			String urlPath = "europeana-sitemap-hashed.xml?prefix=";
-			String paramImages = "&images=";
-			String paramPlaces = "&places=";
-			for (String ab : makeHexLetterPairs()) {
-				for (String cd : makeHexLetters()) {
-					prefix = ab + cd;
-					StringBuilder sb = new StringBuilder();
-					sb.append(getPortalUrl()).append(urlPath).append(prefix);
-					sb.append(paramImages).append(StringUtils.contains(images, "true"));
-					sb.append(paramPlaces).append(StringUtils.contains(places, "true"));
-					line = StringEscapeUtils.escapeXml(sb.toString());
-					out.println("<sitemap>");
-					out.println("  <loc>" + line + "</loc>");
-					out.println("</sitemap>");
+				String prefix, line;
+				String urlPath = "europeana-sitemap-hashed.xml?prefix=";
+				String paramImages = "&images=";
+				String paramPlaces = "&places=";
+				for (String ab : makeHexLetterPairs()) {
+					for (String cd : makeHexLetters()) {
+						prefix = ab + cd;
+						StringBuilder sb = new StringBuilder();
+						sb.append(getPortalUrl()).append(urlPath).append(prefix);
+						sb.append(paramImages).append(StringUtils.contains(images, "true"));
+						sb.append(paramPlaces).append(StringUtils.contains(places, "true"));
+						line = StringEscapeUtils.escapeXml(sb.toString());
+						out.println("<sitemap>");
+						out.println("  <loc>" + line + "</loc>");
+						out.println("</sitemap>");
 
-					fout.write("<sitemap>\n");
-					fout.write("  <loc>" + line + "</loc>\n");
-					fout.write("</sitemap>\n");
+						fout.write("<sitemap>\n");
+						fout.write("  <loc>" + line + "</loc>\n");
+						fout.write("</sitemap>\n");
+					}
 				}
-			}
-			out.println("</sitemapindex>");
-			out.flush();
+				out.println("</sitemapindex>");
+				fout.write("</sitemapindex>");
+			} finally {
+				out.flush();
 
-			fout.write("</sitemapindex>");
-			fout.flush();
-			fout.close();
+				fout.flush();
+				fout.close();
+			}
 		} else {
 			// read from file
 			readCahedFile(response.getOutputStream(), cacheFile);
