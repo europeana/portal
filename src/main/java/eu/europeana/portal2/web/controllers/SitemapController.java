@@ -87,6 +87,8 @@ public class SitemapController {
 	private static Date lastSolrUpdate;
 	private static Calendar lastCheck;
 
+	private static List<ContributorItem> contributorEntries;
+
 	public static String solrQueryClauseToIncludeRecordsToPromoteInSitemaps() {
 		return solrQueryClauseToIncludeRecordsToPromoteInSitemaps(MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES);
 	}
@@ -302,11 +304,13 @@ public class SitemapController {
 
 			try {
 				volume = Integer.parseInt(volumeString);
-				out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-				out.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:video=\"http://www.google.com/schemas/sitemap-video/1.1\">");
+				String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+				out.println(xml);
+				fout.write(xml + "\n");
 
-				fout.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-				fout.write("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:video=\"http://www.google.com/schemas/sitemap-video/1.1\">\n");
+				xml = "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:video=\"http://www.google.com/schemas/sitemap-video/1.1\">";
+				out.println(xml);
+				fout.write(xml + "\n");
 
 				String queryString = "TYPE:VIDEO";
 				Query query = new Query(queryString)
@@ -431,41 +435,42 @@ public class SitemapController {
 		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
 
 		// sitemap index - collections overview
-		List<ContributorItem> entries = new ArrayList<ContributorItem>();
-		List<Count> providers;
-		try {
-			providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
-			for (Count provider : providers) {
-				try {
-					String query = StringEscapeUtils.escapeXml(String.format(
+		if (solrOutdated() || contributorEntries == null) {
+			contributorEntries = new ArrayList<ContributorItem>();
+			List<Count> providers;
+			try {
+				providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
+				for (Count provider : providers) {
+					try {
+						String query = StringEscapeUtils.escapeXml(String.format(
 							"%s/search.html?query=*:*&qf=PROVIDER:%s",
 							portalServer, convertProviderToUrlParameter(provider.getName())));
-					ContributorItem contributorItem = new ContributorItem(query,
+						ContributorItem contributorItem = new ContributorItem(query,
 							provider.getName(), provider.getCount(), portalServer);
 
-					List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
+						List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 
-					List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService, "DATA_PROVIDER",
+						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService, "DATA_PROVIDER",
 							"*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
-					for (Count dataProvider : rawDataProviders) {
-						if (dataProvider.getCount() > 0) {
-							dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider.getName(), dataProvider.getCount()));
+						for (Count dataProvider : rawDataProviders) {
+							if (dataProvider.getCount() > 0) {
+								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider.getName(), dataProvider.getCount()));
+							}
 						}
-					}
 
-					contributorItem.setDataProviders(dataProviders);
-					entries.add(contributorItem);
-				} catch (UnsupportedEncodingException e) {
-					log.warning(e.getMessage() + " on " + provider.getName());
+						contributorItem.setDataProviders(dataProviders);
+						contributorEntries.add(contributorItem);
+					} catch (UnsupportedEncodingException e) {
+						log.warning(e.getMessage() + " on " + provider.getName());
+					}
 				}
+			} catch (SolrTypeException e1) {
+				e1.printStackTrace();
 			}
-		} catch (SolrTypeException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 		SitemapPage<ContributorItem> model = new SitemapPage<ContributorItem>();
-		model.setResults(entries);
+		model.setResults(contributorEntries);
 		model.setPrefix("");
 		model.setLeftContent(getStaticPagePart("/newcontent.html", StaticPageController.AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
 		injector.injectProperties(model);
