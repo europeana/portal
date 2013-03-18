@@ -117,7 +117,7 @@ public class SitemapController {
 			throws IOException {
 		setSitemapCacheDir();
 
-		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9]", "-") : "";
+		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 			// generate file
@@ -183,7 +183,7 @@ public class SitemapController {
 					throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 
-		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9]", "-") : "";
+		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_HASHED + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 			// generate file
@@ -194,78 +194,15 @@ public class SitemapController {
 			SearchPage model = new SearchPage();
 
 			response.setCharacterEncoding("UTF-8");
-			ServletOutputStream out = response.getOutputStream();
-			FileWriter fstream = new FileWriter(cacheFile);
-			BufferedWriter fout = new BufferedWriter(fstream);
-			StringBuilder fullXML = new StringBuilder();
-
+			StringBuilder fullXML = createSitemapHashedContent(prefix, model, isImageSitemap, isPlaceSitemap);
+			BufferedWriter fout = null;
 			try {
-				fullXML.append(XML_HEADER).append(LN);
-				fullXML.append(URLSET_HEADER).append(LN);
-
-				String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps());
-				Query query = new Query("id3hash:" + prefix)
-							.setRefinements(queryString)
-							.setPageSize(20000)
-							.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
-
-				if (isPlaceSitemap) {
-					String queryForPlaces = solrQueryClauseToIncludePlaces();
-					if (!StringUtils.isBlank(queryForPlaces)) {
-						query = query.addRefinement(queryForPlaces);
-					}
-				}
-
-				log.info("queryString: " + query.toString());
-				List<BriefBean> resultSet = null;
-				try {
-					resultSet = searchService.sitemap(BriefBean.class, query).getResults();
-				} catch (SolrTypeException e) {
-					e.printStackTrace();
-				}
-
-				if (resultSet != null) {
-					for (BriefBean bean : resultSet) {
-						BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
-
-						String title = "";
-						if (doc.getTitle() != null) {
-							title = doc.getTitle()[0];
-						}
-						SitemapEntry entry = new SitemapEntry(
-							getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), 
-							doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
-						fullXML.append("<url>\n");
-
-						String url = entry.getLoc();
-
-						if (isPlaceSitemap) {
-							url = StringUtils.replace(url, ".html", ".kml");
-						}
-						fullXML.append("<loc>" + url + "</loc>\n");
-
-						if (isImageSitemap && doc.getType() == DocType.IMAGE) {
-							fullXML.append("<image:image>\n");
-							fullXML.append("<image:loc>")
-								.append(config.getImageCacheUrl() + "uri=" + URLEncoder.encode(entry.getImage(), "UTF-8") + "&amp;size=FULL_DOC")
-								.append("</image:loc>\n");
-							fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle())).append("</image:title>\n");
-							fullXML.append("</image:image>\n");
-
-						}
-						if (isPlaceSitemap) {
-							fullXML.append("<geo:geo><geo:format>kml</geo:format></geo:geo>\n");
-						}
-						fullXML.append("<priority>" + entry.getPriority() + "</priority>\n");
-						fullXML.append("</url>\n");
-					}
-				}
-
-				fullXML.append("</urlset>\n");
-
+				ServletOutputStream out = response.getOutputStream();
 				out.print(fullXML.toString());
 				out.flush();
 
+				FileWriter fstream = new FileWriter(cacheFile);
+				fout = new BufferedWriter(fstream);
 				fout.write(fullXML.toString());
 				fout.flush();
 				success = true;
@@ -274,7 +211,9 @@ public class SitemapController {
 				log.severe("Exception during generation of europeana-sitemap-index-hashed.xml: " + e.getLocalizedMessage());
 				log.severe(ExceptionUtils.getFullStackTrace(e));
 			} finally {
-				fout.close();
+				if (fout != null) {
+					fout.close();
+				}
 			}
 			if (!success) {
 				cacheFile.delete();
@@ -285,6 +224,82 @@ public class SitemapController {
 		}
 	}
 
+	private StringBuilder createSitemapHashedContent(String prefix, SearchPage model, boolean isImageSitemap, boolean isPlaceSitemap) {
+		StringBuilder fullXML = new StringBuilder();
+
+		fullXML.append(XML_HEADER).append(LN);
+		fullXML.append(URLSET_HEADER).append(LN);
+
+		String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps());
+		Query query = new Query("id3hash:" + prefix)
+						.setRefinements(queryString)
+						.setPageSize(20000)
+						.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
+
+		if (isPlaceSitemap) {
+			String queryForPlaces = solrQueryClauseToIncludePlaces();
+			if (!StringUtils.isBlank(queryForPlaces)) {
+				query = query.addRefinement(queryForPlaces);
+			}
+		}
+
+		log.info("queryString: " + query.toString());
+		List<BriefBean> resultSet = null;
+		try {
+			resultSet = searchService.sitemap(BriefBean.class, query).getResults();
+		} catch (SolrTypeException e) {
+			e.printStackTrace();
+		}
+
+		if (resultSet != null) {
+			for (BriefBean bean : resultSet) {
+				BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
+				String title = "";
+				if (doc.getTitle() != null) {
+					title = doc.getTitle()[0];
+				}
+				SitemapEntry entry = new SitemapEntry(
+					getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), 
+					doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
+				fullXML.append("<url>\n");
+
+				String url = entry.getLoc();
+
+				if (isPlaceSitemap) {
+					url = StringUtils.replace(url, ".html", ".kml");
+				}
+				fullXML.append("<loc>" + url + "</loc>\n");
+
+				if (isImageSitemap && doc.getType() == DocType.IMAGE) {
+					String image = "";
+					try {
+						image = URLEncoder.encode(entry.getImage(), "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					fullXML.append("<image:image>\n");
+					fullXML.append("<image:loc>")
+						.append(config.getImageCacheUrl() + "uri=" + image + "&amp;size=FULL_DOC")
+						.append("</image:loc>\n");
+					fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle())).append("</image:title>\n");
+					fullXML.append("</image:image>\n");
+				}
+
+				if (isPlaceSitemap) {
+					fullXML.append("<geo:geo><geo:format>kml</geo:format></geo:geo>\n");
+				}
+
+				fullXML.append("<priority>" + entry.getPriority() + "</priority>\n");
+				fullXML.append("</url>\n");
+			}
+		}
+
+		fullXML.append("</urlset>\n");
+
+		return fullXML;
+	}
+
 	// draft, not completed yet
 	@RequestMapping("/europeana-video-sitemap.xml")
 	public void handleSitemap(
@@ -293,7 +308,7 @@ public class SitemapController {
 			throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 
-		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9]", "-") : "";
+		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_VIDEO + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 
@@ -595,11 +610,6 @@ public class SitemapController {
 	private boolean solrOutdated() {
 		// check it once a day
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addDays(new Date(), -1));
-		log.info("timeout: " + timeout.getTime());
-		if (lastCheck != null) {
-			log.info("lastCheck" + lastCheck.getTime());
-		}
-
 		if (lastCheck == null || lastCheck.before(timeout)) {
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
