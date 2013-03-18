@@ -289,6 +289,11 @@
 			toggleFn: function(){return $("#mobile-menu").is(":visible");},
 			fireFirstOpen:		function(){
     			eu.europeana.vars.suppresResize = true;
+    			
+    			var url = window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=blog' : '/portal/index.html?fragment=blog';
+    			
+    			alert("href: " + window.location.href + "\n\nurl: " + url + "\n\nindexOf: " + window.location.href.indexOf);
+    			
 				$.ajax({
 					url: window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=blog' : '/portal/index.html?fragment=blog',
 					dataType: 'json',
