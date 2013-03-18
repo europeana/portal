@@ -72,7 +72,13 @@ public class ResponsiveImageUtils {
 
 		String extension = location.substring(location.lastIndexOf(".") + 1);
 		String nameWithoutExt = location.substring(0, location.lastIndexOf("."));
-		String toFS = nameWithoutExt.replace("/", "-").replace(":", "-").replace(".", "-");
+		String toFS = nameWithoutExt.replace("http://", "").replace("/", "-").replace(":", "-").replace(".", "-");
+		if (toFS.startsWith("-")) {
+			toFS = toFS.substring(1);
+		}
+		if (toFS.endsWith("-")) {
+			toFS = toFS.substring(0, toFS.length()-1);
+		}
 
 		Integer[] widths;
 		String[] labels;
@@ -95,7 +101,7 @@ public class ResponsiveImageUtils {
 			File outputfile = new File(filePath);
 			BufferedImage responsiveImage = null;
 			if (!outputfile.exists()) {
-				log.info(String.format("new file is %s, url is %s, old file is %s, ", filePath, fileUrl, location));
+				log.info(String.format("new file is %s, url: %s, location: %s, ", filePath, fileUrl, location));
 				if (originalImage == null) {
 					originalImage = readOriginalImage(location, isURL);
 					if (originalImage == null) {
@@ -152,10 +158,10 @@ public class ResponsiveImageUtils {
 				originalImage = ImageIO.read(new File(staticPagePath, location));
 			}
 		} catch (MalformedURLException e) {
-			log.severe("MalformedURLException during reading in location: " + e.getLocalizedMessage());
+			log.severe(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
 			e.printStackTrace();
 		} catch (IOException e) {
-			log.severe("IOException during reading in location: " + e.getLocalizedMessage());
+			log.severe(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()));
 			e.printStackTrace();
 		}
 		return originalImage;

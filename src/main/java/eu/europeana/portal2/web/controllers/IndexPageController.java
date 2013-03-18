@@ -165,7 +165,7 @@ public class IndexPageController {
 	/**
 	 * Sets the featured items list and the highlighted parter
 	 */
-	private void updateFeaturedItem(IndexPage model, Locale locale) {
+	private synchronized void updateFeaturedItem(IndexPage model, Locale locale) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
 		if ((featuredItemAge == null) || featuredItemAge.before(timeout)) {
 			featuredItems = new ArrayList<FeaturedItem>();
@@ -201,7 +201,7 @@ public class IndexPageController {
 	/**
 	 * Sets the featured partner list and the highlighted parter
 	 */
-	private void updateFeaturedPartner(IndexPage model, Locale locale) {
+	private synchronized void updateFeaturedPartner(IndexPage model, Locale locale) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
 		if ((featuredPartnersAge == null) || featuredPartnersAge.before(timeout)) {
 			featuredPartners = new ArrayList<FeaturedPartner>();
@@ -234,7 +234,7 @@ public class IndexPageController {
 		}
 	}
 
-	private void updateCarousel(IndexPage model, Locale locale) {
+	private synchronized void updateCarousel(IndexPage model, Locale locale) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
 		if ((carouselAge == null) || carouselAge.before(timeout)) {
 			carouselItems = new ArrayList<CarouselItem>();
@@ -282,7 +282,7 @@ public class IndexPageController {
 		model.setCarouselItems(carouselItems);
 	}
 
-	private void updateFeedIfNeeded(IndexPage model) {
+	private synchronized void updateFeedIfNeeded(IndexPage model) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -config.getBlogTimeout()));
 		// read feed only once every few hours
 		if ((feedAge == null) || feedAge.before(timeout)) {
@@ -297,7 +297,7 @@ public class IndexPageController {
 		model.setFeedEntries(feedEntries);
 	}
 
-	private void updatePinterest(IndexPage model) {
+	private synchronized void updatePinterest(IndexPage model) {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -config.getPintTimeout()));
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
 			RSSFeedParser parser = new RSSFeedParser(config.getPintFeedUrl(), config.getPintItemLimit());
