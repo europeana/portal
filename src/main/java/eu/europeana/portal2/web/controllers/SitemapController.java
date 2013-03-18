@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField.Count;
@@ -116,6 +117,7 @@ public class SitemapController {
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 			// generate file
+			boolean success = false;
 			FileWriter fstream = new FileWriter(cacheFile);
 			BufferedWriter fout = new BufferedWriter(fstream);
 			ServletOutputStream out = response.getOutputStream();
@@ -138,22 +140,25 @@ public class SitemapController {
 						sb.append(paramImages).append(StringUtils.contains(images, "true"));
 						sb.append(paramPlaces).append(StringUtils.contains(places, "true"));
 						line = StringEscapeUtils.escapeXml(sb.toString());
-						out.println("<sitemap>");
-						out.println("  <loc>" + line + "</loc>");
-						out.println("</sitemap>");
+						out.println("<sitemap><loc>" + line + "</loc></sitemap>");
 
-						fout.write("<sitemap>\n");
-						fout.write("  <loc>" + line + "</loc>\n");
-						fout.write("</sitemap>\n");
+						fout.write("<sitemap><loc>" + line + "</loc></sitemap>\n");
 					}
 				}
 				out.println("</sitemapindex>");
 				fout.write("</sitemapindex>");
-			} finally {
-				out.flush();
 
+				out.flush();
 				fout.flush();
+			} catch (Exception e) {
+				success = false;
+				log.severe("Exception during generation of europeana-sitemap-index-hashed.xml: " + e.getLocalizedMessage());
+				log.severe(ExceptionUtils.getFullStackTrace(e));
+			} finally {
 				fout.close();
+			}
+			if (!success) {
+				cacheFile.delete();
 			}
 		} else {
 			// read from file
@@ -182,6 +187,7 @@ public class SitemapController {
 		if (solrOutdated() || !cacheFile.exists()) {
 			// generate file
 
+			boolean success = false;
 			boolean isImageSitemap = StringUtils.contains(images, "true");
 			boolean isPlaceSitemap = StringUtils.contains(places, "true");
 			SearchPage model = new SearchPage();
@@ -268,11 +274,19 @@ public class SitemapController {
 
 				out.print("</urlset>");
 				fout.write("</urlset>\n");
-			} finally {
-				out.flush();
 
+				out.flush();
 				fout.flush();
+				success = true;
+			} catch (Exception e) {
+				success = false;
+				log.severe("Exception during generation of europeana-sitemap-index-hashed.xml: " + e.getLocalizedMessage());
+				log.severe(ExceptionUtils.getFullStackTrace(e));
+			} finally {
 				fout.close();
+			}
+			if (!success) {
+				cacheFile.delete();
 			}
 		} else {
 			// read from file
