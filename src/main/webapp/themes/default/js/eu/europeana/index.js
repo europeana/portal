@@ -290,12 +290,12 @@
 			fireFirstOpen:		function(){
     			eu.europeana.vars.suppresResize = true;
     			
-    			var url = window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=blog' : '/portal/index.html?fragment=blog';
+    			//var url = window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=blog' : '/portal/index.html?fragment=blog';
     			
-    			alert("href: " + window.location.href + "\n\nurl: " + url + "\n\nindexOf: " + window.location.href.indexOf);
+    			//alert("href: " + window.location.href + "\n\nurl: " + url + "\n\nindexOf: " + window.location.href.indexOf);
     			
 				$.ajax({
-					url: window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=blog' : '/portal/index.html?fragment=blog',
+					url: '/portal/index.html?fragment=blog',
 					dataType: 'json',
 					success: function(data){
 						$("#section-blog .collapse-content").html(data.markup);
@@ -320,7 +320,7 @@
 			fireFirstOpen:		function(){
 				eu.europeana.vars.suppresResize = true;
 				$.ajax({
-					url: window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=featuredContent' : '/portal/index.html?fragment=featuredContent',
+					url: '/portal/index.html?fragment=featuredContent',
 					dataType: 'json',
 					success: function(data){
 						$("#section-featured-content .collapse-content").html(data.markup);
@@ -347,7 +347,7 @@
 			fireFirstOpen:			function(){
 				eu.europeana.vars.suppresResize = false;
 				$.ajax({
-						url: window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=pinterest' : '/portal/index.html?fragment=pinterest',
+						url: '/portal/index.html?fragment=pinterest',
 						dataType: 'json',
 						success: function(data){
 							$("#section-pinterest .collapse-content").html(data.markup);

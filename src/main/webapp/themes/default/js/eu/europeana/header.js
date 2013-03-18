@@ -23,7 +23,7 @@ eu.europeana.header = {
 				 return -1;
 			};
 		}
-		alert("indexOf added");
+
 		$('.submit-cell').css("width",	$('.submit-cell button')	.outerWidth(true) + "px"); 
 		$('.menu-cell').css("width",	$('#search-menu')			.outerWidth(true) + "px");
 		
