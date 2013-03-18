@@ -81,6 +81,10 @@ public class SitemapController {
 	private static final String SITEMAP_HASHED = "europeana-sitemap-hashed-";
 	private static final String SITEMAP_VIDEO = "europeana-video-sitemap-";
 	private static final String XML = ".xml";
+	private static final String LN = "\n";
+	private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	private static final String SITEMAP_HEADER = "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
+	private static final String URLSET_HEADER = "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:geo=\"http://www.google.com/geo/schemas/sitemap/1.0\">";
 
 	private static String portalUrl;
 	private static String sitemapCacheName;
@@ -121,12 +125,10 @@ public class SitemapController {
 			FileWriter fstream = new FileWriter(cacheFile);
 			BufferedWriter fout = new BufferedWriter(fstream);
 			ServletOutputStream out = response.getOutputStream();
+			StringBuilder fullXML = new StringBuilder();
 			try {
-				out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-				out.println("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
-
-				fout.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-				fout.write("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
+				fullXML.append(XML_HEADER).append("\n");
+				fullXML.append(SITEMAP_HEADER).append(LN);
 
 				String prefix, line;
 				String urlPath = "europeana-sitemap-hashed.xml?prefix=";
@@ -139,16 +141,15 @@ public class SitemapController {
 						sb.append(getPortalUrl()).append(urlPath).append(prefix);
 						sb.append(paramImages).append(StringUtils.contains(images, "true"));
 						sb.append(paramPlaces).append(StringUtils.contains(places, "true"));
-						line = StringEscapeUtils.escapeXml(sb.toString());
-						out.println("<sitemap><loc>" + line + "</loc></sitemap>");
-
-						fout.write("<sitemap><loc>" + line + "</loc></sitemap>\n");
+						fullXML.append("<sitemap><loc>").append(StringEscapeUtils.escapeXml(sb.toString())).append("</loc></sitemap>\n");
 					}
 				}
-				out.println("</sitemapindex>");
-				fout.write("</sitemapindex>");
+				fullXML.append("</sitemapindex>");
 
+				out.print(fullXML.toString());
 				out.flush();
+
+				fout.write(fullXML.toString());
 				fout.flush();
 			} catch (Exception e) {
 				success = false;
@@ -196,12 +197,11 @@ public class SitemapController {
 			ServletOutputStream out = response.getOutputStream();
 			FileWriter fstream = new FileWriter(cacheFile);
 			BufferedWriter fout = new BufferedWriter(fstream);
-			try {
-				out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-				out.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:geo=\"http://www.google.com/geo/schemas/sitemap/1.0\">");
+			StringBuilder fullXML = new StringBuilder();
 
-				fout.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-				fout.write("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:geo=\"http://www.google.com/geo/schemas/sitemap/1.0\">\n");
+			try {
+				fullXML.append(XML_HEADER).append(LN);
+				fullXML.append(URLSET_HEADER).append(LN);
 
 				String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps());
 				Query query = new Query("id3hash:" + prefix)
@@ -235,47 +235,38 @@ public class SitemapController {
 						SitemapEntry entry = new SitemapEntry(
 							getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), 
 							doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
-						out.println("<url>");
-						fout.write("<url>\n");
+						fullXML.append("<url>\n");
 
 						String url = entry.getLoc();
 
 						if (isPlaceSitemap) {
 							url = StringUtils.replace(url, ".html", ".kml");
 						}
-						out.println("<loc>" + url + "</loc>");
-						fout.write("<loc>" + url + "</loc>\n");
+						fullXML.append("<loc>" + url + "</loc>\n");
 
 						if (isImageSitemap && doc.getType() == DocType.IMAGE) {
-							out.println("  <image:image>");
-							out.println("    <image:loc>" + config.getImageCacheUrl() + "uri=" + URLEncoder.encode(entry.getImage(), "UTF-8")
-									+ "&amp;size=FULL_DOC</image:loc>");
-							out.println("    <image:title>" + StringEscapeUtils.escapeXml(entry.getTitle()) + "</image:title>");
-							out.println("  </image:image>");
-
-							fout.write("<image:image>\n");
-							fout.write("<image:loc>" + config.getImageCacheUrl() + "uri=" + URLEncoder.encode(entry.getImage(), "UTF-8")
-									+ "&amp;size=FULL_DOC</image:loc>\n");
-							fout.write("<image:title>" + StringEscapeUtils.escapeXml(entry.getTitle()) + "</image:title>\n");
-							fout.write("</image:image>\n");
+							fullXML.append("<image:image>\n");
+							fullXML.append("<image:loc>")
+								.append(config.getImageCacheUrl() + "uri=" + URLEncoder.encode(entry.getImage(), "UTF-8") + "&amp;size=FULL_DOC")
+								.append("</image:loc>\n");
+							fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle())).append("</image:title>\n");
+							fullXML.append("</image:image>\n");
 
 						}
 						if (isPlaceSitemap) {
-							out.println("<geo:geo><geo:format>kml</geo:format></geo:geo>");
-							fout.write("<geo:geo><geo:format>kml</geo:format></geo:geo>\n");
+							fullXML.append("<geo:geo><geo:format>kml</geo:format></geo:geo>\n");
 						}
-						out.println("<priority>" + entry.getPriority() + "</priority>");
-						out.println("</url>");
-
-						fout.write("<priority>" + entry.getPriority() + "</priority>\n");
-						fout.write("</url>\n");
+						fullXML.append("<priority>" + entry.getPriority() + "</priority>\n");
+						fullXML.append("</url>\n");
 					}
 				}
 
-				out.print("</urlset>");
-				fout.write("</urlset>\n");
+				fullXML.append("</urlset>\n");
 
+				out.print(fullXML.toString());
 				out.flush();
+
+				fout.write(fullXML.toString());
 				fout.flush();
 				success = true;
 			} catch (Exception e) {
@@ -604,7 +595,13 @@ public class SitemapController {
 	private boolean solrOutdated() {
 		// check it once a day
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addDays(new Date(), -1));
+		log.info("timeout: " + timeout.getTime());
+		if (lastCheck != null) {
+			log.info("lastCheck" + lastCheck.getTime());
+		}
+
 		if (lastCheck == null || lastCheck.before(timeout)) {
+			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
 				actualSolrUpdate = searchService.getLastSolrUpdate();
