@@ -64,13 +64,13 @@
 "/>
 <c:choose>
   <c:when test='${model.pageName == "index.html"}'>
-	  <c:out value="${sharethis}" escapeXml="false" />
+    <c:out value="${sharethis}" escapeXml="false" />
   </c:when>
   <c:when test='${model.pageName == "search.html"}'>
-  	<c:out value="${sharethis}" escapeXml="false" />
+    <c:out value="${sharethis}" escapeXml="false" />
   </c:when>
   <c:when test='${model.pageName == "fulldoc.html"}'>
-  	<c:out value="${sharethis}" escapeXml="false" />
+    <c:out value="${sharethis}" escapeXml="false" />
   </c:when>
 </c:choose>
 </div>
