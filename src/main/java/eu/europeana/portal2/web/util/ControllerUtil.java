@@ -87,7 +87,9 @@ public class ControllerUtil {
 			model.setLocale(locale);
 		}
 		model.setPageInfo(view);
-		model.setPageTitle(view.getPageTitle());
+		if (StringUtils.isBlank(model.getPageTitle())) {
+			model.setPageTitle(view.getPageTitle());
+		}
 
 		// create page
 		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
