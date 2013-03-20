@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,7 +58,7 @@ public class SitemapController {
 
 	@Resource private ThumbnailService thumbnailService;
 
-	private Logger log = Logger.getLogger(this.getClass().getName());
+	private static Logger log = Logger.getLogger(SitemapController.class.getCanonicalName());
 
 	private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
 
@@ -92,7 +92,7 @@ public class SitemapController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
-		PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		ServletOutputStream out = response.getOutputStream();
 		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		out.println("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 
@@ -114,7 +114,7 @@ public class SitemapController {
 		}
 		out.println("</sitemapindex>");
 		out.flush();
-		out.close();
+		// out.close();
 	}
 
 	String makeSitemapLocationUrl(String baseUrl, String provider, String images, int pageCounter) 
@@ -137,7 +137,8 @@ public class SitemapController {
 		SearchPage model = new SearchPage();
 
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		// PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		ServletOutputStream out = response.getOutputStream();
 		try {
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			out.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:geo=\"http://www.google.com/geo/schemas/sitemap/1.0\">");
@@ -208,7 +209,7 @@ public class SitemapController {
 			out.print("</urlset>");
 			out.flush();
 		} finally {
-			out.close();
+			// out.close();
 		}
 	}
 
@@ -221,7 +222,8 @@ public class SitemapController {
 
 		int volume = -1;
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		// PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+		ServletOutputStream out = response.getOutputStream();
 		SearchPage model = new SearchPage();
 
 		try {
@@ -274,7 +276,7 @@ public class SitemapController {
 			out.print("</urlset>");
 			out.flush();
 		} finally {
-			out.close();
+			// out.close();
 		}
 	}
 
@@ -332,11 +334,14 @@ public class SitemapController {
 		try {
 			providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
 			for (Count provider : providers) {
-				log.info("provider: " + provider.getName());
+				// log.info("provider: " + provider.getName());
 				try {
 					String query = StringEscapeUtils.escapeXml(String.format(
 							"%s/search.html?query=*:*&qf=PROVIDER:%s",
 							portalServer, convertProviderToUrlParameter(provider.getName())));
+					if (query.indexOf("Saxon") > -1) {
+						log.info("query: " + query);
+					}
 					ContributorItem contributorItem = new ContributorItem(query,
 							provider.getName(), provider.getCount(), portalServer);
 
@@ -346,7 +351,7 @@ public class SitemapController {
 							"*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
 					for (Count dataProvider : rawDataProviders) {
 						if (dataProvider.getCount() > 0) {
-							log.info("dataProvider: " + dataProvider.getName());
+							// log.info("dataProvider: " + dataProvider.getName());
 							dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider.getName(), dataProvider.getCount()));
 						}
 					}
@@ -393,7 +398,11 @@ public class SitemapController {
 
 	public static String convertProviderToUrlParameter(String provider)
 			throws UnsupportedEncodingException {
-		return URLEncoder.encode(provider.replace("\"", "\\\""), "UTF-8");
+		String url = URLEncoder.encode(provider.replace("\"", "\\\"").replace("/", "\\/"), "UTF-8");
+		if (url.indexOf("Saxon") > -1) {
+			log.info(url);
+		}
+		return url;
 	}
 
 	private String getStaticPagePart(String fileName, String partName, Locale language) {
