@@ -675,11 +675,13 @@ public class SitemapController {
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
+				log.info("start");
 				actualSolrUpdate = searchService.getLastSolrUpdate();
+				log.info("ends");
 			} catch (SolrServerException e) {
-				log.severe(e.getLocalizedMessage());
+				log.severe("SolrServerException " + e.getLocalizedMessage());
 			} catch (IOException e) {
-				log.severe(e.getLocalizedMessage());
+				log.severe("IOException " + e.getLocalizedMessage());
 			}
 
 			if (actualSolrUpdate == null) {
