@@ -154,10 +154,11 @@ public class SitemapController {
 //					}
 //				}
 //				fullXML.append("</sitemapindex>");
-				PerReqSitemap sitemap = new PerReqSitemap("index_hashed",null, images,places);
+				PerReqSitemap sitemap = new PerReqSitemap(PerReqSitemap.INDEXED_HASHED, null, images, places);
 				Thread t = new Thread(sitemap);
 				t.start();
-				while(StringUtils.equals(sitemap.getState(), PerReqSitemap.STARTED)){
+				while (StringUtils.equals(sitemap.getState(), PerReqSitemap.IDLE)
+						|| StringUtils.equals(sitemap.getState(), PerReqSitemap.STARTED)) {
 					Thread.sleep(1000);
 				}
 				out.print(sitemap.getSitemap().toString());
@@ -165,6 +166,7 @@ public class SitemapController {
 
 				fout.write(sitemap.getSitemap().toString());
 				fout.flush();
+				success = true;
 			} catch (Exception e) { 
 				success = false;
 				log.severe("Exception during generation of europeana-sitemap-index-hashed.xml: " + e.getLocalizedMessage());
@@ -223,8 +225,9 @@ public class SitemapController {
 
 			response.setCharacterEncoding("UTF-8");
 			long t = new Date().getTime();
-			StringBuilder fullXML = createSitemapHashedContent(prefix, model, images,places);
-			log.info(String.format("Generated XML size: %s took: %s", fullXML.length(), (new Date().getTime() - t)));
+			StringBuilder fullXML = createSitemapHashedContent(prefix, model, images, places);
+			log.info(String.format("Generated XML size: %s took: %s", 
+					fullXML.length(), (new Date().getTime() - t)));
 			BufferedWriter fout = null;
 			try {
 				ServletOutputStream out = response.getOutputStream();
@@ -356,10 +359,11 @@ public class SitemapController {
 //
 //		return fullXML;
 		
-		PerReqSitemap sitemap = new PerReqSitemap("sitemap_content", model, isImageSitemap,isPlaceSitemap,prefix);
+		PerReqSitemap sitemap = new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isImageSitemap, isPlaceSitemap, prefix);
 		Thread t = new Thread(sitemap);
 		t.start();
-		while(StringUtils.equals(sitemap.getState(), PerReqSitemap.STARTED)){
+		while (StringUtils.equals(sitemap.getState(), PerReqSitemap.IDLE)
+				|| StringUtils.equals(sitemap.getState(), PerReqSitemap.STARTED)) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -367,7 +371,7 @@ public class SitemapController {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return sitemap.getSitemap();
 	}
 
@@ -689,9 +693,7 @@ public class SitemapController {
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
-				log.info("start");
 				actualSolrUpdate = searchService.getLastSolrUpdate();
-				log.info("ends");
 			} catch (SolrServerException e) {
 				log.severe("SolrServerException " + e.getLocalizedMessage());
 			} catch (IOException e) {
@@ -725,27 +727,30 @@ public class SitemapController {
 			file.delete();
 		}
 	}
-	
-private class PerReqSitemap implements Runnable {
+
+	private class PerReqSitemap implements Runnable {
 		
 		String[] args;
 		String action;
-		String state;
+		String state = IDLE;
+
+		public final static String IDLE = "idle";
 		public final static String STARTED = "started";
 		public final static String ENDED = "ended";
-		private final static String INDEXED_HASHED="index_hashed";
-		private final static String SITEMAP_HASHED="sitemap_hashed";
+
+		private final static String INDEXED_HASHED = "index_hashed";
+		private final static String SITEMAP_HASHED = "sitemap_hashed";
+
 		private StringBuilder sitemap;
 		private SearchPage model;
+
 		public PerReqSitemap(String action, SearchPage model, String... args) {
 			this.args = args;
 			this.model = model;
 			this.action = action;
 		}
 
-		
-
-		private void createSitemapIndexedHashed(){
+		private void createSitemapIndexedHashed() {
 			state = STARTED;
 			StringBuilder s = new StringBuilder();
 			s.append(XML_HEADER).append(LN);
@@ -766,107 +771,106 @@ private class PerReqSitemap implements Runnable {
 				}
 			}
 			s.append("</sitemapindex>");
-			
+
 			this.sitemap = s;
 			state = ENDED;
 		}
 
-		
-		private void createSitemapContent(){
+		private void createSitemapContent() {
 			state = STARTED;
 			StringBuilder fullXML = new StringBuilder();
-			
-					fullXML.append(XML_HEADER).append(LN);
-					fullXML.append(URLSET_HEADER).append(LN);
-					boolean isPlaceSitemap = StringUtils.contains(args[1], "true");
-					boolean isImageSitemap = StringUtils.contains(args[0],"true");
-					String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps());
-					Query query = new Query("*:*")
-									.addRefinement(queryString)
-									.addRefinement("id3hash:" + args[2])
-									.setPageSize(20000)
-									.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
-			
+
+			fullXML.append(XML_HEADER).append(LN);
+			fullXML.append(URLSET_HEADER).append(LN);
+			boolean isPlaceSitemap = StringUtils.contains(args[1], "true");
+			boolean isImageSitemap = StringUtils.contains(args[0], "true");
+			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(
+					config.getMinCompletenessToPromoteInSitemaps());
+			Query query = new Query("*:*")
+					.addRefinement(queryString)
+					.addRefinement("id3hash:" + args[2])
+					.setPageSize(20000)
+					.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
+
+			if (isPlaceSitemap) {
+				String queryForPlaces = solrQueryClauseToIncludePlaces();
+				if (!StringUtils.isBlank(queryForPlaces)) {
+					query = query.addRefinement(queryForPlaces);
+				}
+			}
+
+			log.info("queryString: " + query.toString());
+			List<BriefBean> resultSet = null;
+			try {
+				long t = new Date().getTime();
+				resultSet = searchService.sitemap(BriefBean.class, query).getResults();
+				log.info("Query took: " + (new Date().getTime() - t));
+			} catch (SolrTypeException e) {
+				e.printStackTrace();
+			}
+
+			if (resultSet != null) {
+				for (BriefBean bean : resultSet) {
+					BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
+					String title = "";
+					if (doc.getTitle() != null) {
+						title = doc.getTitle()[0];
+					}
+					SitemapEntry entry = new SitemapEntry(
+						getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), 
+						doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
+					fullXML.append(URL_S).append(LN);
+
+					String url = entry.getLoc();
+
 					if (isPlaceSitemap) {
-						String queryForPlaces = solrQueryClauseToIncludePlaces();
-						if (!StringUtils.isBlank(queryForPlaces)) {
-							query = query.addRefinement(queryForPlaces);
+						url = StringUtils.replace(url, ".html", ".kml");
+					}
+					fullXML.append(LOC_S).append(url).append(LOC_E).append(LN);
+
+					if (isImageSitemap && doc.getType() == DocType.IMAGE) {
+						String image = "";
+						try {
+							image = URLEncoder.encode(entry.getImage(), "UTF-8");
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
+						fullXML.append("<image:image>").append(LN);
+						fullXML.append("<image:loc>")
+							.append(config.getImageCacheUrl() + "uri=" + image + "&amp;size=FULL_DOC")
+							.append("</image:loc>").append(LN);
+						fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle())).append("</image:title>").append(LN);
+						fullXML.append("</image:image>").append(LN);
 					}
-			
-					log.info("queryString: " + query.toString());
-					List<BriefBean> resultSet = null;
-					try {
-						long t = new Date().getTime();
-						resultSet = searchService.sitemap(BriefBean.class, query).getResults();
-						log.info("Query took: " + (new Date().getTime() - t));
-					} catch (SolrTypeException e) {
-						e.printStackTrace();
+
+					if (isPlaceSitemap) {
+						fullXML.append("<geo:geo><geo:format>kml</geo:format></geo:geo>").append(LN);
 					}
-			
-					if (resultSet != null) {
-						for (BriefBean bean : resultSet) {
-							BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
-							String title = "";
-							if (doc.getTitle() != null) {
-								title = doc.getTitle()[0];
-							}
-							SitemapEntry entry = new SitemapEntry(
-								getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), 
-								doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
-							fullXML.append(URL_S).append(LN);
-			
-							String url = entry.getLoc();
-			
-							if (isPlaceSitemap) {
-								url = StringUtils.replace(url, ".html", ".kml");
-							}
-							fullXML.append(LOC_S).append(url).append(LOC_E).append(LN);
-			
-							if (isImageSitemap && doc.getType() == DocType.IMAGE) {
-								String image = "";
-								try {
-									image = URLEncoder.encode(entry.getImage(), "UTF-8");
-								} catch (UnsupportedEncodingException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								fullXML.append("<image:image>").append(LN);
-								fullXML.append("<image:loc>")
-									.append(config.getImageCacheUrl() + "uri=" + image + "&amp;size=FULL_DOC")
-									.append("</image:loc>").append(LN);
-								fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle())).append("</image:title>").append(LN);
-								fullXML.append("</image:image>").append(LN);
-							}
-			
-							if (isPlaceSitemap) {
-								fullXML.append("<geo:geo><geo:format>kml</geo:format></geo:geo>").append(LN);
-							}
-			
-							fullXML.append("<priority>").append(entry.getPriority()).append("</priority>").append(LN);
-							fullXML.append(URL_E).append(LN);
-						}
-					}
-			
-					fullXML.append("</urlset>").append(LN);
-			
-					this.sitemap  = fullXML;
-					state = ENDED;
+
+					fullXML.append("<priority>").append(entry.getPriority()).append("</priority>").append(LN);
+					fullXML.append(URL_E).append(LN);
+				}
+			}
+
+			fullXML.append("</urlset>").append(LN);
+
+			this.sitemap  = fullXML;
+			state = ENDED;
 		}
-		
-		
-		public StringBuilder getSitemap(){
+
+		public StringBuilder getSitemap() {
 			return sitemap;
 		}
-		
-		public String getState(){
+
+		public String getState() {
 			return this.state;
 		}
-		
-		public void run(){
-			if(StringUtils.equals(action,INDEXED_HASHED)){
-			createSitemapIndexedHashed();
-			} else if (StringUtils.equals(action, SITEMAP_HASHED)){
+
+		public void run() {
+			if (StringUtils.equals(action, INDEXED_HASHED)) {
+				createSitemapIndexedHashed();
+			} else if (StringUtils.equals(action, SITEMAP_HASHED)) {
 				createSitemapContent();
 			}
 		}
