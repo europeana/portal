@@ -139,7 +139,9 @@ public class ObjectController {
 		model.setRecordId(recordId);
 		model.setFormat(format);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
-		queryString = SolrUtils.translateQuery(queryString);
+		if (!StringUtils.isBlank(queryString)) {
+			queryString = SolrUtils.translateQuery(queryString);
+		}
 		model.setQuery(queryString);
 		model.setRefinements(qf);
 		model.setStart(start);
