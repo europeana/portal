@@ -222,16 +222,12 @@ public class SitemapController {
 			BufferedWriter fout = null;
 			try {
 				ServletOutputStream out = response.getOutputStream();
-				log.info("Generated XML size is null? " + (fullXML == null));
-				log.info("out is null? " + (out == null));
 				out.print(fullXML.toString());
 				out.flush();
 				success = 1;
 			} catch (Exception e) {
 				success = 0;
-				log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(),
-						cacheFile));
-				log.severe("out is null? " + (response.getOutputStream() == null));
+				log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(), cacheFile));
 				log.severe(ExceptionUtils.getFullStackTrace(e));
 			}
 
@@ -245,8 +241,7 @@ public class SitemapController {
 				}
 			} catch (Exception e) {
 				success = 0;
-				log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(),
-						cacheFile));
+				log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(), cacheFile));
 				log.severe(ExceptionUtils.getFullStackTrace(e));
 			} finally {
 				if (fout != null) {
@@ -265,8 +260,7 @@ public class SitemapController {
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
-						log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(),
-								cacheFile));
+						log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(), cacheFile));
 						log.severe(e.getLocalizedMessage());
 						// TODO Auto-generated catch block
 						e.printStackTrace();
