@@ -33,10 +33,11 @@ class SitemapCreate {
 	private class PerReqSitemap implements Runnable {
 		
 		Map<String[],String> siteMapCache = new HashMap<String[],String> ();
+		String[] args;
 		OutputStream out;
 		
 		PerReqSitemap(String[] args, OutputStream out) {
-			this.siteMapCache = siteMapCache;
+			this.args = args;
 			this.out = out;
 		}
 
@@ -53,7 +54,7 @@ class SitemapCreate {
 			//create the sitemap here
 			// out.write(s.toString().getBytes());
 			//or you can put the file as well here
-			// siteMapCache.put(args, s.toString());
+			siteMapCache.put(args, s.toString());
 		}
 
 		public void run(){
