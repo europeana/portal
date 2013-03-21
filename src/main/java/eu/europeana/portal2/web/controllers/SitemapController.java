@@ -204,8 +204,10 @@ public class SitemapController {
 
 		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_HASHED + params + XML);
+		
 		if ((solrOutdated() || !cacheFile.exists()) && !inProcess.containsKey(params)) {
 			// generate file
+			log.info(String.format("Generating %s", cacheFile));
 
 			inProcess.put(params, true);
 			int success = 0;
@@ -214,8 +216,9 @@ public class SitemapController {
 			SearchPage model = new SearchPage();
 
 			response.setCharacterEncoding("UTF-8");
+			long t = new Date().getTime();
 			StringBuilder fullXML = createSitemapHashedContent(prefix, model, isImageSitemap, isPlaceSitemap);
-			log.info("Generated XML size: " + fullXML.length());
+			log.info(String.format("Generated XML size: %s took: %s", fullXML.length(), (new Date().getTime() - t)));
 			BufferedWriter fout = null;
 			try {
 				ServletOutputStream out = response.getOutputStream();
@@ -298,7 +301,9 @@ public class SitemapController {
 		log.info("queryString: " + query.toString());
 		List<BriefBean> resultSet = null;
 		try {
+			long t = new Date().getTime();
 			resultSet = searchService.sitemap(BriefBean.class, query).getResults();
+			log.info("Query took: " + (new Date().getTime() - t));
 		} catch (SolrTypeException e) {
 			e.printStackTrace();
 		}
