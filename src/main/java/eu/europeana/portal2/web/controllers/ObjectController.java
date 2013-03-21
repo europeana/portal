@@ -50,6 +50,7 @@ import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.OptOutDatasetsUtil;
 import eu.europeana.portal2.services.Configuration;
@@ -138,6 +139,7 @@ public class ObjectController {
 		model.setRecordId(recordId);
 		model.setFormat(format);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
+		queryString = SolrUtils.translateQuery(queryString);
 		model.setQuery(queryString);
 		model.setRefinements(qf);
 		model.setStart(start);
