@@ -646,16 +646,16 @@ eu.europeana.fulldoc = {
 	},
 	
 	initBottomCarousel : function(){
-		
-		if(typeof carousel2Data != 'undefined'){
+		return;
+		if (typeof carousel2Data != 'undefined') {
 			
 			var carousel2selector = $('#carousel-2-tabbed').is(":visible") ? '#carousel-2-tabbed' : '#carousel-2'; 
 			
 			// 150 too small for iphone: make min height 200
-   			$(carousel2selector).css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
-   	
-   			var x = Galleria.run(carousel2selector, {
-   				debug:			js.debug,
+			$(carousel2selector).css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
+
+			var x = Galleria.run(carousel2selector, {
+				debug:			js.debug,
 				transition:		'fadeslide',
 				carousel:		true,
 				carouselSpeed:	1200,

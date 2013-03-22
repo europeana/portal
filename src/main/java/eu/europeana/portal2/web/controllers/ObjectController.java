@@ -171,11 +171,14 @@ public class ObjectController {
 			model.setFullBeanView(fullBeanView);
 
 			// more like this
+			/*
+			 * TODO: let it back in next time
 			List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
 			if (fullBean.getSimilarItems() == null) {
 				similarItems = getMoreLikeThis(collectionId, recordId, model);
 			}
 			model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
+			*/
 
 			long tSeeAlso0 = (new Date()).getTime();
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
