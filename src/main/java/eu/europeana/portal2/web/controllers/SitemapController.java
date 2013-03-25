@@ -132,35 +132,18 @@ public class SitemapController {
 			return;
 		}
 
-		String params = String.format(SITEMAP_INDEX_PARAMS, images, places);
-		// String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
+		boolean isImageSitemap = StringUtils.contains(images, "true");
+		boolean isPlaceSitemap = StringUtils.contains(places, "true");
+		String params = String.format(SITEMAP_INDEX_PARAMS, isImageSitemap, isPlaceSitemap);
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + params + XML);
+
 		if ((solrOutdated() || !cacheFile.exists()) && !inProcess.containsKey(params)) {
 			// generate file
 			boolean success = false;
 			FileWriter fstream = new FileWriter(cacheFile);
 			BufferedWriter fout = new BufferedWriter(fstream);
 			ServletOutputStream out = response.getOutputStream();
-//			StringBuilder fullXML = new StringBuilder();
 			try {
-//				fullXML.append(XML_HEADER).append(LN);
-//				fullXML.append(SITEMAP_HEADER).append(LN);
-//
-//				String prefix, line;
-//				String urlPath = "europeana-sitemap-hashed.xml?prefix=";
-//				String paramImages = "&images=";
-//				String paramPlaces = "&places=";
-//				for (String ab : makeHexLetterPairs()) {
-//					for (String cd : makeHexLetters()) {
-//						prefix = ab + cd;
-//						StringBuilder sb = new StringBuilder();
-//						sb.append(getPortalUrl()).append(urlPath).append(prefix);
-//						sb.append(paramImages).append(StringUtils.contains(images, "true"));
-//						sb.append(paramPlaces).append(StringUtils.contains(places, "true"));
-//						fullXML.append("<sitemap>").append(LOC_S).append(StringEscapeUtils.escapeXml(sb.toString())).append(LOC_E).append("</sitemap>").append(LN);
-//					}
-//				}
-//				fullXML.append("</sitemapindex>");
 				PerReqSitemap sitemap = new PerReqSitemap(PerReqSitemap.INDEXED_HASHED, null, images, places);
 				Thread t = new Thread(sitemap);
 				t.start();
@@ -216,13 +199,13 @@ public class SitemapController {
 			HttpServletRequest request, HttpServletResponse response)
 					throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
-		if (sitemapCacheDir == null) {
+		if (sitemapCacheDir == null || prefix.length() > 3 || !prefix.matches("^[0-9A-F]{3}$")) {
 			response.setStatus(404);
 			return;
 		}
-
-		String params = String.format(SITEMAP_HASHED_PARAMS, prefix, images, places);
-		// String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
+		boolean isImageSitemap = StringUtils.contains(images, "true");
+		boolean isPlaceSitemap = StringUtils.contains(places, "true");
+		String params = String.format(SITEMAP_HASHED_PARAMS, prefix, isImageSitemap, isPlaceSitemap);
 		File subDir = new File(sitemapCacheDir.getAbsolutePath(), prefix.substring(0, 1));
 		if (!subDir.exists()) {
 			boolean created = subDir.mkdirs();
@@ -235,8 +218,6 @@ public class SitemapController {
 
 			inProcess.put(params, true);
 			int success = 0;
-//			boolean isImageSitemap = StringUtils.contains(images, "true");
-//			boolean isPlaceSitemap = StringUtils.contains(places, "true");
 			SearchPage model = new SearchPage();
 
 			response.setCharacterEncoding("UTF-8");
@@ -306,7 +287,7 @@ public class SitemapController {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				log.severe("Interrupted Exception during waiting for sitemap creation. " + e.getLocalizedMessage());
 				e.printStackTrace();
 			}
 		}
