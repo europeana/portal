@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -80,7 +79,9 @@ public class SitemapController {
 	private static final String europeanaUriInfix = "/resolve/";
 	private static final String canonicalUrlPrefix = "http://www.europeana.eu/portal/";
 	private static final String canonicalUrlInfix = "/portal/";
+	private static final String SITEMAP_INDEX_PARAMS = "images-%s-places-%s";
 	private static final String SITEMAP_INDEX = "europeana-sitemap-index-hashed-";
+	private static final String SITEMAP_HASHED_PARAMS = "prefix-%s-images-%s-places-%s";
 	private static final String SITEMAP_HASHED = "europeana-sitemap-hashed-";
 	private static final String SITEMAP_VIDEO = "europeana-video-sitemap-";
 	private static final String XML = ".xml";
@@ -122,11 +123,17 @@ public class SitemapController {
 	public void handleSitemapIndexHashed(
 			@RequestParam(value = "images", required = false, defaultValue = "false") String images,
 			@RequestParam(value = "places", required = false, defaultValue = "false") String places,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, 
+			HttpServletResponse response)
 			throws IOException {
 		setSitemapCacheDir();
+		if (sitemapCacheDir == null) {
+			response.setStatus(404);
+			return;
+		}
 
-		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
+		String params = String.format(SITEMAP_INDEX_PARAMS, images, places);
+		// String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + params + XML);
 		if ((solrOutdated() || !cacheFile.exists()) && !inProcess.containsKey(params)) {
 			// generate file
@@ -209,10 +216,19 @@ public class SitemapController {
 			HttpServletRequest request, HttpServletResponse response)
 					throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
+		if (sitemapCacheDir == null) {
+			response.setStatus(404);
+			return;
+		}
 
-		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
-		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_HASHED + params + XML);
-		
+		String params = String.format(SITEMAP_HASHED_PARAMS, prefix, images, places);
+		// String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
+		File subDir = new File(sitemapCacheDir.getAbsolutePath(), prefix.substring(0, 1));
+		if (!subDir.exists()) {
+			boolean created = subDir.mkdirs();
+		}
+		File cacheFile = new File(subDir, SITEMAP_HASHED + params + XML);
+
 		if ((solrOutdated() || !cacheFile.exists()) && !inProcess.containsKey(params)) {
 			// generate file
 			log.info(String.format("Generating %s", cacheFile));
@@ -258,7 +274,7 @@ public class SitemapController {
 				}
 			}
 
-			if (success != 2) {
+			if (success != 2 || cacheFile.getTotalSpace() == 0) {
 				cacheFile.delete();
 			}
 			log.info(Thread.currentThread().getName() + " served by generation");
@@ -282,83 +298,6 @@ public class SitemapController {
 	}
 
 	private StringBuilder createSitemapHashedContent(String prefix, SearchPage model, String isImageSitemap, String isPlaceSitemap) {
-//		StringBuilder fullXML = new StringBuilder();
-//
-//		fullXML.append(XML_HEADER).append(LN);
-//		fullXML.append(URLSET_HEADER).append(LN);
-//
-//		String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config.getMinCompletenessToPromoteInSitemaps());
-//		Query query = new Query("*:*")
-//						.addRefinement(queryString)
-//						.addRefinement("id3hash:" + prefix)
-//						.setPageSize(20000)
-//						.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
-//
-//		if (isPlaceSitemap) {
-//			String queryForPlaces = solrQueryClauseToIncludePlaces();
-//			if (!StringUtils.isBlank(queryForPlaces)) {
-//				query = query.addRefinement(queryForPlaces);
-//			}
-//		}
-//
-//		log.info("queryString: " + query.toString());
-//		List<BriefBean> resultSet = null;
-//		try {
-//			long t = new Date().getTime();
-//			resultSet = searchService.sitemap(BriefBean.class, query).getResults();
-//			log.info("Query took: " + (new Date().getTime() - t));
-//		} catch (SolrTypeException e) {
-//			e.printStackTrace();
-//		}
-//
-//		if (resultSet != null) {
-//			for (BriefBean bean : resultSet) {
-//				BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
-//				String title = "";
-//				if (doc.getTitle() != null) {
-//					title = doc.getTitle()[0];
-//				}
-//				SitemapEntry entry = new SitemapEntry(
-//					getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), 
-//					doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
-//				fullXML.append(URL_S).append(LN);
-//
-//				String url = entry.getLoc();
-//
-//				if (isPlaceSitemap) {
-//					url = StringUtils.replace(url, ".html", ".kml");
-//				}
-//				fullXML.append(LOC_S).append(url).append(LOC_E).append(LN);
-//
-//				if (isImageSitemap && doc.getType() == DocType.IMAGE) {
-//					String image = "";
-//					try {
-//						image = URLEncoder.encode(entry.getImage(), "UTF-8");
-//					} catch (UnsupportedEncodingException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					fullXML.append("<image:image>").append(LN);
-//					fullXML.append("<image:loc>")
-//						.append(config.getImageCacheUrl() + "uri=" + image + "&amp;size=FULL_DOC")
-//						.append("</image:loc>").append(LN);
-//					fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle())).append("</image:title>").append(LN);
-//					fullXML.append("</image:image>").append(LN);
-//				}
-//
-//				if (isPlaceSitemap) {
-//					fullXML.append("<geo:geo><geo:format>kml</geo:format></geo:geo>").append(LN);
-//				}
-//
-//				fullXML.append("<priority>").append(entry.getPriority()).append("</priority>").append(LN);
-//				fullXML.append(URL_E).append(LN);
-//			}
-//		}
-//
-//		fullXML.append("</urlset>").append(LN);
-//
-//		return fullXML;
-		
 		PerReqSitemap sitemap = new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isImageSitemap, isPlaceSitemap, prefix);
 		Thread t = new Thread(sitemap);
 		t.start();
@@ -382,6 +321,10 @@ public class SitemapController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
+		if (sitemapCacheDir == null) {
+			response.setStatus(404);
+			return;
+		}
 
 		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_VIDEO + params + XML);
@@ -638,12 +581,14 @@ public class SitemapController {
 	private static void setSitemapCacheDir() {
 		if (sitemapCacheDir == null) {
 			sitemapCacheName = Beans.getConfig().getSitemapCache();
-			if (!sitemapCacheName.endsWith("/")) {
-				sitemapCacheName += "/";
-			}
-			sitemapCacheDir = new File(sitemapCacheName);
-			if (!sitemapCacheDir.exists()) {
-				sitemapCacheDir.mkdir();
+			if (sitemapCacheName != null) {
+				if (!sitemapCacheName.endsWith("/")) {
+					sitemapCacheName += "/";
+				}
+				sitemapCacheDir = new File(sitemapCacheName);
+				if (!sitemapCacheDir.exists()) {
+					sitemapCacheDir.mkdir();
+				}
 			}
 		}
 	}
@@ -693,7 +638,9 @@ public class SitemapController {
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
+				log.info("start checking Solr update time");
 				actualSolrUpdate = searchService.getLastSolrUpdate();
+				log.info("Solr update time checked");
 			} catch (SolrServerException e) {
 				log.severe("SolrServerException " + e.getLocalizedMessage());
 			} catch (IOException e) {
