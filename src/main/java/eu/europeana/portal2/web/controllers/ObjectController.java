@@ -147,6 +147,7 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
+		model.setShowSimilarItems(config.isShowSimilarItems());
 
 		injector.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
@@ -171,14 +172,14 @@ public class ObjectController {
 			model.setFullBeanView(fullBeanView);
 
 			// more like this
-			/*
-			 * TODO: let it back in next time
-			List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
-			if (fullBean.getSimilarItems() == null) {
-				similarItems = getMoreLikeThis(collectionId, recordId, model);
+			
+			if(config.isShowSimilarItems()){
+				List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
+				if (fullBean.getSimilarItems() == null) {
+					similarItems = getMoreLikeThis(collectionId, recordId, model);
+				}
+				model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));				
 			}
-			model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
-			*/
 
 			long tSeeAlso0 = (new Date()).getTime();
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
