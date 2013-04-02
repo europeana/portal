@@ -56,9 +56,7 @@ com.addthis = {
 	
 	
 	ready : function() {
-		
-		js.console.log('addthis is ready');
-		
+		$('body').trigger('addThisReady');
 	},
     
     

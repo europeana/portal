@@ -251,7 +251,9 @@ eu.europeana.fulldoc = {
 	},
 	
 	addThis : function() {
+		
 		$('.shares-link').click(function(){
+			
 			js.loader.loadScripts([{
 				file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
 				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
@@ -272,6 +274,7 @@ eu.europeana.fulldoc = {
 						ui_click: true		// disable hover
 					});
 				
+					
 					// nb: tweet does not accept twitter templates, it only accepts html attributes
 					// @see /js/com/addthis/addthis.js for those attributes
 					
@@ -290,14 +293,14 @@ eu.europeana.fulldoc = {
 					$('.shares-link').html(
 						addThisHtml
 					);
-					
-					com.addthis.init( null, true, false );
-					
-					setTimeout(function() {
-						
-						$('.icon-share').click();
-					}, 100);
 
+					$('body').on('addThisReady', function(){
+						setTimeout(function() {
+							$('.icon-share').click();
+						}, 300);
+					});
+
+					com.addthis.init( null, true, false );
 				}
 			}]);
 			

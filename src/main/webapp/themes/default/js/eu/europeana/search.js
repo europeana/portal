@@ -267,7 +267,6 @@ eu.europeana.search = {
 	
 	addThis : function() {
 		
-		
 		$('.shares-link').click(function(){
 
 			js.loader.loadScripts([{
@@ -277,6 +276,7 @@ eu.europeana.search = {
 				callback : function() {
 					
 					$('.shares-link').unbind('click');
+					
 					var url = $('head link[rel="canonical"]').attr('href'),
 					title = $('head title').html(),
 					description = $('head meta[name="description"]').attr('content');
@@ -315,20 +315,23 @@ eu.europeana.search = {
 						addThisHtml
 					);
 					
-					com.addthis.init( null, true, false );
-					
-					$('#share-subscribe .icon-share').bind('keypress', function(e){
-						if(e.keyCode == 13 || e.keyCode == 32){
-							// carriage return or space
-							e.preventDefault();
-							$(e.target).closest('a').click();
-							return;			
-						}
+
+					$('body').on('addThisReady', function(){
+						setTimeout(function() {
+							$('#share-subscribe .icon-share').bind('keypress', function(e){
+								if(e.keyCode == 13 || e.keyCode == 32){
+									// carriage return or space
+									e.preventDefault();
+									$(e.target).closest('a').click();
+									return;			
+								}
+							});
+							$('.icon-share').click();
+						}, 100);
 					});
 
-					setTimeout(function() {
-						$('.icon-share').click();
-					}, 100);
+					com.addthis.init( null, true, false );
+					
 				}
 			}]);
 
