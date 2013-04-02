@@ -65,7 +65,8 @@ public class CiteValue {
 		switch (value) {
 			case WIKIPEDIA:
 				citeStyleText.append("{{cite web | url=");
-				citeStyleText.append(model.getDocument().getId());
+				citeStyleText.append(model.getDocument().getCannonicalUrl());
+				//citeStyleText.append(model.getDocument().getId());
 				citeStyleText.append("|title=");
 
 				if( StringArrayUtils.isNotBlank(model.getDocument().getTitle())){
