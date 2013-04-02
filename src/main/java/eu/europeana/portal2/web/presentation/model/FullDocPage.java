@@ -84,6 +84,15 @@ public class FullDocPage extends FullDocPreparation {
 	private boolean lightboxRefChecked = false;
 	private String lightboxRefField = null;
 	private String urlRef = null;
+	private boolean showSimilarItems = false;
+
+	public boolean isShowSimilarItems() {
+		return showSimilarItems;
+	}
+
+	public void setShowSimilarItems(boolean showSimilarItems) {
+		this.showSimilarItems = showSimilarItems;
+	}
 
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
