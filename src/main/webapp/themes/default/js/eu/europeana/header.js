@@ -335,6 +335,7 @@ eu.europeana.header = {
 	 */
 	setDefaultFocus : function() {
 		
+		
 		$('#query-input').focus(function(){
 			$("#query-full table tr:first-child .query-cell").addClass("glow");
 		});
@@ -342,6 +343,10 @@ eu.europeana.header = {
 		$('#query-input').blur(function(){
 			$("#query-full table tr:first-child .query-cell").removeClass("glow");
 		});
+		
+		if(eu.europeana.vars.page_name == 'staticpage.html'){
+			return;
+		}
 		
 		var inputFocus = ['login.html', 'forgotPassword.html', 'register-success.html'].indexOf(eu.europeana.vars.page_name) >=0 ? $('#j_username') : $('#query-input');
 
