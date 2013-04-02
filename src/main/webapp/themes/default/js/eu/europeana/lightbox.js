@@ -12,8 +12,11 @@ eu.europeana.lightbox = function(){
 	self.zoomed		= false;
 	self.brdr		= 60;
 	
-	var init = function(cmp, src, carouselData) {
-		self.cmp = cmp;
+	var init = function(initOb) {
+		
+		var cmp				= self.cmp	= initOb.cmp;
+		var src				= initOb.src;
+		var carouselData	= initOb.data;
 		
 		if(carouselData){
 			
@@ -25,7 +28,6 @@ eu.europeana.lightbox = function(){
 				var submodel = [];
 				var submodelActive = 0;
 
-				
 				var nav = function(direction){
 
 					for(var i=0; i<carouselData.length; i++){
@@ -72,8 +74,9 @@ eu.europeana.lightbox = function(){
 		}
 		
 		cmp.find('#lightbox_image').attr('src', src);
-		self.origImgW = cmp.find('#lightbox_image').width();
-		self.origImgH = cmp.find('#lightbox_image').height();
+		
+		self.origImgW = initOb.w;
+		self.origImgH = initOb.h;
 	};
 
 	var layout = function(){
@@ -89,8 +92,14 @@ eu.europeana.lightbox = function(){
 		 * 
 		 */ 
 
+		
+
+		
 		var	img		= self.cmp.find('#lightbox_image'),
 			info	= self.cmp.find('#lightbox_info');
+		
+		//img.attr("style", "");
+		
 		var	imgW	= self.origImgW,
 			imgH	= self.origImgH,
 			infoW	= self.infoW,
@@ -98,6 +107,9 @@ eu.europeana.lightbox = function(){
 			infoHx	= self.infoHx;
 			brdr	= self.brdr;
 		
+//		alert("self.origImgW " + self.origImgW);
+js.console.log("self.origImgW " + self.origImgW);
+			
 		var	aspectWin	= ($(window).width()-brdr) / ($(window).height()-brdr);
 		var	aspectUnder	= imgW / (imgH + infoH);
 		var	aspectRight	= (imgW + infoW) / imgH;
@@ -129,6 +141,7 @@ eu.europeana.lightbox = function(){
 			var projectedHeight	= (w/aspectImg);
 			var projectedWidth	= (h*aspectImg);
 
+js.console.log('testing w/h  ' + projectedWidth + ' / ' + projectedHeight);
 			//js.console.log("projected " + projectedWidth + " / " + projectedHeight +  "   available = " + availableWidth + " x " + availableHeight );
 
 			if(rec > 30){
@@ -149,6 +162,7 @@ eu.europeana.lightbox = function(){
 		
 		img.css('width',		dim[0] + "px");
 		img.css('min-width',	dim[0] + "px");	/*	additional rule needed for ie8	*/
+		$("#lightbox").css("visibility", "visible");
 		
 		// set meta
 		
@@ -333,8 +347,70 @@ eu.europeana.lightbox = function(){
 		},
 		
 		"switchImg" : function(url){
-			self.cmp.find("#lightbox_image").attr("src", url);
-			layout();
+
+
+			/*
+			$('<img src="' + url + '" style="visibility:hidden;"/>').appendTo("body").imagesLoaded(function($images, $proper, $broken){
+				
+				if($proper.length==1 ){
+					alert("loaded ")
+					
+					self.origImgW = $proper.width();
+					self.origImgW = $proper.height();
+
+					
+				}
+			});
+			*/
+			
+			
+			
+			
+//			var img = self.cmp.find("#lightbox_image");
+//			img.attr("style", "");
+//			img.attr("src", url);
+//			layout();
+			
+	
+			
+			//alert("switchImg, self.cmp.find('#lightbox_image').length = " + self.cmp.find('#lightbox_image').length   );
+
+			var img = self.cmp.find('#lightbox_image');
+			img.unbind( '.imagesLoaded' );
+
+			//alert("data = " +   img.data['imagesLoaded']  );
+			//alert("switch src.... ");
+			//self.cmp.find("#lightbox_image").attr("src", url);
+			
+			$("#lightbox").css("visibility", "hidden");
+			
+			img.attr("style", "");// "visibility:hidden"); // clear old w / h and hide
+			img.attr("src", url);
+
+			
+			// MACLEAN
+			img.imagesLoaded(
+
+					function($images, $proper, $broken){
+
+						if($proper.length==1 && $proper.width() > 2){
+
+				//			alert("set self.origImgW, was " + self.origImgW + ", will be " + $proper.width());
+							
+							self.origImgW = $proper.width();
+							self.origImgH = $proper.height();
+	
+	
+							img.unbind( '.imagesLoaded' );
+							//alert("call to layout..." + layout);
+							layout();
+						}
+					}
+
+			);
+			
+			
+			
 		},
 		
 		"getCmp" : function(callback){
