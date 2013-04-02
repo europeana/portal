@@ -125,3 +125,14 @@ description: provides a cache for generated Sitemap files. It should be a file s
 
 example:
 portal.sitemap.cache = /home/peterkiraly/Development/portal2/sitemap-cache/
+
+
+New property:
+	portal.showSimilarItems
+	
+Description:
+	specifies whether or not to include similar-items in the object page
+
+Example:
+	portal.showSimilarItems = true
+	
