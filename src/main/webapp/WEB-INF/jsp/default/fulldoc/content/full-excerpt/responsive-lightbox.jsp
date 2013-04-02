@@ -10,11 +10,12 @@
 		<a id="nav-prev" class="icon-arrow-4" onClick="eu.europeana.fulldoc.lightboxOb.prev();" ></a>
 		<a id="nav-next" class="icon-arrow-2" onClick="eu.europeana.fulldoc.lightboxOb.next();" ></a>
 		<a id="zoomIn" onClick="eu.europeana.fulldoc.lightboxOb.zoom();"></a>
-		
 		<img
 		id="lightbox_image"
 		/><div id="lightbox_info">
+		
 			<ul>
+			
 				<li class="hide_show_meta">
 					<a class="showMeta"><spring:message code="see_details_t"/></a>
 					<a class="hideMeta"><spring:message code="hide_details_t"/></a>

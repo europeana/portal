@@ -11,7 +11,7 @@
     <h1 class="hide-on-phones" ${model.semanticTitle}>${model.objectTitle}</h1>
 
     <c:forEach items="${model.document.dcTitle}" var="title">
-      <c:if test="${title != model.objectTitle }">
+      <c:if test="${title != model.objectTitle && !empty(title)}">
         <div class="item-metadata">
           <span class="bold notranslate"><spring:message code="dc_title_t" />:</span>
           <span class="translate" ${semanticAttributes}>${title}</span>
