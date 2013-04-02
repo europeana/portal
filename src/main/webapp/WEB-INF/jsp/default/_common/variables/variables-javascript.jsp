@@ -164,6 +164,19 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.min.css';
 			</c:otherwise>
 		</c:choose>
+		
+		
+		<c:choose>
+			<c:when test="${!empty model.showSimilarItems && model.showSimilarItems}">
+				eu.europeana.vars.isShowSimilarItems = true;
+			</c:when>
+			<c:otherwise>
+				eu.europeana.vars.isShowSimilarItems = false;
+			</c:otherwise>
+		</c:choose>
+		
+		
+		
 
 		<%-- Translation data for lightbox triggers: map lightboxble type to message --%>
 		
