@@ -191,10 +191,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.item.uri = '${model.document.about}';
 		</c:if>
 
-		<c:if test="${model[lightboxRef]}">
-			eu.europeana.vars.lightbox_swf = '/${branding}/js/jwplayer/mediaplayer-5.8/player.swf';
-			eu.europeana.vars.lightbox_rights = '<eu:displayRights inLightbox="true" />';
-		</c:if>
+
 	</c:when>
 	
 	
@@ -235,6 +232,8 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.close = '${fn:escapeXml(close)}';
 		eu.europeana.vars.msg.search_saved = '${fn:escapeXml(search_saved)}';
 		eu.europeana.vars.msg.search_save_failed = '${fn:escapeXml(search_save_failed)}';
+		eu.europeana.vars.msg.result_count = ${model.briefBeanView.pagination.numFound};
+		
 	</c:when>
 
 </c:choose>
