@@ -26,7 +26,17 @@ public class SeeAlsoSuggestions {
 		String fieldName = parts[0];
 		String fieldValue = parts[1]
 				.replaceAll("^\"", "")
-				.replaceAll("\"$", "");
+				.replaceAll("\"$", "")
+				.replace("\\/", "/")
+				.replace("\\:", ":")
+				.replace("\\&", "&")
+				.replace("\\?", "?")
+				.replace("\\;", ";")
+				.replace("\\+", "+")
+				.replace("\\\"", "\"")
+				.replace("\\(", "(").replace("\\)", ")")
+				.replace("\\[", "[").replace("\\]", "]")
+		;
 
 		String aggregatedFieldName = (seeAlsoAggregations.containsKey(fieldName))
 				? seeAlsoAggregations.get(fieldName) 
@@ -44,7 +54,7 @@ public class SeeAlsoSuggestions {
 		if (fieldName.equals("title") || fieldName.equals("PROVIDER") || fieldName.equals("DATA_PROVIDER")) {
 			extendedQuery = query;
 		} else {
-			extendedQuery = fieldName + ":(" + ControllerUtil.clearSeeAlso(fieldValue) + ")";
+			extendedQuery = query; // fieldName + ":(" + ControllerUtil.clearSeeAlso(fieldValue) + ")";
 		}
 
 		field.addSuggestion(new Suggestion(extendedQuery, fieldValue, count));
