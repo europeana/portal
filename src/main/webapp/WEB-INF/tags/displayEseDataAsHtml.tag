@@ -68,8 +68,23 @@
 		</c:if>
 	</c:forEach>
 
-      <span class="bold notranslate ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
 
+
+	  <%--
+	  <c:set var="hasValue" value="0"/>
+
+      <c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+	  	<c:set var="hasValue" value="1"/>
+	  	<c:out value="${fn:length(value.value)}"/>
+	  </c:forEach>
+	  
+	  <c:if test="${hasValue==2}">
+      </c:if>
+      --%>
+      
+      <span class="bold notranslate ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
+      
+      
       <%-- iterate over possible values for the given label --%>
       <c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
 
@@ -116,7 +131,51 @@
           </c:when>
           <c:otherwise>
          
-            <span class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if><c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:out value="${value.value}" />
+            <span class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if><c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>
+            		><c:choose>
+            		
+            			<%--
+            				Stop the escaping of non-ascii characters as in:
+            					Creator: Tyšler, A.,
+            				on page:
+            					http://localhost:8081/portal/record/2022005/A8FDF4B2F3ECEBB6B469AE7E1D7AB98CBFF66675.html
+            			 --%>
+            		
+            			<c:when test="${localSemanticUrl}">
+		            		<c:out value="${(value.value)}"/>
+            			</c:when>
+            			<c:otherwise>
+            			
+		            		<c:set var="theVal" value="${value.value}" />
+		            		
+		            		<!-- respect <br>, <p> and <i> -->
+		            		
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;BR&gt;',	'<br/>')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;br&gt;',	'<br/>')}" />
+		            		
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;I&gt;',	'<i>')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;i&gt;',	'<i>')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/I&gt;',	'</i>')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/i&gt;',	'</i>')}" />
+
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;P&gt;',	'<p>')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;p&gt;',	'<p>')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/P&gt;',	'</p>')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/p&gt;',	'</p>')}" />
+
+   				            <!-- lose <b> and <li> -->
+   				            
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;LI&gt;',	'')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;li&gt;',	'')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/LI&gt;',	'')}" />
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/li&gt;',	'')}" />
+		            		
+		            		<c:out value="${theVal}" escapeXml="false"/>
+		            		
+            			</c:otherwise>
+            		</c:choose>
+            		
+            		
               <c:if test="${value.value == '3D PDF'}">
                 <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
               </c:if>
