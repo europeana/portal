@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -378,15 +379,18 @@ public class ObjectController {
 
 		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
 		Map<String, List<String>> seeAlsoParams = new LinkedHashMap<String, List<String>>();
+		int i = 0;
 		for (String metaField : seeAlsoFields.keySet()) {
 			List<String> fieldValues = new ArrayList<String>();
 			for (String edmField : seeAlsoFields.get(metaField)) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
+					i = 0;
 					for (String value : values) {
-						if (!StringUtils.isBlank(value))
+						if (!StringUtils.isBlank(value) && i < 20) {
 							fieldValues.add(value);
-						// fieldValues.add(ControllerUtil.clearSeeAlso(value));
+							i++;
+						}
 					}
 				}
 			}
@@ -399,13 +403,18 @@ public class ObjectController {
 			config.getSeeAlsoTranslations(),
 			config.getSeeAlsoAggregations()
 		);
-		Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
-		if (seeAlsoResponse != null) {
-			for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {
-				if (entry.getValue() > 0) {
-					seeAlsoSuggestions.add(entry.getKey(), entry.getValue());
+		try {
+			Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
+			if (seeAlsoResponse != null) {
+				for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {
+					if (entry.getValue() > 0) {
+						seeAlsoSuggestions.add(entry.getKey(), entry.getValue());
+					}
 				}
 			}
+		} catch (Exception e) {
+			log.severe("See also error: " + e.getClass().getCanonicalName() + " " + e.getMessage());
+			log.severe(ExceptionUtils.getStackTrace(e));
 		}
 
 		return seeAlsoSuggestions;
