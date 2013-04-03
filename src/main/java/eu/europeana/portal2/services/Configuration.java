@@ -92,15 +92,6 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.shownAtProviderOverride']}")
 	private String[] shownAtProviderOverride;
 
-	// similar items settings
-	@Value("#{europeanaProperties['portal.showSimilarItems']}")
-	private boolean showSimilarItems;
-
-	
-	public boolean isShowSimilarItems() {
-		return showSimilarItems;
-	}
-
 	// API settings
 	@Value("#{europeanaProperties['api2.url']}")
 	private String api2url;
