@@ -5,7 +5,6 @@
 <% pageContext.setAttribute("newLineChar1", "\r"); %> 
 <% pageContext.setAttribute("newLineChar2", "\n"); %> 
 
-
 <div id="content" class="row">
 	<div class="twelve columns">
 
@@ -23,11 +22,13 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="sidebar-right show-on-x">
-				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+		<c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
+			<div class="row">
+				<div class="sidebar-right show-on-x">
+					<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+				</div>
 			</div>
-		</div>
+		</c:if>
 
 		<c:if test="${model.moreLikeThis != null}">
 

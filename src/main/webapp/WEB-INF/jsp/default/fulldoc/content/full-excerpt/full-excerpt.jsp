@@ -4,9 +4,11 @@
 
 <div id="excerpt">
   <div id="item-details">
+	<c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
     <div class="sidebar-right hide-on-x">
       <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
     </div>
+    </c:if>
 
     <h1 class="hide-on-phones" ${model.semanticTitle}>${model.objectTitle}</h1>
 
