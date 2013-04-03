@@ -1,5 +1,4 @@
 <%@ include file="/WEB-INF/jsp/default/_common/include.jsp" %>
-<%@ include file="/WEB-INF/jsp/default/_common/html/doctype.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/variables/variables.jsp" %>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html-open.jsp" %>
