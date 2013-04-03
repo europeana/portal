@@ -35,6 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -90,6 +92,8 @@ public class ObjectController {
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
+
+	@Resource private ReloadableResourceBundleMessageSource messageSource;
 
 	public static final Map<String, List<String>> seeAlsoFields = new LinkedHashMap<String, List<String>>() {
 		private static final long serialVersionUID = 1L;
@@ -147,7 +151,18 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
-		model.setShowSimilarItems(config.isShowSimilarItems());
+		
+		
+		boolean showSimilarItems = false;
+		try{
+			String sShowSimilarItems = StringUtils.replace(messageSource.getMessage("show_similar_items", null, locale),";", "");
+			showSimilarItems = Boolean.parseBoolean(sShowSimilarItems.trim());
+		}
+		catch (NoSuchMessageException e){
+			e.printStackTrace();
+		}
+		
+		model.setShowSimilarItems(showSimilarItems);
 
 		injector.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
@@ -173,7 +188,7 @@ public class ObjectController {
 
 			// more like this
 			
-			if(config.isShowSimilarItems()){
+			if(model.isShowSimilarItems()){
 				List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
 				if (fullBean.getSimilarItems() == null) {
 					similarItems = getMoreLikeThis(collectionId, recordId, model);
