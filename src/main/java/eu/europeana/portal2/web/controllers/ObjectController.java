@@ -152,17 +152,16 @@ public class ObjectController {
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
-		
-		
+
+		// TODO: refactor this!!!
 		boolean showSimilarItems = false;
 		try{
-			String sShowSimilarItems = StringUtils.replace(messageSource.getMessage("show_similar_items", null, locale),";", "");
+			String sShowSimilarItems = StringUtils.replace(messageSource.getMessage("show_similar_items", null, locale), ";", "");
 			showSimilarItems = Boolean.parseBoolean(sShowSimilarItems.trim());
 		}
 		catch (NoSuchMessageException e){
 			e.printStackTrace();
 		}
-		
 		model.setShowSimilarItems(showSimilarItems);
 
 		injector.injectProperties(model);
