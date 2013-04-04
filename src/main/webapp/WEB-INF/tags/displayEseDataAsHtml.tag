@@ -148,7 +148,7 @@
             			
 		            		<c:set var="theVal" value="${value.value}" />
 		            		
-		            		<!-- respect <br>, <p> and <i> -->
+		            		<%-- respect <br>, <p> and <i> --%>
 		            		
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;BR&gt;',	'<br/>')}" />
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;br&gt;',	'<br/>')}" />
@@ -163,7 +163,7 @@
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/P&gt;',	'</p>')}" />
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/p&gt;',	'</p>')}" />
 
-   				            <!-- lose <b> and <li> -->
+   				            <%-- lose <b> and <li> --%>
    				            
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;LI&gt;',	'')}" />
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;li&gt;',	'')}" />
