@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -74,7 +74,7 @@ public class AdminController {
 		log.info("==== admin.html ====");
 		Injector injector = new Injector(request, response, null);
 
-		int offset = ((pageNr-1) * LIMIT) + 1;
+		int offset = ((pageNr-1) * LIMIT);
 		AdminPage model = new AdminPage();
 		model.setPageNr(pageNr);
 		model.setTheme("devel");
@@ -93,7 +93,7 @@ public class AdminController {
 		long count = apiKeyService.countAll();
 		model.setApiKeyCount(count);
 
-		List<ApiKey> apiKeys = apiKeyService.findAll("userid desc", offset, LIMIT);
+		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(false, offset, LIMIT);
 		for (ApiKey apiKey : apiKeys) {
 			usage.get(ACTUAL).put(apiKey.getId(), apiLogger.getRequestNumber(apiKey.getId()));
 			usage.get(TOTAL).put(apiKey.getId(), apiLogger.getTotalRequestNumber(apiKey.getId()));
@@ -185,8 +185,8 @@ public class AdminController {
 		response.setHeader("Content-Type", "text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
 
-		Map<Long, User> users = new TreeMap<Long, User>();
-		List<ApiKey> apiKeys = apiKeyService.findAll();
+		Map<Long, User> users = new LinkedHashMap<Long, User>();
+		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(true);
 		for (ApiKey apiKey : apiKeys) {
 			User user = apiKey.getUser();
 			if (!users.containsKey(user.getId())) {
@@ -214,7 +214,11 @@ public class AdminController {
 	private List<String> csvEncodeUser(User user) {
 		List<String> fields = new LinkedList<String>();
 		fields.add(user.getId().toString());
-		fields.add(csvEncodeField(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate())));
+		if (user.getRegistrationDate() != null) {
+			fields.add(csvEncodeField(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate())));
+		} else {
+			fields.add("");
+		}
 		fields.add(csvEncodeField(user.getFirstName()));
 		fields.add(csvEncodeField(user.getLastName()));
 		fields.add(csvEncodeField(user.getEmail()));
