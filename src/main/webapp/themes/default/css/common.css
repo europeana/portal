@@ -141,7 +141,8 @@ a:focus .social-link .text{
 .iframe-wrap{
 	display:		table-cell;
 	vertical-align:	middle;
-	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXposition:	relative;
+	position:		relative;
+	z-index:		100;
 	
 	xxxxmax-width:	100%;
 	xxxxmax-height:	100%;
