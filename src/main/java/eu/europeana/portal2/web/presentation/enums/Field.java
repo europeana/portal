@@ -57,7 +57,7 @@ public enum Field {
 		ExternalService.GOOGLEBOOKS, ExternalService.GOOGLE, ExternalService.WORLDCAT,
 		ExternalService.FLICKR, ExternalService.AMAZON, ExternalService.YOUTUBE, ExternalService.IMDB),
 	DC_DATE("dc:date", "dc_date_t", "when:%s", false, false, true, ExternalService.none()),
-	DC_CREATOR("dc:creator", "Creator_t", "who:%s", false, true, true, 
+	DC_CREATOR("dc:creator", "Creator_t", "who:%s", false, true, false, 
 		ExternalService.WIKIPEDIA, ExternalService.GOOGLE, ExternalService.GOOGLEBOOKS,
 		ExternalService.WORLDCAT, ExternalService.FLICKR, ExternalService.AMAZON,
 		ExternalService.YOUTUBE, ExternalService.IMDB),
