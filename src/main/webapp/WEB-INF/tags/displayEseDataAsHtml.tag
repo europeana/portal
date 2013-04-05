@@ -170,6 +170,10 @@
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/LI&gt;',	'')}" />
 		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/li&gt;',	'')}" />
 		            		
+   				            <%-- escape > used as arrows --%>
+		            		
+		            		<c:set var="theVal" value="${fn:replace(theVal, '>>',	'&rarr;')}" />
+		            		
 		            		<c:out value="${theVal}" escapeXml="false"/>
 		            		
             			</c:otherwise>
