@@ -6,7 +6,7 @@
   </c:if>
 
   <%@ include file="/WEB-INF/jsp/default/providers/content/providers.jspf" %>
-  <%@ include file="/WEB-INF/jsp/default/sitemap/incl_browse-all-table.jspf" %>
+  <%-- @ include file="/WEB-INF/jsp/default/sitemap/incl_browse-all-table.jspf" --%>
 
   <c:if test="${model.leftContent}">
     </div>

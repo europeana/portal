@@ -17,7 +17,6 @@
         </c:choose>
         <li>
           <a href="${entry.loc}"${toggle_providers}>${entry.name} (${entry.count})</a>
-          
           <ul class="data-providers">
             <li><a href="${entry.loc}">${entry.name} (${entry.count})</a></li>
             <c:if test="${entry.dataProvidersListed}">
@@ -29,5 +28,26 @@
         </li>
       </c:forEach>
     </ul>
+
+<script type="text/javascript">
+eu_europeana_providers = {
+    init: function(){
+      $('.icon-arrow-2-after').click(function(e){
+        var innerList = $(this).parent().find('ul');
+
+        if( innerList.is(':visible') ){
+          innerList.hide('slow');
+        }
+        else{
+          innerList.show('slow');
+        }
+        e.preventDefault();
+      });
+
+      $('#contributors .outer-list').show();
+    }
+};
+</script>
+
   </c:if>
 </div>
