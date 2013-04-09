@@ -187,13 +187,12 @@ public class ObjectController {
 			model.setFullBeanView(fullBeanView);
 
 			// more like this
-			
 			if(model.isShowSimilarItems()){
 				List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
 				if (fullBean.getSimilarItems() == null) {
 					similarItems = getMoreLikeThis(collectionId, recordId, model);
 				}
-				model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));				
+				model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
 			}
 
 			long tSeeAlso0 = (new Date()).getTime();
@@ -386,7 +385,7 @@ public class ObjectController {
 				if (values != null) {
 					i = 0;
 					for (String value : values) {
-						if (!StringUtils.isBlank(value) && i < 20) {
+						if (!StringUtils.isBlank(value) && value.length() < 500 && i < 20) {
 							fieldValues.add(value);
 							i++;
 						}

@@ -371,14 +371,13 @@ public class FullDocPage extends FullDocPreparation {
 			if(shortcut.get("EdmRights") != null){
 				String[] rightsOp = shortcut.get("EdmRights");
 				rightsOption = RightsValue.safeValueByUrl(rightsOp[0]);
-				if (rightsOption == null && rightsOp.length>1){
-					rightsOption = RightsValue.safeValueByUrl(rightsOp[1]);					
+				if (rightsOption == null && rightsOp.length > 1){
+					rightsOption = RightsValue.safeValueByUrl(rightsOp[1]);
 				}
-				if (rightsOption == null && rightsOp.length>2){
-					rightsOption = RightsValue.safeValueByUrl(rightsOp[2]);					
+				if (rightsOption == null && rightsOp.length > 2){
+					rightsOption = RightsValue.safeValueByUrl(rightsOp[2]);
 				}
 			}
-			
 		}
 		return rightsOption;
 	}
