@@ -4,17 +4,7 @@
 
 <c:if test="${!empty model.rightsOption}">
 
-  <!-- correct rights link here (trim trailing slash and add .html extension) -->
-  <c:set var="rightsLink" value="${model.edmRights}" />
-  
-  <c:if test="${! fn:endsWith(rightsLink, '.html')}">
-	  <c:set var="rightsLinkLength" value="${fn:length(rightsLink)}" />
-	  <c:set var="rightsLink" value="${fn:substring(rightsLink, 0, rightsLinkLength-1 )}" />
-	  <c:set var="rightsLink" value="${rightsLink}.html" />
-  </c:if>
-
-
-  <a href="${rightsLink}" title="${model.rightsOption.rightsText}" class="item-metadata rights-badge" target="_blank" <c:if test="${!inLightbox}">rel="xhv:license http://www.europeana.eu/schemas/edm/rights"</c:if>>
+  <a href="${model.rightsOption.url}" title="${model.rightsOption.rightsText}" class="item-metadata rights-badge" target="_blank" <c:if test="${!inLightbox}">rel="xhv:license http://www.europeana.eu/schemas/edm/rights"</c:if>>
     
        <c:set var="rightsIcons" value="${fn:split(model.rightsOption.rightsIcon, ' ')}" />
          <c:forEach items="${rightsIcons}" var="rightsIcon">
