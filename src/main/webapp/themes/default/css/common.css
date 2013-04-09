@@ -59,15 +59,16 @@
 	max-height:			2em;
 }
 	
-#social-links .social-link{
+
+#social-links .social-link-wrap{
 	float:		none;
 	display:	inline-block;
 	*display:	inline;
 	zoom:		1;
 	width:		auto !important;
-	cursor:		pointer;
 	overflow:	hidden;
 }
+
 
 .social-link.icon-facebook{
 	color:		#3b5998;
@@ -112,12 +113,13 @@ a:focus .social-link .text{
 #social-links a{
 	font-size:	1.5em;
 }
-	
+
+/*
 #social-links span:first-child{
 	margin-bottom:	1em;
 	font-size:		1em;
 }
-
+*/
 
 .overlaid-content{
 	
@@ -133,9 +135,6 @@ a:focus .social-link .text{
 	width:				100%;
 	z-index:			31;
 	display:			table;
-	
-	xxxxmax-width:	100%;
-	xxxxmax-height:	100%;
 }
 
 .iframe-wrap{
@@ -143,10 +142,6 @@ a:focus .social-link .text{
 	vertical-align:	middle;
 	position:		relative;
 	z-index:		100;
-	
-	xxxxmax-width:	100%;
-	xxxxmax-height:	100%;
-	
 }
 
 .iframe-wrap iframe{
@@ -489,11 +484,13 @@ a:focus .social-link .text{
 	}
 	
 	#social-links .social-link{
-		float:			left;
-		min-width:		50%;
-		height:			1.5em;
 		margin-bottom:	0;
-	}	
+	}
+	
+	#social-links .social-link-wrap{
+		min-width:		50%;
+		float:			left;
+	}
 	
 	#social-links .social-link span.text{
 		display:		inline;

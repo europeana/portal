@@ -183,6 +183,10 @@ a.action-link span,
 	top:		-.5em;
 }
 
+.icon-share{
+	cursor:	pointer;
+}
+
 .icon-share .action-title{
 	color:			#333;
 	margin-left:	.5em;
