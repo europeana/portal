@@ -265,80 +265,91 @@ eu.europeana.search = {
 		menuBottom.init();
 	},
 	
+	
+	sharesLinkClicked : function(){
+		js.loader.loadScripts([{
+			
+			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
+			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
+			callback : function() {
+				
+				$('.shares-link').unbind('click');
+				
+				var url = $('head link[rel="canonical"]').attr('href'),
+				title = $('head title').html(),
+				description = $('head meta[name="description"]').attr('content');
+			
+				window.addthis_config = com.addthis.createConfigObject({
+					
+					pubid : eu.europeana.vars.addthis_pubid,
+					ui_language: 'en', // eu.europeana.vars.locale,
+					data_ga_property: eu.europeana.vars.gaId,
+					data_ga_social : true,
+					data_track_clickback: true,
+					ui_use_css : true,
+					ui_click: true		// disable hover
+				});
+				
+				url = $('head meta[property="og:url"]').attr('content');
+				window.addthis_share = com.addthis.createShareObject({
+					// nb: twitter templates will soon be deprecated, no date is given
+					// @link http://www.addthis.com/help/client-api#configuration-sharing-templates
+					templates: { twitter: title + ': ' + url + ' #europeana' }
+				});
+			
+				var addThisHtml = com.addthis.getToolboxHtml({
+					html_class : '',
+					url : url,
+					title : title,
+					description : description,
+					services : {
+						compact : {}
+					},
+					
+					link_html : $('.shares-link').html()			
+				});
+				
+				$('.shares-link').html(
+					addThisHtml
+				);
+				
+
+				$('body').on('addThisReady', function(){
+					setTimeout(function() {
+						$('#share-subscribe .icon-share').bind('keypress', function(e){
+							if(e.keyCode == 13 || e.keyCode == 32){
+								// carriage return or space
+								e.preventDefault();
+								$(e.target).closest('a').click();
+								return;			
+							}
+						});
+						$('.icon-share').click();
+					}, 100);
+				});
+
+				com.addthis.init( null, true, false );
+				
+			}
+		}]);
+		
+	},
+	
+	
 	addThis : function() {
 		
 		$('.shares-link').click(function(){
 
-			js.loader.loadScripts([{
-				
-				file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
-				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
-				callback : function() {
-					
-					$('.shares-link').unbind('click');
-					
-					var url = $('head link[rel="canonical"]').attr('href'),
-					title = $('head title').html(),
-					description = $('head meta[name="description"]').attr('content');
-				
-					window.addthis_config = com.addthis.createConfigObject({
-						
-						pubid : eu.europeana.vars.addthis_pubid,
-						ui_language: 'en', // eu.europeana.vars.locale,
-						data_ga_property: eu.europeana.vars.gaId,
-						data_ga_social : true,
-						data_track_clickback: true,
-						ui_use_css : true,
-						ui_click: true		// disable hover
-					});
-					
-					url = $('head meta[property="og:url"]').attr('content');
-					window.addthis_share = com.addthis.createShareObject({
-						// nb: twitter templates will soon be deprecated, no date is given
-						// @link http://www.addthis.com/help/client-api#configuration-sharing-templates
-						templates: { twitter: title + ': ' + url + ' #europeana' }
-					});
-				
-					var addThisHtml = com.addthis.getToolboxHtml({
-						html_class : '',
-						url : url,
-						title : title,
-						description : description,
-						services : {
-							compact : {}
-						},
-						
-						link_html : $('.shares-link').html()			
-					});
-					
-					$('.shares-link').html(
-						addThisHtml
-					);
-					
-
-					$('body').on('addThisReady', function(){
-						setTimeout(function() {
-							$('#share-subscribe .icon-share').bind('keypress', function(e){
-								if(e.keyCode == 13 || e.keyCode == 32){
-									// carriage return or space
-									e.preventDefault();
-									$(e.target).closest('a').click();
-									return;			
-								}
-							});
-							$('.icon-share').click();
-						}, 100);
-					});
-
-					com.addthis.init( null, true, false );
-					
-				}
-			}]);
-
-			
+			eu.europeana.search.sharesLinkClicked();
 		});
 		
-		return;
+		if( $('#mobile-menu').is(':visible')  ){
+			
+			// can't simulate click in iphone - have to initialise it early
+
+			eu.europeana.search.sharesLinkClicked();
+		}
+
 		/*
 		
 		http://media-cache-lt0.pinterest.com/192x/b7/d2/6f/b7d26fc9aa912f82a1e15026c66caf7f.jpg
