@@ -17,9 +17,16 @@
 
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
+import java.util.logging.Logger;
+
 import eu.europeana.portal2.querymodel.query.RightsOption;
 
 public class RightsValue {
+
+	private final Logger log = Logger.getLogger(RightsValue.class.getCanonicalName());
+
+	private final static String RIGHTS_URL_IDENTIFIER_LONG = "http://www.europeana.eu/rights/";
+	private final static String RIGHTS_URL_IDENTIFIER_SHORT = "/rights/";
 
 	private RightsOption right;
 
@@ -44,10 +51,7 @@ public class RightsValue {
 	 * @return Short version of URL associated with the results
 	 */
 	public String getRightsUrl() {
-		final String RIGHTS_URL_IDENTIFIER_LONG = "http://www.europeana.eu/rights/";
-		final String RIGHTS_URL_IDENTIFIER_SHORT = "/rights/";
-		return url.replace(RIGHTS_URL_IDENTIFIER_LONG,
-				RIGHTS_URL_IDENTIFIER_SHORT);
+		return url.replace(RIGHTS_URL_IDENTIFIER_LONG, RIGHTS_URL_IDENTIFIER_SHORT);
 	}
 
 	/**
@@ -86,4 +90,13 @@ public class RightsValue {
 		return right == RightsOption.NOC || right == RightsOption.CC_ZERO;
 	}
 
+	@Override
+	public String toString() {
+		return "RightsValue [RIGHTS_URL_IDENTIFIER_SHORT=" + RIGHTS_URL_IDENTIFIER_SHORT 
+				+ ", rightsText=" + right.getRightsText()
+				+ ", rightsIcon=" + right.getRightsIcon()
+				+ ", showExternalIcon=" + right.getShowExternalIcon()
+				+ ", rightUrl=" + right.getUrl()
+				+ ", url=" + url + "]";
+	}
 }

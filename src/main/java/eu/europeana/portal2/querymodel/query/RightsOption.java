@@ -1,5 +1,7 @@
 package eu.europeana.portal2.querymodel.query;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -11,7 +13,8 @@ import org.apache.commons.lang.StringUtils;
 public enum RightsOption {
 
 	// CC_ZERO("http://creativecommons.org/publicdomain/zero", "CC0", "cc_zero.png"), 
-	CC_ZERO("http://creativecommons.org/publicdomain/zero", "CC0", "icon-cczero", true), /* not in style guide (hence old text) and not in dataset (hence untested) */ 
+	/* not in style guide (hence old text) and not in dataset (hence untested) */
+	CC_ZERO("http://creativecommons.org/publicdomain/zero", "CC0", "icon-cczero", true),
 
 	// CC_BY("http://creativecommons.org/licenses/by/", "CC BY", "cc_by.png"),
 	CC_BY("http://creativecommons.org/licenses/by/", "CC BY", "icon-cc icon-by",  true),
@@ -49,6 +52,8 @@ public enum RightsOption {
 
 	// EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "eu_unknown.jpg", "cc-unknown.png"); // +transparent
 	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false);
+
+	private final Logger log = Logger.getLogger(RightsOption.class.getCanonicalName());
 
 	private String url = null;
 	private String rightsText = null;
