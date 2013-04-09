@@ -335,6 +335,8 @@ from search.css:
 		float:			right;
 		margin:			0 0 1em 1em;
 		max-width:		30%;
+		white-space:	normal;
+		word-break:		break-all;
 	}
 	
 	.sidebar-right ul{
