@@ -160,15 +160,15 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
 		if (pager.hasPrevious) {
 			pager.previousInt = fullDocUriInt - 1;
-			pager.previousUri = "/record/" + list.get(0).getId();
+			pager.previousUri = "/record" + list.get(0).getId();
 		}
 
 		if (pager.hasNext) {
 			pager.nextInt = fullDocUriInt + 1;
 			if (pager.hasPrevious) {
-				pager.nextUri = "/record/" + list.get(2).getId();
+				pager.nextUri = "/record" + list.get(2).getId();
 			} else {
-				pager.nextUri = "/record/" + list.get(1).getId();
+				pager.nextUri = "/record" + list.get(1).getId();
 			}
 		}
 	}
@@ -247,7 +247,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
 	private void setNextFullDocUrl(Map<String, String[]> httpParameters) {
 		StringBuilder out = new StringBuilder();
-		out.append(MessageFormat.format("/{0}.html?", nextUri.replaceAll("http://www.europeana.eu/resolve", "")));
+		out.append(MessageFormat.format("{0}.html?", nextUri.replace("http://www.europeana.eu/resolve", "")));
 		out.append("query=").append(encode(query));
 		final String[] filterQueries = httpParameters.get("qf");
 		if (filterQueries != null) {
@@ -266,7 +266,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
 	private void setPreviousFullDocUrl(Map<String, String[]> httpParameters) {
 		StringBuilder out = new StringBuilder();
-		out.append(MessageFormat.format("/{0}.html?", previousUri.replaceAll("http://www.europeana.eu/resolve", "")));
+		out.append(MessageFormat.format("{0}.html?", previousUri.replace("http://www.europeana.eu/resolve", "")));
 		out.append("query=").append(encode(query));
 		final String[] filterQueries = httpParameters.get("qf");
 		if (filterQueries != null) {
