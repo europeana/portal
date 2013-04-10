@@ -373,7 +373,9 @@ public class SearchPage extends SearchPreparation {
 		builder.addParam("startPage", Integer.toString(getStartPage()), true);
 		if (briefBeanView == null && getRefinements() != null) {
 			// add refinements back if there is no BriefBeanView available.
-			builder.addParam("qf", getRefinements(), true);
+			for (String _qf : getRefinements()) {
+				builder.addParam("qf", URLEncoder.encode(_qf, "utf8"), true);
+			}
 		}
 		return builder;
 	}
@@ -393,7 +395,9 @@ public class SearchPage extends SearchPreparation {
 		UrlBuilder url = new UrlBuilder(sb.toString());
 		url.addParam("query", URLEncoder.encode(searchTerm, "UTF-8"), true);
 		if (qf != null) {
-			url.addParam("qf", qf, true);
+			for (String _qf : qf) {
+				url.addParam("qf", URLEncoder.encode(_qf, "UTF-8"), true);
+			}
 		}
 		url.addParam("start", start, true);
 		return url;
