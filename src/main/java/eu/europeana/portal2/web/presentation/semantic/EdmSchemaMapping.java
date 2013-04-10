@@ -13,8 +13,8 @@ public class EdmSchemaMapping {
 	protected final static Logger log = Logger.getLogger(EdmSchemaMapping.class.getCanonicalName());
 
 	private static final List<String> mapNames = Arrays.asList(
-		new String[]{"ProvidedCHO", "WebResource", "Agent", "Place", "Timespan", 
-					"Concept", "Aggregation", "Proxy", "EuropeanaAggregation", "FullBean", 
+		new String[]{"ProvidedCHO", "WebResource", "Agent", "Place", "Timespan",
+					"Concept", "Aggregation", "Proxy", "EuropeanaAggregation", "FullBean",
 					"BriefBean"}
 	);
 
@@ -297,8 +297,7 @@ public class EdmSchemaMapping {
 
 			else if (mapName.equals("FullBean")) {
 				fieldMap.put(mapName, new LinkedList<FieldInfo>(Arrays.asList(
-					new FieldInfo("id", "id", "ObjectId", mapName),
-					new FieldInfo("about", "about", "String", mapName),
+					new FieldInfo("@rdf:about", "about", "String", mapName),
 					new FieldInfo("title", "title", "String[]", mapName),
 					new FieldInfo("year", "year", "String[]", mapName),
 					new FieldInfo("provider", "provider", "String[]", mapName),
@@ -307,17 +306,10 @@ public class EdmSchemaMapping {
 					new FieldInfo("type", "type", "DocType", mapName),
 					new FieldInfo("europeanaCompleteness", "europeanaCompleteness", "int", mapName),
 					new FieldInfo("optOut", "optedOut", "boolean", mapName),
-					// new FieldInfo("similarItems", "similarItems", "List<BriefBeanImpl>", mapName),
-					// new FieldInfo("who", "who", "String[]", mapName),
-					// new FieldInfo("what", "what", "String[]", mapName),
-					// new FieldInfo("where", "where", "String[]", mapName),
-					// new FieldInfo("when", "when", "String[]", mapName),
-					// new FieldInfo("edmTimespanBroaderTerm", "edmTimespanBroaderTerm", "String[]", mapName),
-					// new FieldInfo("edmTimespanBroaderLabel", "edmTimespanBroaderLabel", "List<Map<String,String>>", mapName),
-					// new FieldInfo("edmConceptBroaderLabel", "edmConceptBroaderLabel", "List<Map<String,String>>", mapName),
-					// new FieldInfo("edmPlaceBroaderTerm", "edmPlaceBroaderTerm", "String[]", mapName),
-					// new FieldInfo("previewNoDistribute", "previewNoDistribute", "String", mapName),
-					new FieldInfo("europeanaCollectionName", "europeanaCollectionName", "String[]", mapName)
+					new FieldInfo("country", "country", "String[]", mapName),
+					new FieldInfo("userTags", "userTags", "String[]", mapName),
+					new FieldInfo("europeanaCollectionName", "europeanaCollectionName", "String[]", mapName),
+					new FieldInfo("[id]", "id", "ObjectId", mapName)
 				)));
 			}
 

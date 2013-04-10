@@ -5,9 +5,11 @@
 <table style="table-layout:fixed;">
   <c:forEach items="${model.topLevelSchemaMap}" var="topField">
     <c:choose>
-      <c:when test="${topField.propertyName == 'fullBean'}">
 
+      <c:when test="${topField.propertyName == 'fullBean'}">
+        <europeana:displayDocElement topField="${topField}" docElement="${model.document}" elementStatus="${null}" total="1" />
       </c:when>
+
       <c:otherwise>
         <c:if test="${topField.propertyName != 'webResources' && !empty model.document[topField.propertyName]}">
           <tr><td colspan="2"><h4>${topField.schemaName}</h4></td></tr>
