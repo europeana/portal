@@ -374,7 +374,7 @@ public class SearchPage extends SearchPreparation {
 		if (briefBeanView == null && getRefinements() != null) {
 			// add refinements back if there is no BriefBeanView available.
 			for (String _qf : getRefinements()) {
-				builder.addParam("qf", URLEncoder.encode(_qf, "utf8"), true);
+				builder.addMultiParam("qf", URLEncoder.encode(_qf, "utf8"));
 			}
 		}
 		return builder;
@@ -396,7 +396,7 @@ public class SearchPage extends SearchPreparation {
 		url.addParam("query", URLEncoder.encode(searchTerm, "UTF-8"), true);
 		if (qf != null) {
 			for (String _qf : qf) {
-				url.addParam("qf", URLEncoder.encode(_qf, "UTF-8"), true);
+				url.addMultiParam("qf", URLEncoder.encode(_qf, "UTF-8"));
 			}
 		}
 		url.addParam("start", start, true);

@@ -99,7 +99,6 @@ public class SearchController {
 		model.setRswUserId(rswUserId);
 		model.setRswDefqry(rswDefqry);
 		model.setRefinements(qf);
-		log.info("qf: [" + StringUtils.join(qf, "] [") + "]");
 
 		if (start < 1) {
 			start = 1;

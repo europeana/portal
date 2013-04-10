@@ -37,14 +37,14 @@
 				<%-- first arrow --%>
 				<li class="nav-first">
 					<c:if test="${!model.briefBeanView.pagination.first}">
-						<a href="${fn:replace(model.firstPageUrl, "\"", "&quot;")}" title="<spring:message code="AltFirstPage_t" />">&lt;&lt; &nbsp;</a>
+						<a href="${model.firstPageUrl}" title="<spring:message code="AltFirstPage_t" />">&lt;&lt; &nbsp;</a>
 					</c:if>
 				</li>
 
 				<%-- previous arrow --%>
 				<li class="nav-prev">
 					<c:if test="${model.briefBeanView.pagination.previous}">
-						<a href="${fn:replace(model.previousPageUrl, "\"", "&quot;")}" title="<spring:message code="AltPreviousPage_t" />">&nbsp; &lt; &nbsp; </a>
+						<a href="${model.previousPageUrl}" title="<spring:message code="AltPreviousPage_t" />">&nbsp; &lt; &nbsp; </a>
 					</c:if>
 				</li>
 
@@ -54,31 +54,34 @@
 						<input type="number" id="start-page" value="${model.pageNumber}" min="1" max="${model.numberOfPages}" pattern="[0-9]*" /> of ${model.numberOfPages}
 						 --%>
 
-						<input type="text" id="start-page" value="${model.pageNumber}"/>
+						<input type="text" id="start-page" value="${model.pageNumber}" />
 						<span class="of"> <spring:message code="Of_t" /> </span>
 						<span class="of-bracket">
 							${model.numberOfPages}
 						</span>
 
-						<input type="hidden" name="start"	id="start" />
-						<input type="hidden" name="rows"	id="rows" value="${model.rows}" />
-						<input type="hidden" name="query"	value="<c:out value="${model.query}"/>"	/>
-						<input type="hidden" id="max-rows"	value="${model.numberOfPages}" />
-						<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+						<input type="hidden" name="start" id="start" />
+						<input type="hidden" name="rows" id="rows" value="${model.rows}" />
+						<input type="hidden" name="query" value="<c:out value="${model.query}" />" />
+						<c:forEach items="${model.refinements}" var="qf">
+							<input type="hidden" name="qf" value="<c:out value="${qf}" />" />
+						</c:forEach>
+						<input type="hidden" id="max-rows" value="${model.numberOfPages}" />
+						<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" />
 					</form>
 				</li>
 
 				<%-- next arrow --%>
 				<li class="nav-next">
 					<c:if test="${model.briefBeanView.pagination.next}">
-						<a href="${fn:replace(model.nextPageUrl, "\"", "&quot;")}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; &nbsp;</a>
+						<a href="${model.nextPageUrl}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; &nbsp;</a>
 					</c:if>
 				</li>
 
 				<%-- last arrow --%>
 				<li class="nav-last">
 					<c:if test="${!model.briefBeanView.pagination.last}">
-						<a href="${fn:replace(model.lastPageUrl, "\"", "&quot;")}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt;&gt;</a>
+						<a href="${model.lastPageUrl}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt;&gt;</a>
 					</c:if>
 				</li>
 			</ul>
