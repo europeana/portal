@@ -100,8 +100,8 @@
 					if(e.ctrlKey || e.metaKey){
 						return;
 					}
-					var key	= window.event ? e.keyCode : e.which;
-					if(key==27 || key ==0){
+					var key	=  e.keyCode ? e.keyCode : e.which;
+					if(key==27){
 						$(".overlaid-content", parent.document).css('visibility', 'hidden');
 					}
 				});
