@@ -10,9 +10,25 @@
 }
 
 #staticmenu li a {
-	display: block;
+	display: inline-block;
 	padding: 0;
 }
+
+#staticmenu li a{
+	padding:			0 1px;
+	text-decoration:	none;
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
+	border-bottom:		1px dotted transparent;	/* stop slight adjustment on hover with invisiblew border */
+}
+
+#staticmenu li a:hover,
+#staticmenu li a:focus {
+	color:			#11639D; /*#2382c5;*/
+	border-bottom:	1px dotted #9dc425;
+}
+
 
 
 /*
