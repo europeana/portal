@@ -36,7 +36,8 @@
 
 #logo{
 	z-index:2;
-	position:relative;	
+	position:relative;
+	width:100%;	
 }
 
 #logo h1{
@@ -180,6 +181,8 @@ table {
 	position:		relative;
 }
 
+
+
 table, tr{
 	width:100%;
 }
@@ -277,7 +280,10 @@ table tr:first-child{
 	tr td.menu-cell:first-child, tr td.query-cell{
 		width:	auto;
 	}
-
+	
+	#logo{
+		width:auto;
+	}
 }	
 
 	
