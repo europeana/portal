@@ -85,6 +85,7 @@
 					alert(why);
 					return false;
 				} 
+				$(".overlaid-content", parent.document).css('visibility', 'hidden');
 				return true;	 
 			};
 			$(document).ready(function(){
