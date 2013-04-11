@@ -540,6 +540,7 @@ h1 {
 #additional-info .original-context {
 	margin-top:		1em;
 	word-wrap:		break-word;
+	word-break:		break-all;
 }
 
 @media only screen and ( min-width:48em ){
