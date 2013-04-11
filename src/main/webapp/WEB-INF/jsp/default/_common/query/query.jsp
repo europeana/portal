@@ -9,5 +9,16 @@
 </div>
 
 <div id="query-info" class="hide-cell-on-phones">
-	<a class="hide-ilb-on-phones search-help europeana" href="/${model.portalName}/usingeuropeana.html"><spring:message code="rswHelp_t" /></a>
+
+	<c:set var="helpHref" value="/${model.portalName}/usingeuropeana.html"/>
+	<c:choose>
+		<c:when test="${model.pageName == 'login.html' || model.pageName == 'myeuropeana.html'}">
+			<c:set var="helpHref" value="/${model.portalName}/usingeuropeana_myeuropeana.html"/>
+		</c:when>
+		<c:when test="${model.pageName == 'full-doc.html' || model.pageName == 'search.html'}">
+			<c:set var="helpHref" value="/${model.portalName}/usingeuropeana_results.html"/>
+		</c:when>
+	</c:choose>
+
+	<a id="help-link" class="hide-ilb-on-phones search-help europeana" href="${helpHref}"><spring:message code="rswHelp_t" /></a>
 </div>
