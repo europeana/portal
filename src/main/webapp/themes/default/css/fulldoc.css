@@ -48,6 +48,12 @@
 }
 
 
+#translate-container{
+	position:	relative;
+	top:		-0.5em;	
+}
+
+
 #carousel-1{	
 	max-width:			220px;		/* max thumbanil size plus galleria stage offset (2 * 10) */
 	width:				220px;
