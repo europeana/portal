@@ -7,17 +7,7 @@
 			
 				<div class="six columns">
 					<h3><spring:message code="follow_us_t" /></h3>
-					
-					<%--
-					<div id="social-links">
-						<span></span><!-- Andy: empty span needed to stop 1st item appearing smaller in firefox -->
-						<a class="social-link" title="<spring:message code="europeana-facebook-title_t" />" href="<spring:message code="europeana-facebook-url" />" target="<spring:message code="europeana-facebook-target" />" rel="me"><span class="social-link icon-facebook"><span class="text"><spring:message code="europeana-facebook_t" /></span></span></a>
-						<a class="social-link" title="<spring:message code="europeana-twitter-title_t" />" href="<spring:message code="europeana-twitter-url" />" target="<spring:message code="europeana-twitter-target" />" rel="me"><span class="social-link icon-twitter"><span class="text"><spring:message code="europeana-twitter_t" /></span></span></a>
-						<a class="social-link" title="<spring:message code="europeana-pinterest-title_t" />" href="<spring:message code="europeana-pinterest-url" />" target="<spring:message code="europeana-pinterest-target" />" rel="me"><span class="social-link icon-pinterest-2"><span class="text"><spring:message code="europeana-pinterest_t" /></span></span></a>
-						<a class="social-link" title="<spring:message code="europeana-google-title_t" />" href="<spring:message code="europeana-google-url" />" target="<spring:message code="europeana-google-target" />"><span class="social-link icon-google"><span class="text"><spring:message code="europeana-google_t" /></span></span></a>
-						<span class="stretch"></span>
-					</div>
-					--%>
+
 					
 					<div id="social-links">
 
