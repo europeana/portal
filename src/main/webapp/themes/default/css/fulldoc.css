@@ -68,6 +68,7 @@
 
 a.action-link {
 	color:			#333;
+	line-height:	1em;
 	font-size:		1em;
 }
 a.action-link:hover{

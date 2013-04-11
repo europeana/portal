@@ -85,7 +85,7 @@ a.europeana{
 	box-sizing:			border-box;
 	-moz-box-sizing:	border-box;
 	-webkit-box-sizing:	border-box;
-	
+	border-bottom:		1px dotted transparent;	/* stop slight adjustment on hover with invisiblew border */
 }
 
 a.europeana:hover,
