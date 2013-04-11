@@ -83,7 +83,7 @@
 	color:		#db4a39;
 }
  
-a:focus .social-link .text{
+.social-link-wrap a:focus .text{
 	text-decoration:	underline;
 }
 
