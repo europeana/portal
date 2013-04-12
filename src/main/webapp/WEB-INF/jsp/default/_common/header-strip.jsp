@@ -8,20 +8,17 @@
 
 			<c:choose>
 				<c:when test="${empty model.user}">
-
 					<%-- [Home] [My Europeana] --%>
-				
 					<a	href="/${model.portalName}/"
 						target="<spring:message code="notranslate_main_menu_home_a_target_t" />"
 						title="<spring:message code="main_menu_home_a_title_t" />"
 						class="white left"><spring:message code="main_menu_home_a_text_t" /></a>
-										
 					<a	href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t" />"
 						target="<spring:message	code="notranslate_main_menu_myeuropeana_a_target_t"/>"
 						title="<spring:message code="main_menu_myeuropeana_a_title_t" />"
 						class="white left"><spring:message code="main_menu_myeuropeana_a_text_t" /></a>
-												
 				</c:when>
+
 				<c:otherwise>
 					<span class="white">
 						<spring:message code="LoggedInAs_t" />:
