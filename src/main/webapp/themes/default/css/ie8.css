@@ -85,6 +85,7 @@ body{
 	margin-top:	2em;	
 }
 
+/*
 #social-links .social-link{
 	float:			left;
 	min-width:		50%;
@@ -95,6 +96,25 @@ body{
 #social-links .social-link span.text{
 	display:		inline;
 }
+*/
+#social-links {
+	text-align: left !important;			/* override the justify */
+}
+
+#social-links .social-link{
+	margin-bottom:	0;
+}
+
+#social-links .social-link-wrap{
+	min-width:		50%;
+	float:			left;
+}
+
+#social-links .social-link span.text{
+	display:		inline;
+}
+
+
 
 #iframe-newsletter{
 	margin-top:			0;
@@ -155,6 +175,11 @@ body{
 	width:			65%;
 	margin-top:		0;
 	margin-bottom:	0;
+}
+
+#logo,
+#query-full{
+	float:			none;
 }
 
 #query-info{

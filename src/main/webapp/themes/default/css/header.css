@@ -37,8 +37,7 @@
 #logo{
 	z-index:2;
 	position:relative;
-	width:100%;
-	background-color:orange;	
+	display:table-row;
 }
 
 #logo h1{
@@ -121,6 +120,7 @@
 	#logo{
 		width:			25%;
 		display:		table-cell;
+		min-width:		auto;
 	}
 
 	#query-full, #query-info{
@@ -257,8 +257,8 @@ table tr:first-child{
 		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 		border-radius:			0.5em 0.5em 0.5em 0.5em;
 		table-layout:			auto;
-		position:				relative;
-		top:					-0.4em;
+		XXXposition:				relative;
+		XXXtop:					-0.4em;
 	}
 	
 	table tr:first-child{
@@ -282,9 +282,6 @@ table tr:first-child{
 		width:	auto;
 	}
 	
-	#logo{
-		width:auto;
-	}
 }	
 
 	
