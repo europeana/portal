@@ -1,5 +1,10 @@
 package eu.europeana.portal2.web.presentation.model;
 
+/**
+ * Container for a key and value pair
+ *
+ * @author peter.kiraly@kb.nl
+ */
 public class SearchParam {
 
 	private String key;
@@ -56,5 +61,10 @@ public class SearchParam {
 		} else if (!value.equals(other.value))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchParam [key=" + key + ", value=" + value + "]";
 	}
 }
