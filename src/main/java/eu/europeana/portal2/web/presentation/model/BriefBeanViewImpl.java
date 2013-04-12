@@ -198,19 +198,27 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		List<String> otherUrlParams = SearchFilterUtil.getOtherUrlParams(urlParams);
 
 		for (SearchParam param : existingValues) {
-			List<String> params = new ArrayList<String>();
-			params.addAll(otherUrlParams);
-			for (SearchParam otherParam : existingValues) {
-				if (param.equals(otherParam)) {
+			List<String> removeLinkParams = new ArrayList<String>();
+			removeLinkParams.addAll(otherUrlParams);
+			for (SearchParam otherSearchParam : existingValues) {
+				if (param.equals(otherSearchParam)) {
 					continue;
 				}
-				params.add(otherParam.getKey() + "=" + otherParam.getValue());
+				removeLinkParams.add(otherSearchParam.getKey() + "=" + otherSearchParam.getValue());
 			}
-			String url = "search.html" + (params.size() > 0 ? "?" : "") + StringUtils.join(params, "&");
+			String removeLinkUrl = "search.html" + (removeLinkParams.size() > 0 ? "?" : "") 
+					+ StringUtils.join(removeLinkParams, "&");
 
-			params.add(param.getKey() + "=" + param.getValue());
-
-			String urlFull = "search.html" + (params.size() > 0 ? "?" : "") + StringUtils.join(params, "&");  // Andy
+			List<String> breadcrumbLinkParams = new ArrayList<String>();
+			breadcrumbLinkParams.addAll(otherUrlParams);
+			for (SearchParam otherSearchParam : existingValues) {
+				breadcrumbLinkParams.add(otherSearchParam.getKey() + "=" + otherSearchParam.getValue());
+				if (param.equals(otherSearchParam)) {
+					break;
+				}
+			}
+			String breadcrumbLinkUrl = "search.html" + (breadcrumbLinkParams.size() > 0 ? "?" : "") 
+					+ StringUtils.join(breadcrumbLinkParams, "&");
 
 			SearchLabel label = null;
 			String paramValue = param.getValue();
@@ -222,7 +230,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 			} else {
 				label = new SearchLabel(null, paramValue);
 			}
-			searchFilters.add(new SearchFilter(label, url, urlFull));
+			searchFilters.add(new SearchFilter(label, removeLinkUrl, breadcrumbLinkUrl));
 		}
 	}
 
