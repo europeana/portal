@@ -15,15 +15,21 @@ public class SearchFilter {
 
 	private SearchLabel label;
 
-	private String url = null;
+	/**
+	 * Link for the remove icon. It will remove the current search from the list of searches.
+	 */
+	private String removeLinkUrl = null;
 
-	private String urlFull = null; // Andy
+	/**
+	 * Breadbrumb link contains all previous and current search, but excludes the searches after the current one.
+	 */
+	private String breadcrumbLinkUrl = null;
 
-	public SearchFilter(SearchLabel label, String url, String urlFull) {
+	public SearchFilter(SearchLabel label, String removeLinkUrl, String breadcrumbLinkUrl) {
 		super();
 		this.label = label;
-		this.url = url;
-		this.urlFull = urlFull;
+		this.removeLinkUrl = removeLinkUrl;
+		this.breadcrumbLinkUrl = breadcrumbLinkUrl;
 	}
 
 	public SearchLabel getLabelObject() {
@@ -34,25 +40,25 @@ public class SearchFilter {
 		this.label = label;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getRemoveLinkUrl() {
+		return removeLinkUrl;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setRemoveLinkUrl(String url) {
+		this.removeLinkUrl = url;
 	}
 
-	public String getUrlFull() {
-		return urlFull;
+	public String getBreadcrumbLinkUrl() {
+		return breadcrumbLinkUrl;
 	}
 
-	public void setUrlFull(String urlFull) {
-		this.urlFull = urlFull;
+	public void setBreadcrumbLinkUrl(String urlFull) {
+		this.breadcrumbLinkUrl = urlFull;
 	}
 
 	@Override
 	public String toString() {
-		return "SearchFilter [label=" + label + ", url=" + url + "]";
+		return "SearchFilter [label=" + label + ", removeLinkUrl=" + removeLinkUrl + ", breadcrumbLinkUrl=" + breadcrumbLinkUrl + "]";
 	}
 
 	// Wrapper methods for label object
