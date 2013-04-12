@@ -37,7 +37,8 @@
 #logo{
 	z-index:2;
 	position:relative;
-	width:100%;	
+	width:100%;
+	background-color:orange;	
 }
 
 #logo h1{
