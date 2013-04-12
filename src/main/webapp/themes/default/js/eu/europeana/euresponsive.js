@@ -72,9 +72,8 @@
 		}
 	};
 	
-	$(window).bind("resize", function(){
-		window.euResponsiveTriggerRespond();
-	});
+	$(window).euRsz(window.euResponsiveTriggerRespond);
+
 	
 })();
 

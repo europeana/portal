@@ -72,7 +72,7 @@ var europeana_bootstrap = function(){
 	  },
 
 	  {	name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-		dependencies : [ 'ajax' ],
+		dependencies : [ 'ajax', 'utils' ],
 		callback : function(){
 			eu.europeana.header.init();
 		}},
@@ -96,7 +96,7 @@ var europeana_bootstrap = function(){
 		  	name: 'euresponsive',
 			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'jquery' ]
+			dependencies : [ 'jquery', 'utils' ]
 	  }
 	  
 	  

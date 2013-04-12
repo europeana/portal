@@ -193,7 +193,7 @@ eu.europeana.search = {
 							);					
 				}
 		);
-		$(window).bind('resize', function(){
+		$(window).euRsz(function(){
 			for(var i=0; i<ellipsisObjects.length; i++ ){
 				ellipsisObjects[i].respond();
 			}

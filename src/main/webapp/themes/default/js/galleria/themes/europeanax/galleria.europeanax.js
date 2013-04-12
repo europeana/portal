@@ -324,13 +324,23 @@ Galleria.addTheme({
 				}
 			});
 			
-			$(window).resize( function() {
+			/*
+			$(window).rsize( function() {
 				if(eu.europeana.vars.suppresResize){
 		  			return;
 		  		}
 				onResize();
 			 });
+			 */
 				   
+			$(window).euRsz(
+				function() {
+					if(eu.europeana.vars.suppresResize){
+			  			return;
+			  		}
+					onResize();
+				 }	
+			);
 			
 			// END CAROUSEL MODE
 			
@@ -366,7 +376,10 @@ Galleria.addTheme({
 			
 			// resize function for bordered mode (full-doc page)
 			
-	   		$(window).resize( function() {
+			
+			
+			$(window).euRsz(function() {
+	   		//$(window).resize( function() {
 	   			
 				if(eu.europeana.vars.suppresResize){
 		   			Galleria.log("suppress resize!");
@@ -463,7 +476,9 @@ Galleria.addTheme({
 					
 		 		 });
 				
-				$(window).resize( function() {
+				
+				$(window).euRsz(function() {
+				//$(window).resize( function() {
 		   			if(!eu.europeana.vars.suppresResize){	/* waiting for a collapsible section (parent) to open or close */
 						thisGallery.$(	'container' ).parent().css("height", thisGallery.$( 'container' ).css("height"));
 						rerunOnResize();

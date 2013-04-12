@@ -367,11 +367,13 @@
 												ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 											}
 										);
-										$(window).bind('resize', function(){
+										
+										setTimeout(function(){
 											for(var i=0; i<ellipsisObjects.length; i++ ){
 												ellipsisObjects[i].respond();
 											}
-										});
+										}, 1000);
+										
 									};
 
 									var infoSelector = '#carousel-3 .galleria-thumbnails .galleria-image .europeana-carousel-info';
@@ -401,7 +403,7 @@
 									
 									$(this).ready(function(e) {
 										eu.europeana.vars.suppresResize = false;
-										setTimeout(doEllipsis, 1000);
+										setTimeout(doEllipsis, 100);
 									});
 								} 
 							});

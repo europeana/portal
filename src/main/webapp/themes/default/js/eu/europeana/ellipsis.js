@@ -155,13 +155,6 @@ var Ellipsis = function(cmp, ops, onShow) {
 
 	init();
 
-	/*
-	$(window).bind('resize', function(){
-		respond();
-		//console.log("responding!");
-	});
-	*/
-	
 	return {
 		"respond":function(){
 			respond();

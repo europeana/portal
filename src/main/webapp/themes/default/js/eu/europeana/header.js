@@ -15,7 +15,10 @@ eu.europeana.header = {
 	
 	init : function() {
 
-		if (!Array.prototype.indexOf) {	/* IE 8 */
+		/* general utilities */
+		
+		/* indexOf (for arrays not strings) in IE 8 */
+		if (!Array.prototype.indexOf) {	
 			Array.prototype.indexOf = function(obj, start) {
 				 for (var i = (start || 0), j = this.length; i < j; i++) {
 					 if (this[i] === obj) { return i; }
@@ -24,6 +27,44 @@ eu.europeana.header = {
 			};
 		}
 
+		/* event debouncing () */
+		/*
+		(function($,sr){
+
+			var debounce = function (func, threshold, execAsap) {
+			var timeout;
+
+			return function debounced () {
+				var obj = this, args = arguments;
+				function delayed () {
+					if (!execAsap)
+						func.apply(obj, args);
+						timeout = null;
+					};
+
+					if (timeout){
+						clearTimeout(timeout);
+					}
+					else if (execAsap){
+						func.apply(obj, args);
+					}
+
+					timeout = setTimeout(delayed, threshold || 100);
+				};
+			};
+
+			// smartresize 
+			jQuery.fn[sr] = function(fn){	return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+
+		})(jQuery,'euRsz');
+		 */
+
+		// usage:
+		//	$(window).euRsz(function(){
+		//	});
+
+		
+		
 		$('.submit-cell').css("width",	$('.submit-cell button')	.outerWidth(true) + "px"); 
 		$('.menu-cell').css("width",	$('#search-menu')			.outerWidth(true) + "px");
 		
@@ -376,7 +417,7 @@ eu.europeana.header = {
 			
 			$(id).autocomplete({
 				
-			    open: function(event, ui) {
+				open: function(event, ui) {
 			        var oldLeft		= $(".ui-autocomplete").offset().left;
 			        var oldWidth	= $(".ui-autocomplete").width();
 			        var newLeft 	= oldLeft	- parseInt( $(id).parent().css('padding-left') );

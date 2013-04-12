@@ -587,7 +587,7 @@ eu.europeana.fulldoc = {
 				dependencies :  $("html").hasClass('ie8') ? [ ] : ['touchswipe'],
 				
 				callback: function(){
-					$(window).on("resize", function(){
+					$(window).euRsz(function(){
 						if(eu.europeana.fulldoc.lightboxOb){
 							if( $('.overlaid-content').css('visibility') == 'hidden' ){
 								return;
@@ -595,6 +595,7 @@ eu.europeana.fulldoc = {
 							eu.europeana.fulldoc.lightboxOb.layout();							
 						}
 					});
+
 					if(callbackLoad){
 						callbackLoad();
 					}
@@ -717,14 +718,16 @@ eu.europeana.fulldoc = {
 							}
 						);
 
-						$(window).bind('resize', function(){
+						/*
+						$(window).euRsz(function(){
 							if(eu.europeana.vars.suppresResize){
 								return;
 							}
 							for(var i=0; i<ellipsisObjects.length; i++ ){
 								ellipsisObjects[i].respond();
-							}
+							}							
 						});
+						*/
 					};
 					
 					$(this).ready(function(e) {

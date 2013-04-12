@@ -104,7 +104,9 @@ $.fn.Collapsible = function() {
     			}
     			setClasses();
     		};
-    		$(window).bind('resize', fnResize);
+    		
+    		$(window).euRsz(fnResize);
+    		
     		fnResize();
     	}
     	else{
