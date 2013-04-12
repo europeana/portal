@@ -92,9 +92,7 @@
 				$('#e2ma_signup_submit_button').attr('title',	"<spring:message code="news_letter_description_t" />" );				
 				$('#e2ma_signup_submit_button').attr('value',	window.emma.submitLabel);
 				$('#id_email').attr('placeholder',				window.emma.placeholder);
-				$('#id_email').attr('title',					window.emma.placeholder);
-				//top.resizeTo( $( window.parent ).width(), $( window.parent ).height()+1 );
-				
+				$('#id_email').attr('title',					window.emma.placeholder);				
 				
 				$(window).bind('keypress', function(e){
 					if(e.ctrlKey || e.metaKey){
