@@ -19,7 +19,6 @@ import eu.europeana.corelib.definitions.solr.model.Term;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SuggestionsPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
@@ -32,8 +31,6 @@ public class SuggestionController {
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	@Resource private SearchService searchService;
-
-	@Resource(name="configurationService") private Configuration config;
 
 	@Resource private ClickStreamLogger clickStreamLogger;
 
