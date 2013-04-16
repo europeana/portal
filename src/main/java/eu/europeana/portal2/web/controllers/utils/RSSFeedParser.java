@@ -17,18 +17,14 @@
 
 package eu.europeana.portal2.web.controllers.utils;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -40,7 +36,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import eu.europeana.corelib.utils.ImageUtils;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 import eu.europeana.portal2.web.util.ResponsiveImageUtils;
 

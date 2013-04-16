@@ -35,17 +35,16 @@ import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.model.CorePageInfo;
+import eu.europeana.portal2.web.presentation.PortalPageInfo;
+import eu.europeana.portal2.web.presentation.enums.Redirect;
+import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
+import eu.europeana.portal2.web.presentation.model.StaticPage;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.ResponsiveImageCache;
 import eu.europeana.portal2.web.util.StaticPageCache;
-import eu.europeana.portal2.web.presentation.PortalPageInfo;
-import eu.europeana.portal2.web.presentation.enums.Redirect;
-import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
-import eu.europeana.portal2.web.presentation.model.ExceptionPage;
-import eu.europeana.portal2.web.presentation.model.StaticPage;
 
 /**
  * Generic controller for static pages.
