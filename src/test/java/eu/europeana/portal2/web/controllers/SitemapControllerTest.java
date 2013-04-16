@@ -1,6 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotSame;
 
 import java.util.List;
 

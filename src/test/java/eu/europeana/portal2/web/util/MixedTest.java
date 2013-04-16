@@ -1,6 +1,7 @@
 package eu.europeana.portal2.web.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.text.MessageFormat;
 import java.util.regex.Matcher;
