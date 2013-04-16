@@ -21,12 +21,12 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
+import java.util.List;
+import java.util.Map;
+
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * TODO: javadoc

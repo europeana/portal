@@ -19,7 +19,6 @@ package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.Map;
 
-import eu.europeana.portal2.web.presentation.model.abstracts.ResultPageData;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 
 public abstract class SitemapData<T> extends UrlAwareData<T> {

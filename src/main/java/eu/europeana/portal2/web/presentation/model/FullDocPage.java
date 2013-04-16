@@ -17,7 +17,6 @@
 
 package eu.europeana.portal2.web.presentation.model;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -51,8 +50,6 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.semantic.EdmSchemaMapping;
 import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
-import eu.europeana.portal2.web.presentation.semantic.SchemaOrgElement;
-import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.KmlPresentation;

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import eu.europeana.portal2.web.util.ControllerUtil;
-
 public class SeeAlsoSuggestions {
 
 	private Map<String, String> seeAlsoTranslations;

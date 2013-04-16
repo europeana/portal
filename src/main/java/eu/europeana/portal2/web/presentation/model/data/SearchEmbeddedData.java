@@ -18,7 +18,9 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.logging.Logger;
+
 import org.apache.commons.lang.StringUtils;
+
 import eu.europeana.portal2.web.presentation.Configuration;
 
 public abstract class SearchEmbeddedData extends SearchData {

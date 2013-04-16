@@ -46,7 +46,7 @@ public class FacetCountLinkListDecorator implements List<FacetCountLink> {
 			return null;
 		}
 		if (decoratedList == null) {
-			decoratedList = new ArrayList();
+			decoratedList = new ArrayList<FacetCountLink>();
 			for (FacetCountLink facetCountLink : list) {
 				decoratedList.add(new FacetCountLinkDecorator(type, facetCountLink));
 			}
