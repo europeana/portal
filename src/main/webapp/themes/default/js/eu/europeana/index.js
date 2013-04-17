@@ -16,14 +16,14 @@
 				"galleryName"	:	"euresponsive",
 				"selector"		:	"#section-blog .responsive_half",
 				"initialSuffix"	:	initialSuffix,
-				"suffixes"		:	["_1", "_2", "_3", "_2"]
+				"suffixes"		:	["_1", "_2", "_1", "_1"]
 			});
 			
 			new euResponsive({
 				"galleryName"	:	"euresponsive",
 				"selector"		:	"#section-featured-content .responsive_half",
 				"initialSuffix"	:	initialSuffix,
-				"suffixes"		:	["_1", "_2", "_3", "_2"]
+				"suffixes"		:	["_1", "_2", "_1", "_1"]
 			});
 			
 
