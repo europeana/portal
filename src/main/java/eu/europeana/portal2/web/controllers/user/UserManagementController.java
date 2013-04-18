@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
+import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
+import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -51,15 +54,15 @@ public class UserManagementController {
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
 
-		List savedItems = new ArrayList(user.getSavedItems());
+		List<SavedItem> savedItems = new ArrayList<SavedItem>(user.getSavedItems());
 		Collections.sort(savedItems);
 		model.setSavedItems(savedItems);
 
-		List savedsearches = new ArrayList(user.getSavedSearches());
+		List<SavedSearch> savedsearches = new ArrayList<SavedSearch>(user.getSavedSearches());
 		Collections.sort(savedsearches);
 		model.setSavedSearches(savedsearches);
 
-		List socialTags = new ArrayList(user.getSocialTags());
+		List<SocialTag> socialTags = new ArrayList<SocialTag>(user.getSocialTags());
 		Collections.sort(socialTags);
 		model.setSocialTags(socialTags);
 
