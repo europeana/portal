@@ -121,7 +121,6 @@
 
 .fi-block-spacer h4 a{
 	text-align:		center;
-	xxxxxxxxxxxxxxxxxxxxxdisplay:		block;
 }
 
 .fi-block-spacer img{
@@ -147,6 +146,9 @@
 		padding-left:	2em;
 	}
 	
+	.featured-partner-links{
+		word-wrap:		break-word;
+	}
 	
 	#section-featured-content .six:first-child .fi-block-spacer{
 		padding-right:	2em;
