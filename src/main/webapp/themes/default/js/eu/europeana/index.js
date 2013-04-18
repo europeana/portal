@@ -424,22 +424,12 @@
 		$(window).bind("touchmove", function(){
 			eu.europeana.vars.suppresResize = true;
 		});
-		$(window).bind("scroll", function(){
-			setTimeout(function(){
-				eu.europeana.vars.suppresResize = false;
-			}, 20)
-		});
 
+		$(window).scroll($.debounce( 250, true, function(){
+			eu.europeana.vars.suppresResize = false;
+		}));
 		
-		/*
-		js.loader.loadScripts([{
-			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
-			callback : function() {
-				initAddThis();
-			}
-		}]);
-		*/
+	
 	};
 	
 	$(document).ready(function(){
