@@ -1,3 +1,6 @@
+<%@ taglib uri="http://htmlcompressor.googlecode.com/taglib/compressor" prefix="compress" %>
+<compress:html enabled="true" compressJavaScript="true"  yuiJsDisableOptimizations="true">
+
 <%@ include file="/WEB-INF/jsp/default/_common/include.jsp" %>
 <%--
 	http://www.w3.org/TR/xhtml-rdfa-primer/
@@ -27,3 +30,5 @@
 <%-- end responsive grid --%>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/close-html.jsp" %>
+
+</compress:html>

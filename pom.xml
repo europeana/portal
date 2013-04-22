@@ -192,6 +192,27 @@
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 		</dependency>
+		
+		
+		<dependency>
+		  	<groupId>com.googlecode.htmlcompressor</groupId>
+  			<artifactId>htmlcompressor</artifactId>
+ 		 	<version>1.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.javascript</groupId>
+			<artifactId>closure-compiler</artifactId>
+			<version>r1043</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.yahoo.platform.yui</groupId>
+			<artifactId>yuicompressor</artifactId>
+			<version>2.4.6</version>
+		</dependency>
+
+		
 		<!-- Added for jetty-server -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
