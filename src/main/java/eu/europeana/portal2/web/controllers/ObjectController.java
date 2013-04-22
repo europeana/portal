@@ -386,7 +386,7 @@ public class ObjectController {
 					i = 0;
 					for (String value : values) {
 						if (!StringUtils.isBlank(value) && value.length() < 500 && i < 20) {
-							fieldValues.add(value);
+							fieldValues.add(ControllerUtil.clearSeeAlso(value));
 							i++;
 						}
 					}
