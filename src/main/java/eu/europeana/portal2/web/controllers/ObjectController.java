@@ -58,12 +58,14 @@ import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
+import eu.europeana.portal2.web.model.seealso.SeeAlsoParams;
+import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
+import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
-import eu.europeana.portal2.web.presentation.model.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
@@ -376,17 +378,17 @@ public class ObjectController {
 	private SeeAlsoSuggestions createSeeAlsoSuggestions(FullBean fullBean) {
 
 		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
-		Map<String, List<String>> seeAlsoParams = new LinkedHashMap<String, List<String>>();
+		SeeAlsoParams seeAlsoParams = new SeeAlsoParams();
 		int i = 0;
 		for (String metaField : seeAlsoFields.keySet()) {
-			List<String> fieldValues = new ArrayList<String>();
+			List<SeeAlsoSuggestion> fieldValues = new ArrayList<SeeAlsoSuggestion>();
 			for (String edmField : seeAlsoFields.get(metaField)) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
 					i = 0;
 					for (String value : values) {
 						if (!StringUtils.isBlank(value) && value.length() < 500 && i < 20) {
-							fieldValues.add(ControllerUtil.clearSeeAlso(value));
+							fieldValues.add(new SeeAlsoSuggestion(metaField, value));
 							i++;
 						}
 					}
@@ -397,10 +399,14 @@ public class ObjectController {
 			}
 		}
 
-		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations(),
-				config.getSeeAlsoAggregations());
+		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(
+			config.getSeeAlsoTranslations(),
+			config.getSeeAlsoAggregations(),
+			seeAlsoParams
+		);
 		try {
-			Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
+			Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams.getEscapedQueries());
+			seeAlsoParams.updateIndex();
 			if (seeAlsoResponse != null) {
 				for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {
 					if (entry.getValue() > 0) {
