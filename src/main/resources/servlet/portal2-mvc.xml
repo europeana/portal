@@ -80,11 +80,12 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<bean id="messageSource" class="eu.europeana.corelib.web.support.ReportingReloadableMessageSource">
 		<property name="basename" value="#{europeanaProperties['message.resource']}" />
 		<property name="cacheSeconds" value="#{europeanaProperties['message.cache.seconds']}" />
 		<property name="fileEncodings" value="UTF-8"/>
 		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="UseCodeAsDefaultMessage" value="true"/>
 	</bean>
 
 	<bean id="searchController" class="eu.europeana.portal2.web.controllers.SearchController" />

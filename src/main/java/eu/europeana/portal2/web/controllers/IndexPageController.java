@@ -34,9 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
-
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,11 +65,14 @@ import eu.europeana.portal2.web.util.Injector;
 public class IndexPageController {
 
 	// @Resource private ProposedSearchTermSampler proposedSearchTermSampler;
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
-	@Resource private ReloadableResourceBundleMessageSource messageSource;
+	@Resource
+	private AbstractMessageSource messageSource;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
 	private static final List<String> freaments = Arrays.asList("blog", "featuredContent", "pinterest");
 
@@ -81,7 +83,7 @@ public class IndexPageController {
 
 	private static List<FeedEntry> pinterestEntries;
 	private static Calendar pinterestAge;
-	
+
 	private List<CarouselItem> carouselItems;
 	private static Calendar carouselAge;
 
@@ -92,13 +94,10 @@ public class IndexPageController {
 	private ArrayList<FeaturedPartner> featuredPartners;
 
 	@RequestMapping("/index.html")
-	public ModelAndView indexHandler(
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
+	public ModelAndView indexHandler(@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
 			@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
-			@RequestParam(value = "fragment", required = false) String fragment,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale) {
+			@RequestParam(value = "fragment", required = false) String fragment, HttpServletRequest request,
+			HttpServletResponse response, Locale locale) {
 		Injector injector = new Injector(request, response, locale);
 
 		log.fine("===== index ====");
@@ -145,28 +144,21 @@ public class IndexPageController {
 	}
 
 	/**
-	 * We assume that the English locale file has the same number of featured items / partners as all the other locale files 
+	 * We assume that the English locale file has the same number of featured items / partners as all the other locale
+	 * files
 	 **/
 	/*
-	private int getMessageCount(String msg){
-		boolean keepFetching = true;
-		int i = 1;
-		while (keepFetching) {
-			try {
-				messageSource.getMessage(msg, null, Locale.ENGLISH);
-			} catch (NoSuchMessageException e) {
-				keepFetching = false;
-			}
-		}
-		return i;
-	}
-	*/
+	 * private int getMessageCount(String msg){ boolean keepFetching = true; int i = 1; while (keepFetching) { try {
+	 * messageSource.getMessage(msg, null, Locale.ENGLISH); } catch (NoSuchMessageException e) { keepFetching = false; }
+	 * } return i; }
+	 */
 
 	/**
 	 * Sets the featured items list and the highlighted parter
 	 */
 	private synchronized void updateFeaturedItem(IndexPage model, Locale locale) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(),
+				-config.getResponsiveCacheCheckFrequencyInMinute()));
 		if ((featuredItemAge == null) || featuredItemAge.before(timeout)) {
 			featuredItems = new ArrayList<FeaturedItem>();
 			boolean keepFetching = true;
@@ -202,7 +194,8 @@ public class IndexPageController {
 	 * Sets the featured partner list and the highlighted parter
 	 */
 	private synchronized void updateFeaturedPartner(IndexPage model, Locale locale) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(),
+				-config.getResponsiveCacheCheckFrequencyInMinute()));
 		if ((featuredPartnersAge == null) || featuredPartnersAge.before(timeout)) {
 			featuredPartners = new ArrayList<FeaturedPartner>();
 			boolean keepFetching = true;
@@ -235,7 +228,8 @@ public class IndexPageController {
 	}
 
 	private synchronized void updateCarousel(IndexPage model, Locale locale) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -config.getResponsiveCacheCheckFrequencyInMinute()));
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(),
+				-config.getResponsiveCacheCheckFrequencyInMinute()));
 		if ((carouselAge == null) || carouselAge.before(timeout)) {
 			carouselItems = new ArrayList<CarouselItem>();
 			boolean keepFetching = true;
@@ -244,8 +238,7 @@ public class IndexPageController {
 				try {
 					String label = String.format("notranslate_carousel-item-%d_a_url_t", i);
 					String url = messageSource.getMessage(label, null, locale);
-					if (StringUtils.isNotEmpty(url)
-						&& !StringUtils.equals(label, url)) {
+					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 						CarouselItem item = new CarouselItem(model, i, url);
 						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
 
@@ -256,13 +249,11 @@ public class IndexPageController {
 							String key = "";
 							try {
 								key = String.format("notranslate_carousel-item-%d_a_url_lang_%d_t", i, j);
-								String[] langUrl =  messageSource.getMessage(key, null, null).split(",");
+								String[] langUrl = messageSource.getMessage(key, null, null).split(",");
 								translatableUrls.put(langUrl[0], langUrl[1]);
-							}
-							catch (NoSuchMessageException e) {
+							} catch (NoSuchMessageException e) {
 								keepFetchingLanguages = false;
-							}
-							catch (ArrayIndexOutOfBoundsException e) {
+							} catch (ArrayIndexOutOfBoundsException e) {
 								log.severe("misconfigured language: " + key + " - expected format \"code,url\"");
 								keepFetchingLanguages = false;
 							}
