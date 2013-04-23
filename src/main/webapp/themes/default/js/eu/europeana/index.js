@@ -51,141 +51,143 @@
 				debug:			js.debug
 		});
 
-		if(carouselData && carouselData.length>0){
+		if(typeof carouselData != 'undefined' && carouselData.length>0){
 			$('<img src="' + carouselData[0].image + '" style="visibility:hidden"/>').appendTo("#carousel-1");			
 		}
 		
-		var carouselInitialSuffix	= '_1';
-		
-    	
-		var carouselSelector		= '#carousel-1 img';
-		var carosuelEuResponsive = new euResponsive({
-			"galleryName"	:	"euresponsive",
-			"selector"		:	carouselSelector,
-			"initialSuffix"	:	carouselInitialSuffix,
-			"oneOff"		:	true
-		});
-		
-		var src = $($(carouselSelector)[0]).attr("src");
-		if( src.indexOf( carouselInitialSuffix + "." ) == -1 || $("html").hasClass('ie8') ){
+		if(typeof carouselData != 'undefined'){
 			
-			// we're bigger than a mobile: update all image urls in the carousel data to appropriate size
-			var lastSuffix = carosuelEuResponsive.getLastSuffix();
+			var carouselInitialSuffix	= '_1';
+			var carouselSelector		= '#carousel-1 img';
+			var carosuelEuResponsive = new euResponsive({
+				"galleryName"	:	"euresponsive",
+				"selector"		:	carouselSelector,
+				"initialSuffix"	:	carouselInitialSuffix,
+				"oneOff"		:	true
+			});
 			
-			if($("html").hasClass('ie8')){
-				lastSuffix = '_4';
+			var src = $($(carouselSelector)[0]).attr("src");
+			if( src.indexOf( carouselInitialSuffix + "." ) == -1 || $("html").hasClass('ie8') ){
+				
+				// we're bigger than a mobile: update all image urls in the carousel data to appropriate size
+				var lastSuffix = carosuelEuResponsive.getLastSuffix();
+				
+				if($("html").hasClass('ie8')){
+					lastSuffix = '_4';
+				}
+	
+				if(carouselData && carouselData.length>0){
+					$(carouselData).each(function(i, ob){
+						ob.image = ob.image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
+						$($("#carousel-1 img")[i]).attr("src", ob.fullSize);
+					});
+				}			
 			}
-
-			if(carouselData && carouselData.length>0){
-				$(carouselData).each(function(i, ob){
-					ob.image = ob.image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
-					$($("#carousel-1 img")[i]).attr("src", ob.fullSize);
-				});
-			}			
-		}
-		 
 		
-		$("#carousel-1").imagesLoaded(
-			function($images, $proper, $broken) {
-				
-				var imgW			= $(this).find("img").width();
-				var imgH			= $(this).find("img").height();
-				
-				var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
-				for(var i=0; i<$broken.length; i++){
-					msgFailed += "\n  broke: " + $($broken[0]).attr("src")
-				}
-				for(var i=0; i<$proper.length; i++){
-					msgFailed += "\n  proper: " + $($proper[0]).attr("src")
-				}
-				
-				$("#carousel-1 img").remove();
-
-				var carousel		= $("#carousel-1");
-				var parentWidth		= carousel.width();
-				
-
-				var ratio			= imgW / imgH;
-				var thumb			= $('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
-				
-				carousel.css("height",  (parentWidth/ratio) + "px");
-				carousel.css("width",	"100%");
-				
-				thumb.remove();
-				
-				$('#carousel-1').galleria({
-					dataSource:carouselData,
-					autoplay:17000,
-					debug:js.debug,
-					extend: function(e){
-						
-						var thisGallery = this;
-						
-						// Info update
-						this.bind("image", function(e) {
-							var gallery = this;
-							$("#carousel-1 .linkButton").html(carouselData[e.index].linkDescription);
-							$("#carousel-1-external-info").html( $("#carousel-1 .galleria-info-title").html() );
-
-						});
-
-						// Google Analytics
-						
-						this.bind("loadfinish", function(e) {
+			$("#carousel-1").imagesLoaded(
+				function($images, $proper, $broken) {
+					
+					var imgW			= $(this).find("img").width();
+					var imgH			= $(this).find("img").height();
+					
+					var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
+					for(var i=0; i<$broken.length; i++){
+						msgFailed += "\n  broke: " + $($broken[0]).attr("src")
+					}
+					for(var i=0; i<$proper.length; i++){
+						msgFailed += "\n  proper: " + $($proper[0]).attr("src")
+					}
+					
+					$("#carousel-1 img").remove();
+	
+					var carousel		= $("#carousel-1");
+					var parentWidth		= carousel.width();
+					
+	
+					var ratio			= imgW / imgH;
+					var thumb			= $('<div class="galleria-thumbnails-container"></div>').appendTo(carousel);
+					
+					carousel.css("height",  (parentWidth/ratio) + "px");
+					carousel.css("width",	"100%");
+					
+					thumb.remove();
+					
+					$('#carousel-1').galleria({
+						dataSource:carouselData,
+						autoplay:17000,
+						debug:js.debug,
+						extend: function(e){
 							
-							if(!setupAnalytics){
+							var thisGallery = this;
+							
+							// Info update
+							this.bind("image", function(e) {
+								var gallery = this;
+								$("#carousel-1 .linkButton").html(carouselData[e.index].linkDescription);
+								$("#carousel-1-external-info").html( $("#carousel-1 .galleria-info-title").html() );
+	
+							});
+	
+							// Google Analytics
+							
+							this.bind("loadfinish", function(e) {
 								
-								var clicked = function(clickData){
-									com.google.analytics.europeanaEventTrack(
-										clickData.ga.action,
-										clickData.ga.category,
-										clickData.ga.url
-									);
-									if(clickData.open){
-										window.location = clickData.open;
-									}									
-								};
-
-								var dataSource		= this._options.dataSource;
-
-								setTimeout(function(){
-									$('#carousel-1 .galleria-thumbnails img').add('#carousel-1 .galleria-image-nav-right').add('#carousel-1 .galleria-image-nav-left').click(function(e){
-										clicked({
-											"open" : false,
-											"ga" : {
-												"action"	: "Navigate",
-												"category"	: "Index-Carousel",
-												"url"		: ""
-											}	
-										});
-									});
+								if(!setupAnalytics){
 									
-									$('#carousel-1 .galleria-stage .galleria-images').add('#carousel-1 .galleria-info').add('#carousel-1 .galleria-info button').click(function(e){
-										clicked({
-											"open" : dataSource[thisGallery.getIndex()].europeanaLink,
-											"ga" : {
-												"action"	: "Click-Through (link index " + thisGallery.getIndex() + ")",
-												"category"	: "Index-Carousel",
-												"url"		: dataSource[thisGallery.getIndex()].europeanaLink
-											}	
+									var clicked = function(clickData){
+										com.google.analytics.europeanaEventTrack(
+											clickData.ga.action,
+											clickData.ga.category,
+											clickData.ga.url
+										);
+										if(clickData.open){
+											window.location = clickData.open;
+										}									
+									};
+	
+									var dataSource		= this._options.dataSource;
+	
+									setTimeout(function(){
+										$('#carousel-1 .galleria-thumbnails img').add('#carousel-1 .galleria-image-nav-right').add('#carousel-1 .galleria-image-nav-left').click(function(e){
+											clicked({
+												"open" : false,
+												"ga" : {
+													"action"	: "Navigate",
+													"category"	: "Index-Carousel",
+													"url"		: ""
+												}	
+											});
 										});
-										e.stopPropagation();
-									});
-								}, 200);
-								
-								setupAnalytics = true;
-
-							}
-						});
-					}			
-				});
-			
-			}).each(function() {
-				if(this.complete){
-					$(this).load();
-				}
-		});
-
+										
+										$('#carousel-1 .galleria-stage .galleria-images').add('#carousel-1 .galleria-info').add('#carousel-1 .galleria-info button').click(function(e){
+											clicked({
+												"open" : dataSource[thisGallery.getIndex()].europeanaLink,
+												"ga" : {
+													"action"	: "Click-Through (link index " + thisGallery.getIndex() + ")",
+													"category"	: "Index-Carousel",
+													"url"		: dataSource[thisGallery.getIndex()].europeanaLink
+												}	
+											});
+											e.stopPropagation();
+										});
+									}, 200);
+									
+									setupAnalytics = true;
+	
+								}
+							});
+						}			
+					});
+				
+				}).each(function() {
+					if(this.complete){
+						$(this).load();
+					}
+			});
+		}
+		else{
+			js.console.log("no carousel data!");
+		}
 	};
 	
 	/*
