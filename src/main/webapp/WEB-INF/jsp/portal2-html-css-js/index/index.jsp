@@ -1,1 +1,0 @@
-<%@ include file="/WEB-INF/jsp/portal2-html/index/index.jsp" %>
