@@ -8,9 +8,9 @@ public class StatisticsPage extends AdminData {
 
 	private String type;
 
-	private Map<String, Integer> dateStatistics;
+	private Map<String, Long> dateStatistics;
 
-	private Map<String, Integer> userStatistics;
+	private Map<String, Long> userStatistics;
 
 	private Map<String, Map<String, Integer>> typeStatistics;
 
@@ -22,11 +22,11 @@ public class StatisticsPage extends AdminData {
 		this.type = type;
 	}
 
-	public Map<String, Integer> getDateStatistics() {
+	public Map<String, Long> getDateStatistics() {
 		return dateStatistics;
 	}
 
-	public void setDateStatistics(Map<String, Integer> dateStatistics) {
+	public void setDateStatistics(Map<String, Long> dateStatistics) {
 		this.dateStatistics = dateStatistics;
 	}
 
@@ -38,11 +38,11 @@ public class StatisticsPage extends AdminData {
 		this.typeStatistics = typeStatistics;
 	}
 
-	public Map<String, Integer> getUserStatistics() {
+	public Map<String, Long> getUserStatistics() {
 		return userStatistics;
 	}
 
-	public void setUserStatistics(Map<String, Integer> userStatistics) {
+	public void setUserStatistics(Map<String, Long> userStatistics) {
 		this.userStatistics = userStatistics;
 	}
 }

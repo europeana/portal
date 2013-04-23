@@ -83,7 +83,7 @@ public class FullBeanViewImpl implements FullBeanView {
 				}
 			}
 		}
-		return new ArrayList();
+		return new ArrayList<BriefBean>();
 	}
 
 	private List<? extends BriefBean> findChildren() {
@@ -98,7 +98,7 @@ public class FullBeanViewImpl implements FullBeanView {
 				}
 			}
 		}
-		return new ArrayList();
+		return new ArrayList<BriefBean>();
 	}
 
 	public DocIdWindowPager createPager(String id, Map<String, String[]> httpParameters,

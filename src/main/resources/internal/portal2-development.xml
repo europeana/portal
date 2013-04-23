@@ -33,8 +33,4 @@
 		p:solrServer-ref="corelib_solr_solrServer"
 	/>
 
-	<bean id="apiLogger" class="eu.europeana.corelib.db.logging.api.ApiLogger">
-		<constructor-arg ref="corelib_db_mongo"/>
-	</bean>
-
 </beans>	

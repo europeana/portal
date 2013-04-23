@@ -11,6 +11,7 @@
 	<import resource="corelib-solr-context.xml" />
 	<import resource="corelib-definitions-context.xml" />
 	<import resource="corelib-web-context.xml" />
+	<import resource="corelib-utils-context.xml" />
 
 	<!-- SECURITY -->
 	<import resource="internal/portal2-security.xml" />

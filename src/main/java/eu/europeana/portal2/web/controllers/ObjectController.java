@@ -55,7 +55,7 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
-import eu.europeana.corelib.utils.OptOutDatasetsUtil;
+import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -80,11 +80,17 @@ public class ObjectController {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
-	@Resource private SearchService searchService;
+	@Resource
+	private SearchService searchService;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
+	
+	@Resource
+	private OptOutService optOutService;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -94,37 +100,35 @@ public class ObjectController {
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
 
-	@Resource private ReloadableResourceBundleMessageSource messageSource;
+	@Resource
+	private ReloadableResourceBundleMessageSource messageSource;
 
 	public static final Map<String, List<String>> seeAlsoFields = new LinkedHashMap<String, List<String>>() {
 		private static final long serialVersionUID = 1L;
 		{
-			put("title", Arrays.asList(new String[]{"DcTitle", "DctermsAlternative"}));
-			put("who", Arrays.asList(new String[]{"DcContributor", "DcCreator"}));
-			put("what", Arrays.asList(new String[]{"DcType", "DcSubject", "DcFormat"}));
-			// put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated", "DctermsTemporal"}));
+			put("title", Arrays.asList(new String[] { "DcTitle", "DctermsAlternative" }));
+			put("who", Arrays.asList(new String[] { "DcContributor", "DcCreator" }));
+			put("what", Arrays.asList(new String[] { "DcType", "DcSubject", "DcFormat" }));
+			// put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated",
+			// "DctermsTemporal"}));
 			// put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
-			put("DATA_PROVIDER", Arrays.asList(new String[]{"DataProvider"}));
-			put("PROVIDER", Arrays.asList(new String[]{"EdmProvider"}));
+			put("DATA_PROVIDER", Arrays.asList(new String[] { "DataProvider" }));
+			put("PROVIDER", Arrays.asList(new String[] { "EdmProvider" }));
 		}
 	};
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
-	public ModelAndView record(
-			@PathVariable String collectionId,
-			@PathVariable String recordId,
+	public ModelAndView record(@PathVariable String collectionId, @PathVariable String recordId,
 			@RequestParam(value = "format", required = false) String format,
 			@RequestParam(value = "embedded", required = false) String embedded,
 			@RequestParam(value = "query", required = false) String queryString,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			@RequestParam(value = "source", required = false, defaultValue="corelib") String source,
-			@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
-			HttpServletRequest request,
-			HttpServletResponse response, 
-			Locale locale) throws EuropeanaQueryException {
+			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			@RequestParam(value = "source", required = false, defaultValue = "corelib") String source,
+			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows, HttpServletRequest request,
+			HttpServletResponse response, Locale locale) throws EuropeanaQueryException {
 
 		long t0 = (new Date()).getTime();
 		Injector injector = new Injector(request, response, locale);
@@ -134,8 +138,8 @@ public class ObjectController {
 			qf = _qf;
 		}
 
-
-		log.info(String.format("Thread %s =========== /record/%s/%s.html ============", Thread.currentThread().getName(), collectionId, recordId));
+		log.info(String.format("Thread %s =========== /record/%s/%s.html ============", Thread.currentThread()
+				.getName(), collectionId, recordId));
 		log.fine(String.format("=========== /%s/%s.html ============", collectionId, recordId));
 		// Map<String, String[]> parameters = sanitizeParameters(request);
 
@@ -155,11 +159,11 @@ public class ObjectController {
 
 		// TODO: refactor this!!!
 		boolean showSimilarItems = false;
-		try{
-			String sShowSimilarItems = StringUtils.replace(messageSource.getMessage("show_similar_items", null, locale), ";", "");
+		try {
+			String sShowSimilarItems = StringUtils.replace(
+					messageSource.getMessage("show_similar_items", null, locale), ";", "");
 			showSimilarItems = Boolean.parseBoolean(sShowSimilarItems.trim());
-		}
-		catch (NoSuchMessageException e){
+		} catch (NoSuchMessageException e) {
 			e.printStackTrace();
 		}
 		model.setShowSimilarItems(showSimilarItems);
@@ -167,7 +171,6 @@ public class ObjectController {
 		injector.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		// model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
-		OptOutDatasetsUtil.setOptOutDatasets(config.getOptOutList());
 
 		long tgetFullBean0 = (new Date()).getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
@@ -179,7 +182,7 @@ public class ObjectController {
 		log.fine("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
-			model.setOptedOut(OptOutDatasetsUtil.checkById(fullBean.getAbout()));
+			model.setOptedOut(optOutService.check(fullBean.getAbout()));
 			Query query = new Query(queryString).setRefinements(qf).setAllowFacets(false).setAllowSpellcheck(false);
 
 			// full bean view
@@ -187,7 +190,7 @@ public class ObjectController {
 			model.setFullBeanView(fullBeanView);
 
 			// more like this
-			if(model.isShowSimilarItems()){
+			if (model.isShowSimilarItems()) {
 				List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
 				if (fullBean.getSimilarItems() == null) {
 					similarItems = getMoreLikeThis(collectionId, recordId, model);
@@ -199,7 +202,8 @@ public class ObjectController {
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
 			long tSeeAlso1 = (new Date()).getTime();
 			log.fine("see also takes: " + (tSeeAlso1 - tSeeAlso0));
-			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView.getFullDoc().getAbout());
+			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView
+					.getFullDoc().getAbout());
 		}
 
 		injector.postHandle(this, page);
@@ -222,13 +226,10 @@ public class ObjectController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.json", produces = MediaType.TEXT_HTML_VALUE)
-	public String redirectJson(
-			@PathVariable String collectionId,
-			@PathVariable String recordId,
+	public String redirectJson(@PathVariable String collectionId, @PathVariable String recordId,
 			@RequestParam(value = "wskey", required = false) String wskey,
-			@RequestParam(value = "callback", required = false) String callback,
-			HttpServletRequest request
-				) throws Exception {
+			@RequestParam(value = "callback", required = false) String callback, HttpServletRequest request)
+			throws Exception {
 		StringBuilder sb = new StringBuilder(config.getApi2url());
 		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(JSON_EXT);
 		if (!StringUtils.isBlank(request.getQueryString())) {
@@ -249,13 +250,10 @@ public class ObjectController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.srw", produces = MediaType.TEXT_HTML_VALUE)
-	public String redirectSrw(
-			@PathVariable String collectionId,
-			@PathVariable String recordId,
+	public String redirectSrw(@PathVariable String collectionId, @PathVariable String recordId,
 			@RequestParam(value = "wskey", required = false) String wskey,
-			@RequestParam(value = "callback", required = false) String callback,
-			HttpServletRequest request
-				) throws Exception {
+			@RequestParam(value = "callback", required = false) String callback, HttpServletRequest request)
+			throws Exception {
 		StringBuilder sb = new StringBuilder(config.getApi2url());
 		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(SRW_EXT);
 		if (!StringUtils.isBlank(request.getQueryString())) {
@@ -276,6 +274,7 @@ public class ObjectController {
 
 	/**
 	 * Get FullBean through API2 calls
+	 * 
 	 * @param collectionId
 	 * @param recordId
 	 * @param request
@@ -283,7 +282,8 @@ public class ObjectController {
 	 */
 	private FullBean getFullBeanFromApi(String collectionId, String recordId, HttpServletRequest request) {
 		FullBean fullBean = null;
-		ApiFulldocParser parser = new ApiFulldocParser(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
+		ApiFulldocParser parser = new ApiFulldocParser(config.getApi2url(), config.getApi2key(),
+				config.getApi2secret(), request.getSession());
 		fullBean = parser.getFullBean(collectionId, recordId);
 		if (fullBean == null) {
 			log.severe("It is not possible to retrieve FullBean though API2 calls so now the controller tries it with corelib calls");
@@ -294,6 +294,7 @@ public class ObjectController {
 
 	/**
 	 * Get FullBean through corelib calls
+	 * 
 	 * @param collectionId
 	 * @param recordId
 	 * @return
@@ -369,9 +370,8 @@ public class ObjectController {
 	 * Create see also suggestions
 	 * 
 	 * @param fullBean
-	 *   The full bean
-	 * @return
-	 *   The object contains the see also suggestions
+	 *            The full bean
+	 * @return The object contains the see also suggestions
 	 */
 	private SeeAlsoSuggestions createSeeAlsoSuggestions(FullBean fullBean) {
 
@@ -397,10 +397,8 @@ public class ObjectController {
 			}
 		}
 
-		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(
-			config.getSeeAlsoTranslations(),
-			config.getSeeAlsoAggregations()
-		);
+		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations(),
+				config.getSeeAlsoAggregations());
 		try {
 			Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams);
 			if (seeAlsoResponse != null) {

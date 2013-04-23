@@ -23,12 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
-import eu.europeana.corelib.db.logging.api.ApiLogger;
 import eu.europeana.corelib.db.service.ApiKeyService;
-import eu.europeana.corelib.db.util.DateInterval;
-import eu.europeana.corelib.db.util.DateUtils;
+import eu.europeana.corelib.db.service.ApiLogService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.utils.DateIntervalUtils;
+import eu.europeana.corelib.utils.model.DateInterval;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.StatisticsPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
@@ -41,7 +41,7 @@ public class StatisticsController {
 
 	@Resource(name="apiKeyService") private ApiKeyService apiKeyService;
 
-	@Resource private ApiLogger apiLogger;
+	@Resource private ApiLogService apiLogService;
 
 	private static final List<String> TYPES = Arrays.asList(new String[]{"month", "date", "type", "user"});
 
@@ -62,18 +62,18 @@ public class StatisticsController {
 		model.setType(type);
 
 		if (type.equals("date")) {
-			Map<String, Integer> stat = new TreeMap<String, Integer>();
+			Map<String, Long> stat = new TreeMap<String, Long>();
 			for (int i = 0; i < 30; i++) {
-				DateInterval interval = DateUtils.getDay(i);
+				DateInterval interval = DateIntervalUtils.getDay(i);
 				String day = new SimpleDateFormat("yyyy-MM-dd").format(interval.getBegin());
-				int num = apiLogger.getDaily(i);
+				long num = apiLogService.countByInterval(DateIntervalUtils.getDay(i));
 				stat.put(day, num);
 			}
 			model.setDateStatistics(stat);
 
 		} else if (type.equals("type")) {
 			Map<String, Map<String, Integer>> stat = new TreeMap<String, Map<String, Integer>>();
-			DBObject types = apiLogger.getByType();
+			DBObject types = apiLogService.getStatisticsByType();
 			for (String key : types.keySet()) {
 				BasicDBObject item = (BasicDBObject) types.get(key);
 				String recordType = item.getString("recordType");
@@ -94,8 +94,8 @@ public class StatisticsController {
 			model.setTypeStatistics(stat);
 
 		} else if (type.equals("user")) {
-			Map<String, Integer> stat = new TreeMap<String, Integer>();
-			DBObject users = apiLogger.getByUser();
+			Map<String, Long> stat = new TreeMap<String, Long>();
+			DBObject users = apiLogService.getStatisticsByUser();
 			for (String key : users.keySet()) {
 				BasicDBObject item = (BasicDBObject) users.get(key);
 				String wskey = item.getString("apiKey");
@@ -110,18 +110,17 @@ public class StatisticsController {
 				} else {
 					wskey = "unknown";
 				}
-				stat.put(wskey, item.getInt("count"));
+				stat.put(wskey, item.getLong("count"));
 			}
 			model.setUserStatistics(stat);
 
 		} else if (type.equals("month")) {
 			SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
 			DateTime now = new DateTime();
-			Map<String, Integer> stat = new LinkedHashMap<String, Integer>();
-			DateInterval interval;
+			Map<String, Long> stat = new LinkedHashMap<String, Long>();
 			for (int i = 1, max = now.getMonthOfYear(); i <= max; i++) {
-				interval = DateUtils.getMonth(max - i);
-				int count = apiLogger.getCountByInterval(interval);
+				DateInterval interval = DateIntervalUtils.getMonth(max - i);
+				long count =  apiLogService.countByInterval(interval);
 				String key = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
 				stat.put(key, count);
 			}

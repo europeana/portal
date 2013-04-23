@@ -11,7 +11,7 @@ public class AdminPage extends AdminData {
 
 	private List<User> users;
 
-	private Map<String, Map<String, Integer>> usage;
+	private Map<String, Map<String, Long>> usage;
 
 	private long apiKeyCount;
 
@@ -60,11 +60,11 @@ public class AdminPage extends AdminData {
 		this.users = users;
 	}
 
-	public Map<String, Map<String, Integer>> getUsage() {
+	public Map<String, Map<String, Long>> getUsage() {
 		return usage;
 	}
 
-	public void setUsage(Map<String, Map<String, Integer>> usage) {
+	public void setUsage(Map<String, Map<String, Long>> usage) {
 		this.usage = usage;
 	}
 

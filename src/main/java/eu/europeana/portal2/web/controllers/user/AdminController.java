@@ -24,11 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.db.logging.api.ApiLogger;
 import eu.europeana.corelib.db.service.ApiKeyService;
+import eu.europeana.corelib.db.service.ApiLogService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AdminPage;
@@ -54,7 +55,7 @@ public class AdminController {
 
 	@Resource private ClickStreamLogger clickStreamLogger;
 
-	@Resource private ApiLogger apiLogger;
+	@Resource private ApiLogService apiLogService;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
@@ -82,21 +83,21 @@ public class AdminController {
 
 		long t0 = new Date().getTime();
 		// model.setUsers(userService.findAll());
-		Map<String, Map<String, Integer>> usage = new HashMap<String, Map<String, Integer>>(){
+		Map<String, Map<String, Long>> usage = new HashMap<String, Map<String, Long>>(){
 			private static final long serialVersionUID = 1L;
 		{
-			put(ACTUAL, new HashMap<String, Integer>());
-			put(TOTAL, new HashMap<String, Integer>());
+			put(ACTUAL, new HashMap<String, Long>());
+			put(TOTAL, new HashMap<String, Long>());
 		}};
 
 		List<User> users = new ArrayList<User>();
-		long count = apiKeyService.countAll();
+		long count = apiKeyService.count();
 		model.setApiKeyCount(count);
 
 		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(false, offset, LIMIT);
 		for (ApiKey apiKey : apiKeys) {
-			usage.get(ACTUAL).put(apiKey.getId(), apiLogger.getRequestNumber(apiKey.getId()));
-			usage.get(TOTAL).put(apiKey.getId(), apiLogger.getTotalRequestNumber(apiKey.getId()));
+			usage.get(ACTUAL).put(apiKey.getId(), Long.valueOf(apiLogService.countByApiKeyByInterval(apiKey.getId(), DateIntervalUtils.getToday())));
+			usage.get(TOTAL).put(apiKey.getId(), Long.valueOf(apiLogService.countByApiKey(apiKey.getId())));
 			User user = apiKey.getUser();
 			if (!users.contains(user)) {
 				users.add(user);
