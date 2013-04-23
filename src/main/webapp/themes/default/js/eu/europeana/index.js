@@ -266,6 +266,23 @@
 	};
 	 */
 	
+	var fixSearchRowLinks = function(anchor){
+		var newParam	= '';
+		var rows		= $("#mobile-menu").is(":visible") ? 12 : 24;
+		var href		= anchor.attr('href');
+		
+		if(href.indexOf('rows=')>0){
+			href = href.substr(0, href.indexOf('rows=')-1);
+		}
+		if(href.indexOf('?')>0){
+			newParam = '&rows=' + rows;
+		}
+		else{
+			newParam = '?rows=' + rows;			
+		}
+		anchor.attr('href', href + newParam);
+	};
+	
 	var init = function() {
 		
 		js.loader.loadScripts([{
@@ -326,6 +343,15 @@
 						$("#section-featured-content .collapse-content").html(data.markup);
 						$("#collapse-header-2").parent().after(data.markup2);
 		    			eu.europeana.vars.suppresResize = false;
+		    			
+		    			
+		    			$('.searchPartner').each(function(i, ob){
+		    				fixSearchRowLinks($(ob));
+		    				$(window).euRsz(fixSearchRowLinks($(ob)));
+		    			});
+
+
+		    			
 		    			window.euResponsiveTriggerRespond();
 					},
 					error: function(x, status, e){
