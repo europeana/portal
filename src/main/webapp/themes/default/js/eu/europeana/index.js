@@ -424,12 +424,13 @@
 		$(window).bind("touchmove", function(){
 			eu.europeana.vars.suppresResize = true;
 		});
-
-		$(window).scroll($.debounce( 250, true, function(){
-			eu.europeana.vars.suppresResize = false;
-		}));
 		
-	
+		$(window).euScroll(function(){
+    		setTimeout(function(){
+    			eu.europeana.vars.suppresResize = false;    			
+    		}, 1200);	/* 1200 same as collapsible.js timeout */
+		});
+		
 	};
 	
 	$(document).ready(function(){
