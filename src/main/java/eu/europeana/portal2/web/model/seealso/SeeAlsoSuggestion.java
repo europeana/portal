@@ -1,7 +1,5 @@
 package eu.europeana.portal2.web.model.seealso;
 
-import org.apache.solr.client.solrj.util.ClientUtils;
-
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 public class SeeAlsoSuggestion {
@@ -16,10 +14,10 @@ public class SeeAlsoSuggestion {
 		this.metaField = metaField;
 		this.label = label;
 		this.query = ControllerUtil.clearSeeAlso(label);
-		this.escapedQuery = String.format("%s:\"%s\"", 
-				metaField,
-				ClientUtils.escapeQueryChars(query).replace("\\ ", " ").replace("\\-", "-")
-		);
+	}
+
+	public void makeEscapedQuery(String solrEscapedQuery) {
+		this.escapedQuery = String.format("%s:\"%s\"", metaField, solrEscapedQuery);
 	}
 
 	public String getMetaField() {

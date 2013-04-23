@@ -388,7 +388,9 @@ public class ObjectController {
 					i = 0;
 					for (String value : values) {
 						if (!StringUtils.isBlank(value) && value.length() < 500 && i < 20) {
-							fieldValues.add(new SeeAlsoSuggestion(metaField, value));
+							SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(metaField, value);
+							suggestion.makeEscapedQuery(searchService.escapeQuery(suggestion.getQuery()));
+							fieldValues.add(suggestion);
 							i++;
 						}
 					}
@@ -420,12 +422,5 @@ public class ObjectController {
 		}
 
 		return seeAlsoSuggestions;
-	}
-
-	private String clearSeeAlso(String value) {
-		while (value.matches(" \\([^\\(\\)]+\\)\\s*$")) {
-			value = value.replaceAll(" \\([^\\(\\)]+\\)\\s*$", "");
-		}
-		return value;
 	}
 }
