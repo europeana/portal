@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://htmlcompressor.googlecode.com/taglib/compressor" prefix="compress" %>
-<compress:html enabled="true" compressJavaScript="true"  yuiJsDisableOptimizations="true">
+<compress:html enabled="true" compressJavaScript="false"  yuiJsDisableOptimizations="true">
 
 
 <%@ include file="/WEB-INF/jsp/_common/tag-libraries.jsp" %>
