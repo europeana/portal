@@ -154,15 +154,21 @@ eu.europeana.search = {
 			
 			var val = parseInt( $this.val() + String.fromCharCode(key) );
 			
+			if(typeof $this[0].selectionStart != 'undefined' && typeof $this[0].selectionEnd != 'undefined' && $this[0].selectionStart != $this[0].selectionEnd){
+				val = parseInt(	$this.val().substr(0, $this[0].selectionStart -1)	+ String.fromCharCode(key) + $this.val().substr($this[0].selectionEnd, $this.val().length )	);	  
+			}
+			
 			var overwrite;
 			
 			if(!val>0){
 				overwrite = 1;
+				val = 1;
 			}
 			else if(val > maxRows){
 				overwrite = maxRows;
+				val = maxRows;
 			}
-			
+
 			if(overwrite){
 				$(e.target).val(overwrite);
 				e.preventDefault();
