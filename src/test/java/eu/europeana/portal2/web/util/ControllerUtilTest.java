@@ -8,7 +8,7 @@ public class ControllerUtilTest {
 
 	@Test
 	public void testClearSeeAlso() {
-		String test = "Cranach, Lucas (der Ältere) [Herstellung]";
+		String test = "Cranach, Lucas (der Altere) [Herstellung]";
 		String expected = "Cranach, Lucas";
 		assertEquals(expected, ControllerUtil.clearSeeAlso(test));
 	}
