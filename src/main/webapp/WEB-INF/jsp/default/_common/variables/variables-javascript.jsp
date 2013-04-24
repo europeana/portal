@@ -81,7 +81,7 @@
 
 
 <script type="text/javascript">
-<!--
+
 window.eu = { europeana : { vars : { msg : { cite:{} }, item : {}, suppresResize: false } } };
 window.js = {
 	min_suffix      : '',
@@ -178,7 +178,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		
 		
 
-		<%-- Translation data for lightbox triggers: map lightboxble type to message --%>
+		// Translation data for lightbox triggers: map lightboxble type to message
 		
 		eu.europeana.vars.external = {
 			triggers: {
@@ -253,9 +253,9 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 
 eu.europeana.vars.rows = '${rows}';
 
-<%-- 'for share-this' --%>
+// for share-this
 var switchTo5x = true;
 if ( window.stLight ) { stLight.options({publisher : '${model.shareThisId}'}); }
 
-//-->
+
 </script>
