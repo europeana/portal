@@ -8,7 +8,7 @@ public class ControllerUtilTest {
 
 	@Test
 	public void testClearSeeAlso() {
-		String[] tests = new String[]{"Cranach, Lucas (der Altere) [Herstellung]", "Portrat Lucas Cranach <der Ältere>."};
+		String[] tests = new String[]{"Cranach, Lucas (der Altere) [Herstellung]", "Portrat Lucas Cranach <der Altere>."};
 		String[] expected = new String[]{"Cranach, Lucas", "Portrat Lucas Cranach"};
 		for (int i=0, l=tests.length; i < l; i++) {
 			assertEquals(expected[i], ControllerUtil.clearSeeAlso(tests[i]));
