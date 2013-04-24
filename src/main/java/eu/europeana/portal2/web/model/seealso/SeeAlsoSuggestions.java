@@ -5,14 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
-
-import org.eclipse.jetty.util.log.Log;
-
 
 public class SeeAlsoSuggestions {
-
-	private final Logger log = Logger.getLogger(SeeAlsoSuggestions.class.getCanonicalName());
 
 	private Map<String, String> seeAlsoTranslations;
 
@@ -31,27 +25,15 @@ public class SeeAlsoSuggestions {
 		this.seeAlsoParams = seeAlsoParams;
 	}
 
-	private SeeAlsoSuggestion findByQuery(String fieldName, String escapedQuery) {
-		for (SeeAlsoSuggestion suggestion : seeAlsoParams.get(fieldName)) {
-			if (suggestion.getEscapedQuery().equals(escapedQuery)) {
-				return suggestion;
-			}
-		}
-		return null;
-	}
-
 	public void add(String query, Integer count) {
 		String[] parts = query.split(":", 2);
 		String fieldName = parts[0];
-		String escapedQuery = parts[1];
-		log.info(fieldName + " -> " + escapedQuery);
 		SeeAlsoSuggestion suggestion = seeAlsoParams.findByQuery(fieldName, query);
-		log.info("suggestion: " + (suggestion == null ? "null" : suggestion.toString()));
-		String fieldValue = suggestion.getLabel();
+		suggestion.setCount(count);
 
-		String aggregatedFieldName = (seeAlsoAggregations.containsKey(fieldName))
-				? seeAlsoAggregations.get(fieldName) 
-				: fieldName;
+		String aggregatedFieldName = (seeAlsoAggregations.containsKey(suggestion.getMetaField()))
+				? seeAlsoAggregations.get(suggestion.getMetaField()) 
+				: suggestion.getMetaField();
 
 		Field field;
 		if (fields.containsKey(aggregatedFieldName)) {
@@ -61,14 +43,7 @@ public class SeeAlsoSuggestions {
 			fields.put(aggregatedFieldName, field);
 		}
 
-		String extendedQuery;
-		if (fieldName.equals("title") || fieldName.equals("PROVIDER") || fieldName.equals("DATA_PROVIDER")) {
-			extendedQuery = suggestion.getEscapedQuery(); //query;
-		} else {
-			extendedQuery = suggestion.getEscapedQuery(); // query; // fieldName + ":(" + ControllerUtil.clearSeeAlso(fieldValue) + ")";
-		}
-
-		field.addSuggestion(new Suggestion(extendedQuery, fieldValue, count));
+		field.addSuggestion(suggestion);
 	}
 
 	public Map<String, Field> getFields() {
@@ -90,14 +65,14 @@ public class SeeAlsoSuggestions {
 
 		private String fieldName;
 		private String translationKey;
-		private List<Suggestion> suggestions = new LinkedList<Suggestion>();
+		private List<SeeAlsoSuggestion> suggestions = new LinkedList<SeeAlsoSuggestion>();
 
 		public Field(String fieldName, String translationKey) {
 			this.fieldName = fieldName;
 			this.translationKey = translationKey;
 		}
 
-		public void addSuggestion(Suggestion suggestion) {
+		public void addSuggestion(SeeAlsoSuggestion suggestion) {
 			suggestions.add(suggestion);
 		}
 
@@ -109,7 +84,7 @@ public class SeeAlsoSuggestions {
 			return translationKey;
 		}
 
-		public List<Suggestion> getSuggestions() {
+		public List<SeeAlsoSuggestion> getSuggestions() {
 			return suggestions;
 		}
 
@@ -118,35 +93,6 @@ public class SeeAlsoSuggestions {
 			return "Field [fieldName=" + fieldName
 					+ ", translationKey=" + translationKey
 					+ ", suggestions=" + suggestions + "]";
-		}
-	}
-
-	public class Suggestion {
-		private String query;
-		private String value;
-		private Integer count;
-
-		public Suggestion(String query, String value, Integer count) {
-			this.query = query;
-			this.value = value;
-			this.count = count;
-		}
-
-		public String getQuery() {
-			return query;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		public Integer getCount() {
-			return count;
-		}
-
-		@Override
-		public String toString() {
-			return "Suggestion [query=" + query + ", value=" + value + ", count=" + count + "]";
 		}
 	}
 }

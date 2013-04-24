@@ -29,7 +29,7 @@ public class SeeAlsoParams {
 	public List<SeeAlsoSuggestion> get(String metaField) {
 		return params.get(metaField);
 	}
-	
+
 	public List<String> getEscapedQueries() {
 		List<String> escapedQueries = new ArrayList<String>();
 		for (String metaField : getFields()) {
@@ -47,21 +47,16 @@ public class SeeAlsoParams {
 		}
 
 		if (!index.containsKey(fieldName)) {
-			log.info("no field registered: " + fieldName);
+			log.severe("Unknown field in see also feature: " + fieldName);
 			return null;
 		}
 
 		if (index.get(fieldName).containsKey(escapedQuery)) {
-			log.info("has key: " + escapedQuery);
 			int i = index.get(fieldName).get(escapedQuery);
-			log.info("i: " + i);
 			SeeAlsoSuggestion suggestion = params.get(fieldName).get(i);
-			log.info("suggestion: " + suggestion);
 			return suggestion;
 		} else {
-			log.info("no key: " + escapedQuery);
 			for (SeeAlsoSuggestion suggestion : params.get(fieldName)) {
-				log.info("checking query: " + escapedQuery + " vs " + suggestion.getEscapedQuery());
 				if (suggestion.getEscapedQuery().equals(escapedQuery)) {
 					return suggestion;
 				}
