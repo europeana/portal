@@ -58,6 +58,7 @@ public class ControllerUtil {
 	private static final Pattern[] SEE_ALSO_PATTERNS = new Pattern[]{
 		Pattern.compile("\\s*\\(.*?\\)\\s*$"),
 		Pattern.compile("\\s*\\[.*?\\]\\s*$"),
+		Pattern.compile("\\s*<.*?>\\.?\\s*$"),
 		Pattern.compile("\\s*\\d+-\\d+\\s*$")
 	};
 	private static final String EMPTY_STRING = "";
