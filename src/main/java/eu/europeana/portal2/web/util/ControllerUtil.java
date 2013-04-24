@@ -206,20 +206,25 @@ public class ControllerUtil {
 
 	public static String clearSeeAlso(String value) {
 		value = value.replaceAll("\n", " ")
-				.replaceAll(",", " ")
-				.replaceAll(":", " ")
 				.replaceAll("\\s+", " ")
-				.replaceAll("\"", "\\\"")
 		;
 
+		log.info(value);
 		Matcher m;
-		for (Pattern pattern : SEE_ALSO_PATTERNS) {
-			m = pattern.matcher(value);
-			while (m.find()) {
-				value = m.replaceFirst(EMPTY_STRING);
+		boolean doNext = false;
+		do {
+			doNext = false;
+			for (Pattern pattern : SEE_ALSO_PATTERNS) {
+				log.info("checking pattern '" + pattern + "'");
 				m = pattern.matcher(value);
+				while (m.find()) {
+					doNext = true;
+					value = m.replaceFirst(EMPTY_STRING);
+					log.info("'" + value + "'");
+					m = pattern.matcher(value);
+				}
 			}
-		}
+		} while (doNext == true);
 
 		value = value.replaceAll("\\/", "\\\\/");
 
