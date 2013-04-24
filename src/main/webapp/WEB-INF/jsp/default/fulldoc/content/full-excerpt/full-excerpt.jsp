@@ -10,7 +10,7 @@
     </div>
     </c:if>
 
-    <h1 class="hide-on-phones" ${model.semanticTitle}>${model.objectTitle}</h1>
+    <h1 class="hide-on-phones" ${model.semanticTitle}>${fn:escapeXml(model.objectTitle)}</h1>
 
     <c:forEach items="${model.document.dcTitle}" var="title">
       <c:if test="${title != model.objectTitle && !empty(title)}">
