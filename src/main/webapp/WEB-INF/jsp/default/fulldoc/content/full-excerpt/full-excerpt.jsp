@@ -16,7 +16,7 @@
       <c:if test="${title != model.objectTitle && !empty(title)}">
         <div class="item-metadata">
           <span class="bold notranslate"><spring:message code="dc_title_t" />:</span>
-          <span class="translate" ${semanticAttributes}>${title}</span>
+          <span class="translate" ${semanticAttributes}>${fn:escapeXml(title)}</span>
         </div>
       </c:if>
     </c:forEach>
