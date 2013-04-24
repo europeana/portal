@@ -56,9 +56,9 @@ public class ControllerUtil {
 	private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[_A-Za-z0-9-]+)";
 
 	private static final Pattern[] SEE_ALSO_PATTERNS = new Pattern[]{
-		Pattern.compile("\\s*\\(.*?\\)\\s*$"),
-		Pattern.compile("\\s*\\[.*?\\]\\s*$"),
-		Pattern.compile("\\s*<.*?>\\.?\\s*$"),
+		Pattern.compile("\\s*\\([^\\(\\)]*?\\)\\s*$"),
+		Pattern.compile("\\s*\\[[^\\[\\]]*?\\]\\s*$"),
+		Pattern.compile("\\s*<[^<>]*?>\\.?\\s*$"),
 		Pattern.compile("\\s*\\d+-\\d+\\s*$")
 	};
 	private static final String EMPTY_STRING = "";
@@ -216,7 +216,6 @@ public class ControllerUtil {
 		do {
 			doNext = false;
 			for (Pattern pattern : SEE_ALSO_PATTERNS) {
-				log.info("checking pattern '" + pattern + "'");
 				m = pattern.matcher(value);
 				while (m.find()) {
 					doNext = true;
