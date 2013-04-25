@@ -282,6 +282,7 @@
 		else{
 			newParam = '?rows=' + rows;			
 		}
+		console.log("updated href " +  href + newParam );
 		anchor.attr('href', href + newParam);
 	};
 	
@@ -346,13 +347,13 @@
 						$("#collapse-header-2").parent().after(data.markup2);
 		    			eu.europeana.vars.suppresResize = false;
 		    			
-		    			
-		    			$('.searchPartner').each(function(i, ob){
+		    			$('.withRowParam').each(function(i, ob){
 		    				fixSearchRowLinks($(ob));
-		    				$(window).euRsz(fixSearchRowLinks($(ob)));
+		    				$(window).euRsz(function(){
+		    						fixSearchRowLinks($(ob));
+		    					}	
+		    				);
 		    			});
-
-
 		    			
 		    			window.euResponsiveTriggerRespond();
 					},

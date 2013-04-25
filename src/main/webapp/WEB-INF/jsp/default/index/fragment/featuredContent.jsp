@@ -8,14 +8,14 @@
                --%><a  href  = '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
                  --%>title  = '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
                  --%>target  = '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
-                 --%>class  = 'europeana'><%--
+                 --%>class  = 'europeana withRowParam'><%--
                  --%><spring:message code="${model.featuredItem.heading}" /><%--  
                --%></a><%--
              --%></h4><%--
              --%><a  href=  '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
              --%>title=  '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
              --%>target=  '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
-             --%>class=  'image'><%--
+             --%>class=  'image  withRowParam'><%--
              --%><c:set var="altText"><spring:message code="${model.featuredItem.imgAlt}" /></c:set><%-- 
              --%><img class='responsive_half' src='/${model.portalName}${model.featuredItem.responsiveImages["_1"]}' alt='${fn:escapeXml(altText)}'/><%--
              --%></a><%--
@@ -23,7 +23,7 @@
                --%><a href='/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
                --%>title  = '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
                --%>target  = '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
-               --%>class  = 'europeana'><%--
+               --%>class  = 'europeana withRowParam'><%--
                --%><spring:message code="${model.featuredItem.heading}" /><%--  
              --%></a><%--
            --%></h4><%--
@@ -54,7 +54,7 @@
          --%><a  href=  '/${model.portalName}<spring:message code="${model.featuredPartner.anchorUrl}" />'<%--
            --%>title=  '<spring:message code="${model.featuredPartner.anchorTitle}" />'<%--
            --%>target=  '<spring:message code="${model.featuredPartner.anchorTarget}" />'<%--
-           --%>class=  'image searchPartner'><%--
+           --%>class=  'image withRowParam'><%--
 			--%><c:set var="altText"><spring:message code="${model.featuredPartner.imgAlt}" /></c:set><%--
            --%><img class='responsive_half' src='/${model.portalName}${model.featuredPartner.responsiveImages['_1']}'<%--
            --%>alt='${fn:escapeXml(altText)}'<%--
@@ -64,7 +64,7 @@
            --%><a  href  = '/${model.portalName}<spring:message  code="${model.featuredPartner.anchorUrl}" />'<%--
              --%>title  = '<spring:message  code="${model.featuredPartner.anchorTitle}" />'<%--
              --%>target  = '<spring:message  code="${model.featuredPartner.anchorTarget}" />'<%--
-             --%>class  = 'europeana  searchPartner'><%--
+             --%>class  = 'europeana  withRowParam'><%--
              --%><spring:message code="${model.featuredPartner.heading}" /><%--
            --%></a><%--
          --%></h4><%--
