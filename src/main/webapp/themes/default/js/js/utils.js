@@ -162,8 +162,42 @@ js.utils = {
 				window.location.hostname +
 				( window.location.port != '80' && window.location.port != '' ? ':' + window.location.port : '' );
 		
-	}
+	},
+	
+	fixSearchRowLinks : function(anchor){
+				
+		var href;
+		
+		if(typeof anchor == 'object'){
+			href		= anchor.attr('href');
+		}
+		if(typeof anchor == 'string'){
+			href = anchor;
+		}
+		
+		var newParam	= '';
+		var rows		= $("#mobile-menu").is(":visible") ? 12 : 24;
+		
+		if(href.indexOf('rows=')>0){
+			href = href.substr(0, href.indexOf('rows=')-1);
+		}
+		if(href.indexOf('?')>0){
+			newParam = '&rows=' + rows;
+		}
+		else{
+			newParam = '?rows=' + rows;			
+		}
+		console.log("updated href " +  href + newParam );
 
+		if(typeof anchor == 'object'){
+			anchor.attr('href', href + newParam);
+		}
+		if(typeof anchor == 'string'){
+			return href + newParam;
+		}
+		
+	}
+	
 };
 
 

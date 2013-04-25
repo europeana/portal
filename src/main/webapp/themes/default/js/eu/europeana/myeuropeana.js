@@ -33,8 +33,16 @@ eu.europeana.myeuropeana = {
 					var fmted	= query + " &nbsp; &rarr; &nbsp;" + params.join("&nbsp; &rarr; &nbsp;");
 				}
 				$(ob).html(fmted);
+				js.utils.fixSearchRowLinks($(ob));
 			});
 		}
+		
+		$(window).euRsz(function(){
+			$('.saved-search .go').each(function(i, ob){
+				js.utils.fixSearchRowLinks($(ob));
+			});
+		});
+		
 	},
 	
 	loadComponents : function() {

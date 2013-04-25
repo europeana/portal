@@ -768,7 +768,8 @@ eu.europeana.fulldoc = {
 								$(ob).unbind('click');
 								$(ob).click(function(e){
 									clicked({
-										"open" : dataSource[i].europeanaLink,
+										//"open" : dataSource[i].europeanaLink,
+										"open" : js.utils.fixSearchRowLinks(dataSource[i].europeanaLink),
 										"ga" : {
 											"action"	: "Click-Through (link index " + i + ")",
 											"category"	: "Similar-Items-Carousel",
