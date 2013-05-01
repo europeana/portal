@@ -109,7 +109,7 @@
 
 <div class="row footer-bottom-links">
 	<div class="twelve columns">
-		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_api_url_t"/>" target="<spring:message code="footer_menu_api_t"/>" title="<spring:message code="footer_menu_api_t"/>"><spring:message code="footer_menu_api_t"/></a>
+		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_api_url_t"/>" target="<spring:message code="footer_menu_api_target_t"/>" title="<spring:message code="footer_menu_api_t"/>"><spring:message code="footer_menu_api_t"/></a>
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_tou_url_t"/>" target="<spring:message code="footer_menu_tou_target_t"/>" title="<spring:message code="footer_menu_tou_title_t"/>"><spring:message code="footer_menu_tou_text_t"/></a>
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_contact_us_url_t"/>" target="<spring:message code="footer_menu_contact_us_target_t"/>" title="<spring:message code="footer_menu_contact_us_title_t"/>"><spring:message code="footer_menu_contact_us_text_t"/></a>
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_sitemap_url_t"/>" target="<spring:message code="footer_menu_sitemap_target_t"/>" title="<spring:message code="footer_menu_sitemap_title_t"/>"><spring:message code="footer_menu_sitemap_text_t"/></a>
