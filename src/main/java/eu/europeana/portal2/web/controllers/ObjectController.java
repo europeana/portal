@@ -163,7 +163,7 @@ public class ObjectController {
 		boolean showSimilarItems = false;
 		try {
 			String sShowSimilarItems = StringUtils.replace(
-					messageSource.getMessage("show_similar_items", null, locale), ";", "");
+					messageSource.getMessage("notranslate_show_similar_items_t", null, locale), ";", "");
 			showSimilarItems = Boolean.parseBoolean(sShowSimilarItems.trim());
 		} catch (NoSuchMessageException e) {
 			e.printStackTrace();
