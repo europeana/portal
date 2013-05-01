@@ -173,6 +173,11 @@
    				            <%-- escape >> used as arrows --%>
 		            		
 		            		<c:set var="theVal" value="${fn:replace(theVal, '>>',	'&rarr;')}" />
+
+   				            <%-- remove double escaped quotes --%>
+		            		
+		            		<c:set var="theVal" value="${fn:replace(theVal, '&amp;quot;',	'\"')}" />
+		            		
 		            		
 		            		<c:out value="${theVal}" escapeXml="false"/>
 		            		
