@@ -30,7 +30,7 @@ import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 public class CarouselController {
-
+/*
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	@Resource private ReloadableResourceBundleMessageSource messageSource;
@@ -107,4 +107,5 @@ public class CarouselController {
 
 		return page;
 	}
+*/
 }
