@@ -1,6 +1,12 @@
+<%--
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
+--%>
+
 <%--
  * multilingo-menu-link.ftl
  *
@@ -32,6 +38,11 @@
  --%>
 
 <%-- #macro carouselitem ord1 --%>
+
+
+
+<%--
+
 <c:set var="url"><spring:message code="notranslate_carousel-item-${ord1}_a_url_t" /></c:set>
 
 <c:if test='${!fn:contains(url, "http://"}'>
@@ -41,3 +52,5 @@
 <a href="${url}" title="<spring:message code="carousel-item-${ord1}_a_title_t" />" target="<spring:message code="notranslate_carousel-item-${ord1}_a_target_t" />">
 	<img src="/${model.portalName}spring:message code="notranslate_carousel-item-${ord1}_img_url_t" />" width="<spring:message code="notranslate_carousel-item-${ord1}_img_width_t" />" alt="<spring:message code="carousel-item-${ord1}_img_alt_t" />"/>
 </a>
+
+ --%>
