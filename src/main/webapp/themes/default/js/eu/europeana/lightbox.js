@@ -93,12 +93,8 @@ eu.europeana.lightbox = function(){
 		 */ 
 
 		
-
-		
 		var	img		= self.cmp.find('#lightbox_image'),
 			info	= self.cmp.find('#lightbox_info');
-		
-		//img.attr("style", "");
 		
 		var	imgW	= self.origImgW,
 			imgH	= self.origImgH,
@@ -107,8 +103,7 @@ eu.europeana.lightbox = function(){
 			infoHx	= self.infoHx;
 			brdr	= self.brdr;
 		
-//		alert("self.origImgW " + self.origImgW);
-js.console.log("self.origImgW " + self.origImgW);
+		js.console.log("self.origImgW " + self.origImgW);
 			
 		var	aspectWin	= ($(window).width()-brdr) / ($(window).height()-brdr);
 		var	aspectUnder	= imgW / (imgH + infoH);
@@ -141,9 +136,8 @@ js.console.log("self.origImgW " + self.origImgW);
 			var projectedHeight	= (w/aspectImg);
 			var projectedWidth	= (h*aspectImg);
 
-js.console.log('testing w/h  ' + projectedWidth + ' / ' + projectedHeight);
-			//js.console.log("projected " + projectedWidth + " / " + projectedHeight +  "   available = " + availableWidth + " x " + availableHeight );
-
+			js.console.log('testing w/h  ' + projectedWidth + ' / ' + projectedHeight);
+			
 			if(rec > 30){
 				js.console.log('avoid infinite recursion');
 				return [projectedWidth, projectedHeight];

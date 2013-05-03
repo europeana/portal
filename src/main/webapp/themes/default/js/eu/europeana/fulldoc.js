@@ -1,3 +1,6 @@
+
+
+
 js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
@@ -395,6 +398,90 @@ eu.europeana.fulldoc = {
 	},
 	
 	
+	/* Called once:
+	 * All img / magnify clicks routed through here 
+	 * */
+	
+	/**
+	 * Test URLS
+	 * 
+	 * 
+	 * simple lightbox					= http://localhost:8081/portal/record/09102/_SMS_MM_M777.html?start=1&query=paris&startPage=1&rows=24
+	 * broken img lightbox				= 
+	 * carousel lightbox				= http://localhost:8081/portal/record/09102/_CM_0159044.html?start=23&query=paris&startPage=1&rows=24
+	 * carousel lightbox mixed media	= http://localhost:8081/portal/record/09102/_SMS_MM_M1383.html
+	 * 
+	 * 
+	 * */
+	
+	triggerBind : function(){
+
+		$(		'#carousel-1-img-measure img, '
+			+ 	'#carousel-1-img-measure .lb-trigger, '
+			+	'#carousel-1 .galleria-stage .galleria-image img'
+			
+		).die().live('click', eu.europeana.fulldoc.triggerClick);
+		
+		js.console.log("bound all triggers");
+	},
+	
+	triggerClick : function(e){
+		e = $(e.target);
+		
+		var target = "";
+		var openLB = carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'image' && !eu.europeana.fulldoc.lightboxTestFailed && !$("#mobile-menu").is(":visible");
+		
+		if(e.hasClass('label') || e == eu.europeana.fulldoc.triggerPanel){
+			target = "magnify";
+		}
+		else if(e[0].nodeName.toUpperCase()=='IMG'){
+			target = eu.europeana.fulldoc.lightboxTestFailed ? 'broken-img' : 'image';
+		}
+		else{
+			alert("target???");
+		}
+		
+		// category, action, label
+		var gaCategory	= 'Europeana Portal';
+		var gaAction	= openLB ? 'Europeana Lightbox' : 'Europeana Redirect';
+		var gaLabel		= 'External (' + target + ')';
+		
+		com.google.analytics.europeanaEventTrack(gaCategory, gaAction, gaLabel);
+		
+		var targetInfo		= e[0].nodeName + ' #' + e.attr('id') + ', .' + e.attr('class'); 
+		var carouselInfo	= "carousel = " + ( typeof eu.europeana.fulldoc.carousel1 != 'undefined' );
+		var gaData			= "[" + gaCategory + ", " + gaAction + ", " + gaLabel + "]"
+
+		
+		js.console.log(
+			"-----TRIGGER CLICK-----" 
+			+ 
+			target
+			+ '\n' + 
+			targetInfo
+			+ '\n' + 
+			carouselInfo
+			+ '\n' + 
+			gaData
+			+ '\n' + 				
+			"-----------------------" 
+		);
+		
+		if(openLB){
+			eu.europeana.fulldoc.showLightbox();
+		}
+		else{
+			eu.europeana.fulldoc.winOpen();			
+		}
+		
+	},
+	
+	winOpen : function(){
+		var index = eu.europeana.fulldoc.getCarouselIndex();
+		window.open(carouselData[index ? index : 0].external.url, '_new');
+	},
+	
+	
 	showLightbox : function(){
 		$(".iframe-wrap").empty().append(eu.europeana.fulldoc.lightboxOb.getCmp() );
 
@@ -413,7 +500,7 @@ eu.europeana.fulldoc = {
 	},
 	
 	initTriggerPanel: function(type, index, gallery){
-		
+
 		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 			// instantiate and hide
 			eu.europeana.fulldoc.triggerPanel = $('<div class="lb-trigger" >'
@@ -425,30 +512,18 @@ eu.europeana.fulldoc = {
 			eu.europeana.fulldoc.triggerPanel.hide();
 		}
 		
-		
-		var triggerPanel = eu.europeana.fulldoc.triggerPanel;
-		triggerPanel.data['galleryIndex'] = index ? index : 0;
-		
-		//triggerPanel.data['type'] = type; /* used for google analytics category */
-		
-		var triggerSpan = triggerPanel.find('.label');
+		var triggerPanel	= eu.europeana.fulldoc.triggerPanel;
+		var triggerSpan		= triggerPanel.find('.label');
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
 		
-		// function for opening content in new window (broken img or non img)
-		
-		var winOpen = function(){
-			window.open(carouselData[index ? index : 0].external.url, '_new');
-		};
-		
 		if(carouselData[index ? index : 0].external.type == 'image'){
 
-			/* if the image is wider than 200 px initialise the lightbox and show the trigger panel,
-			 * if not bind the image (url) to open the mapped url in a seaparate window
-			 */
-			$('<img src="'+ carouselData[index ? index : 0].external.url + '" style="visibility:hidden"/>')
+			/*	if the image is wider than 200 px initialise the lightbox and show the trigger panel,
+			 	if not set the cursoe icon for the image and the eu.europeana.fulldoc.lightboxTestFailed variable to false	*/
 			
-			.appendTo('body').imagesLoaded(
+			$('<img src="'+ carouselData[index ? index : 0].external.url + '" style="visibility:hidden"/>')
+				.appendTo('body').imagesLoaded(
 							
 				function($images, $proper, $broken){
 
@@ -462,20 +537,7 @@ eu.europeana.fulldoc = {
 						// Add the markup
 
 						eu.europeana.fulldoc.loadLightboxJS(
-							function(){								
-								var ev = $._data( $('#carousel-1-img-measure')[0], 'events');
-								if(! (ev && ev.click) ){
-					
-									$('#carousel-1-img-measure').click(function(){
-										
-										eu.europeana.fulldoc.showLightbox();
-												
-									});
-								}
-								// end new trigger (was previously in lightbox definition file)
-								
-								//alert("proper " + properW+ " / " +  properH );
-								
+							function(){
 								eu.europeana.fulldoc.initLightbox(carouselData[index ? index : 0].external.url, properW, properH);
 								eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 							}
@@ -483,41 +545,20 @@ eu.europeana.fulldoc = {
 					}
 					else{
 						js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[index ? index : 0].external.url + ")"));
+						eu.europeana.fulldoc.lightboxTestFailed = true;
 						
 						// if the lightbox test fails then attach a click handler to the image
 						$('#carousel-1-img-measure img').css('cursor', 'pointer');
-						
-						eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click',
-							function(){
-								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (magnify)");
-								winOpen();
-							}
-						);
-						$('#carousel-1-img-measure img').unbind('click').bind('click',
-							function(){
-								com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", carouselDataIsBy ? "External (broken-img)" : "External (img)");
-								winOpen();
-							}
-						);
 					}
 					$(this).remove();
 				}
 				// end image load test
 			);
 		}
-		else{
-			eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click', function(){
-					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (magnify)");
-					winOpen();
-				}
-			);
-			$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
-					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (image)");
-					winOpen();
-				}
-			);
+		else{ // NON IMAGE
 			eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 		}
+		eu.europeana.fulldoc.triggerBind();
 	},
 	
 	
@@ -563,15 +604,11 @@ eu.europeana.fulldoc = {
 		js.loader.loadScripts([{
 				name : 'touchswipe',
 				file : 'touch-swipe.min.js' + js.cache_helper,
-				path : eu.europeana.vars.branding + '/js/jquery/',
-				callback: function(){ 
-					//alert('loaded touch swipe');
-				}
+				path : eu.europeana.vars.branding + '/js/jquery/'
+				/* ,callback: function(){ js.console.log('loaded touch swipe'); } */
 		}]);		  
 		  
 		if(!window.showingPhone()){
-			
-//			var lightboxJsFile = 'fulldoc-lightbox' + js.min_suffix + '.js' + js.cache_helper;
 			var lightboxJsFile = 'lightbox' + js.min_suffix + '.js' + js.cache_helper;
 			
 			if( js.loader.loader_status[lightboxJsFile]){
@@ -628,7 +665,7 @@ eu.europeana.fulldoc = {
 			extend: function(e){
 				
 				var thisGallery = $(this);	
-
+				
 				$(window).add('.iframe-wrap').bind('keydown', function(e){
 					var key	= window.event ? e.keyCode : e.which;
 					if(key==39){
@@ -657,7 +694,6 @@ eu.europeana.fulldoc = {
 					}
 				});
 				
-				
 				var currIndex = -1;
 				this.bind("image", function(e) {	// lightbox trigger
 					
@@ -674,8 +710,10 @@ eu.europeana.fulldoc = {
 					
 				}); // end bind image
 				
+				eu.europeana.fulldoc.getCarouselIndex = function(){	/* thisGallery.getIndex not working(?) so this utility used to do the same*/
+					return currIndex;
+				};
 			} // end extend
-		
 		}); // end Galleria.run
 	},
 	
@@ -684,7 +722,6 @@ eu.europeana.fulldoc = {
 		if(!eu.europeana.vars.isShowSimilarItems){
 			return;
 		}
-		
 		
 		if(typeof carousel2Data != 'undefined'){
 			
@@ -782,11 +819,8 @@ eu.europeana.fulldoc = {
 							eu.europeana.fulldoc.setupAnalytics = true;
 						}
 					});
-					
-					
 				}
 	   		});
-   			
 		}
 	},
 	
@@ -819,6 +853,10 @@ eu.europeana.fulldoc = {
 			// this is where we go when carousel test images don't load
 			var initNoCarousel = function(){
 				
+				eu.europeana.fulldoc.getCarouselIndex = function(){
+					return 0;
+				};
+				
 				// show either the thumbnail or the alt text
 				
 				$("#carousel-1-img-measure img").removeClass("no-show");
@@ -835,31 +873,6 @@ eu.europeana.fulldoc = {
 						else{
 							eu.europeana.fulldoc.lightboxable = carouselData[0].external;
 							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
-
-							if($("#mobile-menu").is(":visible") ){
-								
-								if(carouselData[0].external.type == 'image'){
-								
-									// rewire from lightbox to redirect
-									
-									$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
-										com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (image)");
-										window.open(carouselData[0].external.url, '_new');
-									});
-										
-								}
-							}
-							else{
-								if(carouselData[0].external.type == 'image'){
-									$('#carousel-1-img-measure img').unbind('click').bind('click', function(e){
-										com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (image)");
-									});
-									
-									eu.europeana.fulldoc.triggerPanel.unbind('click').bind('click', function(e){
-										com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (magnify)");
-									});
-								}								
-							}
 						}
 					}	
 				}
@@ -886,7 +899,6 @@ eu.europeana.fulldoc = {
 						if($proper.length==carouselTest.length){
 							js.console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
 							
-							
 							eu.europeana.fulldoc.getCarousel1Height = function(){
 								var tallestImageH = $("#carousel-1-img-measure").height();
 								var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
@@ -895,24 +907,7 @@ eu.europeana.fulldoc = {
 								}
 								return tallestImageH + galleriaOffsetY;
 							};
-							
 							eu.europeana.fulldoc.initTopCarousel();
-							
-							$('#carousel-1 .galleria-stage .galleria-image img, #carousel-1-img-measure .lb-trigger').unbind('click').live('click', function(e){
-								
-								var clickSrc = $(e.target).parent().hasClass('lb-trigger') ? "magnify" : "image";
-							
-								if( $("#mobile-menu").is(":visible") ){
-									com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Redirect', 'External (' + clickSrc + ')');
-									window.open(carouselData[ eu.europeana.fulldoc.triggerPanel.data['galleryIndex'] ].external.url, '_new');
-								}
-								else{
-									com.google.analytics.europeanaEventTrack("Europeana Portal", 'Europeana Lightbox', 'External (' + clickSrc + ')');
-									eu.europeana.fulldoc.showLightbox();										
-								}
-	
-							});
-							
 						}
 						else{
 							var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
@@ -957,11 +952,10 @@ eu.europeana.fulldoc = {
 					eu.europeana.fulldoc.initBottomCarousel();
 				}
 			);
-
 		});
-
 	},
 	
 };
 
 eu.europeana.fulldoc.init();
+
