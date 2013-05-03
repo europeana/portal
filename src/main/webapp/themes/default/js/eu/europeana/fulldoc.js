@@ -319,7 +319,6 @@ eu.europeana.fulldoc = {
 		if( $('#mobile-menu').is(':visible')  ){
 			
 			// can't simulate click in iphone - have to initialise it early
-			
 			eu.europeana.fulldoc.sharesLinkClicked();
 		}
 		
@@ -329,7 +328,8 @@ eu.europeana.fulldoc = {
 	/**
 	 * Makes the one and only call to eu.europeana.lightbox.init
 	 * */
-	initLightbox : function(url, initialW, initialH){
+	initLightbox : function(url){
+		
 		js.console.log("initLightbox");
 
 		if(!eu.europeana.fulldoc.lightboxOb){
@@ -383,11 +383,11 @@ eu.europeana.fulldoc = {
 			eu.europeana.fulldoc.lightboxOb.init(
 				{	"cmp"	:	cmp,
 					"src"	:	url,
-					"w"		:	initialW,
-					"h"		:	initialH,
-					"data"	:	eu.europeana.fulldoc.getLightboxableCount() > 1 ?  carouselData : null
+					"data"	:	eu.europeana.fulldoc.getLightboxableCount() > 1 ?  carouselData : null,
+					onNav	: function(index){
+						eu.europeana.fulldoc.setCarouselIndex(index);
+					}
 				}
-				
 			);
 			
 			$(".iframe-wrap").empty();
@@ -664,7 +664,7 @@ eu.europeana.fulldoc = {
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find) 
 			extend: function(e){
 				
-				var thisGallery = $(this);	
+				//var thisGallery = $(this);	
 				
 				$(window).add('.iframe-wrap').bind('keydown', function(e){
 					var key	= window.event ? e.keyCode : e.which;
@@ -694,7 +694,7 @@ eu.europeana.fulldoc = {
 					}
 				});
 				
-				var currIndex = -1;
+
 				this.bind("image", function(e) {	// lightbox trigger
 					
 					if($('html').hasClass('ie8')){
@@ -703,16 +703,29 @@ eu.europeana.fulldoc = {
 							return;
 						}
 					}
-					currIndex = e.index;
+					var currIndex = e.index;
 					var gallery = this;
 					var external = gallery._options.dataSource[e.index].external;
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
 					
+					if(eu.europeana.fulldoc.lightboxOb){
+
+						eu.europeana.fulldoc.lightboxOb.switchImg( external.url );
+					}
+					
+					
 				}); // end bind image
 				
-				eu.europeana.fulldoc.getCarouselIndex = function(){	/* thisGallery.getIndex not working(?) so this utility used to do the same*/
-					return currIndex;
+				eu.europeana.fulldoc.getCarouselIndex = function(){
+					return $('#carousel-1').data('galleria').getIndex();
 				};
+				
+				eu.europeana.fulldoc.setCarouselIndex = function(index){
+					eu.europeana.fulldoc.suppressLightboxUpdate = true;
+					$('#carousel-1').data('galleria').show(index);
+				};
+
+				
 			} // end extend
 		}); // end Galleria.run
 	},

@@ -13,10 +13,11 @@ eu.europeana.lightbox = function(){
 	self.brdr		= 60;
 	
 	var init = function(initOb) {
-		
+
 		var cmp				= self.cmp	= initOb.cmp;
 		var src				= initOb.src;
 		var carouselData	= initOb.data;
+		var onNav			= initOb.onNav;
 		
 		if(carouselData){
 			
@@ -25,11 +26,12 @@ eu.europeana.lightbox = function(){
 			var NavOb = function(){
 				var self = this;
 				var currentUrl = $("#lightbox_image").attr("src");
-				var submodel = [];
 				var submodelActive = 0;
 
 				var nav = function(direction){
 
+					var indexAll = 0;
+					var submodel = [];
 					for(var i=0; i<carouselData.length; i++){
 						if(carouselData[i].external && carouselData[i].external.type == "image"){
 							if(carouselData[i].external.url == currentUrl){
@@ -38,8 +40,9 @@ eu.europeana.lightbox = function(){
 							submodel[submodel.length] = carouselData[i].external;
 						}
 					}
-
+					
 					var newActive		= submodelActive + direction;
+					
 					if(newActive<0){
 						newActive = submodel.length -1;
 					}
@@ -51,14 +54,12 @@ eu.europeana.lightbox = function(){
 					$("#hidden_img").unbind( '.imagesLoaded' );
 					$("#hidden_img").remove();
 					
-	
-					$('<div id="hidden_img" style="visibility:hidden;"><img src="' + submodel[newActive].url + '" /></div>').appendTo('#lightbox').imagesLoaded(
-						function(){
-							$('#hidden_img').remove();
-							com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (lightbox nav)");
-							eu.europeana.fulldoc.lightboxOb.switchImg(submodel[newActive].url);
-						}
-					);
+					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (lightbox nav)");
+					eu.europeana.fulldoc.lightboxOb.switchImg(submodel[newActive].url);
+
+					if(typeof onNav != "undefined"){
+						onNav(newActive);
+					}
 				};
 
 				return {
@@ -72,13 +73,30 @@ eu.europeana.lightbox = function(){
 			};
 			self.navOb = new NavOb();
 		}
+
 		
-		cmp.find('#lightbox_image').attr('src', src);
+		imgMeasure(src, function(w, h){
+			self.origImgW = w;
+			self.origImgH = h;
+			cmp.find('#lightbox_image').attr('src', src);
+		});
 		
-		self.origImgW = initOb.w;
-		self.origImgH = initOb.h;
+		
 	};
 
+	var imgMeasure = function(src, callback){
+		$('<div id="hidden_img" style="visibility:hidden;"><img src="' + src + '" /></div>').appendTo('body').imagesLoaded(
+			function($images, $proper, $broken){
+				var w = $proper.width();
+				var h = $proper.height();
+				$('#hidden_img').remove();
+				if(typeof callback != "undefined"){
+					callback(w, h);						
+				}
+			}
+		);
+	};
+	
 	var layout = function(){
 		
 		/*	Strategy:
@@ -103,7 +121,7 @@ eu.europeana.lightbox = function(){
 			infoHx	= self.infoHx;
 			brdr	= self.brdr;
 		
-		js.console.log("self.origImgW " + self.origImgW);
+		js.console.log("BEGIN LAYOUT WITH imgW " + imgW + ", imgH " + imgH);
 			
 		var	aspectWin	= ($(window).width()-brdr) / ($(window).height()-brdr);
 		var	aspectUnder	= imgW / (imgH + infoH);
@@ -285,14 +303,6 @@ eu.europeana.lightbox = function(){
 	var showLightbox = function(callback){
 		layout();
 		
-		/*
-		self.cmp.find('#zoomIn').unbind().click(function(){
-			self.cmp.find('#zoomIn').toggleClass('active');
-			self.zoomed = !self.zoomed;
-			layout();
-		});
-		*/
-		
 		if(callback){
 			callback();
 		}
@@ -342,69 +352,18 @@ eu.europeana.lightbox = function(){
 		
 		"switchImg" : function(url){
 
-
-			/*
-			$('<img src="' + url + '" style="visibility:hidden;"/>').appendTo("body").imagesLoaded(function($images, $proper, $broken){
-				
-				if($proper.length==1 ){
-					alert("loaded ")
-					
-					self.origImgW = $proper.width();
-					self.origImgW = $proper.height();
-
-					
-				}
-			});
-			*/
-			
-			
-			
-			
-//			var img = self.cmp.find("#lightbox_image");
-//			img.attr("style", "");
-//			img.attr("src", url);
-//			layout();
-			
-	
-			
-			//alert("switchImg, self.cmp.find('#lightbox_image').length = " + self.cmp.find('#lightbox_image').length   );
-
 			var img = self.cmp.find('#lightbox_image');
-			img.unbind( '.imagesLoaded' );
-
-			//alert("data = " +   img.data['imagesLoaded']  );
-			//alert("switch src.... ");
-			//self.cmp.find("#lightbox_image").attr("src", url);
 			
-			$("#lightbox").css("visibility", "hidden");
+			if(img.attr('src')==url){
+				return;
+			}
 			
-			img.attr("style", "");// "visibility:hidden"); // clear old w / h and hide
-			img.attr("src", url);
-
-			
-			// MACLEAN
-			img.imagesLoaded(
-
-					function($images, $proper, $broken){
-
-						if($proper.length==1 && $proper.width() > 2){
-
-				//			alert("set self.origImgW, was " + self.origImgW + ", will be " + $proper.width());
-							
-							self.origImgW = $proper.width();
-							self.origImgH = $proper.height();
-	
-	
-							img.unbind( '.imagesLoaded' );
-							//alert("call to layout..." + layout);
-							layout();
-						}
-					}
-
-			);
-			
-			
-			
+			imgMeasure(url, function(w, h){
+				self.origImgW = w;
+				self.origImgH = h;
+				img.attr("src", url);
+				layout();
+			});
 		},
 		
 		"getCmp" : function(callback){
