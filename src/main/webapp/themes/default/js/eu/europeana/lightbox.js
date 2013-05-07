@@ -38,11 +38,6 @@ eu.europeana.lightbox = function(){
 					subModelMap[i] = (imgIndex-1); 
 				}
 
-//console.log("carouselData = " + JSON.stringify(carouselData) );
-//console.log("subModel = " + JSON.stringify(subModel) );
-//console.log("subModelMap = " + JSON.stringify(subModelMap) );
-
-				
 				var nav = function(direction){
 					var newIndex = self.index + direction;
 					if(newIndex>=subModel.length){
@@ -57,7 +52,6 @@ eu.europeana.lightbox = function(){
 					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (lightbox nav)");
 					
 					var imgUrl = carouselData[subModel[self.index]].external.url;
-					//eu.europeana.fulldoc.lightboxOb.
 					switchImg(imgUrl);
 					
 					if(typeof onNav != "undefined"){
@@ -75,7 +69,6 @@ eu.europeana.lightbox = function(){
 					},
 					"goTo" : function(i){						
 						self.index = subModelMap[i];
-						//eu.europeana.fulldoc.lightboxOb.
 						switchImg(
 								carouselData[subModel[self.index]]
 								.external
@@ -86,7 +79,6 @@ eu.europeana.lightbox = function(){
 			};
 			self.navOb = new NavOb();
 		}
-
 		
 		imgMeasure(src, function(w, h){
 			self.origImgW = w;
@@ -147,8 +139,6 @@ eu.europeana.lightbox = function(){
 			infoHx	= self.infoHx;
 			brdr	= self.brdr;
 		
-		js.console.log("BEGIN LAYOUT WITH imgW " + imgW + ", imgH " + imgH);
-			
 		var	aspectWin	= ($(window).width()-brdr) / ($(window).height()-brdr);
 		var	aspectUnder	= imgW / (imgH + infoH);
 		var	aspectRight	= (imgW + infoW) / imgH;
@@ -164,6 +154,28 @@ eu.europeana.lightbox = function(){
 		
 		var isRight			= aspectClosest == aspectRight;
 
+		
+		
+		//////////////////////////////////////////////
+		/*
+		var zoomClosest = null;
+		$.each([aspectZoom, aspectClosest], function(){
+			  if (zoomClosest == null || Math.abs(this - aspectWin) < Math.abs(zoomClosest - aspectWin)) {
+				  zoomClosest = this;
+			  }
+			});
+
+		if(zoomClosest == aspectZoom){
+			alert("ZOOM will be bigger!");			
+		}
+		else{
+			alert("zC " + zoomClosest + "  aC " + aspectClosest  + "\n   " + aspectZoom);
+		}
+		*/
+		//////////////////////////////////////////////
+		
+		
+		
 		var availableHeight =	parseInt(
 			$(window).height()
 			- ( self.zoomed ? 0 : (isRight ? 0 : infoH) )
@@ -174,16 +186,12 @@ eu.europeana.lightbox = function(){
 			- ( self.zoomed ? 0 : (isRight ? infoW : 0) )
 		) - brdr;
 		
-		//js.console.log("available = " + availableWidth + " x " + availableHeight + "  (window " + $(window).width() + " x " + $(window).height() + ")" );
-		
 		var testDimensions = function(w, h, rec){
 			var projectedHeight	= (w/aspectImg);
 			var projectedWidth	= (h*aspectImg);
 
-			js.console.log('testing w/h  ' + projectedWidth + ' / ' + projectedHeight);
-			
 			if(rec > 30){
-				js.console.log('avoid infinite recursion');
+				//js.console.log('avoid infinite recursion');
 				return [projectedWidth, projectedHeight];
 			}
 			if(projectedHeight > availableHeight || projectedWidth > availableWidth){
@@ -375,23 +383,7 @@ eu.europeana.lightbox = function(){
 				
 			}
 		},
-		/*
-		"switchImg" : function(url){
 
-			var img = self.cmp.find('#lightbox_image');
-			
-			if(img.attr('src')==url){
-				return;
-			}
-			
-			imgMeasure(url, function(w, h){
-				self.origImgW = w;
-				self.origImgH = h;
-				img.attr("src", url);
-				layout();
-			});
-		},
-		*/
 		"goTo" : function(i){
 			self.navOb.goTo(i);
 		},

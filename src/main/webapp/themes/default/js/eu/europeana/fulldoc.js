@@ -517,6 +517,9 @@ eu.europeana.fulldoc = {
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
 		
+// Andy: check this out (resize block issue fix?):
+//if(!eu.europeana.fulldoc.lightboxOb){
+
 		if(carouselData[index ? index : 0].external.type == 'image'){
 
 			/*	if the image is wider than 200 px initialise the lightbox and show the trigger panel,
@@ -558,6 +561,7 @@ eu.europeana.fulldoc = {
 		else{ // NON IMAGE
 			eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 		}
+//}
 		eu.europeana.fulldoc.triggerBind();
 	},
 	
