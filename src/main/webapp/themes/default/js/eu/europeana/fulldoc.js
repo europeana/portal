@@ -6,11 +6,11 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 eu.europeana.fulldoc = {
 
 	lightboxOb :	null,
-	
+/*	
 	// provides priority order for which tab to open when no hash is given
 	// provides a list of accepted hash values for validation
-	tab_priority : [ '#related-items','#similar-content','#map-view' ],
-	
+	//tab_priority : [ '#related-items','#similar-content','#map-view' ],
+*/	
 	more_icon_class : "icon-arrow-6-right",
 	
 	less_icon_class : "icon-arrow-7-right",
@@ -384,17 +384,17 @@ eu.europeana.fulldoc = {
 				{	"cmp"	:	cmp,
 					"src"	:	url,
 					"data"	:	eu.europeana.fulldoc.getLightboxableCount() > 1 ?  carouselData : null,
-					onNav	: function(index){
-						eu.europeana.fulldoc.setCarouselIndex(index);
+					onNav	: function(url){
+						eu.europeana.fulldoc.setCarouselIndexByUrl(url);
 					}
 				}
 			);
 			
 			$(".iframe-wrap").empty();
 		}
-		else{
-			eu.europeana.fulldoc.lightboxOb.switchImg(url);
-		}
+		//else{
+			//eu.europeana.fulldoc.lightboxOb.switchImg(url);
+		//}
 	},
 	
 	
@@ -663,9 +663,7 @@ eu.europeana.fulldoc = {
 			thumbnails: 		carouselData.length>1,
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find) 
 			extend: function(e){
-				
-				//var thisGallery = $(this);	
-				
+					
 				$(window).add('.iframe-wrap').bind('keydown', function(e){
 					var key	= window.event ? e.keyCode : e.which;
 					if(key==39){
@@ -709,10 +707,8 @@ eu.europeana.fulldoc = {
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
 					
 					if(eu.europeana.fulldoc.lightboxOb){
-
-						eu.europeana.fulldoc.lightboxOb.switchImg( external.url );
-					}
-					
+						eu.europeana.fulldoc.lightboxOb.goTo(e.index);
+					}					
 					
 				}); // end bind image
 				
@@ -720,9 +716,16 @@ eu.europeana.fulldoc = {
 					return $('#carousel-1').data('galleria').getIndex();
 				};
 				
-				eu.europeana.fulldoc.setCarouselIndex = function(index){
+				eu.europeana.fulldoc.setCarouselIndexByUrl = function(url){
+					
 					eu.europeana.fulldoc.suppressLightboxUpdate = true;
-					$('#carousel-1').data('galleria').show(index);
+					
+					for(var i=0; i<carouselData.length; i++){
+						if(carouselData[i].external && carouselData[i].external.url == url){
+							$('#carousel-1').data('galleria').show(i);
+							break;
+						}
+					}
 				};
 
 				

@@ -25,42 +25,46 @@ eu.europeana.lightbox = function(){
 			
 			var NavOb = function(){
 				var self = this;
-				var currentUrl = $("#lightbox_image").attr("src");
-				var submodelActive = 0;
+				self.index		= 0;
+				var subModel	= [];
+				var subModelMap	= {};
+				var imgIndex	= 0;
+				
+				for(var i=0; i<carouselData.length; i++){
+					if(carouselData[i].external && carouselData[i].external.type == "image"){
+						imgIndex ++;
+						subModel[subModel.length] = i;
+					}
+					subModelMap[i] = (imgIndex-1); 
+				}
 
+//console.log("carouselData = " + JSON.stringify(carouselData) );
+//console.log("subModel = " + JSON.stringify(subModel) );
+//console.log("subModelMap = " + JSON.stringify(subModelMap) );
+
+				
 				var nav = function(direction){
+					var newIndex = self.index + direction;
+					if(newIndex>=subModel.length){
+						newIndex = 0;
+					}
+					else if(newIndex < 0){
+						newIndex = subModel.length-1;
+					}
+				
+					self.index = newIndex;
 
-					var indexAll = 0;
-					var submodel = [];
-					for(var i=0; i<carouselData.length; i++){
-						if(carouselData[i].external && carouselData[i].external.type == "image"){
-							if(carouselData[i].external.url == currentUrl){
-								submodelActive = i;
-							}
-							submodel[submodel.length] = carouselData[i].external;
-						}
-					}
-					
-					var newActive		= submodelActive + direction;
-					
-					if(newActive<0){
-						newActive = submodel.length -1;
-					}
-					else if(newActive >= submodel.length){
-						newActive = 0;						
-					}
-					submodelActive = newActive;
-
-					$("#hidden_img").unbind( '.imagesLoaded' );
-					$("#hidden_img").remove();
-					
 					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (lightbox nav)");
-					eu.europeana.fulldoc.lightboxOb.switchImg(submodel[newActive].url);
-
+					
+					var imgUrl = carouselData[subModel[self.index]].external.url;
+					//eu.europeana.fulldoc.lightboxOb.
+					switchImg(imgUrl);
+					
 					if(typeof onNav != "undefined"){
-						onNav(newActive);
+						onNav(imgUrl);
 					}
-				};
+				}
+				
 
 				return {
 					"prev" : function(){
@@ -68,6 +72,15 @@ eu.europeana.lightbox = function(){
 					},
 					"next" : function(){
 						nav(1);
+					},
+					"goTo" : function(i){						
+						self.index = subModelMap[i];
+						//eu.europeana.fulldoc.lightboxOb.
+						switchImg(
+								carouselData[subModel[self.index]]
+								.external
+								.url
+						);
 					}
 				};
 			};
@@ -80,10 +93,23 @@ eu.europeana.lightbox = function(){
 			self.origImgH = h;
 			cmp.find('#lightbox_image').attr('src', src);
 		});
-		
-		
 	};
 
+	var switchImg = function(url){
+
+		var img = self.cmp.find('#lightbox_image');
+		
+		if(img.attr('src')==url){
+			return;
+		}
+		imgMeasure(url, function(w, h){
+			self.origImgW = w;
+			self.origImgH = h;
+			img.attr("src", url);
+			layout();
+		});
+	};
+	
 	var imgMeasure = function(src, callback){
 		$('<div id="hidden_img" style="visibility:hidden;"><img src="' + src + '" /></div>').appendTo('body').imagesLoaded(
 			function($images, $proper, $broken){
@@ -334,10 +360,10 @@ eu.europeana.lightbox = function(){
 						swipeStatus:function(event, phase, direction, distance, fingerCount) {
 							if(phase=="end"){
 								if(direction == "left"){
-									self.navOb.next();
+									self.navOb.prev();
 								}
 								else if(direction == "right"){
-									self.navOb.prev();
+									self.navOb.next();
 								}
 							}
 						},
@@ -349,7 +375,7 @@ eu.europeana.lightbox = function(){
 				
 			}
 		},
-		
+		/*
 		"switchImg" : function(url){
 
 			var img = self.cmp.find('#lightbox_image');
@@ -364,6 +390,10 @@ eu.europeana.lightbox = function(){
 				img.attr("src", url);
 				layout();
 			});
+		},
+		*/
+		"goTo" : function(i){
+			self.navOb.goTo(i);
 		},
 		
 		"getCmp" : function(callback){
