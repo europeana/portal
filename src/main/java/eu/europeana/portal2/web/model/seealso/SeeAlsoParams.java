@@ -74,7 +74,6 @@ public class SeeAlsoParams {
 				for (SeeAlsoSuggestion seeAlsoSuggestion : params.get(metaField)) {
 					map.put(seeAlsoSuggestion.getEscapedQuery(), i++);
 				}
-				log.info("indexing " + metaField + " " + map.keySet().size());
 				index.put(metaField, map);
 			}
 			updated = true;
