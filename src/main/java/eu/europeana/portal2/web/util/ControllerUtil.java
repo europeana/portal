@@ -210,7 +210,6 @@ public class ControllerUtil {
 				.replaceAll("\\s+", " ")
 		;
 
-		log.info(value);
 		Matcher m;
 		boolean doNext = false;
 		do {
@@ -220,7 +219,6 @@ public class ControllerUtil {
 				while (m.find()) {
 					doNext = true;
 					value = m.replaceFirst(EMPTY_STRING);
-					log.info("'" + value + "'");
 					m = pattern.matcher(value);
 				}
 			}
