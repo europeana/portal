@@ -303,18 +303,18 @@ public class ObjectController {
 	 */
 	private FullBean getFullBeanFromCorelib(String collectionId, String recordId) {
 		FullBean fullBean = null;
+		String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
 		try {
-			String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
 			fullBean = searchService.findById(europeanaId);
 			if (fullBean == null) {
 				fullBean = searchService.resolve(RESOLVE_PREFIX + europeanaId);
 			}
 		} catch (SolrTypeException e) {
-			log.severe("Solr Type Exception: " + e.getMessage());
-			e.printStackTrace();
+			log.severe(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId, e.getMessage()));
+			// log.severe(ExceptionUtils.getStackTrace(e));
 		} catch (Exception e) {
-			log.severe("Exception: " + e.getMessage());
-			e.printStackTrace();
+			log.severe(String.format("Exception during getting the full bean for ID %s: %s", europeanaId, e.getMessage()));
+			// log.severe(ExceptionUtils.getStackTrace(e));
 		}
 		return fullBean;
 	}
