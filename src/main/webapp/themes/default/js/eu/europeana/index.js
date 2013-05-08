@@ -76,12 +76,13 @@
 					lastSuffix = '_4';
 				}
 	
+				
 				if(carouselData && carouselData.length>0){
 					$(carouselData).each(function(i, ob){
 						ob.image = ob.image.replace(carouselInitialSuffix + ".", lastSuffix + ".");
-						$($("#carousel-1 img")[i]).attr("src", ob.fullSize);
 					});
-				}			
+				}
+				
 			}
 		
 			$("#carousel-1").imagesLoaded(
@@ -123,9 +124,9 @@
 							// Info update
 							this.bind("image", function(e) {
 								var gallery = this;
-								$("#carousel-1 .linkButton").html(carouselData[e.index].linkDescription);
-								$("#carousel-1-external-info").html( $("#carousel-1 .galleria-info-title").html() );
-	
+								$('#carousel-1 .linkButton').html(carouselData[e.index].linkDescription);
+								$('#carousel-1-external-info').html( $('#carousel-1 .galleria-info-title').html() );
+								$('#carousel-1 .galleria-stage .galleria-image:visible img').attr('alt',  carouselData[e.index].alt);
 							});
 	
 							// Google Analytics
