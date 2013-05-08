@@ -294,10 +294,6 @@
 			fireFirstOpen:		function(){
     			eu.europeana.vars.suppresResize = true;
     			
-    			//var url = window.location.href.indexOf('/portal') > 0 ? 'index.html?fragment=blog' : '/portal/index.html?fragment=blog';
-    			
-    			//alert("href: " + window.location.href + "\n\nurl: " + url + "\n\nindexOf: " + window.location.href.indexOf);
-    			
 				$.ajax({
 					url: '/portal/index.html?fragment=blog',
 					dataType: 'json',
@@ -367,7 +363,6 @@
 						success: function(data){
 							$("#section-pinterest .collapse-content").html(data.markup);
 							var carousel3Data = data.data.carousel3Data;
-			//alert(JSON.stringify(carousel3Data));
 							$('#carousel-3').galleria({
 								dataSource:carousel3Data,
 								extend: function(e){
