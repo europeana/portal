@@ -778,10 +778,8 @@ eu.europeana.fulldoc = {
 						setTimeout(doEllipsis, 1000);
 					});
 	
-					// Google Analytics
-					
 					this.bind("loadfinish", function(e) {
-						
+						// Google Analytics
 						if(!eu.europeana.fulldoc.setupAnalytics){
 							
 							var clicked = function(clickData){
@@ -822,6 +820,8 @@ eu.europeana.fulldoc = {
 									});
 									e.stopPropagation();
 								});
+								$(ob).find('img').attr('alt', carousel2Data[i].title);
+								$(ob).find('img').attr('title', carousel2Data[i].title);
 							});
 							eu.europeana.fulldoc.setupAnalytics = true;
 						}
