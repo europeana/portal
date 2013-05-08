@@ -849,16 +849,6 @@ eu.europeana.fulldoc = {
 			
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
 
-			// measurement broken if img doesn't load but alt text is present
-			/*
-			$("#carousel-1-img-measure img").each(function(i, ob){
-				$(ob).data.alt = $(ob).attr("alt");
-				$(ob).attr("alt", "");
-			});
-			*/
-			
-			js.console.log("measured carousel 1 images: div width is " + $("#carousel-1-img-measure").width() );
-			
 			// this is where we go when carousel test images don't load
 			var initNoCarousel = function(){
 				
@@ -886,19 +876,10 @@ eu.europeana.fulldoc = {
 					}
 				}
 				else{
+					// if img doesn't load and alt text show, it can break layout
 					$('#carousel-1-img-measure').css('white-space',		'normal');
 					$('#carousel-1-img-measure').css('word-break',		'break-all');
-					/*
-					$("#carousel-1-img-measure img").each(function(i, ob){
-						$(ob).attr("alt", $(ob).data.alt);
-					});
-					 */
 				}
-				/*
-				$("#carousel-1-img-measure img").each(function(i, ob){
-					$(ob).attr("alt", $(ob).data.alt);
-				});
-				*/
 			};
 			
 			// Run carousel test and init if successful
