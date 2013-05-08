@@ -452,21 +452,6 @@ eu.europeana.fulldoc = {
 		var carouselInfo	= "carousel = " + ( typeof eu.europeana.fulldoc.carousel1 != 'undefined' );
 		var gaData			= "[" + gaCategory + ", " + gaAction + ", " + gaLabel + "]"
 
-		
-		js.console.log(
-			"-----TRIGGER CLICK-----" 
-			+ 
-			target
-			+ '\n' + 
-			targetInfo
-			+ '\n' + 
-			carouselInfo
-			+ '\n' + 
-			gaData
-			+ '\n' + 				
-			"-----------------------" 
-		);
-		
 		if(openLB){
 			eu.europeana.fulldoc.showLightbox();
 		}
@@ -714,6 +699,8 @@ eu.europeana.fulldoc = {
 						eu.europeana.fulldoc.lightboxOb.goTo(e.index);
 					}					
 					
+					$('#carousel-1 .galleria-stage .galleria-image:visible img').attr('title', carouselData[e.index].title);
+					
 				}); // end bind image
 				
 				eu.europeana.fulldoc.getCarouselIndex = function(){
@@ -863,10 +850,12 @@ eu.europeana.fulldoc = {
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
 
 			// measurement broken if img doesn't load but alt text is present
+			/*
 			$("#carousel-1-img-measure img").each(function(i, ob){
 				$(ob).data.alt = $(ob).attr("alt");
 				$(ob).attr("alt", "");
 			});
+			*/
 			
 			js.console.log("measured carousel 1 images: div width is " + $("#carousel-1-img-measure").width() );
 			
@@ -894,15 +883,22 @@ eu.europeana.fulldoc = {
 							eu.europeana.fulldoc.lightboxable = carouselData[0].external;
 							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 						}
-					}	
+					}
 				}
 				else{
 					$('#carousel-1-img-measure').css('white-space',		'normal');
 					$('#carousel-1-img-measure').css('word-break',		'break-all');
+					/*
 					$("#carousel-1-img-measure img").each(function(i, ob){
 						$(ob).attr("alt", $(ob).data.alt);
 					});
+					 */
 				}
+				/*
+				$("#carousel-1-img-measure img").each(function(i, ob){
+					$(ob).attr("alt", $(ob).data.alt);
+				});
+				*/
 			};
 			
 			// Run carousel test and init if successful
