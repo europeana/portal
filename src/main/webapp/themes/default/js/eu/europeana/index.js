@@ -367,7 +367,7 @@
 						success: function(data){
 							$("#section-pinterest .collapse-content").html(data.markup);
 							var carousel3Data = data.data.carousel3Data;
-							
+			//alert(JSON.stringify(carousel3Data));
 							$('#carousel-3').galleria({
 								dataSource:carousel3Data,
 								extend: function(e){
@@ -375,7 +375,7 @@
 							    	var thisGallery		= this;
 									
 									// add ellipsis
-									var doEllipsis = function(){
+									var doEllipsis = function(callback){
 										var ellipsisObjects = [];
 										$('.europeana-carousel-info').each(
 											function(i, ob){
@@ -389,6 +389,9 @@
 											}
 										}, 1000);
 										
+										if(callback){
+											callback();
+										}
 									};
 
 									var infoSelector = '#carousel-3 .galleria-thumbnails .galleria-image .europeana-carousel-info';
@@ -418,7 +421,19 @@
 									
 									$(this).ready(function(e) {
 										eu.europeana.vars.suppresResize = false;
-										setTimeout(doEllipsis, 100);
+										setTimeout(
+											function(){
+												doEllipsis(
+													function(){
+														$(imgSelector).each(function(i, ob){
+															ob = $(ob);
+															ob.attr("title", carousel3Data[i].title ? carousel3Data[i].title : '');
+															ob.attr("alt", carousel3Data[i].title ? carousel3Data[i].title : '');
+														});
+													}
+												);
+											}
+											, 100);
 									});
 								} 
 							});
