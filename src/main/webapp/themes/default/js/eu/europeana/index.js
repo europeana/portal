@@ -123,7 +123,6 @@
 							
 							// Info update
 							this.bind("image", function(e) {
-								var gallery = this;
 								$('#carousel-1 .linkButton').html(carouselData[e.index].linkDescription);
 								$('#carousel-1-external-info').html( $('#carousel-1 .galleria-info-title').html() );
 								$('#carousel-1 .galleria-stage .galleria-image:visible img').attr('alt',  carouselData[e.index].alt);
