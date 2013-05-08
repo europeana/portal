@@ -39,7 +39,8 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 					description:		"<spring:message code="${item.description}" />",
 					linkDescription:	"<spring:message code="${item.linkDescription}" />",
 					europeanaLink:		"${item.url}",
-					external:			"<spring:message code="${item.anchorTarget}" />"
+					external:			"<spring:message code="${item.anchorTarget}" />",
+					alt:				"<spring:message code="${item.imgAlt}" />"
 				};
 
 				<c:if test='${!empty item.translatableUrls}'>
