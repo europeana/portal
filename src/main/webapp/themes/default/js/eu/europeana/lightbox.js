@@ -153,29 +153,6 @@ eu.europeana.lightbox = function(){
 		});
 		
 		var isRight			= aspectClosest == aspectRight;
-
-		
-		
-		//////////////////////////////////////////////
-		/*
-		var zoomClosest = null;
-		$.each([aspectZoom, aspectClosest], function(){
-			  if (zoomClosest == null || Math.abs(this - aspectWin) < Math.abs(zoomClosest - aspectWin)) {
-				  zoomClosest = this;
-			  }
-			});
-
-		if(zoomClosest == aspectZoom){
-			alert("ZOOM will be bigger!");			
-		}
-		else{
-			alert("zC " + zoomClosest + "  aC " + aspectClosest  + "\n   " + aspectZoom);
-		}
-		*/
-		//////////////////////////////////////////////
-		
-		
-		
 		var availableHeight =	parseInt(
 			$(window).height()
 			- ( self.zoomed ? 0 : (isRight ? 0 : infoH) )
@@ -203,6 +180,20 @@ eu.europeana.lightbox = function(){
 		};
 		
 		var dim = testDimensions(imgW, imgH, 0);
+		
+		
+		var availableHeight =	parseInt($(window).height()) - brdr;
+		var availableWidth =	parseInt($(window).width()) - brdr;
+		
+		
+
+//		js.console.log(  (dim[0]*dim[1])  + "  v  "  + (dimZ[0]*dimZ[1])  );
+		
+		var isZoomable = false;
+		var dimZ = testDimensions(imgW, imgH, 0);
+		if( (dim[0]*dim[1]) < (dimZ[0]*dimZ[1]) ){
+			isZoomable = true;
+		}
 		
 		// set img
 		
@@ -237,12 +228,15 @@ eu.europeana.lightbox = function(){
 		}
 		
 		var zoom = self.cmp.find('#zoomIn');
-		if(img.width() < self.origImgW){
-			zoom.show();			
-			zoom.css('right', self.zoomed ? 0 : isRight ? self.infoW + 'px' : '0');			
+		if(isZoomable){
+			zoom.show();		
+			zoom.css('right', isRight ? self.infoW + 'px' : '0');
 		}
 		else if(!self.zoomed){
 			zoom.hide();
+		}
+		else if(self.zoomed){
+			zoom.css('right', 0);
 		}
 		
 		
