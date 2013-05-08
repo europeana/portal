@@ -47,7 +47,9 @@ html, body, h1, h2, h3, h4, h5, h6{
     color: #333;
 }
 
-input{	
+input,
+button,
+select{	
     /* font-family: 'SourceSansProRegular', Arial, sans-serif; */
 	font-family: Arial, sans-serif;
 }
