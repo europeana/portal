@@ -433,6 +433,18 @@ public class FullDocPage extends FullDocPreparation {
 			else if (imageUrl.toLowerCase().endsWith(".avi")) {
 				imageType = DocType.VIDEO.name();
 			}
+			else if (imageUrl.toLowerCase().endsWith(".doc")) {
+				imageType = DocType.TEXT.name();
+			}
+			else if (imageUrl.toLowerCase().endsWith(".jpeg")) {
+				imageType = DocType.IMAGE.name();
+			}
+			else if (imageUrl.toLowerCase().endsWith(".jpg")) {
+				imageType = DocType.IMAGE.name();
+			}
+			else if (imageUrl.toLowerCase().endsWith(".tif")) {
+				imageType = DocType.IMAGE.name();
+			}
 		}
 		return imageType;
 	}
