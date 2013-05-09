@@ -69,7 +69,8 @@
 	width:				110px;
 	height:				62px;
 	
-	margin-top:			0.025em;
+	
+	xxxxmargin-top:			0.025em;
 	display:			block;
 	
 	position:			relative;
@@ -105,6 +106,10 @@
 	.logo-t-and-c{
 		width:				206px;
 		height:				123px;		
+	}
+	
+	.logo{
+		top:				0.25em;
 	}
 	
 	/*
