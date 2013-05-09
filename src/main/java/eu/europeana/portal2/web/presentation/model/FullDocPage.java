@@ -69,13 +69,9 @@ public class FullDocPage extends FullDocPreparation {
 
 	private RightsValue rightsOption = null;
 
-	private String schemaOrgMappingFile;
-
 	private Map<String, String> allImages = null;
 
 	private List<Image> imagesToShow;
-
-	private boolean schemaOrgMappingInitialized = false;
 
 	private String lightboxRef = null;
 	private boolean lightboxRefChecked = false;
@@ -421,29 +417,9 @@ public class FullDocPage extends FullDocPreparation {
 	private String getImageType(String imageUrl, String docType){
 		String imageType = docType;
 		if (imageUrl != null) {
-			if (imageUrl.toLowerCase().endsWith(".mp3")) {
-				imageType = DocType.SOUND.name();
-			}
-			else if (imageUrl.toLowerCase().endsWith(".pdf")) {
-				imageType = DocType.TEXT.name();
-			}
-			else if (imageUrl.toLowerCase().endsWith(".mpg")) {
-				imageType = DocType.VIDEO.name();
-			}
-			else if (imageUrl.toLowerCase().endsWith(".avi")) {
-				imageType = DocType.VIDEO.name();
-			}
-			else if (imageUrl.toLowerCase().endsWith(".doc")) {
-				imageType = DocType.TEXT.name();
-			}
-			else if (imageUrl.toLowerCase().endsWith(".jpeg")) {
-				imageType = DocType.IMAGE.name();
-			}
-			else if (imageUrl.toLowerCase().endsWith(".jpg")) {
-				imageType = DocType.IMAGE.name();
-			}
-			else if (imageUrl.toLowerCase().endsWith(".tif")) {
-				imageType = DocType.IMAGE.name();
+			DocType type = DocType.getByExtention(imageUrl);
+			if (type != null) {
+				return type.name();
 			}
 		}
 		return imageType;
@@ -591,6 +567,7 @@ public class FullDocPage extends FullDocPreparation {
 	 * 
 	 * @return page title
 	 */
+	@Override
 	public String getPageTitle() {
 		StringBuilder title = new StringBuilder(getBaseTitle());
 		if (shortcut != null && StringArrayUtils.isNotBlank(shortcut.get("DcCreator"))) {
