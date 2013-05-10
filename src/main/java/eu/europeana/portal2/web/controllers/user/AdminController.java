@@ -96,13 +96,19 @@ public class AdminController {
 
 		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(false, offset, LIMIT);
 		for (ApiKey apiKey : apiKeys) {
-			usage.get(ACTUAL).put(apiKey.getId(), Long.valueOf(apiLogService.countByApiKeyByInterval(apiKey.getId(), DateIntervalUtils.getToday())));
-			usage.get(TOTAL).put(apiKey.getId(), Long.valueOf(apiLogService.countByApiKey(apiKey.getId())));
 			User user = apiKey.getUser();
 			if (!users.contains(user)) {
 				users.add(user);
 			}
 		}
+
+		// Requests API key statistics
+		for (User user : users) {
+			for (ApiKey apiKey : user.getApiKeys()) {
+				getUsageByApiKey(usage, apiKey.getId());
+			}
+		}
+
 		long t = (new Date().getTime() - t0);
 		log.info("get users took " + t);
 		model.setUsers(users);
@@ -259,5 +265,20 @@ public class AdminController {
 	 */
 	private String csvEncodeRecord(List<String> fields) {
 		return StringUtils.join(fields, FIELD_SEPARATOR) + RECORD_SEPARATOR;
+	}
+
+	/**
+	 * Gets and saves the total and actual usage by API key
+	 *
+	 * @param usage
+	 *   A map for collecting the usage statistics
+	 * @param apiKey
+	 *   The API key
+	 */
+	private void getUsageByApiKey(Map<String, Map<String, Long>> usage, String apiKey) {
+		long actual = apiLogService.countByApiKeyByInterval(apiKey, DateIntervalUtils.getToday());
+		long total = apiLogService.countByApiKey(apiKey);
+		usage.get(ACTUAL).put(apiKey, actual);
+		usage.get(TOTAL).put(apiKey, total);
 	}
 }
