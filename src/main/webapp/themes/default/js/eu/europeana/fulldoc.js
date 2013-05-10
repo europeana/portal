@@ -256,8 +256,9 @@ eu.europeana.fulldoc = {
 	
 	addThis : function() {
 		$('.shares-link').click(function(){
+			
 			js.loader.loadScripts([{
-				file: 'addthis' + js.min_suffix + '.js' + js.cache_helper + '&domready=1', //&async=1',
+				file: 'addthis' + js.min_suffix + '.js' + (js.cache_helper ? '?' : '&') + 'domready=1', //&async=1',
 				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 				callback : function() {
 
@@ -293,18 +294,33 @@ eu.europeana.fulldoc = {
 					$('.shares-link').html(
 						addThisHtml
 					);
+					
+					// Alert a message when the AddThis API is ready
+					function addthisReady(evt) {
+						try{
+					        var oEvent = document.createEvent('HTMLEvents');
+					        oEvent.initEvent('click', true, true);
+					        $('.addthis_button')[0].dispatchEvent(oEvent);
+
+						}
+						catch(e){
+							//alert("error [a] " + e);
+						}
+					}
 
 					com.addthis.init( null, true, false,
 						function(){
-							setTimeout(function() {
-								addthis_open( $('.addthis_button')[0], '', '[URL]', '[TITLE]');
-							},
-							200);
+							addthis.addEventListener('addthis.ready', addthisReady);
 						}		
 					);
 				}
 			}]);
 		});
+		
+		
+		if( $('#mobile-menu').is(':visible')  ){
+			$('.shares-link').click();
+		}
 	},
 	
 
