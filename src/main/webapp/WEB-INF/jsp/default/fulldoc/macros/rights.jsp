@@ -4,7 +4,7 @@
 
 <c:if test="${!empty model.rightsOption}">
 
-  <a href="${model.rightsOption.url}" title="${model.rightsOption.rightsText}" class="item-metadata rights-badge" target="_blank" <c:if test="${!inLightbox}">rel="xhv:license http://www.europeana.eu/schemas/edm/rights"</c:if>>
+  <a href="${model.rightsOption.url}" title="${model.rightsOption.rightsText}" class="item-metadata rights-badge" target="_blank" rel="xhv:license http://www.europeana.eu/schemas/edm/rights">
     
        <c:set var="rightsIcons" value="${fn:split(model.rightsOption.rightsIcon, ' ')}" />
          <c:forEach items="${rightsIcons}" var="rightsIcon">

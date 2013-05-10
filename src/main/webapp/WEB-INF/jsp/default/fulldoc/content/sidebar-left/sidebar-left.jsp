@@ -79,38 +79,6 @@
 							"type"	: "${fn:toLowerCase(image.type)}"
 						}
 					</c:if>
-
-// js manipulation pdf:
-/*
-	if( carouselData[carouselData.length-1].image == "http://europeanastatic.eu/api/image?uri=http://hdl.handle.net/10978/F475B1DF-116F-4723-AC7A-26A5FEB48367?locatt=view:level2&size=FULL_DOC"   ){
-		carouselData[carouselData.length-1].external = {
-				"url" 	: "http://cgil.maas.ccr.it/cgil/AJAXAttachment.ashx?resource=cgilcongenealogia/pdf/001065.pdf",
-				"type"	: "pdf"
-		}
-	}
-*/
-
-<%-- double data to test carousel init--%>
-<%--
-var carouselTest = [
-	{"src": decodeURI("${model.allImages[0].full}").replace(/&amp;/g, '&')},
-];
-
-carouselData[carouselData.length] = {
-	"image":		"http://www.2fort.cz/wp-content/forum-avatars/stewie_evil%20%283%29.jpg",
-	"title":		('${fn:escapeXml(model.objectTitle)}'),
-	"dataType":		"${fn:toLowerCase(dataType)}"
-};
-
-<c:if test="${fn:length(image.full) > 0}">
-	carouselData[carouselData.length-1].external = {
-		"url" 	: "http://content6.flixster.com/question/65/91/23/6591236_std.jpg",
-		"type"	: "${fn:toLowerCase(image.type)}"
-	}
-</c:if>
---%>
-<%-- end double data to test carousel init--%>
-
 				</c:forEach>
 			</c:if>
 
@@ -125,7 +93,6 @@ carouselData[carouselData.length] = {
 
 	<div class="original-context">
 		<%-- Rights --%>
-    <c:set var="inLightbox" scope="request" value="false" />
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 		<%-- Original context link --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
