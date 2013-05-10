@@ -132,12 +132,7 @@
 						
 					</a>
 				</li>
-				 --%>
-				 
-				<%--
-				<li id="shares-link" class="share-section">
-				 --%> 
-				
+				 --%>				
 				
 				<div class="action-link shares-link">
 					<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"><span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span></span>
