@@ -84,17 +84,6 @@ eu.europeana.fulldoc = {
 		// dependency group - addthis functionality
 		self.addThis();
 		
-		
-		/*
-		js.loader.loadScripts([{
-			file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
-			callback : function() {
-			}
-		}]);
-		*/
-		
-		
 		js.loader.loadScripts([{
 			name : 'translation-services',
 			file: 'translation-services' + js.min_suffix + '.js' + js.cache_helper,
