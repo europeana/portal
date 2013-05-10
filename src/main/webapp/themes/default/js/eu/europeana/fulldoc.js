@@ -266,8 +266,12 @@ eu.europeana.fulldoc = {
 						ui_click: true		// disable hover
 					});
 					
-					// nb: tweet does not accept twitter templates, it only accepts html attributes
-					// @see /js/com/addthis/addthis.js for those attributes
+					url = $('head meta[property="og:url"]').attr('content');
+					window.addthis_share = com.addthis.createShareObject({
+						// nb: twitter templates will soon be deprecated, no date is given
+						// @link http://www.addthis.com/help/client-api#configuration-sharing-templates
+						templates: { twitter: title + ': ' + url + ' #europeana' }
+					});
 					
 					var addThisHtml = com.addthis.getToolboxHtml({
 						html_class : '',
@@ -284,7 +288,6 @@ eu.europeana.fulldoc = {
 						addThisHtml
 					);
 					
-					// Alert a message when the AddThis API is ready
 					function addthisReady(evt) {
 						try{
 					        var oEvent = document.createEvent('HTMLEvents');
