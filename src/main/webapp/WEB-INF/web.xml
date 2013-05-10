@@ -81,6 +81,4 @@
 		<extension>htc</extension>
 		<mime-type>text/x-component</mime-type>
 	</mime-mapping>
-
-
 </web-app>
