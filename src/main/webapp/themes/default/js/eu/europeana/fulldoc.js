@@ -427,17 +427,14 @@ eu.europeana.fulldoc = {
 	triggerClick : function(e){
 		e = $(e.target);
 		
-		var target = "";
+		var target = "image";
 		var openLB = carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'image' && !eu.europeana.fulldoc.lightboxTestFailed && !$("#mobile-menu").is(":visible");
 		
-		if(e.hasClass('label') || e == eu.europeana.fulldoc.triggerPanel){
+		if(e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel){
 			target = "magnify";
 		}
 		else if(e[0].nodeName.toUpperCase()=='IMG'){
 			target = eu.europeana.fulldoc.lightboxTestFailed ? 'broken-img' : 'image';
-		}
-		else{
-			alert("target???");
 		}
 		
 		// category, action, label
