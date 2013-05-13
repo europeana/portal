@@ -18,4 +18,9 @@
 
 	<!-- DEVELOPMENT -->
 	<import resource="internal/portal2-development.xml" />
+	
+	<!-- SELENIUM MOCK DATA -->
+	<!-- 
+	<import resource="internal/portal2-selenium-test.xml" />
+	 -->
 </beans>
