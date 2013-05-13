@@ -57,7 +57,6 @@ import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.controllers.utils.ApiFulldocParser;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoParams;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
@@ -175,7 +174,7 @@ public class ObjectController {
 		// model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 
 		long tgetFullBean0 = (new Date()).getTime();
-		FullBean fullBean = getFullBean(collectionId, recordId, source, request);
+		FullBean fullBean = getFullBean(collectionId, recordId);
 		if (fullBean == null) {
 			throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
 		}
@@ -264,10 +263,6 @@ public class ObjectController {
 		return "redirect:" + sb.toString();
 	}
 
-	private FullBean getFullBean(String collectionId, String recordId, String source, HttpServletRequest request) {
-		return getFullBeanFromCorelib(collectionId, recordId);
-	}
-
 	/**
 	 * Get FullBean through corelib calls
 	 * 
@@ -275,7 +270,7 @@ public class ObjectController {
 	 * @param recordId
 	 * @return
 	 */
-	private FullBean getFullBeanFromCorelib(String collectionId, String recordId) {
+	private FullBean getFullBean(String collectionId, String recordId) {
 		FullBean fullBean = null;
 		String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
 		try {
