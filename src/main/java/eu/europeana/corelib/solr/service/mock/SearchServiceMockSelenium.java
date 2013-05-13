@@ -1,0 +1,175 @@
+/*
+ * Copyright 2007-2012 The Europeana Foundation
+ *
+ *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
+ *  by the European Commission;
+ *  You may not use this work except in compliance with the Licence.
+ *  
+ *  You may obtain a copy of the Licence at:
+ *  http://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under 
+ *  the Licence is distributed on an "AS IS" basis, without warranties or conditions of 
+ *  any kind, either express or implied.
+ *  See the Licence for the specific language governing permissions and limitations under 
+ *  the Licence.
+ */
+
+package eu.europeana.corelib.solr.service.mock;
+
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.apache.solr.client.solrj.SolrServerException;
+
+import eu.europeana.corelib.definitions.solr.DocType;
+import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.definitions.solr.beans.IdBean;
+import eu.europeana.corelib.definitions.solr.entity.Aggregation;
+import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.definitions.solr.model.Term;
+import eu.europeana.corelib.solr.entity.AggregationImpl;
+import eu.europeana.corelib.solr.exceptions.SolrTypeException;
+import eu.europeana.corelib.solr.model.ResultSet;
+import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.solr.service.mock.bean.BriefBeanMock;
+import eu.europeana.corelib.solr.service.mock.bean.FullBeanMock;
+import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
+
+/**
+ * @author Willem-Jan Boogerd <www.eledge.net/contact>
+ * 
+ * @see eu.europeana.corelib.solr.service.SearchService
+ */
+public class SearchServiceMockSelenium implements SearchService {
+
+	public static final String[] TITLE = new String[]{"Mock Title"};
+	public static final String[] AUTHOR = new String[]{"Mock Author"};
+	public static final String[] THUMBNAIL = new String[]{"MockThumbnail.jpg"};
+	public static final List<? extends Aggregation> aggregations2 = new ArrayList<AggregationImpl>();
+
+	private final Map<String, BriefBean> briefBeans;
+	
+	
+	public SearchServiceMockSelenium(){
+		super();
+		
+		this.briefBeans = new TreeMap<String, BriefBean>();
+		
+		for(int i=1; i<=200; i++){
+			String id = "/selenium1/" + StringUtils.leftPad( String.valueOf(i) , 3, "0");
+			this.briefBeans.put(id, new BriefBeanMock(id, DocType.IMAGE, "Test Title " + i));
+		}
+		
+	}
+	
+	@Override
+	public FullBean findById(String europeanaObjectId) {
+		
+		System.err.println("look up briefbean on " + europeanaObjectId );
+		
+		FullBean mockBean = new FullBeanMock(briefBeans.get(europeanaObjectId));
+		return mockBean;
+	}
+
+	@Override
+	public FullBean findById(String collectionId, String recordId) throws SolrTypeException {
+		return findById(EuropeanaUriUtils.createEuropeanaId(collectionId, recordId));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends IdBean> ResultSet<T> search(Class<T> beanClazz, Query query) {
+
+		System.err.println("SearchServiceMock (Selenium) - search()");
+		
+		ResultSet<T> resultSet = new ResultSet<T>();
+		
+		query.getPageSize();
+		query.getStart();
+
+		List<T> fullResults = new ArrayList<T>((Collection<T>)this.briefBeans.values());
+		
+		int lastResult = query.getStart() + query.getPageSize();
+		if(lastResult > fullResults.size()){
+			lastResult = fullResults.size();
+		}
+		
+		List<T> subResults = fullResults.subList(query.getStart(), lastResult);
+		
+		resultSet.setResults( subResults ) ;
+		resultSet.setResultSize(fullResults.size());
+		
+		return resultSet;
+	}
+
+	@Override
+	public List<Term> suggestions(String query, int pageSize) {
+		return null;
+	}
+
+	@Override
+	public FullBean resolve(String collectionId, String recordId)
+			throws SolrTypeException {
+		return null;
+	}
+
+	@Override
+	public FullBean resolve(String europeanaObjectId) throws SolrTypeException {
+		return null;
+	}
+
+	@Override
+	public List<BriefBean> findMoreLikeThis(String europeanaObjectId)
+			throws SolrServerException {
+		return null;
+	}
+
+	@Override
+	public List<Term> suggestions(String query, int pageSize, String field)
+			throws SolrTypeException {
+		return null;
+	}
+
+	@Override
+	public Map<String, Integer> seeAlso(List<String> params) {
+		return null;
+	}
+
+	@Override
+	public List<BriefBean> findMoreLikeThis(String europeanaObjectId, int count)
+			throws SolrServerException {
+		return null;
+	}
+
+	@Override
+	public <T extends IdBean> ResultSet<T> sitemap(Class<T> beanInterface,
+			Query query) throws SolrTypeException {
+		return null;
+	}
+
+	@Override
+	public FullBean findById(String europeanaObjectId, boolean similarItems)
+			throws SolrTypeException {
+		return null;
+	}
+
+	@Override
+	public Date getLastSolrUpdate() throws SolrServerException, IOException {
+		return null;
+	}
+
+	@Override
+	public String escapeQuery(String query) {
+		return null;
+	}
+}
