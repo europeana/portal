@@ -63,5 +63,11 @@ if [ "$DEBUG" = "1" ]; then
   CATALINA_OPTS="$CATALINA_OPTS -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
 fi
 
+if [ "$PROFILE" = "1" ]; then
+  YJP_HOME="/host/europeana/yourkit/yjp-12.0.3"
+  CATALINA_OPTS="$CATALINA_OPTS -Djava.awt.headless=true -agentpath:$YJP_HOME/bin/linux-x86-64/libyjpagent.so=disablestacktelemetry,disableexceptiontelemetry,builtinprobes=none,delay=10000"
+fi
+
+
 # run Tomcat
 export CATALINA_OPTS="$CATALINA_OPTS $EUROPEANA_OPTS" && echo $CATALINA_OPTS && $TOMCAT_DIR/bin/startup.sh

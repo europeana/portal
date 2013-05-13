@@ -5,6 +5,7 @@ SKIP_CORELIB=0
 SKIP_API=0
 SKIP_PORTAL=0
 DEBUG=0
+PROFILE=0
 
 for i
 do
@@ -23,6 +24,9 @@ do
   if [ "$i" = "-debug" ]; then
     DEBUG=1
   fi;
+  if [ "$i" = "-profile" ]; then
+    PROFILE=1
+  fi;
 done
 
-echo local=$LOCAL, skipApi=$SKIP_API, skipPortal=$SKIP_PORTAL, skipCorelib=$SKIP_CORELIB, debug=$DEBUG
+echo local=$LOCAL, skipApi=$SKIP_API, skipPortal=$SKIP_PORTAL, skipCorelib=$SKIP_CORELIB, debug=$DEBUG, profile=$PROFILE
