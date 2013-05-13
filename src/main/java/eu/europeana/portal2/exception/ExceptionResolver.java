@@ -40,7 +40,10 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		}
 
 		String stackTrace = ExceptionUtils.getFullStackTrace(exception);
-		log.severe(stackTrace);
+		if (problem != ProblemType.RECORD_NOT_FOUND) {
+			log.severe("problem.name: " + problem.name());
+			log.severe(stackTrace);
+		}
 
 		switch (problem.getAction()) {
 			case MAIL :
@@ -76,7 +79,6 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		}
 
 		ExceptionPage model = new ExceptionPage();
-		log.info("problem.name: " + problem.name());
 		model.setException(exception);
 		model.setProblem(problem);
 		model.setStackTrace(stackTrace);
