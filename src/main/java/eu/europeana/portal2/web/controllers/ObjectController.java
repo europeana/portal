@@ -265,33 +265,7 @@ public class ObjectController {
 	}
 
 	private FullBean getFullBean(String collectionId, String recordId, String source, HttpServletRequest request) {
-		FullBean fullBean = null;
-		if (source.equals("api2")) {
-			fullBean = getFullBeanFromApi(collectionId, recordId, request);
-		} else {
-			fullBean = getFullBeanFromCorelib(collectionId, recordId);
-		}
-		return fullBean;
-	}
-
-	/**
-	 * Get FullBean through API2 calls
-	 * 
-	 * @param collectionId
-	 * @param recordId
-	 * @param request
-	 * @return
-	 */
-	private FullBean getFullBeanFromApi(String collectionId, String recordId, HttpServletRequest request) {
-		FullBean fullBean = null;
-		ApiFulldocParser parser = new ApiFulldocParser(config.getApi2url(), config.getApi2key(),
-				config.getApi2secret(), request.getSession());
-		fullBean = parser.getFullBean(collectionId, recordId);
-		if (fullBean == null) {
-			log.severe("It is not possible to retrieve FullBean though API2 calls so now the controller tries it with corelib calls");
-			fullBean = getFullBeanFromCorelib(collectionId, recordId);
-		}
-		return fullBean;
+		return getFullBeanFromCorelib(collectionId, recordId);
 	}
 
 	/**
@@ -311,10 +285,8 @@ public class ObjectController {
 			}
 		} catch (SolrTypeException e) {
 			log.severe(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId, e.getMessage()));
-			// log.severe(ExceptionUtils.getStackTrace(e));
-		} catch (Exception e) {
-			log.severe(String.format("Exception during getting the full bean for ID %s: %s", europeanaId, e.getMessage()));
-			// log.severe(ExceptionUtils.getStackTrace(e));
+		} catch (NullPointerException e) {
+			log.severe(String.format("Exception during getting the full bean for ID %s: %s", europeanaId, e.getStackTrace()[0]));
 		}
 		return fullBean;
 	}
