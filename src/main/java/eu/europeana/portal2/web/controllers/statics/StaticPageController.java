@@ -34,7 +34,6 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.model.CorePageInfo;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.enums.Redirect;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
@@ -234,7 +233,7 @@ public class StaticPageController {
 		Injector injector = new Injector(request, response, null);
 
 		log.info("====== error.html ======");
-		CorePageInfo pageType = CorePageInfo.ERROR;
+		PortalPageInfo pageType = PortalPageInfo.ERROR;
 
 		clickStreamLogger.logStaticPageView(request, pageType);
 		EmptyModelPage model = new EmptyModelPage();
