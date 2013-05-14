@@ -244,14 +244,17 @@ eu.europeana.fulldoc = {
 	
 	
 	addThis : function() {
-		$('.shares-link').click(function(){
+		
+		
+		$('#lightbox_info .shares-link, #additional-info .shares-link').live('click', function(e){
 			
 			js.loader.loadScripts([{
 				file: 'addthis' + js.min_suffix + '.js' + (js.cache_helper ? '?' : '&') + 'domready=1', //&async=1',
 				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 				callback : function() {
 
-					$('.shares-link').unbind('click');
+					// remove live handlers
+					$('#lightbox_info .shares-link, #additional-info .shares-link').die('click');
 						
 					var url = $('head link[rel="canonical"]').attr('href'),
 					title = $('head title').html(),
@@ -273,7 +276,7 @@ eu.europeana.fulldoc = {
 						templates: { twitter: title + ': ' + url + ' #europeana' }
 					});
 					
-					var addThisHtml = com.addthis.getToolboxHtml({
+					window.addthis_html = com.addthis.getToolboxHtml({
 						html_class : '',
 						url : url,
 						title : title,
@@ -281,23 +284,22 @@ eu.europeana.fulldoc = {
 						services : {
 							compact : {}
 						},
-						link_html : $('.shares-link').html()
+						link_html : $('#additional-info .shares-link').html()
 					});
 
-					$('.shares-link').html(
-						addThisHtml
-					);
-					
-					function addthisReady(evt) {
-						try{
-					        var oEvent = document.createEvent('HTMLEvents');
-					        oEvent.initEvent('click', true, true);
-					        $('.addthis_button')[0].dispatchEvent(oEvent);
+					$('.shares-link').each(function(){
+						$(this).html(window.addthis_html);
+					});
 
-						}
-						catch(e){
-							//alert("error [a] " + e);
-						}
+					function addthisReady(evt) {
+				        var oEvent = document.createEvent('HTMLEvents');
+				        oEvent.initEvent('click', true, true);
+				        if($('#lightbox').is(':visible')){
+				        	$('#lightbox .addthis_button')[0].dispatchEvent(oEvent);
+				        }
+				        else{
+				        	$('#additional-info .addthis_button')[0].dispatchEvent(oEvent);
+				        }
 					}
 
 					com.addthis.init( null, true, false,
@@ -322,11 +324,11 @@ eu.europeana.fulldoc = {
 	initLightbox : function(url){
 		
 		js.console.log("initLightbox");
+		
 
 		if(!eu.europeana.fulldoc.lightboxOb){
 			var cmp = $('<div id="lightbox">'	+ $('#lightbox-proxy').html() + '</div>');
 			$(".iframe-wrap").empty().append(cmp);
-
 			
 			// copy title, meta and original context to the info panel
 			
@@ -345,31 +347,31 @@ eu.europeana.fulldoc = {
 				
 				if(metaValue){
 					var metaLabel = $(ob).html();
-					cmp.find('#lightbox_info ul').append(
+					cmp.find('#lightbox_info ul li.rights').before(
 						'<li><strong>' + metaLabel + '</strong>&nbsp;' + metaValue + '</li>'
 					);
 				}
 			});
-			
+
 			// original context
 			var ocLabel = $('.original-context div:not(:empty)');
 			ocLabel = ocLabel.length ? ocLabel.html() : '';
 			var ocValue = $('.original-context #urlRefIsShownAt');
 			ocValue = ocValue.length ? ocValue.clone().wrap('<p>').parent().html() : '';
 			
-			cmp.find('#lightbox_info ul').append(
+			cmp.find('#lightbox_info ul li.rights').before(
 				'<li><strong>' + ocLabel + ':</strong>&nbsp;'
 				+ ocValue + '</li>'
 			);
 
 			// rights
 			var rightsVal = $('.original-context .rights-badge').clone().wrap('<p>').parent().html();
-			cmp.find('#lightbox_info ul').append(
-				'<li class="rights">' + (rightsVal ? rightsVal : '') + '</li>'
+			
+			cmp.find('#lightbox_info ul li.rights').append(
+				 (rightsVal ? rightsVal : '') 
 			);				
-			
+
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
-			
 			
 			eu.europeana.fulldoc.lightboxOb.init(
 				{	"cmp"	:	cmp,
@@ -456,8 +458,9 @@ eu.europeana.fulldoc = {
 	
 	
 	showLightbox : function(){
+		
 		$(".iframe-wrap").empty().append(eu.europeana.fulldoc.lightboxOb.getCmp() );
-
+		
 		$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
 			$(ob).click(function(e){
 				if(e.target == ob){
@@ -490,10 +493,7 @@ eu.europeana.fulldoc = {
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
 		
-// Andy: check this out (resize block issue fix?):
-//if(!eu.europeana.fulldoc.lightboxOb){
-
-		if(carouselData[index ? index : 0].external.type == 'image'){
+		if(!eu.europeana.fulldoc.lightboxOb && carouselData[index ? index : 0].external.type == 'image'){
 
 			/*	if the image is wider than 200 px initialise the lightbox and show the trigger panel,
 			 	if not set the cursoe icon for the image and the eu.europeana.fulldoc.lightboxTestFailed variable to false	*/
@@ -534,7 +534,7 @@ eu.europeana.fulldoc = {
 		else{ // NON IMAGE
 			eu.europeana.fulldoc.showExternalTrigger(true, carouselData[index ? index : 0].external.type, gallery);
 		}
-//}
+
 		eu.europeana.fulldoc.triggerBind();
 	},
 	

@@ -23,6 +23,12 @@
 				<li class="title"><strong><spring:message code="dc_title_t"/>:</strong></li>
 			</c:if>
 
+			<li class="rights">
+			 	<div class="action-link shares-link">
+					<span class="icon-share" title="<spring:message code="Share_item_link_alt_t" />"><span class="action-title" title="<spring:message code="Share_item_link_alt_t" />"><spring:message code="Share_item_link_t" /></span></span>
+				</div>
+			</li>
+
 		</ul>
 	</div></div><a class="close"></a></div>
 

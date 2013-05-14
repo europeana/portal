@@ -127,8 +127,6 @@ eu.europeana.lightbox = function(){
 		 * 	2) recursively reduce img dimensions until img + info fit available space
 		 * 
 		 */ 
-
-		
 		var	img		= self.cmp.find('#lightbox_image'),
 			info	= self.cmp.find('#lightbox_info');
 		
@@ -306,13 +304,11 @@ eu.europeana.lightbox = function(){
 
 					list.css('height', '100%');
 
-	// BUG: when info under, expanded, scrolled then page resized (narrower), list is still "scrolled"
-					
-	//var ref = info.css('overflow-y');
-	//info.css('overflow-y', 'auto');
-	//info.scrollTop();
-	//info.css('overflow-y', ref);
-	//alert( info.css('overflow-y') );
+					// BUG: when info under, expanded, scrolled then page resized (narrower), list is still "scrolled"
+					//var ref = info.css('overflow-y');
+					//info.css('overflow-y', 'auto');
+					//info.scrollTop();
+					//info.css('overflow-y', ref);
 					
 					if(availHeight >= naturalHeight){
 						info.css('height', naturalHeight + 1);  // add the one to stop a .2 pixel height variation causing a scrollbar to appear 
@@ -374,12 +370,21 @@ eu.europeana.lightbox = function(){
 						}
 					);
 				}
-				
 			}
+			
+			if(window.addthis_config && !$('#lightbox-info .icon-share').parent().hasClass('addthis_button') ){
+				$('#lightbox div.shares-link').html(window.addthis_html);  
+				addthis.button( $('#lightbox div.shares-link')[0], window.addthis_config, window.addthis_share );
+			}
+			
 		},
 
 		"goTo" : function(i){
 			self.navOb.goTo(i);
+		},
+		
+		"setCmp" : function(cmp){
+			self.cmp = cmp;
 		},
 		
 		"getCmp" : function(callback){
