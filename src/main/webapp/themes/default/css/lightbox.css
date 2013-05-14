@@ -114,9 +114,12 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 	display:	inline;
 }
 
+#lightbox_info .icon-share,
+#lightbox_info .icon-share .action-title,
 #lightbox_info a span{
 	color:	#fff;
 }
+
 
 .hide_show_meta{
 	height:		1em;
