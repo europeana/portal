@@ -187,7 +187,7 @@ js.utils = {
 		else{
 			newParam = '?rows=' + rows;			
 		}
-		console.log("updated href " +  href + newParam );
+		js.console.log("updated href " +  href + newParam );
 
 		if(typeof anchor == 'object'){
 			anchor.attr('href', href + newParam);
