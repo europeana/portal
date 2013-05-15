@@ -175,7 +175,7 @@ js.utils = {
 			href = anchor;
 		}
 		
-		if(typeof anchor == "undefined"){
+		if(typeof href == "undefined"){
 			return;
 		}
 		
