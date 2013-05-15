@@ -559,7 +559,8 @@ eu.europeana.fulldoc = {
 			
 			if(gallery){				
 				marginTrigger = ( $("#carousel-1").width() - $(gallery.getActiveImage()).width() ) / 2;
-				eu.europeana.fulldoc.triggerPanel.css("bottom", "-0.75em"); 
+				var top = $('#carousel-1').height() - (2 * $('#carousel-1 .galleria-thumbnails-container').height());
+				eu.europeana.fulldoc.triggerPanel.css("top", top + "px"); 
 			}
 			else{
 				marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
@@ -893,7 +894,10 @@ eu.europeana.fulldoc = {
 								if( window.showingPhone() ){
 									galleriaOffsetY	= 120;	
 								}
-								return tallestImageH + galleriaOffsetY;
+								
+								var res = (tallestImageH < 80 ? 80 : tallestImageH) + galleriaOffsetY;
+								return res;
+								
 							};
 							eu.europeana.fulldoc.initTopCarousel();
 						}
