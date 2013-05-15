@@ -169,10 +169,14 @@ js.utils = {
 		var href;
 		
 		if(typeof anchor == 'object'){
-			href		= anchor.attr('href');
+			href = anchor.attr('href');
 		}
 		if(typeof anchor == 'string'){
 			href = anchor;
+		}
+		
+		if(typeof anchor == "undefined"){
+			return;
 		}
 		
 		var newParam	= '';
