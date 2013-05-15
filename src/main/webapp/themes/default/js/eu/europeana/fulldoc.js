@@ -319,9 +319,6 @@ eu.europeana.fulldoc = {
 		if( navigator.userAgent.match(/iPhone/i) ){
 			$('.shares-link').click();			
 		}
-		
-		//if( $('#mobile-menu').is(':visible')  ){
-		//}
 	},
 	
 

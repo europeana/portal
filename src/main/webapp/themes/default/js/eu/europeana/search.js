@@ -338,9 +338,10 @@ eu.europeana.search = {
 			}]);
 		});
 		
-		if( $('#mobile-menu').is(':visible')  ){
-			$('.shares-link').click();
+		if( navigator.userAgent.match(/iPhone/i) ){
+			$('.shares-link').click();			
 		}
+
 	},
 	
 	
