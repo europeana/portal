@@ -26,6 +26,8 @@ eu.europeana.fulldoc = {
 			js.utils.fixSearchRowLinks($(ob));
 		});
 		
+		js.utils.fixSearchRowLinks($('#navigation a').first());
+		
 		
 		$('#item-save-tag')	.bind('submit', this.handleSaveTagSubmit );
 		$('#item-embed')	.bind('click', this.handleEmbedClick );
