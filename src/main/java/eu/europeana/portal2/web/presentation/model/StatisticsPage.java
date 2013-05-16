@@ -1,16 +1,25 @@
 package eu.europeana.portal2.web.presentation.model;
 
+import java.util.List;
 import java.util.Map;
 
+import eu.europeana.portal2.web.model.statistics.UserStatistics;
 import eu.europeana.portal2.web.presentation.model.data.AdminData;
 
 public class StatisticsPage extends AdminData {
 
 	private String type;
 
+	private String order;
+
+	/**
+	 * Whether the order is descending (true) or ascending (false)
+	 */
+	private boolean descending = false;
+
 	private Map<String, Long> dateStatistics;
 
-	private Map<String, Long> userStatistics;
+	private Map<Object, List<UserStatistics>> userStatistics;
 
 	private Map<String, Map<String, Integer>> typeStatistics;
 
@@ -20,6 +29,22 @@ public class StatisticsPage extends AdminData {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	public boolean isDescending() {
+		return descending;
+	}
+
+	public void setDescending(boolean descending) {
+		this.descending = descending;
 	}
 
 	public Map<String, Long> getDateStatistics() {
@@ -38,11 +63,11 @@ public class StatisticsPage extends AdminData {
 		this.typeStatistics = typeStatistics;
 	}
 
-	public Map<String, Long> getUserStatistics() {
+	public Map<Object, List<UserStatistics>> getUserStatistics() {
 		return userStatistics;
 	}
 
-	public void setUserStatistics(Map<String, Long> userStatistics) {
+	public void setUserStatistics(Map<Object, List<UserStatistics>> userStatistics) {
 		this.userStatistics = userStatistics;
 	}
 }

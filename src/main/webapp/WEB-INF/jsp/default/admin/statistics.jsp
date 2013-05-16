@@ -62,10 +62,42 @@
 
       <c:when test="${model.type == 'user'}">
         <h3><spring:message code="apistat_by_user_t" /></h3>
+        <c:set var="reverseName" value="false" />
+        <c:set var="reverseApi" value="false" />
+        <c:set var="reverseCount" value="false" />
+        <c:if test="${!model.descending}">
+          <c:choose>
+            <c:when test="${model.order == 'name'}">
+              <c:set var="reverseName" value="true" />
+            </c:when>
+            <c:when test="${model.order == 'apikey'}">
+              <c:set var="reverseApi" value="true" />
+            </c:when>
+            <c:when test="${model.order == 'count'}">
+              <c:set var="reverseCount" value="true" />
+            </c:when>
+          </c:choose>
+        </c:if>
+
         <table>
-          <c:forEach items="${model.userStatistics}" var="stat">
-            <tr><td>${stat.key}</td><td>${stat.value}</td></tr>
+          <thead>
+          <tr>
+            <th><a href="?type=user&order=name<c:if test="${reverseName}">&dir=desc</c:if>"><spring:message code="apistat_by_user_name_t" /></a></th>
+            <th><a href="?type=user&order=apikey<c:if test="${reverseApi}">&dir=desc</c:if>"><spring:message code="apistat_by_user_apikey_t" /></a></th>
+            <th><a href="?type=user&order=count<c:if test="${reverseCount}">&dir=desc</c:if>"><spring:message code="apistat_by_user_count_t" /></a></th>
+          </tr>
+          </thead>
+          <tbody>
+          <c:forEach items="${model.userStatistics}" var="stats">
+            <c:forEach items="${stats.value}" var="stat">
+              <tr>
+                <td>${stat.name}</td>
+                <td>${stat.apiKey}</td>
+                <td align="right">${stat.count}</td>
+              </tr>
+            </c:forEach>
           </c:forEach>
+          </tbody>
         </table>
       </c:when>
 
