@@ -3,6 +3,7 @@ package eu.europeana.portal2.web.presentation.model;
 import java.util.List;
 import java.util.Map;
 
+import eu.europeana.portal2.web.model.statistics.TypeStatistics;
 import eu.europeana.portal2.web.model.statistics.UserStatistics;
 import eu.europeana.portal2.web.presentation.model.data.AdminData;
 
@@ -21,7 +22,7 @@ public class StatisticsPage extends AdminData {
 
 	private Map<Object, List<UserStatistics>> userStatistics;
 
-	private Map<String, Map<String, Integer>> typeStatistics;
+	private Map<Object, List<TypeStatistics>> typeStatistics;
 
 	public String getType() {
 		return type;
@@ -55,11 +56,11 @@ public class StatisticsPage extends AdminData {
 		this.dateStatistics = dateStatistics;
 	}
 
-	public Map<String, Map<String, Integer>> getTypeStatistics() {
+	public Map<Object, List<TypeStatistics>> getTypeStatistics() {
 		return typeStatistics;
 	}
 
-	public void setTypeStatistics(Map<String, Map<String, Integer>> typeStatistics) {
+	public void setTypeStatistics(Map<Object, List<TypeStatistics>> typeStatistics) {
 		this.typeStatistics = typeStatistics;
 	}
 

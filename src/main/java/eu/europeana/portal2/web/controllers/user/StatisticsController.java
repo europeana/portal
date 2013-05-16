@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +33,8 @@ import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.corelib.utils.model.DateInterval;
+import eu.europeana.portal2.web.model.statistics.TypeStatistics;
+import eu.europeana.portal2.web.model.statistics.TypeStatisticsImpl;
 import eu.europeana.portal2.web.model.statistics.UserStatistics;
 import eu.europeana.portal2.web.model.statistics.UserStatisticsImpl;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -51,6 +54,19 @@ public class StatisticsController {
 	private static final List<String> TYPES = Arrays.asList(new String[]{"month", "date", "type", "user"});
 
 	private static final List<String> ORDERS = Arrays.asList(new String[]{"name", "count", "apikey"});
+
+	private static final Map<String, Integer> RECORD_TYPES = new HashMap<String, Integer>(){
+		private static final long serialVersionUID = 1L;
+		{
+			put("SEARCH", 1);
+			put("OBJECT", 2);
+			put("LIMIT", 3);
+			put("REDIRECT", 4);
+		}
+	};
+	
+	private static final int DEFAULT_TYPE_SYMBOL = 10;
+	private static final int LAST_TYPE_SYMBOL = 100;
 
 	@RequestMapping("/admin/statistics.html")
 	public ModelAndView statisticsHandler(
@@ -111,26 +127,38 @@ public class StatisticsController {
 	/**
 	 * Create the type based statistics
 	 */
-	private Map<String, Map<String, Integer>> getTypeStatistics() {
-		Map<String, Map<String, Integer>> stat = new TreeMap<String, Map<String, Integer>>();
+	private Map<Object, List<TypeStatistics>> getTypeStatistics() {
+		Map<Object, List<TypeStatistics>> stat = new TreeMap<Object, List<TypeStatistics>>();
+
 		DBObject types = apiLogService.getStatisticsByType();
 		for (String key : types.keySet()) {
 			BasicDBObject item = (BasicDBObject) types.get(key);
 			String recordType = item.getString("recordType");
 			String profile = item.getString("profile");
-			int count = item.getInt("count");
+			long count = item.getLong("count");
+			int typeSymbol = RECORD_TYPES.containsKey(recordType) ? RECORD_TYPES.get(recordType) : DEFAULT_TYPE_SYMBOL;
 
-			Map<String, Integer> itemStat;
-			if (stat.containsKey(recordType)) {
-				itemStat = stat.get(recordType);
-			} else {
-				itemStat = new TreeMap<String, Integer>();
-				itemStat.put("total", 0);
-				stat.put(recordType, itemStat);
+			if (!stat.containsKey(typeSymbol)) {
+				stat.put(typeSymbol, new ArrayList<TypeStatistics>());
 			}
-			itemStat.put(profile, count);
-			itemStat.put("total", (itemStat.get("total") + count));
+			stat.get(typeSymbol).add(new TypeStatisticsImpl(recordType, profile, count));
 		}
+
+		long total = 0;
+		for (Object typeSymbol : stat.keySet()) {
+			long subTotal = 0;
+			String recordType = null;
+			for (TypeStatistics itemStat : stat.get(typeSymbol)) {
+				total += itemStat.getCount();
+				subTotal += itemStat.getCount();
+				if (recordType == null) {
+					recordType = itemStat.getRecordType();
+				}
+			}
+			stat.get(typeSymbol).add(new TypeStatisticsImpl(recordType, "total", subTotal));
+		}
+		stat.put(LAST_TYPE_SYMBOL, new ArrayList<TypeStatistics>(Arrays.asList(new TypeStatisticsImpl("All record types", "total", total))));
+
 		return stat;
 	}
 
