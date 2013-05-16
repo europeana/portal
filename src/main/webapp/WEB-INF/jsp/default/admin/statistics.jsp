@@ -50,10 +50,11 @@
           <tbody>
             <c:forEach items="${model.typeStatistics}" var="stat">
               <c:forEach items="${stat.value}" var="item" varStatus="status">
-                <tr <c:if test="${item.key == 'total'}">class="total"</c:if>>
-                <td><c:if test="${status.first}">${stat.key}</c:if></td>
-                <td>${item.key}</td>
-                <td>${item.value}</td></tr>
+                <tr <c:if test="${item.profile == 'total'}">class="total"</c:if>>
+                  <td><c:if test="${status.first}">${item.recordType}</c:if></td>
+                  <td>${item.profile}</td>
+                  <td align="right">${item.count}</td>
+                </tr>
               </c:forEach>
             </c:forEach>
           </tbody>
