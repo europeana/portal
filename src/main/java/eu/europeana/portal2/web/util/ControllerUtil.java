@@ -39,11 +39,9 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.web.model.FragmentInfo;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.web.presentation.ThemeChecker;
-import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
 import eu.europeana.portal2.web.security.Portal2UserDetails;
 
@@ -109,7 +107,7 @@ public class ControllerUtil {
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;
 	}
-	
+
 	/*
 	 * Format full requested uri from HttpServletRequest
 	 */
