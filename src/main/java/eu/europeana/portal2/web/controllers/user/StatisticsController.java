@@ -23,20 +23,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-
 import eu.europeana.corelib.db.exception.DatabaseException;
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.ApiLogService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.definitions.model.statistics.TypeStatistics;
+import eu.europeana.corelib.definitions.model.statistics.UserStatistics;
 import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.corelib.utils.model.DateInterval;
-import eu.europeana.portal2.web.model.statistics.TypeStatistics;
-import eu.europeana.portal2.web.model.statistics.TypeStatisticsImpl;
-import eu.europeana.portal2.web.model.statistics.UserStatistics;
-import eu.europeana.portal2.web.model.statistics.UserStatisticsImpl;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.StatisticsPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
@@ -130,18 +125,16 @@ public class StatisticsController {
 	private Map<Object, List<TypeStatistics>> getTypeStatistics() {
 		Map<Object, List<TypeStatistics>> stat = new TreeMap<Object, List<TypeStatistics>>();
 
-		DBObject types = apiLogService.getStatisticsByType();
-		for (String key : types.keySet()) {
-			BasicDBObject item = (BasicDBObject) types.get(key);
-			String recordType = item.getString("recordType");
-			String profile = item.getString("profile");
-			long count = item.getLong("count");
-			int typeSymbol = RECORD_TYPES.containsKey(recordType) ? RECORD_TYPES.get(recordType) : DEFAULT_TYPE_SYMBOL;
+		List<TypeStatistics> types = apiLogService.getStatisticsByType();
+		for (TypeStatistics type : types) {
+			int typeSymbol = RECORD_TYPES.containsKey(type.getRecordType())
+							? RECORD_TYPES.get(type.getRecordType())
+							: DEFAULT_TYPE_SYMBOL;
 
 			if (!stat.containsKey(typeSymbol)) {
 				stat.put(typeSymbol, new ArrayList<TypeStatistics>());
 			}
-			stat.get(typeSymbol).add(new TypeStatisticsImpl(recordType, profile, count));
+			stat.get(typeSymbol).add(type);
 		}
 
 		long total = 0;
@@ -155,9 +148,9 @@ public class StatisticsController {
 					recordType = itemStat.getRecordType();
 				}
 			}
-			stat.get(typeSymbol).add(new TypeStatisticsImpl(recordType, "total", subTotal));
+			stat.get(typeSymbol).add(new TypeStatistics(recordType, "total", subTotal));
 		}
-		stat.put(LAST_TYPE_SYMBOL, new ArrayList<TypeStatistics>(Arrays.asList(new TypeStatisticsImpl("All record types", "total", total))));
+		stat.put(LAST_TYPE_SYMBOL, new ArrayList<TypeStatistics>(Arrays.asList(new TypeStatistics("All record types", "total", total))));
 
 		return stat;
 	}
@@ -186,12 +179,11 @@ public class StatisticsController {
 			}
 		}
 
-		DBObject users = apiLogService.getStatisticsByUser();
-		for (String key : users.keySet()) {
-			BasicDBObject item = (BasicDBObject) users.get(key);
-			String wskey = item.getString("apiKey");
+		List<UserStatistics> users = apiLogService.getStatisticsByUser();
+		for (UserStatistics userStatistics : users) {
 			StringBuilder nameInfo = new StringBuilder();
-			if (wskey != null) {
+			String wskey = userStatistics.getApiKey();
+			if (userStatistics.getApiKey() != null) {
 				ApiKey apiKey = null;
 				try {
 					apiKey = apiKeyService.findByID(wskey);
@@ -220,11 +212,11 @@ public class StatisticsController {
 				nameInfo.append("unknown");
 			}
 			String name = nameInfo.toString();
-			UserStatistics userStatistics = new UserStatisticsImpl(name, wskey, item.getLong("count"));
+			userStatistics.setName(name);
 
 			Object orderByKey;
 			if (orderBy.equals("count")) {
-				orderByKey = item.getLong("count");
+				orderByKey = userStatistics.getCount();
 			} else if (orderBy.equals("apikey")) {
 				orderByKey = wskey;
 			} else {

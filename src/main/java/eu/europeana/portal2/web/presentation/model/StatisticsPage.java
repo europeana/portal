@@ -3,8 +3,8 @@ package eu.europeana.portal2.web.presentation.model;
 import java.util.List;
 import java.util.Map;
 
-import eu.europeana.portal2.web.model.statistics.TypeStatistics;
-import eu.europeana.portal2.web.model.statistics.UserStatistics;
+import eu.europeana.corelib.definitions.model.statistics.TypeStatistics;
+import eu.europeana.corelib.definitions.model.statistics.UserStatistics;
 import eu.europeana.portal2.web.presentation.model.data.AdminData;
 
 public class StatisticsPage extends AdminData {
