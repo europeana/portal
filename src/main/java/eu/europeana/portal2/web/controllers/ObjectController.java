@@ -356,7 +356,7 @@ public class ObjectController {
 					for (String value : values) {
 						if (!StringUtils.isBlank(value) && value.length() < 500 && i < 20) {
 							SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(metaField, value);
-							suggestion.makeEscapedQuery(searchService.escapeQuery(suggestion.getQuery()));
+							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
 							fieldValues.add(suggestion);
 							i++;
 						}
