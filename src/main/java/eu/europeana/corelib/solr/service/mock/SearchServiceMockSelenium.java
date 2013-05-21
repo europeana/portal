@@ -167,9 +167,4 @@ public class SearchServiceMockSelenium implements SearchService {
 	public Date getLastSolrUpdate() throws SolrServerException, IOException {
 		return null;
 	}
-
-	@Override
-	public String escapeQuery(String query) {
-		return null;
-	}
 }
