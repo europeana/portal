@@ -44,33 +44,35 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
 
 /**
- * During registration, users click on an email link to end up here with a
- * "token" that allows them to proceed with registration. They have to choose a
- * user name, password etc.
+ * During registration, users click on an email link to end up here with a "token" that allows them to proceed with
+ * registration. They have to choose a user name, password etc.
  * 
- * @author Gerald de Jong <geralddejong@gmail.com>
  */
-
 @Controller
 @RequestMapping("/api/registration.html")
 public class RegisterApiPageController {
 
-	@Resource(name = "corelib_db_userService") private UserService userService;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name = "corelib_db_tokenService") private TokenService tokenService;
+	@Resource(name = "corelib_db_tokenService")
+	private TokenService tokenService;
 
-	@Resource(name = "corelib_web_emailService") private EmailService emailService;
+	@Resource(name = "corelib_web_emailService")
+	private EmailService emailService;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
-	@Resource(name = "configurationService") private Configuration config;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ApiKeyService apiKeyService;
+	@Resource
+	private ApiKeyService apiKeyService;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static final String REQUEST_API = "RequestAPI";
-	private static final String REGISTER_API = "RegisterAPI";
 
 	/**
 	 * The default daily usage limit of API
@@ -84,12 +86,9 @@ public class RegisterApiPageController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	protected ModelAndView getRequest(
-			@RequestParam(value = "token", required = false, defaultValue="") String tokenKey,
-			@ModelAttribute("model") RegisterApiPage model,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale) 
-					throws EuropeanaQueryException, DatabaseException {
+			@RequestParam(value = "token", required = false, defaultValue = "") String tokenKey,
+			@ModelAttribute("model") RegisterApiPage model, HttpServletRequest request, HttpServletResponse response,
+			Locale locale) throws EuropeanaQueryException, DatabaseException {
 
 		log.info("================= /api/registration.html GET ==================");
 		Injector injector = new Injector(request, response, locale);
@@ -124,11 +123,9 @@ public class RegisterApiPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView formSubmit(
-			@Valid @ModelAttribute("model") RegisterApiPage model,
-			BindingResult result, HttpServletRequest request,
-			HttpServletResponse response, Locale locale)
-			throws EuropeanaQueryException, DatabaseException {
+	protected ModelAndView formSubmit(@Valid @ModelAttribute("model") RegisterApiPage model, BindingResult result,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws EuropeanaQueryException,
+			DatabaseException {
 		log.info("================= /api/registration.html POST ==================");
 
 		Injector injector = new Injector(request, response, locale);
@@ -170,19 +167,18 @@ public class RegisterApiPageController {
 			log.info("Creating API user");
 			String token = model.getToken();
 			log.info("token: " + token);
-			User user = userService.createApiKey(token,
-				model.getEmail(), model.getApiKey(), model.getPrivateKey(),
-				DEFAULT_USAGE_LIMIT, model.getEmail(), // use email for username
-				model.getCompany(), model.getCountry(), model.getFirstName(),
-				model.getLastName(), model.getWebsite(), model.getAddress(), 
-				model.getPhone(), model.getFieldOfWork());
+			apiKeyService.createApiKey(token, model.getEmail(), model.getApiKey(), model.getPrivateKey(),
+					DEFAULT_USAGE_LIMIT,
+					model.getEmail(), // use email for username
+					model.getCompany(), model.getCountry(), model.getFirstName(), model.getLastName(),
+					model.getWebsite(), model.getAddress(), model.getPhone(), model.getFieldOfWork());
 			ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 
-			log.info("User: " + user);
+			log.info("User: " + apiKey.getUser());
 			log.info("ApiKey: " + apiKey);
 			tokenService.remove(tokenService.findByID(token));
 			log.info("token is removed: " + model.getToken());
-			sendNotificationEmails(user, apiKey);
+			sendNotificationEmails(apiKey.getUser(), apiKey);
 			target = PortalPageInfo.API_REGISTER_SUCCESS;
 		}
 
@@ -209,11 +205,9 @@ public class RegisterApiPageController {
 		// pass phrase. Note that the number 0 and the letter 'O' have been
 		// removed to avoid confusion between the two. The same is true
 		// of 'I', 1, and 'l'.
-		final char[] allowableCharacters = new char[] { 'a', 'b', 'c', 'd',
-				'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q',
-				'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C',
-				'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q',
-				'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '2', '3', '4',
+		final char[] allowableCharacters = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm',
+				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+				'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '2', '3', '4',
 				'5', '6', '7', '8', '9' };
 
 		final int max = allowableCharacters.length - 1;
@@ -231,8 +225,7 @@ public class RegisterApiPageController {
 		try {
 			return (apiKeyService.findByID(apiKey) == null);
 		} catch (DatabaseException e) {
-			log.severe("DatabaseException while finding apikey: "
-					+ e.getLocalizedMessage());
+			log.severe("DatabaseException while finding apikey: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 		return false;
@@ -252,7 +245,8 @@ public class RegisterApiPageController {
 			final int PASS_MAX = 30;
 
 			if (form.getRequestedAction().equals(REQUEST_API)) {
-				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "apiKey.required", "Email address is required");
+				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "apiKey.required",
+						"Email address is required");
 				if (!ControllerUtil.validEmailAddress(form.getEmail())) {
 					errors.rejectValue("email", "email.invalid", "Invalid email address.");
 				}
@@ -260,8 +254,10 @@ public class RegisterApiPageController {
 			}
 
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "apiKey", "apiKey.required", "API key is required");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "privateKey", "privateKey.required", "Private key is required");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required", "First name is required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "privateKey", "privateKey.required",
+					"Private key is required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required",
+					"First name is required");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.required", "Last name is required");
 			if (!validApiKey(form.getApiKey())) {
 				errors.rejectValue("apiKey", "apiKey.invalidChars", "API key may only contain letters, and digits.");
@@ -269,9 +265,7 @@ public class RegisterApiPageController {
 
 			if (form.getApiKey() != null) {
 				if (form.getApiKey().length() > PASS_MAX) {
-					errors.rejectValue(
-							"apiKey",
-							"apiKey.tooLong",
+					errors.rejectValue("apiKey", "apiKey.tooLong",
 							String.format("API Key is too long, it should be max %d characters.", PASS_MAX));
 				}
 
@@ -282,16 +276,12 @@ public class RegisterApiPageController {
 
 			if (form.getPrivateKey() != null) {
 				if (form.getPrivateKey().length() < PASS_MIN) {
-					errors.rejectValue(
-							"privateKey",
-							"privateKey.length",
-							String.format("Private key is too short, it should be %d-%d character.", PASS_MIN, PASS_MAX));
+					errors.rejectValue("privateKey", "privateKey.length", String.format(
+							"Private key is too short, it should be %d-%d character.", PASS_MIN, PASS_MAX));
 				}
 
 				if (form.getPrivateKey().length() > PASS_MAX) {
-					errors.rejectValue(
-							"privateKey",
-							"privateKey.length",
+					errors.rejectValue("privateKey", "privateKey.length",
 							String.format("Private key is too long, it should be %d-%d character.", PASS_MIN, PASS_MAX));
 				}
 			}

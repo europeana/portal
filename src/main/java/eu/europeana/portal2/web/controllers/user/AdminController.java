@@ -168,7 +168,7 @@ public class AdminController {
 		log.info("==== admin/removeApiKey.html ====");
 		log.info(String.format("%s, %s", userId, apiKey));
 
-		userService.removeApiKey(userId, apiKey);
+		apiKeyService.removeApiKey(userId, apiKey);
 
 		return "redirect:/admin.html";
 	}
