@@ -174,14 +174,14 @@ public class SuggestionControllerSpeedTest {
 									}
 								}
 								//return the term, the number of hits for each collation and the field that it should be mapped to
-								Term term = new Term(termResult.toString().trim(), collation.getNumberOfHits(), field);
+								Term term = new Term(termResult.toString().trim(), collation.getNumberOfHits(), field, null);
 								results.add(term);
 							}
 						}
 					} else {
 						for (Suggestion suggestion : spResponse.getSuggestions()) {
 							for (String term : suggestion.getSuggestions()) {
-								results.add(new Term(term, 1, field));
+								results.add(new Term(term, 1, field, null));
 							}
 						}
 					}

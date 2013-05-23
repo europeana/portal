@@ -21,6 +21,7 @@ import java.util.List;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
@@ -28,7 +29,6 @@ import eu.europeana.portal2.web.presentation.model.abstracts.RestLocationsData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanViewDecorator;
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public abstract class FullDocData extends RestLocationsData<Void> {

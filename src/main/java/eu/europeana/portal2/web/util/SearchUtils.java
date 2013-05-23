@@ -32,13 +32,13 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.utils.NavigationUtils;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.ModelUtils;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class SearchUtils {
 

@@ -20,7 +20,7 @@ package eu.europeana.portal2.web.presentation.model;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 
 public class FullRecordPage extends FullRecordData {
 

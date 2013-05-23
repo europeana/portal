@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.Configuration;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class BreadcrumbDecorator extends BreadCrumb {

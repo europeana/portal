@@ -2,8 +2,6 @@ package eu.europeana.portal2.web.presentation.model;
 
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * Object for displaying active filters
  * 

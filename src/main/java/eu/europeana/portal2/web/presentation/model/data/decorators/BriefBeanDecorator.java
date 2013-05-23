@@ -31,8 +31,8 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class BriefBeanDecorator implements BriefBean {
 

@@ -26,11 +26,11 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.Configuration;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.data.SearchEmbeddedData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public abstract class SearchPreparation extends SearchEmbeddedData {
 

@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.DocIdWindow;
 import eu.europeana.portal2.web.presentation.model.DocIdWindowPager;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 

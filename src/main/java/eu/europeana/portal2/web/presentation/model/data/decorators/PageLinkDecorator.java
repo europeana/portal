@@ -19,9 +19,9 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
 
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.PageLink;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
 
 public class PageLinkDecorator extends PageLink {
 

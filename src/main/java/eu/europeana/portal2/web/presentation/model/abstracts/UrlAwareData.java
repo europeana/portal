@@ -19,7 +19,7 @@ package eu.europeana.portal2.web.presentation.model.abstracts;
 
 import java.io.UnsupportedEncodingException;
 
-import eu.europeana.portal2.web.presentation.utils.UrlBuilder;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 
 public abstract class UrlAwareData<T> extends ResultPageData<T> {
 
