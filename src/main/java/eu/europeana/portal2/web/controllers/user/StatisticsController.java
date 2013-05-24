@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,7 +47,9 @@ public class StatisticsController {
 
 	@Resource private ApiLogService apiLogService;
 
-	private static final List<String> TYPES = Arrays.asList(new String[]{"month", "date", "type", "user"});
+	private static final List<String> TYPES = Arrays.asList(new String[]{
+		"month", "date", "type", "user", "monthsByUser", "usersByMonth"
+	});
 
 	private static final List<String> ORDERS = Arrays.asList(new String[]{"name", "count", "apikey"});
 
@@ -59,13 +62,14 @@ public class StatisticsController {
 			put("REDIRECT", 4);
 		}
 	};
-	
+
 	private static final int DEFAULT_TYPE_SYMBOL = 10;
 	private static final int LAST_TYPE_SYMBOL = 100;
 
 	@RequestMapping("/admin/statistics.html")
 	public ModelAndView statisticsHandler(
 			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "month", required = false, defaultValue="0") int month,
 			@RequestParam(value = "order", required = false, defaultValue="name") String order,
 			@RequestParam(value = "dir", required = false, defaultValue="") String direction,
 			HttpServletRequest request,
@@ -85,6 +89,7 @@ public class StatisticsController {
 			order = "name";
 		}
 		model.setOrder(order);
+		model.setMonth(month);
 
 		if (direction.equals("desc")) {
 			model.setDescending(true);
@@ -97,7 +102,11 @@ public class StatisticsController {
 		} else if (type.equals("user")) {
 			model.setUserStatistics(getUserStatistics(order, model.isDescending()));
 		} else if (type.equals("month")) {
-			model.setDateStatistics(getMonthStatistics());
+			model.setMonthStatistics(getMonthsStatistics());
+		} else if (type.equals("usersByMonth")) {
+			// getUsersByMonthStatistics(monthInput);
+			model.setUserStatistics(getUsersByMonthStatistics(month, order, model.isDescending()));
+			model.setMonthLabel(getMonthLabel(month));
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_STATISTICS);
@@ -159,75 +168,46 @@ public class StatisticsController {
 	 * Create the user based statistics
 	 */
 	private Map<Object, List<UserStatistics>> getUserStatistics(String orderBy, boolean descending) {
-
-		Map<Object, List<UserStatistics>> stat;
-		if (!descending) {
-			stat = new TreeMap<Object, List<UserStatistics>>();
-		} else {
-			if (orderBy.equals("count")) {
-				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
-					public int compare(Object a, Object b) {
-						return ((Long)b).compareTo((Long)a);
-					}
-				});
-			} else {
-				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
-					public int compare(Object a, Object b) {
-						return ((String)b).compareTo((String)a);
-					}
-				});
-			}
-		}
-
+		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 		List<UserStatistics> users = apiLogService.getStatisticsByUser();
-		for (UserStatistics userStatistics : users) {
-			StringBuilder nameInfo = new StringBuilder();
-			String wskey = userStatistics.getApiKey();
-			if (userStatistics.getApiKey() != null) {
-				ApiKey apiKey = null;
-				try {
-					apiKey = apiKeyService.findByID(wskey);
-				} catch (DatabaseException e) {
-					log.severe("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
-				}
-				if (apiKey != null) {
-					User user = apiKey.getUser();
-					if (user != null) {
-						if (!StringUtils.isBlank(user.getLastName())
-							&& !StringUtils.isBlank(user.getFirstName())) {
-							nameInfo.append(user.getLastName()).append(", ").append(user.getFirstName());
-						} else if (!StringUtils.isBlank(user.getEmail())) {
-							nameInfo.append(user.getEmail());
-						}
-					}
-				} else {
-					log.warning("API key object found for wskey: " + wskey);
-				}
+		resolveUsers(users, stat, orderBy);
 
-				if (nameInfo.length() == 0) {
-					nameInfo.append("unknown");
-				}
-			} else {
-				log.warning("No wskey");
-				nameInfo.append("unknown");
-			}
-			String name = nameInfo.toString();
-			userStatistics.setName(name);
+		return stat;
+	}
 
-			Object orderByKey;
-			if (orderBy.equals("count")) {
-				orderByKey = userStatistics.getCount();
-			} else if (orderBy.equals("apikey")) {
-				orderByKey = wskey;
-			} else {
-				orderByKey = name;
-			}
+	private Map<Object, List<UserStatistics>> getUsersByMonthStatistics(int month, String orderBy, boolean descending) {
+		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 
-			if (!stat.containsKey(orderByKey)) {
-				stat.put(orderByKey, new ArrayList<UserStatistics>());
-			}
-			stat.get(orderByKey).add(userStatistics);
+		DateInterval interval = DateIntervalUtils.getMonth(new DateTime().getMonthOfYear() - month);
+		List<UserStatistics> users = apiLogService.getStatisticsByUsersByInterval(interval);
+		resolveUsers(users, stat, orderBy);
+
+		return stat;
+	}
+	
+	private String getMonthLabel(int month) {
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+		DateTime now = new DateTime();
+		DateInterval interval = DateIntervalUtils.getMonth(now.getMonthOfYear() - month);
+		String label = String.format("%s&mdash;%s" ,  dt1.format(interval.getBegin()), dt1.format(interval.getEnd()));
+		return label;
+	}
+
+
+	/**
+	 * Create the month based statistics
+	 */
+	private List<MonthStatistics> getMonthsStatistics() {
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+		DateTime now = new DateTime();
+		List<MonthStatistics> stat = new LinkedList<MonthStatistics>();
+		for (int month = 1, max = now.getMonthOfYear(); month <= max; month++) {
+			DateInterval interval = DateIntervalUtils.getMonth(max - month);
+			long count =  apiLogService.countByInterval(interval);
+			String label = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
+			stat.add(new MonthStatistics(month, label, count));
 		}
+		log.info("size: " + stat.size());
 		return stat;
 	}
 
@@ -247,4 +227,89 @@ public class StatisticsController {
 		return stat;
 	}
 
+	/**
+	 * Returns the users with names
+	 *
+	 * @param users
+	 *   The users match for the criterias
+	 * @param stat
+	 *   The ordered map
+	 * @param orderBy
+	 *   The ordering key
+	 * @return
+	 */
+	private void resolveUsers(List<UserStatistics> users, Map<Object, List<UserStatistics>> stat, String orderBy) {
+		for (UserStatistics userStatistics : users) {
+			StringBuilder nameInfo = new StringBuilder();
+			String wskey = userStatistics.getApiKey();
+			if (wskey != null) {
+				ApiKey apiKey = null;
+				try {
+					apiKey = apiKeyService.findByID(wskey);
+				} catch (DatabaseException e) {
+					log.severe("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
+				}
+				if (apiKey != null) {
+					User user = apiKey.getUser();
+					if (user != null) {
+						if (!StringUtils.isBlank(user.getLastName())
+								&& !StringUtils.isBlank(user.getFirstName())) {
+							nameInfo.append(user.getLastName()).append(", ").append(user.getFirstName());
+						} else if (!StringUtils.isBlank(user.getEmail())) {
+							nameInfo.append(user.getEmail());
+						}
+					}
+				} else {
+					log.warning("API key object found for wskey: " + wskey);
+				}
+
+				if (nameInfo.length() == 0) {
+					nameInfo.append("unknown");
+				}
+			} else {
+				log.warning("No wskey");
+				continue;
+			}
+			String name = nameInfo.toString();
+			userStatistics.setName(name);
+
+			Object orderByKey;
+			if (orderBy.equals("count")) {
+				orderByKey = userStatistics.getCount();
+			} else if (orderBy.equals("apikey")) {
+				orderByKey = wskey;
+			} else {
+				orderByKey = name;
+			}
+
+			if (!stat.containsKey(orderByKey)) {
+				stat.put(orderByKey, new ArrayList<UserStatistics>());
+			}
+			stat.get(orderByKey).add(userStatistics);
+		}
+	}
+
+	private Map<Object, List<UserStatistics>> createUserStatisticsMap(String orderBy, boolean descending) {
+		Map<Object, List<UserStatistics>> stat;
+
+		if (!descending) {
+			stat = new TreeMap<Object, List<UserStatistics>>();
+		} else {
+			if (orderBy.equals("count")) {
+				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
+					public int compare(Object a, Object b) {
+						return ((Long)b).compareTo((Long)a);
+					}
+				});
+			} else {
+				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
+					public int compare(Object a, Object b) {
+						return ((String)b).compareTo((String)a);
+					}
+				});
+			}
+		}
+
+		return stat;
+	}
 }
