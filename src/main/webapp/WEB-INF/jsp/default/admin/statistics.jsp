@@ -61,8 +61,17 @@
         </table>
       </c:when>
 
-      <c:when test="${model.type == 'user'}">
+      <c:when test="${model.type == 'user' || model.type == 'usersByMonth'}">
         <h3><spring:message code="apistat_by_user_t" /></h3>
+        <c:if test="${model.type == 'usersByMonth'}">
+          <h4>${model.monthLabel}</h4>
+        </c:if>
+
+        <c:set var="defaultParams" value="type=${model.type}" />
+        <c:if test="${model.type == 'usersByMonth'}">
+          <c:set var="defaultParams" value="${defaultParams}&month=${model.month}" />
+        </c:if>
+
         <c:set var="reverseName" value="false" />
         <c:set var="reverseApi" value="false" />
         <c:set var="reverseCount" value="false" />
@@ -82,11 +91,11 @@
 
         <table>
           <thead>
-          <tr>
-            <th><a href="?type=user&order=name<c:if test="${reverseName}">&dir=desc</c:if>"><spring:message code="apistat_by_user_name_t" /></a></th>
-            <th><a href="?type=user&order=apikey<c:if test="${reverseApi}">&dir=desc</c:if>"><spring:message code="apistat_by_user_apikey_t" /></a></th>
-            <th><a href="?type=user&order=count<c:if test="${reverseCount}">&dir=desc</c:if>"><spring:message code="apistat_by_user_count_t" /></a></th>
-          </tr>
+            <tr>
+              <th><a href="?${defaultParams}&order=name<c:if test="${reverseName}">&dir=desc</c:if>"><spring:message code="apistat_by_user_name_t" /></a></th>
+              <th><a href="?${defaultParams}&order=apikey<c:if test="${reverseApi}">&dir=desc</c:if>"><spring:message code="apistat_by_user_apikey_t" /></a></th>
+              <th><a href="?${defaultParams}&order=count<c:if test="${reverseCount}">&dir=desc</c:if>"><spring:message code="apistat_by_user_count_t" /></a></th>
+            </tr>
           </thead>
           <tbody>
           <c:forEach items="${model.userStatistics}" var="stats">
@@ -105,9 +114,17 @@
       <c:when test="${model.type == 'month'}">
         <h3><spring:message code="apistat_by_month_t" /></h3>
         <table>
-          <c:forEach items="${model.dateStatistics}" var="stat">
-            <tr><td>${stat.key}</td><td>${stat.value}</td></tr>
-          </c:forEach>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:forEach items="${model.monthStatistics}" var="stat">
+              <tr><td><a href="?type=usersByMonth&month=${stat.month}">${stat.label}</a></td><td>${stat.count}</td></tr>
+            </c:forEach>
+          </tbody>
         </table>
       </c:when>
     </c:choose>
