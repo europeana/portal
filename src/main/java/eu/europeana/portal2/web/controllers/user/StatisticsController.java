@@ -48,7 +48,7 @@ public class StatisticsController {
 	@Resource private ApiLogService apiLogService;
 
 	private static final List<String> TYPES = Arrays.asList(new String[]{
-		"month", "date", "type", "user", "monthsByUser", "usersByMonth", "usersByRecordType"
+		"month", "date", "type", "user", "monthsByUser", "usersByMonth", "usersByRecordType", "recordTypesByuser", "apiKeyInfo"
 	});
 
 	private static final List<String> ORDERS = Arrays.asList(new String[]{"name", "count", "apikey"});
@@ -72,6 +72,7 @@ public class StatisticsController {
 			@RequestParam(value = "month", required = false, defaultValue="0") int month,
 			@RequestParam(value = "order", required = false, defaultValue="name") String order,
 			@RequestParam(value = "recordType", required = false, defaultValue="SEARCH") String recordType,
+			@RequestParam(value = "apiKey", required = false, defaultValue="") String apiKey,
 			@RequestParam(value = "dir", required = false, defaultValue="") String direction,
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -113,13 +114,17 @@ public class StatisticsController {
 		} else if (type.equals("usersByRecordType")) {
 			model.setUserStatistics(getUsersByRecordTypeStatistics(recordType, order, model.isDescending()));
 			model.setRecordType(recordType);
+		} else if (type.equals("apiKeyInfo")) {
+			model.setApiKey(apiKey);
+			model.setUserName(getUserName(apiKey));
+			model.setTypeStatistics(getRecordTypesByUresStatistics(apiKey));
+			model.setMonthStatistics(getMonthsByApiKeyStatistics(apiKey));
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_STATISTICS);
 		injector.postHandle(this, page);
 		return page;
 	}
-
 
 	/**
 	 * Create the date based statistics (last 30 days)
@@ -139,36 +144,16 @@ public class StatisticsController {
 	 * Create the type based statistics
 	 */
 	private Map<Object, List<TypeStatistics>> getTypeStatistics() {
-		Map<Object, List<TypeStatistics>> stat = new TreeMap<Object, List<TypeStatistics>>();
-
 		List<TypeStatistics> types = apiLogService.getStatisticsByType();
-		for (TypeStatistics type : types) {
-			int typeSymbol = RECORD_TYPES.containsKey(type.getRecordType())
-							? RECORD_TYPES.get(type.getRecordType())
-							: DEFAULT_TYPE_SYMBOL;
 
-			if (!stat.containsKey(typeSymbol)) {
-				stat.put(typeSymbol, new ArrayList<TypeStatistics>());
-			}
-			stat.get(typeSymbol).add(type);
-		}
+		return createOrderedTypeMap(types);
+	}
 
-		long total = 0;
-		for (Object typeSymbol : stat.keySet()) {
-			long subTotal = 0;
-			String recordType = null;
-			for (TypeStatistics itemStat : stat.get(typeSymbol)) {
-				total += itemStat.getCount();
-				subTotal += itemStat.getCount();
-				if (recordType == null) {
-					recordType = itemStat.getRecordType();
-				}
-			}
-			stat.get(typeSymbol).add(new TypeStatistics(recordType, "total", subTotal));
-		}
-		stat.put(LAST_TYPE_SYMBOL, new ArrayList<TypeStatistics>(Arrays.asList(new TypeStatistics("All record types", "total", total))));
+	private Map<Object, List<TypeStatistics>> getRecordTypesByUresStatistics(
+			String apiKey) {
+		List<TypeStatistics> types = apiLogService.getStatisticsByRecordTypesByUser(apiKey);
 
-		return stat;
+		return createOrderedTypeMap(types);
 	}
 
 	/**
@@ -196,7 +181,6 @@ public class StatisticsController {
 			String recordType, String orderBy, boolean descending) {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 		List<UserStatistics> users = apiLogService.getStatisticsByUsersByRecordType(recordType);
-		log.info("users: " + users.size());
 		resolveUsers(users, stat, orderBy);
 		return stat;
 	}
@@ -223,7 +207,22 @@ public class StatisticsController {
 			String label = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
 			stat.add(new MonthStatistics(month, label, count));
 		}
-		log.info("size: " + stat.size());
+		return stat;
+	}
+
+	/**
+	 * Create the month based statistics for a apiKey
+	 */
+	private List<MonthStatistics> getMonthsByApiKeyStatistics(String apiKey) {
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+		DateTime now = new DateTime();
+		List<MonthStatistics> stat = new LinkedList<MonthStatistics>();
+		for (int month = 1, max = now.getMonthOfYear(); month <= max; month++) {
+			DateInterval interval = DateIntervalUtils.getMonth(max - month);
+			long count =  apiLogService.countByApiKeyByInterval(apiKey, interval);
+			String label = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
+			stat.add(new MonthStatistics(month, label, count));
+		}
 		return stat;
 	}
 
@@ -256,37 +255,14 @@ public class StatisticsController {
 	 */
 	private void resolveUsers(List<UserStatistics> users, Map<Object, List<UserStatistics>> stat, String orderBy) {
 		for (UserStatistics userStatistics : users) {
-			StringBuilder nameInfo = new StringBuilder();
+			String name = null;
 			String wskey = userStatistics.getApiKey();
 			if (wskey != null) {
-				ApiKey apiKey = null;
-				try {
-					apiKey = apiKeyService.findByID(wskey);
-				} catch (DatabaseException e) {
-					log.severe("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
-				}
-				if (apiKey != null) {
-					User user = apiKey.getUser();
-					if (user != null) {
-						if (!StringUtils.isBlank(user.getLastName())
-								&& !StringUtils.isBlank(user.getFirstName())) {
-							nameInfo.append(user.getLastName()).append(", ").append(user.getFirstName());
-						} else if (!StringUtils.isBlank(user.getEmail())) {
-							nameInfo.append(user.getEmail());
-						}
-					}
-				} else {
-					log.warning("API key object found for wskey: " + wskey);
-				}
-
-				if (nameInfo.length() == 0) {
-					nameInfo.append("unknown");
-				}
+				name = getUserName(wskey);
 			} else {
 				log.warning("No wskey");
 				continue;
 			}
-			String name = nameInfo.toString();
 			userStatistics.setName(name);
 
 			Object orderByKey;
@@ -303,6 +279,34 @@ public class StatisticsController {
 			}
 			stat.get(orderByKey).add(userStatistics);
 		}
+	}
+
+	private String getUserName(String wskey) {
+		StringBuilder userName = new StringBuilder("");
+		ApiKey apiKey = null;
+		try {
+			apiKey = apiKeyService.findByID(wskey);
+		} catch (DatabaseException e) {
+			log.severe("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
+		}
+		if (apiKey != null) {
+			User user = apiKey.getUser();
+			if (user != null) {
+				if (!StringUtils.isBlank(user.getLastName())
+						&& !StringUtils.isBlank(user.getFirstName())) {
+					userName.append(user.getLastName()).append(", ").append(user.getFirstName());
+				} else if (!StringUtils.isBlank(user.getEmail())) {
+					userName.append(user.getEmail());
+				}
+			}
+		} else {
+			log.warning("API key object found for wskey: " + wskey);
+		}
+
+		if (userName.length() == 0) {
+			userName.append("unknown");
+		}
+		return userName.toString();
 	}
 
 	private Map<Object, List<UserStatistics>> createUserStatisticsMap(String orderBy, boolean descending) {
@@ -328,4 +332,38 @@ public class StatisticsController {
 
 		return stat;
 	}
+
+	private Map<Object, List<TypeStatistics>> createOrderedTypeMap(
+			List<TypeStatistics> types) {
+		Map<Object, List<TypeStatistics>> stat = new TreeMap<Object, List<TypeStatistics>>();
+
+		for (TypeStatistics type : types) {
+			int typeSymbol = RECORD_TYPES.containsKey(type.getRecordType())
+							? RECORD_TYPES.get(type.getRecordType())
+							: DEFAULT_TYPE_SYMBOL;
+
+			if (!stat.containsKey(typeSymbol)) {
+				stat.put(typeSymbol, new ArrayList<TypeStatistics>());
+			}
+			stat.get(typeSymbol).add(type);
+		}
+
+		long total = 0;
+		for (Object typeSymbol : stat.keySet()) {
+			long subTotal = 0;
+			String recordType = null;
+			for (TypeStatistics itemStat : stat.get(typeSymbol)) {
+				total += itemStat.getCount();
+				subTotal += itemStat.getCount();
+				if (recordType == null) {
+					recordType = itemStat.getRecordType();
+				}
+			}
+			stat.get(typeSymbol).add(new TypeStatistics(recordType, "total", subTotal));
+		}
+		stat.put(LAST_TYPE_SYMBOL, new ArrayList<TypeStatistics>(Arrays.asList(new TypeStatistics("All record types", "total", total))));
+
+		return stat;
+	}
+
 }

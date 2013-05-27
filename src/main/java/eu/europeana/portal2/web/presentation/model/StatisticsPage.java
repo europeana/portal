@@ -20,6 +20,10 @@ public class StatisticsPage extends AdminData {
 
 	private String recordType;
 
+	private String apiKey;
+
+	private String userName;
+
 	/**
 	 * Whether the order is descending (true) or ascending (false)
 	 */
@@ -111,5 +115,21 @@ public class StatisticsPage extends AdminData {
 
 	public void setRecordType(String recordType) {
 		this.recordType = recordType;
+	}
+
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

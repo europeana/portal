@@ -108,7 +108,7 @@
             <c:forEach items="${stats.value}" var="stat">
               <tr>
                 <td>${stat.name}</td>
-                <td>${stat.apiKey}</td>
+                <td><a href="?type=apiKeyInfo&apiKey=${stat.apiKey}">${stat.apiKey}</a></td>
                 <td align="right">${stat.count}</td>
               </tr>
             </c:forEach>
@@ -132,6 +132,49 @@
             </c:forEach>
           </tbody>
         </table>
+      </c:when>
+      
+      <c:when test="${model.type == 'apiKeyInfo'}">
+        <h3>Usage Info about ${model.userName} (API key: ${model.apiKey})</h3>
+        <style>tr.total {font-weight: bold;}</style>
+
+        <h4>By Type</h4>
+        <table>
+          <thead>
+            <tr>
+              <th><spring:message code="apistat_record_type_t" /></th>
+              <th><spring:message code="apistat_profile_t" /></th>
+              <th><spring:message code="apistat_count_t" /></th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:forEach items="${model.typeStatistics}" var="stat">
+              <c:forEach items="${stat.value}" var="item" varStatus="status">
+                <tr <c:if test="${item.profile == 'total'}">class="total"</c:if>>
+                  <td><c:if test="${status.first}"><a href="?type=usersByRecordType&recordType=${item.recordType}">${item.recordType}</a></c:if></td>
+                  <td>${item.profile}</td>
+                  <td align="right">${item.count}</td>
+                </tr>
+              </c:forEach>
+            </c:forEach>
+          </tbody>
+        </table>
+
+        <h4>By month</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:forEach items="${model.monthStatistics}" var="stat">
+              <tr><td><a href="?type=usersByMonth&month=${stat.month}">${stat.label}</a></td><td>${stat.count}</td></tr>
+            </c:forEach>
+          </tbody>
+        </table>
+
       </c:when>
     </c:choose>
 
