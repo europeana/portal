@@ -18,6 +18,8 @@ public class StatisticsPage extends AdminData {
 
 	private String monthLabel;
 
+	private String recordType;
+
 	/**
 	 * Whether the order is descending (true) or ascending (false)
 	 */
@@ -101,5 +103,13 @@ public class StatisticsPage extends AdminData {
 
 	public void setMonthLabel(String monthLabel) {
 		this.monthLabel = monthLabel;
+	}
+
+	public String getRecordType() {
+		return recordType;
+	}
+
+	public void setRecordType(String recordType) {
+		this.recordType = recordType;
 	}
 }

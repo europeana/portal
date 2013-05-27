@@ -51,7 +51,7 @@
             <c:forEach items="${model.typeStatistics}" var="stat">
               <c:forEach items="${stat.value}" var="item" varStatus="status">
                 <tr <c:if test="${item.profile == 'total'}">class="total"</c:if>>
-                  <td><c:if test="${status.first}">${item.recordType}</c:if></td>
+                  <td><c:if test="${status.first}"><a href="?type=usersByRecordType&recordType=${item.recordType}">${item.recordType}</a></c:if></td>
                   <td>${item.profile}</td>
                   <td align="right">${item.count}</td>
                 </tr>
@@ -61,15 +61,21 @@
         </table>
       </c:when>
 
-      <c:when test="${model.type == 'user' || model.type == 'usersByMonth'}">
+      <c:when test="${model.type == 'user' || model.type == 'usersByMonth' || model.type == 'usersByRecordType'}">
         <h3><spring:message code="apistat_by_user_t" /></h3>
         <c:if test="${model.type == 'usersByMonth'}">
           <h4>${model.monthLabel}</h4>
+        </c:if>
+        <c:if test="${model.type == 'usersByRecordType'}">
+          <h4>${model.recordType}</h4>
         </c:if>
 
         <c:set var="defaultParams" value="type=${model.type}" />
         <c:if test="${model.type == 'usersByMonth'}">
           <c:set var="defaultParams" value="${defaultParams}&month=${model.month}" />
+        </c:if>
+        <c:if test="${model.type == 'usersByRecordType'}">
+          <c:set var="defaultParams" value="${defaultParams}&recordType=${model.recordType}" />
         </c:if>
 
         <c:set var="reverseName" value="false" />

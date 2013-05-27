@@ -48,7 +48,7 @@ public class StatisticsController {
 	@Resource private ApiLogService apiLogService;
 
 	private static final List<String> TYPES = Arrays.asList(new String[]{
-		"month", "date", "type", "user", "monthsByUser", "usersByMonth"
+		"month", "date", "type", "user", "monthsByUser", "usersByMonth", "usersByRecordType"
 	});
 
 	private static final List<String> ORDERS = Arrays.asList(new String[]{"name", "count", "apikey"});
@@ -71,6 +71,7 @@ public class StatisticsController {
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "month", required = false, defaultValue="0") int month,
 			@RequestParam(value = "order", required = false, defaultValue="name") String order,
+			@RequestParam(value = "recordType", required = false, defaultValue="SEARCH") String recordType,
 			@RequestParam(value = "dir", required = false, defaultValue="") String direction,
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -90,6 +91,9 @@ public class StatisticsController {
 		}
 		model.setOrder(order);
 		model.setMonth(month);
+		if (StringUtils.isBlank(recordType) || !RECORD_TYPES.containsKey(recordType)) {
+			recordType = "SEARCH";
+		}
 
 		if (direction.equals("desc")) {
 			model.setDescending(true);
@@ -104,15 +108,18 @@ public class StatisticsController {
 		} else if (type.equals("month")) {
 			model.setMonthStatistics(getMonthsStatistics());
 		} else if (type.equals("usersByMonth")) {
-			// getUsersByMonthStatistics(monthInput);
 			model.setUserStatistics(getUsersByMonthStatistics(month, order, model.isDescending()));
 			model.setMonthLabel(getMonthLabel(month));
+		} else if (type.equals("usersByRecordType")) {
+			model.setUserStatistics(getUsersByRecordTypeStatistics(recordType, order, model.isDescending()));
+			model.setRecordType(recordType);
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_STATISTICS);
 		injector.postHandle(this, page);
 		return page;
 	}
+
 
 	/**
 	 * Create the date based statistics (last 30 days)
@@ -184,7 +191,16 @@ public class StatisticsController {
 
 		return stat;
 	}
-	
+
+	private Map<Object, List<UserStatistics>> getUsersByRecordTypeStatistics(
+			String recordType, String orderBy, boolean descending) {
+		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
+		List<UserStatistics> users = apiLogService.getStatisticsByUsersByRecordType(recordType);
+		log.info("users: " + users.size());
+		resolveUsers(users, stat, orderBy);
+		return stat;
+	}
+
 	private String getMonthLabel(int month) {
 		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
 		DateTime now = new DateTime();
