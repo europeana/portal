@@ -33,6 +33,7 @@ import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AdminPage;
+import eu.europeana.portal2.web.util.CSVUtils;
 import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
@@ -58,9 +59,6 @@ public class AdminController {
 	@Resource private ApiLogService apiLogService;
 
 	private final Logger log = Logger.getLogger(getClass().getName());
-
-	private static final String RECORD_SEPARATOR = "\n";
-	private static final String FIELD_SEPARATOR = ",";
 
 	private static final String ACTUAL = "actual";
 	private static final String TOTAL = "total";
@@ -206,9 +204,9 @@ public class AdminController {
 			"id", "Date of registration", "First name", "Last name", "Email", "Company", "Country",
 			"Address", "Phone", "Website", "Field of work", "Number of keys", "Keys (limit)"
 		));
-		sb.append(csvEncodeRecord(fieldNames));
+		sb.append(CSVUtils.encodeRecord(fieldNames));
 		for (User user : users.values()) {
-			sb.append(csvEncodeRecord(csvEncodeUser(user)));
+			sb.append(CSVUtils.encodeRecord(csvEncodeUser(user)));
 		}
 		return sb.toString();
 	}
@@ -222,49 +220,26 @@ public class AdminController {
 		List<String> fields = new LinkedList<String>();
 		fields.add(user.getId().toString());
 		if (user.getRegistrationDate() != null) {
-			fields.add(csvEncodeField(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate())));
+			fields.add(CSVUtils.encodeField(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate())));
 		} else {
 			fields.add("");
 		}
-		fields.add(csvEncodeField(user.getFirstName()));
-		fields.add(csvEncodeField(user.getLastName()));
-		fields.add(csvEncodeField(user.getEmail()));
-		fields.add(csvEncodeField(user.getCompany()));
-		fields.add(csvEncodeField(user.getCountry()));
-		fields.add(csvEncodeField(user.getAddress()));
-		fields.add(csvEncodeField(user.getPhone()));
-		fields.add(csvEncodeField(user.getWebsite()));
-		fields.add(csvEncodeField(user.getFieldOfWork()));
+		fields.add(CSVUtils.encodeField(user.getFirstName()));
+		fields.add(CSVUtils.encodeField(user.getLastName()));
+		fields.add(CSVUtils.encodeField(user.getEmail()));
+		fields.add(CSVUtils.encodeField(user.getCompany()));
+		fields.add(CSVUtils.encodeField(user.getCountry()));
+		fields.add(CSVUtils.encodeField(user.getAddress()));
+		fields.add(CSVUtils.encodeField(user.getPhone()));
+		fields.add(CSVUtils.encodeField(user.getWebsite()));
+		fields.add(CSVUtils.encodeField(user.getFieldOfWork()));
 		fields.add(String.valueOf(user.getApiKeys().size()));
 		List<String> keys = new LinkedList<String>();
 		for (ApiKey key : user.getApiKeys()) {
 			keys.add(key.getId() + " (" + key.getUsageLimit() + ")");
 		}
-		fields.add(csvEncodeField(StringUtils.join(keys, ", ")));
+		fields.add(CSVUtils.encodeField(StringUtils.join(keys, ", ")));
 		return fields;
-	}
-
-	/**
-	 * Encode a field for usage in CSV
-	 * @param field
-	 * @return
-	 */
-	private String csvEncodeField(String field) {
-		if (StringUtils.isBlank(field)) {
-			return "";
-		}
-		if (field.indexOf('"') > -1) {
-			field = field.replaceAll("\"", "\"\"");
-		}
-		field = '"' + field + '"';
-		return field;
-	}
-
-	/**
-	 * Encode a record (list of fields) for usage in CSV
-	 */
-	private String csvEncodeRecord(List<String> fields) {
-		return StringUtils.join(fields, FIELD_SEPARATOR) + RECORD_SEPARATOR;
 	}
 
 	/**

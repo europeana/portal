@@ -19,9 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.exception.DatabaseException;
@@ -35,6 +37,7 @@ import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.corelib.utils.model.DateInterval;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.StatisticsPage;
+import eu.europeana.portal2.web.util.CSVUtils;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
 
@@ -136,6 +139,121 @@ public class StatisticsController {
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_STATISTICS);
 		injector.postHandle(this, page);
 		return page;
+	}
+
+	@RequestMapping(value = "/admin/statistics.csv", produces = MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String statisticsCSVHandler(
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "month", required = false, defaultValue="0") int month,
+			@RequestParam(value = "stat", required = false, defaultValue="") String stat,
+			@RequestParam(value = "recordType", required = false, defaultValue="SEARCH") String recordType,
+			@RequestParam(value = "apiKey", required = false, defaultValue="") String apiKey,
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale)
+					throws Exception {
+
+		if (StringUtils.isBlank(type) || !TYPES.contains(type)) {
+			type = "dates";
+		}
+		if (StringUtils.isBlank(recordType) || !RECORD_TYPES.containsKey(recordType)) {
+			recordType = "SEARCH";
+		}
+
+		response.setHeader("Content-Type", "text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
+
+		StringBuilder sb = new StringBuilder();
+
+		if (type.equals("dates")) {
+			datesToCSV(sb, getDateStatistics());
+		} else if (type.equals("months")) {
+			monthToCSV(sb, getMonthsStatistics());
+		} else if (type.equals("recordTypes")) {
+			recordTypeToCSV(sb, getTypeStatistics());
+		} else if (type.equals("apiKeys")) {
+			apiKeyToCSV(sb, getUserStatistics("name", false));
+		} else if (type.equals("month")) {
+			if (stat.equals("apiKey")) {
+				apiKeyToCSV(sb, getUsersByMonthStatistics(month, "name", false));
+			} else if (stat.equals("recordType")) {
+				recordTypeToCSV(sb, getRecordTypesByMonthStatistics(month));
+			}
+		} else if (type.equals("recordType")) {
+			if (stat.equals("apiKey")) {
+				apiKeyToCSV(sb, getUsersByRecordTypeStatistics(recordType, "name", false));
+			} else if (stat.equals("month")) {
+				monthToCSV(sb, getMonthsByRecordTypeStatistics(recordType));
+			}
+		} else if (type.equals("apiKey")) {
+			if (stat.equals("recordType")) {
+				recordTypeToCSV(sb, getRecordTypesByUserStatistics(apiKey));
+			} else if (stat.equals("month")) {
+				monthToCSV(sb, getMonthsByApiKeyStatistics(apiKey));
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private void datesToCSV(StringBuilder sb, Map<String, Long> values) {
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
+			"Date", "Count"
+		));
+		sb.append(CSVUtils.encodeRecord(fieldNames));
+		for (Map.Entry<String, Long> item : values.entrySet()) {
+			List<String> fields = new LinkedList<String>();
+			fields.add(CSVUtils.encodeField(item.getKey()));
+			fields.add(item.getValue().toString());
+			sb.append(CSVUtils.encodeRecord(fields));
+		}
+	}
+
+	private void monthToCSV(StringBuilder sb, List<MonthStatistics> values) {
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
+			"Month", "Count"
+		));
+		sb.append(CSVUtils.encodeRecord(fieldNames));
+
+		for (MonthStatistics item : values) {
+			List<String> fields = new LinkedList<String>();
+			fields.add(CSVUtils.encodeField(item.getLabel()));
+			fields.add(String.valueOf(item.getCount()));
+			sb.append(CSVUtils.encodeRecord(fields));
+		}
+	}
+
+	private void recordTypeToCSV(StringBuilder sb, Map<Object, List<TypeStatistics>> values) {
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
+			"Record Type", "Profile", "Count"
+		));
+		sb.append(CSVUtils.encodeRecord(fieldNames));
+
+		for (Map.Entry<Object, List<TypeStatistics>> value : values.entrySet()) {
+			for (TypeStatistics item : value.getValue()) {
+				List<String> fields = new LinkedList<String>();
+				fields.add(CSVUtils.encodeField(item.getRecordType()));
+				fields.add(CSVUtils.encodeField(item.getProfile()));
+				fields.add(String.valueOf(item.getCount()));
+				sb.append(CSVUtils.encodeRecord(fields));
+			}
+		}
+	}
+
+	private void apiKeyToCSV(StringBuilder sb, Map<Object, List<UserStatistics>> values) {
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
+			"User name", "API Key", "Count"
+		));
+		sb.append(CSVUtils.encodeRecord(fieldNames));
+		for (Map.Entry<Object, List<UserStatistics>> value : values.entrySet()) {
+			for (UserStatistics item : value.getValue()) {
+				List<String> fields = new LinkedList<String>();
+				fields.add(CSVUtils.encodeField(item.getName()));
+				fields.add(CSVUtils.encodeField(item.getApiKey()));
+				fields.add(String.valueOf(item.getCount()));
+				sb.append(CSVUtils.encodeRecord(fields));
+			}
+		}
 	}
 
 	/**

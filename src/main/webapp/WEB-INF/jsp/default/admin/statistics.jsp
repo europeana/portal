@@ -45,6 +45,8 @@
             <tr><td>${stat.key}</td><td>${stat.value}</td></tr>
           </c:forEach>
         </table>
+
+        <p><a href="statistics.csv?type=dates">Export to CVS</a></p>
       </c:when>
 
       <c:when test="${model.type == 'recordTypes'}">
@@ -77,6 +79,8 @@
             </c:forEach>
           </tbody>
         </table>
+
+        <p><a href="statistics.csv?type=${model.type}">Export to CVS</a></p>
       </c:when>
 
       <c:when test="${model.type == 'apiKeys' || model.type == 'usersByMonth' || model.type == 'usersByRecordType'}">
@@ -133,6 +137,8 @@
           </c:forEach>
           </tbody>
         </table>
+
+        <p><a href="statistics.csv?type=${model.type}">Export to CVS</a></p>
       </c:when>
 
       <c:when test="${model.type == 'months'}">
@@ -150,8 +156,10 @@
             </c:forEach>
           </tbody>
         </table>
+
+        <p><a href="statistics.csv?type=${model.type}">Export to CVS</a></p>
       </c:when>
-      
+
       <c:when test="${model.type == 'apiKey'}">
         <h3>Usage info about user <em>${model.userName}</em> (API key: ${model.apiKey})</h3>
         <style>tr.total {font-weight: bold;}</style>
@@ -184,6 +192,7 @@
             </c:forEach>
           </tbody>
         </table>
+        <p><a href="statistics.csv?type=${model.type}&apiKey=${model.apiKey}&stat=recordType">Export to CVS</a></p>
 
         <h4>By month</h4>
         <table>
@@ -200,6 +209,7 @@
           </tbody>
         </table>
 
+        <p><a href="statistics.csv?type=${model.type}&apiKey=${model.apiKey}&stat=month">Export to CVS</a></p>
       </c:when>
 
       <c:when test="${model.type == 'recordType'}">
@@ -246,6 +256,7 @@
           </c:forEach>
           </tbody>
         </table>
+        <p><a href="statistics.csv?type=${model.type}&recordType=${model.recordType}&stat=apiKey">Export to CVS</a></p>
 
         <h4>By month</h4>
         <table>
@@ -261,6 +272,8 @@
             </c:forEach>
           </tbody>
         </table>
+
+        <p><a href="statistics.csv?type=${model.type}&recordType=${model.recordType}&stat=month">Export to CVS</a></p>
       </c:when>
 
       <c:when test="${model.type == 'month'}">
@@ -307,6 +320,8 @@
           </tbody>
         </table>
 
+        <p><a href="statistics.csv?type=${model.type}&month=${model.month}&stat=apiKey">Export to CVS</a></p>
+
         <h4><spring:message code="apistat_by_type_t" /></h4>
         <style>tr.total {font-weight: bold;}</style>
         <table>
@@ -337,8 +352,9 @@
           </tbody>
         </table>
 
-      </c:when>
+        <p><a href="statistics.csv?type=${model.type}&month=${model.month}&stat=recordType">Export to CVS</a></p>
 
+      </c:when>
     </c:choose>
 
     <p>
