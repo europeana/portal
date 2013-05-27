@@ -48,10 +48,17 @@
             </tr>
           </thead>
           <tbody>
-            <c:forEach items="${model.typeStatistics}" var="stat">
-              <c:forEach items="${stat.value}" var="item" varStatus="status">
+            <c:forEach items="${model.typeStatistics}" var="type" varStatus="typeStatus">
+              <c:forEach items="${type.value}" var="item" varStatus="status">
                 <tr <c:if test="${item.profile == 'total'}">class="total"</c:if>>
-                  <td><c:if test="${status.first}"><a href="?type=usersByRecordType&recordType=${item.recordType}">${item.recordType}</a></c:if></td>
+                  <td>
+                    <c:if test="${status.first}">
+                      <c:choose>
+                        <c:when test="${!typeStatus.last}"><a href="?type=usersByRecordType&recordType=${item.recordType}">${item.recordType}</a></c:when>
+                        <c:otherwise>${item.recordType}</c:otherwise>
+                      </c:choose>
+                    </c:if>
+                  </td>
                   <td>${item.profile}</td>
                   <td align="right">${item.count}</td>
                 </tr>
@@ -148,10 +155,17 @@
             </tr>
           </thead>
           <tbody>
-            <c:forEach items="${model.typeStatistics}" var="stat">
-              <c:forEach items="${stat.value}" var="item" varStatus="status">
+            <c:forEach items="${model.typeStatistics}" var="type" varStatus="typeStatus">
+              <c:forEach items="${type.value}" var="item" varStatus="status">
                 <tr <c:if test="${item.profile == 'total'}">class="total"</c:if>>
-                  <td><c:if test="${status.first}"><a href="?type=usersByRecordType&recordType=${item.recordType}">${item.recordType}</a></c:if></td>
+                  <td>
+                    <c:if test="${status.first}">
+                      <c:choose>
+                        <c:when test="${!typeStatus.last}"><a href="?type=usersByRecordType&recordType=${item.recordType}">${item.recordType}</a></c:when>
+                        <c:otherwise>${item.recordType}</c:otherwise>
+                      </c:choose>
+                    </c:if>
+                  </td>
                   <td>${item.profile}</td>
                   <td align="right">${item.count}</td>
                 </tr>
