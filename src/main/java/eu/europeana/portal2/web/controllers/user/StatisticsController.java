@@ -48,7 +48,10 @@ public class StatisticsController {
 	@Resource private ApiLogService apiLogService;
 
 	private static final List<String> TYPES = Arrays.asList(new String[]{
-		"month", "date", "type", "user", "monthsByUser", "usersByMonth", "usersByRecordType", "recordTypesByuser", "apiKeyInfo"
+		"dates",
+		"months", "recordTypes", "apiKeys", 
+		"month",  "recordType",  "apiKey",
+		"monthsByUser", "usersByMonth", "usersByRecordType", "recordTypesByuser"
 	});
 
 	private static final List<String> ORDERS = Arrays.asList(new String[]{"name", "count", "apikey"});
@@ -83,7 +86,7 @@ public class StatisticsController {
 		StatisticsPage model = new StatisticsPage();
 		injector.injectProperties(model);
 		if (StringUtils.isBlank(type) || !TYPES.contains(type)) {
-			type = "date";
+			type = "dates";
 		}
 		model.setType(type);
 
@@ -100,25 +103,34 @@ public class StatisticsController {
 			model.setDescending(true);
 		}
 
-		if (type.equals("date")) {
+		if (type.equals("dates")) {
 			model.setDateStatistics(getDateStatistics());
-		} else if (type.equals("type")) {
+		} else if (type.equals("months")) {
+			model.setMonthStatistics(getMonthsStatistics());
+		} else if (type.equals("recordTypes")) {
 			model.setTypeStatistics(getTypeStatistics());
-		} else if (type.equals("user")) {
+		} else if (type.equals("apiKeys")) {
 			model.setUserStatistics(getUserStatistics(order, model.isDescending()));
 		} else if (type.equals("month")) {
-			model.setMonthStatistics(getMonthsStatistics());
-		} else if (type.equals("usersByMonth")) {
-			model.setUserStatistics(getUsersByMonthStatistics(month, order, model.isDescending()));
 			model.setMonthLabel(getMonthLabel(month));
-		} else if (type.equals("usersByRecordType")) {
-			model.setUserStatistics(getUsersByRecordTypeStatistics(recordType, order, model.isDescending()));
+			model.setUserStatistics(getUsersByMonthStatistics(month, order, model.isDescending()));
+			model.setTypeStatistics(getRecordTypesByMonthStatistics(month));
+		} else if (type.equals("recordType")) {
 			model.setRecordType(recordType);
-		} else if (type.equals("apiKeyInfo")) {
+			model.setUserStatistics(getUsersByRecordTypeStatistics(recordType, order, model.isDescending()));
+			model.setMonthStatistics(getMonthsByRecordTypeStatistics(recordType));
+		} else if (type.equals("apiKey")) {
 			model.setApiKey(apiKey);
 			model.setUserName(getUserName(apiKey));
-			model.setTypeStatistics(getRecordTypesByUresStatistics(apiKey));
+			model.setTypeStatistics(getRecordTypesByUserStatistics(apiKey));
 			model.setMonthStatistics(getMonthsByApiKeyStatistics(apiKey));
+		// legacy code
+		} else if (type.equals("usersByMonth")) {
+			model.setMonthLabel(getMonthLabel(month));
+			model.setUserStatistics(getUsersByMonthStatistics(month, order, model.isDescending()));
+		} else if (type.equals("usersByRecordType")) {
+			model.setRecordType(recordType);
+			model.setUserStatistics(getUsersByRecordTypeStatistics(recordType, order, model.isDescending()));
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_STATISTICS);
@@ -144,15 +156,22 @@ public class StatisticsController {
 	 * Create the type based statistics
 	 */
 	private Map<Object, List<TypeStatistics>> getTypeStatistics() {
-		List<TypeStatistics> types = apiLogService.getStatisticsByType();
+		List<TypeStatistics> types = apiLogService.getStatisticsForType();
 
 		return createOrderedTypeMap(types);
 	}
 
-	private Map<Object, List<TypeStatistics>> getRecordTypesByUresStatistics(
+	private Map<Object, List<TypeStatistics>> getRecordTypesByUserStatistics(
 			String apiKey) {
-		List<TypeStatistics> types = apiLogService.getStatisticsByRecordTypesByUser(apiKey);
+		List<TypeStatistics> types = apiLogService.getStatisticsForRecordTypesByUser(apiKey);
 
+		return createOrderedTypeMap(types);
+	}
+
+	private Map<Object, List<TypeStatistics>> getRecordTypesByMonthStatistics(
+			int month) {
+		DateInterval interval = DateIntervalUtils.getMonth(new DateTime().getMonthOfYear() - month);
+		List<TypeStatistics> types = apiLogService.getStatisticsForRecordTypesByInterval(interval);
 		return createOrderedTypeMap(types);
 	}
 
@@ -161,7 +180,7 @@ public class StatisticsController {
 	 */
 	private Map<Object, List<UserStatistics>> getUserStatistics(String orderBy, boolean descending) {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
-		List<UserStatistics> users = apiLogService.getStatisticsByUser();
+		List<UserStatistics> users = apiLogService.getStatisticsForUser();
 		resolveUsers(users, stat, orderBy);
 
 		return stat;
@@ -171,7 +190,7 @@ public class StatisticsController {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 
 		DateInterval interval = DateIntervalUtils.getMonth(new DateTime().getMonthOfYear() - month);
-		List<UserStatistics> users = apiLogService.getStatisticsByUsersByInterval(interval);
+		List<UserStatistics> users = apiLogService.getStatisticsForUsersByInterval(interval);
 		resolveUsers(users, stat, orderBy);
 
 		return stat;
@@ -180,7 +199,7 @@ public class StatisticsController {
 	private Map<Object, List<UserStatistics>> getUsersByRecordTypeStatistics(
 			String recordType, String orderBy, boolean descending) {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
-		List<UserStatistics> users = apiLogService.getStatisticsByUsersByRecordType(recordType);
+		List<UserStatistics> users = apiLogService.getStatisticsForUsersByRecordType(recordType);
 		resolveUsers(users, stat, orderBy);
 		return stat;
 	}
@@ -219,12 +238,27 @@ public class StatisticsController {
 		List<MonthStatistics> stat = new LinkedList<MonthStatistics>();
 		for (int month = 1, max = now.getMonthOfYear(); month <= max; month++) {
 			DateInterval interval = DateIntervalUtils.getMonth(max - month);
-			long count =  apiLogService.countByApiKeyByInterval(apiKey, interval);
+			long count = apiLogService.countByIntervalAndApiKey(interval, apiKey);
 			String label = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
 			stat.add(new MonthStatistics(month, label, count));
 		}
 		return stat;
 	}
+
+	private List<MonthStatistics> getMonthsByRecordTypeStatistics(
+			String recordType) {
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+		DateTime now = new DateTime();
+		List<MonthStatistics> stat = new LinkedList<MonthStatistics>();
+		for (int month = 1, max = now.getMonthOfYear(); month <= max; month++) {
+			DateInterval interval = DateIntervalUtils.getMonth(max - month);
+			long count = apiLogService.countByIntervalAndRecordType(interval, recordType);
+			String label = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
+			stat.add(new MonthStatistics(month, label, count));
+		}
+		return stat;
+	}
+
 
 	/**
 	 * Create the month based statistics
