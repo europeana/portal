@@ -308,7 +308,6 @@ public class StatisticsController {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 
 		DateInterval interval = DateIntervalUtils.getMonth(new DateTime().getMonthOfYear() - month);
-		log.info("interval: " + interval);
 		List<UserStatistics> users = apiLogService.getStatisticsForUsersByInterval(interval);
 		resolveUsers(users, stat, orderBy);
 
