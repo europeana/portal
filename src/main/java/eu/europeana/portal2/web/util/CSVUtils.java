@@ -4,6 +4,11 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+/**
+ * Utility class for creating CSV values
+ *
+ * @author peter.kiraly@kb.nl
+ */
 public class CSVUtils {
 
 	private static final String RECORD_SEPARATOR = "\n";
@@ -21,14 +26,13 @@ public class CSVUtils {
 		if (field.indexOf('"') > -1) {
 			field = field.replaceAll("\"", "\"\"");
 		}
-		field = '"' + field + '"';
-		return field;
+		return String.format("\"%s\"", field);
 	}
 
 	/**
 	 * Encode a record (list of fields) for usage in CSV
 	 */
 	public static String encodeRecord(List<String> fields) {
-		return StringUtils.join(fields, FIELD_SEPARATOR) + RECORD_SEPARATOR;
+		return String.format("%s%s", StringUtils.join(fields, FIELD_SEPARATOR), RECORD_SEPARATOR);
 	}
 }
