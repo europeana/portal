@@ -73,6 +73,16 @@ public class StatisticsPage extends AdminData {
 		return typeStatistics;
 	}
 
+	public long getTypeStatisticsTotal() {
+		long total = 0;
+		for (List<TypeStatistics> stats : typeStatistics.values()) {
+			for (TypeStatistics stat : stats) {
+				total += stat.getCount();
+			}
+		}
+		return total;
+	}
+
 	public void setTypeStatistics(Map<Object, List<TypeStatistics>> typeStatistics) {
 		this.typeStatistics = typeStatistics;
 	}
@@ -85,8 +95,26 @@ public class StatisticsPage extends AdminData {
 		this.userStatistics = userStatistics;
 	}
 
+	public long getUserStatisticsTotal() {
+		long total = 0;
+		for (List<UserStatistics> stats : userStatistics.values()) {
+			for (UserStatistics stat : stats) {
+				total += stat.getCount();
+			}
+		}
+		return total;
+	}
+
 	public List<MonthStatistics> getMonthStatistics() {
 		return monthStatistics;
+	}
+
+	public long getMonthStatisticsTotal() {
+		long total = 0;
+		for (MonthStatistics stat : monthStatistics) {
+			total += stat.getCount();
+		}
+		return total;
 	}
 
 	public void setMonthStatistics(List<MonthStatistics> monthStatistics) {

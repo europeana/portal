@@ -308,14 +308,14 @@ public class StatisticsController {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 
 		DateInterval interval = DateIntervalUtils.getMonth(new DateTime().getMonthOfYear() - month);
+		log.info("interval: " + interval);
 		List<UserStatistics> users = apiLogService.getStatisticsForUsersByInterval(interval);
 		resolveUsers(users, stat, orderBy);
 
 		return stat;
 	}
 
-	private Map<Object, List<UserStatistics>> getUsersByRecordTypeStatistics(
-			String recordType, String orderBy, boolean descending) {
+	private Map<Object, List<UserStatistics>> getUsersByRecordTypeStatistics(String recordType, String orderBy, boolean descending) {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 		List<UserStatistics> users = apiLogService.getStatisticsForUsersByRecordType(recordType);
 		resolveUsers(users, stat, orderBy);
@@ -363,8 +363,7 @@ public class StatisticsController {
 		return stat;
 	}
 
-	private List<MonthStatistics> getMonthsByRecordTypeStatistics(
-			String recordType) {
+	private List<MonthStatistics> getMonthsByRecordTypeStatistics(String recordType) {
 		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
 		DateTime now = new DateTime();
 		List<MonthStatistics> stat = new LinkedList<MonthStatistics>();
@@ -373,23 +372,6 @@ public class StatisticsController {
 			long count = apiLogService.countByIntervalAndRecordType(interval, recordType);
 			String label = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
 			stat.add(new MonthStatistics(month, label, count));
-		}
-		return stat;
-	}
-
-
-	/**
-	 * Create the month based statistics
-	 */
-	private Map<String, Long> getMonthStatistics() {
-		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
-		DateTime now = new DateTime();
-		Map<String, Long> stat = new LinkedHashMap<String, Long>();
-		for (int i = 1, max = now.getMonthOfYear(); i <= max; i++) {
-			DateInterval interval = DateIntervalUtils.getMonth(max - i);
-			long count =  apiLogService.countByInterval(interval);
-			String key = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
-			stat.put(key, count);
 		}
 		return stat;
 	}
@@ -412,8 +394,11 @@ public class StatisticsController {
 			if (wskey != null) {
 				name = getUserName(wskey);
 			} else {
-				log.warning("No wskey");
-				continue;
+				name = "unknown";
+				userStatistics.setApiKey("-");
+				wskey = "-";
+				// log.warning("No wskey");
+				// continue;
 			}
 			userStatistics.setName(name);
 
@@ -452,7 +437,7 @@ public class StatisticsController {
 				}
 			}
 		} else {
-			log.warning("API key object found for wskey: " + wskey);
+			// log.warning("No API key object found for wskey: " + wskey);
 		}
 
 		if (userName.length() == 0) {
@@ -485,8 +470,7 @@ public class StatisticsController {
 		return stat;
 	}
 
-	private Map<Object, List<TypeStatistics>> createOrderedTypeMap(
-			List<TypeStatistics> types) {
+	private Map<Object, List<TypeStatistics>> createOrderedTypeMap(List<TypeStatistics> types) {
 		Map<Object, List<TypeStatistics>> stat = new TreeMap<Object, List<TypeStatistics>>();
 
 		for (TypeStatistics type : types) {

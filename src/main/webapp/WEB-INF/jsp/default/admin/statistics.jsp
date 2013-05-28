@@ -116,15 +116,25 @@
             </tr>
           </thead>
           <tbody>
-          <c:forEach items="${model.userStatistics}" var="stats">
-            <c:forEach items="${stats.value}" var="stat">
-              <tr>
-                <td>${stat.name}</td>
-                <td><a href="?type=apiKey&apiKey=${stat.apiKey}">${stat.apiKey}</a></td>
-                <td align="right">${stat.count}</td>
-              </tr>
+            <c:forEach items="${model.userStatistics}" var="stats">
+              <c:forEach items="${stats.value}" var="stat">
+                <tr>
+                  <td>${stat.name}</td>
+                  <td>
+                    <c:choose>
+                      <c:when test="${stat.apiKey != '-'}"><a href="?type=apiKey&apiKey=${stat.apiKey}">${stat.apiKey}</a></c:when>
+                      <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                  </td>
+                  <td align="right">${stat.count}</td>
+                </tr>
+              </c:forEach>
             </c:forEach>
-          </c:forEach>
+            <tr class="total">
+              <td>Total</td>
+              <td>&mdash;</td>
+              <td align="right">${model.userStatisticsTotal}</td>
+            </tr>
           </tbody>
         </table>
 
@@ -142,8 +152,15 @@
           </thead>
           <tbody>
             <c:forEach items="${model.monthStatistics}" var="stat">
-              <tr><td><a href="?type=month&month=${stat.month}">${stat.label}</a></td><td>${stat.count}</td></tr>
+              <tr>
+                <td><a href="?type=month&month=${stat.month}">${stat.label}</a></td>
+                <td>${stat.count}</td>
+              </tr>
             </c:forEach>
+            <tr class="total">
+              <td>Total</td>
+              <td>${model.monthStatisticsTotal}</td>
+            </tr>
           </tbody>
         </table>
 
@@ -196,8 +213,15 @@
           </thead>
           <tbody>
             <c:forEach items="${model.monthStatistics}" var="stat">
-              <tr><td><a href="?type=month&month=${stat.month}">${stat.label}</a></td><td>${stat.count}</td></tr>
+              <tr>
+                <td><a href="?type=month&month=${stat.month}">${stat.label}</a></td>
+                <td>${stat.count}</td>
+              </tr>
             </c:forEach>
+            <tr class="total">
+              <td>Total</td>
+              <td>${model.monthStatisticsTotal}</td>
+            </tr>
           </tbody>
         </table>
 
@@ -237,15 +261,25 @@
             </tr>
           </thead>
           <tbody>
-          <c:forEach items="${model.userStatistics}" var="stats">
-            <c:forEach items="${stats.value}" var="stat">
-              <tr>
-                <td>${stat.name}</td>
-                <td><a href="?type=apiKey&apiKey=${stat.apiKey}">${stat.apiKey}</a></td>
-                <td align="right">${stat.count}</td>
-              </tr>
+            <c:forEach items="${model.userStatistics}" var="stats">
+              <c:forEach items="${stats.value}" var="stat">
+                <tr>
+                  <td>${stat.name}</td>
+                  <td>
+                    <c:choose>
+                      <c:when test="${stat.apiKey != '-'}"><a href="?type=apiKey&apiKey=${stat.apiKey}">${stat.apiKey}</a></c:when>
+                      <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                  </td>
+                  <td align="right">${stat.count}</td>
+                </tr>
+              </c:forEach>
             </c:forEach>
-          </c:forEach>
+            <tr class="total">
+              <td>Total</td>
+              <td>&mdash;</td>
+              <td align="right">${model.userStatisticsTotal}</td>
+            </tr>
           </tbody>
         </table>
         <p><a href="statistics.csv?type=${model.type}&recordType=${model.recordType}&stat=apiKey">Export to CVS</a></p>
@@ -260,8 +294,15 @@
           </thead>
           <tbody>
             <c:forEach items="${model.monthStatistics}" var="stat">
-              <tr><td><a href="?type=month&month=${stat.month}">${stat.label}</a></td><td>${stat.count}</td></tr>
+              <tr>
+                <td><a href="?type=month&month=${stat.month}">${stat.label}</a></td>
+                <td>${stat.count}</td>
+              </tr>
             </c:forEach>
+            <tr class="total">
+              <td>Total</td>
+              <td>${model.monthStatisticsTotal}</td>
+            </tr>
           </tbody>
         </table>
 
@@ -300,15 +341,25 @@
             </tr>
           </thead>
           <tbody>
-          <c:forEach items="${model.userStatistics}" var="stats">
-            <c:forEach items="${stats.value}" var="stat">
-              <tr>
-                <td>${stat.name}</td>
-                <td><a href="?type=apiKey&apiKey=${stat.apiKey}">${stat.apiKey}</a></td>
-                <td align="right">${stat.count}</td>
-              </tr>
+            <c:forEach items="${model.userStatistics}" var="stats">
+              <c:forEach items="${stats.value}" var="stat">
+                <tr>
+                  <td>${stat.name}</td>
+                  <td>
+                    <c:choose>
+                      <c:when test="${stat.apiKey != '-'}"><a href="?type=apiKey&apiKey=${stat.apiKey}">${stat.apiKey}</a></c:when>
+                      <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                  </td>
+                  <td align="right">${stat.count}</td>
+                </tr>
+              </c:forEach>
             </c:forEach>
-          </c:forEach>
+            <tr class="total">
+              <td>Total</td>
+              <td>&mdash;</td>
+              <td align="right">${model.userStatisticsTotal}</td>
+            </tr>
           </tbody>
         </table>
 
