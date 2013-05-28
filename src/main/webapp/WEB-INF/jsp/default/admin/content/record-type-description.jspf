@@ -1,0 +1,14 @@
+<style type="text/css">
+#record-type-description {
+  font-size: 80%;
+}
+</style>
+<div id="record-type-description">
+Meanings of values in the Record Type column
+<ul>
+  <li>SEARCH: Search request.</li>
+  <li>OBJECT: Object (full record) request.</li>
+  <li>REDIRECT: Object redirection.</li>
+  <li>LIMIT: The requested item was above the limit.</li>
+</ul>
+</div>

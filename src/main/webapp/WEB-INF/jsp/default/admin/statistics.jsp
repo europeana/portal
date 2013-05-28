@@ -81,24 +81,14 @@
         </table>
 
         <p><a href="statistics.csv?type=${model.type}">Export to CVS</a></p>
+        <%@ include file="/WEB-INF/jsp/default/admin/content/record-type-description.jspf" %>
+
       </c:when>
 
-      <c:when test="${model.type == 'apiKeys' || model.type == 'usersByMonth' || model.type == 'usersByRecordType'}">
+      <c:when test="${model.type == 'apiKeys'}">
         <h3><spring:message code="apistat_by_user_t" /></h3>
-        <c:if test="${model.type == 'usersByMonth'}">
-          <h4>${model.monthLabel}</h4>
-        </c:if>
-        <c:if test="${model.type == 'usersByRecordType'}">
-          <h4>${model.recordType}</h4>
-        </c:if>
 
         <c:set var="defaultParams" value="type=${model.type}" />
-        <c:if test="${model.type == 'usersByMonth'}">
-          <c:set var="defaultParams" value="${defaultParams}&month=${model.month}" />
-        </c:if>
-        <c:if test="${model.type == 'usersByRecordType'}">
-          <c:set var="defaultParams" value="${defaultParams}&recordType=${model.recordType}" />
-        </c:if>
 
         <c:set var="reverseName" value="false" />
         <c:set var="reverseApi" value="false" />
@@ -192,7 +182,9 @@
             </c:forEach>
           </tbody>
         </table>
+
         <p><a href="statistics.csv?type=${model.type}&apiKey=${model.apiKey}&stat=recordType">Export to CVS</a></p>
+        <%@ include file="/WEB-INF/jsp/default/admin/content/record-type-description.jspf" %>
 
         <h4>By month</h4>
         <table>
@@ -353,6 +345,7 @@
         </table>
 
         <p><a href="statistics.csv?type=${model.type}&month=${model.month}&stat=recordType">Export to CVS</a></p>
+        <%@ include file="/WEB-INF/jsp/default/admin/content/record-type-description.jspf" %>
 
       </c:when>
     </c:choose>
