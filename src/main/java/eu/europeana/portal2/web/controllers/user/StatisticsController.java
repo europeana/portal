@@ -161,7 +161,7 @@ public class StatisticsController {
 		}
 
 		response.setHeader("Content-Type", "text/csv");
-		response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
+		response.setHeader("Content-Disposition", "attachment; filename=\"api-statistics.csv\"");
 
 		StringBuilder sb = new StringBuilder();
 
