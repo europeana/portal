@@ -132,12 +132,20 @@ table {
       <c:when test="${empty model.type || model.type == 'dates'}">
         <h3><spring:message code="apistat_by_date_t" /></h3>
         <table class="bordered">
-          <c:forEach items="${model.dateStatistics}" var="stat">
+          <thead>
             <tr>
-              <td>${stat.key}</td>
-              <td>${stat.value}</td>
+              <th>Date</th>
+              <th><spring:message code="apistat_count_t" /></th>
             </tr>
-          </c:forEach>
+          </thead>
+          <tbody>
+            <c:forEach items="${model.dateStatistics}" var="stat">
+              <tr>
+                <td>${stat.key}</td>
+                <td>${stat.value}</td>
+              </tr>
+            </c:forEach>
+          </tbody>
         </table>
 
         <p><a href="statistics.csv?type=dates">Export to CVS</a></p>
