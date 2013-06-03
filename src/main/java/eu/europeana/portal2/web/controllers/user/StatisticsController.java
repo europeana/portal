@@ -107,36 +107,46 @@ public class StatisticsController {
 		}
 
 		if (type.equals("dates")) {
+			model.setPageTitle("Statistics for last 30 days");
 			model.setDateStatistics(getDateStatistics());
 		} else if (type.equals("months")) {
+			model.setPageTitle("Statistics for months");
 			model.setMonthStatistics(getMonthsStatistics());
 		} else if (type.equals("recordTypes")) {
+			model.setPageTitle("Statistics for record types");
 			model.setTypeStatistics(getTypeStatistics());
 		} else if (type.equals("apiKeys")) {
+			model.setPageTitle("Statistics for API keys");
 			model.setUserStatistics(getUserStatistics(order, model.isDescending()));
 		} else if (type.equals("month")) {
+			model.setPageTitle("Statistics for a month");
 			model.setMonthLabel(getMonthLabel(month));
 			model.setUserStatistics(getUsersByMonthStatistics(month, order, model.isDescending()));
 			model.setTypeStatistics(getRecordTypesByMonthStatistics(month));
 		} else if (type.equals("recordType")) {
+			model.setPageTitle("Statistics for a record type");
 			model.setRecordType(recordType);
 			model.setUserStatistics(getUsersByRecordTypeStatistics(recordType, order, model.isDescending()));
 			model.setMonthStatistics(getMonthsByRecordTypeStatistics(recordType));
 		} else if (type.equals("apiKey")) {
+			model.setPageTitle("Statistics for an API key");
 			model.setApiKey(apiKey);
 			model.setUserName(getUserName(apiKey));
 			model.setTypeStatistics(getRecordTypesByUserStatistics(apiKey));
 			model.setMonthStatistics(getMonthsByApiKeyStatistics(apiKey));
 		// legacy code
 		} else if (type.equals("usersByMonth")) {
+			model.setPageTitle("Statistics for users by month");
 			model.setMonthLabel(getMonthLabel(month));
 			model.setUserStatistics(getUsersByMonthStatistics(month, order, model.isDescending()));
 		} else if (type.equals("usersByRecordType")) {
+			model.setPageTitle("Statistics for users by record type");
 			model.setRecordType(recordType);
 			model.setUserStatistics(getUsersByRecordTypeStatistics(recordType, order, model.isDescending()));
 		}
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.ADMIN_STATISTICS);
+
 		injector.postHandle(this, page);
 		return page;
 	}
@@ -160,38 +170,50 @@ public class StatisticsController {
 			recordType = "SEARCH";
 		}
 
-		response.setHeader("Content-Type", "text/csv");
-		response.setHeader("Content-Disposition", "attachment; filename=\"api-statistics.csv\"");
+		String fileName = "api-statistics.csv";
 
 		StringBuilder sb = new StringBuilder();
 
 		if (type.equals("dates")) {
+			fileName = "api-statistics-dates.csv";
 			datesToCSV(sb, getDateStatistics());
 		} else if (type.equals("months")) {
+			fileName = "api-statistics-months.csv";
 			monthToCSV(sb, getMonthsStatistics());
 		} else if (type.equals("recordTypes")) {
+			fileName = "api-statistics-recordTypes.csv";
 			recordTypeToCSV(sb, getTypeStatistics());
 		} else if (type.equals("apiKeys")) {
+			fileName = "api-statistics-apiKeys.csv";
 			apiKeyToCSV(sb, getUserStatistics("name", false));
 		} else if (type.equals("month")) {
 			if (stat.equals("apiKey")) {
+				fileName = "api-statistics-month-by-apiKey.csv";
 				apiKeyToCSV(sb, getUsersByMonthStatistics(month, "name", false));
 			} else if (stat.equals("recordType")) {
+				fileName = "api-statistics-month-by-recordType.csv";
 				recordTypeToCSV(sb, getRecordTypesByMonthStatistics(month));
 			}
 		} else if (type.equals("recordType")) {
 			if (stat.equals("apiKey")) {
+				fileName = "api-statistics-recordType-by-apiKey.csv";
 				apiKeyToCSV(sb, getUsersByRecordTypeStatistics(recordType, "name", false));
 			} else if (stat.equals("month")) {
+				fileName = "api-statistics-recordType-by-month.csv";
 				monthToCSV(sb, getMonthsByRecordTypeStatistics(recordType));
 			}
 		} else if (type.equals("apiKey")) {
 			if (stat.equals("recordType")) {
+				fileName = "api-statistics-apiKey-by-recordType.csv";
 				recordTypeToCSV(sb, getRecordTypesByUserStatistics(apiKey));
 			} else if (stat.equals("month")) {
+				fileName = "api-statistics-apiKey-by-month.csv";
 				monthToCSV(sb, getMonthsByApiKeyStatistics(apiKey));
 			}
 		}
+
+		response.setHeader("Content-Type", "text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
 		return sb.toString();
 	}

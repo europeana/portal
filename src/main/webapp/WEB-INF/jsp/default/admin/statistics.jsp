@@ -5,14 +5,105 @@
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/open-html.jsp" %>
 <style type="text/css">
-    ul#stat-selector {
-      margin: 0;
-      padding: 0;
-    }
-    ul#stat-selector li {
-      display: inline;
-      margin-right: 30px;
-    }
+tr.total {
+  font-weight: bold;
+}
+ul#stat-selector {
+  margin: 0;
+  padding: 0;
+}
+ul#stat-selector li {
+  display: inline;
+  margin-right: 30px;
+}
+table {
+  *border-collapse: collapse; /* IE7 and lower */
+  border-spacing: 0;
+  width: 100%;
+}
+
+.bordered a {
+  display: block;
+  cursor: pointer;
+}
+
+.bordered {
+  border: solid #ccc 1px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 3px 3px 13px #ccc;
+  -moz-box-shadow: 3px 3px 13px #ccc;
+  box-shadow: 3px 3px 13px #ccc;
+}
+
+.bordered tr:hover {
+  background: #e3fffb; /* Hover color could be related to site specific (lightest colour) */
+  -o-transition: all 0.1s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.bordered td, .bordered th {
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 0.6em;
+  text-align: left;
+  white-space: normal;
+}
+
+.bordered th {
+  background-color: #dce9f9;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+  background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+  background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+  background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+  background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+  background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; 
+  -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
+  border-top: none;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5); 
+  font-weight: 600;
+  padding-top: 0.8em;
+}
+
+.bordered td:first-child, .bordered th:first-child {
+  border-left: none;
+}
+
+.bordered th:first-child {
+  -moz-border-radius: 6px 0 0 0;
+  -webkit-border-radius: 6px 0 0 0;
+  border-radius: 6px 0 0 0;
+}
+
+.bordered th:last-child {
+  -moz-border-radius: 0 6px 0 0;
+  -webkit-border-radius: 0 6px 0 0;
+  border-radius: 0 6px 0 0;
+}
+
+.bordered th:only-child{
+  -moz-border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0;
+}
+
+.bordered tr:last-child td:first-child {
+  -moz-border-radius: 0 0 0 6px;
+  -webkit-border-radius: 0 0 0 6px;
+  border-radius: 0 0 0 6px;
+}
+
+.bordered tr:last-child td:last-child {
+  -moz-border-radius: 0 0 6px 0;
+  -webkit-border-radius: 0 0 6px 0;
+  border-radius: 0 0 6px 0;
+}
 </style>
 <div class="container">
   <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
@@ -40,9 +131,12 @@
     <c:choose>
       <c:when test="${empty model.type || model.type == 'dates'}">
         <h3><spring:message code="apistat_by_date_t" /></h3>
-        <table>
+        <table class="bordered">
           <c:forEach items="${model.dateStatistics}" var="stat">
-            <tr><td>${stat.key}</td><td>${stat.value}</td></tr>
+            <tr>
+              <td>${stat.key}</td>
+              <td>${stat.value}</td>
+            </tr>
           </c:forEach>
         </table>
 
@@ -51,8 +145,7 @@
 
       <c:when test="${model.type == 'recordTypes'}">
         <h3><spring:message code="apistat_by_type_t" /></h3>
-        <style>tr.total {font-weight: bold;}</style>
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th><spring:message code="apistat_record_type_t" /></th>
@@ -107,7 +200,7 @@
           </c:choose>
         </c:if>
 
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th><a href="?${defaultParams}&order=name<c:if test="${reverseName}">&dir=desc</c:if>"><spring:message code="apistat_by_user_name_t" /></a></th>
@@ -143,7 +236,7 @@
 
       <c:when test="${model.type == 'months'}">
         <h3><spring:message code="apistat_by_month_t" /></h3>
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th>Month</th>
@@ -169,10 +262,9 @@
 
       <c:when test="${model.type == 'apiKey'}">
         <h3>Usage info about user <em>${model.userName}</em> (API key: ${model.apiKey})</h3>
-        <style>tr.total {font-weight: bold;}</style>
 
         <h4>By Type</h4>
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th><spring:message code="apistat_record_type_t" /></th>
@@ -204,7 +296,7 @@
         <%@ include file="/WEB-INF/jsp/default/admin/content/record-type-description.jspf" %>
 
         <h4>By month</h4>
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th>Month</th>
@@ -230,7 +322,6 @@
 
       <c:when test="${model.type == 'recordType'}">
         <h3>Usage info about API call type: <em>${model.recordType}</em></h3>
-        <style>tr.total {font-weight: bold;}</style>
 
         <h4>By API keys</h4>
         <c:set var="defaultParams" value="type=${model.type}&recordType=${model.recordType}" />
@@ -252,7 +343,7 @@
           </c:choose>
         </c:if>
 
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th><a href="?${defaultParams}&order=name<c:if test="${reverseName}">&dir=desc</c:if>"><spring:message code="apistat_by_user_name_t" /></a></th>
@@ -285,7 +376,7 @@
         <p><a href="statistics.csv?type=${model.type}&recordType=${model.recordType}&stat=apiKey">Export to CVS</a></p>
 
         <h4>By month</h4>
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th>Month</th>
@@ -332,7 +423,7 @@
         </c:if>
 
         <h4><spring:message code="apistat_by_user_t" /></h4>
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th><a href="?${defaultParams}&order=name<c:if test="${reverseName}">&dir=desc</c:if>"><spring:message code="apistat_by_user_name_t" /></a></th>
@@ -366,8 +457,7 @@
         <p><a href="statistics.csv?type=${model.type}&month=${model.month}&stat=apiKey">Export to CVS</a></p>
 
         <h4><spring:message code="apistat_by_type_t" /></h4>
-        <style>tr.total {font-weight: bold;}</style>
-        <table>
+        <table class="bordered">
           <thead>
             <tr>
               <th><spring:message code="apistat_record_type_t" /></th>
