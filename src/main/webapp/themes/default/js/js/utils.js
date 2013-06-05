@@ -11,6 +11,9 @@
  *  @package	js
  *  @author		dan entous <contact@pennlinepublishing.com>
  */
+if(typeof js == 'undefined'){
+	js = {};
+}
 
 js.utils = {
 	
