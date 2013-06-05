@@ -1146,6 +1146,33 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
+					
+					
+					<!-- Search Widjet js -->
+					
+					<execution>
+						<id>minify-search-widget.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>search-widget-all.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>utils.min.js</jsSourceInclude>
+								<jsSourceInclude>EuAccessibility.js</jsSourceInclude>
+								<jsSourceInclude>EuMenu.js</jsSourceInclude>
+								<jsSourceInclude>ellipsis.js</jsSourceInclude>
+								<jsSourceInclude>search-widget2.js</jsSourceInclude>							
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					
+					
 					<!-- END INIDVIDUAL JS FILES -->
 				</executions>
 			</plugin>
