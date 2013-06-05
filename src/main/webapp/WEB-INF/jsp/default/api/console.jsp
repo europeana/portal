@@ -124,11 +124,15 @@ var selectedPanel = '${model.function}';
           <form>
             <input type="hidden" name="function" value="search" />
             <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
-            <input type="text" id="api-query" name="query" value="${model.query}" /><br/>
+            <c:set var="searchQuery" value="" />
+            <c:if test="${model.function == 'search'}">
+              <c:set var="searchQuery" value="${fn:escapeXml(model.query)}" />
+            </c:if>
+            <input type="text" id="api-query" name="query" value="${searchQuery}" /><br/>
 
             <label for="api-qf"><spring:message code="apiconsole_refinements_t" />:</label><br/>
             <c:forEach items="${model.refinements}" var="qf">
-              <input type="text" id="api-qf" name="qf" value="${qf}" /><br/>
+              <input type="text" id="api-qf" name="qf" value="${fn:escapeXml(qf)}" /><br/>
             </c:forEach>
             <input type="text" id="api-qf" name="qf" value="${qf}" />
             <br/>
@@ -222,7 +226,12 @@ var selectedPanel = '${model.function}';
           <form>
             <input type="hidden" name="function" value="suggestions" />
             <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
-            <input type="text" id="api-query" name="query" value="${model.query}" /><br/>
+
+            <c:set var="suggestionsQuery" value="" />
+            <c:if test="${model.function == 'suggestions'}">
+              <c:set var="suggestionsQuery" value="${fn:escapeXml(model.query)}" />
+            </c:if>
+            <input type="text" id="api-query" name="query" value="${suggestionsQuery}" /><br/>
 
             <p class="section">
               <label for="api-suggestions-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>
