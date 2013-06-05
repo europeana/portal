@@ -60,7 +60,7 @@ public class WidgetController {
 		} else if (id.equals("navigation")) {
 			view = PortalPageInfo.TEMPLATE_NAVIGATION_HTML;
 		} else if (id.equals("search")) {
-			view = PortalPageInfo.SEARCH_HTML;
+			view = PortalPageInfo.TEMPLATE_SEARCH_HTML;
 		}
 
 		ModelAndView page = null;
