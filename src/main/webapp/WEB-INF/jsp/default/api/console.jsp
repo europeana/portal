@@ -222,7 +222,7 @@ var selectedPanel = '${model.function}';
 
         <fieldset id="suggestions-panel">
           <legend><spring:message code="apiconsole_suggestions_parameters_t" /></legend>
-    
+
           <form>
             <input type="hidden" name="function" value="suggestions" />
             <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
@@ -278,4 +278,3 @@ var selectedPanel = '${model.function}';
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/html/close-html.jsp" %>
-
