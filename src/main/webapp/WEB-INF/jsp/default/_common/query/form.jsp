@@ -12,7 +12,7 @@
 
 <%-- form --%>
 	<form id="query-search" action="${query_action}" method="get">
-		<table cellspacing="0" cellpadding="0" class="no-show">
+		<table class="query-table" cellspacing="0" cellpadding="0">
 			<tr>
 				<td class="menu-cell">
 					<div id="search-menu" class="eu-menu" aria-hidden="true">

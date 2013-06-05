@@ -6,7 +6,7 @@
 		title="${cell.titleBidi[0]}"
 		${targetArg}
 		rel="nofollow">
-		<img class="thumbnail" src='${cell.thumbnail}' alt="${cell.title[0]}" data-type="${fn:toLowerCase(cell.type)}" />
+		<img class="thumbnail" src="${cell.thumbnail}" alt="${cell.title[0]}" data-type="${fn:toLowerCase(cell.type)}" />
 	</a>
 </c:if>
 
