@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://htmlcompressor.googlecode.com/taglib/compressor" prefix="compress" %>
 
+<%-- 
+	/portal/template.html?id=search
+--%>
+
 <c:set var="isSearchWidget" value="true"/>
 
 <c:choose>
