@@ -42,7 +42,6 @@
 								<cssSourceInclude>ajax.css</cssSourceInclude>
 								<cssSourceInclude>header.css</cssSourceInclude>
 								<cssSourceInclude>menu-main.css</cssSourceInclude>
-								<cssSourceInclude>menu-right.css</cssSourceInclude>
 								<cssSourceInclude>responsive-grid.css</cssSourceInclude>
 								<cssSourceInclude>eu-menu.css</cssSourceInclude>
 								<cssSourceInclude>ellipsis.css</cssSourceInclude>
@@ -54,6 +53,43 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
+
+
+					<!-- widget.css (as common.css but with absolute font-icon paths + search.css) -->
+					<execution>
+						<id>minify-search-widget.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>search-widget-all.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>html.css</cssSourceInclude>
+								<cssSourceInclude>common.css</cssSourceInclude>
+								<!--  cssSourceInclude>ajax.css</cssSourceInclude-->
+								<cssSourceInclude>header.css</cssSourceInclude>
+								<cssSourceInclude>menu-main.css</cssSourceInclude>
+								<!--cssSourceInclude>menu-right.css</cssSourceInclude-->
+								<cssSourceInclude>responsive-grid.css</cssSourceInclude>
+								<cssSourceInclude>eu-menu.css</cssSourceInclude>
+								<cssSourceInclude>ellipsis.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-icons-widget.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
+								
+								<cssSourceInclude>search.css</cssSourceInclude>
+								<cssSourceInclude>search-navigation.css</cssSourceInclude>
+								<cssSourceInclude>search-pagination.css</cssSourceInclude>
+								<cssSourceInclude>sidebar-facets.css</cssSourceInclude>
+								
+								
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
 
 					<!-- separate file for newsletter -->
 					<execution>
@@ -976,41 +1012,6 @@
 					</execution>
 
 					<execution>
-						<id>minify-search-widget.js</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
-							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>search-widget.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
-							<jsSourceIncludes>
-								<jsSourceInclude>search-widget.js</jsSourceInclude>
-							</jsSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-
-					<!-- TODO: tabs is beiong phased out: this execution will shortly be deleted -->
-					<execution>
-						<id>minify-tabs.js</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/gmtplusone</webappTargetDir>
-							<jsSourceDir>/themes/default/js/com/gmtplusone</jsSourceDir>
-							<jsFinalFile>tabs.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
-							<jsSourceIncludes>
-								<jsSourceInclude>tabs.js</jsSourceInclude>
-							</jsSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-
-					<execution>
 						<id>minify-accordion-tabs.js</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -1027,7 +1028,7 @@
 						</goals>
 					</execution>
 
-					<execution>
+					<!--execution>
 						<id>minify-timeline.js</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -1042,7 +1043,7 @@
 						<goals>
 							<goal>minify</goal>
 						</goals>
-					</execution>
+					</execution-->
 
 					<execution>
 						<id>minify-translation-services.js</id>
