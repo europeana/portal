@@ -99,7 +99,12 @@ public enum PortalPageInfo implements PageInfo {
 	STATICPAGE("staticpage.html", "Europeana Page", "staticpage/staticpage"),
 
 	TIMELINE("timeline.html", "Europeana - Timeline", "timeline/timeline"),
-	TIMELINE_JSON("search.json", "timeline/timeline-json");
+	TIMELINE_JSON("search.json", "timeline/timeline-json"),
+
+	TEMPLATE_SEARCHGRID_HTML("template.html", "Europeana - Template", "template/searchGrid"),
+	TEMPLATE_HEADER_HTML("template.html", "Europeana - Template", "template/header"),
+	TEMPLATE_FACETS_HTML("template.html", "Europeana - Template", "template/facets"),
+	TEMPLATE_NAVIGATION_HTML("template.html", "Europeana - Template", "template/navigation");
 
 	private String pageName;
 	private String template;
