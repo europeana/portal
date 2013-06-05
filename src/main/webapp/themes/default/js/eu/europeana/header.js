@@ -30,21 +30,8 @@ eu.europeana.header = {
 		
 		$('.submit-cell').css("width",	$('.submit-cell button')	.outerWidth(true) + "px"); 
 		$('.menu-cell').css("width",	$('#search-menu')			.outerWidth(true) + "px");
-		
 		$('.submit-cell button').css("border-left",	"solid 1px #4C7ECF");	// do this after the resize to stop 1px gap in FF
-		
-		$("#query-search>table")									.css("display",		"none");
-		$("#query-search>table")									.css("visibility",	"visible");
-		
-		
-		/*
-		$("#query-search>table").fadeIn(600, function(){
-			$("#query-input").focus();
-		});
-		*/
-		
-		$("#query-search>table").fadeIn(600);
-		
+	
 
 		this.initResponsiveUtility();
 		this.addLanguageChangeHandler();
@@ -257,7 +244,7 @@ eu.europeana.header = {
 						var searchType = $(ob).attr("class");
 						
 						if(searchTerm.indexOf(searchType) == 0){
-							self.setLabel(searchType);
+						 	self.setLabel(searchType);
 							input.val( searchTerm.substr( searchType.length, searchTerm.length) );
 							self.setActive(searchType);
 						}
