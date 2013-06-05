@@ -12,6 +12,10 @@
 
 searchWidget = {
 
+	searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo',
+	q : false,
+	container : false,
+	
 	// get markup from portal
 		
 	load : function(){
@@ -23,12 +27,27 @@ searchWidget = {
 		});
 	},
 
-	// load style / initialise events / set state
+	// load style / initialise events / set state - called by load callback
 
 	init : function(htmlData) {
-		$('.search-widget-container').append(htmlData.markup);
-
-		this.setupResultSizeMenu();
+		this.container = $('.search-widget-container');
+		this.container.append(htmlData.markup);
+		
+		// work out percentage width window/container
+		/*
+		var wBody = $('body').width();
+		var wThis = this.container.width();
+		var pct = wThis / wBody;
+		alert("pct = " + pct);
+		this.container.css('zoom', '2');
+		this.container.css('-moz-transform', 'scale(2)');
+		*/
+		
+//		file:///home/maclean/workspace/europeana/new-search-widget.html
+			
+		
+		this.setupQuery();
+		this.setupMenus();
 		this.setupEllipsis();
 		this.setupPageJump();
 
@@ -38,23 +57,44 @@ searchWidget = {
 		
 		// use the widget
 		
-		var url = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=paris&qf=PROVIDER%3A%22Judaica+Europeana%22&qf=DATA_PROVIDER%3AAkadem&start=49&rows=12&profile=portal&callback=searchWidget.showRes";
-
+		
 		$('#search').click(function(){
-			$.ajax({
-				"url" : url,
-				"type" : "GET",
-				"crossDomain" : true,
-				"dataType" : "script"
-			});
+			var url = buildUrl();
+			if(url){
+				$.ajax({
+					"url" : url,
+					"type" : "GET",
+					"crossDomain" : true,
+					"dataType" : "script"
+				});				
+			}
+			else{
+				this.q.addClass('error-border');
+			}
 		});
 	},
 
+	buildUrl : function(){
+		var term = this.q.val();
+		if(!term){
+			return '';
+		}
+		
+		var url = searchWidget.searchUrl + '&query=' + term;
+
+		// "&qf=PROVIDER%3A%22Judaica+Europeana%22&qf=DATA_PROVIDER%3AAkadem&start=49&rows=12&profile=portal&callback=searchWidget.showRes";
+		/*
+		 &qf=PROVIDER%3A%22Judaica+Europeana%22
+		 &qf=DATA_PROVIDER%3AAkadem
+		 &start=49
+		 &rows=12
+		 &profile=portal
+		 &callback=searchWidget.showRes";
+		*/
+	},
 	
 	showRes:function(data){
-	
 		$(data.facets).each(function(i, ob){
-			alert(i);
 			$('body').append(JSON.stringify(ob));
 			$('body').append('<br>');
 		});
@@ -162,8 +202,64 @@ searchWidget = {
 
 	},
 
+	setupQuery : function(){
+		this.q = $('#query-input');
+		
+		this.q.blur(function(){
+			$(this).removeClass('glow');
+		}).focus(function(){
+			$(this).addClass('glow');	
+		});
+		
+		//return;
+		var submitCell = this.container.find('.submit-cell');
+		var submitCellButton = submitCell.find('button');
+		var menuCell = this.container.find('.menu-cell');
+		var searchMenu = this.container.find('#search-menu');
+
+		//alert(searchMenu.width());
+
+		
+		submitCell.css("width", submitCellButton.outerWidth(true) + "px"); 
+		menuCell.css("width", searchMenu.width() + "px");//searchMenu.outerWidth(false) + "px");
+		submitCellButton.css("border-left",	"solid 1px #4C7ECF");	// do this after the resize to stop 1px gap in FF
+		
+		
+
+		//alert(searchMenu.width());
+
+	},
+	
 	// todo 
-	setupResultSizeMenu : function(){
+	setupMenus : function(){
+		
+		// search 
+		this.searchMenu = new EuMenu( 
+			$("#search-menu"),
+			{
+				"fn_item": function(self){},
+				"fn_init": function(self){
+					var input		= $('#query-input');
+					var searchTerm	= input.attr("valueForBackButton").replace("*:*", "");
+					self.cmp.find(".item a").each(function(i, ob){
+						var searchType = $(ob).attr("class");
+						if(searchTerm.indexOf(searchType) == 0){
+						 	self.setLabel(searchType);
+							input.val( searchTerm.substr( searchType.length, searchTerm.length) );
+							self.setActive(searchType);
+						}
+					});
+				},
+				"fn_submit":function(self){
+					var active	= self.cmp.find(".item.active a").attr("class");
+					var input	= $('#query-input');
+					input.val( (typeof active == "undefined" ? "" : active) + input.val());
+				}
+			}
+		);
+		this.searchMenu.init();
+			
+		// result size 
 		var config = {
 			"fn_init": function(self){
 				self.setActive( $("#query-search input[name=rows]").val() );
@@ -173,23 +269,16 @@ searchWidget = {
 			}
 		};
 		
-		var menuTop = new EuMenu( $(".nav-top .eu-menu"), config);
-		var menuBottom = new EuMenu( $(".nav-bottom .eu-menu"), config);
-		menuTop.init();
-		menuBottom.init();
-	},
-	
-	// todo
-	checkKeywordSupplied : function(){
-		if($('#newKeyword').val().length>0){
-			return true;
-		}
-		else{
-			$('#newKeyword').addClass('error-border');
-			return false;
-		}	
+		new EuMenu( $(".nav-top .eu-menu"), config).init();
+		new EuMenu( $(".nav-bottom .eu-menu"), config).init();
+		
+		// menu closing
+		
+		$(this.container).click( function(){
+			$('.eu-menu' ).removeClass("active");
+		});
+
 	}
-	
 	
 };
 
