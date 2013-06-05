@@ -128,8 +128,7 @@
 		min-width:		auto;
 	}
 
-	#query-full,
-	#query-info{
+	#query-full, #query-info{
 		display:		table-cell;
 		vertical-align:	middle;
 	}
@@ -180,7 +179,7 @@
 /* Search Menu */
 
 
-.query-table{
+table {
 	border-collapse: separate;
 	cell-padding:	0;
 	cell-spacing:	0;
@@ -189,21 +188,19 @@
 }
 
 
-.query-table,
-.query-table tr{
+
+table, tr{
 	width:100%;
 }
 
-.query-table td{
+td{
 	padding:		0px;
 	white-space:	nowrap;
 }
 
 
-.query-table td:first-child,
-.query-table td:last-child{
-	min-width:	1em;
-	width:		auto;
+tr td:first-child, tr td:last-child{
+	width:	auto;
 }
 
 
@@ -212,30 +209,22 @@
 	padding-right:1em;
 }
 
-.query-table td.menu-cell:first-child{
+tr td.menu-cell:first-child{
 	width:	20%;
 	text-align:	center;	
 }
 
-.query-table .query-cell{
-	width:	80%;
-}
-
-.query-table,
-.query-table tr,
-.query-table td{
-	box-sizing:			border-box;
-	-moz-box-sizing:	border-box;
-	-webkit-box-sizing:	border-box;
+tr td.query-cell{
+	width:	80%;		
 }
 
 
-.query-table{
+table{
 	table-layout:fixed;
 }
 
 
-.query-table tr:first-child{
+table tr:first-child{
 	border:		1px solid #E4E4E4;
 	font-size:	1.4em;
 }
@@ -267,22 +256,17 @@
 
 @media only screen and ( min-width:48em ){
 	
-	.query-table{
+	table{
 		border:					1px solid #e4e4e4 !important;
 		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 		border-radius:			0.5em 0.5em 0.5em 0.5em;
-		XXXtable-layout:			auto;
-		table-layout:			fixed;
-		
-		ZZZpadding-right:			1em;
-		
+		table-layout:			auto;
 		XXXposition:				relative;
 		XXXtop:					-0.4em;
-		
 	}
 	
-	.query-table tr:first-child{
+	table tr:first-child{
 		border:					none !important;
 		-moz-border-radius:		0;
 		-webkit-border-radius:	0;
@@ -299,24 +283,19 @@
 	}
 
 	
-	.query-table td.menu-cell:first-child{
+	tr td.menu-cell:first-child, tr td.query-cell{
 		width:	auto;
-		width:	9em;		
-	}
-	
-	.query-table td.query-cell{
-		width:	100%;
 	}
 	
 }	
 
 	
-.query-table #query-input{
+#query-input{
 	color:							#333;
 	font-weight:					400;
 	font-size:						inherit;
 	height:							1.2em;
-	margin:							0 0 0 0.25em;
+	margin:							0;
 	outline:						none;						/* firefox */
 	padding:						0;
 	-webkit-appearance:				none;						/* chrome */
@@ -326,7 +305,7 @@
 	border:							none;
 }
 
-.query-table #query-input:focus {
+#query-input:focus {
     outline:						none;
    	-webkit-appearance:				none;
 	-webkit-tap-highlight-color:	rgba(0, 0, 0, 0);
@@ -335,15 +314,10 @@
 
 
 
-.query-table .query-cell{
-	border-left:			1px solid #E4E4E4;
-	padding:				0 0.75em 0 0.25em;
-	
-	XXXXXXXoverflow:		hidden;
-	
-	-moz-border-radius:		0 0.5em 0.5em 0;
-	-webkit-border-radius:	0 0.5em 0.5em 0;
-	border-radius:			0 0.5em 0.5em 0;
+.query-cell{
+	border-left:	1px solid #E4E4E4;
+	padding:		0 0.25em;
+	overflow:		hidden;
 }
 
 .glow{
@@ -366,18 +340,11 @@
 	
 	#query-input{
 		width:					100%;
-		XXXXXXmargin-right:			100%;
 		-moz-border-radius:		0 0 0 0;
 		-webkit-border-radius:	0 0 0 0;
 		border-radius:			0 0 0 0;
 	}
-
-	.query-table .query-cell{
-		-moz-border-radius:		0;
-		-webkit-border-radius:	0;
-		border-radius:			0;
-	}
-
+	
 }
 
 
@@ -409,7 +376,7 @@
 }
 	
  
-.query-table .submit-cell{
+.submit-cell{
 	height:			100%;
 	vertical-align:	middle;
 	text-align:		center;
@@ -418,7 +385,7 @@
 	padding-top:	2.5em;
 }
 
-.query-table .submit-cell button{
+.submit-cell button{
 	/*font-family:			'SourceSansProRegular', Arial, sans-serif;*/
 	/*background-color:		#9900ff;*/
 	
@@ -446,11 +413,11 @@
 
 @media only screen and ( min-width:48em ){
 
-	.query-table .submit-cell{
+	.submit-cell{
 		padding-top:		0;
 	}
 
-	.query-table .submit-cell button{
+	.submit-cell button{
 	
 		position:				absolute;
 		padding:				0;
@@ -463,9 +430,7 @@
 		-moz-border-radius:		0 0.5em 0.5em 0;
 		-webkit-border-radius:	0 0.5em 0.5em 0;
 		border-radius:			0 0.5em 0.5em 0;
-		xxwidth:					7.15em;
 		width:					auto;
-		
 		height:					100%;	
 		
 	}
@@ -481,7 +446,7 @@
 	}
 	
 
-	.query-table .submit-button {
+	.submit-button {
 		width:		auto !important;
 		margin-top:	0;			
 	}
