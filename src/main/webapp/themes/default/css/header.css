@@ -128,7 +128,8 @@
 		min-width:		auto;
 	}
 
-	#query-full, #query-info{
+	#query-full,
+	#query-info{
 		display:		table-cell;
 		vertical-align:	middle;
 	}
@@ -179,7 +180,7 @@
 /* Search Menu */
 
 
-table {
+.query-table{
 	border-collapse: separate;
 	cell-padding:	0;
 	cell-spacing:	0;
@@ -188,19 +189,21 @@ table {
 }
 
 
-
-table, tr{
+.query-table,
+.query-table tr{
 	width:100%;
 }
 
-td{
+.query-table td{
 	padding:		0px;
 	white-space:	nowrap;
 }
 
 
-tr td:first-child, tr td:last-child{
-	width:	auto;
+.query-table td:first-child,
+.query-table td:last-child{
+	min-width:	1em;
+	width:		auto;
 }
 
 
@@ -209,22 +212,30 @@ tr td:first-child, tr td:last-child{
 	padding-right:1em;
 }
 
-tr td.menu-cell:first-child{
+.query-table td.menu-cell:first-child{
 	width:	20%;
 	text-align:	center;	
 }
 
-tr td.query-cell{
-	width:	80%;		
+.query-table .query-cell{
+	width:	80%;
+}
+
+.query-table,
+.query-table tr,
+.query-table td{
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
 }
 
 
-table{
+.query-table{
 	table-layout:fixed;
 }
 
 
-table tr:first-child{
+.query-table tr:first-child{
 	border:		1px solid #E4E4E4;
 	font-size:	1.4em;
 }
@@ -256,17 +267,22 @@ table tr:first-child{
 
 @media only screen and ( min-width:48em ){
 	
-	table{
+	.query-table{
 		border:					1px solid #e4e4e4 !important;
 		-moz-border-radius:		0.5em 0.5em 0.5em 0.5em;
 		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 		border-radius:			0.5em 0.5em 0.5em 0.5em;
-		table-layout:			auto;
+		XXXtable-layout:			auto;
+		table-layout:			fixed;
+		
+		ZZZpadding-right:			1em;
+		
 		XXXposition:				relative;
 		XXXtop:					-0.4em;
+		
 	}
 	
-	table tr:first-child{
+	.query-table tr:first-child{
 		border:					none !important;
 		-moz-border-radius:		0;
 		-webkit-border-radius:	0;
@@ -283,19 +299,24 @@ table tr:first-child{
 	}
 
 	
-	tr td.menu-cell:first-child, tr td.query-cell{
+	.query-table td.menu-cell:first-child{
 		width:	auto;
+		width:	9em;		
+	}
+	
+	.query-table td.query-cell{
+		width:	100%;
 	}
 	
 }	
 
 	
-#query-input{
+.query-table #query-input{
 	color:							#333;
 	font-weight:					400;
 	font-size:						inherit;
 	height:							1.2em;
-	margin:							0;
+	margin:							0 0 0 0.25em;
 	outline:						none;						/* firefox */
 	padding:						0;
 	-webkit-appearance:				none;						/* chrome */
@@ -305,7 +326,7 @@ table tr:first-child{
 	border:							none;
 }
 
-#query-input:focus {
+.query-table #query-input:focus {
     outline:						none;
    	-webkit-appearance:				none;
 	-webkit-tap-highlight-color:	rgba(0, 0, 0, 0);
@@ -314,10 +335,15 @@ table tr:first-child{
 
 
 
-.query-cell{
-	border-left:	1px solid #E4E4E4;
-	padding:		0 0.25em;
-	overflow:		hidden;
+.query-table .query-cell{
+	border-left:			1px solid #E4E4E4;
+	padding:				0 0.75em 0 0.25em;
+	
+	XXXXXXXoverflow:		hidden;
+	
+	-moz-border-radius:		0 0.5em 0.5em 0;
+	-webkit-border-radius:	0 0.5em 0.5em 0;
+	border-radius:			0 0.5em 0.5em 0;
 }
 
 .glow{
@@ -340,11 +366,18 @@ table tr:first-child{
 	
 	#query-input{
 		width:					100%;
+		XXXXXXmargin-right:			100%;
 		-moz-border-radius:		0 0 0 0;
 		-webkit-border-radius:	0 0 0 0;
 		border-radius:			0 0 0 0;
 	}
-	
+
+	.query-table .query-cell{
+		-moz-border-radius:		0;
+		-webkit-border-radius:	0;
+		border-radius:			0;
+	}
+
 }
 
 
@@ -376,7 +409,7 @@ table tr:first-child{
 }
 	
  
-.submit-cell{
+.query-table .submit-cell{
 	height:			100%;
 	vertical-align:	middle;
 	text-align:		center;
@@ -385,7 +418,7 @@ table tr:first-child{
 	padding-top:	2.5em;
 }
 
-.submit-cell button{
+.query-table .submit-cell button{
 	/*font-family:			'SourceSansProRegular', Arial, sans-serif;*/
 	/*background-color:		#9900ff;*/
 	
@@ -413,11 +446,11 @@ table tr:first-child{
 
 @media only screen and ( min-width:48em ){
 
-	.submit-cell{
+	.query-table .submit-cell{
 		padding-top:		0;
 	}
 
-	.submit-cell button{
+	.query-table .submit-cell button{
 	
 		position:				absolute;
 		padding:				0;
@@ -430,7 +463,9 @@ table tr:first-child{
 		-moz-border-radius:		0 0.5em 0.5em 0;
 		-webkit-border-radius:	0 0.5em 0.5em 0;
 		border-radius:			0 0.5em 0.5em 0;
+		xxwidth:					7.15em;
 		width:					auto;
+		
 		height:					100%;	
 		
 	}
@@ -446,7 +481,7 @@ table tr:first-child{
 	}
 	
 
-	.submit-button {
+	.query-table .submit-button {
 		width:		auto !important;
 		margin-top:	0;			
 	}
