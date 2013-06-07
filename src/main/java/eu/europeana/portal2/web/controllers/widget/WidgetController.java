@@ -38,7 +38,7 @@ import eu.europeana.portal2.web.util.Injector;
 public class WidgetController {
 
 	private static final List<String> IDS = Arrays.asList(new String[]{"search", "searchGrid", "header", "facets", "navigation"});
-	
+
 	@RequestMapping({"/template.html"})
 	public ModelAndView templateHtml(
 		@RequestParam(value = "id", required = false, defaultValue="searchGrid") String id,
@@ -50,17 +50,17 @@ public class WidgetController {
 			id = "searchGrid";
 		}
 
-		PageInfo view = PortalPageInfo.TEMPLATE_SEARCHGRID_HTML;
+		PageInfo view = PortalPageInfo.WIDGET_SEARCHGRID_TPL;
 		if (id.equals("searchGrid")) {
-			view = PortalPageInfo.TEMPLATE_SEARCHGRID_HTML;
+			view = PortalPageInfo.WIDGET_SEARCHGRID_TPL;
 		} else if (id.equals("header")) {
-			view = PortalPageInfo.TEMPLATE_HEADER_HTML;
+			view = PortalPageInfo.WIDGET_HEADER_TPL;
 		} else if (id.equals("facets")) {
-			view = PortalPageInfo.TEMPLATE_FACETS_HTML;
+			view = PortalPageInfo.WIDGET_FACETS_TPL;
 		} else if (id.equals("navigation")) {
-			view = PortalPageInfo.TEMPLATE_NAVIGATION_HTML;
+			view = PortalPageInfo.WIDGET_NAVIGATION_TPL;
 		} else if (id.equals("search")) {
-			view = PortalPageInfo.TEMPLATE_SEARCH_HTML;
+			view = PortalPageInfo.WIDGET_SEARCH_TPL;
 		}
 
 		ModelAndView page = null;
@@ -93,6 +93,20 @@ public class WidgetController {
 			EmptyModelPage model = new EmptyModelPage();
 			page = ControllerUtil.createModelAndViewPage(model, locale, view);
 		}
+		return page;
+	}
+
+	@RequestMapping({"/widget/editor.html"})
+	public ModelAndView editWidget(
+		HttpServletRequest request,
+		HttpServletResponse response,
+		Locale locale
+	) {
+		Injector injector = new Injector(request, response, locale);
+		EmptyModelPage model = new EmptyModelPage();
+		injector.injectProperties(model);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.WIDGET_EDITOR);
+		injector.postHandle(this, page);
 		return page;
 	}
 

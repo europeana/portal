@@ -101,11 +101,13 @@ public enum PortalPageInfo implements PageInfo {
 	TIMELINE("timeline.html", "Europeana - Timeline", "timeline/timeline"),
 	TIMELINE_JSON("search.json", "timeline/timeline-json"),
 
-	TEMPLATE_SEARCH_HTML("search.html", "Europeana - Search results", "template/search"),
-	TEMPLATE_SEARCHGRID_HTML("template.html", "Europeana - Template", "template/searchGrid"),
-	TEMPLATE_HEADER_HTML("template.html", "Europeana - Template", "template/header"),
-	TEMPLATE_FACETS_HTML("template.html", "Europeana - Template", "template/facets"),
-	TEMPLATE_NAVIGATION_HTML("template.html", "Europeana - Template", "template/navigation");
+	WIDGET_SEARCH_TPL("search.html", "Europeana - Search results", "template/search"),
+	WIDGET_SEARCHGRID_TPL("template.html", "Europeana - Template", "template/searchGrid"),
+	WIDGET_HEADER_TPL("template.html", "Europeana - Template", "template/header"),
+	WIDGET_FACETS_TPL("template.html", "Europeana - Template", "template/facets"),
+	WIDGET_NAVIGATION_TPL("template.html", "Europeana - Template", "template/navigation"),
+
+	WIDGET_EDITOR("widget/editor.html", "Europeana - Search Widget Editor", "widget/editor");
 
 	private String pageName;
 	private String template;
