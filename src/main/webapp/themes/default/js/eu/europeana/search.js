@@ -11,7 +11,7 @@ eu.europeana.search = {
 				ob.checked = false;
 			}
 		});
-		
+
 		// make facet sections collapsible
 		$("#filter-search>li").each(function(i, ob){
 
@@ -49,7 +49,9 @@ eu.europeana.search = {
 			}
 		});
 		
-		
+		$('#refine-search-form').submit(function(){
+			return eu.europeana.search.checkKeywordSupplied();
+		});
 		
 		$(window).bind('collapsibleExpanded',
 			function(event, elements){
@@ -103,97 +105,6 @@ eu.europeana.search = {
 		// add this
 		this.addThis();
 	},
-	/*
-	loadComponents : function() {
-		
-		var self = eu.europeana.search;
-
-			js.loader.loadScripts([{
-				
-				file: 'addthis' + js.min_suffix + '.js' + js.cache_helper,
-				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
-				callback : function() {
-					self.addThis(); 
-				}
-				
-			}]);
-	},
-	*/
-	
-	/*
-	
-	setupPageJump : function(){
-		$('.jump-to-page').bind('submit', 				this.jumpToPageSubmit );
-		$('.jump-to-page #start-page').bind('keypress',	this.validateJumpToPage);
-	},
-	
-	jumpToPageSubmit : function( e ){		
-		var $jumpToPage	= $(this).parent();
-		var rows		= parseInt($jumpToPage.find("input[name=rows]").val());
-		var pageNum		= parseInt($jumpToPage.find("#start-page").val());
-		var newStart	= 1 + ((pageNum-1)*rows);
-		
-		$jumpToPage.find("input[name=start]").val(newStart);
-		//window.location.href = eu.europeana.search.urlAlterParam("start", newStart);
-		//return false; // stop submit
-	},
-	
-	validateJumpToPage : function(e){
-
-		if(e.ctrlKey || e.metaKey || e.keyCode == 9){
-			// ctrl or cmd or tab
-			return;
-		}
-		
-		var $this		= $(this);
-		var $jumpToPage	= $(this).parent();
-		var key			= window.event ? e.keyCode : e.which;
-		var maxRows		= parseInt($jumpToPage.find("#max-rows").val());
-
-		if([8, 46, 37, 38, 39, 40].indexOf(e.keyCode)>-1){
-			// delete, backspace, left, up, right, down 
-			return true;
-		}
-		else if(e.keyCode == 13){
-			// return 
-			var currVal = $jumpToPage.find("#start-page").val();
-			return currVal.length > 0;
-		}
-		else if ( key < 48 || key > 57 ) {
-			// alphabet 
-			return false;
-		}
-		else{
-			// number 
-			
-			var val = parseInt( $this.val() + String.fromCharCode(key) );
-			
-			if(typeof $this[0].selectionStart != 'undefined' && typeof $this[0].selectionEnd != 'undefined' && $this[0].selectionStart != $this[0].selectionEnd){
-				val = parseInt(	$this.val().substr(0, $this[0].selectionStart -1)	+ String.fromCharCode(key) + $this.val().substr($this[0].selectionEnd, $this.val().length )	);	  
-			}
-			
-			var overwrite;
-			
-			if(!val>0){
-				overwrite = 1;
-				val = 1;
-			}
-			else if(val > maxRows){
-				overwrite = maxRows;
-				val = maxRows;
-			}
-
-			if(overwrite){
-				$(e.target).val(overwrite);
-				e.preventDefault();
-			}
-			
-			return true;
-		}
-		
-	},
-
-	*/
 	
 	setupEllipsis : function(){
 		// add ellipsis
@@ -282,11 +193,8 @@ eu.europeana.search = {
 				window.location.href = eu.europeana.search.urlAlterParam("rows", selected);
 			}
 		};
-		
-		var menuTop = new EuMenu( $(".nav-top .eu-menu"), config);
-		var menuBottom = new EuMenu( $(".nav-bottom .eu-menu"), config);
-		menuTop.init();
-		menuBottom.init();
+		new EuMenu( $(".nav-top .eu-menu"), config).init();
+		new EuMenu( $(".nav-bottom .eu-menu"), config).init();
 	},
 	
 
