@@ -23,11 +23,10 @@
 		<div class="count">
 			<span>
 				<spring:message code="Results_t" />&nbsp;
-				${model.briefBeanView.pagination.start}<span class="spaced">-</span>${model.briefBeanView.pagination.lastViewableRecord}
-	
+				<span class="first-vis-record">${model.briefBeanView.pagination.start}</span><span class="spaced">-</span><span class="last-vis-record">${model.briefBeanView.pagination.lastViewableRecord}</span>	
 				<span class="of"> <spring:message code="Of_t" /> </span>
-				<span class="of-bracket"><fmt:formatNumber 
-											value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0"
+				<span class="of-bracket last-record"><fmt:formatNumber 
+					value="${model.briefBeanView.pagination.numFound}" type="NUMBER" maxFractionDigits="0"
 				/></span>
 			</span>
 		</div>
@@ -36,14 +35,14 @@
 			<ul class="result-pagination">
 				<%-- first arrow --%>
 				<li class="nav-first">
-					<c:if test="${!model.briefBeanView.pagination.first}">
+					<c:if test="${!model.briefBeanView.pagination.first || isSearchWidget}" >
 						<a href="${model.firstPageUrl}" title="<spring:message code="AltFirstPage_t" />">&lt;&lt; &nbsp;</a>
 					</c:if>
 				</li>
 
 				<%-- previous arrow --%>
 				<li class="nav-prev">
-					<c:if test="${model.briefBeanView.pagination.previous}">
+					<c:if test="${model.briefBeanView.pagination.previous || isSearchWidget}">
 						<a href="${model.previousPageUrl}" title="<spring:message code="AltPreviousPage_t" />">&nbsp; &lt; &nbsp; </a>
 					</c:if>
 				</li>
@@ -73,14 +72,14 @@
 
 				<%-- next arrow --%>
 				<li class="nav-next">
-					<c:if test="${model.briefBeanView.pagination.next}">
+					<c:if test="${model.briefBeanView.pagination.next || isSearchWidget}">
 						<a href="${model.nextPageUrl}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; &nbsp;</a>
 					</c:if>
 				</li>
 
 				<%-- last arrow --%>
 				<li class="nav-last">
-					<c:if test="${!model.briefBeanView.pagination.last}">
+					<c:if test="${!model.briefBeanView.pagination.last || isSearchWidget}">
 						<a href="${model.lastPageUrl}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt;&gt;</a>
 					</c:if>
 				</li>
