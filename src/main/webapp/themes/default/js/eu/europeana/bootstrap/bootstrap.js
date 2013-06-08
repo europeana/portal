@@ -284,9 +284,15 @@ var europeana_bootstrap = function(){
 		});
 		
 		scripts.push({
+			name : 'EuPagination',
+			file : 'EuPagination' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+		});
+		
+		scripts.push({
 			file : 'search' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils', 'collapsible', 'ellipsis', 'EuMenu' ],
+			dependencies : [ 'ajax', 'utils', 'collapsible', 'ellipsis', 'EuMenu', 'EuPagination' ],
 			callback: function(){
 				eu.europeana.search.init();
 			}

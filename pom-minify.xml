@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.samaxes.maven</groupId>
-	<artifactId>minify-maven-plugin-demo</artifactId>
+	<artifactId>minify-maven-europeana-resources</artifactId>
 	<version>1.5.2</version>
 	<packaging>pom</packaging>
 	<name>Minify Europeana Resources</name>
@@ -19,6 +19,7 @@
 
 	<build>
 		<plugins>
+		
 			<plugin><!-- START MINIFY-MAVEN-PLUGIN -->
 				<groupId>com.samaxes.maven</groupId>
 				<artifactId>minify-maven-plugin</artifactId>
@@ -1163,6 +1164,7 @@
 								<jsSourceInclude>EuAccessibility.js</jsSourceInclude>
 								<jsSourceInclude>EuMenu.js</jsSourceInclude>
 								<jsSourceInclude>ellipsis.js</jsSourceInclude>
+								<jsSourceInclude>collapsible.js</jsSourceInclude>
 								<jsSourceInclude>search-widget2.js</jsSourceInclude>							
 							</jsSourceIncludes>
 						</configuration>

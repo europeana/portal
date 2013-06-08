@@ -246,6 +246,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.search_saved = '${fn:escapeXml(search_saved)}';
 		eu.europeana.vars.msg.search_save_failed = '${fn:escapeXml(search_save_failed)}';
 		eu.europeana.vars.msg.result_count = ${model.briefBeanView.pagination.numFound};
+		eu.europeana.vars.msg.start = ${model.briefBeanView.pagination.start};
 		
 	</c:when>
 

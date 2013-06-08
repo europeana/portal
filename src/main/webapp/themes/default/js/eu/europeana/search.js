@@ -4,7 +4,7 @@ eu.europeana.search = {
 	
 	facet_sections : [],
 	init : function() {
-		
+				
 		// fix firefox' habit of creating invalid form states by remembering old checked values on refresh & page back 
 		$('#filter-search li ul li input:checkbox').each(function(i, ob){
 			if( ob.checked && !ob.getAttribute("checked")){
@@ -70,7 +70,17 @@ eu.europeana.search = {
 
 		this.setupResultSizeMenu();
 		this.setupEllipsis();
-		this.setupPageJump();
+		
+		//this.setupPageJump();
+		new EuPagination($('.result-pagination'),
+			{
+				data:{
+					records: eu.europeana.vars.msg.result_count,
+					rows: parseInt(eu.europeana.vars.rows),
+					start: eu.europeana.vars.msg.start
+				}
+		});
+
 		
 		if( $('#save-search').hasClass('icon-unsaveditem')){
 			$('#save-search').bind('click', this.handleSaveSearchClick );			
@@ -110,18 +120,22 @@ eu.europeana.search = {
 	},
 	*/
 	
+	/*
+	
 	setupPageJump : function(){
 		$('.jump-to-page').bind('submit', 				this.jumpToPageSubmit );
 		$('.jump-to-page #start-page').bind('keypress',	this.validateJumpToPage);
 	},
 	
-	jumpToPageSubmit : function( e ){
+	jumpToPageSubmit : function( e ){		
 		var $jumpToPage	= $(this).parent();
 		var rows		= parseInt($jumpToPage.find("input[name=rows]").val());
 		var pageNum		= parseInt($jumpToPage.find("#start-page").val());
 		var newStart	= 1 + ((pageNum-1)*rows);
-		window.location.href = eu.europeana.search.urlAlterParam("start", newStart);
-		return false; // stop submit
+		
+		$jumpToPage.find("input[name=start]").val(newStart);
+		//window.location.href = eu.europeana.search.urlAlterParam("start", newStart);
+		//return false; // stop submit
 	},
 	
 	validateJumpToPage : function(e){
@@ -137,20 +151,20 @@ eu.europeana.search = {
 		var maxRows		= parseInt($jumpToPage.find("#max-rows").val());
 
 		if([8, 46, 37, 38, 39, 40].indexOf(e.keyCode)>-1){
-			/* delete, backspace, left, up, right, down */
+			// delete, backspace, left, up, right, down 
 			return true;
 		}
 		else if(e.keyCode == 13){
-			/* return */
+			// return 
 			var currVal = $jumpToPage.find("#start-page").val();
 			return currVal.length > 0;
 		}
 		else if ( key < 48 || key > 57 ) {
-			/* alphabet */
+			// alphabet 
 			return false;
 		}
 		else{
-			/* number */
+			// number 
 			
 			var val = parseInt( $this.val() + String.fromCharCode(key) );
 			
@@ -179,6 +193,8 @@ eu.europeana.search = {
 		
 	},
 
+	*/
+	
 	setupEllipsis : function(){
 		// add ellipsis
 		var ellipsisObjects = [];
@@ -207,6 +223,7 @@ eu.europeana.search = {
 
 	},
 
+	
 	urlAlterParam : function(paramNameIn, paramValIn){
 		var params = {};
 
@@ -254,6 +271,7 @@ eu.europeana.search = {
 		}
 		return newUrl;
 	},
+	
 	
 	setupResultSizeMenu : function(){
 		var config = {
