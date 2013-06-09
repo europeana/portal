@@ -1165,6 +1165,7 @@
 								<jsSourceInclude>EuMenu.js</jsSourceInclude>
 								<jsSourceInclude>ellipsis.js</jsSourceInclude>
 								<jsSourceInclude>collapsible.js</jsSourceInclude>
+								<jsSourceInclude>EuPagination.js</jsSourceInclude>
 								<jsSourceInclude>search-widget2.js</jsSourceInclude>							
 							</jsSourceIncludes>
 						</configuration>
