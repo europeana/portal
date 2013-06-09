@@ -209,6 +209,7 @@ a.action-link span,
 
 #filter-search #refinements{
 	overflow:	hidden;	
+	display:block;
 }
 
 
