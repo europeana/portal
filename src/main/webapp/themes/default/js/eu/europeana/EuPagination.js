@@ -75,17 +75,15 @@ var EuPagination = function(cmpIn, options){
            	$.each([self.next, self.last],      function(i, ob){ob.css('display', start < getMaxStart() ? 'table-cell' : 'none')});
             
             // labels & input
-            
             self.ofPages.html(getMaxPages());
-            self.jump.val( (records > rows) ? parseInt(start/rows)+1 : parseInt(start/rows) );
+            
+            var res = (records > rows) ? parseInt(start/rows)+1 : 1;
+            self.jump.val( res );
         }
     };
     
     var jumpToPageSubmit = function(e){
-        if(self.ajax){
-            
-        }
-        else{
+        if(!self.ajax){
             var pageNum        = parseInt(self.jump.val());
             var newStart    = 1 + ((pageNum-1) * self.rows);
             self.cmp.find('#start').val(newStart);            
