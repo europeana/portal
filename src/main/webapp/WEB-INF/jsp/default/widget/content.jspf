@@ -7,12 +7,15 @@
 	}
 </style>
 
+
 <div class="row">
+
+	<h2><spring:message code="wizard_heading_t"/></h2>
 
 	<div id="wizard-tabs">
 	
 		<div class="section" id="tab-1">
-			<a href="#step-1" title="title" />Header</a>
+			<a href="#step-1" title="title" /><spring:message code="wizard_tab1_heading_t"/></a>
 			<div class="content">
 			
 				Welcome to the widget wizard! 
@@ -22,10 +25,10 @@
 		</div>
 
 		<div class="section"  id="tab-2">
-			<a href="#step-2" title="title" />Header 2</a>
+			<a href="#step-2" title="title" /><spring:message code="wizard_tab2_heading_t"/></a>
 			<div class="content">
 			
-				Please select some options:
+				<spring:message code="wizard_tab2_content1_t"/>
 				<br> 
 				<select>
 					<option value="">Please select...</option>
@@ -38,10 +41,10 @@
 		</div>
 
 		<div class="section" id="tab-3">
-			<a href="#step-3" title="title" />Header 3</a>
+			<a href="#step-3" title="title" /><spring:message code="wizard_tab3_heading_t"/></a>
 			<div class="content">
 			
-				Please select some options:
+				<spring:message code="wizard_tab3_content1_t"/>
 				<br> 
 				<input type="text" id="step3input"/>
 
@@ -49,10 +52,10 @@
 		</div>
 
 		<div class="section" id="tab-4">
-			<a href="#step-4" title="title" />Header 4</a>
+			<a href="#step-4" title="title" /><spring:message code="wizard_tab4_heading_t"/></a>
 			<div class="content">
 
-				Please select some options:
+				<spring:message code="wizard_tab4_content1_t"/>
 				<br> 
 				<input type="text" id="step4input"/>
 
@@ -60,10 +63,10 @@
 		</div>
 
 		<div class="section"  id="tab-5">
-			<a href="#step-5" title="title" />Header 5</a>
+			<a href="#step-5" title="title" /><spring:message code="wizard_tab5_heading_t"/></a>
 			<div class="content">
 
-				Please select some options:
+				<spring:message code="wizard_tab5_content1_t"/>
 				<br> 
 				<input type="text" id="step5input"/>
 
