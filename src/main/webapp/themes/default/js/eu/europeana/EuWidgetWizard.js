@@ -1,3 +1,20 @@
+/**
+ * @author: Andy MacLean
+ * 
+ * To use:
+ * 
+ * $(document).ready(function(){
+ *   searchWidget.load();
+ * })
+ * 
+ * 
+ * Script dependencies:
+ * 
+ * jquery                   (TODO: detect if available / load if available)
+ * js/js/utils.js           (TODO: more the directory to compile to all file)
+ * search-widget-all.min.js (derived from minify)
+ * 
+ * */
 
 var EuWidgetWizard = function(cmpIn, options){
 	
@@ -7,9 +24,6 @@ var EuWidgetWizard = function(cmpIn, options){
 	self.tabs         = false;
 	self.disabledTabs = [1, 2, 3, 4];
 		
-	var fnSwitch = function(index, id, hash){
-		//alert('switch: index = ' + index + ", id = " + id + ", hash = " + hash);
-	}
 	
 	var setDisabledTabs = function(){
 		var disabled = [];
@@ -55,7 +69,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	}
 	
 	var init = function(){
-		self.tabs = new AccordionTabs(self.cmp, fnSwitch);
+		self.tabs = new AccordionTabs(self.cmp);
 		self.tabs.setDisabledTabs(self.disabledTabs);
 		
 		self.cmp.find('input:not(.next)').val('');
