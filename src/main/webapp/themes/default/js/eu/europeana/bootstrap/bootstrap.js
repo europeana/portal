@@ -53,10 +53,8 @@ var europeana_bootstrap = function(){
 	  {	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui' ]	},
 	  
 	  
-	  {	name : 'analytics',			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,					path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,							dependencies : [ 'utils' ]	},
+//	  {	name : 'analytics',			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,					path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,							dependencies : [ 'utils' ]	},
 	  {	name : 'ajax',				file : 'ajax' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'utils' ]	},
-
-	  
 	  
 	  {
 		  name : 'EuAccessibility',
@@ -110,6 +108,29 @@ var europeana_bootstrap = function(){
 		loadScripts(scripts);
 	}
 
+	if(eu.europeana.vars.page_name == 'widget/editor.html'){
+		
+		scripts.push({
+			name : 'AccordionTabs',
+			file : 'accordion-tabs2' + js.min_suffix + '.js' + js.cache_helper,
+			dependencies : ['jquery'],
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+		});
+		  
+		scripts.push({
+			file : 'EuWidgetWizard' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : ['AccordionTabs'],
+			callback : function(){
+				new EuWidgetWizard(
+					$('#wizard-tabs'),
+					{}
+				).init();
+			}
+		});
+		
+		loadScripts(scripts);
+	}
 	
 	if(eu.europeana.vars.page_name == 'contact.html'){
 		scripts.push({

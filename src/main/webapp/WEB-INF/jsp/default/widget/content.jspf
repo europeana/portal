@@ -1,0 +1,48 @@
+
+<div class="row">
+
+	<div id="wizard-tabs" style="height:10em; margin-bottom: 4em;">
+	
+		<div class="section" id="tab-1">
+			<a href="#step-1" title="title" />Header</a>
+			<div class="content">
+			
+				<div>
+					content 1 - does this get cloned? 
+					<input type="text" id="step1input"/>
+				</div>
+				
+			</div>
+		</div>
+
+		<div class="section"  id="tab-2">
+			<a href="#step-2" title="title" />Header 2</a>
+			<div class="content">
+				content 2
+			</div>
+		</div>
+
+		<div class="section" id="tab-3">
+			<a href="#step-3" title="title" />Header 3</a>
+			<div class="content">
+				content 3
+			</div>
+		</div>
+
+		<div class="section" id="tab-4">
+			<a href="#step-4" title="title" />Header 4</a>
+			<div class="content">
+				content 4
+			</div>
+		</div>
+
+		<div class="section"  id="tab-5">
+			<a href="#step-5" title="title" />Header 5</a>
+			<div class="content">
+				content 5
+			</div>
+		</div>
+
+	</div>
+
+</div>
