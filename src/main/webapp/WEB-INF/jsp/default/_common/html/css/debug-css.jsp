@@ -65,6 +65,12 @@
 		<c:when test="${model.pageName == 'embed'}">
 			<link rel="stylesheet" href="/${branding}/css/embed.css" />
 		</c:when>
+
+		<c:when test="${model.pageName == 'widget/editor.html'}">
+			<link rel="stylesheet" href="/${branding}/css/accordion-tabs2.css" />
+		</c:when>
+		
+		
 	
 		<c:when test="${model.pageName == 'forgotPassword.html'}">
 			<link rel="stylesheet" href="/${branding}/css/login.css" />

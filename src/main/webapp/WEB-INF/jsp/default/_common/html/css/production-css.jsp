@@ -69,6 +69,10 @@
 		<link rel="stylesheet" href="/${branding}/css/min/register.min.css" />
 	</c:when>
 	
+	<c:when test="${model.pageName == 'widget/editor.html'}">
+		<link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" />
+	</c:when>
+	
 </c:choose>
 
 
