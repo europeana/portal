@@ -4,6 +4,10 @@
 <%@ taglib prefix="eu" tagdir="/WEB-INF/tags" %>
 
 <c:if test="${!empty model.briefBeanView && !empty model.briefBeanView.pagination.presentationQuery.queryForPresentation}">
+	<c:set var="pageSizeOps">12,24,48,96</c:set>
+	<c:if test="${isSearchWidget}">
+		<c:set var="pageSizeOps">6,12,18</c:set>
+	</c:if>
 	<div class="${position_class} nav">
 		<c:if test="${!model.embedded}">
 			<div class="menu show-on-22">
@@ -12,7 +16,7 @@
 					<span class="menu-label"></span>
 					<span class="icon-arrow-3 open-menu"></span>
 					<ul>
-						<c:forEach var="size" items="12,24,48,96">
+						<c:forEach var="size" items="${pageSizeOps}">
 							<li class="${model.rows == size ? 'item active' : 'item'}">	<a href="" class="${size}">${size}</a></li>
 						</c:forEach>
 					</ul>
