@@ -1,14 +1,65 @@
 <style type="text/css">
+	
+	.widget-configuration h2{
+		padding:	0.5em 0;	
+	}
+	
+	#wizard-tabs .next{
+		border:			0;
+		border-radius:	0.5em;
+		padding:		0.5em;
+		position:		absolute;
+		bottom:			0;
+		right:			0;
+		display:		none;
+	}
+	
+	#wizard-tabs .next.disabled{
+		background-color:   #ddd !important;
+		background: 		0;
+		color:				#999 !important;
+	}
+	
+	.progress-wrapper{
+		width:				50%;
+		margin:				2em auto 2em auto;
+	}
+	
+	.progress{
+		width:				100%;
+		height:				1em;
+		background-color:	#ddd;
+	}
+
+	.progress .bar{
+		background-color:	blue;
+		height:				1em;
+		width:				20%;
+	}	
+	
+	.content-inner{
+		position:			relative;
+		width:				100%;
+		height:				100%;
+	}
+	
 	@media only screen and ( min-width:48em ){
 		#wizard-tabs{
 			height:10em;
-			 margin-bottom: 4em;
+			margin-bottom: 4em;
+		}
+		
+		#wizard-tabs .next{
+			display:	block;
 		}
 	}
+	
 </style>
 
 
-<div class="row">
+<div class="row widget-configuration">
+
+	<c:set var="buttonText"><spring:message code="wizard_next_t"/> &rarr;</c:set>
 
 	<h2><spring:message code="wizard_heading_t"/></h2>
 
@@ -17,62 +68,81 @@
 		<div class="section" id="tab-1">
 			<a href="#step-1" title="title" /><spring:message code="wizard_tab1_heading_t"/></a>
 			<div class="content">
-			
-				Welcome to the widget wizard! 
-				<input type="text" id="step1input"/>
-				
+				<div class="content-inner">				
+					<spring:message code="wizard_tab1_content1_t"/> 
+					<input type="text" id="step1input"/>
+					<input type="button" class="deans-button-1 next" value="${buttonText}" />
+				</div>
 			</div>
 		</div>
 
 		<div class="section"  id="tab-2">
 			<a href="#step-2" title="title" /><spring:message code="wizard_tab2_heading_t"/></a>
 			<div class="content">
+				<div class="content-inner">				
 			
-				<spring:message code="wizard_tab2_content1_t"/>
-				<br> 
-				<select>
-					<option value="">Please select...</option>
-					<option value="1">option 1</option>
-					<option value="2">option 2</option>
-					<option value="3">option 3</option>
-				</select>
-
+					<spring:message code="wizard_tab2_content1_t"/>
+					<br> 
+					<select>
+						<option value="">Please select...</option>
+						<option value="1">option 1</option>
+						<option value="2">option 2</option>
+						<option value="3">option 3</option>
+					</select>
+					<input type="button" class="deans-button-1 next" value="${buttonText}" />
+					
+				</div>
 			</div>
 		</div>
 
 		<div class="section" id="tab-3">
 			<a href="#step-3" title="title" /><spring:message code="wizard_tab3_heading_t"/></a>
 			<div class="content">
+				<div class="content-inner">				
 			
-				<spring:message code="wizard_tab3_content1_t"/>
-				<br> 
-				<input type="text" id="step3input"/>
-
+					<spring:message code="wizard_tab3_content1_t"/>
+					<br> 
+					<input type="text" id="step3input"/>
+					<input type="button" class="deans-button-1 next" value="${buttonText}" />
+				</div>
 			</div>
 		</div>
 
 		<div class="section" id="tab-4">
 			<a href="#step-4" title="title" /><spring:message code="wizard_tab4_heading_t"/></a>
 			<div class="content">
+				<div class="content-inner">				
 
-				<spring:message code="wizard_tab4_content1_t"/>
-				<br> 
-				<input type="text" id="step4input"/>
+					<spring:message code="wizard_tab4_content1_t"/>
+					<br> 
+					<input type="text" id="step4input"/>
+					<input type="button" class="deans-button-1 next" value="${buttonText}" />
 
+				</div>
 			</div>
 		</div>
 
 		<div class="section"  id="tab-5">
 			<a href="#step-5" title="title" /><spring:message code="wizard_tab5_heading_t"/></a>
 			<div class="content">
+				<div class="content-inner">				
 
-				<spring:message code="wizard_tab5_content1_t"/>
-				<br> 
-				<input type="text" id="step5input"/>
-
+					<spring:message code="wizard_tab5_content1_t"/>
+					<br> 
+					<input type="text" id="step5input"/>
+	
+				</div>
 			</div>
 		</div>
 
 	</div>
 
+
+	<div class="progress-wrapper">
+		<spring:message code="wizard_progress_t"/>
+		<div class="progress">
+			<div class="bar">
+			</div>
+		</div>
+	</div>
 </div>

@@ -79,7 +79,11 @@ var AccordionTabs = function(elIn, callbackIn, hash){
 			}				
 		}
 	};
-		
+	
+	self.openTabAtIndex = function(i){
+		allTabs[i].openTab();
+	};
+	
 	if (allTabs.length>0) {
 		if(hash){
 			self.openTab(hash);
@@ -96,6 +100,9 @@ var AccordionTabs = function(elIn, callbackIn, hash){
 		openTab : function(hash){
 			alert("exposed openTab");
 			self.openTab(hash);
+		},
+		openTabAtIndex : function(i){
+			self.openTabAtIndex(i);
 		},
 		setDisabledTabs : function(disabledTabs){			
 			self.disabledTabs = disabledTabs;
