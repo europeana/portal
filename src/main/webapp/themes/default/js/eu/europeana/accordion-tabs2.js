@@ -65,7 +65,7 @@ var AccordionTabs = function(elIn, callbackIn, hash){
 		
 	self.openTab = function(hash){
 			
-		alert("open tab " + JSON.stringify(self.disabledTabs)  + " hash = " + hash + ", self.disabledTabs.indexOf(hash)" + self.disabledTabs.indexOf(hash));
+		//alert("open tab " + JSON.stringify(self.disabledTabs)  + " hash = " + hash + ", self.disabledTabs.indexOf(hash)" + self.disabledTabs.indexOf(hash));
 			
 		if(self.disabledTabs.indexOf(hash) == -1){
 			if(hash != self.activeHash){

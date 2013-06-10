@@ -4,11 +4,7 @@
 	position:			relative;
 	padding:			0;
 	background-color:	#fff;
-	
-	
-	box-shadow:			3px 3px 4px #C3C3C3;
 	border-radius:		8px;
-	
 }
 
 
@@ -69,10 +65,12 @@
 	height:				100%;
 }
 
+
 .tab_content{
 	display:		none;
 	max-width:		100%;
 	margin-top:		-1px;
+	height:			100%;
 }
 
 .is-open{
@@ -86,6 +84,7 @@
 	.accordion-tabs{
 		box-shadow:			none;
 		border-radius:		0;
+		
 	}
 	
 	.accordion-tabs .section{
@@ -124,15 +123,10 @@
 
 	.accordion-tabs .tab_content{
 		box-shadow:		3px -2px 6px -2px #C3C3C3;	/* tab-content box-shadow */
-		border-radius:	0 8px 0 0;
+		border-radius:	0 8px 8px 0;
 		display:		block;
-		padding:		1em;
 	}
 
-	.is-open{
-		Xdisplay:	none !important;
-	}
-	
 	.accordion-tabs>.section>a{
 		border:		none;
 	}
