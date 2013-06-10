@@ -17,6 +17,7 @@ var AccordionTab = function (elIn, parentIn, indexIn) {
 	self.a.on('click', function (e) {
 		e.preventDefault();
 
+		console.log("self.index " + self.index + ", self.disabledTabs " + self.parent.disabledTabs + " -> " + JSON.stringify(self.parent.disabledTabs) )
 		if(self.parent.disabledTabs.length){
 			if(self.parent.disabledTabs.indexOf(self.index)>-1){
 				return;
@@ -27,8 +28,11 @@ var AccordionTab = function (elIn, parentIn, indexIn) {
 	});
 
 	return {
-		openTab : function () {
+		openTab : function (){
 			open();
+		},
+		getTabContent : function(){
+			return self.el;
 		}
 	};
 };
@@ -101,6 +105,9 @@ var AccordionTabs = function(elIn, callbackIn, hash){
 				section.addClass('disabled');
 			});
 
+		},
+		getTabs : function(){
+			return allTabs;
 		}
 	};
 };

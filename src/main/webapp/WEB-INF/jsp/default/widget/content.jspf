@@ -1,16 +1,22 @@
+<style type="text/css">
+	@media only screen and ( min-width:48em ){
+		#wizard-tabs{
+			height:10em;
+			 margin-bottom: 4em;
+		}
+	}
+</style>
 
 <div class="row">
 
-	<div id="wizard-tabs" style="height:10em; margin-bottom: 4em;">
+	<div id="wizard-tabs">
 	
 		<div class="section" id="tab-1">
 			<a href="#step-1" title="title" />Header</a>
 			<div class="content">
 			
-				<div>
-					content 1 - does this get cloned? 
-					<input type="text" id="step1input"/>
-				</div>
+				Welcome to the widget wizard! 
+				<input type="text" id="step1input"/>
 				
 			</div>
 		</div>
@@ -18,28 +24,49 @@
 		<div class="section"  id="tab-2">
 			<a href="#step-2" title="title" />Header 2</a>
 			<div class="content">
-				content 2
+			
+				Please select some options:
+				<br> 
+				<select>
+					<option value="">Please select...</option>
+					<option value="1">option 1</option>
+					<option value="2">option 2</option>
+					<option value="3">option 3</option>
+				</select>
+
 			</div>
 		</div>
 
 		<div class="section" id="tab-3">
 			<a href="#step-3" title="title" />Header 3</a>
 			<div class="content">
-				content 3
+			
+				Please select some options:
+				<br> 
+				<input type="text" id="step3input"/>
+
 			</div>
 		</div>
 
 		<div class="section" id="tab-4">
 			<a href="#step-4" title="title" />Header 4</a>
 			<div class="content">
-				content 4
+
+				Please select some options:
+				<br> 
+				<input type="text" id="step4input"/>
+
 			</div>
 		</div>
 
 		<div class="section"  id="tab-5">
 			<a href="#step-5" title="title" />Header 5</a>
 			<div class="content">
-				content 5
+
+				Please select some options:
+				<br> 
+				<input type="text" id="step5input"/>
+
 			</div>
 		</div>
 
