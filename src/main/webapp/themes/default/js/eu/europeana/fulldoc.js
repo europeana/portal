@@ -255,7 +255,9 @@ eu.europeana.fulldoc = {
 		$('#lightbox_info .shares-link, #additional-info .shares-link').live('click', function(e){
 			
 			js.loader.loadScripts([{
-				file: 'addthis' + js.min_suffix + '.js' + (js.cache_helper ? '?' : '&') + 'domready=1', //&async=1',
+				
+				file: 'addthis' + js.min_suffix + '.js' + '?' + 'domready=1', //&async=1',
+				
 				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 				callback : function() {
 
