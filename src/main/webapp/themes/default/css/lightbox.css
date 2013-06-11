@@ -82,21 +82,26 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 	font-size:		0.25em;
 }
 
-#lightbox_info li.rights{
+#lightbox_info li.bottom{
 	height:		100%;
 	display:	table-cell;
 	vertical-align:	bottom;
 }
 
-#lightbox_info li.rights a.rights-badge{
+#lightbox_info a:hover{
+	border-bottom:	1px dotted #fff;
+}
+
+
+#lightbox_info  a.rights-badge{
 	border-bottom:	none;
 	display:		inline-block;
 	margin-bottom:	0;
-	padding:		1em 0 0.25em;
+	/*	padding:		1em 0 0.25em;	*/
 	font-size:		1em;	/* override fulldoc */
 }
 
-#lightbox_info li.rights a.rights-badge:hover .rights-text{
+#lightbox_info  a.rights-badge:hover .rights-text{
 	border-bottom:		1px dotted #fff;
 }
 
@@ -105,9 +110,9 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 	text-decoration:	none;	
 }
 
-#lightbox_info a:hover{
-	border-bottom:	1px dotted #fff;
-}
+
+
+
 
 /* full doc override */
 #lightbox_info a.external.item-metadata{

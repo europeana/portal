@@ -355,7 +355,7 @@ eu.europeana.fulldoc = {
 				
 				if(metaValue){
 					var metaLabel = $(ob).html();
-					cmp.find('#lightbox_info ul li.rights').before(
+					cmp.find('#lightbox_info ul li.bottom').before(
 						'<li><strong>' + metaLabel + '</strong>&nbsp;' + metaValue + '</li>'
 					);
 				}
@@ -367,18 +367,25 @@ eu.europeana.fulldoc = {
 			var ocValue = $('.original-context #urlRefIsShownAt');
 			ocValue = ocValue.length ? ocValue.clone().wrap('<p>').parent().html() : '';
 			
-			cmp.find('#lightbox_info ul li.rights').before(
+			cmp.find('#lightbox_info ul li.bottom').before(
 				'<li><strong>' + ocLabel + ':</strong>&nbsp;'
 				+ ocValue + '</li>'
 			);
 
 			// rights
 			var rightsVal = $('.original-context .rights-badge').clone().wrap('<p>').parent().html();
-			
-			cmp.find('#lightbox_info ul li.rights').append(
-				 (rightsVal ? rightsVal : '') 
-			);				
 
+			/*
+			cmp.find('#lightbox_info ul li.bottom').append(
+				 (rightsVal ? rightsVal : '') 
+			);
+			*/				
+
+			cmp.find('#lightbox_info ul li.bottom').before(
+				'<li>' + 	(rightsVal ? rightsVal : '') + '</li>' 
+			);
+			
+			
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
 			
 			eu.europeana.fulldoc.lightboxOb.init(
