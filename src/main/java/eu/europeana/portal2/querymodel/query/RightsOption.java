@@ -50,6 +50,8 @@ public enum RightsOption {
 	// EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "eu_restricted_access.jpg", "cc-restrictedaccess.png"), // +transparent
 	EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "icon-copyright", false),
 
+	EU_ORPHAN("http://www.europeana.eu/rights/test-orphan-work-test/", "TEST Orphan Work", "icon-orphan", false),
+
 	// EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "eu_unknown.jpg", "cc-unknown.png"); // +transparent
 	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false);
 
