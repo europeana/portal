@@ -182,27 +182,18 @@ js.utils = {
 			return;
 		}
 		
-		var newParam	= '';
+		//var newParam	= '';
 		var rows		= $("#mobile-menu").is(":visible") ? 12 : 24;
 		
-		if(href.indexOf('rows=')>0){
-			href = href.substr(0, href.indexOf('rows=')-1);
-		}
-		if(href.indexOf('?')>0){
-			newParam = '&rows=' + rows;
-		}
-		else{
-			newParam = '?rows=' + rows;			
-		}
-		js.console.log("updated href " +  href + newParam );
+		
+		href = href.replace(/([?&])rows=\d+/, '$1rows=' + rows);
 
 		if(typeof anchor == 'object'){
-			anchor.attr('href', href + newParam);
+			anchor.attr('href', href);
 		}
 		if(typeof anchor == 'string'){
-			return href + newParam;
+			return href;
 		}
-		
 	}
 	
 };
