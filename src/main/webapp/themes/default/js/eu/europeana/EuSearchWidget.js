@@ -1,15 +1,21 @@
 
 var searchWidget = function(options){
 	
-    var self               = this;
-    var container          = false;
-    var itemTemplate       = false;
-    var facetTemplate      = false;
-    var filterTemplate     = false;
+    var self                    = this;
+    var container               = false;
+    var itemTemplate            = false;
+    var facetTemplate           = false;
+    var filterTemplate          = false;
     
-    var addKeywordTemplate = false;
-    var searchUrl          = 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
-    var markupUrl          = "http://localhost:8081/portal/template.html?id=search";
+    var debug                   = true;
+    
+    var addKeywordTemplate      = false;
+    var searchUrl               = 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
+    var markupUrl               = "http://test.portal2.eanadev.org/portal/template.html?id=search";
+    var cssUrl                  = "http://test.portal2.eanadev.org/portal/themes/default/css/";
+    
+    var responsiveContainersUrl = 'test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
+    
     //var searchUrl          = 'file:///home/maclean/workspace/europeana/search.json';
     //var markupUrl          = "file:///home/maclean/workspace/europeana/template.html";
 
@@ -21,6 +27,7 @@ var searchWidget = function(options){
     
     // get markup from portal
     self.load = function(){
+       	$.holdReady(true);
         $.ajax({
             "url" :         markupUrl,
             "type" :        "GET",
@@ -33,8 +40,11 @@ var searchWidget = function(options){
 
     self.init = function(htmlData) {
         container = $('.search-widget-container');
+        container.css('background-color',	'#FFF');
+        container.css('border',				'solid 1px #999');
+        
         container.append(htmlData.markup);
-
+        
         // PETER - include this in the markup
         $('<h2>Matches for:</h2>'
        	+ '<ul class="notranslate" id="search-filter"> '
@@ -99,12 +109,42 @@ var searchWidget = function(options){
         		}
         	}
         );
-        
-        
-        // load style
-        $('head').append('<link rel="stylesheet" href="http://localhost:8081/portal/themes/default/css/min/search-widget-all.css" type="text/css" />');
 
-        //doStuff();
+        
+       	$.getScript("http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js", function() {
+     	     $.holdReady(false);
+     	});
+       		
+        $(document).ready(function(){
+        	container.resizable({
+        		resize: function( event, ui ) {
+        			$(window).trigger("widgetResize");
+        		}
+        	});
+        	container.draggable();
+        	
+           	$.getScript(responsiveContainersUrl, function() {
+           		console.log('got thne switch code');
+        	});
+
+        	
+        });
+        
+        
+        // load style - as single files if in debug mode
+        
+        if(debug){
+			$.each(['html-sw', 'common', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw'], function(i, ob){
+	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
+			});
+        }
+        else{
+        	$('head').append('<link rel="stylesheet" href="' + cssUrl + '/min/search-widget-all.css" type="text/css" />');
+        }
+        
+        // load jquery ui style
+        $('head').append('<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css" type="text/css" />');
+
     };
 
     
@@ -199,7 +239,7 @@ var searchWidget = function(options){
         // pagination
         
         // PETER - can't the api send back the rows paramter?
-        var xRows = (self.resMenu1.getActive() ? parseInt(self.resMenu1.getActive()) : defaultRows)
+        var xRows = (self.resMenu1.getActive() ? parseInt(self.resMenu1.getActive()) : defaultRows);
 
         //paginationData = {"records":data.totalResults, "rows":data.itemsCount, "start":data.start};
         paginationData = {"records":data.totalResults, "rows":xRows, "start":data.start};
@@ -294,7 +334,7 @@ var searchWidget = function(options){
 			createCollapsibleSection(ob, function(){
 	            return heading.parent().next('ul').first().find('a');   
 	        },
-	        heading)
+	        heading);
         });
 
         // restore facet selection
@@ -387,10 +427,8 @@ var searchWidget = function(options){
         }
     };
 
-    //  todo / to check
 
     var setupEllipsis = function(){
-        // add ellipsis
         var ellipsisObjects = [];
         $('.ellipsis').each(
             function(i, ob){
@@ -410,7 +448,7 @@ var searchWidget = function(options){
             }
         );
 
-        $(window).euRsz(function(){
+        $(container).euRsz(function(){
             for(var i=0; i<ellipsisObjects.length; i++ ){
                 ellipsisObjects[i].respond();
             }
@@ -440,9 +478,6 @@ var searchWidget = function(options){
             doSearch();
             return false;
         });
-        
-        
-      //  var refinements = container.find("#refinements");
         
         container.find("#refine-search-form").unbind('submit').submit(function() {
 	        try{	
@@ -514,7 +549,7 @@ var searchWidget = function(options){
         $(container).click( function(){
             $('.eu-menu' ).removeClass("active");
         });
-    }
+    };
 
     var setUpRefinements = function(){
         var addKeyword = $("#filter-search>li:first");

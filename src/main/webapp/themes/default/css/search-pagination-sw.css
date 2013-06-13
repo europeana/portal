@@ -205,11 +205,9 @@
 		vertical-align:	middle;
 	}
 
-	.min55em .nav>.menu, .nav>.pagination{
-		XXXXwidth:1px; /* removed for search widget */
-	}
-	.desktop .nav>.menu, .nav>.pagination{
-		width:1px; /* removed for search widget */
+	.min55em .nav>.menu,
+	.min55em .nav>.pagination{
+		width:1px;
 	}
 
 
