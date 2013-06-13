@@ -66,24 +66,18 @@
 							<cssFinalFile>search-widget-all.css</cssFinalFile>
 							<cssTargetDir>min</cssTargetDir>
 							<cssSourceIncludes>
-								<cssSourceInclude>html.css</cssSourceInclude>
+								<cssSourceInclude>html-sw.css</cssSourceInclude>
 								<cssSourceInclude>common.css</cssSourceInclude>
-								<!--  cssSourceInclude>ajax.css</cssSourceInclude-->
-								<cssSourceInclude>header.css</cssSourceInclude>
+								<cssSourceInclude>header-sw.css</cssSourceInclude>
 								<cssSourceInclude>menu-main.css</cssSourceInclude>
-								<!--cssSourceInclude>menu-right.css</cssSourceInclude-->
-								<cssSourceInclude>responsive-grid.css</cssSourceInclude>
+								<cssSourceInclude>responsive-grid-sw.css</cssSourceInclude>
 								<cssSourceInclude>eu-menu.css</cssSourceInclude>
 								<cssSourceInclude>ellipsis.css</cssSourceInclude>
 								<cssSourceInclude>europeana-font-icons-widget.css</cssSourceInclude>
 								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
-								
-								<cssSourceInclude>search.css</cssSourceInclude>
-								<cssSourceInclude>search-navigation.css</cssSourceInclude>
-								<cssSourceInclude>search-pagination.css</cssSourceInclude>
-								<cssSourceInclude>sidebar-facets.css</cssSourceInclude>
-								
-								
+								<cssSourceInclude>search-sw.css</cssSourceInclude>
+								<cssSourceInclude>search-pagination-sw.css</cssSourceInclude>
+								<cssSourceInclude>sidebar-facets-sw.css</cssSourceInclude>
 							</cssSourceIncludes>
 						</configuration>
 						<goals>
