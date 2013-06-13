@@ -3,6 +3,7 @@ package eu.europeana.portal2.web.controllers.widget;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -119,7 +120,7 @@ public class WidgetController {
 		beans.add(bean);
 
 		briefBeanView.setBriefBeans(beans);
-		
+
 		Query query = new Query("fake");
 
 		List<Facet> facets = new ArrayList<Facet>();
@@ -134,6 +135,14 @@ public class WidgetController {
 		List<BreadCrumb> breadCrumbs = new ArrayList<BreadCrumb>();
 		ResultPagination pagination = new ResultPaginationImpl(1, 1, 1, query, breadCrumbs);
 		briefBeanView.setPagination(pagination);
+
+		// set search filters
+		briefBeanView.makeFilters(query, new HashMap<String, String[]>(){
+			private static final long serialVersionUID = 1L;
+			{
+				put("q", new String[]{"fake"});
+			}
+		});
 
 		return briefBeanView;
 	}
