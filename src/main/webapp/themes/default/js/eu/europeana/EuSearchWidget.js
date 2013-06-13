@@ -14,7 +14,7 @@ var searchWidget = function(options){
     var markupUrl               = "http://test.portal2.eanadev.org/portal/template.html?id=search";
     var cssUrl                  = "http://test.portal2.eanadev.org/portal/themes/default/css/";
     
-    var responsiveContainersUrl = 'test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
+    var responsiveContainersUrl = 'http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
     
     //var searchUrl          = 'file:///home/maclean/workspace/europeana/search.json';
     //var markupUrl          = "file:///home/maclean/workspace/europeana/template.html";
