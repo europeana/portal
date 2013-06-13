@@ -1,0 +1,178 @@
+/* CSS for responsive grid, based on Foundation v2.2 */
+
+.container{padding:0 20px;}
+
+[class*="column"]+[class*="column"]:last-child{float:right;}
+
+img, object, embed{max-width:100%; height:auto;}
+img{-ms-interpolation-mode:bicubic;}
+
+.row:before, .row:after {content:""; display:table;}
+.row:after              {clear:both;}
+.row                    {zoom:1;}
+
+
+/* Mobile first */
+
+.container                                        {min-width:0; margin-left:0; margin-right:0;}
+.row                                              {width:100%; min-width:0; margin-left:0; margin-right:0;}
+.row .row .column, .row .row .columns             {padding:0;}
+.column, .columns                                 {width:auto; float:none; margin-left:0; margin-right:0;}
+.column:last-child, .columns:last-child           {margin-right:0; float:none;}
+[class*="column"]+[class*="column"]:last-child    {float: none;}
+[class*="column"]:before,[class*="column"]:after  {content:""; display:table;}
+[class*="column"]:after                           {clear:both;}
+    
+.offset-by-one, .offset-by-two, .offset-by-three, .offset-by-four, .offset-by-five, .offset-by-six, .offset-by-seven, .offset-by-eight, .offset-by-nine, .offset-by-ten, .offset-by-eleven, .centered{margin-left:0;}
+    
+.push-one, .push-two, .push-three, .push-four, .push-five, .push-six, .push-seven, .push-eight, .push-nine, .push-ten, .push-eleven{left:auto;}
+.pull-one, .pull-two, .pull-three, .pull-four, .pull-five, .pull-six, .pull-seven, .pull-eight, .pull-nine, .pull-ten, .pull-eleven{right:auto;}
+
+        
+.hide-on-phones       {display:none  !important;}        
+.hide-ilb-on-phones   {display:none  !important;}        
+.hide-cell-on-phones  {display:none  !important;}        
+
+.show-on-phones       {display:block !important;}
+.show-ilb-on-phones   {display:inline-block !important;}
+.show-cell-on-phones  {display:table-cell !important;}        
+
+
+.left{
+    float:    left;
+}
+.right{
+    float:    right;
+}
+.hidden{
+    display:none;
+}
+.no-show{
+    visibility:hidden;
+}
+
+
+#content{
+    padding-bottom:    1em;
+}
+
+/* full-doc special grid styling */
+.three-cols-fulldoc-sidebar{
+    width:          100%;
+    display:        block;
+    min-width:      240px;    /* >= carousel-1 min-width (see fulldoc.css) plus 20 */
+}
+
+.nine-cols-fulldoc{
+    width:         100%;
+    display:       block;
+}
+
+
+/* grid styling */
+/* @media only screen and ( min-width:    48em ) */
+
+    .desktop .row{
+        width:     100%;
+        max-width: 1140px;
+        margin:    0 auto;
+    }
+
+    .desktop .row .row{min-width:0;}
+
+    .desktop .column,
+    .desktop .columns{margin:0; float:left !important; min-height:1px; position:relative;}
+
+    .desktop .row .one    {width:8.33334%        !important;}
+    .desktop .row .two    {width:16.66667%    !important;}
+    .desktop .row .three  {width:25%            !important;}
+    .desktop .row .four   {width:33.33334%    !important;}
+    .desktop .row .five   {width:41.66667%    !important;}
+    .desktop .row .six    {width:50%            !important;}
+    .desktop .row .seven  {width:58.33334%    !important;}
+    .desktop .row .eight  {width:66.66667%    !important;}
+    .desktop .row .nine   {width:75%            !important;}
+    .desktop .row .ten    {width:83.33334%    !important;}
+    .desktop .row .eleven {width:91.66667%    !important;}
+    .desktop .row .twelve {width:100%            !important;}
+
+    .desktop .row .offset-by-one     {margin-left:8.33334%    !important;}
+    .desktop .row .offset-by-two     {margin-left:16.66667%    !important;}
+    .desktop .row .offset-by-three   {margin-left:25%        !important;}
+    .desktop .row .offset-by-four    {margin-left:33.33334%    !important;}
+    .desktop .row .offset-by-five    {margin-left:41.66667%    !important;}
+    .desktop .row .offset-by-six     {margin-left:50%        !important;}
+    .desktop .row .offset-by-seven   {margin-left:58.33334%    !important;}
+    .desktop .row .offset-by-eight   {margin-left:66.66667%    !important;}
+    .desktop .row .offset-by-nine    {margin-left:75%        !important;}
+    .desktop .row .offset-by-ten     {margin-left:83.33334%    !important;}
+    .desktop .row .offset-by-eleven  {margin-left:91.66667%    !important;}
+
+    .desktop .row .centered        {float:none !important; margin:0 auto; !important}
+
+    .desktop .push-one      {left:8.33334%;}
+    .desktop .push-two      {left:16.66667%;}
+    .desktop .push-three    {left:25%;}
+    .desktop .push-four     {left:33.33334%;}
+    .desktop .push-five     {left:41.66667%;}
+    .desktop .push-six      {left:50%;}
+    .desktop .push-seven    {left:58.33334%;}
+    .desktop .push-eight    {left:66.66667%;}
+    .desktop .push-nine     {left:75%;}
+    .desktop .push-ten      {left:83.33334%;}
+    .desktop .push-eleven   {left:91.66667%;}
+
+    .desktop .pull-one    {right:8.33334%;}
+    .desktop .pull-two    {right:16.66667%;}
+    .desktop .pull-three  {right:25%;}
+    .desktop .pull-four   {right:33.33334%;}
+    .desktop .pull-five   {right:41.66667%;}
+    .desktop .pull-six    {right:50%;}
+    .desktop .pull-seven  {right:58.33334%;}
+    .desktop .pull-eight  {right:66.66667%;}
+    .desktop .pull-nine   {right:75%;}
+    .desktop .pull-ten    {right:83.33334%;}
+    .desktop .pull-eleven {right:91.66667%;}
+    
+    .desktop .container>.row{
+        box-sizing:         border-box;
+        -moz-box-sizing:    border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .desktop .container>.row{
+        padding-left:1em;
+        padding-right:1em;
+    }
+
+    .desktop .container{
+        background-color:    #999;
+        background-color:    #DADADA;
+    }
+
+    .desktop .container>.row:not(.footer){
+        background-color:    white;    
+    }
+    
+    .desktop .three-cols-fulldoc-sidebar{
+        width:        1px;
+        display:    table-cell;    
+    }
+    
+    .desktop .nine-cols-fulldoc{
+        width:            100%;
+        display:        table-cell;
+        vertical-align:    top;
+    }
+    
+    .desktop .hide-on-phones            {display:block            !important;}    
+    .desktop .hide-ilb-on-phones        {display:inline-block    !important;}    
+    .desktop .hide-cell-on-phones    {display:table-cell        !important;}    
+
+    .desktop .show-on-phones            {display:none !important;}    
+    .desktop .show-ilb-on-phones    {display:none !important;}
+    .desktop .show-cell-on-phones   {display:none !important;}
+
+
+
+
