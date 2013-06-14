@@ -30,6 +30,7 @@ var searchWidget = function(options){
             "crossDomain" : true,
             "dataType" :    "script"
         });
+        return self;
     };
 
     // load style / initialise events / set state - called by load callback
@@ -40,32 +41,9 @@ var searchWidget = function(options){
         container.css('border',				'solid 1px #999');
         
         container.append(htmlData.markup);
-        
-        // PETER - include this in the markup
-        
-        $('<h2>Matches for:</h2>'
-       	+ '<ul class="notranslate" id="search-filter"> '
-        +    '<li>'
-        +        '<a class="europeana" href="search.html?rows=24&amp;query=paris">paris</a>'
-        +        '<a href="search.html?rows=24">'
-        +            '<span class="icon-remove">&nbsp;</span>&nbsp;'
-        +        '</a>'
-        +    '</li>'
-        + '</ul>').prependTo('#facets-actions');
+        container.find('#content').hide();
         
         $('#query-input').val('paris');
-
-        // work out percentage width window/container
-        /*
-        var wBody = $('body').width();
-        var wThis = container.width();
-        var pct = wThis / wBody;
-        alert("pct = " + pct);
-        searchWidget.container.css('zoom', '2');
-        searchWidget.container.css('-moz-transform', 'scale(2)');
-        */
-        
-        container.find('#content').hide();
         
         itemTemplate       = container.find('.thumb-frame').parent();
         facetTemplate      = container.find('#filter-search li:nth-child(2)');
@@ -106,7 +84,6 @@ var searchWidget = function(options){
         		}
         	}
         );
-
         
        	$.getScript("http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js", function() {
      	     $.holdReady(false);
@@ -568,4 +545,8 @@ var searchWidget = function(options){
         "showRes" : function(data){ showRes(data); }
     };
 }();
+
+searchWidget.load();
+
+
 

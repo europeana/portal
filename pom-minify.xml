@@ -1130,7 +1130,7 @@
 						<id>minify-utils.js</id>
 						<phase>process-resources</phase>
 						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/js</webappTargetDir>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/js</jsSourceDir>
 							<jsFinalFile>utils.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
@@ -1172,7 +1172,9 @@
 							<jsFinalFile>search-widget-all.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
-								<jsSourceInclude>utils.min.js</jsSourceInclude>
+								<!-- this tool orders src files alphabetically - the jquery dependency has to be 1st (hence the "A_" prefix) -->
+								<jsSourceInclude>A_EuSearchWidgetJQuery.js</jsSourceInclude>
+								<jsSourceInclude>utils.js</jsSourceInclude>
 								<jsSourceInclude>EuAccessibility.js</jsSourceInclude>
 								<jsSourceInclude>EuMenu.js</jsSourceInclude>
 								<jsSourceInclude>ellipsis.js</jsSourceInclude>
