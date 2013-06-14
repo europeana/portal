@@ -61,6 +61,7 @@ public enum RightsOption {
 	private String rightsIcon = null;
 	private boolean showExternalIcon = false;
 	private boolean isRelativeUrl = false;
+	private String relativeUrl = null;
 
 	/**
 	 * Constructor for method
@@ -94,15 +95,18 @@ public enum RightsOption {
 	}
 
 	public String getRelativeUrl() {
-		if (isRelativeUrl) {
-			String portalServer = Beans.getConfig().getPortalServer();
-			if (!portalServer.endsWith("/")) {
-				portalServer += "/";
+		if (relativeUrl == null) {
+			if (isRelativeUrl) {
+				String portalUrl = Beans.getConfig().getPortalUrl();
+				if (!portalUrl.endsWith("/")) {
+					portalUrl += "/";
+				}
+				relativeUrl = url.replace("http://www.europeana.eu/", portalUrl).replaceAll("/$", ".html");
+			} else {
+				relativeUrl = url;
 			}
-			String relativeUrl = url.replace("http://www.europeana.eu/", portalServer);
-			return relativeUrl;
 		}
-		return url;
+		return relativeUrl;
 	}
 
 	/**
