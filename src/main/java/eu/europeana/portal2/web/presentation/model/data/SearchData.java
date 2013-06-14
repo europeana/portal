@@ -45,6 +45,8 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 
 	protected int maxMapResults;
 
+	protected boolean markupOnly;
+	
 	abstract public String getRswUserId();
 
 	abstract public String getRswDefqry();
@@ -100,4 +102,13 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 	public void setCoords(String coords) {
 		this.coords = coords;
 	}
+	
+	public boolean isMarkupOnly() {
+		return markupOnly;
+	}
+
+	public void setMarkupOnly(boolean markupOnly) {
+		this.markupOnly = markupOnly;
+	}
+
 }

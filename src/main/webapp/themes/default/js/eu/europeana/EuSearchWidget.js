@@ -7,23 +7,19 @@ var searchWidget = function(options){
     var facetTemplate           = false;
     var filterTemplate          = false;
     
-    var debug                   = true;
+    var debug                   = true;	// true sets localhost urls and uncompressed js
     
     var addKeywordTemplate      = false;
     var searchUrl               = 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
-    var markupUrl               = "http://test.portal2.eanadev.org/portal/template.html?id=search";
-    var cssUrl                  = "http://test.portal2.eanadev.org/portal/themes/default/css/";
+    var markupUrl               = debug ? 'http://localhost:8081/portal/template.html?id=search' : 'http://test.portal2.eanadev.org/portal/template.html?id=search';
+    var cssUrl                  = debug ? 'http://localhost:8081/portal/themes/default/css/' : 'http://test.portal2.eanadev.org/portal/themes/default/css/';
+    var responsiveContainersUrl = debug ? 'http://localhost:8081/portal/themes/default/js/eu/europeana/responsive-containers.js' : 'http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
     
-    var responsiveContainersUrl = 'http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
+    var resultServerUrl         = 'http://europeana.eu/portal';
     
-    //var searchUrl          = 'file:///home/maclean/workspace/europeana/search.json';
-    //var markupUrl          = "file:///home/maclean/workspace/europeana/template.html";
-
-    var resultServerUrl = 'http://europeana.eu/portal';
-    
-    var defaultRows     = 6;
-    var pagination      = false;
-    var paginationData  = {};
+    var defaultRows             = 6;
+    var pagination              = false;
+    var paginationData          = {};
     
     // get markup from portal
     self.load = function(){
@@ -46,6 +42,7 @@ var searchWidget = function(options){
         container.append(htmlData.markup);
         
         // PETER - include this in the markup
+        
         $('<h2>Matches for:</h2>'
        	+ '<ul class="notranslate" id="search-filter"> '
         +    '<li>'
@@ -56,7 +53,7 @@ var searchWidget = function(options){
         +    '</li>'
         + '</ul>').prependTo('#facets-actions');
         
-        $('#query-input').val('star wars');
+        $('#query-input').val('paris');
 
         // work out percentage width window/container
         /*
@@ -121,7 +118,9 @@ var searchWidget = function(options){
         			$(window).trigger("widgetResize");
         		}
         	});
+        	
         	container.draggable();
+        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	
            	$.getScript(responsiveContainersUrl, function() {
            		console.log('got thne switch code');
