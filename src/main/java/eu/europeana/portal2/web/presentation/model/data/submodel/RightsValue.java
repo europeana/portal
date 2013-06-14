@@ -17,13 +17,9 @@
 
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
-import java.util.logging.Logger;
-
 import eu.europeana.portal2.querymodel.query.RightsOption;
 
 public class RightsValue {
-
-	private final Logger log = Logger.getLogger(RightsValue.class.getCanonicalName());
 
 	private final static String RIGHTS_URL_IDENTIFIER_LONG = "http://www.europeana.eu/rights/";
 	private final static String RIGHTS_URL_IDENTIFIER_SHORT = "/rights/";
@@ -81,9 +77,12 @@ public class RightsValue {
 		return right.getRightsIcon();
 	}
 
-
 	public boolean getRightsShowExternalIcon() {
 		return right.getShowExternalIcon();
+	}
+
+	public String getRelativeUrl() {
+		return right.getRelativeUrl();
 	}
 
 	public boolean isNoc() {

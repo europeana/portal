@@ -3,9 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="eu" tagdir="/WEB-INF/tags"%>
 
-<% pageContext.setAttribute("newLineChar1", "\r"); %> 
-<% pageContext.setAttribute("newLineChar2", "\n"); %> 
-
+<% pageContext.setAttribute("newLineChar1", "\r"); %>
+<% pageContext.setAttribute("newLineChar2", "\n"); %>
 
 <c:set var="about" value=""/>
 <c:if test="${not empty model.document['about']}">

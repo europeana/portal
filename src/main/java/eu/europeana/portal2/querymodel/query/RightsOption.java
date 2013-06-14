@@ -1,8 +1,8 @@
 package eu.europeana.portal2.querymodel.query;
 
-import java.util.logging.Logger;
-
 import org.apache.commons.lang.StringUtils;
+
+import eu.europeana.portal2.web.util.Beans;
 
 /**
  * Class represents a set of rights that can be attached to an item in the Europeana website.
@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
  */
 
 public enum RightsOption {
-	
+
 	// CC_ZERO("http://creativecommons.org/publicdomain/zero", "CC0", "cc_zero.png"), 
 	/* not in style guide (hence old text) and not in dataset (hence untested) */
 	CC_ZERO("http://creativecommons.org/publicdomain/zero", "CC0", "icon-cczero", true),
@@ -43,25 +43,24 @@ public enum RightsOption {
 	// EU_PD("http://www.europeana.eu/rights/pd/", "Public Domain", "icon-pd", false), // +transparent 
 
 	// EU_RR_F("http://www.europeana.eu/rights/rr-f/", "Free Access - Rights Reserved", "eu_free_access.jpg", "eu_free_access.png"), // +transparent
-	EU_RR_F("http://www.europeana.eu/rights/rr-f/", "Free Access - Rights Reserved", "icon-copyright", false),
+	EU_RR_F("http://www.europeana.eu/rights/rr-f/", "Free Access - Rights Reserved", "icon-copyright", false, true),
 
 	// EU_RR_P("http://www.europeana.eu/rights/rr-p/", "Paid Access - Rights Reserved", "eu_paid_access.jpg", "eu_paid_access.png"), // +transparent
-	EU_RR_P("http://www.europeana.eu/rights/rr-p/", "Paid Access - Rights Reserved", "icon-copyright", false),
+	EU_RR_P("http://www.europeana.eu/rights/rr-p/", "Paid Access - Rights Reserved", "icon-copyright", false, true),
 
 	// EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "eu_restricted_access.jpg", "cc-restrictedaccess.png"), // +transparent
-	EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "icon-copyright", false),
+	EU_RR_R("http://www.europeana.eu/rights/rr-r/", "Restricted Access - Rights Reserved", "icon-copyright", false, true),
 
-	EU_ORPHAN("http://www.europeana.eu/rights/test-orphan-work-test/", "Orphan Work", "icon-unknown", false),
+	EU_ORPHAN("http://www.europeana.eu/rights/test-orphan-work-test/", "Orphan Work", "icon-unknown", false, true),
 
 	// EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "eu_unknown.jpg", "cc-unknown.png"); // +transparent
-	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false);
-
-	private final Logger log = Logger.getLogger(RightsOption.class.getCanonicalName());
+	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false, true);
 
 	private String url = null;
 	private String rightsText = null;
 	private String rightsIcon = null;
 	private boolean showExternalIcon = false;
+	private boolean isRelativeUrl = false;
 
 	/**
 	 * Constructor for method
@@ -80,12 +79,29 @@ public enum RightsOption {
 		this.showExternalIcon = showExternalIconIn;
 	}
 
+	private RightsOption(String url, String rightsText, String rightsIcon, boolean showExternalIconIn, boolean isRelativeUrl) {
+		this(url, rightsText, rightsIcon, showExternalIconIn);
+		this.isRelativeUrl = isRelativeUrl;
+	}
+
 	/**
 	 * Returns the full Url associated with the rights
 	 * 
 	 * @return Full url associated with the rights
 	 */
 	public String getUrl() {
+		return url;
+	}
+
+	public String getRelativeUrl() {
+		if (isRelativeUrl) {
+			String portalServer = Beans.getConfig().getPortalServer();
+			if (!portalServer.endsWith("/")) {
+				portalServer += "/";
+			}
+			String relativeUrl = url.replace("http://www.europeana.eu/", portalServer);
+			return relativeUrl;
+		}
 		return url;
 	}
 
@@ -125,5 +141,9 @@ public enum RightsOption {
 			}
 		}
 		return null;
+	}
+
+	public boolean isRelativeUrl() {
+		return isRelativeUrl;
 	}
 }

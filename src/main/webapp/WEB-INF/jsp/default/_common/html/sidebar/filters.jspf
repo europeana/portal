@@ -4,10 +4,10 @@
 
 <c:if test="${!empty model.briefBeanView.searchFilters}">
 	<h2><spring:message code="MatchesFor_t" />:</h2>
-	
+
 	<ul id="search-filter" class="notranslate">
 		<c:forEach items="${model.briefBeanView.searchFilters}" var="filter">
-		
+
 			<c:set var="skip" value="false"/>
 			<c:if test="${filter.field == '*' && filter.label == '*' }">
 				<c:set var="skip" value="true"/>
