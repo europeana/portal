@@ -1,26 +1,30 @@
 
 var searchWidget = function(options){
-	
+
     var self                    = this;
     var container               = false;
     var itemTemplate            = false;
     var facetTemplate           = false;
     var filterTemplate          = false;
-    
+
     var debug                   = false;	// true sets localhost urls and uncompressed js
-    
+
     var addKeywordTemplate      = false;
+    // TODO:
+    // move wskey and URLs to an external .jsp generated file, in order to 
+    // 1) generate URLs dinamically
+    // 2) hide wskey, and use a distinct wskey
     var searchUrl               = 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
     var markupUrl               = debug ? 'http://localhost:8081/portal/template.html?id=search' : 'http://test.portal2.eanadev.org/portal/template.html?id=search';
     var cssUrl                  = debug ? 'http://localhost:8081/portal/themes/default/css/' : 'http://test.portal2.eanadev.org/portal/themes/default/css/';
     var responsiveContainersUrl = debug ? 'http://localhost:8081/portal/themes/default/js/eu/europeana/responsive-containers.js' : 'http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
-    
+
     var resultServerUrl         = 'http://europeana.eu/portal';
-    
+
     var defaultRows             = 6;
     var pagination              = false;
     var paginationData          = {};
-    
+
     // get markup from portal
     self.load = function(){
        	$.holdReady(true);
@@ -39,22 +43,21 @@ var searchWidget = function(options){
         container = $('.search-widget-container');
         container.css('background-color',	'#FFF');
         container.css('border',				'solid 1px #999');
-        
+
         container.append(htmlData.markup);
         container.find('#content').hide();
-        
+
         $('#query-input').val('paris');
-        
+
         itemTemplate       = container.find('.thumb-frame').parent();
         facetTemplate      = container.find('#filter-search li:nth-child(2)');
         addKeywordTemplate = container.find('#filter-search li:first');
         filterTemplate     = container.find('#search-filter li:first');
 
-        
         setupQuery();
         setupMenus();
         setUpRefinements();
-        
+
         pagination = new EuPagination($('.result-pagination'),
         	{
         		"ajax":true,
@@ -65,7 +68,7 @@ var searchWidget = function(options){
             		},
 					"fnPrevious":function(e){
 						e.preventDefault();
-            			searchWidget.search(paginationData.start - paginationData.rows);						
+            			searchWidget.search(paginationData.start - paginationData.rows);
 					},       			
             		"fnNext":function(e){
             			e.preventDefault();
@@ -105,10 +108,8 @@ var searchWidget = function(options){
 
         	
         });
-        
-        
+
         // load style - as single files if in debug mode
-        
         if(debug){
 			$.each(['html-sw', 'common', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw'], function(i, ob){
 	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
@@ -135,11 +136,11 @@ var searchWidget = function(options){
         	}
         	else{
                 $.ajax({
-                    "url" : url + "&profile=portal&callback=searchWidget.showRes",
+                    "url" : url + "&profile=portal params&callback=searchWidget.showRes",
                     "type" : "GET",
                     "crossDomain" : true,
                     "dataType" : "script"
-                });        		
+                });
         	}
         }
         else{
@@ -147,11 +148,11 @@ var searchWidget = function(options){
         }
     };
 
-    // build search param from url-fragment hrefs.  @startParam set to 1 if not specified    
+    // build search param from url-fragment hrefs.  @startParam set to 1 if not specified
     var buildUrl = function(startParam){
-    	
+
         var term = self.q.val();
-        if(!term){
+        if (!term) {
             return '';
         }
         var url = searchUrl + '&query=' + term;
@@ -177,17 +178,16 @@ var searchWidget = function(options){
 
     
     var showRes = function(data){
-    	
+
         // Append items
-        
         var grid = container.find('#items');
         grid.empty();
-        
-        var start = data.start ? data.start : 1;
+
+        var start = data.params.start ? data.params.start : 1;
 
         $(data.items).each(function(i, ob){
             var item = itemTemplate.clone();
-            
+
             item.find('a').attr(
                 'href', resultServerUrl + '/record' + ob.id + '.html?start=' + start + '&query='
             );
@@ -218,19 +218,18 @@ var searchWidget = function(options){
         var xRows = (self.resMenu1.getActive() ? parseInt(self.resMenu1.getActive()) : defaultRows);
 
         //paginationData = {"records":data.totalResults, "rows":data.itemsCount, "start":data.start};
-        paginationData = {"records":data.totalResults, "rows":xRows, "start":data.start};
+        paginationData = {"records":data.totalResults, "rows":xRows, "start":start};
         
         //pagination.setData(data.totalResults, data.itemsCount, data.start);
         pagination.setData(
         		data.totalResults,
         		xRows,
-        		data.start);
-            
-        
+        		start);
+
+
         // result stats
-        
-        container.find('.first-vis-record').html(data.start);
-        container.find('.last-vis-record') .html(data.start - 1 + data.itemsCount);
+        container.find('.first-vis-record').html(start);
+        container.find('.last-vis-record') .html(start - 1 + data.itemsCount);
         container.find('.last-record')     .html(data.totalResults);
 
 
@@ -388,7 +387,7 @@ var searchWidget = function(options){
     	return (str.substr(0,1).toUpperCase() + str.substr(1).toLowerCase() ).replace(/_/g, ' ');
     }
     
-	var createCollapsibleSection = function(ob, fnGetItems, heading){        
+	var createCollapsibleSection = function(ob, fnGetItems, heading){
         var accessibility =  new EuAccessibility(heading, fnGetItems);
         
         if(ob.hasClass('ugc-li')){
@@ -399,10 +398,9 @@ var searchWidget = function(options){
                 "headingSelector" : "h3 a",
                 "bodySelector"    : "ul",
                 "keyHandler"      : accessibility
-            });        
+            });
         }
     };
-
 
     var setupEllipsis = function(){
         var ellipsisObjects = [];
@@ -531,7 +529,7 @@ var searchWidget = function(options){
         var addKeyword = $("#filter-search>li:first");
        	var heading = addKeyword.find("h3 a");
 		createCollapsibleSection(addKeyword, function(){
-    	        return heading.parent().next('form').find('input[type!="hidden"]');    
+    	        return heading.parent().next('form').find('input[type!="hidden"]');
 	        },
 	        heading);
 		
@@ -547,6 +545,3 @@ var searchWidget = function(options){
 }();
 
 searchWidget.load();
-
-
-

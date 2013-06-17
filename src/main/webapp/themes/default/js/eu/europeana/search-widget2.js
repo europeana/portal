@@ -15,9 +15,8 @@ searchWidget = {
 	searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo',
 	q : false,
 	container : false,
-	
+
 	// get markup from portal
-		
 	load : function(){
 		$.ajax({
 			"url" : "http://localhost:8081/portal/template.html?id=search",
@@ -28,11 +27,10 @@ searchWidget = {
 	},
 
 	// load style / initialise events / set state - called by load callback
-
 	init : function(htmlData) {
 		this.container = $('.search-widget-container');
 		this.container.append(htmlData.markup);
-		
+
 		// work out percentage width window/container
 		/*
 		var wBody = $('body').width();
@@ -53,11 +51,8 @@ searchWidget = {
 
 		// load style
 		$('head').append('<link rel="stylesheet" href="http://localhost:8081/portal/themes/default/css/min/search-widget-all.css" type="text/css" />');
-		
-		
+
 		// use the widget
-		
-		
 		$('#search').click(function(){
 			var url = buildUrl();
 			if(url){
@@ -66,7 +61,7 @@ searchWidget = {
 					"type" : "GET",
 					"crossDomain" : true,
 					"dataType" : "script"
-				});				
+				});
 			}
 			else{
 				this.q.addClass('error-border');
@@ -74,7 +69,8 @@ searchWidget = {
 		});
 	},
 
-	buildUrl : function(){
+	buildUrl : function() {
+		console.log("buildUrl");
 		var term = this.q.val();
 		if(!term){
 			return '';
@@ -92,22 +88,20 @@ searchWidget = {
 		 &callback=searchWidget.showRes";
 		*/
 	},
-	
-	showRes:function(data){
+
+	showRes: function(data){
 		$(data.facets).each(function(i, ob){
 			$('body').append(JSON.stringify(ob));
 			$('body').append('<br>');
 		});
 	},
-	
-	
-	
+
 	// todo
 	setupPageJump : function(){
 		//$('.jump-to-page').bind('submit', 				this.jumpToPageSubmit );
 		//$('.jump-to-page #start-page').bind('keypress',	this.validateJumpToPage);
 	},
-	
+
 	// todo
 	jumpToPageSubmit : function( e ){
 		//var $jumpToPage	= $(this).parent();
