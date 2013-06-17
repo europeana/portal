@@ -125,3 +125,28 @@ description: provides a cache for generated Sitemap files. It should be a file s
 
 example:
 portal.sitemap.cache = /home/peterkiraly/Development/portal2/sitemap-cache/
+
+==== 2013-06-17
+
+New properties for API logging. The logging is goes to MongoDB. Previously EDM record 
+store and API logging went to the same database, but since this database was behind load 
+balancer, and missed replication, the logs went on only one of the database instances,
+which resulted an incorrect logging. Since EDM doesn't requires replication (at this
+point), we have to separate mongo instances: one for the EDM records, and a new one for
+API's purposes (logging, and authentiation in the future). So right now we have to double
+the mongo settings with an '.apilog' extension. The old mongo settings remain the same,
+but we add the following new keys:
+
+mongodb.apilog.host -- host name or IP address
+mongodb.apilog.port -- port number
+mongodb.apilog.dbname -- logging database name (should be "apilog")
+mongodb.apilog.username -- user name for accessing the Mongo instance
+mongodb.apilog.password -- password
+
+example:
+mongodb.apilog.host = record-management.eanadev.org
+mongodb.apilog.port = 33023
+mongodb.apilog.dbname = apilog
+mongodb.apilog.username = europeana
+mongodb.apilog.password = culture
+
