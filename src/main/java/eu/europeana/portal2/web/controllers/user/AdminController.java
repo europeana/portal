@@ -251,7 +251,7 @@ public class AdminController {
 	 *   The API key
 	 */
 	private void getUsageByApiKey(Map<String, Map<String, Long>> usage, String apiKey) {
-		long actual = apiLogService.countByIntervalAndApiKey(DateIntervalUtils.getToday(), apiKey);
+		long actual = apiLogService.countByIntervalAndApiKey(DateIntervalUtils.getLast24Hours(), apiKey);
 		long total = apiLogService.countByApiKey(apiKey);
 		usage.get(ACTUAL).put(apiKey, actual);
 		usage.get(TOTAL).put(apiKey, total);
