@@ -7,7 +7,7 @@ var searchWidget = function(options){
     var facetTemplate           = false;
     var filterTemplate          = false;
     
-    var debug                   = true;	// true sets localhost urls and uncompressed js
+    var debug                   = false;	// true sets localhost urls and uncompressed js
     
     var addKeywordTemplate      = false;
     var searchUrl               = 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
