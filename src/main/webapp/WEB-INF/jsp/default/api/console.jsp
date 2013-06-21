@@ -160,8 +160,8 @@ var selectedPanel = '${model.function}';
             <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
             <c:forEach items="${model.defaultSearchProfiles}" var="profile">
               <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
-              <input type="radio" name="profile" id="api-profile-${profile}" value="${profile}" <c:if test="${model.profile == profile}">checked="checked"</c:if> />
-              <label for="api-profile-${profile}">${profile}</label><br/>
+              <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
+              <label for="api-profile-${profile.key}">${profile.key}</label><br/>
             </c:forEach>
 
             <p class="section">
@@ -201,8 +201,8 @@ var selectedPanel = '${model.function}';
               <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
               <c:forEach items="${model.defaultObjectProfiles}" var="profile">
                 <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
-                <input type="radio" name="profile" id="api-profile-${profile}" value="${profile}" <c:if test="${model.profile == profile}">checked="checked"</c:if> />
-                <label for="api-profile-${profile}">${profile}</label><br/>
+                <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
+                <label for="api-profile-${profile.key}">${profile.key}</label><br/>
               </c:forEach>
 
             <label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>

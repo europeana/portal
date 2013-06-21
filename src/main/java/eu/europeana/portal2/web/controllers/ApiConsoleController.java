@@ -1,8 +1,10 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -51,7 +53,7 @@ public class ApiConsoleController {
 			@RequestParam(value = "callback", required = false) String callback,
 			@RequestParam(value = "query", required = false) String query,
 			@RequestParam(value = "qf", required = false) String[] refinements,
-			@RequestParam(value = "profile", required = false, defaultValue="standard") String profile,
+			@RequestParam(value = "profile", required = false) String[] profile,
 			@RequestParam(value = "start", required = false, defaultValue="1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
 			@RequestParam(value = "sort", required = false) String sort,
@@ -75,6 +77,11 @@ public class ApiConsoleController {
 			refinements = _qf;
 		}
 
+		String[] _profile = (String[]) request.getParameterMap().get("profile");
+		if (_profile != null && _profile.length != profile.length) {
+			profile = _profile;
+		}
+
 		ApiConsolePage model = new ApiConsolePage();
 		injector.injectProperties(model);
 
@@ -83,12 +90,14 @@ public class ApiConsoleController {
 		}
 
 		refinements = clearRefinements(refinements);
-		if (function.equals(SEARCH) && !model.getDefaultSearchProfiles().contains(profile)) {
-			profile = "standard";
+
+		List<String> profiles = ArrayUtils.isEmpty(profile) ? new ArrayList<String>() : Arrays.asList(profile);
+		if (function.equals(SEARCH)) {
+			checkProfiles(profiles, "standard", model.getDefaultSearchProfiles());
 		}
 
-		if (function.equals(RECORD) && !model.getDefaultObjectProfiles().contains(profile)) {
-			profile = "full";
+		if (function.equals(RECORD)) {
+			checkProfiles(profiles, "full", model.getDefaultObjectProfiles());
 		}
 
 		if (!model.getDefaultRows().contains(Integer.toString(rows))) {
@@ -108,7 +117,7 @@ public class ApiConsoleController {
 		model.setFunction(function);
 		model.setQuery(query);
 		model.setRefinements(refinements);
-		model.setProfile(profile);
+		model.setProfile(StringUtils.join(profile, " "));
 		model.setStart(start);
 		model.setRows(rows);
 		model.setSort(sort);
@@ -122,6 +131,8 @@ public class ApiConsoleController {
 		model.setLongMax(longMax);
 		model.setYearMin(yearMin);
 		model.setYearMax(yearMax);
+
+		model.setProfiles(profiles);
 
 		if (function.equals(SEARCH)) {
 			if (!StringUtils.isBlank(latMin) || !StringUtils.isBlank(latMax)) {
@@ -159,11 +170,11 @@ public class ApiConsoleController {
 		ApiWrapper api = new ApiWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(), request.getSession());
 		ApiResult apiResult = null;
 		if (function.equals(SEARCH) && !StringUtils.isBlank(query)) {
-			apiResult = api.getSearchResult(query, refinements, profile, start, rows, sort, callback);
+			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profile, "%20"), start, rows, sort, callback);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			apiResult = api.getObject(collectionId, recordId, profile, callback);
+			apiResult = api.getObject(collectionId, recordId, StringUtils.join(profile, "%20"), callback);
 		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			apiResult = api.getObject(recordId, profile, callback);
+			apiResult = api.getObject(recordId, StringUtils.join(profile, "%20"), callback);
 		} else if (function.equals("suggestions") && !StringUtils.isBlank(query)) {
 			apiResult = api.getSuggestions(query, rows, phrases, callback);
 		}
@@ -220,5 +231,18 @@ public class ApiConsoleController {
 		}
 		return "*";
 		*/
+	}
+
+	private void checkProfiles(List<String> profiles, String defaultProfile, Map<String, Boolean> allowedValues) {
+		boolean hasValid = false;
+		for (String profile : profiles) {
+			if (allowedValues.containsKey(profile)) {
+				allowedValues.put(profile, true);
+				hasValid = true;
+			}
+		}
+		if (!hasValid) {
+			allowedValues.put(defaultProfile, true);
+		}
 	}
 }

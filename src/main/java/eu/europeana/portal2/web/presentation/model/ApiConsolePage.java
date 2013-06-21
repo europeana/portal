@@ -1,7 +1,9 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import eu.europeana.portal2.web.presentation.model.data.ApiData;
 
@@ -41,9 +43,28 @@ public class ApiConsolePage extends ApiData {
 
 	private List<String> supportedFunctions = Arrays.asList(new String[]{"search", "record", "suggestions"});
 	// TODO: add back "spelling"
-	private List<String> defaultSearchProfiles = Arrays.asList(new String[]{"standard", "portal", "facets", "breadcrumb", "minimal"});
-	private List<String> defaultObjectProfiles = Arrays.asList(new String[]{"full", "similar"});
+	private Map<String, Boolean> defaultSearchProfiles = new LinkedHashMap<String, Boolean>(){
+		private static final long serialVersionUID = 1L;
+		{
+			put("standard", false);
+			put("portal", false);
+			put("facets", false);
+			put("breadcrumb", false);
+			put("minimal", false);
+			put("params", false);
+		}
+	};
+	private Map<String, Boolean> defaultObjectProfiles = new LinkedHashMap<String, Boolean>(){
+		private static final long serialVersionUID = 1L;
+		{
+			put("full", false);
+			put("similar", false);
+			put("params", false);
+		}
+	};
 	private List<String> defaultRows = Arrays.asList(new String[]{"12", "24", "48", "96"});
+
+	private List<String> profiles;
 
 	public String getFunction() {
 		return function;
@@ -61,11 +82,11 @@ public class ApiConsolePage extends ApiData {
 		this.jsonString = jsonString;
 	}
 
-	public List<String> getDefaultSearchProfiles() {
+	public Map<String, Boolean> getDefaultSearchProfiles() {
 		return defaultSearchProfiles;
 	}
 
-	public List<String> getDefaultObjectProfiles() {
+	public Map<String, Boolean> getDefaultObjectProfiles() {
 		return defaultObjectProfiles;
 	}
 
@@ -219,5 +240,13 @@ public class ApiConsolePage extends ApiData {
 
 	public void setYearMax(String yearMax) {
 		this.yearMax = yearMax;
+	}
+
+	public List<String> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<String> profiles) {
+		this.profiles = profiles;
 	}
 }
