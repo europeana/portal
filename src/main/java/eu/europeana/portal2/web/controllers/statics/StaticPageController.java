@@ -18,13 +18,13 @@
 package eu.europeana.portal2.web.controllers.statics;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,18 +32,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.exception.ProblemType;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.enums.Redirect;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
 import eu.europeana.portal2.web.presentation.model.StaticPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.ResponsiveImageCache;
 import eu.europeana.portal2.web.util.StaticPageCache;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * Generic controller for static pages.
@@ -56,7 +57,11 @@ import eu.europeana.portal2.web.util.StaticPageCache;
 @Controller
 public class StaticPageController {
 
-	@Resource(name="configurationService") private Configuration config;
+	@Log
+	private Logger log;
+
+	@Resource(name = "configurationService")
+	private Configuration config;
 
 	public static final String AFFIX_TEMPLATE_VAR_FOR_LEFT = "left";
 
@@ -66,13 +71,14 @@ public class StaticPageController {
 
 	private static final String AFFIX_TEMPLATE_VAR_FOR_TITLE = "title";
 
-	@Resource(name="staticPageCache") private StaticPageCache staticPageCache;
+	@Resource(name = "staticPageCache")
+	private StaticPageCache staticPageCache;
 
-	@Resource(name="responsiveImageCache") private ResponsiveImageCache responsiveImageCache;
+	@Resource(name = "responsiveImageCache")
+	private ResponsiveImageCache responsiveImageCache;
 
 	private ClickStreamLogger clickStreamLogger = new ClickStreamLoggerImpl();
 
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	/**
 	 * All of the pages are served up from here
@@ -86,12 +92,9 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 	@RequestMapping("/{pageName}.html")
-	public ModelAndView fetchStaticPage(
-			@PathVariable String pageName,
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			HttpServletRequest request, 
-			HttpServletResponse response) 
-					throws Exception {
+	public ModelAndView fetchStaticPage(@PathVariable String pageName,
+			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Injector injector = new Injector(request, response, null);
 
 		pageName = "/" + pageName + getSuffix(pageName) + ".html";
@@ -107,12 +110,9 @@ public class StaticPageController {
 	}
 
 	@RequestMapping("/rights/{pageName}.html")
-	public ModelAndView fetchStaticRightsPage(
-			@PathVariable String pageName,
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			HttpServletRequest request, 
-			HttpServletResponse response) 
-					throws Exception {
+	public ModelAndView fetchStaticRightsPage(@PathVariable String pageName,
+			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Injector injector = new Injector(request, response, null);
 
 		pageName = "/rights/" + pageName + getSuffix(pageName) + ".html";
@@ -130,9 +130,9 @@ public class StaticPageController {
 	/**
 	 * Adds suffix which can be used by adding page name. It distinguises portal1 and portal2 static pages.
 	 * 
-	 * @param pageName The page name
-	 * @return
-	 *   The suffix
+	 * @param pageName
+	 *            The page name
+	 * @return The suffix
 	 */
 	private String getSuffix(String pageName) {
 		String suffix = config.getStaticPageSuffix();
@@ -143,7 +143,7 @@ public class StaticPageController {
 
 		if (pageName.endsWith(suffix)) {
 			if (!config.getStaticPageInVersions().contains(pageName.substring(0, pageName.length() - suffix.length()))) {
-				log.warning("pageName not registered in the StaticPageInVersions property: " + pageName);
+				log.warn("pageName not registered in the StaticPageInVersions property: " + pageName);
 			}
 			return "";
 		}
@@ -155,7 +155,8 @@ public class StaticPageController {
 		return suffix;
 	}
 
-	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response, StaticPage model) {
+	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response,
+			StaticPage model) {
 		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		staticPageCache.setStaticPagePath(config.getStaticPagePath());
@@ -178,7 +179,7 @@ public class StaticPageController {
 		// request.getPathInfo());
 
 		// generate static page
-		model.setTc(pageName.indexOf("rights") >- 1);
+		model.setTc(pageName.indexOf("rights") > -1);
 		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, injector.getLocale()));
 		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, injector.getLocale()));
 		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, injector.getLocale()));
@@ -187,15 +188,14 @@ public class StaticPageController {
 		// TODO: check it!
 		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
-		if (StringUtils.isBlank(model.getBodyContent()) 
-				&& StringUtils.isBlank(model.getHeaderContent()) 
-				&& StringUtils.isBlank(model.getLeftContent())
-				&& StringUtils.isBlank(titleContent)) {
+		if (StringUtils.isBlank(model.getBodyContent()) && StringUtils.isBlank(model.getHeaderContent())
+				&& StringUtils.isBlank(model.getLeftContent()) && StringUtils.isBlank(titleContent)) {
 			model.setPageFound(false);
 		}
 		injector.injectProperties(model);
 
-		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" + request.getPathInfo());
+		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" +
+		// request.getPathInfo());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.STATICPAGE);
 		injector.postHandle(this, page);
@@ -212,16 +212,6 @@ public class StaticPageController {
 		return staticPageCache.getPage(fileName, language);
 	}
 
-	/**
-	 * composed from servletPath and pathInfo that may be null and may be called
-	 * w/o language fo)r verbatim pages
-	 */
-	private String makePageFileName(String pageNamePrefix, String pageName) {
-		String pageFileName = (pageNamePrefix == null ? "" : pageNamePrefix)
-				+ (pageName == null ? "" : pageName);
-		return pageFileName;
-	}
-
 	@RequestMapping("/page-not-found.html")
 	public ModelAndView pageNotFoundHandler(HttpServletRequest request, Locale locale) throws Exception {
 		log.info("====== page-not-found.html ======");
@@ -229,7 +219,8 @@ public class StaticPageController {
 	}
 
 	@RequestMapping("/error.html")
-	public ModelAndView errorPageHandler(HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+	public ModelAndView errorPageHandler(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws Exception {
 		Injector injector = new Injector(request, response, null);
 
 		log.info("====== error.html ======");

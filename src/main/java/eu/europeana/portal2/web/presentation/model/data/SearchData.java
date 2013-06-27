@@ -18,7 +18,6 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
@@ -28,8 +27,6 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanView
 import eu.europeana.portal2.web.presentation.model.data.decorators.lists.BreadcrumbListDecorator;
 
 public abstract class SearchData extends UrlAwareData<BriefBean> {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	protected List<BreadCrumb> breadcrumbs;
 
@@ -46,7 +43,7 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 	protected int maxMapResults;
 
 	protected boolean markupOnly;
-	
+
 	abstract public String getRswUserId();
 
 	abstract public String getRswDefqry();
@@ -102,7 +99,7 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 	public void setCoords(String coords) {
 		this.coords = coords;
 	}
-	
+
 	public boolean isMarkupOnly() {
 		return markupOnly;
 	}

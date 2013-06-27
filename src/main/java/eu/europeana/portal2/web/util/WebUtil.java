@@ -11,15 +11,16 @@ import java.net.URLEncoder;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebUtil {
-
-	private static final Logger log = Logger.getLogger(WebUtil.class.getName());
+	
+	private static Logger log = LoggerFactory.getLogger(WebUtil.class);
 
 	public static String requestApiSession(String apiUrl, String api2key, String api2secret) {
 		log.info("get API session " + api2key + ", " + api2secret);

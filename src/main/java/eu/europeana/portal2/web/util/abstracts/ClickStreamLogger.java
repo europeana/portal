@@ -15,7 +15,7 @@
  *  the Licence.
  */
 
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.util.abstracts;
 
 import java.util.Locale;
 

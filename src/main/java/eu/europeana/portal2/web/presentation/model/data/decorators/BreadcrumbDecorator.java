@@ -18,7 +18,6 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -29,8 +28,6 @@ import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class BreadcrumbDecorator extends BreadCrumb {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private SearchData model;
 

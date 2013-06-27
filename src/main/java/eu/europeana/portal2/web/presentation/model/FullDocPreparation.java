@@ -26,10 +26,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
@@ -41,8 +42,8 @@ import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentation;
 
 public abstract class FullDocPreparation extends FullDocData {
-
-	protected final Logger log = Logger.getLogger(getClass().getName());
+	
+	private final Logger log = LoggerFactory.getLogger(FullDocPreparation.class);
 
 	private static final String LANDING_PAGE_PREFIX = "http://www.europeana.eu/portal";
 	private static final String HTML_EXT = ".html";
@@ -359,7 +360,6 @@ public abstract class FullDocPreparation extends FullDocData {
 			return;
 		}
 
-		FieldPresentation fieldPresentation = new FieldPresentation(this, fieldInfo);
 		List<String> fieldValues = new LinkedList<String>();
 		for (String[] fieldValueArray : fieldValuesArrays) {
 			if (fieldValueArray == null) {
@@ -384,8 +384,10 @@ public abstract class FullDocPreparation extends FullDocData {
 			try {
 				fields.add(new FieldPresentation(this, fieldInfo, fieldValues));
 			} catch (NullPointerException npe) {
-				log.warning("Failed to add field in fullDocPresentationImpl for: " + fieldInfo.getFieldLabel());
-				log.severe(ExceptionUtils.getFullStackTrace(npe));
+				if (log.isDebugEnabled()) {
+					log.debug("Failed to add field in fullDocPresentationImpl for: " + fieldInfo.getFieldLabel());
+				}
+				log.error(ExceptionUtils.getFullStackTrace(npe));
 			}
 		}
 	}
@@ -416,7 +418,9 @@ public abstract class FullDocPreparation extends FullDocData {
 			} else if (fieldValueArray instanceof Map) {
 				fieldPresentation.addMap(this, (Map<Field, List<String>>)fieldValueArray);
 			} else {
-				log.warning("Unhandled data type in addFieldMap(): " + fieldValueArray.getClass());
+				if (log.isDebugEnabled()) {
+					log.debug("Unhandled data type in addFieldMap(): " + fieldValueArray.getClass());
+				}
 			}
 		}
 	}
@@ -445,7 +449,9 @@ public abstract class FullDocPreparation extends FullDocData {
 			return;
 		}
 		if (fieldInfo.getFieldLabel() == null) {
-			log.warning(String.format("No field label for fieldInfo: %s, %s", fieldInfo.getFieldName(), fieldInfo.getFieldLabel()));
+			if (log.isDebugEnabled()) {
+				log.debug(String.format("No field label for fieldInfo: %s, %s", fieldInfo.getFieldName(), fieldInfo.getFieldLabel()));
+			}
 			return;
 		}
 		FieldPresentation fieldPresentation = getFieldPresentation(fields, fieldInfo);

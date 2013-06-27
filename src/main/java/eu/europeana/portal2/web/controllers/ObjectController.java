@@ -20,22 +20,19 @@ package eu.europeana.portal2.web.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.slf4j.Logger;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
@@ -49,6 +46,7 @@ import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -56,6 +54,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.service.OptOutService;
+import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoParams;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
@@ -67,8 +66,8 @@ import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
-import eu.europeana.portal2.web.util.ClickStreamLogger.UserAction;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger.UserAction;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.Injector;
@@ -79,7 +78,8 @@ import eu.europeana.portal2.web.util.Injector;
 @Controller
 public class ObjectController {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Log
+	private Logger log;
 
 	@Resource
 	private SearchService searchService;
@@ -89,13 +89,13 @@ public class ObjectController {
 
 	@Resource
 	private ClickStreamLogger clickStreamLogger;
-	
+
 	@Resource
 	private OptOutService optOutService;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
-	//private final static String RESOLVE_PREFIX = "http://www.europeana.eu/resolve/record";
+	// private final static String RESOLVE_PREFIX = "http://www.europeana.eu/resolve/record";
 
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
@@ -139,11 +139,6 @@ public class ObjectController {
 			qf = _qf;
 		}
 
-		log.info(String.format("Thread %s =========== /record/%s/%s.html ============", Thread.currentThread()
-				.getName(), collectionId, recordId));
-		log.fine(String.format("=========== /%s/%s.html ============", collectionId, recordId));
-		// Map<String, String[]> parameters = sanitizeParameters(request);
-
 		FullDocPage model = new FullDocPage();
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
@@ -179,15 +174,17 @@ public class ObjectController {
 			throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
 		}
 
-		long tgetFullBean1 = (new Date()).getTime();
-		log.fine("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
+		if (log.isDebugEnabled()) {
+			long tgetFullBean1 = (new Date()).getTime();
+			log.debug("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
+		}
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
 			model.setOptedOut(optOutService.check(fullBean.getAbout()));
 			Query query = new Query(queryString).setRefinements(qf).setAllowFacets(false).setAllowSpellcheck(false);
 
 			// full bean view
-			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, request.getParameterMap(), query, searchService);
+			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, RequestUtils.getParameterMap(request), query, searchService);
 			model.setFullBeanView(fullBeanView);
 
 			// more like this
@@ -201,16 +198,20 @@ public class ObjectController {
 
 			long tSeeAlso0 = (new Date()).getTime();
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
-			long tSeeAlso1 = (new Date()).getTime();
-			log.fine("see also takes: " + (tSeeAlso1 - tSeeAlso0));
+			if (log.isDebugEnabled()) {
+				long tSeeAlso1 = (new Date()).getTime();
+				log.debug("see also takes: " + (tSeeAlso1 - tSeeAlso0));
+			}
 			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView
 					.getFullDoc().getAbout());
 		}
 
 		injector.postHandle(this, page);
 
-		long t1 = (new Date()).getTime();
-		log.fine("object page takes: " + (t1 - t0));
+		if (log.isDebugEnabled()) {
+			long t1 = (new Date()).getTime();
+			log.debug("object page takes: " + (t1 - t0));
+		}
 
 		return page;
 	}
@@ -279,9 +280,11 @@ public class ObjectController {
 				fullBean = searchService.resolve(europeanaId);
 			}
 		} catch (SolrTypeException e) {
-			log.severe(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId, e.getMessage()));
+			log.error(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId,
+					e.getMessage()));
 		} catch (NullPointerException e) {
-			log.severe(String.format("Exception during getting the full bean for ID %s: %s", europeanaId, e.getStackTrace()[0]));
+			log.error(String.format("Exception during getting the full bean for ID %s: %s", europeanaId,
+					e.getStackTrace()[0]));
 		}
 		return fullBean;
 	}
@@ -292,7 +295,7 @@ public class ObjectController {
 		try {
 			result = searchService.findMoreLikeThis(europeanaId);
 		} catch (SolrServerException e) {
-			log.severe("Solr Server Exception: " + e.getMessage());
+			log.error("Solr Server Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
@@ -307,32 +310,6 @@ public class ObjectController {
 		}
 
 		return moreLikeThis;
-	}
-
-	private Map<String, String[]> sanitizeParameters(HttpServletRequest request) {
-		Map<String, String[]> parameters = new HashMap<String, String[]>();
-		Enumeration params = request.getParameterNames();
-		while (params.hasMoreElements()) {
-			String parameter = params.nextElement().toString();
-			String[] values = request.getParameterValues(parameter);
-
-			if (!isBrokenQuery(parameter, values)) {
-				parameters.put(parameter, values);
-			}
-		}
-		return parameters;
-	}
-
-	private boolean isBrokenQuery(String parameter, String[] values) {
-		if ("query".equals(parameter)) {
-			if (values == null || values.length != 1 || values[0] == null) {
-				return true;
-			}
-			// one quote
-			String query = values[0];
-			return query.contains("\"") && StringUtils.indexOf(query, '\"') == StringUtils.lastIndexOf(query, '\"');
-		}
-		return false;
 	}
 
 	/**
@@ -368,11 +345,8 @@ public class ObjectController {
 			}
 		}
 
-		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(
-			config.getSeeAlsoTranslations(),
-			config.getSeeAlsoAggregations(),
-			seeAlsoParams
-		);
+		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations(),
+				config.getSeeAlsoAggregations(), seeAlsoParams);
 		try {
 			Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams.getEscapedQueries());
 			seeAlsoParams.updateIndex();
@@ -384,8 +358,7 @@ public class ObjectController {
 				}
 			}
 		} catch (Exception e) {
-			log.severe("See also error: " + e.getClass().getCanonicalName() + " " + e.getMessage());
-			log.severe(ExceptionUtils.getStackTrace(e));
+			log.error("See also error: " + e.getClass().getCanonicalName() + " " + e.getMessage(),e);
 		}
 
 		return seeAlsoSuggestions;

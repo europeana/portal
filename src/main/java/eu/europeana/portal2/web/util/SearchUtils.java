@@ -21,7 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -41,8 +40,6 @@ import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
 
 public class SearchUtils {
-
-	private static final Logger log = Logger.getLogger(SearchUtils.class.getName());
 
 	public static BriefBeanView createResults(SearchService searchService,
 			Class<? extends BriefBean> clazz, String profile, Query query,

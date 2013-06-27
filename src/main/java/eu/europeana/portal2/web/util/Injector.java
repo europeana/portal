@@ -2,12 +2,13 @@ package eu.europeana.portal2.web.util;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -20,7 +21,7 @@ import eu.europeana.portal2.web.presentation.model.PortalPageData;
 
 public class Injector {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	private final Logger log = LoggerFactory.getLogger(Injector.class);
 
 	private static UserService userService = Beans.getUserService();
 
@@ -34,9 +35,8 @@ public class Injector {
 	private HttpServletResponse response;
 	private Locale locale;
 	private long start;
-
+	
 	public Injector() {
-		// log.info("create injector(): " + (config == null));
 	}
 
 	public Injector(HttpServletRequest request, HttpServletResponse response, Locale locale) {
@@ -48,7 +48,7 @@ public class Injector {
 	}
 
 	public void injectProperties(PortalPageData model) {
-		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(config.getPortalGooglePlusPublisherId()));
+		model.setGooglePlusPublisherId(StringUtils.trimToEmpty(Configuration.getPortalGooglePlusPublisherId()));
 		model.setTheme(getTheme(request));
 		model.setDebug(config.getDebugMode());
 		// TODO: change it later!!!!
@@ -67,11 +67,9 @@ public class Injector {
 		try {
 			configInterceptor.postHandle(request, response, object, page);
 		} catch (Exception e) {
-			log.severe("Exception - " + e.getClass() + ": " + e.getMessage());
-			log.severe(ControllerUtil.getStackTrace(e));
-			log.severe(String.format("configInterceptor: %s, request: %s, response: %s, object: %s, page: %s",
+			log.error("Exception - " + e.getClass() + ": " + e.getMessage(),e);
+			log.error(String.format("configInterceptor: %s, request: %s, response: %s, object: %s, page: %s",
 				(configInterceptor != null), (request != null), (response != null), (object != null), (page != null)));
-			e.printStackTrace();
 		}
 		logTime(object.getClass().getSimpleName());
 	}

@@ -2,13 +2,13 @@ package eu.europeana.portal2.web.controllers;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -35,8 +35,6 @@ public class BlogTest {
 	// TODO: use it later, to test something else
 	// private List<FeedEntry> pinterestEntries;
 	// private Calendar pinterestAge;
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private String blogFeedUrl = "http://blog.europeana.eu/feed/";
 	private Integer blogItemLimit = 3;
@@ -100,11 +98,9 @@ public class BlogTest {
 			try {
 				orig = ImageIO.read(new URL(location));
 			} catch (MalformedURLException e) {
-				log.severe("MalformedURLException during reading in location: " + e.getLocalizedMessage());
-				e.printStackTrace();
+				fail("MalformedURLException during reading in location: " + e.getLocalizedMessage());
 			} catch (IOException e) {
-				log.severe("IOException during reading in location: " + e.getLocalizedMessage());
-				e.printStackTrace();
+				fail("IOException during reading in location: " + e.getLocalizedMessage());
 			}
 
 			for (int i = 0, len = responsiveWidths.length; i < len; i++) {
@@ -118,8 +114,7 @@ public class BlogTest {
 							(height <= responsive.getHeight()+1 || height >= responsive.getHeight()+1));
 					assertTrue(responsive.getHeight() > 1);
 				} catch (IOException e) {
-					log.severe("IOException during scaling image: " + e.getLocalizedMessage());
-					e.printStackTrace();
+					fail("IOException during scaling image: " + e.getLocalizedMessage());
 				}
 			}
 		}

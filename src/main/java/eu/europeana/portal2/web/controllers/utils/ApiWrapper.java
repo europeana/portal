@@ -19,7 +19,6 @@ package eu.europeana.portal2.web.controllers.utils;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,10 +29,14 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class ApiWrapper {
+	
+	private final Logger log = LoggerFactory.getLogger(ApiWrapper.class);
 
 	private static final String SEARCH_PATH = "/v2/search.json";
 	private static final String SUGGESTIONS_PATH = "/v2/suggestions.json";
@@ -54,8 +57,6 @@ public class ApiWrapper {
 	private static final String HEADER = "{\"apikey\":\"";
 	private static final String WSKEY = "wskey=";
 	private static final String UTM_CAMPAIGN = "utm_campaign=";
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private String lastUrl;
 
@@ -170,8 +171,7 @@ public class ApiWrapper {
 			jsonResponse = writer.toString();
 
 		} catch (IOException e) {
-			log.severe(e.getMessage());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 
 		return new ApiResult(
@@ -194,7 +194,7 @@ public class ApiWrapper {
 			if (sessionId != null && session != null) {
 				session.setAttribute(SESSION_KEY, sessionId);
 			} else {
-				log.severe("It was unsuccessfull to get apiSession");
+				log.warn("It was unsuccessfull to get apiSession");
 			}
 		}
 
@@ -215,14 +215,12 @@ public class ApiWrapper {
 			if (apiSession != null) {
 				apiSession = apiSession.substring(0, apiSession.indexOf(";"));
 			} else {
-				log.severe("No cookie information in API2 login response");
+				log.warn("No cookie information in API2 login response");
 			}
 		} catch (HttpException e) {
-			log.severe("HttpException: " + e.getMessage());
-			e.printStackTrace();
+			log.error("HttpException: " + e.getMessage());
 		} catch (IOException e) {
-			log.severe("IOException: " + e.getMessage());
-			e.printStackTrace();
+			log.error("IOException: " + e.getMessage());
 		}
 		log.info("resulted apiSession: " + apiSession);
 		return apiSession;

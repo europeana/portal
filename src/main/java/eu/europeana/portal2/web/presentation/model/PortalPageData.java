@@ -3,15 +3,12 @@ package eu.europeana.portal2.web.presentation.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import eu.europeana.corelib.web.model.PageData;
 
 public abstract class PortalPageData extends PageData {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private HttpServletRequest request;
 
@@ -74,26 +71,32 @@ public abstract class PortalPageData extends PageData {
 		this.request = request;
 	}
 
+	@Override
 	public boolean isDebug() {
 		return debug;
 	}
 
+	@Override
 	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}
 
+	@Override
 	public boolean isMinify() {
 		return minify;
 	}
 
+	@Override
 	public void setMinify(boolean minify) {
 		this.minify = minify;
 	}
 
+	@Override
 	public Locale getLocale() {
 		return locale;
 	}
 
+	@Override
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}

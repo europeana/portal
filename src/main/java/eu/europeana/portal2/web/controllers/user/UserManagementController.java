@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,29 +23,26 @@ import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
 import eu.europeana.portal2.web.presentation.model.MyEuropeanaPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class UserManagementController {
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
-
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
 	@RequestMapping("/myeuropeana.html")
 	public ModelAndView myEuropeanaHandler(
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale) 
-					throws Exception {
-		log.info("===== myeuropeana.html =======");
+			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		MyEuropeanaPage model = new MyEuropeanaPage();
 		injector.injectProperties(model);
@@ -74,18 +70,14 @@ public class UserManagementController {
 	}
 
 	@RequestMapping("/logout-success.html")
-	public String logoutSuccessHandler(HttpServletRequest request)
-			throws Exception {
+	public String logoutSuccessHandler(HttpServletRequest request) throws Exception {
 		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.LOGOUT);
 		return "redirect:/login.html";
 	}
 
 	@RequestMapping("/logout.html")
-	public ModelAndView logoutHandler(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+	public ModelAndView logoutHandler(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		EmptyModelPage model = new EmptyModelPage();
 		injector.injectProperties(model);

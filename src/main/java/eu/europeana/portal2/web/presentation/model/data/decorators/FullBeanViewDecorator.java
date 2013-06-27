@@ -20,7 +20,6 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -30,7 +29,6 @@ import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 public class FullBeanViewDecorator implements FullBeanView {
 	private static final long serialVersionUID = -5504231572868214828L;
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private FullDocData model;
 	private FullBeanView fullBeanView;
@@ -45,8 +43,7 @@ public class FullBeanViewDecorator implements FullBeanView {
 	}
 
 	@Override
-	public DocIdWindowPager getDocIdWindowPager() throws Exception,
-			UnsupportedEncodingException {
+	public DocIdWindowPager getDocIdWindowPager() throws Exception, UnsupportedEncodingException {
 		if (fullBeanView.getDocIdWindowPager() != null) {
 			return new DocIdWindowPagerDecorator(model, fullBeanView.getDocIdWindowPager());
 		}

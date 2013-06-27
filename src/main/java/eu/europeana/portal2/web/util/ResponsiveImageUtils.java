@@ -7,15 +7,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.corelib.utils.ImageUtils;
 
 public class ResponsiveImageUtils {
 
-	private static final Logger log = Logger.getLogger(ResponsiveImageUtils.class.getCanonicalName());
+	private static final Logger log = LoggerFactory.getLogger(ResponsiveImageUtils.class);
 
 	private static String staticPagePath = Beans.getConfig().getStaticPagePath();
 
@@ -105,7 +107,7 @@ public class ResponsiveImageUtils {
 				if (originalImage == null) {
 					originalImage = readOriginalImage(location, isURL);
 					if (originalImage == null) {
-						log.severe(String.format("The original image (%s) is not readable", location));
+						log.warn(String.format("The original image (%s) is not readable", location));
 						return responsiveImages;
 					}
 				}
@@ -115,8 +117,7 @@ public class ResponsiveImageUtils {
 					responsiveImage = ImageUtils.scale(originalImage, widths[i], height);
 					// responsive = ImageUtils.compress(responsive, 0.8f);
 				} catch (IOException e) {
-					log.severe("IOException during scaling image: " + e.getLocalizedMessage());
-					e.printStackTrace();
+					log.error("IOException during scaling image: " + e.getLocalizedMessage(), e);
 				}
 
 				if (responsiveImage == null) {
@@ -130,8 +131,7 @@ public class ResponsiveImageUtils {
 				try {
 					created = outputfile.createNewFile();
 				} catch (IOException e) {
-					log.severe("IOException during create new file: " + e.getLocalizedMessage());
-					e.printStackTrace();
+					log.error("IOException during create new file: " + e.getLocalizedMessage(), e);
 				}
 
 				if (created) {
@@ -139,8 +139,7 @@ public class ResponsiveImageUtils {
 						// compressAndShow
 						ImageIO.write(responsiveImage, extension, outputfile);
 					} catch (IOException e) {
-						log.severe("IOException during writing new file: " + e.getLocalizedMessage());
-						e.printStackTrace();
+						log.error("IOException during writing new file: " + e.getLocalizedMessage(), e);
 					}
 					log.info("created " + outputfile);
 				}
@@ -158,11 +157,9 @@ public class ResponsiveImageUtils {
 				originalImage = ImageIO.read(new File(staticPagePath, location));
 			}
 		} catch (MalformedURLException e) {
-			log.severe(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
-			e.printStackTrace();
+			log.error(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
 		} catch (IOException e) {
-			log.severe(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()));
-			e.printStackTrace();
+			log.error(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()), e);
 		}
 		return originalImage;
 	}

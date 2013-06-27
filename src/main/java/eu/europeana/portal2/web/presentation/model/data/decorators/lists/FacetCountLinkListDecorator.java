@@ -22,14 +22,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.logging.Logger;
 
 import eu.europeana.portal2.querymodel.query.FacetCountLink;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FacetCountLinkDecorator;
 
 public class FacetCountLinkListDecorator implements List<FacetCountLink> {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private String type;
 	private List<FacetCountLink> list;

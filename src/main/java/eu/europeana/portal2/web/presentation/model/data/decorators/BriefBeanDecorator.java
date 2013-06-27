@@ -22,7 +22,6 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -38,8 +37,6 @@ public class BriefBeanDecorator implements BriefBean {
 
 	final static private String PATH = "record";
 	final static private String EXTENTION = ".html";
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	protected BriefBean briefBean;
 	private UrlAwareData<?> model;
@@ -101,7 +98,7 @@ public class BriefBeanDecorator implements BriefBean {
 				try {
 					builder = model.enrichFullDocUrl(builder);
 				} catch (UnsupportedEncodingException e) {
-					log.severe("UnsupportedEncodingException while enrich url: " + e.getLocalizedMessage());
+					// never happen
 				}
 				fullDocUrl = builder.toString();
 			}

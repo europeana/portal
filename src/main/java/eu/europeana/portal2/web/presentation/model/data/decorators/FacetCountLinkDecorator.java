@@ -17,8 +17,6 @@
 
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
-import java.util.logging.Logger;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
@@ -27,8 +25,6 @@ import eu.europeana.portal2.querymodel.query.RightsOption;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 
 public class FacetCountLinkDecorator implements FacetCountLink {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static final String RIGHTS = "RIGHTS";
 	private static final String COUNTRY = "COUNTRY";
@@ -87,8 +83,7 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 				} else {
 					title = facetCountLink.getValue();
 				}
-			}
-			else {
+			} else {
 				title = facetCountLink.getValue();
 				if (StringUtils.equals(type, RIGHTS)) {
 					if (facetCountLink.getRightsOption() != null) {

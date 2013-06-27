@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -15,8 +14,6 @@ import eu.europeana.portal2.web.util.QueryUtil;
  */
 
 public class ResultPaginationImpl implements ResultPagination {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static final String FACET_PROMPT = "&qf=";
 	private boolean isPrevious;

@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +16,9 @@ import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class NewsletterController {
@@ -30,8 +29,6 @@ public class NewsletterController {
 
 	@Resource private ClickStreamLogger clickStreamLogger;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
 	@RequestMapping("/newsletter.html")
 	public ModelAndView myEuropeanaHandler(
 			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
@@ -39,7 +36,6 @@ public class NewsletterController {
 			HttpServletResponse response,
 			Locale locale) 
 					throws Exception {
-		log.info("===== newsletter.html =======");
 		Injector injector = new Injector(request, response, locale);
 		EmptyModelPage model = new EmptyModelPage();
 		injector.injectProperties(model);

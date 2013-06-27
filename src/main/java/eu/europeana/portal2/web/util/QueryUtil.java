@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,8 +22,6 @@ public class QueryUtil {
 	public static final String TYPE = "TYPE";
 
 	public static final Pattern SQUARE_BRACKET_PATTERN = Pattern.compile("^\\[(.*?)\\]$");
-
-	private static final Logger log = Logger.getLogger(QueryUtil.class.getName());
 
 	public static Map<String, List<String>> getFilterQueriesWithoutPhrases(Query solrQuery) {
 		String[] filterQueries = solrQuery.getRefinements(false);
@@ -63,8 +60,6 @@ public class QueryUtil {
 		try {
 			query = originalQuery.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			log.severe(e.getMessage());
 			return originalQuery;
 		}//
 		if (originalQuery.getRefinements() == null) {
@@ -120,7 +115,6 @@ public class QueryUtil {
 		try {
 			value = URLEncoder.encode(value, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			log.severe(e.getMessage());
 		}
 		return value;
 	}
@@ -129,7 +123,6 @@ public class QueryUtil {
 		try {
 			value = URLDecoder.decode(value, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			log.severe(e.getMessage());
 		}
 		return value;
 	}

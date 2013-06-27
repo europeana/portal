@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * Deprecated views get redirected here.

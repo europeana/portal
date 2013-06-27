@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -28,23 +27,25 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ContactPage;
 import eu.europeana.portal2.web.presentation.model.validation.ContactPageValidator;
 import eu.europeana.portal2.web.security.Portal2UserDetails;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 @RequestMapping("/contact.html")
 public class ContactPageController {
 
-	@Resource(name="corelib_web_emailService") private EmailService emailService;
+	@Resource(name = "corelib_web_emailService")
+	private EmailService emailService;
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
-
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -58,9 +59,9 @@ public class ContactPageController {
 		User user = null;
 		if (authentication != null) {
 			// Principal principal = (Principal)authentication.getPrincipal();
-			Object principal = (Object)authentication.getPrincipal();
+			Object principal = (Object) authentication.getPrincipal();
 			if (principal instanceof Portal2UserDetails) {
-				user = userService.findByEmail(((Portal2UserDetails)principal).getUsername());
+				user = userService.findByEmail(((Portal2UserDetails) principal).getUsername());
 			}
 		}
 		if (user != null) {
@@ -70,11 +71,8 @@ public class ContactPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView handleGet(
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			HttpServletRequest request, 
-			HttpServletResponse response, 
-			Locale locale) {
+	public ModelAndView handleGet(@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		Injector injector = new Injector(request, response, locale);
 		ContactPage model = createContactForm();
 		injector.injectProperties(model);
@@ -85,14 +83,9 @@ public class ContactPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView handlePost(
-			@ModelAttribute("model") @Valid ContactPage form,
-			BindingResult result,
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			HttpServletRequest request, 
-			HttpServletResponse response, 
-			Locale locale)
-					throws Exception {
+	protected ModelAndView handlePost(@ModelAttribute("model") @Valid ContactPage form, BindingResult result,
+			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		if (result.hasErrors()) {
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.FEEDBACK_SEND_FAILURE);

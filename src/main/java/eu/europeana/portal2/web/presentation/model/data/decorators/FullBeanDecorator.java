@@ -21,7 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -41,15 +40,9 @@ import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
-import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.util.Beans;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
-
-	private final Logger log = Logger.getLogger(FullBeanDecorator.class.getCanonicalName());
-
-	private Configuration config = Beans.getConfig();
 
 	private FullBean fulldoc;
 
@@ -93,28 +86,24 @@ public class FullBeanDecorator implements FullBean {
 
 	public String getUrlKml() {
 		if (isPositionAvailable()) {
-			//return "record" + getAbout() + ".kml";
+			// return "record" + getAbout() + ".kml";
 			return "";
 		}
 		return null;
 	}
 
 	public boolean isPositionAvailable() {
-		return (shortcut.getEdmPlaceLatitude() != null
-				&& shortcut.getEdmPlaceLatitude().length > 0
-				&& shortcut.getEdmPlaceLatitude()[0] != null 
-				&& shortcut.getEdmPlaceLatitude()[0] != 0)
-			|| (shortcut.getEdmPlaceLongitude() != null 
-				&& shortcut.getEdmPlaceLongitude().length > 0
-				&& shortcut.getEdmPlaceLongitude()[0] != null 
-				&& shortcut.getEdmPlaceLongitude()[0] != 0);
+		return (shortcut.getEdmPlaceLatitude() != null && shortcut.getEdmPlaceLatitude().length > 0
+				&& shortcut.getEdmPlaceLatitude()[0] != null && shortcut.getEdmPlaceLatitude()[0] != 0)
+				|| (shortcut.getEdmPlaceLongitude() != null && shortcut.getEdmPlaceLongitude().length > 0
+						&& shortcut.getEdmPlaceLongitude()[0] != null && shortcut.getEdmPlaceLongitude()[0] != 0);
 	}
 
-	public Float[] getEdmPlaceLatitude(){
+	public Float[] getEdmPlaceLatitude() {
 		return shortcut.getEdmPlaceLatitude();
 	}
 
-	public Float[] getEdmPlaceLongitude(){
+	public Float[] getEdmPlaceLongitude() {
 		return shortcut.getEdmPlaceLongitude();
 	}
 
@@ -198,8 +187,7 @@ public class FullBeanDecorator implements FullBean {
 
 	public boolean isUserGeneratedContent() {
 		if (StringArrayUtils.isNotBlank(shortcut.get("EdmUGC"))) {
-			return StringUtils.equalsIgnoreCase(shortcut.get("EdmUGC")[0],
-					"true");
+			return StringUtils.equalsIgnoreCase(shortcut.get("EdmUGC")[0], "true");
 		}
 		return false;
 	}

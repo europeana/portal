@@ -17,15 +17,11 @@
 
 package eu.europeana.portal2.web.presentation.model.data;
 
-import java.util.logging.Logger;
-
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.Configuration;
 
 public abstract class SearchEmbeddedData extends SearchData {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private String embeddedLogo = "poweredbyeuropeanaBlack.png";
 	private String embeddedLang = null;

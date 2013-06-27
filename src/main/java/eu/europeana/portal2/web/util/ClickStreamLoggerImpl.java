@@ -21,30 +21,33 @@ import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
+import java.util.Map.Entry;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.DocIdWindowPager;
 import eu.europeana.portal2.web.presentation.model.FullBeanView;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  */
 public class ClickStreamLoggerImpl implements ClickStreamLogger {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
-	private static final Logger log2 = Logger.getLogger(ClickStreamLoggerImpl.class.getCanonicalName());
+	
+	private final Logger log = LoggerFactory.getLogger(ClickStreamLoggerImpl.class);
 
 	private static String VERSION = "2.0";
 
@@ -107,7 +110,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 		// String pageId;
 		// private String state;
 		UserAction userAction = UserAction.BRIEF_RESULT;
-		Map params = request.getParameterMap();
+		Map<String, String[]> params = RequestUtils.getParameterMap(request); 
 		if (params.containsKey("bt")) {
 			if (request.getParameter("bt").equalsIgnoreCase("pacta")) {
 				userAction = UserAction.BRIEF_RESULT_FROM_PACTA;
@@ -140,7 +143,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 			// TODO decide what to do with this error
 		}
 
-		Map params = request.getParameterMap();
+		Map<String, String[]> params = RequestUtils.getParameterMap(request); 
 		if (params.containsKey("bt")) {
 			if (request.getParameter("bt").equalsIgnoreCase("savedItem")) {
 				userAction = UserAction.FULL_RESULT_FROM_SAVED_ITEM;
@@ -202,7 +205,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 	private static String getRequestUrl(HttpServletRequest request) {
 		String base = ControllerUtil.getFullServletUrl(request);
 		String queryStringParameters = request.getQueryString();
-		Map postParameters = request.getParameterMap();
+		Map<String, String[]> postParameters = RequestUtils.getParameterMap(request); 
 		StringBuilder out = new StringBuilder();
 		out.append(base);
 		String queryString;
@@ -211,8 +214,7 @@ public class ClickStreamLoggerImpl implements ClickStreamLogger {
 			queryString = out.toString();
 		} else if (postParameters.size() > 0) {
 			out.append("?");
-			for (Object entryKey : postParameters.entrySet()) {
-				Map.Entry entry = (Map.Entry) entryKey;
+			for (Entry<String, String[]> entry : postParameters.entrySet()) {
 				String key = entry.getKey().toString();
 				String[] values = (String[]) entry.getValue();
 				for (String value : values) {

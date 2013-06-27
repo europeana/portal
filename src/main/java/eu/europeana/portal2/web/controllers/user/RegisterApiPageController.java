@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.math.RandomUtils;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -32,6 +31,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.exception.ProblemType;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.exception.EmailServiceException;
 import eu.europeana.corelib.web.model.PageInfo;
@@ -39,9 +39,9 @@ import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.RegisterApiPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * During registration, users click on an email link to end up here with a "token" that allows them to proceed with
@@ -51,6 +51,9 @@ import eu.europeana.portal2.web.util.Injector;
 @Controller
 @RequestMapping("/api/registration.html")
 public class RegisterApiPageController {
+
+	@Log
+	private Logger log;
 
 	@Resource(name = "corelib_db_userService")
 	private UserService userService;
@@ -69,8 +72,6 @@ public class RegisterApiPageController {
 
 	@Resource
 	private ApiKeyService apiKeyService;
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static final String REQUEST_API = "RequestAPI";
 
@@ -157,7 +158,7 @@ public class RegisterApiPageController {
 				try {
 					emailService.sendApiToken(token, url);
 				} catch (EmailServiceException e) {
-					log.severe("Error during API token sending. " + e.getLocalizedMessage());
+					log.error("Error during API token sending. " + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 				model.setSuccess(true);
@@ -195,8 +196,7 @@ public class RegisterApiPageController {
 			emailService.sendRegisterApiNotifyUser(apiKey);
 			emailService.sendRegisterApiNotifyAdmin(user);
 		} catch (Exception e) {
-			log.severe("Unable to send email to sys: " + e.getLocalizedMessage());
-			log.severe(ExceptionUtils.getFullStackTrace(e));
+			log.error("Unable to send email to sys: " + e.getLocalizedMessage(),e);
 		}
 	}
 
@@ -225,8 +225,7 @@ public class RegisterApiPageController {
 		try {
 			return (apiKeyService.findByID(apiKey) == null);
 		} catch (DatabaseException e) {
-			log.severe("DatabaseException while finding apikey: " + e.getLocalizedMessage());
-			e.printStackTrace();
+			log.error("DatabaseException while finding apikey: " + e.getLocalizedMessage(),e);
 		}
 		return false;
 	}

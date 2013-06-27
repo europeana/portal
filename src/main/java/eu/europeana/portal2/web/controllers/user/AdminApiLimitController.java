@@ -1,12 +1,12 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LimitApiKeyPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * 
@@ -35,25 +36,26 @@ import eu.europeana.portal2.web.util.Injector;
 @RequestMapping("/admin/limitApiKey.html")
 public class AdminApiLimitController {
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Log
+	private Logger log;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name="apiKeyService") private ApiKeyService apiKeyService;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource(name = "apiKeyService")
+	private ApiKeyService apiKeyService;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView limitApiKeyFormHandler(
-			@RequestParam(value = "userId", required = true) long userId,
+	public ModelAndView limitApiKeyFormHandler(@RequestParam(value = "userId", required = true) long userId,
 			@RequestParam(value = "apiKey", required = true) String apiKeyId,
-			@ModelAttribute("model") LimitApiKeyPage model,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+			@ModelAttribute("model") LimitApiKeyPage model, HttpServletRequest request, HttpServletResponse response,
+			Locale locale) throws Exception {
 		log.info("==== /admin/limitApiKey.html ====");
 		Injector injector = new Injector(request, response, locale);
 		injector.injectProperties(model);
@@ -70,12 +72,8 @@ public class AdminApiLimitController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String limitApiKeyHandler(
-			@ModelAttribute("model") LimitApiKeyPage model,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+	public String limitApiKeyHandler(@ModelAttribute("model") LimitApiKeyPage model, HttpServletRequest request,
+			HttpServletResponse response, Locale locale) throws Exception {
 		log.info("==== admin.html ====");
 
 		ApiKey apiKey = apiKeyService.findByID(model.getApiKey());

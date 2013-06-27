@@ -19,7 +19,6 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -28,8 +27,6 @@ import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 
 public class CiteValue {
-
-	private final Logger log = Logger.getLogger(CiteValue.class.getCanonicalName());
 
 	private FullDocData model;
 
@@ -63,44 +60,44 @@ public class CiteValue {
 		StringBuilder citeStyleText = new StringBuilder();
 
 		switch (value) {
-			case WIKIPEDIA:
-				citeStyleText.append("{{cite web | url=");
-				citeStyleText.append(model.getDocument().getCannonicalUrl());
-				//citeStyleText.append(model.getDocument().getId());
-				citeStyleText.append("|title=");
+		case WIKIPEDIA:
+			citeStyleText.append("{{cite web | url=");
+			citeStyleText.append(model.getDocument().getCannonicalUrl());
+			// citeStyleText.append(model.getDocument().getId());
+			citeStyleText.append("|title=");
 
-				if( StringArrayUtils.isNotBlank(model.getDocument().getTitle())){
-					citeStyleText.append( model.getDocument().getTitle()[0]);
-				}
-				else{
-					citeStyleText.append(model.getPageTitle().replace("|", ""));
-				}
+			if (StringArrayUtils.isNotBlank(model.getDocument().getTitle())) {
+				citeStyleText.append(model.getDocument().getTitle()[0]);
+			} else {
+				citeStyleText.append(model.getPageTitle().replace("|", ""));
+			}
 
-				if (StringUtils.isNotBlank(authorNames)) {
-					citeStyleText.append("|author=" + authorNames);
-				}
+			if (StringUtils.isNotBlank(authorNames)) {
+				citeStyleText.append("|author=" + authorNames);
+			}
 
-				citeStyleText.append("|accessdate=");
-				citeStyleText.append(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
-				citeStyleText.append(" |publisher=Europeana}}");
-				break;
-			case HARVARD:
-				String availableAtMsg = "Webpage available at:";
-				if (authorNames != null) {
-					citeStyleText.append(authorNames).append(" (");
-				} else {
-					citeStyleText.append("(");
-				}
-				// citeStyleText.append(model.getDocument().getEuropeanaYear()[0])
-				if (model.getDocument().getYear() != null) {
-					citeStyleText.append(model.getDocument().getYear()[0]);
-				}
-				citeStyleText.append(") ").append(model.getPageTitle()).append(" ");
-				citeStyleText.append(availableAtMsg).append(" ");
-				citeStyleText.append(model.getDocument().getId()).append(" [Accessed: ");
-				citeStyleText.append(new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a").format(Calendar.getInstance().getTime()));
-				citeStyleText.append("]");
-				break;
+			citeStyleText.append("|accessdate=");
+			citeStyleText.append(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+			citeStyleText.append(" |publisher=Europeana}}");
+			break;
+		case HARVARD:
+			String availableAtMsg = "Webpage available at:";
+			if (authorNames != null) {
+				citeStyleText.append(authorNames).append(" (");
+			} else {
+				citeStyleText.append("(");
+			}
+			// citeStyleText.append(model.getDocument().getEuropeanaYear()[0])
+			if (model.getDocument().getYear() != null) {
+				citeStyleText.append(model.getDocument().getYear()[0]);
+			}
+			citeStyleText.append(") ").append(model.getPageTitle()).append(" ");
+			citeStyleText.append(availableAtMsg).append(" ");
+			citeStyleText.append(model.getDocument().getId()).append(" [Accessed: ");
+			citeStyleText.append(new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a").format(Calendar.getInstance()
+					.getTime()));
+			citeStyleText.append("]");
+			break;
 		}
 		return citeStyleText.toString();
 	}

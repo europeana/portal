@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
@@ -47,8 +46,6 @@ import eu.europeana.portal2.web.presentation.utils.SearchFilterUtil;
  */
 public class BriefBeanViewImpl implements BriefBeanView {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
 	private ResultPagination pagination;
 	private List<? extends BriefBean> briefBeans;
 	private List<FacetQueryLinks> queryLinks;
@@ -57,42 +54,26 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	private BriefBean matchDoc;
 	private SpellCheck spellcheck;
 
-	public BriefBeanViewImpl() {};
+	public BriefBeanViewImpl() {
+	};
 
 	/*
-	public BriefBeanViewImpl(BeanQueryModelFactory factory,
-			SolrQuery solrQuery, QueryResponse solrResponse,
-			String requestQueryString) 
-		throws UnsupportedEncodingException, EuropeanaQueryException 
-	{
-		pagination = createPagination(solrResponse, solrQuery, requestQueryString);
-		briefDocs = factory.addIndexToBriefDocList(solrQuery,
-				solrBinder.bindBriefDoc(solrResponse.getResults()));
-		queryLinks = FacetQueryLinksImpl.createDecoratedFacets(solrQuery,
-				solrResponse.getFacetFields());
-		facetLogs = createFacetLogs(solrResponse);
-		matchDoc = createBriefDoc(factory, solrResponse);
-		spellcheck = solrResponse.getSpellCheckResponse();
-	}
-	*/
+	 * public BriefBeanViewImpl(BeanQueryModelFactory factory, SolrQuery solrQuery, QueryResponse solrResponse, String
+	 * requestQueryString) throws UnsupportedEncodingException, EuropeanaQueryException { pagination =
+	 * createPagination(solrResponse, solrQuery, requestQueryString); briefDocs =
+	 * factory.addIndexToBriefDocList(solrQuery, solrBinder.bindBriefDoc(solrResponse.getResults())); queryLinks =
+	 * FacetQueryLinksImpl.createDecoratedFacets(solrQuery, solrResponse.getFacetFields()); facetLogs =
+	 * createFacetLogs(solrResponse); matchDoc = createBriefDoc(factory, solrResponse); spellcheck =
+	 * solrResponse.getSpellCheckResponse(); }
+	 */
 
 	/*
-	private BriefBean createBriefDoc(BeanQueryModelFactory factory,
-			QueryResponse solrResponse) {
-		BriefBean briefDoc = null;
-		SolrDocumentList matchDoc = (SolrDocumentList) solrResponse
-				.getResponse().get("match");
-		if (matchDoc != null) {
-			List<? extends BriefBean> briefBeanList = solrBinder.bindBriefDoc(matchDoc);
-			if (briefBeanList.size() > 0) {
-				briefDoc = briefBeanList.get(0);
-				String europeanaId = factory.createFullDocUrl(briefDoc.getId());
-				briefDoc.setFullDocUrl(europeanaId);
-			}
-		}
-		return briefDoc;
-	}
-	*/
+	 * private BriefBean createBriefDoc(BeanQueryModelFactory factory, QueryResponse solrResponse) { BriefBean briefDoc
+	 * = null; SolrDocumentList matchDoc = (SolrDocumentList) solrResponse .getResponse().get("match"); if (matchDoc !=
+	 * null) { List<? extends BriefBean> briefBeanList = solrBinder.bindBriefDoc(matchDoc); if (briefBeanList.size() >
+	 * 0) { briefDoc = briefBeanList.get(0); String europeanaId = factory.createFullDocUrl(briefDoc.getId());
+	 * briefDoc.setFullDocUrl(europeanaId); } } return briefDoc; }
+	 */
 
 	public void setFacetLogs(List<FacetField> facetFieldList) {
 		this.facetLogs = createFacetLogs(facetFieldList);
@@ -127,20 +108,13 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	}
 
 	/*
-	// createPagination(solrResponse, solrQuery, requestQueryString);
-	public static ResultPagination createPagination(QueryResponse response, 
-			SolrQuery query, String requestQueryString)
-			throws EuropeanaQueryException {
-		int numFound = (int) response.getResults().getNumFound();
-		Boolean debug = query.getBool("debugQuery");
-		String parsedQuery = "Information not available";
-		if (debug != null && debug) {
-			parsedQuery = String.valueOf(response.getDebugMap().get(
-					"parsedquery_toString"));
-		}
-		return new ResultPaginationImpl(query, numFound, requestQueryString, parsedQuery);
-	}
-	*/
+	 * // createPagination(solrResponse, solrQuery, requestQueryString); public static ResultPagination
+	 * createPagination(QueryResponse response, SolrQuery query, String requestQueryString) throws
+	 * EuropeanaQueryException { int numFound = (int) response.getResults().getNumFound(); Boolean debug =
+	 * query.getBool("debugQuery"); String parsedQuery = "Information not available"; if (debug != null && debug) {
+	 * parsedQuery = String.valueOf(response.getDebugMap().get( "parsedquery_toString")); } return new
+	 * ResultPaginationImpl(query, numFound, requestQueryString, parsedQuery); }
+	 */
 
 	@Override
 	public List<? extends BriefBean> getBriefBeans() {
@@ -206,7 +180,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 				}
 				removeLinkParams.add(otherSearchParam.getKey() + "=" + otherSearchParam.getValue());
 			}
-			String removeLinkUrl = "search.html" + (removeLinkParams.size() > 0 ? "?" : "") 
+			String removeLinkUrl = "search.html" + (removeLinkParams.size() > 0 ? "?" : "")
 					+ StringUtils.join(removeLinkParams, "&");
 
 			List<String> breadcrumbLinkParams = new ArrayList<String>();
@@ -217,7 +191,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 					break;
 				}
 			}
-			String breadcrumbLinkUrl = "search.html" + (breadcrumbLinkParams.size() > 0 ? "?" : "") 
+			String breadcrumbLinkUrl = "search.html" + (breadcrumbLinkParams.size() > 0 ? "?" : "")
 					+ StringUtils.join(breadcrumbLinkParams, "&");
 
 			SearchLabel label = null;

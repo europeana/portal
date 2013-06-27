@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
@@ -32,7 +31,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.definitions.solr.model.Term;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
@@ -46,16 +44,14 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDeco
 import eu.europeana.portal2.web.util.SearchUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
+@ContextConfiguration({ "/servlet/portal2-mvc.xml", "/internal/portal2-development.xml" })
 public class SearchControllerTest {
 
 	@Resource
 	private SearchService searchService;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
 	private float cents = 0.2f;
-	private int iterations = (int)(100 * cents);
+	private int iterations = (int) (100 * cents);
 
 	private List<String> words;
 
@@ -73,16 +69,14 @@ public class SearchControllerTest {
 
 		long t = new Date().getTime();
 		long min = 0, max = 0, t1, t3;
-		String minw = "", maxw = "";
+		String maxw = "";
 		int i;
 		List<String> slowQueries = new ArrayList<String>();
-		for (i = 0; i<iterations; i++) {
-			if (i > words.size()-1) {
+		for (i = 0; i < iterations; i++) {
+			if (i > words.size() - 1) {
 				break;
 			}
 			String url = String.format(baseUrl, words.get(i));
-			// System.out.println(url);
-			// System.out.println(url);
 			t1 = new Date().getTime();
 			getWebContent(url);
 			t3 = (new Date().getTime() - t1);
@@ -90,19 +84,25 @@ public class SearchControllerTest {
 			if (t3 > 1000) {
 				slowQueries.add(words.get(i) + " (" + t3 + ")");
 			}
-			if (min == 0) {min = max = t3;}
-			if (t3 < min) {min = t3; minw = words.get(i);}
-			if (t3 > max) {max = t3; maxw = words.get(i);}
+			if (min == 0) {
+				min = max = t3;
+			}
+			if (t3 < min) {
+				min = t3;
+				words.get(i);
+			}
+			if (t3 > max) {
+				max = t3;
+				maxw = words.get(i);
+			}
 		}
 		long time = (new Date().getTime() - t);
-		System.out.println("[search] took " + (time/iterations) + " (" + min + "-" + max + ") " + maxw
+		System.out.println("[search] took " + (time / iterations) + " (" + min + "-" + max + ") " + maxw
 				+ ", slow queries: " + slowQueries);
 	}
 
 	private void searchServiceSpeedTest() {
 		Class<? extends BriefBean> clazz = BriefBean.class;
-		// String profile = "portal";
-		// Map<String, String[]> params = new HashMap<String, String[]>();
 
 		try {
 			long t = new Date().getTime();
@@ -111,32 +111,33 @@ public class SearchControllerTest {
 			String maxw = "";
 			List<String> slowQueries = new ArrayList<String>();
 
-			for (i = 0; i<iterations; i++) {
-				if (i > words.size()-1) {
+			for (i = 0; i < iterations; i++) {
+				if (i > words.size() - 1) {
 					break;
 				}
-				Query query = new Query(words.get(i)).setPageSize(12)
-						.setStart(0)
-						.addRefinement("YEAR:1981")
-						.setParameter("facet.mincount", "1")
-						.setProduceFacetUnion(true)
-						.setAllowSpellcheck(false);
+				Query query = new Query(words.get(i)).setPageSize(12).setStart(0).addRefinement("YEAR:1981")
+						.setParameter("facet.mincount", "1").setProduceFacetUnion(true).setAllowSpellcheck(false);
 
 				t1 = new Date().getTime();
-				ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
-				List<Term> suggestions = searchService.suggestions(words.get(i), 10);
+				searchService.search(clazz, query);
+				searchService.suggestions(words.get(i), 10);
 				t3 = (new Date().getTime() - t1);
 				if (t3 > 1000) {
 					slowQueries.add(words.get(i) + " (" + t3 + ")");
 				}
-				if (min == 0) {min = max = t3;}
-				if (t3 < min) {min = t3;}
-				if (t3 > max) {max = t3; maxw = words.get(i);}
+				if (min == 0) {
+					min = max = t3;
+				}
+				if (t3 < min) {
+					min = t3;
+				}
+				if (t3 > max) {
+					max = t3;
+					maxw = words.get(i);
+				}
 			}
-			long time = (new Date().getTime() - t);
-			System.out.println("[searchService] took " + ((new Date().getTime() - t)/iterations) 
-					+ " (" + min + "-" + max + ") " + maxw
-					+ ", slow queries: " + slowQueries);
+			System.out.println("[searchService] took " + ((new Date().getTime() - t) / iterations) + " (" + min + "-"
+					+ max + ") " + maxw + ", slow queries: " + slowQueries);
 		} catch (SolrTypeException e) {
 			e.printStackTrace();
 		}
@@ -150,7 +151,7 @@ public class SearchControllerTest {
 
 		try {
 			url = new URL(_url);
-			is = url.openStream();  // throws an IOException
+			is = url.openStream(); // throws an IOException
 			dis = new DataInputStream(new BufferedInputStream(is));
 			StringBuilder content = new StringBuilder();
 
@@ -173,36 +174,17 @@ public class SearchControllerTest {
 	}
 
 	// @Test
-	public void test() {
-		SearchController controller = new SearchController();
-		String[] qf = new String[]{""};
-		try {
-			/*
-			ModelAndView modelAndView = controller.searchHtml("ebook", "", "", "", "", "", qf, "", "", 10, 12, 
-					"portal",
-					null, null, null);
-			assertEquals("search", modelAndView.getViewName());
-			assertNull(modelAndView.getView());
-			*/
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Exception happened");
-		}
-	}
-	
-	// @Test
 	public void refinementTest() {
-		String[] numbers = new String[]{"1", "2", "3"};
-		String[] words = new String[]{"one", "two", "three"};
-		
+		String[] numbers = new String[] { "1", "2", "3" };
+		String[] words = new String[] { "one", "two", "three" };
+
 		String[] all = (String[]) ArrayUtils.addAll(numbers, words);
 		assertEquals(3, numbers.length);
 		assertEquals(6, all.length);
-		assertArrayEquals(new String[]{"1", "2", "3", "one", "two", "three"}, all);
+		assertArrayEquals(new String[] { "1", "2", "3", "one", "two", "three" }, all);
 		testFunction(all);
 	}
-	
+
 	private void testFunction(String... strings) {
 		// do nothing
 	}
@@ -220,8 +202,8 @@ public class SearchControllerTest {
 		Query query = new Query("*:*").setRefinements("general");
 		Class<? extends BriefBean> clazz = BriefBean.class;
 		Map<String, String[]> params = new HashMap<String, String[]>();
-		params.put("query", new String[]{"*:*"});
-		params.put("qf", new String[]{"general"});
+		params.put("query", new String[] { "*:*" });
+		params.put("qf", new String[] { "general" });
 		BriefBeanView briefBeanView;
 
 		try {
@@ -230,7 +212,7 @@ public class SearchControllerTest {
 			int index = start;
 			for (Object o : model.getBriefBeanView().getBriefBeans()) {
 				assertTrue(o instanceof BriefBeanDecorator);
-				BriefBeanDecorator bean = (BriefBeanDecorator)o;
+				BriefBeanDecorator bean = (BriefBeanDecorator) o;
 				assertTrue(bean.getFullDocUrl().indexOf("start=" + index++) > -1);
 			}
 			for (FacetQueryLinks facet : briefBeanView.getFacetQueryLinks()) {
@@ -255,7 +237,7 @@ public class SearchControllerTest {
 		Query query = new Query("haag");
 		Class<? extends BriefBean> clazz = BriefBean.class;
 		Map<String, String[]> params = new HashMap<String, String[]>();
-		params.put("query", new String[]{"*:*"});
+		params.put("query", new String[] { "*:*" });
 		// BriefBeanView briefBeanView;
 
 		try {
@@ -287,7 +269,7 @@ public class SearchControllerTest {
 	}
 
 	private List<String> randomWords(int count) {
-		
+
 		List<String> queries = null;
 		try {
 			queries = FileUtils.readLines(new File("/home/peterkiraly/words.txt"));
@@ -300,7 +282,7 @@ public class SearchControllerTest {
 		String query;
 		long size = 0;
 		while (random.size() < count) {
-			int startRecord = (int) (Math.random()* queries.size());
+			int startRecord = (int) (Math.random() * queries.size());
 			query = queries.get(startRecord).trim().replaceAll("[\"'()]", "").replace("/", "\\/");
 			if (query.length() >= 3 && !random.contains(query)) {
 				size += query.length();

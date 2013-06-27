@@ -7,6 +7,7 @@
     ">
 
 	<!-- CORELIB -->
+	<import resource="corelib-logging-context.xml" />
 	<import resource="corelib-db-context.xml" />
 	<import resource="corelib-solr-context.xml" />
 	<import resource="corelib-definitions-context.xml" />

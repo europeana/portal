@@ -7,7 +7,6 @@ import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -28,9 +27,8 @@ import eu.europeana.portal2.web.util.QueryUtil;
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  */
 
+@SuppressWarnings("serial")
 public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
-
-	private static final Logger log = Logger.getLogger(DocIdWindowPagerImpl.class.getCanonicalName());
 
 	private DocIdWindow docIdWindow;
 	private boolean hasNext;
@@ -47,7 +45,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	private String nextFullDocUrl;
 	private String previousFullDocUrl;
 	private String pageId;
-	//private String siwa;
+	// private String siwa;
 	private List<BreadCrumb> breadcrumbs;
 	private int fullDocUriInt;
 
@@ -62,34 +60,29 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		this.portalName = portalName;
 	}
 
-	@SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject"})
-	public static DocIdWindowPager fetchPager(
-			String id,
-			Map<String, String[]> httpParameters,
-			Query query, 
-			SearchService searchService,
-			Class<? extends BriefBean> clazz)
-					throws SolrTypeException {
+	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
+	public static DocIdWindowPager fetchPager(String id, Map<String, String[]> httpParameters, Query query,
+			SearchService searchService, Class<? extends BriefBean> clazz) throws SolrTypeException {
 
 		DocIdWindowPagerImpl pager = new DocIdWindowPagerImpl();
 		pager.query = query.getQuery();
 		int fullDocUriInt = getFullDocInt(httpParameters, query, pager);
 
 		// negative parameters should return null so no pager is rendered
-		if (fullDocUriInt < 1 
-				|| Integer.parseInt(fetchParameter(httpParameters, "startPage", "1")) < 1
+		if (fullDocUriInt < 1 || Integer.parseInt(fetchParameter(httpParameters, "startPage", "1")) < 1
 				|| StringUtils.isBlank(query.getQuery())) {
-			
+
 			return null;
 		}
 		int solrStartRow = getSolrStart(pager, fullDocUriInt);
 		// query.setAllowSpellcheck(false);
 		// query.setAllowFacets(false);
-		ResultSet<? extends BriefBean> queryResponse = getQueryResponse(query, searchService, pager, solrStartRow, clazz);
+		ResultSet<? extends BriefBean> queryResponse = getQueryResponse(query, searchService, pager, solrStartRow,
+				clazz);
 
 		// if no results are found return null to signify that docIdPage can be created.
 		if (queryResponse.getResults() == null) {
-			return null; 
+			return null;
 		}
 
 		List<? extends IdBean> list = queryResponse.getResults(); // <? extends IdBean>
@@ -106,18 +99,17 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		return pager;
 	}
 
-	@SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject"})
-	static int getFullDocInt(Map<String, String[]> httpParameters,
-			Query query, DocIdWindowPagerImpl pager) {
+	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
+	static int getFullDocInt(Map<String, String[]> httpParameters, Query query, DocIdWindowPagerImpl pager) {
 
 		pager.fullDocUri = fetchParameter(httpParameters, "start", "1");
 		if (pager.fullDocUri.isEmpty()) {
 			// TODO: a better exception
-			throw new IllegalArgumentException("Expected 'uri' parameter"); 
+			throw new IllegalArgumentException("Expected 'uri' parameter");
 		}
 		pager.startPage = fetchParameter(httpParameters, "startPage", "1");
 		pager.pageId = fetchParameter(httpParameters, "pageId", "");
-		//pager.siwa = fetchParameter(httpParameters, "siwa", "");
+		// pager.siwa = fetchParameter(httpParameters, "siwa", "");
 		if (pager.pageId != null) {
 			pager.setReturnToResults(httpParameters);
 		}
@@ -130,8 +122,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	}
 
 	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
-	private static int getSolrStart(DocIdWindowPagerImpl pager,
-			int fullDocUriInt) {
+	private static int getSolrStart(DocIdWindowPagerImpl pager, int fullDocUriInt) {
 		int solrStartRow = fullDocUriInt;
 		pager.hasPrevious = fullDocUriInt > 1;
 		if (fullDocUriInt > 1) {
@@ -143,9 +134,8 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	}
 
 	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
-	private static void setNextAndPrevious(DocIdWindowPagerImpl pager,
-			int fullDocUriInt, List<? extends IdBean> list, int offset,
-			int numFound) {
+	private static void setNextAndPrevious(DocIdWindowPagerImpl pager, int fullDocUriInt, List<? extends IdBean> list,
+			int offset, int numFound) {
 
 		if (offset + 2 < numFound) {
 			pager.hasNext = true;
@@ -174,8 +164,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	}
 
 	/**
-	 * This method queries the SolrSearch engine to get a QueryResponse with 3
-	 * DocIds
+	 * This method queries the SolrSearch engine to get a QueryResponse with 3 DocIds
 	 * <p/>
 	 * This method does not have to be Unit Tested
 	 * 
@@ -185,12 +174,12 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	 * @param solrStartRow
 	 * 
 	 * @return
-	 * @throws SolrTypeException 
+	 * @throws SolrTypeException
 	 * 
 	 * @throws EuropeanaQueryException
 	 * @throws SolrServerException
 	 */
-	@SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject"})
+	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
 	private static ResultSet<? extends BriefBean> getQueryResponse(Query query, SearchService searchService,
 			DocIdWindowPagerImpl pager, int start, Class<? extends BriefBean> clazz) throws SolrTypeException {
 
@@ -199,9 +188,9 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		query.setPageSize(3);
 
 		/*
-		pager.breadcrumbs = BreadCrumb.createList(originalBriefSolrQuery);
-		return solrServer.query(originalBriefSolrQuery);
-		*/
+		 * pager.breadcrumbs = BreadCrumb.createList(originalBriefSolrQuery); return
+		 * solrServer.query(originalBriefSolrQuery);
+		 */
 		return searchService.search(clazz, query);
 	}
 
@@ -238,9 +227,9 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 			// }
 		}
 		out.append("&start=").append(startPage);
-		//if (!siwa.isEmpty()) {
-		//	out.append("&siwa=").append(siwa);
-		//}
+		// if (!siwa.isEmpty()) {
+		// out.append("&siwa=").append(siwa);
+		// }
 		out.append("&rtr=true");
 		returnToResults = out.toString();
 	}
@@ -258,9 +247,9 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		out.append("&start=").append(nextInt);
 		out.append("&startPage=").append(startPage);
 		out.append("&pageId=").append(pageId);
-		//if (!siwa.isEmpty()) {
-		//	out.append("&siwa=").append(siwa);
-		//}
+		// if (!siwa.isEmpty()) {
+		// out.append("&siwa=").append(siwa);
+		// }
 		nextFullDocUrl = out.toString();
 	}
 
@@ -299,7 +288,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
 	private static String fetchParameter(Map<String, String[]> httpParameters, String key, String defaultValue) {
 		String[] array = httpParameters.get(key);
-		
+
 		if (array == null || array.length == 0) {
 			return defaultValue;
 		} else {
@@ -419,8 +408,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		map.put("returnToResults", returnToResults);
 		StringBuilder out = new StringBuilder();
 		for (Map.Entry<String, String> entry : map.entrySet()) {
-			out.append(entry.getKey()).append(" => ").append(entry.getValue())
-					.append("\n");
+			out.append(entry.getKey()).append(" => ").append(entry.getValue()).append("\n");
 		}
 		return out.toString();
 	}

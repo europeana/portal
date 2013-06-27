@@ -5,7 +5,6 @@ import java.io.StringWriter;
 import java.net.URLDecoder;
 import java.sql.BatchUpdateException;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.mail.search.SearchTerm;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,31 +22,33 @@ import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AjaxPage;
 import eu.europeana.portal2.web.presentation.model.data.FieldSize;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class AjaxController {
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Log
+	private Logger log;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
 	@RequestMapping("/remove.ajax")
-	public ModelAndView handleAjaxRemoveRequest(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale) 
-					throws Exception {
+	public ModelAndView handleAjaxRemoveRequest(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		AjaxPage model = new AjaxPage();
 		try {
@@ -63,11 +65,8 @@ public class AjaxController {
 	}
 
 	@RequestMapping("/save.ajax")
-	public ModelAndView handleAjaxSaveRequest(
-			HttpServletRequest request,
-			HttpServletResponse response, 
-			Locale locale) 
-					throws Exception {
+	public ModelAndView handleAjaxSaveRequest(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		log.info("================ save.json ================");
 		AjaxPage model = new AjaxPage();
@@ -94,37 +93,34 @@ public class AjaxController {
 
 		String uri = null;
 		switch (findModifiable(className)) {
-			case SAVED_ITEM:
-				uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
-				user = userService.createSavedItem(user.getId(), uri);
-				log.info("SavedItems: " + StringUtils.join(user.getSavedItems(), ", "));
-				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_ITEM);
-				break;
-			// className=SavedSearch&query=query%3Dparish&queryString=parish
-			case SAVED_SEARCH:
-				String query = getStringParameter("query", FieldSize.QUERY, request);
-				String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request), "utf-8");
-				user = userService.createSavedSearch(user.getId(), query, queryString);
+		case SAVED_ITEM:
+			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+			user = userService.createSavedItem(user.getId(), uri);
+			log.info("SavedItems: " + StringUtils.join(user.getSavedItems(), ", "));
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_ITEM);
+			break;
+		// className=SavedSearch&query=query%3Dparish&queryString=parish
+		case SAVED_SEARCH:
+			String query = getStringParameter("query", FieldSize.QUERY, request);
+			String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request),
+					"utf-8");
+			user = userService.createSavedSearch(user.getId(), query, queryString);
 
-				log.info("SavedSearches: " + StringUtils.join(user.getSavedSearches(), ", "));
-				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_SEARCH);
-				break;
-			/*
-			case SEARCH_TERM:
-				SearchTerm searchTerm = staticInfoDao.addSearchTerm(Long.valueOf(idString));
-				if (searchTerm == null) {
-					model.setSuccess(false);
-				}
-				break;
-			*/
-			case SOCIAL_TAG:
-				uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
-				String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
-				user = userService.createSocialTag(user.getId(), uri, tag);
-				clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
-				break;
-			default:
-				throw new IllegalArgumentException("Unhandled ajax action: " + className);
+			log.info("SavedSearches: " + StringUtils.join(user.getSavedSearches(), ", "));
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_SEARCH);
+			break;
+		/*
+		 * case SEARCH_TERM: SearchTerm searchTerm = staticInfoDao.addSearchTerm(Long.valueOf(idString)); if (searchTerm
+		 * == null) { model.setSuccess(false); } break;
+		 */
+		case SOCIAL_TAG:
+			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+			String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
+			user = userService.createSocialTag(user.getId(), uri, tag);
+			clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
+			break;
+		default:
+			throw new IllegalArgumentException("Unhandled ajax action: " + className);
 		}
 
 		model.setUser(user);
@@ -141,26 +137,24 @@ public class AjaxController {
 		Long id = Long.valueOf(idString);
 
 		switch (findModifiable(className)) {
-			case SAVED_ITEM:
-				userService.removeSavedItem(user.getId(), id);
-				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_ITEM);
-				break;
-			case SAVED_SEARCH:
-				userService.removeSavedSearch(user.getId(), id);
-				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_SEARCH);
-				break;
-			/*
-			case SEARCH_TERM:
-				user = staticInfoDao.removeSearchTerm(id);
-				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SEARCH_TERM);
-				break;
-			*/
-			case SOCIAL_TAG:
-				userService.removeSocialTag(user.getId(), id);
-				clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SOCIAL_TAG);
-				break;
-			default:
-				throw new IllegalArgumentException("Unhandled removable");
+		case SAVED_ITEM:
+			userService.removeSavedItem(user.getId(), id);
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_ITEM);
+			break;
+		case SAVED_SEARCH:
+			userService.removeSavedSearch(user.getId(), id);
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_SEARCH);
+			break;
+		/*
+		 * case SEARCH_TERM: user = staticInfoDao.removeSearchTerm(id); clickStreamLogger.logUserAction(request,
+		 * ClickStreamLogger.UserAction.REMOVE_SEARCH_TERM); break;
+		 */
+		case SOCIAL_TAG:
+			userService.removeSocialTag(user.getId(), id);
+			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SOCIAL_TAG);
+			break;
+		default:
+			throw new IllegalArgumentException("Unhandled removable");
 		}
 		model.setUser(user);
 		model.setSuccess(true);
@@ -176,10 +170,8 @@ public class AjaxController {
 	}
 
 	private enum Modifiable {
-		SAVED_ITEM(SavedItem.class), 
-		SAVED_SEARCH(SavedSearch.class), 
-		SEARCH_TERM(SearchTerm.class), 
-		SOCIAL_TAG(SocialTag.class);
+		SAVED_ITEM(SavedItem.class), SAVED_SEARCH(SavedSearch.class), SEARCH_TERM(SearchTerm.class), SOCIAL_TAG(
+				SocialTag.class);
 
 		private String className;
 
@@ -199,7 +191,7 @@ public class AjaxController {
 			// TODO: rething this. Using "<" is a little bit cryptic
 			if (request.getParameter(String.valueOf(o)).contains("<")) {
 				hasJavascript = true;
-				log.warning("The request contains javascript so do not process this request");
+				log.warn("The request contains javascript so do not process this request");
 				break;
 			}
 		}
@@ -208,7 +200,7 @@ public class AjaxController {
 
 	/**
 	 * Returns a HTTP parameter up to a given length
-	 *
+	 * 
 	 * @param parameterName
 	 * @param maximumLength
 	 * @param request
@@ -226,18 +218,18 @@ public class AjaxController {
 		return stringValue;
 	}
 
-	private void handleAjaxException(AjaxPage model, Exception e,
-			HttpServletResponse response, HttpServletRequest request) {
+	private void handleAjaxException(AjaxPage model, Exception e, HttpServletResponse response,
+			HttpServletRequest request) {
 		model.setSuccess(false);
 		model.setException(getStackTrace(e));
 		response.setStatus(400);
 		// clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.AJAX_ERROR);
-		log.severe("Problem handling AJAX request: " + e);
+		log.error("Problem handling AJAX request: " + e);
 		StringBuilder sb = new StringBuilder();
 		for (StackTraceElement el : e.getStackTrace()) {
 			sb.append(el.toString() + "\n");
 		}
-		log.severe(sb.toString());
+		log.error(sb.toString());
 	}
 
 	private String getStackTrace(Exception exception) {
@@ -247,7 +239,7 @@ public class AjaxController {
 			if (e instanceof BatchUpdateException) {
 				BatchUpdateException bue = (BatchUpdateException) e;
 				Exception next = bue.getNextException();
-				log.warning("Next exception in batch: " + next);
+				log.warn("Next exception in batch: " + next);
 				next.printStackTrace(printWriter);
 			}
 		}

@@ -18,19 +18,21 @@
 package eu.europeana.portal2.web.controllers.utils;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
+import org.slf4j.Logger;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.portal2.web.model.json.Json2FullBean;
 
 public class ApiFulldocParser extends ApiWrapper {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Log
+	private Logger log;
 
 	public ApiFulldocParser(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		super(apiUrl, api2key, api2secret, session);
@@ -54,13 +56,13 @@ public class ApiFulldocParser extends ApiWrapper {
 			Json2FullBean parser = new Json2FullBean(json);
 			fullBean = parser.extractFullBean();
 		} catch (JsonParseException e) {
-			log.severe(e.getMessage());
+			log.error(e.getMessage());
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			log.severe(e.getMessage());
+			log.error(e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
-			log.severe(e.getMessage());
+			log.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return fullBean;

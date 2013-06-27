@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -25,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField.Count;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +37,7 @@ import eu.europeana.corelib.db.service.ThumbnailService;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
@@ -50,26 +50,32 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDeco
 import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.SitemapEntry;
 import eu.europeana.portal2.web.util.Beans;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.IngestionUtils;
 import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.StaticCache;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
+import eu.europeana.portal2.web.util.abstracts.StaticCache;
 
 @Controller
 public class SitemapController {
 
-	@Resource(name = "configurationService") private Configuration config;
+	@Log
+	private Logger log;
 
-	@Resource private StaticCache staticPageCache;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private SearchService searchService;
+	@Resource
+	private StaticCache staticPageCache;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource
+	private SearchService searchService;
 
-	@Resource private ThumbnailService thumbnailService;
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
-	private static Logger log = Logger.getLogger(SitemapController.class.getCanonicalName());
+	@Resource
+	private ThumbnailService thumbnailService;
 
 	private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
 
@@ -123,9 +129,7 @@ public class SitemapController {
 	public void handleSitemapIndexHashed(
 			@RequestParam(value = "images", required = false, defaultValue = "false") String images,
 			@RequestParam(value = "places", required = false, defaultValue = "false") String places,
-			HttpServletRequest request, 
-			HttpServletResponse response)
-			throws IOException {
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		setSitemapCacheDir();
 		if (sitemapCacheDir == null) {
 			response.setStatus(404);
@@ -157,10 +161,11 @@ public class SitemapController {
 				fout.write(sitemap.getSitemap().toString());
 				fout.flush();
 				success = true;
-			} catch (Exception e) { 
+			} catch (Exception e) {
 				success = false;
-				log.severe("Exception during generation of europeana-sitemap-index-hashed.xml: " + e.getLocalizedMessage());
-				log.severe(ExceptionUtils.getFullStackTrace(e));
+				log.error(
+						"Exception during generation of europeana-sitemap-index-hashed.xml: " + e.getLocalizedMessage(),
+						e);
 			} finally {
 				fout.close();
 			}
@@ -173,9 +178,7 @@ public class SitemapController {
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
-						log.severe(e.getLocalizedMessage());
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.error(e.getLocalizedMessage(), e);
 					}
 				} while (inProcess.containsKey(params));
 			}
@@ -184,20 +187,17 @@ public class SitemapController {
 		}
 	}
 
-	String makeSitemapLocationUrl(String baseUrl, String provider, String images, int pageCounter) 
+	String makeSitemapLocationUrl(String baseUrl, String provider, String images, int pageCounter)
 			throws UnsupportedEncodingException {
-		return StringEscapeUtils.escapeXml(String.format(
-			"%seuropeana-sitemap.xml?provider=%s&page=%d&images=%s",
-			baseUrl, convertProviderToUrlParameter(provider), pageCounter, images));
+		return StringEscapeUtils.escapeXml(String.format("%seuropeana-sitemap.xml?provider=%s&page=%d&images=%s",
+				baseUrl, convertProviderToUrlParameter(provider), pageCounter, images));
 	}
 
 	@RequestMapping("/europeana-sitemap-hashed.xml")
-	public void handleSitemap(
-			@RequestParam(value = "prefix", required = true) String prefix,
+	public void handleSitemap(@RequestParam(value = "prefix", required = true) String prefix,
 			@RequestParam(value = "images", required = false, defaultValue = "false") String images,
 			@RequestParam(value = "places", required = false, defaultValue = "false") String places,
-			HttpServletRequest request, HttpServletResponse response)
-					throws EuropeanaQueryException, IOException {
+			HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 		if (sitemapCacheDir == null || prefix.length() > 3 || !prefix.matches("^[0-9A-F]{3}$")) {
 			response.setStatus(404);
@@ -208,7 +208,7 @@ public class SitemapController {
 		String params = String.format(SITEMAP_HASHED_PARAMS, prefix, isImageSitemap, isPlaceSitemap);
 		File subDir = new File(sitemapCacheDir.getAbsolutePath(), prefix.substring(0, 1));
 		if (!subDir.exists()) {
-			boolean created = subDir.mkdirs();
+			subDir.mkdirs();
 		}
 		File cacheFile = new File(subDir, SITEMAP_HASHED + params + XML);
 
@@ -223,8 +223,7 @@ public class SitemapController {
 			response.setCharacterEncoding("UTF-8");
 			long t = new Date().getTime();
 			StringBuilder fullXML = createSitemapHashedContent(prefix, model, images, places);
-			log.info(String.format("Generated XML size: %s took: %s", 
-					fullXML.length(), (new Date().getTime() - t)));
+			log.info(String.format("Generated XML size: %s took: %s", fullXML.length(), (new Date().getTime() - t)));
 			BufferedWriter fout = null;
 			try {
 				ServletOutputStream out = response.getOutputStream();
@@ -233,8 +232,9 @@ public class SitemapController {
 				success = 1;
 			} catch (Exception e) {
 				success = 0;
-				log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(), cacheFile));
-				log.severe(ExceptionUtils.getFullStackTrace(e));
+				log.error(
+						String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
+								e.getLocalizedMessage(), cacheFile), e);
 			}
 
 			try {
@@ -247,8 +247,9 @@ public class SitemapController {
 				}
 			} catch (Exception e) {
 				success = 0;
-				log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(), cacheFile));
-				log.severe(ExceptionUtils.getFullStackTrace(e));
+				log.error(
+						String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
+								e.getLocalizedMessage(), cacheFile), e);
 			} finally {
 				if (fout != null) {
 					fout.close();
@@ -266,10 +267,9 @@ public class SitemapController {
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
-						log.severe(String.format("Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s", e.getLocalizedMessage(), cacheFile));
-						log.severe(e.getLocalizedMessage());
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.error(String.format(
+								"Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
+								e.getLocalizedMessage(), cacheFile), e);
 					}
 				} while (inProcess.containsKey(params) || !cacheFile.exists());
 			}
@@ -278,8 +278,10 @@ public class SitemapController {
 		}
 	}
 
-	private StringBuilder createSitemapHashedContent(String prefix, SearchPage model, String isImageSitemap, String isPlaceSitemap) {
-		PerReqSitemap sitemap = new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isImageSitemap, isPlaceSitemap, prefix);
+	private StringBuilder createSitemapHashedContent(String prefix, SearchPage model, String isImageSitemap,
+			String isPlaceSitemap) {
+		PerReqSitemap sitemap = new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isImageSitemap, isPlaceSitemap,
+				prefix);
 		Thread t = new Thread(sitemap);
 		t.start();
 		while (StringUtils.equals(sitemap.getState(), PerReqSitemap.IDLE)
@@ -287,8 +289,7 @@ public class SitemapController {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				log.severe("Interrupted Exception during waiting for sitemap creation. " + e.getLocalizedMessage());
-				e.printStackTrace();
+				log.error("Interrupted Exception during waiting for sitemap creation. " + e.getLocalizedMessage(), e);
 			}
 		}
 
@@ -297,17 +298,16 @@ public class SitemapController {
 
 	// draft, not completed yet
 	@RequestMapping("/europeana-video-sitemap.xml")
-	public void handleSitemap(
-			@RequestParam(value = "volume", required = true) String volumeString,
-			HttpServletRequest request, HttpServletResponse response)
-			throws EuropeanaQueryException, IOException {
+	public void handleSitemap(@RequestParam(value = "volume", required = true) String volumeString,
+			HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 		if (sitemapCacheDir == null) {
 			response.setStatus(404);
 			return;
 		}
 
-		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-") : "";
+		String params = request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-")
+				: "";
 		File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_VIDEO + params + XML);
 		if (solrOutdated() || !cacheFile.exists()) {
 
@@ -332,10 +332,9 @@ public class SitemapController {
 				fout.write(xml + "\n");
 
 				String queryString = "TYPE:VIDEO";
-				Query query = new Query(queryString)
-								.setParameter("rows", String.valueOf(VIDEO_SITEMAP_VOLUME_SIZE))
-								.setStart(volume * VIDEO_SITEMAP_VOLUME_SIZE)
-								.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
+				Query query = new Query(queryString).setParameter("rows", String.valueOf(VIDEO_SITEMAP_VOLUME_SIZE))
+						.setStart(volume * VIDEO_SITEMAP_VOLUME_SIZE)
+						.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
 
 				List<? extends BriefBean> resultSet = null;
 				try {
@@ -347,12 +346,9 @@ public class SitemapController {
 				if (resultSet != null) {
 					for (BriefBean bean : resultSet) {
 						BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
-						SitemapEntry entry = new SitemapEntry(
-							getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false),
-							doc.getThumbnail(), 
-							doc.getTitle()[0],
-							doc.getEuropeanaCompleteness()
-						);
+						SitemapEntry entry = new SitemapEntry(getPortalUrl()
+								+ convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false),
+								doc.getThumbnail(), doc.getTitle()[0], doc.getEuropeanaCompleteness());
 						out.println(URL_S);
 						out.println(LOC_S + entry.getLoc() + LOC_E);
 
@@ -363,25 +359,31 @@ public class SitemapController {
 							out.println("<video:video>");
 							out.println("<video:thumbnail_loc>" + image + "</video:thumbnail_loc>");
 							/*
-							out.println("<video:thumbnail_loc>" + config.getImageCacheUrl() 
-									+ "uri=" + URLEncoder.encode(entry.getImage(), "UTF-8")
-									+ "&amp;size=FULL_DOC</video:thumbnail_loc>");
-									*/
-							out.println("<video:title>" + StringEscapeUtils.escapeXml(entry.getTitle()) + "</video:title>");
-							out.println("<video:description>" + StringEscapeUtils.escapeXml(entry.getTitle()) + "</video:description>");
-							out.println("<video:player_loc>" + URLEncoder.encode(entry.getImage(), "UTF-8") + "</video:player_loc>");
+							 * out.println("<video:thumbnail_loc>" + config.getImageCacheUrl() + "uri=" +
+							 * URLEncoder.encode(entry.getImage(), "UTF-8") +
+							 * "&amp;size=FULL_DOC</video:thumbnail_loc>");
+							 */
+							out.println("<video:title>" + StringEscapeUtils.escapeXml(entry.getTitle())
+									+ "</video:title>");
+							out.println("<video:description>" + StringEscapeUtils.escapeXml(entry.getTitle())
+									+ "</video:description>");
+							out.println("<video:player_loc>" + URLEncoder.encode(entry.getImage(), "UTF-8")
+									+ "</video:player_loc>");
 							out.println("</video:video>");
 
 							fout.write("<video:video>\n");
 							fout.write("<video:thumbnail_loc>" + image + "</video:thumbnail_loc>\n");
 							/*
-							fout.write("<video:thumbnail_loc>" + config.getImageCacheUrl() 
-									+ "uri=" + URLEncoder.encode(entry.getImage(), "UTF-8")
-									+ "&amp;size=FULL_DOC</video:thumbnail_loc>\n");
-									*/
-							fout.write("<video:title>" + StringEscapeUtils.escapeXml(entry.getTitle()) + "</video:title>\n");
-							fout.write("<video:description>" + StringEscapeUtils.escapeXml(entry.getTitle()) + "</video:description>\n");
-							fout.write("<video:player_loc>" + URLEncoder.encode(entry.getImage(), "UTF-8") + "</video:player_loc>\n");
+							 * fout.write("<video:thumbnail_loc>" + config.getImageCacheUrl() + "uri=" +
+							 * URLEncoder.encode(entry.getImage(), "UTF-8") +
+							 * "&amp;size=FULL_DOC</video:thumbnail_loc>\n");
+							 */
+							fout.write("<video:title>" + StringEscapeUtils.escapeXml(entry.getTitle())
+									+ "</video:title>\n");
+							fout.write("<video:description>" + StringEscapeUtils.escapeXml(entry.getTitle())
+									+ "</video:description>\n");
+							fout.write("<video:player_loc>" + URLEncoder.encode(entry.getImage(), "UTF-8")
+									+ "</video:player_loc>\n");
 							fout.write("</video:video>\n");
 						}
 
@@ -442,11 +444,8 @@ public class SitemapController {
 	}
 
 	@RequestMapping("/europeana-providers.html")
-	public ModelAndView handleListOfContributors(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws EuropeanaQueryException {
+	public ModelAndView handleListOfContributors(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws EuropeanaQueryException {
 		setSitemapCacheDir();
 
 		Injector injector = new Injector(request, response, locale);
@@ -462,25 +461,26 @@ public class SitemapController {
 				for (Count provider : providers) {
 					try {
 						String query = StringEscapeUtils.escapeXml(String.format(
-							"%s/search.html?query=*:*&qf=PROVIDER:%s",
-							portalServer, convertProviderToUrlParameter(provider.getName())));
-						ContributorItem contributorItem = new ContributorItem(query,
-							provider.getName(), provider.getCount(), portalServer);
+								"%s/search.html?query=*:*&qf=PROVIDER:%s", portalServer,
+								convertProviderToUrlParameter(provider.getName())));
+						ContributorItem contributorItem = new ContributorItem(query, provider.getName(),
+								provider.getCount(), portalServer);
 
 						List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 
-						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService, "DATA_PROVIDER",
-							"*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
+						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService,
+								"DATA_PROVIDER", "*:*", new String[] { "PROVIDER:\"" + provider.getName() + "\"" });
 						for (Count dataProvider : rawDataProviders) {
 							if (dataProvider.getCount() > 0) {
-								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider.getName(), dataProvider.getCount()));
+								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider
+										.getName(), dataProvider.getCount()));
 							}
 						}
 
 						contributorItem.setDataProviders(dataProviders);
 						contributorEntries.add(contributorItem);
 					} catch (UnsupportedEncodingException e) {
-						log.warning(e.getMessage() + " on " + provider.getName());
+						log.warn(e.getMessage() + " on " + provider.getName());
 					}
 				}
 			} catch (SolrTypeException e1) {
@@ -491,7 +491,8 @@ public class SitemapController {
 		SitemapPage<ContributorItem> model = new SitemapPage<ContributorItem>();
 		model.setResults(contributorEntries);
 		model.setPrefix("");
-		model.setLeftContent(getStaticPagePart("/newcontent.html", StaticPageController.AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
+		model.setLeftContent(getStaticPagePart("/newcontent.html", StaticPageController.AFFIX_TEMPLATE_VAR_FOR_LEFT,
+				locale));
 		injector.injectProperties(model);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.PROVIDERS);
@@ -517,8 +518,7 @@ public class SitemapController {
 		return page;
 	}
 
-	public static String convertProviderToUrlParameter(String provider)
-			throws UnsupportedEncodingException {
+	public static String convertProviderToUrlParameter(String provider) throws UnsupportedEncodingException {
 		String url = URLEncoder.encode(provider.replace("\"", "\\\"").replace("/", "\\/"), "UTF-8");
 		return url;
 	}
@@ -576,6 +576,7 @@ public class SitemapController {
 
 	/**
 	 * Read a cached file, and copy its content to the output stream
+	 * 
 	 * @param out
 	 * @param cacheFile
 	 */
@@ -591,7 +592,8 @@ public class SitemapController {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (br != null)br.close();
+				if (br != null)
+					br.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
@@ -605,17 +607,16 @@ public class SitemapController {
 
 	/**
 	 * Try to find out whether the solr index has been modified. If yes, it empties the cache
-	 * @return
-	 *   Boolean flag whether or not Solr modified
+	 * 
+	 * @return Boolean flag whether or not Solr modified
 	 */
 	synchronized private boolean solrOutdated() {
 		// check it once a day
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addDays(new Date(), -1));
 		if (lastCheck == null || lastCheck.before(timeout)) {
-			log.info(String.format("%s requesting solr outdated (timeout: %s, lastCheck: %s)",
-					Thread.currentThread().getName(),
-					timeout.getTime().toString(),
-					(lastCheck == null ? "null" : lastCheck.getTime().toString())));
+			log.info(String.format("%s requesting solr outdated (timeout: %s, lastCheck: %s)", Thread.currentThread()
+					.getName(), timeout.getTime().toString(), (lastCheck == null ? "null" : lastCheck.getTime()
+					.toString())));
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
@@ -623,9 +624,9 @@ public class SitemapController {
 				actualSolrUpdate = searchService.getLastSolrUpdate();
 				log.info("Solr update time checked");
 			} catch (SolrServerException e) {
-				log.severe("SolrServerException " + e.getLocalizedMessage());
+				log.error("SolrServerException " + e.getLocalizedMessage());
 			} catch (IOException e) {
-				log.severe("IOException " + e.getLocalizedMessage());
+				log.error("IOException " + e.getLocalizedMessage());
 			}
 
 			if (actualSolrUpdate == null) {
@@ -657,7 +658,7 @@ public class SitemapController {
 	}
 
 	private class PerReqSitemap implements Runnable {
-		
+
 		String[] args;
 		String action;
 		String state = IDLE;
@@ -695,7 +696,8 @@ public class SitemapController {
 					sb.append(getPortalUrl()).append(urlPath).append(prefix);
 					sb.append(paramImages).append(StringUtils.contains(args[0], "true"));
 					sb.append(paramPlaces).append(StringUtils.contains(args[1], "true"));
-					s.append("<sitemap>").append(LOC_S).append(StringEscapeUtils.escapeXml(sb.toString())).append(LOC_E).append("</sitemap>").append(LN);
+					s.append("<sitemap>").append(LOC_S).append(StringEscapeUtils.escapeXml(sb.toString()))
+							.append(LOC_E).append("</sitemap>").append(LN);
 				}
 			}
 			s.append("</sitemapindex>");
@@ -712,11 +714,9 @@ public class SitemapController {
 			fullXML.append(URLSET_HEADER).append(LN);
 			boolean isPlaceSitemap = StringUtils.contains(args[1], "true");
 			boolean isImageSitemap = StringUtils.contains(args[0], "true");
-			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(
-					config.getMinCompletenessToPromoteInSitemaps());
-			Query query = new Query("*:*")
-					.addRefinement(queryString)
-					.addRefinement("id3hash:" + args[2])
+			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config
+					.getMinCompletenessToPromoteInSitemaps());
+			Query query = new Query("*:*").addRefinement(queryString).addRefinement("id3hash:" + args[2])
 					.setPageSize(20000)
 					.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
 
@@ -727,12 +727,16 @@ public class SitemapController {
 				}
 			}
 
-			log.info("queryString: " + query.toString());
+			if (log.isDebugEnabled()) {
+				log.info("queryString: " + query.toString());
+			}
 			List<BriefBean> resultSet = null;
 			try {
 				long t = new Date().getTime();
 				resultSet = searchService.sitemap(BriefBean.class, query).getResults();
-				log.info("Query took: " + (new Date().getTime() - t));
+				if (log.isDebugEnabled()) {
+					log.debug("Query took: " + (new Date().getTime() - t));
+				}
 			} catch (SolrTypeException e) {
 				e.printStackTrace();
 			}
@@ -744,9 +748,9 @@ public class SitemapController {
 					if (doc.getTitle() != null) {
 						title = doc.getTitle()[0];
 					}
-					SitemapEntry entry = new SitemapEntry(
-						getPortalUrl() + convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), 
-						doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
+					SitemapEntry entry = new SitemapEntry(getPortalUrl()
+							+ convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), doc.getThumbnail(),
+							title, doc.getEuropeanaCompleteness());
 					fullXML.append(URL_S).append(LN);
 
 					String url = entry.getLoc();
@@ -761,14 +765,13 @@ public class SitemapController {
 						try {
 							image = URLEncoder.encode(entry.getImage(), "UTF-8");
 						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						}
 						fullXML.append("<image:image>").append(LN);
 						fullXML.append("<image:loc>")
-							.append(config.getImageCacheUrl() + "uri=" + image + "&amp;size=FULL_DOC")
-							.append("</image:loc>").append(LN);
-						fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle())).append("</image:title>").append(LN);
+								.append(config.getImageCacheUrl() + "uri=" + image + "&amp;size=FULL_DOC")
+								.append("</image:loc>").append(LN);
+						fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle()))
+								.append("</image:title>").append(LN);
 						fullXML.append("</image:image>").append(LN);
 					}
 
@@ -783,7 +786,7 @@ public class SitemapController {
 
 			fullXML.append("</urlset>").append(LN);
 
-			this.sitemap  = fullXML;
+			this.sitemap = fullXML;
 			state = ENDED;
 		}
 
@@ -795,6 +798,7 @@ public class SitemapController {
 			return this.state;
 		}
 
+		@Override
 		public void run() {
 			if (StringUtils.equals(action, INDEXED_HASHED)) {
 				createSitemapIndexedHashed();

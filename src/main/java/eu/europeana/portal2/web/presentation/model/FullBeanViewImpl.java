@@ -26,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -43,11 +45,9 @@ import eu.europeana.corelib.solr.service.SearchService;
  * @author Serkan Demirel <serkan@blackbuilt.nl>
  */
 public class FullBeanViewImpl implements FullBeanView {
-
-	private SearchService searchService;
-
 	private static final long serialVersionUID = -4971453940874288310L;
-	private final Logger log = Logger.getLogger(getClass().getName());
+	
+	private final Logger log = LoggerFactory.getLogger(FullBeanViewImpl.class);
 
 	// Do not ever touch these fields as they are persisted as document cache
 	private FullBean fullDoc;
@@ -60,14 +60,12 @@ public class FullBeanViewImpl implements FullBeanView {
 
 	public FullBeanViewImpl(FullBean fullDoc, Map<String, String[]> httpParameters,
 			Query query, SearchService searchService) {
-		this.searchService = searchService;
 		this.fullDoc = fullDoc;
 		// this.relatedItems = fullDoc.getRelatedItems();
 		this.parents = findParents();
 		this.children = findChildren();
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
-		log.fine("fullDoc is null? " + (fullDoc == null));
 		this.docIdWindowPager = createPager(fullDoc.getAbout(), httpParameters, query, searchService, clazz);
 	}
 
@@ -107,8 +105,7 @@ public class FullBeanViewImpl implements FullBeanView {
 		try {
 			pager = DocIdWindowPagerImpl.fetchPager(id, httpParameters, query, searchService, clazz);
 		} catch (SolrTypeException e) {
-			log.severe("SolrTypeException: " + e.getLocalizedMessage());
-			e.printStackTrace();
+			log.error("SolrTypeException: " + e.getLocalizedMessage(),e);
 		}
 		return pager;
 	}

@@ -1,13 +1,13 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -28,19 +28,19 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.exception.ProblemType;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.RegisterPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
- * During registration, users click on an email link to end up here with a
- * "token" that allows them to proceed with registration. They have to choose a
- * user name, password etc.
+ * During registration, users click on an email link to end up here with a "token" that allows them to proceed with
+ * registration. They have to choose a user name, password etc.
  * 
  * @author Gerald de Jong <geralddejong@gmail.com>
  */
@@ -49,17 +49,23 @@ import eu.europeana.portal2.web.util.Injector;
 @RequestMapping("/register.html")
 public class RegisterPageController {
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Log
+	private Logger log;
 
-	@Resource(name="corelib_db_tokenService") private TokenService tokenService;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name="corelib_web_emailService") private EmailService emailService;
+	@Resource(name = "corelib_db_tokenService")
+	private TokenService tokenService;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource(name = "corelib_web_emailService")
+	private EmailService emailService;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource(name = "configurationService")
+	private Configuration config;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -67,13 +73,9 @@ public class RegisterPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView getRequest(
-			@RequestParam("token") String tokenKey,
-			@ModelAttribute("model") RegisterPage model,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws EuropeanaQueryException, DatabaseException {
+	protected ModelAndView getRequest(@RequestParam("token") String tokenKey,
+			@ModelAttribute("model") RegisterPage model, HttpServletRequest request, HttpServletResponse response,
+			Locale locale) throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /register.html GET ==================");
 		Injector injector = new Injector(request, response, locale);
 		injector.injectProperties(model);
@@ -94,13 +96,9 @@ public class RegisterPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView formSubmit(
-			@Valid @ModelAttribute("model") RegisterPage model,
-			BindingResult result, 
-			HttpServletRequest request, 
-			HttpServletResponse response, 
-			Locale locale)
-					throws EuropeanaQueryException, DatabaseException {
+	protected ModelAndView formSubmit(@Valid @ModelAttribute("model") RegisterPage model, BindingResult result,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws EuropeanaQueryException,
+			DatabaseException {
 		log.info("================= /register.html POST ==================");
 		Injector injector = new Injector(request, response, locale);
 		injector.injectProperties(model);
@@ -136,7 +134,7 @@ public class RegisterPageController {
 		try {
 			emailService.sendRegisterNotify(user);
 		} catch (Exception e) {
-			log.severe("Unable to send email to sys " + e.getLocalizedMessage());
+			log.error("Unable to send email to sys " + e.getLocalizedMessage());
 		}
 	}
 
@@ -156,16 +154,19 @@ public class RegisterPageController {
 
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "username.required", "Username is required");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required", "Password is required");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password2", "password2.required", "Repeat Password is required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password2", "password2.required",
+					"Repeat Password is required");
 
 			if (!validUserName(form.getUserName())) {
-				errors.rejectValue("userName", "username.invalidChars", "Username may only contain letters, digits, spaces and underscores.");
+				errors.rejectValue("userName", "username.invalidChars",
+						"Username may only contain letters, digits, spaces and underscores.");
 			}
 			if (form.getUserName() != null) {
 
 				if (!validUserName(form.getUserName()) && form.getUserName().length() > UserImpl.FIELDSIZE_USERNAME) {
 					// TODO standard error code?
-					errors.rejectValue("userName", "username.tooLong", String.format("Username is too long, it should be max %d characters.", UserImpl.FIELDSIZE_USERNAME)); 
+					errors.rejectValue("userName", "username.tooLong", String.format(
+							"Username is too long, it should be max %d characters.", UserImpl.FIELDSIZE_USERNAME));
 				}
 
 				if (!validUserName(form.getUserName()) && userService.findByName(form.getUserName()) != null) {
@@ -173,18 +174,19 @@ public class RegisterPageController {
 				}
 			}
 
-			if (form.getPassword() == null
-					|| !form.getPassword().equals(form.getPassword2())) {
+			if (form.getPassword() == null || !form.getPassword().equals(form.getPassword2())) {
 				errors.rejectValue("password", "password.mismatch", "Passwords do not match.");
 			}
 			if (form.getPassword() != null) {
 
 				if (form.getPassword().length() < PASS_MIN) {
-					errors.rejectValue("password", "password.length", String.format("Password is too short, it should be %d-%d character.", PASS_MIN, PASS_MAX));
+					errors.rejectValue("password", "password.length",
+							String.format("Password is too short, it should be %d-%d character.", PASS_MIN, PASS_MAX));
 				}
 
 				if (form.getPassword().length() > PASS_MAX) {
-					errors.rejectValue("password", "password.length", String.format("Password is too long, it should be %d-%d character.", PASS_MIN, PASS_MAX));
+					errors.rejectValue("password", "password.length",
+							String.format("Password is too long, it should be %d-%d character.", PASS_MIN, PASS_MAX));
 				}
 			}
 

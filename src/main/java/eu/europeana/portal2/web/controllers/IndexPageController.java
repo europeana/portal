@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.slf4j.Logger;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Controller;
@@ -39,14 +39,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * Where people arrive.
@@ -58,7 +59,9 @@ import eu.europeana.portal2.web.util.Injector;
 @Controller
 public class IndexPageController {
 
-	// @Resource private ProposedSearchTermSampler proposedSearchTermSampler;
+	@Log
+	private Logger log;
+
 	@Resource
 	private ClickStreamLogger clickStreamLogger;
 
@@ -68,19 +71,14 @@ public class IndexPageController {
 	@Resource(name = "configurationService")
 	private Configuration config;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
 	private List<CarouselItem> carouselItems;
 	private static Calendar carouselAge;
 
 	@RequestMapping("/index.html")
 	public ModelAndView indexHandler(@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			@RequestParam(value = "embeddedlang", required = false) String embeddedLang,
-			HttpServletRequest request,
+			@RequestParam(value = "embeddedlang", required = false) String embeddedLang, HttpServletRequest request,
 			HttpServletResponse response, Locale locale) {
 		Injector injector = new Injector(request, response, locale);
-
-		log.fine("===== index ====");
 
 		IndexPage model = new IndexPage();
 		// update dynamic items
@@ -147,7 +145,7 @@ public class IndexPageController {
 							} catch (NoSuchMessageException e) {
 								keepFetchingLanguages = false;
 							} catch (ArrayIndexOutOfBoundsException e) {
-								log.severe("misconfigured language: " + key + " - expected format \"code,url\"");
+								log.error("misconfigured language: " + key + " - expected format \"code,url\"");
 								keepFetchingLanguages = false;
 							}
 							j++;

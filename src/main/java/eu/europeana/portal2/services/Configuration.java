@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
@@ -22,10 +21,6 @@ public class Configuration {
 	@Resource(name="corelib_web_configInterceptor") private ConfigInterceptor configInterceptor;
 
 	@Resource private Properties europeanaProperties;
-
-	private final Logger log = Logger.getLogger(getClass().getName());
-
-	///////////////////////////////// properties
 
 	// basic portal value
 	@Value("#{europeanaProperties['portal.name']}")
@@ -328,7 +323,6 @@ public class Configuration {
 	}
 
 	public Integer[] getResponsiveImageWidths(){
-		log.info("getResponsiveImageWidths()");
 		if (responsiveImageWidths == null) {
 			String[] imageWidths = responsiveImageWidthString.split(",");
 			responsiveImageWidths = new Integer[imageWidths.length];
@@ -336,10 +330,7 @@ public class Configuration {
 			for (int i=0, len=imageWidths.length; i<len; i++) {
 				responsiveImageWidths[i] = Integer.parseInt(imageWidths[i]);
 			}
-			log.info("responsiveImageWidths: " + responsiveImageWidths);
 		}
-		log.info("responsiveImageWidths: " + responsiveImageWidths);
-
 		return responsiveImageWidths;
 	}
 

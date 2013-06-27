@@ -23,7 +23,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,8 +55,6 @@ public class RSSFeedParser {
 	private final URL url;
 
 	String staticPagePath = "";
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	public void setStaticPagePath(String staticPagePath) {
 		this.staticPagePath = staticPagePath;

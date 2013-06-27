@@ -22,15 +22,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BreadcrumbDecorator;
 
 public class BreadcrumbListDecorator implements List<BreadCrumb> {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private SearchData model;
 	private List<BreadCrumb> list;

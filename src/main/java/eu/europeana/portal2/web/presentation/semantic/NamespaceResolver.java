@@ -2,9 +2,11 @@ package eu.europeana.portal2.web.presentation.semantic;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -13,8 +15,8 @@ import java.util.regex.Pattern;
  * @author peter.kiraly@kb.nl
  */
 public class NamespaceResolver {
-
-	private static final Logger log = Logger.getLogger(NamespaceResolver.class.getName());
+	
+	private final static Logger log = LoggerFactory.getLogger(NamespaceResolver.class);
 
 	private static final Pattern NAME_PATTERN = Pattern.compile("^@?([^:]+):([^:]+)$");
 
@@ -49,7 +51,7 @@ public class NamespaceResolver {
 			if (namespaces.containsKey(prefix)) {
 				return new Element(namespaces.get(prefix), elementName);
 			} else {
-				log.severe(String.format("Unregistered namespace prefix: %s", prefix));
+				log.warn(String.format("Unregistered namespace prefix: %s", prefix));
 			}
 		}
 		else {

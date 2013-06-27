@@ -1,15 +1,11 @@
 package eu.europeana.portal2.web.presentation.model;
 
-import java.util.logging.Logger;
-
 /**
  * Object for displaying active filters
  * 
  * @author peter.kiraly@kb.nl
  */
 public class SearchFilter {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private SearchLabel label;
 
@@ -56,7 +52,8 @@ public class SearchFilter {
 
 	@Override
 	public String toString() {
-		return "SearchFilter [label=" + label + ", removeLinkUrl=" + removeLinkUrl + ", breadcrumbLinkUrl=" + breadcrumbLinkUrl + "]";
+		return "SearchFilter [label=" + label + ", removeLinkUrl=" + removeLinkUrl + ", breadcrumbLinkUrl="
+				+ breadcrumbLinkUrl + "]";
 	}
 
 	// Wrapper methods for label object

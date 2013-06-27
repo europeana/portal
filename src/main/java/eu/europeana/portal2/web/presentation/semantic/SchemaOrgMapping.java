@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -16,12 +15,10 @@ import eu.europeana.portal2.web.util.Beans;
 
 /**
  * Mapping of EDM elements and schema.org elements
- *
+ * 
  * @author peter.kiraly@kb.nl
  */
 public class SchemaOrgMapping {
-
-	protected final static Logger log = Logger.getLogger(SchemaOrgMapping.class.getCanonicalName());
 
 	private static Configuration config = Beans.getConfig();
 
@@ -35,59 +32,52 @@ public class SchemaOrgMapping {
 	private static void initialize() {
 		edm2schemaOrg = readFromProperty(config.getSchemaOrgMappingFile());
 		/*
-		edm2schemaOrg = new HashMap<String, SchemaOrgElement>() {
-			private static final long serialVersionUID = 1L; {
-			put("edm:country", new SchemaOrgElement("schema:addressCountry", new String[]{"schema:Thing"}));
-			put("edm:dataProvider", new SchemaOrgElement("schema:provider", new String[]{"schema:CreativeWork"}));
-			put("edm:hasView", new SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"}));
-			put("edm:isShownAt", new SchemaOrgElement("schema:url", new String[]{"schema:WebPage"}));
-			put("edm:isShownBy", new SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"}));
-			put("edm:landingPage", new SchemaOrgElement("schema:url", new String[]{"schema:Thing"}));
-			put("edm:language", new SchemaOrgElement("schema:inLanguage", new String[]{"schema:CreativeWork"}));
-			put("edm:object", new SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"}));
-			put("edm:provider", new SchemaOrgElement("schema:provider", new String[]{"schema:CreativeWork"}));
-			put("edm:currentLocation", new SchemaOrgElement("schema:contentLocation", new String[]{"schema:CreativeWork"}));
-			put("edm:hasType", new SchemaOrgElement("schema:additionalType", new String[]{"schema:Thing"}));
-			put("edm:isRepresentationOf", new SchemaOrgElement("schema:about", new String[]{"schema:CreativeWork"}));
-			put("edm:userTag", new SchemaOrgElement("schema:keywords", new String[]{"schema:CreativeWork"}));
-			put("skos:prefLabel", new SchemaOrgElement("schema:name", new String[]{"schema:Person"}));
-			put("skos:altLabel", new SchemaOrgElement("schema:additionalName", new String[]{"schema:Person"}));
-			put("skos:hiddenLabel", new SchemaOrgElement("schema:additionalName", new String[]{"schema:Person"}));
-			put("skos:note", new SchemaOrgElement("schema:description", new String[]{"schema:Thing"}));
-			put("edm:begin", new SchemaOrgElement("schema:birthdate", new String[]{"schema:Person"}));
-			put("edm:end", new SchemaOrgElement("schema:deathdate", new String[]{"schema:Person"}));
-			put("edm:hasMet", new SchemaOrgElement("schema:knows", new String[]{"schema:Person"}));
-			put("edm:isRelatedTo", new SchemaOrgElement("schema:relatedTo", new String[]{"schema:Person"}));
-			put("edm:wasPresentAt", new SchemaOrgElement("schema:event", new String[]{"schema:Organization"}));
-			put("foaf:name", new SchemaOrgElement("schema:name", new String[]{"schema:Person"}));
-			put("foaf:name", new SchemaOrgElement("schema:name", new String[]{"schema:Person"}));
-			put("rdaGr2:biographicalInformation", new SchemaOrgElement("schema:description", new String[]{"schema:Thing"}));
-			put("rdaGr2:dateOfBirth", new SchemaOrgElement("schema:birthdate", new String[]{"schema:Person"}));
-			put("rdaGr2:dateOfDeath", new SchemaOrgElement("schema:deathdate", new String[]{"schema:Person"}));
-			put("rdaGr2:dateOfEstablishment", new SchemaOrgElement("schema:foundingDate", new String[]{"schema:Organization"}));
-			put("rdaGr2:gender", new SchemaOrgElement("schema:gender", new String[]{"schema:Person"}));
-			put("rdaGr2:professionOrOccupation", new SchemaOrgElement("schema:jobTitle", new String[]{"schema:Person"}));
-			put("wgs84_pos:lat", new SchemaOrgElement("schema:latitude", new String[]{"schema:Intangible"}));
-			put("wgs84_pos:long", new SchemaOrgElement("schema:longitude", new String[]{"schema:Intangible"}));
-			put("wgs84_pos:alt", new SchemaOrgElement("schema:elevation", new String[]{"schema:Intangible"}));
-			put("skos:prefLabel", new SchemaOrgElement("schema:name", new String[]{""}));
-			put("skos:altLabel", new SchemaOrgElement("schema:name", new String[]{""}));
-			put("skos:hiddenLabel", new SchemaOrgElement("schema:name", new String[]{""}));
-			put("skos:note", new SchemaOrgElement("schema:description", new String[]{"schema:Thing"}));
-			put("dcterms:isPartOf", new SchemaOrgElement("schema:containedIn", new String[]{"schema:Place"}));
-
-			// put("", new SchemaOrgElement("", new String[]{""}));
-		}};
-		*/
+		 * edm2schemaOrg = new HashMap<String, SchemaOrgElement>() { private static final long serialVersionUID = 1L; {
+		 * put("edm:country", new SchemaOrgElement("schema:addressCountry", new String[]{"schema:Thing"}));
+		 * put("edm:dataProvider", new SchemaOrgElement("schema:provider", new String[]{"schema:CreativeWork"}));
+		 * put("edm:hasView", new SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"}));
+		 * put("edm:isShownAt", new SchemaOrgElement("schema:url", new String[]{"schema:WebPage"}));
+		 * put("edm:isShownBy", new SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"}));
+		 * put("edm:landingPage", new SchemaOrgElement("schema:url", new String[]{"schema:Thing"})); put("edm:language",
+		 * new SchemaOrgElement("schema:inLanguage", new String[]{"schema:CreativeWork"})); put("edm:object", new
+		 * SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"})); put("edm:provider", new
+		 * SchemaOrgElement("schema:provider", new String[]{"schema:CreativeWork"})); put("edm:currentLocation", new
+		 * SchemaOrgElement("schema:contentLocation", new String[]{"schema:CreativeWork"})); put("edm:hasType", new
+		 * SchemaOrgElement("schema:additionalType", new String[]{"schema:Thing"})); put("edm:isRepresentationOf", new
+		 * SchemaOrgElement("schema:about", new String[]{"schema:CreativeWork"})); put("edm:userTag", new
+		 * SchemaOrgElement("schema:keywords", new String[]{"schema:CreativeWork"})); put("skos:prefLabel", new
+		 * SchemaOrgElement("schema:name", new String[]{"schema:Person"})); put("skos:altLabel", new
+		 * SchemaOrgElement("schema:additionalName", new String[]{"schema:Person"})); put("skos:hiddenLabel", new
+		 * SchemaOrgElement("schema:additionalName", new String[]{"schema:Person"})); put("skos:note", new
+		 * SchemaOrgElement("schema:description", new String[]{"schema:Thing"})); put("edm:begin", new
+		 * SchemaOrgElement("schema:birthdate", new String[]{"schema:Person"})); put("edm:end", new
+		 * SchemaOrgElement("schema:deathdate", new String[]{"schema:Person"})); put("edm:hasMet", new
+		 * SchemaOrgElement("schema:knows", new String[]{"schema:Person"})); put("edm:isRelatedTo", new
+		 * SchemaOrgElement("schema:relatedTo", new String[]{"schema:Person"})); put("edm:wasPresentAt", new
+		 * SchemaOrgElement("schema:event", new String[]{"schema:Organization"})); put("foaf:name", new
+		 * SchemaOrgElement("schema:name", new String[]{"schema:Person"})); put("foaf:name", new
+		 * SchemaOrgElement("schema:name", new String[]{"schema:Person"})); put("rdaGr2:biographicalInformation", new
+		 * SchemaOrgElement("schema:description", new String[]{"schema:Thing"})); put("rdaGr2:dateOfBirth", new
+		 * SchemaOrgElement("schema:birthdate", new String[]{"schema:Person"})); put("rdaGr2:dateOfDeath", new
+		 * SchemaOrgElement("schema:deathdate", new String[]{"schema:Person"})); put("rdaGr2:dateOfEstablishment", new
+		 * SchemaOrgElement("schema:foundingDate", new String[]{"schema:Organization"})); put("rdaGr2:gender", new
+		 * SchemaOrgElement("schema:gender", new String[]{"schema:Person"})); put("rdaGr2:professionOrOccupation", new
+		 * SchemaOrgElement("schema:jobTitle", new String[]{"schema:Person"})); put("wgs84_pos:lat", new
+		 * SchemaOrgElement("schema:latitude", new String[]{"schema:Intangible"})); put("wgs84_pos:long", new
+		 * SchemaOrgElement("schema:longitude", new String[]{"schema:Intangible"})); put("wgs84_pos:alt", new
+		 * SchemaOrgElement("schema:elevation", new String[]{"schema:Intangible"})); put("skos:prefLabel", new
+		 * SchemaOrgElement("schema:name", new String[]{""})); put("skos:altLabel", new SchemaOrgElement("schema:name",
+		 * new String[]{""})); put("skos:hiddenLabel", new SchemaOrgElement("schema:name", new String[]{""}));
+		 * put("skos:note", new SchemaOrgElement("schema:description", new String[]{"schema:Thing"}));
+		 * put("dcterms:isPartOf", new SchemaOrgElement("schema:containedIn", new String[]{"schema:Place"}));
+		 * 
+		 * // put("", new SchemaOrgElement("", new String[]{""})); }};
+		 */
 	}
 
 	public SchemaOrgMapping() {
-		log.info("initializing SchemaOrgMapping");
-		log.info("file: " + config.getSchemaOrgMappingFile());
 		edm2schemaOrg = readFromProperty(config.getSchemaOrgMappingFile());
-		log.info("map size: " + edm2schemaOrg.size());
 	}
-
 
 	public static Map<String, SchemaOrgElement> getMap() {
 		if (edm2schemaOrg == null) {
@@ -113,13 +103,11 @@ public class SchemaOrgMapping {
 	public static void initialize(String filename) {
 		edm2schemaOrg = readFromProperty(filename);
 		/*
-		edm2schemaOrg = new ConcurrentHashMap<String, SchemaOrgElement>();
-		Map<String, SchemaOrgElement> mapping = readFromProperty(config.getSchemaOrgMappingFile());
-		for (Map.Entry<String, SchemaOrgElement> entry : mapping.entrySet()) {
-			// TODO: add more features to SchemaOrgElement later, like attributes, parents etc.
-			edm2schemaOrg.put(entry.getKey(), entry.getValue()); //new SchemaOrgElement(entry.getValue()));
-		}
-		*/
+		 * edm2schemaOrg = new ConcurrentHashMap<String, SchemaOrgElement>(); Map<String, SchemaOrgElement> mapping =
+		 * readFromProperty(config.getSchemaOrgMappingFile()); for (Map.Entry<String, SchemaOrgElement> entry :
+		 * mapping.entrySet()) { // TODO: add more features to SchemaOrgElement later, like attributes, parents etc.
+		 * edm2schemaOrg.put(entry.getKey(), entry.getValue()); //new SchemaOrgElement(entry.getValue())); }
+		 */
 	}
 
 	private static Map<String, SchemaOrgElement> readFromProperty(String file) {
@@ -153,12 +141,13 @@ public class SchemaOrgMapping {
 					String[] schemaParts = schema.split("/", 2);
 					String schemaParent = schemaParts[0];
 					String schemaElementName = schemaParts[1];
-					schemaElement = new SchemaOrgElement(schemaElementName, new String[]{schemaParent}, edmElementName);
+					schemaElement = new SchemaOrgElement(schemaElementName, new String[] { schemaParent },
+							edmElementName);
 				}
 				mapping.put(edmElementName, schemaElement);
 				mapping.put(edmParentName + "/" + edmElementName, schemaElement);
 			}
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (br != null) {

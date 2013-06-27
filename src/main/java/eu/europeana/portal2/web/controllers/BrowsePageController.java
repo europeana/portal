@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,39 +19,38 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SitemapPage;
-import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
-import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class BrowsePageController {
 
-	@Resource private SearchService searchService;
+	@Log
+	private Logger log;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource
+	private SearchService searchService;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
 	@Value("#{europeanaProperties['portal.minCompletenessToPromoteInSitemaps']}")
 	private int minCompletenessToPromoteInSitemaps;
 
 	@RequestMapping("/browse-all.html")
-	public ModelAndView browseAll(
-			@RequestParam(value = "prefix", required = false) String prefix,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale) 
-				throws Exception {
+	public ModelAndView browseAll(@RequestParam(value = "prefix", required = false) String prefix,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		log.info("=========== browse-all.html ===========");
 
 		Injector injector = new Injector(request, response, locale);
@@ -69,13 +68,13 @@ public class BrowsePageController {
 				prefix = prefix.substring(0, 4);
 				pageInfo = PortalPageInfo.SITEMAP_BROWSE_LANDING;
 				Query query = new Query(
-					SitemapController.solrQueryClauseToIncludeRecordsToPromoteInSitemaps(minCompletenessToPromoteInSitemaps))
-					.setRefinements("id6hash:" + prefix + "*")
-					.setPageSize(1000);
+						SitemapController
+								.solrQueryClauseToIncludeRecordsToPromoteInSitemaps(minCompletenessToPromoteInSitemaps))
+						.setRefinements("id6hash:" + prefix + "*").setPageSize(1000);
 
 				BriefBeanView briefBeanView = null;
 				Class<? extends BriefBean> clazz = BriefBean.class;
-				Map<String, String[]> params = request.getParameterMap();
+				Map<String, String[]> params = RequestUtils.getParameterMap(request); 
 
 				try {
 					briefBeanView = SearchUtils.createResults(searchService, clazz, "portal", query, 0, 1000, params);
@@ -87,12 +86,9 @@ public class BrowsePageController {
 					model.setResults(beans);
 					log.info("results: " + model.getResults().size());
 				} catch (SolrTypeException e) {
-					log.severe("SolrTypeException: " + e.getMessage());
-					// return new ApiError("search.json", e.getMessage());
-					e.printStackTrace();
+					log.error("SolrTypeException: " + e.getMessage(),e);
 				} catch (Exception e) {
-					log.severe("Exception: " + e.getMessage());
-					e.printStackTrace();
+					log.error("Exception: " + e.getMessage(),e);
 				}
 
 			}

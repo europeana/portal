@@ -3,37 +3,30 @@ package eu.europeana.portal2.web.presentation.semantic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
-
 
 /**
  * This class gives you information about fields used in EDM schema.
  * 
- * A field has a qualified schema field name (schemaName), a name we use it in Java classes (propertyName),
- * and Java data type.
- *
+ * A field has a qualified schema field name (schemaName), a name we use it in Java classes (propertyName), and Java
+ * data type.
+ * 
  * @author peter.kiraly@kb.nl
  */
 public class FieldInfo {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
 	/**
 	 * The list of current Java types of fields
 	 */
-	private final static List<String> types = new ArrayList<String>(Arrays.asList(
-			"String", "ObjectId", "float", "Boolean", "boolean", "DocType", "int", "Date",
-			"String[]", "Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>",
-			"List<Map<String,String>>", "Map<String, List<String>>"
-	));
+	private final static List<String> types = new ArrayList<String>(Arrays.asList("String", "ObjectId", "float",
+			"Boolean", "boolean", "DocType", "int", "Date", "String[]", "Map<String,String>", "List<WebResourceImpl>",
+			"List<BriefBeanImpl>", "List<Map<String,String>>", "Map<String, List<String>>"));
 
 	/**
 	 * The collection types
 	 */
-	private final static List<String> collections = new ArrayList<String>(Arrays.asList(
-			"String[]", "Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>",
-			"List<Map<String,String>>", "Map<String, List<String>>"
-	));
+	private final static List<String> collections = new ArrayList<String>(Arrays.asList("String[]",
+			"Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>", "List<Map<String,String>>",
+			"Map<String, List<String>>"));
 
 	/**
 	 * The qualified schema name
@@ -147,10 +140,7 @@ public class FieldInfo {
 	}
 
 	public String toString() {
-		return "{schemaName: " + schemaName 
-				+ ", propertyName: " + propertyName 
-				+ ", type: " + type 
-				+ ", parent: " + parent 
-				+ ", isCollection(): " + isCollection() + "}";
+		return "{schemaName: " + schemaName + ", propertyName: " + propertyName + ", type: " + type + ", parent: "
+				+ parent + ", isCollection(): " + isCollection() + "}";
 	}
 }

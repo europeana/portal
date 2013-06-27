@@ -15,11 +15,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
@@ -42,6 +43,8 @@ import eu.europeana.corelib.solr.entity.TimespanImpl;
 import eu.europeana.portal2.web.model.FullBean4Json;
 
 public class Json2FullBean {
+	
+	private final Logger log = LoggerFactory.getLogger(Json2FullBean.class);
 
 	private static final String AGGREGATIONS = "aggregations";
 	private static final String PROXIES = "proxies";
@@ -51,8 +54,6 @@ public class Json2FullBean {
 	private static final String AGENTS = "agents";
 	private static final String TIMESPANS = "timespans";
 	private static final String CONCEPTS = "concepts";
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	// setters.get(prefix).get(field) -> Method
@@ -95,7 +96,7 @@ public class Json2FullBean {
 			fields = new HashMap<String, Map<String, Field>>();
 		}
 
-		Map<String, Class> objects4setters = Collections.unmodifiableMap(new HashMap<String, Class>() {{
+		Map<String, Class<?>> objects4setters = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {{
 			put("", FullBean4Json.class);
 			put(PROXIES, Proxy.class);
 			put(AGGREGATIONS, Aggregation.class);
@@ -107,7 +108,7 @@ public class Json2FullBean {
 			put(CONCEPTS, Concept.class);
 		}});
 
-		Map<String, Class> objects4fields = Collections.unmodifiableMap(new HashMap<String, Class>() {{
+		Map<String, Class<?>> objects4fields = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {{
 			put(RELATED_ITEMS, BriefBeanImpl.class);
 		}});
 
@@ -175,7 +176,7 @@ public class Json2FullBean {
 
 			if (!value.getClass().getName().equals(setter.getParameterTypes()[0].getCanonicalName())) {
 				if (!handledFields.contains(field)) {
-					log.severe(field + ": " + value.getClass().getName() + " is not fit for "+ setter.getParameterTypes()[0].getCanonicalName());
+					log.warn(field + ": " + value.getClass().getName() + " is not fit for "+ setter.getParameterTypes()[0].getCanonicalName());
 				}
 			}
 
@@ -228,25 +229,17 @@ public class Json2FullBean {
 				&& setter.getParameterTypes()[0].getCanonicalName().equals("java.lang.String[]"));
 	}
 
-	private boolean isListToArray(Object value, Field field) {
-		return (value.getClass().getName().equals("java.util.ArrayList") 
-				&& field.getClass().getCanonicalName().equals("java.lang.String[]"));
-	}
-
 	private void set(Object bean, Method setter, Object value) {
 		try {
 			setter.invoke(bean, value);
 		} catch (IllegalArgumentException e) {
-			log.severe(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
-			log.severe(e.getMessage() + ": " + setter.getParameterTypes()[0].getCanonicalName());
-			log.severe(e.getMessage() + ": " + value.getClass().getName());
-			e.printStackTrace();
+			log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
+			log.error(e.getMessage() + ": " + setter.getParameterTypes()[0].getCanonicalName());
+			log.error(e.getMessage() + ": " + value.getClass().getName());
 		} catch (IllegalAccessException e) {
-			log.severe(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
-			e.printStackTrace();
+			log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
 		} catch (InvocationTargetException e) {
-			log.severe(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
-			e.printStackTrace();
+			log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
 		}
 	}
 

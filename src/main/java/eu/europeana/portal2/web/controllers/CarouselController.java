@@ -1,32 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.presentation.PortalPageInfo;
-import eu.europeana.portal2.web.presentation.model.data.CarouselPage;
-import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
-import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
 
 @Controller
 public class CarouselController {

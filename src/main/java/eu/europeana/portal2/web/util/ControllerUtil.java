@@ -24,13 +24,14 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -53,6 +54,8 @@ import eu.europeana.portal2.web.security.Portal2UserDetails;
  */
 
 public class ControllerUtil {
+	
+	private static final Logger log = LoggerFactory.getLogger(ControllerUtil.class);
 
 	private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[_A-Za-z0-9-]+)";
 
@@ -68,11 +71,6 @@ public class ControllerUtil {
 	public static boolean validEmailAddress(String emailAddress) {
 		return emailAddress.endsWith("@localhost") || emailAddress.matches(EMAIL_REGEXP);
 	}
-
-	// @Value("#{europeanaProperties['portal.theme']}")
-	// private static String defaultTheme;
-
-	private static Logger log = Logger.getLogger(ControllerUtil.class.getName());
 
 	public static Locale getLocale(HttpServletRequest request) {
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
@@ -189,7 +187,7 @@ public class ControllerUtil {
 	public static User getUser(UserService userService) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null) {
-			log.severe("Authentication is null");
+			log.warn("Authentication is null");
 			return null;
 		}
 		User user = null;
@@ -243,7 +241,7 @@ public class ControllerUtil {
 			if (e instanceof BatchUpdateException) {
 				BatchUpdateException bue = (BatchUpdateException) e;
 				Exception next = bue.getNextException();
-				log.warning("Next exception in batch: " + next);
+				log.warn("Next exception in batch: " + next);
 				next.printStackTrace(printWriter);
 			}
 		}
@@ -252,6 +250,8 @@ public class ControllerUtil {
 	}
 
 	public static void logTime(String type, long time) {
-		log.fine(String.format("elapsed time (%s): %d", type, time));
+		if (log.isDebugEnabled()) {
+			log.debug(String.format("elapsed time (%s): %d", type, time));
+		}
 	}
 }

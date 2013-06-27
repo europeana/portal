@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,71 +19,72 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class SearchController {
 
-	@Resource private SearchService searchService;
+	@Log
+	private Logger log;
 
-	@Resource private InternalResourceViewResolver viewResolver;
+	@Resource
+	private SearchService searchService;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource
+	private InternalResourceViewResolver viewResolver;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
 	/**
 	 * Possible sort options
 	 */
-	private final List<String> sortValues = Arrays.asList(new String[]{
-		"score desc", "title desc", "date desc"
-	});
+	private final List<String> sortValues = Arrays.asList(new String[] { "score desc", "title desc", "date desc" });
 
 	/**
 	 * Deafult sort order
 	 */
 	private static final String DEFAULT_SORT = "score desc";
 
-	@RequestMapping({"/search.html", "/brief-doc.html"})
+	@RequestMapping({ "/search.html", "/brief-doc.html" })
 	public ModelAndView searchHtml(
-		@RequestParam(value = "query", required = false, defaultValue="*:*") String q,
-		@RequestParam(value = "embedded", required = false) String embedded,
-		@RequestParam(value = "embeddedLogo", required = false) String embeddedLogo,
-		@RequestParam(value = "embeddedBgColor", required = false) String embeddedBgColor,
-		@RequestParam(value = "embeddedForeColor", required = false) String embeddedForeColor,
-		@RequestParam(value = "lang", required = false) String embeddedLang, // embeddedLang -> lang
-		@RequestParam(value = "qf", required = false) String[] qf,
-		@RequestParam(value = "rswUserId", required = false) String rswUserId,
-		@RequestParam(value = "rswDefqry", required = false) String rswDefqry,
-		@RequestParam(value = "start", required = false, defaultValue = "1") int start,
-		@RequestParam(value = "rows", required = false, defaultValue="12") int rows,
-		@RequestParam(value = "sort", required = false, defaultValue="") String sort,
-		@RequestParam(value = "profile", required = false, defaultValue="portal") String profile,
-		@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-		// @RequestParam(value = "bt", required = false) String bt,
-		HttpServletRequest request,
-		HttpServletResponse response,
-		Locale locale
-	) {
+			@RequestParam(value = "query", required = false, defaultValue = "*:*") String q,
+			@RequestParam(value = "embedded", required = false) String embedded,
+			@RequestParam(value = "embeddedLogo", required = false) String embeddedLogo,
+			@RequestParam(value = "embeddedBgColor", required = false) String embeddedBgColor,
+			@RequestParam(value = "embeddedForeColor", required = false) String embeddedForeColor,
+			@RequestParam(value = "lang", required = false) String embeddedLang, // embeddedLang -> lang
+			@RequestParam(value = "qf", required = false) String[] qf,
+			@RequestParam(value = "rswUserId", required = false) String rswUserId,
+			@RequestParam(value = "rswDefqry", required = false) String rswDefqry,
+			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
+			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows,
+			@RequestParam(value = "sort", required = false, defaultValue = "") String sort,
+			@RequestParam(value = "profile", required = false, defaultValue = "portal") String profile,
+			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			// @RequestParam(value = "bt", required = false) String bt,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		Injector injector = new Injector(request, response, locale);
 
 		rows = Math.min(rows, config.getRowLimit());
 
-		log.fine("============== START SEARCHING ==============");
-		Map<String, String[]> params = request.getParameterMap();
+		Map<String, String[]> params = RequestUtils.getParameterMap(request);
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		if (params.get("qf") != null && params.get("qf").length != qf.length) {
 			qf = params.get("qf");
@@ -116,8 +117,8 @@ public class SearchController {
 			sort = DEFAULT_SORT;
 		}
 		// TODO: the sorting is not solved yet in Solr, so we maintain only one sorting option regardless
-		//       what the user sets.
-		//       REMOVE THIS LINE AS SOON AS POSSIBLE, but not earlier ;-)
+		// what the user sets.
+		// REMOVE THIS LINE AS SOON AS POSSIBLE, but not earlier ;-)
 		sort = DEFAULT_SORT;
 		model.setSort(sort);
 		injector.injectProperties(model);
@@ -125,15 +126,10 @@ public class SearchController {
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 
-		Query query = new Query(q)
-						.setRefinements(qf)
-						.setPageSize(rows)
-						.setStart(start-1) // Solr starts from 0
-						.setParameter("facet.mincount", "1")
-						// .setParameter("f.YEAR.facet.mincount", "1")
-						.setParameter("sort", sort)
-						.setProduceFacetUnion(true)
-						.setAllowSpellcheck(false);
+		Query query = new Query(q).setRefinements(qf).setPageSize(rows).setStart(start - 1) // Solr starts from 0
+				.setParameter("facet.mincount", "1")
+				// .setParameter("f.YEAR.facet.mincount", "1")
+				.setParameter("sort", sort).setProduceFacetUnion(true).setAllowSpellcheck(false);
 
 		if (model.isEmbedded()) {
 			query.setAllowFacets(false);
@@ -142,19 +138,23 @@ public class SearchController {
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
-		log.fine("query: " + query);
+		if (log.isDebugEnabled()) {
+			log.debug("query: " + query);
+		}
 		BriefBeanView briefBeanView = null;
 		try {
 			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params);
 			model.setBriefBeanView(briefBeanView);
-			log.fine("NumFound: " + briefBeanView.getPagination().getNumFound());
+			if (log.isDebugEnabled()) {
+				log.debug("NumFound: " + briefBeanView.getPagination().getNumFound());
+			}
 			model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
 		} catch (SolrTypeException e) {
-			log.severe("SolrTypeException: " + e.getMessage());
+			log.error("SolrTypeException: " + e.getMessage());
 			// return new ApiError("search.json", e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
-			log.severe("Exception: " + e.getMessage());
+			log.error("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
 

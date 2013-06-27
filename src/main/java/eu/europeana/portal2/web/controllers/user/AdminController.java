@@ -10,13 +10,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +29,15 @@ import eu.europeana.corelib.db.service.ApiLogService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AdminPage;
 import eu.europeana.portal2.web.util.CSVUtils;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * 
@@ -48,32 +49,35 @@ import eu.europeana.portal2.web.util.Injector;
 @Controller
 public class AdminController {
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Log
+	private Logger log;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name="apiKeyService") private ApiKeyService apiKeyService;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource(name = "apiKeyService")
+	private ApiKeyService apiKeyService;
 
-	@Resource private ApiLogService apiLogService;
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource
+	private ApiLogService apiLogService;
 
 	private static final String ACTUAL = "actual";
 	private static final String TOTAL = "total";
 	private static final int LIMIT = 50;
 
 	@RequestMapping("/admin.html")
-	public ModelAndView adminHandler(
-			@RequestParam(value = "page", required = false, defaultValue="1") int pageNr,
-			HttpServletRequest request,
-			HttpServletResponse response)
-					throws Exception {
+	public ModelAndView adminHandler(@RequestParam(value = "page", required = false, defaultValue = "1") int pageNr,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.info("==== admin.html ====");
 		Injector injector = new Injector(request, response, null);
 
-		int offset = ((pageNr-1) * LIMIT);
+		int offset = ((pageNr - 1) * LIMIT);
 		AdminPage model = new AdminPage();
 		model.setPageNr(pageNr);
 		model.setTheme("devel");
@@ -81,12 +85,13 @@ public class AdminController {
 
 		long t0 = new Date().getTime();
 		// model.setUsers(userService.findAll());
-		Map<String, Map<String, Long>> usage = new HashMap<String, Map<String, Long>>(){
+		Map<String, Map<String, Long>> usage = new HashMap<String, Map<String, Long>>() {
 			private static final long serialVersionUID = 1L;
-		{
-			put(ACTUAL, new HashMap<String, Long>());
-			put(TOTAL, new HashMap<String, Long>());
-		}};
+			{
+				put(ACTUAL, new HashMap<String, Long>());
+				put(TOTAL, new HashMap<String, Long>());
+			}
+		};
 
 		List<User> users = new ArrayList<User>();
 		long count = apiKeyService.count();
@@ -112,7 +117,7 @@ public class AdminController {
 		model.setUsers(users);
 		model.setUsage(usage);
 		List<Integer> pageNumbers = new ArrayList<Integer>();
-		for (int i = 1; ((i-1)*LIMIT)+1 < count; i++) {
+		for (int i = 1; ((i - 1) * LIMIT) + 1 < count; i++) {
 			pageNumbers.add(i);
 		}
 		model.setPageNumbers(pageNumbers);
@@ -123,12 +128,8 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/removeUser.html")
-	public String removeUserHandler(
-			@RequestParam(value = "id", required = true) long id,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+	public String removeUserHandler(@RequestParam(value = "id", required = true) long id, HttpServletRequest request,
+			HttpServletResponse response, Locale locale) throws Exception {
 		log.info("==== admin.html ====");
 
 		User user = userService.findByID(id);
@@ -138,31 +139,20 @@ public class AdminController {
 	}
 
 	/*
-	@RequestMapping("/admin/blockUser.html")
-	public String blockUserHandler(
-			@RequestParam(value = "id", required = true) int id,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
-		log.info("==== admin.html ====");
-
-		User user = userService.findByID(id);
-		user.setEnabled(false);
-		userService.store(user);
-
-		return "redirect:/admin.html";
-	}
-	*/
+	 * @RequestMapping("/admin/blockUser.html") public String blockUserHandler(
+	 * 
+	 * @RequestParam(value = "id", required = true) int id, HttpServletRequest request, HttpServletResponse response,
+	 * Locale locale) throws Exception { log.info("==== admin.html ====");
+	 * 
+	 * User user = userService.findByID(id); user.setEnabled(false); userService.store(user);
+	 * 
+	 * return "redirect:/admin.html"; }
+	 */
 
 	@RequestMapping("/admin/removeApiKey.html")
-	public String removeApiKeyHandler(
-			@RequestParam(value = "userId", required = true) long userId,
-			@RequestParam(value = "apiKey", required = true) String apiKey,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+	public String removeApiKeyHandler(@RequestParam(value = "userId", required = true) long userId,
+			@RequestParam(value = "apiKey", required = true) String apiKey, HttpServletRequest request,
+			HttpServletResponse response, Locale locale) throws Exception {
 		log.info("==== admin/removeApiKey.html ====");
 		log.info(String.format("%s, %s", userId, apiKey));
 
@@ -181,11 +171,8 @@ public class AdminController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/admin/exportUsers.html", produces = MediaType.TEXT_PLAIN_VALUE)
-	public @ResponseBody String exportUsersHandler(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+	public @ResponseBody
+	String exportUsersHandler(HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		log.info("==== admin/exportUsers.html ====");
 		response.setHeader("Content-Type", "text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
@@ -200,10 +187,9 @@ public class AdminController {
 		}
 
 		StringBuilder sb = new StringBuilder();
-		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
-			"id", "Date of registration", "First name", "Last name", "Email", "Company", "Country",
-			"Address", "Phone", "Website", "Field of work", "Number of keys", "Keys (limit)"
-		));
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList("id", "Date of registration", "First name",
+				"Last name", "Email", "Company", "Country", "Address", "Phone", "Website", "Field of work",
+				"Number of keys", "Keys (limit)"));
 		sb.append(CSVUtils.encodeRecord(fieldNames));
 		for (User user : users.values()) {
 			sb.append(CSVUtils.encodeRecord(csvEncodeUser(user)));
@@ -213,6 +199,7 @@ public class AdminController {
 
 	/**
 	 * Create an CSV encoded record (list of fields) from a User object
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -244,11 +231,11 @@ public class AdminController {
 
 	/**
 	 * Gets and saves the total and actual usage by API key
-	 *
+	 * 
 	 * @param usage
-	 *   A map for collecting the usage statistics
+	 *            A map for collecting the usage statistics
 	 * @param apiKey
-	 *   The API key
+	 *            The API key
 	 */
 	private void getUsageByApiKey(Map<String, Map<String, Long>> usage, String apiKey) {
 		long actual = apiLogService.countByIntervalAndApiKey(DateIntervalUtils.getLast24Hours(), apiKey);

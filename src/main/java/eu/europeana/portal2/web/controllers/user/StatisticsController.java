@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +32,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.model.statistics.TypeStatistics;
 import eu.europeana.corelib.definitions.model.statistics.UserStatistics;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.corelib.utils.model.DateInterval;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -44,22 +44,22 @@ import eu.europeana.portal2.web.util.Injector;
 @Controller
 public class StatisticsController {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Log
+	private Logger log;
 
-	@Resource(name="apiKeyService") private ApiKeyService apiKeyService;
+	@Resource(name = "apiKeyService")
+	private ApiKeyService apiKeyService;
 
-	@Resource private ApiLogService apiLogService;
+	@Resource
+	private ApiLogService apiLogService;
 
-	private static final List<String> TYPES = Arrays.asList(new String[]{
-		"dates",
-		"months", "recordTypes", "apiKeys", 
-		"month",  "recordType",  "apiKey",
-		"monthsByUser", "usersByMonth", "usersByRecordType", "recordTypesByuser"
-	});
+	private static final List<String> TYPES = Arrays
+			.asList(new String[] { "dates", "months", "recordTypes", "apiKeys", "month", "recordType", "apiKey",
+					"monthsByUser", "usersByMonth", "usersByRecordType", "recordTypesByuser" });
 
-	private static final List<String> ORDERS = Arrays.asList(new String[]{"name", "count", "apikey"});
+	private static final List<String> ORDERS = Arrays.asList(new String[] { "name", "count", "apikey" });
 
-	private static final Map<String, Integer> RECORD_TYPES = new HashMap<String, Integer>(){
+	private static final Map<String, Integer> RECORD_TYPES = new HashMap<String, Integer>() {
 		private static final long serialVersionUID = 1L;
 		{
 			put("SEARCH", 1);
@@ -73,17 +73,13 @@ public class StatisticsController {
 	private static final int LAST_TYPE_SYMBOL = 100;
 
 	@RequestMapping("/admin/statistics.html")
-	public ModelAndView statisticsHandler(
-			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "month", required = false, defaultValue="0") int month,
-			@RequestParam(value = "order", required = false, defaultValue="name") String order,
-			@RequestParam(value = "recordType", required = false, defaultValue="SEARCH") String recordType,
-			@RequestParam(value = "apiKey", required = false, defaultValue="") String apiKey,
-			@RequestParam(value = "dir", required = false, defaultValue="") String direction,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+	public ModelAndView statisticsHandler(@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "month", required = false, defaultValue = "0") int month,
+			@RequestParam(value = "order", required = false, defaultValue = "name") String order,
+			@RequestParam(value = "recordType", required = false, defaultValue = "SEARCH") String recordType,
+			@RequestParam(value = "apiKey", required = false, defaultValue = "") String apiKey,
+			@RequestParam(value = "dir", required = false, defaultValue = "") String direction,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		log.info("==== admin/statistics.html ====");
 		Injector injector = new Injector(request, response, locale);
 		StatisticsPage model = new StatisticsPage();
@@ -134,7 +130,7 @@ public class StatisticsController {
 			model.setUserName(getUserName(apiKey));
 			model.setTypeStatistics(getRecordTypesByUserStatistics(apiKey));
 			model.setMonthStatistics(getMonthsByApiKeyStatistics(apiKey));
-		// legacy code
+			// legacy code
 		} else if (type.equals("usersByMonth")) {
 			model.setPageTitle("Statistics for users by month");
 			model.setMonthLabel(getMonthLabel(month));
@@ -152,16 +148,13 @@ public class StatisticsController {
 	}
 
 	@RequestMapping(value = "/admin/statistics.csv", produces = MediaType.TEXT_PLAIN_VALUE)
-	public @ResponseBody String statisticsCSVHandler(
-			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "month", required = false, defaultValue="0") int month,
-			@RequestParam(value = "stat", required = false, defaultValue="") String stat,
-			@RequestParam(value = "recordType", required = false, defaultValue="SEARCH") String recordType,
-			@RequestParam(value = "apiKey", required = false, defaultValue="") String apiKey,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Locale locale)
-					throws Exception {
+	public @ResponseBody
+	String statisticsCSVHandler(@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "month", required = false, defaultValue = "0") int month,
+			@RequestParam(value = "stat", required = false, defaultValue = "") String stat,
+			@RequestParam(value = "recordType", required = false, defaultValue = "SEARCH") String recordType,
+			@RequestParam(value = "apiKey", required = false, defaultValue = "") String apiKey,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 
 		if (StringUtils.isBlank(type) || !TYPES.contains(type)) {
 			type = "dates";
@@ -219,9 +212,7 @@ public class StatisticsController {
 	}
 
 	private void datesToCSV(StringBuilder sb, Map<String, Long> values) {
-		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
-			"Date", "Count"
-		));
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList("Date", "Count"));
 		sb.append(CSVUtils.encodeRecord(fieldNames));
 		for (Map.Entry<String, Long> item : values.entrySet()) {
 			List<String> fields = new LinkedList<String>();
@@ -232,9 +223,7 @@ public class StatisticsController {
 	}
 
 	private void monthToCSV(StringBuilder sb, List<MonthStatistics> values) {
-		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
-			"Month", "Count"
-		));
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList("Month", "Count"));
 		sb.append(CSVUtils.encodeRecord(fieldNames));
 
 		for (MonthStatistics item : values) {
@@ -246,9 +235,7 @@ public class StatisticsController {
 	}
 
 	private void recordTypeToCSV(StringBuilder sb, Map<Object, List<TypeStatistics>> values) {
-		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
-			"Record Type", "Profile", "Count"
-		));
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList("Record Type", "Profile", "Count"));
 		sb.append(CSVUtils.encodeRecord(fieldNames));
 
 		for (Map.Entry<Object, List<TypeStatistics>> value : values.entrySet()) {
@@ -263,9 +250,7 @@ public class StatisticsController {
 	}
 
 	private void apiKeyToCSV(StringBuilder sb, Map<Object, List<UserStatistics>> values) {
-		List<String> fieldNames = new LinkedList<String>(Arrays.asList(
-			"User name", "API Key", "Count"
-		));
+		List<String> fieldNames = new LinkedList<String>(Arrays.asList("User name", "API Key", "Count"));
 		sb.append(CSVUtils.encodeRecord(fieldNames));
 		for (Map.Entry<Object, List<UserStatistics>> value : values.entrySet()) {
 			for (UserStatistics item : value.getValue()) {
@@ -301,15 +286,13 @@ public class StatisticsController {
 		return createOrderedTypeMap(types);
 	}
 
-	private Map<Object, List<TypeStatistics>> getRecordTypesByUserStatistics(
-			String apiKey) {
+	private Map<Object, List<TypeStatistics>> getRecordTypesByUserStatistics(String apiKey) {
 		List<TypeStatistics> types = apiLogService.getStatisticsForRecordTypesByUser(apiKey);
 
 		return createOrderedTypeMap(types);
 	}
 
-	private Map<Object, List<TypeStatistics>> getRecordTypesByMonthStatistics(
-			int month) {
+	private Map<Object, List<TypeStatistics>> getRecordTypesByMonthStatistics(int month) {
 		DateInterval interval = DateIntervalUtils.getMonth(new DateTime().getMonthOfYear() - month);
 		List<TypeStatistics> types = apiLogService.getStatisticsForRecordTypesByInterval(interval);
 		return createOrderedTypeMap(types);
@@ -336,7 +319,8 @@ public class StatisticsController {
 		return stat;
 	}
 
-	private Map<Object, List<UserStatistics>> getUsersByRecordTypeStatistics(String recordType, String orderBy, boolean descending) {
+	private Map<Object, List<UserStatistics>> getUsersByRecordTypeStatistics(String recordType, String orderBy,
+			boolean descending) {
 		Map<Object, List<UserStatistics>> stat = createUserStatisticsMap(orderBy, descending);
 		List<UserStatistics> users = apiLogService.getStatisticsForUsersByRecordType(recordType);
 		resolveUsers(users, stat, orderBy);
@@ -347,10 +331,9 @@ public class StatisticsController {
 		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
 		DateTime now = new DateTime();
 		DateInterval interval = DateIntervalUtils.getMonth(now.getMonthOfYear() - month);
-		String label = String.format("%s&mdash;%s" ,  dt1.format(interval.getBegin()), dt1.format(interval.getEnd()));
+		String label = String.format("%s&mdash;%s", dt1.format(interval.getBegin()), dt1.format(interval.getEnd()));
 		return label;
 	}
-
 
 	/**
 	 * Create the month based statistics
@@ -361,7 +344,7 @@ public class StatisticsController {
 		List<MonthStatistics> stat = new LinkedList<MonthStatistics>();
 		for (int month = 1, max = now.getMonthOfYear(); month <= max; month++) {
 			DateInterval interval = DateIntervalUtils.getMonth(max - month);
-			long count =  apiLogService.countByInterval(interval);
+			long count = apiLogService.countByInterval(interval);
 			String label = dt1.format(interval.getBegin()) + "&mdash;" + dt1.format(interval.getEnd());
 			stat.add(new MonthStatistics(month, label, count));
 		}
@@ -399,13 +382,13 @@ public class StatisticsController {
 
 	/**
 	 * Returns the users with names
-	 *
+	 * 
 	 * @param users
-	 *   The users match for the criterias
+	 *            The users match for the criterias
 	 * @param stat
-	 *   The ordered map
+	 *            The ordered map
 	 * @param orderBy
-	 *   The ordering key
+	 *            The ordering key
 	 * @return
 	 */
 	private void resolveUsers(List<UserStatistics> users, Map<Object, List<UserStatistics>> stat, String orderBy) {
@@ -445,13 +428,12 @@ public class StatisticsController {
 		try {
 			apiKey = apiKeyService.findByID(wskey);
 		} catch (DatabaseException e) {
-			log.severe("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
+			log.error("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
 		}
 		if (apiKey != null) {
 			User user = apiKey.getUser();
 			if (user != null) {
-				if (!StringUtils.isBlank(user.getLastName())
-						&& !StringUtils.isBlank(user.getFirstName())) {
+				if (!StringUtils.isBlank(user.getLastName()) && !StringUtils.isBlank(user.getFirstName())) {
 					userName.append(user.getLastName()).append(", ").append(user.getFirstName());
 				} else if (!StringUtils.isBlank(user.getEmail())) {
 					userName.append(user.getEmail());
@@ -476,13 +458,13 @@ public class StatisticsController {
 			if (orderBy.equals("count")) {
 				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
 					public int compare(Object a, Object b) {
-						return ((Long)b).compareTo((Long)a);
+						return ((Long) b).compareTo((Long) a);
 					}
 				});
 			} else {
 				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
 					public int compare(Object a, Object b) {
-						return ((String)b).compareTo((String)a);
+						return ((String) b).compareTo((String) a);
 					}
 				});
 			}
@@ -495,9 +477,8 @@ public class StatisticsController {
 		Map<Object, List<TypeStatistics>> stat = new TreeMap<Object, List<TypeStatistics>>();
 
 		for (TypeStatistics type : types) {
-			int typeSymbol = RECORD_TYPES.containsKey(type.getRecordType())
-							? RECORD_TYPES.get(type.getRecordType())
-							: DEFAULT_TYPE_SYMBOL;
+			int typeSymbol = RECORD_TYPES.containsKey(type.getRecordType()) ? RECORD_TYPES.get(type.getRecordType())
+					: DEFAULT_TYPE_SYMBOL;
 
 			if (!stat.containsKey(typeSymbol)) {
 				stat.put(typeSymbol, new ArrayList<TypeStatistics>());
@@ -518,7 +499,8 @@ public class StatisticsController {
 			}
 			stat.get(typeSymbol).add(new TypeStatistics(recordType, "total", subTotal));
 		}
-		stat.put(LAST_TYPE_SYMBOL, new ArrayList<TypeStatistics>(Arrays.asList(new TypeStatistics("All record types", "total", total))));
+		stat.put(LAST_TYPE_SYMBOL,
+				new ArrayList<TypeStatistics>(Arrays.asList(new TypeStatistics("All record types", "total", total))));
 
 		return stat;
 	}

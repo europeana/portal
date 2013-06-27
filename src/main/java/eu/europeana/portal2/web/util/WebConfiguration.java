@@ -8,9 +8,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * Registering the static page path as web resource resolver.
- * It means, that static files of the static pages (js, css, img) will served directly,
- * and they won't get through a contoller.
+ * Registering the static page path as web resource resolver. It means, that static files of the static pages (js, css,
+ * img) will served directly, and they won't get through a contoller.
  * 
  * @author peter.kiraly@kb.nl
  */
@@ -18,7 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
-	@Resource(name="configurationService") private eu.europeana.portal2.services.Configuration config;
+	@Resource(name = "configurationService")
+	private eu.europeana.portal2.services.Configuration config;
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

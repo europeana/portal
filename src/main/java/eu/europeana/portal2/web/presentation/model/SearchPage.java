@@ -21,7 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -35,17 +34,14 @@ import eu.europeana.portal2.web.presentation.model.preparation.SearchPreparation
 
 public class SearchPage extends SearchPreparation {
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
 	@Override
 	public boolean isIndexable() {
 		return false;
 	}
 
 	/**
-	 * Formats any url adding in any required addition parameters required for
-	 * the brief view page. Useful for embedded version which must keep track of
-	 * its configuration
+	 * Formats any url adding in any required addition parameters required for the brief view page. Useful for embedded
+	 * version which must keep track of its configuration
 	 * 
 	 * @param url
 	 *            - Url to be formatted
@@ -56,8 +52,7 @@ public class SearchPage extends SearchPreparation {
 	public UrlBuilder getPortalFormattedUrl(UrlBuilder url) {
 
 		/**
-		 * If page is to be embedded into an external site adds the related
-		 * attributes to the url
+		 * If page is to be embedded into an external site adds the related attributes to the url
 		 */
 		if (isEmbedded()) {
 			url.addParam("embedded", "true", false);
@@ -83,7 +78,8 @@ public class SearchPage extends SearchPreparation {
 	public UrlBuilder enrichFullDocUrl(UrlBuilder builder) throws UnsupportedEncodingException {
 
 		if (getBriefBeanView() != null) {
-			builder.addParamsFromURL(getBriefBeanView().getPagination().getPresentationQuery().getQueryForPresentation());
+			builder.addParamsFromURL(getBriefBeanView().getPagination().getPresentationQuery()
+					.getQueryForPresentation());
 			builder.addParam("startPage", Integer.toString(getBriefBeanView().getPagination().getStart()), true);
 		}
 		builder = getPortalFormattedUrl(builder);
@@ -118,10 +114,8 @@ public class SearchPage extends SearchPreparation {
 	 * @return - Mapview url
 	 */
 	public String getMapKmlUrl() throws UnsupportedEncodingException {
-		return StringUtils.replace(
-				getPortalFormattedUrl(
-						getViewUrl(PortalPageInfo.SEARCH_KML.getPageName()))
-						.toString(), "&amp;", "&");
+		return StringUtils.replace(getPortalFormattedUrl(getViewUrl(PortalPageInfo.SEARCH_KML.getPageName()))
+				.toString(), "&amp;", "&");
 	}
 
 	/**
@@ -132,8 +126,7 @@ public class SearchPage extends SearchPreparation {
 	 * @return - Mapview url
 	 */
 	public String getMapJsonUrl() throws UnsupportedEncodingException {
-		UrlBuilder url = getPortalFormattedUrl(getViewUrl(PortalPageInfo.MAP_JSON
-				.getPageName()));
+		UrlBuilder url = getPortalFormattedUrl(getViewUrl(PortalPageInfo.MAP_JSON.getPageName()));
 		if (coords != null) {
 			url.addParam("coords", coords, true);
 		}
@@ -185,7 +178,7 @@ public class SearchPage extends SearchPreparation {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getLastPageUrl() throws UnsupportedEncodingException {
-		//return createNavigationUrl(briefBeanView.getPagination().getLastPage() + 1);
+		// return createNavigationUrl(briefBeanView.getPagination().getLastPage() + 1);
 		return createNavigationUrl(briefBeanView.getPagination().getLastPage());
 	}
 
@@ -193,9 +186,8 @@ public class SearchPage extends SearchPreparation {
 	 * Creates the navigation URL (first, last, prev, next)
 	 * 
 	 * @param start
-	 *   The start parameter
-	 * @return
-	 *   The URL of the page
+	 *            The start parameter
+	 * @return The URL of the page
 	 * @throws UnsupportedEncodingException
 	 */
 	private String createNavigationUrl(int start) throws UnsupportedEncodingException {
@@ -204,20 +196,19 @@ public class SearchPage extends SearchPreparation {
 		}
 		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(), Integer.toString(start));
 		builder.addParam("rows", Integer.toString(getRows()), true);
-		builder.addParamsFromURL(
-			briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(), 
-			"query", "qf", "start", "rows");
+		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(),
+				"query", "qf", "start", "rows");
 		return getPortalFormattedUrl(builder).toString();
 	}
 
-	public int getNumberOfPages(){
+	public int getNumberOfPages() {
 		if (briefBeanView == null) {
 			return 0;
 		}
 		return briefBeanView.getPagination().getNumberOfPages();
 	}
 
-	public int getPageNumber(){
+	public int getPageNumber() {
 		if (briefBeanView == null) {
 			return 0;
 		}
@@ -258,34 +249,27 @@ public class SearchPage extends SearchPreparation {
 	 * @return - Mapview url
 	 */
 	public String getViewUrlMap() throws UnsupportedEncodingException {
-		return getPortalFormattedUrl(
-				getViewUrl(PortalPageInfo.MAP.getPageName())).toString();
+		return getPortalFormattedUrl(getViewUrl(PortalPageInfo.MAP.getPageName())).toString();
 	}
 
 	public String getViewUrlTable() throws UnsupportedEncodingException {
-		return getPortalFormattedUrl(
-				getViewUrl(PortalPageInfo.SEARCH_HTML.getPageName()))
-				.toString();
+		return getPortalFormattedUrl(getViewUrl(PortalPageInfo.SEARCH_HTML.getPageName())).toString();
 	}
 
 	public String getJsonUrlMap() throws UnsupportedEncodingException {
-		return StringUtils.replace(
-				getPortalFormattedUrl(
-						getViewUrl(PortalPageInfo.MAP_JSON.getPageName()))
-						.toString(), "&amp;", "&");
+		return StringUtils.replace(getPortalFormattedUrl(getViewUrl(PortalPageInfo.MAP_JSON.getPageName())).toString(),
+				"&amp;", "&");
 	}
 
 	public String getQueryForPresentation() {
 		if (briefBeanView == null) {
 			return null;
 		}
-		return briefBeanView.getPagination().getPresentationQuery()
-				.getQueryForPresentation();
+		return briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation();
 	}
 
 	/**
-	 * Generates the url for the timeline link to show the results on the
-	 * timeline
+	 * Generates the url for the timeline link to show the results on the timeline
 	 * 
 	 * @param portalName
 	 *            - name of the portal
@@ -296,17 +280,14 @@ public class SearchPage extends SearchPreparation {
 	}
 
 	public String getJsonUrlTimeline() throws UnsupportedEncodingException {
-		return StringUtils.replace(
-			getPortalFormattedUrl(
-				getViewUrl(PortalPageInfo.TIMELINE_JSON.getPageName())
-			).toString(), "&amp;", "&");
+		return StringUtils.replace(getPortalFormattedUrl(getViewUrl(PortalPageInfo.TIMELINE_JSON.getPageName()))
+				.toString(), "&amp;", "&");
 	}
 
 	public boolean isShowTimeLine() {
 		boolean startsWithEuropeanaUri = true;
 		if (getQuery().length() >= 14) {
-			startsWithEuropeanaUri = !getQuery().substring(0, 14).equals(
-					"europeana_uri:");
+			startsWithEuropeanaUri = !getQuery().substring(0, 14).equals("europeana_uri:");
 		}
 		return startsWithEuropeanaUri;
 	}
@@ -316,12 +297,10 @@ public class SearchPage extends SearchPreparation {
 		if (isEmbedded() || (getBriefBeanView() == null)) {
 			return false;
 		}
-		if ((getBriefBeanView().getPagination() != null)
-				&& (getBriefBeanView().getPagination().getNumFound() > 0)) {
+		if ((getBriefBeanView().getPagination() != null) && (getBriefBeanView().getPagination().getNumFound() > 0)) {
 			return false;
 		}
-		if ((getBriefBeanView().getSpellCheck() != null)
-				&& (getBriefBeanView().getSpellCheck().suggestions != null)
+		if ((getBriefBeanView().getSpellCheck() != null) && (getBriefBeanView().getSpellCheck().suggestions != null)
 				&& !getBriefBeanView().getSpellCheck().correctlySpelled) {
 			return true;
 		}
@@ -336,16 +315,15 @@ public class SearchPage extends SearchPreparation {
 			String refine = getRefineKeyword();
 			String cleanedRefine = refine; // QueryAnalyzer.sanitize(refine);
 			refine = StringUtils.contains(refine, ":") ? cleanedRefine
-					: (StringUtils.startsWith(refine, "-") ? "-text:" : "text:")
-							+ cleanedRefine;
+					: (StringUtils.startsWith(refine, "-") ? "-text:" : "text:") + cleanedRefine;
 			qf = (String[]) ArrayUtils.add(qf, refine);
 		}
 		return qf;
 	}
 
 	/**
-	 * Generates a url to see the results shown in a specific view. That is a
-	 * url to determine how the results should be displayed
+	 * Generates a url to see the results shown in a specific view. That is a url to determine how the results should be
+	 * displayed
 	 * 
 	 * @param portalName
 	 *            - Name of the portal
@@ -355,8 +333,7 @@ public class SearchPage extends SearchPreparation {
 	 *            - Which view to use to show the results
 	 * @return - Url to show results in specified view
 	 */
-	private UrlBuilder getViewUrl(String pageName)
-			throws UnsupportedEncodingException {
+	private UrlBuilder getViewUrl(String pageName) throws UnsupportedEncodingException {
 		String queryForPresentation = null;
 		if (briefBeanView != null) {
 			queryForPresentation = briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation();
@@ -381,17 +358,14 @@ public class SearchPage extends SearchPreparation {
 	}
 
 	@Override
-	public UrlBuilder createSearchUrl(String searchTerm, String[] qf,
-			String start) throws UnsupportedEncodingException {
+	public UrlBuilder createSearchUrl(String searchTerm, String[] qf, String start) throws UnsupportedEncodingException {
 		return createSearchUrl(getPortalName(), SearchPageEnum.SEARCH_HTML, searchTerm, qf, start);
 	}
 
-	public static UrlBuilder createSearchUrl(String portalname,
-			SearchPageEnum returnTo, String searchTerm, String[] qf,
-			String start) throws UnsupportedEncodingException {
+	public static UrlBuilder createSearchUrl(String portalname, SearchPageEnum returnTo, String searchTerm,
+			String[] qf, String start) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/").append(portalname).append("/")
-				.append(returnTo.getPageInfo().getPageName());
+		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
 		url.addParam("query", URLEncoder.encode(searchTerm, "UTF-8"), true);
 		if (qf != null) {
@@ -406,8 +380,7 @@ public class SearchPage extends SearchPreparation {
 	public boolean isUGCFilter() {
 		if (getRefinements() != null) {
 			for (String qf : getRefinements()) {
-				if (StringUtils.equalsIgnoreCase(qf,
-						Configuration.FACET_UCG_FILTER)) {
+				if (StringUtils.equalsIgnoreCase(qf, Configuration.FACET_UCG_FILTER)) {
 					return true;
 				}
 			}

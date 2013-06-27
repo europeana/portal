@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -36,8 +35,6 @@ import eu.europeana.portal2.web.presentation.model.data.FullDocData;
  * 
  */
 public class FieldPresentation {
-
-	private final Logger log = Logger.getLogger(getClass().getName());
 
 	public static final String FIELD_ID_PREFIX = "fpfn_";
 

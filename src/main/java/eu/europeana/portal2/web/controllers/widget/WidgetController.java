@@ -5,12 +5,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +18,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,8 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
@@ -49,9 +47,7 @@ import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.presentation.model.SearchWidgetEditorPage;
-import eu.europeana.portal2.web.presentation.model.SearchWidgetPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem;
-import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem.DataProviderItem;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.IngestionUtils;
 import eu.europeana.portal2.web.util.Injector;
@@ -59,25 +55,26 @@ import eu.europeana.portal2.web.util.Injector;
 @Controller
 public class WidgetController {
 
-	@Resource(name = "configurationService") private Configuration config;
+	@Log
+	private Logger log;
 
-	@Resource private SearchService searchService;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	private static final List<String> IDS = Arrays.asList(new String[]{"search", "searchGrid", "header", "facets", "navigation"});
+	@Resource
+	private SearchService searchService;
 
-	private static Logger log = Logger.getLogger(WidgetController.class.getCanonicalName());
+	private static final List<String> IDS = Arrays.asList(new String[] { "search", "searchGrid", "header", "facets",
+			"navigation" });
 
 	private static Date lastSolrUpdate;
 	private static List<ContributorItem> contributorEntries;
 	private volatile static Calendar lastCheck;
 
-	@RequestMapping({"/template.html"})
+	@RequestMapping({ "/template.html" })
 	public ModelAndView templateHtml(
-		@RequestParam(value = "id", required = false, defaultValue="searchGrid") String id,
-		HttpServletRequest request,
-		HttpServletResponse response,
-		Locale locale
-	) {
+			@RequestParam(value = "id", required = false, defaultValue = "searchGrid") String id,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		if (StringUtils.isBlank(id) || !IDS.contains(id)) {
 			id = "searchGrid";
 		}
@@ -107,7 +104,7 @@ public class WidgetController {
 			model.setEmbeddedLogo("");
 			model.setRswUserId("");
 			model.setRswDefqry("");
-			model.setRefinements(new String[]{});
+			model.setRefinements(new String[] {});
 			model.setStart(1);
 			model.setRows(1);
 			model.setQuery("fake");
@@ -128,12 +125,8 @@ public class WidgetController {
 		return page;
 	}
 
-	@RequestMapping({"/widget/editor.html"})
-	public ModelAndView editWidget(
-		HttpServletRequest request,
-		HttpServletResponse response,
-		Locale locale
-	) {
+	@RequestMapping({ "/widget/editor.html" })
+	public ModelAndView editWidget(HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		Injector injector = new Injector(request, response, locale);
 		SearchWidgetEditorPage<ContributorItem> model = new SearchWidgetEditorPage<ContributorItem>();
 		injector.injectProperties(model);
@@ -148,25 +141,26 @@ public class WidgetController {
 				for (Count provider : providers) {
 					try {
 						String query = StringEscapeUtils.escapeXml(String.format(
-							"%s/search.html?query=*:*&qf=PROVIDER:%s",
-							portalServer, SitemapController.convertProviderToUrlParameter(provider.getName())));
-						ContributorItem contributorItem = new ContributorItem(query,
-							provider.getName(), provider.getCount(), portalServer);
+								"%s/search.html?query=*:*&qf=PROVIDER:%s", portalServer,
+								SitemapController.convertProviderToUrlParameter(provider.getName())));
+						ContributorItem contributorItem = new ContributorItem(query, provider.getName(),
+								provider.getCount(), portalServer);
 
 						List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 
-						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService, "DATA_PROVIDER",
-							"*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
+						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService,
+								"DATA_PROVIDER", "*:*", new String[] { "PROVIDER:\"" + provider.getName() + "\"" });
 						for (Count dataProvider : rawDataProviders) {
 							if (dataProvider.getCount() > 0) {
-								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider.getName(), dataProvider.getCount()));
+								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider
+										.getName(), dataProvider.getCount()));
 							}
 						}
 
 						contributorItem.setDataProviders(dataProviders);
 						contributorEntries.add(contributorItem);
 					} catch (UnsupportedEncodingException e) {
-						log.warning(e.getMessage() + " on " + provider.getName());
+						log.warn(e.getMessage() + " on " + provider.getName());
 					}
 				}
 			} catch (SolrTypeException e1) {
@@ -184,7 +178,7 @@ public class WidgetController {
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 		BriefBeanImpl bean = new BriefBeanImpl();
 		bean.setId("xxx");
-		bean.setDocType(new String[]{"TEXT"});
+		bean.setDocType(new String[] { "TEXT" });
 		List<BriefBean> beans = new ArrayList<BriefBean>();
 		beans.add(bean);
 
@@ -206,10 +200,10 @@ public class WidgetController {
 		briefBeanView.setPagination(pagination);
 
 		// set search filters
-		briefBeanView.makeFilters(query, new HashMap<String, String[]>(){
+		briefBeanView.makeFilters(query, new HashMap<String, String[]>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("q", new String[]{"fake"});
+				put("q", new String[] { "fake" });
 			}
 		});
 
@@ -220,10 +214,9 @@ public class WidgetController {
 		// check it once a day
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addDays(new Date(), -1));
 		if (lastCheck == null || lastCheck.before(timeout)) {
-			log.info(String.format("%s requesting solr outdated (timeout: %s, lastCheck: %s)",
-					Thread.currentThread().getName(),
-					timeout.getTime().toString(),
-					(lastCheck == null ? "null" : lastCheck.getTime().toString())));
+			log.info(String.format("%s requesting solr outdated (timeout: %s, lastCheck: %s)", Thread.currentThread()
+					.getName(), timeout.getTime().toString(), (lastCheck == null ? "null" : lastCheck.getTime()
+					.toString())));
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
@@ -231,9 +224,9 @@ public class WidgetController {
 				actualSolrUpdate = searchService.getLastSolrUpdate();
 				log.info("Solr update time checked");
 			} catch (SolrServerException e) {
-				log.severe("SolrServerException " + e.getLocalizedMessage());
+				log.error("SolrServerException " + e.getLocalizedMessage());
 			} catch (IOException e) {
-				log.severe("IOException " + e.getLocalizedMessage());
+				log.error("IOException " + e.getLocalizedMessage());
 			}
 
 			if (actualSolrUpdate == null) {

@@ -3,7 +3,6 @@ package eu.europeana.portal2.web.controllers.user;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -26,15 +26,16 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.exception.ProblemType;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ChangePasswordPage;
 import eu.europeana.portal2.web.presentation.model.validation.ChangePasswordPageValidator;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * This Controller allows people to change their passwords
@@ -46,19 +47,23 @@ import eu.europeana.portal2.web.util.Injector;
 @RequestMapping("/change-password.html")
 public class ChangePasswordController {
 
-	@Resource(name="corelib_web_emailService") private EmailService emailService;
+	@Log
+	private Logger log;
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Resource(name = "corelib_web_emailService")
+	private EmailService emailService;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name="corelib_db_tokenService") private TokenService tokenService;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource(name = "corelib_db_tokenService")
+	private TokenService tokenService;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
-
-	// @Autowired @Qualifier("emailSenderForPasswordChangeNotify") private EmailSender notifyEmailSender;
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -66,13 +71,9 @@ public class ChangePasswordController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView getMethod(
-			@RequestParam("token") String tokenKey,
-			@ModelAttribute("model") ChangePasswordPage model,
-			HttpServletRequest request, 
-			HttpServletResponse response, 
-			Locale locale
-				) throws Exception {
+	protected ModelAndView getMethod(@RequestParam("token") String tokenKey,
+			@ModelAttribute("model") ChangePasswordPage model, HttpServletRequest request,
+			HttpServletResponse response, Locale locale) throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		log.info("=========== change-password.html POST =================");
 		injector.injectProperties(model);
@@ -97,18 +98,13 @@ public class ChangePasswordController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView post(
-			@Valid @ModelAttribute("model") ChangePasswordPage model,
-			BindingResult result,
-			HttpServletRequest request, 
-			HttpServletResponse response, 
-			Locale locale)
-					throws Exception {
+	protected ModelAndView post(@Valid @ModelAttribute("model") ChangePasswordPage model, BindingResult result,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		log.info("=========== change-password.html POST =================");
 		injector.injectProperties(model);
 		if (result.hasErrors()) {
-			log.severe("The change password form has errors");
+			log.error("The change password form has errors");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_FAILURE);
 			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
 			injector.postHandle(this, page);
@@ -118,7 +114,7 @@ public class ChangePasswordController {
 		// token is validated in handleRequestInternal
 		Token token = tokenService.findByID(model.getToken());
 		if (token == null) {
-			log.severe("Expected to find token.");
+			log.error("Expected to find token.");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find token.");
 		}
@@ -126,7 +122,7 @@ public class ChangePasswordController {
 		// don't use email from the form. use token.
 		User user = userService.findByEmail(token.getEmail());
 		if (user == null) {
-			log.severe("Expected to find the user.");
+			log.error("Expected to find the user.");
 			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find user for " + token.getEmail());
 		}
@@ -154,7 +150,7 @@ public class ChangePasswordController {
 			// notifyEmailSender.sendEmail(model);
 			// emailService.sendFeedback(email, feedback)
 		} catch (Exception e) {
-			log.warning("Unable to send email to " + user.getEmail() + ": " + e.getLocalizedMessage());
+			log.warn("Unable to send email to " + user.getEmail() + ": " + e.getLocalizedMessage());
 		}
 	}
 }

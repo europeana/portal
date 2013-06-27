@@ -58,10 +58,8 @@ import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
 
-	/**
-	 * 
-	 */
 	private static final Map<String, String> IMAGE_FIELDS = new HashMap<String, String>();
+	
 	static {{
 		IMAGE_FIELDS.put("EdmIsShownBy", "edm:isShownBy");
 		IMAGE_FIELDS.put("EdmHasView", "edm:hasView");
@@ -165,8 +163,6 @@ public class FullDocPage extends FullDocPreparation {
 			} else if (hasShownAt && !StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])) {
 				lightboxRef = shortcut.get("EdmIsShownAt")[0];
 				lightboxRefField = "edm:isShownAt";
-			} else {
-				log.warning("No EdmIsShownBy/EdmIsShownAt");
 			}
 
 			lightboxRefChecked = true;

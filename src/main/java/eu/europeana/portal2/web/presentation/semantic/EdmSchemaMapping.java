@@ -6,11 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class EdmSchemaMapping {
-
-	protected final static Logger log = Logger.getLogger(EdmSchemaMapping.class.getCanonicalName());
 
 	private static final List<String> mapNames = Arrays.asList(
 		new String[]{"ProvidedCHO", "WebResource", "Agent", "Place", "Timespan",

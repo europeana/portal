@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
@@ -21,8 +20,6 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  * @author peter.kiraly@kb.nl
  */
 public class FullBeanShortcut {
-
-	private final Logger log = Logger.getLogger(FullBeanShortcut.class.getCanonicalName());
 
 	private FullBeanImpl document;
 

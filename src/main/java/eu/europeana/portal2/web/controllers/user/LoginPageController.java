@@ -1,13 +1,13 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,42 +17,45 @@ import eu.europeana.corelib.db.service.TokenService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
-import eu.europeana.portal2.web.util.ClickStreamLogger;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class LoginPageController {
 
-	@Resource(name="corelib_web_emailService") private EmailService emailService;
+	@Log
+	private Logger log;
 
-	@Resource(name="corelib_db_userService") private UserService userService;
+	@Resource(name = "corelib_web_emailService")
+	private EmailService emailService;
 
-	@Resource(name="configurationService") private Configuration config;
+	@Resource(name = "corelib_db_userService")
+	private UserService userService;
 
-	@Resource(name="corelib_db_tokenService") private TokenService tokenService;
+	@Resource(name = "configurationService")
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource(name = "corelib_db_tokenService")
+	private TokenService tokenService;
 
-	private final Logger log = Logger.getLogger(getClass().getName());
+	@Resource
+	private ClickStreamLogger clickStreamLogger;
 
 	private static final String REGISTER = "Register";
 	private static final String REGISTER_API = "RegisterAPI";
 	private static final String REQUEST = "Request";
 
 	@RequestMapping("/login.html")
-	public ModelAndView handle(
-			@RequestParam(value = "email", required = false) String email,
+	public ModelAndView handle(@RequestParam(value = "email", required = false) String email,
 			@RequestParam(value = "requested_action", required = false) String requestedAction,
-			@RequestParam(value = "theme", required = false, defaultValue="") String theme,
-			HttpServletRequest request, 
-			HttpServletResponse response, 
-			Locale locale) 
-					throws Exception {
+			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		Injector injector = new Injector(request, response, locale);
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
@@ -80,16 +83,16 @@ public class LoginPageController {
 
 			// Register for API
 			else if (REGISTER_API.equals(requestedAction)) {
-//				if (!ControllerUtil.validEmailAddress(email)) {
-//					model.setFailureFormat(true);
-//				//} else if (emailExists(email)) {
-//				//	model.setFailureExists(true);
-//				} else {
-					Token token = tokenService.create(email);
-					String url = baseUrl + "/register-api.html";
-					emailService.sendToken(token, url);
-					model.setSuccess(true);
-//				}
+				// if (!ControllerUtil.validEmailAddress(email)) {
+				// model.setFailureFormat(true);
+				// //} else if (emailExists(email)) {
+				// // model.setFailureExists(true);
+				// } else {
+				Token token = tokenService.create(email);
+				String url = baseUrl + "/register-api.html";
+				emailService.sendToken(token, url);
+				model.setSuccess(true);
+				// }
 			}
 
 			// Forgot Password
