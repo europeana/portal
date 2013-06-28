@@ -1,14 +1,14 @@
-var AccordionTab = function (elIn, parentIn, indexIn) {
+var AccordionTab = function (elIn, parentIn, indexIn, fnDisabledClick) {
 	var self          = this;
 	self.el           = elIn;
-	self.a            = self.el.find("a");
+	self.a            = self.el.children('a');
 	self.index        = indexIn;
 	self.parent       = parentIn;
 
 	var open = function () {
-		self.parent.el.find('.is-open').removeClass('is-open');
+		self.parent.el.find('.content.is-open').removeClass('is-open');
 		self.parent.el.find('.active').removeClass('active');
-		self.a.next().addClass('is-open');
+		self.a.next('.content').addClass('is-open');
 		self.el.addClass('active');	
 
 		self.parent.selectionMade(self.index, self.el.attr('id'), self.a.attr('href') );
@@ -20,6 +20,9 @@ var AccordionTab = function (elIn, parentIn, indexIn) {
 		console.log("self.index " + self.index + ", self.disabledTabs " + self.parent.disabledTabs + " -> " + JSON.stringify(self.parent.disabledTabs) )
 		if(self.parent.disabledTabs.length){
 			if(self.parent.disabledTabs.indexOf(self.index)>-1){
+				if(fnDisabledClick){
+					fnDisabledClick();
+				}
 				return;
 			}
 		}
@@ -38,7 +41,7 @@ var AccordionTab = function (elIn, parentIn, indexIn) {
 };
 	
 
-var AccordionTabs = function(elIn, callbackIn, hash){
+var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 	var self		= this;
 	var allTabs		= [];
 	
@@ -58,7 +61,7 @@ var AccordionTabs = function(elIn, callbackIn, hash){
 	};
 
 	self.el.find('.section').each(function (i, ob) {
-		allTabs[allTabs.length] = new AccordionTab($(ob), self, i);
+		allTabs[allTabs.length] = new AccordionTab($(ob), self, i, fnDisabledClick);
 	});
 		
 	self.tabContent = $('<div class="tab_content">').appendTo(self.el);

@@ -68,6 +68,7 @@
 
 		<c:when test="${model.pageName == 'widget/editor.html'}">
 			<link rel="stylesheet" href="/${branding}/css/accordion-tabs2.css" />
+			<link rel="stylesheet" href="/${branding}/css/EuMultiSelect.css" />
 		</c:when>
 		
 		
@@ -130,6 +131,7 @@
 		<c:when test="${model.pageName == 'staticpage.html'}">
 			<link rel="stylesheet" href="/${branding}/css/staticpages.css" />
 		</c:when>
+		
 	</c:choose>
 
 	<!--[if IE 8]><link rel="stylesheet" href="/${branding}/css/ie8.css" /><![endif]-->

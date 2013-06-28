@@ -22,7 +22,8 @@
 }
 
 
-.accordion-tabs .section a{
+
+.accordion-tabs>.section>a{
 	display:			block;
 	padding:			0.25em 1em;
 	text-decoration:	none;

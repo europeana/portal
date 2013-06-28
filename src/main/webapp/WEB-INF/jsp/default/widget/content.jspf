@@ -14,6 +14,41 @@
 		display:		none;
 	}
 	
+	.data-providers,
+	.outer-list{
+		list-style:		none;
+		padding:		0;
+		margin:			0;
+	}
+	
+	/* checkboxes */
+	
+	.removeLink{
+		background-color:	#dedede;
+		float:				left;
+		line-height:		1.2em;
+		margin:				0.25em;
+		max-height:			2.8em;
+		max-width:			9.4em;
+		overflow:			hidden;
+		padding:			0.2em;		
+		-moz-box-sizing:	border-box;
+		-webkit-box-sizing:	border-box;
+		box-sizing:			border-box;
+		word-wrap:			break-word; 
+	}
+
+	
+	.data-providers{
+		display:		none;
+	}
+	
+	.data-providers li {
+		list-style:		none;
+		margin-left:	1.5em;
+	}
+	
+	
 	#wizard-tabs .next.disabled{
 		background-color:   #ddd !important;
 		background: 		0;
@@ -43,9 +78,17 @@
 		height:				100%;
 	}
 	
+	
+	/* Allow select components to overrun the content area */
+	#wizard-tabs .content,
+	#wizard-tabs .content-inner{
+		overflow:visible;
+	}
+
+	
 	@media only screen and ( min-width:48em ){
 		#wizard-tabs{
-			height:10em;
+			height:25em;
 			margin-bottom: 4em;
 		}
 		
@@ -63,6 +106,7 @@
 
 	<h2><spring:message code="wizard_heading_t"/></h2>
 
+	
 	<div id="wizard-tabs">
 	
 		<div class="section" id="tab-1">
@@ -70,7 +114,50 @@
 			<div class="content">
 				<div class="content-inner">				
 					<spring:message code="wizard_tab1_content1_t"/> 
-					<input type="text" id="step1input"/>
+					
+					<select id="content-provider" name="content-provider" class="mandatory">
+						<option value="0">Please select...</option>
+						<option value="1">option 1</option>
+						<option value="2">option 2</option>
+						<option value="3">option 3</option>
+					</select>
+					
+					<div id="data-providers-wrapper" style="max-height:8em; overflow:auto">
+					    <c:set var="toggle_providers" value=""/>
+					    <ul class="outer-list">
+					    
+					      <c:forEach items="${model.results}" var="entry" varStatus="status1">
+					        <c:choose>
+					          <c:when test="${entry.dataProvidersListed}">
+					            <c:set var="toggle_providers" value=' class="icon-arrow-2-after"'/>
+					          </c:when>
+					          <c:otherwise>
+					            <c:set var="toggle_providers" value=' class="no-children"'/>
+					          </c:otherwise>
+					        </c:choose>
+					        <li>
+					          <!--a href="${entry.loc}"${toggle_providers}><input type="checkbox"/>${entry.name} (${entry.count})</a-->
+					          <a href="#"${toggle_providers}><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+					          <ul class="data-providers">
+					            <li>
+					            	<a href="#"><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+					            </li>
+					            
+					            <c:if test="${entry.dataProvidersListed}">
+					              <c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
+
+					                <li><a href="#" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
+					              </c:forEach>
+					            </c:if>
+					            
+					          </ul>
+					        </li>
+					      </c:forEach>
+					      
+					    </ul>
+					</div>
+					
+					
 					<input type="button" class="deans-button-1 next" value="${buttonText}" />
 				</div>
 			</div>
@@ -83,12 +170,10 @@
 			
 					<spring:message code="wizard_tab2_content1_t"/>
 					<br> 
-					<select>
-						<option value="">Please select...</option>
-						<option value="1">option 1</option>
-						<option value="2">option 2</option>
-						<option value="3">option 3</option>
-					</select>
+					<input type="text" id="step1input" class="mandatory"/>
+					<br> 
+					<br> 
+					<br> 
 					<input type="button" class="deans-button-1 next" value="${buttonText}" />
 					
 				</div>
@@ -102,7 +187,7 @@
 			
 					<spring:message code="wizard_tab3_content1_t"/>
 					<br> 
-					<input type="text" id="step3input"/>
+					<input type="text" id="step3input" class="mandatory"/>
 					<input type="button" class="deans-button-1 next" value="${buttonText}" />
 				</div>
 			</div>
@@ -115,7 +200,7 @@
 
 					<spring:message code="wizard_tab4_content1_t"/>
 					<br> 
-					<input type="text" id="step4input"/>
+					<input type="text" id="step4input" class="mandatory"/>
 					<input type="button" class="deans-button-1 next" value="${buttonText}" />
 
 				</div>
@@ -128,8 +213,20 @@
 				<div class="content-inner">				
 
 					<spring:message code="wizard_tab5_content1_t"/>
-					<br> 
-					<input type="text" id="step5input"/>
+					
+					Paste these dependencies into the head:
+					<br/>
+					<br/>
+					&lt;script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" &gt;&lt;/script&gt;
+					<br/>
+					&lt;script type="text/javascript" src="http://test.portal2.eanadev.org/portal/themes/default/js/js/utils.js"&gt;&lt;/script&gt;
+					<br/>
+					&lt;script type="text/javascript" src="http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/min/search-widget-all.min.js"&gt;&lt;/script&gt;
+					<br/>
+					<br/>
+					And include the container:
+										
+
 	
 				</div>
 			</div>
