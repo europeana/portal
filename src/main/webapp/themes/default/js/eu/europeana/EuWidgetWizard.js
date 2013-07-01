@@ -133,6 +133,9 @@ var EuWidgetWizard = function(cmpIn, options){
 			},
 			
 			init: function(){
+				
+				// checkboxes and collapsibility
+				
 				var change = function(e){
 					var cb       = e.target ? $(e.target) : $(e);
 					var checked  = cb.prop('checked');
@@ -159,12 +162,37 @@ var EuWidgetWizard = function(cmpIn, options){
 					change(cb);
 				});
 				
-			  $('.outer-list').show();
+				// filter
+				
+			   	$('#content-provider-filter-filter').keyup( function(e){
+			    	var val =  $(this).val().toUpperCase();
+			    	if(val.length > 0){
+			    		var re = new RegExp('^' + val + '[A-Za-z\\d\\s]*');
+			            $('#wizard-tabs .outer-list .icon-arrow-2-after span').add('#wizard-tabs .no-children').each(function(i, ob){
+			            	var text = $(ob).html().toUpperCase();
+			            	var item = $(ob).closest('li');
+			            	
+			            	if(re.test(text)){
+			            		console.log("match: " + text );
+			            		item.show();
+			            	}
+			            	else{
+			            		item.hide();
+			            	}
+			            });    		
+			    	}
+			    	else{
+			            $('.icon-arrow-2-after span').add('.no-children').closest('li').show();    		
+			    	}
+
+			    } );
+				
+				$('.outer-list').show();
 			}
 		};
 		eu_europeana_providers.init();
 		
-		new EuMultiSelect( $('[name=content-provider]') ).init();
+		//new EuMultiSelect( $('[name=content-provider]') ).init();
 	};
 	
 	
