@@ -125,9 +125,9 @@ var searchWidget = function(options){
     };
 
     
-    var doSearch = function(startParam){
-
-    	var url = buildUrl(startParam);
+    var doSearch = function(startParam, query){
+    	
+    	var url = buildUrl(startParam, query);
        
         if(typeof url != 'undefined' && url.length){
         	
@@ -149,19 +149,25 @@ var searchWidget = function(options){
     };
 
     // build search param from url-fragment hrefs.  @startParam set to 1 if not specified
-    var buildUrl = function(startParam){
+    var buildUrl = function(startParam, query){
 
         var term = self.q.val();
         if (!term) {
             return '';
         }
-        var url = searchUrl + '&query=' + term;
-
+        
+        var url = query ? searchUrl + '&' + query : searchUrl + '&query=' + term;
+        
         // params
         
         url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
         url += '&start=' + (startParam ? startParam : 1);
 
+        if(query){
+        	console.log("return the pre-set query");
+        	return url;
+        }
+        
         // refinements & facets read from hidden inputs
         
         container.find('#refine-search-form > input').each(function(i, ob){
@@ -356,6 +362,22 @@ var searchWidget = function(options){
             		// 1st link cuts all susequent
             		filter.find('a:first').attr('href', ob.href);  
             		filter.find('a:first').html(ob.display); 
+            		filter.find('a:first').click(function(e){
+
+            			// remove all hidden fields occuring after the current filter / uncheck any checkboxes.
+            			$('#refine-search-form').find('input[type=hidden]').each(function(iFilter, obFilter){
+            				if(iFilter >= i){
+            					var settingCbs = $('input[value="' + $(this).val() + '"]');
+            					console.log("settingCbs = " + settingCbs.length );
+            					settingCbs.prop('checked', false);
+            					$(this).remove();
+            				}
+            			});
+            			doSearch(self.resMenu1.getActive(), ob.href);
+
+            			e.preventDefault();
+            			return;
+            		}); 
             		
             		// 2nd link removes this
             		var linkRemove = filter.find('a:nth-child(2)');  
@@ -385,7 +407,7 @@ var searchWidget = function(options){
 
     var capitalise = function(str){
     	return (str.substr(0,1).toUpperCase() + str.substr(1).toLowerCase() ).replace(/_/g, ' ');
-    }
+    };
     
 	var createCollapsibleSection = function(ob, fnGetItems, heading){
         var accessibility =  new EuAccessibility(heading, fnGetItems);
