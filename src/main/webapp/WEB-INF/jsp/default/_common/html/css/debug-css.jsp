@@ -68,7 +68,6 @@
 
 		<c:when test="${model.pageName == 'widget/editor.html'}">
 			<link rel="stylesheet" href="/${branding}/css/accordion-tabs2.css" />
-			<link rel="stylesheet" href="/${branding}/css/EuMultiSelect.css" />
 		</c:when>
 		
 		
