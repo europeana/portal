@@ -1,5 +1,5 @@
 
-var searchWidget = function(options){
+var searchWidget = function(config){
 
     var self                    = this;
     var container               = false;
@@ -7,15 +7,34 @@ var searchWidget = function(options){
     var facetTemplate           = false;
     var filterTemplate          = false;
 
-    var debug                   = false;	// true sets localhost urls and uncompressed js
-
+    var debug                   = true;	// true sets localhost urls and uncompressed js
+    var showFacets				= false;
+    
+    if( typeof config != 'undefined'){
+    	console.log("config supplied: " + JSON.stringify(config) );
+    	
+    	/* 
+    	 * 
+    	 * Params object can contain:
+    	 * 
+    	 *  TYPE
+    	 *  COPYRIGHT
+    	 *  LANGUAGE
+    	 *  PROVIDER
+    	 * 
+    	 * 
+    	 */
+    	self.config = config;
+    	
+    }
+    
     var addKeywordTemplate      = false;
     // TODO:
     // move wskey and URLs to an external .jsp generated file, in order to 
     // 1) generate URLs dinamically
     // 2) hide wskey, and use a distinct wskey
     var searchUrl               = 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
-    var markupUrl               = debug ? 'http://localhost:8081/portal/template.html?id=search' : 'http://test.portal2.eanadev.org/portal/template.html?id=search';
+    var markupUrl               = debug ? 'http://localhost:8081/portal/template.html?id=search&showFacets=' + showFacets : 'http://test.portal2.eanadev.org/portal/template.html?id=search&showFacets=' + showFacets;
     var cssUrl                  = debug ? 'http://localhost:8081/portal/themes/default/css/' : 'http://test.portal2.eanadev.org/portal/themes/default/css/';
     var responsiveContainersUrl = debug ? 'http://localhost:8081/portal/themes/default/js/eu/europeana/responsive-containers.js' : 'http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
 
@@ -24,7 +43,8 @@ var searchWidget = function(options){
     var defaultRows             = 6;
     var pagination              = false;
     var paginationData          = {};
-
+    
+    
     // get markup from portal
     self.load = function(){
        	$.holdReady(true);
@@ -56,7 +76,7 @@ var searchWidget = function(options){
 
         setupQuery();
         setupMenus();
-        setUpRefinements();
+        setUpRefinements(); // TODO
 
         pagination = new EuPagination($('.result-pagination'),
         	{
@@ -163,6 +183,7 @@ var searchWidget = function(options){
         url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
         url += '&start=' + (startParam ? startParam : 1);
 
+        // remove-filter links provide the url - return here if provided
         if(query){
         	console.log("return the pre-set query");
         	return url;
@@ -170,13 +191,23 @@ var searchWidget = function(options){
         
         // refinements & facets read from hidden inputs
         
-        container.find('#refine-search-form > input').each(function(i, ob){
-        	var urlFragment = $(ob).attr('value');
-        	if(urlFragment.indexOf(':')>0){
-        		urlFragment = urlFragment.split(':')[0] + ':' + '"' + encodeURI(urlFragment.split(':')[1] + '"');
+        if(showFacets){
+            container.find('#refine-search-form > input').each(function(i, ob){
+            	var urlFragment = $(ob).attr('value');
+            	if(urlFragment.indexOf(':')>0){
+            		urlFragment = urlFragment.split(':')[0] + ':' + '"' + encodeURI(urlFragment.split(':')[1] + '"');
+            	}
+            	url += '&' + urlFragment;
+            });        	
+        }
+        
+        if(self.config){
+        	if(self.config.qf){
+        		$.each(self.config.qf, function(i, ob){
+        			url += '&qf=' + ob;
+        		});
         	}
-        	url += '&' + urlFragment;
-        });
+        }
 
 		console.log('final search url: ' + url);
         return url;
@@ -564,6 +595,34 @@ var searchWidget = function(options){
         "search" : function(startParam){ doSearch(startParam); },
         "showRes" : function(data){ showRes(data); }
     };
-}();
+}( 	
+	function(){
+		var scripts    = document.getElementsByTagName('script');
+		var thisScript = scripts[scripts.length - 1];
+		var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
+
+		function parseQuery ( query ) {
+			var Params = new Object ();
+			if(!query) return Params; // return empty object
+			var Pairs = query.split('&');
+			for ( var i = 0; i < Pairs.length; i++ ) {
+				var KeyVal = Pairs[i].split('=');
+				if(!KeyVal || KeyVal.length != 2 ){
+					console.log("invalid parameter");
+					continue;
+				}
+				var key = unescape( KeyVal[0] );
+				var val = unescape( KeyVal[1] );
+				val = val.replace(/\+/g, ' ');
+				if(!Params[key]){
+					Params[key] = new Array ();
+				}
+				Params[key].push(val);
+			}
+			return Params;
+		};
+		return parseQuery( queryString );
+	}()
+  );
 
 searchWidget.load();

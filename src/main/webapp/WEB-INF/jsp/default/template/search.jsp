@@ -6,6 +6,8 @@
 --%>
 
 <c:set var="isSearchWidget" value="true"/>
+<c:set var="includeFacets" value="true"/>
+
 
 <c:choose>
 	<c:when test="${!empty param.noAjax}">

@@ -118,10 +118,11 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 		});
 		
+		
 		scripts.push({
 			file : 'EuWidgetWizard' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : ['AccordionTabs'],
+			dependencies : ['AccordionTabs', 'EuMenu'],
 			callback : function(){
 				new EuWidgetWizard(
 					$('#wizard-tabs'),

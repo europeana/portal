@@ -22,8 +22,8 @@ var EuWidgetWizard = function(cmpIn, options){
 	self.cmp          = cmpIn;
 	self.options      = options;
 	self.tabs         = false;
-	self.disabledTabs = [1, 2, 3, 4];
-		
+	self.disabledTabs = [];//[1, 2, 3, 4];
+
 	/* Flash a red border on the inputs that have to be filled before the next tab can open */
 	var disabledClick = function(){
 		var active = $('#' + self.tabs.getOpenTabId());
@@ -44,20 +44,23 @@ var EuWidgetWizard = function(cmpIn, options){
 		var allTabs  = self.tabs.getTabs();
 		var noTabs   = allTabs.length;
 		
-		$.each(allTabs, function(i, ob){
-			var inputs  = ob.getTabContent().find('input.mandatory').add(ob.getTabContent().find('select.mandatory'));
+		$.each(allTabs, function(i, tab){
+		
+			var content = tab.getTabContent();
+			var inputs  = content.find('input.mandatory').add(content.find('select.mandatory'));
+			
 			inputs.each(function(j, field){
 				if($(field).val().length == 0 ){
 					if(i+1 <= noTabs){
-						disabled.push(i+1);						
+						disabled.push(i+1);		
+						console.log("disable tab " + (i+1))
 					}
 				}
 			});
+
 		});
 		
 		self.disabledTabs = disabled;
-		
-		console.log("disabled tabs = " + JSON.stringify(  self.disabledTabs  ) );
 		
 		self.tabs.setDisabledTabs(self.disabledTabs); 
 		
@@ -71,6 +74,42 @@ var EuWidgetWizard = function(cmpIn, options){
 		$.each(disabled, function(i, ob){
 			$(  self.cmp.find('input.next')[ob-1]  ).addClass('disabled');
 		});
+		
+		// tab 3 search menu
+		new EuMenu( 
+			$("#search-menu-widget"),
+			{
+				"fn_item": function(self){
+				},
+
+				"fn_init": function(self){
+					/*
+					var input		= $('#query-input');
+					var searchTerm	= input.attr("valueForBackButton").replace("*:*", "");
+					self.cmp.find(".item a").each(function(i, ob){
+						var searchType = $(ob).attr("class");
+						
+						if(searchTerm.indexOf(searchType) == 0){
+						 	self.setLabel(searchType);
+							input.val( searchTerm.substr( searchType.length, searchTerm.length) );
+							self.setActive(searchType);
+						}
+					});
+					*/
+				},
+				
+				"fn_submit":function(self){
+					/*
+					var active	= self.cmp.find(".item.active a").attr("class");
+					var input	= $('#query-input');
+					input.val( (typeof active == "undefined" ? "" : active) + input.val());
+					*/
+				}
+			
+			}
+		).init();
+			
+		
 	};
 	
 	
@@ -83,8 +122,8 @@ var EuWidgetWizard = function(cmpIn, options){
 				false,
 				disabledClick
 		);
-		
-		self.tabs.setDisabledTabs(self.disabledTabs);
+	
+		setDisabledTabs();
 		
 		self.cmp.find('input:not(.next)').val('');
 		self.cmp.find('select').val('');
@@ -123,7 +162,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						var text = ob.next('span').html();
 						
 						removeLink.attr("title", text);
-						removeLink.html('&nbsp;' + text);
+						removeLink.html('<span>&nbsp;' + text + '</span>');
 						removeLink.click(function(){
 							ob.prop('checked', false);
 							removeLink.remove();
