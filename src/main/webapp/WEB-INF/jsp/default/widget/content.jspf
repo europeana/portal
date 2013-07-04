@@ -182,6 +182,10 @@
 </style>
 
 
+<script type="text/javascript">
+  var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/min/search-widget-all.min.js";
+</script>
+
 <div class="row widget-configuration">
 
 	<c:set var="buttonNextText"><spring:message code="wizard_next_t"/> &rarr;</c:set>
@@ -359,7 +363,10 @@
 					<br/>
 					<br/>
 					And include the container:
-										
+									
+					<textarea id="output" rows="7" style="width:100%">
+					</textarea>
+									
 
 	
 				</div>
