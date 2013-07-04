@@ -38,6 +38,22 @@ var EuWidgetWizard = function(cmpIn, options){
 		});
 	};
 	
+	var output = function(){
+		var result = searchWidgetUrl;
+		
+		$('.data-providers a input').each(function(i, ob){
+			if($(ob).prop('checked')){
+				var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
+				console.log("provider: ");
+				//result += (result.indexOf('?')>-1 ? '&' : '?') + 'qf=PROVIDER:' + ((name.indexOf(' ') > 0) ? '"' + name.replace(/\s/g, '+') + '"' : name);
+				result += (result.indexOf('?')>-1 ? '&' : '?') + 'qf=PROVIDER:';
+				result += (name.indexOf(' ') > 0) ? '' + name.replace(/\s/g, '+') + '' : name;
+			}
+		});
+		
+		$('#output').html(result);
+	};
+	
 	/* Disable tabs that have unfilled inputs */
 	var setDisabledTabs = function(){
 		var disabled = [];
@@ -53,7 +69,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				if($(field).val().length == 0 ){
 					if(i+1 <= noTabs){
 						disabled.push(i+1);		
-						console.log("disable tab " + (i+1))
+						console.log("disable tab " + (i+1));
 					}
 				}
 			});
@@ -118,6 +134,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		self.tabs = new AccordionTabs(
 				self.cmp,
 				function(){
+					output();
 				},
 				false,
 				disabledClick

@@ -13,6 +13,10 @@ var searchWidget = function(config){
     if( typeof config != 'undefined'){
     	console.log("config supplied: " + JSON.stringify(config) );
     	
+//    	config supplied: {"qf":["PROVIDER:Athena","PROVIDER:Bildarchiv Foto Marburg","PROVIDER:Progetto ArtPast- CulturaItalia"]}
+  ///  	search...aItalia (line 2)
+
+    	
     	/* 
     	 * 
     	 * Params object can contain:
@@ -201,10 +205,20 @@ var searchWidget = function(config){
             });        	
         }
         
+        
+        // config supplied: {"qf":["PROVIDER:Athena","PROVIDER:Bildarchiv Foto Marburg","PROVIDER:Progetto ArtPast- CulturaItalia"]}
+
+        
         if(self.config){
         	if(self.config.qf){
         		$.each(self.config.qf, function(i, ob){
-        			url += '&qf=' + ob;
+        			
+        			console.log("Full ob = " + JSON.stringify(ob) + ", "  + ob.length);
+        			
+        			url += '&qf=';
+        			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
+        			
+        			console.log('append to url: ' + url);
         		});
         	}
         }
