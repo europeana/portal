@@ -273,7 +273,7 @@ public class ObjectController {
 	 */
 	private FullBean getFullBean(String collectionId, String recordId) {
 		FullBean fullBean = null;
-		String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
+		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
 		try {
 			fullBean = searchService.findById(europeanaId);
 			if (fullBean == null) {
@@ -290,7 +290,7 @@ public class ObjectController {
 	}
 
 	private List<BriefBean> getMoreLikeThis(String collectionId, String recordId, UrlAwareData<?> model) {
-		String europeanaId = EuropeanaUriUtils.createEuropeanaId(collectionId, recordId);
+		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
 		List<BriefBean> result = null;
 		try {
 			result = searchService.findMoreLikeThis(europeanaId);
