@@ -633,6 +633,7 @@ var searchWidget = function(config){
 				}
 				Params[key].push(val);
 			}
+			
 			return Params;
 		};
 		return parseQuery( queryString );

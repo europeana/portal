@@ -4,29 +4,49 @@
 		padding:	0.5em 0;	
 	}
 	
-	#wizard-tabs .previous,
-	#wizard-tabs .next,
-	#wizard-tabs .clear-sel{
+	#wizard-tabs .clear{
 		border:			0;
 		border-radius:	0.5em;
 		padding:		0.5em;
 	}
 
+
 	#wizard-tabs .previous,
 	#wizard-tabs .next{
-		position:		absolute;
-		bottom:			-7em;
-		left:			2em;
-		display:		none;
+		border:			0;
+		border-radius:	0.5em 0.5em 0 0;
+		padding:		0.5em;
+		z-index:		1;
+	}
+
+
+
+	#wizard-tabs .previous,
+	#wizard-tabs .next{
+		position:		fixed;
+		top:			50%;
+		left:			1em;
+		right:			auto;
+		
+		transform:					rotate(90deg);
+		-webkit-transform:			rotate(90deg);
+		transform-origin:			left;		
+		-webkit-transform-origin:	left;		
 	}
 	
 	#wizard-tabs .next{
-		bottom:			-7em;
-		right:			2em;
-		left:			auto;	
+		right:	1em;
+		left:	auto;
+		
+		transform:					rotate(270deg);
+		-webkit-transform:			rotate(270deg);
+		transform-origin:			right;
+		-webkit-transform-origin:	right;
+			
 	}
 	
-	#wizard-tabs .next.disabled{
+	#wizard-tabs .next.disabled,
+	#wizard-tabs .previous.disabled{
 		background-color:   #ddd !important;
 		background: 		0;
 		color:				#999 !important;
@@ -43,8 +63,11 @@
 		margin-bottom:	0.5em;
 	}
 	
-	.data-providers,
-	.outer-list{
+	ul.data-providers,
+	ul.outer-list,
+	ul.types,
+	ul.copyrights,
+	ul.languages{
 		list-style:		none;
 		padding:		0;
 		margin:			0;
@@ -137,17 +160,23 @@
 	
 	#data-providers-wrapper{
 		word-wrap:	break-word;
-		height:		8em;
+		height:		14em;
 		overflow:	auto;
 	}
-
-	.multi-select{
-		background-color: #F3F3F3;
+	
+	#search-options-wrapper{
+		word-wrap:	break-word;
+		height:		22em;
+		overflow:	auto;
 	}
 	
 
+	
+
 	.filter-wrapper{
+		display:		table-row;
 		margin:			auto;
+		margin-bottom:	1em;
 		width:			23em;
 		font-size:		1.2em;
 	}	
@@ -166,18 +195,66 @@
 		
 	}
 	
+	.content-inner{
+		display:table;
+	}
+	
 	.choices{
+		xxborder:		1px solid #999;
+		width:		100%;
+		height:		8em;
+		xxxdisplay:	table-row;
+		overflow:	hidden;
+		padding-top:	1em;
+	}
+	
+
+	.choices,
+	.choices .choice-content{
+		-moz-box-sizing:	border-box;
+		-webkit-box-sizing:	border-box;
+		box-sizing:			border-box;
+	
+	}
+
+	
+	.choices .choice-content{
 		border:		1px solid #999;
 		width:		100%;
-		height:		6em;
+		height:		100%;
 		overflow:	auto;
-		margin-top:	1em;	
+		xxmargin-top:	1em;
 	}
 	
 	#search-menu-widget{
 		border:	1px solid #e4e4e4;
 	}
 
+	@media only screen and ( min-width:	48em ){
+	
+	
+		#wizard-tabs .previous,
+		#wizard-tabs .next{
+			border-radius:	0.5em;
+			position:		absolute;
+			bottom:			-7em;
+			left:			2em;
+			top:			auto;
+			
+			transform:					rotate(0deg);
+			-webkit-transform:			rotate(0deg);
+			transform-origin:			left;
+			-webkit-transform-origin:	left;
+			
+		}
+		
+		#wizard-tabs .next{
+			bottom:			-7em;
+			right:			2em;
+			left:			auto;	
+		}
+		
+	}
 	
 </style>
 
@@ -189,7 +266,7 @@
 <div class="row widget-configuration">
 
 	<c:set var="buttonNextText"><spring:message code="wizard_next_t"/> &rarr;</c:set>
-	<c:set var="buttonPreviousText"><spring:message code="wizard_previous_t"/> &larr;</c:set>
+	<c:set var="buttonPreviousText">&larr; <spring:message code="wizard_previous_t"/></c:set>
 
 	<h2><spring:message code="wizard_heading_t"/></h2>
 
@@ -208,6 +285,8 @@
 					</p>
 				</div>
 			</div>
+			<input type="hidden" id="step1" class="mandatory"/>
+			
 		</div>
 
 		<div class="section"  id="tab-2">
@@ -221,10 +300,10 @@
 						<input id="default_query" /> 
 
 						<spring:message code="wizard_tab2_search_in_t"/>
-						
+
 						<div id="search-menu-widget" class="eu-menu" aria-hidden="true">
-						
-							<span class="hide-ilb-on-phones menu-label">&nbsp;</span>
+		
+							<span class="hide-ilb-on-phones menu-label"><spring:message code="Search_t" /></span>
 							<span class="icon-arrow-3 open-menu"></span>
 							<ul>
 								<li class="item">
@@ -232,66 +311,96 @@
 								</li>
 								<li class="item">
 									<a	href=""
-										class="title:"><spring:message code="FieldedSearchTitle_t" /></a>
+										class="title%3A"><spring:message code="FieldedSearchTitle_t" /></a>
 								</li>
 								<li class="item">
 									<a	href=""
-										class="who:"><spring:message code="FieldedSearchWho_t" /></a>
+										class="who%3A"><spring:message code="FieldedSearchWho_t" /></a>
 								</li>
 								<li class="item">
 									<a	href=""
-										class="what:"><spring:message code="FieldedSearchWhat_t" /></a>
+										class="what%3A"><spring:message code="FieldedSearchWhat_t" /></a>
 								</li>
 								<li class="item">
 									<a	href=""
-										class="when:"><spring:message code="FieldedSearchWhen_t" /></a>
+										class="when%3A"><spring:message code="FieldedSearchWhen_t" /></a>
 								</li>
 								<li class="item">
 									<a	href=""
-										class="where:"><spring:message code="FieldedSearchWhere_t" /></a>
+										class="where%3A"><spring:message code="FieldedSearchWhere_t" /></a>
 								</li>
 							</ul>
+							
 						</div>
+					
 					</div>
 					
 					<div class="para">
 						<spring:message code="wizard_tab2_search_include_t"/>
 					</div>
-			
-					<div class="para">
-						<button class="deans-button-1 clear-sel"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
-					</div>
-			
-					<spring:message code="wizard_tab2_content1_t"/>
-					<br> 
-					<input type="text" id="step1input" class="mandatory"/>
-					<br> 
-					<br> 
-					<br> 
-					<%--
-					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
-					 --%>
 					
+					<div id="search-options-wrapper">
+						
+						<div class="para">
+						
+							<c:set var="model_types">IMAGE,SOUND,TEXT,VIDEO</c:set>
+							<c:set var="model_copyrights">Public Domain marked (1093244),Free Access - Rights Reserved (174457), CC0 (64908),Restricted Access (1480),CC BY-NC-ND (818),Unknown copyright (427),CC BY (86),CC BY-NC-SA (6811)</c:set>
+							<c:set var="model_languages">English (26754),Español (26119),Français (11973),Yiddish (yi) (6789),Magyar (4182)</c:set>
+	
+	
+	
+							<ul class="types">
+								<c:forEach items="${model_types}" var="type">
+						        	<li><a><input type="checkbox" title="${type}"><span>${type}</span></a></li>
+								</c:forEach>
+							</ul>
+							
+							<div class="para">
+								<button class="deans-button-1 clear clear-types"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
+							</div>
+													
+	
+							<ul class="copyrights">
+								<c:forEach items="${model_copyrights}" var="copyright">
+						        	<li><a><input type="checkbox" title="${copyright}"><span>${copyright}</span></a></li>
+								</c:forEach>
+							</ul>
+							
+							<div class="para">
+								<button class="deans-button-1 clear clear-copyrights"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
+							</div>
+							
+							<ul class="languages">
+								<c:forEach items="${model_languages}" var="language">
+						        	<li><a><input type="checkbox" title="${language}"><span>${language}</span></a></li>
+								</c:forEach>
+							</ul>
+							
+							<div class="para">
+								<button class="deans-button-1 clear clear-languages"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
+							</div>
+						</div>
+										
+					</div>
 					
 				</div>
 			</div>
+			<input type="hidden" id="step2" class="mandatory"/>
+			
 		</div>
 
 		<div class="section" id="tab-3">
 			<a href="#step-3" title="title" /><spring:message code="wizard_tab3_heading_t"/></a>
 			<div class="content">
-				<div class="content-inner">				
-			
-					<spring:message code="wizard_tab3_content1_t"/>
-					<br> 
+				<div class="content-inner">
+								
 					<div class="filter-wrapper">
+						<spring:message code="wizard_tab3_content1_t"/>
 						<span class="filter-label icon-mag"></span>
 						<input class="filter" id="content-provider-filter-filter" style=""/>
 					</div>
 					
-				    <div class="multi-select"></div>
-					
-					<div id="data-providers-wrapper" style="height:8em; overflow:auto">
+					<div id="data-providers-wrapper">
 					    <c:set var="toggle_providers" value=""/>
 					    <ul class="outer-list">
 					    
@@ -305,15 +414,15 @@
 					          </c:otherwise>
 					        </c:choose>
 					        <li>
-					          <a href="#"${toggle_providers}><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+					          <a ${toggle_providers}><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
 					          <ul class="data-providers">
 					            <li>
-					            	<a href="#"><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+					            	<a><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
 					            </li>
 					            
 					            <c:if test="${entry.dataProvidersListed}">
 					              <c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
-					                <li><a href="#" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
+					                <li><a class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
 					              </c:forEach>
 					            </c:if>
 					            
@@ -324,9 +433,10 @@
 					    </ul>
 					</div>
 					
-					<div class="choices"></div>					
+					<div class="choices"><div class="choice-content"></div></div>					
 				</div>
 			</div>
+			<input type="hidden" id="step3" class="mandatory"/>
 		</div>
 
 		<div class="section" id="tab-4">
@@ -336,13 +446,10 @@
 
 					<spring:message code="wizard_tab4_content1_t"/>
 					<br> 
-					<input type="text" id="step4input" class="mandatory"/>
-					<%--
-					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
-					 --%>
 
 				</div>
 			</div>
+			<input type="hidden" id="step4" class="mandatory"/>
 		</div>
 
 		<div class="section"  id="tab-5">

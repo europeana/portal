@@ -46,14 +46,16 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 	var allTabs		= [];
 	
 	self.disabledTabs = [];
-	self.el			= elIn;
-	self.activeId	= '';
-	self.activeHash	= '';
-	self.callback	= callbackIn;
+	self.el			 = elIn;
+	self.activeId	 = '';
+	self.activeIndex = '';
+	self.activeHash	 = '';
+	self.callback	 = callbackIn;
 		
 	self.el.addClass('accordion-tabs');
 	self.selectionMade = function(index, id, hash){
 		self.activeId      = id;
+		self.activeIndex   = index;
 		self.activeHash    = hash;
 		if(self.callback){
 			self.callback(index, id, hash);
@@ -99,6 +101,9 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 	return {
 		getOpenTabId : function () {
 			return self.activeId;
+		},
+		getOpenTabIndex : function () {
+			return self.activeIndex;
 		},
 		openTab : function(hash){
 			alert("exposed openTab");
