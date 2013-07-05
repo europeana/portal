@@ -69,6 +69,10 @@ public class WidgetController {
 
 	private static Date lastSolrUpdate;
 	private static List<ContributorItem> contributorEntries;
+	private static List<Count> rights;
+	private static List<Count> types;
+	private static List<Count> languages;
+
 	private volatile static Calendar lastCheck;
 
 	@RequestMapping({ "/template.html" })
@@ -125,7 +129,7 @@ public class WidgetController {
 		return page;
 	}
 
-	@RequestMapping({ "/widget/editor.html" })
+	@RequestMapping({"/widget/editor.html"})
 	public ModelAndView editWidget(HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		Injector injector = new Injector(request, response, locale);
 		SearchWidgetEditorPage<ContributorItem> model = new SearchWidgetEditorPage<ContributorItem>();
@@ -149,7 +153,7 @@ public class WidgetController {
 						List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 
 						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService,
-								"DATA_PROVIDER", "*:*", new String[] { "PROVIDER:\"" + provider.getName() + "\"" });
+								"DATA_PROVIDER", "*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
 						for (Count dataProvider : rawDataProviders) {
 							if (dataProvider.getCount() > 0) {
 								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider
@@ -166,8 +170,33 @@ public class WidgetController {
 			} catch (SolrTypeException e1) {
 				e1.printStackTrace();
 			}
+
+			try {
+				rights = IngestionUtils.getCollectionsFromSolr(searchService, "RIGHTS", "*:*", null);
+			} catch (SolrTypeException e) {
+				rights = new ArrayList<Count>();
+				e.printStackTrace();
+			}
+
+			try {
+				types = IngestionUtils.getCollectionsFromSolr(searchService, "TYPE", "*:*", null);
+			} catch (SolrTypeException e) {
+				types = new ArrayList<Count>();
+				e.printStackTrace();
+			}
+
+			try {
+				languages = IngestionUtils.getCollectionsFromSolr(searchService, "LANGUAGE", "*:*", null);
+			} catch (SolrTypeException e) {
+				languages = new ArrayList<Count>();
+				e.printStackTrace();
+			}
 		}
-		model.setResults(contributorEntries);
+
+		model.setProviders(contributorEntries);
+		model.setRights(rights);
+		model.setTypes(types);
+		model.setLanguages(languages);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.WIDGET_EDITOR);
 		injector.postHandle(this, page);

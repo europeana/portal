@@ -1,15 +1,13 @@
 <style type="text/css">
-	
 	.widget-configuration h2{
 		padding:	0.5em 0;	
 	}
-	
+
 	#wizard-tabs .clear{
 		border:			0;
 		border-radius:	0.5em;
 		padding:		0.5em;
 	}
-
 
 	#wizard-tabs .previous,
 	#wizard-tabs .next{
@@ -18,8 +16,6 @@
 		padding:		0.5em;
 		z-index:		1;
 	}
-
-
 
 	#wizard-tabs .previous,
 	#wizard-tabs .next{
@@ -33,7 +29,7 @@
 		transform-origin:			left;		
 		-webkit-transform-origin:	left;		
 	}
-	
+
 	#wizard-tabs .next{
 		right:	1em;
 		left:	auto;
@@ -91,11 +87,11 @@
 		color:				red; 
 	}
 
-	.removeLink span{		
+	.removeLink span {
 		color:				#333; 
 	}
 	
-	.data-providers{
+	.data-providers {
 		display:		none;
 	}
 	
@@ -293,16 +289,16 @@
 			<a href="#step-2" title="title" /><spring:message code="wizard_tab2_heading_t"/></a>
 			<div class="content">
 				<div class="content-inner">
-						
+
 					<div class="para">
 						<spring:message code="wizard_tab2_search_for_t"/> 
-						
+
 						<input id="default_query" /> 
 
 						<spring:message code="wizard_tab2_search_in_t"/>
 
 						<div id="search-menu-widget" class="eu-menu" aria-hidden="true">
-		
+
 							<span class="hide-ilb-on-phones menu-label"><spring:message code="Search_t" /></span>
 							<span class="icon-arrow-3 open-menu"></span>
 							<ul>
@@ -404,7 +400,7 @@
 					    <c:set var="toggle_providers" value=""/>
 					    <ul class="outer-list">
 					    
-					      <c:forEach items="${model.results}" var="entry" varStatus="status1">
+					      <c:forEach items="${model.providers}" var="entry" varStatus="status1">
 					        <c:choose>
 					          <c:when test="${entry.dataProvidersListed}">
 					            <c:set var="toggle_providers" value=' class="icon-arrow-2-after"'/>
@@ -429,11 +425,28 @@
 					          </ul>
 					        </li>
 					      </c:forEach>
-					      
 					    </ul>
 					</div>
-					
-					<div class="choices"><div class="choice-content"></div></div>					
+
+					<ul>
+						<c:forEach items="${model.types}" var="entry" varStatus="status">
+							<li>${entry.name} (${entry.count})</li>
+						</c:forEach>
+					</ul>
+
+					<ul>
+						<c:forEach items="${model.rights}" var="entry" varStatus="status">
+							<li>${entry.name} (${entry.count})</li>
+						</c:forEach>
+					</ul>
+
+					<ul>
+						<c:forEach items="${model.languages}" var="entry" varStatus="status">
+							<li>${entry.name} (${entry.count})</li>
+						</c:forEach>
+					</ul>
+
+					<div class="choices"><div class="choice-content"></div></div>
 				</div>
 			</div>
 			<input type="hidden" id="step3" class="mandatory"/>
@@ -442,10 +455,10 @@
 		<div class="section" id="tab-4">
 			<a href="#step-4" title="title" /><spring:message code="wizard_tab4_heading_t"/></a>
 			<div class="content">
-				<div class="content-inner">				
+				<div class="content-inner">
 
 					<spring:message code="wizard_tab4_content1_t"/>
-					<br> 
+					<br>
 
 				</div>
 			</div>
