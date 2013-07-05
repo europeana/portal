@@ -428,7 +428,8 @@
 					    </ul>
 					</div>
 
-					<ul>
+					<%-- PETER'S MODEL --%>
+					<%--ul>
 						<c:forEach items="${model.types}" var="entry" varStatus="status">
 							<li>${entry.name} (${entry.count})</li>
 						</c:forEach>
@@ -444,7 +445,7 @@
 						<c:forEach items="${model.languages}" var="entry" varStatus="status">
 							<li>${entry.name} (${entry.count})</li>
 						</c:forEach>
-					</ul>
+					</ul--%>
 
 					<div class="choices"><div class="choice-content"></div></div>
 				</div>
