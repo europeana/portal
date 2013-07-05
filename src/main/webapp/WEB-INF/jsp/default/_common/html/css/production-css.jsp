@@ -70,8 +70,9 @@
 	</c:when>
 	
 	<c:when test="${model.pageName == 'widget/editor.html'}">
-		<link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" />
+		<link rel="stylesheet" href="/${branding}/css/accordion-tabs2.css" />
 	</c:when>
+
 	
 </c:choose>
 
