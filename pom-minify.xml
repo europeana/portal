@@ -1167,7 +1167,7 @@
 						<phase>process-resources</phase>
 						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
-							<jsSourceDir>/themes/default/js/js</jsSourceDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>utils.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
