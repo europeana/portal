@@ -12,10 +12,16 @@ to the .eot, .svg, .woff and .ttf in a filter or a local .htaccess file
 
 @font-face {
 	font-family: 'europeana';
+	/*
 	src: url('http://europeana.eu/portal/themes/default/images/europeana-font-files/europeana.eot?#') format('eot'),
 		url('http://europeana.eu/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'),
 		url('http://europeana.eu/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
 		url('http://europeana.eu/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
+	*/
+	src: url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.eot?#') format('eot'),
+		url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'),
+		url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
+		url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	color:red !important;
