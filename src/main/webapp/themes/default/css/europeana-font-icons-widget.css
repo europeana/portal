@@ -18,10 +18,10 @@ to the .eot, .svg, .woff and .ttf in a filter or a local .htaccess file
 		url('http://europeana.eu/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
 		url('http://europeana.eu/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
 	*/
-	src: url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.eot?#') format('eot'),
-		url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'),
-		url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
-		url('preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
+	src: url('http://preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.eot?#') format('eot'),
+		url('http://preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'),
+		url('http://preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
+		url('http://preview.europeana.eu/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	color:red !important;
