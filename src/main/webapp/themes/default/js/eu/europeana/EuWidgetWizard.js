@@ -81,6 +81,9 @@ var EuWidgetWizard = function(cmpIn, options){
 			});			
 		}
 		
+//		result = '<script type="text/javascript" src="' + result + '"></script>';
+	//	result = '<script type="text/javascript" src="' + result + '"></script>';
+		result = '&lt;script type="text/javascript" src="' + result + '"&gt;&lt;/script&gt;';
 		$('#output').html(result);
 	};
 	
