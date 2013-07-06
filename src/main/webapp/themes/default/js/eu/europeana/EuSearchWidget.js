@@ -1,5 +1,5 @@
 
-var searchWidget = function(config){
+fnSearchWidget = function(config){
 
     var self                    = this;
     var container               = false;
@@ -127,7 +127,7 @@ var searchWidget = function(config){
         	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	
            	$.getScript(responsiveContainersUrl, function() {
-           		console.log('got thne switch code');
+           		console.log('got the switch code');
         	});
 
         	
@@ -145,7 +145,6 @@ var searchWidget = function(config){
         
         // load jquery ui style
         $('head').append('<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css" type="text/css" />');
-
     };
 
     
@@ -536,7 +535,7 @@ var searchWidget = function(config){
 	        	}
 	        }
 	        catch(e){
-	        	alert(e);
+	        	console.log(e);
 	        }
             return false;
         });
@@ -609,35 +608,107 @@ var searchWidget = function(config){
         "search" : function(startParam){ doSearch(startParam); },
         "showRes" : function(data){ showRes(data); }
     };
-}( 	
-	function(){
-		var scripts    = document.getElementsByTagName('script');
-		var thisScript = scripts[scripts.length - 1];
-		var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
+};
 
-		function parseQuery ( query ) {
-			var Params = new Object ();
-			if(!query) return Params; // return empty object
-			var Pairs = query.split('&');
-			for ( var i = 0; i < Pairs.length; i++ ) {
-				var KeyVal = Pairs[i].split('=');
-				if(!KeyVal || KeyVal.length != 2 ){
-					console.log("invalid parameter");
-					continue;
-				}
-				var key = unescape( KeyVal[0] );
-				var val = unescape( KeyVal[1] );
-				val = val.replace(/\+/g, ' ');
-				if(!Params[key]){
-					Params[key] = new Array ();
-				}
-				Params[key].push(val);
+
+
+var theParams = function(){
+		
+	// read params
+	
+	var scripts    = document.getElementsByTagName('script');
+	var thisScript = scripts[scripts.length - 1];
+	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
+
+	function parseQuery ( query ) {
+		var Params = new Object ();
+		if(!query) return Params; // return empty object
+		var Pairs = query.split('&');
+		for ( var i = 0; i < Pairs.length; i++ ) {
+			var KeyVal = Pairs[i].split('=');
+			if(!KeyVal || KeyVal.length != 2 ){
+				console.log("invalid parameter");
+				continue;
 			}
-			
-			return Params;
-		};
-		return parseQuery( queryString );
-	}()
-  );
+			var key = unescape( KeyVal[0] );
+			var val = unescape( KeyVal[1] );
+			val = val.replace(/\+/g, ' ');
+			if(!Params[key]){
+				Params[key] = new Array ();
+			}
+			Params[key].push(val);
+		}
+		
+		return Params;
+	};
+	
+	// load js
+	return parseQuery( queryString );
+}();
 
-searchWidget.load();
+
+
+var searchWidget;
+var rootUrl = "http://localhost:8081/portal/themes/default/js/eu/europeana/";
+
+var withJQuery = function($){
+	var dependencies = [
+		'utils.js',
+		'EuAccessibility.js',
+		'EuMenu.js',
+		'ellipsis.js',
+		'collapsible_widget.js',
+		'collapsible.js',
+		'EuPagination.js',
+	]
+
+	function recursiveLoad(index){
+		if(dependencies.length > index){
+
+			$.ajax({
+				url: rootUrl + dependencies[index],
+				dataType: "script",
+				success: function(){
+					console.log('loaded ' + dependencies[index] + ', now get ' + (index+1));
+					recursiveLoad(index + 1);	
+				}
+			});
+		}
+		else{
+			searchWidget = fnSearchWidget(theParams);
+			searchWidget.load();
+		}
+	}
+	recursiveLoad(0);
+}
+
+if(typeof jQuery == "undefined"){
+	
+	var jq = document.createElement('script');
+	jq.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
+	jq.setAttribute('type', 'text/javascript');
+
+
+	if ( 'onload' in document || 'addEventListener' in window ) {
+		jq.onload = function() {
+			withJQuery($);
+		};
+		
+	}
+	else if ( 'onreadystatechange' in document ) {
+		jq.onreadystatechange = function () {
+			if ( jq.readyState === 'loaded' || jq.readyState === 'complete' ) {
+				withJQuery($);
+			}
+		};
+	}
+	
+	document.getElementsByTagName('body')[0].appendChild(jq);
+}
+else{
+	withJQuery(jQuery);	
+}
+
+
+
+

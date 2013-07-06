@@ -1197,7 +1197,7 @@
 					</execution>
 					
 					
-					<!-- Search Widjet js -->
+					<!-- Search Widget js -->
 					
 					<execution>
 						<id>minify-search-widget.js</id>
@@ -1205,19 +1205,10 @@
 						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>search-widget-all.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
+							<jsFinalFile>EuSearchWidget.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>							
 							<jsSourceIncludes>
-								<!-- this tool orders src files alphabetically - the jquery dependency has to be 1st (hence the "A_" prefix) -->
-								<jsSourceInclude>A_EuSearchWidgetJQuery.js</jsSourceInclude>
-								<jsSourceInclude>utils.js</jsSourceInclude>
-								<jsSourceInclude>EuAccessibility.js</jsSourceInclude>
-								<jsSourceInclude>EuMenu.js</jsSourceInclude>
-								<jsSourceInclude>ellipsis.js</jsSourceInclude>
-								<jsSourceInclude>collapsible_widget.js</jsSourceInclude>
-								<jsSourceInclude>collapsible.js</jsSourceInclude>
-								<jsSourceInclude>EuPagination.js</jsSourceInclude>
-								<jsSourceInclude>EuSearchWidget.js</jsSourceInclude>							
+								<jsSourceInclude>EuSearchWidget.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
