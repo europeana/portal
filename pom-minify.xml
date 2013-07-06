@@ -1057,6 +1057,23 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
+
+					<execution>
+						<id>minify-accordion-tabs3.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>accordion-tabs3.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>accordion-tabs3.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
 					
 					<execution>
 						<id>minify-widget-wizard.js</id>

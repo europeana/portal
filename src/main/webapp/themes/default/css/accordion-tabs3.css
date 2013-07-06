@@ -4,24 +4,21 @@
 	position:			relative;
 	padding:			0;
 	background-color:	#fff;
-	border-radius:		8px;
+	border-radius:		0.5em;
 	white-space:		nowrap;
 }
 
-.tab-header{
-	border:		1px solid #d6d6d6;
-	position:   relative;
-	z-index:    1;
-}
-
 .accordion-tabs .tab-header{
-	display:			block;
-	padding:			0.25em 1em;
-	text-decoration:	none;
-	color:				#2A85E8;
-	outline:			0;
-	border-radius:		0.5em;
+	border:			1px solid #d6d6d6;
+	border-radius:	0.5em;
+	color:			#2A85E8;
+	display:		block;
+	padding:		0.25em 1em;
 	margin-top:		0.5em;
+	outline:		0;
+	position:  		relative;
+	text-decoration:none;
+	z-index:    	1;
 }
 
 .accordion-tabs .tab-header :hover{
@@ -31,12 +28,24 @@
 
 .accordion-tabs .tab-header.active{
 	border-radius:	0.5em 0.5em 0 0;
-	xmargin-top:	0;
+}
+
+.accordion-tabs .tab-header.disabled{
+	background-color:	#e4e4e4;
 }
 
 .accordion-tabs .content{
-	xxxoverflow:	hidden; 
 	padding:	1em;
+}
+
+/* clearfix */
+.accordion-tabs:after { 
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	height: 0;
+	clear:both;
 }
 
 
@@ -65,7 +74,6 @@
 }
 
 
-
 @media only screen and ( min-width:48em ){
 
 	.accordion-tabs{
@@ -86,7 +94,7 @@
 
 	.accordion-tabs .section{
 		border-top:						1px solid #d6d6d6;
-		border-radius:					0 0.5em 0 0;
+		border-radius:					0 0.5em 0.5em 0;
 		box-shadow:						7px 0 4px -5px #C3C3C3;
 		background-color:				white;
 		float:							left;

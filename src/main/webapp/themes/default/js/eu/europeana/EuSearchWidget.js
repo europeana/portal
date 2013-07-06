@@ -1,5 +1,5 @@
 
-fnSearchWidget = function(config){
+fnSearchWidget = function($, config){
 
     var self                    = this;
     var container               = false;
@@ -664,7 +664,6 @@ var withJQuery = function($){
 
 	function recursiveLoad(index){
 		if(dependencies.length > index){
-
 			$.ajax({
 				url: rootUrl + dependencies[index],
 				dataType: "script",
@@ -675,7 +674,7 @@ var withJQuery = function($){
 			});
 		}
 		else{
-			searchWidget = fnSearchWidget(theParams);
+			searchWidget = fnSearchWidget($, theParams);
 			searchWidget.load();
 		}
 	}

@@ -9,16 +9,12 @@
 		padding:		0.5em;
 	}
 
-	#wizard-tabs .previous,
-	#wizard-tabs .next{
+	.widget-configuration .previous,
+	.widget-configuration .next{
 		border:			0;
 		border-radius:	0.5em 0.5em 0 0;
 		padding:		0.5em;
 		z-index:		1;
-	}
-
-	#wizard-tabs .previous,
-	#wizard-tabs .next{
 		position:		fixed;
 		top:			50%;
 		left:			1em;
@@ -30,19 +26,18 @@
 		-webkit-transform-origin:	left;		
 	}
 
-	#wizard-tabs .next{
+	.widget-configuration .next{
 		right:	1em;
 		left:	auto;
 		
 		transform:					rotate(270deg);
 		-webkit-transform:			rotate(270deg);
 		transform-origin:			right;
-		-webkit-transform-origin:	right;
-			
+		-webkit-transform-origin:	right;			
 	}
 	
-	#wizard-tabs .next.disabled,
-	#wizard-tabs .previous.disabled{
+	.widget-configuration .next.disabled,
+	.widget-configuration .previous.disabled{
 		background-color:   #ddd !important;
 		background: 		0;
 		color:				#999 !important;
@@ -50,13 +45,12 @@
 	
 
 	#wizard-tabs input{
-		border:			1px solid #e4e4e4;
 		font-size:		1em;
 	}
 	
 	#wizard-tabs .para{
 		margin-top:		0.5em;
-		margin-bottom:	0.5em;
+		margin-bottom:	0.75em;
 	}
 	
 	ul.data-providers,
@@ -101,39 +95,29 @@
 	}
 	
 	.progress-wrapper{
+		margin:				auto;
+		padding-bottom:		3em;
+		position:			relative;
+		top:				0.5em;
 		width:				50%;
-		margin:				2em auto 2em auto;
 	}
 	
 	.progress{
 		width:				100%;
-		height:				1em;
 		background-color:	#ddd;
 	}
 
 	.progress .bar{
 		background-color:	blue;
-		height:				1em;
+		height:				1.5em;
 		width:				20%;
 	}	
 	
 	.content-inner{
-		position:			relative;
 		width:				100%;
-		height:				100%;
 	}
 	
 	
-	/* Allow select components to overrun the content area */
-	
-	#wizard-tabs .content,
-	#wizard-tabs .content-inner{
-		overflow:visible;
-	}
-
-	#wizard-tabs .content{
-		margin-bottom:		2em;
-	}
 
 	#wizard-tabs .eu-menu{
 		padding-bottom: 0;
@@ -143,37 +127,31 @@
 		top:		-0.02em;
 	}
 	
-	@media only screen and ( min-width:48em ){
-		#wizard-tabs{
-			height:			28em;
-			margin-bottom:	4em;
-		}
-		
-		#wizard-tabs .next{
-			display:	block;
-		}
-	}
 	
-	#data-providers-wrapper{
+	/* scrollables */
+	
+	.data-providers-wrapper,	
+	ul.types,
+	ul.copyrights,
+	ul.languages{
+		height:		4em;
+		overflow:	auto;
 		word-wrap:	break-word;
+	}
+	ul.copyrights{
+		height:		6em;
+	}
+	ul.languages{
+		height:		8em;
+	}
+	.data-providers-wrapper{
 		height:		14em;
-		overflow:	auto;
 	}
 	
-	#search-options-wrapper{
-		word-wrap:	break-word;
-		height:		22em;
-		overflow:	auto;
-	}
 	
-
-	
-
 	.filter-wrapper{
-		display:		table-row;
 		margin:			auto;
 		margin-bottom:	1em;
-		width:			23em;
 		font-size:		1.2em;
 	}	
 
@@ -184,72 +162,79 @@
 	input.filter{
 		display:		inline;
 		font-size:		1em;
-		width:			20em;
+		max-width:80%;
+	}
+	
+	.choices{
+		width:		100%;
+		height:		8em;
+		overflow:	auto;
+		
+		margin-top:	1em;
+		padding-top:	1em;
+		
 		-moz-box-sizing:	border-box;
 		-webkit-box-sizing:	border-box;
 		box-sizing:			border-box;
 		
+	}
+	
+
+	/* borders */
+	#wizard-tabs input,
+	#wizard-tabs textarea,
+	
+	ul.types,
+	ul.copyrights,
+	ul.languages,
+	
+	.search-what-menu,
+	.data-providers-wrapper,
+	.choices{
+		border:		1px solid #e4e4e4;
+	}
+	
+	.data-providers-wrapper,
+	.choices,
+	.filter-wrapper{
+		XXXdisplay:table-row;
 	}
 	
 	.content-inner{
 		display:table;
 	}
 	
-	.choices{
-		xxborder:		1px solid #999;
-		width:		100%;
-		height:		8em;
-		xxxdisplay:	table-row;
-		overflow:	hidden;
-		padding-top:	1em;
-	}
 	
-
-	.choices,
-	.choices .choice-content{
-		-moz-box-sizing:	border-box;
-		-webkit-box-sizing:	border-box;
-		box-sizing:			border-box;
-	
+	.filter-content{
+		margin:			1em 0;
+		text-align:	center;
+		white-space: nowrap;
 	}
-
-	
-	.choices .choice-content{
-		border:		1px solid #999;
-		width:		100%;
-		height:		100%;
-		overflow:	auto;
-		xxmargin-top:	1em;
-	}
-	
-	#search-menu-widget{
-		border:	1px solid #e4e4e4;
-	}
-
+		
 	@media only screen and ( min-width:	48em ){
 	
-	
-		#wizard-tabs .previous,
-		#wizard-tabs .next{
+		.widget-configuration .previous,
+		.widget-configuration .next{
 			border-radius:	0.5em;
-			position:		absolute;
-			bottom:			-7em;
-			left:			2em;
-			top:			auto;
+			position:		relative;
 			
+			left:			2em;
+			top:			1.5em;
+			float:			left;
+						
 			transform:					rotate(0deg);
 			-webkit-transform:			rotate(0deg);
 			transform-origin:			left;
 			-webkit-transform-origin:	left;
-			
 		}
 		
-		#wizard-tabs .next{
-			bottom:			-7em;
+		.widget-configuration .next{
 			right:			2em;
-			left:			auto;	
+			left:			auto;
+			float:			right;
 		}
 		
+
 	}
 	
 </style>
@@ -268,9 +253,11 @@
 
 	
 	<div id="wizard-tabs">
+
+		<c:set var="tabTitle"><spring:message code="wizard_tab1_heading_t"/></c:set>
+		<a href="#step-1" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
 	
 		<div class="section" id="tab-1">
-			<a href="#step-1" title="title" /><spring:message code="wizard_tab1_heading_t"/></a>
 			<div class="content">
 				<div class="content-inner">				
 					<p>
@@ -285,8 +272,10 @@
 			
 		</div>
 
+		<c:set var="tabTitle"><spring:message code="wizard_tab2_heading_t"/></c:set>
+		<a href="#step-2" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+
 		<div class="section"  id="tab-2">
-			<a href="#step-2" title="title" /><spring:message code="wizard_tab2_heading_t"/></a>
 			<div class="content">
 				<div class="content-inner">
 
@@ -297,7 +286,7 @@
 
 						<spring:message code="wizard_tab2_search_in_t"/>
 
-						<div id="search-menu-widget" class="eu-menu" aria-hidden="true">
+						<div class="eu-menu search-what-menu" aria-hidden="true">
 
 							<span class="hide-ilb-on-phones menu-label"><spring:message code="Search_t" /></span>
 							<span class="icon-arrow-3 open-menu"></span>
@@ -335,7 +324,7 @@
 						<spring:message code="wizard_tab2_search_include_t"/>
 					</div>
 					
-					<div id="search-options-wrapper">
+					<div>
 						
 						<div class="para">
 						
@@ -385,18 +374,22 @@
 			
 		</div>
 
+		<c:set var="tabTitle"><spring:message code="wizard_tab3_heading_t"/></c:set>		
+		<a href="#step-3" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+
 		<div class="section" id="tab-3">
-			<a href="#step-3" title="title" /><spring:message code="wizard_tab3_heading_t"/></a>
 			<div class="content">
 				<div class="content-inner">
 								
 					<div class="filter-wrapper">
 						<spring:message code="wizard_tab3_content1_t"/>
-						<span class="filter-label icon-mag"></span>
-						<input class="filter" id="content-provider-filter-filter" style=""/>
+						<div class="filter-content">
+							<span class="filter-label icon-mag"></span>
+							<input class="filter" id="content-provider-filter-filter" style=""/>
+						</div>
 					</div>
 					
-					<div id="data-providers-wrapper">
+					<div class="data-providers-wrapper">
 					    <c:set var="toggle_providers" value=""/>
 					    <ul class="outer-list">
 					    
@@ -447,14 +440,16 @@
 						</c:forEach>
 					</ul--%>
 
-					<div class="choices"><div class="choice-content"></div></div>
+					<div class="choices"></div>
 				</div>
 			</div>
 			<input type="hidden" id="step3" class="mandatory"/>
 		</div>
 
+		<c:set var="tabTitle"><spring:message code="wizard_tab4_heading_t"/></c:set>
+		<a href="#step-4" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+
 		<div class="section" id="tab-4">
-			<a href="#step-4" title="title" /><spring:message code="wizard_tab4_heading_t"/></a>
 			<div class="content">
 				<div class="content-inner">
 
@@ -466,44 +461,33 @@
 			<input type="hidden" id="step4" class="mandatory"/>
 		</div>
 
+		<c:set var="tabTitle"><spring:message code="wizard_tab5_heading_t"/></c:set>
+		<a href="#step-5" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+
 		<div class="section"  id="tab-5">
-			<a href="#step-5" title="title" /><spring:message code="wizard_tab5_heading_t"/></a>
 			<div class="content">
 				<div class="content-inner">				
-
-					<spring:message code="wizard_tab5_content1_t"/>
-					
-					Paste these dependencies into the head:
-					<br/>
-					<br/>
-					&lt;script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" &gt;&lt;/script&gt;
-					<br/>
-					&lt;script type="text/javascript" src="http://test.portal2.eanadev.org/portal/themes/default/js/js/utils.js"&gt;&lt;/script&gt;
-					<br/>
-					&lt;script type="text/javascript" src="http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/min/search-widget-all.min.js"&gt;&lt;/script&gt;
-					<br/>
-					<br/>
-					And include the container:
-									
-					<textarea id="output" rows="7" style="width:100%">
-					</textarea>
-									
-
-	
+					<div class="para">
+						<spring:message code="wizard_tab5_content1_t"/>
+					</div>
+					<div class="para">
+						<spring:message code="wizard_tab5_content2_t"/>
+					</div>					
+					<div class="para">
+						<textarea id="output" rows="7" style="width:100%"></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-		<input type="button" class="deans-button-1 next"		value="${buttonNextText}" />
-		<input type="button" class="deans-button-1 previous"	value="${buttonPreviousText}" />
-
 	</div>
 
+	<input type="button" class="deans-button-1 next"		value="${buttonNextText}" />
+	<input type="button" class="deans-button-1 previous"	value="${buttonPreviousText}" />
 
 	<div class="progress-wrapper">
 		<spring:message code="wizard_progress_t"/>
 		<div class="progress">
-			<div class="bar">
+			<div class="bar deans-button-1">
 			</div>
 		</div>
 	</div>

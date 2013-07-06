@@ -81,8 +81,6 @@ var EuWidgetWizard = function(cmpIn, options){
 			});			
 		}
 		
-//		result = '<script type="text/javascript" src="' + result + '"></script>';
-	//	result = '<script type="text/javascript" src="' + result + '"></script>';
 		result = '&lt;script type="text/javascript" src="' + result + '"&gt;&lt;/script&gt;';
 		$('#output').html(result);
 	};
@@ -112,21 +110,12 @@ var EuWidgetWizard = function(cmpIn, options){
 		});
 		
 		self.disabledTabs = disabled;
-		
 		self.tabs.setDisabledTabs(self.disabledTabs); 
 		
 		// progress bar
 		var progress = self.tabs.getOpenTabId() == "tab-5" ? 100 : ((noTabs - disabled.length -1) / noTabs) * 100;
 		
-		
-		$('.progress .bar').css('width', progress + '%'); 
-		 
-		// next buttons
-		// maclean
-		//self.cmp.find('input.next').removeClass('disabled');
-		//$(self.cmp.find('input.next')).addClass('disabled');
-		
-
+		$('.progress .bar').css('width', progress + '%');
 		
 		var openIdex = self.tabs.getOpenTabIndex();
 		if( openIdex > 0){
@@ -137,10 +126,10 @@ var EuWidgetWizard = function(cmpIn, options){
 		}
 		
 		if( (openIdex+1) >= self.tabs.getTabs().length){
-			self.cmp.find('input.next').addClass('disabled');
+			$('.widget-configuration input.next').addClass('disabled');
 		}
 		else{
-			self.cmp.find('input.next').removeClass('disabled');
+			$('.widget-configuration input.next').removeClass('disabled');
 		}
 		
 		
@@ -149,13 +138,13 @@ var EuWidgetWizard = function(cmpIn, options){
 	
 	var init = function(){
 
+		// individual tab initialisation
 		
 		var initTab = function(tabIndex){
 			
-			// query / types / copyrights / languages
-			
-			if(tabIndex == 1){
-				self.searchMenu = new EuMenu( $("#search-menu-widget"), {} );
+			if(tabIndex == 1){			// query / types / copyrights / languages
+				
+				self.searchMenu = new EuMenu( $(".search-what-menu"), {} );
 				self.searchMenu.init();
 				
 				var change = function(e){
@@ -183,30 +172,25 @@ var EuWidgetWizard = function(cmpIn, options){
 				$('button.clear-languages').click(function(){
 					$('ul.languages').find('input').prop('checked', false);
 				});
-
-				
-				
 			}
-			
-			if(tabIndex == 2){
-				
-				// providers
+
+			if(tabIndex == 2){				// providers
 				
 				eu_europeana_providers = {
-					
 					addLinks : function(){
 						// remove old
-						$('.choices .choice-content').html('');
+						$('.choices').html('');
 						
 						$('.data-providers').find('input').each(function(i, ob){
 							ob = $(ob);
 							if(ob.prop('checked')){
-								var removeLink = $('<div class="removeLink icon-remove">').appendTo('.choices .choice-content');
+								var removeLink = $('<div class="removeLink icon-remove">').appendTo('.choices');
 								var text = ob.next('span').html();
 								
 								removeLink.attr("title", text);
 								removeLink.html('<span>&nbsp;' + text + '</span>');
 								removeLink.click(function(){
+									console.log('clicked');
 									ob.prop('checked', false);
 									removeLink.remove();
 								});
@@ -214,7 +198,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						});
 					},
 					
-					initProviders: function(){
+					init: function(){
 						
 						// checkboxes and collapsibility
 						
@@ -267,7 +251,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						$('.outer-list').show();
 					}
 				};
-				eu_europeana_providers.initProviders();
+				eu_europeana_providers.init();
 			}
 			self.initialisedTabs[tabIndex] = true;
 		};  // end initTab()
@@ -303,16 +287,17 @@ var EuWidgetWizard = function(cmpIn, options){
 			setDisabledTabs();
 		});
 
-		self.cmp.find('input.next').addClass('disabled');
+		$('.widget-configuration input.next').addClass('disabled');
 		
-		self.cmp.find('input.next').click(function(){
+		$('.widget-configuration input.next').click(function(){
 			if( $(this).hasClass('disabled')){
 				disabledClick();
 				return;
 			}
 			self.tabs.openTabAtIndex(self.tabs.getOpenTabIndex()+1);
 		});
-		self.cmp.find('input.previous').click(function(){
+		
+		$('.widget-configuration input.previous').click(function(){
 			if( $(this).hasClass('disabled')){
 				return;
 			}
