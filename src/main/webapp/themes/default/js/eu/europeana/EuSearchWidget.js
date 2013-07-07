@@ -124,6 +124,10 @@ fnSearchWidget = function($, config){
         	});
         	
         	container.draggable();
+        	container.css('overflow-y', 'auto');
+        	container.css('overflow-x', 'hidden');
+        	
+        	// responsive-containers initialisation
         	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	
            	$.getScript(responsiveContainersUrl, function() {

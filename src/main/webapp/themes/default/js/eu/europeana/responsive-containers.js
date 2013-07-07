@@ -187,6 +187,9 @@ THE SOFTWARE.
         return val;
     }
 
+    // Andy: (europeana) change
+
+    /*
     if (doc.addEventListener) {
         doc.addEventListener("DOMContentLoaded", contentReady, false);
         // or
@@ -198,7 +201,13 @@ THE SOFTWARE.
         // or
         win.attachEvent("onload", contentReady);
     }
+    */
 
+    $(document).ready(function(){
+    	contentReady();
+    });
+
+    // End (europeana) change
 
     win["SelectorQueries"] = {
         "add": add,
