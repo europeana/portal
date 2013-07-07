@@ -52,8 +52,10 @@ fnSearchWidget = function($, config){
     // get markup from portal
     self.load = function(){
        	$.holdReady(true);
+       	var url = self.config.lang ? markupUrl + '&lang=' + self.config.lang[0] : markupUrl;
+
         $.ajax({
-            "url" :         markupUrl,
+            "url" :         url,
             "type" :        "GET",
             "crossDomain" : true,
             "dataType" :    "script"
@@ -163,7 +165,7 @@ fnSearchWidget = function($, config){
         	}
         	else{
                 $.ajax({
-                    "url" : url + "&profile=portal params&callback=searchWidget.showRes",
+                    "url" : url + "&profile=portal&callback=searchWidget.showRes",
                     "type" : "GET",
                     "crossDomain" : true,
                     "dataType" : "script"
@@ -224,6 +226,7 @@ fnSearchWidget = function($, config){
         			console.log('append to url: ' + url);
         		});
         	}
+
         }
 
 		console.log('final search url: ' + url);

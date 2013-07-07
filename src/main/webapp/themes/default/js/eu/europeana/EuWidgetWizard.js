@@ -12,7 +12,6 @@
  * 
  * jquery                   (TODO: detect if available / load if available)
  * js/js/utils.js           (TODO: more the directory to compile to all file)
- * search-widget-all.min.js (derived from minify)
  * 
  * */
 
@@ -40,7 +39,6 @@ var EuWidgetWizard = function(cmpIn, options){
 	};
 	
 	var output = function(){
-		
 		var result = searchWidgetUrl;
 		var param = function(){
 			return (result.indexOf('?')>-1) ? '&' : '?';
@@ -79,6 +77,17 @@ var EuWidgetWizard = function(cmpIn, options){
 					result += param() + 'qf=PROVIDER:' + (name.indexOf(' ') > 0) ? '' + name.replace(/\s/g, '+') + '' : name;
 				}
 			});			
+		}
+
+		if(self.initialisedTabs[2]){
+		
+			$('ul.portal-languages a input').each(function(i, ob){
+				if($(ob).prop('checked')){
+					var lang = $(ob).next('span').attr('class');
+					result += param() + 'lang=' + lang;
+				}
+			});
+
 		}
 		
 		result = '&lt;script type="text/javascript" src="' + result + '"&gt;&lt;/script&gt;';
@@ -252,6 +261,24 @@ var EuWidgetWizard = function(cmpIn, options){
 					}
 				};
 				eu_europeana_providers.init();
+			}
+			if(tabIndex == 3){
+				// TODO: generic checkbox change
+				var change = function(e){
+					var cb       = e.target ? $(e.target) : $(e);
+					var checked  = cb.prop('checked');
+				};
+				
+				$("ul.portal-languages input").change(change).click(function(e){
+					e.stopPropagation();
+				}).prop('checked', false);
+				
+				$('ul.portal-languages a').click(function(e){
+					var cb = $(this).find('input'); 
+					cb.prop('checked', !cb.prop('checked'));
+					change(cb);
+				});
+
 			}
 			self.initialisedTabs[tabIndex] = true;
 		};  // end initTab()

@@ -44,9 +44,7 @@
 	}
 	
 
-	#wizard-tabs input{
-		font-size:		1em;
-	}
+
 	
 	#wizard-tabs .para{
 		margin-top:		0.5em;
@@ -56,6 +54,7 @@
 	ul.data-providers,
 	ul.outer-list,
 	ul.types,
+	ul.portal-languages,
 	ul.copyrights,
 	ul.languages{
 		list-style:		none;
@@ -133,7 +132,8 @@
 	.data-providers-wrapper,	
 	ul.types,
 	ul.copyrights,
-	ul.languages{
+	ul.languages,
+	ul.portal-languages{
 		height:		4em;
 		overflow:	auto;
 		word-wrap:	break-word;
@@ -144,6 +144,9 @@
 	ul.languages{
 		height:		8em;
 	}
+	ul.portal-languages{
+		height:		10em;
+	}
 	.data-providers-wrapper{
 		height:		14em;
 	}
@@ -152,7 +155,6 @@
 	.filter-wrapper{
 		margin:			auto;
 		margin-bottom:	1em;
-		font-size:		1.2em;
 	}	
 
 	.filter-label{
@@ -161,7 +163,6 @@
 	
 	input.filter{
 		display:		inline;
-		font-size:		1em;
 		max-width:80%;
 	}
 	
@@ -187,6 +188,8 @@
 	ul.types,
 	ul.copyrights,
 	ul.languages,
+	
+	ul.portal-languages,
 	
 	.search-what-menu,
 	.data-providers-wrapper,
@@ -240,9 +243,21 @@
 </style>
 
 
-<script type="text/javascript">
-  var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/min/search-widget-all.min.js";
-</script>
+
+<c:choose>
+	<c:when test="${!empty model.debug && model.debug}">
+		<script type="text/javascript">
+			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js";
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script type="text/javascript">
+			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js";
+		</script>
+	</c:otherwise>
+</c:choose>
+	
+
 
 <div class="row widget-configuration">
 
@@ -250,7 +265,6 @@
 	<c:set var="buttonPreviousText">&larr; <spring:message code="wizard_previous_t"/></c:set>
 
 	<h2><spring:message code="wizard_heading_t"/></h2>
-
 	
 	<div id="wizard-tabs">
 
@@ -380,9 +394,10 @@
 		<div class="section" id="tab-3">
 			<div class="content">
 				<div class="content-inner">
-								
-					<div class="filter-wrapper">
+					<div class="para">
 						<spring:message code="wizard_tab3_content1_t"/>
+					</div>								
+					<div class="filter-wrapper">
 						<div class="filter-content">
 							<span class="filter-label icon-mag"></span>
 							<input class="filter" id="content-provider-filter-filter" style=""/>
@@ -452,10 +467,14 @@
 		<div class="section" id="tab-4">
 			<div class="content">
 				<div class="content-inner">
-
-					<spring:message code="wizard_tab4_content1_t"/>
-					<br>
-
+					<div class="para">
+						<spring:message code="wizard_tab4_content1_t"/>
+					</div>
+					<ul class="portal-languages">
+						<c:forEach items="${model.portalLanguages}" var="language">
+				        	<li><a><input type="radio" name="lang" title="${language.languageName}"><span class="${language.languageCode}">${language.languageName}</span></a></li>
+						</c:forEach>
+					</ul>
 				</div>
 			</div>
 			<input type="hidden" id="step4" class="mandatory"/>
