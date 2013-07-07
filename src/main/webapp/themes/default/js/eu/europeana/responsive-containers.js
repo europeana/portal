@@ -80,11 +80,6 @@ THE SOFTWARE.
 
     function applyRules() {
     	
-    	
-    	console.log("applyRules()");
-    	
-    	
-    	
         // For each element, apply the rules to the class name.
         for (var i = 0, j = els.length; i<j; ++i) {
             el = els[i];
