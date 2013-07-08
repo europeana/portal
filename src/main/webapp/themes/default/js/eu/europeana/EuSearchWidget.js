@@ -7,7 +7,6 @@ fnSearchWidget = function($, config){
     var facetTemplate           = false;
     var filterTemplate          = false;
 
-    var debug                   = true;	// true sets localhost urls and uncompressed js
     var showFacets				= false;
     
     if( typeof config != 'undefined'){
@@ -37,13 +36,14 @@ fnSearchWidget = function($, config){
     // move wskey and URLs to an external .jsp generated file, in order to 
     // 1) generate URLs dinamically
     // 2) hide wskey, and use a distinct wskey
-    var searchUrl               = 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
-    var markupUrl               = debug ? 'http://localhost:8081/portal/template.html?id=search&showFacets=' + showFacets : 'http://test.portal2.eanadev.org/portal/template.html?id=search&showFacets=' + showFacets;
-    var cssUrl                  = debug ? 'http://localhost:8081/portal/themes/default/css/' : 'http://test.portal2.eanadev.org/portal/themes/default/css/';
-    var responsiveContainersUrl = debug ? 'http://localhost:8081/portal/themes/default/js/eu/europeana/responsive-containers.js' : 'http://test.portal2.eanadev.org/portal/themes/default/js/eu/europeana/responsive-containers.js';
 
     var resultServerUrl         = 'http://europeana.eu/portal';
 
+	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
+	var cssUrl                  = rootUrl +  '/themes/default/css/';
+	var responsiveContainersUrl = rootUrl +  '/themes/default/js/eu/europeana/responsive-containers.js';
+
+    
     var defaultRows             = 6;
     var pagination              = false;
     var paginationData          = {};
@@ -150,7 +150,7 @@ fnSearchWidget = function($, config){
         });
 
         // load style - as single files if in debug mode
-        if(debug){
+        if(js.debug){
 			$.each(['html-sw', 'common', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
 	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
 			});
@@ -661,7 +661,7 @@ var theParams = function(){
 		}
 	}
 	
-	rootUrl = thisScript.src.split('EuSearchWidget')[0];
+	rootJsUrl = thisScript.src.split('EuSearchWidget')[0];
 		
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
 
@@ -705,7 +705,7 @@ var theParams = function(){
 
 
 var searchWidget;
-var rootUrl;// = "http://localhost:8081/portal/themes/default/js/eu/europeana/";
+var rootJsUrl;// = "http://localhost:8081/portal/themes/default/js/eu/europeana/";
 
 var withJQuery = function($){
 	var dependencies = [
@@ -721,7 +721,7 @@ var withJQuery = function($){
 	function recursiveLoad(index){
 		if(dependencies.length > index){
 			$.ajax({
-				url: rootUrl + dependencies[index],
+				url: rootJsUrl + dependencies[index],
 				dataType: "script",
 				success: function(){
 					//console.log('loaded ' + dependencies[index] + ', now get ' + (index+1));
