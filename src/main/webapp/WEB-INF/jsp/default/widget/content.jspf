@@ -364,38 +364,130 @@
 						
 						<div class="para">
 						
+	
+	
+<%--	
 							<c:set var="model_types">IMAGE,SOUND,TEXT,VIDEO</c:set>
-							<c:set var="model_copyrights">Public Domain marked (1093244),Free Access - Rights Reserved (174457), CC0 (64908),Restricted Access (1480),CC BY-NC-ND (818),Unknown copyright (427),CC BY (86),CC BY-NC-SA (6811)</c:set>
-							<c:set var="model_languages">English (26754),Español (26119),Français (11973),Yiddish (yi) (6789),Magyar (4182)</c:set>
-	
-	
-	
 							<ul class="types">
 								<c:forEach items="${model_types}" var="type">
 						        	<li><a><input type="checkbox" title="${type}"><span>${type}</span></a></li>
 								</c:forEach>
 							</ul>
-							
+--%>
+							<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
+								<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
+									<c:if test="${fn:toLowerCase(facet.type) == 'type'}">
+										<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
+										<ul class="types">
+											<c:forEach items="${facet.links}" var="facet_item">
+												<c:set var="label">
+													<c:choose>
+														<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
+														<c:otherwise>${facet_item.value}</c:otherwise>
+													</c:choose>
+												</c:set>
+												<li>
+													<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
+														<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
+														<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
+													</a>
+												</li>
+											</c:forEach>
+										</ul>
+									</c:if>
+								</c:forEach>
+							</c:if>
+									
+									
 							<div class="para">
 								<button class="deans-button-1 clear clear-types"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
 							</div>
 													
-	
+
+							<%--
+							<c:set var="model_copyrights">Public Domain marked (1093244),Free Access - Rights Reserved (174457), CC0 (64908),Restricted Access (1480),CC BY-NC-ND (818),Unknown copyright (427),CC BY (86),CC BY-NC-SA (6811)</c:set>
+							
 							<ul class="copyrights">
 								<c:forEach items="${model_copyrights}" var="copyright">
 						        	<li><a><input type="checkbox" title="${copyright}"><span>${copyright}</span></a></li>
 								</c:forEach>
 							</ul>
-							
+							 --%>	
+
+							<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
+								<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
+									
+									<c:if test="${fn:toLowerCase(facet.type) == 'rights'}">
+									
+										<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
+										<ul class="copyrights">
+											<c:forEach items="${facet.links}" var="facet_item">
+												<c:set var="label">
+													<c:choose>
+														<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
+														<c:otherwise>${facet_item.value}</c:otherwise>
+													</c:choose>
+												</c:set>
+												<li>
+													<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
+														<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox"/>
+														<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
+													</a>
+												</li>
+											</c:forEach>
+										</ul>
+									
+									</c:if>
+									
+								</c:forEach>
+							</c:if>
+
 							<div class="para">
 								<button class="deans-button-1 clear clear-copyrights"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
 							</div>
-							
+
+
+							<%-- 
+							<c:set var="model_languages">English (26754),Español (26119),Français (11973),Yiddish (yi) (6789),Magyar (4182)</c:set>
+														
 							<ul class="languages">
 								<c:forEach items="${model_languages}" var="language">
 						        	<li><a><input type="checkbox" title="${language}"><span>${language}</span></a></li>
 								</c:forEach>
 							</ul>
+							--%>
+
+							<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
+								<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
+									
+									<c:if test="${fn:toLowerCase(facet.type) == 'language'}">
+									
+										<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
+										
+										<ul class="languages">
+											<c:forEach items="${facet.links}" var="facet_item">
+												<c:set var="label">
+													<c:choose>
+														<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
+														<c:otherwise>${facet_item.value}</c:otherwise>
+													</c:choose>
+												</c:set>
+												<li>
+													<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
+														<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
+														<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
+													</a>
+												</li>
+											</c:forEach>
+										</ul>
+									
+									</c:if>
+									
+								</c:forEach>
+					</c:if>
+
+
+
 							
 							<div class="para">
 								<button class="deans-button-1 clear clear-languages"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
@@ -461,98 +553,7 @@
 					<%-- THE FACETS AS IN THE PORTAL --%>
  
  					<%--
- 
-					<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
-						<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
-						
-							<c:if test="${fn:toLowerCase(facet.type) == 'type'}">
-							
-								<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
-								<ul>
-									<c:forEach items="${facet.links}" var="facet_item">
-										<c:set var="label">
-											<c:choose>
-												<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
-												<c:otherwise>${facet_item.value}</c:otherwise>
-											</c:choose>
-										</c:set>
-										<li>
-											<input type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
-											<a href="/${model.portalName}/${model.pageName}?query=${fn:replace(model.query, '"', '&quot;')}${fn:replace(facet_item.url, '"', '&quot;')}${rowsParam}"
-												title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-												<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
-											</a>
-										</li>
-									</c:forEach>
-								</ul>
-							
-							</c:if>
-							
-						</c:forEach>
-					</c:if>
 
-
-
-					<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
-						<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
-							
-							<c:if test="${fn:toLowerCase(facet.type) == 'language'}">
-							
-								<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
-								<ul>
-									<c:forEach items="${facet.links}" var="facet_item">
-										<c:set var="label">
-											<c:choose>
-												<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
-												<c:otherwise>${facet_item.value}</c:otherwise>
-											</c:choose>
-										</c:set>
-										<li>
-											<input type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
-											<a href="/${model.portalName}/${model.pageName}?query=${fn:replace(model.query, '"', '&quot;')}${fn:replace(facet_item.url, '"', '&quot;')}${rowsParam}"
-												title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-												<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
-											</a>
-										</li>
-									</c:forEach>
-								</ul>
-							
-							</c:if>
-							
-						</c:forEach>
-					</c:if>
-
-
-
-					<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
-						<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
-							
-							<c:if test="${fn:toLowerCase(facet.type) == 'rights'}">
-							
-								<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
-								<ul>
-									<c:forEach items="${facet.links}" var="facet_item">
-										<c:set var="label">
-											<c:choose>
-												<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
-												<c:otherwise>${facet_item.value}</c:otherwise>
-											</c:choose>
-										</c:set>
-										<li>
-											<input type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
-											<a href="/${model.portalName}/${model.pageName}?query=${fn:replace(model.query, '"', '&quot;')}${fn:replace(facet_item.url, '"', '&quot;')}${rowsParam}"
-												title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-												<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
-											</a>
-										</li>
-									</c:forEach>
-								</ul>
-							
-							</c:if>
-							
-						</c:forEach>
-					</c:if>
-					
 					provider
 					data_provider
 				

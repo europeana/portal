@@ -55,19 +55,15 @@ var EuWidgetWizard = function(cmpIn, options){
 				result += param() + 'query=' + (searchPrefix ? searchPrefix : '') + query;			
 			}
 			
-			$('ul.types a input').each(function(i, ob){
+			$('ul.types a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
 				if($(ob).prop('checked')){
-					var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
-					result += param() + 'qf=TYPE:' + name;
+					//var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
+					//var name = $(ob).attr('title').replace(/ *\([^)]*\) */g, "");
+					var name = $(ob).attr('title').replace(/\"/g, "");
+					result += name;
 				}
 			});
 
-			$('ul.copyrights a input').each(function(i, ob){
-				if($(ob).prop('checked')){
-					var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
-					result += param() + 'qf=RIGHTS:' + name;
-				}
-			});
 			
 		}		
 		if(self.initialisedTabs[2]){
@@ -162,11 +158,32 @@ var EuWidgetWizard = function(cmpIn, options){
 				self.searchMenu = new EuMenu( $(".search-what-menu"), {} );
 				self.searchMenu.init();
 				
+				/*
 				var change = function(e){
 					var cb       = e.target ? $(e.target) : $(e);
 					var checked  = cb.prop('checked');
 					console.log( (checked ? "Add" : "Remove") + " value " + cb.attr("title") );
 				};
+				*/
+				var change = function(e){
+					var cb       = e.target ? $(e.target) : $(e);
+					var checked  = cb.prop('checked');
+					console.log( (checked ? "Add" : "Remove") + cb.attr('title') );
+				};
+				
+				
+				$("ul.types input").add("ul.copyrights input").add("ul.languages input").change(change).click(function(e){
+					e.stopPropagation();
+				}).prop('checked', false);
+
+				$('ul.types a').add("ul.copyrights a").add("ul.languages a").click(function(e){
+					var cb = $(this).find('input'); 
+					cb.prop('checked', !cb.prop('checked'));
+					change(cb);
+					e.preventDefault();
+				});
+
+				/*
 				
 				$("ul.types input").add("ul.copyrights input").add("ul.languages input").change(change).click(function(e){
 					e.stopPropagation();
@@ -177,7 +194,7 @@ var EuWidgetWizard = function(cmpIn, options){
 					cb.prop('checked', !cb.prop('checked'));
 					change(cb);
 				});
-				
+				*/
 				$('button.clear-types').click(function(){
 					$('ul.types').find('input').prop('checked', false);
 				});

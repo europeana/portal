@@ -32,6 +32,7 @@
 
 .accordion-tabs .tab-header.disabled{
 	background-color:	#e4e4e4;
+	cursor:				default;
 }
 
 .accordion-tabs .content{
@@ -84,7 +85,8 @@
 	.accordion-tabs .tab-header{
 		display:		inline-block;
 		border-radius:	0.5em 0.5em 0 0;
-		margin-top:	0;
+		margin-top:		0;
+		cursor:			pointer;
 	}
 	
 	.accordion-tabs .tab-header.active{
