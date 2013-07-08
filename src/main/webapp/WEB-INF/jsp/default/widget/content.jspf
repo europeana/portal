@@ -1,4 +1,14 @@
 <style type="text/css">
+
+	.choices,
+	.remove-link,
+	#output{
+		-moz-box-sizing:	border-box;
+		-webkit-box-sizing:	border-box;
+		box-sizing:			border-box;
+	}
+
+
 	.widget-configuration h2{
 		padding:	0.5em 0;	
 	}
@@ -67,23 +77,17 @@
 	
 	/* checkboxes */
 	
-	.removeLink{
+	.remove-link{
 		background-color:	#dedede;
-		float:				left;
+		display:			inline-block;
 		line-height:		1.2em;
 		margin:				0.25em;
-		max-height:			2.8em;
-		max-width:			9.4em;
-		overflow:			hidden;
-		padding:			0.2em;
-		-moz-box-sizing:	border-box;
-		-webkit-box-sizing:	border-box;
-		box-sizing:			border-box;
+		padding:			0.5em;
 		word-wrap:			break-word;
 		color:				red; 
 	}
 
-	.removeLink span {
+	.remove-link span {
 		color:				#333; 
 	}
 	
@@ -178,35 +182,27 @@
 	}
 	
 	.choices{
+		display:	none;
 		width:		100%;
-		height:		8em;
+		max-height:	8.5725em;
 		overflow:	auto;
 		
 		margin-top:	1em;
-		padding-top:	1em;
-		
-		-moz-box-sizing:	border-box;
-		-webkit-box-sizing:	border-box;
-		box-sizing:			border-box;
-		
+		padding:	0.5em;
 	}
 	
 
 	/* borders */
 	#wizard-tabs input,
-	#wizard-tabs textarea,
-	
 	ul.types,
 	ul.copyrights,
 	ul.languages,
-	
 	ul.portal-languages,
-	
 	.search-what-menu,
 	.data-providers-wrapper,
 	.choices,
-	
-	.preview-window{
+	.preview-window,
+	#output{
 		border:		1px solid #e4e4e4;
 	}
 	
@@ -224,6 +220,24 @@
 	.preview-window{
 		width:	100%;
 		height:	12em;
+	}
+
+	#output{
+		display: block;
+		padding: 0.5em;
+		overflow-y: auto;
+		
+		word-break: break-all; /* webkit */
+		word-wrap: break-word;
+		white-space: pre;
+		white-space: -moz-pre-wrap; /* fennec */
+		white-space: pre-wrap;
+		white-space: pre\9; /* IE7+ */
+		
+		
+		line-height:	1.2em;
+		max-height:		7.2em;
+		width:			100%;
 	}
 
 		
@@ -616,7 +630,7 @@
 					</div>					
 					
 					<div class="para">
-						<textarea id="output" rows="4" style="width:100%"></textarea>
+						<p id="output"></p>
 					</div>
 					
 				</div>

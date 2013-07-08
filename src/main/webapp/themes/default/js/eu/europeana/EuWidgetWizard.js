@@ -20,10 +20,14 @@ var EuWidgetWizard = function(cmpIn, options){
 	var self             = this;
 	self.cmp             = cmpIn;
 	self.options         = options;
+	
+	var PREVIEW_TAB_INDEX = 4;
+	
 	self.tabs            = false;
-	self.disabledTabs    = [];//[1, 2, 3, 4];
+	self.disabledTabs    = [];
     self.initialisedTabs = {};
 	
+    
 	/* Flash a red border on the inputs that have to be filled before the next tab can open */
 	var disabledClick = function(){
 		var active = $('#' + self.tabs.getOpenTabId());
@@ -85,16 +89,36 @@ var EuWidgetWizard = function(cmpIn, options){
 			});
 
 		}
-		
-		if(preview){
-			return result;
-		}
-		else{
-			result = '&lt;script type="text/javascript" src="' + result + '"&gt;&lt;/script&gt;';
-			$('#output').html(result);			
-		}
+
+		return result;
 		
 	};
+	
+	var selectElementContents = function(el) {
+	    var range;
+	    if (window.getSelection && document.createRange) {
+	        range = document.createRange();
+	        var sel = window.getSelection();
+	        if(typeof sel != 'undefined' && sel != null){
+		        range.selectNodeContents(el);
+		        try{
+		        	sel.removeAllRanges();
+		        }catch(e){}
+		        try{
+		        	sel.addRange(range);
+		        }catch(e){}
+	        }
+	    }
+	    else if (document.body && document.body.createTextRange) {
+	    	try{
+		        range = document.body.createTextRange();
+		        range.moveToElementText(el);
+		        range.select();
+	    	}
+	    	catch(e){}
+	    }
+	};
+	
 	
 	/* Disable tabs that have unfilled inputs */
 	var setDisabledTabs = function(){
@@ -198,12 +222,14 @@ var EuWidgetWizard = function(cmpIn, options){
 				eu_europeana_providers = {
 					addLinks : function(){
 						// remove old
-						$('.choices').html('');
+						$('.choices').css('display', 'none');//html('');
+						var show = false;
 						
 						$('.data-providers').find('input').each(function(i, ob){
 							ob = $(ob);
 							if(ob.prop('checked')){
-								var removeLink = $('<div class="removeLink icon-remove">').appendTo('.choices');
+								show = true;
+								var removeLink = $('<span class="remove-link icon-remove small">').appendTo('.choices');
 								var text = ob.next('span').html();
 								
 								removeLink.attr("title", text);
@@ -214,6 +240,10 @@ var EuWidgetWizard = function(cmpIn, options){
 								});
 							}
 						});
+						
+						if(show){
+							$('.choices').css('display', 'block');
+						}
 					},
 					
 					init: function(){
@@ -289,10 +319,10 @@ var EuWidgetWizard = function(cmpIn, options){
 				});
 
 			}
-			if(tabIndex == 4){
+			if(tabIndex == PREVIEW_TAB_INDEX){
 				
 				/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
-				var src = output(true);
+				var src = output();
 				$('.preview-window').html('');
 				$('.preview-window').append('<input  type="hidden" id="widget-url-ref" value="' + src + '" />');
 				$('.preview-window').append('<script type="text/javascript" src="' + src + '"></script>');
@@ -310,11 +340,15 @@ var EuWidgetWizard = function(cmpIn, options){
 				function(i){
 					initTab(i);
 					setTimeout(function(){
-						$('#step' + (i+1)).val("ANDY");
+						$('#step' + (i+1)).val("Yes2014"); // satisfy mandatory condition
 						setDisabledTabs();
 					}, 1);
 					
-					output();
+					if(i == PREVIEW_TAB_INDEX){
+						var result = '&lt;script type="text/javascript" src="' + output() + '"&gt;&lt;/script&gt;';
+						$('#output').html(result);
+						selectElementContents($('#output')[0]);
+					}
 				},
 				false,
 				disabledClick

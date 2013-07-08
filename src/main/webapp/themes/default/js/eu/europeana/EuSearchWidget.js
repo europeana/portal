@@ -53,7 +53,7 @@ fnSearchWidget = function($, config){
     self.load = function(){
        	$.holdReady(true);
        	
-       	var url = self.config.lang ? markupUrl + '&lang=' + self.config.lang[0] : markupUrl;
+       	var url = markupUrl + (self.config.lang ? '&lang=' + self.config.lang[0] : '');
 
         $.ajax({
             "url" :         url,
@@ -80,7 +80,7 @@ fnSearchWidget = function($, config){
         container.append(htmlData.markup);
         container.find('#content').hide();
 
-        $('#query-input').val('paris');
+    //    $('#query-input').val('paris');
 
         itemTemplate       = container.find('.thumb-frame').parent();
         facetTemplate      = container.find('#filter-search li:nth-child(2)');
@@ -531,7 +531,7 @@ fnSearchWidget = function($, config){
             $(this).parent().removeClass('glow');
         }).focus(function(){
             $(this).parent().addClass('glow');    
-        }).val('*:*');
+        }).val(config.query ? config.query : '*:*');
 
         var submitCell          = container.find('.submit-cell');
         var submitCellButton    = container.find('button');
