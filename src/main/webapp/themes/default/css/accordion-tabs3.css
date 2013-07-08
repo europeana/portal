@@ -89,7 +89,8 @@
 	
 	.accordion-tabs .tab-header.active{
 		border-bottom:		1px solid #fff;
-		margin-top:	0;
+		margin-top:			0;
+		text-decoration:	underline;
 	}
 
 	.accordion-tabs .section{
