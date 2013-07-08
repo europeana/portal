@@ -639,7 +639,7 @@
 	</div>
 
 	<input type="button" class="deans-button-1 next"		value="${buttonNextText}" />
-	<input type="button" class="deans-button-1 previous"	value="${buttonPreviousText}" />
+	<input type="button" class="deans-button-1 previous disabled"	value="${buttonPreviousText}" />
 
 	<div class="progress-wrapper">
 		<spring:message code="wizard_progress_t"/>

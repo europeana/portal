@@ -159,6 +159,14 @@ var EuWidgetWizard = function(cmpIn, options){
 		else{
 			self.cmp.find('input.previous').addClass('disabled');			
 		}
+
+		
+		if( (openIdex == 0) ){
+			$('.widget-configuration input.previous').addClass('disabled');
+		}
+		else{
+			$('.widget-configuration input.previous').removeClass('disabled');
+		}
 		
 		if( (openIdex+1) >= self.tabs.getTabs().length){
 			$('.widget-configuration input.next').addClass('disabled');
