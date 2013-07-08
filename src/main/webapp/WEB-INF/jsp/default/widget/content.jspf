@@ -265,16 +265,16 @@
 </style>
 
 
-<h1>${model.portalServer}</h1> 
 <c:choose>
+
 	<c:when test="${!empty model.debug && model.debug}">
 		<script type="text/javascript">
-			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
+			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
 		</script>
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
+			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
 		</script>
 	</c:otherwise>
 </c:choose>
