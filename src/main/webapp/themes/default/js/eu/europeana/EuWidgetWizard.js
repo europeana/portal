@@ -153,18 +153,17 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		var initTab = function(tabIndex){
 			
+			if(self.initialisedTabs[tabIndex]){
+				if(tabIndex != 4){
+					return;
+				}
+			}
+			
 			if(tabIndex == 1){			// query / types / copyrights / languages
 				
 				self.searchMenu = new EuMenu( $(".search-what-menu"), {} );
 				self.searchMenu.init();
 				
-				/*
-				var change = function(e){
-					var cb       = e.target ? $(e.target) : $(e);
-					var checked  = cb.prop('checked');
-					console.log( (checked ? "Add" : "Remove") + " value " + cb.attr("title") );
-				};
-				*/
 				var change = function(e){
 					var cb       = e.target ? $(e.target) : $(e);
 					var checked  = cb.prop('checked');
@@ -183,18 +182,6 @@ var EuWidgetWizard = function(cmpIn, options){
 					e.preventDefault();
 				});
 
-				/*
-				
-				$("ul.types input").add("ul.copyrights input").add("ul.languages input").change(change).click(function(e){
-					e.stopPropagation();
-				}).prop('checked', false);
-
-				$('ul.types a').add('ul.copyrights a').add('ul.languages a').click(function(e){
-					var cb = $(this).find('input'); 
-					cb.prop('checked', !cb.prop('checked'));
-					change(cb);
-				});
-				*/
 				$('button.clear-types').click(function(){
 					$('ul.types').find('input').prop('checked', false);
 				});
@@ -304,14 +291,16 @@ var EuWidgetWizard = function(cmpIn, options){
 			}
 			if(tabIndex == 4){
 				
-				$('.update-preview').click(function(e){
-					
-					/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
-					var src = output(true);
-					$('.preview-window').html('');
-					$('.preview-window').append('<input  type="hidden" id="widget-url-ref" value="' + src + '" />');
-					$('.preview-window').append('<script type="text/javascript" src="' + src + '"></script>');
+				/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
+				var src = output(true);
+				$('.preview-window').html('');
+				$('.preview-window').append('<input  type="hidden" id="widget-url-ref" value="' + src + '" />');
+				$('.preview-window').append('<script type="text/javascript" src="' + src + '"></script>');
+
+				/*
+				$('.update-preview').click(function(e){					
 				});
+				*/
 			}
 			self.initialisedTabs[tabIndex] = true;
 		};  // end initTab()
@@ -319,9 +308,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		self.tabs = new AccordionTabs(
 				self.cmp,
 				function(i){
-					if(!self.initialisedTabs[i]){
-						initTab(i);
-					}
+					initTab(i);
 					setTimeout(function(){
 						$('#step' + (i+1)).val("ANDY");
 						setDisabledTabs();

@@ -49,7 +49,7 @@ fnSearchWidget = function($, config){
     var paginationData          = {};
     
     
-    // get markup from portal
+    // get markup from portal - callback will invoke init
     self.load = function(){
        	$.holdReady(true);
        	
@@ -69,9 +69,11 @@ fnSearchWidget = function($, config){
 
     self.init = function(htmlData) {
         container = $('.search-widget-container');
-        container.css('background-color',	'#FFF');
-        container.css('border',				'solid 1px #999');
+        
+        //container.css('background-color',	'#FFF');
+        //container.css('border',				'solid 1px #999');
 
+        
         container.append('<div id="overlay"></div>');
         $('#overlay').hide();
         
@@ -524,12 +526,12 @@ fnSearchWidget = function($, config){
     };
 
     var setupQuery = function(){
-        self.q = $('#query-input');
+        self.q = container.find('#query-input');
         self.q.blur(function(){
             $(this).parent().removeClass('glow');
         }).focus(function(){
             $(this).parent().addClass('glow');    
-        });
+        }).val('*:*');
 
         var submitCell          = container.find('.submit-cell');
         var submitCellButton    = container.find('button');
@@ -573,12 +575,12 @@ fnSearchWidget = function($, config){
     	
         // search 
         self.searchMenu = new EuMenu( 
-            $("#search-menu"),
+        	container.find("#search-menu"),
             {
                 "fn_item": function(self){},
                 "fn_init": function(self){
-                    var input        = $('#query-input');
-                    var searchTerm    = input.attr("valueForBackButton").replace("*:*", "");
+                    var input        = container.find('#query-input');
+                    var searchTerm   = input.attr("valueForBackButton").replace("*:*", "");
                     self.cmp.find(".item a").each(function(i, ob){
                         var searchType = $(ob).attr("class");
                         if(searchTerm.indexOf(searchType) == 0){
@@ -590,7 +592,7 @@ fnSearchWidget = function($, config){
                 },
                 "fn_submit":function(self){
                     var active    = self.cmp.find(".item.active a").attr("class");
-                    var input    = $('#query-input');
+                    var input    = container.find('#query-input');
                     input.val( (typeof active == "undefined" ? "" : active) + input.val());
                 }
             }
@@ -607,15 +609,15 @@ fnSearchWidget = function($, config){
             }
         };
         
-        self.resMenu1 = new EuMenu( $(".nav-top .eu-menu"), config);
-        self.resMenu2 = new EuMenu( $(".nav-bottom .eu-menu"), config);
+        self.resMenu1 = new EuMenu( container.find(".nav-top .eu-menu"), config);
+        self.resMenu2 = new EuMenu( container.find(".nav-bottom .eu-menu"), config);
 
         self.resMenu1.init();
         self.resMenu2.init();
 
         // menu closing
         $(container).click( function(){
-            $('.eu-menu' ).removeClass("active");
+        	container.find('.eu-menu' ).removeClass("active");
         });
     };
 
@@ -659,14 +661,15 @@ var theParams = function(){
 		}
 	}
 	
+	rootUrl = thisScript.src.split('EuSearchWidget')[0];
+		
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
-	//var queryString = thisScript.src.substr(thisScript.src.indexOf('?')+1, thisScript.src.length);
 
-	console.log("thisScript.src = " + thisScript.src + "\n\nqueryString = " + queryString);
+	//console.log("thisScript.src = " + thisScript.src + "\n\nqueryString = " + queryString);
 	
 	function parseQuery ( query ) {
 		
-		console.log("parseQuery ( " + query + " )");
+		//console.log("parseQuery ( " + query + " )");
 		
 		var Params = new Object ();
 		if(!query){
@@ -682,8 +685,6 @@ var theParams = function(){
 				console.log("invalid parameter");
 				continue;
 			}
-//			var key = unescape( KeyVal[0] );
-	//		var val = unescape( KeyVal[1] );
 			var key = unescape( KeyVal[0] );
 			var val = unescape( KeyVal[1] );
 			val = val.replace(/\+/g, ' ');
@@ -704,7 +705,7 @@ var theParams = function(){
 
 
 var searchWidget;
-var rootUrl = "http://localhost:8081/portal/themes/default/js/eu/europeana/";
+var rootUrl;// = "http://localhost:8081/portal/themes/default/js/eu/europeana/";
 
 var withJQuery = function($){
 	var dependencies = [
@@ -723,7 +724,7 @@ var withJQuery = function($){
 				url: rootUrl + dependencies[index],
 				dataType: "script",
 				success: function(){
-					console.log('loaded ' + dependencies[index] + ', now get ' + (index+1));
+					//console.log('loaded ' + dependencies[index] + ', now get ' + (index+1));
 					recursiveLoad(index + 1);	
 				}
 			});
