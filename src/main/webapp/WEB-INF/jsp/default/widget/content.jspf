@@ -458,6 +458,33 @@
 					    </ul>
 					</div>
 
+					<%-- THE FACETS AS IN THE PORTAL --%>
+<%-- 
+					<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
+						<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
+							<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
+							<ul>
+								<c:forEach items="${facet.links}" var="facet_item">
+									<c:set var="label">
+										<c:choose>
+											<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
+											<c:otherwise>${facet_item.value}</c:otherwise>
+										</c:choose>
+									</c:set>
+									<li>
+										<input type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
+										<a href="/${model.portalName}/${model.pageName}?query=${fn:replace(model.query, '"', '&quot;')}${fn:replace(facet_item.url, '"', '&quot;')}${rowsParam}"
+											title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
+											<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
+										</a>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:forEach>
+					</c:if>
+ --%>
+ 					<%-- /THE FACETS AS IN THE PORTAL --%>
+
 					<%-- PETER'S MODEL --%>
 					<%--ul>
 						<c:forEach items="${model.types}" var="entry" varStatus="status">
