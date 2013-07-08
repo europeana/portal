@@ -1,0 +1,13 @@
+
+#overlay{
+    position:	absolute;
+    width:		100%;
+    height:		100%;
+    background:	black url(/portal/themes/default/images/spinner.gif) center center no-repeat;
+    opacity:	.5;
+    z-index:	12;
+}
+
+.search-widget-container{
+	position:	relative;
+}

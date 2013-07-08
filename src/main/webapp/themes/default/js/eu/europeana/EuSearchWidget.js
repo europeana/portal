@@ -61,6 +61,7 @@ fnSearchWidget = function($, config){
             "crossDomain" : true,
             "dataType" :    "script"
         });
+        
         return self;
     };
 
@@ -71,6 +72,9 @@ fnSearchWidget = function($, config){
         container.css('background-color',	'#FFF');
         container.css('border',				'solid 1px #999');
 
+        container.append('<div id="overlay"></div>');
+        $('#overlay').hide();
+        
         container.append(htmlData.markup);
         container.find('#content').hide();
 
@@ -145,7 +149,7 @@ fnSearchWidget = function($, config){
 
         // load style - as single files if in debug mode
         if(debug){
-			$.each(['html-sw', 'common', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw'], function(i, ob){
+			$.each(['html-sw', 'common', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
 	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
 			});
         }
@@ -168,6 +172,7 @@ fnSearchWidget = function($, config){
 				getFake();
         	}
         	else{
+        		showSpinner();
                 $.ajax({
                     "url" : url + "&profile=portal,params&callback=searchWidget.showRes",
                     "type" : "GET",
@@ -456,11 +461,22 @@ fnSearchWidget = function($, config){
             		filters.append(filter);
             	}
             });
-            
             container.find('#content').show();
+            hideSpinner();   
         }
     }; // end showRes
 
+    
+    var showSpinner = function(){
+    	$('#overlay').show();
+    	$('.search-widget-container').css('overflow-y', 'hidden');    	
+    };
+    
+    var hideSpinner = function(){
+    	$('#overlay').hide();
+    	$('.search-widget-container').css('overflow-y', 'auto');
+    };
+    
     var capitalise = function(str){
     	return (str.substr(0,1).toUpperCase() + str.substr(1).toLowerCase() ).replace(/_/g, ' ');
     };

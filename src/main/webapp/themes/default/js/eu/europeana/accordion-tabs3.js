@@ -92,7 +92,12 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 	};
 	
 	self.openTabAtIndex = function(i){
-		allTabs[i].openTab();
+		if(allTabs[i]){
+			allTabs[i].openTab();			
+		}
+		else{
+			console.log("no such tab: " + i);
+		}
 	};
 	
 	if (allTabs.length>0) {

@@ -285,9 +285,6 @@
 
 	<c:set var="buttonNextText"><spring:message code="wizard_next_t"/> &rarr;</c:set>
 	<c:set var="buttonPreviousText">&larr; <spring:message code="wizard_previous_t"/></c:set>
-<!-- 
-spinner = <img src="/portal/themes/default/images/spinner.gif">
- -->
 
 	<h2><spring:message code="wizard_heading_t"/></h2>
 	
