@@ -265,7 +265,7 @@
 </style>
 
 
-
+<h1>${model.portalServer}</h1> 
 <c:choose>
 	<c:when test="${!empty model.debug && model.debug}">
 		<script type="text/javascript">
