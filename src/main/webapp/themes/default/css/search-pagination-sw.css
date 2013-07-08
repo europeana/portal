@@ -1,26 +1,25 @@
 /* pagination for search results */
 
-.search-results-navigation {
+.search-widget-container .search-results-navigation {
 	clear:				both;
 	position:			relative;
 	border-bottom:		1px solid #E4E4E4;
 }
 
-.nav-numbers{
+.search-widget-container .nav-numbers{
 	text-align:		center;
 	white-space:	nowrap;
 	font-size:		0.75em;
 }
 
-.nav-numbers input{	
+.search-widget-container .nav-numbers input{	
 	font-size:	1em;
 	border:		1px solid #E4E4E4;
 	text-align:	center;
 }
 
 
-
-.result-pagination{
+.search-widget-container .result-pagination{
 	float:			none;	
 	margin:			0;
 	width:			100%;
@@ -33,28 +32,28 @@
 	z-index:		1;	
 }
 
-.result-pagination li{
+.search-widget-container .result-pagination li{
 	list-style: 	none;
 	display:		table-cell;
 	vertical-align:	top;
 }
 
-.jump-to-page{
+.search-widget-container .jump-to-page{
 	margin-top:	2em;
 }
 
 
-#start-page {
+.search-widget-container #start-page {
 	outline: medium none !important;
 	width: 4em;
 	text-align:center;
 }
 
-.result-pagination a:focus{
+.search-widget-container .result-pagination a:focus{
     border-bottom: 1px dotted #4C7ECF;
 }
 
-.nav .eu-menu{
+.search-widget-container .nav .eu-menu{
 	display:		inline-block;
 	border:			1px solid #e4e4e4;
 	margin-left:	0.5em;
@@ -64,8 +63,8 @@
 }
 
 /* override glow on selected menu item */
-.nav .eu-menu.selected span.open-menu,
-.nav .eu-menu.selected .item.active{
+.search-widget-container .nav .eu-menu.selected span.open-menu,
+.search-widget-container .nav .eu-menu.selected .item.active{
 	text-shadow:	none !important;
 }
 
@@ -73,9 +72,7 @@
 
 /* end copied */
 
-
-
-.nav{
+.search-widget-container .nav{
 	padding:			.25em 0;
 	
 	box-sizing:			border-box;
@@ -86,46 +83,42 @@
 	width:				100%;	/* needed for safari */
 }
 
-
-.nav>div{
+.search-widget-container .nav>div{
 	display:	block;
 	text-align:	center;
 	width:		100%;
 }
 
-
-
-.nav>div.menu, .nav>div.pagination{
+.search-widget-container .nav>div.menu, .nav>div.pagination{
 	white-space:	nowrap;
 }
 
 
-
-.nav .of{
+.search-widget-container .nav .of{
 	display:none;
 }
 
-.nav .of-bracket{
+.search-widget-container .nav .of-bracket{
 	color:#333 !important;	/* fix for strange iphone bug (wanting to color this as a link) */
 }
 
-.nav .of-bracket:before{
+.search-widget-container .nav .of-bracket:before{
 	content:'(';
 }
 
-.nav .of-bracket:after{
+.search-widget-container .nav .of-bracket:after{
 	content:')';
 }
 
-.nav .of-value{
+.search-widget-container .nav .of-value{
 	display:	block;
 }
 
-.nav .spaced:before{
+.search-widget-container .nav .spaced:before{
 	content:'';
 }
 
-.nav .spaced:after{
+.search-widget-container .nav .spaced:after{
 	content:'';
 }
 
@@ -138,16 +131,16 @@
 
 
 */
-	.min22em .nav .of-bracket:before{
+	.search-widget-container .min22em .nav .of-bracket:before{
 		content:'';
 	}
 
-	.min22em .nav .of-bracket:after{
+	.search-widget-container .min22em .nav .of-bracket:after{
 		content:'';
 	}
 
-	.min22em .nav .of,
-	.min22em .nav .of-value{
+	.search-widget-container .min22em .nav .of,
+	.search-widget-container .min22em .nav .of-value{
 		display:inline;
 	}	
 /*	
@@ -157,19 +150,19 @@
 /*
 @media only screen and (min-width: 48em) {
 */
-	.desktop .nav .spaced:before{
+	.search-widget-container.desktop .nav .spaced:before{
 		content:' ';
 	}
 	
-	.desktop .nav .spaced:after{
+	.search-widget-container.desktop .nav .spaced:after{
 		content:' ';
 	}
 	
-	.desktop .result-pagination li{
+	.search-widget-container.desktop .result-pagination li{
 		vertical-align:	middle;
 	}
 	
-	.desktop .jump-to-page{
+	.search-widget-container.desktop .jump-to-page{
 		margin-top:	0;
 		display:inline;
 	}
@@ -180,7 +173,7 @@
 /*
 @media only screen and (max-width: 55em) {
 */
-	.max55em .nav>div.show-on-22{
+	.search-widget-container.max55em .nav>div.show-on-22{
 		display:none;
 	}
 /*
@@ -191,9 +184,9 @@
 /*
 @media only screen and (min-width: 55em) {
 */
-	.min55em .show-on-22{display:table-cell !important;}
+	.search-widget-container.min55em .show-on-22{display:table-cell !important;}
 	
-	.min55em .result-pagination{
+	.search-widget-container.min55em .result-pagination{
 		float:		right;
 		width:		auto;	
 		font-size:	1em;
@@ -201,32 +194,32 @@
 	}
 
 	/* flex-box rules */
-	.min55em .nav>div{
+	.search-widget-container.min55em .nav>div{
 		display:		table-cell;
 		vertical-align:	middle;
 	}
 
-	.min55em .nav>.menu,
-	.min55em .nav>.pagination{
+	.search-widget-container.min55em .nav>.menu,
+	.search-widget-container.min55em .nav>.pagination{
 		width:1px;
 	}
 
 
-	.min55em .nav>.count{
+	.search-widget-container.min55em .nav>.count{
 		width:		100%;
 		text-align:	center;
 	}
 
-	.min55em .nav-numbers{	
+	.search-widget-container.min55em .nav-numbers{
 		font-size:	1em;
 		width:		auto;
 	}
 
-	.min55em .nav>.menu{
+	.search-widget-container.min55em .nav>.menu{
 		text-align:	left;
 	}
 
-	.min55em .nav>.pagination{
+	.search-widget-container.min55em .nav>.pagination{
 		text-align:	right;
 	}
 /*
@@ -234,8 +227,8 @@
 */
 
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.search-widget-container input::-webkit-outer-spin-button,
+.search-widget-container input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
     margin: 0;

@@ -9,11 +9,18 @@
 		padding:		0.5em;
 	}
 
+
 	.widget-configuration .previous,
-	.widget-configuration .next{
+	.widget-configuration .next,
+	.widget-configuration .update-preview{
 		border:			0;
 		border-radius:	0.5em 0.5em 0 0;
+		cursor:			pointer;
 		padding:		0.5em;
+	}
+
+	.widget-configuration .previous,
+	.widget-configuration .next{
 		z-index:		1;
 		position:		fixed;
 		top:			50%;
@@ -43,7 +50,12 @@
 		color:				#999 !important;
 	}
 	
-
+	.widget-configuration .update-preview{
+		border-radius:	0.5em;
+		float:			right;
+		clear:			both;
+		margin:			1.5em 0;
+	}
 
 	
 	#wizard-tabs .para{
@@ -161,9 +173,17 @@
 		display:		inline;
 	}
 	
+	input.previous,
+	input.next,
+	input.filter,
+	input.default_query{
+		font-size:	1em;
+	}
+	
 	input.filter{
-		display:		inline;
-		max-width:80%;
+		display:	inline;
+		max-width:	80%;
+		width:		80%;
 	}
 	
 	.choices{
@@ -193,14 +213,10 @@
 	
 	.search-what-menu,
 	.data-providers-wrapper,
-	.choices{
-		border:		1px solid #e4e4e4;
-	}
-	
-	.data-providers-wrapper,
 	.choices,
-	.filter-wrapper{
-		XXXdisplay:table-row;
+	
+	.preview-window{
+		border:		1px solid #e4e4e4;
 	}
 	
 	.content-inner{
@@ -210,9 +226,15 @@
 	
 	.filter-content{
 		margin:			1em 0;
-		text-align:	center;
-		white-space: nowrap;
+		text-align:		center;
+		white-space:	nowrap;
 	}
+
+	.preview-window{
+		width:	100%;
+		height:	12em;
+	}
+
 		
 	@media only screen and ( min-width:	48em ){
 	
@@ -247,12 +269,12 @@
 <c:choose>
 	<c:when test="${!empty model.debug && model.debug}">
 		<script type="text/javascript">
-			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js";
+			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js";
 		</script>
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js";
+			var searchWidgetUrl = "http://" + "${pageContext.request.serverName}" + ":" + "${pageContext.request.serverPort}" + "${request.contextPath}/${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js";
 		</script>
 	</c:otherwise>
 </c:choose>
@@ -296,7 +318,7 @@
 					<div class="para">
 						<spring:message code="wizard_tab2_search_for_t"/> 
 
-						<input id="default_query" /> 
+						<input class="default_query" /> 
 
 						<spring:message code="wizard_tab2_search_in_t"/>
 
@@ -491,10 +513,18 @@
 					</div>
 					<div class="para">
 						<spring:message code="wizard_tab5_content2_t"/>
-					</div>					
-					<div class="para">
-						<textarea id="output" rows="7" style="width:100%"></textarea>
 					</div>
+					
+					<div class="preview-window search-widget-container">
+					</div>
+					
+					<button class="update-preview deans-button-1"><spring:message code="wizard_tab5_update_preview_t"/></button>
+					
+					
+					<div class="para">
+						<textarea id="output" rows="4" style="width:100%"></textarea>
+					</div>
+					
 				</div>
 			</div>
 		</div>

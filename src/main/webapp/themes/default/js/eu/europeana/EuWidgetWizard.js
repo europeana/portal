@@ -38,7 +38,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		});
 	};
 	
-	var output = function(){
+	var output = function(preview){
 		var result = searchWidgetUrl;
 		var param = function(){
 			return (result.indexOf('?')>-1) ? '&' : '?';
@@ -50,7 +50,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		}
 		
 		if(self.initialisedTabs[1]){
-			var query = $('.widget-configuration #default_query').val();
+			var query = $('.widget-configuration .default_query').val();
 			if(query){
 				result += param() + 'query=' + (searchPrefix ? searchPrefix : '') + query;			
 			}
@@ -79,7 +79,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			});			
 		}
 
-		if(self.initialisedTabs[2]){
+		if(self.initialisedTabs[3]){
 		
 			$('ul.portal-languages a input').each(function(i, ob){
 				if($(ob).prop('checked')){
@@ -90,8 +90,14 @@ var EuWidgetWizard = function(cmpIn, options){
 
 		}
 		
-		result = '&lt;script type="text/javascript" src="' + result + '"&gt;&lt;/script&gt;';
-		$('#output').html(result);
+		if(preview){
+			return '<script type="text/javascript" src="' + result + '"></script>';
+		}
+		else{
+			result = '&lt;script type="text/javascript" src="' + result + '"&gt;&lt;/script&gt;';
+			$('#output').html(result);			
+		}
+		
 	};
 	
 	/* Disable tabs that have unfilled inputs */
@@ -279,6 +285,15 @@ var EuWidgetWizard = function(cmpIn, options){
 					change(cb);
 				});
 
+			}
+			if(tabIndex == 4){
+				
+				$('.update-preview').click(function(e){
+					
+					console.log('update preview....');
+					
+					$('.preview-window').html( output(true) );
+				});
 			}
 			self.initialisedTabs[tabIndex] = true;
 		};  // end initTab()

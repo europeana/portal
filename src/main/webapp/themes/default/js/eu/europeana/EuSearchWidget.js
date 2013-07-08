@@ -119,13 +119,16 @@ fnSearchWidget = function($, config){
      	});
        		
         $(document).ready(function(){
+        	/*
         	container.resizable({
         		resize: function( event, ui ) {
         			$(window).trigger("widgetResize");
         		}
         	});
-        	
+        	*/
+        	/*
         	container.draggable();
+        	 */
         	container.css('overflow-y', 'auto');
         	container.css('overflow-x', 'hidden');
         	
@@ -165,7 +168,7 @@ fnSearchWidget = function($, config){
         	}
         	else{
                 $.ajax({
-                    "url" : url + "&profile=portal&callback=searchWidget.showRes",
+                    "url" : url + "&profile=portal,params&callback=searchWidget.showRes",
                     "type" : "GET",
                     "crossDomain" : true,
                     "dataType" : "script"
@@ -240,6 +243,7 @@ fnSearchWidget = function($, config){
         var grid = container.find('#items');
         grid.empty();
 
+        console.log("widget showRes(data), data = \n" + JSON.stringify(data));
         var start = data.params.start ? data.params.start : 1;
 
         $(data.items).each(function(i, ob){

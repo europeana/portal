@@ -28,7 +28,8 @@
 /*
 @media only screen and ( min-width:48em ){
 */
-	.desktop.search-widget-container{
+
+	.search-widget-container.desktop{
 		font-size:	1.125em;
 	}
 /*
@@ -37,7 +38,7 @@
 /*
 @media only screen and ( min-width:71em ){
 */
-	.min71em.search-widget-container{
+	.search-widget-container.min71em{
 		font-size:	1.063em;
 	}
 /*
