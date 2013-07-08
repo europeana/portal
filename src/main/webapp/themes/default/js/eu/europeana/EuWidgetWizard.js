@@ -91,7 +91,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		}
 		
 		if(preview){
-			return '<script type="text/javascript" src="' + result + '"></script>';
+			return result;
 		}
 		else{
 			result = '&lt;script type="text/javascript" src="' + result + '"&gt;&lt;/script&gt;';
@@ -205,7 +205,6 @@ var EuWidgetWizard = function(cmpIn, options){
 								removeLink.attr("title", text);
 								removeLink.html('<span>&nbsp;' + text + '</span>');
 								removeLink.click(function(){
-									console.log('clicked');
 									ob.prop('checked', false);
 									removeLink.remove();
 								});
@@ -290,9 +289,11 @@ var EuWidgetWizard = function(cmpIn, options){
 				
 				$('.update-preview').click(function(e){
 					
-					console.log('update preview....');
-					
-					$('.preview-window').html( output(true) );
+					/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
+					var src = output(true);
+					$('.preview-window').html('');
+					$('.preview-window').append('<input  type="hidden" id="widget-url-ref" value="' + src + '" />');
+					$('.preview-window').append('<script type="text/javascript" src="' + src + '"></script>');
 				});
 			}
 			self.initialisedTabs[tabIndex] = true;
@@ -307,7 +308,6 @@ var EuWidgetWizard = function(cmpIn, options){
 					setTimeout(function(){
 						$('#step' + (i+1)).val("ANDY");
 						setDisabledTabs();
-						//console.log( '#step' + (i+1) + ' st to ' + $('#step' + (i+1)).val() );
 					}, 1);
 					
 					output();

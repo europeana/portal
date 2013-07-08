@@ -52,6 +52,7 @@ fnSearchWidget = function($, config){
     // get markup from portal
     self.load = function(){
        	$.holdReady(true);
+       	
        	var url = self.config.lang ? markupUrl + '&lang=' + self.config.lang[0] : markupUrl;
 
         $.ajax({
@@ -136,7 +137,7 @@ fnSearchWidget = function($, config){
         	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	
            	$.getScript(responsiveContainersUrl, function() {
-           		console.log('got the switch code');
+           		console.log('initialise responsive containers here');
         	});
 
         	
@@ -625,28 +626,55 @@ fnSearchWidget = function($, config){
 
 var theParams = function(){
 		
-	// read params
-	
 	var scripts    = document.getElementsByTagName('script');
-	var thisScript = scripts[scripts.length - 1];
+	var thisScript = false;
+	
+	for(var i=0; i<scripts.length; i++){
+		if(scripts[i].src.indexOf('EuSearchWidget') > -1){
+			thisScript = scripts[i];			
+		}
+	}
+	if(!thisScript){
+		if($('#widget-url-ref').length>0 && $('#widget-url-ref').val().length>0){
+			thisScript = {"src": $('#widget-url-ref').val()};
+		}
+		else{
+			return {};
+		}
+	}
+	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
+	//var queryString = thisScript.src.substr(thisScript.src.indexOf('?')+1, thisScript.src.length);
 
+	console.log("thisScript.src = " + thisScript.src + "\n\nqueryString = " + queryString);
+	
 	function parseQuery ( query ) {
+		
+		console.log("parseQuery ( " + query + " )");
+		
 		var Params = new Object ();
-		if(!query) return Params; // return empty object
+		if(!query){
+			return Params; // return empty object
+		}
+		
 		var Pairs = query.split('&');
 		for ( var i = 0; i < Pairs.length; i++ ) {
+			
+			console.log("pairing.... ")
 			var KeyVal = Pairs[i].split('=');
 			if(!KeyVal || KeyVal.length != 2 ){
 				console.log("invalid parameter");
 				continue;
 			}
+//			var key = unescape( KeyVal[0] );
+	//		var val = unescape( KeyVal[1] );
 			var key = unescape( KeyVal[0] );
 			var val = unescape( KeyVal[1] );
 			val = val.replace(/\+/g, ' ');
 			if(!Params[key]){
 				Params[key] = new Array ();
 			}
+			console.log("push " + key + "  " + val);
 			Params[key].push(val);
 		}
 		
@@ -671,7 +699,7 @@ var withJQuery = function($){
 		'collapsible_widget.js',
 		'collapsible.js',
 		'EuPagination.js',
-	]
+	];
 
 	function recursiveLoad(index){
 		if(dependencies.length > index){
@@ -690,7 +718,7 @@ var withJQuery = function($){
 		}
 	}
 	recursiveLoad(0);
-}
+};
 
 if(typeof jQuery == "undefined"){
 	
