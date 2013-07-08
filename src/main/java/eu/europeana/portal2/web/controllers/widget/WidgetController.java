@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +33,11 @@ import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinksImpl;
 import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.web.controllers.SearchController;
 import eu.europeana.portal2.web.controllers.SitemapController;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.facets.LabelFrequency;
@@ -51,6 +54,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.IngestionUtils;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
 public class WidgetController {
@@ -69,9 +73,7 @@ public class WidgetController {
 
 	private static Date lastSolrUpdate;
 	private static List<ContributorItem> contributorEntries;
-	private static List<Count> rights;
-	private static List<Count> types;
-	private static List<Count> languages;
+	private static BriefBeanView briefBeanView;
 
 	private volatile static Calendar lastCheck;
 
@@ -132,22 +134,45 @@ public class WidgetController {
 	@RequestMapping({"/widget/editor.html"})
 	public ModelAndView editWidget(HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		Injector injector = new Injector(request, response, locale);
-		SearchWidgetEditorPage<ContributorItem> model = new SearchWidgetEditorPage<ContributorItem>();
+		SearchWidgetEditorPage model = new SearchWidgetEditorPage();
 		injector.injectProperties(model);
 
 		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
+		String providerQueryFormat = String.format("%s/search.html?query=*:*&qf=PROVIDER:", portalServer) + "%s";
 
 		if (solrOutdated() || contributorEntries == null) {
 			contributorEntries = new ArrayList<ContributorItem>();
 			List<Count> providers;
+
+			Query query = new Query("*:*")
+				.setPageSize(0)
+				.setStart(0) // Solr starts from 0
+				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
+				.setParameter("sort", SearchController.DEFAULT_SORT)
+				.setProduceFacetUnion(true)
+				.setAllowSpellcheck(false);
+
+			briefBeanView = null;
+			try {
+				Map<String, String[]> params = RequestUtils.getParameterMap(request);
+				briefBeanView = SearchUtils.createResults(searchService, BriefBean.class, "portal", query, 0, 0, params);
+			} catch (SolrTypeException e) {
+				log.error("SolrTypeException: " + e.getMessage());
+				// return new ApiError("search.json", e.getMessage());
+				e.printStackTrace();
+			} catch (Exception e) {
+				log.error("Exception: " + e.getMessage());
+				e.printStackTrace();
+			}
+
 			try {
 				providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
 				for (Count provider : providers) {
 					try {
-						String query = StringEscapeUtils.escapeXml(String.format(
-								"%s/search.html?query=*:*&qf=PROVIDER:%s", portalServer,
+						String queryString = StringEscapeUtils.escapeXml(String.format(
+								providerQueryFormat,
 								SitemapController.convertProviderToUrlParameter(provider.getName())));
-						ContributorItem contributorItem = new ContributorItem(query, provider.getName(),
+						ContributorItem contributorItem = new ContributorItem(queryString, provider.getName(),
 								provider.getCount(), portalServer);
 
 						List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
@@ -170,33 +195,15 @@ public class WidgetController {
 			} catch (SolrTypeException e1) {
 				e1.printStackTrace();
 			}
-
-			try {
-				rights = IngestionUtils.getCollectionsFromSolr(searchService, "RIGHTS", "*:*", null);
-			} catch (SolrTypeException e) {
-				rights = new ArrayList<Count>();
-				e.printStackTrace();
-			}
-
-			try {
-				types = IngestionUtils.getCollectionsFromSolr(searchService, "TYPE", "*:*", null);
-			} catch (SolrTypeException e) {
-				types = new ArrayList<Count>();
-				e.printStackTrace();
-			}
-
-			try {
-				languages = IngestionUtils.getCollectionsFromSolr(searchService, "LANGUAGE", "*:*", null);
-			} catch (SolrTypeException e) {
-				languages = new ArrayList<Count>();
-				e.printStackTrace();
-			}
 		}
 
 		model.setProviders(contributorEntries);
-		model.setRights(rights);
-		model.setTypes(types);
-		model.setLanguages(languages);
+		try {
+			model.setBriefBeanView(briefBeanView);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.WIDGET_EDITOR);
 		injector.postHandle(this, page);

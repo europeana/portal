@@ -60,7 +60,7 @@ public class SearchController {
 	/**
 	 * Deafult sort order
 	 */
-	private static final String DEFAULT_SORT = "score desc";
+	public static final String DEFAULT_SORT = "score desc";
 
 	@RequestMapping({ "/search.html", "/brief-doc.html" })
 	public ModelAndView searchHtml(
@@ -126,10 +126,14 @@ public class SearchController {
 		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 
-		Query query = new Query(q).setRefinements(qf).setPageSize(rows).setStart(start - 1) // Solr starts from 0
-				.setParameter("facet.mincount", "1")
-				// .setParameter("f.YEAR.facet.mincount", "1")
-				.setParameter("sort", sort).setProduceFacetUnion(true).setAllowSpellcheck(false);
+		Query query = new Query(q)
+				.setRefinements(qf)
+				.setPageSize(rows)
+				.setStart(start - 1) // Solr starts from 0
+				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
+				.setParameter("sort", sort)
+				.setProduceFacetUnion(true)
+				.setAllowSpellcheck(false);
 
 		if (model.isEmbedded()) {
 			query.setAllowFacets(false);

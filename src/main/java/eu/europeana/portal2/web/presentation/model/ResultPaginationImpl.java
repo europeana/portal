@@ -31,17 +31,20 @@ public class ResultPaginationImpl implements ResultPagination {
 	private int numFound;
 	private List<BreadCrumb> breadcrumbs;
 	private PresentationQueryImpl presentationQuery = new PresentationQueryImpl();
-	
-	
-	public ResultPaginationImpl(int start, int rows, int numFound, Query query, List<BreadCrumb> breadcrumbs) {
-		this.numFound	= numFound;
-		this.rows		= rows;
-		
-		int totalPages = numFound / rows;
-		lastPage		=    (  (numFound / rows) * rows ) +  ( numFound % rows > 0 ? 1 : (0-rows)+1 );
-		firstPage		= 1;
 
-		if (numFound % rows != 0) {
+	public ResultPaginationImpl(int start, int rows, int numFound, Query query, List<BreadCrumb> breadcrumbs) {
+		this.numFound = numFound;
+		this.rows = rows;
+
+		int totalPages = rows == 0 ? 1 : numFound / rows;
+		if (rows == 0) {
+			lastPage = 1;
+		} else {
+			lastPage = ((numFound / rows) * rows) + (numFound % rows > 0 ? 1 : (0 - rows) + 1);
+		}
+		firstPage = 1;
+
+		if (rows != 0 && numFound % rows != 0) {
 			totalPages++;
 		}
 		this.numberOfPages = totalPages;
@@ -50,15 +53,15 @@ public class ResultPaginationImpl implements ResultPagination {
 		if (start != 0) {
 			this.start = start;
 		}
-		pageNumber = start / rows + 1;
-		
-		this.isPrevious		= start > 1;
-		this.previousPage	= start - rows;
-		this.isFirst		= pageNumber == 1;
-		this.isLast			= pageNumber == totalPages;
-		this.isNext			= pageNumber < totalPages;
-		this.nextPage		= start + rows;
-		this.breadcrumbs	= breadcrumbs;
+		pageNumber = (rows == 0) ? 1 : start / rows + 1;
+
+		this.isPrevious   = start > 1;
+		this.previousPage = start - rows;
+		this.isFirst      = pageNumber == 1;
+		this.isLast       = pageNumber == totalPages;
+		this.isNext       = pageNumber < totalPages;
+		this.nextPage     = start + rows;
+		this.breadcrumbs  = breadcrumbs;
 
 		presentationQuery.queryForPresentation = createQueryForPresentation(query);
 		presentationQuery.queryToSave = query.getQuery();
