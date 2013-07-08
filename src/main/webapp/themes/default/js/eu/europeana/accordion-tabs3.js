@@ -102,7 +102,7 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 			}
 			else{
 				self.openTabAtIndex(0);				
-			}			
+			}
 		}, 1);
 	}
 		
