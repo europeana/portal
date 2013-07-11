@@ -30,8 +30,8 @@
 }
 
 .accordion-tabs .tab-header.disabled{
-	background-color:	#e4e4e4;
-	cursor:				default;
+	color:	#e4e4e4;
+	cursor:	default;
 }
 
 .accordion-tabs .content{
