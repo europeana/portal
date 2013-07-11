@@ -153,7 +153,7 @@ fnSearchWidget = function($, config){
 
         // load style - as single files if in debug mode
         if(js.debug){
-			$.each(['html-sw', 'common', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
+			$.each(['html-sw', 'common-sw', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
 	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
 			});
         }
