@@ -59,7 +59,8 @@ fnSearchWidget = function($, config){
             "url" :         url,
             "type" :        "GET",
             "crossDomain" : true,
-            "dataType" :    "script"
+            "dataType" :    "script",
+            "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
         });
         
         return self;
@@ -68,6 +69,7 @@ fnSearchWidget = function($, config){
     // load style / initialise events / set state - called by load callback
 
     self.init = function(htmlData) {
+
         container = $('.search-widget-container');
         
         //container.css('background-color',	'#FFF');
