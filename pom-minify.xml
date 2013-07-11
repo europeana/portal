@@ -57,6 +57,7 @@
 
 
 					<!-- widget.css (as common.css but with absolute font-icon paths + search.css) -->
+					<!-- 
 					<execution>
 						<id>minify-search-widget.css</id>
 						<phase>process-resources</phase>
@@ -84,7 +85,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-
+					-->
 
 					<!-- separate file for newsletter -->
 					<execution>
