@@ -40,7 +40,7 @@ fnSearchWidget = function($, config){
     var resultServerUrl         = 'http://europeana.eu/portal';
 
     
-    var rootUrl				= rootUrl ? rootUrl : 'http://localhost:8081/portal';
+    var rootUrl				= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal';//'http://localhost:8081/portal';
 	var searchUrl			= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
 //    var rootUrl					= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal/';
     
@@ -733,7 +733,7 @@ var theParams = function(){
 
 
 var searchWidget;
-var rootJsUrl;// = "http://localhost:8081/portal/themes/default/js/eu/europeana/";
+var rootJsUrl;
 
 var withJQuery = function($){
 	var dependencies = [
