@@ -42,7 +42,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		});
 	};
 	
-	var output = function(preview){
+	var output = function(){
 		var result = searchWidgetUrl;
 		var param = function(){
 			return (result.indexOf('?')>-1) ? '&' : '?';
@@ -71,10 +71,18 @@ var EuWidgetWizard = function(cmpIn, options){
 			
 		}		
 		if(self.initialisedTabs[2]){
-			$('.data-providers a input').each(function(i, ob){
+			$('.data-providers>li>a>input').add('.providers>li>a>input').each(function(i, ob){
 				if($(ob).prop('checked')){
-					var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
-					result += param() + 'qf=PROVIDER:' + (name.indexOf(' ') > 0) ? '' + name.replace(/\s/g, '+') + '' : name;
+					
+					console.log("checked name is " + $(ob).next('span').html());
+					
+					var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+					
+					result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':{' + name + '}';
+					//result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':&quot;' + name + '&quot;';
+					//result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':' + name;
+
+					
 				}
 			});			
 		}
@@ -117,6 +125,39 @@ var EuWidgetWizard = function(cmpIn, options){
 	    	}
 	    	catch(e){}
 	    }
+	};
+	
+	var createCollapsibleSection = function(i, ob){
+		ob = $(ob);
+		
+		var headingSelector	= "h3 a";
+		var headingSelected	= ob.find(headingSelector);
+		var fnGetItems		= function(){
+			return headingSelected.closest('.facet-header').next('li').find('ul').find('a');
+		};
+		
+		var accessibility = new EuAccessibility(
+			headingSelected,
+			fnGetItems
+		);
+		
+		ob.Collapsible(
+			{
+				"headingSelector"		: "h3 a",
+				"bodySelector"			: "ul",
+				"keyHandler"			: accessibility
+			}
+		);
+		
+		headingSelected.click(function(){
+			var btn = $(this).closest('.facet-header').find('button');
+			if($(this).hasClass('active')){
+				btn.css('display', 'block');
+			}
+			else{
+				btn.css('display', 'none');
+			}
+		});	
 	};
 	
 	
@@ -202,6 +243,12 @@ var EuWidgetWizard = function(cmpIn, options){
 					console.log( (checked ? "Add" : "Remove") + cb.attr('title') );
 				};
 				
+				// make facet sections collapsible
+				
+				$("#tab-2 #filter-search>li.facet-header").each(function(i, ob){
+					createCollapsibleSection(i, ob);
+				});
+
 				
 				$("ul.types input").add("ul.copyrights input").add("ul.languages input").change(change).click(function(e){
 					e.stopPropagation();
@@ -217,9 +264,11 @@ var EuWidgetWizard = function(cmpIn, options){
 				$('button.clear-types').click(function(){
 					$('ul.types').find('input').prop('checked', false);
 				});
+				
 				$('button.clear-copyrights').click(function(){
 					$('ul.copyrights').find('input').prop('checked', false);
 				});
+				
 				$('button.clear-languages').click(function(){
 					$('ul.languages').find('input').prop('checked', false);
 				});
@@ -229,8 +278,10 @@ var EuWidgetWizard = function(cmpIn, options){
 				
 				eu_europeana_providers = {
 					addLinks : function(){
-						// remove old
-						$('.choices').css('display', 'none');//html('');
+						
+						$('.choices').css('display', 'none');
+						$('.choices').html('');
+						
 						var show = false;
 						
 						$('.data-providers').find('input').each(function(i, ob){
@@ -256,9 +307,10 @@ var EuWidgetWizard = function(cmpIn, options){
 					
 					init: function(){
 						
-						// checkboxes and collapsibility
+// checkboxes and collapsibility
 						
 						var change = function(e){
+console.log("change event START");							
 							var cb       = e.target ? $(e.target) : $(e);
 							var checked  = cb.prop('checked');
 							var subBoxes = cb.parent().next('ul').find('li a input');
@@ -266,6 +318,7 @@ var EuWidgetWizard = function(cmpIn, options){
 								$(ob).prop('checked', checked);
 							});
 							eu_europeana_providers.addLinks();
+console.log("change event END");							
 						};
 						
 						$('.icon-arrow-2-after>input').add('.data-providers input').change(change).click(function(e){
@@ -274,15 +327,15 @@ var EuWidgetWizard = function(cmpIn, options){
 						
 						$('.icon-arrow-2-after').click(function(e){
 							var innerList = $(this).parent().find('ul');
-							innerList.is(':visible') ? innerList.hide('slow') : innerList.show('slow');
+							innerList.is(':visible') ? innerList.hide('slow') : innerList.show('slow');							
 							e.preventDefault();
 						});
 					  
 						$('.data-providers a').click(function(e){
 							var cb = $(this).find('input'); 
 							cb.prop('checked', !cb.prop('checked'));
-							change(cb);
-							
+							//change(cb);
+							eu_europeana_providers.addLinks();							
 						});
 						
 						// filter
@@ -293,10 +346,42 @@ var EuWidgetWizard = function(cmpIn, options){
 					    		//var re = new RegExp('^' + val + '[A-Za-z\\d\\s]*');
 					    		var re = new RegExp(val + '[A-Za-z\\d\\s]*');
 					    		
-					            $('#wizard-tabs .outer-list .icon-arrow-2-after span').add('#wizard-tabs .no-children').each(function(i, ob){
-					            	var text = $(ob).html().toUpperCase();
-					            	var item = $(ob).closest('li');
-					            	re.test(text) ? item.show() : item.hide();
+					    		$('#wizard-tabs .icon-arrow-2-after span')
+					    		.add('#wizard-tabs .no-children')
+					    		.each(function(i, ob){
+					            	var text		= $(ob).html().toUpperCase();
+					            	var item		= $(ob).closest('li');
+					            	var sub			= item.find('ul');
+					            	var childMatch	= false;
+					            	
+					            	sub.find('li').each(function(j, subItem){
+					            		subItem = $(subItem);
+					            		var subText = subItem.find('span').html().toUpperCase();
+					            		if(re.test(subText)){
+					            			subItem.show();
+					            			childMatch = true;
+					            		}
+					            		else{
+					            			subItem.hide();					            			
+					            		}
+					            	});
+					            	
+
+					            	if(re.test(text)){
+					            		item.show();
+					            	}
+					            	else{
+					            		if(childMatch){
+					            			// open.... 
+					            			$(ob).closest('li').show();
+					            			if(sub.css('display')=="none"){
+					            				$(ob).click();					            				
+					            			}
+					            		}
+					            		else{
+					            			$(ob).closest('li').hide();
+					            		}
+					            	}
 					            });    		
 					    	}
 					    	else{
@@ -304,10 +389,12 @@ var EuWidgetWizard = function(cmpIn, options){
 					    	}
 
 					    } );						
-						$('.outer-list').show();
+					   	
 					}
 				};
 				eu_europeana_providers.init();
+				
+
 			}
 			if(tabIndex == 3){
 				// TODO: generic checkbox change

@@ -57,7 +57,7 @@
 
 
 					<!-- widget.css (as common.css but with absolute font-icon paths + search.css) -->
-					<!-- 
+					
 					<execution>
 						<id>minify-search-widget.css</id>
 						<phase>process-resources</phase>
@@ -68,7 +68,7 @@
 							<cssTargetDir>min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>html-sw.css</cssSourceInclude>
-								<cssSourceInclude>common.css</cssSourceInclude>
+								<cssSourceInclude>common-sw.css</cssSourceInclude>
 								<cssSourceInclude>header-sw.css</cssSourceInclude>
 								<cssSourceInclude>menu-main.css</cssSourceInclude>
 								<cssSourceInclude>responsive-grid-sw.css</cssSourceInclude>
@@ -79,13 +79,14 @@
 								<cssSourceInclude>search-sw.css</cssSourceInclude>
 								<cssSourceInclude>search-pagination-sw.css</cssSourceInclude>
 								<cssSourceInclude>sidebar-facets-sw.css</cssSourceInclude>
+								<cssSourceInclude>styling-sw.css</cssSourceInclude>
 							</cssSourceIncludes>
 						</configuration>
 						<goals>
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					-->
+					
 
 					<!-- separate file for newsletter -->
 					<execution>

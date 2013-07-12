@@ -118,11 +118,17 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 		});
 		
+		scripts.push({
+			name : 'collapsible',
+			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'utils', 'EuAccessibility' ]
+		});
 		
 		scripts.push({
 			file : 'EuWidgetWizard' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : ['AccordionTabs', 'EuMenu'],
+			dependencies : ['AccordionTabs', 'EuMenu', 'collapsible'],
 			callback : function(){
 				new EuWidgetWizard(
 					$('#wizard-tabs'),

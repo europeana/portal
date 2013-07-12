@@ -39,6 +39,12 @@ fnSearchWidget = function($, config){
 
     var resultServerUrl         = 'http://europeana.eu/portal';
 
+    
+    var rootUrl				= rootUrl ? rootUrl : 'http://localhost:8081/portal';
+	var searchUrl			= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
+//    var rootUrl					= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal/';
+    
+    
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
 	var cssUrl                  = rootUrl +  '/themes/default/css/';
 	var responsiveContainersUrl = rootUrl +  '/themes/default/js/eu/europeana/responsive-containers.js';
@@ -145,20 +151,20 @@ fnSearchWidget = function($, config){
         	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	
            	$.getScript(responsiveContainersUrl, function() {
-           		console.log('initialise responsive containers here');
+           		//console.log('initialise responsive containers here');
         	});
 
         	
         });
 
         // load style - as single files if in debug mode
-        if(js.debug){
+        if(true || js.debug){
 			$.each(['html-sw', 'common-sw', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
 	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
 			});
         }
         else{
-        	$('head').append('<link rel="stylesheet" href="' + cssUrl + '/min/search-widget-all.css" type="text/css" />');
+        	$('head').append('<link rel="stylesheet" href="' + cssUrl + 'min/search-widget-all.css" type="text/css" />');
         }
         
         // load jquery ui style
@@ -169,7 +175,8 @@ fnSearchWidget = function($, config){
     var doSearch = function(startParam, query){
     	
     	var url = buildUrl(startParam, query);
-       
+    	console.log("searchUrl = " + url);
+    	
         if(typeof url != 'undefined' && url.length){
         	
         	if(searchUrl.indexOf('file')==0){
@@ -178,10 +185,11 @@ fnSearchWidget = function($, config){
         	else{
         		showSpinner();
                 $.ajax({
-                    "url" : url + "&profile=portal,params&callback=searchWidget.showRes",
+                    "url" : url,
                     "type" : "GET",
                     "crossDomain" : true,
-                    "dataType" : "script"
+                    "dataType" : "script",
+                    "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
                 });
         	}
         }
@@ -190,6 +198,10 @@ fnSearchWidget = function($, config){
         }
     };
 
+    
+//http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&callback=searchWidget.showRes&rows=6&start=1&qf=DATA_PROVIDER:%22French+National+Library+-+Biblioth%C2%8F%C3%A8que+Nationale+de+France%22
+//http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&callback=searchWidget.showRes&rows=6&start=1&qf=DATA_PROVIDER:%22French+National+Library+-+Biblioth%C3%A8que+Nationale+de+France%22
+    
     // build search param from url-fragment hrefs.  @startParam set to 1 if not specified
     var buildUrl = function(startParam, query){
 
@@ -201,7 +213,7 @@ fnSearchWidget = function($, config){
         var url = query ? searchUrl + '&' + query : searchUrl + '&query=' + term;
         
         // params
-        
+        url += "&profile=portal,params&callback=searchWidget.showRes";
         url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
         url += '&start=' + (startParam ? startParam : 1);
 
@@ -212,7 +224,7 @@ fnSearchWidget = function($, config){
         }
         
         // refinements & facets read from hidden inputs
-        
+
         if(showFacets){
             container.find('#refine-search-form > input').each(function(i, ob){
             	var urlFragment = $(ob).attr('value');
@@ -225,13 +237,16 @@ fnSearchWidget = function($, config){
         
         
         // config supplied: {"qf":["PROVIDER:Athena","PROVIDER:Bildarchiv Foto Marburg","PROVIDER:Progetto ArtPast- CulturaItalia"]}
-
         
         if(self.config){
         	if(self.config.qf){
         		$.each(self.config.qf, function(i, ob){
         			
-        			console.log("Full ob = " + JSON.stringify(ob) + ", "  + ob.length);
+        			// console.log("Full ob = " + JSON.stringify(ob) + ", "  + ob.length);
+        			console.log("append to url = " + JSON.stringify(ob));
+        			
+        			ob = ob.replace(/[\{\}]/g, '"');
+//        			ob = ob.replace(/\}/g, '"');
         			
         			url += '&qf=';
         			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
@@ -239,8 +254,8 @@ fnSearchWidget = function($, config){
         			console.log('append to url: ' + url);
         		});
         	}
-
         }
+
 
 		console.log('final search url: ' + url);
         return url;
@@ -253,9 +268,9 @@ fnSearchWidget = function($, config){
         var grid = container.find('#items');
         grid.empty();
 
-        console.log("widget showRes(data), data = \n" + JSON.stringify(data));
+        // console.log("widget showRes(data), data = \n" + JSON.stringify(data));
         var start = data.params.start ? data.params.start : 1;
-
+        
         $(data.items).each(function(i, ob){
             var item = itemTemplate.clone();
 
@@ -285,16 +300,15 @@ fnSearchWidget = function($, config){
 
         // pagination
         
-        // PETER - can't the api send back the rows paramter?
-        var xRows = (self.resMenu1.getActive() ? parseInt(self.resMenu1.getActive()) : defaultRows);
+        //var xRows = (self.resMenu1.getActive() ? parseInt(self.resMenu1.getActive()) : defaultRows);
 
         //paginationData = {"records":data.totalResults, "rows":data.itemsCount, "start":data.start};
-        paginationData = {"records":data.totalResults, "rows":xRows, "start":start};
+        paginationData = {"records":data.totalResults, "rows": data.params.rows, "start":start};
         
         //pagination.setData(data.totalResults, data.itemsCount, data.start);
         pagination.setData(
         		data.totalResults,
-        		xRows,
+        		data.params.rows,
         		start);
 
 
@@ -305,179 +319,181 @@ fnSearchWidget = function($, config){
 
 
         // facets
-        var cbCount  = 0;
-        var ugcFacet = $('#filter-search .ugc-li');
-        var selected = $('#filter-search input[type=checkbox]:checked').next('a');
-
-        $('#filter-search>li:not(:first)').remove(); // remove all but the "Add Keyword" form.
+        if(showFacets){
         
-        // write facet dom
-        
-        $(data.facets).each(function(i, ob){
-            var facet           = facetTemplate.clone();
-            var facetOps        = facet.find('ul');
-            var facetOpTemplate = facetOps.find('li:nth-child(1)');
-            facet.find('h3 a').html(capitalise(ob.name));
-            facetOps.empty();
-            $.each(ob.fields, function(i, field){
-                
-                var facetOp = facetOpTemplate.clone();
-                var urlFragment = "qf=" + ob.name + ":" + field.label;
-                
-                facetOp.find('h4 a').attr({
-                    "href"  : urlFragment,
-                    "title" : field.label
-                });
+	        var cbCount  = 0;
+	        var ugcFacet = container.find('#filter-search .ugc-li');
+	        var selected = container.find('#filter-search input[type=checkbox]:checked').next('a');
+	
+	        container.find('#filter-search>li:not(:first)').remove(); // remove all but the "Add Keyword" form.
+	        
+	        // write facet dom
+	        
+	        $(data.facets).each(function(i, ob){
+	            var facet           = facetTemplate.clone();
+	            var facetOps        = facet.find('ul');
+	            var facetOpTemplate = facetOps.find('li:nth-child(1)');
+	            facet.find('h3 a').html(capitalise(ob.name));
+	            facetOps.empty();
+	            $.each(ob.fields, function(i, field){
+	                
+	                var facetOp = facetOpTemplate.clone();
+	                var urlFragment = "qf=" + ob.name + ":" + field.label;
+	                
+	                facetOp.find('h4 a').attr({
+	                    "href"  : urlFragment,
+	                    "title" : field.label
+	                });
+	
+	                facetOp.find("input").attr({
+	                    "name"  : "cb-" + cbCount,
+	                    "id"    : "cb-" + cbCount,
+	                    "value" : urlFragment
+	                });
+	
+	                facetOp.find('label').html(field.label + ' (' + field.count + ')').attr({
+	                    "for"   : "cb-" + cbCount,
+	                    "title" : field.label
+	                });
+	
+	                facetOps.append( facetOp );
+	                cbCount ++;
+	            });
+	            facet.append(facetOps);
+	            container.find('#filter-search').append(facet);
+	        });
 
-                facetOp.find("input").attr({
-                    "name"  : "cb-" + cbCount,
-                    "id"    : "cb-" + cbCount,
-                    "value" : urlFragment
-                });
-
-                facetOp.find('label').html(field.label + ' (' + field.count + ')').attr({
-                    "for"   : "cb-" + cbCount,
-                    "title" : field.label
-                });
-
-                facetOps.append( facetOp );
-                cbCount ++;
-            });
-            facet.append(facetOps);
-            $('#filter-search').append(facet);
-        });
-
-        // facet actions 
-        
-        var refinements =  container.find('#refine-search-form');
-		
-        $("#filter-search  a label, #filter-search h4 input").click(function(e){
-            var cb = $(this);
-
-            if(cb.attr("for")){
-                cb = $("#filter-search #" + cb.attr("for"));
-            }
-            cb.prop('checked', !cb.prop('checked') );
-            e.preventDefault();
-            
-            
-            var href = cb.next('a').attr('href');
-            if(cb.prop('checked')){
-            	$('<input type="hidden" name="qf" value="' + href + '"/>').appendTo(refinements);            	
-            }
-            else{
-    			var toRemove =  refinements.find('input[value="' + href + '"]');
-            	toRemove.remove();
-            }
-            doSearch();
-        });
-        
-        // facet collapsibility 
-              
-        $("#filter-search>li:not(:first)").each(function(i, ob){
-        	ob = $(ob);
-        	var heading = ob.find('h3 a');
-			createCollapsibleSection(ob, function(){
-	            return heading.parent().next('ul').first().find('a');   
-	        },
-	        heading);
-        });
-
-        // restore facet selection
-    
-        var opened = {};
-        $(selected).each(function(i, ob){ 
-            var object = $('a[href="' + $(ob).attr('href') + '"]');
-            var opener = object.closest('ul').prev('h3').find('a');
-            
-            if(!opened[opener]){
-                opened[opener] = true;
-                console.log("restore selected " + opener.html() );
-                opener.click();
-            }
-            object.prev().prop('checked', true);
-        });
-        
-        // open "Add Keyword"
-        
-        if($('#refinements').css('display') == 'none'){
-            $('#filter-search li:first h3 a').click();
-        }
-
-        // filters
-        
-        if(data.breadCrumbs){
-        	
-        	//var hFields = {};
-			var filters = container.find('#search-filter');
-    		filters.empty();
+	        // facet actions 
+	        
+	        var refinements = container.find('#refine-search-form');
 			
-            $.each(data.breadCrumbs, function(i, ob){
-            	if(ob.param == "qf" || ob.param == "query"){
-            		
-            		// add dom data
-                	ob.href = ob.href.replace(/&amp;/g, '&'); // unescape ampersans
-                	ob.href = ob.href.replace(/\"/g, ''); // remove quotes
-            		
-            		var href = (ob.param == "query") ? '' : 'qf=' + ob.href.split('&qf=')[1];
-            		            		
-            		// add filter
-            		var filter  = filterTemplate.clone();
-            		
-            		// 1st link cuts all susequent
-            		filter.find('a:first').attr('href', ob.href);  
-            		filter.find('a:first').html(ob.display); 
-            		filter.find('a:first').click(function(e){
+	        container.find('#filter-search  a label').add(container.find('#filter-search h4 input')).click(function(e){
+	            var cb = $(this);
+	            if(cb.attr("for")){
+	                cb = container.find('#filter-search #' + cb.attr("for"));
+	            }
+	            cb.prop('checked', !cb.prop('checked') );
+	            e.preventDefault();
+	            
+	            var href = cb.next('a').attr('href');
+	            if(cb.prop('checked')){
+	            	$('<input type="hidden" name="qf" value="' + href + '"/>').appendTo(refinements);            	
+	            }
+	            else{
+	    			var toRemove =  refinements.find('input[value="' + href + '"]');
+	            	toRemove.remove();
+	            }
+	            doSearch();
+	        });
+	        
+	        // facet collapsibility 
+	              
+	        container.find('#filter-search>li:not(:first)').each(function(i, ob){
+	        	ob = $(ob);
+	        	var heading = ob.find('h3 a');
+				createCollapsibleSection(ob, function(){
+		            return heading.parent().next('ul').first().find('a');   
+		        },
+		        heading);
+	        });
 
-            			// remove all hidden fields occuring after the current filter / uncheck any checkboxes.
-            			$('#refine-search-form').find('input[type=hidden]').each(function(iFilter, obFilter){
-            				if(iFilter >= i){
-            					var settingCbs = $('input[value="' + $(this).val() + '"]');
-            					console.log("settingCbs = " + settingCbs.length );
-            					settingCbs.prop('checked', false);
-            					$(this).remove();
-            				}
-            			});
-            			doSearch(self.resMenu1.getActive(), ob.href);
+	        // restore facet selection
+	    
+	        var opened = {};
+	        $(selected).each(function(i, ob){ 
+	            var object = container.find('a[href="' + $(ob).attr('href') + '"]');
+	            var opener = object.closest('ul').prev('h3').find('a');
+	            
+	            if(!opened[opener]){
+	                opened[opener] = true;
+	                // console.log("restore selected " + opener.html() );
+	                opener.click();
+	            }
+	            object.prev().prop('checked', true);
+	        });
+	        
+	        // open "Add Keyword"
+	        
+	        if(container.find('#refinements').css('display') == 'none'){
+	        	container.find('#filter-search li:first h3 a').click();
+	        }
 
-            			e.preventDefault();
-            			return;
-            		}); 
-            		
-            		// 2nd link removes this
-            		var linkRemove = filter.find('a:nth-child(2)');  
-            		linkRemove.attr('href', '');
-            		linkRemove.click(function(e){
-            			try{
-	            			var toRemove =  refinements.find('input[value="' + href + '"]');
-	            			toRemove.remove();
-	            			
-	            			// uncheck
-	            			container.find("#filter-search").find('input[value="' + href + '"]') .prop('checked', false);
-	            			
-	            			doSearch();
-            			}
-            			catch(e){
-            				console.log(e);
-            			}
-            			e.preventDefault();
-            		});
-            		filters.append(filter);
-            	}
-            });
-            container.find('#content').show();
-            hideSpinner();   
+	        // filters
+	        
+	        if(data.breadCrumbs){
+	        	
+	        	//var hFields = {};
+				var filters = container.find('#search-filter');
+	    		filters.empty();
+				
+	            $.each(data.breadCrumbs, function(i, ob){
+	            	if(ob.param == "qf" || ob.param == "query"){
+	            		
+	            		// add dom data
+	                	ob.href = ob.href.replace(/&amp;/g, '&'); // unescape ampersans
+	                	ob.href = ob.href.replace(/\"/g, ''); // remove quotes
+	            		
+	            		var href = (ob.param == "query") ? '' : 'qf=' + ob.href.split('&qf=')[1];
+	            		            		
+	            		// add filter
+	            		var filter  = filterTemplate.clone();
+	            		
+	            		// 1st link cuts all susequent
+	            		filter.find('a:first').attr('href', ob.href);  
+	            		filter.find('a:first').html(ob.display); 
+	            		filter.find('a:first').click(function(e){
+	
+	            			// remove all hidden fields occuring after the current filter / uncheck any checkboxes.
+	            			container.find('#refine-search-form input[type=hidden]').each(function(iFilter, obFilter){
+	            				if(iFilter >= i){
+	            					var settingCbs = container.find('input[value="' + $(this).val() + '"]');
+	            					// console.log("settingCbs = " + settingCbs.length );
+	            					settingCbs.prop('checked', false);
+	            					$(this).remove();
+	            				}
+	            			});
+	            			doSearch(self.resMenu1.getActive(), ob.href);
+	
+	            			e.preventDefault();
+	            			return;
+	            		}); 
+	            		
+	            		// 2nd link removes this
+	            		var linkRemove = filter.find('a:nth-child(2)');  
+	            		linkRemove.attr('href', '');
+	            		linkRemove.click(function(e){
+	            			try{
+		            			var toRemove =  refinements.find('input[value="' + href + '"]');
+		            			toRemove.remove();
+		            			
+		            			// uncheck
+		            			container.find("#filter-search").find('input[value="' + href + '"]') .prop('checked', false);
+		            			
+		            			doSearch();
+	            			}
+	            			catch(e){
+	            				console.log(e);
+	            			}
+	            			e.preventDefault();
+	            		});
+	            		filters.append(filter);
+	            	}
+	            });
+	        }
         }
+        container.find('#content').show();
+        hideSpinner();
+        
     }; // end showRes
 
     
     var showSpinner = function(){
-    	$('#overlay').show();
+    	container.find('#overlay').show();
     	$('.search-widget-container').css('overflow-y', 'hidden');    	
     };
     
     var hideSpinner = function(){
-    	$('#overlay').hide();
+    	container.find('#overlay').hide();
     	$('.search-widget-container').css('overflow-y', 'auto');
     };
     
@@ -502,7 +518,7 @@ fnSearchWidget = function($, config){
 
     var setupEllipsis = function(){
         var ellipsisObjects = [];
-        $('.ellipsis').each(
+        container.find('.ellipsis').each(
             function(i, ob){
                 var fixed    = $(ob).find('.fixed');
                 var html    = fixed.html();
@@ -546,6 +562,8 @@ fnSearchWidget = function($, config){
         submitCellButton.css("border-left",    "solid 1px #4C7ECF");    // do this after the resize to stop 1px gap in FF
 
         // Disable forms and wire submission to ajax call
+        
+        
         container.find("form").submit(function() {
             doSearch();
             return false;
@@ -624,14 +642,14 @@ fnSearchWidget = function($, config){
     };
 
     var setUpRefinements = function(){
-        var addKeyword = $("#filter-search>li:first");
+        var addKeyword = container.find('#filter-search>li:first');
        	var heading = addKeyword.find("h3 a");
 		createCollapsibleSection(addKeyword, function(){
     	        return heading.parent().next('form').find('input[type!="hidden"]');
 	        },
 	        heading);
 		
-		$("#refine-search-form > input").remove();
+		container.find('#refine-search-form > input').remove();
     };
     
     return {
@@ -667,21 +685,25 @@ var theParams = function(){
 		
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
 
-	//console.log("thisScript.src = " + thisScript.src + "\n\nqueryString = " + queryString);
 	
 	function parseQuery ( query ) {
-		
-		//console.log("parseQuery ( " + query + " )");
 		
 		var Params = new Object ();
 		if(!query){
 			return Params; // return empty object
 		}
+
+		/*
+		alert("search widget gets query " + query);
+		query = query.replace(/\{/g, '"');
+		query = query.replace(/\}/g, '"');
+		
+		alert("made into " + query);
+		*/
 		
 		var Pairs = query.split('&');
 		for ( var i = 0; i < Pairs.length; i++ ) {
 			
-			console.log("pairing.... ")
 			var KeyVal = Pairs[i].split('=');
 			if(!KeyVal || KeyVal.length != 2 ){
 				console.log("invalid parameter");
@@ -689,11 +711,15 @@ var theParams = function(){
 			}
 			var key = unescape( KeyVal[0] );
 			var val = unescape( KeyVal[1] );
-			val = val.replace(/\+/g, ' ');
+			
+			console.log(KeyVal[1]);
+			
+			//val = val.replace(/\+/g, ' ');
 			if(!Params[key]){
 				Params[key] = new Array ();
 			}
-			console.log("push " + key + "  " + val);
+
+			//Params[key].push(encodeURIComponent(val));
 			Params[key].push(val);
 		}
 		
@@ -723,12 +749,13 @@ var withJQuery = function($){
 	function recursiveLoad(index){
 		if(dependencies.length > index){
 			$.ajax({
-				url: rootJsUrl + dependencies[index],
-				dataType: "script",
-				success: function(){
+				"url": rootJsUrl + dependencies[index],
+				"dataType": "script",
+				"success": function(){
 					//console.log('loaded ' + dependencies[index] + ', now get ' + (index+1));
 					recursiveLoad(index + 1);	
-				}
+				},
+	            "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
 			});
 		}
 		else{

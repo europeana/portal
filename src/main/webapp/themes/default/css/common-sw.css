@@ -230,6 +230,7 @@
 .e2ma_signup_form_required_footnote{
 	display:	none;
 }
+*/
 
 #e2ma_signup_submit_button,
 .deans-button-1{
@@ -267,7 +268,7 @@
 	-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 	border-radius:			0.5em 0.5em 0.5em 0.5em;
 }
-*/
+
 
 .search-widget-container .deans-button-1:focus,
 .search-widget-container .europeana-button-1:focus{
