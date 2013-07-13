@@ -68,15 +68,9 @@
 	background-repeat:	no-repeat;
 	width:				110px;
 	height:				62px;
-	
-	
-	xxxxmargin-top:			0.025em;
 	display:			block;
-	
 	position:			relative;
-	
 	left:				-1px;
-
 	background-size:	contain;
 }
 
@@ -262,8 +256,6 @@ table tr:first-child{
 		-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 		border-radius:			0.5em 0.5em 0.5em 0.5em;
 		table-layout:			auto;
-		XXXposition:				relative;
-		XXXtop:					-0.4em;
 	}
 	
 	table tr:first-child{
