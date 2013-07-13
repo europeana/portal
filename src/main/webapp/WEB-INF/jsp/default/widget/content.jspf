@@ -232,8 +232,8 @@
 	}
 
 	.preview-window{
-		width:	100%;
-		height:	12em;
+		width:			100%;
+		margin-bottom:	1.5em;
 	}
 
 	#output{
@@ -606,18 +606,15 @@
 				<div class="content-inner">				
 					<div class="para">
 						<spring:message code="wizard_tab5_content1_t"/>
-					</div>
+					</div>					
+					<div class="preview-window search-widget-container">
+					</div>					
 					<div class="para">
 						<spring:message code="wizard_tab5_content2_t"/>
 					</div>
-					
-					<div class="preview-window search-widget-container">
-					</div>					
-					
 					<div class="para">
-						<textarea id="output"></textarea>
+						<p id="output"></p>
 					</div>
-					
 				</div>
 			</div>
 		</div>

@@ -30,7 +30,8 @@
 
 /* Mobile first */
 
-.search-widget-container .container                                        {min-width:0; margin-left:0; margin-right:0;}
+.search-widget-container .container                                        {min-width:0; margin-left:0; margin-right:0; background-color: #fff;}
+
 .search-widget-container .row                                              {width:100%; min-width:0; margin-left:0; margin-right:0;}
 .search-widget-container .row .row .column, .row .row .columns             {padding:0;}
 .search-widget-container .column, .columns                                 {width:auto; float:none; margin-left:0; margin-right:0;}
@@ -82,7 +83,16 @@
 	right:auto;
 }
 
-        
+/* reset 
+.search-widget-container .hide-on-phones       {display:block  !important;}
+.search-widget-container .hide-ilb-on-phones   {display:block  !important;}
+.search-widget-container .hide-cell-on-phones  {display:block  !important;}
+
+.search-widget-container .show-on-phones       {display:block !important;}
+.search-widget-container .show-ilb-on-phones   {display:block !important;}
+.search-widget-container .show-cell-on-phones  {display:block !important;}        
+ end reset */
+
 .search-widget-container .hide-on-phones       {display:none  !important;}
 .search-widget-container .hide-ilb-on-phones   {display:none  !important;}
 .search-widget-container .hide-cell-on-phones  {display:none  !important;}
@@ -121,9 +131,9 @@
     display:       block;
 }
 
-
 /* grid styling */
 /* @media only screen and ( min-width:    48em ) */
+
 
     .search-widget-container.desktop .row{
         width:     100%;
@@ -199,12 +209,11 @@
     }
 
     .search-widget-container.desktop .container{
-        background-color:    #999;
-        background-color:    #DADADA;
+        background-color:    #fff;
     }
 
     .search-widget-container.desktop .container>.row:not(.footer){
-        background-color:    white;    
+        background-color:   #fff;    
     }
     
     .search-widget-container.desktop .three-cols-fulldoc-sidebar{

@@ -11,24 +11,7 @@ fnSearchWidget = function($, config){
     
     if( typeof config != 'undefined'){
     	console.log("config supplied: " + JSON.stringify(config) );
-    	
-//    	config supplied: {"qf":["PROVIDER:Athena","PROVIDER:Bildarchiv Foto Marburg","PROVIDER:Progetto ArtPast- CulturaItalia"]}
-  ///  	search...aItalia (line 2)
-
-    	
-    	/* 
-    	 * 
-    	 * Params object can contain:
-    	 * 
-    	 *  TYPE
-    	 *  COPYRIGHT
-    	 *  LANGUAGE
-    	 *  PROVIDER
-    	 * 
-    	 * 
-    	 */
     	self.config = config;
-    	
     }
     
     var addKeywordTemplate      = false;
@@ -40,7 +23,7 @@ fnSearchWidget = function($, config){
     var resultServerUrl         = 'http://europeana.eu/portal';
 
     
-    var rootUrl				= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal';//'http://localhost:8081/portal';
+//    var rootUrl				= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal';//'http://localhost:8081/portal';
 	var searchUrl			= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
 //    var rootUrl					= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal/';
     
@@ -148,7 +131,11 @@ fnSearchWidget = function($, config){
         	container.css('overflow-x', 'hidden');
         	
         	// responsive-containers initialisation
-        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
+//        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
+//        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em                        min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
+        	container.attr('data-squery', 'max-width:55em=max55em max-width:48em=mobile max-width:30em=max30em min-width:22em=min22em min-width:48em=desktop min-width:55em=min55em min-width:71em=min71em');
+
+
         	
            	$.getScript(responsiveContainersUrl, function() {
            		//console.log('initialise responsive containers here');
@@ -296,7 +283,7 @@ fnSearchWidget = function($, config){
             grid.append(item);
         });
 
-        setupEllipsis();
+   //     setupEllipsis();
 
         // pagination
         
@@ -482,6 +469,8 @@ fnSearchWidget = function($, config){
 	        }
         }
         container.find('#content').show();
+        setupEllipsis();
+
         hideSpinner();
         
     }; // end showRes
@@ -536,7 +525,8 @@ fnSearchWidget = function($, config){
             }
         );
 
-        $(container).euRsz(function(){
+        $(window).euRsz(function(){
+        	
             for(var i=0; i<ellipsisObjects.length; i++ ){
                 ellipsisObjects[i].respond();
             }
@@ -681,8 +671,9 @@ var theParams = function(){
 		}
 	}
 	
-	rootJsUrl = thisScript.src.split('EuSearchWidget')[0];
-		
+	rootJsUrl	= thisScript.src.split('EuSearchWidget')[0];
+	rootUrl		= rootJsUrl.split('/portal/')[0] + '/portal';
+	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
 
 	
@@ -693,13 +684,7 @@ var theParams = function(){
 			return Params; // return empty object
 		}
 
-		/*
-		alert("search widget gets query " + query);
-		query = query.replace(/\{/g, '"');
-		query = query.replace(/\}/g, '"');
-		
-		alert("made into " + query);
-		*/
+
 		
 		var Pairs = query.split('&');
 		for ( var i = 0; i < Pairs.length; i++ ) {
@@ -733,6 +718,7 @@ var theParams = function(){
 
 
 var searchWidget;
+var rootUrl;
 var rootJsUrl;
 
 var withJQuery = function($){
