@@ -15,8 +15,7 @@ fnSearchWidget = function($, config){
     	self.config = config;
     }
     
-    self.withResults			= typeof self.config == 'object' && self.config.withResults;
-    
+    self.withResults			= typeof self.config == 'object' && self.config.withResults == 'true';
     var addKeywordTemplate      = false;
     // TODO:
     // move wskey and URLs to an external .jsp generated file, in order to 
@@ -158,11 +157,12 @@ fnSearchWidget = function($, config){
 
     
     var doSearch = function(startParam, query){
-    	
+//maclean
+try{
     	var url = buildUrl(startParam, query);
     	
         if(typeof url != 'undefined' && url.length){
-
+        	
         	if(self.withResults){
             	if(searchUrl.indexOf('file')==0){
     				getFake();
@@ -181,11 +181,13 @@ fnSearchWidget = function($, config){
         	else{
         		window.open(url, '_blank');        		
         	}
-
         }
         else{
             self.q.addClass('error-border');
         }
+}catch(e){console.log(e);}
+
+        
     };
 
     
@@ -197,13 +199,13 @@ fnSearchWidget = function($, config){
             return '';
         }
         
-        var url;
-		var param = function(){
-			return (url.indexOf('?')>-1) ? '&' : '?';
+        var url = '';
+		var param = function(urlIn){
+			return ((urlIn ? urlIn : url).indexOf('?')>-1) ? '&' : '?';
 		};
 
         if(self.withResults){
-        	url = query ? searchUrl + param() + query : searchUrl + param() + 'query=' + term;        	
+        	url = query ? searchUrl + param(searchUrl) + query : searchUrl + param(searchUrl) + 'query=' + term;        	
         	url += "&profile=portal,params&callback=searchWidget.showRes";
         	url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
         	url += '&start=' + (startParam ? startParam : 1);
@@ -214,8 +216,7 @@ fnSearchWidget = function($, config){
         	}
         }
         else{
-        	url = searchUrlWithoutResults;
-        	url += param() + 'query=' + term;
+        	url = searchUrlWithoutResults + param(searchUrlWithoutResults) + 'query=' + term;
         }
                 
         // params
@@ -657,7 +658,14 @@ fnSearchWidget = function($, config){
         "init" : function(data){ self.init(data); },
         "load" : function(){ self.load(); },
         "search" : function(startParam){ doSearch(startParam); },
-        "showRes" : function(data){ showRes(data); }
+        "showRes" : function(data){ showRes(data); },
+        "setWithResults" : function(withResults){
+        	self.withResults = withResults;
+        	console.log("set withResults to " + withResults);
+        	if(!withResults){
+        		container.find('#content').hide();        		
+        	}
+        }
     };
 };
 
@@ -687,7 +695,8 @@ var theParams = function(){
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
 
-	
+	console.log("queryString = " + queryString);
+
 	function parseQuery ( query ) {
 		
 		var Params = new Object ();
@@ -706,7 +715,7 @@ var theParams = function(){
 			var key = unescape( KeyVal[0] );
 			var val = unescape( KeyVal[1] );
 			
-			console.log(KeyVal[1]);
+			console.log(key + " = " + val);
 			
 			//val = val.replace(/\+/g, ' ');
 			if(!Params[key]){

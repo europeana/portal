@@ -71,20 +71,49 @@ var EuWidgetWizard = function(cmpIn, options){
 			
 		}		
 		if(self.initialisedTabs[2]){
-			$('.data-providers>li>a>input').add('.providers>li>a>input').each(function(i, ob){
-				if($(ob).prop('checked')){
-					
-					console.log("checked name is " + $(ob).next('span').html());
-					
-					var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
-					
-					result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':{' + name + '}';
-					//result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':&quot;' + name + '&quot;';
-					//result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':' + name;
 
-					
+			var cleanName = function(name){
+				return name.replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+			};
+try{			
+			$('.providers>li').each(function(i, ob){
+				var provider      = $(ob);
+				var providerInput = provider.children('a').children('input');
+				
+				if(providerInput.prop('checked')){
+					var name = providerInput.next('span').html();
+					console.log("checked PROVIDER name is " + name);
+					result += param() + 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
+					//result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':{' + name + '}';
+				}
+				else{
+					provider.find('.data-providers>li').each(function(j, dp){
+						var dataProvider      = $(dp);
+						var dataProviderInput = dataProvider.children('a').children('input');
+
+						if(dataProviderInput.prop('checked')){
+							var name          = dataProviderInput.next('span').html();
+
+							console.log("checked DATA PROVIDER name is " + name);
+
+							result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+
+						}
+						
+					});
 				}
 			});			
+}catch(e){console.log(e);}
+			
+//			$('.data-providers>li>a>input').add('.providers>li>a>input').each(function(i, ob){
+//				if($(ob).prop('checked')){
+//					console.log("checked name is " + $(ob).next('span').html());
+//					var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+//					result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':{' + name + '}';
+//				}
+//			});			
+			
+			
 		}
 
 		if(self.initialisedTabs[3]){
@@ -98,14 +127,18 @@ var EuWidgetWizard = function(cmpIn, options){
 
 		}
 
-		if(self.initialisedTabs[4]){
-			var resultBehaviour = $('#withResults').prop('checked');
-			result += param() + 'withResults=' + withResults;
-		}
-		
+		result += param() + 'withResults=' + $('#withResults').prop('checked');
+
+		console.log('output() returns ' + result);
+
 		return result;
-		
 	};
+	
+	var setCopy = function(copyIn){
+		var copy = '&lt;script type="text/javascript" src="' + (copyIn ? copyIn : output()) + '"&gt;&lt;/script&gt;';
+		$('#output').html(copy);
+		selectElementContents($('#output')[0]);
+	}
 	
 	var selectElementContents = function(el) {
 	    var range;
@@ -162,7 +195,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			else{
 				btn.css('display', 'none');
 			}
-		});	
+		});
 	};
 	
 	
@@ -227,15 +260,20 @@ var EuWidgetWizard = function(cmpIn, options){
 	
 	var init = function(){
 
+		// reset checkboxes
+		$('#withResults')   .prop('checked', true);
+		$('#withoutResults').prop('checked', false);
+
 		// individual tab initialisation
 		
 		var initTab = function(tabIndex){
-			
+
 			if(self.initialisedTabs[tabIndex]){
-				if(tabIndex != 4){
+				if(tabIndex != PREVIEW_TAB_INDEX){ // last tab can be reinitialised
 					return;
 				}
 			}
+			self.initialisedTabs[tabIndex] = true;
 			
 			if(tabIndex == 1){			// query / types / copyrights / languages
 				
@@ -315,7 +353,6 @@ var EuWidgetWizard = function(cmpIn, options){
 // checkboxes and collapsibility
 						
 						var change = function(e){
-console.log("change event START");							
 							var cb       = e.target ? $(e.target) : $(e);
 							var checked  = cb.prop('checked');
 							var subBoxes = cb.parent().next('ul').find('li a input');
@@ -323,7 +360,6 @@ console.log("change event START");
 								$(ob).prop('checked', checked);
 							});
 							eu_europeana_providers.addLinks();
-console.log("change event END");							
 						};
 						
 						$('.icon-arrow-2-after>input').add('.data-providers input').change(change).click(function(e){
@@ -339,7 +375,27 @@ console.log("change event END");
 						$('.data-providers a').click(function(e){
 							var cb = $(this).find('input'); 
 							cb.prop('checked', !cb.prop('checked'));
-							//change(cb);
+							
+							var checked = cb.prop('checked');
+							var parentProvider = cb.closest('.data-providers').prev('a').find('input[type=checkbox]');
+
+							if(!checked && parentProvider.prop('checked')){ // remove parent check if the set was complete
+								console.log('uncheck the parent');
+								parentProvider.prop('checked', false);
+							}
+							else{  // restore parent check if this data-provider completes the set
+								var siblingProviders = cb.closest('.data-providers').find('input[type=checkbox]');
+								var allSiblingsChecked = true;
+								siblingProviders.each(function(i, ob){
+									if(!$(ob).prop('checked')){
+										allSiblingsChecked = false;
+										return false;
+									}
+								});
+								if(allSiblingsChecked){
+									parentProvider.prop('checked', true);
+								}
+							}
 							eu_europeana_providers.addLinks();							
 						});
 						
@@ -420,19 +476,27 @@ console.log("change event END");
 
 			}
 			if(tabIndex == PREVIEW_TAB_INDEX){
+
+				// this tab re-inits
 				
-				/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
 				var src = output();
+				
 				$('.preview-window').html('');
 				$('.preview-window').append('<input  type="hidden" id="widget-url-ref" value="' + src + '" />');
-				$('.preview-window').append('<script type="text/javascript" src="' + src + '"></script>');
+				$('.preview-window').append('<script type="text/javascript" src="' + src + '"></script>');					
 
-				/*
-				$('.update-preview').click(function(e){					
+				/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
+				var doPreview = function(){
+					searchWidget.setWithResults($('#withResults').prop('checked'));
+					var src = output();
+					$("#widget-url-ref").attr('src', src)
+					setCopy(src);
+				};
+				
+				$('#withResults').add('#withoutResults').change(function(e){
+					doPreview();
 				});
-				*/
 			}
-			self.initialisedTabs[tabIndex] = true;
 		};  // end initTab()
 		
 		self.tabs = new AccordionTabs(
@@ -445,9 +509,7 @@ console.log("change event END");
 					}, 1);
 					
 					if(i == PREVIEW_TAB_INDEX){
-						var result = '&lt;script type="text/javascript" src="' + output() + '"&gt;&lt;/script&gt;';
-						$('#output').html(result);
-						selectElementContents($('#output')[0]);
+						setCopy();
 					}
 				},
 				false,
