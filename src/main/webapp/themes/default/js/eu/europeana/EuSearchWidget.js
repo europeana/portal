@@ -9,10 +9,13 @@ fnSearchWidget = function($, config){
 
     var showFacets				= false;
     
+    
     if( typeof config != 'undefined'){
     	console.log("config supplied: " + JSON.stringify(config) );
     	self.config = config;
     }
+    
+    self.withResults			= typeof self.config == 'object' && self.config.withResults;
     
     var addKeywordTemplate      = false;
     // TODO:
@@ -21,17 +24,12 @@ fnSearchWidget = function($, config){
     // 2) hide wskey, and use a distinct wskey
 
     var resultServerUrl         = 'http://europeana.eu/portal';
-
-    
-//    var rootUrl				= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal';//'http://localhost:8081/portal';
-	var searchUrl			= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
-//    var rootUrl					= rootUrl ? rootUrl : 'http://test.portal2.eanadev.org/portal/';
-    
-    
+	var searchUrl				= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
+	var searchUrlWithoutResults = 'http://test.portal2.eanadev.org/portal/search.html';
+	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
 	var cssUrl                  = rootUrl +  '/themes/default/css/';
 	var responsiveContainersUrl = rootUrl +  '/themes/default/js/eu/europeana/responsive-containers.js';
-
     
     var defaultRows             = 6;
     var pagination              = false;
@@ -162,32 +160,34 @@ fnSearchWidget = function($, config){
     var doSearch = function(startParam, query){
     	
     	var url = buildUrl(startParam, query);
-    	console.log("searchUrl = " + url);
     	
         if(typeof url != 'undefined' && url.length){
-        	
-        	if(searchUrl.indexOf('file')==0){
-				getFake();
+
+        	if(self.withResults){
+            	if(searchUrl.indexOf('file')==0){
+    				getFake();
+            	}
+            	else{
+            		showSpinner();
+                    $.ajax({
+                        "url" : url,
+                        "type" : "GET",
+                        "crossDomain" : true,
+                        "dataType" : "script",
+                        "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
+                    });
+            	}        		
         	}
         	else{
-        		showSpinner();
-                $.ajax({
-                    "url" : url,
-                    "type" : "GET",
-                    "crossDomain" : true,
-                    "dataType" : "script",
-                    "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
-                });
+        		window.open(url, '_blank');        		
         	}
+
         }
         else{
             self.q.addClass('error-border');
         }
     };
 
-    
-//http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&callback=searchWidget.showRes&rows=6&start=1&qf=DATA_PROVIDER:%22French+National+Library+-+Biblioth%C2%8F%C3%A8que+Nationale+de+France%22
-//http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&callback=searchWidget.showRes&rows=6&start=1&qf=DATA_PROVIDER:%22French+National+Library+-+Biblioth%C3%A8que+Nationale+de+France%22
     
     // build search param from url-fragment hrefs.  @startParam set to 1 if not specified
     var buildUrl = function(startParam, query){
@@ -197,18 +197,29 @@ fnSearchWidget = function($, config){
             return '';
         }
         
-        var url = query ? searchUrl + '&' + query : searchUrl + '&query=' + term;
-        
-        // params
-        url += "&profile=portal,params&callback=searchWidget.showRes";
-        url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
-        url += '&start=' + (startParam ? startParam : 1);
+        var url;
+		var param = function(){
+			return (url.indexOf('?')>-1) ? '&' : '?';
+		};
 
-        // remove-filter links provide the url - return here if provided
-        if(query){
-        	console.log("return the pre-set query");
-        	return url;
+        if(self.withResults){
+        	url = query ? searchUrl + param() + query : searchUrl + param() + 'query=' + term;        	
+        	url += "&profile=portal,params&callback=searchWidget.showRes";
+        	url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
+        	url += '&start=' + (startParam ? startParam : 1);
+        	// remove-filter links provide the url - return here if provided
+        	if(query){
+        		console.log("return the pre-set query");
+        		return url;
+        	}
         }
+        else{
+        	url = searchUrlWithoutResults;
+        	url += param() + 'query=' + term;
+        }
+                
+        // params
+
         
         // refinements & facets read from hidden inputs
 
@@ -218,7 +229,7 @@ fnSearchWidget = function($, config){
             	if(urlFragment.indexOf(':')>0){
             		urlFragment = urlFragment.split(':')[0] + ':' + '"' + encodeURI(urlFragment.split(':')[1] + '"');
             	}
-            	url += '&' + urlFragment;
+            	url += param() + urlFragment;
             });        	
         }
         
@@ -235,7 +246,7 @@ fnSearchWidget = function($, config){
         			ob = ob.replace(/[\{\}]/g, '"');
 //        			ob = ob.replace(/\}/g, '"');
         			
-        			url += '&qf=';
+        			url += param() + 'qf=';
         			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
         			
         			console.log('append to url: ' + url);
@@ -683,8 +694,6 @@ var theParams = function(){
 		if(!query){
 			return Params; // return empty object
 		}
-
-
 		
 		var Pairs = query.split('&');
 		for ( var i = 0; i < Pairs.length; i++ ) {

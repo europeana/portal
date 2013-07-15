@@ -37,12 +37,11 @@
 .search-widget-container #logo{
 	z-index:	2;
 	position:	relative;
-	display:	table-row;
 	width:		auto;
 }
 
 .search-widget-container .logo{
-	top:	-0.25em;
+	top:	0.25em;
 }
 
 .search-widget-container #logo h1{
@@ -83,10 +82,17 @@
 /*
 @media only screen and ( min-width:48em ){
 */
-	.search-widget-container.desktop .logo,
-	.search-widget-container.desktop .logo-t-and-c{
-		width:				206px;
-		height:				123px;		
+
+
+
+	.search-widget-container.max55em #logo{
+		display:	table-row;
+	}
+		
+	.search-widget-container.desktop .logo{
+		width:		206px;
+		height:		123px;
+		top:		-0.1em;
 	}
 	
 	
@@ -112,9 +118,15 @@
 	}
 	
 	.search-widget-container.desktop #logo-and-search{
-		XXXpadding-top:	1.25em;
+		padding-top:	0;
 		padding-bottom:	1.5em;
 	}
+	
+	.search-widget-container.desktop #logo{
+		display:	table-row;
+	}
+	
+	
 	
 	.search-widget-container.desktop #lang-menu>ul>li.item.icon-home,
 	.search-widget-container.desktop #lang-menu>ul>li.item.icon-info,

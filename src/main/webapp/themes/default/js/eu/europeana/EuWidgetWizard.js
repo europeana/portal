@@ -98,6 +98,11 @@ var EuWidgetWizard = function(cmpIn, options){
 
 		}
 
+		if(self.initialisedTabs[4]){
+			var resultBehaviour = $('#withResults').prop('checked');
+			result += param() + 'withResults=' + withResults;
+		}
+		
 		return result;
 		
 	};

@@ -603,10 +603,16 @@
 
 		<div class="section"  id="tab-5">
 			<div class="content">
-				<div class="content-inner">				
+				<div class="content-inner">
 					<div class="para">
 						<spring:message code="wizard_tab5_content1_t"/>
-					</div>					
+					</div>			
+					<div class="para">
+						with results <input id="withResults" type="radio" name="withResults" value="true" />
+						<br/>
+						without results <input type="radio" name="withResults" value="false" />
+					</div>
+												
 					<div class="preview-window search-widget-container">
 					</div>					
 					<div class="para">
