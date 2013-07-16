@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="eu" tagdir="/WEB-INF/tags" %>
 <meta name="description" content="${model.pageTitle}"/>
-<link rel="author" href="/humans.txt" />
+<link href="/humans.txt" />
+<link rel="author" href="https://plus.google.com/u/0/115619270851872228337 ">
 
 <c:if test="${not model.indexable}">
   <c:choose>
