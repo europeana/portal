@@ -150,3 +150,25 @@ mongodb.apilog.dbname = apilog
 mongodb.apilog.username = europeana
 mongodb.apilog.password = culture
 
+===== 2013-07-01
+
+The api-demo application and the api is using the properties mentioned below to connect.
+The first 3 were already in the properties, but have to be double checked to be correct.
+
+The last 2 are used by both API and the API-DEMO, they should not point to localhost on
+any server! Only in local development machines.
+
+api2.url -- url of API including trailing /
+api2.key -- api2 demo key, not important on production 
+api2.secret -- api2 demo password, not required on production 
+api2.url.oauth.token -- complete url to API token service
+api2.url.oauth.authorize -- complete url to API authorisation service
+
+EXAMPLES
+api2.url=http://preview.europeana.eu/api/
+api2.key=api2demo
+api2.secret=verysecret
+api2.url.oauth.token=http://preview.europeana.eu/api/oauth/token
+api2.url.oauth.authorize=http://preview.europeana.eu/api/oauth/authorize
+
+
