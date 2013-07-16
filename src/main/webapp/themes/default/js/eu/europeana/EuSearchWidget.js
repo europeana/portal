@@ -12,10 +12,12 @@ fnSearchWidget = function($, config){
     
     if( typeof config != 'undefined'){
     	console.log("config supplied: " + JSON.stringify(config) );
-    	self.config = config;
+    	self.config      = config;
+        self.withResults = self.config.withResults == 'true';
+        self.theme       = self.config.theme;
     }
     
-    self.withResults			= typeof self.config == 'object' && self.config.withResults == 'true';
+    
     var addKeywordTemplate      = false;
     // TODO:
     // move wskey and URLs to an external .jsp generated file, in order to 
@@ -132,8 +134,23 @@ fnSearchWidget = function($, config){
 //        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em                        min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	container.attr('data-squery', 'max-width:55em=max55em max-width:48em=mobile max-width:30em=max30em min-width:22em=min22em min-width:48em=desktop min-width:55em=min55em min-width:71em=min71em');
 
-
         	
+        	
+        	
+            // load style - as single files if in debug mode
+            if(true || js.debug){
+    			$.each(['html-sw', 'common-sw', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
+    	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
+    			});
+            }
+            else{
+            	$('head').append('<link rel="stylesheet" href="' + cssUrl + 'min/search-widget-all.css" type="text/css" />');
+            }
+            if(self.theme){
+               	container.addClass('' + self.theme);
+               	$('body').addClass(self.theme);
+            }
+            
            	$.getScript(responsiveContainersUrl, function() {
            		//console.log('initialise responsive containers here');
         	});
@@ -141,18 +158,6 @@ fnSearchWidget = function($, config){
         	
         });
 
-        // load style - as single files if in debug mode
-        if(true || js.debug){
-			$.each(['html-sw', 'common-sw', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
-	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
-			});
-        }
-        else{
-        	$('head').append('<link rel="stylesheet" href="' + cssUrl + 'min/search-widget-all.css" type="text/css" />');
-        }
-        
-        // load jquery ui style
-        $('head').append('<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css" type="text/css" />');
     };
 
     
@@ -664,6 +669,17 @@ try{
         	console.log("set withResults to " + withResults);
         	if(!withResults){
         		container.find('#content').hide();        		
+        	}
+        },
+        "setTheme" : function(theme){        	
+        	if(self.theme){
+        		container.removeClass(self.theme);
+            	console.log("removed theme");
+        	}
+        	if(theme){
+            	self.theme = theme;
+        		container.addClass(theme);        		
+            	console.log("set theme to " + theme);
         	}
         }
     };

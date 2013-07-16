@@ -128,6 +128,7 @@ try{
 		}
 
 		result += param() + 'withResults=' + $('#withResults').prop('checked');
+		result += $('#themeDark').prop('checked') ? param() + "theme=dark" : '';
 
 		console.log('output() returns ' + result);
 
@@ -260,10 +261,13 @@ try{
 	
 	var init = function(){
 
-		// reset checkboxes
+		// Do this once: reset preview-tab checkboxes
 		$('#withResults')   .prop('checked', true);
 		$('#withoutResults').prop('checked', false);
-
+		$('#themeClassic')  .prop('checked', true);
+		$('#themeDark')     .prop('checked', false);
+		
+		
 		// individual tab initialisation
 		
 		var initTab = function(tabIndex){
@@ -488,12 +492,14 @@ try{
 				/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
 				var doPreview = function(){
 					searchWidget.setWithResults($('#withResults').prop('checked'));
+					searchWidget.setTheme($('#themeDark').prop('checked') ? "dark" : false);
+			
 					var src = output();
-					$("#widget-url-ref").attr('src', src)
+					//$("#widget-url-ref").attr('src', src)
 					setCopy(src);
 				};
 				
-				$('#withResults').add('#withoutResults').change(function(e){
+				$('#withResults').add('#withoutResults').add('#themeClassic').add('#themeDark').change(function(e){
 					doPreview();
 				});
 			}

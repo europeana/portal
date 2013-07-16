@@ -613,9 +613,25 @@
 						<spring:message code="wizard_tab5_content1_t"/>
 					</div>			
 					<div class="para">
-						<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
-						<br/>
-						<input id="withoutResults" name="withResults" type="radio" name="withResults" value="false" /><label for="withoutResults">without results</label>
+<style>
+	.radio-block{
+		float:left;
+		margin: 1em;
+	}
+</style>					
+						<div class="radio-block">					
+							<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
+							<br/>
+							<input id="withoutResults" name="withResults" type="radio"  value="false" /><label for="withoutResults">without results</label>
+						</div>
+
+						<div class="radio-block">
+	
+							<input id="themeClassic" name="theme" type="radio" value="true" checked/><label for="themeClassic">classic theme</label>
+							<br/>
+							<input id="themeDark"    name="theme" type="radio" value="false" /><label for="themeDark">dark theme</label>
+						</div>
+						
 					</div>
 												
 					<div class="preview-window search-widget-container">
