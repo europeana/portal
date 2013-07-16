@@ -1,6 +1,6 @@
 /* CSS for responsive grid, based on Foundation v2.2 */
 
-.search-widget-container .container{padding:0 20px;}
+.search-widget-container .container{padding:0 0.5em;}
 
 .search-widget-container [class*="column"]+[class*="column"]:last-child{float:right;}
 
