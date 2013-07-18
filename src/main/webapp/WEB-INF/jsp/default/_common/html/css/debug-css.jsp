@@ -68,7 +68,7 @@
 
 		<c:when test="${model.pageName == 'widget/editor.html'}">
 			<link rel="stylesheet" href="/${branding}/css/sidebar-facets.css" />		
-			<link rel="stylesheet" href="/${branding}/css/accordion-tabs3.css" />
+			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 		</c:when>
 		
 		
@@ -82,7 +82,6 @@
 			<link rel="stylesheet" href="/${branding}/css/lightbox.css" />
 			
 			<!-- accordion-tabs before fulldoc-ess -->
-			<!--link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" /-->
 			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 			
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
@@ -108,8 +107,6 @@
 	
 		<c:when test="${model.pageName == 'myeuropeana.html'}">
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
-			
-			<!--link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" /-->
 			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 		</c:when>
 	
