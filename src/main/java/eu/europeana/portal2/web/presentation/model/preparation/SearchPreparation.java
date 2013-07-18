@@ -29,10 +29,10 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.Configuration;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.data.SearchEmbeddedData;
+import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
 
-public abstract class SearchPreparation extends SearchEmbeddedData {
+public abstract class SearchPreparation extends SearchData{
 
 	/**
 	 * pack into decorator class
@@ -50,28 +50,6 @@ public abstract class SearchPreparation extends SearchEmbeddedData {
 		setStartPage(getBriefBeanView().getPagination().getPageNumber());
 	}
 
-	/**
-	 * Returns the background color for the page. Only applicable in the
-	 * embedded version
-	 * 
-	 * @return - background color
-	 */
-	public void setEmbeddedBgColor(String color) {
-		embeddedBgColor = StringUtils.defaultIfEmpty(
-				StringUtils.replace(color, "%23", "#"),
-				Configuration.EMBEDDED_BGCOLOR);
-	}
-
-	/**
-	 * Returns the color for text in the embedded version.
-	 * 
-	 * @return color of text
-	 */
-	public void setEmbeddedForeColor(String color) {
-		embeddedForeColor = StringUtils.defaultIfEmpty(
-				StringUtils.replace(color, "%23", "#"),
-				Configuration.EMBEDDED_FORECOLOR);
-	}
 
 	private void setBreadcrumbs() throws UnsupportedEncodingException {
 		if (!isEmbedded()) {
