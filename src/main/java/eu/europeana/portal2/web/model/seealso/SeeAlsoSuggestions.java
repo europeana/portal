@@ -50,6 +50,7 @@ public class SeeAlsoSuggestions {
 		return fields;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("SeeAlsoSuggestions [");
 		for (Entry<String, Field> entry : fields.entrySet()) {

@@ -27,6 +27,7 @@ public class PageLink {
 		return linked;
 	}
 
+	@Override
 	public String toString() {
 		if (linked) {
 			return display + ":" + start;

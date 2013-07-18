@@ -47,7 +47,6 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 		this.view = view;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getBriefBeans() {
 		if (beans == null) {

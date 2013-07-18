@@ -53,7 +53,6 @@ public class FullBeanViewDecorator implements FullBeanView {
 	/**
 	 * Give back only the first 3 list item
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getRelatedItems() {
 		if (relatedItems == null) {
@@ -70,7 +69,6 @@ public class FullBeanViewDecorator implements FullBeanView {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getChildren() {
 		if (children != null) {
@@ -87,7 +85,6 @@ public class FullBeanViewDecorator implements FullBeanView {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<? extends BriefBean> getParents() {
 		if (parents != null) {

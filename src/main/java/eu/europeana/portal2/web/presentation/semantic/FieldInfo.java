@@ -17,9 +17,9 @@ public class FieldInfo {
 	/**
 	 * The list of current Java types of fields
 	 */
-	private final static List<String> types = new ArrayList<String>(Arrays.asList("String", "ObjectId", "float",
-			"Boolean", "boolean", "DocType", "int", "Date", "String[]", "Map<String,String>", "List<WebResourceImpl>",
-			"List<BriefBeanImpl>", "List<Map<String,String>>", "Map<String, List<String>>"));
+//	private final static List<String> types = new ArrayList<String>(Arrays.asList("String", "ObjectId", "float",
+//			"Boolean", "boolean", "DocType", "int", "Date", "String[]", "Map<String,String>", "List<WebResourceImpl>",
+//			"List<BriefBeanImpl>", "List<Map<String,String>>", "Map<String, List<String>>"));
 
 	/**
 	 * The collection types
@@ -139,6 +139,7 @@ public class FieldInfo {
 		return false;
 	}
 
+	@Override
 	public String toString() {
 		return "{schemaName: " + schemaName + ", propertyName: " + propertyName + ", type: " + type + ", parent: "
 				+ parent + ", isCollection(): " + isCollection() + "}";

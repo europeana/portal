@@ -95,6 +95,7 @@ public class DateUtilTest {
 			this.end = end;
 		}
 		
+		@Override
 		public String toString() {
 			return begin.toString() + " - " + end.toString();
 		}

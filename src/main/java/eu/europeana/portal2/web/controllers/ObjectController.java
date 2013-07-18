@@ -66,11 +66,11 @@ import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger.UserAction;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
+import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger.UserAction;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>

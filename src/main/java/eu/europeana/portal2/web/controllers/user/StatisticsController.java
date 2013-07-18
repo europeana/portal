@@ -457,12 +457,14 @@ public class StatisticsController {
 		} else {
 			if (orderBy.equals("count")) {
 				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
+					@Override
 					public int compare(Object a, Object b) {
 						return ((Long) b).compareTo((Long) a);
 					}
 				});
 			} else {
 				stat = new TreeMap<Object, List<UserStatistics>>(new Comparator<Object>() {
+					@Override
 					public int compare(Object a, Object b) {
 						return ((String) b).compareTo((String) a);
 					}

@@ -48,18 +48,22 @@ public class CarouselPage extends SearchPageData {
 		this.total = total;
 	}
 
+	@Override
 	public int getRows() {
 		return rows;
 	}
 
+	@Override
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
 
+	@Override
 	public int getStart() {
 		return start;
 	}
 
+	@Override
 	public void setStart(int start) {
 		this.start = start;
 	}

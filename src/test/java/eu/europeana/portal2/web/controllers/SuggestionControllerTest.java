@@ -118,7 +118,7 @@ public class SuggestionControllerTest {
 					break;
 				}
 				t1 = new Date().getTime();
-				List<Term> suggestions = searchService.suggestions(words.get(i), 10);
+				searchService.suggestions(words.get(i), 10);
 				t3 = (new Date().getTime() - t1);
 				if (t3 > 1000) {
 					slowQueries.add(words.get(i) + " (" + t3 + ")");
@@ -127,7 +127,6 @@ public class SuggestionControllerTest {
 				if (t3 < min) {min = t3;}
 				if (t3 > max) {max = t3; maxw = words.get(i);}
 			}
-			long time = (new Date().getTime() - t);
 			System.out.println("[searchService] took " + ((new Date().getTime() - t)/cents) 
 					+ " (" + min + "-" + max + ") " + maxw
 					+ ", slow queries: " + slowQueries);
@@ -306,7 +305,7 @@ public class SuggestionControllerTest {
 			final ModelAndView mav = handlerAdapter.handle(request, response, controller);
 			assertNotNull(mav);
 			assertTrue(mav.getModelMap().containsKey("results"));
-			List<String> results = (List<String>)mav.getModelMap().get("results");
+			mav.getModelMap().get("results");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			fail(e1.getMessage());

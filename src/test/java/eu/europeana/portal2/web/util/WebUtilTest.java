@@ -27,7 +27,6 @@ public class WebUtilTest {
 	}
 
 	public void objectMapperCleanJsonTest() {
-		FullBean fullBean = null;
 		ObjectMapper mapper = new ObjectMapper();
 		// Json2FullBean parser = new Json2FullBean();
 		String json = Json2FullBean.fileToString("src/test/api2.results/91627.7E8AAB01E1C2AD825615C3153CF82C1B2D39B224.json.js");
@@ -76,7 +75,6 @@ public class WebUtilTest {
 
 	@Test
 	public void shortcutTest() {
-		FullBean fullBean = null;
 		// String baseDir = "/home/peterkiraly/workspace/europeana/trunk/portal2/";
 		Json2FullBean parser = new Json2FullBean(new File("src/test/api2.results/91627.7E8AAB01E1C2AD825615C3153CF82C1B2D39B224.json.js"));
 		try {

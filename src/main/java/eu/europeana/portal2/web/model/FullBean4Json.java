@@ -29,6 +29,7 @@ public class FullBean4Json extends FullBeanImpl {
 		this.id = id;
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}

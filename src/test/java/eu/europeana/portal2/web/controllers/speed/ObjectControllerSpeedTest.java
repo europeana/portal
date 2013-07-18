@@ -37,7 +37,7 @@ public class ObjectControllerSpeedTest {
 	private int maxPerTerm = 10;
 	private int rows = 20;
 	private String solrUrl = "http://10.101.38.1:9595/solr/search/select?fl=europeana_id&rows=" + rows;
-	private String portalUrl = "http://localhost:8080/portal/record";
+//	private String portalUrl = "http://localhost:8080/portal/record";
 	private Pattern pattern = Pattern.compile("<str name=\"europeana_id\">(.*?)</str>");
 
 	@Test

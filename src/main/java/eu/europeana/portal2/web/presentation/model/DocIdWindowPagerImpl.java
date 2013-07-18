@@ -60,7 +60,6 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		this.portalName = portalName;
 	}
 
-	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
 	public static DocIdWindowPager fetchPager(String id, Map<String, String[]> httpParameters, Query query,
 			SearchService searchService, Class<? extends BriefBean> clazz) throws SolrTypeException {
 
@@ -99,7 +98,6 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		return pager;
 	}
 
-	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
 	static int getFullDocInt(Map<String, String[]> httpParameters, Query query, DocIdWindowPagerImpl pager) {
 
 		pager.fullDocUri = fetchParameter(httpParameters, "start", "1");
@@ -121,7 +119,6 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		return fullDocUriInt;
 	}
 
-	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
 	private static int getSolrStart(DocIdWindowPagerImpl pager, int fullDocUriInt) {
 		int solrStartRow = fullDocUriInt;
 		pager.hasPrevious = fullDocUriInt > 1;
@@ -133,7 +130,6 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		return solrStartRow;
 	}
 
-	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
 	private static void setNextAndPrevious(DocIdWindowPagerImpl pager, int fullDocUriInt, List<? extends IdBean> list,
 			int offset, int numFound) {
 
@@ -179,7 +175,6 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	 * @throws EuropeanaQueryException
 	 * @throws SolrServerException
 	 */
-	@SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject" })
 	private static ResultSet<? extends BriefBean> getQueryResponse(Query query, SearchService searchService,
 			DocIdWindowPagerImpl pager, int start, Class<? extends BriefBean> clazz) throws SolrTypeException {
 

@@ -37,6 +37,7 @@ public interface DocIdWindowPager {
 
 	String getPageId();
 
+	@Override
 	String toString();
 
 	String getStartPage();

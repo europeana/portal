@@ -35,10 +35,11 @@ public class BriefBeanImpl implements BriefBean {
 	private List<Map<String, String>> edmAgentLabel;
 	private String[] dctermsHasPart;
 	private String[] dctermsSpatial;
-	private DocType type;
+//	private DocType type;
 	private boolean isOptedOut;
 	private String[] edmPreview;
 
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -54,6 +55,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.fullDocUrl = fullDocUrl;
 	}
 
+	@Override
 	public Date getTimestamp() {
 		return timestamp;
 	}
@@ -62,6 +64,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.timestamp = timestamp;
 	}
 
+	@Override
 	public String[] getProvider() {
 		return provider;
 	}
@@ -78,6 +81,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmDataProvider = edmDataProvider;
 	}
 
+	@Override
 	public String[] getEdmObject() {
 		return edmObject;
 	}
@@ -86,6 +90,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmObject = edmObject;
 	}
 
+	@Override
 	public int getEuropeanaCompleteness() {
 		return europeanaCompleteness;
 	}
@@ -102,6 +107,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.docType = docType;
 	}
 
+	@Override
 	public String[] getLanguage() {
 		return language;
 	}
@@ -110,6 +116,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.language = language;
 	}
 
+	@Override
 	public String[] getYear() {
 		return year;
 	}
@@ -118,6 +125,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.year = year;
 	}
 
+	@Override
 	public String[] getRights() {
 		return rights;
 	}
@@ -126,6 +134,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.rights = rights;
 	}
 
+	@Override
 	public String[] getTitle() {
 		return title;
 	}
@@ -134,6 +143,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.title = title;
 	}
 
+	@Override
 	public String[] getDcCreator() {
 		return dcCreator;
 	}
@@ -142,6 +152,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.dcCreator = dcCreator;
 	}
 
+	@Override
 	public String[] getDcContributor() {
 		return dcContributor;
 	}
@@ -150,6 +161,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.dcContributor = dcContributor;
 	}
 
+	@Override
 	public String[] getEdmPlace() {
 		return edmPlace;
 	}
@@ -166,6 +178,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmPlacePrefLabel = edmPlacePrefLabel;
 	}
 
+	@Override
 	public List<String> getEdmPlaceLatitude() {
 		return edmPlaceLatitude;
 	}
@@ -174,6 +187,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmPlaceLatitude = edmPlaceLatitude;
 	}
 
+	@Override
 	public List<String> getEdmPlaceLongitude() {
 		return edmPlaceLongitude;
 	}
@@ -182,6 +196,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmPlaceLongitude = edmPlaceLongitude;
 	}
 
+	@Override
 	public String[] getEdmTimespan() {
 		return edmTimespan;
 	}
@@ -190,6 +205,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmTimespan = edmTimespan;
 	}
 
+	@Override
 	public List<Map<String, String>> getEdmTimespanLabel() {
 		return edmTimespanLabel;
 	}
@@ -198,6 +214,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmTimespanLabel = edmTimespanLabel;
 	}
 
+	@Override
 	public String[] getEdmTimespanBegin() {
 		return edmTimespanBegin;
 	}
@@ -206,6 +223,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmTimespanBegin = edmTimespanBegin;
 	}
 
+	@Override
 	public String[] getEdmTimespanEnd() {
 		return edmTimespanEnd;
 	}
@@ -222,6 +240,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmAgentTerm = edmAgentTerm;
 	}
 
+	@Override
 	public List<Map<String, String>> getEdmAgentLabel() {
 		return edmAgentLabel;
 	}
@@ -230,6 +249,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.edmAgentLabel = edmAgentLabel;
 	}
 
+	@Override
 	public String[] getDctermsHasPart() {
 		return dctermsHasPart;
 	}
@@ -238,6 +258,7 @@ public class BriefBeanImpl implements BriefBean {
 		this.dctermsHasPart = dctermsHasPart;
 	}
 
+	@Override
 	public String[] getDctermsSpatial() {
 		return dctermsSpatial;
 	}
@@ -246,12 +267,13 @@ public class BriefBeanImpl implements BriefBean {
 		this.dctermsSpatial = dctermsSpatial;
 	}
 
+	@Override
 	public DocType getType() {
-		return DocType.get(docType);
+		return DocType.safeValueOf(docType);
 	}
 
 	public void setType(DocType type) {
-		this.type = type;
+//		this.type = type;
 		this.docType = new String[]{type.name()};
 	}
 

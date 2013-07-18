@@ -398,6 +398,7 @@ public class SearchPage extends SearchPreparation {
 		return url.toString();
 	}
 
+	@Override
 	public String getImageLocale() {
 		PortalLanguage current = PortalLanguage.safeValueOf(getLocale());
 		if (!current.hasImageSupport()) {

@@ -43,18 +43,22 @@ public class FacetCountLinkImpl implements FacetCountLink {
 		this.rightsOption = rightsOption;
 	}
 
+	@Override
 	public String getUrl() {
 		return url;
 	}
 
+	@Override
 	public boolean isRemove() {
 		return remove;
 	}
 
+	@Override
 	public String getValue() {
 		return facetCount.getLabel();
 	}
 
+	@Override
 	public long getCount() {
 		return facetCount.getCount();
 	}
@@ -66,6 +70,7 @@ public class FacetCountLinkImpl implements FacetCountLink {
 	 * @param facetCountLink
 	 *            The facetCountLink to merge with.
 	 */
+	@Override
 	public void update(FacetCountLink facetCountLink) {
 		facetCount.setCount(facetCount.getCount() + facetCountLink.getCount());
 	}
@@ -94,6 +99,7 @@ public class FacetCountLinkImpl implements FacetCountLink {
 		return facetCount.getLabel().hashCode();
 	}
 
+	@Override
 	public String toString() {
 		return "<a href='" + url + "'>" + getValue() + "</a> " + (remove ? "(remove)" : "(add)");
 	}

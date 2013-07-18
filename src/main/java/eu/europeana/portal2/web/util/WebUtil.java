@@ -80,7 +80,6 @@ public class WebUtil {
 
 	private Response getOrPost(Request request) {
 
-		String mErrorMessage = null;
 		HttpURLConnection conn = null;
 		Response response = null;
 		try {
@@ -111,8 +110,6 @@ public class WebUtil {
 			}
 		} catch (IOException e) {
 			e.printStackTrace(System.err);
-			mErrorMessage = ((request instanceof POST) ? "POST " : "GET ")
-					+ e.getLocalizedMessage();
 		} finally {
 			if (conn != null)
 				conn.disconnect();

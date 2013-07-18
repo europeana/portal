@@ -78,6 +78,7 @@ public abstract class SearchEmbeddedData extends SearchData {
 		}
 	}
 
+	@Override
 	public String getRswUserId() {
 		return rswUserId;
 	}
@@ -88,6 +89,7 @@ public abstract class SearchEmbeddedData extends SearchData {
 		}
 	}
 
+	@Override
 	public String getRswDefqry() {
 		return rswDefqry;
 	}

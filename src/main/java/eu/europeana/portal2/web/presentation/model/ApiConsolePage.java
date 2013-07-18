@@ -98,18 +98,22 @@ public class ApiConsolePage extends ApiData {
 		return supportedFunctions;
 	}
 
+	@Override
 	public String getQuery() {
 		return query;
 	}
 
+	@Override
 	public void setQuery(String query) {
 		this.query = query;
 	}
 
+	@Override
 	public String[] getRefinements() {
 		return refinements;
 	}
 
+	@Override
 	public void setRefinements(String[] refinements) {
 		this.refinements = refinements;
 	}
@@ -122,26 +126,32 @@ public class ApiConsolePage extends ApiData {
 		this.profile = profile;
 	}
 
+	@Override
 	public int getStart() {
 		return start;
 	}
 
+	@Override
 	public void setStart(int start) {
 		this.start = start;
 	}
 
+	@Override
 	public int getRows() {
 		return rows;
 	}
 
+	@Override
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
 
+	@Override
 	public String getSort() {
 		return sort;
 	}
 
+	@Override
 	public void setSort(String sort) {
 		this.sort = sort;
 	}

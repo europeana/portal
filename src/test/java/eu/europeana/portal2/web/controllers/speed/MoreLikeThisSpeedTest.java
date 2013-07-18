@@ -63,7 +63,6 @@ public class MoreLikeThisSpeedTest {
 		}
 		for (int i=1; i<3; i++) {
 			mltFields = null;
-			long t = new Date().getTime();
 			DescriptiveStatistics stat1 = new DescriptiveStatistics();
 			DescriptiveStatistics stat2 = new DescriptiveStatistics();
 			System.out.println("mlt.mindf=" + 5*i);

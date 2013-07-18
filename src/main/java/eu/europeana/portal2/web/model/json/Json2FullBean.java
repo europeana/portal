@@ -313,7 +313,7 @@ public class Json2FullBean {
 			}
 			if ((prefix.equals(PROXIES) && field.equals("edmType")) 
 				|| (prefix.equals(RELATED_ITEMS) && field.equals("type"))) {
-				value = DocType.get((String)value);
+				value = DocType.safeValueOf((String)value);
 			}
 			set(item, setter, value);
 		}
