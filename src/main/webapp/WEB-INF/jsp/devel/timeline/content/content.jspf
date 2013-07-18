@@ -1,5 +1,0 @@
-<div id="content">
-  <%@ include file="/WEB-INF/jsp/devel/_common/html/navigation/breadcrumb.jsp" %>
-  <%@ include file="/WEB-INF/jsp/devel/_common/html/navigation/search-results-navigation.jsp" %>
-  <%@ include file="/WEB-INF/jsp/devel/timeline/content/timeline.jspf" %>
-</div>

@@ -1,2 +1,0 @@
-"totalResults" : ${model.briefBeanView.pagination.numFound},
-"startIndex" : ${model.start},

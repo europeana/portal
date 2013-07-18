@@ -1,4 +1,0 @@
-<c:if test="${!model.user}">
-	<a href="/${model.portalName}/login.html?pageId=fd" class="underline" rel="nofollow"><spring:message code="LogIn_t" /></a> |
-	<a href="/${model.portalName}/login.html?pageId=fd" class="underline" rel="nofollow"><spring:message code="Register_t" /></a>
-</c:if>

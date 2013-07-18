@@ -1,3 +1,0 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<div id="tl"></div>
-<div id="loader-bubble"><span><spring:message code="loading_t" /></span></div>

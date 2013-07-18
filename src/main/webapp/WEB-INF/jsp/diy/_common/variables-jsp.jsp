@@ -1,1 +1,0 @@
-<c:set var="theme_path" value="/WEB-INF/jsp/${model.theme}"/>
