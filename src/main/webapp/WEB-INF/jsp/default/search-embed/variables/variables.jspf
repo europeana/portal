@@ -1,1 +1,0 @@
-<c:set var="branding" value="${model.portalName}/branding/portal2" />

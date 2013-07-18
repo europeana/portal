@@ -1,4 +1,0 @@
-<div id="footer" class="row" style="padding-top:1.5em;padding-bottom:1.5em;">
-  <img src="/${branding}/images/logos/${model.embeddedLogo}" id="europeana-logo" alt="<spring:message code="rswLogoAlt_t" />" style="float:left;"/>
-  <div id="european-union" style="float:right;"><spring:message code="FundedBy_t" /> <img src="/${branding}/images/logos/eu-flag.gif" alt="European Union Flag" width="20" height="13"/></div>
-</div>
