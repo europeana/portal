@@ -461,6 +461,9 @@ ul.menu > li{
 
 /* override accordion tabs */
 
+
+
+/*
 .accordion-tabs .section{
 	display:				inline-block;
 
@@ -502,6 +505,8 @@ ul.menu > li{
 .accordion-tabs>.section>a{
 	border:		none;
 }
+*/
+
 
 
 
