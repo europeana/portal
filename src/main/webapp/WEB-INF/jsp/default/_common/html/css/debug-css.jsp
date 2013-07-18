@@ -82,7 +82,9 @@
 			<link rel="stylesheet" href="/${branding}/css/lightbox.css" />
 			
 			<!-- accordion-tabs before fulldoc-ess -->
-			<link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" />
+			<!--link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" /-->
+			
+			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 			
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-explore-further.css" />

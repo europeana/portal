@@ -113,7 +113,10 @@ var europeana_bootstrap = function(){
 		
 		scripts.push({
 			name : 'AccordionTabs',
+			/*
 			file : 'accordion-tabs3' + js.min_suffix + '.js' + js.cache_helper,
+			*/
+			file : 'EuAccordionTabs' + js.min_suffix + '.js' + js.cache_helper,
 			dependencies : ['jquery'],
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 		});

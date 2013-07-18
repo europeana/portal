@@ -30,16 +30,17 @@ eu.europeana.citation = {
 			var html = '';
 			$( "#citations .citation").each(function(i, ob){
 				html += ''
+					+			'<a href="#" class="tab-header">'
+					+				(i==0 ? eu.europeana.vars.msg.cite.citation : eu.europeana.vars.msg.cite.footnote)
+					+			'</a>'
 					+			'<div class="section" id="citestyle' + i + '">'
-					+				'<a href="#">'
-					+					(i==0 ? eu.europeana.vars.msg.cite.citation : eu.europeana.vars.msg.cite.footnote)
-					+				'</a>'
 					+				'<div class="content">'
-					+					eu.europeana.vars.msg.cite.citation_header					
-					+					'<span class="copy">'
-					+ 					 	ob.innerHTML
-					+					'</span>'
-
+					+					'<div class="content-inner">'
+					+						eu.europeana.vars.msg.cite.citation_header					
+					+						'<span class="copy">'
+					+ 						 	ob.innerHTML
+					+						'</span>'
+					+					'</div>'
 					+				'</div>'
 					+			'</div>';
 			});
@@ -108,12 +109,15 @@ eu.europeana.citation = {
 		var self = e.data.self;
 		
 		var callback = function(index, id){
-			if($("#mobile-menu").is(":visible") ){
-				eu.europeana.citation.selectElementContents(   $(self.options.container).find('.section.active>.content.is-open>.copy')[0]   );					
-			}
-			else{
-				eu.europeana.citation.selectElementContents($(self.options.container).find('.tab_content>.copy')[0]);
-			}
+			//if($("#mobile-menu").is(":visible") ){
+				
+				
+				
+				eu.europeana.citation.selectElementContents(   $(self.options.container).find('.section.active .content-inner .copy')[0]   );					
+				//}
+				//else{
+				//eu.europeana.citation.selectElementContents($(self.options.container).find('.tab_content>.copy')[0]);
+				//}
 		};
 		eu.europeana.citation.tabs = new AccordionTabs( $('#citation-tabs'), callback );			
 		

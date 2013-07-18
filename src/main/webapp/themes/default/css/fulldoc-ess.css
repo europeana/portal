@@ -18,6 +18,7 @@
 }
 
 /* accordion tabs override */
+
 #citation-tabs.accordion-tabs{
 	border-radius:	0;
 	box-shadow:		none;	
@@ -29,6 +30,7 @@
 #citation-tabs.accordion-tabs>.section>a{
 	border-radius:	0;
 }
+
 /* end accordion tabs override */
 
 #citation h3 {
@@ -135,35 +137,8 @@
 	}
 	
 	.external-services-container{
-		padding:			0 1em 0 1em;
+		padding:	1em;
 	}
-	
-	/*
-	.external-services-container p {
-		overflow:			hidden;
-		word-wrap:			break-word;
-	}
-	.external-services-container .header {
-		border-radius:		5px 5px 0px 0px;
-		position:			relative;
-		border-top: 		1px solid black;
-		height:				25px;
-		width:				auto;
-		overflow:			hidden;
-	}
-	
-	.external-services-container .heading {
-		padding:	2px 0 0 7px;
-		z-index:	200;
-	}
-	
-	.external-services-container .services {
-		padding: 0.75em 0 0.75em 0.75em;
-	}
-	
-	.external-services-container .service {
-		display: block;
-	}
-	*/
+
 }
 

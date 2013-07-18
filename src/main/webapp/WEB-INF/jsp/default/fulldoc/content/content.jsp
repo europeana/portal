@@ -58,7 +58,6 @@
 						markup for carousel:
 						SEO friendly html rendering of images used as an image dimension measuring utility: has to live outside of the initially hidden #similar-content div
 					--%>
-
 					<div id="carousel-2-img-measure">
 						<c:forEach var="similar" items="${model.moreLikeThis}">
 							<c:set var="title" value="${fn:escapeXml(fn:join(similar.title, ' '))}" />

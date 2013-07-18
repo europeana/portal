@@ -73,9 +73,16 @@ eu.europeana.fulldoc = {
 		}]);
 		
 		js.loader.loadScripts([{
+			/*
 			name : 'accordion-tabs',
 			file : 'accordion-tabs' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+			*/
+			
+			name : 'accordion-tabs',
+			file : 'EuAccordionTabs' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+
 		}]);
 		
 		js.loader.loadScripts([{
@@ -730,6 +737,7 @@ eu.europeana.fulldoc = {
 	
 	initBottomCarousel : function(){
 		
+		alert("eu.europeana.vars.isShowSimilarItems " + eu.europeana.vars.isShowSimilarItems);
 		if(!eu.europeana.vars.isShowSimilarItems){
 			return;
 		}
