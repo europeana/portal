@@ -75,11 +75,9 @@
 			<input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}"/>
 			<input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}"/>
 			<input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}"/>
-      <c:forEach items="${model.refinements}" var="qf">
-        <input type="hidden" name="qf" value="${qf}"/>
-      </c:forEach>
-			<input type="hidden" name="rswUserId" value="${model.rswUserId}"/>
-			<input type="hidden" name="rswDefqry" value="${model.rswDefqry}"/>
+		    <c:forEach items="${model.refinements}" var="qf">
+		        <input type="hidden" name="qf" value="${qf}"/>
+		    </c:forEach>
 			<input type="hidden" name="lang" value="${model.locale}"/>
 		</c:if>
 

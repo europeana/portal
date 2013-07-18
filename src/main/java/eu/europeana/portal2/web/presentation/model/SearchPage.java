@@ -40,8 +40,7 @@ public class SearchPage extends SearchPreparation {
 	}
 
 	/**
-	 * Formats any url adding in any required addition parameters required for the brief view page. Useful for embedded
-	 * version which must keep track of its configuration
+	 * Formats any url adding in any required addition parameters required for the brief view page.
 	 * 
 	 * @param url
 	 *            - Url to be formatted
@@ -50,21 +49,6 @@ public class SearchPage extends SearchPreparation {
 	 */
 	@Override
 	public UrlBuilder getPortalFormattedUrl(UrlBuilder url) {
-
-		/**
-		 * If page is to be embedded into an external site adds the related attributes to the url
-		 */
-		if (isEmbedded()) {
-			url.addParam("embedded", "true", false);
-			url.addParam("lang", getEmbeddedLang(), true);
-			url.addParam("bt", "sw", false);
-			url.addParam("rswDefqry", getRswDefqry(), false);
-			url.addParam("embeddedBgColor", getEmbeddedBgColor().replace("#", "%23"), false);
-			url.addParam("embeddedForeColor", getEmbeddedForeColor().replace("#", "%23"), false);
-			url.addParam("embeddedLogo", getEmbeddedLogo(), false);
-			url.addParam("rswUserId", getRswUserId(), false);
-		}
-
 		// remove default values to clean up url...
 		url.removeDefault("view", "table");
 		// url.removeDefault("start", "1");
@@ -83,14 +67,6 @@ public class SearchPage extends SearchPreparation {
 			builder.addParam("startPage", Integer.toString(getBriefBeanView().getPagination().getStart()), true);
 		}
 		builder = getPortalFormattedUrl(builder);
-
-		if (isEmbedded()) {
-			builder.removeParam("embedded");
-			builder.removeParam("embeddedBgColor");
-			builder.removeParam("embeddedForeColor");
-			builder.removeParam("embeddedLogo");
-		}
-
 		return builder;
 	}
 
@@ -294,9 +270,6 @@ public class SearchPage extends SearchPreparation {
 
 	@Override
 	public boolean isShowDidYouMean() {
-		if (isEmbedded() || (getBriefBeanView() == null)) {
-			return false;
-		}
 		if ((getBriefBeanView().getPagination() != null) && (getBriefBeanView().getPagination().getNumFound() > 0)) {
 			return false;
 		}

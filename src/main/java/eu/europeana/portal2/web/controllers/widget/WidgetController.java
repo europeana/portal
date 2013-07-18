@@ -108,8 +108,6 @@ public class WidgetController {
 			model.setEmbedded("");
 			model.setEmbeddedLang("");
 			model.setEmbeddedLogo("");
-			model.setRswUserId("");
-			model.setRswDefqry("");
 			model.setRefinements(new String[] {});
 			model.setStart(1);
 			model.setRows(1);

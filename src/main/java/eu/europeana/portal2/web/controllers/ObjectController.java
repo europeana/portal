@@ -275,7 +275,7 @@ public class ObjectController {
 		FullBean fullBean = null;
 		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
 		try {
-			fullBean = searchService.findById(europeanaId);
+			fullBean = searchService.findById(europeanaId, true);
 			if (fullBean == null) {
 				fullBean = searchService.resolve(europeanaId);
 			}

@@ -71,8 +71,6 @@ public class SearchController {
 			@RequestParam(value = "embeddedForeColor", required = false) String embeddedForeColor,
 			@RequestParam(value = "lang", required = false) String embeddedLang, // embeddedLang -> lang
 			@RequestParam(value = "qf", required = false) String[] qf,
-			@RequestParam(value = "rswUserId", required = false) String rswUserId,
-			@RequestParam(value = "rswDefqry", required = false) String rswDefqry,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows,
 			@RequestParam(value = "sort", required = false, defaultValue = "") String sort,
@@ -92,13 +90,6 @@ public class SearchController {
 
 		SearchPage model = new SearchPage();
 		model.setRequest(request);
-		model.setEmbeddedBgColor(embeddedBgColor);
-		model.setEmbeddedForeColor(embeddedForeColor);
-		model.setEmbedded(embedded);
-		model.setEmbeddedLang(embeddedLang);
-		model.setEmbeddedLogo(embeddedLogo);
-		model.setRswUserId(rswUserId);
-		model.setRswDefqry(rswDefqry);
 		model.setRefinements(qf);
 
 		if (start < 1) {
@@ -107,9 +98,6 @@ public class SearchController {
 		model.setStart(start);
 		model.setRows(rows);
 
-		if (!StringUtils.isBlank(rswDefqry)) {
-			q = rswDefqry;
-		}
 		q = SolrUtils.translateQuery(q);
 		model.setQuery(q);
 
@@ -123,7 +111,7 @@ public class SearchController {
 		model.setSort(sort);
 		injector.injectProperties(model);
 
-		PageInfo view = model.isEmbedded() ? PortalPageInfo.SEARCH_EMBED_HTML : PortalPageInfo.SEARCH_HTML;
+		PageInfo view = PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 
 		Query query = new Query(q)

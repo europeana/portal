@@ -36,8 +36,6 @@
 				<input type="hidden" name="embeddedBgColor" 	value="${model.embeddedBgColor}" />
 				<input type="hidden" name="embeddedForeColor" 	value="${model.embeddedForeColor}" />
 				<input type="hidden" name="embeddedLogo"	 	value="${model.embeddedLogo}" />
-				<input type="hidden" name="rswUserId"	 		value="${model.rswUserId}" />
-				<input type="hidden" name="rswDefqry"			value="${model.rswDefqry}" />
 				<input type="hidden" name="lang"				value="${model.locale}" />
 			</c:if>
 	</fieldset>
