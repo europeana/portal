@@ -3,38 +3,39 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<a href="#api-keys" class="tab-header"><spring:message code="myeuropeana_ApiKeys_t" /></a>
+
 <div class="section">
-
-	<a href="#api-keys"><spring:message code="myeuropeana_ApiKeys_t" /></a>
-
 	<div class="content">
+		<div class="content-inner">
 
-		<div id="api-keys">
-		  <c:choose>
-		    <c:when test="${fn:length(model.user.apiKeys) < 1}">
-		      <p><spring:message code="myeuropeana_NoApiKey_t" /></p>
-		    </c:when>
-		    <c:otherwise>
-		      <table>
-		        <thead>
-		          <tr>
-		            <th><spring:message code="myeuropeana_ApiKey_t" /></th>
-		            <th><spring:message code="myeuropeana_PrivateKey_t" /></th>
-		            <th><spring:message code="myeuropeana_Limit_t" /></th>
-		          </tr>
-		        </thead>
-		        <c:forEach items="${model.user.apiKeys}" var="apiKey">
-		          <tr>
-		            <td><code>${apiKey.id}</code></td>
-		            <td><code>${apiKey.privateKey}</code></td>
-		            <td><code>${apiKey.usageLimit}</code></td>
-		          </tr>
-		        </c:forEach>
-		      </table>
-		    </c:otherwise>
-		  </c:choose>
-
-		  <p><a class="europeana" href="/${model.portalName}/<spring:message code="myeuropeana_api_1_a_url_t"/>" target="<spring:message code="myeuropeana_api_1_a_target_t"/>" title="<spring:message code="myeuropeana_api_1_a_title_t"/>"><spring:message code="myeuropeana_api_1_a_text_t"/></a></p>
+			<div id="api-keys">
+			  <c:choose>
+			    <c:when test="${fn:length(model.user.apiKeys) < 1}">
+			      <p><spring:message code="myeuropeana_NoApiKey_t" /></p>
+			    </c:when>
+			    <c:otherwise>
+			      <table>
+			        <thead>
+			          <tr>
+			            <th><spring:message code="myeuropeana_ApiKey_t" /></th>
+			            <th><spring:message code="myeuropeana_PrivateKey_t" /></th>
+			            <th><spring:message code="myeuropeana_Limit_t" /></th>
+			          </tr>
+			        </thead>
+			        <c:forEach items="${model.user.apiKeys}" var="apiKey">
+			          <tr>
+			            <td><code>${apiKey.id}</code></td>
+			            <td><code>${apiKey.privateKey}</code></td>
+			            <td><code>${apiKey.usageLimit}</code></td>
+			          </tr>
+			        </c:forEach>
+			      </table>
+			    </c:otherwise>
+			  </c:choose>
+	
+			  <p><a class="europeana" href="/${model.portalName}/<spring:message code="myeuropeana_api_1_a_url_t"/>" target="<spring:message code="myeuropeana_api_1_a_target_t"/>" title="<spring:message code="myeuropeana_api_1_a_title_t"/>"><spring:message code="myeuropeana_api_1_a_text_t"/></a></p>
+			</div>
 		</div>
 	</div>
 </div>

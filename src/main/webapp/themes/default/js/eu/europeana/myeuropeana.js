@@ -51,6 +51,8 @@ eu.europeana.myeuropeana = {
 			file: 'tabs' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/com/gmtplusone/' + js.min_directory,
 			callback: function(){
+				
+				alert("what got loaded??????")
 				self.addAccordionTabs();
 			}
 		}]);
@@ -58,8 +60,8 @@ eu.europeana.myeuropeana = {
 	
 	addAccordionTabs:function(){
 		js.loader.loadScripts([{
-			name : 'accordion-tabs',
-			file : 'accordion-tabs' + js.min_suffix + '.js' + js.cache_helper,
+			//name : 'accordion-tabs',
+			file : 'EuAccordionTabs' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			callback:function(){
 				eu.europeana.myeuropeana.accordionTabs = new AccordionTabs( $('#user-panels'),

@@ -1,7 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%--
+
 <h3>
+--%>
 	<%-- onclick="euQuery.cookie('ui-tabs-4', '1', { expires: 1 });" --%>
-	<a href="#saved-notifications" title="<spring:message code="SavedNotifications_t" />">
+<%--	<a href="#saved-notifications" title="<spring:message code="SavedNotifications_t" />">
 		<spring:message code="SavedNotifications_t" />
 	</a>
 </h3>
@@ -16,7 +19,7 @@
 		
 			<div class="item-info">
 
-				<#if true> <#-- !item.europeanaId.orphan -->
+				<#if true> 
 	
 					<a href='/${model.portalName}/${item.getEuropeanaUri()?replace("http://www.europeana.eu/resolve/", "")}.html?bt=savedItem'><strong><@stringLimiter "${item.title}" "50"/></strong></a>
 					<p><@spring.message 'Creator_t'/>: <em>${item.author}</em></p>
@@ -42,3 +45,5 @@
 		
 	</#if>
 </div>
+
+--%>

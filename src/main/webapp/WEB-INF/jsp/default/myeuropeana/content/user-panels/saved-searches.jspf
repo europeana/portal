@@ -3,49 +3,48 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<a href="#saved-searches" class="tab-header"><spring:message code="SavedSearches_t" /></a>
 
 <div class="section">
-
-	<a href="#saved-searches"><spring:message code="SavedSearches_t" /></a>
-	
 	<div class="content">
-	
-		<div class="saved-searches">
-		
-			<c:choose>
-				<c:when test="${fn:length(model.savedSearches) < 1}">
-					<spring:message code="NoSavedSearches_t" />
-				</c:when>
-				<c:otherwise>
-					<%-- Iterate over Saved Searches --%>
-					
-					<c:forEach items="${model.savedSearches}" var="search">
-						<div class="saved-search ${search.id}">
-							<a href="/${model.portalName}/search.html?query=${search.query}&amp;bt=savedSearch" class="go">${search.queryString}</a><br/>
-							<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${search.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
-							<button id="${search.id}" class="remove-saved-search  deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
-							
-							<%-- 
-							<c:if test="${model.user.role == 'ROLE_PACTA' || model.user.role == 'ROLE_EDITOR'}"> --%>
-								<%-- TODO: move search term conditional in here --%>
-								<%--
-								<c:choose>
-									<c:when test="${search.hasSearchTerm()}">
-										<button class="submit-button" onclick="removeRequest('SearchTerm',${search.id});">SearchTerm <spring:message code="Delete_t" /></button>
-									</c:when>
-									<c:otherwise>
-							--%>
-									<%-- TODO: add add button --%>
+		<div class="content-inner">
+			<div class="saved-searches">
+			
+				<c:choose>
+					<c:when test="${fn:length(model.savedSearches) < 1}">
+						<spring:message code="NoSavedSearches_t" />
+					</c:when>
+					<c:otherwise>
+						<%-- Iterate over Saved Searches --%>
+						
+						<c:forEach items="${model.savedSearches}" var="search">
+							<div class="saved-search ${search.id}">
+								<a href="/${model.portalName}/search.html?query=${search.query}&amp;bt=savedSearch" class="go">${search.queryString}</a><br/>
+								<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${search.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
+								<button id="${search.id}" class="remove-saved-search  deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
+								
+								<%-- 
+								<c:if test="${model.user.role == 'ROLE_PACTA' || model.user.role == 'ROLE_EDITOR'}"> --%>
+									<%-- TODO: move search term conditional in here --%>
 									<%--
-										<button class="submit-button" onclick="saveRequest('SearchTerm',${search.id});">SearchTerm - <spring:message code="Add_t" /></button>
-									</c:otherwise>
-								</c:choose>
-							</c:if>
-							--%>
-						</div>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
+									<c:choose>
+										<c:when test="${search.hasSearchTerm()}">
+											<button class="submit-button" onclick="removeRequest('SearchTerm',${search.id});">SearchTerm <spring:message code="Delete_t" /></button>
+										</c:when>
+										<c:otherwise>
+								--%>
+										<%-- TODO: add add button --%>
+										<%--
+											<button class="submit-button" onclick="saveRequest('SearchTerm',${search.id});">SearchTerm - <spring:message code="Add_t" /></button>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+								--%>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 	</div>
 </div>

@@ -134,7 +134,8 @@
 							<cssSourceIncludes>
 								<cssSourceInclude>fulldoc.css</cssSourceInclude>
 								<cssSourceInclude>lightbox.css</cssSourceInclude>
-								<cssSourceInclude>accordion-tabs.css</cssSourceInclude>
+								<!-- cssSourceInclude>accordion-tabs.css</cssSourceInclude-->
+								<cssSourceInclude>eu-accordion-tabs.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
 								<cssSourceInclude>tabbed-navigation.css</cssSourceInclude>

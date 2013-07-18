@@ -83,7 +83,6 @@
 			
 			<!-- accordion-tabs before fulldoc-ess -->
 			<!--link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" /-->
-			
 			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 			
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
@@ -109,7 +108,9 @@
 	
 		<c:when test="${model.pageName == 'myeuropeana.html'}">
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
-			<link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" />
+			
+			<!--link rel="stylesheet" href="/${branding}/css/accordion-tabs.css" /-->
+			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 		</c:when>
 	
 		<c:when test="${model.pageName == 'register.html'}">
