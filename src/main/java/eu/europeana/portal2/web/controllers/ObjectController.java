@@ -277,7 +277,7 @@ public class ObjectController {
 		try {
 			fullBean = searchService.findById(europeanaId, true);
 			if (fullBean == null) {
-				fullBean = searchService.resolve(europeanaId);
+				fullBean = searchService.resolve(europeanaId,true);
 			}
 		} catch (SolrTypeException e) {
 			log.error(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId,

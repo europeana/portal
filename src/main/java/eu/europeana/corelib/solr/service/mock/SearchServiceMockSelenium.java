@@ -72,7 +72,7 @@ public class SearchServiceMockSelenium implements SearchService {
 	}
 	
 	@Override
-	public FullBean findById(String europeanaObjectId) {
+	public FullBean findById(String europeanaObjectId,boolean similarItems) {
 		
 		System.err.println("look up briefbean on " + europeanaObjectId );
 		
@@ -81,8 +81,8 @@ public class SearchServiceMockSelenium implements SearchService {
 	}
 
 	@Override
-	public FullBean findById(String collectionId, String recordId) throws SolrTypeException {
-		return findById(EuropeanaUriUtils.createEuropeanaId(collectionId, recordId));
+	public FullBean findById(String collectionId, String recordId,boolean similarItems) throws SolrTypeException {
+		return findById(EuropeanaUriUtils.createEuropeanaId(collectionId, recordId),similarItems);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -117,13 +117,13 @@ public class SearchServiceMockSelenium implements SearchService {
 	}
 
 	@Override
-	public FullBean resolve(String collectionId, String recordId)
+	public FullBean resolve(String collectionId, String recordId,boolean similarItems)
 			throws SolrTypeException {
 		return null;
 	}
 
 	@Override
-	public FullBean resolve(String europeanaObjectId) throws SolrTypeException {
+	public FullBean resolve(String europeanaObjectId,boolean similarItems) throws SolrTypeException {
 		return null;
 	}
 
@@ -156,11 +156,7 @@ public class SearchServiceMockSelenium implements SearchService {
 		return null;
 	}
 
-	@Override
-	public FullBean findById(String europeanaObjectId, boolean similarItems)
-			throws SolrTypeException {
-		return null;
-	}
+
 
 	@Override
 	public Date getLastSolrUpdate() throws SolrServerException, IOException {

@@ -47,7 +47,7 @@ public class ObjectControllerTest {
 		FullBean fullBean = null;
 		try {
 			FullDocPage model = new FullDocPage();
-			fullBean = searchService.findById("91626", "5AB4F1FA6904FC9BA63B5B58ADCDB4BEF2900147");
+			fullBean = searchService.findById("91626", "5AB4F1FA6904FC9BA63B5B58ADCDB4BEF2900147",false);
 			Query query = new Query("*:*").setRefinements("TYPE:IMAGE");
 			Map<String, String[]> params = new HashMap<String, String[]>();
 			params.put("start", new String[]{"39"});
@@ -96,7 +96,7 @@ public class ObjectControllerTest {
 			System.out.format("%s=%s%n", envName, env.get(envName));
 		}
 		try {
-			FullBean fullBean = searchService.findById("91627", "B056315A5C6D63CF55A8735DBAA45884EC3F1ADE");
+			FullBean fullBean = searchService.findById("91627", "B056315A5C6D63CF55A8735DBAA45884EC3F1ADE",false);
 			assertNotNull("Full bean should not be null", fullBean);
 			assertEquals("/91627/B056315A5C6D63CF55A8735DBAA45884EC3F1ADE", fullBean.getAbout());
 			assertEquals(10, fullBean.getEuropeanaCompleteness());
