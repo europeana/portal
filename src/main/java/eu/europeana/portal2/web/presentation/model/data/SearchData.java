@@ -44,10 +44,6 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 
 	protected boolean markupOnly;
 
-	abstract public String getRswUserId();
-
-	abstract public String getRswDefqry();
-
 	public int getMaxMapResults() {
 		return maxMapResults;
 	}
