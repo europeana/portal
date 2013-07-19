@@ -103,11 +103,7 @@ public class WidgetController {
 			Injector injector = new Injector(request, response, locale);
 			SearchPage model = new SearchPage();
 			model.setRequest(request);
-			model.setEmbeddedBgColor("");
-			model.setEmbeddedForeColor("");
-			model.setEmbedded("");
-			model.setEmbeddedLang("");
-			model.setEmbeddedLogo("");
+
 			model.setRefinements(new String[] {});
 			model.setStart(1);
 			model.setRows(1);
