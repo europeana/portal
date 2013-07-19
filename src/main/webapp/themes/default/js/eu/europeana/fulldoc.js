@@ -729,26 +729,22 @@ eu.europeana.fulldoc = {
 						}
 					}
 				};
-
 				
 			} // end extend
 		}); // end Galleria.run
 	},
 	
 	initBottomCarousel : function(){
-		
-		alert("eu.europeana.vars.isShowSimilarItems " + eu.europeana.vars.isShowSimilarItems);
 		if(!eu.europeana.vars.isShowSimilarItems){
 			return;
 		}
 		
 		if(typeof carousel2Data != 'undefined'){
-			
-			var carousel2selector = $('#carousel-2-tabbed').is(":visible") ? '#carousel-2-tabbed' : '#carousel-2'; 
+			var carousel2selector = '#carousel-2';  //  $('#carousel-2-tabbed').is(":visible") ? '#carousel-2-tabbed' : '#carousel-2'; 
 			
 			// 150 too small for iphone: make min height 200
    			$(carousel2selector).css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
-   	
+			
    			var x = Galleria.run(carousel2selector, {
    				debug:			js.debug,
 				transition:		'fadeslide',
@@ -944,9 +940,8 @@ eu.europeana.fulldoc = {
 
 		
 		$("#carousel-2-img-measure img").imagesLoaded( function(){
-
 			eu.europeana.fulldoc.getCarousel2Dimensions = function(){
-
+				
 				$("#carousel-2-img-measure img").css("display", "inline-block");
   				var tallestImageH = $("#carousel-2-img-measure").height();
   				
@@ -957,13 +952,10 @@ eu.europeana.fulldoc = {
   				
   				return {w:widestImageW, h:tallestImageH};
 			};
+			
 			$("#carousel-2-img-measure img").css("display", "none");
-	
-			eu.europeana.fulldoc.bottomTabs =  new AccordionTabs( $('#explore-further'),
-				function(){
-					eu.europeana.fulldoc.initBottomCarousel();
-				}
-			);
+			eu.europeana.fulldoc.bottomTabs =  new AccordionTabs( $('#explore-further') );
+			eu.europeana.fulldoc.initBottomCarousel();
 		});
 	},
 	

@@ -30,7 +30,7 @@
 			</div>
 		</c:if>
 
-		<c:if test="${model.moreLikeThis != null}">
+		<c:if test="${model.moreLikeThis != null && !empty model.moreLikeThis}">
 
 			<div class="row">
 				<div class="twelve columns">
@@ -65,10 +65,12 @@
 						</c:forEach>
 					</div>
 					<div id="explore-further">
+						<a class="tab-header" href="#"><spring:message code="SimilarContent_t" /></a>
 						<div class="section">
-							<a href="#"><spring:message code="SimilarContent_t" /></a>
 							<div class="content">
-								<div id="carousel-2" about="${model.document.id}" class="europeana-carousel"></div>
+								<div class="content-inner">							
+									<div id="carousel-2" about="${model.document.id}" class="europeana-carousel"></div>
+								</div>
 							</div>
 						</div>
 					</div>
