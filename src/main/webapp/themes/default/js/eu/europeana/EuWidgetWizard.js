@@ -403,66 +403,73 @@ try{
 							eu_europeana_providers.addLinks();							
 						});
 						
-						// filter
 						
-					   	$('#content-provider-filter-filter').keyup( function(e){
-					    	var val =  $(this).val().toUpperCase();
-					    	if(val.length > 0){
-					    		//var re = new RegExp('^' + val + '[A-Za-z\\d\\s]*');
-					    		var re = new RegExp(val + '[A-Za-z\\d\\s]*');
-					    		
-					    		$('#wizard-tabs .icon-arrow-2-after span')
-					    		.add('#wizard-tabs .no-children')
-					    		.each(function(i, ob){
-					            	var text		= $(ob).html().toUpperCase();
-					            	var item		= $(ob).closest('li');
-					            	var sub			= item.find('ul');
+						// filter objects
+						var filterObjects = [];
+						
+						var FilterObject = function(el, doDebug){
+							var self		= this;
+							self.el			= el;
+							self.item		= el.closest('li');
+							self.subItems	= [];
+							self.sub		= self.item.find('ul');
+			            	if(self.sub){
+			            		self.sub.find('li').each(function(j, subItem){
+			            			subItem = $(subItem);
+			            			var subText = subItem.find('span').html().toUpperCase();
+			            			self.subItems[self.subItems.length] = {"t" : subText, "e" : subItem };
+			            		});
+			            	}
+
+							self.text		= el.html().toUpperCase();
+							
+							return {
+								"test" : function(s){
+									var re			= new RegExp(s.toUpperCase() + '[A-Za-z\\d\\s]*');
 					            	var childMatch	= false;
-					            	
-					            	sub.find('li').each(function(j, subItem){
-					            		subItem = $(subItem);
-					            		var subText = subItem.find('span').html().toUpperCase();
-					            		if(re.test(subText)){
-					            			subItem.show();
-					            			childMatch = true;
-					            		}
-					            		else{
-					            			subItem.hide();					            			
-					            		}
-					            	});
-					            	
-
-					            	if(re.test(text)){
-					            		item.show();
-					            	}
-					            	else{
-					            		if(childMatch){
-					            			// open.... 
-					            			$(ob).closest('li').show();
-					            			if(sub.css('display')=="none"){
-					            				$(ob).click();					            				
+					            	if(self.sub){
+					            		self.sub.find('li').each(function(j, subItem){
+					            			subItem = $(subItem);
+					            			var subText = subItem.find('span').html().toUpperCase();
+					            			
+					            			if(re.test(subText)){
+					            				subItem.show();
+					            				childMatch = true;
 					            			}
-					            		}
-					            		else{
-					            			$(ob).closest('li').hide();
-					            		}
+					            			else{
+					            				subItem.hide();					            			
+					            			}
+					            		});
 					            	}
-					            });    		
-					    	}
-					    	else{
-					            $('.icon-arrow-2-after span').add('.no-children').closest('li').show();    		
-					    	}
-
-					    } );						
-					   	
+									if(childMatch || re.test(self.text)){
+										self.item.show();
+									}
+									else{
+										self.item.hide();										
+									}
+								}
+							};
+							
+						};
+						
+			    		$('#wizard-tabs .icon-arrow-2-after span')
+			    		.add('#wizard-tabs .no-children')
+			    		.each(function(i, ob){
+			    			filterObjects[filterObjects.length] = new FilterObject( $(ob), i==0 );
+			    		});
+			    		
+						
+					   	$('#content-provider-filter-filter').keyup(function(e){
+					    	var val =  $(this).val().toUpperCase();
+					   		$.each(filterObjects, function(i, ob){
+					   			ob.test(val);
+					   		});
+					   	});
 					}
 				};
 				eu_europeana_providers.init();
-				
-
 			}
 			if(tabIndex == 3){
-				// TODO: generic checkbox change
 				var change = function(e){
 					var cb       = e.target ? $(e.target) : $(e);
 					var checked  = cb.prop('checked');
