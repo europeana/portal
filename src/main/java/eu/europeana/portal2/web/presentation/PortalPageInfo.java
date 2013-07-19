@@ -88,8 +88,8 @@ public enum PortalPageInfo implements PageInfo {
 
 	SEARCH_HTML("search.html", "Europeana - Search results", "search/search"),
 	SEARCH_KML("search.kml", "search/search-kml"),
-	SEARCH_EMBED_HTML("search.html", "Europeana - Search results", "search-embed/search-embed"),
-	SEARCH_WIDGET("search-widget.html", "search-widget/search-widget"),
+	//SEARCH_EMBED_HTML("search.html", "Europeana - Search results", "search-embed/search-embed"),
+	//SEARCH_WIDGET("search-widget.html", "search-widget/search-widget"),
 
 	SITEMAP(null, "sitemap/sitemap"),
 	SITEMAP_BROWSE_INDEX(null, "sitemap/browse-all-index-page"),
