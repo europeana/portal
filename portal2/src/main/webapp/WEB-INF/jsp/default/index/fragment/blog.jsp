@@ -36,7 +36,9 @@
                         --%></a><%--
                      --%></h4><%--
                      --%><p class='featured-text'><%--
+                     
                         --%>${fn:replace(entry.description, '"', '\\"')}<%--
+                        
                      --%></p><%--
                   --%></div><%--
                --%></div><%--

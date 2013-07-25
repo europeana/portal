@@ -383,6 +383,7 @@
 											}
 										}, 1000);
 										
+										
 										$(window).euRsz(function(){
 											for(var i=0; i<ellipsisObjects.length; i++ ){
 												ellipsisObjects[i].respond();
