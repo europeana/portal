@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -28,6 +28,7 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.FacetField.Count;
 
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
@@ -113,6 +114,12 @@ public class SearchServiceMockSelenium implements SearchService {
 
 	@Override
 	public List<Term> suggestions(String query, int pageSize) {
+		return null;
+	}
+	
+	@Override
+	public List<Count> createCollections(String facetFieldName, String queryString, String... refinements)
+			throws SolrTypeException {
 		return null;
 	}
 
