@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -55,7 +55,9 @@ import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.utils.RequestUtils;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.services.ClickStreamLogService.UserAction;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoParams;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
@@ -68,9 +70,6 @@ import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger.UserAction;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
@@ -84,11 +83,11 @@ public class ObjectController {
 	@Resource
 	private SearchService searchService;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	@Resource
 	private OptOutService optOutService;
@@ -132,7 +131,6 @@ public class ObjectController {
 			HttpServletResponse response, Locale locale) throws EuropeanaQueryException {
 
 		long t0 = (new Date()).getTime();
-		Injector injector = new Injector(request, response, locale);
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");
 		if (_qf != null && _qf.length != qf.length) {
@@ -164,7 +162,6 @@ public class ObjectController {
 		}
 		model.setShowSimilarItems(showSimilarItems);
 
-		injector.injectProperties(model);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		// model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
 
@@ -205,8 +202,6 @@ public class ObjectController {
 			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView
 					.getFullDoc().getAbout());
 		}
-
-		injector.postHandle(this, page);
 
 		if (log.isDebugEnabled()) {
 			long t1 = (new Date()).getTime();

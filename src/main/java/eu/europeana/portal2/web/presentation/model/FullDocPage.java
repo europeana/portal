@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -38,6 +38,7 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.controllers.ObjectController;
@@ -48,13 +49,12 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecor
 import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.presentation.model.data.submodel.MetaDataFieldPresentation;
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
-import eu.europeana.portal2.web.presentation.semantic.EdmSchemaMapping;
 import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
+import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
-import eu.europeana.portal2.web.util.WebUtils;
 
 public class FullDocPage extends FullDocPreparation {
 
@@ -359,12 +359,12 @@ public class FullDocPage extends FullDocPreparation {
 			// ANDY: avoid null pointer here but edm rights aren't being mapped properly. 
 			if(shortcut.get("EdmRights") != null){
 				String[] rightsOp = shortcut.get("EdmRights");
-				rightsOption = RightsValue.safeValueByUrl(rightsOp[0]);
+				rightsOption = RightsValue.safeValueByUrl(rightsOp[0], getPortalUrl());
 				if (rightsOption == null && rightsOp.length > 1){
-					rightsOption = RightsValue.safeValueByUrl(rightsOp[1]);
+					rightsOption = RightsValue.safeValueByUrl(rightsOp[1], getPortalUrl());
 				}
 				if (rightsOption == null && rightsOp.length > 2){
-					rightsOption = RightsValue.safeValueByUrl(rightsOp[2]);
+					rightsOption = RightsValue.safeValueByUrl(rightsOp[2], getPortalUrl());
 				}
 			}
 		}
@@ -550,8 +550,8 @@ public class FullDocPage extends FullDocPreparation {
 
 		FullBeanShortcut fbShourtcut = new FullBeanShortcut((FullBeanImpl)getFullBeanView().getFullDoc());
 		return KmlPresentation.getKmlDescriptor(getMetaCanonicalUrl(),
-				getCacheUrl(), WebUtils.returnFirst(fbShourtcut.get("EdmObject"), ""),
-				WebUtils.returnFirst(doc.getTitle(), ""), descr, sDate, sPlace);
+				getCacheUrl(), CollectionUtils.returnFirst(fbShourtcut.get("EdmObject"), ""),
+				CollectionUtils.returnFirst(doc.getTitle(), ""), descr, sDate, sPlace);
 	}
 
 	public String getObjectTitle() {
@@ -767,7 +767,7 @@ public class FullDocPage extends FullDocPreparation {
 
 	public List<FieldInfo> getTopLevelSchemaMap() {
 		List<FieldInfo> list = new ArrayList<FieldInfo>();
-		for (FieldInfo field : EdmSchemaMapping.getTopLevel()) {
+		for (FieldInfo field : edmTopLevels) {
 			if (!field.getSchemaName().equals("briefBean")) {
 				list.add(field);
 			}
@@ -775,12 +775,12 @@ public class FullDocPage extends FullDocPreparation {
 		return list;
 	}
 
-	public Map<String, List<FieldInfo>> getSchemaMap() {
-		return EdmSchemaMapping.getFullMap();
+	public Map<String, List<FieldInfo>> getSchemaMap(  SchemaOrgMapping mapping) {
+		return edmFullMap;
 	}
 
 	public FieldInfo getWebResourceField() {
-		for (FieldInfo info : EdmSchemaMapping.getTopLevel()) {
+		for (FieldInfo info : edmTopLevels) {
 			if (info.getSchemaName().equals("edm:WebResource")) {
 				return info;
 			}
@@ -789,7 +789,7 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public FieldInfo getBriefBeanField() {
-		for (FieldInfo info : EdmSchemaMapping.getTopLevel()) {
+		for (FieldInfo info : edmTopLevels) {
 			if (info.getSchemaName().equals("briefBean")) {
 				return info;
 			}
@@ -798,34 +798,11 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public Map<String, Element> getEdmElements() {
-		return EdmSchemaMapping.getEdmElements();
+		return edmElements;
 	}
 	
 	public String getSemanticTitle() {
 		return Field.DC_TITLE.getSemanticAttributes();
 	}
 
-	/*
-	public Map<String, SchemaOrgElement> getSchemaOrgMapping() {
-		if (!schemaOrgMappingInitialized) {
-			if (schemaOrgMappingFile != null && new File(schemaOrgMappingFile).exists()) {
-				SchemaOrgMapping.initialize(schemaOrgMappingFile);
-			}
-			schemaOrgMappingInitialized = true;
-		}
-		return SchemaOrgMapping.getMap();
-	}
-
-	public SchemaOrgElement getSchemaOrgMapping(String edmElement, String parent) {
-		return SchemaOrgMapping.get(edmElement);
-	}
-
-	public String getSchemaOrgMappingFile() {
-		return schemaOrgMappingFile;
-	}
-
-	public void setSchemaOrgMappingFile(String schemaOrgMappingFile) {
-		this.schemaOrgMappingFile = schemaOrgMappingFile;
-	}
-	*/
 }

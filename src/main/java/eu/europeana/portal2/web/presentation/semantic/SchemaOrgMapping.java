@@ -8,10 +8,12 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.util.Beans;
 
 /**
  * Mapping of EDM elements and schema.org elements
@@ -20,87 +22,34 @@ import eu.europeana.portal2.web.util.Beans;
  */
 public class SchemaOrgMapping {
 
-	private static Configuration config = Beans.getConfig();
-
-	private static Map<String, SchemaOrgElement> edm2schemaOrg;
-	private static Map<String, String> semanticAttributesMap = new ConcurrentHashMap<String, String>();
-	private static Map<String, Boolean> semanticUrlMap = new ConcurrentHashMap<String, Boolean>();
-
 	private static final String DC_TITLE = "dc:title";
 	private static final String DC_PUBLISHER = "dc:publisher";
+	
+	private Map<String, SchemaOrgElement> edm2schemaOrg;
+	private Map<String, String> semanticAttributesMap = new ConcurrentHashMap<String, String>();
+	private Map<String, Boolean> semanticUrlMap = new ConcurrentHashMap<String, Boolean>();
 
-	private static void initialize() {
-		edm2schemaOrg = readFromProperty(config.getSchemaOrgMappingFile());
-		/*
-		 * edm2schemaOrg = new HashMap<String, SchemaOrgElement>() { private static final long serialVersionUID = 1L; {
-		 * put("edm:country", new SchemaOrgElement("schema:addressCountry", new String[]{"schema:Thing"}));
-		 * put("edm:dataProvider", new SchemaOrgElement("schema:provider", new String[]{"schema:CreativeWork"}));
-		 * put("edm:hasView", new SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"}));
-		 * put("edm:isShownAt", new SchemaOrgElement("schema:url", new String[]{"schema:WebPage"}));
-		 * put("edm:isShownBy", new SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"}));
-		 * put("edm:landingPage", new SchemaOrgElement("schema:url", new String[]{"schema:Thing"})); put("edm:language",
-		 * new SchemaOrgElement("schema:inLanguage", new String[]{"schema:CreativeWork"})); put("edm:object", new
-		 * SchemaOrgElement("schema:url", new String[]{"schema:MediaObject"})); put("edm:provider", new
-		 * SchemaOrgElement("schema:provider", new String[]{"schema:CreativeWork"})); put("edm:currentLocation", new
-		 * SchemaOrgElement("schema:contentLocation", new String[]{"schema:CreativeWork"})); put("edm:hasType", new
-		 * SchemaOrgElement("schema:additionalType", new String[]{"schema:Thing"})); put("edm:isRepresentationOf", new
-		 * SchemaOrgElement("schema:about", new String[]{"schema:CreativeWork"})); put("edm:userTag", new
-		 * SchemaOrgElement("schema:keywords", new String[]{"schema:CreativeWork"})); put("skos:prefLabel", new
-		 * SchemaOrgElement("schema:name", new String[]{"schema:Person"})); put("skos:altLabel", new
-		 * SchemaOrgElement("schema:additionalName", new String[]{"schema:Person"})); put("skos:hiddenLabel", new
-		 * SchemaOrgElement("schema:additionalName", new String[]{"schema:Person"})); put("skos:note", new
-		 * SchemaOrgElement("schema:description", new String[]{"schema:Thing"})); put("edm:begin", new
-		 * SchemaOrgElement("schema:birthdate", new String[]{"schema:Person"})); put("edm:end", new
-		 * SchemaOrgElement("schema:deathdate", new String[]{"schema:Person"})); put("edm:hasMet", new
-		 * SchemaOrgElement("schema:knows", new String[]{"schema:Person"})); put("edm:isRelatedTo", new
-		 * SchemaOrgElement("schema:relatedTo", new String[]{"schema:Person"})); put("edm:wasPresentAt", new
-		 * SchemaOrgElement("schema:event", new String[]{"schema:Organization"})); put("foaf:name", new
-		 * SchemaOrgElement("schema:name", new String[]{"schema:Person"})); put("foaf:name", new
-		 * SchemaOrgElement("schema:name", new String[]{"schema:Person"})); put("rdaGr2:biographicalInformation", new
-		 * SchemaOrgElement("schema:description", new String[]{"schema:Thing"})); put("rdaGr2:dateOfBirth", new
-		 * SchemaOrgElement("schema:birthdate", new String[]{"schema:Person"})); put("rdaGr2:dateOfDeath", new
-		 * SchemaOrgElement("schema:deathdate", new String[]{"schema:Person"})); put("rdaGr2:dateOfEstablishment", new
-		 * SchemaOrgElement("schema:foundingDate", new String[]{"schema:Organization"})); put("rdaGr2:gender", new
-		 * SchemaOrgElement("schema:gender", new String[]{"schema:Person"})); put("rdaGr2:professionOrOccupation", new
-		 * SchemaOrgElement("schema:jobTitle", new String[]{"schema:Person"})); put("wgs84_pos:lat", new
-		 * SchemaOrgElement("schema:latitude", new String[]{"schema:Intangible"})); put("wgs84_pos:long", new
-		 * SchemaOrgElement("schema:longitude", new String[]{"schema:Intangible"})); put("wgs84_pos:alt", new
-		 * SchemaOrgElement("schema:elevation", new String[]{"schema:Intangible"})); put("skos:prefLabel", new
-		 * SchemaOrgElement("schema:name", new String[]{""})); put("skos:altLabel", new SchemaOrgElement("schema:name",
-		 * new String[]{""})); put("skos:hiddenLabel", new SchemaOrgElement("schema:name", new String[]{""}));
-		 * put("skos:note", new SchemaOrgElement("schema:description", new String[]{"schema:Thing"}));
-		 * put("dcterms:isPartOf", new SchemaOrgElement("schema:containedIn", new String[]{"schema:Place"}));
-		 * 
-		 * // put("", new SchemaOrgElement("", new String[]{""})); }};
-		 */
-	}
-
-	public SchemaOrgMapping() {
+	@Autowired
+	public SchemaOrgMapping(Configuration config) {
 		edm2schemaOrg = readFromProperty(config.getSchemaOrgMappingFile());
 	}
 
-	public static Map<String, SchemaOrgElement> getMap() {
-		if (edm2schemaOrg == null) {
-			initialize();
-		}
+	public Map<String, SchemaOrgElement> getMap() {
 		return edm2schemaOrg;
 	}
 
-	public static SchemaOrgElement get(String edmElement) {
-		if (edm2schemaOrg == null) {
-			initialize();
-		}
+	public SchemaOrgElement get(String edmElement) {
 		if (edm2schemaOrg.containsKey(edmElement)) {
 			return edm2schemaOrg.get(edmElement);
 		}
 		return null;
 	}
 
-	public static SchemaOrgElement get(Element edmElement) {
+	public SchemaOrgElement get(Element edmElement) {
 		return get(edmElement.getQualifiedName());
 	}
 
-	public static void initialize(String filename) {
+	public void initialize(String filename) {
 		edm2schemaOrg = readFromProperty(filename);
 		/*
 		 * edm2schemaOrg = new ConcurrentHashMap<String, SchemaOrgElement>(); Map<String, SchemaOrgElement> mapping =
@@ -110,7 +59,7 @@ public class SchemaOrgMapping {
 		 */
 	}
 
-	private static Map<String, SchemaOrgElement> readFromProperty(String file) {
+	private Map<String, SchemaOrgElement> readFromProperty(String file) {
 		Map<String, SchemaOrgElement> mapping = new ConcurrentHashMap<String, SchemaOrgElement>();
 		DataInputStream in = null;
 		BufferedReader br = null;
@@ -179,14 +128,14 @@ public class SchemaOrgMapping {
 		return false;
 	}
 
-	public static String getSemanticAttributes(String field, String contextualEntity) {
+	public String getSemanticAttributes(String field, String contextualEntity) {
 		String schemaKey = field;
 		if (!StringUtils.isBlank(contextualEntity)) {
 			schemaKey = contextualEntity + '/' + field;
 		}
 
 		if (!semanticAttributesMap.containsKey(schemaKey)) {
-			Element element = EdmSchemaMapping.getEdmElements().get(field);
+			Element element = EdmSchemaMapping.getEdmElements(this).get(field);
 			if (element == null) {
 				semanticAttributesMap.put(schemaKey, "");
 			} else {
@@ -207,7 +156,7 @@ public class SchemaOrgMapping {
 		return semanticAttributesMap.get(schemaKey);
 	}
 
-	public static Boolean isSemanticUrl(String schemaKey) {
+	public Boolean isSemanticUrl(String schemaKey) {
 		if (!semanticUrlMap.containsKey(schemaKey)) {
 			boolean isSemanticUrl = false;
 			if (edm2schemaOrg.containsKey(schemaKey)) {
@@ -218,7 +167,7 @@ public class SchemaOrgMapping {
 		return semanticUrlMap.get(schemaKey);
 	}
 
-	public static Boolean isSemanticUrl(String field, String contextualEntity) {
+	public Boolean isSemanticUrl(String field, String contextualEntity) {
 		String schemaKey = field;
 		if (!StringUtils.isBlank(contextualEntity)) {
 			schemaKey = contextualEntity + '/' + field;

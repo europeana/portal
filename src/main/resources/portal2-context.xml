@@ -10,18 +10,18 @@
 	<import resource="corelib-logging-context.xml" />
 	<import resource="corelib-db-context.xml" />
 	<import resource="corelib-solr-context.xml" />
-	<import resource="corelib-definitions-context.xml" />
 	<import resource="corelib-web-context.xml" />
 	<import resource="corelib-utils-context.xml" />
+
+	<!-- SERVICES -->
+	<import resource="internal/portal2-services.xml" />
 
 	<!-- SECURITY -->
 	<import resource="internal/portal2-security.xml" />
 
 	<!-- DEVELOPMENT -->
-	<import resource="internal/portal2-development.xml" />
+	<!-- <import resource="internal/portal2-development.xml" /> -->
 	
 	<!-- SELENIUM MOCK DATA -->
-	<!-- 
-	<import resource="internal/portal2-selenium-test.xml" />
-	 -->
+	<!-- <import resource="internal/portal2-selenium-test.xml" /> -->
 </beans>

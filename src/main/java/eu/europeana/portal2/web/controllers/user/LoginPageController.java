@@ -19,12 +19,12 @@ import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.web.service.EmailService;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
+import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class LoginPageController {
@@ -32,20 +32,20 @@ public class LoginPageController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "corelib_web_emailService")
+	@Resource
 	private EmailService emailService;
 
-	@Resource(name = "corelib_db_userService")
+	@Resource
 	private UserService userService;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
-	@Resource(name = "corelib_db_tokenService")
+	@Resource
 	private TokenService tokenService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	private static final String REGISTER = "Register";
 	private static final String REGISTER_API = "RegisterAPI";
@@ -56,10 +56,8 @@ public class LoginPageController {
 			@RequestParam(value = "requested_action", required = false) String requestedAction,
 			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
-		Injector injector = new Injector(request, response, locale);
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
-		injector.injectProperties(model);
 
 		model.setEmail(email);
 		log.info("requestedAction: " + requestedAction);
@@ -124,10 +122,22 @@ public class LoginPageController {
 		// page.addObject("register", register);
 		model.setErrorMessage("1".equals(request.getParameter("error")) ? "Invalid Credentials" : null);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGIN);
-		injector.postHandle(this, page);
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.LOGIN, page);
-
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN, page);
 		return page;
+	}
+
+	@RequestMapping("/logout-success.html")
+	public String logoutSuccessHandler(HttpServletRequest request) throws Exception {
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGOUT);
+		return "redirect:/login.html";
+	}
+
+	@RequestMapping("/logout.html")
+	public ModelAndView logoutHandler(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws Exception {
+		EmptyModelPage model = new EmptyModelPage();
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGOUT);
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGOUT);
 	}
 
 	private boolean emailExists(String email) {

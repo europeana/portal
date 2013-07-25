@@ -18,15 +18,14 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.utils.RequestUtils;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class TimelineController {
@@ -35,9 +34,9 @@ public class TimelineController {
 	private SearchService searchService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@RequestMapping("/timeline.html")
@@ -49,7 +48,6 @@ public class TimelineController {
 			@RequestParam(value = "rq", required = false) String rq,
 			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
-		Injector injector = new Injector(request, response, locale);
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");
 		if (_qf != null && _qf.length != qf.length) {
@@ -64,12 +62,9 @@ public class TimelineController {
 		model.setStartPage(startPage);
 		model.setRefinements(qf);
 		model.setRefineKeyword(StringUtils.trimToNull(rq));
-		injector.injectProperties(model);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.TIMELINE);
-		injector.postHandle(this, page);
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.TIMELINE, page);
-
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.TIMELINE, page);
 		return page;
 	}
 
@@ -78,10 +73,8 @@ public class TimelineController {
 			@RequestParam(value = "startFrom", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue = "1000") int rows,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
-		Injector injector = new Injector(request, response, locale);
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
-		injector.injectProperties(model);
 
 		Map<String, String[]> params = RequestUtils.getParameterMap(request);
 
@@ -105,8 +98,6 @@ public class TimelineController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.TIMELINE_JSON);
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
-		injector.postHandle(this, page);
-
 		return page;
 	}
 }

@@ -35,12 +35,14 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.service.query.MoreLikeThis;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
+@ContextConfiguration({ "/servlet/portal2-mvc.xml", "/internal/portal2-development.xml" })
 public class MoreLikeThisSpeedTest {
 
-	@Resource(name = "corelib_solr_solrServer") private SolrServer solrServer;
+	@Resource(name = "corelib_solr_solrServer")
+	private SolrServer solrServer;
 
-	@Resource private SearchService searchService;
+	@Resource
+	private SearchService searchService;
 
 	private int totalRecordsToTest = 20;
 	private int maxPerTerm = 4;
@@ -61,11 +63,11 @@ public class MoreLikeThisSpeedTest {
 				e.printStackTrace();
 			}
 		}
-		for (int i=1; i<3; i++) {
+		for (int i = 1; i < 3; i++) {
 			mltFields = null;
 			DescriptiveStatistics stat1 = new DescriptiveStatistics();
 			DescriptiveStatistics stat2 = new DescriptiveStatistics();
-			System.out.println("mlt.mindf=" + 5*i);
+			System.out.println("mlt.mindf=" + 5 * i);
 			for (String[] recordId : recordIds) {
 				try {
 					long t2 = new Date().getTime();
@@ -87,18 +89,16 @@ public class MoreLikeThisSpeedTest {
 
 			double[] values = stat1.getSortedValues();
 			DescriptiveStatistics stat3 = new DescriptiveStatistics();
-			for (int j=1; j<values.length-1; j++) {
+			for (int j = 1; j < values.length - 1; j++) {
 				stat3.addValue(values[j]);
 			}
 			SpeedTestUtils.printStatistics(stat3);
 		}
 	}
 
-	private List<BriefBean> findMoreLikeThis(String europeanaObjectId, int count, int mintf)
-			throws SolrServerException {
+	private List<BriefBean> findMoreLikeThis(String europeanaObjectId, int count, int mintf) throws SolrServerException {
 
-		SolrQuery solrQuery = new SolrQuery()
-			.setQuery("europeana_id:\"" + europeanaObjectId + "\"");
+		SolrQuery solrQuery = new SolrQuery().setQuery("europeana_id:\"" + europeanaObjectId + "\"");
 		if (mintf == 2) {
 			solrQuery.setQueryType(QueryType.ADVANCED.toString());
 		}
@@ -148,7 +148,7 @@ public class MoreLikeThisSpeedTest {
 		Matcher matcher = pattern.matcher(content);
 		while (matcher.find()) {
 			if (!matcher.group(1).contains("/_")) {
-				ids.add(new String[]{matcher.group(1), URLEncoder.encode(query), String.valueOf(start)});
+				ids.add(new String[] { matcher.group(1), URLEncoder.encode(query), String.valueOf(start) });
 			}
 			if (ids.size() == maxPerTerm) {
 				break;
@@ -193,7 +193,7 @@ public class MoreLikeThisSpeedTest {
 
 		try {
 			url = new URL(_url);
-			is = url.openStream();  // throws an IOException
+			is = url.openStream(); // throws an IOException
 			dis = new DataInputStream(new BufferedInputStream(is));
 
 			while ((line = dis.readLine()) != null) {

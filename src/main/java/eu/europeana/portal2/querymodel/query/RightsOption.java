@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -18,8 +18,6 @@
 package eu.europeana.portal2.querymodel.query;
 
 import org.apache.commons.lang.StringUtils;
-
-import eu.europeana.portal2.web.util.Beans;
 
 /**
  * Class represents a set of rights that can be attached to an item in the Europeana website.
@@ -111,10 +109,9 @@ public enum RightsOption {
 		return url;
 	}
 
-	public String getRelativeUrl() {
+	public String getRelativeUrl(String portalUrl) {
 		if (relativeUrl == null) {
 			if (isRelativeUrl) {
-				String portalUrl = Beans.getConfig().getPortalUrl();
 				if (!portalUrl.endsWith("/")) {
 					portalUrl += "/";
 				}

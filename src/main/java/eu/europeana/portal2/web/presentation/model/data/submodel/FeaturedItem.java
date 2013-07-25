@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -18,8 +18,6 @@
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.util.Map;
-
-import eu.europeana.portal2.web.util.ResponsiveImageUtils;
 
 /**
  * Placeholder objects for featured items.
@@ -85,7 +83,7 @@ public class FeaturedItem {
 		return responsiveImages;
 	}
 
-	public void setResponsiveImages(String imgUrl) {
-		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, false);
+	public void setResponsiveImages(Map<String, String> images) {
+		responsiveImages = images;
 	}
 }

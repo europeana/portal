@@ -52,8 +52,6 @@ import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.presentation.model.SearchWidgetEditorPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.IngestionUtils;
-import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
@@ -62,7 +60,7 @@ public class WidgetController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@Resource
@@ -100,7 +98,6 @@ public class WidgetController {
 
 		ModelAndView page = null;
 		if (id.equals("search")) {
-			Injector injector = new Injector(request, response, locale);
 			SearchPage model = new SearchPage();
 			model.setRequest(request);
 
@@ -115,9 +112,7 @@ public class WidgetController {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			injector.injectProperties(model);
 			page = ControllerUtil.createModelAndViewPage(model, locale, view);
-			injector.postHandle(this, page);
 		} else {
 			EmptyModelPage model = new EmptyModelPage();
 			page = ControllerUtil.createModelAndViewPage(model, locale, view);
@@ -125,11 +120,9 @@ public class WidgetController {
 		return page;
 	}
 
-	@RequestMapping({"/widget/editor.html"})
+	@RequestMapping({ "/widget/editor.html" })
 	public ModelAndView editWidget(HttpServletRequest request, HttpServletResponse response, Locale locale) {
-		Injector injector = new Injector(request, response, locale);
 		SearchWidgetEditorPage model = new SearchWidgetEditorPage();
-		injector.injectProperties(model);
 
 		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
 		String providerQueryFormat = String.format("%s/search.html?query=*:*&qf=PROVIDER:", portalServer) + "%s";
@@ -138,18 +131,18 @@ public class WidgetController {
 			contributorEntries = new ArrayList<ContributorItem>();
 			List<Count> providers;
 
-			Query query = new Query("*:*")
-				.setPageSize(0)
-				.setStart(0) // Solr starts from 0
-				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
-				.setParameter("sort", SearchController.DEFAULT_SORT)
-				.setProduceFacetUnion(true)
-				.setAllowSpellcheck(false);
+			Query query = new Query("*:*").setPageSize(0).setStart(0)
+					// Solr starts from 0
+					.setParameter("facet.mincount", "1")
+					// .setParameter("f.YEAR.facet.mincount", "1")
+					.setParameter("sort", SearchController.DEFAULT_SORT).setProduceFacetUnion(true)
+					.setAllowSpellcheck(false);
 
 			briefBeanView = null;
 			try {
 				Map<String, String[]> params = RequestUtils.getParameterMap(request);
-				briefBeanView = SearchUtils.createResults(searchService, BriefBean.class, "portal", query, 0, 0, params);
+				briefBeanView = SearchUtils
+						.createResults(searchService, BriefBean.class, "portal", query, 0, 0, params);
 			} catch (SolrTypeException e) {
 				log.error("SolrTypeException: " + e.getMessage());
 				// return new ApiError("search.json", e.getMessage());
@@ -160,19 +153,18 @@ public class WidgetController {
 			}
 
 			try {
-				providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
+				providers = searchService.createCollections("PROVIDER", "*:*");
 				for (Count provider : providers) {
 					try {
-						String queryString = StringEscapeUtils.escapeXml(String.format(
-								providerQueryFormat,
+						String queryString = StringEscapeUtils.escapeXml(String.format(providerQueryFormat,
 								SitemapController.convertProviderToUrlParameter(provider.getName())));
 						ContributorItem contributorItem = new ContributorItem(queryString, provider.getName(),
 								provider.getCount(), portalServer);
 
 						List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 
-						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService,
-								"DATA_PROVIDER", "*:*", new String[]{"PROVIDER:\"" + provider.getName() + "\""});
+						List<Count> rawDataProviders = searchService.createCollections("DATA_PROVIDER", "*:*",
+								"PROVIDER:\"" + provider.getName() + "\"");
 						for (Count dataProvider : rawDataProviders) {
 							if (dataProvider.getCount() > 0) {
 								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider
@@ -199,9 +191,7 @@ public class WidgetController {
 		}
 		model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.WIDGET_EDITOR);
-		injector.postHandle(this, page);
-		return page;
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.WIDGET_EDITOR);
 	}
 
 	private BriefBeanView getFakeBriefBeanView() {

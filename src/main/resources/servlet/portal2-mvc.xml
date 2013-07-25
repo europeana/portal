@@ -16,63 +16,39 @@
 		http://www.springframework.org/schema/util/spring-util.xsd
 	">
 
+	<import resource="../corelib-definitions-context.xml" />
+
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
 	</bean>
 
-	<util:properties id="europeanaProperties" location="file:${EUROPEANA_PROPERTIES}" />
-
 	<mvc:default-servlet-handler />
 
 	<mvc:annotation-driven/>
 
-	<!-- INTERCEPTORS -->
-	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
-	<!--bean id="locale_interceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" /-->
-
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers" />
 
-	<bean id="handlerMapping" 
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" 
-		p:interceptors-ref="corelib_web_configInterceptor" />
+	<!-- INTERCEPTORS -->
+<!-- 	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
+	<bean id="corelib_web_localeChangeInterceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" p:paramName="lang"/>
+	<bean id="portal2_configInterceptor" class="eu.europeana.portal2.web.interceptor.PortalConfigInterceptor" />
+ -->
+	<mvc:interceptors>
+		<!--bean id="locale_interceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" /-->
+		<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
+		<bean id="portal2_configInterceptor" class="eu.europeana.portal2.web.interceptor.PortalConfigInterceptor" />
+	</mvc:interceptors>
 
-	<!-- bean id="handlerMapping2" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" p:interceptors-ref="locale_interceptor" /-->
-
-	<!-- 
-	<bean id="localeChangeInterceptor" class="eu.europeana.core.util.web.LocaleChangeInterceptor">
-        <property name="paramName" value="lang"/>
-        <property name="clickStreamLogger" ref="clickStreamLogger"/>
-    </bean>
-	 -->
-
-	<bean id="localeChangeInterceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor">
-		<property name="paramName" value="lang" />
-	</bean>
-
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-		<property name="interceptors">
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+<!-- 		<property name="interceptors">
 			<list>
+				<ref bean="corelib_web_localeChangeInterceptor" />
 				<ref bean="corelib_web_configInterceptor" />
-				<!--ref bean="locale_interceptor" /-->
-				<ref bean="localeChangeInterceptor" />
+				<ref bean="portal2_configInterceptor" />
 			</list>
 		</property>
-	</bean>
-
-	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="mappings">
-			<props>
-				<prop key="/search.html">searchController</prop>
-			</props>
-		</property>
-		<property name="interceptors">
-			<list>
-				<ref bean="corelib_web_configInterceptor" />
-				<ref bean="localeChangeInterceptor" />
-			</list>
-		</property>
-	</bean>
+ -->	</bean>
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
@@ -88,43 +64,8 @@
 		<property name="UseCodeAsDefaultMessage" value="true"/>
 	</bean>
 
-	<bean id="searchController" class="eu.europeana.portal2.web.controllers.SearchController" />
-
-	<bean id="clickStreamLogger" class="eu.europeana.portal2.web.util.ClickStreamLoggerImpl"/>
-
-	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
-
-	<bean id="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />
-
-	<bean id="responsiveImageCache" class="eu.europeana.portal2.web.util.ResponsiveImageCache" />
-
-	<bean id="beans" class="eu.europeana.portal2.web.util.Beans">
-		<property name="userService" ref="corelib_db_userService" />
-		<property name="configInterceptor" ref="corelib_web_configInterceptor" />
-		<property name="config" ref="configurationService" />
-		<property name="localeChangeInterceptor" ref="localeChangeInterceptor" />
-	</bean>
-
-	<bean id="schemaOrgMapping" class="eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping" />
-
-	<!-- a bean for storing configuration properties. -->
-	<bean id="runtimeConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="locations">
-			<list>
-				<value>file:${EUROPEANA_PROPERTIES}</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="apiKeyService" class="eu.europeana.corelib.db.service.impl.ApiKeyServiceImpl" p:dao-ref="corelib_db_apiKeyDao" />
-
-	<bean id="corelib_db_apiKeyDao" parent="corelib_db_dao">
-		<constructor-arg type="java.lang.Class" value="eu.europeana.corelib.db.entity.relational.ApiKeyImpl" />
-	</bean>
-
 	<bean id="exceptionResolver" class="eu.europeana.portal2.exception.ExceptionResolver" />
 
-	<bean id="responsiveImageUtils" class="eu.europeana.portal2.web.util.ResponsiveImageUtils" />
-
 	<import resource="../portal2-context.xml"/>
+	
 </beans>

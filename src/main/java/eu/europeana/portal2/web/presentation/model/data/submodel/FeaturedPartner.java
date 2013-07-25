@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -19,7 +19,7 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.util.Map;
 
-import eu.europeana.portal2.web.util.ResponsiveImageUtils;
+import eu.europeana.portal2.services.impl.ResponsiveImageServiceImpl;
 
 /**
  * Placeholder object for featured partners.
@@ -83,19 +83,11 @@ public class FeaturedPartner extends StaticFeaturedPartner {
 		return String.format("featured-partner-%d_p_t", i);
 	}
 
-	/** Gets the message key for name tag  */
-	/*
-	public String getName() {
-		return String.format("featured-partner-%d_name_t", i);
-		//return String.format("featured-partner-%d_name_t", i);
-	}
-	*/
-
 	public Map<String, String> getResponsiveImages() {
 		return responsiveImages;
 	}
 
-	public void setResponsiveImages(String imgUrl) {
-		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, false);
+	public void setResponsiveImages(Map<String, String> images) {
+		responsiveImages = images;
 	}
 }

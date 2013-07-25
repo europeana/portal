@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -26,7 +26,7 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 
-import eu.europeana.portal2.web.controllers.utils.RSSImage;
+import eu.europeana.portal2.web.util.rss.RSSImage;
 
 public class FeedEntry {
 

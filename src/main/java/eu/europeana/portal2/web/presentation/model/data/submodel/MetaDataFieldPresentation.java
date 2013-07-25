@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -22,9 +22,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
-import eu.europeana.portal2.web.util.WebUtils;
 
 /**
  * Class provides functionality to present meta Data Fields
@@ -47,7 +47,7 @@ public class MetaDataFieldPresentation {
 	 */
 	public MetaDataFieldPresentation(FullDocPage model, Field field, String value) {
 		this.field = field;
-		fieldValues.add(new FieldValue(model, field, WebUtils.clean(value)));
+		fieldValues.add(new FieldValue(model, field, StringArrayUtils.clean(value)));
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class MetaDataFieldPresentation {
 		this.field = field;
 		for (String string : value) {
 			if (StringUtils.isNotBlank(string) && !string.equals("0000")) {
-				fieldValues.add(new FieldValue(model, field, WebUtils.clean(string)));
+				fieldValues.add(new FieldValue(model, field, StringArrayUtils.clean(string)));
 			}
 		}
 	}

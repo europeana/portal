@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -22,11 +22,11 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.web.model.PageData;
-import eu.europeana.portal2.web.util.ResponsiveImageUtils;
+import eu.europeana.portal2.services.impl.ResponsiveImageServiceImpl;
 
 public class CarouselItem {
 
-	private int i;
+	private int id;
 	private String url;
 	private PageData model;
 	private Map<String, String> responsiveImages;
@@ -34,7 +34,7 @@ public class CarouselItem {
 
 	public CarouselItem(PageData model, int i, String url) {
 		this.model = model;
-		this.i = i;
+		this.id = i;
 		this.url = url;
 	}
 
@@ -57,51 +57,51 @@ public class CarouselItem {
 	}
 
 	public String getAnchorUrl() {
-		return String.format("notranslate_carousel-item-%d_a_url_t", i);
+		return String.format("notranslate_carousel-item-%d_a_url_t", id);
 	}
 
 	public String getAnchorTitle() {
-		return String.format("carousel-item-%d_a_title_t", i);
+		return String.format("carousel-item-%d_a_title_t", id);
 	}
 
 	public String getDescription() {
-		return String.format("carousel-item-%d_a_description_t", i);
+		return String.format("carousel-item-%d_a_description_t", id);
 	}
 
 	public String getLinkDescription() {
-		return String.format("carousel-item-%d_a_linkdescription_t", i);
+		return String.format("carousel-item-%d_a_linkdescription_t", id);
 	}
 
 	public String getAnchorTarget() {
-		return String.format("notranslate_carousel-item-%d_a_target_t", i);
+		return String.format("notranslate_carousel-item-%d_a_target_t", id);
 	}
 
 	public String getImgUrl() {
-		return String.format("notranslate_carousel-item-%d_img_url_t", i);
+		return String.format("notranslate_carousel-item-%d_img_url_t", id);
 	}
 
 	public String getImgAlt() {
-		return String.format("carousel-item-%d_img_alt_t", i);
+		return String.format("carousel-item-%d_img_alt_t", id);
 	}
 
 	public String getImgWidth() {
-		return String.format("notranslate_carousel-item-%d_img_width_t", i);
+		return String.format("notranslate_carousel-item-%d_img_width_t", id);
 	}
 
 	public String getImgHeight() {
-		return String.format("notranslate_carousel-item-%d_img_height_t", i);
+		return String.format("notranslate_carousel-item-%d_img_height_t", id);
 	}
 
 	public int getId() {
-		return i;
+		return id;
 	}
 
 	public Map<String, String> getResponsiveImages() {
 		return responsiveImages;
 	}
 
-	public void setResponsiveImages(String imgUrl) {
-		responsiveImages = ResponsiveImageUtils.createResponsiveImage(imgUrl.replace("//", "/"), false, true);
+	public void setResponsiveImages(Map<String, String> images) {
+		responsiveImages = images;
 	}
 
 	public Map<String, String> getTranslatableUrls() {

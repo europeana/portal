@@ -5,15 +5,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
-import eu.europeana.portal2.web.controllers.utils.RSSImage;
+import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
+import eu.europeana.portal2.web.util.rss.RSSFeedParser;
+import eu.europeana.portal2.web.util.rss.RSSImage;
 
 /**
  * Tests the Pinterest feed related functions.
@@ -23,6 +26,9 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
 public class PinterestTest {
+	
+	@Resource
+	private ResponsiveImageService responsiveImageService;
 	
 	// TODO: use it later, to test something else
 	// private List<FeedEntry> pinterestEntries;
@@ -43,7 +49,7 @@ public class PinterestTest {
 	@Test
 	public void testImageExtraction() {
 		
-		List<FeedEntry> newEntries = parser.readFeed();
+		List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 		if ((newEntries != null) && (newEntries.size() > 0)) {
 			for (FeedEntry entry : newEntries) {
 				for (RSSImage image : entry.getImages()) {
@@ -60,7 +66,7 @@ public class PinterestTest {
 	 */
 	@Test
 	public void testPlainDescription() {
-		List<FeedEntry> newEntries = parser.readFeed();
+		List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 		if ((newEntries != null) && (newEntries.size() > 0)) {
 			for (FeedEntry entry : newEntries) {
 				assertTrue(entry.getPlainDescription().indexOf("<") == -1);

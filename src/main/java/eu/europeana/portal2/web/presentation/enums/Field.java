@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.enums;
 
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.portal2.web.interceptor.ApplicationContextContainer;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.FieldValueProcessor;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.Wordcapitalizer;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
@@ -285,11 +286,11 @@ public enum Field {
 	}
 
 	public String getSemanticAttributes() {
-		return SchemaOrgMapping.getSemanticAttributes(fieldName, contextualEntity);
+		return getSchemaOrgMapping().getSemanticAttributes(fieldName, contextualEntity);
 	}
 
 	public boolean isSemanticUrl() {
-		return SchemaOrgMapping.isSemanticUrl(fieldName, contextualEntity);
+		return getSchemaOrgMapping().isSemanticUrl(fieldName, contextualEntity);
 	}
 
 	public String[] getValues(String[] values) {
@@ -301,5 +302,14 @@ public enum Field {
 			}
 		}
 		return values;
+	}
+	
+	private static SchemaOrgMapping schemaOrgMapping;
+	
+	private SchemaOrgMapping getSchemaOrgMapping() {
+		if (schemaOrgMapping == null) {
+			schemaOrgMapping = ApplicationContextContainer.getBean(SchemaOrgMapping.class);
+		}
+		return schemaOrgMapping;
 	}
 }

@@ -29,18 +29,16 @@ import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.service.EmailService;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ChangePasswordPage;
 import eu.europeana.portal2.web.presentation.model.validation.ChangePasswordPageValidator;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * This Controller allows people to change their passwords
  * 
- * @author Gerald de Jong <geralddejong@gmail.com>
  */
 
 @Controller
@@ -50,20 +48,20 @@ public class ChangePasswordController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "corelib_web_emailService")
+	@Resource
 	private EmailService emailService;
 
-	@Resource(name = "corelib_db_userService")
+	@Resource
 	private UserService userService;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
-	@Resource(name = "corelib_db_tokenService")
+	@Resource
 	private TokenService tokenService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -74,48 +72,39 @@ public class ChangePasswordController {
 	protected ModelAndView getMethod(@RequestParam("token") String tokenKey,
 			@ModelAttribute("model") ChangePasswordPage model, HttpServletRequest request,
 			HttpServletResponse response, Locale locale) throws Exception {
-		Injector injector = new Injector(request, response, locale);
 		log.info("=========== change-password.html POST =================");
-		injector.injectProperties(model);
 
 		if (tokenKey == null) {
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.ERROR_NO_TOKEN);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.ERROR_NO_TOKEN);
 			throw new EuropeanaQueryException(ProblemType.UNKNOWN_TOKEN);
 		}
 		Token token = tokenService.findByID(tokenKey);
 		if (token == null) {
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.ERROR_TOKEN_EXPIRED);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.ERROR_TOKEN_EXPIRED);
 			// FIXME: This is forwarding to a non-existing view???
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_TOKEN);
 		}
 		model.setToken(token.getToken());
 		model.setEmail(token.getEmail());
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_SUCCES);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
-		injector.postHandle(this, page);
-
-		return page;
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CHANGE_PASSWORD_SUCCES);
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	protected ModelAndView post(@Valid @ModelAttribute("model") ChangePasswordPage model, BindingResult result,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
-		Injector injector = new Injector(request, response, locale);
 		log.info("=========== change-password.html POST =================");
-		injector.injectProperties(model);
 		if (result.hasErrors()) {
 			log.error("The change password form has errors");
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.CHANGE_PASSWORD_FAILURE);
-			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
-			injector.postHandle(this, page);
-			return page;
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CHANGE_PASSWORD_FAILURE);
+			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
 		}
 
 		// token is validated in handleRequestInternal
 		Token token = tokenService.findByID(model.getToken());
 		if (token == null) {
 			log.error("Expected to find token.");
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find token.");
 		}
 
@@ -123,7 +112,7 @@ public class ChangePasswordController {
 		User user = userService.findByEmail(token.getEmail());
 		if (user == null) {
 			log.error("Expected to find the user.");
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find user for " + token.getEmail());
 		}
 
@@ -136,11 +125,8 @@ public class ChangePasswordController {
 		// userService.store(user);
 		sendNotificationEmail(user);
 
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_SUCCESS);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGED);
-		injector.postHandle(this, page);
-
-		return page;
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_SUCCESS);
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGED);
 	}
 
 	private void sendNotificationEmail(User user) {

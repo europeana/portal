@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,14 +24,13 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class SearchController {
@@ -46,11 +44,11 @@ public class SearchController {
 	@Resource
 	private InternalResourceViewResolver viewResolver;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	/**
 	 * Possible sort options
@@ -78,7 +76,6 @@ public class SearchController {
 			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
 			// @RequestParam(value = "bt", required = false) String bt,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) {
-		Injector injector = new Injector(request, response, locale);
 
 		rows = Math.min(rows, config.getRowLimit());
 
@@ -109,7 +106,6 @@ public class SearchController {
 		// REMOVE THIS LINE AS SOON AS POSSIBLE, but not earlier ;-)
 		sort = DEFAULT_SORT;
 		model.setSort(sort);
-		injector.injectProperties(model);
 
 		PageInfo view = PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
@@ -150,9 +146,7 @@ public class SearchController {
 			e.printStackTrace();
 		}
 
-		injector.postHandle(this, page);
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
-
 		return page;
 	}
 

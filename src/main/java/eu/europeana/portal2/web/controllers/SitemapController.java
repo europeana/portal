@@ -41,7 +41,9 @@ import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.services.impl.StaticPageCache;
 import eu.europeana.portal2.web.controllers.statics.StaticPageController;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
@@ -49,12 +51,7 @@ import eu.europeana.portal2.web.presentation.model.SitemapPage;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.SitemapEntry;
-import eu.europeana.portal2.web.util.Beans;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.IngestionUtils;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
-import eu.europeana.portal2.web.util.abstracts.StaticCache;
 
 @Controller
 public class SitemapController {
@@ -62,17 +59,17 @@ public class SitemapController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@Resource
-	private StaticCache staticPageCache;
+	private StaticPageCache staticPageCache;
 
 	@Resource
 	private SearchService searchService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	@Resource
 	private ThumbnailService thumbnailService;
@@ -448,8 +445,6 @@ public class SitemapController {
 			throws EuropeanaQueryException {
 		setSitemapCacheDir();
 
-		Injector injector = new Injector(request, response, locale);
-
 		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
 
 		// sitemap index - collections overview
@@ -457,7 +452,7 @@ public class SitemapController {
 			contributorEntries = new ArrayList<ContributorItem>();
 			List<Count> providers;
 			try {
-				providers = IngestionUtils.getCollectionsFromSolr(searchService, "PROVIDER", "*:*", null);
+				providers = searchService.createCollections("PROVIDER", "*:*");
 				for (Count provider : providers) {
 					try {
 						String query = StringEscapeUtils.escapeXml(String.format(
@@ -468,8 +463,8 @@ public class SitemapController {
 
 						List<ContributorItem.DataProviderItem> dataProviders = new ArrayList<ContributorItem.DataProviderItem>();
 
-						List<Count> rawDataProviders = IngestionUtils.getCollectionsFromSolr(searchService,
-								"DATA_PROVIDER", "*:*", new String[] { "PROVIDER:\"" + provider.getName() + "\"" });
+						List<Count> rawDataProviders = searchService.createCollections(
+								"DATA_PROVIDER", "*:*", "PROVIDER:\"" + provider.getName() + "\"");
 						for (Count dataProvider : rawDataProviders) {
 							if (dataProvider.getCount() > 0) {
 								dataProviders.add(contributorItem.new DataProviderItem(contributorItem, dataProvider
@@ -493,13 +488,9 @@ public class SitemapController {
 		model.setPrefix("");
 		model.setLeftContent(getStaticPagePart("/newcontent.html", StaticPageController.AFFIX_TEMPLATE_VAR_FOR_LEFT,
 				locale));
-		injector.injectProperties(model);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.PROVIDERS);
-
-		injector.postHandle(this, page);
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SITE_MAP_XML, page);
-
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SITE_MAP_XML, page);
 		return page;
 	}
 
@@ -514,7 +505,7 @@ public class SitemapController {
 		model.setShowImages(false);
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.SITEMAP);
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SITE_MAP_XML, page);
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SITE_MAP_XML, page);
 		return page;
 	}
 
@@ -559,9 +550,9 @@ public class SitemapController {
 	/**
 	 * Set sitemap directory, and create it in file system if it does not exist
 	 */
-	private static void setSitemapCacheDir() {
+	private void setSitemapCacheDir() {
 		if (sitemapCacheDir == null) {
-			sitemapCacheName = Beans.getConfig().getSitemapCache();
+			sitemapCacheName = config.getSitemapCache();
 			if (sitemapCacheName != null) {
 				if (!sitemapCacheName.endsWith("/")) {
 					sitemapCacheName += "/";

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -168,15 +168,6 @@ public class ControllerUtil {
 			theme = ThemeChecker.check(theme, defaultTheme);
 			// session.setAttribute("theme", theme);
 		}
-		/*
-		else {
-			String storedTheme = (String)session.getAttribute("theme");
-			if (!StringUtils.isBlank(storedTheme)) {
-				theme = ThemeChecker.check(storedTheme, defaultTheme);
-				log.info("theme2: " + theme);
-			}
-		}
-		*/
 		if (StringUtils.isBlank(theme)) {
 			// theme = ThemeChecker.check(defaultTheme);
 			theme = ThemeChecker.DEFAULT_THEME;
@@ -194,18 +185,6 @@ public class ControllerUtil {
 		Object principal = (Object)authentication.getPrincipal();
 		if (principal instanceof Portal2UserDetails) {
 			user = userService.findByEmail(((Portal2UserDetails)principal).getUsername());
-		} else {
-			// log.warning("Principal is not Portal2UserDetails: " + principal.toString());
-			// TODO: it is not a logged-in-user, do we need to get default information?
-			/*
-			try {
-				user = userService.findByID(principal.toString());
-				log.info("User: " + user.toString());
-			} catch (DatabaseException e) {
-				log.severe("DatabaseException while getting user: " + e.getLocalizedMessage());
-				e.printStackTrace();
-			}
-			*/
 		}
 		return user;
 	}

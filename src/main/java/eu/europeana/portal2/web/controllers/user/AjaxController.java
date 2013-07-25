@@ -23,13 +23,12 @@ import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Log;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AjaxPage;
 import eu.europeana.portal2.web.presentation.model.data.FieldSize;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class AjaxController {
@@ -37,19 +36,18 @@ public class AjaxController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "corelib_db_userService")
+	@Resource
 	private UserService userService;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	@RequestMapping("/remove.ajax")
 	public ModelAndView handleAjaxRemoveRequest(HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws Exception {
-		Injector injector = new Injector(request, response, locale);
 		AjaxPage model = new AjaxPage();
 		try {
 			if (!hasJavascriptInjection(request)) {
@@ -58,16 +56,12 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
-		injector.injectProperties(model);
-		ModelAndView page = createResponsePage(model);
-		injector.postHandle(this, page);
-		return page;
+		return createResponsePage(model);
 	}
 
 	@RequestMapping("/save.ajax")
 	public ModelAndView handleAjaxSaveRequest(HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws Exception {
-		Injector injector = new Injector(request, response, locale);
 		log.info("================ save.json ================");
 		AjaxPage model = new AjaxPage();
 		try {
@@ -77,10 +71,7 @@ public class AjaxController {
 		} catch (Exception e) {
 			handleAjaxException(model, e, response, request);
 		}
-		injector.injectProperties(model);
-		ModelAndView page = createResponsePage(model);
-		injector.postHandle(this, page);
-		return page;
+		return createResponsePage(model);
 	}
 
 	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request, Locale locale) throws Exception {
@@ -97,7 +88,7 @@ public class AjaxController {
 			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 			user = userService.createSavedItem(user.getId(), uri);
 			log.info("SavedItems: " + StringUtils.join(user.getSavedItems(), ", "));
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_ITEM);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_ITEM);
 			break;
 		// className=SavedSearch&query=query%3Dparish&queryString=parish
 		case SAVED_SEARCH:
@@ -107,7 +98,7 @@ public class AjaxController {
 			user = userService.createSavedSearch(user.getId(), query, queryString);
 
 			log.info("SavedSearches: " + StringUtils.join(user.getSavedSearches(), ", "));
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.SAVE_SEARCH);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_SEARCH);
 			break;
 		/*
 		 * case SEARCH_TERM: SearchTerm searchTerm = staticInfoDao.addSearchTerm(Long.valueOf(idString)); if (searchTerm
@@ -117,7 +108,7 @@ public class AjaxController {
 			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 			String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
 			user = userService.createSocialTag(user.getId(), uri, tag);
-			clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
+			clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
 			break;
 		default:
 			throw new IllegalArgumentException("Unhandled ajax action: " + className);
@@ -139,11 +130,11 @@ public class AjaxController {
 		switch (findModifiable(className)) {
 		case SAVED_ITEM:
 			userService.removeSavedItem(user.getId(), id);
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_ITEM);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_ITEM);
 			break;
 		case SAVED_SEARCH:
 			userService.removeSavedSearch(user.getId(), id);
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SAVED_SEARCH);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_SEARCH);
 			break;
 		/*
 		 * case SEARCH_TERM: user = staticInfoDao.removeSearchTerm(id); clickStreamLogger.logUserAction(request,
@@ -151,7 +142,7 @@ public class AjaxController {
 		 */
 		case SOCIAL_TAG:
 			userService.removeSocialTag(user.getId(), id);
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REMOVE_SOCIAL_TAG);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SOCIAL_TAG);
 			break;
 		default:
 			throw new IllegalArgumentException("Unhandled removable");

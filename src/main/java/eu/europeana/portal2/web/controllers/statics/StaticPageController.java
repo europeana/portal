@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -34,17 +34,15 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.services.impl.ResponsiveImageCache;
+import eu.europeana.portal2.services.impl.StaticPageCache;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.enums.Redirect;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
 import eu.europeana.portal2.web.presentation.model.StaticPage;
-import eu.europeana.portal2.web.util.ClickStreamLoggerImpl;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.ResponsiveImageCache;
-import eu.europeana.portal2.web.util.StaticPageCache;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * Generic controller for static pages.
@@ -57,12 +55,6 @@ import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 @Controller
 public class StaticPageController {
 
-	@Log
-	private Logger log;
-
-	@Resource(name = "configurationService")
-	private Configuration config;
-
 	public static final String AFFIX_TEMPLATE_VAR_FOR_LEFT = "left";
 
 	private static final String AFFIX_TEMPLATE_VAR_FOR_HEADER = "header";
@@ -71,14 +63,20 @@ public class StaticPageController {
 
 	private static final String AFFIX_TEMPLATE_VAR_FOR_TITLE = "title";
 
-	@Resource(name = "staticPageCache")
+	@Log
+	private Logger log;
+
+	@Resource
+	private Configuration config;
+
+	@Resource
 	private StaticPageCache staticPageCache;
 
-	@Resource(name = "responsiveImageCache")
+	@Resource
 	private ResponsiveImageCache responsiveImageCache;
 
-	private ClickStreamLogger clickStreamLogger = new ClickStreamLoggerImpl();
-
+	@Resource
+	private ClickStreamLogService clickStreamLogger;
 
 	/**
 	 * All of the pages are served up from here
@@ -94,13 +92,11 @@ public class StaticPageController {
 	@RequestMapping("/{pageName}.html")
 	public ModelAndView fetchStaticPage(@PathVariable String pageName,
 			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Injector injector = new Injector(request, response, null);
-
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		pageName = "/" + pageName + getSuffix(pageName) + ".html";
 		StaticPage model = new StaticPage();
 
-		ModelAndView page = doFetchStaticPage(injector, pageName, response, model);
+		ModelAndView page = doFetchStaticPage(pageName, response, model, locale);
 
 		if (!model.isPageFound()) {
 			response.setStatus(404);
@@ -112,13 +108,11 @@ public class StaticPageController {
 	@RequestMapping("/rights/{pageName}.html")
 	public ModelAndView fetchStaticRightsPage(@PathVariable String pageName,
 			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Injector injector = new Injector(request, response, null);
-
+			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		pageName = "/rights/" + pageName + getSuffix(pageName) + ".html";
 		StaticPage model = new StaticPage();
 
-		ModelAndView page = doFetchStaticPage(injector, pageName, response, model);
+		ModelAndView page = doFetchStaticPage(pageName, response, model, locale);
 
 		if (!model.isPageFound()) {
 			response.setStatus(404);
@@ -155,8 +149,8 @@ public class StaticPageController {
 		return suffix;
 	}
 
-	private ModelAndView doFetchStaticPage(Injector injector, String pageName, HttpServletResponse response,
-			StaticPage model) {
+	private ModelAndView doFetchStaticPage(String pageName, HttpServletResponse response, StaticPage model,
+			Locale locale) {
 		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		staticPageCache.setStaticPagePath(config.getStaticPagePath());
@@ -180,36 +174,27 @@ public class StaticPageController {
 
 		// generate static page
 		model.setTc(pageName.indexOf("rights") > -1);
-		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, injector.getLocale()));
-		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, injector.getLocale()));
-		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, injector.getLocale()));
-		String titleContent = getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_TITLE, injector.getLocale());
+		model.setBodyContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_CONTENT, locale));
+		model.setHeaderContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_HEADER, locale));
+		model.setLeftContent(getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_LEFT, locale));
+		String titleContent = getStaticPagePart(pageName, AFFIX_TEMPLATE_VAR_FOR_TITLE, locale);
 		model.setTitleContent(titleContent);
-		// TODO: check it!
-		// model.setDefaultContent(getStaticPagePart(pageName, "", locale));
 		model.setDefaultContent(model.getBodyContent());
 		if (StringUtils.isBlank(model.getBodyContent()) && StringUtils.isBlank(model.getHeaderContent())
 				&& StringUtils.isBlank(model.getLeftContent()) && StringUtils.isBlank(titleContent)) {
 			model.setPageFound(false);
 		}
-		injector.injectProperties(model);
 
-		// clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.STATICPAGE, "view=" +
-		// request.getPathInfo());
-
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.STATICPAGE);
-		injector.postHandle(this, page);
-
-		return page;
+		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.STATICPAGE);
 	}
 
-	private String getStaticPagePart(String fileName, String partName, Locale language) {
+	private String getStaticPagePart(String fileName, String partName, Locale locale) {
 
 		if (!StringUtils.isEmpty(partName)) {
 			fileName = StringUtils.replaceOnce(fileName, ".", "_" + partName + ".");
 		}
 
-		return staticPageCache.getPage(fileName, language);
+		return staticPageCache.getPage(fileName, locale);
 	}
 
 	@RequestMapping("/page-not-found.html")
@@ -221,8 +206,6 @@ public class StaticPageController {
 	@RequestMapping("/error.html")
 	public ModelAndView errorPageHandler(HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws Exception {
-		Injector injector = new Injector(request, response, null);
-
 		log.info("====== error.html ======");
 		PortalPageInfo pageType = PortalPageInfo.ERROR;
 
@@ -230,11 +213,7 @@ public class StaticPageController {
 		EmptyModelPage model = new EmptyModelPage();
 		model.setProblem(ProblemType.UNKNOWN);
 
-		injector.injectProperties(model);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, pageType);
-		injector.postHandle(this, page);
-
-		return page;
+		return ControllerUtil.createModelAndViewPage(model, locale, pageType);
 	}
 
 	public void setStaticPageCache(StaticPageCache staticPageCache) {

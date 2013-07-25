@@ -18,14 +18,13 @@ import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ExceptionPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
 
 public class ExceptionResolver implements HandlerExceptionResolver {
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
-	@Resource(name = "corelib_web_emailService")
+	@Resource
 	private EmailService emailService;
 
 	@Log
@@ -34,7 +33,6 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object object,
 			Exception exception) {
-		Injector injector = new Injector(request, response, null);
 
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		ProblemType problem = ProblemType.NONE;
@@ -83,14 +81,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		model.setException(exception);
 		model.setProblem(problem);
 		model.setStackTrace(stackTrace);
-		model.setPortalName(config.getPortalName());
-		// model.setCacheUrl(imageCacheUrl);
-		model.setDebug(config.getDebugMode());
-		injector.injectProperties(model);
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);
-		injector.postHandle(this, page);
-
-		return page;
+		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);
 	}
 }

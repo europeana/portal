@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * Deprecated views get redirected here.
@@ -23,9 +23,11 @@ import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 @Controller
 public class RedirectController {
 
-	@Resource(name = "configurationService") private Configuration config;
+	@Resource
+	private Configuration config;
 
-	@Resource private ClickStreamLogger clickStreamLogger;
+	@Resource
+	private ClickStreamLogService clickStreamLogger;
 
 	static private final String SHOWN_AT = "shownAt";
 	static private final String SHOWN_BY = "shownBy";
@@ -33,14 +35,12 @@ public class RedirectController {
 	static private final String EUROPEANA_ID = "id";
 
 	@RequestMapping("/full-doc.html")
-	public void fullDocHtml(
-			@RequestParam(value = "uri", required = false) String uri,
-			HttpServletResponse response) throws Exception {
+	public void fullDocHtml(@RequestParam(value = "uri", required = false) String uri, HttpServletResponse response)
+			throws Exception {
 
 		if (!StringUtils.isEmpty(uri) && !uri.contains("full-doc")) {
 			String urilc = SitemapController.convertEuropeanaUriToCanonicalUrl(uri);
-			if (urilc.startsWith("http://europeana.eu")
-					|| urilc.startsWith("http://www.europeana.eu")
+			if (urilc.startsWith("http://europeana.eu") || urilc.startsWith("http://www.europeana.eu")
 					|| !urilc.endsWith(".html")) {
 				response.sendRedirect(urilc);
 			}
@@ -66,11 +66,11 @@ public class RedirectController {
 			redirect = isShownBy;
 		} else {
 			throw new IllegalArgumentException(MessageFormat.format(
-					"Expected to find '{0}' or '{1}' in the request URL",
-					SHOWN_AT, SHOWN_BY));
+					"Expected to find '{0}' or '{1}' in the request URL", SHOWN_AT, SHOWN_BY));
 		}
-		String logString = MessageFormat.format("outlink={0}, provider={2}, europeana_id={1}", redirect, europeanaId, provider);
-		clickStreamLogger.logCustomUserAction(request, ClickStreamLogger.UserAction.REDIRECT_OUTLINK, logString);
+		String logString = MessageFormat.format("outlink={0}, provider={2}, europeana_id={1}", redirect, europeanaId,
+				provider);
+		clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.REDIRECT_OUTLINK, logString);
 		return "redirect:" + redirect;
 	}
 }

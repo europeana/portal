@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
+import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.PortalFragmentInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedPartner;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
+import eu.europeana.portal2.web.util.rss.RSSFeedParser;
 
 @Controller
 public class FragmentController {
@@ -36,8 +36,11 @@ public class FragmentController {
 	@Resource
 	private AbstractMessageSource messageSource;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
+	
+	@Resource
+	private ResponsiveImageService responsiveImageService;
 	
 	private static List<FeedEntry> feedEntries;
 	private static Calendar feedAge;
@@ -55,10 +58,8 @@ public class FragmentController {
 	public ModelAndView indexFragment(@RequestParam(value = "fragment", required = false) String fragmentName,
 			HttpServletRequest request, HttpServletResponse response,
 			Locale locale) {
-		Injector injector = new Injector(request, response, locale);
 
 		IndexPage model = new IndexPage();
-		injector.injectProperties(model);
 
 		PortalFragmentInfo fragment = PortalFragmentInfo.getByFragmentName(fragmentName);
 		if (fragment != null) {
@@ -81,9 +82,7 @@ public class FragmentController {
 			}
 
 		}
-		ModelAndView page = ControllerUtil.createModelAndViewFragment(model, fragment, locale);
-		injector.postHandle(this, page);
-		return page;
+		return ControllerUtil.createModelAndViewFragment(model, fragment, locale);
 	}
 
 	/**
@@ -102,7 +101,8 @@ public class FragmentController {
 					String url = messageSource.getMessage(label, null, locale);
 					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 						FeaturedItem item = new FeaturedItem(i);
-						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+						String imgUrl = messageSource.getMessage(item.getImgUrl(), null, locale);
+						item.setResponsiveImages(responsiveImageService.createResponsiveImage(imgUrl.replace("//", "/"), false, false));
 						featuredItems.add(item);
 						i++;
 					} else {
@@ -139,7 +139,8 @@ public class FragmentController {
 					String url = messageSource.getMessage(label, null, locale);
 					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 						FeaturedPartner item = new FeaturedPartner(i);
-						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
+						String imgUrl = messageSource.getMessage(item.getImgUrl(), null, locale);
+						item.setResponsiveImages(responsiveImageService.createResponsiveImage(imgUrl.replace("//", "/"), false, false));
 						featuredPartners.add(item);
 						i++;
 					} else {
@@ -166,7 +167,7 @@ public class FragmentController {
 		if ((feedAge == null) || feedAge.before(timeout)) {
 			RSSFeedParser parser = new RSSFeedParser(config.getBlogUrl(), 3);
 			parser.setStaticPagePath(config.getStaticPagePath());
-			List<FeedEntry> newEntries = parser.readFeed();
+			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				feedEntries = newEntries;
 				feedAge = Calendar.getInstance();
@@ -180,7 +181,7 @@ public class FragmentController {
 		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
 			RSSFeedParser parser = new RSSFeedParser(config.getPintFeedUrl(), config.getPintItemLimit());
 			parser.setStaticPagePath(config.getStaticPagePath());
-			List<FeedEntry> newEntries = parser.readFeed();
+			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 			if ((newEntries != null) && (newEntries.size() > 0)) {
 				pinterestEntries = newEntries;
 				pinterestAge = Calendar.getInstance();

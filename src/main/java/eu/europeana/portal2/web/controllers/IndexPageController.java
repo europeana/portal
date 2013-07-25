@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -41,13 +41,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * Where people arrive.
@@ -63,13 +63,16 @@ public class IndexPageController {
 	private Logger log;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	@Resource
 	private AbstractMessageSource messageSource;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
+	
+	@Resource
+	private ResponsiveImageService responsiveImageService;
 
 	private List<CarouselItem> carouselItems;
 	private static Calendar carouselAge;
@@ -78,21 +81,17 @@ public class IndexPageController {
 	public ModelAndView indexHandler(@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
 			@RequestParam(value = "embeddedlang", required = false) String embeddedLang, HttpServletRequest request,
 			HttpServletResponse response, Locale locale) {
-		Injector injector = new Injector(request, response, locale);
-
+		
 		IndexPage model = new IndexPage();
 		// update dynamic items
 		updateCarousel(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
-		injector.injectProperties(model);
 
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		PageInfo view = PortalPageInfo.INDEX;
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
-		injector.postHandle(this, page);
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.INDEXPAGE, page);
-
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.INDEXPAGE, page);
 		return page;
 	}
 
@@ -131,8 +130,8 @@ public class IndexPageController {
 					String url = messageSource.getMessage(label, null, locale);
 					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 						CarouselItem item = new CarouselItem(model, i, url);
-						item.setResponsiveImages(messageSource.getMessage(item.getImgUrl(), null, locale));
-
+						String imgUrl = messageSource.getMessage(item.getImgUrl(), null, locale);
+						item.setResponsiveImages(responsiveImageService.createResponsiveImage(imgUrl.replace("//", "/"), false, true));
 						Map<String, String> translatableUrls = new HashMap<String, String>();
 						boolean keepFetchingLanguages = true;
 						int j = 1;

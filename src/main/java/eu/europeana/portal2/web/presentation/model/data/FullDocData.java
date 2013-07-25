@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.List;
+import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
@@ -29,6 +30,10 @@ import eu.europeana.portal2.web.presentation.model.abstracts.RestLocationsData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanViewDecorator;
+import eu.europeana.portal2.web.presentation.semantic.EdmSchemaMapping;
+import eu.europeana.portal2.web.presentation.semantic.Element;
+import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
+import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public abstract class FullDocData extends RestLocationsData<Void> {
@@ -58,6 +63,18 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected SeeAlsoSuggestions seeAlsoSuggestions;
 
 	private boolean isOptedOut = false;
+	
+	protected List<FieldInfo> edmTopLevels;
+	
+	protected Map<String, List<FieldInfo>> edmFullMap;
+	
+	protected Map<String, Element> edmElements;
+	
+	public void setEdmSchemaMappings(SchemaOrgMapping schema) {
+		this.edmTopLevels = EdmSchemaMapping.getTopLevel(schema);
+		this.edmFullMap = EdmSchemaMapping.getFullMap(schema);
+		this.edmElements = EdmSchemaMapping.getEdmElements(schema);
+	}
 
 	public void setFormat(String format) {
 		this.format = format;

@@ -20,11 +20,10 @@ import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SuggestionsPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class SuggestionController {
@@ -36,14 +35,13 @@ public class SuggestionController {
 	private SearchService searchService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	@RequestMapping("/suggestions.json")
 	public ModelAndView suggestionHtml(@RequestParam(value = "term", required = false, defaultValue = "") String term,
 			@RequestParam(value = "size", required = false, defaultValue = "10") int size,
 			@RequestParam(value = "field", required = false, defaultValue = "") String field,
 			HttpServletRequest request, HttpServletResponse response, Locale locale) throws EuropeanaQueryException {
-		Injector injector = new Injector(request, response, locale);
 
 		if (term == null) {
 			throw new EuropeanaQueryException(ProblemType.MALFORMED_QUERY);
@@ -62,11 +60,8 @@ public class SuggestionController {
 		// log.fine("number of suggestions: " + suggestions.size());
 		SuggestionsPage model = new SuggestionsPage();
 		model.setResults(suggestions);
-		injector.injectProperties(model);
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_SUGGESTION);
-		injector.postHandle(this, page);
-		return page;
+		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_SUGGESTION);
 	}
 
 	private String clearSuggestionTerm(String term) {

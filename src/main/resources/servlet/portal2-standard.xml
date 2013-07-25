@@ -25,24 +25,18 @@
 		http://www.springframework.org/schema/util/spring-util.xsd
 	">
 
-	<!-- import resource="common-portal-servlet-config.xml"/ -->
+	<import resource="../portal2-context.xml" />
 
 	<context:annotation-config />
+	
+	<context:component-scan base-package="eu.europeana.portal2.web.configuration" />
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers.statics" />
-	<context:component-scan base-package="eu.europeana.portal2.web.util" />
 
-	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
-
-	<bean id="staticPageCache" class="eu.europeana.portal2.web.util.StaticPageCache" />
-	<bean id="responsiveImageCache" class="eu.europeana.portal2.web.util.ResponsiveImageCache" />
-
-	<bean id="staticPageController" class="eu.europeana.portal2.web.controllers.statics.StaticPageController">
-		<property name="staticPageCache" ref="staticPageCache" />
-		<property name="responsiveImageCache" ref="responsiveImageCache" />
-	</bean>
-	<bean name="clickStreamLogger" class="eu.europeana.portal2.web.util.ClickStreamLoggerImpl" />
-
-	<bean id="configurationService" class="eu.europeana.portal2.services.Configuration"/>
+	<mvc:interceptors>
+		<!--bean id="locale_interceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" /-->
+		<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
+		<bean id="portal2_configInterceptor" class="eu.europeana.portal2.web.interceptor.PortalConfigInterceptor" />
+	</mvc:interceptors>
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<!-- property name="basename" value="classpath:message_keys/messages" / -->
@@ -51,21 +45,5 @@
 		<property name="fileEncodings" value="UTF-8"/>
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
-
-<!-- 
-	<bean id="staticPageCacheTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-		<property name="jobDetail">
-			<bean
-				class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-				<property name="targetObject" ref="staticPageCache" />
-				<property name="targetMethod" value="invalidate" />
-				<property name="concurrent" value="false" />
-			</bean>
-		</property>
-		<property name="startDelay" value="60000" />
-		<property name="repeatInterval" value="600000" />
-	</bean>
- -->
-	<import resource="../portal2-context.xml" />
 
 </beans>

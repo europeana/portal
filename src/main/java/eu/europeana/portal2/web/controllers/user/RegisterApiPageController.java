@@ -36,12 +36,11 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.exception.EmailServiceException;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.service.EmailService;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.RegisterApiPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * During registration, users click on an email link to end up here with a "token" that allows them to proceed with
@@ -55,19 +54,19 @@ public class RegisterApiPageController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "corelib_db_userService")
+	@Resource
 	private UserService userService;
 
-	@Resource(name = "corelib_db_tokenService")
+	@Resource
 	private TokenService tokenService;
 
-	@Resource(name = "corelib_web_emailService")
+	@Resource
 	private EmailService emailService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@Resource
@@ -92,8 +91,6 @@ public class RegisterApiPageController {
 			Locale locale) throws EuropeanaQueryException, DatabaseException {
 
 		log.info("================= /api/registration.html GET ==================");
-		Injector injector = new Injector(request, response, locale);
-		injector.injectProperties(model);
 
 		ModelAndView page;
 		if (StringUtils.isBlank(tokenKey)) {
@@ -116,10 +113,7 @@ public class RegisterApiPageController {
 			model.setPrivateKey(generatePassPhrase(9));
 			page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REGISTER_FORM);
 		}
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API);
-
-		injector.postHandle(this, page);
-
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API);
 		return page;
 	}
 
@@ -129,15 +123,11 @@ public class RegisterApiPageController {
 			DatabaseException {
 		log.info("================= /api/registration.html POST ==================");
 
-		Injector injector = new Injector(request, response, locale);
-		injector.injectProperties(model);
 		if (result.hasErrors()) {
 			log.info("The registration form has errors " + model.getFirstName());
 
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API_FAILURE);
-			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REGISTER_FORM);
-			injector.postHandle(this, page);
-			return page;
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API_FAILURE);
+			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REGISTER_FORM);
 		}
 
 		String baseUrl = config.getPortalUrl();
@@ -183,11 +173,8 @@ public class RegisterApiPageController {
 			target = PortalPageInfo.API_REGISTER_SUCCESS;
 		}
 
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_API_SUCCESS);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, target);
-		injector.postHandle(this, page);
-
-		return page;
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API_SUCCESS);
+		return ControllerUtil.createModelAndViewPage(model, locale, target);
 	}
 
 	private void sendNotificationEmails(User user, ApiKey apiKey) {

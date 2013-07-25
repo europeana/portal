@@ -11,16 +11,13 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
-import eu.europeana.corelib.db.service.UserService;
-import eu.europeana.corelib.web.interceptor.ConfigInterceptor;
-
 public class Configuration {
 
-	@Resource(name="corelib_db_userService") private UserService userService;
-
-	@Resource(name="corelib_web_configInterceptor") private ConfigInterceptor configInterceptor;
-
-	@Resource private Properties europeanaProperties;
+	public static final String FACET_UCG_FILTER = "-UGC:true";
+	public static final String FACET_TYPE = "TYPE:";
+	
+	@Resource
+	private Properties europeanaProperties;
 
 	// basic portal value
 	@Value("#{europeanaProperties['portal.name']}")
@@ -128,7 +125,7 @@ public class Configuration {
 	@Value("#{europeanaProperties['portal.sitemap.cache']}")
 	private String sitemapCache;
 
-	/////////////////////////////// generated/derivated properties
+	// ///////////////////////////// generated/derivated properties
 
 	private Map<String, String> seeAlsoTranslations;
 
@@ -138,17 +135,9 @@ public class Configuration {
 
 	private String canonicalUrl;
 
-	private String[] responsiveImageLabels;
-
-	private String[] responsiveCarouselImageLabels;
-
-	private Integer[] responsiveImageWidths;
-
-	private Integer[] responsiveCarouselImageWidths;
-
 	private List<String> staticPageInVersions;
 
-	///////////////////////////////// getters and setters
+	// /////////////////////////////// getters and setters
 
 	public String getPortalName() {
 		return portalName;
@@ -218,14 +207,6 @@ public class Configuration {
 		return staticPageSuffix;
 	}
 
-	public String getResponsiveImageWidthString() {
-		return responsiveImageWidthString;
-	}
-
-	public String getResponsiveImageLabelString() {
-		return responsiveImageLabelString;
-	}
-
 	public static String getPortalGooglePlusPublisherId() {
 		return portalGooglePlusPublisherId;
 	}
@@ -252,10 +233,6 @@ public class Configuration {
 
 	public String getResponsiveCache() {
 		return responsiveCache;
-	}
-
-	public Integer getStaticPageCheckFrequencyInMinute() {
-		return staticPageCheckFrequencyInMinute;
 	}
 
 	public Integer getResponsiveCacheCheckFrequencyInMinute() {
@@ -313,45 +290,6 @@ public class Configuration {
 			canonicalUrl = sb.toString();
 		}
 		return canonicalUrl;
-	}
-
-	public String[] getResponsiveImageLabels() {
-		if (responsiveImageLabels == null) {
-			responsiveImageLabels = responsiveImageLabelString.split(",");
-		}
-		return responsiveImageLabels;
-	}
-
-	public Integer[] getResponsiveImageWidths(){
-		if (responsiveImageWidths == null) {
-			String[] imageWidths = responsiveImageWidthString.split(",");
-			responsiveImageWidths = new Integer[imageWidths.length];
-
-			for (int i=0, len=imageWidths.length; i<len; i++) {
-				responsiveImageWidths[i] = Integer.parseInt(imageWidths[i]);
-			}
-		}
-		return responsiveImageWidths;
-	}
-
-	public String[] getResponsiveCarouselImageLabels() {
-		if (responsiveCarouselImageLabels == null) {
-			responsiveCarouselImageLabels = responsiveCarouselImageLabelString.split(",");
-		}
-		return responsiveCarouselImageLabels;
-	}
-
-	public Integer[] getResponsiveCarouselImageWidths(){
-		if (responsiveCarouselImageWidths == null) {
-			String[] imageWidths = responsiveCarouselImageWidthString.split(",");
-			responsiveCarouselImageWidths = new Integer[imageWidths.length];
-
-			for (int i=0, len=imageWidths.length; i<len; i++) {
-				responsiveCarouselImageWidths[i] = Integer.parseInt(imageWidths[i]);
-			}
-		}
-
-		return responsiveCarouselImageWidths;
 	}
 
 	public List<String> getStaticPageInVersions() {

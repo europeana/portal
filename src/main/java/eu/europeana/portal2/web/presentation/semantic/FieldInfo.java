@@ -50,7 +50,10 @@ public class FieldInfo {
 	 */
 	private Element element;
 
-	public FieldInfo(String schemaName, String propertyName, String type, String parent) {
+	private SchemaOrgMapping schemaOrgMapping;
+
+	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName, String type, String parent) {
+		this.schemaOrgMapping = mapping;
 		this.schemaName = schemaName;
 		this.propertyName = propertyName;
 		this.type = type;
@@ -58,12 +61,12 @@ public class FieldInfo {
 		element = NamespaceResolver.createElement(this.schemaName);
 	}
 
-	public FieldInfo(String schemaName, String propertyName, String type) {
-		this(schemaName, propertyName, type, null);
+	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName, String type) {
+		this(mapping, schemaName, propertyName, type, null);
 	}
 
-	public FieldInfo(String schemaName, String propertyName) {
-		this(schemaName, propertyName, null, null);
+	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName) {
+		this(mapping, schemaName, propertyName, null, null);
 	}
 
 	public String getSchemaName() {
@@ -121,7 +124,7 @@ public class FieldInfo {
 	 * Gets the mapped schema.org element if any, otherwise null.
 	 */
 	public String getSchemaOrgElement() {
-		SchemaOrgElement schemaOrgElement = SchemaOrgMapping.get(element);
+		SchemaOrgElement schemaOrgElement = schemaOrgMapping.get(element);
 		if (schemaOrgElement != null) {
 			return schemaOrgElement.getElement().getElementName();
 		}
@@ -132,7 +135,7 @@ public class FieldInfo {
 	 * Whether the mapped schema.org element is a URL?
 	 */
 	public boolean getSchemaOrgElementIsURL() {
-		SchemaOrgElement schemaOrgElement = SchemaOrgMapping.get(element);
+		SchemaOrgElement schemaOrgElement = schemaOrgMapping.get(element);
 		if (schemaOrgElement != null) {
 			return schemaOrgElement.getElement().getQualifiedName().equals("schema:url");
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 The Europeana Foundation
+ * Copyright 2007-2013 The Europeana Foundation
  *
  *  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
  *  by the European Commission;
@@ -27,16 +27,19 @@ public class RightsValue {
 	private RightsOption right;
 
 	private String url;
+	
+	private String portalUrl;
 
-	public RightsValue(RightsOption right, String url) {
+	public RightsValue(RightsOption right, String url, String portalUrl) {
 		this.right = right;
 		this.url = url;
+		this.portalUrl = portalUrl;
 	}
 
-	public static final RightsValue safeValueByUrl(String url) {
+	public static final RightsValue safeValueByUrl(String url, String portalUrl) {
 		RightsOption right = RightsOption.safeValueByUrl(url);
 		if (right != null) {
-			return new RightsValue(right, url);
+			return new RightsValue(right, url, portalUrl);
 		}
 		return null;
 	}
@@ -82,7 +85,7 @@ public class RightsValue {
 	}
 
 	public String getRelativeUrl() {
-		return right.getRelativeUrl();
+		return right.getRelativeUrl(portalUrl);
 	}
 
 	public boolean isNoc() {

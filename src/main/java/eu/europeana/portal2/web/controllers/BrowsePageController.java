@@ -24,14 +24,13 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SitemapPage;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.SearchUtils;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 @Controller
 public class BrowsePageController {
@@ -43,7 +42,7 @@ public class BrowsePageController {
 	private SearchService searchService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
 	@Value("#{europeanaProperties['portal.minCompletenessToPromoteInSitemaps']}")
 	private int minCompletenessToPromoteInSitemaps;
@@ -53,10 +52,7 @@ public class BrowsePageController {
 			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		log.info("=========== browse-all.html ===========");
 
-		Injector injector = new Injector(request, response, locale);
-
 		SitemapPage<BriefBeanDecorator> model = new SitemapPage<BriefBeanDecorator>();
-		injector.injectProperties(model);
 
 		PageInfo pageInfo = PortalPageInfo.SITEMAP_BROWSE_INDEX;
 		if (StringUtils.isEmpty(prefix)) {
@@ -95,11 +91,9 @@ public class BrowsePageController {
 		}
 
 		makePageObject(model, prefix);
+		
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, pageInfo);
-
-		injector.postHandle(this, page);
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.BROWSE_ALL, page);
-
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.BROWSE_ALL, page);
 		return page;
 	}
 

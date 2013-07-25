@@ -1,10 +1,5 @@
 package eu.europeana.portal2.web.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,20 +9,18 @@ import org.junit.Test;
 
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.FullDocPreparation;
-import eu.europeana.portal2.web.presentation.semantic.SchemaOrgElement;
-import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 
 public class SchemaOrMappingTest {
 
 	// @Test
-	public void test() {
-		// fail("Not yet implemented");
-		String mappingFile = "/home/peterkiraly/workspace/europeana/trunk/schema.org.mapping.properties";
-		assertNotNull(mappingFile);
-		assertTrue(new File(mappingFile).exists());
-		SchemaOrgMapping.initialize(mappingFile);
-		assertEquals(new SchemaOrgElement("schema:addressCountry", new String[]{}), SchemaOrgMapping.get("edm:country"));
-	}
+//	public void test() {
+//		// fail("Not yet implemented");
+//		String mappingFile = "/home/peterkiraly/workspace/europeana/trunk/schema.org.mapping.properties";
+//		assertNotNull(mappingFile);
+//		assertTrue(new File(mappingFile).exists());
+//		SchemaOrgMapping.initialize(mappingFile);
+//		assertEquals(new SchemaOrgElement("schema:addressCountry", new String[]{}), SchemaOrgMapping.get("edm:country"));
+//	}
 
 	@Test
 	public void testTypes() {

@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 
 import org.junit.Before;
@@ -19,9 +20,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eu.europeana.corelib.utils.ImageUtils;
-import eu.europeana.portal2.web.controllers.utils.RSSFeedParser;
-import eu.europeana.portal2.web.controllers.utils.RSSImage;
+import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
+import eu.europeana.portal2.web.util.rss.RSSFeedParser;
+import eu.europeana.portal2.web.util.rss.RSSImage;
 
 /**
  * Testing the blog parsing features
@@ -31,6 +33,9 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
 public class BlogTest {
+	
+	@Resource
+	private ResponsiveImageService responsiveImageService;
 	
 	// TODO: use it later, to test something else
 	// private List<FeedEntry> pinterestEntries;
@@ -52,7 +57,7 @@ public class BlogTest {
 	@Test
 	public void testImageExtraction() {
 		
-		List<FeedEntry> newEntries = parser.readFeed();
+		List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 		if ((newEntries != null) && (newEntries.size() > 0)) {
 			for (FeedEntry entry : newEntries) {
 				assertTrue(entry.getImages().size() > 0);
@@ -69,7 +74,7 @@ public class BlogTest {
 	 */
 	@Test
 	public void testPlainDescription() {
-		List<FeedEntry> newEntries = parser.readFeed();
+		List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 		if ((newEntries != null) && (newEntries.size() > 0)) {
 			for (FeedEntry entry : newEntries) {
 				assertTrue(entry.getPlainDescription().indexOf("<") == -1);

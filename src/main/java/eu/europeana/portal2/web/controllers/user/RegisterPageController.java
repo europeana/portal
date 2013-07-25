@@ -31,12 +31,11 @@ import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.service.EmailService;
+import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.RegisterPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
-import eu.europeana.portal2.web.util.abstracts.ClickStreamLogger;
 
 /**
  * During registration, users click on an email link to end up here with a "token" that allows them to proceed with
@@ -52,19 +51,19 @@ public class RegisterPageController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "corelib_db_userService")
+	@Resource
 	private UserService userService;
 
-	@Resource(name = "corelib_db_tokenService")
+	@Resource
 	private TokenService tokenService;
 
-	@Resource(name = "corelib_web_emailService")
+	@Resource
 	private EmailService emailService;
 
 	@Resource
-	private ClickStreamLogger clickStreamLogger;
+	private ClickStreamLogService clickStreamLogger;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	@InitBinder
@@ -77,9 +76,6 @@ public class RegisterPageController {
 			@ModelAttribute("model") RegisterPage model, HttpServletRequest request, HttpServletResponse response,
 			Locale locale) throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /register.html GET ==================");
-		Injector injector = new Injector(request, response, locale);
-		injector.injectProperties(model);
-
 		log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
 		Token token = tokenService.findByID(tokenKey);
 		// when token is null, show useful message
@@ -88,11 +84,8 @@ public class RegisterPageController {
 		}
 		model.setToken(token.getToken());
 		model.setEmail(token.getEmail());
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
-		injector.postHandle(this, page);
-
-		return page;
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER);
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -100,14 +93,10 @@ public class RegisterPageController {
 			HttpServletRequest request, HttpServletResponse response, Locale locale) throws EuropeanaQueryException,
 			DatabaseException {
 		log.info("================= /register.html POST ==================");
-		Injector injector = new Injector(request, response, locale);
-		injector.injectProperties(model);
 		if (result.hasErrors()) {
 			log.info("The registration form has errors");
-			clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_FAILURE);
-			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
-			injector.postHandle(this, page);
-			return page;
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_FAILURE);
+			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
 		}
 
 		Token token = tokenService.findByID(model.getToken());
@@ -123,11 +112,8 @@ public class RegisterPageController {
 		}
 		sendNotificationEmail(user);
 
-		clickStreamLogger.logUserAction(request, ClickStreamLogger.UserAction.REGISTER_SUCCESS);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTERED);
-		injector.postHandle(this, page);
-
-		return page;
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_SUCCESS);
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTERED);
 	}
 
 	private void sendNotificationEmail(User user) {

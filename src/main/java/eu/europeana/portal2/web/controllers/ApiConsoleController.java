@@ -23,13 +23,12 @@ import com.google.gson.JsonSyntaxException;
 
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.portal2.services.Configuration;
-import eu.europeana.portal2.web.controllers.utils.ApiResult;
-import eu.europeana.portal2.web.controllers.utils.ApiWrapper;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ApiConsolePage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.Injector;
 import eu.europeana.portal2.web.util.JsonFormatter;
+import eu.europeana.portal2.web.util.apiconsole.ApiResult;
+import eu.europeana.portal2.web.util.apiconsole.ApiWrapper;
 
 /**
  * Controller for Api playground.
@@ -44,7 +43,7 @@ public class ApiConsoleController {
 	@Log
 	private Logger log;
 
-	@Resource(name = "configurationService")
+	@Resource
 	private Configuration config;
 
 	private static final String SEARCH = "search";
@@ -71,7 +70,6 @@ public class ApiConsoleController {
 			@RequestParam(value = "yearMin", required = false) String yearMin, // temporal search values
 			@RequestParam(value = "yearMax", required = false) String yearMax, HttpServletRequest request,
 			HttpServletResponse response, Locale locale) {
-		Injector injector = new Injector(request, response, locale);
 		log.info("===== /api/console.html =====");
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");
@@ -85,7 +83,6 @@ public class ApiConsoleController {
 		}
 
 		ApiConsolePage model = new ApiConsolePage();
-		injector.injectProperties(model);
 
 		if (!model.getSupportedFunctions().contains(function)) {
 			function = SEARCH;
@@ -202,10 +199,7 @@ public class ApiConsoleController {
 			model.setHttpStatusCode(apiResult.getHttpStatusCode());
 		}
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);
-		injector.postHandle(this, page);
-
-		return page;
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_CONCOLE);
 	}
 
 	/**

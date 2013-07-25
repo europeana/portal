@@ -5,7 +5,7 @@ import java.util.Map;
 
 import eu.europeana.corelib.definitions.model.statistics.TypeStatistics;
 import eu.europeana.corelib.definitions.model.statistics.UserStatistics;
-import eu.europeana.portal2.web.controllers.user.MonthStatistics;
+import eu.europeana.portal2.web.model.stats.MonthStatistics;
 import eu.europeana.portal2.web.presentation.model.data.AdminData;
 
 public class StatisticsPage extends AdminData {
