@@ -383,6 +383,12 @@
 											}
 										}, 1000);
 										
+										$(window).euRsz(function(){
+											for(var i=0; i<ellipsisObjects.length; i++ ){
+												ellipsisObjects[i].respond();
+											}
+										});
+										
 										if(callback){
 											callback();
 										}
@@ -391,27 +397,23 @@
 									var infoSelector = '#carousel-3 .galleria-thumbnails .galleria-image .europeana-carousel-info';
 									var imgSelector = '#carousel-3 .galleria-thumbnails .galleria-image img';
 									
-									$(infoSelector).live('click', 
-										function(){
-											var clicked	= this;
-											$(infoSelector).each(function(i, ob){
-												if(ob == clicked){
-													com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
-												}
-											});
-										}
-									);
-									
-									$(imgSelector).live('click', 
-										function(){
-											var clicked	= this;
-											$(imgSelector).each(function(i, ob){
-												if(ob == clicked){
-													com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
-												}
-											});
-										}
-									);
+									$(infoSelector).click(function(){
+										var clicked	= this;
+										$(infoSelector).each(function(i, ob){
+											if(ob == clicked){
+												com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
+											}
+										});
+									});
+
+									$(imgSelector).click(function(){
+										var clicked	= this;
+										$(imgSelector).each(function(i, ob){
+											if(ob == clicked){
+												com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
+											}
+										});
+									});
 									
 									$(this).ready(function(e) {
 										eu.europeana.vars.suppresResize = false;
@@ -426,6 +428,7 @@
 														});
 													}
 												);
+												
 											}
 											, 100);
 									});
