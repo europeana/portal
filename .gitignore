@@ -2,9 +2,14 @@
 .classpath
 .project
 .settings/
+.externalToolBuilders/
 
 # Maven
 */target/**
 
 # Portal specific
 europeana.properties
+
+# Temp files
+*~
+*.bak
