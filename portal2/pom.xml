@@ -31,7 +31,7 @@
 		<artifactId>corelib</artifactId>
 		<groupId>eu.europeana</groupId>
 		<version>2.0-SNAPSHOT</version>
-		<relativePath>../corelib/pom.xml</relativePath>
+		<relativePath>../../corelib/pom.xml</relativePath>
 	</parent>
 
 	<organization>
@@ -61,7 +61,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>
-						-DEUROPEANA_PROPERTIES=../corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
+						-DEUROPEANA_PROPERTIES=../../corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
 					</argLine>
 				</configuration>
 			</plugin>
@@ -116,6 +116,41 @@
 					</webResources>
 				</configuration>
 			</plugin>
+			
+			
+					
+			<plugin>
+			
+				<!-- To run:
+					mvn jetty:run -Dorg.mortbay.jetty.webapp.parentLoaderPriority=true
+				  -->
+			
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.6</version>
+                <configuration>
+                    <webAppSourceDirectory>${project.basedir}/src/main/webapp</webAppSourceDirectory>
+                    <contextPath>portal</contextPath>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>EUROPEANA_PROPERTIES</name>
+                            <value>${project.basedir}/europeana.properties</value>
+                         </systemProperty>
+                        
+                        <!-- 
+                        
+                        <systemProperty>
+                            <name>RUNTIME_ENVIRONMENT</name>
+                            <value>local</value>
+                        </systemProperty>
+                        
+                        -->
+                        
+                    </systemProperties>
+                </configuration>
+            </plugin>
+			
+			
 		</plugins>
 	</build>
 
@@ -297,3 +332,6 @@
 		</repository>
 	</repositories>
 </project>
+
+
+
