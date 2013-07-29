@@ -146,25 +146,6 @@
 					</execution>
 
 					<execution>
-						<id>minify-map.css</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
-							<cssSourceDir>/themes/default/css</cssSourceDir>
-							<cssFinalFile>map.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
-							<cssSourceIncludes>
-								<cssSourceInclude>search-icons.css</cssSourceInclude>
-								<cssSourceInclude>search-pagination.css</cssSourceInclude>
-								<cssSourceInclude>map.css</cssSourceInclude>
-							</cssSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-
-					<execution>
 						<id>minify-myeuropeana.css</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -1060,24 +1041,6 @@
 						</goals>
 					</execution>
 					
-					
-
-					<!--execution>
-						<id>minify-timeline.js</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
-							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>timeline.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
-							<jsSourceIncludes>
-								<jsSourceInclude>timeline.js</jsSourceInclude>
-							</jsSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution-->
 
 					<execution>
 						<id>minify-translation-services.js</id>
