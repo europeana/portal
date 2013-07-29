@@ -88,9 +88,23 @@ eu.europeana.myeuropeana = {
 	},
 	
 	addUserPanelListeners : function() {
-		$('.remove-saved-search').live('click', { type : 'SavedSearch' },	this.handleRemoveUserPanelItem );
-		$('.remove-saved-item').live('click', { type : 'SavedItem' },		this.handleRemoveUserPanelItem );
-		$('.remove-saved-tag').live('click', { type : 'SocialTag' },		this.handleRemoveUserPanelItem );
+		
+		$(document).on('click',
+			'.remove-saved-search',
+			{ type : 'SavedSearch' },
+			this.handleRemoveUserPanelItem
+		);
+		$(document).on('click',
+			'.remove-saved-item',
+			{ type : 'SavedItem' },
+			this.handleRemoveUserPanelItem
+		);
+		$(document).on('click',
+			'.remove-saved-tag',
+			{ type : 'SocialTag' },
+			this.handleRemoveUserPanelItem
+		);
+		
 	},
 	
 	addHashListener : function() {
@@ -199,19 +213,36 @@ eu.europeana.myeuropeana = {
 	},
 	
 	addItemHighlight : function() {
-		$('.saved-item, .saved-search, .saved-tag').live(
-				'mouseenter',
-					function(){
-						$(this).css('background-color', '#f5f5f5');
-			         }
+		
+		var shade = function(){ $(this).css('background-color', '#f5f5f5'); };
+		var unshade = function(){ $(this).css('background-color', '#fff'); };
+		
+		$(document).on('mouseenter',
+			'.saved-item',
+			shade
 		);
-
-		$('.saved-item, .saved-search, .saved-tag').live(
-				'mouseleave',
-					function(){
-						$(this).css('background-color', '#fff');
-					}
+		$(document).on('mouseenter',
+			'.saved-search',
+			shade
 		);
+		$(document).on('mouseenter',
+			'.saved-tag',
+			shade
+		);
+		
+		$(document).on('mouseleave',
+			'.saved-item',
+			unshade
+		);
+		$(document).on('mouseleave',
+			'.saved-search',
+			unshade
+		);
+		$(document).on('mouseleave',
+			'.saved-tag',
+			unshade
+		);
+		
 	}
 	
 };
