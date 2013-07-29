@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.presentation.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
-import eu.europeana.portal2.web.presentation.model.SearchFilter;
 
 public class SearchFilterTest {
 

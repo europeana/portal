@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers;
+package eu.europeana.portal.portal2.speedtests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -13,42 +13,18 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import javax.management.Query;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.solr.client.solrj.response.FacetField;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.model.ResultSet;
-import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
-import eu.europeana.portal2.web.model.ModelUtils;
-import eu.europeana.portal2.web.model.facets.Facet;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
-import eu.europeana.portal2.web.presentation.model.SearchPage;
-import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
-import eu.europeana.portal2.web.util.SearchUtils;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/servlet/portal2-mvc.xml", "/internal/portal2-development.xml" })
 public class SearchControllerTest {
-
-	@Resource
-	private SearchService searchService;
 
 	private float cents = 0.2f;
 	private int iterations = (int) (100 * cents);
@@ -59,7 +35,6 @@ public class SearchControllerTest {
 	public void allSpeedTest() {
 		words = randomWords(iterations);
 		// solrJSpeedTest();
-		searchServiceSpeedTest();
 		restSpeedTest();
 		// solrSpeedTest();
 	}
@@ -99,48 +74,6 @@ public class SearchControllerTest {
 		long time = (new Date().getTime() - t);
 		System.out.println("[search] took " + (time / iterations) + " (" + min + "-" + max + ") " + maxw
 				+ ", slow queries: " + slowQueries);
-	}
-
-	private void searchServiceSpeedTest() {
-		Class<? extends BriefBean> clazz = BriefBean.class;
-
-		try {
-			long t = new Date().getTime();
-			int i;
-			long min = 0, max = 0, t1, t3;
-			String maxw = "";
-			List<String> slowQueries = new ArrayList<String>();
-
-			for (i = 0; i < iterations; i++) {
-				if (i > words.size() - 1) {
-					break;
-				}
-				Query query = new Query(words.get(i)).setPageSize(12).setStart(0).addRefinement("YEAR:1981")
-						.setParameter("facet.mincount", "1").setProduceFacetUnion(true).setAllowSpellcheck(false);
-
-				t1 = new Date().getTime();
-				searchService.search(clazz, query);
-				searchService.suggestions(words.get(i), 10);
-				t3 = (new Date().getTime() - t1);
-				if (t3 > 1000) {
-					slowQueries.add(words.get(i) + " (" + t3 + ")");
-				}
-				if (min == 0) {
-					min = max = t3;
-				}
-				if (t3 < min) {
-					min = t3;
-				}
-				if (t3 > max) {
-					max = t3;
-					maxw = words.get(i);
-				}
-			}
-			System.out.println("[searchService] took " + ((new Date().getTime() - t) / iterations) + " (" + min + "-"
-					+ max + ") " + maxw + ", slow queries: " + slowQueries);
-		} catch (SolrTypeException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void getWebContent(String _url) {

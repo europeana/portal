@@ -2,9 +2,6 @@ package eu.europeana.portal2.web.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
-
-import java.util.regex.Matcher;
 
 import org.junit.Test;
 
@@ -14,26 +11,6 @@ import org.junit.Test;
  * @author peter.kiraly@kb.nl
  */
 public class QueryUtilTest {
-
-	/**
-	 * Testing whether String.replace() replaces all instances
-	 */
-	@Test
-	public void testReplace() {
-		String input = "19\"8\"7";
-		String output = input.replace("\"", "\\\"");
-		assertEquals("19\\\"8\\\"7", output);
-	}
-	/**
-	 * Testing QueryUtil.SQUARE_BRACKET_PATTERN
-	 */
-	@Test
-	public void testPattern() {
-		String input = "[1987]";
-		Matcher matcher = QueryUtil.SQUARE_BRACKET_PATTERN.matcher(input);
-		assertTrue(matcher.find());
-		assertEquals("1987", matcher.group(1));
-	}
 
 	/**
 	 * Testing QueryUtil.escapeSquareBrackets

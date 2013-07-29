@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers;
+package eu.europeana.portal2.web.util.rss;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,9 +19,12 @@ public class ImageExtractingTest {
 		assertEquals(2, images.size());
 
 		assertEquals("http://blog.europeana.eu/wp-content/uploads/2012/08/battle-of-arcole.jpg", images.get(0).getSrc());
-		assertEquals("Antoine-Jean Gros, 'Napoleon Bonaparte : bataille d'Arcole', French National Library", images.get(0).getTitle());
+		assertEquals("Antoine-Jean Gros, 'Napoleon Bonaparte : bataille d'Arcole', French National Library", images
+				.get(0).getTitle());
 
 		assertEquals("http://blog.europeana.eu/wp-content/uploads/2012/08/portraitsketch.jpg", images.get(1).getSrc());
-		assertEquals("'Napoleon Bonaparte, sketched at Saint Helena by a British Officier in May last', French National Library", images.get(1).getTitle());
+		assertEquals(
+				"'Napoleon Bonaparte, sketched at Saint Helena by a British Officier in May last', French National Library",
+				images.get(1).getTitle());
 	}
 }
