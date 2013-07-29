@@ -1,0 +1,19 @@
+@import "compass/css3/text-shadow";
+
+$background-color: red;
+$background-color: orange;
+
+body {
+    background: $background-color;
+    padding: 50px;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    font-size: 40px;
+    padding-top: 20px;
+    @include single-text-shadow(magenta, 3px, 3px);
+}
