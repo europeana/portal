@@ -17,25 +17,20 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.ModifiableSolrParams;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter;
 
-import eu.europeana.corelib.definitions.solr.model.Term;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.portal2.web.controllers.speed.SpeedTestUtils;
 import eu.europeana.portal2.web.controllers.speed.TermProvider;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
 public class SuggestionControllerTest {
 
 	@Resource private SearchService searchService;
@@ -58,13 +53,12 @@ public class SuggestionControllerTest {
 	private HttpRequestHandlerAdapter handlerAdapter;
 	private SuggestionController controller;
 
-	@Test
+//	@Test
 	public void allSpeedTest() {
 		words = TermProvider.getRandomWords(iterations);
 		solrJSpeedTest();
 		suggestionServiceSpeedTest();
 		restSpeedTest();
-		// solrSpeedTest();
 	}
 
 	// @Test
@@ -86,22 +80,6 @@ public class SuggestionControllerTest {
 		term = term.replaceAll("[\"'()]", "").replace("/", "\\/");
 
 		return term;
-	}
-
-	// @Test
-	public void suggestionServiceTest() {
-		try {
-			List<Term> suggestions = searchService.suggestions("pari", 10);
-			assertNotNull(suggestions);
-			// TODO: change it when it is OK.
-			assertEquals(10, suggestions.size());
-			for (Term term : suggestions) {
-				System.out.println(StringUtils.join(
-					new String[]{term.getField(), term.getTerm(), Long.toString(term.getFrequency())}, " // "));
-			}
-		} catch (SolrTypeException e) {
-			e.printStackTrace();
-		}
 	}
 
 	// @Test

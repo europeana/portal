@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers;
+package eu.europeana.portal2.web.util.rss;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
