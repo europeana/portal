@@ -13,3 +13,4 @@ europeana.properties
 # Temp files
 *~
 *.bak
+.sass-cache/
