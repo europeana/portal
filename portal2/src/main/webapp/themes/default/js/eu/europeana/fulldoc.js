@@ -258,9 +258,8 @@ eu.europeana.fulldoc = {
 	
 	addThis : function() {
 		
+		$(document).on('click', '#lightbox_info .shares-link, #additional-info .shares-link', function(e){
 		
-		$('#lightbox_info .shares-link, #additional-info .shares-link').live('click', function(e){
-			
 			js.loader.loadScripts([{
 				
 				file: 'addthis' + js.min_suffix + '.js' + '?' + 'domready=1', //&async=1',
@@ -427,12 +426,19 @@ eu.europeana.fulldoc = {
 	 * */
 	
 	triggerBind : function(){
-
-		$(		'#carousel-1-img-measure img, '
-			+ 	'#carousel-1-img-measure .lb-trigger, '
-			+	'#carousel-1 .galleria-stage .galleria-image img'
-			
-		).die().live('click', eu.europeana.fulldoc.triggerClick);
+		
+		$(document).off('click',
+			'#carousel-1-img-measure img, '
+		+ 	'#carousel-1-img-measure .lb-trigger, '
+		+	'#carousel-1 .galleria-stage .galleria-image img')		
+		
+		.on('click',
+			'#carousel-1-img-measure img, '
+		+ 	'#carousel-1-img-measure .lb-trigger, '
+		+	'#carousel-1 .galleria-stage .galleria-image img',
+		
+		eu.europeana.fulldoc.triggerClick);
+		
 		
 		js.console.log("bound all triggers");
 	},
