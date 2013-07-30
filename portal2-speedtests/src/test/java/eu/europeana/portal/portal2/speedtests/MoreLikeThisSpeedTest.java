@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers.speed;
+package eu.europeana.portal.portal2.speedtests;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -33,9 +33,11 @@ import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.solr.bean.impl.BriefBeanImpl;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.service.query.MoreLikeThis;
+import eu.europeana.portal2.web.controllers.speed.SpeedTestUtils;
+import eu.europeana.portal2.web.controllers.speed.TermProvider;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/servlet/portal2-mvc.xml", "/internal/portal2-development.xml" })
+@ContextConfiguration({ "/servlet/portal2-mvc.xml", "/portal2-test.xml" })
 public class MoreLikeThisSpeedTest {
 
 	@Resource(name = "corelib_solr_solrServer")

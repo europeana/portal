@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers.speed;
+package eu.europeana.portal.portal2.speedtests;
 
 import java.io.File;
 import java.io.IOException;

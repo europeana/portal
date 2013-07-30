@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers.speed;
+package eu.europeana.portal.portal2.speedtests;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -26,9 +26,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.web.controllers.speed.TermProvider;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
+@ContextConfiguration({ "/servlet/portal2-mvc.xml", "/portal2-test.xml" })
 public class ObjectControllerSpeedTest {
 
 	@Resource private SearchService searchService;

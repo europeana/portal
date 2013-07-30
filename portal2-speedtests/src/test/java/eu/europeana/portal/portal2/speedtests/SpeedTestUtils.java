@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers.speed;
+package eu.europeana.portal.portal2.speedtests;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

@@ -24,7 +24,7 @@ import eu.europeana.portal2.web.util.rss.RSSImage;
  * @author peter.kiraly@kb.nl
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
+@ContextConfiguration({"/portal2-test.xml"})
 public class PinterestTest {
 	
 	@Resource

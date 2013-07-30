@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers.speed;
+package eu.europeana.portal.portal2.speedtests;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +19,8 @@ import org.apache.solr.common.params.ModifiableSolrParams;
 import org.junit.Test;
 
 import eu.europeana.corelib.definitions.solr.model.Term;
+import eu.europeana.portal2.web.controllers.speed.SpeedTestUtils;
+import eu.europeana.portal2.web.controllers.speed.TermProvider;
 
 public class SuggestionControllerSpeedTest {
 

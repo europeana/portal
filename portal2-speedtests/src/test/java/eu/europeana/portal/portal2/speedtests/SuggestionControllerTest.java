@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.controllers;
+package eu.europeana.portal.portal2.speedtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter;
 
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.web.controllers.SuggestionController;
 import eu.europeana.portal2.web.controllers.speed.SpeedTestUtils;
 import eu.europeana.portal2.web.controllers.speed.TermProvider;
 

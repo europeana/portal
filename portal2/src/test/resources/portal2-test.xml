@@ -6,13 +6,24 @@
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     ">
-    
-    <!-- CORE LIBRARY -->
-    <import resource="portal2-context.xml"/>
 
-	<!-- OVERRIDE FOR LOCAL DEVELOPMENT -->
-<!-- 	<bean name="corelib_solr_searchService" class="eu.europeana.corelib.solr.service.impl.SearchServiceImpl"
-		p:solrServer-ref="corelib_solr_solrEmbedded"
-	/>
- -->
+	<import resource="corelib-definitions-test.xml" />
+	<import resource="corelib-logging-context.xml" />
+    
+	<import resource="internal/portal2-services.xml" />
+
+    <!-- Mocking services from other modules and overruling their configuration -->
+
+    <bean name="corelib_db_userService" class="eu.europeana.corelib.EmptyBean"/>
+
+    <bean name="corelib_solr_searchService" class="eu.europeana.corelib.EmptyBean"/>
+
+    <bean name="corelib_solr_mongoServer" class="eu.europeana.corelib.EmptyBean"/>
+    
+    <bean name="corelib_solr_vocabularyMongoServer" class="eu.europeana.corelib.EmptyBean"/>
+        
+    <bean name="corelib_solr_solrServer" class="eu.europeana.corelib.EmptyBean"/>
+
+    <bean name="corelib_solr_solrEmbedded" class="eu.europeana.corelib.EmptyBean"/>
+
 </beans>

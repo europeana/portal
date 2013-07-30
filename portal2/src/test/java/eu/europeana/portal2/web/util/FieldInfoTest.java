@@ -14,7 +14,7 @@ import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/servlet/portal2-mvc.xml", "/internal/portal2-development.xml"})
+@ContextConfiguration({"/portal2-test.xml"})
 public class FieldInfoTest {
 	
 	@Resource
