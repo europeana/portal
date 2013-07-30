@@ -512,22 +512,6 @@
 						</goals>
 					</execution>
 
-					<execution>
-						<id>minify-carousel.js</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/gmtplusone</webappTargetDir>
-							<jsSourceDir>/themes/default/js/com/gmtplusone</jsSourceDir>
-							<jsFinalFile>carousel.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
-							<jsSourceIncludes>
-								<jsSourceInclude>carousel.js</jsSourceInclude>
-							</jsSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
 
 					<execution>
 						<id>minify-citation.js</id>
