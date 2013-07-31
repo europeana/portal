@@ -30,25 +30,15 @@
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers" />
 
 	<!-- INTERCEPTORS -->
-<!-- 	<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
-	<bean id="corelib_web_localeChangeInterceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" p:paramName="lang"/>
-	<bean id="portal2_configInterceptor" class="eu.europeana.portal2.web.interceptor.PortalConfigInterceptor" />
- -->
 	<mvc:interceptors>
-		<!--bean id="locale_interceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor" /-->
+		<bean id="portal2_locale_interceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor">
+			<property name="paramName" value="lang"/>
+		</bean>
 		<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
 		<bean id="portal2_configInterceptor" class="eu.europeana.portal2.web.interceptor.PortalConfigInterceptor" />
 	</mvc:interceptors>
 
-	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-<!-- 		<property name="interceptors">
-			<list>
-				<ref bean="corelib_web_localeChangeInterceptor" />
-				<ref bean="corelib_web_configInterceptor" />
-				<ref bean="portal2_configInterceptor" />
-			</list>
-		</property>
- -->	</bean>
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
