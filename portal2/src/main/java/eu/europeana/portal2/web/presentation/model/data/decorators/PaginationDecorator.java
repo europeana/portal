@@ -20,9 +20,9 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 import java.util.List;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
-import eu.europeana.portal2.web.presentation.model.PresentationQuery;
-import eu.europeana.portal2.web.presentation.model.ResultPagination;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
+import eu.europeana.portal2.web.presentation.model.submodel.PresentationQuery;
+import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
 
 public class PaginationDecorator implements ResultPagination {
 

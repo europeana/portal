@@ -28,8 +28,8 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 
 /**
  * Build Solr queries.

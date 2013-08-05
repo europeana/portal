@@ -22,7 +22,6 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.web.model.PageData;
-import eu.europeana.portal2.services.impl.ResponsiveImageServiceImpl;
 
 public class CarouselItem {
 

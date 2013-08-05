@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.portal2.web.presentation.model.submodel.SearchFilter;
+import eu.europeana.portal2.web.presentation.model.submodel.impl.BriefBeanViewImpl;
 
 public class SearchFilterTest {
 

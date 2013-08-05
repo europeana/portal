@@ -25,8 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.web.model.PageInfo;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 
 /**
  * This interface is used add custom logging information to the

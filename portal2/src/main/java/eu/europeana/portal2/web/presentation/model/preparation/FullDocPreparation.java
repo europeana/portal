@@ -15,7 +15,7 @@
  *  the Licence.
  */
 
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.preparation;
 
 import java.util.ArrayList;
 import java.util.Arrays;

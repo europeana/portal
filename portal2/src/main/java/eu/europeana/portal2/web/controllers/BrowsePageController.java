@@ -26,9 +26,9 @@ import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SitemapPage;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 

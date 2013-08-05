@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.submodel;
 
 /**
  * Object for displaying active filters

@@ -6,9 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import eu.europeana.portal2.web.util.rss.RSSImage;
-import eu.europeana.portal2.web.util.rss.RSSImageExtractor;
-
 public class ImageExtractingTest {
 
 	@Test

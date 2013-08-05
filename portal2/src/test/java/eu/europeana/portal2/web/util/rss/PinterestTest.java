@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
-import eu.europeana.portal2.web.util.rss.RSSFeedParser;
-import eu.europeana.portal2.web.util.rss.RSSImage;
 
 /**
  * Tests the Pinterest feed related functions.

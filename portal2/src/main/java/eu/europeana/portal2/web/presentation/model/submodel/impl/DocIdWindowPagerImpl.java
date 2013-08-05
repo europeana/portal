@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.submodel.impl;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -20,6 +20,8 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindow;
+import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 /**

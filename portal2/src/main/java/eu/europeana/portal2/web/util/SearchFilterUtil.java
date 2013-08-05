@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.utils;
+package eu.europeana.portal2.web.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.portal2.web.presentation.model.SearchParam;
+import eu.europeana.portal2.web.presentation.model.submodel.SearchParam;
 
 public class SearchFilterUtil {
 

@@ -34,10 +34,10 @@ import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.ModelUtils;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
-import eu.europeana.portal2.web.presentation.model.ResultPagination;
-import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
+import eu.europeana.portal2.web.presentation.model.submodel.impl.BriefBeanViewImpl;
+import eu.europeana.portal2.web.presentation.model.submodel.impl.ResultPaginationImpl;
 
 public class SearchUtils {
 

@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.submodel;
 
 import org.apache.commons.lang.StringUtils;
 

@@ -19,7 +19,7 @@
  * permissions and limitations under the Licence.
  */
 
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.submodel.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -36,6 +36,8 @@ import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
+import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 
 /**
  * Do not ever touch this class! It is persisted to XML and serves as document

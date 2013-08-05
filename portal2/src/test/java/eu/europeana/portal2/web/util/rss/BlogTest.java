@@ -22,8 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import eu.europeana.corelib.utils.ImageUtils;
 import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
-import eu.europeana.portal2.web.util.rss.RSSFeedParser;
-import eu.europeana.portal2.web.util.rss.RSSImage;
 
 /**
  * Testing the blog parsing features

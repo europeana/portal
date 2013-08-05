@@ -26,10 +26,10 @@ import org.apache.commons.lang.ArrayUtils;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.ResultPagination;
-import eu.europeana.portal2.web.presentation.model.SearchFilter;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
+import eu.europeana.portal2.web.presentation.model.submodel.SearchFilter;
 
 public class BriefBeanViewDecorator implements BriefBeanView {
 

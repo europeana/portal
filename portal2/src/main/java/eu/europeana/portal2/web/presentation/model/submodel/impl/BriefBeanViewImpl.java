@@ -19,7 +19,7 @@
  * permissions and limitations under the Licence.
  */
 
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.submodel.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,12 @@ import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinksImpl;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
-import eu.europeana.portal2.web.presentation.utils.SearchFilterUtil;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
+import eu.europeana.portal2.web.presentation.model.submodel.SearchFilter;
+import eu.europeana.portal2.web.presentation.model.submodel.SearchLabel;
+import eu.europeana.portal2.web.presentation.model.submodel.SearchParam;
+import eu.europeana.portal2.web.util.SearchFilterUtil;
 
 /**
  * Decorates the brief views with links.

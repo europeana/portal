@@ -22,8 +22,8 @@ import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 

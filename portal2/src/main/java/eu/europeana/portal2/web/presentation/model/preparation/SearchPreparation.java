@@ -25,9 +25,9 @@ import java.util.List;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.web.utils.UrlBuilder;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 
 public abstract class SearchPreparation extends SearchData{
 

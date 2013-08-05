@@ -56,18 +56,19 @@ import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
-import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService.UserAction;
+import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoParams;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
-import eu.europeana.portal2.web.presentation.model.FullBeanView;
-import eu.europeana.portal2.web.presentation.model.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.impl.FullBeanViewImpl;
+import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
@@ -91,6 +92,9 @@ public class ObjectController {
 
 	@Resource
 	private OptOutService optOutService;
+	
+	@Resource
+	private SchemaOrgMapping schemaOrgMapping;
 
 	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
 
@@ -163,7 +167,7 @@ public class ObjectController {
 		model.setShowSimilarItems(showSimilarItems);
 
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
-		// model.setSchemaOrgMappingFile(config.getSchemaOrgMappingFile());
+		model.setEdmSchemaMappings(schemaOrgMapping);
 
 		long tgetFullBean0 = (new Date()).getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId);

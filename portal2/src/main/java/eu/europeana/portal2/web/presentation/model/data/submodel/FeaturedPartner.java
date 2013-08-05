@@ -19,8 +19,6 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.util.Map;
 
-import eu.europeana.portal2.services.impl.ResponsiveImageServiceImpl;
-
 /**
  * Placeholder object for featured partners.
  * 

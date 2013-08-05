@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.submodel;
 
 /**
  * Container for a key and value pair

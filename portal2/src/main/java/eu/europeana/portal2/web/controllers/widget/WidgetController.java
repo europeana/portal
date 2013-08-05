@@ -43,14 +43,14 @@ import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.model.json.BriefBeanImpl;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.BriefBeanViewImpl;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
-import eu.europeana.portal2.web.presentation.model.ResultPagination;
-import eu.europeana.portal2.web.presentation.model.ResultPaginationImpl;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.presentation.model.SearchWidgetEditorPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
+import eu.europeana.portal2.web.presentation.model.submodel.impl.BriefBeanViewImpl;
+import eu.europeana.portal2.web.presentation.model.submodel.impl.ResultPaginationImpl;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 

@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model;
+package eu.europeana.portal2.web.presentation.model.submodel;
 
 import java.util.Collections;
 import java.util.HashMap;

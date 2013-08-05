@@ -38,9 +38,9 @@ import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
-import eu.europeana.portal2.web.presentation.model.BriefBeanView;
-import eu.europeana.portal2.web.presentation.model.DocIdWindowPager;
-import eu.europeana.portal2.web.presentation.model.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
+import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 /**

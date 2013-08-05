@@ -23,9 +23,9 @@ import java.util.List;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.portal2.web.presentation.model.DocIdWindowPager;
-import eu.europeana.portal2.web.presentation.model.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
+import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
+import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 
 public class FullBeanViewDecorator implements FullBeanView {
 	private static final long serialVersionUID = -5504231572868214828L;
