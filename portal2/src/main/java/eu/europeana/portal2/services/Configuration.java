@@ -66,7 +66,7 @@ public class Configuration {
 
 	// Google+ settings
 	@Value("#{europeanaProperties['portal.google.plus.publisher.id']}")
-	private static String portalGooglePlusPublisherId;
+	private String portalGooglePlusPublisherId;
 
 	// responsive images in the index page
 	@Value("#{europeanaProperties['portal.responsive.widths']}")
@@ -207,7 +207,7 @@ public class Configuration {
 		return staticPageSuffix;
 	}
 
-	public static String getPortalGooglePlusPublisherId() {
+	public String getPortalGooglePlusPublisherId() {
 		return portalGooglePlusPublisherId;
 	}
 
@@ -228,7 +228,7 @@ public class Configuration {
 	}
 
 	public boolean getDebugMode() {
-		return StringUtils.isBlank(debug) || Boolean.getBoolean(debug);
+		return StringUtils.isBlank(debug) || Boolean.parseBoolean(debug);
 	}
 
 	public String getResponsiveCache() {

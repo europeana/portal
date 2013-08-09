@@ -1,4 +1,4 @@
-package eu.europeana.portal2.exception;
+package eu.europeana.portal2.web.interceptor;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.logging.Log;
@@ -81,6 +82,12 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		model.setException(exception);
 		model.setProblem(problem);
 		model.setStackTrace(stackTrace);
+		// set all needed config as interceptors don't work on exception handlers
+		model.setTheme(ControllerUtil.getSessionManagedTheme(request, config.getDefaultTheme()));
+		model.setLocale(RequestContextUtils.getLocaleResolver(request).resolveLocale(request));
+		model.setPortalUrl(config.getPortalUrl());
+		model.setPortalName(config.getPortalName());
+		model.setDebug(config.getDebugMode());
 
 		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);
 	}

@@ -68,16 +68,6 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
-<!--
-	<error-page>
-		<error-code>404</error-code>
-		<location>/page-not-found.html</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/error.html</location>
-	</error-page>
--->
 	<mime-mapping>
 		<extension>htc</extension>
 		<mime-type>text/x-component</mime-type>

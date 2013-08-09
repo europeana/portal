@@ -54,7 +54,7 @@
 		<property name="UseCodeAsDefaultMessage" value="true"/>
 	</bean>
 
-	<bean id="exceptionResolver" class="eu.europeana.portal2.exception.ExceptionResolver" />
+	<bean id="exceptionResolver" class="eu.europeana.portal2.web.interceptor.ExceptionResolver" />
 
 	<import resource="../portal2-context.xml"/>
 	
