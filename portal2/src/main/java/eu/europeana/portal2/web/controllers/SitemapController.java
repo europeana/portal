@@ -76,8 +76,6 @@ public class SitemapController {
 
 	private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
 
-	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
-
 	private static final String europeanaUriPrefix = "http://www.europeana.eu/resolve/";
 	private static final String europeanaUriInfix = "/resolve/";
 	private static final String canonicalUrlPrefix = "http://www.europeana.eu/portal/";
@@ -106,10 +104,6 @@ public class SitemapController {
 	private static Map<String, Boolean> inProcess = new ConcurrentHashMap<String, Boolean>();
 
 	private static List<ContributorItem> contributorEntries;
-
-	public static String solrQueryClauseToIncludeRecordsToPromoteInSitemaps() {
-		return solrQueryClauseToIncludeRecordsToPromoteInSitemaps(MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES);
-	}
 
 	public static String solrQueryClauseToIncludeRecordsToPromoteInSitemaps(int min) {
 		return "COMPLETENESS:[" + min + " TO *]";
