@@ -85,7 +85,10 @@ public class RightsValue {
 	}
 
 	public String getRelativeUrl() {
-		return right.getRelativeUrl(portalUrl);
+		if(right.isRelativeUrl()){
+			return right.getRelativeUrl(portalUrl);			
+		}
+		return url;
 	}
 
 	public boolean isNoc() {
