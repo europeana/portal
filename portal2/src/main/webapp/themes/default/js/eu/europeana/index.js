@@ -131,7 +131,6 @@
 							// Google Analytics
 							
 							this.bind("loadfinish", function(e) {
-								
 								if(!setupAnalytics){
 									
 									var clicked = function(clickData){
@@ -141,7 +140,12 @@
 											clickData.ga.url
 										);
 										if(clickData.open){
-											window.location = clickData.open;
+											if(dataSource[thisGallery.getIndex()].external == '_blank'){
+												window.open(clickData.open, '_blank');
+											}
+											else{
+												window.location = clickData.open;												
+											}
 										}									
 									};
 	

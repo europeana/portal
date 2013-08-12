@@ -10,6 +10,10 @@
 	z-index:		10;
 }
 
+#carousel-1 .galleria-image img{
+	cursor: pointer;
+}
+	
 @media only screen and ( min-width:48em ){
 	#carousel-1{
 		margin-bottom:	0;
