@@ -370,7 +370,8 @@ eu.europeana.fulldoc = {
 			// original context
 			var ocLabel = $('.original-context div:not(:empty)');
 			ocLabel = ocLabel.length ? ocLabel.html() : '';
-			var ocValue = $('.original-context #urlRefIsShownAt');
+			var ocValue = $('.original-context #urlRefIsShownAt').length > 0 ? $('.original-context #urlRefIsShownAt') : $('.original-context #urlRefIsShownBy'); 
+			
 			ocValue = ocValue.length ? ocValue.clone().wrap('<p>').parent().html() : '';
 			
 			cmp.find('#lightbox_info ul li.bottom').before(
