@@ -53,7 +53,6 @@ import eu.europeana.portal2.web.presentation.model.preparation.FullDocPreparatio
 import eu.europeana.portal2.web.presentation.model.submodel.Image;
 import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
-import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
