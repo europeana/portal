@@ -58,10 +58,11 @@ public class BlogTest {
 		List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 		if ((newEntries != null) && (newEntries.size() > 0)) {
 			for (FeedEntry entry : newEntries) {
-				assertTrue(entry.getImages().size() > 0);
-				for (RSSImage image : entry.getImages()) {
-					assertNotNull(image.getSrc());
-					assertTrue(image.getSrc().length() > 0);
+				if (entry.getImages().size() > 0) {
+					for (RSSImage image : entry.getImages()) {
+						assertNotNull(image.getSrc());
+						assertTrue(image.getSrc().length() > 0);
+					}
 				}
 			}
 		}
