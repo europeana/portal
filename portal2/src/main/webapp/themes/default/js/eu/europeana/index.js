@@ -126,6 +126,12 @@
 								$('#carousel-1 .linkButton').html(carouselData[e.index].linkDescription);
 								$('#carousel-1-external-info').html( $('#carousel-1 .galleria-info-title').html() );
 								$('#carousel-1 .galleria-stage .galleria-image:visible img').attr('alt',  carouselData[e.index].alt);
+								$('#carousel-1 .galleria-stage .galleria-image:visible img').attr('title',  carouselData[e.index].alt);
+								$('#carousel-1 .galleria-info-title')
+									.add( '#carousel-1 .galleria-info-description' ) 
+									.add( '#carousel-1 .galleria-info-text' ) 
+									.add( '#carousel-1 .linkButton' ) 
+									.attr('title',  carouselData[e.index].alt);
 							});
 	
 							// Google Analytics

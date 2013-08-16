@@ -15,7 +15,8 @@
           <c:param name="query" value="${suggestion.escapedQuery}"/>
           <c:param name="rows" value="${model.rows}"/>
         </c:url>
-        <li><a class="europeana" dir="ltr" href="${url}">${fn:escapeXml(suggestion.label)}</a> (${suggestion.count})</li>
+        <!-- #312: the fix for special characters was to REMOVE fn:escapeXML and just output the value directly. -->
+        <li><a class="europeana" dir="ltr" href="${url}">${suggestion.label}</a> (${suggestion.count})</li>
       </c:forEach>
     </ul>
   </c:forEach>
