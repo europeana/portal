@@ -96,10 +96,6 @@ public class ObjectController {
 	@Resource
 	private SchemaOrgMapping schemaOrgMapping;
 
-	public static final int MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES = 6;
-
-	// private final static String RESOLVE_PREFIX = "http://www.europeana.eu/resolve/record";
-
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";

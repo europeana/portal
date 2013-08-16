@@ -41,7 +41,6 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
-import eu.europeana.portal2.web.controllers.ObjectController;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
@@ -53,7 +52,6 @@ import eu.europeana.portal2.web.presentation.model.preparation.FullDocPreparatio
 import eu.europeana.portal2.web.presentation.model.submodel.Image;
 import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
-import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
@@ -517,10 +515,6 @@ public class FullDocPage extends FullDocPreparation {
 		}
 
 		return allImages;
-	}
-
-	public boolean isAllowIndexing() {
-		return (document.getEuropeanaCompleteness() >= ObjectController.MIN_COMPLETENESS_TO_PROMOTE_TO_SEARCH_ENGINES);
 	}
 
 	public String getKmlDescription() throws UnsupportedEncodingException, EuropeanaQueryException {
