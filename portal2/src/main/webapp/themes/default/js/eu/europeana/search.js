@@ -133,55 +133,6 @@ eu.europeana.search = {
 		});
 
 	},
-
-	
-	urlAlterParam : function(paramNameIn, paramValIn){
-		var params = {};
-
-		document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
-		    function decode(s) {
-		        return decodeURIComponent(s.split("+").join(" "));
-		    }
-		    
-		    var paramName	= decode(arguments[1]);
-		    var paramVal	= decode(arguments[2]);
-		    if( params[paramName] ){
-		    	if(typeof( params[paramName] )  == "string"){
-		    		params[paramName] = [params[paramName], paramVal];
-		    	}
-		    	else if(typeof( params[paramName] )  == "object"){
-		    		params[paramName].push(paramVal);
-		    	}
-		    }
-		    else{
-			    params[paramName] = paramVal;
-		    }
-		});
-
-		var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
-		var index = 0;
-		var found = false;
-		$.each(params, function(name, val){
-			var match = (name == paramNameIn);
-			if(match){
-				found = true;
-			}
-			
-			if( typeof(val) == "string" ){
-				newUrl += ((index==0) ? "?" : "&") + name + "=" + (match ? paramValIn : val);				
-			}
-			else{
-				for(var j=0; j<val.length; j++){
-					newUrl += ((index==0 && j==0) ? "?" : "&") + name + "=" + (match ? paramValIn : val[j]);
-				}
-			}
-			index++;
-		});
-		if(!found){
-			newUrl += "&" + paramNameIn + "=" + paramValIn;
-		}
-		return newUrl;
-	},
 	
 	
 	setupResultSizeMenu : function(){
@@ -190,7 +141,7 @@ eu.europeana.search = {
 				self.setActive( $("#query-search input[name=rows]").val() );
 			},
 			"fn_item":function(self, selected){
-				window.location.href = eu.europeana.search.urlAlterParam("rows", selected);
+				window.location.href = window.location.href.replace(/([?&])rows=\d{2}/, '$1rows=' + selected)
 			}
 		};
 		new EuMenu( $(".nav-top .eu-menu"), config).init();
