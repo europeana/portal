@@ -303,9 +303,9 @@ public enum Field {
 		}
 		return values;
 	}
-	
+
 	private static SchemaOrgMapping schemaOrgMapping;
-	
+
 	private SchemaOrgMapping getSchemaOrgMapping() {
 		if (schemaOrgMapping == null) {
 			schemaOrgMapping = ApplicationContextContainer.getBean(SchemaOrgMapping.class);

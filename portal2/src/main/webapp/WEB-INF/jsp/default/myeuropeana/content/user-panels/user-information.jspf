@@ -1,37 +1,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
 <a href="#user-information" class="tab-header" title="<spring:message code="UserInformation_t" />"><spring:message code="UserInformation_t" /></a>
 
 <div class="section">
 	<div class="content">
 		<div class="content-inner">
 			<div id="user-information">
-			  <strong><spring:message code="Username_t" />:</strong><br/>
-			  ${model.user.userName}<br/>
-			  <br/>
-			
-			  <strong><spring:message code="EmailAddress_t" />:</strong><br/>
-			  ${model.user.email}<br/>
-			  <br/>
-			
-			  <c:if test="${model.user[firstName] != null}">
-			    <strong><spring:message code="FirstName_t" />:</strong><br/>
-			    ${model.user.firstName}<br/>
-			    <br/>
-			  </c:if>
-			
-			  <c:if test="${model.user[lastName] != null}">
-			    <strong><spring:message code="lastName_t" />:</strong><br/>
-			    ${model.user.lastName}
-			  </c:if>
-			
-			  <c:if test="${model.user.role == 'ROLE_GOD'}">
-			    <c:url var="adminPage" value="/admin.html" />
-			    <a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
-			  </c:if>
-			
+				<strong><spring:message code="Username_t" />:</strong><br/>
+				${model.user.userName}<br/>
+				<br/>
+
+				<strong><spring:message code="EmailAddress_t" />:</strong><br/>
+				${model.user.email}<br/>
+				<br/>
+
+				<c:if test="${model.user[firstName] != null}">
+					<strong><spring:message code="FirstName_t" />:</strong><br/>
+					${model.user.firstName}<br/>
+					<br/>
+				</c:if>
+
+				<c:if test="${model.user[lastName] != null}">
+					<strong><spring:message code="lastName_t" />:</strong><br/>
+					${model.user.lastName}
+				</c:if>
+
+				<c:if test="${model.user.role == 'ROLE_GOD'}">
+					<c:url var="adminPage" value="/admin.html" />
+					<a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
+				</c:if>
+
 			</div>
 		</div>
 	</div>
