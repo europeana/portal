@@ -78,7 +78,6 @@ public class AdminController {
 		int offset = ((pageNr - 1) * LIMIT);
 		AdminPage model = new AdminPage();
 		model.setPageNr(pageNr);
-		model.setTheme("devel");
 
 		long t0 = new Date().getTime();
 		// model.setUsers(userService.findAll());

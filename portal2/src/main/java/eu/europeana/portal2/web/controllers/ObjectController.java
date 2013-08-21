@@ -166,7 +166,7 @@ public class ObjectController {
 		model.setEdmSchemaMappings(schemaOrgMapping);
 
 		long tgetFullBean0 = (new Date()).getTime();
-		FullBean fullBean = getFullBean(collectionId, recordId);
+		FullBean fullBean = getFullBean(collectionId, recordId, showSimilarItems);
 		if (fullBean == null) {
 			throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
 		}
@@ -186,14 +186,19 @@ public class ObjectController {
 
 			// more like this
 			if (model.isShowSimilarItems()) {
-				List<? extends BriefBean> similarItems = fullBean.getSimilarItems();
+				List<? extends BriefBean> similarItems;
 				if (fullBean.getSimilarItems() == null) {
 					similarItems = getMoreLikeThis(collectionId, recordId, model);
+				} else {
+					similarItems = fullBean.getSimilarItems();
 				}
 				model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
 			}
 
-			long tSeeAlso0 = (new Date()).getTime();
+			long tSeeAlso0 = 0;
+			if (log.isDebugEnabled()) {
+				tSeeAlso0 = (new Date()).getTime();
+			}
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
 			if (log.isDebugEnabled()) {
 				long tSeeAlso1 = (new Date()).getTime();
@@ -266,13 +271,13 @@ public class ObjectController {
 	 * @param recordId
 	 * @return
 	 */
-	private FullBean getFullBean(String collectionId, String recordId) {
+	private FullBean getFullBean(String collectionId, String recordId, boolean showSimilarItems) {
 		FullBean fullBean = null;
 		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
 		try {
-			fullBean = searchService.findById(europeanaId, true);
+			fullBean = searchService.findById(europeanaId, showSimilarItems);
 			if (fullBean == null) {
-				fullBean = searchService.resolve(europeanaId,true);
+				fullBean = searchService.resolve(europeanaId, showSimilarItems);
 			}
 		} catch (SolrTypeException e) {
 			log.error(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId,
