@@ -20,7 +20,7 @@ import eu.europeana.portal2.services.ResponsiveImageService;
 public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 
 	final private static String CACHEDIR = "/sp/rss-blog-cache/";
-	
+
 	@Log
 	private Logger log;
 
@@ -46,8 +46,7 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 	private String[] responsiveCarouselImageLabels;
 	private String[] responsiveImageLabels;
 	private Integer[] responsiveImageWidths;
-	
-	
+
 	private static String directory;
 	private static File dir;
 
@@ -158,7 +157,7 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 		}
 		return responsiveImages;
 	}
-	
+
 	private BufferedImage readOriginalImage(String location, boolean isURL) {
 		BufferedImage originalImage = null;
 		try {
@@ -171,10 +170,17 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 			log.error(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
 		} catch (IOException e) {
 			log.error(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()), e);
+		// java.awt.image.ColorConvertOp.filter(ColorConvertOp.java:460) produces
+		// an exception saying:
+		// "Numbers of source Raster bands and source color space components do not match"
+		// The images are:
+		// http://blog.europeana.eu/wp-content/uploads/2013/08/4LFM7132.jpg
+		// http://blog.europeana.eu/wp-content/uploads/2013/08/3LFM7114.jpg
+		} catch (IllegalArgumentException e) {
+			log.error(String.format("IllegalArgumentException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
 		}
 		return originalImage;
 	}
-	
 
 	private Integer[] getResponsiveCarouselImageWidths() {
 		if (responsiveCarouselImageWidths == null) {
@@ -188,7 +194,6 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 
 		return responsiveCarouselImageWidths;
 	}
-	
 
 	private String[] getResponsiveCarouselImageLabels() {
 		if (responsiveCarouselImageLabels == null) {
@@ -196,7 +201,6 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 		}
 		return responsiveCarouselImageLabels;
 	}
-	
 
 	private String[] getResponsiveImageLabels() {
 		if (responsiveImageLabels == null) {
@@ -216,5 +220,4 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 		}
 		return responsiveImageWidths;
 	}
-	
 }
