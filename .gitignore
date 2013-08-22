@@ -14,3 +14,17 @@ europeana.properties
 *~
 *.bak
 .sass-cache/
+
+# minified files
+
+portal2/src/main/webapp/themes/default/css/min/
+portal2/src/main/webapp/themes/default/js/com/addthis/min/
+portal2/src/main/webapp/themes/default/js/com/google/analytics/min/
+portal2/src/main/webapp/themes/default/js/com/google/translator/min/
+portal2/src/main/webapp/themes/default/js/com/microsoft/min/
+portal2/src/main/webapp/themes/default/js/eu/europeana/bootstrap/min/
+portal2/src/main/webapp/themes/default/js/eu/europeana/min/
+portal2/src/main/webapp/themes/default/js/galleria/themes/europeanax/min/
+portal2/src/main/webapp/themes/default/js/js/min/
+portal2/src/main/webapp/themes/default/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/min/
+

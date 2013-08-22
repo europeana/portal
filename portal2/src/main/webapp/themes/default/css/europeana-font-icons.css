@@ -1,9 +1,20 @@
 @font-face {
 	font-family: 'europeana';
+	/*
 	src: url('/portal/themes/default/images/europeana-font-files/europeana.eot?#') format('eot'),
 		url('/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'),
 		url('/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
 		url('/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
+	*/
+	
+	src: url('/portal/themes/default/images/europeana-font-files/europeana.eot');
+	src: url('/portal/themes/default/images/europeana-font-files/europeana.eot?#iefix') format('embedded-opentype'),
+		url('/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
+		url('/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype'),
+		url('/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg');
+		
+		
+		
 	font-weight: normal;
 	font-style: normal;
 	color:red !important;
