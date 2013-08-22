@@ -170,12 +170,6 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 			log.error(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
 		} catch (IOException e) {
 			log.error(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()), e);
-		// java.awt.image.ColorConvertOp.filter(ColorConvertOp.java:460) produces
-		// an exception saying:
-		// "Numbers of source Raster bands and source color space components do not match"
-		// The images are:
-		// http://blog.europeana.eu/wp-content/uploads/2013/08/4LFM7132.jpg
-		// http://blog.europeana.eu/wp-content/uploads/2013/08/3LFM7114.jpg
 		} catch (IllegalArgumentException e) {
 			log.error(String.format("IllegalArgumentException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
 		}
