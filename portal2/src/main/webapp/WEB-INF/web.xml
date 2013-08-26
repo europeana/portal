@@ -103,7 +103,8 @@
 	
 	<mime-mapping>
 	    <extension>woff</extension>
-	    <mime-type>application/x-font-woff</mime-type>
+	    <!-- mime-type>application/x-font-woff</mime-type -->
+	    <mime-type>application/octet-stream</mime-type>
 	</mime-mapping>
 	
 	<mime-mapping>
