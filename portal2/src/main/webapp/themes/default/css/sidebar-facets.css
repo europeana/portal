@@ -200,13 +200,14 @@ a.action-link span,
 
 /* facet section items */
 
-#filter-search ul {
+#filter-search ul:not(#wizard-tabs #filter-search ul) {
 	overflow:		auto;
 	margin-left:	1em;
 	margin-bottom:	1em;
 	display:		none;
 }
 
+	
 #filter-search #refinements{
 	overflow:	hidden;	
 	display:block;
