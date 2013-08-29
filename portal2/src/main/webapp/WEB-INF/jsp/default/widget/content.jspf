@@ -24,7 +24,29 @@
 		
 		display:		none;
 	}
-
+	
+	
+	
+	#wizard-tabs.accordion-tabs .tab-header{
+		padding-left: 1.5em;
+	}
+	
+	#wizard-tabs .tab-number{
+		position:      absolute;
+		font-size:     0.8em;
+		border:        1px solid #2A85E8;
+		border-radius: 0.5em;
+		top:           0.5em;
+		left:          0.4em;
+		width:         1em;
+		height:        1em;
+		line-height:   1em;
+		text-align:    center;
+	}
+	
+	#wizard-tabs .disabled .tab-number{
+		border:        1px solid #E4E4E4;
+	}
 
 	.widget-configuration .previous,
 	.widget-configuration .next{
@@ -382,7 +404,7 @@
 	<div id="wizard-tabs">
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab1_heading_t"/></c:set>
-		<a href="#step-1" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-1" class="tab-header" title="${tabTitle}" /><span class="tab-number">1</span>${tabTitle}</a>
 	
 		<div class="section" id="tab-1">
 			<div class="content">
@@ -407,9 +429,8 @@
 
 
 
-
 		<c:set var="tabTitle"><spring:message code="wizard_tab2_heading_t"/></c:set>
-		<a href="#step-2" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-2" class="tab-header" title="${tabTitle}" /><span class="tab-number">2</span>${tabTitle}</a>
 
 		<div class="section"  id="tab-2">
 			<div class="content">
@@ -696,7 +717,7 @@
 
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab3_heading_t"/></c:set>		
-		<a href="#step-3" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-3" class="tab-header" title="${tabTitle}" /><span class="tab-number">3</span>${tabTitle}</a>
 
 		<div class="section" id="tab-3">
 			<div class="content">
@@ -707,7 +728,7 @@
 		</div>
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab4_heading_t"/></c:set>
-		<a href="#step-4" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-4" class="tab-header" title="${tabTitle}" /><span class="tab-number">4</span>${tabTitle}</a>
 
 		<div class="section" id="tab-4">
 			<div class="content">

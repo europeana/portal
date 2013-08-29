@@ -295,13 +295,22 @@ var EuWidgetWizard = function(cmpIn, options){
 					var cb       = e.target ? $(e.target) : $(e);
 					var checked  = cb.prop('checked');
 					
+
 					var groupChecked = false;
-					$.each( cb.closest('.facet-header').find('.hide-til-opened').find('input'), function(i, ob){
-						if( $(ob).is(':checked') ){
-							groupChecked = true;
-							return true;
-						}
-					});
+					
+					if(cb.attr('type')=='radio'){
+						groupChecked = cb.attr('id') == 'rd-search-type-all' ? false : true; 
+					}
+					else{
+						$.each( cb.closest('.facet-header').find('.hide-til-opened').find('input'), function(i, ob){
+							if( $(ob).is(':checked') ){
+								groupChecked = true;
+								return true;
+							}
+						});						
+					}
+					
+					console.log("groupChecked = " + groupChecked);
 					
 					var labels = cb.closest('.facet-header').find('.facet-section');
 					if(groupChecked){
@@ -377,8 +386,18 @@ var EuWidgetWizard = function(cmpIn, options){
 							}
 						});
 						
+						
+						var labels = $('.choices').closest('.facet-header').find('.facet-section');
+						
 						if(show){
 							$('.choices').css('display', 'block');
+							
+							labels.find('.unmodified').css('display', 'inline-block');
+							labels.find('.modified')  .css('display', 'none');
+						}
+						else{
+							labels.find('.unmodified').css('display', 'none');
+							labels.find('.modified')  .css('display', 'inline-block');							
 						}
 					},
 					init: function(){
