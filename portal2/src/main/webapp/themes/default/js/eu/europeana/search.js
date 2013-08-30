@@ -73,16 +73,18 @@ eu.europeana.search = {
 		this.setupResultSizeMenu();
 		this.setupEllipsis();
 		
-		//this.setupPageJump();
-		new EuPagination($('.result-pagination'),
-			{
-				data:{
+		
+		$.each($('.result-pagination'), function(i, ob){
+			
+			new EuPagination( $(ob),
+				{
+					data:{
 					records: eu.europeana.vars.msg.result_count,
 					rows: parseInt(eu.europeana.vars.rows),
 					start: eu.europeana.vars.msg.start
-				}
+					} 
+				});
 		});
-
 		
 		if( $('#save-search').hasClass('icon-unsaveditem')){
 			$('#save-search').bind('click', this.handleSaveSearchClick );			
