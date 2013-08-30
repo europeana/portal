@@ -19,13 +19,10 @@
 		padding:		0.5em;
 		margin-left:	1.5em;
 		margin-bottom:	1.5em;
-		margin-top:    1em;
-		margin-bottom: 1em;
-		
+		margin-top:     1em;
+		margin-bottom:  1em;
 		display:		none;
 	}
-	
-	
 	
 	#wizard-tabs.accordion-tabs .tab-header{
 		padding-left: 1.5em;
@@ -118,14 +115,47 @@
 		text-decoration: underline;
 	}
 	
+	/*
     #wizard-tabs #withResults,
     #wizard-tabs #withoutResults{
     	position: relative;
     	top: 0.12em;
     }
+    */
     
-    #wizard-tabs .section-label.unmodified{
+    #wizard-tabs .theme-select{
+		text-align: center;
+	}
+		
+	#wizard-tabs .theme-select img{
+		width:              150px;
+		border:             4px solid white;
+	}
+		
+	#wizard-tabs .theme-select img.active{
+		border-color:       red;
+	}
+
+	#wizard-tabs .theme-select,
+	#wizard-tabs .theme-select img{
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing:    border-box;
+		box-sizing:         border-box;
+	}
+		
+    #wizard-tabs .section-label.modified{
     	display: none;
+    }
+    #wizard-tabs .section-label.modified:before{
+    	font-family:            'europeana';
+		content:                attr(data-icon);
+		speak:                  none;
+		font-weight:            normal;
+		-webkit-font-smoothing: antialiased;
+    	content:                "\55";
+    	color:                  yellow;
+    	text-shadow:            1px 3px 3px #000000;
+    	margin-right:           0.4em;
     }
     
     #wizard-tabs ul.data-providers{
@@ -291,7 +321,6 @@
 	
 	.filter-content{
 		margin:			1em 0;
-		XXXtext-align:		center;
 		white-space:	nowrap;
 	}
 
@@ -368,6 +397,11 @@
 			float:			right;
 		}
 		
+		#wizard-tabs .theme-select img{
+			width:       auto;
+			max-width:   24%;
+			float:       left;
+		}
 
 	}
 	
@@ -454,8 +488,8 @@
 							<li class="facet-header">
 								<h3>
 									<a class="facet-section" rel="nofollow">
-										<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_type_header_1" /></span>
-										<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_type_header_2" /></span>
+										<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_type_header_1" /></span>
+										<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_type_header_2" /></span>
 										<span class="change">&nbsp; <span class="underline">change</span></span>
 									</a> 
 								</h3>
@@ -525,8 +559,8 @@
 									<h3>
 										<a class="facet-section" rel="nofollow">
 
-											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_provider_header_1" /></span>
-											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_provider_header_2" /></span>
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_provider_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_provider_header_2" /></span>
 											<span class="change">&nbsp; <span class="underline">change</span></span>
 										</a> 
 									</h3>
@@ -581,8 +615,8 @@
 								<li class="facet-header">
 									<h3>
 										<a class="facet-section" rel="nofollow">
-											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_media_header_1" /></span>
-											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_media_header_2" /></span>
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_media_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_media_header_2" /></span>
 											<span class="change">&nbsp; <span class="underline">change</span></span>
 										</a> 
 									</h3>
@@ -621,8 +655,8 @@
 								<li class="facet-header">
 									<h3>
 										<a class="facet-section" rel="nofollow">
-											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_copyrights_header_1" /></span>
-											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_copyrights_header_2" /></span>
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_copyrights_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_copyrights_header_2" /></span>
 											<span class="change">&nbsp; <span class="underline">change</span></span>
 										</a> 
 									</h3>
@@ -663,8 +697,8 @@
 								<li class="facet-header">
 									<h3>
 										<a class="facet-section" rel="nofollow">
-											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_languages_header_1" /></span>
-											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_languages_header_2" /></span>
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_languages_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_languages_header_2" /></span>
 											<span class="change">&nbsp; <span class="underline">change</span></span>
 										</a> 
 									</h3>
@@ -722,6 +756,38 @@
 		<div class="section" id="tab-3">
 			<div class="content">
 				<div class="content-inner">
+				
+					<div class="theme-select">
+						<img src="/portal/themes/default/images/sw-theme-1.png" data-index="1" class="active"/>
+						<img src="/portal/themes/default/images/sw-theme-2.png" data-index="2" />
+						<img src="/portal/themes/default/images/sw-theme-3.png" data-index="3" />
+						<img src="/portal/themes/default/images/sw-theme-4.png" data-index="4" />
+					</div>
+			
+						
+						
+						<!--
+						<div class="radio-block">
+											
+							<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
+							<br/>
+							<input id="withoutResults" name="withResults" type="radio"  value="false" /><label for="withoutResults">without results</label>
+							
+						</div>
+
+
+						<div class="radio-block">
+	
+							<input id="themeClassic" name="theme" type="radio" value="true" checked/><label for="themeClassic">classic theme</label>
+							<br/>
+							<input id="themeDark"    name="theme" type="radio" value="false" /><label for="themeDark">dark theme</label>
+							
+						</div>
+						-->
+
+				
+				
+				
 				</div>
 			</div>
 			<input type="hidden" id="step3" class="mandatory"/>
@@ -737,6 +803,7 @@
 						<spring:message code="wizard_tab4_content1_t"/>
 					</div>
 
+<!-- 
 					<div class="para">
 						<div class="radio-block">					
 							<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
@@ -751,6 +818,7 @@
 							<input id="themeDark"    name="theme" type="radio" value="false" /><label for="themeDark">dark theme</label>
 						</div>
 					</div>
+ -->
 												
 					<div class="preview-window search-widget-container">
 					</div>

@@ -102,31 +102,10 @@ var EuWidgetWizard = function(cmpIn, options){
 				});
 			}
 			catch(e){console.log(e);}
-			
-//			$('.data-providers>li>a>input').add('.providers>li>a>input').each(function(i, ob){
-//				if($(ob).prop('checked')){
-//					console.log("checked name is " + $(ob).next('span').html());
-//					var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
-//					result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':{' + name + '}';
-//				}
-//			});			
-			
-			
 		}
-
-		if(self.initialisedTabs[3]){
 		
-			$('ul.portal-languages a input').each(function(i, ob){
-				if($(ob).prop('checked')){
-					var lang = $(ob).next('span').attr('class');
-					result += param() + 'lang=' + lang;
-				}
-			});
-
-		}
-
-		result += param() + 'withResults=' + $('#withResults').prop('checked');
-		result += $('#themeDark').prop('checked') ? param() + "theme=dark" : '';
+		result += param() + 'withResults=' + getWithResults();
+		result += param() + 'theme=' + getTheme();
 
 		console.log('output() returns ' + result);
 
@@ -165,18 +144,11 @@ var EuWidgetWizard = function(cmpIn, options){
 	};
 	
 	var createCollapsibleSection = function(i, ob){
-		// maclean
-		//return;
 		ob = $(ob);
-		
-		//var headingSelector	= "h3 a";
 		
 		var headingSelector	= "h3 a .change";
 		var headingSelected	= ob.find(headingSelector);
 		var fnGetItems		= function(){
-			//alert("get items");
-			//return headingSelected.closest('.facet-header').next('li').find('ul').find('a');
-			//return headingSelected.closest('.facet-header').next('li').children('ul').find('a');
 			return headingSelected.closest('.facet-header').children('ul').find('a');
 		};
 		
@@ -184,14 +156,11 @@ var EuWidgetWizard = function(cmpIn, options){
 			headingSelected,
 			fnGetItems
 		);
-		
 
 		ob.Collapsible(
 			{
 				"expandedClass"         : "icon-arrow-7-right",
 				"collapsedClass"        : "icon-arrow-6-right",
-
-				
 				"headingSelector"       : headingSelector,
 				"bodySelector"          : ".hide-til-opened",
 				"keyHandler"            : accessibility
@@ -208,6 +177,20 @@ var EuWidgetWizard = function(cmpIn, options){
 			}
 		});
 	};
+
+	var getSelectedImageIndex = function(){
+		return parseInt( $('.theme-select img.active').attr('data-index') );
+	};
+	
+	var getTheme = function(){
+		var selIndex = getSelectedImageIndex();
+		return (selIndex == 2 || selIndex == 4) ? 'dark' : '';
+	};
+	
+	var getWithResults = function(){
+		var selIndex = getSelectedImageIndex();
+		return ( selIndex == 3 || selIndex == 4) ? false : true;
+	};
 	
 	
 	/* Disable tabs that have unfilled inputs */
@@ -222,7 +205,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		$.each(allTabs, function(i, tab){
 		
 			var content = tab.getTabContent();
-			var inputs  = content.find('input.mandatory');//.add(content.find('select.mandatory'));
+			var inputs  = content.find('input.mandatory');
 			
 			inputs.each(function(j, field){
 				if($(field).val().length == 0 ){
@@ -271,13 +254,6 @@ var EuWidgetWizard = function(cmpIn, options){
 	
 	var init = function(){
 
-		// Do this once: reset preview-tab checkboxes
-		$('#withResults')   .prop('checked', true);
-		$('#withoutResults').prop('checked', false);
-		$('#themeClassic')  .prop('checked', true);
-		$('#themeDark')     .prop('checked', false);
-		
-		
 		// individual tab initialisation
 		
 		var initTab = function(tabIndex){
@@ -314,12 +290,12 @@ var EuWidgetWizard = function(cmpIn, options){
 					
 					var labels = cb.closest('.facet-header').find('.facet-section');
 					if(groupChecked){
-						labels.find('.unmodified').css('display', 'inline-block');
-						labels.find('.modified')  .css('display', 'none');
-					}
-					else{
 						labels.find('.unmodified').css('display', 'none');
 						labels.find('.modified')  .css('display', 'inline-block');
+					}
+					else{
+						labels.find('.unmodified').css('display', 'inline-block');
+						labels.find('.modified')  .css('display', 'none');
 					}
 					
 					//cconsole.log( (checked ? "Add" : "Remove") + cb.attr('title') );
@@ -392,12 +368,12 @@ var EuWidgetWizard = function(cmpIn, options){
 						if(show){
 							$('.choices').css('display', 'block');
 							
-							labels.find('.unmodified').css('display', 'inline-block');
-							labels.find('.modified')  .css('display', 'none');
+							labels.find('.modified')  .css('display', 'inline-block');
+							labels.find('.unmodified').css('display', 'none');
 						}
 						else{
-							labels.find('.unmodified').css('display', 'none');
-							labels.find('.modified')  .css('display', 'inline-block');							
+							labels.find('.modified')  .css('display', 'none');
+							labels.find('.unmodified').css('display', 'inline-block');							
 						}
 					},
 					init: function(){
@@ -517,27 +493,16 @@ var EuWidgetWizard = function(cmpIn, options){
 				};
 				eu_europeana_providers.init();
 			}
-			if(tabIndex == 3){
-				var change = function(e){
-					var cb       = e.target ? $(e.target) : $(e);
-					var checked  = cb.prop('checked');
-				};
-				
-				$("ul.portal-languages input").change(change).click(function(e){
-					e.stopPropagation();
-				}).prop('checked', false);
-				
-				$('ul.portal-languages a').click(function(e){
-					var cb = $(this).find('input'); 
-					cb.prop('checked', !cb.prop('checked'));
-					change(cb);
+			if(tabIndex == 2){
+				$('.theme-select img').click(function(){
+					$('.theme-select img').removeClass('active');
+					$(this).addClass('active');
 				});
-
 			}
 			if(tabIndex == PREVIEW_TAB_INDEX){
 
 				// this tab re-inits
-				alert("show the preview");
+
 				var src = output();
 				
 				$('.preview-window').html('');
@@ -545,18 +510,19 @@ var EuWidgetWizard = function(cmpIn, options){
 				$('.preview-window').append('<script type="text/javascript" src="' + src + '"></script>');					
 
 				/* dynamically added scripts have no readable src attribute, so we have to provide the #widget-url-ref fall back  */
+				/*
 				var doPreview = function(){
-					searchWidget.setWithResults($('#withResults').prop('checked'));
+					searchWidget.setWithResults( getWithResults() );
 					searchWidget.setTheme($('#themeDark').prop('checked') ? "dark" : false);
 			
 					var src = output();
 					//$("#widget-url-ref").attr('src', src)
 					setCopy(src);
 				};
-				
-				$('#withResults').add('#withoutResults').add('#themeClassic').add('#themeDark').change(function(e){
-					doPreview();
-				});
+				*/
+				//$('#withResults').add('#withoutResults').add('#themeClassic').add('#themeDark').change(function(e){
+				//	doPreview();
+				//});
 			}
 		};  // end initTab()
 		
@@ -580,6 +546,9 @@ var EuWidgetWizard = function(cmpIn, options){
 		setDisabledTabs();
 		
 		self.cmp.find('input[type!=radio]:not(.next):not(.previous)').val('');
+		self.cmp.find('#rd-search-type-all').prop('checked', true);
+		
+		
 		self.cmp.find('select').val('');
 		
 		self.cmp.find('input.mandatory').keyup(function(e){
