@@ -1,7 +1,7 @@
 <style type="text/css">
 
-	.choices,
 	.remove-link,
+	#wizard-tabs .choices,
 	#output{
 		-moz-box-sizing:	border-box;
 		-webkit-box-sizing:	border-box;
@@ -19,9 +19,31 @@
 		padding:		0.5em;
 		margin-left:	1.5em;
 		margin-bottom:	1.5em;
+		margin-top:     1em;
+		margin-bottom:  1em;
 		display:		none;
 	}
-
+	
+	#wizard-tabs.accordion-tabs .tab-header{
+		padding-left: 1.5em;
+	}
+	
+	#wizard-tabs .tab-number{
+		position:      absolute;
+		font-size:     0.8em;
+		border:        1px solid #2A85E8;
+		border-radius: 0.5em;
+		top:           0.5em;
+		left:          0.4em;
+		width:         1em;
+		height:        1em;
+		line-height:   1em;
+		text-align:    center;
+	}
+	
+	#wizard-tabs .disabled .tab-number{
+		border:        1px solid #E4E4E4;
+	}
 
 	.widget-configuration .previous,
 	.widget-configuration .next{
@@ -67,6 +89,12 @@
 		margin-bottom:	0.75em;
 	}
 	
+	#wizard-tabs .default_query{
+		margin-left:   0.5em;
+		padding-left:  0.25em;
+		padding-right: 0.25em;
+	}
+	
 	#wizard-tabs #filter-search,
 	#wizard-tabs ul.data-providers,
 	#wizard-tabs ul.providers,
@@ -79,10 +107,55 @@
 		margin:			0;
 	}
 	
+	#wizard-tabs #filter-search h3{
+		border-top: none;
+	}
+	
+	#wizard-tabs a .change .underline{
+		text-decoration: underline;
+	}
+	
+	/*
     #wizard-tabs #withResults,
     #wizard-tabs #withoutResults{
     	position: relative;
     	top: 0.12em;
+    }
+    */
+    
+    #wizard-tabs .theme-select{
+		text-align: center;
+	}
+		
+	#wizard-tabs .theme-select img{
+		width:              150px;
+		border:             4px solid white;
+	}
+		
+	#wizard-tabs .theme-select img.active{
+		border-color:       red;
+	}
+
+	#wizard-tabs .theme-select,
+	#wizard-tabs .theme-select img{
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing:    border-box;
+		box-sizing:         border-box;
+	}
+		
+    #wizard-tabs .section-label.modified{
+    	display: none;
+    }
+    #wizard-tabs .section-label.modified:before{
+    	font-family:            'europeana';
+		content:                attr(data-icon);
+		speak:                  none;
+		font-weight:            normal;
+		-webkit-font-smoothing: antialiased;
+    	content:                "\55";
+    	color:                  yellow;
+    	text-shadow:            1px 3px 3px #000000;
+    	margin-right:           0.4em;
     }
     
     #wizard-tabs ul.data-providers{
@@ -90,11 +163,15 @@
     }
     
     #wizard-tabs a.data-provider{
-    	max-height:			none;
-    	word-break:			break-all;
+    	max-height:  none;
+    	word-break:  break-all;
+    	display:     inline-block;
+    	max-width:   100%;
     }
 	
-	/* checkboxes */
+	
+	
+	/* checkboxes / radios */
 	
 	#wizard-tabs .remove-link{
 		background-color:	#dedede;
@@ -105,6 +182,11 @@
 		word-wrap:			break-word;
 		color:				red; 
 	}
+	
+	#wizard-tabs .radio-block{
+		margin: 1em;
+	}
+
 
 	#wizard-tabs .remove-link span {
 		color:				#333; 
@@ -117,6 +199,11 @@
 	#wizard-tabs .data-providers li {
 		list-style:		none;
 		margin-left:	1.5em;
+	}
+	
+	
+	#wizard-tabs .hide-til-opened label {
+		display: inline;
 	}
 	
 	.progress-wrapper{
@@ -196,11 +283,11 @@
 	
 	input.filter{
 		display:	inline;
-		max-width:	80%;
-		width:		80%;
+		max-width:	100%;
+		width:		20em;
 	}
 	
-	.choices{
+	#wizard-tabs .choices{
 		display:	none;
 		width:		100%;
 		max-height:	8.5725em;
@@ -209,18 +296,20 @@
 		margin-top:	1em;
 		padding:	0.5em;
 	}
-	
 
 	/* borders */
+	/*
+	#wizard-tabs .search-what-menu,
+	*/
+	#wizard-tabs .choices,
 	#wizard-tabs input,
-	ul.types,
-	ul.copyrights,
-	ul.languages,
-	ul.portal-languages,
-	.search-what-menu,
-	.providers,
-	.choices,
-	.preview-window,
+	#wizard-tabs ul.search-types,
+	#wizard-tabs ul.types,
+	#wizard-tabs ul.copyrights,
+	#wizard-tabs ul.languages,
+	#wizard-tabs ul.portal-languages,
+	#wizard-tabs .providers,
+	#wizard-tabs .preview-window,
 	#output{
 		border:		1px solid #e4e4e4;
 	}
@@ -232,7 +321,6 @@
 	
 	.filter-content{
 		margin:			1em 0;
-		text-align:		center;
 		white-space:	nowrap;
 	}
 
@@ -259,8 +347,34 @@
 		width:			100%;
 	}
 
+
+
+	#intro-text{		
+	}
+	
+	#video-area{
+		background-color: orange;
+		width:            100%;
+		height:           200px;
+	}
+		
+	
 		
 	@media only screen and ( min-width:	48em ){
+
+		#intro-text{
+			float:     left;
+			max-width: 50%;
+		}
+		
+		#video-area{
+			float:            right;
+			background-color: orange;
+			width:            380px;
+			height:           200px;
+			max-width:        50%;
+		}
+
 	
 		.widget-configuration .previous,
 		.widget-configuration .next{
@@ -283,6 +397,11 @@
 			float:			right;
 		}
 		
+		#wizard-tabs .theme-select img{
+			width:       auto;
+			max-width:   24%;
+			float:       left;
+		}
 
 	}
 	
@@ -319,25 +438,33 @@
 	<div id="wizard-tabs">
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab1_heading_t"/></c:set>
-		<a href="#step-1" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-1" class="tab-header" title="${tabTitle}" /><span class="tab-number">1</span>${tabTitle}</a>
 	
 		<div class="section" id="tab-1">
 			<div class="content">
 				<div class="content-inner">				
-					<p>
-						<spring:message code="wizard_tab1_content1_t"/> 
-					</p>
-					<p>
-						<spring:message code="wizard_tab1_content2_t"/> 
-					</p>
+					<div id="intro-text">
+						<p class="para">
+							<spring:message code="wizard_tab1_content1_t"/> 
+						</p>
+						<p class="para">
+							<spring:message code="wizard_tab1_content2_t"/> 
+						</p>
+					</div>
+					<div id="video-area" class="para">
+						
+					</div>
 				</div>
 			</div>
 			<input type="hidden" id="step1" class="mandatory"/>
 			
 		</div>
 
+
+
+
 		<c:set var="tabTitle"><spring:message code="wizard_tab2_heading_t"/></c:set>
-		<a href="#step-2" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-2" class="tab-header" title="${tabTitle}" /><span class="tab-number">2</span>${tabTitle}</a>
 
 		<div class="section"  id="tab-2">
 			<div class="content">
@@ -345,62 +472,152 @@
 
 					<div class="para">
 						<spring:message code="wizard_tab2_search_for_t"/> 
-
 						<input class="default_query" /> 
-
-						<spring:message code="wizard_tab2_search_in_t"/>
-
-						<div class="eu-menu search-what-menu" aria-hidden="true">
-
-							<span class="hide-ilb-on-phones menu-label"><spring:message code="Search_t" /></span>
-							<span class="icon-arrow-3 open-menu"></span>
-							<ul>
-								<li class="item">
-									<a	href=""><spring:message code="FieldedSearchAllFields_t" /></a>
-								</li>
-								<li class="item">
-									<a	href=""
-										class="title%3A"><spring:message code="FieldedSearchTitle_t" /></a>
-								</li>
-								<li class="item">
-									<a	href=""
-										class="who%3A"><spring:message code="FieldedSearchWho_t" /></a>
-								</li>
-								<li class="item">
-									<a	href=""
-										class="what%3A"><spring:message code="FieldedSearchWhat_t" /></a>
-								</li>
-								<li class="item">
-									<a	href=""
-										class="when%3A"><spring:message code="FieldedSearchWhen_t" /></a>
-								</li>
-								<li class="item">
-									<a	href=""
-										class="where%3A"><spring:message code="FieldedSearchWhere_t" /></a>
-								</li>
-							</ul>
-							
-						</div>
-					
 					</div>
 					
+					
 					<div class="para">
-						<spring:message code="wizard_tab2_search_include_t"/>
+						<spring:message code="wizard_tab2_search_include_t"/>:
 					</div>
 					
 					<div>
 	
+						<!-- types -->
+						<ul id="filter-search">
+						
+							<li class="facet-header">
+								<h3>
+									<a class="facet-section" rel="nofollow">
+										<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_type_header_1" /></span>
+										<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_type_header_2" /></span>
+										<span class="change">&nbsp; <span class="underline">change</span></span>
+									</a> 
+								</h3>
+								
+								<div class="hide-til-opened">							
+									<ul class="search-types">
 
-						<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
-						 					
-							<ul id="filter-search">
+										<li>
+											<a title="<spring:message code="FieldedSearchAllFields_t" />" rel="nofollow">
+												<input title="<spring:message code="FieldedSearchAllFields_t" />" type="radio" checked="checked" id="rd-search-type-all" name="rd-search-type" value=""/>
+												<label for="rd-search-type-all">
+													&nbsp; Search All Fields
+												</label>
+											</a>
+										</li>
+										<li>
+											<a title="<spring:message code="FieldedSearchTitle_t" />" rel="nofollow">
+												<input title="<spring:message code="FieldedSearchTitle_t" />" type="radio" id="rd-search-type-titles" name="rd-search-type" value="title:"/>
+												<label for="rd-search-type-titles">
+													&nbsp; Search Titles
+												</label>
+											</a>
+										</li>
+										<li>
+											<a title="<spring:message code="FieldedSearchWho_t" />" rel="nofollow">
+												<input title="<spring:message code="FieldedSearchWho_t" />" type="radio" id="rd-search-type-creators" name="rd-search-type" value="who:"/>
+												<label for="rd-search-type-creators">
+													&nbsp; Search Creators
+												</label>
+											</a>
+										</li>
+										<li>
+											<a title="<spring:message code="FieldedSearchWhat_t" />" rel="nofollow">
+												<input title="<spring:message code="FieldedSearchWhat_t" />" type="radio" id="rd-search-type-subjects" name="rd-search-type" value="what:" />
+												<label for="rd-search-type-subjects">
+													&nbsp; Search Subjects
+												</label>
+											</a>
+										</li>
+										<li>
+											<a title="<spring:message code="FieldedSearchWhen_t" />" rel="nofollow">
+												<input title="<spring:message code="FieldedSearchWhen_t" />" type="radio" id="rd-search-type-dates" name="rd-search-type" value="when:"/>
+												<label for="rd-search-type-dates">
+													&nbsp; Search Dates / Periods
+												</label>
+											</a>
+										</li>
+										<li>
+											<a title="<spring:message code="FieldedSearchWhere_t" />" rel="nofollow">
+												<input title="<spring:message code="FieldedSearchWhere_t" />" type="radio" id="rd-search-type-places" name="rd-search-type" value="where:"/>
+												<label for="rd-search-type-places">
+													&nbsp; Search Places
+												</label>
+											</a>
+										</li>
+									</ul>
+									
+								</div>
+							</li>
+						
+						
+						
+						
+							<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
+
+								<li class="facet-header">
+									<h3>
+										<a class="facet-section" rel="nofollow">
+
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_provider_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_provider_header_2" /></span>
+											<span class="change">&nbsp; <span class="underline">change</span></span>
+										</a> 
+									</h3>
+									
+									<div class="hide-til-opened">							
+									
+										<div class="filter-wrapper">
+											<div class="filter-content">
+												<span class="filter-label icon-mag"></span>
+												<input class="filter" id="content-provider-filter-filter" style=""/>
+											</div>
+										</div>
+										
+										<ul class="providers">
+											<c:set var="toggle_providers" value=""/>
+											
+											<c:forEach items="${model.providers}" var="entry" varStatus="status1">
+												<c:choose>
+													<c:when test="${entry.dataProvidersListed}">
+														<c:set var="toggle_providers" value=' class="icon-arrow-2-after"'/>
+													</c:when>
+												    <c:otherwise>
+														<c:set var="toggle_providers" value=' class="no-children"'/>
+													</c:otherwise>
+												</c:choose>
+												<li>
+													<a ${toggle_providers}><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+													<ul class="data-providers">
+														<li>
+															<a><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+														</li>
+														
+														<c:if test="${entry.dataProvidersListed}">
+															<c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
+																<li><a class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
+															</c:forEach>
+														</c:if>
+												    </ul>
+												</li>
+											</c:forEach>
+										</ul>
+										<div class="choices"></div>
+									</div>
+
+								</li>
+								
+
+
 							
 								<!-- types -->
 
 								<li class="facet-header">
 									<h3>
-										<a class="facet-section icon-arrow-6" rel="nofollow">
-											<spring:message code="ByMediatype_t" />
+										<a class="facet-section" rel="nofollow">
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_media_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_media_header_2" /></span>
+											<span class="change">&nbsp; <span class="underline">change</span></span>
 										</a> 
 									</h3>
 								
@@ -408,7 +625,7 @@
 										<c:if test="${fn:toLowerCase(facet.type) == 'type'}">
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 										
-											<ul class="types">
+											<ul class="types hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -437,8 +654,10 @@
 	
 								<li class="facet-header">
 									<h3>
-										<a class="facet-section icon-arrow-6" rel="nofollow">
-											<spring:message code="byCopyright_t" />
+										<a class="facet-section" rel="nofollow">
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_copyrights_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_copyrights_header_2" /></span>
+											<span class="change">&nbsp; <span class="underline">change</span></span>
 										</a> 
 									</h3>
 	
@@ -448,7 +667,7 @@
 										
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 											
-											<ul class="copyrights">
+											<ul class="copyrights hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -472,12 +691,15 @@
 								</li>
 	
 	
+	
 								<!-- languages -->
 
 								<li class="facet-header">
 									<h3>
-										<a class="facet-section icon-arrow-6" rel="nofollow">
-											<spring:message code="ByLanguage_t" />
+										<a class="facet-section" rel="nofollow">
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_languages_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_languages_header_2" /></span>
+											<span class="change">&nbsp; <span class="underline">change</span></span>
 										</a> 
 									</h3>
 	
@@ -487,7 +709,7 @@
 										
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 											
-											<ul class="languages">
+											<ul class="languages hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -507,12 +729,12 @@
 
 										</c:if>
 									</c:forEach>
+
 								</li>
 								
+							</c:if>
 								
-							</ul>
-							
-						</c:if>
+						</ul>
 										
 					</div>
 					
@@ -522,70 +744,57 @@
 			
 		</div>
 
+
+
+
+
+
+
 		<c:set var="tabTitle"><spring:message code="wizard_tab3_heading_t"/></c:set>		
-		<a href="#step-3" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-3" class="tab-header" title="${tabTitle}" /><span class="tab-number">3</span>${tabTitle}</a>
 
 		<div class="section" id="tab-3">
 			<div class="content">
 				<div class="content-inner">
-					<div class="para">
-						<spring:message code="wizard_tab3_content1_t"/>
-					</div>								
-					<div class="filter-wrapper">
-						<div class="filter-content">
-							<span class="filter-label icon-mag"></span>
-							<input class="filter" id="content-provider-filter-filter" style=""/>
-						</div>
-					</div>
-					
-					<ul class="providers">
-						<c:set var="toggle_providers" value=""/>
-						
-						<c:forEach items="${model.providers}" var="entry" varStatus="status1">
-							<c:choose>
-								<c:when test="${entry.dataProvidersListed}">
-									<c:set var="toggle_providers" value=' class="icon-arrow-2-after"'/>
-								</c:when>
-							    <c:otherwise>
-									<c:set var="toggle_providers" value=' class="no-children"'/>
-								</c:otherwise>
-							</c:choose>
-							<li>
-								<a ${toggle_providers}><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
-								<ul class="data-providers">
-									<li>
-										<a><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
-									</li>
-									
-									<c:if test="${entry.dataProvidersListed}">
-										<c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
-											<li><a class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
-										</c:forEach>
-									</c:if>
-							    </ul>
-							</li>
-						</c:forEach>
-					</ul>
-
-					<%-- THE FACETS AS IN THE PORTAL --%>
- 
- 					<%--
-
-					provider
-					data_provider
 				
-					--%>
- 
- 					<%-- /THE FACETS AS IN THE PORTAL --%>
+					<div class="theme-select">
+						<img src="/portal/themes/default/images/sw-theme-1.png" data-index="1" class="active"/>
+						<img src="/portal/themes/default/images/sw-theme-2.png" data-index="2" />
+						<img src="/portal/themes/default/images/sw-theme-3.png" data-index="3" />
+						<img src="/portal/themes/default/images/sw-theme-4.png" data-index="4" />
+					</div>
+			
+						
+						
+						<!--
+						<div class="radio-block">
+											
+							<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
+							<br/>
+							<input id="withoutResults" name="withResults" type="radio"  value="false" /><label for="withoutResults">without results</label>
+							
+						</div>
 
-					<div class="choices"></div>
+
+						<div class="radio-block">
+	
+							<input id="themeClassic" name="theme" type="radio" value="true" checked/><label for="themeClassic">classic theme</label>
+							<br/>
+							<input id="themeDark"    name="theme" type="radio" value="false" /><label for="themeDark">dark theme</label>
+							
+						</div>
+						-->
+
+				
+				
+				
 				</div>
 			</div>
 			<input type="hidden" id="step3" class="mandatory"/>
 		</div>
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab4_heading_t"/></c:set>
-		<a href="#step-4" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
+		<a href="#step-4" class="tab-header" title="${tabTitle}" /><span class="tab-number">4</span>${tabTitle}</a>
 
 		<div class="section" id="tab-4">
 			<div class="content">
@@ -593,32 +802,9 @@
 					<div class="para">
 						<spring:message code="wizard_tab4_content1_t"/>
 					</div>
-					<ul class="portal-languages">
-						<c:forEach items="${model.portalLanguages}" var="language">
-					  	<li><a><input type="radio" name="lang" title="${language.languageName}"><span class="${language.languageCode}">${language.languageName}</span></a></li>
-						</c:forEach>
-					</ul>
-				</div>
-			</div>
-			<input type="hidden" id="step4" class="mandatory"/>
-		</div>
 
-		<c:set var="tabTitle"><spring:message code="wizard_tab5_heading_t"/></c:set>
-		<a href="#step-5" class="tab-header" title="${tabTitle}" />${tabTitle}</a>
-
-		<div class="section"  id="tab-5">
-			<div class="content">
-				<div class="content-inner">
+<!-- 
 					<div class="para">
-						<spring:message code="wizard_tab5_content1_t"/>
-					</div>			
-					<div class="para">
-<style>
-	.radio-block{
-		float:left;
-		margin: 1em;
-	}
-</style>					
 						<div class="radio-block">					
 							<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
 							<br/>
@@ -631,24 +817,29 @@
 							<br/>
 							<input id="themeDark"    name="theme" type="radio" value="false" /><label for="themeDark">dark theme</label>
 						</div>
-						
 					</div>
+ -->
 												
 					<div class="preview-window search-widget-container">
-					</div>					
-					<div class="para">
-						<spring:message code="wizard_tab5_content2_t"/>
 					</div>
+								
+					<div class="para">
+						<spring:message code="wizard_tab4_content2_t"/>
+					</div>
+					
 					<div class="para">
 						<p id="output"></p>
 					</div>
+
 				</div>
 			</div>
+			<!-- input type="hidden" id="step4" class="mandatory"/-->
 		</div>
+
 	</div>
 
-	<input type="button" class="deans-button-1 next"		value="${buttonNextText}" />
-	<input type="button" class="deans-button-1 previous disabled"	value="${buttonPreviousText}" />
+	<input type="button" class="deans-button-1 next"               value="${buttonNextText}" />
+	<input type="button" class="deans-button-1 previous disabled"  value="${buttonPreviousText}" />
 
 	<div class="progress-wrapper">
 		<spring:message code="wizard_progress_t"/>
