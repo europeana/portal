@@ -85,8 +85,8 @@ public class RightsValue {
 	}
 
 	public String getRelativeUrl() {
-		if(right.isRelativeUrl()){
-			return right.getRelativeUrl(portalUrl);			
+		if (right.isRelativeUrl()) {
+			return right.getRelativeUrl(portalUrl);
 		}
 		return url;
 	}

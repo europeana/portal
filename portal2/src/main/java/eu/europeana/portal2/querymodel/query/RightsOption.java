@@ -69,16 +69,11 @@ public enum RightsOption {
 	EU_ORPHAN("http://www.europeana.eu/rights/test-orphan-work-test/", "Orphan Work", "icon-unknown", false, true),
 
 	// EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "eu_unknown.jpg", "cc-unknown.png"); // +transparent
-	
 	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false, true),
-	
 
-	OOC_NC("http://www.europeana.eu/rights/ooc-nc/", "Out of copyright - non commercial reuse", "icon-publicdomain icon-nc", false, true);
+	OOC_NC("http://www.europeana.eu/rights/out-of-copyright-non-commercial/", 
+			"Out of copyright - non commercial reuse", "icon-publicdomain icon-nc", false, true);
 
-	
-	
-	
-	
 	private String url = null;
 	private String rightsText = null;
 	private String rightsIcon = null;
@@ -123,7 +118,8 @@ public enum RightsOption {
 				if (!portalUrl.endsWith("/")) {
 					portalUrl += "/";
 				}
-				relativeUrl = url.replace("http://www.europeana.eu/", portalUrl).replaceAll("/$", ".html");
+				relativeUrl = url.replace("http://www.europeana.eu/", portalUrl)
+								.replaceAll("/$", ".html");
 			} else {
 				relativeUrl = url;
 			}
