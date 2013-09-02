@@ -5,6 +5,16 @@
 .row p.note {
   font-size: 80%;
 }
+.apikey {
+  margin: 10px 0 10px 0;
+}
+.apikey-header {
+  border-top: thin #333;
+}
+.apikey-header th {
+  font-weight: normal;
+  font-style: italic;
+}
 </style>
 <div class="row">
 
@@ -24,7 +34,6 @@
       <th><spring:message code="admin_Registration_t" /></th>
       <th><spring:message code="myeuropeana_UserRole_t" /></th>
       <th><spring:message code="Actions_t" /></th>
-      <th><spring:message code="myeuropeana_ApiKeys_t" />*</th>
     </tr>
   </thead>
   <tbody>
@@ -45,25 +54,45 @@
       </c:url>
       <a href="${blockUser}"><spring:message code="admin_BlockUser_t" /></a>
     </td>
-    <td>
-      <table>
-        <c:forEach items="${user.apiKeys}" var="apiKey">
-          <c:url var="removeApiKey" value="/admin/removeApiKey.html">
-            <c:param name="userId" value="${user.id}" />
-            <c:param name="apiKey" value="${apiKey.id}" />
-          </c:url>
-          <c:url var="limitApiKey" value="/admin/limitApiKey.html">
-            <c:param name="userId" value="${user.id}" />
-            <c:param name="apiKey" value="${apiKey.id}" />
-          </c:url>
-          <tr>
-            <td width="70%"><code>${apiKey.id}</code> / <code>${apiKey.privateKey}</code> / ${apiKey.usageLimit} 
-              (${model.usage['total'][apiKey.id]}/${model.usage['actual'][apiKey.id]})</td>
-            <td width="30%">
-                <a href="${removeApiKey}"><spring:message code="Remove_t" /></a>
-              | <a href="${limitApiKey}"><spring:message code="admin_limitApiKey_t" /></a>
-            </td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><!-- <em><spring:message code="myeuropeana_ApiKeys_t" />:</em> --></td>
+    <td colspan="4">
+      <table class="apikey">
+        <!-- 
+        <thead>
+          <tr class="apikey-header">
+            <th>API key</th>
+            <th>Private key</th>
+            <th>Limit</th>
+            <th>Usage</th>
+            <th>currently</th>
+            <th><spring:message code="Actions_t" /></th>
           </tr>
+        </thead>
+         -->
+        <tbody>
+          <c:forEach items="${user.apiKeys}" var="apiKey">
+            <c:url var="removeApiKey" value="/admin/removeApiKey.html">
+              <c:param name="userId" value="${user.id}" />
+              <c:param name="apiKey" value="${apiKey.id}" />
+            </c:url>
+            <c:url var="limitApiKey" value="/admin/limitApiKey.html">
+              <c:param name="userId" value="${user.id}" />
+              <c:param name="apiKey" value="${apiKey.id}" />
+            </c:url>
+            <tr>
+              <td title="API key"><code>${apiKey.id}</code></td>
+              <td title="Private key"><code>${apiKey.privateKey}</code></td>
+              <td title="Limit">${apiKey.usageLimit}</td>
+              <td title="Usage">${model.usage['total'][apiKey.id]}</td>
+              <td title="Current usage">${model.usage['actual'][apiKey.id]}</td>
+              <td title="<spring:message code="Actions_t" />" align="right">
+                  <a href="${removeApiKey}"><spring:message code="Remove_t" /></a>
+                | <a href="${limitApiKey}"><spring:message code="admin_limitApiKey_t" /></a>
+              </td>
+            </tr>
+          </tbody>
         </c:forEach>
       </table>
     </td>
