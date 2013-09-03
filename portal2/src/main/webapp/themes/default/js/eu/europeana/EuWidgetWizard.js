@@ -268,10 +268,8 @@ var EuWidgetWizard = function(cmpIn, options){
 			if(tabIndex == 1){			// query / providers / types / copyrights / languages
 				
 				var change = function(e){
-					var cb       = e.target ? $(e.target) : $(e);
-					var checked  = cb.prop('checked');
-					
-
+					var cb           = e.target ? $(e.target) : $(e);
+					var checked      = cb.prop('checked');
 					var groupChecked = false;
 					
 					if(cb.attr('type')=='radio'){
@@ -286,8 +284,6 @@ var EuWidgetWizard = function(cmpIn, options){
 						});						
 					}
 					
-					console.log("groupChecked = " + groupChecked);
-					
 					var labels = cb.closest('.facet-header').find('.facet-section');
 					if(groupChecked){
 						labels.find('.unmodified').css('display', 'none');
@@ -297,8 +293,6 @@ var EuWidgetWizard = function(cmpIn, options){
 						labels.find('.unmodified').css('display', 'inline-block');
 						labels.find('.modified')  .css('display', 'none');
 					}
-					
-					//cconsole.log( (checked ? "Add" : "Remove") + cb.attr('title') );
 				};
 				
 				// make facet sections collapsible
@@ -323,25 +317,70 @@ var EuWidgetWizard = function(cmpIn, options){
 				
 				$('button.clear-types').click(function(){
 					$('ul.types').find('input').prop('checked', false);
+					$('ul.types').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.types').prev('h3').find('.unmodified').css('display', 'inline-block');
+
 				});
 				
 				$('button.clear-copyrights').click(function(){
 					$('ul.copyrights').find('input').prop('checked', false);
+					$('ul.copyrights').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.copyrights').prev('h3').find('.unmodified').css('display', 'inline-block');
 				});
 				
 				$('button.clear-languages').click(function(){
 					$('ul.languages').find('input').prop('checked', false);
+					$('ul.languages').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.languages').prev('h3').find('.unmodified').css('display', 'inline-block');
+
 				});
 
 
 				// providers
 				
 				eu_europeana_providers = {
-					addLinks : function(){
+					addLinks : function(cb){
+						
+						// parent checkboxes
+						var checked = cb.prop('checked');
+						var updateParentCheckboxes = function(cb, checked){
+							
+							var parentProvider = cb.closest('.data-providers').prev('a').find('input[type=checkbox]');
+	
+							if(!checked && parentProvider.prop('checked')){ // remove parent check if the set was complete
+								parentProvider.prop('checked', false);
+							}
+							else{  // restore parent check if this data-provider completes the set
+								var siblingProviders = cb.closest('.data-providers').find('input[type=checkbox]');
+								var allSiblingsChecked = true;
+								siblingProviders.each(function(i, ob){
+									if(!$(ob).prop('checked')){
+										allSiblingsChecked = false;
+										return false; /* break */
+									}
+								});
+								if(allSiblingsChecked){
+									parentProvider.prop('checked', true);
+								}
+							}
+						}
+						updateParentCheckboxes(cb, checked);
+						
+						// choices 
+						
 						$('.choices').css('display', 'none');
 						$('.choices').html('');
 						
 						var show = false;
+						var setModified = function(){
+							labels.find('.modified')  .css('display', 'inline-block');
+							labels.find('.unmodified').css('display', 'none');
+						}
+						var setUnmodified = function(){
+							labels.find('.modified')  .css('display', 'none');
+							labels.find('.unmodified').css('display', 'inline-block');							
+						}
+						
 						
 						$('.data-providers').find('input').each(function(i, ob){
 							ob = $(ob);
@@ -354,9 +393,11 @@ var EuWidgetWizard = function(cmpIn, options){
 								removeLink.html('<span>&nbsp;' + text + '</span>');
 								removeLink.click(function(){
 									ob.prop('checked', false);
+									updateParentCheckboxes( ob, false );
 									removeLink.remove();
 									if(!$('.choices').html().length){
 										$('.choices').css('display', 'none');
+										setUnmodified();
 									}
 								});
 							}
@@ -365,15 +406,13 @@ var EuWidgetWizard = function(cmpIn, options){
 						
 						var labels = $('.choices').closest('.facet-header').find('.facet-section');
 						
+
 						if(show){
 							$('.choices').css('display', 'block');
-							
-							labels.find('.modified')  .css('display', 'inline-block');
-							labels.find('.unmodified').css('display', 'none');
+							setModified();
 						}
 						else{
-							labels.find('.modified')  .css('display', 'none');
-							labels.find('.unmodified').css('display', 'inline-block');							
+							setUnmodified();
 						}
 					},
 					init: function(){
@@ -387,7 +426,7 @@ var EuWidgetWizard = function(cmpIn, options){
 							$.each(subBoxes, function(i, ob){
 								$(ob).prop('checked', checked);
 							});
-							eu_europeana_providers.addLinks();
+							eu_europeana_providers.addLinks(cb);
 						};
 						
 						$('.icon-arrow-2-after>input').add('.data-providers input').change(change).click(function(e){
@@ -403,28 +442,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						$('.data-providers a').click(function(e){
 							var cb = $(this).find('input'); 
 							cb.prop('checked', !cb.prop('checked'));
-							
-							var checked = cb.prop('checked');
-							var parentProvider = cb.closest('.data-providers').prev('a').find('input[type=checkbox]');
-
-							if(!checked && parentProvider.prop('checked')){ // remove parent check if the set was complete
-								console.log('uncheck the parent');
-								parentProvider.prop('checked', false);
-							}
-							else{  // restore parent check if this data-provider completes the set
-								var siblingProviders = cb.closest('.data-providers').find('input[type=checkbox]');
-								var allSiblingsChecked = true;
-								siblingProviders.each(function(i, ob){
-									if(!$(ob).prop('checked')){
-										allSiblingsChecked = false;
-										return false;
-									}
-								});
-								if(allSiblingsChecked){
-									parentProvider.prop('checked', true);
-								}
-							}
-							eu_europeana_providers.addLinks();							
+							eu_europeana_providers.addLinks(cb);							
 						});
 						
 						
@@ -432,6 +450,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						var filterObjects = [];
 						
 						var FilterObject = function(el, doDebug){
+							
 							var self		= this;
 							self.el			= el;
 							self.item		= el.closest('li');
