@@ -71,7 +71,7 @@ public enum RightsOption {
 	// EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "eu_unknown.jpg", "cc-unknown.png"); // +transparent
 	EU_U("http://www.europeana.eu/rights/unknown/", "Unknown copyright status", "icon-unknown", false, true),
 
-	OOC_NC("http://www.europeana.eu/rights/out-of-copyright-non-commercial/", 
+	OOC_NC("http://www.europeana.eu/rights/out-of-copyright-non-commercial/",
 			"Out of copyright - non commercial reuse", "icon-publicdomain icon-nc", false, true);
 
 	private String url = null;
