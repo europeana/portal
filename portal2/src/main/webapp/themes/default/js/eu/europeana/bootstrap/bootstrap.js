@@ -140,6 +140,13 @@ var europeana_bootstrap = function(){
 			}
 		});
 		
+		scripts.push({
+			file : 'mediaelement-and-player.min.js',
+			path : eu.europeana.vars.branding + '/js/com/mediaelement/build/',
+			dependencies : [ 'jquery' ],
+			callback: setupPlayer
+		});
+		
 		loadScripts(scripts);
 	}
 	
