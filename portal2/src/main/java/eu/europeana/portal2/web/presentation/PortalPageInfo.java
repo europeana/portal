@@ -45,7 +45,7 @@ public enum PortalPageInfo implements PageInfo {
 	ERROR("exception.html","error/error"),
 
 	// Administration-related things
-	ADMIN(null, "admin/admin"),
+	ADMIN("admin.html", "admin/admin"),
 	ADMIN_STATISTICS("admin/statistics.html", "Europeana - statistics", "admin/statistics"),
 
 	API_CONCOLE("api/console.html", "Europeana - API console", "api/console"),

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -119,6 +120,21 @@ public class AdminController {
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.ADMIN);
 		return page;
+	}
+
+	@RequestMapping("/admin/limitInfo.json")
+	public void limitInfoHandler(
+			@RequestParam(value = "apiKey", required = false, defaultValue = "") String apiKey,
+			HttpServletResponse response)
+					throws Exception {
+		response.setContentType("application/json");
+		long[] usage = new long[]{0, 0};
+		if (!StringUtils.isBlank(apiKey)) {
+			usage = getUsageByApiKey(apiKey);
+		}
+		ServletOutputStream out = response.getOutputStream();
+		out.print(String.format("{\"actual\": %d, \"total\": %d}", usage[0], usage[1]));
+		out.flush();
 	}
 
 	@RequestMapping("/admin/removeUser.html")
@@ -231,9 +247,15 @@ public class AdminController {
 	 *            The API key
 	 */
 	private void getUsageByApiKey(Map<String, Map<String, Long>> usage, String apiKey) {
-		long actual = apiLogService.countByIntervalAndApiKey(DateIntervalUtils.getLast24Hours(), apiKey);
-		long total = apiLogService.countByApiKey(apiKey);
+		long actual = 0; // apiLogService.countByIntervalAndApiKey(DateIntervalUtils.getLast24Hours(), apiKey);
+		long total = 0; // apiLogService.countByApiKey(apiKey);
 		usage.get(ACTUAL).put(apiKey, actual);
 		usage.get(TOTAL).put(apiKey, total);
+	}
+
+	private long[] getUsageByApiKey(String apiKey) {
+		long actual = apiLogService.countByIntervalAndApiKey(DateIntervalUtils.getLast24Hours(), apiKey);
+		long total = apiLogService.countByApiKey(apiKey);
+		return new long[]{actual, total};
 	}
 }
