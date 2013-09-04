@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -79,7 +78,7 @@ public class StatisticsController {
 			@RequestParam(value = "recordType", required = false, defaultValue = "SEARCH") String recordType,
 			@RequestParam(value = "apiKey", required = false, defaultValue = "") String apiKey,
 			@RequestParam(value = "dir", required = false, defaultValue = "") String direction,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+			Locale locale) throws Exception {
 		log.info("==== admin/statistics.html ====");
 		StatisticsPage model = new StatisticsPage();
 		if (StringUtils.isBlank(type) || !TYPES.contains(type)) {
@@ -149,7 +148,7 @@ public class StatisticsController {
 			@RequestParam(value = "stat", required = false, defaultValue = "") String stat,
 			@RequestParam(value = "recordType", required = false, defaultValue = "SEARCH") String recordType,
 			@RequestParam(value = "apiKey", required = false, defaultValue = "") String apiKey,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletResponse response) throws Exception {
 
 		if (StringUtils.isBlank(type) || !TYPES.contains(type)) {
 			type = "dates";

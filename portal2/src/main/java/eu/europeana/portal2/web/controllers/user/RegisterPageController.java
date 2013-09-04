@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -72,8 +71,10 @@ public class RegisterPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView getRequest(@RequestParam("token") String tokenKey,
-			@ModelAttribute("model") RegisterPage model, HttpServletRequest request, HttpServletResponse response,
+	protected ModelAndView getRequest(
+			@RequestParam("token") String tokenKey,
+			@ModelAttribute("model") RegisterPage model, 
+			HttpServletRequest request,
 			Locale locale) throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /register.html GET ==================");
 		log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
@@ -89,8 +90,10 @@ public class RegisterPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView formSubmit(@Valid @ModelAttribute("model") RegisterPage model, BindingResult result,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws EuropeanaQueryException,
+	protected ModelAndView formSubmit(
+			@Valid @ModelAttribute("model") RegisterPage model, 
+			BindingResult result,
+			HttpServletRequest request, Locale locale) throws EuropeanaQueryException,
 			DatabaseException {
 		log.info("================= /register.html POST ==================");
 		if (result.hasErrors()) {

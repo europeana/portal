@@ -7,11 +7,9 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
@@ -39,8 +37,7 @@ public class MyEuropeanaController {
 
 	@RequestMapping("/myeuropeana.html")
 	public ModelAndView myEuropeanaHandler(
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletRequest request, Locale locale) throws Exception {
 		MyEuropeanaPage model = new MyEuropeanaPage();
 
 		User user = ControllerUtil.getUser(userService);

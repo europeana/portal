@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -68,8 +67,8 @@ public class ApiConsoleController {
 			@RequestParam(value = "longMin", required = false) String longMin,
 			@RequestParam(value = "longMax", required = false) String longMax,
 			@RequestParam(value = "yearMin", required = false) String yearMin, // temporal search values
-			@RequestParam(value = "yearMax", required = false) String yearMax, HttpServletRequest request,
-			HttpServletResponse response, Locale locale) {
+			@RequestParam(value = "yearMax", required = false) String yearMax, 
+			HttpServletRequest request, Locale locale) {
 		log.info("===== /api/console.html =====");
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");
@@ -173,7 +172,7 @@ public class ApiConsoleController {
 				request.getSession());
 		ApiResult apiResult = null;
 		if (function.equals(SEARCH) && !StringUtils.isBlank(query)) {
-			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profile, "%20"), start, rows, sort,
+			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profile, "%20"), start, rows,
 					callback);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
 			apiResult = api.getObject(collectionId, recordId, StringUtils.join(profile, "%20"), callback);

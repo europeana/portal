@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -63,19 +62,12 @@ public class SearchController {
 	@RequestMapping({ "/search.html", "/brief-doc.html" })
 	public ModelAndView searchHtml(
 			@RequestParam(value = "query", required = false, defaultValue = "*:*") String q,
-			@RequestParam(value = "embedded", required = false) String embedded,
-			@RequestParam(value = "embeddedLogo", required = false) String embeddedLogo,
-			@RequestParam(value = "embeddedBgColor", required = false) String embeddedBgColor,
-			@RequestParam(value = "embeddedForeColor", required = false) String embeddedForeColor,
-			@RequestParam(value = "lang", required = false) String embeddedLang, // embeddedLang -> lang
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows,
 			@RequestParam(value = "sort", required = false, defaultValue = "") String sort,
 			@RequestParam(value = "profile", required = false, defaultValue = "portal") String profile,
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			// @RequestParam(value = "bt", required = false) String bt,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) {
+			HttpServletRequest request, Locale locale) {
 
 		rows = Math.min(rows, config.getRowLimit());
 

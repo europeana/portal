@@ -17,7 +17,6 @@
 
 package eu.europeana.portal2.web.presentation.model.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.search.SearchTerm;
@@ -34,22 +33,13 @@ public abstract class IndexData extends SearchPageData {
 
 	protected List<FeedEntry> feedEntries;
 
-	private List<CarouselItem> carouselItems;
-
-	/** List of all featured items */
-	private List<FeaturedItem> featuredItems;
+	protected List<CarouselItem> carouselItems;
 
 	protected FeaturedItem featuredItem;
-
-	/** List of all featured partners */
-	private List<FeaturedPartner> featuredPartners;
 
 	protected FeaturedPartner featuredPartner;
 
 	private FeedEntry pinterestItem;
-
-	/** List of all Pinterest items */
-	private List<FeedEntry> pinterestItems;
 
 	private String pinterestUrl;
 
@@ -67,16 +57,6 @@ public abstract class IndexData extends SearchPageData {
 
 	public List<FeedEntry> getFeedEntries() {
 		return feedEntries;
-	}
-
-	public void setCarouselItems(List<CarouselItem> carouselItems) {
-		List<CarouselItem> carouselItemsUnique = new ArrayList<CarouselItem>();
-		for(CarouselItem carouselItem : carouselItems){
-			if(!carouselItemsUnique.contains(carouselItem)){
-				carouselItemsUnique.add(carouselItem);
-			}
-		}
-		this.carouselItems = carouselItemsUnique;
 	}
 
 	public List<CarouselItem> getCarouselItems() {
@@ -107,22 +87,6 @@ public abstract class IndexData extends SearchPageData {
 		return pinterestUrl;
 	}
 
-	public List<FeaturedItem> getFeaturedItems() {
-		return featuredItems;
-	}
-
-	public void setFeaturedItems(List<FeaturedItem> featuredItems) {
-		this.featuredItems = featuredItems;
-	}
-
-	public List<FeaturedPartner> getFeaturedPartners() {
-		return featuredPartners;
-	}
-
-	public void setFeaturedPartners(List<FeaturedPartner> featuredPartners) {
-		this.featuredPartners = featuredPartners;
-	}
-
 	public FeaturedPartner getFeaturedPartner() {
 		return featuredPartner;
 	}
@@ -131,11 +95,4 @@ public abstract class IndexData extends SearchPageData {
 		this.featuredPartner = featuredPartner;
 	}
 
-	public List<FeedEntry> getPinterestItems() {
-		return pinterestItems;
-	}
-
-	public void setPinterestItems(List<FeedEntry> pinterestItems) {
-		this.pinterestItems = pinterestItems;
-	}
 }

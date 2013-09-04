@@ -68,7 +68,7 @@ public class FullBeanViewImpl implements FullBeanView {
 		this.children = findChildren();
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
-		this.docIdWindowPager = createPager(fullDoc.getAbout(), httpParameters, query, searchService, clazz);
+		this.docIdWindowPager = createPager(httpParameters, query, searchService, clazz);
 	}
 
 	private List<? extends BriefBean> findParents() {
@@ -101,11 +101,11 @@ public class FullBeanViewImpl implements FullBeanView {
 		return new ArrayList<BriefBean>();
 	}
 
-	public DocIdWindowPager createPager(String id, Map<String, String[]> httpParameters,
+	public DocIdWindowPager createPager(Map<String, String[]> httpParameters,
 			Query query, SearchService searchService, Class<? extends BriefBean> clazz) {
 		DocIdWindowPager pager = null;
 		try {
-			pager = DocIdWindowPagerImpl.fetchPager(id, httpParameters, query, searchService, clazz);
+			pager = DocIdWindowPagerImpl.fetchPager(httpParameters, query, searchService, clazz);
 		} catch (SolrTypeException e) {
 			log.error("SolrTypeException: " + e.getLocalizedMessage(),e);
 		}

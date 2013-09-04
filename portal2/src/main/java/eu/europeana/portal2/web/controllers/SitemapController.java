@@ -120,7 +120,7 @@ public class SitemapController {
 	public void handleSitemapIndexHashed(
 			@RequestParam(value = "images", required = false, defaultValue = "false") String images,
 			@RequestParam(value = "places", required = false, defaultValue = "false") String places,
-			HttpServletRequest request, HttpServletResponse response) throws IOException {
+			HttpServletResponse response) throws IOException {
 		setSitemapCacheDir();
 		if (sitemapCacheDir == null) {
 			response.setStatus(404);
@@ -188,7 +188,7 @@ public class SitemapController {
 	public void handleSitemap(@RequestParam(value = "prefix", required = true) String prefix,
 			@RequestParam(value = "images", required = false, defaultValue = "false") String images,
 			@RequestParam(value = "places", required = false, defaultValue = "false") String places,
-			HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException, IOException {
+			HttpServletResponse response) throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 		if (sitemapCacheDir == null || prefix.length() > 3 || !prefix.matches("^[0-9A-F]{3}$")) {
 			response.setStatus(404);
@@ -435,7 +435,7 @@ public class SitemapController {
 	}
 
 	@RequestMapping("/europeana-providers.html")
-	public ModelAndView handleListOfContributors(HttpServletRequest request, HttpServletResponse response, Locale locale)
+	public ModelAndView handleListOfContributors(HttpServletRequest request, Locale locale)
 			throws EuropeanaQueryException {
 		setSitemapCacheDir();
 
@@ -489,7 +489,7 @@ public class SitemapController {
 	}
 
 	@RequestMapping("/europeana-sitemap-static.xml")
-	public ModelAndView handleSitemap(HttpServletRequest request, Locale locale) {
+	public ModelAndView handleSitemap(HttpServletRequest request) {
 
 		List<SitemapEntry> records = new ArrayList<SitemapEntry>();
 		records.add(new SitemapEntry("http://www.europeana.eu/portal/europeana-providers.html", null, null, 10));

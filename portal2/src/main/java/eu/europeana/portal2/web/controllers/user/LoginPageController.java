@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -52,10 +51,10 @@ public class LoginPageController {
 	private static final String REQUEST = "Request";
 
 	@RequestMapping("/login.html")
-	public ModelAndView handle(@RequestParam(value = "email", required = false) String email,
+	public ModelAndView handle(
+			@RequestParam(value = "email", required = false) String email,
 			@RequestParam(value = "requested_action", required = false) String requestedAction,
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletRequest request, Locale locale) throws Exception {
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
 
@@ -133,7 +132,7 @@ public class LoginPageController {
 	}
 
 	@RequestMapping("/logout.html")
-	public ModelAndView logoutHandler(HttpServletRequest request, HttpServletResponse response, Locale locale)
+	public ModelAndView logoutHandler(HttpServletRequest request, Locale locale)
 			throws Exception {
 		EmptyModelPage model = new EmptyModelPage();
 		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGOUT);

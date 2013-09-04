@@ -10,7 +10,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.springframework.beans.factory.annotation.Value;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
@@ -51,19 +50,11 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	private List<BreadCrumb> breadcrumbs;
 	private int fullDocUriInt;
 
-	// FIXME TODO just below this bean is instantiated by calling constructor,
-	// and this bean is used
-	// The one instantiated by Spring, with the portal name pulled from
-	// properties, is not used.
-	private String portalName = "portal";
-
-	@Value("#{europeanaProperties['portal.name']}")
-	public void setPortalName(String portalName) {
-		this.portalName = portalName;
-	}
-
-	public static DocIdWindowPager fetchPager(String id, Map<String, String[]> httpParameters, Query query,
-			SearchService searchService, Class<? extends BriefBean> clazz) throws SolrTypeException {
+	public static DocIdWindowPager fetchPager(
+			Map<String, String[]> httpParameters, 
+			Query query,
+			SearchService searchService, 
+			Class<? extends BriefBean> clazz) throws SolrTypeException {
 
 		DocIdWindowPagerImpl pager = new DocIdWindowPagerImpl();
 		pager.query = query.getQuery();
@@ -78,7 +69,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		int solrStartRow = getSolrStart(pager, fullDocUriInt);
 		// query.setAllowSpellcheck(false);
 		// query.setAllowFacets(false);
-		ResultSet<? extends BriefBean> queryResponse = getQueryResponse(query, searchService, pager, solrStartRow,
+		ResultSet<? extends BriefBean> queryResponse = getQueryResponse(query, searchService, solrStartRow,
 				clazz);
 
 		// if no results are found return null to signify that docIdPage can be created.
@@ -178,7 +169,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	 * @throws SolrServerException
 	 */
 	private static ResultSet<? extends BriefBean> getQueryResponse(Query query, SearchService searchService,
-			DocIdWindowPagerImpl pager, int start, Class<? extends BriefBean> clazz) throws SolrTypeException {
+			int start, Class<? extends BriefBean> clazz) throws SolrTypeException {
 
 		// query.setParameter("fl", "europeana_uri");
 		query.setStart(start);

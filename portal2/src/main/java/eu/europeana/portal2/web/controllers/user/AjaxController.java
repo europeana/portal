@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLDecoder;
 import java.sql.BatchUpdateException;
-import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.mail.search.SearchTerm;
@@ -46,7 +45,7 @@ public class AjaxController {
 	private ClickStreamLogService clickStreamLogger;
 
 	@RequestMapping("/remove.ajax")
-	public ModelAndView handleAjaxRemoveRequest(HttpServletRequest request, HttpServletResponse response, Locale locale)
+	public ModelAndView handleAjaxRemoveRequest(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		AjaxPage model = new AjaxPage();
 		try {
@@ -54,27 +53,27 @@ public class AjaxController {
 				processAjaxRemoveRequest(model, request);
 			}
 		} catch (Exception e) {
-			handleAjaxException(model, e, response, request);
+			handleAjaxException(model, e, response);
 		}
 		return createResponsePage(model);
 	}
 
 	@RequestMapping("/save.ajax")
-	public ModelAndView handleAjaxSaveRequest(HttpServletRequest request, HttpServletResponse response, Locale locale)
+	public ModelAndView handleAjaxSaveRequest(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		log.info("================ save.json ================");
 		AjaxPage model = new AjaxPage();
 		try {
 			if (!hasJavascriptInjection(request)) {
-				processAjaxSaveRequest(model, request, locale);
+				processAjaxSaveRequest(model, request);
 			}
 		} catch (Exception e) {
-			handleAjaxException(model, e, response, request);
+			handleAjaxException(model, e, response);
 		}
 		return createResponsePage(model);
 	}
 
-	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request, Locale locale) throws Exception {
+	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
 		User user = ControllerUtil.getUser(userService);
 		String className = request.getParameter("className");
 		// String idString = request.getParameter("id");
@@ -209,8 +208,7 @@ public class AjaxController {
 		return stringValue;
 	}
 
-	private void handleAjaxException(AjaxPage model, Exception e, HttpServletResponse response,
-			HttpServletRequest request) {
+	private void handleAjaxException(AjaxPage model, Exception e, HttpServletResponse response) {
 		model.setSuccess(false);
 		model.setException(getStackTrace(e));
 		response.setStatus(400);

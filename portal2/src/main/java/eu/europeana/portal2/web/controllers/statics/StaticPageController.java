@@ -28,7 +28,6 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.exception.ProblemType;
@@ -90,9 +89,9 @@ public class StaticPageController {
 	 *             something went wrong
 	 */
 	@RequestMapping("/{pageName}.html")
-	public ModelAndView fetchStaticPage(@PathVariable String pageName,
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+	public ModelAndView fetchStaticPage(
+			@PathVariable String pageName,
+			HttpServletResponse response, Locale locale) throws Exception {
 		pageName = "/" + pageName + getSuffix(pageName) + ".html";
 		StaticPage model = new StaticPage();
 
@@ -106,9 +105,9 @@ public class StaticPageController {
 	}
 
 	@RequestMapping("/rights/{pageName}.html")
-	public ModelAndView fetchStaticRightsPage(@PathVariable String pageName,
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+	public ModelAndView fetchStaticRightsPage(
+			@PathVariable String pageName,
+			HttpServletResponse response, Locale locale) throws Exception {
 		pageName = "/rights/" + pageName + getSuffix(pageName) + ".html";
 		StaticPage model = new StaticPage();
 
@@ -198,13 +197,13 @@ public class StaticPageController {
 	}
 
 	@RequestMapping("/page-not-found.html")
-	public ModelAndView pageNotFoundHandler(HttpServletRequest request, Locale locale) throws Exception {
+	public ModelAndView pageNotFoundHandler() throws Exception {
 		log.info("====== page-not-found.html ======");
 		throw new EuropeanaQueryException(ProblemType.PAGE_NOT_FOUND);
 	}
 
 	@RequestMapping("/error.html")
-	public ModelAndView errorPageHandler(HttpServletRequest request, HttpServletResponse response, Locale locale)
+	public ModelAndView errorPageHandler(HttpServletRequest request, Locale locale)
 			throws Exception {
 		log.info("====== error.html ======");
 		PortalPageInfo pageType = PortalPageInfo.ERROR;

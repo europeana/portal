@@ -519,7 +519,7 @@ public class FullDocPage extends FullDocPreparation {
 
 	public String getKmlDescription() throws UnsupportedEncodingException, EuropeanaQueryException {
 		FullBeanDecorator doc = (FullBeanDecorator) getFullBeanView().getFullDoc();
-		String descr = doc.getDcDescriptionCombined();
+//		String descr = doc.getDcDescriptionCombined();
 		
 		// ANDY: #352 (feature request) "dc:description is not shown in its full length. Please pull in the full lenght text from our database."
 		/*
@@ -547,7 +547,7 @@ public class FullDocPage extends FullDocPreparation {
 		FullBeanShortcut fbShourtcut = new FullBeanShortcut((FullBeanImpl)getFullBeanView().getFullDoc());
 		return KmlPresentation.getKmlDescriptor(getMetaCanonicalUrl(),
 				getCacheUrl(), CollectionUtils.returnFirst(fbShourtcut.get("EdmObject"), ""),
-				CollectionUtils.returnFirst(doc.getTitle(), ""), descr, sDate, sPlace);
+				CollectionUtils.returnFirst(doc.getTitle(), ""), sDate, sPlace);
 	}
 
 	public String getObjectTitle() {

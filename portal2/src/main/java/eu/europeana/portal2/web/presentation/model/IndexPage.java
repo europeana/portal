@@ -22,9 +22,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import eu.europeana.portal2.web.presentation.model.data.IndexData;
+import eu.europeana.portal2.web.presentation.model.preparation.IndexPreperation;
 
-public class IndexPage extends IndexData {
+public class IndexPage extends IndexPreperation {
 
 	@Override
 	public String getMetaCanonicalUrl() {

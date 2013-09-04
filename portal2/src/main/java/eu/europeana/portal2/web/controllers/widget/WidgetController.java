@@ -13,7 +13,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -78,7 +77,7 @@ public class WidgetController {
 	@RequestMapping({ "/template.html" })
 	public ModelAndView templateHtml(
 			@RequestParam(value = "id", required = false, defaultValue = "searchGrid") String id,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) {
+			HttpServletRequest request, Locale locale) {
 		if (StringUtils.isBlank(id) || !IDS.contains(id)) {
 			id = "searchGrid";
 		}
@@ -121,7 +120,7 @@ public class WidgetController {
 	}
 
 	@RequestMapping({ "/widget/editor.html" })
-	public ModelAndView editWidget(HttpServletRequest request, HttpServletResponse response, Locale locale) {
+	public ModelAndView editWidget(HttpServletRequest request, Locale locale) {
 		SearchWidgetEditorPage model = new SearchWidgetEditorPage();
 
 		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();

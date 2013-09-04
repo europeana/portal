@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
@@ -87,7 +86,8 @@ public class RegisterApiPageController {
 	@RequestMapping(method = RequestMethod.GET)
 	protected ModelAndView getRequest(
 			@RequestParam(value = "token", required = false, defaultValue = "") String tokenKey,
-			@ModelAttribute("model") RegisterApiPage model, HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("model") RegisterApiPage model, 
+			HttpServletRequest request,
 			Locale locale) throws EuropeanaQueryException, DatabaseException {
 
 		log.info("================= /api/registration.html GET ==================");
@@ -118,8 +118,10 @@ public class RegisterApiPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView formSubmit(@Valid @ModelAttribute("model") RegisterApiPage model, BindingResult result,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws EuropeanaQueryException,
+	protected ModelAndView formSubmit(
+			@Valid @ModelAttribute("model") RegisterApiPage model, 
+			BindingResult result,
+			HttpServletRequest request, Locale locale) throws EuropeanaQueryException,
 			DatabaseException {
 		log.info("================= /api/registration.html POST ==================");
 

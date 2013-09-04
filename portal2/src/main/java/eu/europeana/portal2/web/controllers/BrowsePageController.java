@@ -2,12 +2,10 @@ package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -49,7 +47,7 @@ public class BrowsePageController {
 
 	@RequestMapping("/browse-all.html")
 	public ModelAndView browseAll(@RequestParam(value = "prefix", required = false) String prefix,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletRequest request) throws Exception {
 		log.info("=========== browse-all.html ===========");
 
 		SitemapPage<BriefBeanDecorator> model = new SitemapPage<BriefBeanDecorator>();

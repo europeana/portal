@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
@@ -17,7 +15,6 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.portal2.services.Configuration;
@@ -38,10 +35,10 @@ public class FragmentController {
 
 	@Resource
 	private Configuration config;
-	
+
 	@Resource
 	private ResponsiveImageService responsiveImageService;
-	
+
 	private static List<FeedEntry> feedEntries;
 	private static Calendar feedAge;
 
@@ -54,35 +51,26 @@ public class FragmentController {
 	private static Calendar featuredPartnersAge;
 	private ArrayList<FeaturedPartner> featuredPartners;
 
-	@RequestMapping("/indexFragment.json")
-	public ModelAndView indexFragment(@RequestParam(value = "fragment", required = false) String fragmentName,
-			HttpServletRequest request, HttpServletResponse response,
-			Locale locale) {
-
+	@RequestMapping(value = "/indexFragment.json", params = "fragment=blog")
+	public ModelAndView indexFragmentBlog() {
 		IndexPage model = new IndexPage();
+		updateFeedIfNeeded(model);
+		return ControllerUtil.createModelAndViewFragment(model, PortalFragmentInfo.INDEX_BLOG);
+	}
 
-		PortalFragmentInfo fragment = PortalFragmentInfo.getByFragmentName(fragmentName);
-		if (fragment != null) {
-			switch (fragment) {
-			case INDEX_BLOG:
-				updateFeedIfNeeded(model);
-				break;
+	@RequestMapping(value = "/indexFragment.json", params = "fragment=featuredContent")
+	public ModelAndView indexFragmentFeaturedContent(Locale locale) {
+		IndexPage model = new IndexPage();
+		updateFeaturedItem(model, locale);
+		updateFeaturedPartner(model, locale);
+		return ControllerUtil.createModelAndViewFragment(model, PortalFragmentInfo.INDEX_FEATUREDCONTENT);
+	}
 
-			case INDEX_FEATUREDCONTENT:
-				updateFeaturedItem(model, locale);
-				updateFeaturedPartner(model, locale);
-				break;
-
-			case INDEX_PINTEREST:
-				updatePinterest(model);
-				break;
-
-			default:
-				break;
-			}
-
-		}
-		return ControllerUtil.createModelAndViewFragment(model, fragment, locale);
+	@RequestMapping(value = "/indexFragment.json", params = "fragment=pinterest")
+	public ModelAndView indexFragmentPinterest() {
+		IndexPage model = new IndexPage();
+		updatePinterest(model);
+		return ControllerUtil.createModelAndViewFragment(model, PortalFragmentInfo.INDEX_PINTEREST);
 	}
 
 	/**
@@ -102,7 +90,8 @@ public class FragmentController {
 					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 						FeaturedItem item = new FeaturedItem(i);
 						String imgUrl = messageSource.getMessage(item.getImgUrl(), null, locale);
-						item.setResponsiveImages(responsiveImageService.createResponsiveImage(imgUrl.replace("//", "/"), false, false));
+						item.setResponsiveImages(responsiveImageService.createResponsiveImage(
+								imgUrl.replace("//", "/"), false, false));
 						featuredItems.add(item);
 						i++;
 					} else {
@@ -113,7 +102,6 @@ public class FragmentController {
 				}
 			}
 		}
-		model.setFeaturedItems(featuredItems);
 		if (featuredItems.size() > 0) {
 			int index = 0;
 			if (featuredItems.size() > 1) {
@@ -140,7 +128,8 @@ public class FragmentController {
 					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 						FeaturedPartner item = new FeaturedPartner(i);
 						String imgUrl = messageSource.getMessage(item.getImgUrl(), null, locale);
-						item.setResponsiveImages(responsiveImageService.createResponsiveImage(imgUrl.replace("//", "/"), false, false));
+						item.setResponsiveImages(responsiveImageService.createResponsiveImage(
+								imgUrl.replace("//", "/"), false, false));
 						featuredPartners.add(item);
 						i++;
 					} else {
@@ -151,7 +140,6 @@ public class FragmentController {
 				}
 			}
 		}
-		model.setFeaturedPartners(featuredPartners);
 		if (featuredPartners.size() > 0) {
 			int index = 0;
 			if (featuredPartners.size() > 1) {
@@ -188,7 +176,6 @@ public class FragmentController {
 			}
 		}
 		if ((pinterestEntries != null) && !pinterestEntries.isEmpty()) {
-			model.setPinterestItems(pinterestEntries);
 			model.setPinterestItem(pinterestEntries.get(RandomUtils.nextInt(pinterestEntries.size())));
 		} else {
 			model.setPinterestItem(null);

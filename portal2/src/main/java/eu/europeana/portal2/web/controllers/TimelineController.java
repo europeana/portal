@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -46,8 +45,7 @@ public class TimelineController {
 			@RequestParam(value = "startPage", required = false, defaultValue = "1") int startPage,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "rq", required = false) String rq,
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletRequest request, Locale locale) throws Exception {
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");
 		if (_qf != null && _qf.length != qf.length) {
@@ -72,7 +70,7 @@ public class TimelineController {
 	public ModelAndView searchJson(@RequestParam(value = "query", required = false, defaultValue = "") String q,
 			@RequestParam(value = "startFrom", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue = "1000") int rows,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletRequest request) throws Exception {
 		SearchPage model = new SearchPage();
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
 

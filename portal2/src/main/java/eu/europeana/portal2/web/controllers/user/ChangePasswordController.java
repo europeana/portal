@@ -6,7 +6,6 @@ import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,8 +32,8 @@ import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ChangePasswordPage;
-import eu.europeana.portal2.web.presentation.model.validation.ChangePasswordPageValidator;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.validators.ChangePasswordPageValidator;
 
 /**
  * This Controller allows people to change their passwords
@@ -69,9 +68,11 @@ public class ChangePasswordController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView getMethod(@RequestParam("token") String tokenKey,
-			@ModelAttribute("model") ChangePasswordPage model, HttpServletRequest request,
-			HttpServletResponse response, Locale locale) throws Exception {
+	protected ModelAndView getMethod(
+			@RequestParam("token") String tokenKey,
+			@ModelAttribute("model") ChangePasswordPage model, 
+			HttpServletRequest request,
+			Locale locale) throws Exception {
 		log.info("=========== change-password.html POST =================");
 
 		if (tokenKey == null) {
@@ -91,8 +92,11 @@ public class ChangePasswordController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView post(@Valid @ModelAttribute("model") ChangePasswordPage model, BindingResult result,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+	protected ModelAndView post(
+			@Valid @ModelAttribute("model") ChangePasswordPage model, 
+			BindingResult result,
+			HttpServletRequest request, 
+			Locale locale) throws Exception {
 		log.info("=========== change-password.html POST =================");
 		if (result.hasErrors()) {
 			log.error("The change password form has errors");

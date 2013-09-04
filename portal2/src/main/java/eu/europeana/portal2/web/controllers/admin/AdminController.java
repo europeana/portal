@@ -8,11 +8,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -71,8 +69,9 @@ public class AdminController {
 	private static final int LIMIT = 50;
 
 	@RequestMapping("/admin.html")
-	public ModelAndView adminHandler(@RequestParam(value = "page", required = false, defaultValue = "1") int pageNr,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView adminHandler(
+			@RequestParam(value = "page", required = false, defaultValue = "1") int pageNr
+			) throws Exception {
 		log.info("==== admin.html ====");
 
 		int offset = ((pageNr - 1) * LIMIT);
@@ -123,8 +122,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/removeUser.html")
-	public String removeUserHandler(@RequestParam(value = "id", required = true) long id, HttpServletRequest request,
-			HttpServletResponse response, Locale locale) throws Exception {
+	public String removeUserHandler(@RequestParam(value = "id", required = true) long id) throws Exception {
 		log.info("==== admin.html ====");
 
 		User user = userService.findByID(id);
@@ -145,9 +143,10 @@ public class AdminController {
 	 */
 
 	@RequestMapping("/admin/removeApiKey.html")
-	public String removeApiKeyHandler(@RequestParam(value = "userId", required = true) long userId,
-			@RequestParam(value = "apiKey", required = true) String apiKey, HttpServletRequest request,
-			HttpServletResponse response, Locale locale) throws Exception {
+	public String removeApiKeyHandler(
+			@RequestParam(value = "userId", required = true) long userId,
+			@RequestParam(value = "apiKey", required = true) String apiKey
+			) throws Exception {
 		log.info("==== admin/removeApiKey.html ====");
 		log.info(String.format("%s, %s", userId, apiKey));
 
@@ -166,8 +165,7 @@ public class AdminController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/admin/exportUsers.html", produces = MediaType.TEXT_PLAIN_VALUE)
-	public @ResponseBody
-	String exportUsersHandler(HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+	public @ResponseBody String exportUsersHandler(HttpServletResponse response) throws Exception {
 		log.info("==== admin/exportUsers.html ====");
 		response.setHeader("Content-Type", "text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");

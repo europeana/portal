@@ -2,11 +2,8 @@ package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -40,8 +37,8 @@ public class SuggestionController {
 	@RequestMapping("/suggestions.json")
 	public ModelAndView suggestionHtml(@RequestParam(value = "term", required = false, defaultValue = "") String term,
 			@RequestParam(value = "size", required = false, defaultValue = "10") int size,
-			@RequestParam(value = "field", required = false, defaultValue = "") String field,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws EuropeanaQueryException {
+			@RequestParam(value = "field", required = false, defaultValue = "") String field
+			) throws EuropeanaQueryException {
 
 		if (term == null) {
 			throw new EuropeanaQueryException(ProblemType.MALFORMED_QUERY);

@@ -1,10 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.util.Locale;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,27 +15,21 @@ import eu.europeana.corelib.definitions.model.ThumbSize;
 @Controller
 public class ImageController {
 
-	@Resource private ThumbnailService thumbnailService;
+	@Resource
+	private ThumbnailService thumbnailService;
 
 	@RequestMapping("/image")
-	public byte[] getImage(
-			@RequestParam(value = "url", required = false, defaultValue="*:*") String url,
-			@RequestParam(value = "size", required = false) String size,
-			@RequestParam(value = "embeddedLogo", required = false) String embeddedLogo,
-			HttpServletRequest request, 
-			HttpServletResponse response,
-			Locale locale
-			) {
+	public byte[] getImage(@RequestParam(value = "url", required = false, defaultValue = "*:*") String url) {
 		/*
 		 * see ThumbnailServiceTest, MongoImageViewServlet
-		 * */
+		 */
 		ImageCache cache;
 		try {
 			cache = thumbnailService.findByOriginalUrl(url);
 			Image image = cache.getImages().get(ThumbSize.TINY.toString());
 			image.getHeight();
 			image.getWidth();
-		return image.getImage();
+			return image.getImage();
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

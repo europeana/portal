@@ -88,7 +88,7 @@ public class ApiWrapper {
 		utmCampaignReplacement = UTM_CAMPAIGN + wskeyReplacement;
 	}
 
-	public ApiResult getSearchResult(String query, String[] refinements, String profile, int start, int rows, String sort, String callback) {
+	public ApiResult getSearchResult(String query, String[] refinements, String profile, int start, int rows, String callback) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(SEARCH_PATH);
 		url.append(WSKEY_PARAM).append(api2key);

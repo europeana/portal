@@ -1,10 +1,7 @@
 package eu.europeana.portal2.web.controllers.admin;
 
-import java.util.Locale;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -51,10 +48,10 @@ public class AdminApiLimitController {
 	private ClickStreamLogService clickStreamLogger;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView limitApiKeyFormHandler(@RequestParam(value = "userId", required = true) long userId,
+	public ModelAndView limitApiKeyFormHandler(
 			@RequestParam(value = "apiKey", required = true) String apiKeyId,
-			@ModelAttribute("model") LimitApiKeyPage model, HttpServletRequest request, HttpServletResponse response,
-			Locale locale) throws Exception {
+			@ModelAttribute("model") LimitApiKeyPage model, 
+			HttpServletRequest request) throws Exception {
 		log.info("==== /admin/limitApiKey.html ====");
 
 		ApiKey apiKey = apiKeyService.findByID(apiKeyId);
@@ -68,8 +65,7 @@ public class AdminApiLimitController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String limitApiKeyHandler(@ModelAttribute("model") LimitApiKeyPage model, HttpServletRequest request,
-			HttpServletResponse response, Locale locale) throws Exception {
+	public String limitApiKeyHandler(@ModelAttribute("model") LimitApiKeyPage model) throws Exception {
 		log.info("==== admin.html ====");
 
 		ApiKey apiKey = apiKeyService.findByID(model.getApiKey());

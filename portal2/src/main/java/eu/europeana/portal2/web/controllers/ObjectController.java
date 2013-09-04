@@ -28,7 +28,6 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -125,10 +124,8 @@ public class ObjectController {
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			@RequestParam(value = "source", required = false, defaultValue = "corelib") String source,
-			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows, HttpServletRequest request,
-			HttpServletResponse response, Locale locale) throws EuropeanaQueryException {
+			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows, 
+			HttpServletRequest request, Locale locale) throws EuropeanaQueryException {
 
 		long t0 = (new Date()).getTime();
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
@@ -188,7 +185,7 @@ public class ObjectController {
 			if (model.isShowSimilarItems()) {
 				List<? extends BriefBean> similarItems;
 				if (fullBean.getSimilarItems() == null) {
-					similarItems = getMoreLikeThis(collectionId, recordId, model);
+					similarItems = getMoreLikeThis(collectionId, recordId);
 				} else {
 					similarItems = fullBean.getSimilarItems();
 				}
@@ -228,10 +225,10 @@ public class ObjectController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.json", produces = MediaType.TEXT_HTML_VALUE)
-	public String redirectJson(@PathVariable String collectionId, @PathVariable String recordId,
-			@RequestParam(value = "wskey", required = false) String wskey,
-			@RequestParam(value = "callback", required = false) String callback, HttpServletRequest request)
-			throws Exception {
+	public String redirectJson(
+			@PathVariable String collectionId, 
+			@PathVariable String recordId,
+			HttpServletRequest request) throws Exception {
 		StringBuilder sb = new StringBuilder(config.getApi2url());
 		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(JSON_EXT);
 		if (!StringUtils.isBlank(request.getQueryString())) {
@@ -252,10 +249,10 @@ public class ObjectController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.srw", produces = MediaType.TEXT_HTML_VALUE)
-	public String redirectSrw(@PathVariable String collectionId, @PathVariable String recordId,
-			@RequestParam(value = "wskey", required = false) String wskey,
-			@RequestParam(value = "callback", required = false) String callback, HttpServletRequest request)
-			throws Exception {
+	public String redirectSrw(
+			@PathVariable String collectionId, 
+			@PathVariable String recordId,
+			HttpServletRequest request)	throws Exception {
 		StringBuilder sb = new StringBuilder(config.getApi2url());
 		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(SRW_EXT);
 		if (!StringUtils.isBlank(request.getQueryString())) {
@@ -289,7 +286,7 @@ public class ObjectController {
 		return fullBean;
 	}
 
-	private List<BriefBean> getMoreLikeThis(String collectionId, String recordId, UrlAwareData<?> model) {
+	private List<BriefBean> getMoreLikeThis(String collectionId, String recordId) {
 		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
 		List<BriefBean> result = null;
 		try {

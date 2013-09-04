@@ -62,7 +62,7 @@ public class KmlPresentation {
 
 	// override
 	public static String getKmlDescriptor(String url, String imageCacheUrl,
-			String thumbnail, String name, String descr, String date,
+			String thumbnail, String name, String date,
 			String place) throws UnsupportedEncodingException {
 
 		StringBuilder sb = new StringBuilder();

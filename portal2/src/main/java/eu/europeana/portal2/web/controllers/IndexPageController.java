@@ -27,7 +27,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -36,7 +35,6 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.logging.Log;
@@ -70,7 +68,7 @@ public class IndexPageController {
 
 	@Resource
 	private Configuration config;
-	
+
 	@Resource
 	private ResponsiveImageService responsiveImageService;
 
@@ -78,10 +76,8 @@ public class IndexPageController {
 	private static Calendar carouselAge;
 
 	@RequestMapping("/index.html")
-	public ModelAndView indexHandler(@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			@RequestParam(value = "embeddedlang", required = false) String embeddedLang, HttpServletRequest request,
-			HttpServletResponse response, Locale locale) {
-		
+	public ModelAndView indexHandler(HttpServletRequest request, Locale locale) {
+
 		IndexPage model = new IndexPage();
 		// update dynamic items
 		updateCarousel(model, locale);
@@ -131,7 +127,8 @@ public class IndexPageController {
 					if (StringUtils.isNotEmpty(url) && !StringUtils.equals(label, url)) {
 						CarouselItem item = new CarouselItem(model, i, url);
 						String imgUrl = messageSource.getMessage(item.getImgUrl(), null, locale);
-						item.setResponsiveImages(responsiveImageService.createResponsiveImage(imgUrl.replace("//", "/"), false, true));
+						item.setResponsiveImages(responsiveImageService.createResponsiveImage(
+								imgUrl.replace("//", "/"), false, true));
 						Map<String, String> translatableUrls = new HashMap<String, String>();
 						boolean keepFetchingLanguages = true;
 						int j = 1;

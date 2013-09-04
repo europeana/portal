@@ -96,7 +96,9 @@ public class Json2FullBean {
 			fields = new HashMap<String, Map<String, Field>>();
 		}
 
-		Map<String, Class<?>> objects4setters = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {{
+		Map<String, Class<?>> objects4setters = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {
+			private static final long serialVersionUID = -6837547862257755340L;
+		{
 			put("", FullBean4Json.class);
 			put(PROXIES, Proxy.class);
 			put(AGGREGATIONS, Aggregation.class);
@@ -108,7 +110,9 @@ public class Json2FullBean {
 			put(CONCEPTS, Concept.class);
 		}});
 
-		Map<String, Class<?>> objects4fields = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {{
+		Map<String, Class<?>> objects4fields = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {
+			private static final long serialVersionUID = 8585436419159454924L;
+		{
 			put(RELATED_ITEMS, BriefBeanImpl.class);
 		}});
 
@@ -140,10 +144,11 @@ public class Json2FullBean {
 		if (setters == null) {
 			initializeSetters();
 		}
-		Map<String,Object> result = (isFileSouce) 
+		@SuppressWarnings("unchecked")
+		Map<String,Map<String, Object>> result = (isFileSouce) 
 			? mapper.readValue(file, Map.class)
 			: mapper.readValue(content, Map.class);
-		Map<String,Object> object = (Map<String, Object>) result.get("object");
+		Map<String,Object> object = result.get("object");
 
 		FullBeanImpl fullBean = new FullBean4Json();
 		for (String field : object.keySet()) {
@@ -218,7 +223,8 @@ public class Json2FullBean {
 	 * @return
 	 */
 	private static String[] listToArray(Object value) {
-		ArrayList<String> myList = (ArrayList<String>)value;
+		@SuppressWarnings("unchecked")
+		ArrayList<String> myList = (ArrayList<String>) value;
 		String[] myArray = new String[myList.size()];
 		myList.toArray(myArray);
 		return myArray;
@@ -243,6 +249,7 @@ public class Json2FullBean {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private Object convertObject(Object valueObject, String prefix) {
 		List items = getList(prefix);
 		for (LinkedHashMap<String, Object> rawItem : (ArrayList<LinkedHashMap<String, Object>>)valueObject) {
@@ -253,7 +260,7 @@ public class Json2FullBean {
 		return items;
 	}
 
-	private List getList(String type) {
+	private List<?> getList(String type) {
 		if (type.equals(PROXIES)) {
 			return new ArrayList<Proxy>();
 		} else if (type.equals(AGGREGATIONS)) {
@@ -319,8 +326,8 @@ public class Json2FullBean {
 		}
 	}
 
-	private List<Field> extractFields(Class clazz) {
-		Class superClazz = clazz;
+	private List<Field> extractFields(Class<?> clazz) {
+		Class<?> superClazz = clazz;
 		List<Field> members = new ArrayList<Field>();
 		while (superClazz != null && superClazz != Object.class) {
 			members.addAll(Arrays.asList(superClazz.getDeclaredFields()));

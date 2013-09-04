@@ -403,6 +403,7 @@ public abstract class FullDocPreparation extends FullDocData {
 		return fieldPresentation;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void extractAllFieldValues(FieldPresentation fieldPresentation, Field fieldInfo, Object... fieldValuesArrays) {
 		for (Object fieldValueArray : fieldValuesArrays) {
 			if (fieldValueArray == null) {

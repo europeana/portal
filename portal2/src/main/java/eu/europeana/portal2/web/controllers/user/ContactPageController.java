@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.security.core.Authentication;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
@@ -26,9 +24,9 @@ import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ContactPage;
-import eu.europeana.portal2.web.presentation.model.validation.ContactPageValidator;
 import eu.europeana.portal2.web.security.Portal2UserDetails;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.validators.ContactPageValidator;
 
 @Controller
 @RequestMapping("/contact.html")
@@ -70,16 +68,16 @@ public class ContactPageController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView handleGet(@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) {
+	public ModelAndView handleGet(Locale locale) {
 		ContactPage model = createContactForm();
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.CONTACT);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView handlePost(@ModelAttribute("model") @Valid ContactPage form, BindingResult result,
-			@RequestParam(value = "theme", required = false, defaultValue = "") String theme,
-			HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+	protected ModelAndView handlePost(
+			@ModelAttribute("model") @Valid ContactPage form, 
+			BindingResult result,
+			HttpServletRequest request, Locale locale) throws Exception {
 		if (result.hasErrors()) {
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND_FAILURE);
 		} else {

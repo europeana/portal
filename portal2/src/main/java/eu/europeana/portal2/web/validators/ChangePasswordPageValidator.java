@@ -15,7 +15,7 @@
  *  the Licence.
  */
 
-package eu.europeana.portal2.web.presentation.model.validation;
+package eu.europeana.portal2.web.validators;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
