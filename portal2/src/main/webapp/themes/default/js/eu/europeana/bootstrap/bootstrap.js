@@ -46,61 +46,90 @@ var europeana_bootstrap = function(){
 	
 	// array of scripts needed for all pages
 	var scripts = [
-	  {	name  : 'jquery',			file : 'jquery-1.8.1.min.js',													path : eu.europeana.vars.branding + '/js/jquery/min/'	},
+		{
+			name  : 'jquery',
+			file : 'jquery-1.8.1.min.js',
+			path : eu.europeana.vars.branding + '/js/jquery/min/'
+		},
 
-	  { name : 'jquery-ui',			file : 'jquery-ui-1.9.0.custom.min.js',											path : eu.europeana.vars.branding + '/js/jquery/min/',															dependencies : [ 'jquery' ]	},
-	  
-//	  {	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui' ]	},
-	  {	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,											dependencies : [ 'jquery-ui' ]	},
-	  
-	  
-	  {	name : 'analytics',			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,					path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,							dependencies : [ 'utils' ]	},
-	  {	name : 'ajax',				file : 'ajax' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,									dependencies : [ 'utils' ]	},
-	  
-	  {
-		  name : 'EuAccessibility',
-		  file : 'EuAccessibility' + js.min_suffix + '.js' + js.cache_helper,
-		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory		  
-	  },
-	  
-	  {
-		  name : 'EuMenu',
-		  file : 'EuMenu' + js.min_suffix + '.js' + js.cache_helper,
-		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-		  dependencies : [ 'utils', 'EuAccessibility' ]
-	  },
+		{
+			name : 'jquery-ui',
+			file : 'jquery-ui-1.9.0.custom.min.js',
+			path : eu.europeana.vars.branding + '/js/jquery/min/',
+			dependencies : [ 'jquery' ]
+		},
 
-	  {	name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-		dependencies : [ 'ajax', 'utils' ],
-		callback : function(){
-			eu.europeana.header.init();
-		}},
-		
-	  {	name : 'orientation-fix',	file : 'ios-orientationchange-fix' + js.min_suffix + '.js' + js.cache_helper,	path : eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory	},
-	  
-	  {
+//		{	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui' ]	},
+		{
+			name : 'utils',
+			file : 'utils' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'jquery-ui' ]
+		},
+
+		{
+			name : 'analytics',
+			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,
+			dependencies : [ 'utils' ]
+		},
+
+		{
+			name : 'ajax',
+			file : 'ajax' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'utils' ]
+		},
+
+		{
+			name : 'EuAccessibility',
+			file : 'EuAccessibility' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory		  
+		},
+
+		{
+			name : 'EuMenu',
+			file : 'EuMenu' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'utils', 'EuAccessibility' ]
+		},
+
+		{
+			name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'ajax', 'utils' ],
+			callback : function(){
+				eu.europeana.header.init();
+			}
+		},
+
+		{
+			name : 'orientation-fix',	file : 'ios-orientationchange-fix' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory
+		},
+
+		{
 			name : 'touchswipe',
 			file : 'touch-swipe' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'utils', 'jquery' ]
-	  },
-	  {
-		  name : 'ellipsis',
-		  file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
-		  path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-		  dependencies : [ 'utils' ]
-	  },
-	  
-	  {
-		  	name: 'euresponsive',
+		},
+
+		{
+			name : 'ellipsis',
+			file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'utils' ]
+		},
+
+		{
+			name: 'euresponsive',
 			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery', 'utils' ]
-	  }
-	  
-	  
-   	];
-	
+		}
+	];
+
 	if(eu.europeana.vars.page_name == 'api/console.html'){
 		loadScripts(scripts);
 	}
@@ -362,7 +391,18 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'utils' ]
 		});
 		loadScripts(scripts);
-	}	
+	}
+	else if(eu.europeana.vars.page_name == 'admin.html'){
+		scripts.push({
+			file : 'admin' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'jquery', 'utils' ],
+			callback : function() {
+				eu.europeana.admin.init();
+			}
+		});
+		loadScripts(scripts);
+	}
 }();
 
 // end conditional load object
