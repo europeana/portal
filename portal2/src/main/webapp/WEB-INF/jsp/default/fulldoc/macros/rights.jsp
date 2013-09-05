@@ -8,11 +8,7 @@
     <c:forEach items="${rightsIcons}" var="rightsIcon">
       <span title="${model.rightsOption.rightsText}" class="rights-icon ${rightsIcon}"></span>
     </c:forEach>
-    <span class="rights-text">
-      <c:set var="rightsText" value="${fn:replace(model.rightsOption.rightsText, ' ', '_')}" />
-      <c:set var="rightsText" value="${fn:replace(rightsText, '-', '_')}" />
-      <spring:message code="rights_${rightsText}" />
-    </span>
+    <span class="rights-text">${model.rightsOption.rightsText}</span>
     <c:if test="${model.rightsOption.rightsShowExternalIcon}">
       <span class="icon-external-right"></span>
     </c:if>

@@ -56,8 +56,8 @@ public class FeedServiceImpl implements FeedService {
 	@Resource
 	private ResponsiveImageService responsiveImageService;
 
-	private List<FeedEntry> feedEntries = new ArrayList<FeedEntry>();
-	private List<FeedEntry> pinterestEntries = new ArrayList<FeedEntry>();
+	private static List<FeedEntry> feedEntries = new ArrayList<FeedEntry>();
+	private static List<FeedEntry> pinterestEntries = new ArrayList<FeedEntry>();
 	
 	@PostConstruct
 	public void scheduleFirstRun() {
@@ -105,10 +105,14 @@ public class FeedServiceImpl implements FeedService {
 					updatePinterestTask = scheduler.scheduleWithFixedDelay(new UpdatePinterestTask(), millisecondsHours(config.getPintTimeout()));
 				}
 			}
-			if (!feedEntries.isEmpty() && !pinterestEntries.isEmpty()) {
-				log.info("FIRST RUN SCHEDULER TASK: my job is done, terminating myself...");
-				firstRunTask.cancel(true);
+			if ((updateFeedTask != null) && (updatePinterestTask != null)) {
+				if (firstRunTask.cancel(true)) {
+					log.info("FIRST RUN SCHEDULER TASK: my job is done, terminating myself...");
+				} else {
+					log.warn("FIRST RUN SCHEDULER TASK: self-termination failed...");
+				}
 			}
+			log.info("FIRST RUN SCHEDULER TASK: finished...");
 		}
 	}
 	
@@ -123,6 +127,7 @@ public class FeedServiceImpl implements FeedService {
 				feedEntries.clear();
 				feedEntries.addAll(newEntries);
 			}
+			log.info("BLOG RSS FEED: finished...");
 		}
 	}
 
@@ -137,6 +142,7 @@ public class FeedServiceImpl implements FeedService {
 				pinterestEntries.clear();
 				pinterestEntries.addAll(newEntries);
 			}
+			log.info("PINTEREST: finished...");
 		}
 	}
 	
