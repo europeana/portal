@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.portal2.services.Configuration;
+import eu.europeana.portal2.services.FeedService;
 import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.PortalFragmentInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeaturedPartner;
-import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.rss.RSSFeedParser;
 
 @Controller
 public class FragmentController {
@@ -35,26 +34,23 @@ public class FragmentController {
 
 	@Resource
 	private Configuration config;
+	
+	@Resource
+	private FeedService feedService;
 
 	@Resource
 	private ResponsiveImageService responsiveImageService;
 
-	private static List<FeedEntry> feedEntries;
-	private static Calendar feedAge;
-
-	private static List<FeedEntry> pinterestEntries;
-	private static Calendar pinterestAge;
-
 	private static Calendar featuredItemAge;
-	private ArrayList<FeaturedItem> featuredItems;
+	private List<FeaturedItem> featuredItems;
 
 	private static Calendar featuredPartnersAge;
-	private ArrayList<FeaturedPartner> featuredPartners;
+	private List<FeaturedPartner> featuredPartners;
 
 	@RequestMapping(value = "/indexFragment.json", params = "fragment=blog")
 	public ModelAndView indexFragmentBlog() {
 		IndexPage model = new IndexPage();
-		updateFeedIfNeeded(model);
+		model.setFeedEntries(feedService.getFeedEntries());
 		return ControllerUtil.createModelAndViewFragment(model, PortalFragmentInfo.INDEX_BLOG);
 	}
 
@@ -69,7 +65,8 @@ public class FragmentController {
 	@RequestMapping(value = "/indexFragment.json", params = "fragment=pinterest")
 	public ModelAndView indexFragmentPinterest() {
 		IndexPage model = new IndexPage();
-		updatePinterest(model);
+		model.setPinterestItems(feedService.getPinterestEntries());
+		model.setPinterestUrl(config.getPintUrl());
 		return ControllerUtil.createModelAndViewFragment(model, PortalFragmentInfo.INDEX_PINTEREST);
 	}
 
@@ -147,40 +144,6 @@ public class FragmentController {
 			}
 			model.setFeaturedPartner(featuredPartners.get(index));
 		}
-	}
-
-	private synchronized void updateFeedIfNeeded(IndexPage model) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -config.getBlogTimeout()));
-		// read feed only once every few hours
-		if ((feedAge == null) || feedAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(config.getBlogUrl(), 3);
-			parser.setStaticPagePath(config.getStaticPagePath());
-			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
-			if ((newEntries != null) && (newEntries.size() > 0)) {
-				feedEntries = newEntries;
-				feedAge = Calendar.getInstance();
-			}
-		}
-		model.setFeedEntries(feedEntries);
-	}
-
-	private synchronized void updatePinterest(IndexPage model) {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addHours(new Date(), -config.getPintTimeout()));
-		if ((pinterestAge == null) || pinterestAge.before(timeout)) {
-			RSSFeedParser parser = new RSSFeedParser(config.getPintFeedUrl(), config.getPintItemLimit());
-			parser.setStaticPagePath(config.getStaticPagePath());
-			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
-			if ((newEntries != null) && (newEntries.size() > 0)) {
-				pinterestEntries = newEntries;
-				pinterestAge = Calendar.getInstance();
-			}
-		}
-		if ((pinterestEntries != null) && !pinterestEntries.isEmpty()) {
-			model.setPinterestItem(pinterestEntries.get(RandomUtils.nextInt(pinterestEntries.size())));
-		} else {
-			model.setPinterestItem(null);
-		}
-		model.setPinterestUrl(config.getPintUrl());
 	}
 
 }

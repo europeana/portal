@@ -8,7 +8,7 @@
 			<spring:message code="from_the_blog_t" />
 		</span>
 		<span class="collapse-icon"></span>
-		<a class="feed-link icon-rss" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a>
+		<a class="feed-link icon-rss" href="${model.blogFeedUrl}" target="_blank" title="RSS Feed"></a>
 	</h3>
 	<div class="row collapse-content">
 	</div>

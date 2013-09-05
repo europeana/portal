@@ -13,11 +13,10 @@
 	<import resource="corelib-web-context.xml" />
 	<import resource="corelib-utils-context.xml" />
 
-	<!-- SERVICES -->
+	<!-- INTERNAL -->
 	<import resource="internal/portal2-services.xml" />
-
-	<!-- SECURITY -->
 	<import resource="internal/portal2-security.xml" />
+	<import resource="internal/portal2-scheduler.xml" />
 
 	<!-- SELENIUM MOCK DATA -->
 	<!-- <import resource="internal/portal2-selenium-test.xml" /> -->

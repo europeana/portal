@@ -39,6 +39,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			User user = ControllerUtil.getUser(userService);
 			model.setUser(user);
 			model.setPortalUrl(configuration.getPortalUrl());
+			model.setBlogFeedUrl(configuration.getBlogUrl());
 		}
 	}
 

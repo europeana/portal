@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div class="tout">
-	<h2><a id="blog-feed" href="http://blog.europeana.eu/feed/" target="_blank" title="RSS Feed"></a><spring:message code="from_the_blog_t" /></h2>
+	<h2><a id="blog-feed" href="${model.blogFeedUrl}" target="_blank" title="RSS Feed"></a><spring:message code="from_the_blog_t" /></h2>
 
 	<c:choose>
 		<c:when test="${model[feedEntries]}">

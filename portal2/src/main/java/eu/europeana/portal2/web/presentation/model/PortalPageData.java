@@ -27,6 +27,8 @@ public abstract class PortalPageData extends PageData {
 	private Locale locale;
 
 	private String portalUrl;
+	
+	private String blogFeedUrl;
 
 	public String getTheme() {
 		return theme;
@@ -107,5 +109,13 @@ public abstract class PortalPageData extends PageData {
 
 	public void setPortalUrl(String portalUrl) {
 		this.portalUrl = portalUrl;
+	}
+
+	public String getBlogFeedUrl() {
+		return blogFeedUrl;
+	}
+
+	public void setBlogFeedUrl(String blogFeedUrl) {
+		this.blogFeedUrl = blogFeedUrl;
 	}
 }

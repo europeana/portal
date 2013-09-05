@@ -124,11 +124,6 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.pinterest = {};
 		eu.europeana.vars.pinterest.item = {};
 		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
-		<c:if test="${!empty model[pinterestItem]}">
-			eu.europeana.vars.pinterest.item.title = '${model.pinterestItem.title}';
-			eu.europeana.vars.pinterest.item.description = '${model.pinterestItem.descriptionFull}';
-			eu.europeana.vars.pinterest.item.link = '${model.pinterestItem.link}';
-		</c:if>
 		eu.europeana.vars.galleria = {};
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
