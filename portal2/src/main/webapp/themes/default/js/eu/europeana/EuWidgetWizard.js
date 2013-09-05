@@ -201,7 +201,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		var disabled = [];
 		var allTabs  = self.tabs.getTabs();
 		var noTabs   = allTabs.length;
-		
+
 		$.each(allTabs, function(i, tab){
 		
 			var content = tab.getTabContent();
@@ -221,25 +221,26 @@ var EuWidgetWizard = function(cmpIn, options){
 		self.tabs.setDisabledTabs(self.disabledTabs); 
 		
 		// progress bar
-		var progress = self.tabs.getOpenTabId() == "tab-5" ? 100 : ((noTabs - disabled.length -1) / noTabs) * 100;
+		var progress = self.tabs.getOpenTabId() == "tab-4" ? 100 : ((noTabs - disabled.length -1) / noTabs) * 100;
 		
 		$('.progress .bar').css('width', progress + '%');
 		
 		var openIdex = self.tabs.getOpenTabIndex();
+		/*
 		if( openIdex > 0){
-			self.cmp.find('input.previous').removeClass('disabled');
+			self.cmp.find('a.previous').removeClass('disabled');
 		}
 		else{
-			self.cmp.find('input.previous').addClass('disabled');			
+			self.cmp.find('a.previous').addClass('disabled');			
 		}
-
-		
 		if( (openIdex == 0) ){
 			$('.widget-configuration input.previous').addClass('disabled');
 		}
 		else{
 			$('.widget-configuration input.previous').removeClass('disabled');
 		}
+		*/
+
 		
 		if( (openIdex+1) >= self.tabs.getTabs().length){
 			$('.widget-configuration input.next').addClass('disabled');
@@ -564,7 +565,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	
 		setDisabledTabs();
 		
-		self.cmp.find('input[type!=radio]:not(.next):not(.previous)').val('');
+		self.cmp.find('input[type!=radio]:not(.next)').val('');
 		self.cmp.find('#rd-search-type-all').prop('checked', true);
 		
 		
@@ -588,13 +589,16 @@ var EuWidgetWizard = function(cmpIn, options){
 			self.tabs.openTabAtIndex(self.tabs.getOpenTabIndex()+1);
 		});
 		
-		$('.widget-configuration input.previous').click(function(){
+		$('.widget-configuration a.previous').click(function(e){
+			e.preventDefault();
 			if( $(this).hasClass('disabled')){
 				return;
 			}
 			self.tabs.openTabAtIndex(self.tabs.getOpenTabIndex()-1);
 		});
 		
+		
+		setupPlayer();
 	};
 	
 	

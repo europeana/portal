@@ -10,11 +10,13 @@ fnSearchWidget = function($, config){
     var showFacets				= false;
     
     
-    if( typeof config != 'undefined'){
+    if( typeof config != 'undefined' ){
     	console.log("config supplied: " + JSON.stringify(config) );
     	self.config      = config;
         self.withResults = self.config.withResults == 'true';
         self.theme       = self.config.theme;
+        
+        console.log('init theme: ' + self.theme);
     }
     
     
@@ -147,8 +149,14 @@ fnSearchWidget = function($, config){
             	$('head').append('<link rel="stylesheet" href="' + cssUrl + 'min/search-widget-all.css" type="text/css" />');
             }
             if(self.theme){
+            	container.removeClass('dark');            	
+            	$('body').removeClass('dark');
                	container.addClass('' + self.theme);
                	$('body').addClass(self.theme);
+            }
+            else{
+            	container.removeClass('dark');            	
+            	$('body').removeClass('dark');
             }
             
            	$.getScript(responsiveContainersUrl, function() {
@@ -246,16 +254,16 @@ try{
         	if(self.config.qf){
         		$.each(self.config.qf, function(i, ob){
         			
-        			// console.log("Full ob = " + JSON.stringify(ob) + ", "  + ob.length);
+
         			console.log("append to url = " + JSON.stringify(ob));
         			
         			ob = ob.replace(/[\{\}]/g, '"');
-//        			ob = ob.replace(/\}/g, '"');
+        			//ob = ob.replace(/\}/g, '"');
         			
         			url += param() + 'qf=';
         			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
         			
-        			console.log('append to url: ' + url);
+        			//console.log('append to url: ' + url);
         		});
         	}
         }
@@ -671,15 +679,21 @@ try{
         		container.find('#content').hide();        		
         	}
         },
-        "setTheme" : function(theme){        	
+        "setTheme" : function(theme){
+        	
+        	console.log('call setTheme: ' + theme);
         	if(self.theme){
         		container.removeClass(self.theme);
+        		$('body	').removeClass(self.theme);
             	console.log("removed theme");
         	}
         	if(theme){
             	self.theme = theme;
         		container.addClass(theme);        		
             	console.log("set theme to " + theme);
+        	}
+        	else{
+        		container.removeClass('dark');
         	}
         }
     };

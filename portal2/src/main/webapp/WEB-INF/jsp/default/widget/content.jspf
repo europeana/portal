@@ -42,6 +42,11 @@
 		padding-top:   1px;
 	}
 	
+	/* clearfix */
+	#wizard-tabs .content{
+	  overflow: hidden;
+	}
+	
 	#wizard-tabs .disabled .tab-number{
 		border:        1px solid #E4E4E4;
 	}
@@ -56,6 +61,10 @@
 
 	.widget-configuration .previous,
 	.widget-configuration .next{
+	
+		display:		none;
+		
+		/*
 		z-index:		1;
 		position:		fixed;
 		top:			50%;
@@ -65,9 +74,11 @@
 		transform:					rotate(90deg);
 		-webkit-transform:			rotate(90deg);
 		transform-origin:			left;		
-		-webkit-transform-origin:	left;		
+		-webkit-transform-origin:	left;
+		*/		
 	}
 
+	/*
 	.widget-configuration .next{
 		right:	1em;
 		left:	auto;
@@ -77,12 +88,15 @@
 		transform-origin:			right;
 		-webkit-transform-origin:	right;			
 	}
+	*/
 	
 	.widget-configuration .next.disabled,
 	.widget-configuration .previous.disabled{
-		background-color:   #ddd !important;
-		background: 		0;
 		color:				#999 !important;
+	}
+	.widget-configuration .next.disabled{
+		background: 		0;
+		background-color:   #ddd !important;
 	}
 	
 	#wizard-tabs .para{
@@ -126,27 +140,39 @@
     
     #wizard-tabs .theme-select{
 		text-align: center;
+		overflow:   hidden;
+		display:    table;
 	}
 		
 	#wizard-tabs .theme-select img{
-		width:              150px;
-		border:             4px solid white;
+		width:      150px;
+		border:     4px solid white;
+		display:    inline-block;
 	}
 		
 	#wizard-tabs .theme-select img.active{
 		border-color:       red;
 	}
 
+	#wizard-tabs #video-area,
 	#wizard-tabs .theme-select,
 	#wizard-tabs .theme-select img{
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing:    border-box;
 		box-sizing:         border-box;
 	}
+	
+	#wizard-tabs a.help-link{
+		display:	block;
+		text-align: center;
+		margin:	1em auto;
+    }
+	
 		
     #wizard-tabs .section-label.modified{
     	display: none;
     }
+    
     #wizard-tabs .section-label.modified:before{
     	font-family:            'europeana';
 		content:                attr(data-icon);
@@ -169,7 +195,6 @@
     	display:     inline-block;
     	max-width:   100%;
     }
-	
 	
 	
 	/* checkboxes / radios */
@@ -288,6 +313,10 @@
 		width:		20em;
 	}
 	
+	#wizard-tabs #filter-search{
+		border-bottom: 0;
+	}
+	
 	#wizard-tabs .choices{
 		display:	none;
 		width:		100%;
@@ -314,11 +343,6 @@
 	#output{
 		border:		1px solid #e4e4e4;
 	}
-	
-	.content-inner{
-		display:table;
-	}
-	
 	
 	.filter-content{
 		margin:			1em 0;
@@ -348,60 +372,74 @@
 		width:			100%;
 	}
 
-
-
-	#intro-text{		
+	#intro-text{
+		display:	      block;
 	}
 	
 	#video-area{
 		width:            100%;
 		height:           auto;
-		display:          table-cell;
-		vartical-align:   top;
+		display:          block;
+		vertical-align:   top;
+		padding:          0 0 1em 0;	
 	}
 		
-	
-		
 	@media only screen and ( min-width:	48em ){
-
+		
 		#intro-text{
-			float:     left;
-			max-width: 50%;
+			display:	    table-cell;
+			vertical-align: top;
+			max-width:        50%;
 		}
 		
 		#video-area{
-			float:            right;
-			width:            380px;
-			height:           auto;
 			max-width:        50%;
+			display:          table-cell;
+			width:            380px;
+			
+			height:           auto;
+			padding:          0 0 1em 1em;	
 		}
 
 	
 		.widget-configuration .previous,
 		.widget-configuration .next{
+		
+			border:	        none !important;
 			border-radius:	0.5em;
-			position:		relative;
-			
-			left:			2em;
-			top:			1.5em;
+			display:		block;
 			float:			left;
-						
+			XXXXmargin: 		1.56em 1.56em 0;
+			margin: 		1.56em 0 0 0 ;
+			position:		relative;
+					
+			/*	
 			transform:					rotate(0deg);
 			-webkit-transform:			rotate(0deg);
 			transform-origin:			left;
 			-webkit-transform-origin:	left;
+			*/
 		}
 		
-		.widget-configuration .next{
-			right:			2em;
-			left:			auto;
+		.widget-configuration .previous{
 			float:			right;
 		}
 		
+		.content-inner{
+			display:table;
+		}
+		
+		#tab-1 .content-inner{
+			display:       table;
+			table-layout: fixed;
+		}
+	
+		
 		#wizard-tabs .theme-select img{
-			width:       auto;
-			max-width:   24%;
-			float:       left;
+			width:          auto;
+			max-width:      24%;
+			display:        table-cell;
+			vertical-align: top;
 		}
 
 	}
@@ -479,34 +517,36 @@
 						        <!-- Image as a last resort -->
 						        <img src="/portal/themes/default/js/com/mediaelement/media/echo-hereweare.jpg" width="320" height="240" title="No video playback capabilities" />
 						    </object>
-						    
 						</video>
 						
-						    <script type="text/javascript">
-						    	function setupPlayer(){
+						<a class="help-link" onClick="javascript:alert('this should redirect to a help page')"><spring:message code="wizard_tab1_help_link_text_t"/></a>
+						
+					    <script type="text/javascript">
+					    	function setupPlayer(){
 
-									var player = new MediaElementPlayer('#video-area video',{
+								var player = new MediaElementPlayer('#video-area video',{
 
-										enableAutosize: true,
-										
-										enablePluginDebug: true,
-										
-										plugins : ['flash', 'silverlight'],
-										
-										success:function(player){
-											
-											player.pause();
-	           								$('.mejs-overlay-button').trigger('click');
-											player.play();
-										},
-										error:function(e){
-											alert("error " + e + "\n\n" + e.message  );
-										}
-									});
-						    	}
-							</script>						
+									enableAutosize: false,
+									enablePluginDebug: true,
+									plugins : ['flash', 'silverlight'],
+									success:function(player){
+										player.pause();
+           								//$('.mejs-overlay-button').trigger('click');
+										//player.play();
+									},
+									error:function(e){
+										alert("error " + e + "\n\n" + e.message  );
+									}
+								});
+					    	}
+						</script>						
 					</div>
+					
+					
 				</div>
+				
+				<input type="button" class="deans-button-1 next"               value="${buttonNextText}" />
+				
 			</div>
 			<input type="hidden" id="step1" class="mandatory"/>
 			
@@ -790,14 +830,14 @@
 										
 					</div>
 					
+					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
+					<a class="previous">${buttonPreviousText}</a>
+					
 				</div>
 			</div>
 			<input type="hidden" id="step2" class="mandatory"/>
 			
 		</div>
-
-
-
 
 
 
@@ -815,30 +855,9 @@
 						<img src="/portal/themes/default/images/sw-theme-3.png" data-index="3" />
 						<img src="/portal/themes/default/images/sw-theme-4.png" data-index="4" />
 					</div>
-			
-						
-						
-						<!--
-						<div class="radio-block">
-											
-							<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
-							<br/>
-							<input id="withoutResults" name="withResults" type="radio"  value="false" /><label for="withoutResults">without results</label>
-							
-						</div>
 
-
-						<div class="radio-block">
-	
-							<input id="themeClassic" name="theme" type="radio" value="true" checked/><label for="themeClassic">classic theme</label>
-							<br/>
-							<input id="themeDark"    name="theme" type="radio" value="false" /><label for="themeDark">dark theme</label>
-							
-						</div>
-						-->
-
-				
-				
+					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
+					<a class="previous">${buttonPreviousText}</a>
 				
 				</div>
 			</div>
@@ -854,23 +873,6 @@
 					<div class="para">
 						<spring:message code="wizard_tab4_content1_t"/>
 					</div>
-
-<!-- 
-					<div class="para">
-						<div class="radio-block">					
-							<input id="withResults" name="withResults" type="radio" value="true" checked/><label for="withResults">with results</label>
-							<br/>
-							<input id="withoutResults" name="withResults" type="radio"  value="false" /><label for="withoutResults">without results</label>
-						</div>
-
-						<div class="radio-block">
-	
-							<input id="themeClassic" name="theme" type="radio" value="true" checked/><label for="themeClassic">classic theme</label>
-							<br/>
-							<input id="themeDark"    name="theme" type="radio" value="false" /><label for="themeDark">dark theme</label>
-						</div>
-					</div>
- -->
 												
 					<div class="preview-window search-widget-container">
 					</div>
@@ -883,6 +885,8 @@
 						<p id="output"></p>
 					</div>
 
+					<a class="previous">${buttonPreviousText}</a>
+
 				</div>
 			</div>
 			<!-- input type="hidden" id="step4" class="mandatory"/-->
@@ -890,8 +894,10 @@
 
 	</div>
 
+<!-- 
 	<input type="button" class="deans-button-1 next"               value="${buttonNextText}" />
 	<input type="button" class="deans-button-1 previous disabled"  value="${buttonPreviousText}" />
+ -->
 
 	<div class="progress-wrapper">
 		<spring:message code="wizard_progress_t"/>
