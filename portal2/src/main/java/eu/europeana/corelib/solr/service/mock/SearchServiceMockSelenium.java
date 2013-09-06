@@ -163,10 +163,18 @@ public class SearchServiceMockSelenium implements SearchService {
 		return null;
 	}
 
-
-
 	@Override
 	public Date getLastSolrUpdate() throws SolrServerException, IOException {
+		return null;
+	}
+
+	@Override
+	public String resolveId(String europeanaObjectId) {
+		return null;
+	}
+
+	@Override
+	public String resolveId(String collectionId, String recordId) {
 		return null;
 	}
 }
