@@ -170,9 +170,13 @@ public class ObjectController {
 		if (fullBean == null) {
 			String newRecordId = resolveNewRecordId(collectionId, recordId);
 			if (StringUtils.isNotBlank(newRecordId)) {
-				String location = config.getPortalUrl() + "/record" + newRecordId + ".html";
+				StringBuilder location = new StringBuilder();
+				if (!config.getPortalName().startsWith("/")) {
+					location.append("/");
+				}
+				location.append(config.getPortalName()).append("/record").append(newRecordId).append(".html");
 				response.setStatus(301);
-				response.setHeader("Location", location);
+				response.setHeader("Location", location.toString());
 				return null;
 			} else {
 				throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
