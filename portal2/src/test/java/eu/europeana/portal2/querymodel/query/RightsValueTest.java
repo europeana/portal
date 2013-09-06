@@ -38,7 +38,7 @@ public class RightsValueTest {
 		assertEquals(oocUrl, ooc.getUrl());
 		assertEquals("/rights/out-of-copyright-non-commercial/", ooc.getRightsUrl());
 		assertEquals("Out of copyright - non commercial reuse", ooc.getRightsText());
-		assertEquals("icon-publicdomain icon-nc", ooc.getRightsIcon());
+		assertEquals("icon-publicdomain icon-nceu", ooc.getRightsIcon());
 		assertEquals(false, ooc.getRightsShowExternalIcon());
 		assertEquals("http://europeana.eu/portal/rights/out-of-copyright-non-commercial.html",
 				ooc.getRelativeUrl());
@@ -82,7 +82,7 @@ public class RightsValueTest {
 	public void testGetRightsIcon() {
 		assertEquals("icon-cczero", cczero.getRightsIcon());
 		assertEquals("icon-unknown", orphan.getRightsIcon());
-		assertEquals("icon-publicdomain icon-nc", ooc.getRightsIcon());
+		assertEquals("icon-publicdomain icon-nceu", ooc.getRightsIcon());
 	}
 
 	@Test
