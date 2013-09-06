@@ -26,11 +26,12 @@
 				<a	href="/${model.portalName}/"
 					title="<spring:message code="AltLogoEuropeana_t" />">
 					
-					<span	class="${logoClass}"
-							<c:if test="${!empty logoBg}">
-							style="background-image:url(\"/${model.portalName}/sp/img/${logoBg}\")"
-							</c:if>
-					></span>
+					<span class="${logoClass}">&nbsp;</span>
+					<c:if test="${!empty logoBg}">
+						<style type="text/css">
+							.${logoWrapperTag} .${logoClass} { background-image:url(/portal/themes/default/images/europeana-logo-2.png); }
+						</style>
+					</c:if>
 				</a>
 			</${logoWrapperTag}>
 			

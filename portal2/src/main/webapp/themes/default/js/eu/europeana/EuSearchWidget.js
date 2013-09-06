@@ -59,65 +59,80 @@ fnSearchWidget = function($, config){
     // load style / initialise events / set state - called by load callback
 
     self.init = function(htmlData) {
-
-        container = $('.search-widget-container');
-        
-        //container.css('background-color',	'#FFF');
-        //container.css('border',				'solid 1px #999');
-
-        
-        container.append('<div id="overlay"></div>');
-        $('#overlay').hide();
-        
-        container.append(htmlData.markup);
-        container.find('#content').hide();
-
-    //    $('#query-input').val('paris');
-
-        itemTemplate       = container.find('.thumb-frame').parent();
-        facetTemplate      = container.find('#filter-search li:nth-child(2)');
-        addKeywordTemplate = container.find('#filter-search li:first');
-        filterTemplate     = container.find('#search-filter li:first');
-
-        setupQuery();
-        setupMenus();
-        setUpRefinements(); // TODO
-
-        pagination = new EuPagination($('.result-pagination'),
-        	{
-        		"ajax":true,
-        		"fns":{
-            		"fnFirst":function(e){
-            			e.preventDefault();
-            			searchWidget.search(1);
-            		},
-					"fnPrevious":function(e){
-						e.preventDefault();
-            			searchWidget.search(paginationData.start - paginationData.rows);
-					},       			
-            		"fnNext":function(e){
-            			e.preventDefault();
-            			searchWidget.search(paginationData.start + paginationData.rows);
-            		},
-					"fnLast":function(e){
-						e.preventDefault();
-            			searchWidget.search(pagination.getMaxStart());
-					},
-            		"fnSubmit":function(val){
-						val = parseInt(val);
-            			var start = ((val-1) * paginationData.rows) + 1;
-   						searchWidget.search( start );            				
-			            return false;
-					}
-        		}
-        	}
-        );
-        
+    	
+    	
        	$.getScript("http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js", function() {
-     	     $.holdReady(false);
-     	});
-       		
-        $(document).ready(function(){
+    	     $.holdReady(false);
+    	});
+      		
+
+    	$(document).ready(function(){
+    	
+	    	var containerClass    = "search-widget-container";
+	    	var containerSelector = "." + containerClass;
+	        container = $(containerSelector);
+	        
+	        if(!container.length){
+	        	var scripts    = document.getElementsByTagName('script');
+	        	$.each(scripts, function(i, ob){
+	        		var src   = $(ob).attr('src');
+	        		var regex = new RegExp('^' + rootUrl + '(.*)EuSearchWidget.js');
+	        		if(regex.test(src)){
+	        			$(ob).after('<div class="' + containerClass + '"></div>');
+	        			container = $(containerSelector);
+	        		}
+	        	});
+	        }
+	        
+	        //container.css('background-color',	'#FFF');
+	        //container.css('border',				'solid 1px #999');
+	        
+	        container.append('<div id="overlay"></div>');
+	        $('#overlay').hide();
+	        
+	        container.append(htmlData.markup);
+	        container.find('#content').hide();	
+	
+	        itemTemplate       = container.find('.thumb-frame').parent();
+	        facetTemplate      = container.find('#filter-search li:nth-child(2)');
+	        addKeywordTemplate = container.find('#filter-search li:first');
+	        filterTemplate     = container.find('#search-filter li:first');
+	
+	        setupQuery();
+	        setupMenus();
+	        setUpRefinements(); // TODO
+	
+	        pagination = new EuPagination($('.result-pagination'),
+	        	{
+	        		"ajax":true,
+	        		"fns":{
+	            		"fnFirst":function(e){
+	            			e.preventDefault();
+	            			searchWidget.search(1);
+	            		},
+						"fnPrevious":function(e){
+							e.preventDefault();
+	            			searchWidget.search(paginationData.start - paginationData.rows);
+						},       			
+	            		"fnNext":function(e){
+	            			e.preventDefault();
+	            			searchWidget.search(paginationData.start + paginationData.rows);
+	            		},
+						"fnLast":function(e){
+							e.preventDefault();
+	            			searchWidget.search(pagination.getMaxStart());
+						},
+	            		"fnSubmit":function(val){
+							val = parseInt(val);
+	            			var start = ((val-1) * paginationData.rows) + 1;
+	   						searchWidget.search( start );            				
+				            return false;
+						}
+	        		}
+	        	}
+	        );
+	        
+        //$(document).ready(function(){
         	/*
         	container.resizable({
         		resize: function( event, ui ) {
@@ -159,10 +174,7 @@ fnSearchWidget = function($, config){
             	$('body').removeClass('dark');
             }
             
-           	$.getScript(responsiveContainersUrl, function() {
-           		//console.log('initialise responsive containers here');
-        	});
-
+           	$.getScript(responsiveContainersUrl, function() {});
         	
         });
 
@@ -170,37 +182,38 @@ fnSearchWidget = function($, config){
 
     
     var doSearch = function(startParam, query){
-//maclean
-try{
-    	var url = buildUrl(startParam, query);
-    	
-        if(typeof url != 'undefined' && url.length){
-        	
-        	if(self.withResults){
-            	if(searchUrl.indexOf('file')==0){
-    				getFake();
-            	}
-            	else{
-            		showSpinner();
-                    $.ajax({
-                        "url" : url,
-                        "type" : "GET",
-                        "crossDomain" : true,
-                        "dataType" : "script",
-                        "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
-                    });
-            	}        		
-        	}
-        	else{
-        		window.open(url, '_blank');        		
-        	}
-        }
-        else{
-            self.q.addClass('error-border');
-        }
-}catch(e){console.log(e);}
 
-        
+    	try{
+    		var url = buildUrl(startParam, query);
+    	
+	        if(typeof url != 'undefined' && url.length){
+	        	
+	        	if(self.withResults){
+	            	if(searchUrl.indexOf('file')==0){
+	    				getFake();
+	            	}
+	            	else{
+	            		showSpinner();
+	                    $.ajax({
+	                        "url" : url,
+	                        "type" : "GET",
+	                        "crossDomain" : true,
+	                        "dataType" : "script",
+	                        "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
+	                    });
+	            	}        		
+	        	}
+	        	else{
+	        		window.open(url, '_blank');        		
+	        	}
+	        }
+	        else{
+	            self.q.addClass('error-border');
+	        }
+    	}
+    	catch(e){
+    		console.log(e);
+    	}
     };
 
     
@@ -615,7 +628,8 @@ try{
                 "fn_item": function(self){},
                 "fn_init": function(self){
                     var input        = container.find('#query-input');
-                    var searchTerm   = input.attr("valueForBackButton").replace("*:*", "");
+                    var searchTerm   = 'paris';
+                    //var searchTerm   = input.attr("valueForBackButton").replace("*:*", "");
                     self.cmp.find(".item a").each(function(i, ob){
                         var searchType = $(ob).attr("class");
                         if(searchTerm.indexOf(searchType) == 0){
@@ -707,11 +721,13 @@ var theParams = function(){
 	var thisScript = false;
 	
 	for(var i=0; i<scripts.length; i++){
+		// remote
 		if(scripts[i].src.indexOf('EuSearchWidget') > -1){
 			thisScript = scripts[i];			
 		}
 	}
 	if(!thisScript){
+		// within preview page on portal
 		if($('#widget-url-ref').length>0 && $('#widget-url-ref').val().length>0){
 			thisScript = {"src": $('#widget-url-ref').val()};
 		}
@@ -770,38 +786,46 @@ var rootUrl;
 var rootJsUrl;
 
 var withJQuery = function($){
-	var dependencies = [
-		'utils.js',
-		'EuAccessibility.js',
-		'EuMenu.js',
-		'ellipsis.js',
-		'collapsible_widget.js',
-		'collapsible.js',
-		'EuPagination.js',
-	];
+	
+	$(document).ready(function(){
 
-	function recursiveLoad(index){
-		if(dependencies.length > index){
-			$.ajax({
-				"url": rootJsUrl + dependencies[index],
-				"dataType": "script",
-				"success": function(){
-					//console.log('loaded ' + dependencies[index] + ', now get ' + (index+1));
-					recursiveLoad(index + 1);	
-				},
-	            "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
-			});
-		}
-		else{
-			searchWidget = fnSearchWidget($, theParams);
-			searchWidget.load();
-		}
-	}
-	recursiveLoad(0);
+		var dependencies = [
+		            		'utils.js',
+		            		'EuAccessibility.js',
+		            		'EuMenu.js',
+		            		'ellipsis.js',
+		            		'collapsible_widget.js',
+		            		'collapsible.js',
+		            		'EuPagination.js',
+		            	];
+
+		            	function recursiveLoad(index){
+		            		if(dependencies.length > index){
+		            			$.ajax({
+		            				"url": rootJsUrl + dependencies[index],
+		            				"dataType": "script",
+		            				"success": function(){
+		            					//console.log('loaded ' + dependencies[index] + ', now get ' + (index+1));
+		            					recursiveLoad(index + 1);	
+		            				},
+		            	            "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8"
+		            			});
+		            		}
+		            		else{
+		            			searchWidget = fnSearchWidget($, theParams);
+		            			searchWidget.load();
+		            		}
+		            	}
+		            	recursiveLoad(0);
+		
+		
+	});
+	
+
 };
 
 if(typeof jQuery == "undefined"){
-	
+
 	var jq = document.createElement('script');
 	jq.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
 	jq.setAttribute('type', 'text/javascript');
