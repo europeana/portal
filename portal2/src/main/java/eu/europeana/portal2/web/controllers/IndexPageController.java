@@ -136,8 +136,15 @@ public class IndexPageController {
 							String key = "";
 							try {
 								key = String.format("notranslate_carousel-item-%d_a_url_lang_%d_t", i, j);
-								String[] langUrl = messageSource.getMessage(key, null, null).split(",");
-								translatableUrls.put(langUrl[0], langUrl[1]);
+								String langUrlRaw = messageSource.getMessage(key, null, null);
+								keepFetchingLanguages = false;
+								if (StringUtils.isNotBlank(langUrlRaw) && !key.equals(langUrlRaw)) {
+									String[] langUrl = langUrlRaw.split(",");
+									if (langUrl.length == 2) {
+										translatableUrls.put(langUrl[0], langUrl[1]);
+										keepFetchingLanguages = true;
+									}
+								}
 							} catch (NoSuchMessageException e) {
 								keepFetchingLanguages = false;
 							} catch (ArrayIndexOutOfBoundsException e) {
