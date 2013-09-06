@@ -17,6 +17,7 @@
 
 package eu.europeana.portal2.web.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,6 +29,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -125,7 +127,9 @@ public class ObjectController {
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows, 
-			HttpServletRequest request, Locale locale) throws EuropeanaQueryException {
+			HttpServletRequest request, 
+			HttpServletResponse response, 
+			Locale locale) throws EuropeanaQueryException {
 
 		long t0 = (new Date()).getTime();
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
@@ -165,7 +169,15 @@ public class ObjectController {
 		long tgetFullBean0 = (new Date()).getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, showSimilarItems);
 		if (fullBean == null) {
-			throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
+			String newRecordId = resolveNewRecordId(collectionId, recordId);
+			if (StringUtils.isNotBlank(newRecordId)) {
+				String location = config.getPortalUrl() + "/record" + newRecordId + ".html";
+				response.setStatus(301);
+				response.setHeader("Location", location);
+				return null;
+			} else {
+				throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
+			}
 		}
 
 		if (log.isDebugEnabled()) {
@@ -273,9 +285,11 @@ public class ObjectController {
 		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
 		try {
 			fullBean = searchService.findById(europeanaId, showSimilarItems);
+			/*
 			if (fullBean == null) {
 				fullBean = searchService.resolve(europeanaId, showSimilarItems);
 			}
+			*/
 		} catch (SolrTypeException e) {
 			log.error(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId,
 					e.getMessage()));
@@ -284,6 +298,18 @@ public class ObjectController {
 					e.getStackTrace()[0]));
 		}
 		return fullBean;
+	}
+
+	private String resolveNewRecordId(String collectionId, String recordId) {
+		String newRecordId = null;
+		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
+		try {
+			newRecordId = searchService.resolveId(europeanaId);
+		} catch (NullPointerException e) {
+			log.error(String.format("Exception during getting the full bean for ID %s: %s", europeanaId,
+					e.getStackTrace()[0]));
+		}
+		return newRecordId;
 	}
 
 	private List<BriefBean> getMoreLikeThis(String collectionId, String recordId) {
