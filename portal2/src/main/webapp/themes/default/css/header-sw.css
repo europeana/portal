@@ -73,8 +73,20 @@
 	background-image:	url('/portal/themes/default/images/europeana-logo-2.png');	
 }
 
+/*
 .search-widget-container .logo-t-and-c{
 	background-image:	url('/portal/themes/default/images/europeana-logo-tc.png');	
+}
+*/
+
+.search-widget-container .logo {
+	background-repeat:	no-repeat;
+	width:				110px;
+	height:				62px;
+	display:			block;
+	position:			relative;
+	left:				-1px;
+	background-size:	contain;
 }
 
 
@@ -96,9 +108,11 @@
 	}
 	
 	
+	/*
 	.search-widget-container.desktop .logo-t-and-c{
 		background-image:	url('/portal/themes/default/images/europeana-logo-tc.png');
 	}
+	*/
 
 
 	.search-widget-container.desktop #query-full, #query-info{
