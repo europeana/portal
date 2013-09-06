@@ -138,7 +138,7 @@ public class IndexPageController {
 								key = String.format("notranslate_carousel-item-%d_a_url_lang_%d_t", i, j);
 								String langUrlRaw = messageSource.getMessage(key, null, null);
 								keepFetchingLanguages = false;
-								if (langUrlRaw != null) {
+								if (StringUtils.isNotBlank(langUrlRaw)) {
 									String[] langUrl = langUrlRaw.split(",");
 									if (langUrl.length == 2) {
 										translatableUrls.put(langUrl[0], langUrl[1]);
