@@ -131,28 +131,16 @@ fnSearchWidget = function($, config){
 	        		}
 	        	}
 	        );
-	        
-        //$(document).ready(function(){
-        	/*
-        	container.resizable({
-        		resize: function( event, ui ) {
-        			$(window).trigger("widgetResize");
-        		}
-        	});
-        	*/
-        	/*
-        	container.draggable();
-        	 */
+
         	container.css('overflow-y', 'auto');
         	container.css('overflow-x', 'hidden');
         	
         	// responsive-containers initialisation
+        	
 //        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em max-width:48em=max48em min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
 //        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em                        min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	container.attr('data-squery', 'max-width:55em=max55em max-width:48em=mobile max-width:30em=max30em min-width:22em=min22em min-width:48em=desktop min-width:55em=min55em min-width:71em=min71em');
 
-        	
-        	
         	
             // load style - as single files if in debug mode
             if(true || js.debug){
@@ -235,6 +223,8 @@ fnSearchWidget = function($, config){
         	url += "&profile=portal,params&callback=searchWidget.showRes";
         	url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
         	url += '&start=' + (startParam ? startParam : 1);
+        	//url += '&bt=searchwidget2';
+        	
         	// remove-filter links provide the url - return here if provided
         	if(query){
         		console.log("return the pre-set query");
@@ -242,7 +232,7 @@ fnSearchWidget = function($, config){
         	}
         }
         else{
-        	url = searchUrlWithoutResults + param(searchUrlWithoutResults) + 'query=' + term;
+        	url = searchUrlWithoutResults + param(searchUrlWithoutResults) + 'query=' + term + '&bt=searchwidget2';
         }
                 
         // params
@@ -295,12 +285,13 @@ fnSearchWidget = function($, config){
 
         // console.log("widget showRes(data), data = \n" + JSON.stringify(data));
         var start = data.params.start ? data.params.start : 1;
-        
+        var query = self.q.val();
+
         $(data.items).each(function(i, ob){
             var item = itemTemplate.clone();
 
             item.find('a').attr(
-                'href', resultServerUrl + '/record' + ob.id + '.html?start=' + start + '&query='
+                'href', resultServerUrl + '/record' + ob.id + '.html?start=' + start + '&query=' + query + '&bt=searchwidget2'
             );
 
             item.find('a .ellipsis').prepend(
@@ -628,8 +619,8 @@ fnSearchWidget = function($, config){
                 "fn_item": function(self){},
                 "fn_init": function(self){
                     var input        = container.find('#query-input');
-                    var searchTerm   = 'paris';
-                    //var searchTerm   = input.attr("valueForBackButton").replace("*:*", "");
+                    //var searchTerm   = 'paris';
+                    var searchTerm   = input.attr("valueForBackButton").replace("*:*", "");
                     self.cmp.find(".item a").each(function(i, ob){
                         var searchType = $(ob).attr("class");
                         if(searchTerm.indexOf(searchType) == 0){
