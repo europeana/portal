@@ -35,7 +35,7 @@ fnSearchWidget = function($, config){
 	var responsiveContainersUrl = rootUrl +  '/themes/default/js/eu/europeana/responsive-containers.js';
     
     var defaultRows             = 6;
-    var pagination              = false;
+    var pagination              = [];
     var paginationData          = {};
     
     
@@ -102,35 +102,41 @@ fnSearchWidget = function($, config){
 	        setupMenus();
 	        setUpRefinements(); // TODO
 	
-	        pagination = new EuPagination($('.result-pagination'),
-	        	{
-	        		"ajax":true,
-	        		"fns":{
-	            		"fnFirst":function(e){
-	            			e.preventDefault();
-	            			searchWidget.search(1);
-	            		},
-						"fnPrevious":function(e){
-							e.preventDefault();
-	            			searchWidget.search(paginationData.start - paginationData.rows);
-						},       			
-	            		"fnNext":function(e){
-	            			e.preventDefault();
-	            			searchWidget.search(paginationData.start + paginationData.rows);
-	            		},
-						"fnLast":function(e){
-							e.preventDefault();
-	            			searchWidget.search(pagination.getMaxStart());
-						},
-	            		"fnSubmit":function(val){
-							val = parseInt(val);
-	            			var start = ((val-1) * paginationData.rows) + 1;
-	   						searchWidget.search( start );            				
-				            return false;
-						}
-	        		}
-	        	}
-	        );
+	        pagination = [];
+	        $.each( $('.result-pagination'), function(i, ob){
+		        pagination.push( new EuPagination($(ob),
+		        	{
+		        		"ajax":true,
+		        		"fns":{
+		            		"fnFirst":function(e){
+		            			e.preventDefault();
+		            			searchWidget.search(1);
+		            		},
+							"fnPrevious":function(e){
+								e.preventDefault();
+		            			searchWidget.search(paginationData.start - paginationData.rows);
+							},       			
+		            		"fnNext":function(e){
+		            			e.preventDefault();
+		            			searchWidget.search(paginationData.start + paginationData.rows);
+		            		},
+							"fnLast":function(e){
+								e.preventDefault();
+		            			searchWidget.search(pagination.getMaxStart());
+							},
+		            		"fnSubmit":function(val){
+								val = parseInt(val);
+		            			var start = ((val-1) * paginationData.rows) + 1;
+		   						searchWidget.search( start );            				
+					            return false;
+							}
+		        		}
+		        	})
+		        );
+	        });
+	        
+
+	        
 
         	container.css('overflow-y', 'auto');
         	container.css('overflow-x', 'hidden');
@@ -223,7 +229,6 @@ fnSearchWidget = function($, config){
         	url += "&profile=portal,params&callback=searchWidget.showRes";
         	url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
         	url += '&start=' + (startParam ? startParam : 1);
-        	//url += '&bt=searchwidget2';
         	
         	// remove-filter links provide the url - return here if provided
         	if(query){
@@ -322,11 +327,11 @@ fnSearchWidget = function($, config){
         paginationData = {"records":data.totalResults, "rows": data.params.rows, "start":start};
         
         //pagination.setData(data.totalResults, data.itemsCount, data.start);
-        pagination.setData(
-        		data.totalResults,
-        		data.params.rows,
-        		start);
-
+        $.each(pagination, function(i, ob){
+            ob.setData(data.totalResults,
+            		data.params.rows,
+            		start);
+        });
 
         // result stats
         container.find('.first-vis-record').html(start);
