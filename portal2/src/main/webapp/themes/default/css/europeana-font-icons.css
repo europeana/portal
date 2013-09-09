@@ -334,7 +334,37 @@
 
 /* rights icons all have different image borders - corrective css margins added here */
 
+.icon-cczero{
+	position:relative;
+	top:     -0.0625em;
+}
 
+
+.icon-publicdomain{
+	position:relative;
+	top:     -0.0625em;
+	top:     -0.056em;
+}
+
+.icon-copyright{
+	position: relative;
+	top:      -0.0625em;
+	top:     -0.056em;
+}
+
+.icon-unknown{
+	position:relative;
+	top:     -0.0625em;
+	top:     -0.056em;
+}
+
+
+#content-main .icon-publicdomain{
+	top:     -0.05505em;
+}
+
+
+/*
 span.rights-icon.icon-copyright{
 	margin-top:	.07em;
 }
@@ -354,7 +384,7 @@ span.rights-icon.icon-cc, span.rights-icon.icon-by, span.rights-icon.icon-sa, sp
 span.rights-icon.icon-unknown{
 	margin-top:	.07em;
 }
-
+*/
 
 
 
