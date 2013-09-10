@@ -58,8 +58,7 @@ public class SearchServiceMockSelenium implements SearchService {
 	public static final List<? extends Aggregation> aggregations2 = new ArrayList<AggregationImpl>();
 
 	private final Map<String, BriefBean> briefBeans;
-	
-	
+
 	public SearchServiceMockSelenium(){
 		super();
 		
@@ -71,18 +70,18 @@ public class SearchServiceMockSelenium implements SearchService {
 		}
 		
 	}
-	
+
 	@Override
 	public FullBean findById(String europeanaObjectId,boolean similarItems) {
-		
+
 		System.err.println("look up briefbean on " + europeanaObjectId );
-		
+
 		FullBean mockBean = new FullBeanMock(briefBeans.get(europeanaObjectId));
 		return mockBean;
 	}
 
 	@Override
-	public FullBean findById(String collectionId, String recordId,boolean similarItems) throws SolrTypeException {
+	public FullBean findById(String collectionId, String recordId, boolean similarItems) {
 		return findById(EuropeanaUriUtils.createEuropeanaId(collectionId, recordId),similarItems);
 	}
 
@@ -91,24 +90,24 @@ public class SearchServiceMockSelenium implements SearchService {
 	public <T extends IdBean> ResultSet<T> search(Class<T> beanClazz, Query query) {
 
 		System.err.println("SearchServiceMock (Selenium) - search()");
-		
+
 		ResultSet<T> resultSet = new ResultSet<T>();
-		
+
 		query.getPageSize();
 		query.getStart();
 
 		List<T> fullResults = new ArrayList<T>((Collection<T>)this.briefBeans.values());
-		
+
 		int lastResult = query.getStart() + query.getPageSize();
 		if(lastResult > fullResults.size()){
 			lastResult = fullResults.size();
 		}
-		
+
 		List<T> subResults = fullResults.subList(query.getStart(), lastResult);
-		
+
 		resultSet.setResults( subResults ) ;
 		resultSet.setResultSize(fullResults.size());
-		
+
 		return resultSet;
 	}
 
@@ -116,7 +115,7 @@ public class SearchServiceMockSelenium implements SearchService {
 	public List<Term> suggestions(String query, int pageSize) {
 		return null;
 	}
-	
+
 	@Override
 	public List<Count> createCollections(String facetFieldName, String queryString, String... refinements)
 			throws SolrTypeException {
