@@ -49,6 +49,7 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.solr.exceptions.MongoDBException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
@@ -288,13 +289,8 @@ public class ObjectController {
 		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
 		try {
 			fullBean = searchService.findById(europeanaId, showSimilarItems);
-			/*
-			if (fullBean == null) {
-				fullBean = searchService.resolve(europeanaId, showSimilarItems);
-			}
-			*/
-		} catch (SolrTypeException e) {
-			log.error(String.format("Solr Type Exception during getting the full bean for ID %s: %s", europeanaId,
+		} catch (MongoDBException e) {
+			log.error(String.format("MongoDB Exception during getting the full bean for ID %s: %s", europeanaId,
 					e.getMessage()));
 		} catch (NullPointerException e) {
 			log.error(String.format("Exception during getting the full bean for ID %s: %s", europeanaId,
