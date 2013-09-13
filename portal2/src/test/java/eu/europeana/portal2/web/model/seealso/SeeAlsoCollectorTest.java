@@ -14,7 +14,7 @@ public class SeeAlsoCollectorTest {
 	private String[][] testData = new String[][] {
 		new String[] {"title", "Das Alphabet in Glozel", "0"},
 		new String[] {"what", "still image", "1"},
-		new String[] {"DATA_PROVIDER", "Bibliothèque de l'Alliance israélite universelle", "2"},
+		new String[] {"DATA_PROVIDER", "Bibliotheque de l'Alliance israelite universelle", "2"},
 		new String[] {"PROVIDER", "Judaica Europeana", "3"},
 	};
 
@@ -124,7 +124,7 @@ public class SeeAlsoCollectorTest {
 		assertEquals(4, queries.size());
 		assertEquals("{!id=0}title:\"Das Alphabet in Glozel\"", queries.get(0));
 		assertEquals("{!id=1}what:\"still image\"", queries.get(1));
-		assertEquals("{!id=2}DATA_PROVIDER:\"Bibliothèque de l'Alliance israélite universelle\"", queries.get(2));
+		assertEquals("{!id=2}DATA_PROVIDER:\"Bibliotheque de l'Alliance israelite universelle\"", queries.get(2));
 		assertEquals("{!id=3}PROVIDER:\"Judaica Europeana\"", queries.get(3));
 
 		queries = seeAlsoCollector.getQueries(false);
@@ -132,7 +132,7 @@ public class SeeAlsoCollectorTest {
 		assertEquals(4, queries.size());
 		assertEquals("title:\"Das Alphabet in Glozel\"", queries.get(0));
 		assertEquals("what:\"still image\"", queries.get(1));
-		assertEquals("DATA_PROVIDER:\"Bibliothèque de l'Alliance israélite universelle\"", queries.get(2));
+		assertEquals("DATA_PROVIDER:\"Bibliotheque de l'Alliance israelite universelle\"", queries.get(2));
 		assertEquals("PROVIDER:\"Judaica Europeana\"", queries.get(3));
 	}
 
@@ -172,10 +172,10 @@ public class SeeAlsoCollectorTest {
 		assertNotNull(suggestion);
 		assertEquals(2, suggestion.getId());
 		assertEquals("DATA_PROVIDER", suggestion.getMetaField());
-		assertEquals("Bibliothèque de l'Alliance israélite universelle", suggestion.getLabel());
-		assertEquals("Bibliothèque de l'Alliance israélite universelle", suggestion.getQuery());
-		assertEquals("DATA_PROVIDER:\"Bibliothèque de l'Alliance israélite universelle\"", suggestion.getEscapedQuery());
-		assertEquals("{!id=2}DATA_PROVIDER:\"Bibliothèque de l'Alliance israélite universelle\"", suggestion.getTaggedEscapedQuery());
+		assertEquals("Bibliotheque de l'Alliance israelite universelle", suggestion.getLabel());
+		assertEquals("Bibliotheque de l'Alliance israelite universelle", suggestion.getQuery());
+		assertEquals("DATA_PROVIDER:\"Bibliotheque de l'Alliance israelite universelle\"", suggestion.getEscapedQuery());
+		assertEquals("{!id=2}DATA_PROVIDER:\"Bibliotheque de l'Alliance israelite universelle\"", suggestion.getTaggedEscapedQuery());
 	}
 
 	/**
