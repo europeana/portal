@@ -13,6 +13,10 @@
 		padding:	0.5em 0;	
 	}
 
+	#wizard-tabs{
+		margin-bottom:	1.5em;
+	}
+
 	#wizard-tabs .clear{
 		border:			0;
 		border-radius:	0.5em;
@@ -57,8 +61,7 @@
 		border-radius:	0.5em 0.5em 0 0;
 		cursor:			pointer;
 		padding:		0.5em;
-		XXXXdisplay:		none;
-		visibility:hidden;
+		display:		none;
 	}
 	.widget-configuration .previous{
 		text-align:    right;
@@ -237,7 +240,6 @@
 		display:       inline-block;
 		display:       table-cell;
 		text-align:    right;
-		padding-right: 1em;
 	}
 		
 	.progress{
@@ -388,7 +390,29 @@
 		vertical-align:   top;
 		padding:          0 0 1em 0;	
 	}
+	#video-area iframe{
+		min-height:       15em;
+	}
+
 		
+	@media only screen and ( min-width:	28em ){
+		
+		.widget-configuration .previous,
+		.widget-configuration .next{
+			display:		table-cell;	/* but still hidden */
+			
+		}
+		
+	}
+	@media only screen and ( max-width:	48em ){
+		
+		.widget-configuration .previous,
+		.widget-configuration .next{
+			visibility: hidden;
+		}
+		
+	}
+	
 	@media only screen and ( min-width:	48em ){
 		
 		#intro-text{
@@ -406,15 +430,13 @@
 			padding:          0 0 1em 1em;	
 		}
 
-	
 		.widget-configuration .previous,
-		.widget-configuration .next{
-		
+		.widget-configuration .next {
 			border:	        none !important;
 			border-radius:	0.5em;
-			display:		table-cell;
 			position:		relative;
-			visibility:     visibility;
+			visibility:     visibile;
+			display:		table-cell;	/* but still hidden */
 		}
 		
 		.content-inner{
@@ -430,7 +452,6 @@
 		#wizard-tabs .theme-select img{
 			width:          auto;
 			max-width:      24%;
-			display:        table-cell;
 			vertical-align: top;
 		}
 
@@ -485,53 +506,17 @@
 					
 					<div id="video-area">
 						
-						<video width="0" height="0" style="height:100%; width:100%;" poster="/portal/themes/default/js/com/mediaelement/media/echo-hereweare.jpg" controls="controls" preload="none">
+						<iframe src="//player.vimeo.com/video/24416915?title=0&amp;byline=0&amp;color=ff0179" 
+						width="100%"
+						height="100%"
+						frameborder="0"
+						webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
 						
-						    <!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 (needs to come first) -->
-						    <source type="video/mp4" src="/portal/themes/default/js/com/mediaelement/media/echo-hereweare.mp4" />
-						    
-						    <!-- WebM/VP8 for Firefox4, Opera, and Chrome -->
-						    <source type="video/webm" src="/portal/themes/default/js/com/mediaelement/media/sample.webm" />
-						    
-						    
-						    <!-- source type="video/webm" src="myvideo.webm" / -->
-						    <!-- Ogg/Vorbis for older Firefox and Opera versions -->
-						    <!-- source type="video/ogg" src="myvideo.ogv" / -->
-						    <!-- Optional: Add subtitles for each language -->
-						    <!-- track kind="subtitles" src="subtitles.srt" srclang="en" / -->
-						    <!-- Optional: Add chapters -->
-						    <!-- track kind="chapters" src="chapters.srt" srclang="en" / --> 
-						    <!-- Flash fallback for non-HTML5 browsers without JavaScript -->
-						    
-						    <object width="300" height="200" type="application/x-shockwave-flash" data="/portal/themes/default/js/com/mediaelement/build/flashmediaelement.swf">
-						        <param name="movie"                        value="/portal/themes/default/js/com/mediaelement/build/flashmediaelement.swf" />
-						        <param name="flashvars" value="controls=true&amp;file=/portal/themes/default/js/com/mediaelement/media/bunny.mp4" />
-						        <!-- Image as a last resort -->
-						        <img src="/portal/themes/default/js/com/mediaelement/media/echo-hereweare.jpg" width="320" height="240" title="No video playback capabilities" />
-						    </object>
-						</video>
-						
+						<!-- 
+						<p><a href="http://vimeo.com/24416915">Europeana promo</a> from <a href="http://vimeo.com/europeana">Europeana</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+						-->
 						<a class="help-link europeana" onClick="javascript:alert('this should redirect to a help page')"><spring:message code="wizard_tab1_help_link_text_t"/></a>
-						
-					    <script type="text/javascript">
-					    	function setupPlayer(){
-
-								var player = new MediaElementPlayer('#video-area video',{
-
-									enableAutosize: false,
-									enablePluginDebug: true,
-									plugins : ['flash', 'silverlight'],
-									success:function(player){
-										player.pause();
-           								//$('.mejs-overlay-button').trigger('click');
-										//player.play();
-									},
-									error:function(e){
-										alert("error " + e + "\n\n" + e.message  );
-									}
-								});
-					    	}
-						</script>						
+					
 					</div>
 				</div>
 				
@@ -539,12 +524,11 @@
 				<div class="tab-footer">
 					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
 
-						<div class="progress-label">
-							<spring:message code="wizard_progress_t"/>
-						</div>
+					<div class="progress-label">
+						<spring:message code="wizard_progress_t"/> &nbsp;
+					</div>
+					
 					<div class="progress-wrapper">
-					
-					
 						<div class="progress">
 							<div class="bar deans-button-1">
 							</div>
@@ -885,10 +869,11 @@
 					
 						<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
 						
+						<div class="progress-label">
+							<spring:message code="wizard_progress_t"/>  &nbsp;
+						</div>
+						
 						<div class="progress-wrapper">
-							<div class="progress-label">
-								<spring:message code="wizard_progress_t"/>
-							</div>
 							<div class="progress">
 								<div class="bar deans-button-1">
 								</div>
@@ -925,10 +910,11 @@
 					<div class="tab-footer">
 						<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
 						
+						<div class="progress-label">
+							<spring:message code="wizard_progress_t"/>  &nbsp;
+						</div>
+						
 						<div class="progress-wrapper">
-							<div class="progress-label">
-								<spring:message code="wizard_progress_t"/>
-							</div>
 							<div class="progress">
 								<div class="bar deans-button-1">
 								</div>
@@ -969,10 +955,11 @@
 					
 						<input type="button" class="deans-button-1 next" value="${buttonNextText}" style="visibility:hidden;" />
 						
+						<div class="progress-label">
+							<spring:message code="wizard_progress_t"/>  &nbsp;
+						</div>
+						
 						<div class="progress-wrapper">
-							<div class="progress-label">
-								<spring:message code="wizard_progress_t"/>
-							</div>
 							<div class="progress">
 								<div class="bar deans-button-1">
 								</div>
