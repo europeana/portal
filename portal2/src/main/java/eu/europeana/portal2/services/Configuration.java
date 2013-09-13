@@ -252,6 +252,14 @@ public class Configuration {
 		return seeAlsoTranslations;
 	}
 
+	/**
+	 * Returns portal.seeAlso.aggregation.* as a map of fields belongs to another filed.
+	 * Such as 
+	 *   portal.seeAlso.aggregation.1 = PROVIDER,DATA_PROVIDER
+	 * means, that DATA_PROVIDER should be displayed in the same box as PROVIDER
+	 * 
+	 * @return
+	 */
 	public Map<String, String> getSeeAlsoAggregations() {
 		if (seeAlsoAggregations == null) {
 			seeAlsoAggregations = new HashMap<String, String>();
