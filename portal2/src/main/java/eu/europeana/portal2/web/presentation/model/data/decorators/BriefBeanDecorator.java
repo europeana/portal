@@ -35,7 +35,7 @@ import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 
 public class BriefBeanDecorator implements BriefBean {
 
-	final static private String PATH = "record";
+	final static private String PATH = "/portal/record";
 	final static private String EXTENTION = ".html";
 
 	protected BriefBean briefBean;
