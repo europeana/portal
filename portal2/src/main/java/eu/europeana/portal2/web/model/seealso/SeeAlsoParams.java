@@ -33,13 +33,17 @@ public class SeeAlsoParams {
 
 	boolean updated = false;
 	Map<String, List<SeeAlsoSuggestion>> params = new LinkedHashMap<String, List<SeeAlsoSuggestion>>();
-	Map<String, Map<String, Integer>> index = new HashMap<String, Map<String, Integer>>();
+	Map<String, Map<Integer, Integer>> index = new HashMap<String, Map<Integer, Integer>>();
 
 	public void put(String metaField, List<SeeAlsoSuggestion> fieldValues) {
 		params.put(metaField, fieldValues);
 		updated = false;
 	}
 
+	/**
+	 * Returns the field names
+	 * @return
+	 */
 	public Set<String> getFields() {
 		return params.keySet();
 	}
@@ -58,7 +62,7 @@ public class SeeAlsoParams {
 		return escapedQueries;
 	}
 
-	public SeeAlsoSuggestion findByQuery(String fieldName, String escapedQuery) {
+	public SeeAlsoSuggestion findByQuery(String fieldName, int id) {
 
 		if (!updated) {
 			updateIndex();
@@ -69,13 +73,13 @@ public class SeeAlsoParams {
 			return null;
 		}
 
-		if (index.get(fieldName).containsKey(escapedQuery)) {
-			int i = index.get(fieldName).get(escapedQuery);
+		if (index.get(fieldName).containsKey(id)) {
+			int i = index.get(fieldName).get(id);
 			SeeAlsoSuggestion suggestion = params.get(fieldName).get(i);
 			return suggestion;
 		} else {
 			for (SeeAlsoSuggestion suggestion : params.get(fieldName)) {
-				if (suggestion.getEscapedQuery().equals(escapedQuery)) {
+				if (suggestion.getId() == id) {
 					return suggestion;
 				}
 			}
@@ -88,9 +92,9 @@ public class SeeAlsoParams {
 		if (!updated) {
 			for (String metaField : getFields()) {
 				int i = 0;
-				Map<String, Integer> map = new HashMap<String, Integer>();
+				Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 				for (SeeAlsoSuggestion seeAlsoSuggestion : params.get(metaField)) {
-					map.put(seeAlsoSuggestion.getEscapedQuery(), i++);
+					map.put(seeAlsoSuggestion.getId(), i++);
 				}
 				index.put(metaField, map);
 			}

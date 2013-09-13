@@ -5,14 +5,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import eu.europeana.corelib.logging.Log;
 
 public class SeeAlsoSuggestions {
+
+	Logger log = Logger.getLogger(SeeAlsoSuggestions.class.getCanonicalName());
 
 	private Map<String, String> seeAlsoTranslations;
 
 	private Map<String, String> seeAlsoAggregations;
 
 	private Map<String, Field> fields = new LinkedHashMap<String, Field>();
+	
+	private static final Pattern ID_PATTERN = Pattern.compile("\\{!id=([0-9]+)\\}");
 
 	private SeeAlsoParams seeAlsoParams;
 
@@ -26,9 +35,18 @@ public class SeeAlsoSuggestions {
 	}
 
 	public void add(String query, Integer count) {
+		log.info(String.format("query: %s,  count %d", query, count));
 		String[] parts = query.split(":", 2);
-		String fieldName = parts[0];
-		SeeAlsoSuggestion suggestion = seeAlsoParams.findByQuery(fieldName, query);
+		Matcher matcher = ID_PATTERN.matcher(parts[0]);
+		int id = -1;
+		if (matcher.find()) {
+			log.info(matcher.group(1));
+			id = Integer.parseInt(matcher.group(1));
+		} else {
+			return;
+		}
+		String fieldName = parts[0].replaceAll(ID_PATTERN.pattern(), "");
+		SeeAlsoSuggestion suggestion = seeAlsoParams.findByQuery(fieldName, id);
 		suggestion.setCount(count);
 
 		String aggregatedFieldName = (seeAlsoAggregations.containsKey(suggestion.getMetaField()))

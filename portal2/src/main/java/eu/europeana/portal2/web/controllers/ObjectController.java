@@ -51,6 +51,7 @@ import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.MongoDBException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
+import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
@@ -100,11 +101,12 @@ public class ObjectController {
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
+	public static final int MAX_COUNT_PER_FIELD = 20;
 
 	@Resource
 	private ReloadableResourceBundleMessageSource messageSource;
 
-	public static final Map<String, List<String>> seeAlsoFields = new LinkedHashMap<String, List<String>>() {
+	public static final Map<String, List<String>> SEE_ALSO_FIELDS = new LinkedHashMap<String, List<String>>() {
 		private static final long serialVersionUID = 1L;
 		{
 			put("title", Arrays.asList(new String[] { "DcTitle", "DctermsAlternative" }));
@@ -212,7 +214,10 @@ public class ObjectController {
 			if (log.isDebugEnabled()) {
 				tSeeAlso0 = (new Date()).getTime();
 			}
-			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(fullBean));
+			model.setSeeAlsoParameters(extractSeeAlsoSearchParameters(fullBean));
+			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model.getSeeAlsoParameters()));
+			model.setEuropeanaMlt(createEuropeanaMlt(model.getSeeAlsoParameters()));
+
 			if (log.isDebugEnabled()) {
 				long tSeeAlso1 = (new Date()).getTime();
 				log.debug("see also takes: " + (tSeeAlso1 - tSeeAlso0));
@@ -334,6 +339,7 @@ public class ObjectController {
 		return moreLikeThis;
 	}
 
+	
 	/**
 	 * Create see also suggestions
 	 * 
@@ -341,34 +347,14 @@ public class ObjectController {
 	 *            The full bean
 	 * @return The object contains the see also suggestions
 	 */
-	private SeeAlsoSuggestions createSeeAlsoSuggestions(FullBean fullBean) {
+	private SeeAlsoSuggestions createSeeAlsoSuggestions(SeeAlsoParams seeAlsoParams) {
 
-		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
-		SeeAlsoParams seeAlsoParams = new SeeAlsoParams();
-		int i = 0;
-		for (String metaField : seeAlsoFields.keySet()) {
-			List<SeeAlsoSuggestion> fieldValues = new ArrayList<SeeAlsoSuggestion>();
-			for (String edmField : seeAlsoFields.get(metaField)) {
-				String[] values = shortcut.get(edmField);
-				if (values != null) {
-					i = 0;
-					for (String value : values) {
-						if (!StringUtils.isBlank(value) && value.length() < 500 && i < 20) {
-							SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(metaField, value);
-							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
-							fieldValues.add(suggestion);
-							i++;
-						}
-					}
-				}
-			}
-			if (fieldValues.size() > 0) {
-				seeAlsoParams.put(metaField, fieldValues);
-			}
-		}
+		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(
+			config.getSeeAlsoTranslations(),
+			config.getSeeAlsoAggregations(),
+			seeAlsoParams
+		);
 
-		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(config.getSeeAlsoTranslations(),
-				config.getSeeAlsoAggregations(), seeAlsoParams);
 		try {
 			Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoParams.getEscapedQueries());
 			seeAlsoParams.updateIndex();
@@ -384,5 +370,71 @@ public class ObjectController {
 		}
 
 		return seeAlsoSuggestions;
+	}
+
+	private boolean createEuropeanaMlt(SeeAlsoParams seeAlsoParameters) {
+		long tSeeAlso0 = (new Date()).getTime();
+		List<String> ids = new ArrayList<String>();
+		for (String metaField : seeAlsoParameters.getFields()) {
+			for (SeeAlsoSuggestion suggestion : seeAlsoParameters.get(metaField)) {
+				log.info(suggestion.getEscapedQuery());
+				ids.addAll(searchMltItem(suggestion.getEscapedQuery()));
+			}
+		}
+		log.info("total ids: " + ids.size());
+		long tSeeAlso1 = (new Date()).getTime();
+		log.info("createEuropeanaMlt takes: " + (tSeeAlso1 - tSeeAlso0));
+
+		return false;
+	}
+
+	private List<String> searchMltItem(String queryTerm) {
+		List<String> ids = new ArrayList<String>();
+		Query query = new Query(queryTerm)
+			.setPageSize(10)
+			.setStart(0) // Solr starts from 0
+			.setAllowSpellcheck(false)
+			.setAllowFacets(false)
+		;
+		try {
+			ResultSet<? extends BriefBean> resultSet = searchService.search(BriefBean.class, query);
+			for (BriefBean bean : resultSet.getResults()) {
+				ids.add(bean.getId());
+			}
+		} catch (SolrTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ids;
+	}
+
+	private SeeAlsoParams extractSeeAlsoSearchParameters(FullBean fullBean) {
+		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
+		SeeAlsoParams seeAlsoParams = new SeeAlsoParams();
+		int countPerField = 0, id = 0;
+		for (String metaField : SEE_ALSO_FIELDS.keySet()) {
+			List<SeeAlsoSuggestion> fieldValues = new ArrayList<SeeAlsoSuggestion>();
+			for (String edmField : SEE_ALSO_FIELDS.get(metaField)) {
+				String[] values = shortcut.get(edmField);
+				if (values != null) {
+					countPerField = 0;
+					for (String value : values) {
+						if (!StringUtils.isBlank(value)
+							&& value.length() < 500 
+							&& countPerField < MAX_COUNT_PER_FIELD)
+						{
+							SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(metaField, value, id);
+							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+							fieldValues.add(suggestion);
+							countPerField++; id++;
+						}
+					}
+				}
+			}
+			if (fieldValues.size() > 0) {
+				seeAlsoParams.put(metaField, fieldValues);
+			}
+		}
+		return seeAlsoParams;
 	}
 }
