@@ -9,8 +9,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eu.europeana.corelib.logging.Log;
-
 public class SeeAlsoSuggestions {
 
 	Logger log = Logger.getLogger(SeeAlsoSuggestions.class.getCanonicalName());
@@ -23,11 +21,11 @@ public class SeeAlsoSuggestions {
 	
 	private static final Pattern ID_PATTERN = Pattern.compile("\\{!id=([0-9]+)\\}");
 
-	private SeeAlsoParams seeAlsoParams;
+	private SeeAlsoCollector seeAlsoParams;
 
 	public SeeAlsoSuggestions(Map<String, String> seeAlsoTranslations, 
 			Map<String, String> seeAlsoAggregations, 
-			SeeAlsoParams seeAlsoParams
+			SeeAlsoCollector seeAlsoParams
 		) {
 		this.seeAlsoTranslations = seeAlsoTranslations;
 		this.seeAlsoAggregations = seeAlsoAggregations;
@@ -35,18 +33,12 @@ public class SeeAlsoSuggestions {
 	}
 
 	public void add(String query, Integer count) {
-		log.info(String.format("query: %s,  count %d", query, count));
-		String[] parts = query.split(":", 2);
-		Matcher matcher = ID_PATTERN.matcher(parts[0]);
-		int id = -1;
-		if (matcher.find()) {
-			log.info(matcher.group(1));
-			id = Integer.parseInt(matcher.group(1));
-		} else {
+		Matcher matcher = ID_PATTERN.matcher(query);
+		if (!matcher.find()) {
 			return;
 		}
-		String fieldName = parts[0].replaceAll(ID_PATTERN.pattern(), "");
-		SeeAlsoSuggestion suggestion = seeAlsoParams.findByQuery(fieldName, id);
+		int id = Integer.parseInt(matcher.group(1));
+		SeeAlsoSuggestion suggestion = seeAlsoParams.findById(id);
 		suggestion.setCount(count);
 
 		String aggregatedFieldName = (seeAlsoAggregations.containsKey(suggestion.getMetaField()))
