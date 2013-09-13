@@ -57,38 +57,20 @@
 		border-radius:	0.5em 0.5em 0 0;
 		cursor:			pointer;
 		padding:		0.5em;
+		XXXXdisplay:		none;
+		visibility:hidden;
+	}
+	.widget-configuration .previous{
+		text-align:    right;
 	}
 
-	.widget-configuration .previous,
-	.widget-configuration .next{
-	
-		display:		none;
-		
-		/*
-		z-index:		1;
-		position:		fixed;
-		top:			50%;
-		left:			1em;
-		right:			auto;
-		
-		transform:					rotate(90deg);
-		-webkit-transform:			rotate(90deg);
-		transform-origin:			left;		
-		-webkit-transform-origin:	left;
-		*/		
+	.widget-configuration .tab-footer{
+		display:      table;
+		table-layout: fixed;
+		width:        100%;
+		margin:       2em 0 1em 0;
 	}
 
-	/*
-	.widget-configuration .next{
-		right:	1em;
-		left:	auto;
-		
-		transform:					rotate(270deg);
-		-webkit-transform:			rotate(270deg);
-		transform-origin:			right;
-		-webkit-transform-origin:	right;			
-	}
-	*/
 	
 	.widget-configuration .next.disabled,
 	.widget-configuration .previous.disabled{
@@ -110,6 +92,11 @@
 		padding-right: 0.25em;
 	}
 	
+	#wizard-tabs #filter-content .filter:focus,
+	#wizard-tabs .default_query:focus{
+		box-shadow:	inset	0 0 4px #4C7ECF;
+	}
+		
 	#wizard-tabs #filter-search,
 	#wizard-tabs ul.data-providers,
 	#wizard-tabs ul.providers,
@@ -123,12 +110,20 @@
 	}
 	
 	#wizard-tabs #filter-search h3{
-		border-top: none;
+		border-top:     none;
 	}
 	
-	#wizard-tabs a .change .underline{
-		text-decoration: underline;
+	
+	
+	#wizard-tabs a.facet-section .europeana{
+		color:			#11639D;
 	}
+	
+	#wizard-tabs a.facet-section .change:after{
+		position:		relative;
+		top:		    0.16em;
+	}
+	
 	
 	/*
     #wizard-tabs #withResults,
@@ -160,12 +155,12 @@
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing:    border-box;
 		box-sizing:         border-box;
+		text-align:         center;
 	}
 	
 	#wizard-tabs a.help-link{
-		display:	block;
-		text-align: center;
-		margin:	1em auto;
+		display:  inline-block;
+		margin:	  1.56em auto;
     }
 	
 		
@@ -233,17 +228,27 @@
 	}
 	
 	.progress-wrapper{
-		margin:				auto;
-		padding-bottom:		3em;
-		position:			relative;
-		top:				0.5em;
-		width:				50%;
+		display:		table-cell;
+		margin:			0 1em 0 1em;
+		white-space:    nowrap;
 	}
 	
-	.progress{
-		width:				100%;
-		background-color:	#ddd;
+	.progress-label{
+		display:       inline-block;
+		display:       table-cell;
+		text-align:    right;
+		padding-right: 1em;
 	}
+		
+	.progress{
+		background-color:	#ddd;
+		display:            inline-block;
+		width:				100%;
+		position:           relative;
+		top:                0.4em;
+		
+	}
+	
 
 	.progress .bar{
 		background-color:	blue;
@@ -407,22 +412,9 @@
 		
 			border:	        none !important;
 			border-radius:	0.5em;
-			display:		block;
-			float:			left;
-			XXXXmargin: 		1.56em 1.56em 0;
-			margin: 		1.56em 0 0 0 ;
+			display:		table-cell;
 			position:		relative;
-					
-			/*	
-			transform:					rotate(0deg);
-			-webkit-transform:			rotate(0deg);
-			transform-origin:			left;
-			-webkit-transform-origin:	left;
-			*/
-		}
-		
-		.widget-configuration .previous{
-			float:			right;
+			visibility:     visibility;
 		}
 		
 		.content-inner{
@@ -519,7 +511,7 @@
 						    </object>
 						</video>
 						
-						<a class="help-link" onClick="javascript:alert('this should redirect to a help page')"><spring:message code="wizard_tab1_help_link_text_t"/></a>
+						<a class="help-link europeana" onClick="javascript:alert('this should redirect to a help page')"><spring:message code="wizard_tab1_help_link_text_t"/></a>
 						
 					    <script type="text/javascript">
 					    	function setupPlayer(){
@@ -541,11 +533,26 @@
 					    	}
 						</script>						
 					</div>
-					
-					
 				</div>
 				
-				<input type="button" class="deans-button-1 next"               value="${buttonNextText}" />
+				
+				<div class="tab-footer">
+					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
+
+						<div class="progress-label">
+							<spring:message code="wizard_progress_t"/>
+						</div>
+					<div class="progress-wrapper">
+					
+					
+						<div class="progress">
+							<div class="bar deans-button-1">
+							</div>
+						</div>
+					</div>
+				
+					<a class="previous" style="visibility:hidden;">${buttonPreviousText}</a>
+				</div>
 				
 			</div>
 			<input type="hidden" id="step1" class="mandatory"/>
@@ -575,6 +582,7 @@
 					<div>
 	
 						<!-- types -->
+						
 						<ul id="filter-search">
 						
 							<li class="facet-header">
@@ -582,7 +590,9 @@
 									<a class="facet-section" rel="nofollow">
 										<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_type_header_1" /></span>
 										<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_type_header_2" /></span>
-										<span class="change">&nbsp; <span class="underline">change</span></span>
+										<span class="change">
+											<span class="europeana"><spring:message code="wizard_tab2_change"/></span>
+										</span>
 									</a> 
 								</h3>
 								
@@ -650,10 +660,11 @@
 								<li class="facet-header">
 									<h3>
 										<a class="facet-section" rel="nofollow">
-
 											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_provider_header_1" /></span>
 											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_provider_header_2" /></span>
-											<span class="change">&nbsp; <span class="underline">change</span></span>
+											<span class="change">
+												<span class="europeana"><spring:message code="wizard_tab2_change"/></span>
+											</span>
 										</a> 
 									</h3>
 									
@@ -696,11 +707,45 @@
 										</ul>
 										<div class="choices"></div>
 									</div>
-
 								</li>
 								
 
+								<li class="facet-header">
+									<h3>
+										<a class="facet-section" rel="nofollow">
+											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_countries_header_1" /></span>
+											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_countries_header_2" /></span>
+											<span class="change">
+												<span class="europeana"><spring:message code="wizard_tab2_change"/></span>
+											</span>
+										</a> 
+									</h3>
 
+									<c:forEach items="${model.briefBeanView.facetQueryLinks}" var="facet">
+										<c:if test="${fn:toLowerCase(facet.type) == 'country'}">
+											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
+										
+											<ul class="types hide-til-opened">
+												<c:forEach items="${facet.links}" var="facet_item">
+													<c:set var="label">
+														<c:choose>
+															<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
+															<c:otherwise>${facet_item.value}</c:otherwise>
+														</c:choose>
+													</c:set>
+													<li>
+														<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
+															<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
+															<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
+														</a>
+													</li>
+												</c:forEach>
+											</ul>
+											<button class="deans-button-1 clear clear-types"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
+												
+										</c:if>
+									</c:forEach>
+								</li>
 							
 								<!-- types -->
 
@@ -709,7 +754,9 @@
 										<a class="facet-section" rel="nofollow">
 											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_media_header_1" /></span>
 											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_media_header_2" /></span>
-											<span class="change">&nbsp; <span class="underline">change</span></span>
+											<span class="change">
+												<span class="europeana"><spring:message code="wizard_tab2_change"/></span>
+											</span>
 										</a> 
 									</h3>
 								
@@ -749,7 +796,9 @@
 										<a class="facet-section" rel="nofollow">
 											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_copyrights_header_1" /></span>
 											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_copyrights_header_2" /></span>
-											<span class="change">&nbsp; <span class="underline">change</span></span>
+											<span class="change">
+												<span class="europeana"><spring:message code="wizard_tab2_change"/></span>
+											</span>
 										</a> 
 									</h3>
 	
@@ -791,7 +840,9 @@
 										<a class="facet-section" rel="nofollow">
 											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_languages_header_1" /></span>
 											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_languages_header_2" /></span>
-											<span class="change">&nbsp; <span class="underline">change</span></span>
+											<span class="change">
+												<span class="europeana"><spring:message code="wizard_tab2_change"/></span>
+											</span>
 										</a> 
 									</h3>
 	
@@ -830,8 +881,23 @@
 										
 					</div>
 					
-					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
-					<a class="previous">${buttonPreviousText}</a>
+					<div class="tab-footer">
+					
+						<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
+						
+						<div class="progress-wrapper">
+							<div class="progress-label">
+								<spring:message code="wizard_progress_t"/>
+							</div>
+							<div class="progress">
+								<div class="bar deans-button-1">
+								</div>
+							</div>
+						</div>
+						
+						<a class="previous">${buttonPreviousText}</a>
+					
+					</div>
 					
 				</div>
 			</div>
@@ -856,9 +922,23 @@
 						<img src="/portal/themes/default/images/sw-theme-4.png" data-index="4" />
 					</div>
 
-					<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
-					<a class="previous">${buttonPreviousText}</a>
+					<div class="tab-footer">
+						<input type="button" class="deans-button-1 next" value="${buttonNextText}" />
+						
+						<div class="progress-wrapper">
+							<div class="progress-label">
+								<spring:message code="wizard_progress_t"/>
+							</div>
+							<div class="progress">
+								<div class="bar deans-button-1">
+								</div>
+							</div>
+						</div>
+						
+						<a class="previous">${buttonPreviousText}</a>
 				
+					</div>
+					
 				</div>
 			</div>
 			<input type="hidden" id="step3" class="mandatory"/>
@@ -885,11 +965,26 @@
 						<p id="output"></p>
 					</div>
 
-					<a class="previous">${buttonPreviousText}</a>
-
+					<div class="tab-footer">
+					
+						<input type="button" class="deans-button-1 next" value="${buttonNextText}" style="visibility:hidden;" />
+						
+						<div class="progress-wrapper">
+							<div class="progress-label">
+								<spring:message code="wizard_progress_t"/>
+							</div>
+							<div class="progress">
+								<div class="bar deans-button-1">
+								</div>
+							</div>
+						</div>
+	
+						<a class="previous">${buttonPreviousText}</a>
+					</div>
+				
 				</div>
 			</div>
-			<!-- input type="hidden" id="step4" class="mandatory"/-->
+			
 		</div>
 
 	</div>
@@ -899,11 +994,4 @@
 	<input type="button" class="deans-button-1 previous disabled"  value="${buttonPreviousText}" />
  -->
 
-	<div class="progress-wrapper">
-		<spring:message code="wizard_progress_t"/>
-		<div class="progress">
-			<div class="bar deans-button-1">
-			</div>
-		</div>
-	</div>
 </div>
