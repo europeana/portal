@@ -9,15 +9,17 @@ public class SeeAlsoSuggestion {
 	private String query;
 	private String escapedQuery;
 	private int count;
+	private int id;
 
-	public SeeAlsoSuggestion(String metaField, String label) {
+	public SeeAlsoSuggestion(String metaField, String label, int id) {
 		this.metaField = metaField;
 		this.label = label;
 		this.query = ControllerUtil.clearSeeAlso(label);
+		this.id = id;
 	}
 
 	public void makeEscapedQuery(String solrEscapedQuery) {
-		this.escapedQuery = String.format("%s:\"%s\"", metaField, solrEscapedQuery);
+		this.escapedQuery = String.format("{!id=%d}%s:\"%s\"", id, metaField, solrEscapedQuery);
 	}
 
 	public String getMetaField() {
@@ -58,6 +60,10 @@ public class SeeAlsoSuggestion {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
+import eu.europeana.portal2.web.model.seealso.SeeAlsoParams;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
@@ -60,6 +61,8 @@ public class FullDocPage extends FullDocPreparation {
 
 	private static final Map<String, String> IMAGE_FIELDS = new HashMap<String, String>();
 	
+	private SeeAlsoParams seeAlsoSearchParameters;
+
 	static {{
 		IMAGE_FIELDS.put("EdmIsShownBy", "edm:isShownBy");
 		IMAGE_FIELDS.put("EdmHasView", "edm:hasView");
@@ -801,4 +804,15 @@ public class FullDocPage extends FullDocPreparation {
 		return Field.DC_TITLE.getSemanticAttributes();
 	}
 
+	public void setEuropeanaMlt(boolean showSimilarItems2) {
+		// TODO
+	}
+
+	public void setSeeAlsoParameters(SeeAlsoParams seeAlsoSearchParameters) {
+		this.seeAlsoSearchParameters = seeAlsoSearchParameters;
+	}
+
+	public SeeAlsoParams getSeeAlsoParameters() {
+		return this.seeAlsoSearchParameters;
+	}
 }

@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +25,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -96,6 +96,7 @@ public class SitemapController {
 	private static final String LOC_S = "<loc>";
 	private static final String LOC_E = "</loc>";
 
+	private static final String PREFIX_PATTERN = "^[0-9A-Za-z_]{3}$";
 	private static String portalUrl;
 	private static String sitemapCacheName;
 	private static File sitemapCacheDir;
@@ -190,7 +191,7 @@ public class SitemapController {
 			@RequestParam(value = "places", required = false, defaultValue = "false") String places,
 			HttpServletResponse response) throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
-		if (sitemapCacheDir == null || prefix.length() > 3 || !prefix.matches("^[0-9A-F]{3}$")) {
+		if (sitemapCacheDir == null || prefix.length() > 3 || !prefix.matches(PREFIX_PATTERN)) {
 			response.setStatus(404);
 			return;
 		}
@@ -323,7 +324,8 @@ public class SitemapController {
 				fout.write(xml + "\n");
 
 				String queryString = "TYPE:VIDEO";
-				Query query = new Query(queryString).setParameter("rows", String.valueOf(VIDEO_SITEMAP_VOLUME_SIZE))
+				Query query = new Query(queryString)
+						.setParameter("rows", String.valueOf(VIDEO_SITEMAP_VOLUME_SIZE))
 						.setStart(volume * VIDEO_SITEMAP_VOLUME_SIZE)
 						.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
 
@@ -517,20 +519,6 @@ public class SitemapController {
 		return staticPageCache.getPage(fileName, language);
 	}
 
-	public static List<String> makeHexLetterPairs() {
-		List<String> hexLetterPairs = new ArrayList<String>();
-		for (String dirA : SitemapPage.HEX) {
-			for (String dirB : SitemapPage.HEX) {
-				hexLetterPairs.add(dirA + dirB);
-			}
-		}
-		return hexLetterPairs;
-	}
-
-	public static List<String> makeHexLetters() {
-		return Arrays.asList(SitemapPage.HEX);
-	}
-
 	private String getPortalUrl() {
 		if (portalUrl == null) {
 			portalUrl = config.getCannonicalPortalServer() + config.getPortalName();
@@ -670,20 +658,41 @@ public class SitemapController {
 			s.append(XML_HEADER).append(LN);
 			s.append(SITEMAP_HEADER).append(LN);
 
-			String prefix;
 			String urlPath = "europeana-sitemap-hashed.xml?prefix=";
 			String paramImages = "&images=";
 			String paramPlaces = "&places=";
-			for (String ab : makeHexLetterPairs()) {
-				for (String cd : makeHexLetters()) {
-					prefix = ab + cd;
-					StringBuilder sb = new StringBuilder();
-					sb.append(getPortalUrl()).append(urlPath).append(prefix);
-					sb.append(paramImages).append(StringUtils.contains(args[0], "true"));
-					sb.append(paramPlaces).append(StringUtils.contains(args[1], "true"));
-					s.append("<sitemap>").append(LOC_S).append(StringEscapeUtils.escapeXml(sb.toString()))
-							.append(LOC_E).append("</sitemap>").append(LN);
+			// ?q=*:*&rows=0&facet=on&facet.field=id2hash&facet.limit=1000000&facet.sort=lexical
+			Query query = new Query("*:*")
+				.setPageSize(0)
+				.setParameter("facet", "on")
+				.setParameter("facet.field", "id3hash")
+				.setParameter("facet.limit", "1000000")
+				.setParameter("facet.sort", "lexical")
+			;
+			try {
+				int prefixes = 0;
+				long total = 0;
+				List<FacetField> results = searchService.sitemap(BriefBean.class, query).getFacetFields();
+				for (FacetField facet : results) {
+					if (facet.getName().equals("id3hash")) {
+						for (Count value : facet.getValues()) {
+							prefixes++;
+							total += value.getCount();
+							if (!value.getName().matches(PREFIX_PATTERN)) {
+								log.warn(String.format("Prefix %s did not match pattern %s", value.getName(), PREFIX_PATTERN));
+							}
+							StringBuilder sb = new StringBuilder();
+							sb.append(getPortalUrl()).append(urlPath).append(value.getName());
+							sb.append(paramImages).append(StringUtils.contains(args[0], "true"));
+							sb.append(paramPlaces).append(StringUtils.contains(args[1], "true"));
+							s.append("<sitemap>").append(LOC_S).append(StringEscapeUtils.escapeXml(sb.toString()))
+									.append(LOC_E).append("</sitemap>").append(LN);
+						}
+					}
 				}
+				log.info(String.format("prefixes: %d, total: %d", prefixes, total));
+			} catch (SolrTypeException e) {
+				e.printStackTrace();
 			}
 			s.append("</sitemapindex>");
 
@@ -701,7 +710,9 @@ public class SitemapController {
 			boolean isImageSitemap = StringUtils.contains(args[0], "true");
 			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config
 					.getMinCompletenessToPromoteInSitemaps());
-			Query query = new Query("*:*").addRefinement(queryString).addRefinement("id3hash:" + args[2])
+			Query query = new Query("*:*")
+					.addRefinement(queryString)
+					.addRefinement("id3hash:" + args[2])
 					.setPageSize(20000)
 					.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
 

@@ -36,7 +36,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 import eu.europeana.portal2.web.util.rss.RSSFeedParser;
 
 public class FeedServiceImpl implements FeedService {
-	
+
 	@Log
 	private Logger log;
 
@@ -48,22 +48,22 @@ public class FeedServiceImpl implements FeedService {
 
 	@Resource(name="portal2_taskExecutor")
 	private  TaskExecutor executor;
-	
+
 	private ScheduledFuture<?> firstRunTask;
 	private ScheduledFuture<?> updateFeedTask;
 	private ScheduledFuture<?> updatePinterestTask;
-	
+
 	@Resource
 	private ResponsiveImageService responsiveImageService;
 
 	private static List<FeedEntry> feedEntries = new ArrayList<FeedEntry>();
 	private static List<FeedEntry> pinterestEntries = new ArrayList<FeedEntry>();
-	
+
 	@PostConstruct
 	public void scheduleFirstRun() {
 		firstRunTask = scheduler.scheduleAtFixedRate(new FirstRunTask(), millisecondsMinutes(10));
 	}
-	
+
 	@Override
 	public List<FeedEntry> getFeedEntries() {
 		return feedEntries;
@@ -73,11 +73,11 @@ public class FeedServiceImpl implements FeedService {
 	public List<FeedEntry> getPinterestEntries() {
 		return pinterestEntries;
 	}
-	
+
 	private int millisecondsMinutes(int minutes) {
 		return (minutes*60*1000);
 	}
-	
+
 	private int millisecondsHours(int hours) {
 		return (hours*millisecondsMinutes(60));
 	}
@@ -90,7 +90,9 @@ public class FeedServiceImpl implements FeedService {
 	private class FirstRunTask implements Runnable {
 		@Override
 		public void run() {
-			log.info("FIRST RUN SCHEDULER TASK: running...");
+			if (log.isTraceEnabled()) {
+				log.trace("FIRST RUN SCHEDULER TASK: running...");
+			}
 			if (updateFeedTask == null) {
 				if (feedEntries.isEmpty()) {
 					executor.execute(new UpdateFeedTask());
@@ -107,19 +109,25 @@ public class FeedServiceImpl implements FeedService {
 			}
 			if ((updateFeedTask != null) && (updatePinterestTask != null)) {
 				if (firstRunTask.cancel(true)) {
-					log.info("FIRST RUN SCHEDULER TASK: my job is done, terminating myself...");
+					if (log.isTraceEnabled()) {
+						log.trace("FIRST RUN SCHEDULER TASK: my job is done, terminating myself...");
+					}
 				} else {
 					log.warn("FIRST RUN SCHEDULER TASK: self-termination failed...");
 				}
 			}
-			log.info("FIRST RUN SCHEDULER TASK: finished...");
+			if (log.isTraceEnabled()) {
+				log.trace("FIRST RUN SCHEDULER TASK: finished...");
+			}
 		}
 	}
 	
 	private class UpdateFeedTask implements Runnable {
 		@Override
 		public void run() {
-			log.info("BLOG RSS FEED: updating...");
+			if (log.isTraceEnabled()) {
+				log.trace("BLOG RSS FEED: updating...");
+			}
 			RSSFeedParser parser = new RSSFeedParser(config.getBlogUrl(), 3);
 			parser.setStaticPagePath(config.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
@@ -127,14 +135,18 @@ public class FeedServiceImpl implements FeedService {
 				feedEntries.clear();
 				feedEntries.addAll(newEntries);
 			}
-			log.info("BLOG RSS FEED: finished...");
+			if (log.isTraceEnabled()) {
+				log.trace("BLOG RSS FEED: finished...");
+			}
 		}
 	}
 
 	private class UpdatePinterestTask implements Runnable {
 		@Override
 		public void run() {
-			log.info("PINTEREST: updating...");
+			if (log.isTraceEnabled()) {
+				log.trace("PINTEREST: updating...");
+			}
 			RSSFeedParser parser = new RSSFeedParser(config.getPintFeedUrl(), config.getPintItemLimit());
 			parser.setStaticPagePath(config.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
@@ -142,7 +154,9 @@ public class FeedServiceImpl implements FeedService {
 				pinterestEntries.clear();
 				pinterestEntries.addAll(newEntries);
 			}
-			log.info("PINTEREST: finished...");
+			if (log.isTraceEnabled()) {
+				log.trace("PINTEREST: finished...");
+			}
 		}
 	}
 	
