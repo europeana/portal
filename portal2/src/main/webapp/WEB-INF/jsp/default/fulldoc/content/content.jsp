@@ -30,6 +30,14 @@
 			</div>
 		</c:if>
 
+		<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">
+			<div class="row">
+				<div class="twelve columns">
+					<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/europeana-mlt.jspf" %>
+				</div>
+			</div>
+		</c:if>
+
 		<c:if test="${model.moreLikeThis != null && !empty model.moreLikeThis}">
 
 			<div class="row">

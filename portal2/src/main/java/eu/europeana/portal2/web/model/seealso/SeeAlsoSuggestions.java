@@ -5,20 +5,27 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SeeAlsoSuggestions {
+
+	Logger log = Logger.getLogger(SeeAlsoSuggestions.class.getCanonicalName());
 
 	private Map<String, String> seeAlsoTranslations;
 
 	private Map<String, String> seeAlsoAggregations;
 
 	private Map<String, Field> fields = new LinkedHashMap<String, Field>();
+	
+	private static final Pattern ID_PATTERN = Pattern.compile("\\{!id=([0-9]+)\\}");
 
-	private SeeAlsoParams seeAlsoParams;
+	private SeeAlsoCollector seeAlsoParams;
 
 	public SeeAlsoSuggestions(Map<String, String> seeAlsoTranslations, 
 			Map<String, String> seeAlsoAggregations, 
-			SeeAlsoParams seeAlsoParams
+			SeeAlsoCollector seeAlsoParams
 		) {
 		this.seeAlsoTranslations = seeAlsoTranslations;
 		this.seeAlsoAggregations = seeAlsoAggregations;
@@ -26,9 +33,12 @@ public class SeeAlsoSuggestions {
 	}
 
 	public void add(String query, Integer count) {
-		String[] parts = query.split(":", 2);
-		String fieldName = parts[0];
-		SeeAlsoSuggestion suggestion = seeAlsoParams.findByQuery(fieldName, query);
+		Matcher matcher = ID_PATTERN.matcher(query);
+		if (!matcher.find()) {
+			return;
+		}
+		int id = Integer.parseInt(matcher.group(1));
+		SeeAlsoSuggestion suggestion = seeAlsoParams.findById(id);
 		suggestion.setCount(count);
 
 		String aggregatedFieldName = (seeAlsoAggregations.containsKey(suggestion.getMetaField()))

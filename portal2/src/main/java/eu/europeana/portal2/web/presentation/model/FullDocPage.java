@@ -41,6 +41,8 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
+import eu.europeana.portal2.web.model.seealso.EuropeanaMlt;
+import eu.europeana.portal2.web.model.seealso.SeeAlsoCollector;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
@@ -60,6 +62,9 @@ public class FullDocPage extends FullDocPreparation {
 
 	private static final Map<String, String> IMAGE_FIELDS = new HashMap<String, String>();
 	
+	private SeeAlsoCollector seeAlsoCollector;
+	private EuropeanaMlt europeanaMlt;
+
 	static {{
 		IMAGE_FIELDS.put("EdmIsShownBy", "edm:isShownBy");
 		IMAGE_FIELDS.put("EdmHasView", "edm:hasView");
@@ -76,6 +81,7 @@ public class FullDocPage extends FullDocPreparation {
 	private String lightboxRefField = null;
 	private String urlRef = null;
 	private boolean showSimilarItems = false;
+	private boolean showEuropeanaMlt = false;
 
 	public boolean isShowSimilarItems() {
 		return showSimilarItems;
@@ -801,4 +807,27 @@ public class FullDocPage extends FullDocPreparation {
 		return Field.DC_TITLE.getSemanticAttributes();
 	}
 
+	public void setEuropeanaMlt(EuropeanaMlt europeanaMlt) {
+		this.europeanaMlt = europeanaMlt;
+	}
+
+	public EuropeanaMlt getEuropeanaMlt() {
+		return europeanaMlt;
+	}
+
+	public void setSeeAlsoCollector(SeeAlsoCollector seeAlsoCollector) {
+		this.seeAlsoCollector = seeAlsoCollector;
+	}
+
+	public SeeAlsoCollector getSeeAlsoCollector() {
+		return this.seeAlsoCollector;
+	}
+
+	public void setShowEuropeanaMlt(boolean showEuropeanaMlt) {
+		this.showEuropeanaMlt = showEuropeanaMlt;
+	}
+
+	public boolean isShowEuropeanaMlt() {
+		return showEuropeanaMlt;
+	}
 }

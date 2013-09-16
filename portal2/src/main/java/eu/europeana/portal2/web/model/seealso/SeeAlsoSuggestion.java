@@ -4,20 +4,24 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 
 public class SeeAlsoSuggestion {
 
+	private int id;
 	private String metaField;
 	private String label;
 	private String query;
 	private String escapedQuery;
+	private String taggedEscapedQuery;
 	private int count;
 
-	public SeeAlsoSuggestion(String metaField, String label) {
+	public SeeAlsoSuggestion(String metaField, String label, int id) {
 		this.metaField = metaField;
 		this.label = label;
 		this.query = ControllerUtil.clearSeeAlso(label);
+		this.id = id;
 	}
 
 	public void makeEscapedQuery(String solrEscapedQuery) {
 		this.escapedQuery = String.format("%s:\"%s\"", metaField, solrEscapedQuery);
+		this.taggedEscapedQuery = String.format("{!id=%d}%s", id, this.escapedQuery);
 	}
 
 	public String getMetaField() {
@@ -48,6 +52,10 @@ public class SeeAlsoSuggestion {
 		return escapedQuery;
 	}
 
+	public String getTaggedEscapedQuery() {
+		return taggedEscapedQuery;
+	}
+
 	public void setEscapedQuery(String escapedQuery) {
 		this.escapedQuery = escapedQuery;
 	}
@@ -58,6 +66,10 @@ public class SeeAlsoSuggestion {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override

@@ -268,6 +268,8 @@ var EuWidgetWizard = function(cmpIn, options){
 			
 			if(tabIndex == 1){			// query / providers / types / copyrights / languages
 				
+				$('.default_query').focus();
+				
 				var change = function(e){
 					var cb           = e.target ? $(e.target) : $(e);
 					var checked      = cb.prop('checked');
@@ -597,8 +599,6 @@ var EuWidgetWizard = function(cmpIn, options){
 			self.tabs.openTabAtIndex(self.tabs.getOpenTabIndex()-1);
 		});
 		
-		
-		setupPlayer();
 	};
 	
 	
