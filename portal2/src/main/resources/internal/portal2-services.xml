@@ -28,8 +28,6 @@
 	
 	<bean name="portal2_contextcontainer" class="eu.europeana.portal2.web.interceptor.ApplicationContextContainer"/>
 
-	<bean name="portal2_configuration" class="eu.europeana.portal2.services.Configuration"/>
-
 	<bean name="portal2_responsiveImageService" class="eu.europeana.portal2.services.impl.ResponsiveImageServiceImpl"/>
 	
 	<bean name="portal2_clickStreamLogService" class="eu.europeana.portal2.services.impl.ClickStreamLogServiceImpl"/>

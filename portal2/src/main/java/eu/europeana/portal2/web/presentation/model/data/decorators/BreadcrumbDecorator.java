@@ -22,8 +22,8 @@ import java.io.UnsupportedEncodingException;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.UrlBuilder;
-import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.util.QueryUtil;
 

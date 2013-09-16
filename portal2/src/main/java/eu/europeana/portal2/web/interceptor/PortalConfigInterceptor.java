@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.model.PageData;
-import eu.europeana.portal2.services.Configuration;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
 import eu.europeana.portal2.web.util.ControllerUtil;
 

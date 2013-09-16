@@ -39,8 +39,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
-import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;

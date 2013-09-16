@@ -25,8 +25,8 @@ import java.util.List;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.UrlBuilder;
-import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;

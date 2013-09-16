@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
-import eu.europeana.portal2.services.Configuration;
 
 /**
  * Deprecated views get redirected here.

@@ -15,7 +15,7 @@ import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.service.EmailService;
-import eu.europeana.portal2.services.Configuration;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ExceptionPage;
 import eu.europeana.portal2.web.util.ControllerUtil;

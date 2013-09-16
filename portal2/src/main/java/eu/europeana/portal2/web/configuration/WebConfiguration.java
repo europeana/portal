@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Resource
-	private eu.europeana.portal2.services.Configuration config;
+	private eu.europeana.corelib.web.support.Configuration config;
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

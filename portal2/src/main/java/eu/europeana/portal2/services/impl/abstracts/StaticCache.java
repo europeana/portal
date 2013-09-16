@@ -39,7 +39,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import eu.europeana.corelib.logging.Log;
-import eu.europeana.portal2.services.Configuration;
+import eu.europeana.corelib.web.support.Configuration;
 
 /**
  * This class pays attention to a file system directory and delivers pages if

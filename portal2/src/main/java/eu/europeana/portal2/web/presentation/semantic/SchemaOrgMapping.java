@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import eu.europeana.portal2.services.Configuration;
+import eu.europeana.corelib.web.support.Configuration;
 
 /**
  * Mapping of EDM elements and schema.org elements

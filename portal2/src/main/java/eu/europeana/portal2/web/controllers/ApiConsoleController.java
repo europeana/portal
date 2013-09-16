@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.JsonSyntaxException;
 
 import eu.europeana.corelib.logging.Log;
-import eu.europeana.portal2.services.Configuration;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ApiConsolePage;
 import eu.europeana.portal2.web.util.ControllerUtil;

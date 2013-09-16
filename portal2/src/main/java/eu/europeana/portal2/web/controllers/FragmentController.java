@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.portal2.services.Configuration;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.FeedService;
 import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.PortalFragmentInfo;

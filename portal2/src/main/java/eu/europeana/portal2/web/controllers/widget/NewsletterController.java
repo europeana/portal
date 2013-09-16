@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
-import eu.europeana.portal2.services.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.EmptyModelPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
