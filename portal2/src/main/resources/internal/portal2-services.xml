@@ -25,8 +25,6 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
-	<bean name="portal2_contextcontainer" class="eu.europeana.portal2.web.interceptor.ApplicationContextContainer"/>
 
 	<bean name="portal2_responsiveImageService" class="eu.europeana.portal2.services.impl.ResponsiveImageServiceImpl"/>
 	

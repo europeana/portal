@@ -17,8 +17,8 @@
 
 package eu.europeana.portal2.web.presentation.enums;
 
+import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.utils.StringArrayUtils;
-import eu.europeana.portal2.web.interceptor.ApplicationContextContainer;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.FieldValueProcessor;
 import eu.europeana.portal2.web.presentation.enums.fieldutils.Wordcapitalizer;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
