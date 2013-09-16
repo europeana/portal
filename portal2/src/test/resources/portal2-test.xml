@@ -9,7 +9,6 @@
 
 	<import resource="corelib-definitions-test.xml" />
 	<import resource="corelib-logging-context.xml" />
-	<import resource="corelib-web-context.xml" />
     
 	<import resource="internal/portal2-services.xml" />
 
