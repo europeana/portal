@@ -12,6 +12,9 @@
     
 	<import resource="internal/portal2-services.xml" />
 
+	<!-- CONFIGURATION -->
+	<bean name="europeana_configuration" class="eu.europeana.corelib.web.support.Configuration"/>
+
     <!-- Mocking services from other modules and overruling their configuration -->
 
     <bean name="corelib_db_userService" class="eu.europeana.corelib.EmptyBean"/>
