@@ -123,7 +123,7 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 				}
 
 				try {
-					int height = (int)Math.ceil((widths[i] * originalImage.getHeight()) / originalImage.getWidth());
+					int height = (widths[i] * originalImage.getHeight()) / originalImage.getWidth();
 					responsiveImage = ImageUtils.scale(originalImage, widths[i], height);
 					// responsive = ImageUtils.compress(responsive, 0.8f);
 				} catch (IOException e) {
