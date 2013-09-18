@@ -24,7 +24,7 @@
 		</div>
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
-		<a href="${fn:replace(cell.fullDocUrl, "\"", "&quot;")}&rows=${model.rows}"
+		<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}"
 			<c:if test="${!empty cell.titleBidi}">
 				title="${title}"
 			</c:if>
