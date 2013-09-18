@@ -163,6 +163,7 @@ public class IndexPageController {
 					keepFetching = false;
 				}
 			}
+			carouselAge = Calendar.getInstance();
 		}
 		model.setCarouselItems(carouselItems);
 	}

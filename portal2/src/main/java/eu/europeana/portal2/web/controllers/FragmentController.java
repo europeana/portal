@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,12 +12,14 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.slf4j.Logger;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.FeedService;
 import eu.europeana.portal2.services.ResponsiveImageService;
@@ -28,6 +31,9 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
 public class FragmentController {
+
+	@Log
+	private Logger log;
 
 	@Resource
 	private AbstractMessageSource messageSource;
@@ -41,10 +47,10 @@ public class FragmentController {
 	@Resource
 	private ResponsiveImageService responsiveImageService;
 
-	private static Calendar featuredItemAge;
+	private Calendar featuredItemAge;
 	private List<FeaturedItem> featuredItems;
 
-	private static Calendar featuredPartnersAge;
+	private Calendar featuredPartnersAge;
 	private List<FeaturedPartner> featuredPartners;
 
 	@RequestMapping(value = "/indexFragment.json", params = "fragment=blog")
@@ -98,6 +104,9 @@ public class FragmentController {
 					keepFetching = false;
 				}
 			}
+			featuredItemAge = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+			log.info("featuredItemAge: " + sdf.format(featuredItemAge.getTime()));
 		}
 		if (featuredItems.size() > 0) {
 			int index = 0;
@@ -136,6 +145,9 @@ public class FragmentController {
 					keepFetching = false;
 				}
 			}
+			featuredPartnersAge = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+			log.info("featuredPartnersAge: " + sdf.format(featuredPartnersAge.getTime()));
 		}
 		if (featuredPartners.size() > 0) {
 			int index = 0;
