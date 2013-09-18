@@ -136,7 +136,7 @@ public class RegisterApiPageController {
 
 		log.info("requestedAction: " + model.getRequestedAction());
 		// Register for API
-		PageInfo target = null;
+		PageInfo target = PortalPageInfo.API_REQUEST;
 		if (model.getRequestedAction().equals(REQUEST_API)) {
 
 			if (!ControllerUtil.validEmailAddress(model.getEmail())) {
