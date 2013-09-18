@@ -123,7 +123,7 @@ public abstract class StaticCache {
 					String defautFileName = fileName.replace(DOT, "_" + Locale.ENGLISH.getLanguage() + DOT);
 					page = pageMap().get(defautFileName);
 					if (page == null) {
-						log.warn(String.format("filename (%s,  %s) is not existing", fileName, lingualFileName, defautFileName));
+						log.warn(String.format("filename %s (%s,  %s) is not existing", fileName, lingualFileName, defautFileName));
 						return null;
 					}
 				}
@@ -184,9 +184,11 @@ public abstract class StaticCache {
 				if (checkForDot(baseFileName)) {
 					pageMapCache.put(baseFileName, new Page(file));
 				} else {
+					/*
 					if (!baseFileName.endsWith(".svn-base") && !baseFileName.endsWith(".js")) {
-						// log.warning(String.format("Skip registering file to static cache: %s", file.getAbsolutePath()));
+						log.warning(String.format("Skip registering file to static cache: %s", file.getAbsolutePath()));
 					}
+					*/
 				}
 			}
 		}
