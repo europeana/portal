@@ -110,7 +110,7 @@ public class BlogTest {
 			for (int i = 0, len = responsiveWidths.length; i < len; i++) {
 				BufferedImage responsive = null;
 				try {
-					int height = (int)Math.ceil((responsiveWidths[i] * orig.getHeight()) / orig.getWidth());
+					int height = (responsiveWidths[i] * orig.getHeight()) / orig.getWidth();
 					responsive = ImageUtils.scale(orig, responsiveWidths[i], height);
 					assertTrue(String.format("The expected (%d) and actual (%d) width should be in the same range", responsiveWidths[i], responsive.getWidth()),
 							(responsiveWidths[i] <= responsive.getWidth()+1 || responsiveWidths[i] >= responsive.getWidth()+1));
