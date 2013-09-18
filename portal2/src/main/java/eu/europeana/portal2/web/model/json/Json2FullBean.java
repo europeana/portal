@@ -209,7 +209,9 @@ public class Json2FullBean {
 			throw new RuntimeException("IO problem in fileToString", e);
 		} finally {
 			try {
-				in.close();
+				if (in != null) {
+					in.close();
+				}
 			} catch (IOException e) { /* ignore it */
 			}
 		}
