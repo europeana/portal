@@ -55,11 +55,13 @@
         <c:param name="id" value="${user.id}" />
       </c:url>
       <a href="${removeUser}"><spring:message code="admin_RemoveUser_t" /></a>
+      <%--
       |
       <c:url var="blockUser" value="/admin/blockUser.html">
         <c:param name="id" value="${user.id}" />
       </c:url>
       <a href="${blockUser}"><spring:message code="admin_BlockUser_t" /></a>
+       --%>
     </td>
   </tr>
   <tr valign="top">
@@ -123,8 +125,8 @@
   </tr>
   <tr>
     <td colspan="6">
-        <a href="<c:url value="/admin/exportApiKeys.html" />"><spring:message code="admin_exportApiKeys_t" /></a>
-      | <a href="<c:url value="/admin/exportUsers.html" />"><spring:message code="admin_exportUsers_t" /></a>
+      <%-- <a href="<c:url value="/admin/exportApiKeys.html" />"><spring:message code="admin_exportApiKeys_t" /></a>
+      | --%><a href="<c:url value="/admin/exportUsers.html" />"><spring:message code="admin_exportUsers_t" /></a>
       | <a href="<c:url value="/admin/statistics.html" />"><spring:message code="admin_statistics_t" /></a>
     </td>
   </tr>
