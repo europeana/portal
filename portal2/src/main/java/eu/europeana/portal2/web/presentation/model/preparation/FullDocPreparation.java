@@ -37,6 +37,7 @@ import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentation;
@@ -44,9 +45,6 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentati
 public abstract class FullDocPreparation extends FullDocData {
 	
 	private final Logger log = LoggerFactory.getLogger(FullDocPreparation.class);
-
-	private static final String LANDING_PAGE_PREFIX = "http://www.europeana.eu/portal";
-	private static final String HTML_EXT = ".html";
 
 	// caching fields
 	private List<FieldPresentation> fields;
@@ -431,7 +429,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			if (StringUtils.isNotBlank(value) && !value.equals("0000")) {
 				// modifying the landing page value
 				if (fieldInfo.equals(Field.EDM_LANDINGPAGE)) {
-					value = value.replace(LANDING_PAGE_PREFIX, getPortalUrl()) + HTML_EXT;
+					value = value.replace(EuropeanaUrlService.URL_EUROPEANA+"/portal", getPortalUrl()) + EuropeanaUrlService.EXT_HTML;
 				}
 
 				if (fieldInfo.getMaxLength() == -1) {

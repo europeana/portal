@@ -40,6 +40,7 @@ import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
@@ -149,8 +150,7 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String getCannonicalUrl() {
-		// return config.getPortalUrl() + "/resolve/record" + fulldoc.getAbout();
-		return "http://www.europeana.eu/resolve/record" + fulldoc.getAbout();
+		return EuropeanaUrlServiceImpl.getBeanInstance().getPortalResolve(fulldoc.getAbout());
 	}
 
 	@Override
