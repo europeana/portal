@@ -2,36 +2,30 @@ package eu.europeana.portal2.web.controllers;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-// @ContextConfiguration({"/servlet/portal2-mvc.xml", "/portal2-test.xml"})
-@ContextConfiguration({"/portal2-context.xml"})
 public class SitemapControllerTest {
 
-	@Log
-	private Logger log;
+	private Logger log = LoggerFactory.getLogger(getClass());
 
-	@Resource
 	private SearchService searchService;
 
 	private static final String PREFIX_PATTERN = "^[0-9A-F]{3}$";
+	
+	public SitemapControllerTest(ApplicationContext context) {
+		searchService = context.getBean(SearchService.class);
+	}
 
-	@Test
 	public void test() {
 		Query query = new Query("*:*")
 			.setPageSize(0)
@@ -112,5 +106,11 @@ public class SitemapControllerTest {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("portal2-context.xml");
+		SitemapControllerTest test = new SitemapControllerTest(context);
+		test.test();
 	}
 }
