@@ -17,12 +17,15 @@
 
 package eu.europeana.portal2.web.presentation.model.abstracts;
 
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
+import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.corelib.web.utils.UrlBuilder;
+
 /**
  * 
  * Utilities for handling REST requests
  * 
  * @author Willem-Jan Boogerd
- * @author Borys Omelayenko
  * 
  */
 public abstract class RestLocationsData<T> extends UrlAwareData<T> {
@@ -47,65 +50,28 @@ public abstract class RestLocationsData<T> extends UrlAwareData<T> {
 	}
 
 	public String getResolveUri() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("http://www.europeana.eu/resolve/record/");
-		sb.append(collectionId);
-		sb.append("/");
-		sb.append(recordId);
-		return sb.toString();
+		return EuropeanaUrlServiceImpl.getBeanInstance().getPortalResolve(collectionId, recordId);
 	}
 
 	@Override
-	// [server]/[portalName]/record/[collectionId]/[recordId].html
 	public String getMetaCanonicalUrl() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getPortalServer());
-		sb.append(getPortalName());
-		sb.append("/record/");
-		sb.append(collectionId);
-		sb.append("/");
-		sb.append(recordId);
-		sb.append(".html");
-		return sb.toString();
+		return EuropeanaUrlServiceImpl.getBeanInstance().getPortalRecord(false, collectionId, recordId).toString();
 	}
 
 	// /action/embed/record/[collectionId]/[recordId].html
 	public String getEmbedRecordUrl() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getPortalServer());
-		sb.append(getPortalName());
-		sb.append("/action/embed/record/");
-		sb.append(collectionId);
-		sb.append("/");
-		sb.append(recordId);
-		sb.append(".html");
-		return sb.toString();
-	}
-
-	// /record/[collectionId]/[recordId].png
-	public String getCanonicalPng() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getPortalServer());
-		sb.append(getPortalName());
-		sb.append("/record/");
-		sb.append(collectionId);
-		sb.append("/");
-		sb.append(recordId);
-		sb.append(".png");
-		return sb.toString();
+		UrlBuilder url = EuropeanaUrlServiceImpl.getBeanInstance().getPortalHome(false);
+		url.addPath("action","embed", EuropeanaUrlService.PATH_RECORD, collectionId);
+		url.addPage(recordId+EuropeanaUrlService.EXT_HTML);
+		return url.toString();
 	}
 
 	// /[portalName]/action/siwa/record/[collectionId]/[recordId].html
 	public String getEssUrl() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("/");
-		sb.append(getPortalName());
-		sb.append("/action/siwa/record/");
-		sb.append(collectionId);
-		sb.append("/");
-		sb.append(recordId);
-		sb.append(".html");
-		return sb.toString();
+		UrlBuilder url = EuropeanaUrlServiceImpl.getBeanInstance().getPortalHome(true);
+		url.addPath("action","siwa", EuropeanaUrlService.PATH_RECORD, collectionId);
+		url.addPage(recordId+EuropeanaUrlService.EXT_HTML);
+		return url.toString();
 	}
 
 }

@@ -22,6 +22,8 @@ import java.net.URLEncoder;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
+
 /**
  * KML Presentation helper class
  * 
@@ -55,7 +57,9 @@ public class KmlPresentation {
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("</table>");
-		sb.append("<p align=right><font color=\"#008B8B\"><a href=\"http://www.europeana.eu\">Europeana.eu</a></font></p>");
+		sb.append("<p align=right><font color=\"#008B8B\"><a href=\"");
+		sb.append(EuropeanaUrlService.URL_EUROPEANA);
+		sb.append("\">Europeana.eu</a></font></p>");
 
 		return StringEscapeUtils.escapeXml(sb.toString());
 	}

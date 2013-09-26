@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
 
@@ -40,7 +41,7 @@ public class RedirectController {
 
 		if (!StringUtils.isEmpty(uri) && !uri.contains("full-doc")) {
 			String urilc = SitemapController.convertEuropeanaUriToCanonicalUrl(uri);
-			if (urilc.startsWith("http://europeana.eu") || urilc.startsWith("http://www.europeana.eu")
+			if (urilc.startsWith("http://europeana.eu") || urilc.startsWith(EuropeanaUrlService.URL_EUROPEANA)
 					|| !urilc.endsWith(".html")) {
 				response.sendRedirect(urilc);
 			}
