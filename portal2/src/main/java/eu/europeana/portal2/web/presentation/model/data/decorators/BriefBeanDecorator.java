@@ -30,13 +30,11 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 
 public class BriefBeanDecorator implements BriefBean {
-
-	final static private String PATH = "/portal/record";
-	final static private String EXTENTION = ".html";
 
 	protected BriefBean briefBean;
 	private UrlAwareData<?> model;
@@ -81,27 +79,17 @@ public class BriefBeanDecorator implements BriefBean {
 
 	public String getFullDocUrl(boolean addParams) {
 		if (fullDocUrl == null) {
-			String id = briefBean.getId();
-			if (!id.startsWith("/")) {
-				id = "/" + id;
-			}
-			if (id.indexOf("#") > -1) {
-				id = id.replace("#", "");
-			}
-			String url = PATH + id + EXTENTION;
+			UrlBuilder url = EuropeanaUrlServiceImpl.getBeanInstance().getPortalRecord(true, briefBean.getId());
 
-			if (!addParams) {
-				fullDocUrl = url;
-			} else {
-				UrlBuilder builder = new UrlBuilder(url);
-				builder.addParam("start", Integer.toString(getIndex()), true);
+			if (addParams) {
+				url.addParam("start", Integer.toString(getIndex()), true);
 				try {
-					builder = model.enrichFullDocUrl(builder);
+					model.enrichFullDocUrl(url);
 				} catch (UnsupportedEncodingException e) {
 					// never happen
 				}
-				fullDocUrl = builder.toString();
 			}
+			fullDocUrl = url.toString();
 		}
 
 		return fullDocUrl;

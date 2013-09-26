@@ -41,6 +41,7 @@ import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.impl.StaticPageCache;
@@ -73,13 +74,12 @@ public class SitemapController {
 
 	@Resource
 	private ThumbnailService thumbnailService;
+	
+	@Resource
+	private EuropeanaUrlService urlService;
 
 	private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
 
-	private static final String europeanaUriPrefix = "http://www.europeana.eu/resolve/";
-	private static final String europeanaUriInfix = "/resolve/";
-	private static final String canonicalUrlPrefix = "http://www.europeana.eu/portal/";
-	private static final String canonicalUrlInfix = "/portal/";
 	private static final String SITEMAP_INDEX_PARAMS = "images-%s-places-%s";
 	private static final String SITEMAP_INDEX = "europeana-sitemap-index-hashed-";
 	private static final String SITEMAP_HASHED_PARAMS = "prefix-%s-images-%s-places-%s";
@@ -339,8 +339,7 @@ public class SitemapController {
 				if (resultSet != null) {
 					for (BriefBean bean : resultSet) {
 						BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
-						SitemapEntry entry = new SitemapEntry(getPortalUrl()
-								+ convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false),
+						SitemapEntry entry = new SitemapEntry(urlService.getCanonicalPortalRecord(bean.getId()).toString(),
 								doc.getThumbnail(), doc.getTitle()[0], doc.getEuropeanaCompleteness());
 						out.println(URL_S);
 						out.println(LOC_S + entry.getLoc() + LOC_E);
@@ -406,34 +405,6 @@ public class SitemapController {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * Replace http://www.europeana.eu/resolve/xxx to http://www.europeana.eu/portal/xxx.html
-	 * 
-	 * @param europeanaUri
-	 * @return
-	 */
-	public static String convertEuropeanaUriToCanonicalUrl(String europeanaUri) {
-		return convertEuropeanaUriToCanonicalUrl(europeanaUri, true);
-	}
-
-	public static String convertEuropeanaUriToCanonicalUrl(String europeanaUri, boolean usePrefix) {
-		if (usePrefix) {
-			return europeanaUri.replace(europeanaUriPrefix, canonicalUrlPrefix) + ".html";
-		}
-		return europeanaUri.replace(europeanaUriInfix, canonicalUrlInfix);
-	}
-
-	static String convertCanonicalUrlToEuropeanaUri(String canonicalUrl) {
-		return convertCanonicalUrlToEuropeanaUri(canonicalUrl, true);
-	}
-
-	static String convertCanonicalUrlToEuropeanaUri(String canonicalUrl, boolean usePrefix) {
-		if (usePrefix) {
-			return StringUtils.removeEnd(canonicalUrl.replace(canonicalUrlPrefix, europeanaUriPrefix), ".html");
-		}
-		return StringUtils.removeEnd(canonicalUrl.replace(canonicalUrlInfix, europeanaUriInfix), ".html");
 	}
 
 	@RequestMapping("/europeana-providers.html")
@@ -744,9 +715,8 @@ public class SitemapController {
 					if (doc.getTitle() != null) {
 						title = doc.getTitle()[0];
 					}
-					SitemapEntry entry = new SitemapEntry(getPortalUrl()
-							+ convertEuropeanaUriToCanonicalUrl(doc.getFullDocUrl(false), false), doc.getThumbnail(),
-							title, doc.getEuropeanaCompleteness());
+					SitemapEntry entry = new SitemapEntry(urlService.getCanonicalPortalRecord(bean.getId()).toString(),
+							doc.getThumbnail(),	title, doc.getEuropeanaCompleteness());
 					fullXML.append(URL_S).append(LN);
 
 					String url = entry.getLoc();

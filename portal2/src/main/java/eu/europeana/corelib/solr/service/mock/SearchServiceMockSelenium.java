@@ -43,7 +43,7 @@ import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.service.mock.bean.BriefBeanMock;
 import eu.europeana.corelib.solr.service.mock.bean.FullBeanMock;
-import eu.europeana.corelib.tools.utils.EuropeanaUriUtils;
+import eu.europeana.corelib.utils.EuropeanaUriUtils;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>

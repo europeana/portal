@@ -26,27 +26,21 @@ public class RedirectController {
 
 	@Resource
 	private Configuration config;
+	
+	@Resource
+	private EuropeanaUrlService urlService;
 
 	@Resource
 	private ClickStreamLogService clickStreamLogger;
-
-	static private final String SHOWN_AT = "shownAt";
-	static private final String SHOWN_BY = "shownBy";
-	static private final String PROVIDER = "provider";
-	static private final String EUROPEANA_ID = "id";
 
 	@RequestMapping("/full-doc.html")
 	public void fullDocHtml(@RequestParam(value = "uri", required = false) String uri, HttpServletResponse response)
 			throws Exception {
 
 		if (!StringUtils.isEmpty(uri) && !uri.contains("full-doc")) {
-			String urilc = SitemapController.convertEuropeanaUriToCanonicalUrl(uri);
-			if (urilc.startsWith("http://europeana.eu") || urilc.startsWith(EuropeanaUrlService.URL_EUROPEANA)
-					|| !urilc.endsWith(".html")) {
-				response.sendRedirect(urilc);
-			}
+				response.sendRedirect(urlService.getCanonicalPortalRecord(urlService.extractEuropeanaId(uri)).toString());
 		} else {
-			response.sendRedirect(config.getPortalUrl());
+			response.sendRedirect(urlService.getPortalHome(false).toString());
 		}
 	}
 
@@ -56,10 +50,10 @@ public class RedirectController {
 	@RequestMapping("/redirect.html")
 	public String handleRedirectFromFullView(HttpServletRequest request) throws Exception {
 
-		String isShownAt = request.getParameter(SHOWN_AT);
-		String isShownBy = request.getParameter(SHOWN_BY);
-		String provider = request.getParameter(PROVIDER);
-		String europeanaId = request.getParameter(EUROPEANA_ID);
+		String isShownAt = request.getParameter(EuropeanaUrlService.PARAM_REDIRECT_SHOWNAT);
+		String isShownBy = request.getParameter(EuropeanaUrlService.PARAM_REDIRECT_SHOWNBY);
+		String provider = request.getParameter(EuropeanaUrlService.PARAM_REDIRECT_PROVIDER);
+		String europeanaId = request.getParameter(EuropeanaUrlService.PARAM_REDIRECT_EUROPEANAID);
 		String redirect;
 		if (isShownAt != null) {
 			redirect = isShownAt;
@@ -67,7 +61,7 @@ public class RedirectController {
 			redirect = isShownBy;
 		} else {
 			throw new IllegalArgumentException(MessageFormat.format(
-					"Expected to find '{0}' or '{1}' in the request URL", SHOWN_AT, SHOWN_BY));
+					"Expected to find '{0}' or '{1}' in the request URL", EuropeanaUrlService.PARAM_REDIRECT_SHOWNAT, EuropeanaUrlService.PARAM_REDIRECT_SHOWNBY));
 		}
 		String logString = MessageFormat.format("outlink={0}, provider={2}, europeana_id={1}", redirect, europeanaId,
 				provider);
