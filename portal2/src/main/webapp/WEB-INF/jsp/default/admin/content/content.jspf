@@ -101,8 +101,8 @@
                 | <a href="${limitApiKey}"><spring:message code="admin_limitApiKey_t" /></a>
               </td>
             </tr>
-          </tbody>
-        </c:forEach>
+          </c:forEach>
+        </tbody>
       </table>
     </td>
   </tr>
