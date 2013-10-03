@@ -445,6 +445,23 @@
 					<!-- @see WEB-INF/jsp/default/_common/html/css/production-css.jsp -->
 					<!-- INDIVIDUAL JS FILES -->
 					<execution>
+						<id>minify-admin.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>admin.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>admin.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-addthis.js</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -511,7 +528,6 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-
 
 					<execution>
 						<id>minify-citation.js</id>
