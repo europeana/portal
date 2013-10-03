@@ -24,12 +24,14 @@
 		</div>
 
 		<!-- comments within the ellipsis div cause problems with the functionality! -->
-		<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}"
-			<c:if test="${!empty cell.titleBidi}">
-				title="${title}"
-			</c:if>
-			 ${targetArg}
-			 rel="nofollow">
+
+
+		<c:set var="titleBidi" value="" />
+		<c:if test="${!empty cell.titleBidi}">
+			<c:set var="titleBidi"> title="${title}"</c:set>
+		</c:if>
+		
+		<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}" ${targetArg} rel="nofollow" ${titleBidi}>
 			<div class="ellipsis">
 				<c:choose>
 					<c:when test="${!empty cell.titleBidi}">${title}</c:when>

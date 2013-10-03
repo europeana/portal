@@ -3,6 +3,27 @@
 	position: relative;
 }
 
+
+.search-widget-container #footer-logo{	
+	background-repeat:	no-repeat;
+	background-image:	url('/portal/themes/default/images/search-widget/powered-by-europeana-black.png');
+	height:				2em;	
+	display:			block;
+	position:			relative;
+	left:				-1px;
+	background-size:	contain;
+}
+
+.search-widget-container.dark #logo-and-search{
+	border-bottom: 0;
+}
+
+.search-widget-container.dark #footer-logo{	
+	background-image:	url('/portal/themes/default/images/search-widget/powered-by-europeana-white.png');	
+}
+
+
+
 .search-widget-container .ui-helper-hidden-accessible{
 	display:none;
 }

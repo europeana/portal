@@ -22,8 +22,9 @@
 .search-widget-container.dark #header,
 .search-widget-container.dark #content,
 .search-widget-container.dark .query-table,
-.search-widget-container.dark .thumb-frame{
-	background-color: #555;
+.search-widget-container.dark .thumb-frame,
+.search-widget-container.dark .row{
+	background-color: #555 !important;
 }
 
 .search-widget-container.dark .query-table .menu-cell,

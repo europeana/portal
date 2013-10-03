@@ -67,8 +67,7 @@ fnSearchWidget = function($, config){
       		
 
     	$(document).ready(function(){
-    	
-	    	var containerClass    = "search-widget-container";
+	    	var containerClass    = "search-widget-container";// + (self.withResults ? ' withResults' : '');
 	    	var containerSelector = "." + containerClass;
 	        container = $(containerSelector);
 	        
@@ -84,14 +83,15 @@ fnSearchWidget = function($, config){
 	        	});
 	        }
 	        
-	        //container.css('background-color',	'#FFF');
-	        //container.css('border',				'solid 1px #999');
 	        
 	        container.append('<div id="overlay"></div>');
 	        $('#overlay').hide();
 	        
 	        container.append(htmlData.markup);
-	        container.find('#content').hide();	
+	        container.find('#content').hide();
+	        if(self.withResults){
+	        	$('#footer-logo').remove();
+	        }
 	
 	        itemTemplate       = container.find('.thumb-frame').parent();
 	        facetTemplate      = container.find('#filter-search li:nth-child(2)');
@@ -294,7 +294,7 @@ fnSearchWidget = function($, config){
 
         $(data.items).each(function(i, ob){
             var item = itemTemplate.clone();
-
+            
             item.find('a').attr(
                 'href', resultServerUrl + '/record' + ob.id + '.html?start=' + start + '&query=' + query + '&bt=searchwidget2'
             );
@@ -313,7 +313,6 @@ fnSearchWidget = function($, config){
 	                'src', ob.edmPreview[0]
 	            );
             }
-            
             grid.append(item);
         });
 

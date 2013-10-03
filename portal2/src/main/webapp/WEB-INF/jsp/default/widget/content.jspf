@@ -512,12 +512,7 @@
 						height="100%"
 						frameborder="0"
 						webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
-						
-						<!-- 
-						<p><a href="http://vimeo.com/24416915">Europeana promo</a> from <a href="http://vimeo.com/europeana">Europeana</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-						-->
-						<a class="help-link europeana" onClick="javascript:alert('this should redirect to a help page')"><spring:message code="wizard_tab1_help_link_text_t"/></a>
-					
+						<a class="help-link europeana" href="/portal/usingeuropeana_searchwidget.html"><spring:message code="wizard_tab1_help_link_text_t"/></a>
 					</div>
 				</div>
 				
