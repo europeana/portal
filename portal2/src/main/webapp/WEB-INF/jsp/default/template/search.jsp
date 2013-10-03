@@ -28,6 +28,7 @@
 				<script type="text/javascript">var rootUrl = "${model.portalServer}${model.portalName}";</script>
 				<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 				<%@ include file="/WEB-INF/jsp/default/search/content/content.jsp" %>
+				<div class="row"><div id="footer-logo"></div></div>
 			</div>
 		</c:set>
 		
