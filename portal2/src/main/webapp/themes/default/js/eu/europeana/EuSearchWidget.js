@@ -332,10 +332,16 @@ fnSearchWidget = function($, config){
             		start);
         });
 
+        
         // result stats
-        container.find('.first-vis-record').html(start);
-        container.find('.last-vis-record') .html(start - 1 + data.itemsCount);
-        container.find('.last-record')     .html(data.totalResults);
+        
+        container.find('.count').hide();
+        container.find('.of').html('/');
+        if(false){
+        	container.find('.first-vis-record').html(start);
+        	container.find('.last-vis-record') .html(start - 1 + data.itemsCount);
+        	container.find('.last-record')     .html(data.totalResults);        	
+        }
 
 
         // facets

@@ -96,6 +96,7 @@
 
 .search-widget-container .nav .of{
 	display:none;
+	display:inline;
 }
 
 .search-widget-container .nav .of-bracket{
@@ -139,7 +140,7 @@
 		content:'';
 	}
 
-	.search-widget-container .min22em .nav .of,
+	
 	.search-widget-container .min22em .nav .of-value{
 		display:inline;
 	}	

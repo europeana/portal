@@ -9,9 +9,12 @@
 			<%@ include file="/WEB-INF/jsp/default/search/content/results/doYouMean.jsp" %>
 			--%>
 
-			<div class="search-results-navigation notranslate">
-				<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/pagination.jsp" %>
-			</div>
+
+			<c:if test="${empty isSearchWidget}">
+				<div class="search-results-navigation notranslate">
+					<%@ include file="/WEB-INF/jsp/default/_common/html/navigation/pagination.jsp" %>
+				</div>
+			</c:if>
 
 			<%@ include file="/WEB-INF/jsp/default/search/content/results/grid.jsp" %>
 
