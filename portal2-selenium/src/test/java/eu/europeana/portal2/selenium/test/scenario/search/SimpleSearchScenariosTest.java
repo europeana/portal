@@ -1,6 +1,7 @@
 package eu.europeana.portal2.selenium.test.scenario.search;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,11 +27,15 @@ public class SimpleSearchScenariosTest {
 	
 	@Test
 	public void searchForParisTest() {
+		// Search for paris
 		IndexPage indexPage = IndexPage.openPage(webDriver);
 		indexPage.setSearchQuery("paris");
 		indexPage.doSearchSubmit();
+		
+		// check the amount of search results
 		SearchPage searchPage = SearchPage.checkPage(webDriver);
-		assertNotNull("search page not loaded", searchPage);
+		assertNotNull("Search page not loaded", searchPage);
+		assertEquals("Not displaying 24 results", 24, searchPage.countSearchResults());
 	}
 
 }
