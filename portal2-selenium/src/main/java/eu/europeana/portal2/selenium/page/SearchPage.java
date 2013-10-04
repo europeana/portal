@@ -1,6 +1,7 @@
 package eu.europeana.portal2.selenium.page;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import eu.europeana.portal2.selenium.page.abstracts.Portal2Page;
@@ -23,9 +24,12 @@ public class SearchPage extends Portal2Page {
 		return null;
 	}
 	
-	
 	private SearchPage(WebDriver driver) {
 		super(driver);
+	}
+	
+	public int countSearchResults() {
+		return driver.findElements(By.cssSelector("div#items div.li")).size();
 	}
 	
 }
