@@ -2,11 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>eu.europeana</groupId>
-	<version>2.0.7</version>
 	<artifactId>portal2-selenium</artifactId>
 	<packaging>jar</packaging>
 	<name>portal2-selenium</name>
+
+	<parent>
+		<artifactId>portal</artifactId>
+		<groupId>eu.europeana</groupId>
+		<version>2.0.7</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 
 	<repositories>
 		<repository>
@@ -47,6 +52,13 @@
 	</repositories>
 
 	<dependencies>
+		<!-- Corelib -->
+		<dependency>
+			<groupId>eu.europeana.corelib</groupId>
+			<artifactId>corelib-definitions</artifactId>
+			<version>${version.europeanaCorelib}</version>
+		</dependency>
+		<!-- Selenium -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
@@ -62,6 +74,17 @@
 					<artifactId>org.mortbay.jetty</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${version.commonsLang}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
