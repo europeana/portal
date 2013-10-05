@@ -30,7 +30,6 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
-import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
@@ -41,8 +40,6 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
-import eu.europeana.portal2.web.model.seealso.EuropeanaMlt;
-import eu.europeana.portal2.web.model.seealso.SeeAlsoCollector;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
@@ -52,44 +49,12 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.MetaDataFieldPr
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.model.preparation.FullDocPreparation;
 import eu.europeana.portal2.web.presentation.model.submodel.Image;
-import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
 
 public class FullDocPage extends FullDocPreparation {
-
-	private static final Map<String, String> IMAGE_FIELDS = new HashMap<String, String>();
-	
-	private SeeAlsoCollector seeAlsoCollector;
-	private EuropeanaMlt europeanaMlt;
-
-	static {{
-		IMAGE_FIELDS.put("EdmIsShownBy", "edm:isShownBy");
-		IMAGE_FIELDS.put("EdmHasView", "edm:hasView");
-	}}; // "EdmObject", "WebResourceAbout",
-
-	private RightsValue rightsOption = null;
-
-	private Map<String, String> allImages = null;
-
-	private List<Image> imagesToShow;
-
-	private String lightboxRef = null;
-	private boolean lightboxRefChecked = false;
-	private String lightboxRefField = null;
-	private String urlRef = null;
-	private boolean showSimilarItems = false;
-	private boolean showEuropeanaMlt = false;
-
-	public boolean isShowSimilarItems() {
-		return showSimilarItems;
-	}
-
-	public void setShowSimilarItems(boolean showSimilarItems) {
-		this.showSimilarItems = showSimilarItems;
-	}
 
 	@Override
 	public UrlBuilder prepareFullDocUrl(UrlBuilder builder) {
@@ -174,10 +139,6 @@ public class FullDocPage extends FullDocPreparation {
 			lightboxRefChecked = true;
 		}
 		return lightboxRef;
-	}
-
-	public String getLightboxRefField() {
-		return lightboxRefField;
 	}
 
 	public boolean isEuropeanaIsShownBy() {
@@ -631,10 +592,6 @@ public class FullDocPage extends FullDocPreparation {
 			&& isEuropeanaIsShownBy();
 	}
 
-	public boolean isUrlRefMms() {
-		return StringUtils.startsWith(getUrlRef(), "mms");
-	}
-
 	public boolean isHasDataProvider() {
 		return StringArrayUtils.isNotBlank(getDocument().getEdmDataProvider());
 	}
@@ -760,13 +717,6 @@ public class FullDocPage extends FullDocPreparation {
 		return returnTo.toString();
 	}
 
-	/**
-	 * Null-returning getter to satisfy EL
-	 */
-	public List<BreadCrumb> getBreadcrumbs() {
-		return null;
-	}
-
 	public List<FieldInfo> getTopLevelSchemaMap() {
 		List<FieldInfo> list = new ArrayList<FieldInfo>();
 		for (FieldInfo field : edmTopLevels) {
@@ -775,10 +725,6 @@ public class FullDocPage extends FullDocPreparation {
 			}
 		}
 		return list;
-	}
-
-	public Map<String, List<FieldInfo>> getSchemaMap() {
-		return edmFullMap;
 	}
 
 	public FieldInfo getWebResourceField() {
@@ -799,35 +745,11 @@ public class FullDocPage extends FullDocPreparation {
 		return null;
 	}
 
-	public Map<String, Element> getEdmElements() {
-		return edmElements;
-	}
-	
 	public String getSemanticTitle() {
 		return Field.DC_TITLE.getSemanticAttributes();
 	}
 
-	public void setEuropeanaMlt(EuropeanaMlt europeanaMlt) {
-		this.europeanaMlt = europeanaMlt;
-	}
-
-	public EuropeanaMlt getEuropeanaMlt() {
-		return europeanaMlt;
-	}
-
-	public void setSeeAlsoCollector(SeeAlsoCollector seeAlsoCollector) {
-		this.seeAlsoCollector = seeAlsoCollector;
-	}
-
-	public SeeAlsoCollector getSeeAlsoCollector() {
-		return this.seeAlsoCollector;
-	}
-
-	public void setShowEuropeanaMlt(boolean showEuropeanaMlt) {
-		this.showEuropeanaMlt = showEuropeanaMlt;
-	}
-
-	public boolean isShowEuropeanaMlt() {
-		return showEuropeanaMlt;
+	public boolean isUrlRefMms() {
+		return StringUtils.startsWith(getUrlRef(), "mms");
 	}
 }

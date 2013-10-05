@@ -17,19 +17,25 @@
 
 package eu.europeana.portal2.web.presentation.model.data;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
+import eu.europeana.portal2.web.model.seealso.EuropeanaMlt;
+import eu.europeana.portal2.web.model.seealso.SeeAlsoCollector;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.abstracts.RestLocationsData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanViewDecorator;
+import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.Image;
 import eu.europeana.portal2.web.presentation.semantic.EdmSchemaMapping;
 import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
@@ -37,6 +43,14 @@ import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public abstract class FullDocData extends RestLocationsData<Void> {
+
+	protected static final Map<String, String> IMAGE_FIELDS = new HashMap<String, String>();
+	static {
+		{
+			IMAGE_FIELDS.put("EdmIsShownBy", "edm:isShownBy");
+			IMAGE_FIELDS.put("EdmHasView", "edm:hasView");
+		}
+	}; // "EdmObject", "WebResourceAbout",
 
 	protected FullBeanView fullBeanView;
 
@@ -63,13 +77,29 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected SeeAlsoSuggestions seeAlsoSuggestions;
 
 	private boolean isOptedOut = false;
-	
+
 	protected List<FieldInfo> edmTopLevels;
-	
+
 	protected Map<String, List<FieldInfo>> edmFullMap;
-	
+
 	protected Map<String, Element> edmElements;
-	
+
+	protected SeeAlsoCollector seeAlsoCollector;
+	protected EuropeanaMlt europeanaMlt;
+
+	protected RightsValue rightsOption = null;
+
+	protected Map<String, String> allImages = null;
+
+	protected List<Image> imagesToShow;
+
+	protected String lightboxRef = null;
+	protected boolean lightboxRefChecked = false;
+	protected String lightboxRefField = null;
+	protected String urlRef = null;
+	protected boolean showSimilarItems = false;
+	protected boolean showEuropeanaMlt = false;
+
 	public void setEdmSchemaMappings(SchemaOrgMapping schema) {
 		this.edmTopLevels = EdmSchemaMapping.getTopLevel(schema);
 		this.edmFullMap = EdmSchemaMapping.getFullMap(schema);
@@ -87,7 +117,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	public void setFullBeanView(FullBeanView fullBeanView) {
 		this.fullBeanView = fullBeanView;
 		this.document = fullBeanView.getFullDoc();
-		this.shortcut = new FullBeanShortcut((FullBeanImpl)this.document);
+		this.shortcut = new FullBeanShortcut((FullBeanImpl) this.document);
 	}
 
 	public FullBeanViewDecorator getFullBeanView() {
@@ -151,5 +181,56 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public void setOptedOut(boolean isOptedOut) {
 		this.isOptedOut = isOptedOut;
+	}
+
+	public boolean isShowSimilarItems() {
+		return showSimilarItems;
+	}
+
+	public boolean isShowEuropeanaMlt() {
+		return showEuropeanaMlt;
+	}
+
+	/**
+	 * Null-returning getter to satisfy EL
+	 */
+	public List<BreadCrumb> getBreadcrumbs() {
+		return null;
+	}
+
+	public Map<String, Element> getEdmElements() {
+		return edmElements;
+	}
+
+	public EuropeanaMlt getEuropeanaMlt() {
+		return europeanaMlt;
+	}
+
+	public void setShowSimilarItems(boolean showSimilarItems) {
+		this.showSimilarItems = showSimilarItems;
+	}
+
+	public void setEuropeanaMlt(EuropeanaMlt europeanaMlt) {
+		this.europeanaMlt = europeanaMlt;
+	}
+
+	public void setSeeAlsoCollector(SeeAlsoCollector seeAlsoCollector) {
+		this.seeAlsoCollector = seeAlsoCollector;
+	}
+
+	public void setShowEuropeanaMlt(boolean showEuropeanaMlt) {
+		this.showEuropeanaMlt = showEuropeanaMlt;
+	}
+
+	public SeeAlsoCollector getSeeAlsoCollector() {
+		return this.seeAlsoCollector;
+	}
+
+	public Map<String, List<FieldInfo>> getSchemaMap() {
+		return edmFullMap;
+	}
+
+	public String getLightboxRefField() {
+		return lightboxRefField;
 	}
 }
