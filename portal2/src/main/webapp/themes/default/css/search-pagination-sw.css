@@ -185,19 +185,28 @@
 /*
 @media only screen and (min-width: 55em) {
 */
-	.search-widget-container.min55em .show-on-22{display:table-cell !important;}
+	/*
+	.search-widget-container.min55em .show-on-22{
+		display:table-cell !important;
+	}
+	*/
 	
 	.search-widget-container.min55em .result-pagination{
+		/*	
 		float:		right;
-		width:		auto;	
-		font-size:	1em;
 		width:		auto;
+		*/	
+		width:		100%;
+		font-size:	1em;
 	}
 
 	/* flex-box rules */
 	.search-widget-container.min55em .nav>div{
 		display:		table-cell;
 		vertical-align:	middle;
+	}
+	.search-widget-container.min55em .nav>.menu{
+		display:		none !important;
 	}
 
 	.search-widget-container.min55em .nav>.menu,

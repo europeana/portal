@@ -334,9 +334,16 @@ fnSearchWidget = function($, config){
 
         
         // result stats
-        
         container.find('.count').hide();
         container.find('.of').html('/');
+
+        if(data.items){
+        	$('.search-results-navigation').show();        	
+        }
+        else{
+        	$('.search-results-navigation').hide();
+        }
+        
         if(false){
         	container.find('.first-vis-record').html(start);
         	container.find('.last-vis-record') .html(start - 1 + data.itemsCount);
