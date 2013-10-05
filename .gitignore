@@ -5,6 +5,7 @@
 .externalToolBuilders/
 
 # Maven
+*/target
 */target/**
 
 # Portal specific
