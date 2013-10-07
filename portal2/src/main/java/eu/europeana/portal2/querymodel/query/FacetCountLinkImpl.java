@@ -1,5 +1,6 @@
 package eu.europeana.portal2.querymodel.query;
 
+import eu.europeana.corelib.definitions.model.RightsOption;
 import eu.europeana.portal2.web.model.facets.LabelFrequency;
 
 public class FacetCountLinkImpl implements FacetCountLink {

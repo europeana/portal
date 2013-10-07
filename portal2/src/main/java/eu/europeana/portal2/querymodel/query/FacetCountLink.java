@@ -1,5 +1,7 @@
 package eu.europeana.portal2.querymodel.query;
 
+import eu.europeana.corelib.definitions.model.RightsOption;
+
 public interface FacetCountLink {
 
 	public void update(FacetCountLink facetCountLink);

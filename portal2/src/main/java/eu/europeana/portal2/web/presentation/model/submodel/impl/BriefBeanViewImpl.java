@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
@@ -50,6 +51,8 @@ import eu.europeana.portal2.web.util.SearchFilterUtil;
  * @see eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator
  */
 public class BriefBeanViewImpl implements BriefBeanView {
+	
+	Logger log = Logger.getLogger(BriefBeanViewImpl.class.getCanonicalName());
 
 	private ResultPagination pagination;
 	private List<? extends BriefBean> briefBeans;
@@ -128,6 +131,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 
 	@Override
 	public List<FacetQueryLinks> getFacetQueryLinks() {
+		log.info("getFacetQueryLinks: " + queryLinks.size());
 		return queryLinks;
 	}
 

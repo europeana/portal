@@ -20,6 +20,7 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -33,7 +34,10 @@ import eu.europeana.portal2.web.presentation.model.submodel.SearchFilter;
 
 public class BriefBeanViewDecorator implements BriefBeanView {
 
-	private final static String[] facetOrder = new String[]{"TYPE", "LANGUAGE", "YEAR", "COUNTRY", "RIGHTS", "PROVIDER", "DATA_PROVIDER"};
+	private final static String[] facetOrder = new String[]{
+		"TYPE", "LANGUAGE", "YEAR", "COUNTRY", "REUSABILITY", 
+		"RIGHTS", "PROVIDER", "DATA_PROVIDER"
+	};
 
 	private SearchData model;
 	private BriefBeanView view;

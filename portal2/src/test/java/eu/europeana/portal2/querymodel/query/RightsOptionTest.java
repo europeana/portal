@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import eu.europeana.corelib.definitions.model.RightsOption;
+
 public class RightsOptionTest {
 
 	String portalUrl = "http://europeana.eu/portal";

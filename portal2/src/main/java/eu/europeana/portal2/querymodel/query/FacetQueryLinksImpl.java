@@ -3,13 +3,17 @@ package eu.europeana.portal2.querymodel.query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import eu.europeana.corelib.definitions.model.RightsOption;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class FacetQueryLinksImpl implements FacetQueryLinks {
+
+	private static Logger log = Logger.getLogger(FacetQueryLinksImpl.class.getCanonicalName());
 
 	private static final String FACET_PROMPT = "&qf=";
 	private static final String RIGHTS_FACET = "RIGHTS";

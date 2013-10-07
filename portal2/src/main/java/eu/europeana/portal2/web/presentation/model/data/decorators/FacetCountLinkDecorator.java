@@ -20,8 +20,8 @@ package eu.europeana.portal2.web.presentation.model.data.decorators;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
+import eu.europeana.corelib.definitions.model.RightsOption;
 import eu.europeana.portal2.querymodel.query.FacetCountLink;
-import eu.europeana.portal2.querymodel.query.RightsOption;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 
 public class FacetCountLinkDecorator implements FacetCountLink {

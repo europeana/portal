@@ -17,7 +17,7 @@
 
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
-import eu.europeana.portal2.querymodel.query.RightsOption;
+import eu.europeana.corelib.definitions.model.RightsOption;
 
 public class RightsValue {
 
