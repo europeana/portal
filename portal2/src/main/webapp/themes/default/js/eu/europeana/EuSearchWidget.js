@@ -89,6 +89,8 @@ fnSearchWidget = function($, config){
 	        
 	        container.append(htmlData.markup);
 	        container.find('#content').hide();
+	        container.find('#no-results').hide();
+	        
 	        if(self.withResults){
 	        	$('#footer-logo').remove();
 	        }
@@ -176,7 +178,7 @@ fnSearchWidget = function($, config){
 
     
     var doSearch = function(startParam, query){
-
+    	
     	try{
     		var url = buildUrl(startParam, query);
     	
@@ -288,10 +290,18 @@ fnSearchWidget = function($, config){
         var grid = container.find('#items');
         grid.empty();
 
+        
         // console.log("widget showRes(data), data = \n" + JSON.stringify(data));
         var start = data.params.start ? data.params.start : 1;
         var query = self.q.val();
 
+        if( $(data.items).length ){
+        	container.find('#no-results').hide();        	
+        }
+        else{        	
+        	container.find('#no-results').show();        	
+        }
+        
         $(data.items).each(function(i, ob){
             var item = itemTemplate.clone();
             

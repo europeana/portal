@@ -16,6 +16,11 @@
 	position:	relative;
 }
 
+.search-widget-container #no-results{
+	margin:	 1.5em 0;
+}
+
+
 /* dark theme */
 
 .search-widget-container.dark .container,
@@ -38,7 +43,8 @@
 
 .search-widget-container.dark .result-pagination a,
 .search-widget-container.dark .nav,
-.search-widget-container.dark .ellipsis{
+.search-widget-container.dark .ellipsis,
+.search-widget-container.dark #no-results{
 	color: #fff;
 }
 
