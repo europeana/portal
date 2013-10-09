@@ -18,7 +18,7 @@ public class SeeAlsoSuggestions {
 	private Map<String, String> seeAlsoAggregations;
 
 	private Map<String, Field> fields = new LinkedHashMap<String, Field>();
-	
+
 	private static final Pattern ID_PATTERN = Pattern.compile("\\{!id=([0-9]+)\\}");
 
 	private SeeAlsoCollector seeAlsoParams;

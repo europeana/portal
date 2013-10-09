@@ -21,7 +21,7 @@ public class SitemapControllerTest {
 	private SearchService searchService;
 
 	private static final String PREFIX_PATTERN = "^[0-9A-F]{3}$";
-	
+
 	public SitemapControllerTest(ApplicationContext context) {
 		searchService = context.getBean(SearchService.class);
 	}
@@ -107,7 +107,7 @@ public class SitemapControllerTest {
 		}
 		return 0;
 	}
-	
+
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("portal2-context.xml");
 		SitemapControllerTest test = new SitemapControllerTest(context);

@@ -176,4 +176,10 @@ public class SearchServiceMockSelenium implements SearchService {
 	public String resolveId(String collectionId, String recordId) {
 		return null;
 	}
+
+	@Override
+	public Map<String, Integer> queryFacetSearch(String query, String[] qf,
+			List<String> queries) {
+		return null;
+	}
 }

@@ -25,9 +25,6 @@ import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion;
 
-import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
-import eu.europeana.portal2.querymodel.query.FacetCountLink;
-import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
@@ -43,34 +40,19 @@ public class ModelUtils {
 
 	public static List<Facet> conventFacetList(List<FacetField> facetFields) {
 		if ((facetFields != null) && !facetFields.isEmpty()) {
-			RightReusabilityCategorizer catalogizer = new RightReusabilityCategorizer();
 			List<Facet> facets = new ArrayList<Facet>();
 			for (FacetField facetField : facetFields) {
 				if (facetField.getValues() != null) {
 					Facet facet = new Facet();
 					facet.name = facetField.getName();
-					boolean isRightFacet = false;
-					if (facet.name.equals("RIGHTS")) {
-						isRightFacet = true;
-					}
 
 					for (FacetField.Count count : facetField.getValues()) {
 						if (StringUtils.isNotEmpty(count.getName()) && (count.getCount() > 0)) {
 							facet.fields.add(new LabelFrequency(count.getName(), count.getCount()));
-							if (isRightFacet) {
-								catalogizer.categorize(count.getName(), count.getCount());
-							}
 						}
 					}
 
 					if (!facet.fields.isEmpty()) {
-						if (isRightFacet) {
-							Facet rightReusabilityFacet = new Facet();
-							rightReusabilityFacet.name = "REUSABILITY";
-							rightReusabilityFacet.fields.add(new LabelFrequency("Free", catalogizer.getNumberOfFree()));
-							rightReusabilityFacet.fields.add(new LabelFrequency("Limited", catalogizer.getNumberOfLimited()));
-							facets.add(rightReusabilityFacet);
-						}
 						facets.add(facet);
 					}
 				}

@@ -71,7 +71,7 @@ public class BrowsePageController {
 				Map<String, String[]> params = RequestUtils.getParameterMap(request); 
 
 				try {
-					briefBeanView = SearchUtils.createResults(searchService, clazz, "portal", query, 0, 1000, params);
+					briefBeanView = SearchUtils.createResults(searchService, clazz, "portal", query, 0, 1000, params, null);
 					List<BriefBeanDecorator> beans = new ArrayList<BriefBeanDecorator>();
 					int index = model.getStart();
 					for (BriefBean briefDoc : briefBeanView.getBriefBeans()) {

@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -9,7 +8,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +22,6 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.PageInfo;
-import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -107,7 +104,7 @@ public class SearchController {
 
 		Query query = new Query(q)
 				.setRefinements(qf)
-				.setValueReplacements(mapValueReplacements(qf))
+				.setValueReplacements(SearchUtils.mapValueReplacements(qf))
 				.setPageSize(rows)
 				.setStart(start - 1) // Solr starts from 0
 				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
@@ -120,6 +117,7 @@ public class SearchController {
 			query.setAllowSpellcheck(false);
 		}
 
+		Query usabilityQuery = SearchUtils.createUsabilityQuery(q, qf);
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
 		if (log.isDebugEnabled()) {
@@ -127,7 +125,7 @@ public class SearchController {
 		}
 		BriefBeanView briefBeanView = null;
 		try {
-			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params);
+			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, usabilityQuery);
 			model.setBriefBeanView(briefBeanView);
 			if (log.isDebugEnabled()) {
 				log.debug("NumFound: " + briefBeanView.getPagination().getNumFound());
@@ -144,28 +142,6 @@ public class SearchController {
 
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
-	}
-
-	private Map<String, String> mapValueReplacements(String[] qf) {
-		if (ArrayUtils.isEmpty(qf)) {
-			return null;
-		}
-		Map<String, String> valueReplacements = new HashMap<String, String>();
-		int reusabilityFilters = 0;
-		for (String value : qf) {
-			if (value.equals("REUSABILITY:Free")) {
-				valueReplacements.put(value, RightReusabilityCategorizer.getFreeRightsQuery());
-				reusabilityFilters++;
-			} else if (value.equals("REUSABILITY:Limited")) {
-				valueReplacements.put(value, RightReusabilityCategorizer.getLimitedRightsQuery());
-				reusabilityFilters++;
-			}
-		}
-		if (reusabilityFilters == 2) {
-			valueReplacements.put("REUSABILITY:Free", RightReusabilityCategorizer.getAllRightsQuery());
-			valueReplacements.put("REUSABILITY:Limited", "");
-		}
-		return valueReplacements;
 	}
 
 	public InternalResourceViewResolver getViewResolver() {
