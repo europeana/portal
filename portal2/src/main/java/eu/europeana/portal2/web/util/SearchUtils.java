@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +35,7 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
@@ -48,8 +47,6 @@ import eu.europeana.portal2.web.presentation.model.submodel.impl.BriefBeanViewIm
 import eu.europeana.portal2.web.presentation.model.submodel.impl.ResultPaginationImpl;
 
 public class SearchUtils {
-
-	private static final Pattern ID_PATTERN = Pattern.compile("^\\{!id=([^:]+):([^:]+)\\}");
 
 	private static Logger log = Logger.getLogger(SearchUtils.class.getCanonicalName());
 
@@ -69,7 +66,7 @@ public class SearchUtils {
 				usabilityQuery.getRefinements(true),
 				usabilityQuery.getFacetQueries()
 			);
-			List<FacetField> allQueryFacetsMap = extractQueryFacets(usability);
+			List<FacetField> allQueryFacetsMap = SolrUtils.extractQueryFacets(usability);
 			if (allQueryFacetsMap != null && !allQueryFacetsMap.isEmpty()) {
 				facetFields.addAll(allQueryFacetsMap);
 			}
@@ -104,40 +101,6 @@ public class SearchUtils {
 		return briefBeanView;
 	}
 
-	/**
-	 * The QueryFacets are in this form:
-	 * {!id=REUSABILITY:Limited}RIGHTS:(http\:\/\/creativecommons.org\/licenses\/by-nc\/*
-	 * OR http\:\/\/creativecommons.org\/licenses\/by-nc-sa\/* OR http\:\/\/creativecommons.org\/licenses\/by-nc-nd\/* 
-	 * OR http\:\/\/creativecommons.org\/licenses\/by-nd\/*
-	 * OR http\:\/\/www.europeana.eu\/rights\/out-of-copyright-non-commercial\/*)
-	 * 
-	 * this function creates a hierarchy:
-	 * REUSABILITY
-	 *   Limited: x
-	 *   Free: y
-	 * ...
-	 * 
-	 * @param queryFacets
-	 * @return
-	 */
-	public static List<FacetField> extractQueryFacets(Map<String, Integer> queryFacets) {
-		Map<String, FacetField> map = new HashMap<String, FacetField>();
-		for (String query : queryFacets.keySet()) {
-			Matcher matcher = ID_PATTERN.matcher(query);
-			if (!matcher.find()) {
-				continue;
-			}
-			String field = matcher.group(1);
-			String value = matcher.group(2);
-			if (!map.containsKey(field)) {
-				map.put(field, new FacetField(field));
-			}
-			map.get(field).add(value, queryFacets.get(query));
-		}
-		List<FacetField> list = new ArrayList<FacetField>(map.values());
-		return list;
-	}
-
 	public static UrlBuilder createSearchUrl(String portalname, SearchPageEnum returnTo, 
 			String searchTerm, String[] qf, String start)
 					throws UnsupportedEncodingException {
@@ -157,9 +120,11 @@ public class SearchUtils {
 
 	public static Query createUsabilityQuery(String q, String[] qf) {
 		List<String> refinements = new ArrayList<String>();
-		for (String value : qf) {
-			if (!value.equals("REUSABILITY:Free") && !value.equals("REUSABILITY:Limited")) {
-				refinements.add(value);
+		if (qf != null) {
+			for (String value : qf) {
+				if (!value.equals("REUSABILITY:Free") && !value.equals("REUSABILITY:Limited")) {
+					refinements.add(value);
+				}
 			}
 		}
 		String[] filteredQf = refinements.toArray(new String[refinements.size()]);
