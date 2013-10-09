@@ -36,6 +36,7 @@ public class SearchLabel {
 			put("RIGHTS", "byCopyright_t");
 			put("TYPE", "ByMediatype_t");
 			put("YEAR", "Bydate_t");
+			put("REUSABILITY", "byReusability_t");
 		}
 	});
 

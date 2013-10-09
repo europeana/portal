@@ -67,7 +67,8 @@ public class ApiConsoleController {
 			@RequestParam(value = "longMin", required = false) String longMin,
 			@RequestParam(value = "longMax", required = false) String longMax,
 			@RequestParam(value = "yearMin", required = false) String yearMin, // temporal search values
-			@RequestParam(value = "yearMax", required = false) String yearMax, 
+			@RequestParam(value = "yearMax", required = false) String yearMax,
+			@RequestParam(value = "reusability", required = false) String reusability,
 			HttpServletRequest request, Locale locale) {
 		log.info("===== /api/console.html =====");
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
@@ -112,6 +113,10 @@ public class ApiConsoleController {
 			}
 		}
 
+		if (!model.getSupportedReusabilityValues().contains(reusability)) {
+			reusability = null;
+		}
+
 		model.setFunction(function);
 		model.setQuery(query);
 		model.setRefinements(refinements);
@@ -129,6 +134,7 @@ public class ApiConsoleController {
 		model.setLongMax(longMax);
 		model.setYearMin(yearMin);
 		model.setYearMax(yearMax);
+		model.setReusability(reusability);
 
 		model.setProfiles(profiles);
 
@@ -172,10 +178,10 @@ public class ApiConsoleController {
 				request.getSession());
 		ApiResult apiResult = null;
 		if (function.equals(SEARCH) && !StringUtils.isBlank(query)) {
-			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profile, "%20"), start, rows,
-					callback);
+			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profile, "+"), 
+					start, rows, callback, reusability);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			apiResult = api.getObject(collectionId, recordId, StringUtils.join(profile, "%20"), callback);
+			apiResult = api.getObject(collectionId, recordId, StringUtils.join(profile, "+"), callback);
 		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
 			apiResult = api.getObject(recordId, StringUtils.join(profile, "%20"), callback);
 		} else if (function.equals("suggestions") && !StringUtils.isBlank(query)) {
