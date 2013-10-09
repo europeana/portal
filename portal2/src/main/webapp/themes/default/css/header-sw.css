@@ -249,7 +249,7 @@
 @media only screen and ( min-width:48em ){
 */
 	.search-widget-container.desktop table{
-		border:					1px solid #e4e4e4 !important;
+
 		table-layout:			auto;
 	}
 	
@@ -308,7 +308,13 @@
 	overflow:		hidden;
 }
 
-.search-widget-container .glow{
+.search-widget-container .query-cell{
+	box-shadow:	inset	0 0 4px #d6d6d6;
+}
+
+.search-widget-container .glow,
+.search-widget-container .query-cell.glow
+{
 	box-shadow:	inset	0 0 4px #4C7ECF;
 }
 

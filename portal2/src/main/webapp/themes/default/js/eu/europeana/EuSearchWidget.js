@@ -106,7 +106,7 @@ fnSearchWidget = function($, config){
 	
 	        pagination = [];
 	        $.each( $('.result-pagination'), function(i, ob){
-		        pagination.push( new EuPagination($(ob),
+		        pagination.push( pager = new EuPagination($(ob),
 		        	{
 		        		"ajax":true,
 		        		"fns":{
@@ -124,7 +124,7 @@ fnSearchWidget = function($, config){
 		            		},
 							"fnLast":function(e){
 								e.preventDefault();
-		            			searchWidget.search(pagination.getMaxStart());
+		            			searchWidget.search(pager.getMaxStart());
 							},
 		            		"fnSubmit":function(val){
 								val = parseInt(val);
