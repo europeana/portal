@@ -249,7 +249,9 @@
 @media only screen and ( min-width:48em ){
 */
 	.search-widget-container.desktop table{
+		/* disabled border because chrome on wiondows can't draw the border with rounded corners 
 		border:					1px solid #e4e4e4 !important;
+		*/
 		table-layout:			auto;
 	}
 	
