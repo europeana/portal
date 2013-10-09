@@ -217,7 +217,7 @@ eu.europeana.search = {
 			}]);
 		});
 		
-		if( navigator.userAgent.match(/iPhone/i) ){
+		if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
 			$('.shares-link').click();			
 		}
 
