@@ -11,6 +11,12 @@
 	color: #666;
 }
 
+.mobile-logout{
+	display:		inline-block;
+	margin-left:	1em;
+	margin-bottom:	1em;
+}
+
 .saved-items img,
 .saved-tags img {
 	float: left;
@@ -62,6 +68,11 @@ li.saved-tags{
 	#user-panels a.active {
  		font-weight: bold;
  	}
+ 	
+ 	.mobile-logout{
+		display:	none;
+	}
+ 	
  	/*
  	#user-information,
 		.saved-items,

@@ -18,4 +18,8 @@
     <%--@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/remote-search-widget.jspf" --%>
 
   </div>
+  
+  <a href="/${model.portalName}/logout.html" class="mobile-logout europeana"><spring:message code="LogOut_t" /></a>
+  
+  
 </div>
