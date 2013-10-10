@@ -16,4 +16,5 @@
   <c:if test="${model.rightsOption.noc}">
     <span rel="cc:useGuidelines" resource="http://www.europeana.eu/rights/pd-usage-guide/"></span>
   </c:if>
+		
 </c:if>

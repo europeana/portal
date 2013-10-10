@@ -455,12 +455,7 @@ h1 {
 	float:			left;
 	width:			100%;
 	color:			#333 !important;
-	
 	font-size:		1.5em;
-	
-	border-bottom:	1px solid #AAAAAA;
-	margin-bottom:	1em;
-	padding-bottom:	1em;
 }
 
 .rights-badge span.rights-icon{
@@ -542,6 +537,20 @@ h1 {
 	white-space:	normal;
 }
 
+#additional-info .original-context-inner{
+	border-top:		1px solid #AAAAAA;
+	margin-top:		1em;
+	padding-top:	1em;
+}
+
+#additional-info .icon-ugc{
+	display:   		inline-block;
+	margin-right:	0.25em;
+	font-size:		1.5em;
+	position:		relative;
+	top:			0.18em;
+}
+				
 @media only screen and ( min-width:48em ){
 	
 	.rights-badge{
@@ -551,6 +560,11 @@ h1 {
 	#additional-info .original-context{
 		margin-bottom:		1em;
 	}
+	
+	#additional-info .icon-ugc{
+		font-size:		1em;	
+	}
+	
 	
 	#microsoft-translate-element select {
 		width:		auto;
