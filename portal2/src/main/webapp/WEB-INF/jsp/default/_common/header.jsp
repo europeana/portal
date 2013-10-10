@@ -4,38 +4,37 @@
 
 <div id="header" role="banner" class="row">
 	<div id="logo-and-search">
-		<div id="logo">
-			<c:set var="logoWrapperTag" value="h1"/>
-			<c:if test="${model.pageName == 'full-doc.html'}">
-				<c:set var="logoWrapperTag" value="div"/>
-			</c:if>
+		<c:if test="${empty isSearchWidget}">
+			<div id="logo">
+				<c:set var="logoWrapperTag" value="h1"/>
+				<c:if test="${model.pageName == 'full-doc.html'}">
+					<c:set var="logoWrapperTag" value="div"/>
+				</c:if>
 
-			<c:set var="logoClass" value="logo"/>
-			<c:set var="logoBg" value=""/>
-
-			<c:choose>
-				<c:when test="${model.pageName == 'staticpage.html' && model.tc}">
-					<c:set var="logoClass" value="logo-t-and-c"/>
-				</c:when>
-				<c:otherwise>
-					<c:set var="logoBg" value="europeana-logo-${model.locale}.png"/>
-				</c:otherwise>
-			</c:choose>
-			
-			<${logoWrapperTag} title="<spring:message code="AltLogoEuropeana_t" />">
-				<a	href="/${model.portalName}/"
-					title="<spring:message code="AltLogoEuropeana_t" />">
-					
-					<span class="${logoClass}">&nbsp;</span>
-					<c:if test="${!empty logoBg}">
-						<style type="text/css">
-							.${logoWrapperTag} .${logoClass} { background-image:url(/portal/themes/default/images/europeana-logo-2.png); }
-						</style>
-					</c:if>
-				</a>
-			</${logoWrapperTag}>
-			
-			<c:if test="${empty isSearchWidget}">
+				<c:set var="logoClass" value="logo"/>
+				<c:set var="logoBg" value=""/>
+	
+				<c:choose>
+					<c:when test="${model.pageName == 'staticpage.html' && model.tc}">
+						<c:set var="logoClass" value="logo-t-and-c"/>
+					</c:when>
+					<c:otherwise>
+						<c:set var="logoBg" value="europeana-logo-${model.locale}.png"/>
+					</c:otherwise>
+				</c:choose>
+				
+				<${logoWrapperTag} title="<spring:message code="AltLogoEuropeana_t" />">
+					<a	href="/${model.portalName}/"
+						title="<spring:message code="AltLogoEuropeana_t" />">
+						
+						<span class="${logoClass}">&nbsp;</span>
+						<c:if test="${!empty logoBg}">
+							<style type="text/css">
+								.${logoWrapperTag} .${logoClass} { background-image:url(/portal/themes/default/images/europeana-logo-2.png); }
+							</style>
+						</c:if>
+					</a>
+				</${logoWrapperTag}>
 			
 				<script type="text/javascript">
 					var completionTranslations = {};
@@ -52,9 +51,10 @@
 					completionClasses['Subject']		= "what:";
 					completionClasses['Creator']		= "who:";
 				</script>
-			</c:if>
 			
-		</div>
+			</div>
+			
+		</c:if>
 
 
 		<c:if test="${!(model.pageName == 'staticpage.html' && model.tc)}">

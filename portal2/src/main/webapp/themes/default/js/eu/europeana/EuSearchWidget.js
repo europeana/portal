@@ -92,14 +92,17 @@ fnSearchWidget = function($, config){
 	        container.find('#no-results').hide();
 	        
 	        if(self.withResults){
-	        	$('#footer-logo').remove();
+	        	$('.search-widget-container #footer-logo').remove();
+	        }
+	        else{
+	        	$('.search-widget-container #logo').remove();
 	        }
 	
 	        itemTemplate       = container.find('.thumb-frame').parent();
 	        facetTemplate      = container.find('#filter-search li:nth-child(2)');
 	        addKeywordTemplate = container.find('#filter-search li:first');
 	        filterTemplate     = container.find('#search-filter li:first');
-	
+	        
 	        setupQuery();
 	        setupMenus();
 	        setUpRefinements(); // TODO
@@ -172,6 +175,12 @@ fnSearchWidget = function($, config){
             
            	$.getScript(responsiveContainersUrl, function() {});
         	
+           	if(config.query && self.withResults){
+           		
+           		setTimeout(doSearch, 200);
+//           		$('#query-search').submit();
+           	}
+           	
         });
 
     };
@@ -590,6 +599,7 @@ fnSearchWidget = function($, config){
     };
 
     var setupQuery = function(){
+ 
         self.q = container.find('#query-input');
         self.q.blur(function(){
             $(this).parent().removeClass('glow');
@@ -605,10 +615,17 @@ fnSearchWidget = function($, config){
         // form size adjust
         submitCell.css("width", submitCellButton.outerWidth(true) + "px"); 
         menuCell.css("width", searchMenu.width() + "px");
-        submitCellButton.css("border-left",    "solid 1px #4C7ECF");    // do this after the resize to stop 1px gap in FF
-
-        // Disable forms and wire submission to ajax call
         
+        // do this after the resize to stop 1px gap in FF        	
+        if(container.hasClass('dark')){
+        	submitCellButton.css("border-left",    "solid 1px #333");
+        }
+        else{
+        	submitCellButton.css("border-left",    "solid 1px #4C7ECF");        	
+        }
+
+        
+        // Disable forms and wire submission to ajax call
         
         container.find("form").submit(function() {
             doSearch();
