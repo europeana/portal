@@ -131,7 +131,6 @@ public class BriefBeanViewImpl implements BriefBeanView {
 
 	@Override
 	public List<FacetQueryLinks> getFacetQueryLinks() {
-		log.info("getFacetQueryLinks: " + queryLinks.size());
 		return queryLinks;
 	}
 

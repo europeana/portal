@@ -157,12 +157,21 @@ var selectedPanel = '${model.function}';
               <span class="api-help"><spring:message code="apiconsole_temporal_help_t" /></span>
             </p>
 
-            <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
-            <c:forEach items="${model.defaultSearchProfiles}" var="profile">
-              <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
-              <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
-              <label for="api-profile-${profile.key}">${profile.key}</label><br/>
-            </c:forEach>
+            <p>
+              <label for="api-reusability"><spring:message code="apiconsole_reusability_t" />:</label><br/>
+              <c:forEach items="${model.supportedReusabilityValues}" var="reusability">
+                <input type="checkbox" name="reusability" id="api-reusability-${reusability}" value="${reusability}" <c:if test="${model.reusability == reusability}">checked="checked"</c:if> />
+                <label for="api-reusability-${reusability}">${reusability}</label><br/>
+              </c:forEach>
+            </p>
+
+            <p>
+              <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
+              <c:forEach items="${model.defaultSearchProfiles}" var="profile">
+                <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
+                <label for="api-profile-${profile.key}">${profile.key}</label><br/>
+              </c:forEach>
+            </p>
 
             <p class="section">
               <label for="api-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>

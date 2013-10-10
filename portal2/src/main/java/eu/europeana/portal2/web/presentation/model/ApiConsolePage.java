@@ -33,6 +33,7 @@ public class ApiConsolePage extends ApiData {
 	private String longMax;
 	private String yearMin;
 	private String yearMax;
+	private String reusability;
 
 	// record parameters
 	private String collectionId;
@@ -54,6 +55,7 @@ public class ApiConsolePage extends ApiData {
 			put("params", false);
 		}
 	};
+
 	private Map<String, Boolean> defaultObjectProfiles = new LinkedHashMap<String, Boolean>(){
 		private static final long serialVersionUID = 1L;
 		{
@@ -62,7 +64,10 @@ public class ApiConsolePage extends ApiData {
 			put("params", false);
 		}
 	};
+
 	private List<String> defaultRows = Arrays.asList(new String[]{"12", "24", "48", "96"});
+
+	private List<String> supportedReusabilityValues = Arrays.asList(new String[]{"free", "limited"});
 
 	private List<String> profiles;
 
@@ -258,5 +263,17 @@ public class ApiConsolePage extends ApiData {
 
 	public void setProfiles(List<String> profiles) {
 		this.profiles = profiles;
+	}
+
+	public String getReusability() {
+		return reusability;
+	}
+
+	public void setReusability(String reusability) {
+		this.reusability = reusability;
+	}
+
+	public List<String> getSupportedReusabilityValues() {
+		return supportedReusabilityValues;
 	}
 }

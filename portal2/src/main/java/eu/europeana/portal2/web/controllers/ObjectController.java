@@ -76,6 +76,7 @@ import eu.europeana.portal2.web.presentation.model.submodel.impl.FullBeanViewImp
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
+import eu.europeana.portal2.web.util.SearchUtils;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
@@ -205,7 +206,11 @@ public class ObjectController {
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
 			model.setOptedOut(optOutService.check(fullBean.getAbout()));
-			Query query = new Query(queryString).setRefinements(qf).setAllowFacets(false).setAllowSpellcheck(false);
+			Query query = new Query(queryString)
+				.setRefinements(qf)
+				.setValueReplacements(SearchUtils.mapValueReplacements(qf))
+				.setAllowFacets(false)
+				.setAllowSpellcheck(false);
 
 			// full bean view
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, RequestUtils.getParameterMap(request), query, searchService);
