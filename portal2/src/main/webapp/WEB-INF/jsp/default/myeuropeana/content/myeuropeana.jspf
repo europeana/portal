@@ -19,7 +19,8 @@
 
   </div>
   
-  <a href="/${model.portalName}/logout.html" class="mobile-logout europeana"><spring:message code="LogOut_t" /></a>
+
+  <a href="/${model.portalName}/logout.html" class="mobile-logout deans-button-1 europeana-button-1"><spring:message code="LogOut_t" /></a>
   
   
 </div>

@@ -14,7 +14,8 @@
 .mobile-logout{
 	display:		inline-block;
 	margin-left:	1em;
-	margin-bottom:	1em;
+	margin-bottom:	1.5em;
+	font-size:		0.65em;
 }
 
 .saved-items img,
