@@ -31,7 +31,11 @@ public class SitemapEntry {
 	private int intPriority;
 
 	public String getLoc() {
-		return loc;
+		return getLoc(false);
+	}
+
+	public String getLoc(boolean isPlaceSitemap) {
+		return isPlaceSitemap ? StringUtils.replace(loc, ".html", ".kml") : loc;
 	}
 
 	public String getImage() {

@@ -91,10 +91,10 @@ public class SitemapController {
 	private static final String SITEMAP_HEADER = "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
 	private static final String URLSET_HEADER = "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:geo=\"http://www.google.com/geo/schemas/sitemap/1.0\">";
 
-	private static final String URL_S = "<url>";
-	private static final String URL_E = "</url>";
-	private static final String LOC_S = "<loc>";
-	private static final String LOC_E = "</loc>";
+	private static final String URL_OPENING = "<url>";
+	private static final String URL_CLOSING = "</url>";
+	private static final String LOC_OPENING = "<loc>";
+	private static final String LOC_CLOSING = "</loc>";
 
 	private static final String PREFIX_PATTERN = "^[0-9A-Za-z_]{3}$";
 	private static String portalUrl;
@@ -186,10 +186,12 @@ public class SitemapController {
 	}
 
 	@RequestMapping("/europeana-sitemap-hashed.xml")
-	public void handleSitemap(@RequestParam(value = "prefix", required = true) String prefix,
+	public void handleSitemap(
+			@RequestParam(value = "prefix", required = true) String prefix,
 			@RequestParam(value = "images", required = false, defaultValue = "false") String images,
 			@RequestParam(value = "places", required = false, defaultValue = "false") String places,
-			HttpServletResponse response) throws EuropeanaQueryException, IOException {
+			HttpServletResponse response) 
+					throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 		if (sitemapCacheDir == null || prefix.length() > 3 || !prefix.matches(PREFIX_PATTERN)) {
 			response.setStatus(404);
@@ -290,8 +292,10 @@ public class SitemapController {
 
 	// draft, not completed yet
 	@RequestMapping("/europeana-video-sitemap.xml")
-	public void handleSitemap(@RequestParam(value = "volume", required = true) String volumeString,
-			HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException, IOException {
+	public void handleSitemap(
+			@RequestParam(value = "volume", required = true) String volumeString,
+			HttpServletRequest request, HttpServletResponse response) 
+					throws EuropeanaQueryException, IOException {
 		setSitemapCacheDir();
 		if (sitemapCacheDir == null) {
 			response.setStatus(404);
@@ -333,7 +337,7 @@ public class SitemapController {
 				try {
 					resultSet = searchService.sitemap(BriefBean.class, query).getResults();
 				} catch (SolrTypeException e) {
-					e.printStackTrace();
+					log.error(String.format("Error during request sitemap from Solr: %s", e.getLocalizedMessage()));
 				}
 
 				if (resultSet != null) {
@@ -341,11 +345,11 @@ public class SitemapController {
 						BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
 						SitemapEntry entry = new SitemapEntry(urlService.getCanonicalPortalRecord(bean.getId()).toString(),
 								doc.getThumbnail(), doc.getTitle()[0], doc.getEuropeanaCompleteness());
-						out.println(URL_S);
-						out.println(LOC_S + entry.getLoc() + LOC_E);
+						out.println(URL_OPENING);
+						out.println(LOC_OPENING + entry.getLoc() + LOC_CLOSING);
 
-						fout.write(URL_S + LN);
-						fout.write(LOC_S + entry.getLoc() + LOC_E + LN);
+						fout.write(URL_OPENING + LN);
+						fout.write(LOC_OPENING + entry.getLoc() + LOC_CLOSING + LN);
 						if (doc.getType() == DocType.VIDEO && isVideo(entry.getImage())) {
 							String image = entry.getImage().replace("&", "&amp;");
 							out.println("<video:video>");
@@ -379,9 +383,11 @@ public class SitemapController {
 							fout.write("</video:video>\n");
 						}
 
-						out.println(URL_E);
-						fout.write(URL_E + LN);
+						out.println(URL_CLOSING);
+						fout.write(URL_CLOSING + LN);
 					}
+				} else {
+					log.error("The resultset for video sitemap is null.");
 				}
 
 				out.print("</urlset>");
@@ -656,14 +662,14 @@ public class SitemapController {
 							sb.append(getPortalUrl()).append(urlPath).append(value.getName());
 							sb.append(paramImages).append(StringUtils.contains(args[0], "true"));
 							sb.append(paramPlaces).append(StringUtils.contains(args[1], "true"));
-							s.append("<sitemap>").append(LOC_S).append(StringEscapeUtils.escapeXml(sb.toString()))
-									.append(LOC_E).append("</sitemap>").append(LN);
+							s.append("<sitemap>").append(LOC_OPENING).append(StringEscapeUtils.escapeXml(sb.toString()))
+									.append(LOC_CLOSING).append("</sitemap>").append(LN);
 						}
 					}
 				}
 				log.info(String.format("prefixes: %d, total: %d", prefixes, total));
 			} catch (SolrTypeException e) {
-				e.printStackTrace();
+				log.error(String.format("Error during request sitemap from Solr: %s", e.getLocalizedMessage()));
 			}
 			s.append("</sitemapindex>");
 
@@ -672,6 +678,10 @@ public class SitemapController {
 		}
 
 		private void createSitemapContent() {
+			String isImageSitemapString = args[0];
+			String isPlaceSitemapString = args[1];
+			String id3hashValue = args[2];
+
 			state = STARTED;
 			StringBuilder fullXML = new StringBuilder();
 
@@ -683,7 +693,7 @@ public class SitemapController {
 					.getMinCompletenessToPromoteInSitemaps());
 			Query query = new Query("*:*")
 					.addRefinement(queryString)
-					.addRefinement("id3hash:" + args[2])
+					.addRefinement("id3hash:" + id3hashValue)
 					.setPageSize(20000)
 					.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
 
@@ -694,7 +704,7 @@ public class SitemapController {
 				}
 			}
 
-			if (log.isDebugEnabled()) {
+			if (log.isInfoEnabled()) {
 				log.info("queryString: " + query.toString());
 			}
 			List<BriefBean> resultSet = null;
@@ -705,7 +715,7 @@ public class SitemapController {
 					log.debug("Query took: " + (new Date().getTime() - t));
 				}
 			} catch (SolrTypeException e) {
-				e.printStackTrace();
+				log.error(String.format("Error during request sitemap from Solr for id3hash:%s: %s", id3hashValue, e.getLocalizedMessage()));
 			}
 
 			if (resultSet != null) {
@@ -715,16 +725,15 @@ public class SitemapController {
 					if (doc.getTitle() != null) {
 						title = doc.getTitle()[0];
 					}
-					SitemapEntry entry = new SitemapEntry(urlService.getCanonicalPortalRecord(bean.getId()).toString(),
-							doc.getThumbnail(),	title, doc.getEuropeanaCompleteness());
-					fullXML.append(URL_S).append(LN);
+					SitemapEntry entry = new SitemapEntry(
+							urlService.getCanonicalPortalRecord(bean.getId()).toString(),
+							doc.getThumbnail(),
+							title, 
+							doc.getEuropeanaCompleteness()
+					);
+					fullXML.append(URL_OPENING).append(LN);
 
-					String url = entry.getLoc();
-
-					if (isPlaceSitemap) {
-						url = StringUtils.replace(url, ".html", ".kml");
-					}
-					fullXML.append(LOC_S).append(url).append(LOC_E).append(LN);
+					fullXML.append(LOC_OPENING).append(entry.getLoc(isPlaceSitemap)).append(LOC_CLOSING).append(LN);
 
 					if (isImageSitemap && doc.getType() == DocType.IMAGE) {
 						String image = "";
@@ -746,8 +755,10 @@ public class SitemapController {
 					}
 
 					fullXML.append("<priority>").append(entry.getPriority()).append("</priority>").append(LN);
-					fullXML.append(URL_E).append(LN);
+					fullXML.append(URL_CLOSING).append(LN);
 				}
+			} else {
+				log.error(String.format("The result set for sitemap is null for id3hash:%s.", id3hashValue));
 			}
 
 			fullXML.append("</urlset>").append(LN);
