@@ -208,7 +208,9 @@ public class SitemapController {
 
 		if ((solrOutdated() || !cacheFile.exists()) && !inProcess.containsKey(params)) {
 			// generate file
-			log.info(String.format("Generating %s", cacheFile));
+			if (log.isInfoEnabled()) {
+				log.info(String.format("Generating %s", cacheFile));
+			}
 
 			inProcess.put(params, true);
 			int success = 0;
@@ -217,7 +219,9 @@ public class SitemapController {
 			response.setCharacterEncoding("UTF-8");
 			long t = new Date().getTime();
 			StringBuilder fullXML = createSitemapHashedContent(prefix, model, images, places);
-			log.info(String.format("Generated XML size: %s took: %s", fullXML.length(), (new Date().getTime() - t)));
+			if (log.isInfoEnabled()) {
+				log.info(String.format("Generated XML size: %s chars, it took: %s ms", fullXML.length(), (new Date().getTime() - t)));
+			}
 			BufferedWriter fout = null;
 			try {
 				ServletOutputStream out = response.getOutputStream();
@@ -253,7 +257,9 @@ public class SitemapController {
 			if (success != 2 || cacheFile.getTotalSpace() == 0) {
 				cacheFile.delete();
 			}
-			log.info(Thread.currentThread().getName() + " served by generation");
+			if (log.isInfoEnabled()) {
+				log.info(Thread.currentThread().getName() + " served by generation");
+			}
 			inProcess.remove(params);
 		} else {
 			if (inProcess.containsKey(params) || !cacheFile.exists()) {
@@ -268,6 +274,9 @@ public class SitemapController {
 				} while (inProcess.containsKey(params) || !cacheFile.exists());
 			}
 			// read from file
+			if (log.isInfoEnabled()) {
+				log.info(cacheFile.getName() + " is served from cache");
+			}
 			readCahedFile(response.getOutputStream(), cacheFile);
 		}
 	}
@@ -564,15 +573,23 @@ public class SitemapController {
 		// check it once a day
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addDays(new Date(), -1));
 		if (lastCheck == null || lastCheck.before(timeout)) {
-			log.info(String.format("%s requesting solr outdated (timeout: %s, lastCheck: %s)", Thread.currentThread()
-					.getName(), timeout.getTime().toString(), (lastCheck == null ? "null" : lastCheck.getTime()
-					.toString())));
+			if (log.isInfoEnabled()) {
+				log.info(String.format("%s requesting solr outdated (timeout: %s, lastCheck: %s)", 
+					Thread.currentThread().getName(),
+					timeout.getTime().toString(),
+					(lastCheck == null ? "null" : lastCheck.getTime().toString())
+				));
+			}
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
-				log.info("start checking Solr update time");
+				if (log.isInfoEnabled()) {
+					log.info("start checking Solr update time");
+				}
 				actualSolrUpdate = searchService.getLastSolrUpdate();
-				log.info("Solr update time checked");
+				if (log.isInfoEnabled()) {
+					log.info("Solr update time checked");
+				}
 			} catch (SolrServerException e) {
 				log.error("SolrServerException " + e.getLocalizedMessage());
 			} catch (IOException e) {
@@ -624,9 +641,9 @@ public class SitemapController {
 		private SearchPage model;
 
 		public PerReqSitemap(String action, SearchPage model, String... args) {
-			this.args = args;
-			this.model = model;
 			this.action = action;
+			this.model = model;
+			this.args = args;
 		}
 
 		private void createSitemapIndexedHashed() {
@@ -646,6 +663,7 @@ public class SitemapController {
 				.setParameter("facet.limit", "1000000")
 				.setParameter("facet.sort", "lexical")
 			;
+
 			try {
 				int prefixes = 0;
 				long total = 0;
@@ -667,7 +685,9 @@ public class SitemapController {
 						}
 					}
 				}
-				log.info(String.format("prefixes: %d, total: %d", prefixes, total));
+				if (log.isInfoEnabled()) {
+					log.info(String.format("prefixes: %d, total: %d", prefixes, total));
+				}
 			} catch (SolrTypeException e) {
 				log.error(String.format("Error during request sitemap from Solr: %s", e.getLocalizedMessage()));
 			}
@@ -687,8 +707,8 @@ public class SitemapController {
 
 			fullXML.append(XML_HEADER).append(LN);
 			fullXML.append(URLSET_HEADER).append(LN);
-			boolean isPlaceSitemap = StringUtils.contains(args[1], "true");
-			boolean isImageSitemap = StringUtils.contains(args[0], "true");
+			boolean isImageSitemap = StringUtils.contains(isImageSitemapString, "true");
+			boolean isPlaceSitemap = StringUtils.contains(isPlaceSitemapString, "true");
 			String queryString = solrQueryClauseToIncludeRecordsToPromoteInSitemaps(config
 					.getMinCompletenessToPromoteInSitemaps());
 			Query query = new Query("*:*")
@@ -711,8 +731,8 @@ public class SitemapController {
 			try {
 				long t = new Date().getTime();
 				resultSet = searchService.sitemap(BriefBean.class, query).getResults();
-				if (log.isDebugEnabled()) {
-					log.debug("Query took: " + (new Date().getTime() - t));
+				if (log.isInfoEnabled()) {
+					log.info(String.format("Query took: %d ms, produced %d results.", (new Date().getTime() - t), resultSet.size()));
 				}
 			} catch (SolrTypeException e) {
 				log.error(String.format("Error during request sitemap from Solr for id3hash:%s: %s", id3hashValue, e.getLocalizedMessage()));
