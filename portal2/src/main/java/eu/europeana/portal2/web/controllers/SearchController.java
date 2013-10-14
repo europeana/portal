@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import eu.europeana.corelib.definitions.solr.Facet;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
@@ -76,6 +78,7 @@ public class SearchController {
 		if (params.get("qf") != null && params.get("qf").length != qf.length) {
 			qf = params.get("qf");
 		}
+		boolean hasReusabilityFilter = hasReusabilityFilter(qf);
 
 		SearchPage model = new SearchPage();
 		model.setRequest(request);
@@ -118,6 +121,12 @@ public class SearchController {
 		}
 
 		Query usabilityQuery = SearchUtils.createUsabilityQuery(q, qf);
+		Query rightsFacetQuery = null;
+		if (hasReusabilityFilter) {
+			query.removeFacet(Facet.RIGHTS);
+			rightsFacetQuery = SearchUtils.createRightsFacetQuery(q, qf);
+		}
+
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
 		if (log.isDebugEnabled()) {
@@ -125,7 +134,7 @@ public class SearchController {
 		}
 		BriefBeanView briefBeanView = null;
 		try {
-			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, usabilityQuery);
+			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, usabilityQuery, rightsFacetQuery);
 			model.setBriefBeanView(briefBeanView);
 			if (log.isDebugEnabled()) {
 				log.debug("NumFound: " + briefBeanView.getPagination().getNumFound());
@@ -142,6 +151,19 @@ public class SearchController {
 
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
+	}
+
+	private boolean hasReusabilityFilter(String[] qf) {
+		boolean hasReusability = false;
+		if (qf != null) {
+			for (String filter : qf) {
+				if (StringUtils.contains(filter, "REUSABILITY:")) {
+					hasReusability = true;
+					break;
+				}
+			}
+		}
+		return hasReusability;
 	}
 
 	public InternalResourceViewResolver getViewResolver() {

@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
+import eu.europeana.corelib.definitions.solr.Facet;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -53,7 +54,27 @@ public class SearchUtils {
 	public static BriefBeanView createResults(SearchService searchService,
 			Class<? extends BriefBean> clazz, String profile, Query query,
 			int start, int rows,
-			Map<String, String[]> params, Query usabilityQuery) 
+			Map<String, String[]> params) throws SolrTypeException {
+		return createResults(searchService, clazz, profile, query, start, rows, params, null, null);
+	}
+
+	public static BriefBeanView createResults(SearchService searchService,
+			Class<? extends BriefBean> clazz, String profile, Query query,
+			int start, int rows,
+			Map<String, String[]> params, Query usabilityQuery) throws SolrTypeException {
+		return createResults(searchService, clazz, profile, query, start, rows, params, usabilityQuery, null);
+	}
+
+	public static BriefBeanView createResults(
+			SearchService searchService,
+			Class<? extends BriefBean> clazz,
+			String profile,
+			Query query,
+			int start,
+			int rows,
+			Map<String, String[]> params,
+			Query usabilityQuery,
+			Query rightsFacetQuery)
 					throws SolrTypeException {
 
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
@@ -70,6 +91,12 @@ public class SearchUtils {
 			if (allQueryFacetsMap != null && !allQueryFacetsMap.isEmpty()) {
 				facetFields.addAll(allQueryFacetsMap);
 			}
+		}
+
+		if (rightsFacetQuery != null) {
+			ResultSet<? extends BriefBean> rightsResultSet = searchService.search(clazz, rightsFacetQuery);
+			List<FacetField> rightsFacetFields = rightsResultSet.getFacetFields();
+			facetFields.addAll(rightsFacetFields);
 		}
 
 		briefBeanView.setBriefBeans(resultSet.getResults());
@@ -116,6 +143,29 @@ public class SearchUtils {
 		url.addParam("start", start, true);
 
 		return url;
+	}
+
+	public static Query createRightsFacetQuery(String q, String[] qf) {
+		List<String> refinements = new ArrayList<String>();
+		if (qf != null) {
+			for (String value : qf) {
+				if (!value.startsWith("RIGHTS:")) {
+					refinements.add(value);
+				}
+			}
+		}
+		String[] filteredQf = refinements.toArray(new String[refinements.size()]);
+
+		Query query = new Query(q)
+			.setRefinements(filteredQf)
+			.setValueReplacements(SearchUtils.mapValueReplacements(qf))
+			.setPageSize(0)
+			.setStart(0)
+			.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
+			.setProduceFacetUnion(false)
+			.setAllowSpellcheck(false);
+		query.setFacet(Facet.RIGHTS);
+		return query;
 	}
 
 	public static Query createUsabilityQuery(String q, String[] qf) {
