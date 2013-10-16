@@ -8,6 +8,8 @@ import eu.europeana.portal2.selenium.page.abstracts.Portal2Page;
 public class SearchPage extends Portal2Page {
 
 	public static final String PAGE = IndexPage.PAGE + "search.html";
+	
+	// constructors
 
 	public static SearchPage openPage(WebDriver driver, String paramsString) {
 		driver.get(PAGE + "?" + paramsString);
@@ -30,12 +32,12 @@ public class SearchPage extends Portal2Page {
 	// counters
 
 	public int countSearchResults() {
-		return findByCss("div#items div.li").size();
+		return countByCss("div#items div.li");
 	}
 
 
 	public int countBreadCrumbs() {
-		return findByCss("#breadcrumb li").size();
+		return countByCss("#breadcrumb li");
 	}
 	
 	// getters

@@ -9,6 +9,7 @@ public abstract class Portal2Page extends PageUtils {
 	
 	public static final String ID_SEARCH_MENU_DIV = "search-menu";
 	public static final String ID_SEARCH_INPUT_TEXT = "query-input";
+	public static final String ID_SEARCH_REFINE_TEXT = "query-input";
 	
 	public Portal2Page(WebDriver driver) {
 		super(driver);
@@ -28,6 +29,10 @@ public abstract class Portal2Page extends PageUtils {
 	
 	public void setSearchQuery(String value) {
 		getSearchInput().sendKeys(value);
+	}
+	
+	public void setRefineQuery(String value) {
+		findById(ID_SEARCH_REFINE_TEXT).sendKeys(value);
 	}
 	
 	// getters

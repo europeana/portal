@@ -24,6 +24,14 @@ public abstract class PageUtils {
 	protected List<WebElement> findByClass(String className) {
 		return driver.findElements(By.className(className));
 	}
+
+	protected WebElement findOneByCss(String query) {
+		return driver.findElement(By.cssSelector(query));
+	}
+	
+	protected List<WebElement> findByCss(String query) {
+		return driver.findElements(By.cssSelector(query));
+	}
 	
 	protected int countByClass(String className) {
 		List<WebElement> list = findByClass(className);
@@ -33,12 +41,13 @@ public abstract class PageUtils {
 		return 0;
 	}
 
-	protected WebElement findOneByCss(String query) {
-		return driver.findElement(By.cssSelector(query));
-	}
 	
-	protected List<WebElement> findByCss(String query) {
-		return driver.findElements(By.cssSelector(query));
+	protected int countByCss(String query) {
+		List<WebElement> list = findByCss(query);
+		if (list != null) {
+			return list.size();
+		}
+		return 0;
 	}
 	
 	public void takeScreenshot(File file) {
