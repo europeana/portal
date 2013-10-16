@@ -7,9 +7,10 @@ import eu.europeana.portal2.selenium.utils.PageUtils;
 
 public abstract class Portal2Page extends PageUtils {
 	
-	public static final String ID_SEARCH_MENU_DIV = "search-menu";
-	public static final String ID_SEARCH_INPUT_TEXT = "query-input";
+	public static final String ID_SEARCH_MENU_DIV    = "search-menu";
+	public static final String ID_SEARCH_INPUT_TEXT  = "query-input";
 	public static final String ID_SEARCH_REFINE_TEXT = "query-input";
+	
 	
 	public Portal2Page(WebDriver driver) {
 		super(driver);

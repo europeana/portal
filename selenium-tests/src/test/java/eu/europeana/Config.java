@@ -22,7 +22,7 @@ public class Config {
 	public static  String	searchUrl			= baseUrl + "search.html?";
 	public static  String	searchUrlRealData	= baseUrlRealData + "search.html?";
 
-	private static	boolean		runLocal	= false;
+	private static	boolean		runLocal	= true;
 	private static	URL			webdriverIP	= null;
 	
 	private static File getAppRoot() {
