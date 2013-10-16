@@ -15,6 +15,8 @@ public abstract class PageUtils {
 		this.driver = driver;
 	}
 	
+	// PROTECTED METHODS FOR USE IN PAGE OBJECTS ONLY
+	
 	protected WebElement findById(String id) {
 		return driver.findElement(By.id(id));
 	}
@@ -22,9 +24,26 @@ public abstract class PageUtils {
 	protected List<WebElement> findByClass(String className) {
 		return driver.findElements(By.className(className));
 	}
+
+	protected WebElement findOneByCss(String query) {
+		return driver.findElement(By.cssSelector(query));
+	}
+	
+	protected List<WebElement> findByCss(String query) {
+		return driver.findElements(By.cssSelector(query));
+	}
 	
 	protected int countByClass(String className) {
 		List<WebElement> list = findByClass(className);
+		if (list != null) {
+			return list.size();
+		}
+		return 0;
+	}
+
+	
+	protected int countByCss(String query) {
+		List<WebElement> list = findByCss(query);
 		if (list != null) {
 			return list.size();
 		}
