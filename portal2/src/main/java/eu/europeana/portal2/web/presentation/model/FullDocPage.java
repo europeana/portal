@@ -113,18 +113,12 @@ public class FullDocPage extends FullDocPreparation {
 	public String getLightboxRef() {
 		if (!lightboxRefChecked) {
 			boolean hasShownBy = StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy"));
-			boolean hasShownAt = StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt"));
-			if (!hasShownBy && !hasShownAt) {
-				lightboxRef = null;
-			}
+			lightboxRef = null;
 
 			// if (WebUtils.checkMimeType(shownBy) != null) {
 			if (hasShownBy && StringUtils.isNotBlank(shortcut.get("EdmIsShownBy")[0])) {
 				lightboxRef = shortcut.get("EdmIsShownBy")[0];
 				lightboxRefField = "edm:isShownBy";
-			} else if (hasShownAt && StringUtils.isNotBlank(shortcut.get("EdmIsShownAt")[0])) {
-				lightboxRef = shortcut.get("EdmIsShownAt")[0];
-				lightboxRefField = "edm:isShownAt";
 			}
 
 			lightboxRefChecked = true;
