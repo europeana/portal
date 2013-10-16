@@ -12,9 +12,12 @@ public class BlogItemsTest {
 	
 	private WebDriver webDriver;
 	
+	private IndexPage page;
+	
 	@Before
 	public void setupPage() {
 		webDriver = new FirefoxDriver();
+		page = IndexPage.openPage(webDriver);
 	}
 	
 	@After
@@ -24,7 +27,7 @@ public class BlogItemsTest {
 	
 	@Test
 	public void countBlogItemsTest() {
-		IndexPage page = IndexPage.openPage(webDriver);
+		page.countBlogItems();
 	}
 
 }

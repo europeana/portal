@@ -14,13 +14,33 @@ public abstract class Portal2Page extends PageUtils {
 		super(driver);
 	}
 	
+	// click actions
+	
+	public void clickSearch() {
+		getSearchInput().submit();
+	}
+	
+	public void clickRefine() {
+		findById("refine-search").click();
+	}
+	
+	// setters
+	
 	public void setSearchQuery(String value) {
 		getSearchInput().sendKeys(value);
 	}
 	
-	public void doSearchSubmit() {
-		getSearchInput().submit();
+	// getters
+	
+	public String getPageTitle() {
+		return driver.getTitle();
 	}
+	
+	public String getPageUrl() {
+		return driver.getCurrentUrl();
+	}
+	
+	// internal
 	
 	protected WebElement getSearchInput() {
 		return findById(ID_SEARCH_INPUT_TEXT);
