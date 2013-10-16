@@ -1,5 +1,8 @@
 package eu.europeana.portal2.selenium.page;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 
@@ -43,7 +46,8 @@ public class SearchPage extends Portal2Page {
 	// getters
 
 	public String getPaginationString() {
-		return findOneByCss("#search-results div ul[class='navigation-pagination'] li:nth-child(1)").getText();
+		return normaliseWhitespace( findOneByCss(".search-results-navigation .count").getText() );
 	}
+	
 
 }

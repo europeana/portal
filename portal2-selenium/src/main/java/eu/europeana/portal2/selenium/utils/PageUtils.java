@@ -54,4 +54,8 @@ public abstract class PageUtils {
 		// TODO
 	}
 
+	protected String normaliseWhitespace(String input){
+		return input != null ? input.replaceAll("\\s+", " ").trim() : null;
+	}
+	
 }
