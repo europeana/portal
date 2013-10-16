@@ -313,9 +313,11 @@ public class ObjectController {
 		try {
 			fullBean = searchService.findById(europeanaId, showSimilarItems);
 		} catch (MongoDBException e) {
+			System.out.println("here should be a log.error");
 			log.error(String.format("MongoDB Exception during getting the full bean for ID %s: %s", europeanaId,
 					e.getMessage()));
 		} catch (NullPointerException e) {
+			System.out.println("here should be a log.error");
 			log.error(String.format("Exception during getting the full bean for ID %s: %s", europeanaId,
 					e.getStackTrace()[0]));
 		}
@@ -328,6 +330,7 @@ public class ObjectController {
 		try {
 			newRecordId = searchService.resolveId(europeanaId);
 		} catch (NullPointerException e) {
+			System.out.println("here should be a log.error");
 			log.error(String.format("Exception during getting the full bean for ID %s: %s", europeanaId,
 					e.getStackTrace()[0]));
 		}
