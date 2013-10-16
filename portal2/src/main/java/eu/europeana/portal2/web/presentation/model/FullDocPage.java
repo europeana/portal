@@ -112,26 +112,17 @@ public class FullDocPage extends FullDocPreparation {
 	 * */
 	public String getLightboxRef() {
 		if (!lightboxRefChecked) {
-			boolean hasShownBy = !StringArrayUtils.isBlank(shortcut.get("EdmIsShownBy"));
-			boolean hasShownAt = !StringArrayUtils.isBlank(shortcut.get("EdmIsShownAt"));
+			boolean hasShownBy = StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy"));
+			boolean hasShownAt = StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt"));
 			if (!hasShownBy && !hasShownAt) {
 				lightboxRef = null;
 			}
 
-			/*
-			if (StringUtils.startsWith(shownBy, "mms")
-					&& StringUtils.startsWith(shownAt, "mms")) {
-				lightboxRef = null;
-			}
-			*/
-
-			// FileNameMap fileNameMap = URLConnection.getFileNameMap();
-
 			// if (WebUtils.checkMimeType(shownBy) != null) {
-			if (hasShownBy && !StringUtils.isBlank(shortcut.get("EdmIsShownBy")[0])) {
+			if (hasShownBy && StringUtils.isNotBlank(shortcut.get("EdmIsShownBy")[0])) {
 				lightboxRef = shortcut.get("EdmIsShownBy")[0];
 				lightboxRefField = "edm:isShownBy";
-			} else if (hasShownAt && !StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])) {
+			} else if (hasShownAt && StringUtils.isNotBlank(shortcut.get("EdmIsShownAt")[0])) {
 				lightboxRef = shortcut.get("EdmIsShownAt")[0];
 				lightboxRefField = "edm:isShownAt";
 			}
