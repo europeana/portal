@@ -100,6 +100,7 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 		}
 	};
 	
+	
 	if (allTabs.length>0) {
 		setTimeout(function(){
 			if(hash){
@@ -110,6 +111,64 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 			}
 		}, 1);
 	}
+	
+	
+	/* event debouncing () */
+	(function($,sr){
+
+		var debounce = function (func, threshold, execAsap) {
+			var timeout;
+			return function debounced () {
+				var obj = this, args = arguments;
+				function delayed () {
+					if (!execAsap)
+						func.apply(obj, args);
+						timeout = null;
+					};
+		
+					if (timeout){
+						clearTimeout(timeout);
+					}
+					else if (execAsap){
+						func.apply(obj, args);
+					}
+		
+					timeout = setTimeout(delayed, threshold || 100);
+				};
+			};
+	
+			// smartresize 
+			jQuery.fn[sr] = function(fn){	return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+			jQuery.fn['euScroll'] = function(fn){	return fn ? this.bind('scroll', debounce(fn)) : this.trigger(sr); };
+
+	})(jQuery,'euRsz');
+
+	
+	var forceFit = function(){
+				
+		var origHeight     = self.el.height();	
+		self.el.addClass('measure');
+		
+		var measureHeight  = self.el.height();
+		self.el.removeClass('measure');
+		
+		if(measureHeight > origHeight){
+			self.el.addClass('accordion');
+		}
+		else{
+			self.el.removeClass('accordion');
+		}
+	};
+	
+	$(window).euRsz(function(){
+		forceFit();
+	});
+	
+	forceFit();
+	
+	
+	/* end event debouncing */
+	
 		
 	return {
 		getOpenTabId : function () {
