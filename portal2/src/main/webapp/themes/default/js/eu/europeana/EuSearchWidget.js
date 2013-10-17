@@ -91,12 +91,14 @@ fnSearchWidget = function($, config){
 	        container.find('#content').hide();
 	        container.find('#no-results').hide();
 	        
+	        /*
 	        if(self.withResults){
 	        	$('.search-widget-container #footer-logo').remove();
 	        }
 	        else{
 	        	$('.search-widget-container #logo').remove();
 	        }
+	        */
 	
 	        itemTemplate       = container.find('.thumb-frame').parent();
 	        facetTemplate      = container.find('#filter-search li:nth-child(2)');
