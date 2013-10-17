@@ -67,18 +67,14 @@ eu.europeana.fulldoc = {
 			callback : function() { eu.europeana.ess.init(); }
 		}]);
 		
+		/*
 		js.loader.loadScripts([{
 			file: 'window-open' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/js/' + js.min_directory
 		}]);
+		*/
 		
 		js.loader.loadScripts([{
-			/*
-			name : 'accordion-tabs',
-			file : 'accordion-tabs' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
-			*/
-			
 			name : 'accordion-tabs',
 			file : 'EuAccordionTabs' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory

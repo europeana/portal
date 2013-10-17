@@ -517,6 +517,7 @@ eu.europeana.header = {
 			var key	= window.event ? e.keyCode : e.which;
 			if(key==27){
 				$(".overlaid-content").css('visibility', 'hidden');
+				$("#lightbox").remove();	// this is needed to stop ie8 making a black screen following closing of the lightbox.
 			}
 		});
 
