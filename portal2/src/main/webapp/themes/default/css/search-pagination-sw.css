@@ -236,6 +236,10 @@
 }
 */
 
+.search-widget-container .nav-prev,
+.search-widget-container .nav-first{
+	text-align:	left;
+}
 
 .search-widget-container input::-webkit-outer-spin-button,
 .search-widget-container input::-webkit-inner-spin-button {
