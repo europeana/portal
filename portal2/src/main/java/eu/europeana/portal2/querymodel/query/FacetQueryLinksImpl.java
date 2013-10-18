@@ -1,6 +1,7 @@
 package eu.europeana.portal2.querymodel.query;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -59,6 +60,8 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 		}
 
 		String[] queryRefinements = query.getRefinements(false);
+		Map<String, RightsOption> qfRights = new HashMap<String, RightsOption>();
+		
 		for (LabelFrequency item : facetField.getFields()) {
 			if (isTemporarilyPreventYear0000(this.type, item.getLabel())) {
 				continue;
@@ -79,9 +82,13 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 						boolean doAppend = true;
 						if (qfField.equalsIgnoreCase(facetField.getName())) {
-							String comparable = qfField.equals("RIGHTS") ? QueryUtil.removeTruncation(qfValue) : qfValue;
-							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(comparable)
-									|| comparable.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
+							String comparable = qfField.equals(RIGHTS_FACET) ? QueryUtil.removeTruncation(qfValue) : qfValue;
+							if (QueryUtil.escapeValue(item.getLabel().trim()).equalsIgnoreCase(comparable)
+								|| (qfField.equals(RIGHTS_FACET) 
+									&& comparable.equals(
+										QueryUtil.removeTruncation(
+											EuropeanaRightsConverter.convertCc(
+												item.getLabel().trim()))))) {
 								remove = true;
 								facetSelected = true;
 								doAppend = false;
