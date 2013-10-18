@@ -141,29 +141,6 @@ public class SearchUtils {
 		return query;
 	}
 
-	public static Query createUsabilityQuery(String q, String[] qf) {
-		List<String> refinements = new ArrayList<String>();
-		if (qf != null) {
-			for (String value : qf) {
-				if (!value.equals("REUSABILITY:Free") && !value.equals("REUSABILITY:Limited")) {
-					refinements.add(value);
-				}
-			}
-		}
-		String[] filteredQf = refinements.toArray(new String[refinements.size()]);
-		Query query = new Query(q)
-					.setRefinements(filteredQf)
-					.setPageSize(0)
-					.setProduceFacetUnion(true)
-		;
-
-		Map<String, String> replMap = RightReusabilityCategorizer.getQueryFacets();
-		if (replMap != null) {
-			query.setFacetQueries(replMap);
-		}
-		return query;
-	}
-
 	public static Map<String, String> mapValueReplacements(String[] qf) {
 		if (ArrayUtils.isEmpty(qf)) {
 			return null;
