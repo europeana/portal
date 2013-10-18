@@ -90,7 +90,7 @@ public class TimelineController {
 				.setParameter("f.YEAR.facet.mincount", "1");
 
 		BriefBeanView briefBeanView = SearchUtils.createResults(searchService, BriefBean.class, "standard", query,
-				start, rows, params, null);
+				start, rows, params);
 		model.setBriefBeanView(briefBeanView);
 		model.setQuery(briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery());
 

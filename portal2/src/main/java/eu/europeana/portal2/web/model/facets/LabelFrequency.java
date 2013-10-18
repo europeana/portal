@@ -48,4 +48,9 @@ public class LabelFrequency {
 	public void setCount(long count) {
 		this.count = count;
 	}
+
+	@Override
+	public String toString() {
+		return "LabelFrequency [label=" + label + ", count=" + count + "]";
+	}
 }

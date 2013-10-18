@@ -15,6 +15,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 	private static Logger log = Logger.getLogger(FacetQueryLinksImpl.class.getCanonicalName());
 
+	private static final String NON_WIKIPEDIA = "-TYPE:Wikipedia";
 	private static final String FACET_PROMPT = "&qf=";
 	private static final String RIGHTS_FACET = "RIGHTS";
 	private String type;
@@ -68,22 +69,25 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			// iterating over actual qf values
 			if (queryRefinements != null) {
 				for (String qfTerm : refinements.get(QueryUtil.FACETS)) {
-					if (!qfTerm.equals("-TYPE:Wikipedia")) {
+					if (!qfTerm.equals(NON_WIKIPEDIA)) {
 						String[] parts = qfTerm.split(":", 2);
 						String qfField = parts[0];
 						String qfValue = parts[1];
 						if (isTemporarilyPreventYear0000(qfField, qfValue)) {
 							continue;
 						}
+
 						boolean doAppend = true;
 						if (qfField.equalsIgnoreCase(facetField.getName())) {
-							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(qfValue)
-								|| qfValue.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
+							String comparable = qfField.equals("RIGHTS") ? QueryUtil.removeTruncation(qfValue) : qfValue;
+							if (QueryUtil.escapeValue(item.getLabel()).equalsIgnoreCase(comparable)
+									|| comparable.equals(EuropeanaRightsConverter.convertCc(item.getLabel()))) {
 								remove = true;
 								facetSelected = true;
 								doAppend = false;
 							}
 						}
+
 						if (doAppend) {
 							if (qfField.equals(RIGHTS_FACET) && !qfValue.endsWith("*") && !qfValue.endsWith("\"")) {
 								qfValue = '"' + qfValue + '"';
@@ -101,8 +105,8 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 				url.append(facetField.getName());
 				url.append(":");
 				if (RIGHTS_FACET.equals(type)) {
-					EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel());
-					String value = (license.isModified()) ? license.getModifiedURI() : '"' + license.getOriginalURI() + '"';
+					EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel().trim());
+					String value = (license.isModified()) ? license.getModifiedURI() : license.getOriginalURI() + "*";
 					url.append(value);
 				} else {
 					// escape Solr special chars in item.label
@@ -118,9 +122,14 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			if (RIGHTS_FACET.equals(type)) {
 				EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel());
 				item.setLabel(license.getOriginalURI());
-				links.add(new FacetCountLinkImpl(
-						RightsOption.safeValueByUrl(license.getOriginalURI()), 
-						item, url.toString(), remove));
+				links.add(
+					new FacetCountLinkImpl(
+						RightsOption.safeValueByUrl(license.getOriginalURI()),
+						item,
+						url.toString(),
+						remove
+					)
+				);
 			} else {
 				links.add(new FacetCountLinkImpl(item, url.toString(), remove));
 			}

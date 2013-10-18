@@ -29,6 +29,8 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.lists.FacetCo
 
 public class FacetQueryLinksDecorator implements FacetQueryLinks {
 
+	private static final String YEAR = "YEAR";
+
 	private FacetQueryLinks facetQueryLinks;
 
 	public FacetQueryLinksDecorator(FacetQueryLinks facets) {
@@ -43,7 +45,7 @@ public class FacetQueryLinksDecorator implements FacetQueryLinks {
 	@Override
 	public List<FacetCountLink> getLinks() {
 		List<FacetCountLink> list = facetQueryLinks.getLinks();
-		if (StringUtils.equals(getType(), "YEAR")) {
+		if (StringUtils.equals(getType(), YEAR)) {
 			Collections.sort(list, new FacetCountLinkComparator());
 		}
 		return new FacetCountLinkListDecorator(getType(), list);

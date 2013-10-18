@@ -35,6 +35,7 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinksImpl;
 import eu.europeana.portal2.web.model.facets.Facet;
+import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;

@@ -141,7 +141,7 @@ public class WidgetController {
 			try {
 				Map<String, String[]> params = RequestUtils.getParameterMap(request);
 				briefBeanView = SearchUtils
-						.createResults(searchService, BriefBean.class, "portal", query, 0, 0, params, null);
+						.createResults(searchService, BriefBean.class, "portal", query, 0, 0, params);
 			} catch (SolrTypeException e) {
 				log.error("SolrTypeException: " + e.getMessage());
 				// return new ApiError("search.json", e.getMessage());

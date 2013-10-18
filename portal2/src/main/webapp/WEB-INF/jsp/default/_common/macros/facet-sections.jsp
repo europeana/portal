@@ -40,12 +40,6 @@
 		</a>
 	</h3>
 	<ul>
-		<%--
-		<c:if test="${ == 'rights'}">
-			<li id="rights-info"><spring:message code="rightsNotice_t" /></li>
-		</c:if>
-		--%>
-		
 		<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-items.jsp" %>
 	</ul>
 </li>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:forEach var="facet_item" items="${facet.links}">
+<c:forEach items="${facet.links}" var="facet_item">
 
 	<c:set var="checkedValue" value="" />
 	<c:if test="${facet_item.remove}" >

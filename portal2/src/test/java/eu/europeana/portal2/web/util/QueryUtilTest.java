@@ -49,4 +49,12 @@ public class QueryUtilTest {
 		assertNotSame(output, input);
 		assertEquals("Music Library of Greece \\\"Lilian Voudouri\\\" - Friends of Music Society", output);
 	}
+
+	@Test
+	public void testRemoveTruncation() {
+		String input = "http://creativecommons.org/publicdomain/mark/1.0/*";
+		String output = QueryUtil.removeTruncation(input);
+		assertNotSame(output, input);
+		assertEquals("http://creativecommons.org/publicdomain/mark/1.0/", output);
+	}
 }

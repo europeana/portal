@@ -34,7 +34,7 @@ public final class EuropeanaRightsConverter {
 			"^.*europeana\\.eu/rights/([\\w-]+)[/\\w.]*$");
 	private static final Pattern CREATIVE_COMMONS_PATTERN = Pattern.compile(
 			"(^.*creativecommons\\.org/licenses/)([a-z\\-]+)/([0-9\\.]+)/?([a-z\\.]+?)?/?$");
-	private static final Pattern CREATIVE_COMMONS_PD_PATTERN = Pattern.compile(
+	private static final Pattern CREATIVE_COMMONS_PUBLIC_DOMAIN_PATTERN = Pattern.compile(
 			"^.*creativecommons\\.org/publicdomain/mark/([0-9\\.]+)/.*$");
 
 	static {
@@ -63,7 +63,7 @@ public final class EuropeanaRightsConverter {
 		if ((matcher = CREATIVE_COMMONS_PATTERN.matcher(uri)).matches()) {
 			return tryCcLicenses(matcher);
 		}
-		if ((matcher = CREATIVE_COMMONS_PD_PATTERN.matcher(uri)).matches()) {
+		if ((matcher = CREATIVE_COMMONS_PUBLIC_DOMAIN_PATTERN.matcher(uri)).matches()) {
 			return tryCcPublicDomain(matcher);
 		}
 		return new License(uri);

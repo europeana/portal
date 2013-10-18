@@ -24,6 +24,7 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -108,6 +109,7 @@ public class SearchController {
 		Query query = new Query(q)
 				.setRefinements(qf)
 				.setValueReplacements(SearchUtils.mapValueReplacements(qf))
+				.setFacetQueries(RightReusabilityCategorizer.getQueryFacets())
 				.setPageSize(rows)
 				.setStart(start - 1) // Solr starts from 0
 				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
@@ -120,12 +122,12 @@ public class SearchController {
 			query.setAllowSpellcheck(false);
 		}
 
-		Query usabilityQuery = SearchUtils.createUsabilityQuery(q, qf);
+		/*
 		Query rightsFacetQuery = null;
 		if (hasReusabilityFilter) {
-			query.removeFacet(Facet.RIGHTS);
 			rightsFacetQuery = SearchUtils.createRightsFacetQuery(q, qf);
 		}
+		*/
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
@@ -134,7 +136,7 @@ public class SearchController {
 		}
 		BriefBeanView briefBeanView = null;
 		try {
-			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params, usabilityQuery, rightsFacetQuery);
+			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params);
 			model.setBriefBeanView(briefBeanView);
 			if (log.isDebugEnabled()) {
 				log.debug("NumFound: " + briefBeanView.getPagination().getNumFound());

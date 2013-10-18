@@ -34,6 +34,8 @@ import eu.europeana.portal2.web.presentation.model.submodel.SearchFilter;
 
 public class BriefBeanViewDecorator implements BriefBeanView {
 
+	private Logger log = Logger.getLogger(BriefBeanViewDecorator.class.getCanonicalName());
+
 	private final static String[] facetOrder = new String[]{
 		"TYPE", "LANGUAGE", "YEAR", "COUNTRY", "REUSABILITY", 
 		"RIGHTS", "PROVIDER", "DATA_PROVIDER"

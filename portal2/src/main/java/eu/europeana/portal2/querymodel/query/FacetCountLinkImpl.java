@@ -76,6 +76,9 @@ public class FacetCountLinkImpl implements FacetCountLink {
 		facetCount.setCount(facetCount.getCount() + facetCountLink.getCount());
 	}
 
+	/**
+	 * It prevents adding this into an ArrayList if its value is already contained.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

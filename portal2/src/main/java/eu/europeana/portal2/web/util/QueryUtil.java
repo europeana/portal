@@ -132,6 +132,10 @@ public class QueryUtil {
 				escapeSquareBrackets(text));
 	}
 
+	public static String removeTruncation(String text) {
+		return text.replaceAll("\\*$", "");
+	}
+
 	public static String escapeQuote(String text) {
 		return text.replace("\"", "\\\"");
 	}

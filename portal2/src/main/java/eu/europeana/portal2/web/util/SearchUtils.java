@@ -51,20 +51,6 @@ public class SearchUtils {
 
 	private static Logger log = Logger.getLogger(SearchUtils.class.getCanonicalName());
 
-	public static BriefBeanView createResults(SearchService searchService,
-			Class<? extends BriefBean> clazz, String profile, Query query,
-			int start, int rows,
-			Map<String, String[]> params) throws SolrTypeException {
-		return createResults(searchService, clazz, profile, query, start, rows, params, null, null);
-	}
-
-	public static BriefBeanView createResults(SearchService searchService,
-			Class<? extends BriefBean> clazz, String profile, Query query,
-			int start, int rows,
-			Map<String, String[]> params, Query usabilityQuery) throws SolrTypeException {
-		return createResults(searchService, clazz, profile, query, start, rows, params, usabilityQuery, null);
-	}
-
 	public static BriefBeanView createResults(
 			SearchService searchService,
 			Class<? extends BriefBean> clazz,
@@ -72,31 +58,18 @@ public class SearchUtils {
 			Query query,
 			int start,
 			int rows,
-			Map<String, String[]> params,
-			Query usabilityQuery,
-			Query rightsFacetQuery)
+			Map<String, String[]> params)
 					throws SolrTypeException {
 
 		BriefBeanViewImpl briefBeanView = new BriefBeanViewImpl();
 		ResultSet<? extends BriefBean> resultSet = searchService.search(clazz, query);
 
 		List<FacetField> facetFields = resultSet.getFacetFields();
-		if (usabilityQuery != null) {
-			Map<String, Integer> usability = searchService.queryFacetSearch(
-				usabilityQuery.getQuery(),
-				usabilityQuery.getRefinements(true),
-				usabilityQuery.getFacetQueries()
-			);
-			List<FacetField> allQueryFacetsMap = SolrUtils.extractQueryFacets(usability);
+		if (resultSet.getQueryFacets() != null) {
+			List<FacetField> allQueryFacetsMap = SolrUtils.extractQueryFacets(resultSet.getQueryFacets());
 			if (allQueryFacetsMap != null && !allQueryFacetsMap.isEmpty()) {
 				facetFields.addAll(allQueryFacetsMap);
 			}
-		}
-
-		if (rightsFacetQuery != null) {
-			ResultSet<? extends BriefBean> rightsResultSet = searchService.search(clazz, rightsFacetQuery);
-			List<FacetField> rightsFacetFields = rightsResultSet.getFacetFields();
-			facetFields.addAll(rightsFacetFields);
 		}
 
 		briefBeanView.setBriefBeans(resultSet.getResults());
