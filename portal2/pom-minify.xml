@@ -562,6 +562,23 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
+					
+					<execution>
+						<id>minify-collapsible-widget.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>collapsible_widget.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>collapsible_widget.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
 
 					<execution>
 						<id>minify-contact.js</id>
