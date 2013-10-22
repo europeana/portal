@@ -27,8 +27,8 @@ fnSearchWidget = function($, config){
     // 2) hide wskey, and use a distinct wskey
 
     var resultServerUrl         = 'http://europeana.eu/portal';
-	var searchUrl				= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
-	var searchUrlWithoutResults = 'http://test.portal2.eanadev.org/portal/search.html';
+	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
+	var searchUrlWithoutResults = 'http://www.europeana.eu/portal/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
 	var cssUrl                  = rootUrl +  '/themes/default/css/';
