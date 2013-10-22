@@ -67,40 +67,36 @@ fnSearchWidget = function($, config){
       		
 
     	$(document).ready(function(){
-	    	var containerClass    = "search-widget-container";// + (self.withResults ? ' withResults' : '');
+    		
+   		
+	    	var containerClass    = "search-widget-container";
 	    	var containerSelector = "." + containerClass;
 	        container = $(containerSelector);
+	        
 	        
 	        if(!container.length){
 	        	var scripts    = document.getElementsByTagName('script');
 	        	$.each(scripts, function(i, ob){
 	        		var src   = $(ob).attr('src');
-	        		var regex = new RegExp('^' + rootUrl + '(.*)EuSearchWidget.js');
-	        		if(regex.test(src)){
+	        		var regex = new RegExp('^' + rootUrl + '(.*)EuSearchWidget[\S]*');
+	        		if(regex.test(src)){	        			
 	        			$(ob).after('<div class="' + containerClass + '"></div>');
 	        			container = $(containerSelector);
 	        		}
 	        	});
 	        }
 	        
-	        
 	        container.append('<div id="overlay"></div>');
 	        $('#overlay').hide();
-	        
+
 	        container.append(htmlData.markup);
 	        container.find('#content').hide();
 	        container.find('#no-results').hide();
-	        
-	        /*
-	        if(self.withResults){
-	        	$('.search-widget-container #footer-logo').remove();
-	        }
-	        else{
-	        	$('.search-widget-container #logo').remove();
-	        }
-	        */
-	
+
+
 	        itemTemplate       = container.find('.thumb-frame').parent();
+	        
+	        
 	        facetTemplate      = container.find('#filter-search li:nth-child(2)');
 	        addKeywordTemplate = container.find('#filter-search li:first');
 	        filterTemplate     = container.find('#search-filter li:first');
@@ -108,7 +104,7 @@ fnSearchWidget = function($, config){
 	        setupQuery();
 	        setupMenus();
 	        setUpRefinements(); // TODO
-	
+	        
 	        pagination = [];
 	        $.each( $('.result-pagination'), function(i, ob){
 		        pagination.push( pager = new EuPagination($(ob),
@@ -142,7 +138,6 @@ fnSearchWidget = function($, config){
 		        );
 	        });
 	        
-
 	        
 
         	container.css('overflow-y', 'auto');
@@ -156,7 +151,7 @@ fnSearchWidget = function($, config){
 
         	
             // load style - as single files if in debug mode
-            if(true || js.debug){
+            if(js.debug){
     			$.each(['html-sw', 'common-sw', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
     	        	$('head').append('<link rel="stylesheet" href="' + cssUrl + ob + '.css" type="text/css" />');
     			});
@@ -659,13 +654,15 @@ fnSearchWidget = function($, config){
     var setupMenus = function(){
     	
         // search 
+    	
+    	
         self.searchMenu = new EuMenu( 
         	container.find("#search-menu"),
             {
                 "fn_item": function(self){},
                 "fn_init": function(self){
+                	/*
                     var input        = container.find('#query-input');
-                    //var searchTerm   = 'paris';
                     var searchTerm   = input.attr("valueForBackButton").replace("*:*", "");
                     self.cmp.find(".item a").each(function(i, ob){
                         var searchType = $(ob).attr("class");
@@ -675,6 +672,8 @@ fnSearchWidget = function($, config){
                             self.setActive(searchType);
                         }
                     });
+                    
+                    */
                 },
                 "fn_submit":function(self){
                     var active    = self.cmp.find(".item.active a").attr("class");
@@ -683,8 +682,11 @@ fnSearchWidget = function($, config){
                 }
             }
         );
+        
+        
         self.searchMenu.init();
 
+        
         // result size 
         var config = {
             "fn_init": function(self){
@@ -698,6 +700,7 @@ fnSearchWidget = function($, config){
         self.resMenu1 = new EuMenu( container.find(".nav-top .eu-menu"), config);
         self.resMenu2 = new EuMenu( container.find(".nav-bottom .eu-menu"), config);
 
+        
         self.resMenu1.init();
         self.resMenu2.init();
 
@@ -823,7 +826,6 @@ var rootUrl;
 var rootJsUrl;
 
 var withJQuery = function($){
-	
 	$(document).ready(function(){
 
 		var dependencies = [
@@ -862,7 +864,7 @@ var withJQuery = function($){
 };
 
 if(typeof jQuery == "undefined"){
-
+	
 	var jq = document.createElement('script');
 	jq.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
 	jq.setAttribute('type', 'text/javascript');
