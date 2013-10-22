@@ -55,6 +55,8 @@ public enum PortalLanguage {
 
 	GA(true, "Gaeilge", "irish_t"),
 
+	HR(true, "Hrvatski", "croatian_t"),
+
 	IS(true, "&#205;slenska", "icelandic_t"),
 
 	IT(true, "Italiano","italian_t"),

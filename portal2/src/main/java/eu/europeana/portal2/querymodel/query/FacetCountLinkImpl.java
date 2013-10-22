@@ -74,9 +74,6 @@ public class FacetCountLinkImpl implements FacetCountLink {
 	@Override
 	public void update(FacetCountLink facetCountLink) {
 		facetCount.setCount(facetCount.getCount() + facetCountLink.getCount());
-		if (!remove && facetCountLink.isRemove()) {
-			remove = true;
-		}
 	}
 
 	/**
