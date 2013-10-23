@@ -86,7 +86,6 @@ public class AjaxController {
 		case SAVED_ITEM:
 			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 			user = userService.createSavedItem(user.getId(), uri);
-			log.info("SavedItems: " + StringUtils.join(user.getSavedItems(), ", "));
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_ITEM);
 			break;
 		// className=SavedSearch&query=query%3Dparish&queryString=parish
@@ -95,8 +94,6 @@ public class AjaxController {
 			String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request),
 					"utf-8");
 			user = userService.createSavedSearch(user.getId(), query, queryString);
-
-			log.info("SavedSearches: " + StringUtils.join(user.getSavedSearches(), ", "));
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_SEARCH);
 			break;
 		/*
