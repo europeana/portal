@@ -27,7 +27,6 @@ import org.apache.commons.lang.StringUtils;
  * Hold the languages used by portal. (Subset of the Language enum in definitions project)
  * 
  * @author wjboogerd
- *
  */
 public enum PortalLanguage {
 
@@ -106,11 +105,9 @@ public enum PortalLanguage {
 	YI(false, "Yiddish (yi)", "yiddish_t", false);
 
 	/*
-croatian_t=Croatian (hrv)
-luxemburgish_t=Luxemburgish (ltz)
-
- */
-	// TODO: la, lat = latin, de-DE, en-GB, EN-GB, nn, 
+		luxemburgish_t=Luxemburgish (ltz)
+		TODO: la, lat = latin, de-DE, en-GB, EN-GB, nn,
+	 */
 
 	private String languageName;
 	private boolean portalSupport;
