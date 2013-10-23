@@ -98,7 +98,7 @@
 
 						<%-- hidden form fields --%>
 						<c:if test="${!empty model.briefBeanView}">
-							<input type="hidden" id="query-to-save" value="${fullQueryStr}"/>
+							<input type="hidden" id="query-to-save" value="${fn:escapeXml(fullQueryStr)}"/>
 						</c:if>
 
 						<c:if test="${!empty model.query}">
