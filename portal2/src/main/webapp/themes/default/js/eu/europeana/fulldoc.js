@@ -5,7 +5,9 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
 
-	lightboxOb :	null,
+	lightboxOb :  null,
+	vimeoDetect : 'vimeo.com/video',
+	
 /*	
 	// provides priority order for which tab to open when no hash is given
 	// provides a list of accepted hash values for validation
@@ -338,6 +340,7 @@ eu.europeana.fulldoc = {
 		
 
 		if(!eu.europeana.fulldoc.lightboxOb){
+			
 			var cmp = $('<div id="lightbox">'	+ $('#lightbox-proxy').html() + '</div>');
 			$(".iframe-wrap").empty().append(cmp);
 			
@@ -388,20 +391,18 @@ eu.europeana.fulldoc = {
 			cmp.find('#lightbox_info ul li.bottom').before(
 				'<li>' + 	(rightsVal ? rightsVal : '') + '</li>' 
 			);
-			
-			
+
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
-			
 			eu.europeana.fulldoc.lightboxOb.init(
 				{	"cmp"	:	cmp,
 					"src"	:	url,
 					"data"	:	eu.europeana.fulldoc.getLightboxableCount() > 1 ?  carouselData : null,
-					onNav	: function(url){
+					"onNav"	: function(url){
 						eu.europeana.fulldoc.setCarouselIndexByUrl(url);
 					}
 				}
 			);
-			
+
 			$(".iframe-wrap").empty();
 		}
 	},
@@ -445,8 +446,22 @@ eu.europeana.fulldoc = {
 		e = $(e.target);
 		
 		var target = "image";
-		var openLB = carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'image' && !eu.europeana.fulldoc.lightboxTestFailed && !$("#mobile-menu").is(":visible");
-		
+		var openLB = 	(
+							(
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'image' 
+								&& 
+								!eu.europeana.fulldoc.lightboxTestFailed
+							)
+							|| 
+							(
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video'
+								&&
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+							)
+						)
+						&&
+						!$("#mobile-menu").is(":visible");
+
 		if(e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel){
 			target = "magnify";
 		}
@@ -537,14 +552,15 @@ eu.europeana.fulldoc = {
 	
 							// need to store the real widths here, because by the time fulldoc.js loads the tmp img element may have been removed.
 							
-							var properW = $proper.width();
-							var properH = $proper.height();
+							//var properW = $proper.width();
+							//var properH = $proper.height();
 							
 							// Add the markup
 	
 							eu.europeana.fulldoc.loadLightboxJS(
 								function(){
-									eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, properW, properH);
+									//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, properW, properH);
+									eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url);
 									eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
 								}
 							);
@@ -564,7 +580,23 @@ eu.europeana.fulldoc = {
 			loadLightbox();
 		}
 		else{ // NON IMAGE
-			eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
+			
+			if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video' && carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1){
+				
+				eu.europeana.fulldoc.loadLightboxJS(
+					function(){
+						//var videoW = 582;
+						//var videoH = 315;						
+						//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, videoW, videoH);
+						eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url);
+						eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
+					}
+				);
+			}
+			else{				
+				eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
+			}
+			
 		}
 
 		eu.europeana.fulldoc.triggerBind();
@@ -615,9 +647,16 @@ eu.europeana.fulldoc = {
 				name : 'touchswipe',
 				file : 'touch-swipe.min.js' + js.cache_helper,
 				path : eu.europeana.vars.branding + '/js/jquery/'
-				/* ,callback: function(){ js.console.log('loaded touch swipe'); } */
+		}]);
+		
+		/*
+		js.loader.loadScripts([{
+			name : 'fitvids',
+			file : 'jquery.fitvids.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/com/davatron5000/'
 		}]);		  
-		  
+		*/
+		
 		if(!window.showingPhone()){
 			var lightboxJsFile = 'lightbox' + js.min_suffix + '.js' + js.cache_helper;
 			
@@ -631,7 +670,12 @@ eu.europeana.fulldoc = {
 			js.loader.loadScripts([{
 				file : lightboxJsFile,
 				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-				dependencies :  $("html").hasClass('ie8') ? [ ] : ['touchswipe'],
+				
+				/* 
+				dependencies :  $("html").hasClass('ie8') ? ['fitvids'] : ['touchswipe', 'fitvids'],
+				*/
+				
+				dependencies :  $("html").hasClass('ie8') ? [] : ['touchswipe'],
 				
 				callback: function(){
 					$(window).euRsz(function(){
@@ -729,9 +773,7 @@ eu.europeana.fulldoc = {
 				};
 				
 				eu.europeana.fulldoc.setCarouselIndexByUrl = function(url){
-					
 					eu.europeana.fulldoc.suppressLightboxUpdate = true;
-					
 					for(var i=0; i<carouselData.length; i++){
 						if(carouselData[i].external && carouselData[i].external.url == url){
 							$('#carousel-1').data('galleria').show(i);
@@ -855,6 +897,9 @@ eu.europeana.fulldoc = {
 			if(carouselData[i].external && carouselData[i].external.type == 'image'){
 				lightboxableCount++;
 			}
+			else if(carouselData[i].external && carouselData[i].external.type == 'video' && carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1 ){
+				lightboxableCount++;				
+			}
 		}
 		return lightboxableCount;
 	},
@@ -911,6 +956,7 @@ eu.europeana.fulldoc = {
 								
 				$(testHtml).appendTo('body').imagesLoaded(
 					function($images, $proper, $broken){
+						
 						if($proper.length==carouselTest.length){
 							js.console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
 							

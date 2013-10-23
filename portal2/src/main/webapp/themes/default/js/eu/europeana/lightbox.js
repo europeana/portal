@@ -35,6 +35,10 @@ eu.europeana.lightbox = function(){
 						imgIndex ++;
 						subModel[subModel.length] = i;
 					}
+					else if(carouselData[i].external && carouselData[i].external.type == "video" && carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1 ){
+						imgIndex ++;
+						subModel[subModel.length] = i;						
+					}
 					subModelMap[i] = (imgIndex-1); 
 				}
 
@@ -102,14 +106,44 @@ eu.europeana.lightbox = function(){
 		});
 	};
 	
+	var switchTypeIfNeeded = function(){
+		
+		var img = self.cmp.find('#lightbox_image');
+
+		if(img.attr('src').indexOf(eu.europeana.fulldoc.vimeoDetect) > -1 ){
+			
+			if(img[0].nodeName.toUpperCase() == 'IMG'){
+				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '">');
+				img.remove();
+				self.cmp.find('#lightbox_info').before(elIframe);
+				//elIframe.fitVids();
+			}
+		}
+		else{
+			if(img[0].nodeName.toUpperCase() == 'IFRAME'){
+				var elImg = $('<img id="lightbox_image" src="' + img.attr('src') + '">');
+				img.remove();
+				self.cmp.find('#lightbox_info').before(elImg);				
+			}			
+		}
+	};
+	
 	var imgMeasure = function(src, callback){
+		
+		if(src.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1){
+			if(typeof callback != "undefined"){
+				callback(600, 400);				
+			}
+			return;
+		}
+		
 		$('<div id="hidden_img" style="visibility:hidden;"><img src="' + src + '" /></div>').appendTo('body').imagesLoaded(
 			function($images, $proper, $broken){
 				var w = $proper.width();
 				var h = $proper.height();
 				$('#hidden_img').remove();
 				if(typeof callback != "undefined"){
-					callback(w, h);						
+					callback(w, h);				
 				}
 			}
 		);
@@ -127,6 +161,8 @@ eu.europeana.lightbox = function(){
 		 * 	2) recursively reduce img dimensions until img + info fit available space
 		 * 
 		 */ 
+		switchTypeIfNeeded();
+		
 		var	img		= self.cmp.find('#lightbox_image'),
 			info	= self.cmp.find('#lightbox_info');
 		
@@ -136,6 +172,9 @@ eu.europeana.lightbox = function(){
 			infoH	= self.infoH,
 			infoHx	= self.infoHx;
 			brdr	= self.brdr;
+		
+		
+			
 		
 		var	aspectWin	= ($(window).width()-brdr) / ($(window).height()-brdr);
 		var	aspectUnder	= imgW / (imgH + infoH);
@@ -220,7 +259,6 @@ eu.europeana.lightbox = function(){
 		}
 		
 		// align zoom & nav
-		
 		if(self.navOb){
 			self.cmp.find('#nav-next').css('right', self.zoomed ? 0 : isRight ? self.infoW + 'px' : '0');
 		}
