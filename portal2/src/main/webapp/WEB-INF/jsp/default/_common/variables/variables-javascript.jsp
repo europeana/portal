@@ -150,6 +150,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.cite.citation_header	= '${fn:escapeXml(citation_header)}';
 		eu.europeana.vars.msg.cite.close			= '${fn:escapeXml(close)}';
 		eu.europeana.vars.galleria = {};
+		eu.europeana.vars.collectionId = '${collectionId}';
 		
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">

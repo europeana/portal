@@ -16,6 +16,11 @@
 	-webkit-box-sizing:		border-box;
 }
 
+
+#refine-search-form{
+	margin-bottom: 1em;
+}
+
 #search-filter,
 #filter-search,
 #filter-search ul{
