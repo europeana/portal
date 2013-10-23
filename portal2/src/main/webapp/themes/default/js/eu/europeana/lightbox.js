@@ -39,6 +39,10 @@ eu.europeana.lightbox = function(){
 						imgIndex ++;
 						subModel[subModel.length] = i;						
 					}
+					else if(carouselData[i].external.type == 'sound' && ($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)){
+						imgIndex ++;
+						subModel[subModel.length] = i;												
+					} 
 					subModelMap[i] = (imgIndex-1); 
 				}
 
@@ -110,7 +114,11 @@ eu.europeana.lightbox = function(){
 		
 		var img = self.cmp.find('#lightbox_image');
 
-		if(img.attr('src').indexOf(eu.europeana.fulldoc.vimeoDetect) > -1 ){
+		if(
+			(img.attr('src').indexOf(eu.europeana.fulldoc.vimeoDetect) > -1)
+			||
+			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
+		){
 			
 			if(img[0].nodeName.toUpperCase() == 'IMG'){
 				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '">');
@@ -130,7 +138,10 @@ eu.europeana.lightbox = function(){
 	
 	var imgMeasure = function(src, callback){
 		
-		if(src.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1){
+		if(	(src.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1)
+			||
+			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
+		){
 			if(typeof callback != "undefined"){
 				callback(600, 400);				
 			}

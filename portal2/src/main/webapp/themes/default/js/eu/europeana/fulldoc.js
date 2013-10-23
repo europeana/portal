@@ -1,12 +1,10 @@
-
-
-
 js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
 
 	lightboxOb :  null,
 	vimeoDetect : 'vimeo.com/video',
+	permittedLbSoundCollections : ['2021613'],
 	
 /*	
 	// provides priority order for which tab to open when no hash is given
@@ -458,10 +456,16 @@ eu.europeana.fulldoc = {
 								&&
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
 							)
+							|| 
+							(
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+								&&
+								($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) 
+							)
 						)
 						&&
 						!$("#mobile-menu").is(":visible");
-
+		
 		if(e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel){
 			target = "magnify";
 		}
@@ -517,7 +521,7 @@ eu.europeana.fulldoc = {
 	},
 	
 	initTriggerPanel: function(type, index, gallery){
-
+		
 		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
 			// instantiate and hide
 			eu.europeana.fulldoc.triggerPanel = $('<div class="lb-trigger" >'
@@ -581,7 +585,19 @@ eu.europeana.fulldoc = {
 		}
 		else{ // NON IMAGE
 			
-			if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video' && carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1){
+			if(
+				(
+					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video' 
+					&&
+					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+				)				
+				||
+				(
+					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+					&&
+					($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) 
+				)				
+			){
 				
 				eu.europeana.fulldoc.loadLightboxJS(
 					function(){
@@ -900,6 +916,9 @@ eu.europeana.fulldoc = {
 			else if(carouselData[i].external && carouselData[i].external.type == 'video' && carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1 ){
 				lightboxableCount++;				
 			}
+			else if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound' && ($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) ){
+				lightboxableCount++;								
+			}			
 		}
 		return lightboxableCount;
 	},
@@ -927,6 +946,7 @@ eu.europeana.fulldoc = {
 				$("#additional-info").css("padding-top", "1em");
 				
 				// if the thumbnail loaded then show it, otherwise restore the alt text (but prevent it from breaking the layout)
+				
 				if($("#carousel-1-img-measure").width()>0){
 					if(carouselData[0].external){
 						if(carouselData[0].external.type == '3d'){
