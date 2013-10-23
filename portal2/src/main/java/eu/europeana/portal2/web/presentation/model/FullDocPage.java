@@ -506,6 +506,14 @@ public class FullDocPage extends FullDocPreparation {
 		return StringUtils.left(getBaseTitle(), 250);
 	}
 
+	public String getObjectDcIdentifier() {
+		String[] id =  shortcut.get("DcIdentifier");
+		if(id != null && id.length > 0){
+			return shortcut.get("DcIdentifier")[0];			
+		}
+		return "";
+	}
+	
 	/**
 	 * Returns the title of the page
 	 * 
