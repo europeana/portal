@@ -184,10 +184,8 @@ fnSearchWidget = function($, config){
 
     
     var doSearch = function(startParam, query){
-    	
     	try{
     		var url = buildUrl(startParam, query);
-    	
 	        if(typeof url != 'undefined' && url.length){
 	        	
 	        	if(self.withResults){
@@ -224,7 +222,8 @@ fnSearchWidget = function($, config){
 
         var term = self.q.val();
         if (!term) {
-            return '';
+            //return '';
+        	term = '*:*';
         }
         
         var url = '';
@@ -602,7 +601,7 @@ fnSearchWidget = function($, config){
             $(this).parent().removeClass('glow');
         }).focus(function(){
             $(this).parent().addClass('glow');    
-        }).val(config.query ? config.query : '*:*');
+        }).val(config.query ? config.query : '');
 
         var submitCell          = container.find('.submit-cell');
         var submitCellButton    = container.find('button');

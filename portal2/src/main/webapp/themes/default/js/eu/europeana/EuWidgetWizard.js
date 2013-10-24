@@ -609,6 +609,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			self.tabs.openTabAtIndex(self.tabs.getOpenTabIndex()-1);
 		});
 		
+		$('.tab-number').removeClass('hidden');
 	};
 	
 	
