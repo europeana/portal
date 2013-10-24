@@ -288,6 +288,8 @@ var EuWidgetWizard = function(cmpIn, options){
 					}
 					
 					var labels = cb.closest('.facet-header').find('.facet-section');
+					
+					/*
 					if(groupChecked){
 						labels.find('.unmodified').css('display', 'none');
 						labels.find('.modified')  .css('display', 'inline-block');
@@ -296,6 +298,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						labels.find('.unmodified').css('display', 'inline-block');
 						labels.find('.modified')  .css('display', 'none');
 					}
+					*/
 				};
 				
 				// make facet sections collapsible
@@ -320,22 +323,27 @@ var EuWidgetWizard = function(cmpIn, options){
 				
 				$('button.clear-types').click(function(){
 					$('ul.types').find('input').prop('checked', false);
+					/*
 					$('ul.types').prev('h3').find('.modified')  .css('display', 'none');
 					$('ul.types').prev('h3').find('.unmodified').css('display', 'inline-block');
+					*/
 
 				});
 				
 				$('button.clear-copyrights').click(function(){
 					$('ul.copyrights').find('input').prop('checked', false);
+					/*
 					$('ul.copyrights').prev('h3').find('.modified')  .css('display', 'none');
 					$('ul.copyrights').prev('h3').find('.unmodified').css('display', 'inline-block');
+					*/
 				});
 				
 				$('button.clear-languages').click(function(){
 					$('ul.languages').find('input').prop('checked', false);
+					/*
 					$('ul.languages').prev('h3').find('.modified')  .css('display', 'none');
 					$('ul.languages').prev('h3').find('.unmodified').css('display', 'inline-block');
-
+					*/
 				});
 
 
@@ -376,12 +384,14 @@ var EuWidgetWizard = function(cmpIn, options){
 						
 						var show = false;
 						var setModified = function(){
-							labels.find('.modified')  .css('display', 'inline-block');
-							labels.find('.unmodified').css('display', 'none');
+							return;
+							//labels.find('.modified')  .css('display', 'inline-block');
+							//labels.find('.unmodified').css('display', 'none');
 						}
 						var setUnmodified = function(){
-							labels.find('.modified')  .css('display', 'none');
-							labels.find('.unmodified').css('display', 'inline-block');							
+							return;
+							//labels.find('.modified')  .css('display', 'none');
+							//labels.find('.unmodified').css('display', 'inline-block');							
 						}
 						
 						

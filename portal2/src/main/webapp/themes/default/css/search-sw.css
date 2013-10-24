@@ -33,6 +33,10 @@
 	max-height:		100%;
 	max-width:		100%;
 	vertical-align:	middle;
+	
+	display:		inline;
+	width:			auto;
+	border:			none;
 }
 
 .search-widget-container #items a,
