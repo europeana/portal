@@ -513,9 +513,8 @@
 					</c:set>
 					
 					<c:if test="${videoUrl != noVideo}">
-						<div id="video-area">
-							
-							<iframe src="//player.vimeo.com/video/24416915?title=0&amp;byline=0&amp;color=ff0179" 
+						<div id="video-area">							
+							<iframe src="${videoUrl}"
 							width="100%"
 							height="100%"
 							frameborder="0"
