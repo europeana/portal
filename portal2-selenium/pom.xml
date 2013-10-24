@@ -86,5 +86,12 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.ini4j</groupId>
+			<artifactId>ini4j</artifactId>
+			<version>0.3.3</version>
+		</dependency>
+
 	</dependencies>
 </project>
