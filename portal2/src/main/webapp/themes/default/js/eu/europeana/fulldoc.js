@@ -3,8 +3,9 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 eu.europeana.fulldoc = {
 
 	lightboxOb :  null,
-	vimeoDetect : 'vimeo.com/video',
-	permittedLbSoundCollections : ['2021613'],
+	vimeoDetect : js.debug ? 'vimeo.com/video' : 'XXXXXXXX',
+	permittedLbSoundCollections : js.debug ? ['2021613'] : [],
+	
 	
 /*	
 	// provides priority order for which tab to open when no hash is given
