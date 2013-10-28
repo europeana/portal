@@ -22,9 +22,9 @@ import java.util.List;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 
 public interface FeedService {
-	
+
 	List<FeedEntry> getFeedEntries();
 
 	List<FeedEntry> getPinterestEntries();
-	
+
 }

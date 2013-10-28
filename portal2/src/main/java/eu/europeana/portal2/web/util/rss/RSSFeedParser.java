@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,6 +40,8 @@ import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 
 public class RSSFeedParser {
+
+	Logger log = Logger.getLogger(RSSFeedParser.class.getCanonicalName());
 
 	static final String TITLE = "title";
 	static final String DESCRIPTION = "description";
@@ -91,6 +94,10 @@ public class RSSFeedParser {
 				}
 
 				String description = getElementValue(element, DESCRIPTION);
+				message.setGuid(getElementValue(element, GUID));
+				message.setLink(getElementValue(element, LINK));
+				message.setTitle(getElementValue(element, TITLE));
+				message.setPubDate(getElementValue(element, PUB_DATE));
 				message.setDescription(description);
 				message.setImages(RSSImageExtractor.extractImages(description, useNormalImageFormat));
 				// if no images, tries "content:encoded" element
@@ -103,14 +110,19 @@ public class RSSFeedParser {
 					);
 				}
 				// now we have the image URLs
+				boolean hasImage = false;
 				for (RSSImage image : message.getImages()){
-					Map<String, String> responsiveFileNames = responsiveImageService.createResponsiveImage(image.getSrc());
-					image.setResponsiveFileNames(responsiveFileNames);
+					try {
+						Map<String, String> responsiveFileNames = responsiveImageService.createResponsiveImage(image.getSrc());
+						image.setResponsiveFileNames(responsiveFileNames);
+						hasImage = true;
+					} catch (Exception e) {
+						log.severe(String.format("Error extracting image (%s) for blog %s: %s", image.getSrc(), message.getLink()));
+					}
 				}
-				message.setGuid(getElementValue(element, GUID));
-				message.setLink(getElementValue(element, LINK));
-				message.setTitle(getElementValue(element, TITLE));
-				message.setPubDate(getElementValue(element, PUB_DATE));
+				if (!hasImage) {
+					log.warning(String.format("There is no extracted image for blog %s.", message.getLink()));
+				}
 				feeds.add(message);
 			}
 			return feeds;

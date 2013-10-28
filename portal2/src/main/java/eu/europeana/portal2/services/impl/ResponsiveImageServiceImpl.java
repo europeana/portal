@@ -1,5 +1,6 @@
 package eu.europeana.portal2.services.impl;
 
+import java.awt.color.CMMException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -172,6 +173,8 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 			log.error(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()), e);
 		} catch (IllegalArgumentException e) {
 			log.error(String.format("IllegalArgumentException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
+		} catch (CMMException e) {
+			log.error(String.format("Invalid image format in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
 		}
 		return originalImage;
 	}

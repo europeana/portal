@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.configuration;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -17,19 +16,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
-	@Resource
-	private eu.europeana.corelib.web.support.Configuration config;
+	@Value("#{europeanaProperties['static.page.path']}")
+	private String staticPagePath;
+
+	@Value("#{europeanaProperties['portal.responsive.cache']}")
+	private String responsiveCache;
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		String path = "file:" + config.getStaticPagePath();
+		String path = "file:" + staticPagePath;
 		path += (path.endsWith("/")) ? "sp" : "/sp";
 
 		registry.addResourceHandler("/img/**").addResourceLocations(path + "/img/");
 		registry.addResourceHandler("/css/**").addResourceLocations(path + "/css/");
 		registry.addResourceHandler("/js/**").addResourceLocations(path + "/js/");
 
-		path = "file:" + config.getResponsiveCache();
+		path = "file:" + responsiveCache;
 		path += (path.endsWith("/")) ? "" : "/";
 
 		registry.addResourceHandler("/rss-blog-cache/**").addResourceLocations(path);

@@ -28,7 +28,7 @@
 	<import resource="../portal2-context.xml" />
 
 	<context:annotation-config />
-	
+
 	<context:component-scan base-package="eu.europeana.portal2.web.configuration" />
 	<context:component-scan base-package="eu.europeana.portal2.web.controllers.statics" />
 
