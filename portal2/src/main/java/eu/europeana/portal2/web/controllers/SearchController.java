@@ -108,8 +108,6 @@ public class SearchController {
 
 		Query query = new Query(q)
 				.setRefinements(qf)
-				.setValueReplacements(SearchUtils.mapValueReplacements(qf))
-				.setFacetQueries(RightReusabilityCategorizer.getQueryFacets())
 				.setPageSize(rows)
 				.setStart(start - 1) // Solr starts from 0
 				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
@@ -122,12 +120,10 @@ public class SearchController {
 			query.setAllowSpellcheck(false);
 		}
 
-		/*
-		Query rightsFacetQuery = null;
-		if (hasReusabilityFilter) {
-			rightsFacetQuery = SearchUtils.createRightsFacetQuery(q, qf);
+		if (config.getDebugMode()) {
+			query.setValueReplacements(SearchUtils.mapValueReplacements(qf));
+			query.setFacetQueries(RightReusabilityCategorizer.getQueryFacets());
 		}
-		*/
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
 
