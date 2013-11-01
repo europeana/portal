@@ -65,15 +65,18 @@
 	padding-top:		1em;
 }
 
+#citestyle0,
 #citestyle1,
 #citestyle2,
 #citation-tabs .tab_content{
 	word-wrap:	break-word;
+	word-break: break-all;
 }
 
 .external-services-container p {
    overflow:			hidden;
    word-wrap:			break-word;
+   word-break:			break-all;
 }
 
 /*
