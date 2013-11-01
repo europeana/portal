@@ -16,7 +16,13 @@
 	margin-left: 3px;
 }
 
-	
+.search-widget-container .columns{
+	padding-left:	0;
+	padding-right:	0;
+	padding-top:	0;
+	padding-bottom:	0;
+}
+
 /* items */
 
 .search-widget-container #search-results{
@@ -30,13 +36,14 @@
 }
 
 .search-widget-container #items img {
+	border:			none;	
+	display:		inline;
+	vertical-align:	middle;
 	max-height:		100%;
 	max-width:		100%;
-	vertical-align:	middle;
-	
-	display:		inline;
+	padding:		0;
 	width:			auto;
-	border:			none;
+	
 }
 
 .search-widget-container #items a,
