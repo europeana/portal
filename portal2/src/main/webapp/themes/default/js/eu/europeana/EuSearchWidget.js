@@ -308,6 +308,9 @@ fnSearchWidget = function($, config){
         }
         
         $(data.items).each(function(i, ob){
+        	
+        	//alert(  );	//JSON.stringify(ob, null, 4) );
+        	
             var item = itemTemplate.clone();
             
             item.find('a').attr(
@@ -328,6 +331,13 @@ fnSearchWidget = function($, config){
 	                'src', ob.edmPreview[0]
 	            );
             }
+            
+            //alert( ob.type  + "\n\n" + item.find('.ellipsis span span').length  + '\n\n' +  item.html()    );
+            
+            if(item.find('.ellipsis span span').length){
+            	item.find('.ellipsis span span').attr('class', 'icon-' + ob.type.toLowerCase());
+            }
+            
             grid.append(item);
         });
 
