@@ -68,9 +68,25 @@
 
 			
 /* links */
-.search-widget-container a { text-decoration: none; color: #2A85E8; outline: 0; }
-.search-widget-container a:visited { color: #2A85E8; }
-.search-widget-container a:not(.social-link):hover: { color: #ff00c2; }
+.search-widget-container a {
+	text-decoration:	none;
+	color:				#2A85E8;
+	outline:			0;
+}
+.search-widget-container a:visited {
+	color: #2A85E8;
+}
+.search-widget-container a:not(.social-link):hover {
+	color: #ff00c2;
+	color: #2A85E8;
+}
+
+.search-widget-container a,
+.search-widget-container a:active,
+.search-widget-container a:visited,
+.search-widget-container a:not(.social-link):hover{	
+	background-color:	transparent;
+}
 
 
 .search-widget-container iframe {

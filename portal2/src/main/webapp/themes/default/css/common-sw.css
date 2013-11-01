@@ -1,8 +1,14 @@
 /* sharethis */
-.search-widget-container #header {
-	position: relative;
+.search-widget-container #header{
+	height:			auto;
+	margin-top:		0;
+	margin-bottom:	0;
+	position:		relative;	
 }
 
+.search-widget-container a{
+	padding:	0;
+}
 
 .search-widget-container #footer-logo{	
 	background-repeat:	no-repeat;
