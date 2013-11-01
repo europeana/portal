@@ -3,7 +3,8 @@
 	height:			auto;
 	margin-top:		0;
 	margin-bottom:	0;
-	position:		relative;	
+	position:		relative;
+	width:			auto;
 }
 
 .search-widget-container a{
