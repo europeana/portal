@@ -27,13 +27,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
@@ -49,7 +47,7 @@ import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 public class FullBeanViewImpl implements FullBeanView {
 	private static final long serialVersionUID = -4971453940874288310L;
 	
-	private final Logger log = LoggerFactory.getLogger(FullBeanViewImpl.class);
+	private final Logger log = Logger.getLogger(FullBeanViewImpl.class);
 
 	// Do not ever touch these fields as they are persisted as document cache
 	private FullBean fullDoc;

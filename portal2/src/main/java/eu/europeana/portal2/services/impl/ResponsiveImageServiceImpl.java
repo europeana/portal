@@ -11,10 +11,10 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import eu.europeana.corelib.logging.Log;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.ImageUtils;
 import eu.europeana.portal2.services.ResponsiveImageService;
 

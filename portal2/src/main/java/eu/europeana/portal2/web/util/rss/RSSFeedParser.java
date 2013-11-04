@@ -112,12 +112,17 @@ public class RSSFeedParser {
 				// now we have the image URLs
 				boolean hasImage = false;
 				for (RSSImage image : message.getImages()){
+					if (image.getSrc() == null) {
+						continue;
+					}
 					try {
 						Map<String, String> responsiveFileNames = responsiveImageService.createResponsiveImage(image.getSrc());
 						image.setResponsiveFileNames(responsiveFileNames);
 						hasImage = true;
 					} catch (Exception e) {
-						log.severe(String.format("Error extracting image (%s) for blog %s: %s", image.getSrc(), message.getLink()));
+						if (image.getSrc() != null && message.getLink() != null) {
+							log.severe(String.format("Error extracting image (%s) for blog %s", image.getSrc(), message.getLink()));
+						}
 					}
 				}
 				if (!hasImage) {

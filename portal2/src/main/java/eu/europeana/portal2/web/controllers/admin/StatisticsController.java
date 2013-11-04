@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +31,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.model.statistics.TypeStatistics;
 import eu.europeana.corelib.definitions.model.statistics.UserStatistics;
 import eu.europeana.corelib.logging.Log;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.corelib.utils.model.DateInterval;
 import eu.europeana.portal2.web.model.stats.MonthStatistics;

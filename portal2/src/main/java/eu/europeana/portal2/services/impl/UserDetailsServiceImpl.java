@@ -3,7 +3,6 @@ package eu.europeana.portal2.services.impl;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +13,7 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Log;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.security.Portal2ClientDetails;
 import eu.europeana.portal2.web.security.Portal2UserDetails;
 

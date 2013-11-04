@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +16,7 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Log;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;

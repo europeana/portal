@@ -28,12 +28,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;

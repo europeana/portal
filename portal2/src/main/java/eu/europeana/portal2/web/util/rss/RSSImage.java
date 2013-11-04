@@ -39,4 +39,10 @@ public class RSSImage {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	@Override
+	public String toString() {
+		return "RSSImage [src=" + src + ", title=" + title
+				+ ", responsiveFileNames=" + responsiveFileNames + "]";
+	}
 }
