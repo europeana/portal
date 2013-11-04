@@ -31,10 +31,10 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/portal2-test.xml"})
 public class BlogTest {
-	
+
 	@Resource
 	private ResponsiveImageService responsiveImageService;
-	
+
 	// TODO: use it later, to test something else
 	// private List<FeedEntry> pinterestEntries;
 	// private Calendar pinterestAge;
@@ -54,7 +54,6 @@ public class BlogTest {
 	 */
 	@Test
 	public void testImageExtraction() {
-		
 		List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
 		if ((newEntries != null) && (newEntries.size() > 0)) {
 			for (FeedEntry entry : newEntries) {

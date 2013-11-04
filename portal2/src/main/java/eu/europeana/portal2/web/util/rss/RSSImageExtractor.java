@@ -86,7 +86,9 @@ public class RSSImageExtractor {
 					}
 				}
 			}
-			images.add(image);
+			if (image.getSrc() != null) {
+				images.add(image);
+			}
 		}
 		return images;
 	}
