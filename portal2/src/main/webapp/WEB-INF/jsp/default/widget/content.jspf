@@ -55,6 +55,17 @@
 	  overflow: hidden;
 	}
 	
+	#wizard-overlay{
+	    position:	absolute;
+	    width:		100%;
+	    height:		100%;
+	    background:	black url(/portal/themes/default/images/spinner.gif) center center no-repeat;
+	    opacity:	.5;
+	    z-index:	12;
+	    left:		0;
+	    top:		0;
+	}
+	
 	#wizard-tabs .disabled .tab-number{
 		border:        1px solid #E4E4E4;
 	}
@@ -564,6 +575,9 @@
 			<div class="content">
 				<div class="content-inner">
 
+					<div id="wizard-overlay" style="display:none;"></div>
+
+
 					<div class="para">
 						<spring:message code="wizard_tab2_search_for_t"/> 
 						<input class="default_query" /> 
@@ -689,7 +703,7 @@
 													</c:otherwise>
 												</c:choose>
 												<li>
-													<a ${toggle_providers}><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+													<a ${toggle_providers} title="${entry.name}"><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
 													<ul class="data-providers">
 														<li>
 															<a><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
@@ -697,7 +711,7 @@
 														
 														<c:if test="${entry.dataProvidersListed}">
 															<c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
-																<li><a class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
+																<li><a title="${dataProvider.name}" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
 															</c:forEach>
 														</c:if>
 												    </ul>
@@ -724,7 +738,7 @@
 										<c:if test="${fn:toLowerCase(facet.type) == 'country'}">
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 										
-											<ul class="types hide-til-opened">
+											<ul class="countries hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -740,7 +754,7 @@
 													</li>
 												</c:forEach>
 											</ul>
-											<button class="deans-button-1 clear clear-types"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
+											<button class="deans-button-1 clear clear-countries"><spring:message code="wizard_tab2_search_clear_selection_t"/></button>
 												
 										</c:if>
 									</c:forEach>
@@ -816,7 +830,11 @@
 														</c:choose>
 													</c:set>
 													<li>
+													
+														<!-- 
 														<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
+														 -->
+														<a title="${fn:replace(facet_item.url, '"', '&quot;')}" rel="nofollow">
 															<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox"/>
 															<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 														</a>

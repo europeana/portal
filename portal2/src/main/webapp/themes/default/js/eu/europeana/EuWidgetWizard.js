@@ -28,6 +28,18 @@ var EuWidgetWizard = function(cmpIn, options){
     self.initialisedTabs = {};
 	
     
+	var cleanName = function(name){
+		return name.replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+	};
+	
+    var showSpinner = function(){
+    	$('#wizard-overlay').show();    	
+    };
+    
+    var hideSpinner = function(){
+    	$('#wizard-overlay').hide();
+    };
+    
 	/* Flash a red border on the inputs that have to be filled before the next tab can open */
 	var disabledClick = function(){
 		var active = $('#' + self.tabs.getOpenTabId());
@@ -57,18 +69,18 @@ var EuWidgetWizard = function(cmpIn, options){
 				result += param() + 'query=' + query;			
 			}
 			
-			$('ul.types a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
+			$('ul.types a input').add('ul.countries a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
 				if($(ob).prop('checked')){
 					//var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
 					//var name = $(ob).attr('title').replace(/ *\([^)]*\) */g, "");
 					var name = $(ob).attr('title').replace(/\"/g, "");
 					result += name;
 				}
-			});			
+			});
 
-			var cleanName = function(name){
-				return name.replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
-			};
+			//var cleanName = function(name){
+			//	return name.replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+			//};
 			
 			try{			
 				$('.providers>li').each(function(i, ob){
@@ -108,6 +120,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		result += param() + 'theme=' + getTheme();
 
 		console.log('output() returns ' + result);
+		alert('output() returns ' + result);
 
 		return result;
 	};
@@ -270,6 +283,8 @@ var EuWidgetWizard = function(cmpIn, options){
 				
 				$('.default_query').focus();
 				
+				/*  */
+				
 				var change = function(e){
 					var cb           = e.target ? $(e.target) : $(e);
 					var checked      = cb.prop('checked');
@@ -299,6 +314,8 @@ var EuWidgetWizard = function(cmpIn, options){
 						labels.find('.modified')  .css('display', 'none');
 					}
 					*/
+					
+					updateAvailableFacets();
 				};
 				
 				// make facet sections collapsible
@@ -308,7 +325,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				});
 
 				
-				$("ul.search-types input").add("ul.types input").add("ul.copyrights input").add("ul.languages input").change(change).click(function(e){
+				$("ul.search-types input").add("ul.types input").add("ul.copyrights input").add("ul.countries input").add("ul.languages input").change(change).click(function(e){
 					e.stopPropagation();
 				})
 				$("ul.types input").add("ul.copyrights input").add("ul.languages input").prop('checked', false);
@@ -323,6 +340,8 @@ var EuWidgetWizard = function(cmpIn, options){
 				
 				$('button.clear-types').click(function(){
 					$('ul.types').find('input').prop('checked', false);
+					updateAvailableFacets();
+					
 					/*
 					$('ul.types').prev('h3').find('.modified')  .css('display', 'none');
 					$('ul.types').prev('h3').find('.unmodified').css('display', 'inline-block');
@@ -330,16 +349,31 @@ var EuWidgetWizard = function(cmpIn, options){
 
 				});
 				
+				$('button.clear-countries').click(function(){
+					$('ul.countries').find('input').prop('checked', false);
+					updateAvailableFacets();
+					
+					/*
+					$('ul.countries').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.countries').prev('h3').find('.unmodified').css('display', 'inline-block');
+					 */
+					
+				});
+				
 				$('button.clear-copyrights').click(function(){
 					$('ul.copyrights').find('input').prop('checked', false);
+					updateAvailableFacets();
+					
 					/*
 					$('ul.copyrights').prev('h3').find('.modified')  .css('display', 'none');
 					$('ul.copyrights').prev('h3').find('.unmodified').css('display', 'inline-block');
 					*/
 				});
 				
-				$('button.clear-languages').click(function(){
+				$('button.clear-languages').click(function(){					
 					$('ul.languages').find('input').prop('checked', false);
+					updateAvailableFacets();
+					
 					/*
 					$('ul.languages').prev('h3').find('.modified')  .css('display', 'none');
 					$('ul.languages').prev('h3').find('.unmodified').css('display', 'inline-block');
@@ -412,6 +446,7 @@ var EuWidgetWizard = function(cmpIn, options){
 										$('.choices').css('display', 'none');
 										setUnmodified();
 									}
+									updateAvailableFacets();
 								});
 							}
 						});
@@ -440,6 +475,8 @@ var EuWidgetWizard = function(cmpIn, options){
 								$(ob).prop('checked', checked);
 							});
 							eu_europeana_providers.addLinks(cb);
+							
+							updateAvailableFacets();
 						};
 						
 						$('.icon-arrow-2-after>input').add('.data-providers input').change(change).click(function(e){
@@ -455,7 +492,10 @@ var EuWidgetWizard = function(cmpIn, options){
 						$('.data-providers a').click(function(e){
 							var cb = $(this).find('input'); 
 							cb.prop('checked', !cb.prop('checked'));
-							eu_europeana_providers.addLinks(cb);							
+							eu_europeana_providers.addLinks(cb);
+							
+							
+							updateAvailableFacets();
 						});
 						
 						
@@ -612,11 +652,176 @@ var EuWidgetWizard = function(cmpIn, options){
 		$('.tab-number').removeClass('hidden');
 	};
 	
+	var updateAvailableFacets = function(){
+		
+		showSpinner();
+		
+		// alert("updateAvailableFacets:\n\n");
+		// construct query
+		
+		var query = "";
+		try{			
+			$('.providers>li').each(function(i, ob){
+				var provider      = $(ob);
+				var providerInput = provider.children('a').children('input');
+				
+				if(providerInput.prop('checked')){
+					var name = providerInput.next('span').html();
+					query += '&qf=PROVIDER:"' + cleanName(name) + '"';
+				}
+				else{
+					provider.find('.data-providers>li').each(function(j, dp){
+						var dataProvider      = $(dp);
+						var dataProviderInput = dataProvider.children('a').children('input');
+
+						if(dataProviderInput.prop('checked')){
+							var name          = dataProviderInput.next('span').html();
+							query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
+						}
+						
+					});
+				}
+			});
+			
+			$('ul.types a input').add('ul.countries a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
+				if($(ob).prop('checked')){
+					query += $(ob).attr('title').replace(/\"/g, "");
+				}
+			});
+
+			//$('ul.countries a input').each(function(i, ob){
+			//	if($(ob).prop('checked')){
+			//		var name = $(ob).attr('title').replace(/\"/g, "");
+			//		query += name;
+			//	}
+			//});
+			
+			//$('ul.types a input').add('ul.countries a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
+			//	if($(ob).prop('checked')){
+			//		var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
+			//		var name = $(ob).attr('title').replace(/ *\([^)]*\) */g, "");
+			//		var name = $(ob).attr('title').replace(/\"/g, "");
+			//		result += name;
+			//	}
+			//});
+			
+		}
+		catch(e){console.log(e);}
+		//alert("query to send to api: " + query);
+		console.log("query to send to api: " + query);
+
+	
+		$.ajax({
+	        "url":				"http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params" + query + "&callback=EuWidgetWizard.facetData",
+	        "dataType":			"jsonp",
+	        "jsonpCallback":	"facetData",
+	        "jsonp":			"callback",
+	        "fail":function(){
+	    		hideSpinner();
+	        },
+	        "success":function(data){
+	        	
+	        	console.log(JSON.stringify(data.facets, null, 4));
+	        	
+	        	// countries
+
+	        	var countryOps = $('ul.countries li');
+	        	countryOps.find('a').hide();
+
+	        	// copyrights
+	        	
+	        	var copyrightOps = $('ul.copyrights li');
+	        	copyrightOps.find('a').hide();
+	        	
+	        	// providers
+	        	
+	        	var providerOps = $('ul.providers li');
+	        	providerOps.find('a').hide();
+	        	
+	        	// data providers
+	        	
+	        	var dataProviderOps = $('ul.data-providers li');
+	        	dataProviderOps.find('a').hide();
+	        	
+	        	// types
+	        	
+	        	var typeOps = $('ul.types li');
+	        	typeOps.find('a').hide();
+	        	
+	        	// languages
+	        	
+	        	var langOps = $('ul.languages li');	        	
+	        	langOps.find('a').hide();
+	        	
+	        	$.each(data.facets, function(i, facet){
+	        		if(facet.name == 'PROVIDER'){
+	        			$.each(facet.fields, function(j, field){
+	        				providerOps.find('a[title="' + field.label + '"]').show();
+	        			});
+	        		}
+	        		else if(facet.name == 'DATA_PROVIDER'){
+	        			$.each(facet.fields, function(j, field){
+	        				dataProviderOps.find('a[title="' + field.label + '"]').show();
+	        			});
+	        		}	        		
+	        		else if(facet.name == 'TYPE'){
+	        			$.each(facet.fields, function(j, field){
+	        				typeOps.find('a[title="' + field.label + '"]').show();
+	        			});
+	        		}
+	        		else if(facet.name == 'LANGUAGE'){
+	        			$.each(facet.fields, function(j, field){
+	        				langOps.find('a[title="' + field.label + '"]').show();
+	        			});
+	        		}
+	        		else if(facet.name == 'COUNTRY'){
+	        			$.each(facet.fields, function(j, field){
+	        				countryOps.find('a[title="' + field.label + '"]').show();
+	        			});
+	        		}
+	        		else if(facet.name == 'RIGHTS'){
+	        			$.each(facet.fields, function(j, field){
+	        				
+	        				console.log("field.label " + field.label);
+	        				
+	        				/*
+	        				 * ERROR:
+	        				 * 
+	        				 * 1) ADD FACET:
+	        				 * 		CC BY-SA (1173821) 
+	        				 * 
+	        				 * 2) ADD FACET
+	        				 * 		SOUND (484303)
+	        				 * 
+	        				 * NOTE THAT THE ORIGINAL FACET VANISHES.
+	        				 * 
+	        				 * 
+	        				 * CAUSE:
+	        				 * 
+	        				 * THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
+	        				 * 
+	        				 * 
+	        				 * */
+	        				
+	        				
+	        				//copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '*"]').show();
+	        				copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '"]').show();
+	        			});
+	        		}
+	        	});
+	        	
+	        	hideSpinner();
+	        	
+	        }
+	    });
+		
+	};
+	
 	
 	/* exposed functionality */
 	
 	return {
-		"init" : function(){
+		init : function(){
 			$(document).ready(function(){
 				init();
 			});
