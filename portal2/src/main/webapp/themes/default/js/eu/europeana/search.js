@@ -1,5 +1,5 @@
 js.utils.registerNamespace( 'eu.europeana.search' );
-
+alert("search");
 eu.europeana.search = {
 	
 	facet_sections : [],
@@ -217,7 +217,14 @@ eu.europeana.search = {
 			}]);
 		});
 		
+		if(js.debug){			
+			alert("navigator.userAgent " + navigator.userAgent + "\n\ntest1 = " + (navigator.userAgent.match(/iPhone/i)) + "\ntest2" + navigator.userAgent.match(/CriOS/i)  );
+		}
+		
 		if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
+			if(js.debug){			
+				alert("click!");
+			}
 			$('.shares-link').click();			
 		}
 
