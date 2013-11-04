@@ -19,8 +19,6 @@ import java.util.Map;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
@@ -32,6 +30,7 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.entity.AgentImpl;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
@@ -44,7 +43,7 @@ import eu.europeana.portal2.web.model.FullBean4Json;
 
 public class Json2FullBean {
 	
-	private final Logger log = LoggerFactory.getLogger(Json2FullBean.class);
+	private final Logger log = Logger.getLogger(Json2FullBean.class);
 
 	private static final String AGGREGATIONS = "aggregations";
 	private static final String PROXIES = "proxies";

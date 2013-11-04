@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -15,8 +13,6 @@ import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 
 public class SitemapControllerTest {
-
-	private Logger log = LoggerFactory.getLogger(getClass());
 
 	private SearchService searchService;
 
@@ -48,7 +44,7 @@ public class SitemapControllerTest {
 						prefixes++;
 						total += value.getCount();
 						if (total > (millions * 10000)) {
-							log.info("total: " + total);
+//							log.info("total: " + total);
 							millions++;
 						}
 						if (hasMoreId(value.getName())) {
@@ -57,8 +53,8 @@ public class SitemapControllerTest {
 					}
 				}
 			}
-			log.info(String.format("prefixes: %d, total: %d", prefixes, total));
-			log.info(String.format("hashProblems: %d", hashProblems));
+//			log.info(String.format("prefixes: %d, total: %d", prefixes, total));
+//			log.info(String.format("hashProblems: %d", hashProblems));
 		} catch (SolrTypeException e) {
 			e.printStackTrace();
 		}

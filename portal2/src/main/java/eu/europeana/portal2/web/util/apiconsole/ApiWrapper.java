@@ -29,14 +29,13 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class ApiWrapper {
 	
-	private final Logger log = LoggerFactory.getLogger(ApiWrapper.class);
+	private final Logger log = Logger.getLogger(ApiWrapper.class);
 
 	private static final String SEARCH_PATH = "/v2/search.json";
 	private static final String SUGGESTIONS_PATH = "/v2/suggestions.json";

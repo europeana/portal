@@ -5,9 +5,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import eu.europeana.corelib.logging.Logger;
 
 /**
  * Resolves name spaces, and provides some utility functions.
@@ -16,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NamespaceResolver {
 	
-	private final static Logger log = LoggerFactory.getLogger(NamespaceResolver.class);
+	private final static Logger log = Logger.getLogger(NamespaceResolver.class);
 
 	private static final Pattern NAME_PATTERN = Pattern.compile("^@?([^:]+):([^:]+)$");
 

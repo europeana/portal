@@ -29,13 +29,12 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.portal2.web.presentation.enums.Field;
@@ -44,7 +43,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentati
 
 public abstract class FullDocPreparation extends FullDocData {
 	
-	private final Logger log = LoggerFactory.getLogger(FullDocPreparation.class);
+	private final Logger log = Logger.getLogger(FullDocPreparation.class);
 
 	// caching fields
 	private List<FieldPresentation> fields;
