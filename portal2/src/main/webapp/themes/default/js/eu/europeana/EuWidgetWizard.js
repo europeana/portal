@@ -754,6 +754,44 @@ var EuWidgetWizard = function(cmpIn, options){
 	        	langOps.find('a').hide();
 	        	
 	        	$.each(data.facets, function(i, facet){
+	        		
+	        		/*
+	        		 	var ops  = $('ul.' + facet.name);
+	        		    var regX = /\(\d*\)/g;
+	        		    
+	        		 	if(facet.name == 'RIGHTS'){
+	        		 	
+	        		 		// backslashes need escaped?
+	        		 		
+	        		 		// this works in a browser:
+	        		 		
+	        		 		// http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&qf=RIGHTS:http://creativecommons.org/licenses/by-nc/*
+	        		 	
+	        		  	}
+	        		  	else{
+	        		  	
+	        		  		$.each(facet.fields, function(j, field){
+	        		  		
+	        		  			var item  = ops.find('a[title="' + field.label + '"]');
+	        		  			var label = item.find('label');
+	        					item.show();
+	        					label.html( label.html().replace(regX, '(' + field.count + ')') );
+	        					
+	        				});
+	        		  	
+	        		  	}
+	        		  
+	        			REGEX:
+	        		  
+	        		  	var val = "the french (film4) archive (6294)"
+						var regExp = /\(\d*\)/g;
+						var newVal = val.replace(regExp, '(230)');
+
+						console.log(newVal);
+
+	        		 */
+	        		
+	        		
 	        		if(facet.name == 'PROVIDER'){
 	        			$.each(facet.fields, function(j, field){
 	        				providerOps.find('a[title="' + field.label + '"]').show();
