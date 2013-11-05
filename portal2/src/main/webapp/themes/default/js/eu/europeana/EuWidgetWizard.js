@@ -33,11 +33,11 @@ var EuWidgetWizard = function(cmpIn, options){
 	};
 	
     var showSpinner = function(){
-    	$('#wizard-overlay').show();    	
+    	$('.providers').add('.countries').add('.types').add('.copyrights').add('.languages').append('<div class="wizard-overlay">');
     };
     
     var hideSpinner = function(){
-    	$('#wizard-overlay').hide();
+    	$('.providers').add('.countries').add('.types').add('.copyrights').add('.languages').find('.wizard-overlay').remove();
     };
     
 	/* Flash a red border on the inputs that have to be filled before the next tab can open */

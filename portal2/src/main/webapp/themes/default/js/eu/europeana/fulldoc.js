@@ -257,6 +257,9 @@ eu.europeana.fulldoc = {
 		
 		$(document).on('click', '#lightbox_info .shares-link, #additional-info .shares-link', function(e){
 		
+			// e.preventDefault();
+			
+			
 			js.loader.loadScripts([{
 				
 				file: 'addthis' + js.min_suffix + '.js' + '?' + 'domready=1', //&async=1',
@@ -303,7 +306,6 @@ eu.europeana.fulldoc = {
 					});
 
 					function addthisReady(evt) {
-						
 				        var oEvent = document.createEvent('HTMLEvents');
 				        oEvent.initEvent('click', true, true);
 				        
@@ -324,9 +326,14 @@ eu.europeana.fulldoc = {
 			}]);
 		});
 		
-		if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
+		
+		if(  (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i) || navigator.userAgent.match(/OS 6(_\d)+ like Mac OS X/i)  ) && ! navigator.userAgent.match(/CriOS/i) ){
 			$('.shares-link').click();			
 		}
+
+		//if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
+		//	$('.shares-link').click();			
+		//}
 	},
 	
 
