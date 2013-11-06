@@ -117,7 +117,9 @@ var EuWidgetWizard = function(cmpIn, options){
 					}
 				});
 			}
-			catch(e){console.log(e);}
+			catch(e){
+				console.log("Error: " + e);
+			}
 		}
 		
 		result += param() + 'withResults=' + getWithResults();
@@ -699,7 +701,9 @@ var EuWidgetWizard = function(cmpIn, options){
 			});
 
 		}
-		catch(e){console.log(e);}
+		catch(e){
+			console.log("Error in updateAvailableFacets: " + e);
+		}
 
 		console.log("query to send to api: " + query);
 
@@ -758,33 +762,66 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
 	        	
 	        	$.each(data.facets, function(i, facet){
 	        		
-<<<<<<< HEAD
-=======
+    				console.log(facet.name);
+
+        		 	var ops  = $('ul.' + facet.name);
+        		    var regX = /\(\d*\)/g;
+        		    
+        		 	if(facet.name == 'RIGHTS'){
+        		 	
+        		 		// backslashes need escaped?
+        		 		
+        		 		// this works in a browser:
+        		 		
+        		 		// http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&qf=RIGHTS:http://creativecommons.org/licenses/by-nc/*
+	        			$.each(facet.fields, function(j, field){
+	        				
+	        				//console.log("RIGHTS field.label " + field.label);
+	        				
+	        				
+	        				 // ERROR:
+	        				 //
+	        				 //1) ADD FACET:
+	        				 //		CC BY-SA (1173821) 
+	        				 //
+	        				 //2) ADD FACET
+	        				 //		SOUND (484303)
+	        				 //
+	        				 //NOTE THAT THE ORIGINAL FACET VANISHES.
+	        				 //
+	        				 //
+	        				 //CAUSE:
+	        				 //
+	        				 //THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
+	        				
+	        				//copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '*"]').show();
+	        				var item  = copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '"]');
+	        				var label = $(item).find('label');
+	        				item.show();
+        					if(label.length ){
+        						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
+        					}
+	        			});
+        		 		
+        		  	}
+        		  	else{
+        		  	
+        		  		$.each(facet.fields, function(j, field){
+        		  		
+        		  			var item  = ops.find('a[title="' + field.label + '"]');
+        		  			var label = $(item).find('label');
+        		  			console.log('label (' + label.length + ') in this: '  + item.html() );
+        					item.show();
+        					if(label.length ){
+        						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
+        					}
+        					
+        				});
+        		  	
+        		  	}
+
+        		 	
 	        		/*
-	        		 	var ops  = $('ul.' + facet.name);
-	        		    var regX = /\(\d*\)/g;
-	        		    
-	        		 	if(facet.name == 'RIGHTS'){
-	        		 	
-	        		 		// backslashes need escaped?
-	        		 		
-	        		 		// this works in a browser:
-	        		 		
-	        		 		// http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&qf=RIGHTS:http://creativecommons.org/licenses/by-nc/*
-	        		 	
-	        		  	}
-	        		  	else{
-	        		  	
-	        		  		$.each(facet.fields, function(j, field){
-	        		  		
-	        		  			var item  = ops.find('a[title="' + field.label + '"]');
-	        		  			var label = item.find('label');
-	        					item.show();
-	        					label.html( label.html().replace(regX, '(' + field.count + ')') );
-	        					
-	        				});
-	        		  	
-	        		  	}
 	        		  
 	        			REGEX:
 	        		  
@@ -796,8 +833,7 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
 
 	        		 */
 	        		
-	        		
->>>>>>> 0a3e789b761e9691e517cb0048a761940efccd47
+    				/*
 	        		if(facet.name == 'PROVIDER'){
 	        			$.each(facet.fields, function(j, field){
 	        				providerOps.find('a[title="' + field.label + '"]').show();
@@ -830,32 +866,29 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
 	        		else if(facet.name == 'RIGHTS'){
 	        			$.each(facet.fields, function(j, field){
 	        				
-	        				console.log("field.label " + field.label);
+	        				//console.log("RIGHTS field.label " + field.label);
 	        				
-	        				/*
-	        				 * ERROR:
-	        				 * 
-	        				 * 1) ADD FACET:
-	        				 * 		CC BY-SA (1173821) 
-	        				 * 
-	        				 * 2) ADD FACET
-	        				 * 		SOUND (484303)
-	        				 * 
-	        				 * NOTE THAT THE ORIGINAL FACET VANISHES.
-	        				 * 
-	        				 * 
-	        				 * CAUSE:
-	        				 * 
-	        				 * THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
-	        				 * 
-	        				 * 
-	        				 * */
 	        				
+	        				 // ERROR:
+	        				 //
+	        				 //1) ADD FACET:
+	        				 //		CC BY-SA (1173821) 
+	        				 //
+	        				 //2) ADD FACET
+	        				 //		SOUND (484303)
+	        				 //
+	        				 //NOTE THAT THE ORIGINAL FACET VANISHES.
+	        				 //
+	        				 //
+	        				 //CAUSE:
+	        				 //
+	        				 //THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
 	        				
 	        				//copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '*"]').show();
 	        				copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '"]').show();
 	        			});
 	        		}
+	        		*/
 	        	});
 	        	hideSpinner();
 	        }
