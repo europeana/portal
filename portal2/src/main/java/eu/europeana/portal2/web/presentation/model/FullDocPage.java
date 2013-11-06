@@ -130,6 +130,11 @@ public class FullDocPage extends FullDocPreparation {
 		return StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy"));
 	}
 
+	public boolean isEuropeanaIsShownAt() {
+		return StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt"));
+	}
+	
+	
 	/**
 	 * Returns a collection of Meta Data fields
 	 * 
@@ -434,6 +439,10 @@ public class FullDocPage extends FullDocPreparation {
 
 	public String getIsShownBy() {
 		return shortcut.get("EdmIsShownBy")[0];
+	}
+	
+	public String getIsShownAt() {
+		return shortcut.get("EdmIsShownAt")[0];
 	}
 
 	/**

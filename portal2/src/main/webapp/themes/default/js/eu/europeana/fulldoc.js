@@ -33,6 +33,7 @@ eu.europeana.fulldoc = {
 		$('#item-save-tag')	.bind('submit', this.handleSaveTagSubmit );
 		$('#item-embed')	.bind('click', this.handleEmbedClick );
 		
+		// "View item at" link
 		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
 			function(e){
 				com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (link)");
@@ -67,13 +68,6 @@ eu.europeana.fulldoc = {
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			callback : function() { eu.europeana.ess.init(); }
 		}]);
-		
-		/*
-		js.loader.loadScripts([{
-			file: 'window-open' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/js/' + js.min_directory
-		}]);
-		*/
 		
 		js.loader.loadScripts([{
 			name : 'accordion-tabs',
@@ -124,7 +118,7 @@ eu.europeana.fulldoc = {
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'accordion-tabs' ],
 			callback : function() {
-				self.initCarousels();	
+				self.initCarousels();
 			}
 		}]);
 	},
@@ -341,9 +335,10 @@ eu.europeana.fulldoc = {
 	 * Makes the one and only call to eu.europeana.lightbox.init
 	 * */
 	initLightbox : function(url){
-		
-		js.console.log("initLightbox");
-		
+
+		if(js.debug){
+			js.console.log("initLightbox");			
+		}
 
 		if(!eu.europeana.fulldoc.lightboxOb){
 			
@@ -449,10 +444,13 @@ eu.europeana.fulldoc = {
 	},
 	
 	triggerClick : function(e){
+		
 		e = $(e.target);
 		
 		var target = "image";
-		var openLB = 	(
+		var openLB = 	carouselData[eu.europeana.fulldoc.getCarouselIndex()].external
+						&&
+						(
 							(
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'image' 
 								&& 
@@ -474,11 +472,12 @@ eu.europeana.fulldoc = {
 						&&
 						!$("#mobile-menu").is(":visible");
 		
+		
 		if(e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel){
 			target = "magnify";
 		}
 		else if(e[0].nodeName.toUpperCase()=='IMG'){
-			target = eu.europeana.fulldoc.lightboxTestFailed ? 'broken-img' : 'image';
+			target = carouselData[eu.europeana.fulldoc.getCarouselIndex()].external ? (eu.europeana.fulldoc.lightboxTestFailed ? 'broken-img' : 'image') : 'link';
 		}
 		
 		// category, action, label
@@ -502,8 +501,16 @@ eu.europeana.fulldoc = {
 	},
 	
 	winOpen : function(){
-		var index = eu.europeana.fulldoc.getCarouselIndex();
-		window.open(carouselData[index ? index : 0].external.url, '_new');
+		
+		if(eu.europeana.fulldoc.carousel1){
+			var index = eu.europeana.fulldoc.getCarouselIndex();
+			window.open(carouselData[index ? index : 0].external.url, '_new');
+			
+		}
+		else{
+			window.open(isShownBy.length ? isShownBy : isShownAt, '_new');
+		}	
+		
 	},
 	
 	
@@ -546,83 +553,92 @@ eu.europeana.fulldoc = {
 		triggerSpan.attr('title', eu.europeana.vars.external.triggers.labels[type]);
 		triggerSpan.html(eu.europeana.vars.external.triggers.labels[type]);
 		
-		
 		var imgIndex = index ? index : 0;
 		
-		if(!eu.europeana.fulldoc.lightboxOb && carouselData[imgIndex].external.type == 'image'){
-
-			/*	if the image is wider than 200 px initialise the lightbox and show the trigger panel,
-			 	if not set the cursoe icon for the image and the eu.europeana.fulldoc.lightboxTestFailed variable to false	*/
-			
-			var loadLightbox = function(){
-				$('<img src="'+ carouselData[imgIndex].external.url + '" style="visibility:hidden"/>')
-					.appendTo('body').imagesLoaded(
-								
-					function($images, $proper, $broken){
-	
-						if($proper.length==1 && $proper.width() > 200){
-	
-							// need to store the real widths here, because by the time fulldoc.js loads the tmp img element may have been removed.
-							
-							//var properW = $proper.width();
-							//var properH = $proper.height();
-							
-							// Add the markup
-	
-							eu.europeana.fulldoc.loadLightboxJS(
-								function(){
-									//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, properW, properH);
-									eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url);
-									eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
-								}
-							);
-						}
-						else{
-							js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[imgIndex].external.url + ")"));
-							eu.europeana.fulldoc.lightboxTestFailed = true;
-							
-							// if the lightbox test fails then attach a click handler to the image
-							$('#carousel-1-img-measure img').css('cursor', 'pointer');
-						}
-						$(this).remove();
-					}
-					// end image load test
-				);
-			};
-			loadLightbox();
+		if(!carouselData[imgIndex].external){
+			/* #1039 - "Clicking the thumbnail of an object interaction"
+			 * uncomment this line if we want to show the trigger:
+			 * 
+			 * eu.europeana.fulldoc.showExternalTrigger(true, carouselData[0].dataType, null);  
+			 */
+			$('#carousel-1-img-measure img').css('cursor', 'pointer');			
 		}
-		else{ // NON IMAGE
-			
-			if(
-				(
-					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video' 
-					&&
-					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
-				)				
-				||
-				(
-					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
-					&&
-					($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) 
-				)				
-			){
+		else{
+			if(!eu.europeana.fulldoc.lightboxOb && carouselData[imgIndex].external.type == 'image'){
+
+				/*	if the image is wider than 200 px initialise the lightbox and show the trigger panel,
+				 	if not set the cursoe icon for the image and the eu.europeana.fulldoc.lightboxTestFailed variable to false	*/
 				
-				eu.europeana.fulldoc.loadLightboxJS(
-					function(){
-						//var videoW = 582;
-						//var videoH = 315;						
-						//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, videoW, videoH);
-						eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url);
-						eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
-					}
-				);
+				var loadLightbox = function(){
+					$('<img src="'+ carouselData[imgIndex].external.url + '" style="visibility:hidden"/>')
+						.appendTo('body').imagesLoaded(
+									
+						function($images, $proper, $broken){
+		
+							if($proper.length==1 && $proper.width() > 200){
+		
+								// need to store the real widths here, because by the time fulldoc.js loads the tmp img element may have been removed.
+								
+								//var properW = $proper.width();
+								//var properH = $proper.height();
+								
+								// Add the markup
+		
+								eu.europeana.fulldoc.loadLightboxJS(
+									function(){
+										//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, properW, properH);
+										eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url);
+										eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
+									}
+								);
+							}
+							else{
+								js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[imgIndex].external.url + ")"));
+								eu.europeana.fulldoc.lightboxTestFailed = true;
+								
+								// if the lightbox test fails then triggerBind (below) will attach a click handler - make sure it has a pointer cursor here
+								$('#carousel-1-img-measure img').css('cursor', 'pointer');
+							}
+							$(this).remove();
+						}
+						// end image load test
+					);
+				};
+				loadLightbox();
 			}
-			else{				
-				eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
-			}
-			
+			else{ // NON IMAGE
+				if(
+						(
+							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video' 
+							&&
+							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+						)				
+						||
+						(
+							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+							&&
+							($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) 
+						)				
+					
+				){
+					
+					eu.europeana.fulldoc.loadLightboxJS(
+						function(){
+							//var videoW = 582;
+							//var videoH = 315;						
+							//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, videoW, videoH);
+							eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url);
+							eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
+						}
+					);
+				}
+				else{
+					eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
+				}
+				
+			}			
 		}
-
+		
 		eu.europeana.fulldoc.triggerBind();
 	},
 	
@@ -630,7 +646,7 @@ eu.europeana.fulldoc = {
 	/**
 	 * 
 	 * @gallery galleria instance
-	 * @show true / false - false if we're changing the trigger from within a carousel
+	 * @gallery true / false - false if we're changing the trigger from within a carousel
 	 * 
 	 * */
 	showExternalTrigger : function(show, type, gallery){
@@ -653,6 +669,7 @@ eu.europeana.fulldoc = {
 			
 			eu.europeana.fulldoc.triggerPanel.css("margin-left", marginTrigger + "px");
 			eu.europeana.fulldoc.triggerPanel.fadeIn(500);
+
 			$('#carousel-1-img-measure img').css('cursor', 'pointer');
 		}
 		else{
@@ -934,12 +951,12 @@ eu.europeana.fulldoc = {
 	
 	initCarousels: function(){
 		
-		
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 			
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
 
-			// this is where we go when carousel test images don't load
+			// this is where we go when there is no carosuel data or when the carousel images didn't load
+			
 			var initNoCarousel = function(){
 				
 				eu.europeana.fulldoc.getCarouselIndex = function(){
@@ -956,22 +973,29 @@ eu.europeana.fulldoc = {
 				// if the thumbnail loaded then show it, otherwise restore the alt text (but prevent it from breaking the layout)
 				
 				if($("#carousel-1-img-measure").width()>0){
+					
 					if(carouselData[0].external){
 						if(carouselData[0].external.type == '3d'){
 							$('#carousel-1-img-measure img').css('cursor', 'pointer');
 						}
 						else{
-							eu.europeana.fulldoc.lightboxable = carouselData[0].external;
 							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 						}
 					}
+					else{
+						// init trigger panel here for non-lightboxable stuff
+						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].dataType);
+					}
 				}
 				else{
-					// if img doesn't load and alt text show, it can break layout
+					
+					// if thumbnail img doesn't load and alt text show, it can break layout
 					$('#carousel-1-img-measure').css('white-space',		'normal');
 					$('#carousel-1-img-measure').css('word-break',		'break-all');
 				}
 			};
+			// end initNoCarousel
+			
 			
 			// Run carousel test and init if successful
 			if(typeof carouselTest == 'object'){
@@ -1017,7 +1041,10 @@ eu.europeana.fulldoc = {
 				);
 			}
 			else{
-				js.console.log("no carousel test to run");
+				// not carouselTest object
+				if(js.debug){
+					js.console.log("no carousel test to run");					
+				}			
 				initNoCarousel();
 			}
 		});

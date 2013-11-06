@@ -43,7 +43,7 @@
     <img src="${thumbnail}" alt="${alt}" data-type="${dataType}" class="no-show" ${semanticAttributes} />
   </div>
 
-	<%-- "dataType": "${fn:toLowerCase(model.document.edmType)}" --%>
+
 	<div id="carousel-1" class="europeana-bordered">
 		<script type="text/javascript">
 			var carouselData = [];
@@ -56,8 +56,11 @@
 						{"src": decodeURI("${model.allImages[1].thumbnail}").replace(/&amp;/g, '&')}
 					];
 				</c:if>
-			
-				var carouselDataIsBy = 	${model.europeanaIsShownBy};
+				
+				// var carouselDataIsBy	= 	${model.europeanaIsShownBy};
+				// var carouselDataIsAt	= 	${model.europeanaIsShownAt};
+				var isShownBy			= 	"${model.isShownBy}";
+				var isShownAt			= 	"${model.isShownAt}";
 				
 				<c:forEach items="${model.allImages}" var="image">
 
