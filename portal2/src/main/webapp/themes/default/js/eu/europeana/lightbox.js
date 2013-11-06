@@ -146,7 +146,7 @@ eu.europeana.lightbox = function(){
 			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
 		){
 			if(typeof callback != "undefined"){
-				callback(600, 400);				
+				callback(700, 450);				
 			}
 			return;
 		}
