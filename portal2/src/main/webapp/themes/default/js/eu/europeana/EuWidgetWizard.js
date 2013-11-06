@@ -33,11 +33,15 @@ var EuWidgetWizard = function(cmpIn, options){
 	};
 	
     var showSpinner = function(){
-    	$('.providers').add('.countries').add('.types').add('.copyrights').add('.languages').append('<div class="wizard-overlay">');
+    	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').append('<div class="wizard-overlay">');
+    	
+    	$.each($('.wizard-overlay'), function(i, ob){
+    		$(ob).css('top', $(ob).parent().scrollTop() + 'px'); 
+    	});
     };
     
     var hideSpinner = function(){
-    	$('.providers').add('.countries').add('.types').add('.copyrights').add('.languages').find('.wizard-overlay').remove();
+    	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').find('.wizard-overlay').remove();
     };
     
 	/* Flash a red border on the inputs that have to be filled before the next tab can open */
@@ -69,7 +73,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				result += param() + 'query=' + query;			
 			}
 			
-			$('ul.types a input').add('ul.countries a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
+			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
 				if($(ob).prop('checked')){
 					//var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
 					//var name = $(ob).attr('title').replace(/ *\([^)]*\) */g, "");
@@ -83,7 +87,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			//};
 			
 			try{			
-				$('.providers>li').each(function(i, ob){
+				$('.PROVIDER>li').each(function(i, ob){
 					var provider      = $(ob);
 					var providerInput = provider.children('a').children('input');
 					
@@ -96,7 +100,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						//result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':{' + name + '}';
 					}
 					else{
-						provider.find('.data-providers>li').each(function(j, dp){
+						provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 							var dataProvider      = $(dp);
 							var dataProviderInput = dataProvider.children('a').children('input');
 	
@@ -119,8 +123,8 @@ var EuWidgetWizard = function(cmpIn, options){
 		result += param() + 'withResults=' + getWithResults();
 		result += param() + 'theme=' + getTheme();
 
-		console.log('output() returns ' + result);
-		alert('output() returns ' + result);
+		//console.log('output() returns ' + result);
+
 
 		return result;
 	};
@@ -279,7 +283,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			}
 			self.initialisedTabs[tabIndex] = true;
 			
-			if(tabIndex == 1){			// query / providers / types / copyrights / languages
+			if(tabIndex == 1){			// query / provider / types / copyrights / languages
 				
 				$('.default_query').focus();
 				
@@ -314,8 +318,11 @@ var EuWidgetWizard = function(cmpIn, options){
 						labels.find('.modified')  .css('display', 'none');
 					}
 					*/
-					
-					updateAvailableFacets();
+					var callingFacet = cb.closest('ul').attr('class');
+					if(callingFacet.indexOf(' ') > -1){
+						callingFacet = callingFacet.split(' ')[0];
+					}
+					updateAvailableFacets(callingFacet);
 				};
 				
 				// make facet sections collapsible
@@ -325,12 +332,12 @@ var EuWidgetWizard = function(cmpIn, options){
 				});
 
 				
-				$("ul.search-types input").add("ul.types input").add("ul.copyrights input").add("ul.countries input").add("ul.languages input").change(change).click(function(e){
+				$("ul.search-types input").add("ul.TYPE input").add("ul.RIGHTS input").add("ul.COUNTRY input").add("ul.LANGUAGE input").change(change).click(function(e){
 					e.stopPropagation();
 				})
-				$("ul.types input").add("ul.copyrights input").add("ul.languages input").prop('checked', false);
+				$("ul.TYPE input").add("ul.RIGHTS input").add("ul.LANGUAGE input").prop('checked', false);
 
-				$('ul.search-types a').add('ul.types a').add("ul.copyrights a").add("ul.languages a").click(function(e){
+				$('ul.search-types a').add('ul.TYPE a').add("ul.RIGHTS a").add("ul.LANGUAGE a").click(function(e){
 					var cb = $(this).find('input'); 
 					cb.prop('checked', !cb.prop('checked'));
 					change(cb);
@@ -339,49 +346,49 @@ var EuWidgetWizard = function(cmpIn, options){
 
 				
 				$('button.clear-types').click(function(){
-					$('ul.types').find('input').prop('checked', false);
-					updateAvailableFacets();
+					$('ul.TYPE').find('input').prop('checked', false);
+					updateAvailableFacets('TYPE');
 					
 					/*
-					$('ul.types').prev('h3').find('.modified')  .css('display', 'none');
-					$('ul.types').prev('h3').find('.unmodified').css('display', 'inline-block');
+					$('ul.TYPE').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.TYPE').prev('h3').find('.unmodified').css('display', 'inline-block');
 					*/
 
 				});
 				
 				$('button.clear-countries').click(function(){
-					$('ul.countries').find('input').prop('checked', false);
-					updateAvailableFacets();
+					$('ul.COUNTRY').find('input').prop('checked', false);
+					updateAvailableFacets('COUNTRY');
 					
 					/*
-					$('ul.countries').prev('h3').find('.modified')  .css('display', 'none');
-					$('ul.countries').prev('h3').find('.unmodified').css('display', 'inline-block');
+					$('ul.COUNTRY').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.COUNTRY').prev('h3').find('.unmodified').css('display', 'inline-block');
 					 */
 					
 				});
 				
 				$('button.clear-copyrights').click(function(){
-					$('ul.copyrights').find('input').prop('checked', false);
-					updateAvailableFacets();
+					$('ul.RIGHTS').find('input').prop('checked', false);
+					updateAvailableFacets('RIGHTS');
 					
 					/*
-					$('ul.copyrights').prev('h3').find('.modified')  .css('display', 'none');
-					$('ul.copyrights').prev('h3').find('.unmodified').css('display', 'inline-block');
+					$('ul.RIGHTS').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.RIGHTS').prev('h3').find('.unmodified').css('display', 'inline-block');
 					*/
 				});
 				
 				$('button.clear-languages').click(function(){					
-					$('ul.languages').find('input').prop('checked', false);
-					updateAvailableFacets();
+					$('ul.LANGUAGE').find('input').prop('checked', false);
+					updateAvailableFacets('LANGUAGE');
 					
 					/*
-					$('ul.languages').prev('h3').find('.modified')  .css('display', 'none');
-					$('ul.languages').prev('h3').find('.unmodified').css('display', 'inline-block');
+					$('ul.LANGUAGE').prev('h3').find('.modified')  .css('display', 'none');
+					$('ul.LANGUAGE').prev('h3').find('.unmodified').css('display', 'inline-block');
 					*/
 				});
 
 
-				// providers
+				// PROVIDER
 				
 				eu_europeana_providers = {
 					addLinks : function(cb){
@@ -390,13 +397,13 @@ var EuWidgetWizard = function(cmpIn, options){
 						var checked = cb.prop('checked');
 						var updateParentCheckboxes = function(cb, checked){
 							
-							var parentProvider = cb.closest('.data-providers').prev('a').find('input[type=checkbox]');
+							var parentProvider = cb.closest('.DATA_PROVIDER').prev('a').find('input[type=checkbox]');
 	
 							if(!checked && parentProvider.prop('checked')){ // remove parent check if the set was complete
 								parentProvider.prop('checked', false);
 							}
 							else{  // restore parent check if this data-provider completes the set
-								var siblingProviders = cb.closest('.data-providers').find('input[type=checkbox]');
+								var siblingProviders = cb.closest('.DATA_PROVIDER').find('input[type=checkbox]');
 								var allSiblingsChecked = true;
 								siblingProviders.each(function(i, ob){
 									if(!$(ob).prop('checked')){
@@ -429,7 +436,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						}
 						
 						
-						$('.data-providers').find('input').each(function(i, ob){
+						$('.DATA_PROVIDER').find('input').each(function(i, ob){
 							ob = $(ob);
 							if(ob.prop('checked')){
 								show = true;
@@ -446,7 +453,7 @@ var EuWidgetWizard = function(cmpIn, options){
 										$('.choices').css('display', 'none');
 										setUnmodified();
 									}
-									updateAvailableFacets();
+									updateAvailableFacets('DATA_PROVIDER');
 								});
 							}
 						});
@@ -476,10 +483,14 @@ var EuWidgetWizard = function(cmpIn, options){
 							});
 							eu_europeana_providers.addLinks(cb);
 							
-							updateAvailableFacets();
+							var callingFacet = cb.closest('ul').attr('class');
+							if(callingFacet.indexOf(' ') > -1){
+								callingFacet = callingFacet.split(' ')[0];
+							}
+							updateAvailableFacets(callingFacet);
 						};
 						
-						$('.icon-arrow-2-after>input').add('.data-providers input').change(change).click(function(e){
+						$('.icon-arrow-2-after>input').add('.DATA_PROVIDER input').change(change).click(function(e){
 							e.stopPropagation();
 						}).prop('checked', false);
 						
@@ -489,13 +500,12 @@ var EuWidgetWizard = function(cmpIn, options){
 							e.preventDefault();
 						});
 					  
-						$('.data-providers a').click(function(e){
+						$('.DATA_PROVIDER a').click(function(e){
 							var cb = $(this).find('input'); 
 							cb.prop('checked', !cb.prop('checked'));
 							eu_europeana_providers.addLinks(cb);
 							
-							
-							updateAvailableFacets();
+							updateAvailableFacets('DATA_PROVIDER');
 						});
 						
 						
@@ -652,16 +662,15 @@ var EuWidgetWizard = function(cmpIn, options){
 		$('.tab-number').removeClass('hidden');
 	};
 	
-	var updateAvailableFacets = function(){
+	var updateAvailableFacets = function(chosenFacet){
 		
 		showSpinner();
 		
-		// alert("updateAvailableFacets:\n\n");
 		// construct query
 		
 		var query = "";
 		try{			
-			$('.providers>li').each(function(i, ob){
+			$('.PROVIDER>li').each(function(i, ob){
 				var provider      = $(ob);
 				var providerInput = provider.children('a').children('input');
 				
@@ -670,7 +679,7 @@ var EuWidgetWizard = function(cmpIn, options){
 					query += '&qf=PROVIDER:"' + cleanName(name) + '"';
 				}
 				else{
-					provider.find('.data-providers>li').each(function(j, dp){
+					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 						var dataProvider      = $(dp);
 						var dataProviderInput = dataProvider.children('a').children('input');
 
@@ -683,39 +692,32 @@ var EuWidgetWizard = function(cmpIn, options){
 				}
 			});
 			
-			$('ul.types a input').add('ul.countries a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
+			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
 				if($(ob).prop('checked')){
 					query += $(ob).attr('title').replace(/\"/g, "");
 				}
 			});
 
-			//$('ul.countries a input').each(function(i, ob){
-			//	if($(ob).prop('checked')){
-			//		var name = $(ob).attr('title').replace(/\"/g, "");
-			//		query += name;
-			//	}
-			//});
-			
-			//$('ul.types a input').add('ul.countries a input').add('ul.copyrights a input').add('ul.languages a input').each(function(i, ob){
-			//	if($(ob).prop('checked')){
-			//		var name = $(ob).next('span').html().replace(/ *\([^)]*\) */g, "");
-			//		var name = $(ob).attr('title').replace(/ *\([^)]*\) */g, "");
-			//		var name = $(ob).attr('title').replace(/\"/g, "");
-			//		result += name;
-			//	}
-			//});
-			
 		}
 		catch(e){console.log(e);}
-		//alert("query to send to api: " + query);
+
 		console.log("query to send to api: " + query);
 
+	/*
 	
+RESULT CONTAINS NO FACETS APART FROM DATA PROVIDERS
+
+XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*…%E2%80%9D,+Skopje.%22&qf=DATA_PROVIDER:%22The+Natonal+Library+of+Poalnd%22".
+		
+	*/
+		
+		var postUrl = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params";
+		
 		$.ajax({
-	        "url":				"http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params" + query + "&callback=EuWidgetWizard.facetData",
-	        "dataType":			"jsonp",
-	        "jsonpCallback":	"facetData",
-	        "jsonp":			"callback",
+			"url":				postUrl + query,
+	        "dataType":			"json", 
+	        "crossDomain":		true,
+	        "type":				"POST",
 	        "fail":function(){
 	    		hideSpinner();
 	        },
@@ -725,35 +727,37 @@ var EuWidgetWizard = function(cmpIn, options){
 	        	
 	        	// countries
 
-	        	var countryOps = $('ul.countries li');
+	        	var countryOps = $('ul.COUNTRY li');
 	        	countryOps.find('a').hide();
 
 	        	// copyrights
 	        	
-	        	var copyrightOps = $('ul.copyrights li');
+	        	var copyrightOps = $('ul.RIGHTS li');
 	        	copyrightOps.find('a').hide();
 	        	
 	        	// providers
 	        	
-	        	var providerOps = $('ul.providers li');
+	        	var providerOps = $('ul.PROVIDER li');
 	        	providerOps.find('a').hide();
+	        	
 	        	
 	        	// data providers
 	        	
-	        	var dataProviderOps = $('ul.data-providers li');
+	        	var dataProviderOps = $('ul.DATA_PROVIDER li');
 	        	dataProviderOps.find('a').hide();
 	        	
 	        	// types
 	        	
-	        	var typeOps = $('ul.types li');
+	        	var typeOps = $('ul.TYPE li');
 	        	typeOps.find('a').hide();
 	        	
 	        	// languages
 	        	
-	        	var langOps = $('ul.languages li');	        	
+	        	var langOps = $('ul.LANGUAGE li');	        	
 	        	langOps.find('a').hide();
 	        	
 	        	$.each(data.facets, function(i, facet){
+	        		
 	        		if(facet.name == 'PROVIDER'){
 	        			$.each(facet.fields, function(j, field){
 	        				providerOps.find('a[title="' + field.label + '"]').show();
@@ -761,10 +765,14 @@ var EuWidgetWizard = function(cmpIn, options){
 	        		}
 	        		else if(facet.name == 'DATA_PROVIDER'){
 	        			$.each(facet.fields, function(j, field){
-	        				dataProviderOps.find('a[title="' + field.label + '"]').show();
+	        				var dp = dataProviderOps.find('a[title="' + field.label + '"]');
+	        				dp.show();
+	        				dp.closest('ul.DATA_PROVIDER').prev('a').show();
+	        				
 	        			});
-	        		}	        		
-	        		else if(facet.name == 'TYPE'){
+	        		}
+	        		
+	        		if(facet.name == 'TYPE'){
 	        			$.each(facet.fields, function(j, field){
 	        				typeOps.find('a[title="' + field.label + '"]').show();
 	        			});
@@ -809,9 +817,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	        			});
 	        		}
 	        	});
-	        	
 	        	hideSpinner();
-	        	
 	        }
 	    });
 		
