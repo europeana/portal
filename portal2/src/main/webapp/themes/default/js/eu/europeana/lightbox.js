@@ -11,6 +11,7 @@ eu.europeana.lightbox = function(){
 	self.infoHx		= 30;
 	self.zoomed		= false;
 	self.brdr		= 60;
+	self.showingEl	= 'IMG'; /* either IMG or IFRAME */
 	
 	var init = function(initOb) {
 
@@ -134,6 +135,8 @@ eu.europeana.lightbox = function(){
 				self.cmp.find('#lightbox_info').before(elImg);				
 			}			
 		}
+		
+		return self.cmp.find('#lightbox_image')[0].nodeName.toUpperCase();
 	};
 	
 	var imgMeasure = function(src, callback){
@@ -162,7 +165,7 @@ eu.europeana.lightbox = function(){
 	
 	var layout = function(){
 		
-		/*	Strategy:
+		/*	Strategy if self.showingEl = IMG:
 		 * 
 		 * 	1) get layout by taking 2 hypothetical aspect ratios:
 		 * 		- info underneath
@@ -171,8 +174,15 @@ eu.europeana.lightbox = function(){
 		 * 
 		 * 	2) recursively reduce img dimensions until img + info fit available space
 		 * 
+		 *  Otherwise:
+		 *  
+		 *  - info always goes underneath
+		 * 
 		 */ 
-		switchTypeIfNeeded();
+		self.showingEl	= switchTypeIfNeeded();
+		if(self.showingEl == 'IFRAME'){
+			//return;
+		}
 		
 		var	img		= self.cmp.find('#lightbox_image'),
 			info	= self.cmp.find('#lightbox_info');
@@ -183,10 +193,7 @@ eu.europeana.lightbox = function(){
 			infoH	= self.infoH,
 			infoHx	= self.infoHx;
 			brdr	= self.brdr;
-		
-		
 			
-		
 		var	aspectWin	= ($(window).width()-brdr) / ($(window).height()-brdr);
 		var	aspectUnder	= imgW / (imgH + infoH);
 		var	aspectRight	= (imgW + infoW) / imgH;
@@ -200,7 +207,7 @@ eu.europeana.lightbox = function(){
 		  }
 		});
 		
-		var isRight			= aspectClosest == aspectRight;
+		var isRight			= (self.showingEl == 'IFRAME') ? false : aspectClosest == aspectRight;
 		var availableHeight =	parseInt(
 			$(window).height()
 			- ( self.zoomed ? 0 : (isRight ? 0 : infoH) )
