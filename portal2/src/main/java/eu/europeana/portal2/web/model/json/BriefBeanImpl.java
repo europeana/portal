@@ -38,7 +38,9 @@ public class BriefBeanImpl implements BriefBean {
 //	private DocType type;
 	private boolean isOptedOut;
 	private String[] edmPreview;
+	private float score;
 
+	
 	@Override
 	public String getId() {
 		return id;
@@ -305,4 +307,10 @@ public class BriefBeanImpl implements BriefBean {
 	public String[] getEdmPreview() {
 		return this.edmPreview;
 	}
+	
+	@Override
+	public float getScore() {
+		return this.score;
+	}
+	
 }
