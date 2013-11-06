@@ -11,12 +11,12 @@ fnSearchWidget = function($, config){
     
     
     if( typeof config != 'undefined' ){
-    	console.log("config supplied: " + JSON.stringify(config) );
+    	//console.log("config supplied: " + JSON.stringify(config) );
     	self.config      = config;
         self.withResults = self.config.withResults == 'true';
         self.theme       = self.config.theme;
         
-        console.log('init theme: ' + self.theme);
+        //console.log('init theme: ' + self.theme);
     }
     
     
@@ -194,6 +194,7 @@ fnSearchWidget = function($, config){
 	            	}
 	            	else{
 	            		showSpinner();
+	            		
 	                    $.ajax({
 	                        "url" : url,
 	                        "type" : "GET",
@@ -268,23 +269,12 @@ fnSearchWidget = function($, config){
         if(self.config){
         	if(self.config.qf){
         		$.each(self.config.qf, function(i, ob){
-        			
-
-        			console.log("append to url = " + JSON.stringify(ob));
-        			
         			ob = ob.replace(/[\{\}]/g, '"');
-        			//ob = ob.replace(/\}/g, '"');
-        			
         			url += param() + 'qf=';
         			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
-        			
-        			//console.log('append to url: ' + url);
         		});
         	}
         }
-
-
-		console.log('final search url: ' + url);
         return url;
     };
 
@@ -295,8 +285,6 @@ fnSearchWidget = function($, config){
         var grid = container.find('#items');
         grid.empty();
 
-        
-        // console.log("widget showRes(data), data = \n" + JSON.stringify(data));
         var start = data.params.start ? data.params.start : 1;
         var query = self.q.val();
 
@@ -308,8 +296,6 @@ fnSearchWidget = function($, config){
         }
         
         $(data.items).each(function(i, ob){
-        	
-        	//alert(  );	//JSON.stringify(ob, null, 4) );
         	
             var item = itemTemplate.clone();
             
@@ -332,7 +318,6 @@ fnSearchWidget = function($, config){
 	            );
             }
             
-            //alert( ob.type  + "\n\n" + item.find('.ellipsis span span').length  + '\n\n' +  item.html()    );
             
             if(item.find('.ellipsis span span').length){
             	item.find('.ellipsis span span').attr('class', 'icon-' + ob.type.toLowerCase());
@@ -464,7 +449,6 @@ fnSearchWidget = function($, config){
 	            
 	            if(!opened[opener]){
 	                opened[opener] = true;
-	                // console.log("restore selected " + opener.html() );
 	                opener.click();
 	            }
 	            object.prev().prop('checked', true);
@@ -505,7 +489,6 @@ fnSearchWidget = function($, config){
 	            			container.find('#refine-search-form input[type=hidden]').each(function(iFilter, obFilter){
 	            				if(iFilter >= i){
 	            					var settingCbs = container.find('input[value="' + $(this).val() + '"]');
-	            					// console.log("settingCbs = " + settingCbs.length );
 	            					settingCbs.prop('checked', false);
 	            					$(this).remove();
 	            				}
@@ -737,23 +720,18 @@ fnSearchWidget = function($, config){
         "showRes" : function(data){ showRes(data); },
         "setWithResults" : function(withResults){
         	self.withResults = withResults;
-        	console.log("set withResults to " + withResults);
         	if(!withResults){
         		container.find('#content').hide();        		
         	}
         },
         "setTheme" : function(theme){
-        	
-        	console.log('call setTheme: ' + theme);
         	if(self.theme){
         		container.removeClass(self.theme);
         		$('body	').removeClass(self.theme);
-            	console.log("removed theme");
         	}
         	if(theme){
             	self.theme = theme;
         		container.addClass(theme);        		
-            	console.log("set theme to " + theme);
         	}
         	else{
         		container.removeClass('dark');
@@ -789,9 +767,9 @@ var theParams = function(){
 	rootUrl		= rootJsUrl.split('/portal/')[0] + '/portal';
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
-
-	console.log("queryString = " + queryString);
-
+	queryString = decodeURIComponent(queryString);
+	
+	
 	function parseQuery ( query ) {
 		
 		var Params = new Object ();
@@ -804,13 +782,13 @@ var theParams = function(){
 			
 			var KeyVal = Pairs[i].split('=');
 			if(!KeyVal || KeyVal.length != 2 ){
-				console.log("invalid parameter");
+				//console.log("invalid parameter");
 				continue;
 			}
 			var key = unescape( KeyVal[0] );
 			var val = unescape( KeyVal[1] );
 			
-			console.log(key + " = " + val);
+			//console.log(key + " = " + val);
 			
 			//val = val.replace(/\+/g, ' ');
 			if(!Params[key]){

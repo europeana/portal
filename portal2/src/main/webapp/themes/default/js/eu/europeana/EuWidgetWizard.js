@@ -81,10 +81,6 @@ var EuWidgetWizard = function(cmpIn, options){
 					result += name;
 				}
 			});
-
-			//var cleanName = function(name){
-			//	return name.replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
-			//};
 			
 			try{			
 				$('.PROVIDER>li').each(function(i, ob){
@@ -93,11 +89,7 @@ var EuWidgetWizard = function(cmpIn, options){
 					
 					if(providerInput.prop('checked')){
 						var name = providerInput.next('span').html();
-						
-						// console.log("checked PROVIDER name is " + name);
-						
 						result += param() + 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
-						//result += param() + 'qf=' + ( $(ob).parent().hasClass('data-provider') ? 'DATA_PROVIDER' : 'PROVIDER') + ':{' + name + '}';
 					}
 					else{
 						provider.find('.DATA_PROVIDER>li').each(function(j, dp){
@@ -106,11 +98,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	
 							if(dataProviderInput.prop('checked')){
 								var name          = dataProviderInput.next('span').html();
-	
-								console.log("checked DATA PROVIDER name is " + name);
-	
 								result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
-	
 							}
 							
 						});
@@ -124,9 +112,6 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		result += param() + 'withResults=' + getWithResults();
 		result += param() + 'theme=' + getTheme();
-
-		//console.log('output() returns ' + result);
-
 
 		return result;
 	};
@@ -704,16 +689,6 @@ var EuWidgetWizard = function(cmpIn, options){
 		catch(e){
 			console.log("Error in updateAvailableFacets: " + e);
 		}
-
-		console.log("query to send to api: " + query);
-
-	/*
-	
-RESULT CONTAINS NO FACETS APART FROM DATA PROVIDERS
-
-XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*…%E2%80%9D,+Skopje.%22&qf=DATA_PROVIDER:%22The+Natonal+Library+of+Poalnd%22".
-		
-	*/
 		
 		var postUrl = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params";
 		
@@ -726,8 +701,6 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
 	    		hideSpinner();
 	        },
 	        "success":function(data){
-	        	
-	        	console.log(JSON.stringify(data.facets, null, 4));
 	        	
 	        	// countries
 
@@ -742,7 +715,10 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
 	        	// providers
 	        	
 	        	var providerOps = $('ul.PROVIDER li');
-	        	providerOps.find('a').hide();
+	        	
+	        	if(chosenFacet != 'DATA_PROVIDER'){	        		
+	        		providerOps.find('a').hide();
+	        	}
 	        	
 	        	
 	        	// data providers
@@ -762,8 +738,6 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
 	        	
 	        	$.each(data.facets, function(i, facet){
 	        		
-    				console.log(facet.name);
-
         		 	var ops  = $('ul.' + facet.name);
         		    var regX = /\(\d*\)/g;
         		    
@@ -810,7 +784,7 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
         		  		
         		  			var item  = ops.find('a[title="' + field.label + '"]');
         		  			var label = $(item).find('label');
-        		  			console.log('label (' + label.length + ') in this: '  + item.html() );
+
         					item.show();
         					if(label.length ){
         						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
@@ -820,18 +794,6 @@ XHR finished loading: "http://test.portal2.eanadev.org/api/v2/search.json?wskey=
         		  	
         		  	}
 
-        		 	
-	        		/*
-	        		  
-	        			REGEX:
-	        		  
-	        		  	var val = "the french (film4) archive (6294)"
-						var regExp = /\(\d*\)/g;
-						var newVal = val.replace(regExp, '(230)');
-
-						console.log(newVal);
-
-	        		 */
 	        		
     				/*
 	        		if(facet.name == 'PROVIDER'){
