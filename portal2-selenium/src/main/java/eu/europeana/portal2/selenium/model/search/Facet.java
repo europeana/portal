@@ -10,23 +10,23 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Facet {
-	
+
 	final private WebDriver webDriver;
 	final private WebElement webElement;
 	private WebElement title;
 	private List<FacetItem> items = new ArrayList<FacetItem>();
-	
-	final public  String     label;
-	
-	public Facet(WebDriver webdriver, WebElement e){
+
+	final public String label;
+
+	public Facet(WebDriver webdriver, WebElement e) {
 		webDriver = webdriver;
 		webElement = e;
 		title = e.findElement(By.cssSelector("h3 a"));
 		label = title.getText();
 	}
-	
-	public void click(){
-		final boolean  isDisplaying = isListVisible();
+
+	public void click() {
+		final boolean isDisplaying = isListVisible();
 		title.click();
 		(new WebDriverWait(webDriver, 10)).until(new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver d) {
@@ -34,19 +34,18 @@ public class Facet {
 			}
 		});
 	}
-	
-	public boolean isListVisible(){
+
+	public boolean isListVisible() {
 		return webElement.findElement(By.cssSelector("ul")).isDisplayed();
 	}
-	
-	public List<FacetItem> getItems(){
-		if( items.isEmpty() ){
-			for(WebElement e :  webElement.findElements(By.cssSelector("ul li")) ){
+
+	public List<FacetItem> getItems() {
+		if (items.isEmpty()) {
+			for (WebElement e : webElement.findElements(By.cssSelector("ul li"))) {
 				items.add(new FacetItem(e));
 			}
 		}
 		return items;
 	}
 
-	
 }

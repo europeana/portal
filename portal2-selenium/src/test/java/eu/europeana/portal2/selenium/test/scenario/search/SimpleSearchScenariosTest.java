@@ -40,7 +40,7 @@ public class SimpleSearchScenariosTest {
 		assertEquals("Not displaying 24 results", 24, searchPage.countSearchResults());
 		assertTrue("Check search results page title",
 				searchPage.getPageTitle().toLowerCase().startsWith("paris - europeana - search results"));
-		
+
 		assertTrue("Check there are at least 24 results",
 				StringUtils.startsWith(searchPage.getPaginationString(), "Results 1-24"));
 	}

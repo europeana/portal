@@ -7,16 +7,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SwitchLocaleTest {
 	private WebDriver webDriver;
-	
+
 	@Before
 	public void setupPage() {
 		webDriver = new FirefoxDriver();
 	}
-	
+
 	@After
 	public void closePage() {
 		webDriver.quit();
 	}
-	
-	
+
 }
