@@ -20,6 +20,10 @@
 	#wizard-tabs{
 		margin-bottom:	1.5em;
 	}
+	
+	#wizard-tabs a{
+		cursor:			pointer;
+	}
 
 	#wizard-tabs .clear{
 		border:			0;
@@ -55,7 +59,7 @@
 	  overflow: hidden;
 	}
 	
-	#wizard-overlay{
+	.wizard-overlay{
 	    position:	absolute;
 	    width:		100%;
 	    height:		100%;
@@ -116,16 +120,25 @@
 	}
 		
 	#wizard-tabs #filter-search,
-	#wizard-tabs ul.data-providers,
-	#wizard-tabs ul.providers,
-	#wizard-tabs ul.types,
-	#wizard-tabs ul.portal-languages,
-	#wizard-tabs ul.copyrights,
-	#wizard-tabs ul.languages{
+	#wizard-tabs ul.DATA_PROVIDER,
+	#wizard-tabs ul.PROVIDER,
+	#wizard-tabs ul.TYPE,
+	#wizard-tabs ul.RIGHTS,
+	#wizard-tabs ul.LANGUAGE{
 		list-style:		none;
 		padding:		0;
 		margin:			0;
 	}
+	
+	
+	#wizard-tabs .choices, 
+	#wizard-tabs ul.PROVIDER, 
+    #wizard-tabs ul.COUNTRY,
+	#wizard-tabs ul.TYPE,
+    #wizard-tabs ul.RIGHTS,
+    #wizard-tabs ul.LANGUAGE{
+   		position: relative;
+   	}
 	
 	#wizard-tabs #filter-search h3{
 		border-top:     none;
@@ -198,7 +211,7 @@
     	margin-right:           0.4em;
     }
     
-    #wizard-tabs ul.data-providers{
+    #wizard-tabs ul.DATA_PROVIDER{
     	max-height:			none;
     }
     
@@ -219,7 +232,8 @@
 		margin:				0.25em;
 		padding:			0.5em;
 		word-wrap:			break-word;
-		color:				red; 
+		color:				red;
+		cursor:				pointer; 
 	}
 	
 	#wizard-tabs .radio-block{
@@ -231,15 +245,14 @@
 		color:				#333; 
 	}
 	
-	#wizard-tabs .data-providers {
+	#wizard-tabs .DATA_PROVIDER {
 		display:		none;
 	}
 	
-	#wizard-tabs .data-providers li {
+	#wizard-tabs .DATA_PROVIDER li {
 		list-style:		none;
 		margin-left:	1.5em;
 	}
-	
 	
 	#wizard-tabs .hide-til-opened label {
 		display: inline;
@@ -290,25 +303,21 @@
 	
 	/* scrollables */
 	
-	.providers,	
-	ul.types,
-	ul.copyrights,
-	ul.languages,
-	ul.portal-languages{
+	ul.PROVIDER,	
+	ul.TYPE,
+	ul.RIGHTS,
+	ul.LANGUAGE{
 		height:		4em;
 		overflow:	auto;
 		word-wrap:	break-word;
 	}
-	ul.copyrights{
+	ul.RIGHTS{
 		height:		6em;
 	}
-	ul.languages{
+	ul.LANGUAGE{
 		height:		8em;
 	}
-	ul.portal-languages{
-		height:		10em;
-	}
-	.providers{
+	ul.PROVIDER{
 		height:		14em;
 	}
 	
@@ -356,11 +365,10 @@
 	#wizard-tabs .choices,
 	#wizard-tabs input,
 	#wizard-tabs ul.search-types,
-	#wizard-tabs ul.types,
-	#wizard-tabs ul.copyrights,
-	#wizard-tabs ul.languages,
-	#wizard-tabs ul.portal-languages,
-	#wizard-tabs .providers,
+	#wizard-tabs ul.TYPE,
+	#wizard-tabs ul.RIGHTS,
+	#wizard-tabs ul.LANGUAGE,
+	#wizard-tabs ul.PROVIDER,
 	#wizard-tabs .preview-window,
 	#output{
 		border:		1px solid #e4e4e4;
@@ -575,9 +583,6 @@
 			<div class="content">
 				<div class="content-inner">
 
-					<div id="wizard-overlay" style="display:none;"></div>
-
-
 					<div class="para">
 						<spring:message code="wizard_tab2_search_for_t"/> 
 						<input class="default_query" /> 
@@ -690,7 +695,7 @@
 											</div>
 										</div>
 										
-										<ul class="providers">
+										<ul class="PROVIDER">
 											<c:set var="toggle_providers" value=""/>
 											
 											<c:forEach items="${model.providers}" var="entry" varStatus="status1">
@@ -704,7 +709,7 @@
 												</c:choose>
 												<li>
 													<a ${toggle_providers} title="${entry.name}"><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
-													<ul class="data-providers">
+													<ul class="DATA_PROVIDER">
 														<li>
 															<a><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
 														</li>
@@ -738,7 +743,7 @@
 										<c:if test="${fn:toLowerCase(facet.type) == 'country'}">
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 										
-											<ul class="countries hide-til-opened">
+											<ul class="COUNTRY hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -777,7 +782,7 @@
 										<c:if test="${fn:toLowerCase(facet.type) == 'type'}">
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 										
-											<ul class="types hide-til-opened">
+											<ul class="TYPE hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -821,7 +826,7 @@
 										
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 											
-											<ul class="copyrights hide-til-opened">
+											<ul class="RIGHTS hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -869,7 +874,7 @@
 										
 											<c:set var="facettype" value="${fn:toLowerCase(facet.type)}" />
 											
-											<ul class="languages hide-til-opened">
+											<ul class="LANGUAGE hide-til-opened">
 												<c:forEach items="${facet.links}" var="facet_item">
 													<c:set var="label">
 														<c:choose>
@@ -1009,9 +1014,3 @@
 
 	</div>
 
-<!-- 
-	<input type="button" class="deans-button-1 next"               value="${buttonNextText}" />
-	<input type="button" class="deans-button-1 previous disabled"  value="${buttonPreviousText}" />
- -->
-
-</div>
