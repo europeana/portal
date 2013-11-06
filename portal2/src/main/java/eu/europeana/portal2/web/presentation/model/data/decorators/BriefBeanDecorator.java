@@ -340,4 +340,9 @@ public class BriefBeanDecorator implements BriefBean {
 	public String[] getEdmPreview() {
 		return briefBean.getEdmPreview();
 	}
+	
+	@Override
+	public float getScore(){
+		return briefBean.getScore();
+	}
 }
