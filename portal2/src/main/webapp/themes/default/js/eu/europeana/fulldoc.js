@@ -1050,7 +1050,8 @@ eu.europeana.fulldoc = {
 		});
 
 		
-		$("#carousel-2-img-measure img").imagesLoaded( function(){
+		$("#carousel-2-img-measure img").imagesLoaded( function($images, $proper, $broken){
+			
 			eu.europeana.fulldoc.getCarousel2Dimensions = function(){
 				
 				$("#carousel-2-img-measure img").css("display", "inline-block");
@@ -1068,6 +1069,60 @@ eu.europeana.fulldoc = {
 			eu.europeana.fulldoc.bottomTabs =  new AccordionTabs( $('#explore-further') );
 			eu.europeana.fulldoc.initBottomCarousel();
 		});
+
+		
+		if(mlt){
+
+
+			var loadMltData = function(query, fn){
+				
+				var url = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&profile=portal,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&profile=portal,params";
+
+				url += '&query=' + decodeURIComponent(query);
+				
+				console.log(url);
+				alert(url);
+				
+				$.ajax({
+					"url":				url.replace(/&quot;/g, '"'),
+			        "dataType":			"json", 
+			        "crossDomain":		true,
+			        "type":				"POST",
+			        
+			        "fail":function(e){
+			    		alert("ERROR " + e);
+			        },
+			        "success":function(data){
+			        	fn(data);
+					}
+				});
+			
+			}
+			
+			var loadSingleMltTab = function(){
+			
+				var query = $('#mlt .section.active input[type=hidden]').val();
+				alert("query = " + query + " (" + query.length + ")\n\n" );// + JSON.stringify(query) );
+				
+				var processResult = function(data){
+					alert("RESULT: " + JSON.stringify(data));
+				}
+				
+				loadMltData(query, processResult)
+			
+			}
+			
+			
+			new AccordionTabs( $('#mlt'),
+				function(something){
+					loadSingleMltTab();
+				}
+			);
+			
+			
+		}
+		
+		
 	},
 	
 };

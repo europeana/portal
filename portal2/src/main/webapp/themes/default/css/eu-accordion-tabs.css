@@ -108,13 +108,11 @@
 	.accordion-tabs .tab-header{
 		display:		inline-block;
 		border-radius:	0.5em 0.5em 0 0;
-		margin-top:		0;
 		cursor:			pointer;
 	}
 	
 	.accordion-tabs .tab-header.active{
 		border-bottom:		1px solid #fff;
-		margin-top:			0;
 		text-decoration:	underline;
 	}
 

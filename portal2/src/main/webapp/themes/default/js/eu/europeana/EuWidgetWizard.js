@@ -742,16 +742,10 @@ var EuWidgetWizard = function(cmpIn, options){
         		    var regX = /\(\d*\)/g;
         		    
         		 	if(facet.name == 'RIGHTS'){
-        		 	
-        		 		// backslashes need escaped?
         		 		
-        		 		// this works in a browser:
-        		 		
-        		 		// http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params&qf=RIGHTS:http://creativecommons.org/licenses/by-nc/*
 	        			$.each(facet.fields, function(j, field){
 	        				
 	        				//console.log("RIGHTS field.label " + field.label);
-	        				
 	        				
 	        				 // ERROR:
 	        				 //
@@ -783,9 +777,14 @@ var EuWidgetWizard = function(cmpIn, options){
         		  		$.each(facet.fields, function(j, field){
         		  		
         		  			var item  = ops.find('a[title="' + field.label + '"]');
-        		  			var label = $(item).find('label');
+        		  			var label = $(item).find('>label');
 
         					item.show();
+        					
+        					if(facet.name == 'PROVIDER'){
+        						console.log( 'field.label = ' + field.label + ' (' + item.length + ')(' + label.length + '), ' + field.count );
+        					}
+        					
         					if(label.length ){
         						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
         					}
@@ -795,6 +794,9 @@ var EuWidgetWizard = function(cmpIn, options){
         		  	}
 
 	        		
+        		 	//  console.log( JSON.stringify ( data.facets, null, 4) );
+        		 	
+        		 	
     				/*
 	        		if(facet.name == 'PROVIDER'){
 	        			$.each(facet.fields, function(j, field){
@@ -851,6 +853,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	        			});
 	        		}
 	        		*/
+        		 	
 	        	});
 	        	hideSpinner();
 	        }

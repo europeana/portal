@@ -1,22 +1,50 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:if test="${!empty model.europeanaMlt && fn:length(model.europeanaMlt.categories) > 0}">
-  <div>
-    <strong><spring:message code="see_also_header_t" /></strong>
-  </div>
 
-  <c:forEach items="${model.europeanaMlt.categories}" var="category">
-    <strong><spring:message code="${category.translationKey}" />: ${category.name}</strong> (query: ${category.query})
-    <ul>
-      <c:forEach items="${category.urls}" var="link">
-        <c:url var="url" value="/record${link.id}.html">
-          <c:param name="query" value="${category.query}" />
-          <c:param name="mlt" value="${model.showEuropeanaMlt}" />
-        </c:url>
-        <!-- #312: the fix for special characters was to REMOVE fn:escapeXML and just output the value directly. -->
-        <li><a class="europeana" dir="ltr" href="${url}">${link.title}</a></li>
-      </c:forEach>
-    </ul>
-  </c:forEach>
+
+<c:if test="${!empty model.europeanaMlt && fn:length(model.europeanaMlt.categories) > 0}">
+	<div>
+		<strong><spring:message code="see_also_header_t" /></strong>
+	</div>
+	
+	<script type="text/javascript">
+		var mlt = true;
+	</script>
+	
+	
+	<div id="mlt" class="accordion-tabs">
+
+		<c:forEach items="${model.europeanaMlt.categories}" var="category" varStatus="catStatus">
+		
+			<a class="tab-header"><spring:message code="${category.translationKey}" />: ${category.name}</a>
+			
+			<div class="section">
+				<div class="content">
+					<div class="content-inner">
+						
+						<c:set var="api_query">${fn:replace(category.query, "\"", "&quot;")}</c:set>
+
+						<input id="similiar-category-${catStatus.index}" type="hidden" value="${fn:escapeXml(api_query)}">
+						
+						<ul>
+							<c:forEach items="${category.urls}" var="link">
+								<c:url var="url" value="/record${link.id}.html">
+									<c:param name="query" value="${category.query}" />
+									<c:param name="mlt" value="${model.showEuropeanaMlt}" />
+								</c:url>
+								<!-- #312: the fix for special characters was to REMOVE fn:escapeXML and just output the value directly. -->
+								<li><a class="europeana" dir="ltr" href="${url}">${link.title}</a></li>
+							</c:forEach>
+						</ul>
+		
+					</div>
+				</div>
+			</div>
+			
+		</c:forEach>
+	</div>
+	
 </c:if>
+
+

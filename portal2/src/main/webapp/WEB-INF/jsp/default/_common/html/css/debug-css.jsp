@@ -79,14 +79,18 @@
 	
 		<c:when test="${model.pageName == 'full-doc.html'}">
 			<link rel="stylesheet" href="/${branding}/css/fulldoc.css" />
+			
 			<link rel="stylesheet" href="/${branding}/css/lightbox.css" />
 			
 			<!-- accordion-tabs before fulldoc-ess -->
 			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 			
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
+			
+			<%--
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-explore-further.css" />
 			<link rel="stylesheet" href="/${branding}/css/tabbed-navigation.css" />
+			--%>
 		</c:when>
 	
 		<c:when test="${model.pageName == 'index.html'}">

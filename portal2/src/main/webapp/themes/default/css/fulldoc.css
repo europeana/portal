@@ -212,7 +212,6 @@ a.action-link span,
 	padding-top:	1.5em;
 }
 
-
 #navigation {
 	overflow:		auto;
 	padding:		0;
@@ -221,7 +220,16 @@ a.action-link span,
 	width:			100%;
 	border-bottom:	1px solid #E4E4E4;
 	margin-bottom:	1em;
-	padding:		0.75em 0 0.75em 0;
+	padding-top:		0.75em;
+	/*
+	padding:			0.75em 0 0.75em 0;
+	padding-left:		0;
+	padding-right:		0;
+	*/
+	padding-bottom:		0.75em ;
+	
+/*
+*/
 }
 
 #navigation.hidden{
@@ -229,11 +237,13 @@ a.action-link span,
 	padding-bottom:	0;
 }
 
-#navigation li, .navigation li {
+#navigation li,
+.navigation li {
 	display:	inline;
 }
 
-#navigation li, .navigation li a{
+#navigation li,
+.navigation li a{
 	max-height:		1.48em;	/* stop link hover underline pushing content around */
 	line-height:	1.48em;
 }

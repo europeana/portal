@@ -599,80 +599,6 @@
 						
 						<ul id="filter-search">
 						
-								<!-- 
-							<li class="facet-header">
-								<h3>
-									<a class="facet-section" rel="nofollow">
-										<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_type_header_1" /></span>
-										<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_type_header_2" /></span>
-										<span class="change">
-											<span class="europeana"><spring:message code="wizard_tab2_change"/></span>
-										</span>
-									</a> 
-								</h3>
-								
-								<div class="hide-til-opened">							
-									<ul class="search-types">
-
-										<li>
-											<a title="<spring:message code="FieldedSearchAllFields_t" />" rel="nofollow">
-												<input title="<spring:message code="FieldedSearchAllFields_t" />" type="radio" checked="checked" id="rd-search-type-all" name="rd-search-type" value=""/>
-												<label for="rd-search-type-all">
-													&nbsp; Search All Fields
-												</label>
-											</a>
-										</li>
-										<li>
-											<a title="<spring:message code="FieldedSearchTitle_t" />" rel="nofollow">
-												<input title="<spring:message code="FieldedSearchTitle_t" />" type="radio" id="rd-search-type-titles" name="rd-search-type" value="title:"/>
-												<label for="rd-search-type-titles">
-													&nbsp; Search Titles
-												</label>
-											</a>
-										</li>
-										<li>
-											<a title="<spring:message code="FieldedSearchWho_t" />" rel="nofollow">
-												<input title="<spring:message code="FieldedSearchWho_t" />" type="radio" id="rd-search-type-creators" name="rd-search-type" value="who:"/>
-												<label for="rd-search-type-creators">
-													&nbsp; Search Creators
-												</label>
-											</a>
-										</li>
-										<li>
-											<a title="<spring:message code="FieldedSearchWhat_t" />" rel="nofollow">
-												<input title="<spring:message code="FieldedSearchWhat_t" />" type="radio" id="rd-search-type-subjects" name="rd-search-type" value="what:" />
-												<label for="rd-search-type-subjects">
-													&nbsp; Search Subjects
-												</label>
-											</a>
-										</li>
-										<li>
-											<a title="<spring:message code="FieldedSearchWhen_t" />" rel="nofollow">
-												<input title="<spring:message code="FieldedSearchWhen_t" />" type="radio" id="rd-search-type-dates" name="rd-search-type" value="when:"/>
-												<label for="rd-search-type-dates">
-													&nbsp; Search Dates / Periods
-												</label>
-											</a>
-										</li>
-										<li>
-											<a title="<spring:message code="FieldedSearchWhere_t" />" rel="nofollow">
-												<input title="<spring:message code="FieldedSearchWhere_t" />" type="radio" id="rd-search-type-places" name="rd-search-type" value="where:"/>
-												<label for="rd-search-type-places">
-													&nbsp; Search Places
-												</label>
-											</a>
-										</li>
-									</ul>
-									
-								</div>
-								
-								
-							</li>
-								-->
-						
-						
-						
-						
 							<c:if test="${!empty model.briefBeanView.facetQueryLinks}">
 
 								<li class="facet-header">
@@ -708,7 +634,7 @@
 													</c:otherwise>
 												</c:choose>
 												<li>
-													<a ${toggle_providers} title="${entry.name}"><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+													<a ${toggle_providers} title="${entry.name}"><input type="checkbox" id="${status1.index}"/><label>${entry.name} (${entry.count})</label></a>
 													<ul class="DATA_PROVIDER">
 														<li>
 															<a><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
@@ -716,7 +642,7 @@
 														
 														<c:if test="${entry.dataProvidersListed}">
 															<c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
-																<li><a title="${dataProvider.name}" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><span>${dataProvider.name} (${dataProvider.count})</span></a></li>
+																<li><a title="${dataProvider.name}" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><label>${dataProvider.name} (${dataProvider.count})</label></a></li>
 															</c:forEach>
 														</c:if>
 												    </ul>
