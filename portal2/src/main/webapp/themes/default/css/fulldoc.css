@@ -9,13 +9,13 @@
 /* start carousel pre-load height calculation */
 
 #carousel-1-img-measure img,
-#carousel-2-img-measure img{
+#mlt .images img{
 	display:			inline-block;
 	vertical-align :	bottom;
 }
 
 #carousel-1-img-measure,
-#carousel-2-img-measure{
+#mlt .images{
 	position:		absolute;
 	white-space:	nowrap;
 }
@@ -64,7 +64,7 @@
 }
 
 
-#carousel-2{
+#mlt .carousel{
 	width:		100%;				/* height set programatically. */
 }
 

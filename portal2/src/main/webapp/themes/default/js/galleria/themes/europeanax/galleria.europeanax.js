@@ -10,8 +10,7 @@
 (function($) {
 
 /*global jQuery, Galleria */
-
-Galleria.addTheme({
+var europeanaTheme = {
 	name: 'europeanax',
 	author: 'Andy MacLean',
 	css: eu.europeana.vars.galleria.css,
@@ -22,7 +21,12 @@ Galleria.addTheme({
 		// set this to false if you want to show the caption all the time:
 		_toggleInfo: true
 	},
+	
+	
 	init: function(options) {
+		
+		//jQuery.noConflict();
+		
 		Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
 	
 		/* europeana */
@@ -112,6 +116,63 @@ Galleria.addTheme({
 				thumbNavLeft.show();					  
 			});
 			
+			thisGallery.bind("europeana",function(e) {
+				
+				//alert("got europeana event! " + loadData.tabs[index].carouselMltData );
+				//alert("got europeana event! " + window.updatedCarouselData);
+				
+				/*
+				 	we need to reuse:
+				 	
+				 	the sizing
+				 	the clicking 
+				 	the info
+				 
+				 */ 
+				
+				/*
+				thumbs = thisGallery.$( 'container' ).find('.galleria-thumbnails');
+				
+				thumbs.find('.galleria-image .europeana-carousel-info').remove();
+				
+				alert("thumbs length "  +  thumbs.find('.galleria-image').length  );
+				
+				thumbs.find('.galleria-image').each(function(i, e){
+					$('<div class="europeana-carousel-info">' + dataSource[i].title + '</div>').appendTo(e);
+					
+					$(e).unbind("mouseover").bind("mouseover", function(){					
+						thisGallery.trigger(Galleria.IDLE_EXIT);
+					});
+
+				});
+				*/
+				
+				
+				//thisGallery.init(this._options);
+				
+			      // unload the current theme
+				//Galleria.unloadTheme();
+				//alert("europeanaTheme.init  = " + europeanaTheme.init)
+		        // load a new theme
+				//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
+				
+				//europeanaTheme.init(options);
+				
+				//alert("reodne them");
+		        // run Galleria again with the new theme
+				
+				//thisGallery._options = this._options.dataSource
+				//alert(this._options.dataSource.length);//  JSON.stringify(this._options.dataSource, null, 10) );
+				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
+				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
+				
+				alert("new data source: \n\n" + JSON.stringify(window.galleriaCarouselOptions.dataSource.length) )
+				
+				Galleria.run('#mlt-carousel-0', window.galleriaCarouselOptions );//this._options );
+		        
+				
+			});
+
 						
 			thisGallery._options.responsive = false; /* disable default responsive handling (because it's rubbish) and use custom fns */
 			
@@ -557,6 +618,8 @@ Galleria.addTheme({
 		navRight.css("visibility", "visible");
 		
 	}
-});
+}
+Galleria.addTheme(europeanaTheme);
+
 
 }(jQuery));

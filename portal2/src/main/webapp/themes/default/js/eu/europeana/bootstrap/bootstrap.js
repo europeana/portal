@@ -230,7 +230,8 @@ var europeana_bootstrap = function(){
 		
 		scripts.push({
 			name : 'galleria',
-			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
+//			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
+			file : 'galleria-1.3.2' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
@@ -264,7 +265,8 @@ var europeana_bootstrap = function(){
 
 		scripts.push({
 			name : 'galleria',
-			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
+//			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
+			file : 'galleria-1.3.2' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/galleria/',			
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});

@@ -1,5 +1,9 @@
 /* Galleria Classic Theme 2012-08-07 | https://raw.github.com/aino/galleria/master/LICENSE | (c) Aino */
 
+.galleria-errors{
+	display:none;
+}
+
 #galleria-loader{height:1px!important}
 
 .europeana-carousel .galleria-thumbnails,

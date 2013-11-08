@@ -952,7 +952,7 @@ eu.europeana.fulldoc = {
 	initCarousels: function(){
 		
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
-			
+		
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
 
 			// this is where we go when there is no carosuel data or when the carousel images didn't load
@@ -1071,51 +1071,313 @@ eu.europeana.fulldoc = {
 		});
 
 		
-		if(mlt){
+		if(typeof(mlt) != 'undefined'){
 
+			var loadMltData = function(query, fn, start, qty){
+				
+				try{
+					
+					var url = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo";
+					//var url = "http://www.europeana.eu/api/v2/search.json?wskey=api2demo";
+	
+					url += '&query='	+ decodeURIComponent(query);
+					url += '&start='	+ (start ? start : 1);
+					url += '&rows='		+ (qty ? qty : 4);
+					
+					console.log(url);
+					
+					$.ajax({
+						"url":				url.replace(/&quot;/g, '"'),
+				        "dataType":			"json", 
+				        "crossDomain":		true,
+				        "type":				"POST",
+				        
+				        "fail":function(e){
+				    		alert("ERROR " + e);
+				        },
+				        "success":function(data){
+				        	fn(data);
+				        	return 0;
+						}
+					});
 
-			var loadMltData = function(query, fn){
-				
-				var url = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&profile=portal,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&profile=portal,params";
-
-				url += '&query=' + decodeURIComponent(query);
-				
-				console.log(url);
-				alert(url);
-				
-				$.ajax({
-					"url":				url.replace(/&quot;/g, '"'),
-			        "dataType":			"json", 
-			        "crossDomain":		true,
-			        "type":				"POST",
-			        
-			        "fail":function(e){
-			    		alert("ERROR " + e);
-			        },
-			        "success":function(data){
-			        	fn(data);
-					}
-				});
-			
+					
+				}
+				catch(e){
+					alert('error in ajax ' + e);
+				}
+					
 			}
 			
-			var loadSingleMltTab = function(){
+			// structure to track what's loaded
+			var loadData = { tabs:[ {}, {}, {} ] };
 			
-				var query = $('#mlt .section.active input[type=hidden]').val();
-				alert("query = " + query + " (" + query.length + ")\n\n" );// + JSON.stringify(query) );
+			var loadSingleMltTab = function(index){
+
+				var section		= $('#mlt .section.active');
+				var query		= $('#mlt a.tab-header.active input.query').val();
 				
-				var processResult = function(data){
-					alert("RESULT: " + JSON.stringify(data));
+				if(section.hasClass('loaded')){
+					return;
 				}
 				
-				loadMltData(query, processResult)
+				section.empty();
+				
+				var sectionImages	= $('<div class="images">').appendTo(section);
+				var sectionCarousel	= $('<div class="carousel europeana-carousel" id="mlt-carousel-' + index + '">').appendTo(section);
+				
+				// Load more data function
+				
+				var loadMore = function(index){
+					var start	= loadData.tabs[index].loaded + 1;
+					var qty		= $("#mobile-menu").is(":visible") ? 2 : 4;
+					loadMltData(query, processResult, start, qty)
+				};
+				
+				// function executed on ajax return
+				
+				var processResult = function(data){
+						
+					//console.log(JSON.stringify(data, null, 4));
+					
+					// Append image data to measure div and build carousel data structure
+					
+					if(!loadData.tabs[index].carouselMltData){
+						loadData.tabs[index].carouselMltData = [];
+					}
+					
+					$.each(data.items, function(i, ob){
+						
+						// console.log("ITEM: " + JSON.stringify(ob));
+						
+						sectionImages.append('<img src="' + ob.edmPreview + '">');
+						
+						loadData.tabs[index].carouselMltData[loadData.tabs[index].carouselMltData.length] = {
+							image:			ob.edmPreview[0],
+							title:			ob.title[0],
+							europeanaLink:	ob.link.substr(0, ob.link.indexOf('.json') ).replace('/api/v2/', '/portal/') + '.html'
+						};
+					});
+					//alert("appended data - " + loadData.tabs[index].carouselMltData[loadData.tabs[index].carouselMltData.length-1].europeanaLink );
+					
+					
+					var carouselInit = function(){
+						
+						// init ( / update ) carousel
+
+						// 150 too small for iphone: make min height 200
+						var maxHeight = Math.max(200, loadData.tabs[index].fnGetCarouselDimensions().h) + "px";
+						
+						sectionCarousel.css("height", maxHeight);
+					
+//	alert("call run with this data:\n\n" + JSON.stringify(loadData.tabs[index].carouselMltData, null, 6)  );
+
+						// TODO: store carousel obejct reference in the data structure for retrieval for updates.
+//alert("init 1 - index = " + index + ', element = '  +  $('#mlt-carousel-' + index).length + ', data = \n\n' + JSON.stringify(loadData.tabs[index].carouselMltData, null, 6)  );
+						
+						window.galleriaCarouselOptions = {
+
+								debug:			js.debug,
+								transition:		'fadeslide',
+								carousel:		true,
+								carouselSpeed:	1200,
+								carouselSteps:	1,
+								easing:			'galleriaOut',
+								imageCrop:		false,
+								imagePan:		false,
+								lightbox:		false,
+								responsive:		true,
+								dataSource:		loadData.tabs[index].carouselMltData,
+								thumbnails: 	true,
+								extend: function(e){
+									
+									var thisGallery = this;
+								
+									var doEllipsis = function(){
+										var ellipsisObjects = [];
+
+										$(sectionCarousel.find('.europeana-carousel-info')).each(
+											function(i, ob){
+												ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
+											}
+										);
+									
+										//$(window).euRsz(function(){
+										//	if(eu.europeana.vars.suppresResize){
+										//		return;
+										//	}
+										//	for(var i=0; i<ellipsisObjects.length; i++ ){
+										//		ellipsisObjects[i].respond();
+										//	}							
+										//});
+									};
+								
+									$(this).ready(function(e) {
+										setTimeout(doEllipsis, 1000);
+									});
+				
+									
+									this.bind("loadfinish", function(e) {
+										
+										// Link clicking
+										
+										console.log('loadfinish event');
+										
+										if(!loadData.tabs[index].setup){
+										
+											var clicked = function(clickData){
+												if(clickData.open){
+													window.location = clickData.open;
+												}									
+											};
+											
+											var dataSource		= this._options.dataSource;
+							
+											$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
+												$(ob).unbind('click');
+												$(ob).click(function(e){
+													clicked({
+														"open" : js.utils.fixSearchRowLinks(dataSource[i].europeanaLink)
+														/*
+														,
+														"ga" : {
+															"action"	: "Click-Through (link index " + i + ")",
+															"category"	: "Similar-Items-Carousel",
+															"url"		: dataSource[i].europeanaLink
+														}
+														*/
+														
+													});
+													e.stopPropagation();
+												});
+												$(ob).find('img').attr('alt',	loadData.tabs[index].carouselMltData[i].title);
+												$(ob).find('img').attr('title', loadData.tabs[index].carouselMltData[i].title);
+											});
+											loadData.tabs[index].setup = true;
+										}
+									}); // end loadFinish
+									
+									// loads a single record
+									
+									this.doLoadMore = function(data){
+										this.push(data);
+									}
+									
+									//alert("end carousel int run....")
+									
+								} // end extend
+							};
+						
+						loadData.tabs[index].carousel = Galleria.run('#mlt-carousel-' + index, window.galleriaCarouselOptions); // end run
+						
+						
+						
+						//alert("end carousel int")
+						
+						
+						
+					} // end carouselInit()
+					
+					
+					// First load initialises the carousel for this tab
+					
+					if(typeof(loadData.tabs[index].carousel) == 'undefined'){
+						
+						sectionImages.imagesLoaded( function($images, $proper, $broken){
+							
+							loadData.tabs[index].fnGetCarouselDimensions = function(){
+								
+								sectionImages.css("display", "inline-block");
+								
+				  				var tallestImageH	= sectionImages.height();
+				  				
+				  				sectionImages.css("display", "block");
+				  				
+				  				var widestImageW	= sectionImages.width();
+				  				
+				  				sectionImages.css("display", "none");
+				  				
+				  				return {w:widestImageW, h:tallestImageH};
+							};
+							
+							sectionImages.css("display", "none");
+							carouselInit();
+						});
+					}
+					else{
+						
+						for(var i=data.items.length; i>0; i--){
+							loadData.tabs[index].carousel.get(0).doLoadMore(
+								loadData.tabs[index].carouselMltData[loadData.tabs[index].carouselMltData.length-i]
+							)
+						}
+						
+						
+						//alert(  Galleria.unloadTheme();
+						
+						window.updatedCarouselData = loadData.tabs[index].carouselMltData;
+						
+						loadData.tabs[index].carousel.get(0).trigger('europeana');
+
+//						loadData.tabs[index].carousel.get(0)._run();  // works but doesn't do text
+						//loadData.tabs[index].carousel.europeanaInfo();
+						
+						/*
+						loadData.tabs[index].carousel.get(0).destroy();
+						alert("destroyed " + carouselInit);
+						carouselInit();
+						alert("remade");
+						*/
+					}
+					
+					// Update data tracking model
+					
+					loadData.tabs[index].loaded	= typeof loadData.tabs[index].loaded == 'undefined' ? data.itemsCount : loadData.tabs[index].loaded + data.itemsCount;
+					loadData.tabs[index].total	= data.totalResults;
+					
+					console.log("Load Data:\n" + JSON.stringify(loadData, null, 4) );
+
+					// Add load-more links
+
+					if(loadData.tabs[index].loaded < loadData.tabs[index].total){
+						
+						if(!section.hasClass('loaded')){
+							
+							section.append('<br />');				
+							
+							var loadMoreLink = $('<a class="load-more" href="javascript:void(0);">Load more....</a>').appendTo(section);
+							loadMoreLink.click(function(e){
+								e.preventDefault();
+								loadMore(function(){ return index }());
+							});
+							
+						}
+						
+					}
+					else{
+						section.remove('.load-more');
+					}
+					
+					
+					if(loadData.tabs[index].total > 12){
+						if(!section.hasClass('loaded')){
+							section.append('<br/><a href="/portal/search.html?query=' + query + '&rows=24" target="_new">Load all</a>');
+						}
+					}
+					
+					section.addClass('loaded');
+					
+				};
+				
+				loadMltData(query, processResult);
+
+			};
 			
-			}
 			
-			
-			new AccordionTabs( $('#mlt'),
-				function(something){
-					loadSingleMltTab();
+			new AccordionTabs( 
+				$('#mlt'),
+				function(index){
+					loadSingleMltTab(index);			
 				}
 			);
 			

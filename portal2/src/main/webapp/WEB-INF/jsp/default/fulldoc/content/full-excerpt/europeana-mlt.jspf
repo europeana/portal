@@ -4,28 +4,33 @@
 
 
 <c:if test="${!empty model.europeanaMlt && fn:length(model.europeanaMlt.categories) > 0}">
-	<div>
-		<strong><spring:message code="see_also_header_t" /></strong>
-	</div>
-	
+
 	<script type="text/javascript">
 		var mlt = true;
 	</script>
+	
+	<div style="margin-top:1.5em; margin-bottom:1.5em;">
+		<strong><spring:message code="see_also_header_t" /></strong>
+	</div>
+	
+	
 	
 	
 	<div id="mlt" class="accordion-tabs">
 
 		<c:forEach items="${model.europeanaMlt.categories}" var="category" varStatus="catStatus">
 		
-			<a class="tab-header"><spring:message code="${category.translationKey}" />: ${category.name}</a>
+			<c:set var="api_query">${fn:replace(category.query, "\"", "&quot;")}</c:set>
+			
+			<a class="tab-header">
+				<spring:message code="${category.translationKey}" />: ${category.name}
+				<input id="similiar-category-${catStatus.index}" type="hidden" class="query" value="${fn:escapeXml(api_query)}">
+			</a>
 			
 			<div class="section">
 				<div class="content">
 					<div class="content-inner">
 						
-						<c:set var="api_query">${fn:replace(category.query, "\"", "&quot;")}</c:set>
-
-						<input id="similiar-category-${catStatus.index}" type="hidden" value="${fn:escapeXml(api_query)}">
 						
 						<ul>
 							<c:forEach items="${category.urls}" var="link">
