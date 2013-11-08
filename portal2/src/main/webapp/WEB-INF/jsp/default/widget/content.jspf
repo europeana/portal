@@ -637,7 +637,7 @@
 													<a ${toggle_providers} title="${entry.name}"><input type="checkbox" id="${status1.index}"/><label>${entry.name} (${entry.count})</label></a>
 													<ul class="DATA_PROVIDER">
 														<li>
-															<a><input type="checkbox" id="${status1.index}"/><span>${entry.name} (${entry.count})</span></a>
+															<a><input type="checkbox" id="${status1.index}"/><label>${entry.name} (${entry.count})</label></a>
 														</li>
 														
 														<c:if test="${entry.dataProvidersListed}">

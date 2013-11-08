@@ -88,7 +88,7 @@ var EuWidgetWizard = function(cmpIn, options){
 					var providerInput = provider.children('a').children('input');
 					
 					if(providerInput.prop('checked')){
-						var name = providerInput.next('span').html();
+						var name = providerInput.next('label').html();
 						result += param() + 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
 					}
 					else{
@@ -97,7 +97,7 @@ var EuWidgetWizard = function(cmpIn, options){
 							var dataProviderInput = dataProvider.children('a').children('input');
 	
 							if(dataProviderInput.prop('checked')){
-								var name          = dataProviderInput.next('span').html();
+								var name          = dataProviderInput.next('label').html();
 								result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
 							}
 							
@@ -428,7 +428,7 @@ var EuWidgetWizard = function(cmpIn, options){
 							if(ob.prop('checked')){
 								show = true;
 								var removeLink = $('<span class="remove-link icon-remove small">').appendTo('.choices');
-								var text = ob.next('span').html();
+								var text = ob.next('label').html();
 								
 								removeLink.attr("title", text);
 								removeLink.html('<span>&nbsp;' + text + '</span>');
@@ -662,7 +662,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				var providerInput = provider.children('a').children('input');
 				
 				if(providerInput.prop('checked')){
-					var name = providerInput.next('span').html();
+					var name = providerInput.next('label').html();
 					query += '&qf=PROVIDER:"' + cleanName(name) + '"';
 				}
 				else{
@@ -671,7 +671,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						var dataProviderInput = dataProvider.children('a').children('input');
 
 						if(dataProviderInput.prop('checked')){
-							var name          = dataProviderInput.next('span').html();
+							var name          = dataProviderInput.next('label').html();
 							query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
 						}
 						
@@ -782,7 +782,7 @@ var EuWidgetWizard = function(cmpIn, options){
         					item.show();
         					
         					if(facet.name == 'PROVIDER'){
-        						console.log( 'field.label = ' + field.label + ' (' + item.length + ')(' + label.length + '), ' + field.count );
+        						//console.log( 'field.label = ' + field.label + ' (' + item.length + ')(' + label.length + '), ' + field.count );
         					}
         					
         					if(label.length ){
