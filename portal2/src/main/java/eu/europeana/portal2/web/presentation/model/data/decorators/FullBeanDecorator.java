@@ -40,6 +40,7 @@ import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
@@ -48,10 +49,13 @@ public class FullBeanDecorator implements FullBean {
 	private FullBean fulldoc;
 
 	private FullBeanShortcut shortcut;
+	
+	private EuropeanaUrlService europeanaUrlService;
 
 	public FullBeanDecorator(FullBean fulldoc) {
 		this.fulldoc = fulldoc;
 		this.shortcut = new FullBeanShortcut((FullBeanImpl) fulldoc);
+		europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
 	}
 
 	/**
@@ -150,7 +154,7 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	public String getCannonicalUrl() {
-		return EuropeanaUrlServiceImpl.getBeanInstance().getPortalResolve(fulldoc.getAbout());
+		return europeanaUrlService.getPortalResolve(fulldoc.getAbout());
 	}
 
 	@Override
@@ -395,7 +399,16 @@ public class FullBeanDecorator implements FullBean {
 
 	@Override
 	public EuropeanaAggregation getEuropeanaAggregation() {
-		return fulldoc.getEuropeanaAggregation();
+		EuropeanaAggregation europeanaAggregation = fulldoc.getEuropeanaAggregation();
+		String edmPreview = "";
+		if (this.getAggregations().get(0).getEdmObject() != null) {
+			String url = this.getAggregations().get(0).getEdmObject();
+			if (StringUtils.isNotBlank(url)) {
+				edmPreview = europeanaUrlService.getThumbnailUrl(url, getType()).toString();
+			}
+		}
+		europeanaAggregation.setEdmPreview(edmPreview);
+		return europeanaAggregation;
 	}
 
 	@Override
