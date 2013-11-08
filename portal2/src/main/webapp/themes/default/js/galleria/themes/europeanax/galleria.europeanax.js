@@ -166,10 +166,9 @@ var europeanaTheme = {
 				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
 				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
 				
-				alert("new data source: \n\n" + JSON.stringify(window.galleriaCarouselOptions.dataSource.length) )
+				console.log( JSON.stringify(window.galleriaCarouselOptions.dataSource, null, 4) );
 				
 				Galleria.run('#mlt-carousel-0', window.galleriaCarouselOptions );//this._options );
-		        
 				
 			});
 

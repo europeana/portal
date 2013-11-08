@@ -1223,19 +1223,30 @@ eu.europeana.fulldoc = {
 										
 										console.log('loadfinish event');
 										
-										if(!loadData.tabs[index].setup){
+										//alert("load finish");
+										
+										if(true ||  !loadData.tabs[index].setup){
 										
 											var clicked = function(clickData){
+												
+//												alert(JSON.stringify(clickData));
+												
 												if(clickData.open){
 													window.location = clickData.open;
 												}									
 											};
 											
 											var dataSource		= this._options.dataSource;
+											//var dataSource		= loadData.tabs[index].carouselMltData
 							
 											$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
 												$(ob).unbind('click');
 												$(ob).click(function(e){
+													
+													
+//													alert("click")
+													
+													
 													clicked({
 														"open" : js.utils.fixSearchRowLinks(dataSource[i].europeanaLink)
 														/*
@@ -1268,6 +1279,8 @@ eu.europeana.fulldoc = {
 								} // end extend
 							};
 						
+						
+						window.galleriaCarouselOptions.dataSource = loadData.tabs[index].carouselMltData 
 						loadData.tabs[index].carousel = Galleria.run('#mlt-carousel-' + index, window.galleriaCarouselOptions); // end run
 						
 						
