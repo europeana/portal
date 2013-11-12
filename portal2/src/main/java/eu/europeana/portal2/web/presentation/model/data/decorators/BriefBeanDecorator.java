@@ -345,4 +345,14 @@ public class BriefBeanDecorator implements BriefBean {
 	public float getScore(){
 		return briefBean.getScore();
 	}
+
+	@Override
+	public Date getTimestampCreated() {
+		return briefBean.getTimestampCreated();
+	}
+
+	@Override
+	public Date getTimestampUpdated() {
+		return briefBean.getTimestampUpdated();
+	}
 }

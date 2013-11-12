@@ -39,7 +39,8 @@ public class BriefBeanImpl implements BriefBean {
 	private boolean isOptedOut;
 	private String[] edmPreview;
 	private float score;
-
+	private Date timestampCreated;
+	private Date timestampUpdated;
 	
 	@Override
 	public String getId() {
@@ -311,6 +312,14 @@ public class BriefBeanImpl implements BriefBean {
 	@Override
 	public float getScore() {
 		return this.score;
+	}
+	@Override
+	public Date getTimestampCreated() {
+		return this.timestampCreated;
+	}
+	@Override
+	public Date getTimestampUpdated() {
+		return this.timestampUpdated;
 	}
 	
 }

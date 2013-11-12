@@ -439,4 +439,24 @@ public class FullBeanDecorator implements FullBean {
 	public void setOptOut(boolean optOut) {
 		fulldoc.setOptOut(optOut);
 	}
+
+	@Override
+	public Date getTimestampCreated() {
+		return fulldoc.getTimestampCreated();
+	}
+
+	@Override
+	public Date getTimestampUpdated() {
+		return fulldoc.getTimestampUpdated();
+	}
+
+	@Override
+	public void setTimestampCreated(Date timestampCreated) {
+		fulldoc.setTimestampCreated(timestampCreated);
+	}
+
+	@Override
+	public void setTimestampUpdated(Date timestampUpdated) {
+		fulldoc.setTimestampUpdated(timestampUpdated);
+	}
 }
