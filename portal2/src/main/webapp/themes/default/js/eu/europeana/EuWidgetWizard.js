@@ -29,7 +29,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	
     
 	var cleanName = function(name){
-		return name.replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		return  name.replace(/"/g, '\\\"').replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 	};
 	
     var showSpinner = function(){
@@ -780,10 +780,7 @@ var EuWidgetWizard = function(cmpIn, options){
         		  			var label = $(item).find('>label');
 
         					item.show();
-        					console.log("FACET NAME  " + facet.name)
-        					if(facet.name == 'PROVIDER'){
-        						//console.log( 'field.label = ' + field.label + ' (' + item.length + ')(' + label.length + '), ' + field.count );
-        					}
+
         					
         					if(label.length ){
         						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
@@ -792,67 +789,6 @@ var EuWidgetWizard = function(cmpIn, options){
         				});
         		  	
         		  	}
-
-	        		
-        		 	//  console.log( JSON.stringify ( data.facets, null, 4) );
-        		 	
-        		 	
-    				/*
-	        		if(facet.name == 'PROVIDER'){
-	        			$.each(facet.fields, function(j, field){
-	        				providerOps.find('a[title="' + field.label + '"]').show();
-	        			});
-	        		}
-	        		else if(facet.name == 'DATA_PROVIDER'){
-	        			$.each(facet.fields, function(j, field){
-	        				var dp = dataProviderOps.find('a[title="' + field.label + '"]');
-	        				dp.show();
-	        				dp.closest('ul.DATA_PROVIDER').prev('a').show();
-	        				
-	        			});
-	        		}
-	        		
-	        		if(facet.name == 'TYPE'){
-	        			$.each(facet.fields, function(j, field){
-	        				typeOps.find('a[title="' + field.label + '"]').show();
-	        			});
-	        		}
-	        		else if(facet.name == 'LANGUAGE'){
-	        			$.each(facet.fields, function(j, field){
-	        				langOps.find('a[title="' + field.label + '"]').show();
-	        			});
-	        		}
-	        		else if(facet.name == 'COUNTRY'){
-	        			$.each(facet.fields, function(j, field){
-	        				countryOps.find('a[title="' + field.label + '"]').show();
-	        			});
-	        		}
-	        		else if(facet.name == 'RIGHTS'){
-	        			$.each(facet.fields, function(j, field){
-	        				
-	        				//console.log("RIGHTS field.label " + field.label);
-	        				
-	        				
-	        				 // ERROR:
-	        				 //
-	        				 //1) ADD FACET:
-	        				 //		CC BY-SA (1173821) 
-	        				 //
-	        				 //2) ADD FACET
-	        				 //		SOUND (484303)
-	        				 //
-	        				 //NOTE THAT THE ORIGINAL FACET VANISHES.
-	        				 //
-	        				 //
-	        				 //CAUSE:
-	        				 //
-	        				 //THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
-	        				
-	        				//copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '*"]').show();
-	        				copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '"]').show();
-	        			});
-	        		}
-	        		*/
         		 	
 	        	});
 	        	hideSpinner();
