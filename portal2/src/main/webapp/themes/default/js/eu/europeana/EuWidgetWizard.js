@@ -690,7 +690,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			console.log("Error in updateAvailableFacets: " + e);
 		}
 		
-		var postUrl = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=portal,params";
+		var postUrl = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
 		
 		$.ajax({
 			"url":				postUrl + query,
