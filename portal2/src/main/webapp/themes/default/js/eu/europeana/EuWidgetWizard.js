@@ -509,11 +509,10 @@ var EuWidgetWizard = function(cmpIn, options){
 			            	if(self.sub){
 			            		self.sub.find('li').each(function(j, subItem){
 			            			subItem = $(subItem);
-			            			var subText = subItem.find('span').html().toUpperCase();
+			            			var subText = subItem.find('label').html().toUpperCase();
 			            			self.subItems[self.subItems.length] = {"t" : subText, "e" : subItem };
 			            		});
 			            	}
-
 							self.text		= el.html().toUpperCase();
 							
 							return {
@@ -523,7 +522,8 @@ var EuWidgetWizard = function(cmpIn, options){
 					            	if(self.sub){
 					            		self.sub.find('li').each(function(j, subItem){
 					            			subItem = $(subItem);
-					            			var subText = subItem.find('span').html().toUpperCase();
+					            			
+					            			var subText = subItem.find('label').html().toUpperCase();
 					            			
 					            			if(re.test(subText)){
 					            				subItem.show();
@@ -780,7 +780,7 @@ var EuWidgetWizard = function(cmpIn, options){
         		  			var label = $(item).find('>label');
 
         					item.show();
-        					
+        					console.log("FACET NAME  " + facet.name)
         					if(facet.name == 'PROVIDER'){
         						//console.log( 'field.label = ' + field.label + ' (' + item.length + ')(' + label.length + '), ' + field.count );
         					}
