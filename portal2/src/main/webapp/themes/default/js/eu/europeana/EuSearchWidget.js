@@ -813,7 +813,19 @@ var rootUrl;
 var rootJsUrl;
 
 var withJQuery = function($){
-	$(document).ready(function(){
+	
+	$(document).ready(function($){
+
+
+		/*	workaround for dealiased jQuery used to fix issue #1053
+		 *   
+		 *  proper fix requires all js files to be rewritten (scope $ to their respective ready callbacks).
+		 *  
+		 * */
+		
+		if(typeof window.$ == 'undefined'){
+			window.$ = jQuery;
+		}
 
 		var dependencies = [
 		            		'utils.js',
@@ -859,14 +871,14 @@ if(typeof jQuery == "undefined"){
 
 	if ( 'onload' in document || 'addEventListener' in window ) {
 		jq.onload = function() {
-			withJQuery($);
+			withJQuery(jQuery);
 		};
 		
 	}
 	else if ( 'onreadystatechange' in document ) {
 		jq.onreadystatechange = function () {
 			if ( jq.readyState === 'loaded' || jq.readyState === 'complete' ) {
-				withJQuery($);
+				withJQuery(jQuery);
 			}
 		};
 	}
