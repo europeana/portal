@@ -1158,8 +1158,6 @@ eu.europeana.fulldoc = {
 							europeanaLink:	ob.link.substr(0, ob.link.indexOf('.json') ).replace('/api/v2/', '/portal/') + '.html'
 						};
 					});
-					//alert("appended data - " + loadData.tabs[index].carouselMltData[loadData.tabs[index].carouselMltData.length-1].europeanaLink );
-					
 					
 					var carouselInit = function(){
 						
@@ -1170,10 +1168,6 @@ eu.europeana.fulldoc = {
 						
 						sectionCarousel.css("height", maxHeight);
 					
-//	alert("call run with this data:\n\n" + JSON.stringify(loadData.tabs[index].carouselMltData, null, 6)  );
-
-						// TODO: store carousel obejct reference in the data structure for retrieval for updates.
-//alert("init 1 - index = " + index + ', element = '  +  $('#mlt-carousel-' + index).length + ', data = \n\n' + JSON.stringify(loadData.tabs[index].carouselMltData, null, 6)  );
 						
 						window.galleriaCarouselOptions = {
 
@@ -1324,23 +1318,8 @@ eu.europeana.fulldoc = {
 								loadData.tabs[index].carouselMltData[loadData.tabs[index].carouselMltData.length-i]
 							)
 						}
-						
-						
-						//alert(  Galleria.unloadTheme();
-						
 						window.updatedCarouselData = loadData.tabs[index].carouselMltData;
-						
 						loadData.tabs[index].carousel.get(0).trigger('europeana');
-
-//						loadData.tabs[index].carousel.get(0)._run();  // works but doesn't do text
-						//loadData.tabs[index].carousel.europeanaInfo();
-						
-						/*
-						loadData.tabs[index].carousel.get(0).destroy();
-						alert("destroyed " + carouselInit);
-						carouselInit();
-						alert("remade");
-						*/
 					}
 					
 					// Update data tracking model

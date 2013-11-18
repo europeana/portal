@@ -146,7 +146,8 @@ eu.europeana.lightbox = function(){
 			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
 		){
 			if(typeof callback != "undefined"){
-				callback(700, 450);				
+//				callback(700, 450);			
+				callback(2000, 2000);				
 			}
 			return;
 		}
@@ -181,6 +182,7 @@ eu.europeana.lightbox = function(){
 		 */ 
 		self.showingEl	= switchTypeIfNeeded();
 		if(self.showingEl == 'IFRAME'){
+			//alert(1);
 			//return;
 		}
 		
@@ -199,6 +201,7 @@ eu.europeana.lightbox = function(){
 		var	aspectRight	= (imgW + infoW) / imgH;
 		var	aspectImg	= imgW / imgH;
 		var	aspectZoom	= imgW / imgH;
+		
 		
 		var aspectClosest	= null;
 		$.each([aspectUnder, aspectRight], function(){
@@ -219,9 +222,10 @@ eu.europeana.lightbox = function(){
 		) - brdr;
 		
 		var testDimensions = function(w, h, rec){
+			
 			var projectedHeight	= (w/aspectImg);
 			var projectedWidth	= (h*aspectImg);
-
+			
 			if(rec > 30){
 				//js.console.log('avoid infinite recursion');
 				return [projectedWidth, projectedHeight];
@@ -241,9 +245,6 @@ eu.europeana.lightbox = function(){
 		var availableWidth =	parseInt($(window).width()) - brdr;
 		
 		
-
-//		js.console.log(  (dim[0]*dim[1])  + "  v  "  + (dimZ[0]*dimZ[1])  );
-		
 		var isZoomable = false;
 		var dimZ = testDimensions(imgW, imgH, 0);
 		if( (dim[0]*dim[1]) < (dimZ[0]*dimZ[1]) ){
@@ -252,8 +253,16 @@ eu.europeana.lightbox = function(){
 		
 		// set img
 		
+		
 		img.css('width',		dim[0] + "px");
 		img.css('min-width',	dim[0] + "px");	/*	additional rule needed for ie8	*/
+		
+		
+		if(self.showingEl == 'IFRAME'){
+			img.css('height',		dim[1] + "px");
+		}
+
+		
 		$("#lightbox").css("visibility", "visible");
 		
 		// set meta
@@ -325,7 +334,11 @@ eu.europeana.lightbox = function(){
 
 				// if info is hidden...
 				
-				if( info.find('ul')[0].offsetHeight > info.height()+3 ){/* chrome +3 for border */
+				
+				/* chrome +3 for border */
+				if(
+					( info.find('ul')[0].offsetHeight > info.height()+3 ) || self.showingEl == 'IFRAME' 
+				){
 					
 					var showShow = function(){
 						show.show();
@@ -338,6 +351,7 @@ eu.europeana.lightbox = function(){
 						show.hide();
 						info.css('overflow-y', 'auto');
 					};
+
 					
 					info.height() > self.infoH ? showHide() : showShow();
 
@@ -350,6 +364,7 @@ eu.europeana.lightbox = function(){
 					em = em.height();
 					info.find('.test').remove();
 					
+					
 					// get natural height of list
 					
 					var list = info.find('ul'); 
@@ -359,7 +374,7 @@ eu.europeana.lightbox = function(){
 					var naturalHeight	= list.height() + (2 * em);
 
 					list.css('height', '100%');
-
+					
 					// BUG: when info under, expanded, scrolled then page resized (narrower), list is still "scrolled"
 					//var ref = info.css('overflow-y');
 					//info.css('overflow-y', 'auto');
@@ -367,14 +382,26 @@ eu.europeana.lightbox = function(){
 					//info.css('overflow-y', ref);
 					
 					if(availHeight >= naturalHeight){
+						
 						info.css('height', naturalHeight + 1);  // add the one to stop a .2 pixel height variation causing a scrollbar to appear 
 						hideBoth();
 					}
+					
 					
 					show.unbind('click').click(function(){
 						info.css('height',	availHeight + em + 'px');
 						showHide();
 					});
+
+					
+					if(self.showingEl == 'IFRAME'){
+						showBoth();
+						info.css('height', self.infoH + 'px');
+						showShow();
+						return;
+					}
+
+					
 				}
 			}			
 		}
