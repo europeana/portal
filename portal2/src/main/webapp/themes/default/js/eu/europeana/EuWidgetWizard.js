@@ -32,6 +32,18 @@ var EuWidgetWizard = function(cmpIn, options){
 		return  name.replace(/"/g, '\\\"').replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 	};
 	
+	var uncleanName = function(name){
+		return name;
+		/*
+		if(name.toUpperCase().indexOf('SKOP') > -1){			
+			console.log(name + "   " + name.replace(/\\\"/g, '"') );
+			console.log(name + "   " + name.replace(/\\"/g, '"') );
+		}
+		
+		return  name.replace(/\\\"/g, '"');
+		*/
+	};
+	
     var showSpinner = function(){
     	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').append('<div class="wizard-overlay">');
     	
@@ -82,7 +94,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				}
 			});
 			
-			try{			
+			//try{			
 				$('.PROVIDER>li').each(function(i, ob){
 					var provider      = $(ob);
 					var providerInput = provider.children('a').children('input');
@@ -104,10 +116,10 @@ var EuWidgetWizard = function(cmpIn, options){
 						});
 					}
 				});
-			}
-			catch(e){
-				console.log("Error: " + e);
-			}
+			//}
+			//catch(e){
+			//	console.log("Error: " + e);
+			//}
 		}
 		
 		result += param() + 'withResults=' + getWithResults();
@@ -509,7 +521,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			            	if(self.sub){
 			            		self.sub.find('li').each(function(j, subItem){
 			            			subItem = $(subItem);
-			            			var subText = subItem.find('label').html().toUpperCase();
+			            			var subText = uncleanName( subItem.find('label').html() ).toUpperCase();
 			            			self.subItems[self.subItems.length] = {"t" : subText, "e" : subItem };
 			            		});
 			            	}
@@ -522,9 +534,7 @@ var EuWidgetWizard = function(cmpIn, options){
 					            	if(self.sub){
 					            		self.sub.find('li').each(function(j, subItem){
 					            			subItem = $(subItem);
-					            			
 					            			var subText = subItem.find('label').html().toUpperCase();
-					            			
 					            			if(re.test(subText)){
 					            				subItem.show();
 					            				childMatch = true;
@@ -775,12 +785,17 @@ var EuWidgetWizard = function(cmpIn, options){
         		  	else{
         		  	
         		  		$.each(facet.fields, function(j, field){
-        		  		
-        		  			var item  = ops.find('a[title="' + field.label + '"]');
+        		  			
+        		  			/*
+        		  			if(facet.name == 'DATA_PROVIDER'){
+        		  				console.log(field.label)
+        		  			}
+        		  			*/
+        		  			
+        		  			var item  = ops.find('a[title="' + uncleanName(field.label) + '"]');
         		  			var label = $(item).find('>label');
 
         					item.show();
-
         					
         					if(label.length ){
         						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
