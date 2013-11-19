@@ -181,10 +181,6 @@ eu.europeana.lightbox = function(){
 		 * 
 		 */ 
 		self.showingEl	= switchTypeIfNeeded();
-		if(self.showingEl == 'IFRAME'){
-			//alert(1);
-			//return;
-		}
 		
 		var	img		= self.cmp.find('#lightbox_image'),
 			info	= self.cmp.find('#lightbox_info');
@@ -227,11 +223,11 @@ eu.europeana.lightbox = function(){
 			var projectedWidth	= (h*aspectImg);
 			
 			if(rec > 30){
-				//js.console.log('avoid infinite recursion');
+				// Avoid infinite recursion - stop at 30
 				return [projectedWidth, projectedHeight];
 			}
 			if(projectedHeight > availableHeight || projectedWidth > availableWidth){
-				return testDimensions(	w*0.9, h*0.9, rec+1);
+				return testDimensions(	w*0.9, h*0.9, rec+1 );
 			}
 			else{
 				return [projectedWidth, projectedHeight];
@@ -247,7 +243,7 @@ eu.europeana.lightbox = function(){
 		
 		var isZoomable = false;
 		var dimZ = testDimensions(imgW, imgH, 0);
-		if( (dim[0]*dim[1]) < (dimZ[0]*dimZ[1]) ){
+		if( self.showingEl != 'IFRAME' && (dim[0]*dim[1]) < (dimZ[0]*dimZ[1]) ){
 			isZoomable = true;
 		}
 		
@@ -259,7 +255,7 @@ eu.europeana.lightbox = function(){
 		
 		
 		if(self.showingEl == 'IFRAME'){
-			img.css('height',		dim[1] + "px");
+			img.css('height',		(dim[1]-70) + "px");
 		}
 
 		
