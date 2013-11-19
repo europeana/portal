@@ -38,7 +38,7 @@
 							<a id="saved-searches-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t" />#saved-searches">${fn:length(model.user.savedSearches)}</a>
 						</c:if>
 
-						<c:if test="${!empty model.user.savedSearches}">
+						<c:if test="${!empty model.user.socialTags}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedTags_t" />:
 							<a id="saved-tags-count" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t" />#saved-tags">${fn:length(model.user.socialTags)}</a>
