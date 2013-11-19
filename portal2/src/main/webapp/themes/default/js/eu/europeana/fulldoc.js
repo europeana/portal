@@ -3,7 +3,7 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 eu.europeana.fulldoc = {
 
 	lightboxOb :  null,
-	vimeoDetect : js.debug ? 'vimeo.com/video' : 'XXXXXXXX',
+	vimeoDetect : 'vimeo.com/video',
 	permittedLbSoundCollections : js.debug ? ['2021613'] : [],
 	
 	

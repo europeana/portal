@@ -7,6 +7,10 @@
 	vertical-align:	middle;
 }
 
+iframe#lightbox_image{
+	padding: 0;
+}
+
 .lightbox_content_wrap{
 	border:			none;
 	margin:			0;
