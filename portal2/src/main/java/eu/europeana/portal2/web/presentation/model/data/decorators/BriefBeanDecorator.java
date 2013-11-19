@@ -168,7 +168,7 @@ public class BriefBeanDecorator implements BriefBean {
 			if (briefBean.getEdmObject() != null 
 				&& briefBean.getEdmObject().length > 0
 				&& !StringUtils.isBlank(briefBean.getEdmObject()[0])) {
-				tn = briefBean.getEdmObject()[0];
+				tn = briefBean.getEdmObject()[0].trim();
 			}
 			UrlBuilder url = null;
 			url = new UrlBuilder("http://europeanastatic.eu/api/image");
