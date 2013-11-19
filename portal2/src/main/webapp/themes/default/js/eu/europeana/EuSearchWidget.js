@@ -24,7 +24,6 @@ fnSearchWidget = function($, config){
     // TODO:
     // move wskey and URLs to an external .jsp generated file, in order to 
     // 1) generate URLs dinamically
-    // 2) hide wskey, and use a distinct wskey
 
     var resultServerUrl         = 'http://europeana.eu/portal';
 	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
@@ -318,21 +317,26 @@ fnSearchWidget = function($, config){
 	            );
             }
             
-            
             if(item.find('.ellipsis span span').length){
             	item.find('.ellipsis span span').attr('class', 'icon-' + ob.type.toLowerCase());
+            }
+            
+            item.find('.thumbnail').attr('data-type', ob.type.toLowerCase());
+    
+            
+            if(item.find('.thumbnail').attr('src').indexOf('europeanastatic') > -1){
+            	var newSrc =  item.find('.thumbnail').attr('src');
+            	newSrc = newSrc.replace(/type=[a-zA-Z]+/, 'type=' + ob.type.toUpperCase() );
+            	item.find('.thumbnail').attr('src', newSrc);
             }
             
             grid.append(item);
         });
 
-   //     setupEllipsis();
+        // setupEllipsis();
 
         // pagination
         
-        //var xRows = (self.resMenu1.getActive() ? parseInt(self.resMenu1.getActive()) : defaultRows);
-
-        //paginationData = {"records":data.totalResults, "rows":data.itemsCount, "start":data.start};
         paginationData = {"records":data.totalResults, "rows": data.params.rows, "start":start};
         
         //pagination.setData(data.totalResults, data.itemsCount, data.start);
