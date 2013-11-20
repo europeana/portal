@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
 import eu.europeana.corelib.definitions.model.RightsOption;
+import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.portal2.querymodel.query.FacetCountLink;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 
@@ -89,10 +90,10 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 					title = facetCountLink.getValue();
 				}
 			} else if (StringUtils.equals(type, REUSABILITY)) {
-				if (facetCountLink.getValue().equals("Free")) {
-					title = "Free reuse";
-				} else if (facetCountLink.getValue().equals("Limited")) {
-					title = "Limited reuse";
+				if (facetCountLink.getValue().equalsIgnoreCase(RightReusabilityCategorizer.OPEN)) {
+					title = "Yes, with attribution";
+				} else if (facetCountLink.getValue().equalsIgnoreCase(RightReusabilityCategorizer.RESTRICTED)) {
+					title = "Yes, with restrictions";
 				} else {
 					title = facetCountLink.getValue();
 				}

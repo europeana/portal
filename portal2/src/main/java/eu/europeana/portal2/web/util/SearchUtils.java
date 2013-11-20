@@ -146,19 +146,21 @@ public class SearchUtils {
 			return null;
 		}
 		Map<String, String> valueReplacements = new HashMap<String, String>();
+		String free = "REUSABILITY:" + RightReusabilityCategorizer.OPEN;
+		String limited = "REUSABILITY:" + RightReusabilityCategorizer.RESTRICTED;
 		int reusabilityFilters = 0;
 		for (String value : qf) {
-			if (value.equals("REUSABILITY:Free")) {
-				valueReplacements.put(value, RightReusabilityCategorizer.getFreeRightsQuery());
+			if (value.equalsIgnoreCase(free)) {
+				valueReplacements.put(value, RightReusabilityCategorizer.getOpenStringRightsQuery());
 				reusabilityFilters++;
-			} else if (value.equals("REUSABILITY:Limited")) {
-				valueReplacements.put(value, RightReusabilityCategorizer.getLimitedRightsQuery());
+			} else if (value.equalsIgnoreCase(limited)) {
+				valueReplacements.put(value, RightReusabilityCategorizer.getRestrictedRightsQuery());
 				reusabilityFilters++;
 			}
 		}
 		if (reusabilityFilters == 2) {
-			valueReplacements.put("REUSABILITY:Free", RightReusabilityCategorizer.getAllRightsQuery());
-			valueReplacements.put("REUSABILITY:Limited", "");
+			valueReplacements.put(free, RightReusabilityCategorizer.getAllRightsQuery());
+			valueReplacements.put(limited, "");
 		}
 		return valueReplacements;
 	}

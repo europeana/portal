@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.portal2.web.presentation.model.data.ApiData;
 
 /**
@@ -67,7 +68,10 @@ public class ApiConsolePage extends ApiData {
 
 	private List<String> defaultRows = Arrays.asList(new String[]{"12", "24", "48", "96"});
 
-	private List<String> supportedReusabilityValues = Arrays.asList(new String[]{"free", "limited"});
+	private List<String> supportedReusabilityValues = Arrays.asList(new String[]{
+			RightReusabilityCategorizer.OPEN, 
+			RightReusabilityCategorizer.RESTRICTED
+	});
 
 	private List<String> profiles;
 
