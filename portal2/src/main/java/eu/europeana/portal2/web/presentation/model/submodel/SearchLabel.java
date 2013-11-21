@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 
 /**
@@ -61,7 +63,7 @@ public class SearchLabel {
 	}
 
 	public void createValueCode(String field, String value) {
-		if (field.equals("REUSABILITY")) {
+		if (StringUtils.isNotBlank(field) && field.equals("REUSABILITY")) {
 			this.valueCode = RightReusabilityCategorizer.getTranslationKey(value);
 		}
 	}
