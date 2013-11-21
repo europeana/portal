@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +69,7 @@ public class ApiConsoleController {
 			@RequestParam(value = "longMax", required = false) String longMax,
 			@RequestParam(value = "yearMin", required = false) String yearMin, // temporal search values
 			@RequestParam(value = "yearMax", required = false) String yearMax,
-			@RequestParam(value = "reusability", required = false) String reusability,
+			@RequestParam(value = "reusability", required = false) String[] reusabilities,
 			HttpServletRequest request, Locale locale) {
 		log.info("===== /api/console.html =====");
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
@@ -113,8 +114,8 @@ public class ApiConsoleController {
 			}
 		}
 
-		if (!model.getSupportedReusabilityValues().contains(reusability)) {
-			reusability = null;
+		if (ArrayUtils.isNotEmpty(reusabilities)) {
+			reusabilities = checkReusabilities(reusabilities, model.getSupportedReusabilityValues().keySet());
 		}
 
 		model.setFunction(function);
@@ -134,7 +135,7 @@ public class ApiConsoleController {
 		model.setLongMax(longMax);
 		model.setYearMin(yearMin);
 		model.setYearMax(yearMax);
-		model.setReusability(reusability);
+		model.setReusability(reusabilities);
 
 		model.setProfiles(profiles);
 
@@ -179,7 +180,7 @@ public class ApiConsoleController {
 		ApiResult apiResult = null;
 		if (function.equals(SEARCH) && !StringUtils.isBlank(query)) {
 			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profile, "+"), 
-					start, rows, callback, reusability);
+					start, rows, callback, reusabilities);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
 			apiResult = api.getObject(collectionId, recordId, StringUtils.join(profile, "+"), callback);
 		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
@@ -247,4 +248,17 @@ public class ApiConsoleController {
 			allowedValues.put(defaultProfile, true);
 		}
 	}
+
+	private String[] checkReusabilities(String[] usability, Set<String> supported) {
+		List<String> allowed = new ArrayList<String>();
+		if (ArrayUtils.isNotEmpty(usability)) {
+			for (String key : usability) {
+				if (supported.contains(key.toLowerCase())) {
+					allowed.add(key.toLowerCase());
+				}
+			}
+		}
+		return allowed.toArray(new String[allowed.size()]);
+	}
+
 }

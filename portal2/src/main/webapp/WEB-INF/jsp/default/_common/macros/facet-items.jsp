@@ -1,4 +1,3 @@
-<!-- facet-items -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -11,6 +10,7 @@
 
 	<c:set var="label">
 		<c:choose>
+			<c:when test="${!empty facet_item.valueCode}"><spring:message code="${facet_item.valueCode}" /></c:when>
 			<c:when test="${!empty facet_item.title}">${facet_item.title}</c:when>
 			<c:otherwise>${facet_item.value}</c:otherwise>
 		</c:choose>
@@ -26,4 +26,3 @@
 		</h4>
 	</li>
 </c:forEach>
-<!-- /facet-items -->

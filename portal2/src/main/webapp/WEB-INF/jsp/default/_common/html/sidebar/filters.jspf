@@ -17,14 +17,21 @@
 				<c:set var="linkLabel">
 					<c:choose>
 						<c:when test="${!empty filter.fieldCode}">
-							<spring:message code="${filter.fieldCode}" />:
+							<spring:message code="${filter.fieldCode}" />
 						</c:when>
 						<c:when test="${!empty filter.field}">
-							${filter.field}:
+							${filter.field}
 						</c:when>
 						<c:otherwise></c:otherwise>
 					</c:choose>
-					${filter.label}
+					<c:if test="${!empty filter.field && filter.field != 'REUSABILITY'}">:</c:if>
+					<c:out value=" " />
+					<c:choose>
+						<c:when test="${!empty filter.valueCode}">
+							<spring:message code="${filter.valueCode}" />
+						</c:when>
+						<c:otherwise>${filter.label}</c:otherwise>
+					</c:choose>
 				</c:set>
 				<li>
 					<c:choose>

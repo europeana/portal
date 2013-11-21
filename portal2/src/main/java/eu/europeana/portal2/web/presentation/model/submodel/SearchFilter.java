@@ -20,7 +20,6 @@ public class SearchFilter {
 	private String breadcrumbLinkUrl = null;
 
 	public SearchFilter(SearchLabel label, String removeLinkUrl, String breadcrumbLinkUrl) {
-		super();
 		this.label = label;
 		this.removeLinkUrl = removeLinkUrl;
 		this.breadcrumbLinkUrl = breadcrumbLinkUrl;
@@ -67,6 +66,10 @@ public class SearchFilter {
 
 	public String getValue() {
 		return label.getValue();
+	}
+
+	public String getValueCode() {
+		return label.getValueCode();
 	}
 
 	public String getLabel() {

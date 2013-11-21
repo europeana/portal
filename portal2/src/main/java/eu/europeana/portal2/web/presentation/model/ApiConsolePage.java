@@ -1,9 +1,14 @@
 package eu.europeana.portal2.web.presentation.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.ArrayUtils;
 
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.portal2.web.presentation.model.data.ApiData;
@@ -34,7 +39,8 @@ public class ApiConsolePage extends ApiData {
 	private String longMax;
 	private String yearMin;
 	private String yearMax;
-	private String reusability;
+	private String[] reusability;
+	private Map<String, Boolean> reusabilityMap;
 
 	// record parameters
 	private String collectionId;
@@ -43,35 +49,44 @@ public class ApiConsolePage extends ApiData {
 	// suggestions parameters
 	private boolean phrases;
 
-	private List<String> supportedFunctions = Arrays.asList(new String[]{"search", "record", "suggestions"});
+	private static List<String> supportedFunctions = new ArrayList<String>();
+	static {
+		supportedFunctions.add("search");
+		supportedFunctions.add("record");
+		supportedFunctions.add("suggestions");
+	}
+
 	// TODO: add back "spelling"
-	private Map<String, Boolean> defaultSearchProfiles = new LinkedHashMap<String, Boolean>(){
-		private static final long serialVersionUID = 1L;
-		{
-			put("standard", false);
-			put("portal", false);
-			put("facets", false);
-			put("breadcrumb", false);
-			put("minimal", false);
-			put("params", false);
-		}
-	};
+	private static Map<String, Boolean> defaultSearchProfiles = new LinkedHashMap<String, Boolean>();
+	static {
+		defaultSearchProfiles.put("standard", false);
+		defaultSearchProfiles.put("portal", false);
+		defaultSearchProfiles.put("facets", false);
+		defaultSearchProfiles.put("breadcrumb", false);
+		defaultSearchProfiles.put("minimal", false);
+		defaultSearchProfiles.put("params", false);
+	}
 
-	private Map<String, Boolean> defaultObjectProfiles = new LinkedHashMap<String, Boolean>(){
-		private static final long serialVersionUID = 1L;
-		{
-			put("full", false);
-			put("similar", false);
-			put("params", false);
-		}
-	};
+	private static Map<String, Boolean> defaultObjectProfiles = new LinkedHashMap<String, Boolean>();
+	static {
+		defaultObjectProfiles.put("full", false);
+		defaultObjectProfiles.put("similar", false);
+		defaultObjectProfiles.put("params", false);
+	}
 
-	private List<String> defaultRows = Arrays.asList(new String[]{"12", "24", "48", "96"});
+	private static List<String> defaultRows = new ArrayList<String>();
+	static {
+		defaultRows.add("12");
+		defaultRows.add("24");
+		defaultRows.add("48");
+		defaultRows.add("96");
+	}
 
-	private List<String> supportedReusabilityValues = Arrays.asList(new String[]{
-			RightReusabilityCategorizer.OPEN, 
-			RightReusabilityCategorizer.RESTRICTED
-	});
+	private static List<String> supportedReusabilityValues = new ArrayList<String>();
+	static {
+		supportedReusabilityValues.add(RightReusabilityCategorizer.OPEN);
+		supportedReusabilityValues.add(RightReusabilityCategorizer.RESTRICTED);
+	}
 
 	private List<String> profiles;
 
@@ -269,15 +284,21 @@ public class ApiConsolePage extends ApiData {
 		this.profiles = profiles;
 	}
 
-	public String getReusability() {
-		return reusability;
+	public Map<String, Boolean> getReusability() {
+		if (reusabilityMap == null) {
+			reusabilityMap = new HashMap<String, Boolean>();
+			for (String key : RightReusabilityCategorizer.getReusabilityValueMap().keySet()) {
+				reusabilityMap.put(key, ArrayUtils.contains(reusability, key));
+			}
+		}
+		return reusabilityMap;
 	}
 
-	public void setReusability(String reusability) {
+	public void setReusability(String[] reusability) {
 		this.reusability = reusability;
 	}
 
-	public List<String> getSupportedReusabilityValues() {
-		return supportedReusabilityValues;
+	public Map<String, String> getSupportedReusabilityValues() {
+		return RightReusabilityCategorizer.getReusabilityValueMap();
 	}
 }

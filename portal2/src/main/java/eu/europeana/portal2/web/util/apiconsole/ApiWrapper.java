@@ -89,7 +89,7 @@ public class ApiWrapper {
 	}
 
 	public ApiResult getSearchResult(String query, String[] refinements, String profile, 
-			int start, int rows, String callback, String reusability) {
+			int start, int rows, String callback, String[] reusability) {
 		StringBuilder url = new StringBuilder(apiUrl);
 		url.append(SEARCH_PATH);
 		url.append(WSKEY_PARAM).append(api2key);
@@ -107,8 +107,10 @@ public class ApiWrapper {
 		url.append(START_PARAM).append(start);
 		url.append(ROWS_PARAM).append(rows);
 		url.append(PROFILE_PARAM).append(profile);
-		if (StringUtils.isNotBlank(reusability)) {
-			url.append(REUSABILITY_PARAM).append(reusability);
+		if (ArrayUtils.isNotEmpty(reusability)) {
+			for (String key : reusability) {
+				url.append(REUSABILITY_PARAM).append(key);
+			}
 		}
 		if (StringUtils.isNotBlank(callback)) {
 			url.append(CALLBACK_PARAM).append(callback);

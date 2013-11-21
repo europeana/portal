@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
+
 /**
  * Label for a search field.
  * 
@@ -22,39 +24,46 @@ public class SearchLabel {
 	/** The field value to search for */
 	String value;
 
+	/** The translation code for field */
+	String valueCode;
+
 	/** The human readable value */
 	String label;
 
-	private static Map<String, String> fieldCodeMap = Collections.unmodifiableMap(new HashMap<String, String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			put("COUNTRY", "ByCountry_t");
-			// put("completeness", "?????");
-			put("LANGUAGE", "ByLanguage_t");
-			put("PROVIDER", "ByProvider_t");
-			put("DATA_PROVIDER", "ByDataProvider_t");
-			put("RIGHTS", "byCopyright_t");
-			put("TYPE", "ByMediatype_t");
-			put("YEAR", "Bydate_t");
-			put("REUSABILITY", "byReusability_t");
-		}
-	});
+	private static Map<String, String> fieldCodeMap = new HashMap<String, String>();
+	static {
+		fieldCodeMap.put("COUNTRY", "ByCountry_t");
+		fieldCodeMap.put("LANGUAGE", "ByLanguage_t");
+		fieldCodeMap.put("PROVIDER", "ByProvider_t");
+		fieldCodeMap.put("DATA_PROVIDER", "ByDataProvider_t");
+		fieldCodeMap.put("RIGHTS", "byCopyright_t");
+		fieldCodeMap.put("TYPE", "ByMediatype_t");
+		fieldCodeMap.put("YEAR", "Bydate_t");
+		fieldCodeMap.put("REUSABILITY", "byReusability_t");
+		fieldCodeMap = Collections.unmodifiableMap(fieldCodeMap);
+	}
 
 	public SearchLabel(String field, String value) {
-		super();
 		this.field = field;
 		this.value = value;
 		this.fieldCode = fieldCodeMap.containsKey(field) ? fieldCodeMap.get(field) : null;
 		// TODO: add some logic here
 		this.label = value;
+		createValueCode(field, value);
 	}
 
 	public SearchLabel(String field, String fieldCode, String value, String label) {
-		super();
 		this.field = field;
 		this.fieldCode = fieldCode;
 		this.value = value;
 		this.label = label;
+		createValueCode(field, value);
+	}
+
+	public void createValueCode(String field, String value) {
+		if (field.equals("REUSABILITY")) {
+			this.valueCode = RightReusabilityCategorizer.getTranslationKey(value);
+		}
 	}
 
 	public String getField() {
@@ -81,6 +90,14 @@ public class SearchLabel {
 		this.value = value;
 	}
 
+	public String getValueCode() {
+		return valueCode;
+	}
+
+	public void setValueCode(String valueCode) {
+		this.valueCode = valueCode;
+	}
+
 	public String getLabel() {
 		return label;
 	}
@@ -91,6 +108,10 @@ public class SearchLabel {
 
 	@Override
 	public String toString() {
-		return "SearchLabel [field=" + field + ", fieldCode=" + fieldCode + ", value=" + value + ", label=" + label + "]";
+		return "SearchLabel [field=" + field 
+				+ ", fieldCode=" + fieldCode 
+				+ ", value=" + value 
+				+ ", valueCode=" + valueCode 
+				+ ", label=" + label + "]";
 	}
 }

@@ -40,10 +40,18 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 	private String type;
 	private String title;
 	private String value;
+	private String valueCode;
 
 	public FacetCountLinkDecorator(String type, FacetCountLink facetCountLink) {
 		this.facetCountLink = facetCountLink;
 		this.type = type;
+		createValueCode();
+	}
+
+	private void createValueCode() {
+		if (StringUtils.equals(type, REUSABILITY)) {
+			this.valueCode = RightReusabilityCategorizer.getTranslationKey(facetCountLink.getValue());
+		}
 	}
 
 	@Override
@@ -89,14 +97,6 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 				} else {
 					title = facetCountLink.getValue();
 				}
-			} else if (StringUtils.equals(type, REUSABILITY)) {
-				if (facetCountLink.getValue().equalsIgnoreCase(RightReusabilityCategorizer.OPEN)) {
-					title = "Yes, with attribution";
-				} else if (facetCountLink.getValue().equalsIgnoreCase(RightReusabilityCategorizer.RESTRICTED)) {
-					title = "Yes, with restrictions";
-				} else {
-					title = facetCountLink.getValue();
-				}
 			} else {
 				title = facetCountLink.getValue();
 				if (StringUtils.equals(type, RIGHTS)) {
@@ -115,6 +115,14 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 			}
 		}
 		return title;
+	}
+
+	public String getValueCode() {
+		if (StringUtils.equals(type, REUSABILITY)) {
+			valueCode = RightReusabilityCategorizer.getTranslationKey(facetCountLink.getValue());
+		}
+
+		return valueCode;
 	}
 
 	@Override
