@@ -4,7 +4,8 @@ eu.europeana.fulldoc = {
 
 	lightboxOb :  null,
 	vimeoDetect : 'vimeo.com/video',
-	permittedLbSoundCollections : js.debug ? ['2021613'] : [],
+	// permittedLbSoundCollections : js.debug ? ['2021613'] : [],
+	permittedLbSoundCollections : ['2021613'],
 	
 	
 /*	
