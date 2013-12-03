@@ -116,7 +116,7 @@ var europeanaTheme = {
 				thumbNavLeft.show();					  
 			});
 			
-			thisGallery.bind("europeana",function(e) {
+			thisGallery.bind("europeana", function(e) {
 				
 				//alert("got europeana event! " + loadData.tabs[index].carouselMltData );
 				//alert("got europeana event! " + window.updatedCarouselData);
@@ -166,9 +166,9 @@ var europeanaTheme = {
 				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
 				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
 				
-				console.log( JSON.stringify(window.galleriaCarouselOptions.dataSource, null, 4) );
-				
-				Galleria.run('#mlt-carousel-0', window.galleriaCarouselOptions );//this._options );
+//				console.log( JSON.stringify(window.galleriaCarouselOptions.dataSource, null, 4) );
+				//alert('run???');
+				//Galleria.run('#mlt-carousel-0', window.galleriaCarouselOptions );//this._options );
 				
 			});
 

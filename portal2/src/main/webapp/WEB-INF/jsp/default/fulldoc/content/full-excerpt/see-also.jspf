@@ -1,9 +1,14 @@
+<%--
+  
+  Moved to europeana-mlt.jspf
+  
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
   <div>
-    <strong><spring:message code="see_also_header_t" /></strong>
+    <strong>SEEALSO.jspf <spring:message code="see_also_header_t" /></strong>
   </div>
 
   <c:forEach items="${model.seeAlsoSuggestions.fields}" var="entry">
@@ -21,3 +26,6 @@
     </ul>
   </c:forEach>
 </c:if>
+
+
+--%>

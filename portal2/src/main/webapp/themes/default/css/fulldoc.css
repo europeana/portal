@@ -47,6 +47,9 @@
 	width:			100%;
 }
 
+#mlt .section{
+	padding-top: 1.5em;
+}
 
 #translate-container{
 	position:	relative;

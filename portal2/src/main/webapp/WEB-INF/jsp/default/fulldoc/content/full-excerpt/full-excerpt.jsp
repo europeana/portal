@@ -4,10 +4,14 @@
 
 <div id="excerpt">
   <div id="item-details">
-	<c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
-    <div class="sidebar-right hide-on-x">
-      <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
-    </div>
+
+	<%-- TODO: delete this block once mlt is done --%>
+	<c:if test="${model.europeanaMlt == null || empty model.europeanaMlt}">
+		<c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
+	    <div class="sidebar-right hide-on-x">
+	      <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+	    </div>
+	    </c:if>
     </c:if>
 
     <h1 class="hide-on-phones" ${model.semanticTitle}>${fn:escapeXml(model.objectTitle)}</h1>
