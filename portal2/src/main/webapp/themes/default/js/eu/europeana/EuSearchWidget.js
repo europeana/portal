@@ -1,14 +1,12 @@
 
 fnSearchWidget = function($, config){
 
-    var self                    = this;
-    var container               = false;
-    var itemTemplate            = false;
-    var facetTemplate           = false;
-    var filterTemplate          = false;
-
-    var showFacets				= false;
-    
+    var self             = this;
+    var container        = false;
+    var itemTemplate     = false;
+    var facetTemplate    = false;
+    var filterTemplate   = false;
+    var showFacets       = false;
     
     if( typeof config != 'undefined' ){
     	//console.log("config supplied: " + JSON.stringify(config) );

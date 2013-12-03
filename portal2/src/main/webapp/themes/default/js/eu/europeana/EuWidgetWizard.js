@@ -31,19 +31,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	var cleanName = function(name){
 		return  name.replace(/"/g, '\\\"').replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 	};
-	
-	var uncleanName = function(name){
-		return name;
-		/*
-		if(name.toUpperCase().indexOf('SKOP') > -1){			
-			console.log(name + "   " + name.replace(/\\\"/g, '"') );
-			console.log(name + "   " + name.replace(/\\"/g, '"') );
-		}
 		
-		return  name.replace(/\\\"/g, '"');
-		*/
-	};
-	
     var showSpinner = function(){
     	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').append('<div class="wizard-overlay">');
     	
@@ -78,8 +66,14 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		var searchPrefix = $('input[name=rd-search-type]:checked').val();
 		searchPrefix = typeof searchPrefix == 'undefined' ? '' : searchPrefix;
+
+		
+		// Facets
 		
 		if(self.initialisedTabs[1]){
+			
+			// non-provider facets
+			
 			var query = searchPrefix + $('.widget-configuration .default_query').val();
 			if(query){
 				result += param() + 'query=' + query;			
@@ -93,33 +87,47 @@ var EuWidgetWizard = function(cmpIn, options){
 					result += name;
 				}
 			});
+
+			// Providers
 			
-			//try{			
-				$('.PROVIDER>li').each(function(i, ob){
-					var provider      = $(ob);
-					var providerInput = provider.children('a').children('input');
+			var debug = '';
+			
+			$('.PROVIDER>li').each(function(i, ob){
+				var provider      = $(ob);
+				var providerInput = provider.children('a').children('input');
+				
+				// a checked provider includes all child data_providers
+				
+				var name			= providerInput.next('label').html();
+				var providerParam	= 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
+
+				if(providerInput.prop('checked')){
+					result += param() + providerParam;
+				}
+				else{
+					var subtractUrl = '';
+					var resultFragment = '';
 					
-					if(providerInput.prop('checked')){
-						var name = providerInput.next('label').html();
-						result += param() + 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
-					}
-					else{
-						provider.find('.DATA_PROVIDER>li').each(function(j, dp){
-							var dataProvider      = $(dp);
-							var dataProviderInput = dataProvider.children('a').children('input');
-	
-							if(dataProviderInput.prop('checked')){
-								var name          = dataProviderInput.next('label').html();
-								result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
-							}
-							
-						});
-					}
-				});
-			//}
-			//catch(e){
-			//	console.log("Error: " + e);
-			//}
+					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
+						var dataProvider      = $(dp);
+						var dataProviderInput = dataProvider.children('a').children('input');
+						var name              = dataProviderInput.next('label').html();
+
+						if(dataProviderInput.prop('checked')){
+							//result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+						}
+						else{
+							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+						}
+					});
+					
+					// which is shorter?  Use that!
+					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
+				}
+			});
+
+				
 		}
 		
 		result += param() + 'withResults=' + getWithResults();
@@ -521,7 +529,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			            	if(self.sub){
 			            		self.sub.find('li').each(function(j, subItem){
 			            			subItem = $(subItem);
-			            			var subText = uncleanName( subItem.find('label').html() ).toUpperCase();
+			            			var subText = subItem.find('label').html().toUpperCase();
 			            			self.subItems[self.subItems.length] = {"t" : subText, "e" : subItem };
 			            		});
 			            	}
@@ -666,39 +674,64 @@ var EuWidgetWizard = function(cmpIn, options){
 		// construct query
 		
 		var query = "";
-		try{			
+		//try{			
 			$('.PROVIDER>li').each(function(i, ob){
-				var provider      = $(ob);
-				var providerInput = provider.children('a').children('input');
+				var provider       = $(ob);
+				var providerInput  = provider.children('a').children('input');
+				
+				var name           = providerInput.next('label').html();
+				var providerParam  = '&qf=PROVIDER:"' + cleanName(name) + '"';
+
+
 				
 				if(providerInput.prop('checked')){
-					var name = providerInput.next('label').html();
-					query += '&qf=PROVIDER:"' + cleanName(name) + '"';
+					//var name = providerInput.next('label').html();
+					//query += '&qf=PROVIDER:"' + cleanName(name) + '"';
+					query += providerParam
 				}
 				else{
+					//alert('NOT CHECKED ' + providerParam)
+					var subtractUrl    = '';
+					var resultFragment = '';
+					
 					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 						var dataProvider      = $(dp);
 						var dataProviderInput = dataProvider.children('a').children('input');
+						var name              = dataProviderInput.next('label').html();
 
 						if(dataProviderInput.prop('checked')){
-							var name          = dataProviderInput.next('label').html();
-							query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
+							//query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
+							resultFragment += '&qf=DATA_PROVIDER:"' + cleanName(name) + '"';
+						}
+						else{
+							subtractUrl += '&qf=-DATA_PROVIDER:"' + cleanName(name) + '"';							
 						}
 						
 					});
+					
+					//alert(resultFragment + '\n\n - v- \n\n' + subtractUrl);
+					// which is shorter?  Use that!
+					query += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
 				}
+				
+
 			});
 			
 			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
 				if($(ob).prop('checked')){
-					query += $(ob).attr('title').replace(/\"/g, "");
+					if($(ob).attr('title')){
+						query += $(ob).attr('title').replace(/\"/g, "");						
+					}
+					else{
+						console.log('missing title for ' + $(ob).next('label').html() );
+					}
 				}
 			});
 
-		}
-		catch(e){
-			console.log("Error in updateAvailableFacets: " + e);
-		}
+		//}
+		//catch(e){
+		//	console.log("Error in updateAvailableFacets: " + e);
+		//}
 		
 		var postUrl = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
 		
@@ -726,15 +759,16 @@ var EuWidgetWizard = function(cmpIn, options){
 	        	
 	        	var providerOps = $('ul.PROVIDER li');
 	        	
-	        	if(chosenFacet != 'DATA_PROVIDER'){	        		
+	        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
 	        		providerOps.find('a').hide();
 	        	}
 	        	
 	        	
 	        	// data providers
-	        	
 	        	var dataProviderOps = $('ul.DATA_PROVIDER li');
-	        	dataProviderOps.find('a').hide();
+	        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
+	        		dataProviderOps.find('a').hide();
+	        	}
 	        	
 	        	// types
 	        	
@@ -792,7 +826,7 @@ var EuWidgetWizard = function(cmpIn, options){
         		  			}
         		  			*/
         		  			
-        		  			var item  = ops.find('a[title="' + uncleanName(field.label) + '"]');
+        		  			var item  = ops.find('a[title="' + field.label + '"]');
         		  			var label = $(item).find('>label');
 
         					item.show();
