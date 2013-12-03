@@ -146,8 +146,7 @@ eu.europeana.lightbox = function(){
 			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
 		){
 			if(typeof callback != "undefined"){
-//				callback(700, 450);			
-				callback(2000, 2000);				
+				src.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1 ? callback(2000, 2000) : callback(600, 280);				
 			}
 			return;
 		}
@@ -356,6 +355,7 @@ eu.europeana.lightbox = function(){
 						showShow();
 					});
 
+					// calculate the height of 1em
 					var em = $('<div class="test" style="height:1em;">&nbsp;</div>').appendTo(info);
 					em = em.height();
 					info.find('.test').remove();
@@ -385,7 +385,7 @@ eu.europeana.lightbox = function(){
 					
 					
 					show.unbind('click').click(function(){
-						info.css('height',	availHeight + em + 'px');
+						info.css('height',	Math.min(availHeight + em, naturalHeight) + 'px');
 						showHide();
 					});
 
