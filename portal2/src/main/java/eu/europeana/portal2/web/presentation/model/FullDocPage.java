@@ -580,10 +580,12 @@ public class FullDocPage extends FullDocPreparation {
 	public String getUrlRef() {
 		if (urlRef == null) {
 			urlRef = "#";
-			if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt")) && !StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])) {
-				urlRef = shortcut.get("EdmIsShownAt")[0];
-			} else if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy")) && !StringUtils.isBlank(shortcut.get("EdmIsShownBy")[0])) {
-				urlRef = shortcut.get("EdmIsShownBy")[0];
+			if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt")) 
+				&& !StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])) {
+				urlRef = shortcut.get("EdmIsShownAt")[0].trim();
+			} else if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy"))
+				&& !StringUtils.isBlank(shortcut.get("EdmIsShownBy")[0])) {
+				urlRef = shortcut.get("EdmIsShownBy")[0].trim();
 			}
 		}
 		return urlRef;
