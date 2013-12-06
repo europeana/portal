@@ -674,7 +674,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		// construct query
 		
 		var query = "";
-		//try{			
+		try{			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider       = $(ob);
 				var providerInput  = provider.children('a').children('input');
@@ -728,122 +728,146 @@ var EuWidgetWizard = function(cmpIn, options){
 				}
 			});
 
-		//}
-		//catch(e){
-		//	console.log("Error in updateAvailableFacets: " + e);
-		//}
+		}
+		catch(e){
+			alert("Error in updateAvailableFacets: " + e);
+		}
+		
+		var fnSuccess = function(data){
+        	// countries
+
+        	var countryOps = $('ul.COUNTRY li');
+        	countryOps.find('a').hide();
+
+        	// copyrights
+        	
+        	var copyrightOps = $('ul.RIGHTS li');
+        	copyrightOps.find('a').hide();
+        	
+        	// providers
+        	
+        	var providerOps = $('ul.PROVIDER li');
+        	
+        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
+        		providerOps.find('a').hide();
+        	}
+        	
+        	
+        	// data providers
+        	var dataProviderOps = $('ul.DATA_PROVIDER li');
+        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
+        		dataProviderOps.find('a').hide();
+        	}
+        	
+        	// types
+        	
+        	var typeOps = $('ul.TYPE li');
+        	typeOps.find('a').hide();
+        	
+        	// languages
+        	
+        	var langOps = $('ul.LANGUAGE li');	        	
+        	langOps.find('a').hide();
+        	
+        	$.each(data.facets, function(i, facet){
+        		
+    		 	var ops  = $('ul.' + facet.name);
+    		    var regX = /\(\d*\)/g;
+    		    
+    		 	if(facet.name == 'RIGHTS'){
+    		 		
+        			$.each(facet.fields, function(j, field){
+        				
+        				//console.log("RIGHTS field.label " + field.label);
+        				
+        				 // ERROR:
+        				 //
+        				 //1) ADD FACET:
+        				 //		CC BY-SA (1173821) 
+        				 //
+        				 //2) ADD FACET
+        				 //		SOUND (484303)
+        				 //
+        				 //NOTE THAT THE ORIGINAL FACET VANISHES.
+        				 //
+        				 //
+        				 //CAUSE:
+        				 //
+        				 //THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
+        				
+        				//copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '*"]').show();
+        				var item  = copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '"]');
+        				var label = $(item).find('label');
+        				item.show();
+    					if(label.length ){
+    						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
+    					}
+        			});
+    		 		
+    		  	}
+    		  	else{
+    		  	
+    		  		$.each(facet.fields, function(j, field){
+    		  			var item  = ops.find('a[title="' + field.label + '"]');
+    		  			var label = $(item).find('>label');
+
+    					item.show();
+    					
+    					if(label.length ){
+    						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
+    					}
+    					
+    				});
+    		  	
+    		  	}
+    		 	
+        	});
+        	hideSpinner();
+		};
 		
 		var postUrl = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
 		
-		$.ajax({
-			"url":				postUrl + query,
-	        "dataType":			"json", 
-	        "crossDomain":		true,
-	        "type":				"POST",
-	        "fail":function(){
-	    		hideSpinner();
-	        },
-	        "success":function(data){
-	        	
-	        	// countries
-
-	        	var countryOps = $('ul.COUNTRY li');
-	        	countryOps.find('a').hide();
-
-	        	// copyrights
-	        	
-	        	var copyrightOps = $('ul.RIGHTS li');
-	        	copyrightOps.find('a').hide();
-	        	
-	        	// providers
-	        	
-	        	var providerOps = $('ul.PROVIDER li');
-	        	
-	        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
-	        		providerOps.find('a').hide();
-	        	}
-	        	
-	        	
-	        	// data providers
-	        	var dataProviderOps = $('ul.DATA_PROVIDER li');
-	        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
-	        		dataProviderOps.find('a').hide();
-	        	}
-	        	
-	        	// types
-	        	
-	        	var typeOps = $('ul.TYPE li');
-	        	typeOps.find('a').hide();
-	        	
-	        	// languages
-	        	
-	        	var langOps = $('ul.LANGUAGE li');	        	
-	        	langOps.find('a').hide();
-	        	
-	        	$.each(data.facets, function(i, facet){
-	        		
-        		 	var ops  = $('ul.' + facet.name);
-        		    var regX = /\(\d*\)/g;
-        		    
-        		 	if(facet.name == 'RIGHTS'){
-        		 		
-	        			$.each(facet.fields, function(j, field){
-	        				
-	        				//console.log("RIGHTS field.label " + field.label);
-	        				
-	        				 // ERROR:
-	        				 //
-	        				 //1) ADD FACET:
-	        				 //		CC BY-SA (1173821) 
-	        				 //
-	        				 //2) ADD FACET
-	        				 //		SOUND (484303)
-	        				 //
-	        				 //NOTE THAT THE ORIGINAL FACET VANISHES.
-	        				 //
-	        				 //
-	        				 //CAUSE:
-	        				 //
-	        				 //THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
-	        				
-	        				//copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '*"]').show();
-	        				var item  = copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '"]');
-	        				var label = $(item).find('label');
-	        				item.show();
-        					if(label.length ){
-        						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
-        					}
-	        			});
-        		 		
-        		  	}
-        		  	else{
-        		  	
-        		  		$.each(facet.fields, function(j, field){
-        		  			
-        		  			/*
-        		  			if(facet.name == 'DATA_PROVIDER'){
-        		  				console.log(field.label)
-        		  			}
-        		  			*/
-        		  			
-        		  			var item  = ops.find('a[title="' + field.label + '"]');
-        		  			var label = $(item).find('>label');
-
-        					item.show();
-        					
-        					if(label.length ){
-        						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
-        					}
-        					
-        				});
-        		  	
-        		  	}
-        		 	
-	        	});
-	        	hideSpinner();
-	        }
-	    });
-		
+		try{
+			// IE8 & 9 only Cross domain JSON GET request
+		    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
+		        var xdr = new XDomainRequest(); // Use Microsoft XDR
+		        xdr.open('post', postUrl);
+		        xdr.onprogress = function () {};
+		        xdr.onload = function () {
+		            var dom  = new ActiveXObject('Microsoft.XMLDOM'),
+		                jsonRes = $.parseJSON(xdr.responseText);
+		            dom.async = false;
+		            if (jsonRes == null || typeof (jsonRes) == 'undefined') {
+		            	jsonRes = $.parseJSON(data.firstChild.textContent);
+		            }
+		            fnSuccess(jsonRes);
+		        };
+		        xdr.onerror = function() {
+		        	console.log('xdr fail');
+		            _result = false;  
+		        };
+		        xdr.timeout = 0;
+		        xdr.send();
+		    } 
+		    else{
+				$.ajax({
+					"url":				postUrl + query,
+			        "dataType":			"json", 
+			        "crossDomain":		true,
+			        "type":				"POST",
+			        "fail":function(){
+			        	alert('fail');
+			    		hideSpinner();
+			        },
+			        "success":function(data){
+			        	fnSuccess(data);
+			        }
+			    });		    	
+		    }
+		}		
+		catch(e){
+			console.log("AJAX ERROR " + e);
+		}
 	};
 	
 	
