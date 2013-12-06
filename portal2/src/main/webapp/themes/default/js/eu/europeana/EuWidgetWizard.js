@@ -825,7 +825,10 @@ var EuWidgetWizard = function(cmpIn, options){
         	hideSpinner();
 		};
 		
-		var postUrl = js.debug ?  "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params" : "http://www.europeana.eu/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
+		var postUrl = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params';
+		if(postUrl.indexOf('localhost')>-1){
+			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
+		}
 		
 		try{
 			// IE8 & 9 only Cross domain JSON GET request
