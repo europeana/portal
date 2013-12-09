@@ -5,8 +5,8 @@
   set og_image_url
 --%>
 <c:set var="og_image_url"		value="${model.portalServer}${model.portalName}/sp/img/europeana-logo-en.png"/>
-<c:set var="og_title"			value="${model.pageTitle}"/>
-<c:set var="og_description"		value="${model.pageTitle}"/>
+<c:set var="og_title"			value="${fn:escapeXml(model.pageTitle)}"/>
+<c:set var="og_description"		value="${fn:escapeXml(model.pageTitle)}"/>
 
 <c:if test="${model.pageName=='full-doc.html'}">
   <c:set var="og_image_url" 	value="${fn:replace(model.thumbnailUrlUnescaped, '&amp;', '&')}"/>  

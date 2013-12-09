@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="eu" tagdir="/WEB-INF/tags" %>
-<meta name="description" content="${model.pageTitle}"/>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<meta name="description" content="${fn:escapeXml(model.pageTitle)}"/>
 <link href="/humans.txt" />
 <link rel="author" href="https://plus.google.com/u/0/115619270851872228337 ">
 
