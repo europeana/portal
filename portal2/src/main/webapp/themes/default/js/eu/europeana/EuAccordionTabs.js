@@ -60,6 +60,11 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 	self.callback	 = callbackIn;
 		
 	self.el.addClass('accordion-tabs');
+	
+	self.el.append('<div class="measure-1-em" style="width:1em"></div>');
+	self.w1em = self.el.find('.measure-1-em').width();
+	self.el.find('.measure-1-em').remove();
+	
 	self.selectionMade = function(index, id, hash){
 		self.activeId      = id;
 		self.activeIndex   = index;
@@ -148,11 +153,15 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 		
 		self.el.removeClass('accordion');
 		
-		var w = self.el.width();
+		var w = self.el.find('.section :first').width();
 		var hw = 0;
-		$.each(self.el.find('.tab-header'), function(i, ob){
-			hw += $(ob).width();
+		var headers = self.el.find('.tab-header');
+		
+		$.each(headers, function(i, ob){
+			hw += $(ob).width() + 2 + (2 * self.w1em);
 		});
+
+		hw += (headers.length - 1) * (self.w1em/2);
 		
 		if(hw > w){
 			self.el.addClass('accordion');
@@ -180,7 +189,6 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 			return self.activeIndex;
 		},
 		openTab : function(hash){
-			console.log("exposed openTab");
 			self.openTab(hash);
 		},
 		openTabAtIndex : function(i){
