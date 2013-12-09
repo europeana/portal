@@ -145,14 +145,16 @@ var AccordionTabs = function(elIn, callbackIn, hash, fnDisabledClick){
 
 	
 	var forceFit = function(){
-				
-		var origHeight     = self.el.height();	
-		self.el.addClass('measure');
 		
-		var measureHeight  = self.el.height();
-		self.el.removeClass('measure');
+		self.el.removeClass('accordion');
 		
-		if(measureHeight > origHeight){
+		var w = self.el.width();
+		var hw = 0;
+		$.each(self.el.find('.tab-header'), function(i, ob){
+			hw += $(ob).width();
+		});
+		
+		if(hw > w){
 			self.el.addClass('accordion');
 		}
 		else{

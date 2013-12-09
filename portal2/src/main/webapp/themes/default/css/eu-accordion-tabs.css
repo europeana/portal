@@ -16,6 +16,7 @@
 .accordion-tabs.accordion .tab-header,
 .accordion-tabs .tab-header{
 	border:			1px solid #d6d6d6;
+	border-bottom:  none;
 	border-radius:	0.5em;
 	color:			#2A85E8;
 	display:		block;
@@ -112,7 +113,7 @@
 	}
 	
 	.accordion-tabs .tab-header.active{
-		border-bottom:		1px solid #fff;
+		border-bottom:		2px solid #fff;
 		text-decoration:	underline;
 	}
 

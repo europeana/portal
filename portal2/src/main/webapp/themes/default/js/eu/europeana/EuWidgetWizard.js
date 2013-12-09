@@ -33,15 +33,15 @@ var EuWidgetWizard = function(cmpIn, options){
 	};
 		
     var showSpinner = function(){
-    	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').append('<div class="wizard-overlay">');
+    	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').append('<div class="ajax-overlay">');
     	
-    	$.each($('.wizard-overlay'), function(i, ob){
+    	$.each($('.ajax-overlay'), function(i, ob){
     		$(ob).css('top', $(ob).parent().scrollTop() + 'px'); 
     	});
     };
     
     var hideSpinner = function(){
-    	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').find('.wizard-overlay').remove();
+    	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').find('.ajax-overlay').remove();
     };
     
 	/* Flash a red border on the inputs that have to be filled before the next tab can open */

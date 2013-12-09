@@ -11,12 +11,7 @@
 		var labelLoadAll	= '<spring:message code="see_also_load_all_t" />';
 	</script>
 	
-	<div style="margin-top:1.5em; margin-bottom:1.5em;">
-		<strong><spring:message code="see_also_header_t" /></strong>
-	</div>
-	
-	
-	
+	<strong class="see-also-header"><spring:message code="see_also_header_t" /></strong>
 	
 	<div id="mlt" class="accordion-tabs">
 
