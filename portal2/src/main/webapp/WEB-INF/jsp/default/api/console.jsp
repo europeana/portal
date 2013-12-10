@@ -157,14 +157,16 @@ var selectedPanel = '${model.function}';
               <span class="api-help"><spring:message code="apiconsole_temporal_help_t" /></span>
             </p>
 
-            <p>
-              <label for="api-reusability"><spring:message code="apiconsole_reusability_t" />:</label><br/>
-              <c:forEach items="${model.supportedReusabilityValues}" var="reusability">
-                <input type="checkbox" name="reusability" id="api-reusability-${reusability.key}" value="${reusability.key}" 
-                  <c:if test="${!empty model.reusability[reusability.key] && model.reusability[reusability.key] == true}">checked="checked"</c:if> />
-                <label for="api-reusability-${reusability.key}"><spring:message code="${reusability.value}" /></label><br/>
-              </c:forEach>
-            </p>
+            <c:if test="${model.debug}">
+              <p>
+                <label for="api-reusability"><spring:message code="apiconsole_reusability_t" />:</label><br/>
+                <c:forEach items="${model.supportedReusabilityValues}" var="reusability">
+                  <input type="checkbox" name="reusability" id="api-reusability-${reusability.key}" value="${reusability.key}" 
+                    <c:if test="${!empty model.reusability[reusability.key] && model.reusability[reusability.key] == true}">checked="checked"</c:if> />
+                  <label for="api-reusability-${reusability.key}"><spring:message code="${reusability.value}" /></label><br/>
+                </c:forEach>
+              </p>
+            </c:if>
 
             <p>
               <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
