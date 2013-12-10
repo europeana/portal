@@ -84,6 +84,7 @@ public class ApiConsoleController {
 		}
 
 		ApiConsolePage model = new ApiConsolePage();
+		model.setDebug(config.getDebugMode());
 
 		if (!model.getSupportedFunctions().contains(function)) {
 			function = SEARCH;
