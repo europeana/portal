@@ -777,33 +777,18 @@ var EuWidgetWizard = function(cmpIn, options){
     		 	if(facet.name == 'RIGHTS'){
     		 		
         			$.each(facet.fields, function(j, field){
-        				
-        				//console.log("RIGHTS field.label " + field.label);
-        				
-        				 // ERROR:
-        				 //
-        				 //1) ADD FACET:
-        				 //		CC BY-SA (1173821) 
-        				 //
-        				 //2) ADD FACET
-        				 //		SOUND (484303)
-        				 //
-        				 //NOTE THAT THE ORIGINAL FACET VANISHES.
-        				 //
-        				 //
-        				 //CAUSE:
-        				 //
-        				 //THE '*' QUERY RETURNS SPECIFICS ( /3.0/, /2.0/ ETC) WHICH DO NOT MATCH THE '*' LABEL
-        				
-        				//copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '*"]').show();
-        				var item  = copyrightOps.find('a[title^="&qf=RIGHTS:' + field.label.replace(/\"/g, '&quot;') + '"]');
-        				var label = $(item).find('label');
-        				item.show();
-    					if(label.length ){
-    						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
-    					}
+        				var item  = copyrightOps.find('a[title="&qf=RIGHTS:' + field.label + '*"]');
+        				if(!item.length){
+        					item  = copyrightOps.find('a[title="&qf=RIGHTS:' + field.label.replace(/\d\.\d\/$/, '*') + '"]');
+        				}
+        				if(item.length){        					
+        					var label = $(item).find('label');
+        					item.show();
+        					if(label.length ){
+        						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
+        					}
+        				}
         			});
-    		 		
     		  	}
     		  	else{
     		  	
