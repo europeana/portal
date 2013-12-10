@@ -673,7 +673,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		// construct query
 		
-		var query = "";
+		var query = "&rows=0";
 		try{			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider       = $(ob);
