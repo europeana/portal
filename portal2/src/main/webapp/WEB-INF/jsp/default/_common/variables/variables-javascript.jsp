@@ -33,11 +33,9 @@
 </c:if>
  --%>
 
-
 <c:set var="rows">
  <%= request.getParameter("rows") %>
 </c:set>
-
 
 <c:set var="sample_map_data" value='false' />
 <c:if test="${RequestParameters.sample_map_data}">
@@ -78,7 +76,6 @@
 		<c:otherwise></c:otherwise>
 	</c:choose>
 </c:set>
-
 
 <script type="text/javascript">
 
@@ -152,7 +149,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.galleria = {};
 		eu.europeana.vars.collectionId = '${collectionId}';
 		eu.europeana.vars.dcIdentifier = '${model.objectDcIdentifier}';
-		
+
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
@@ -161,8 +158,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.min.css';
 			</c:otherwise>
 		</c:choose>
-		
-		
+
 		<c:choose>
 			<c:when test="${!empty model.showSimilarItems && model.showSimilarItems}">
 				eu.europeana.vars.isShowSimilarItems = true;
@@ -171,12 +167,8 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.isShowSimilarItems = false;
 			</c:otherwise>
 		</c:choose>
-		
-		
-		
 
 		// Translation data for lightbox triggers: map lightboxble type to message
-		
 		eu.europeana.vars.external = {
 			triggers: {
 				labels : {
@@ -190,8 +182,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				}
 			}
 		};
-		
-		
+
 		<c:if test="${!empty model.user}">
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.saved_item = '${saved_item}';
@@ -201,10 +192,15 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.item.uri = '${model.document.about}';
 		</c:if>
 
-
+		<c:set var="soundCloudAwareCollections">
+			<c:choose>
+				<c:when test="${fn:length(model.soundCloudAwareCollections) == 0}">[]</c:when>
+				<c:otherwise>[<c:forEach items="${model.soundCloudAwareCollections}" var="item" varStatus="status">'${item}'<c:if test="${!status.last}">,</c:if></c:forEach>]</c:otherwise>
+			</c:choose>
+		</c:set>
+		eu.europeana.vars.soundCloudAwareCollections = ${soundCloudAwareCollections};
 	</c:when>
-	
-	
+
 	<c:when test="${model.pageName == 'login.html'}">
 		<c:choose>
 			<c:when test="${!empty model.user}">
@@ -215,8 +211,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			</c:otherwise>
 		</c:choose>
 	</c:when>
-	
-	
+
 	<c:when test="${model.pageName == 'myeuropeana.html'}">
 		<c:choose>
 			<c:when test="${!empty model.user}">
@@ -234,7 +229,6 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.user = false;
 			</c:otherwise>
 		</c:choose>
-
 	</c:when>
 
 	<c:when test="${model.pageName == 'search.html'}">
@@ -244,9 +238,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.search_save_failed = '${fn:escapeXml(search_save_failed)}';
 		eu.europeana.vars.msg.result_count = ${model.briefBeanView.pagination.numFound};
 		eu.europeana.vars.msg.start = ${model.briefBeanView.pagination.start};
-		
 	</c:when>
-
 </c:choose>
 
 eu.europeana.vars.rows = '${rows}';
@@ -254,6 +246,4 @@ eu.europeana.vars.rows = '${rows}';
 // for share-this
 var switchTo5x = true;
 if ( window.stLight ) { stLight.options({publisher : '${model.shareThisId}'}); }
-
-
 </script>

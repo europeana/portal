@@ -166,6 +166,8 @@ public class ObjectController {
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
 		model.setShowEuropeanaMlt(showEuropeanaMlt);
+		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
+		log.info("SoundCloudAwareCollections: " + StringUtils.join(model.getSoundCloudAwareCollections(), ", "));
 
 		// TODO: refactor this!!!
 		boolean showSimilarItems = false;
