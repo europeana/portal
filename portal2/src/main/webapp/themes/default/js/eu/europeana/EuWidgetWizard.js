@@ -29,9 +29,11 @@ var EuWidgetWizard = function(cmpIn, options){
 	
     
 	var cleanName = function(name){
-		return  name.replace(/"/g, '\\\"').replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+//		return  name.replace(/"/g, '\\\"').replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		return  name.replace(/"/g, '\\\"').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 	};
-		
+
+	
     var showSpinner = function(){
     	$('.PROVIDER').add('.COUNTRY').add('.TYPE').add('.RIGHTS').add('.LANGUAGE').add('.choices').append('<div class="ajax-overlay">');
     	
