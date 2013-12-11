@@ -91,6 +91,8 @@ var EuWidgetWizard = function(cmpIn, options){
 			// Providers
 			
 			var debug = '';
+
+			
 			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider      = $(ob);
@@ -99,7 +101,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				// a checked provider includes all child data_providers
 				
 				var name			= providerInput.next('label').html();
-				var providerParam	= 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
+				var providerParam	= param() + 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
 
 				if(providerInput.prop('checked')){
 					result += param() + providerParam;
@@ -126,7 +128,6 @@ var EuWidgetWizard = function(cmpIn, options){
 					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
 				}
 			});
-
 				
 		}
 		
@@ -723,7 +724,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						query += $(ob).attr('title').replace(/\"/g, "");						
 					}
 					else{
-						console.log('missing title for ' + $(ob).next('label').html() );
+						//console.log('missing title for ' + $(ob).next('label').html() );
 					}
 				}
 			});
