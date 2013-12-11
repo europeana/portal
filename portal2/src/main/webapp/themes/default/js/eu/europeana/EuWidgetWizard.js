@@ -101,7 +101,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				// a checked provider includes all child data_providers
 				
 				var name			= providerInput.next('label').html();
-				var providerParam	= param() + 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
+				var providerParam	= 'qf=' + 'PROVIDER' + ':{' + cleanName(name) + '}';
 
 				if(providerInput.prop('checked')){
 					result += param() + providerParam;
@@ -125,7 +125,7 @@ var EuWidgetWizard = function(cmpIn, options){
 					});
 					
 					// which is shorter?  Use that!
-					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
+					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
 				}
 			});
 				
