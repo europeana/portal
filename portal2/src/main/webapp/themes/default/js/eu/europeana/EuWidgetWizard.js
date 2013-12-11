@@ -566,7 +566,7 @@ var EuWidgetWizard = function(cmpIn, options){
 							
 						};
 						
-			    		$('#wizard-tabs .icon-arrow-2-after span')
+			    		$('#wizard-tabs .icon-arrow-2-after label')
 			    		.add('#wizard-tabs .no-children')
 			    		.each(function(i, ob){
 			    			filterObjects[filterObjects.length] = new FilterObject( $(ob), i==0 );
@@ -687,7 +687,7 @@ var EuWidgetWizard = function(cmpIn, options){
 
 
 				
-				if(providerInput.prop('checked')){
+				if(providerInput.prop('checked') && providerInput.is(':visible') ){
 					//var name = providerInput.next('label').html();
 					//query += '&qf=PROVIDER:"' + cleanName(name) + '"';
 					query += providerParam
@@ -702,7 +702,7 @@ var EuWidgetWizard = function(cmpIn, options){
 						var dataProviderInput = dataProvider.children('a').children('input');
 						var name              = dataProviderInput.next('label').html();
 
-						if(dataProviderInput.prop('checked')){
+						if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
 							//query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
 							resultFragment += '&qf=DATA_PROVIDER:"' + cleanName(name) + '"';
 						}
@@ -721,7 +721,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			});
 			
 			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
-				if($(ob).prop('checked')){
+				if($(ob).prop('checked') && $(ob).is(':visible')){
 					if($(ob).attr('title')){
 						query += $(ob).attr('title').replace(/\"/g, "");						
 					}
