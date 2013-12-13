@@ -51,9 +51,6 @@ import eu.europeana.portal2.web.presentation.model.submodel.impl.ResultPaginatio
 public class SearchUtils {
 
 	private static Logger log = Logger.getLogger(SearchUtils.class.getCanonicalName());
-	private final static int SELECT_OPEN = 1;
-	private final static int SELECT_RESTRICTED = 2;
-	private final static int SELECT_PERMISSION = 4;
 
 	public static BriefBeanView createResults(
 			SearchService searchService,
@@ -135,7 +132,7 @@ public class SearchUtils {
 
 		Query query = new Query(q)
 			.setRefinements(filteredQf)
-			.setValueReplacements(SearchUtils.mapValueReplacements(qf))
+			.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(qf))
 			.setPageSize(0)
 			.setStart(0)
 			.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
@@ -144,50 +141,4 @@ public class SearchUtils {
 		query.setFacet(Facet.RIGHTS);
 		return query;
 	}
-
-	public static Map<String, String> mapValueReplacements(String[] qf) {
-		if (ArrayUtils.isEmpty(qf)) {
-			return null;
-		}
-		Map<String, String> valueReplacements = new HashMap<String, String>();
-		String open = "REUSABILITY:" + RightReusabilityCategorizer.OPEN;
-		String restricted = "REUSABILITY:" + RightReusabilityCategorizer.RESTRICTED;
-		String permission = "REUSABILITY:" + RightReusabilityCategorizer.PERMISSION;
-
-		int reusabilityFilters = 0;
-		for (String value : qf) {
-			if (value.equalsIgnoreCase(open)) {
-				TaggedQuery query = new TaggedQuery("REUSABILITY", RightReusabilityCategorizer.getOpenRightsQuery());
-				valueReplacements.put(value, query.toString());
-				reusabilityFilters += SELECT_OPEN;
-			} else if (value.equalsIgnoreCase(restricted)) {
-				TaggedQuery query = new TaggedQuery("REUSABILITY", RightReusabilityCategorizer.getRestrictedRightsQuery());
-				valueReplacements.put(value, query.toString());
-				reusabilityFilters += SELECT_RESTRICTED;
-			} else if (value.equalsIgnoreCase(permission)) {
-				TaggedQuery query = new TaggedQuery("REUSABILITY", RightReusabilityCategorizer.getPermissionRightsQuery());
-				valueReplacements.put(value, query.toString());
-				reusabilityFilters += SELECT_PERMISSION;
-			}
-		}
-		if (reusabilityFilters == (SELECT_OPEN + SELECT_RESTRICTED)) {
-			TaggedQuery query = new TaggedQuery("REUSABILITY", RightReusabilityCategorizer.getAllRightsQuery());
-			valueReplacements.put(open, query.toString());
-			valueReplacements.put(restricted, "");
-		} else if (reusabilityFilters == (SELECT_OPEN + SELECT_PERMISSION)) {
-			TaggedQuery query = new TaggedQuery("REUSABILITY", RightReusabilityCategorizer.getNoRestrictedRightsQuery());
-			valueReplacements.put(open, query.toString());
-			valueReplacements.put(permission, "");
-		} else if (reusabilityFilters == (SELECT_RESTRICTED + SELECT_PERMISSION)) {
-			TaggedQuery query = new TaggedQuery("REUSABILITY", RightReusabilityCategorizer.getNoOpenRightsQuery());
-			valueReplacements.put(restricted, query.toString());
-			valueReplacements.put(permission, "");
-		} else if (reusabilityFilters == (SELECT_OPEN + SELECT_RESTRICTED + SELECT_PERMISSION)) {
-			valueReplacements.put(open, "");
-			valueReplacements.put(restricted, "");
-			valueReplacements.put(permission, "");
-		}
-		return valueReplacements;
-	}
-
 }

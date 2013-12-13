@@ -121,7 +121,7 @@ public class SearchController {
 
 		if (config.getDebugMode()) {
 			RightReusabilityCategorizer.setPermissionStrategy(RightReusabilityCategorizer.PERMISSION_STRATEGY_NEGATIVE_ALL);
-			query.setValueReplacements(SearchUtils.mapValueReplacements(qf));
+			query.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(qf));
 			query.setFacetQueries(RightReusabilityCategorizer.getQueryFacets());
 		}
 

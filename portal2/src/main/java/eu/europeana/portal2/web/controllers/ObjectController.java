@@ -56,6 +56,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.service.OptOutService;
+import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -208,7 +209,7 @@ public class ObjectController {
 			model.setOptedOut(optOutService.check(fullBean.getAbout()));
 			Query query = new Query(queryString)
 				.setRefinements(qf)
-				.setValueReplacements(SearchUtils.mapValueReplacements(qf))
+				.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(qf))
 				.setAllowFacets(false)
 				.setAllowSpellcheck(false);
 
