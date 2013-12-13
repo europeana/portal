@@ -17,6 +17,7 @@
 
 package eu.europeana.portal2.web.presentation.model.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +100,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected String urlRef = null;
 	protected boolean showSimilarItems = false;
 	protected boolean showEuropeanaMlt = false;
+	protected List<String> soundCloudAwareCollections = new ArrayList<String>();
 
 	public void setEdmSchemaMappings(SchemaOrgMapping schema) {
 		this.edmTopLevels = EdmSchemaMapping.getTopLevel(schema);
@@ -232,5 +234,14 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public String getLightboxRefField() {
 		return lightboxRefField;
+	}
+
+	public List<String> getSoundCloudAwareCollections() {
+		return soundCloudAwareCollections;
+	}
+
+	public void setSoundCloudAwareCollections(
+			List<String> soundCloudAwareCollections) {
+		this.soundCloudAwareCollections = soundCloudAwareCollections;
 	}
 }
