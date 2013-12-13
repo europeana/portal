@@ -41,7 +41,8 @@ public class BriefBeanImpl implements BriefBean {
 	private float score;
 	private Date timestampCreated;
 	private Date timestampUpdated;
-	
+	private String[] edmIsShownAt;
+
 	@Override
 	public String getId() {
 		return id;
@@ -308,18 +309,25 @@ public class BriefBeanImpl implements BriefBean {
 	public String[] getEdmPreview() {
 		return this.edmPreview;
 	}
-	
+
 	@Override
 	public float getScore() {
 		return this.score;
 	}
+
 	@Override
 	public Date getTimestampCreated() {
 		return this.timestampCreated;
 	}
+
 	@Override
 	public Date getTimestampUpdated() {
 		return this.timestampUpdated;
 	}
-	
+
+	@Override
+	public String[] getEdmIsShownAt() {
+		return edmIsShownAt;
+	}
+
 }
