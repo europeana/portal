@@ -1,10 +1,13 @@
 js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
+var andy = true;
+
 eu.europeana.fulldoc = {
 
 	lightboxOb :  null,
 	vimeoDetect : 'vimeo.com/video',
-	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
+	// permittedLbSoundCollections : js.debug ? ['2021613'] : [],
+	permittedLbSoundCollections : ['2021613'],
 	
 	
 /*	
@@ -1113,17 +1116,9 @@ eu.europeana.fulldoc = {
 			}
 			
 			var loadMore = function(index){
-				
-				// MacLean: maybe set the expected thumbnail count here 
-				
 				var start	= loadData.tabs[index].loaded + 1;
 				var qty		= $("#mobile-menu").is(":visible") ? 2 : 4;
 				var query   = getQuery();
-				
-				loadData.tabs[index].expectedThumbCount = (loadData.tabs[index].loaded + qty) -1;
-				
-				console.log('set loadData.tabs[' + index + '].expectedThumbCount to ' + loadData.tabs[index].expectedThumbCount);
-				
 				loadMltData(query, processResult, start, qty)
 			};
 
@@ -1181,52 +1176,25 @@ eu.europeana.fulldoc = {
 					
 						var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 						
-						console.log(
-							'thumbnail event (e.index=' + e.index + '),'
-							+ 'loadData.tabs[index].current=' + loadData.tabs[index].current
-							+ 'expected full load?  = ' + loadData.tabs[index].expectedThumbCount
-						);
-						
-						// we only execute on the last thumbnail....
-						if( e.index != loadData.tabs[index].expectedThumbCount){
+						if( e.index !=  ( loadData.tabs[index].current ? loadData.tabs[index].current : 0 ) + 4 -1  ){
 							return;
 						}
+						alert('loadfinish event ' + e.index + '    ' + loadData.tabs[index].current);// JSON.stringify(e.galleriaData));
+
+						//console.log('loadfinish event for carousel #' + this._options.europeanaId + ', #' +  thisGallery._options.europeanaId + ',  - index is ' + index);
+						//alert('loadfinish event for carousel #' + index);
 							
-						
+						// bind click events
+							
 						if(!loadData.tabs[index].setup){
-							
-							// bind swipe events
-							if( ! $("html").hasClass('ie8') ){
-								
-								thisGallery.$( 'container' ).find( '.galleria-thumbnails-container .galleria-image').swipe({
-										swipeStatus:function(event, phase, direction, distance, fingerCount) {
-											if(phase=="end"){
-												if(direction == "left"){
-													thisGallery.$( 'container' ).find('.galleria-thumb-nav-right').click();
-												}
-												if(direction == "right"){
-													thisGallery.$( 'container' ).find('.galleria-thumb-nav-left').click();
-												}
-											}
-										},
-										triggerOnTouchEnd:false,
-										threshold:100
-									}
-								);
-							}
-							
-							
-							// bind click events
-							
 							var clicked = function(clickData){
 								if(clickData.open){
 									window.location = clickData.open;
 								}									
 							};
 								
-							var dataSource = this._options.dataSource;
-
-							
+							var dataSource		= this._options.dataSource;
+				
 							$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
 								
 								$(ob).unbind('click');
@@ -1249,85 +1217,98 @@ eu.europeana.fulldoc = {
 								});
 								
 							});
-							hideSpinner();
 							loadData.tabs[index].setup = true;
 						}
 						
 						
 						///////////////////////////////////////////////////////////////////////////////////////////
-					
-						// rebind right arrow
+						if(typeof andy != 'undefined'){
 						
-						$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').unbind('click').bind('click', function(e){
-			                e.preventDefault();
-
-			                var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
-							var x     = thisGallery;
-			                var xOps  = x._options;
-							var xCar  = x._carousel;
-
-							loadData.tabs[index].current = (xCar.current + xOps.carouselSteps);  // write next val
-							console.log('set loadData.tabs[index].current to ' + loadData.tabs[index].current);
+							// rebind right arrow
 							
-			                // this line is destined to break - review it
-			                var inView      = Math.ceil($('#mlt .section.active .galleria-thumbnails-container').width() / (200 + 45 + 45) )  ;
-			                var loadedCount = xCar.hooks.length -1;
-			                var current     = xCar.current + 1;
+//							var xOps = this._options;
+//							var xCar = this._carousel;
 
-			                if( (current + inView) >= loadedCount){
-			                	console.log('load more then navigate (tabIndex[' + index + '])');
-			                	loadMore(eu.europeana.fulldoc.mltTabs.getOpenTabIndex());
-			                }
-			                else{
-			                	//alert('always....');
-			                	xCar.set(loadData.tabs[index].current);
-			                	//alert('...here');
-			                	
+							
+							$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').unbind('click').bind('click', function(e){
+				                e.preventDefault();
+	
+				                var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
+								var x     = thisGallery;//loadData.tabs[index].carousel;//.get(0);
+				                var xOps  = x._options;
+								var xCar  = x._carousel;
+
+								loadData.tabs[index].current = (xCar.current + xOps.carouselSteps);  // write next val
+								console.log('set loadData.tabs[index].current to ' + loadData.tabs[index].current);
+								
+				                // this line is destined to break - review it
+				                var inView      = Math.ceil($('#mlt .section.active .galleria-thumbnails-container').width() / (200 + 45 + 45) )  ;
+				                var loadedCount = xCar.hooks.length -1;
+				                var current     = xCar.current + 1;
+
+				                if( (current + inView) >= loadedCount){
+				                	console.log('load more then navigate (tabIndex[' + index + '])');
+				                	loadMore(eu.europeana.fulldoc.mltTabs.getOpenTabIndex());
+				                }
+				                else{
+				                	xCar.set(loadData.tabs[index].current);
+				                	
+									if(loadData.tabs[index].loaded < loadData.tabs[index].total){
+										console.log('normal nav and show the arrow  (' + $('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').length + ')');
+										$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').show();
+									}
+					                
+				                }
+							});
+							
+							
+							//var section = $('#mlt .section.active');
+	//						getActiveSection().unbind('post-process').bind('post-process', function(){
+								
+				                var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
+								var x     = thisGallery;//loadData.tabs[index].carousel;//.get(0);
+				                var xOps  = x._options;
+								var xCar  = x._carousel;
+
+								// do the nav
+								console.log('post process [' + index + '] nav kicking in now.... curr1 (internal): ' + xCar.current + ',  curr2 (tracked): ' + loadData.tabs[index].current);
+							
+								if(typeof loadData.tabs[index].current == 'undefined'){
+								
+									alert('ought not see this');
+									loadData.tabs[index].current = 0;//xCar.current;
+									
+								}
+								else {
+									//if(loadData.tabs[index].current != xCar.current){
+									
+									//console.log('current outdated, need to update (' + xCar.current + ') to  ' + loadData.tabs[index].current  );
+									//xCar.set(xCar.current + xOps.carouselSteps loadData.tabs[index].current);
+									xCar.set(loadData.tabs[index].current);
+									//console.log('did update work straight away?  ' + xCar.current  );
+								
+								}
+								
 								if(loadData.tabs[index].loaded < loadData.tabs[index].total){
-									console.log('normal nav and show the arrow  (' + $('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').length + ')');
 									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').show();
 								}
-				                
-			                }
-						});
-						
-		                var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
-						var x     = thisGallery;
-		                var xOps  = x._options;
-						var xCar  = x._carousel;
-
-						// do the nav
-						console.log('post process [' + index + '] nav kicking in now.... curr1 (internal): ' + xCar.current + ',  curr2 (tracked): ' + loadData.tabs[index].current);
-					
-						if(typeof loadData.tabs[index].current == 'undefined'){
-							console.log("loadData.tabs[index].current == 'undefined' so set to 0");
-							loadData.tabs[index].current = 0;			
-						}
-						else {
-							var prevCurrent = loadData.tabs[index].current - loadData.tabs[index].loadSize;
-							var oldSpeed = thisGallery._options.carouselSpeed;
-
-							thisGallery.setOptions( 'carouselSpeed', 0 );
-							xCar.set(prevCurrent);
-							thisGallery.setOptions( 'carouselSpeed', oldSpeed );
-							hideSpinner();
+								
+	//						}); // end post-process
 							
-							xCar.set(loadData.tabs[index].current);
-						}
+							
+							getActiveSection().find('.galleria-thumb-nav-right').removeClass('disabled');
+							getActiveSection().find('.galleria-thumb-nav-right').show();
+							console.log('shown the arrow here');
 						
-						if(loadData.tabs[index].loaded < loadData.tabs[index].total){
-							$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').show();
-						}
-						
-						getActiveSection().find('.galleria-thumb-nav-right').removeClass('disabled');
-						getActiveSection().find('.galleria-thumb-nav-right').show();
-						console.log('shown the arrow here');
+						} // end Andy
 						
 					}); // end loadFinish
 					
 				} // end extend
 			};
 
+			
+			/////////////////////////////////////////////////////
 			
 			var carouselInit = function(index){
 								
@@ -1502,14 +1483,6 @@ eu.europeana.fulldoc = {
 					url += '&start='	+ (start ? start : 1);
 					url += '&rows='		+ (qty ? qty : 4);
 					
-					var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
-					
-					if(typeof loadData.tabs[index].expectedThumbCount == 'undefined'){
-						loadData.tabs[index].expectedThumbCount = (qty ? qty-1 : 3); 
-					}
-					
-					loadData.tabs[index].loadSize = (qty ? qty : 4);
-					
 					$.ajax({
 						"url":				url.replace(/&quot;/g, '"'),
 				        "dataType":			"json", 
@@ -1521,7 +1494,7 @@ eu.europeana.fulldoc = {
 				        },
 				        "success":function(data){
 				        	fn(data);
-				        	//hideSpinner();
+				        	hideSpinner();
 				        	return 0;
 						}
 					});
