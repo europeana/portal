@@ -1,21 +1,7 @@
 package eu.europeana.portal2.selenium.test.page.index;
 
-import org.junit.After;
-import org.junit.Before;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import eu.europeana.portal2.selenium.test.abstracts.TestSetup;
 
-public class SwitchLocaleTest {
-	private WebDriver webDriver;
-
-	@Before
-	public void setupPage() {
-		webDriver = new FirefoxDriver();
-	}
-
-	@After
-	public void closePage() {
-		webDriver.quit();
-	}
+public class SwitchLocaleTest extends TestSetup {
 
 }
