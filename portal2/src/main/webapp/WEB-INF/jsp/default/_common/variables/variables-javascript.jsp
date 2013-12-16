@@ -27,16 +27,6 @@
 <c:set var="return_to_language"><spring:message code="ReturnToOriginalLanguage_t" /></c:set>
 <c:set var="rows" value='' />
 
-<%--
-<c:if test="${!empty RequestParameters.rows}">
-	<c:set var="rows" value='${RequestParameters.rows}' />
-</c:if>
- --%>
-
-<c:set var="rows">
- <%= request.getParameter("rows") %>
-</c:set>
-
 <c:set var="sample_map_data" value='false' />
 <c:if test="${RequestParameters.sample_map_data}">
 	<c:set var="sample_map_data" value='${RequestParameters.sample_map_data}' />
@@ -59,7 +49,6 @@
 	<c:set var="startFrom" value="${RequestParameters.startFrom}" />
 </c:if>
 <c:set var="translate_with"><spring:message code="essTranslateWith_t" /></c:set>
-
 
 <%-- Citation (fulldoc) --%>
 
@@ -241,7 +230,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 	</c:when>
 </c:choose>
 
-eu.europeana.vars.rows = '${rows}';
+eu.europeana.vars.rows = '${model.rows}';
 
 // for share-this
 var switchTo5x = true;
