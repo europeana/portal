@@ -1197,15 +1197,19 @@ eu.europeana.fulldoc = {
 							
 							// bind swipe events
 							if( ! $("html").hasClass('ie8') ){
+
 								
 								thisGallery.$( 'container' ).find( '.galleria-thumbnails-container .galleria-image').swipe({
 										swipeStatus:function(event, phase, direction, distance, fingerCount) {
+											alert('swipe');
 											if(phase=="end"){
 												if(direction == "left"){
 													thisGallery.$( 'container' ).find('.galleria-thumb-nav-right').click();
+													alert('left');
 												}
 												if(direction == "right"){
 													thisGallery.$( 'container' ).find('.galleria-thumb-nav-left').click();
+													alert('right');
 												}
 											}
 										},
@@ -1213,6 +1217,8 @@ eu.europeana.fulldoc = {
 										threshold:100
 									}
 								);
+								
+								alert('bound swipe')
 							}
 							
 							
@@ -1321,7 +1327,6 @@ eu.europeana.fulldoc = {
 						
 						getActiveSection().find('.galleria-thumb-nav-right').removeClass('disabled');
 						getActiveSection().find('.galleria-thumb-nav-right').show();
-						console.log('shown the arrow here');
 						
 					}); // end loadFinish
 					
