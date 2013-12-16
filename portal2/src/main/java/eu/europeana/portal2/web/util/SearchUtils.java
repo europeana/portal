@@ -33,6 +33,7 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.Facet;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.definitions.solr.model.TaggedQuery;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
@@ -131,7 +132,7 @@ public class SearchUtils {
 
 		Query query = new Query(q)
 			.setRefinements(filteredQf)
-			.setValueReplacements(SearchUtils.mapValueReplacements(qf))
+			.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(qf))
 			.setPageSize(0)
 			.setStart(0)
 			.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
@@ -140,29 +141,4 @@ public class SearchUtils {
 		query.setFacet(Facet.RIGHTS);
 		return query;
 	}
-
-	public static Map<String, String> mapValueReplacements(String[] qf) {
-		if (ArrayUtils.isEmpty(qf)) {
-			return null;
-		}
-		Map<String, String> valueReplacements = new HashMap<String, String>();
-		String free = "REUSABILITY:" + RightReusabilityCategorizer.OPEN;
-		String limited = "REUSABILITY:" + RightReusabilityCategorizer.RESTRICTED;
-		int reusabilityFilters = 0;
-		for (String value : qf) {
-			if (value.equalsIgnoreCase(free)) {
-				valueReplacements.put(value, RightReusabilityCategorizer.getOpenStringRightsQuery());
-				reusabilityFilters++;
-			} else if (value.equalsIgnoreCase(limited)) {
-				valueReplacements.put(value, RightReusabilityCategorizer.getRestrictedRightsQuery());
-				reusabilityFilters++;
-			}
-		}
-		if (reusabilityFilters == 2) {
-			valueReplacements.put(free, RightReusabilityCategorizer.getAllRightsQuery());
-			valueReplacements.put(limited, "");
-		}
-		return valueReplacements;
-	}
-
 }

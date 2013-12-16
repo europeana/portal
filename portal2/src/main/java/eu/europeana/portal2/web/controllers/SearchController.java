@@ -119,10 +119,9 @@ public class SearchController {
 			query.setAllowSpellcheck(false);
 		}
 
-		if (config.getDebugMode()) {
-			query.setValueReplacements(SearchUtils.mapValueReplacements(qf));
-			query.setFacetQueries(RightReusabilityCategorizer.getQueryFacets());
-		}
+		RightReusabilityCategorizer.setPermissionStrategy(RightReusabilityCategorizer.PERMISSION_STRATEGY_NEGATIVE_ALL);
+		query.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(qf));
+		query.setFacetQueries(RightReusabilityCategorizer.getQueryFacets());
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
 

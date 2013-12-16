@@ -355,4 +355,9 @@ public class BriefBeanDecorator implements BriefBean {
 	public Date getTimestampUpdated() {
 		return briefBean.getTimestampUpdated();
 	}
+
+	@Override
+	public String[] getEdmIsShownAt() {
+		return briefBean.getEdmIsShownAt();
+	}
 }

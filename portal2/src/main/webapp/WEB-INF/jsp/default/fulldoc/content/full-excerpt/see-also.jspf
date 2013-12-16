@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
   <div>
-    <strong>SEEALSO.jspf <spring:message code="see_also_header_t" /></strong>
+    <strong><spring:message code="see_also_header_t" /></strong>
   </div>
 
   <c:forEach items="${model.seeAlsoSuggestions.fields}" var="entry">
