@@ -1,31 +1,17 @@
 package eu.europeana.portal2.selenium.test.scenario.search;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import eu.europeana.portal2.selenium.page.IndexPage;
 import eu.europeana.portal2.selenium.page.SearchPage;
+import eu.europeana.portal2.selenium.test.abstracts.TestSetup;
 
-public class SimpleSearchScenariosTest {
-	private WebDriver webDriver;
-
-	@Before
-	public void setupPage() {
-		webDriver = new FirefoxDriver();
-	}
-
-	@After
-	public void closePage() {
-		webDriver.quit();
-	}
+public class SimpleSearchScenariosTest extends TestSetup {
 
 	@Test
 	public void searchForParisTest() {

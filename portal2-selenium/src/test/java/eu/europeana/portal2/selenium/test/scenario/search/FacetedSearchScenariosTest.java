@@ -13,38 +13,23 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import eu.europeana.portal2.selenium.Pages;
 import eu.europeana.portal2.selenium.model.search.Facet;
 import eu.europeana.portal2.selenium.model.search.FacetItem;
 import eu.europeana.portal2.selenium.page.IndexPage;
 import eu.europeana.portal2.selenium.page.SearchPage;
+import eu.europeana.portal2.selenium.test.abstracts.TestSetup;
 import eu.europeana.portal2.selenium.utils.PatternUtils;
 
-public class FacetedSearchScenariosTest {
-
-	private WebDriver webDriver;
+public class FacetedSearchScenariosTest extends TestSetup {
 
 	private final String RIGHTS = "RIGHTS";
 	private final String RIGHTS_PREFIX = RIGHTS + ":";
 	private final String RIGHTS_REGEX = RIGHTS_PREFIX + "(\".*\"|.*\\*)$";
 	private final int ROWS = 24;
-
-	@Before
-	public void setupPage() {
-		webDriver = new FirefoxDriver();
-	}
-
-	@After
-	public void closePage() {
-		webDriver.quit();
-	}
-
+	
 	@Test
 	public void searchForParisTest() {
 		System.out.println("testFacets");
