@@ -138,7 +138,7 @@ public class SearchUtils {
 			.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
 			.setProduceFacetUnion(false)
 			.setAllowSpellcheck(false);
-		query.setFacet(Facet.RIGHTS);
+		query.setFacet(Facet.RIGHTS.toString());
 		return query;
 	}
 }
