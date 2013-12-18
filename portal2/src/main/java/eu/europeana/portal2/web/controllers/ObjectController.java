@@ -30,6 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.NoSuchMessageException;
@@ -420,7 +421,10 @@ public class ObjectController {
 			category.setQuery(suggestion.getEscapedQuery());
 			for (BriefBean bean : searchMltItem(suggestion.getEscapedQuery())) {
 				if (!bean.getId().equals(europeanaId)) {
-					category.addUrl(new EuropeanaMltLink(bean.getId(), bean.getTitle()[0]));
+					String title = (ArrayUtils.isNotEmpty(bean.getTitle()) && StringUtils.isNotBlank(bean.getTitle()[0]))
+							? bean.getTitle()[0]
+							: bean.getId();
+					category.addUrl(new EuropeanaMltLink(bean.getId(), title));
 				}
 			}
 			if (category.getUrls().size() == 11) {
