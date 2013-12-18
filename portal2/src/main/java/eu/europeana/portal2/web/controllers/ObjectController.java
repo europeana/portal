@@ -30,7 +30,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.NoSuchMessageException;
@@ -79,7 +78,6 @@ import eu.europeana.portal2.web.presentation.model.submodel.impl.FullBeanViewImp
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
-import eu.europeana.portal2.web.util.SearchUtils;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
@@ -422,8 +420,7 @@ public class ObjectController {
 			category.setQuery(suggestion.getEscapedQuery());
 			for (BriefBean bean : searchMltItem(suggestion.getEscapedQuery())) {
 				if (!bean.getId().equals(europeanaId)) {
-					List<String> titles = StringArrayUtils.toList(bean.getTitle());
-					String title = (titles.size() > 0) ? titles.get(0) : bean.getId();
+					String title = (StringArrayUtils.isNotBlank(bean.getTitle()) ? bean.getTitle()[0] : bean.getId());
 					category.addUrl(new EuropeanaMltLink(bean.getId(), title));
 				}
 			}
