@@ -56,6 +56,7 @@ import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
+import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
@@ -421,9 +422,8 @@ public class ObjectController {
 			category.setQuery(suggestion.getEscapedQuery());
 			for (BriefBean bean : searchMltItem(suggestion.getEscapedQuery())) {
 				if (!bean.getId().equals(europeanaId)) {
-					String title = (ArrayUtils.isNotEmpty(bean.getTitle()) && StringUtils.isNotBlank(bean.getTitle()[0]))
-							? bean.getTitle()[0]
-							: bean.getId();
+					List<String> titles = StringArrayUtils.toList(bean.getTitle());
+					String title = (titles.size() > 0) ? titles.get(0) : bean.getId();
 					category.addUrl(new EuropeanaMltLink(bean.getId(), title));
 				}
 			}
