@@ -2,6 +2,7 @@ package eu.europeana.portal2.selenium.page;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
@@ -20,6 +21,7 @@ public class SearchPage extends Portal2Page {
 	// constructors
 
 	public static SearchPage openPage(WebDriver driver, String paramsString) {
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get(Pages.SEARCH + "?" + paramsString);
 		SearchPage page = new SearchPage(driver);
 		return page;

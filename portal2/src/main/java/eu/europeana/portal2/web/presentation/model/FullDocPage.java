@@ -20,7 +20,6 @@ package eu.europeana.portal2.web.presentation.model;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -86,7 +85,7 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public String getEdmRights(){
-		return Arrays.asList(shortcut.get("EdmRights")).isEmpty() ? null : shortcut.get("EdmRights")[0];
+		return getShortcutFirstValue("EdmRights");
 	}
 
 	/**
@@ -95,9 +94,7 @@ public class FullDocPage extends FullDocPreparation {
 	 * @return image reference
 	 */
 	public String getImageRef() {
-		return StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy")) 
-			? shortcut.get("EdmIsShownBy")[0]
-			: shortcut.get("EdmIsShownAt")[0];
+		return StringUtils.defaultIfBlank(getShortcutFirstValue("EdmIsShownBy"), getShortcutFirstValue("EdmIsShownAt"));
 	}
 
 	/**
@@ -112,15 +109,10 @@ public class FullDocPage extends FullDocPreparation {
 	 * */
 	public String getLightboxRef() {
 		if (!lightboxRefChecked) {
-			boolean hasShownBy = StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy"));
-			lightboxRef = null;
-
-			// if (WebUtils.checkMimeType(shownBy) != null) {
-			if (hasShownBy && StringUtils.isNotBlank(shortcut.get("EdmIsShownBy")[0])) {
-				lightboxRef = shortcut.get("EdmIsShownBy")[0];
+			lightboxRef = getShortcutFirstValue("EdmIsShownBy");
+			if (lightboxRef != null) {
 				lightboxRefField = "edm:isShownBy";
 			}
-
 			lightboxRefChecked = true;
 		}
 		return lightboxRef;
@@ -332,7 +324,7 @@ public class FullDocPage extends FullDocPreparation {
 		String thumbnail = "";
 		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
 			thumbnail = URLEncoder.encode(
-				StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], "").trim(),
+				StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], ""),
 				"utf-8"
 			);
 		}
@@ -352,7 +344,7 @@ public class FullDocPage extends FullDocPreparation {
 	public String getThumbnailUrlUnescaped() throws UnsupportedEncodingException {
 		String thumbnail = "";
 		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
-			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], "").trim();
+			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], "");
 		}
 		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
 	}
@@ -438,11 +430,11 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public String getIsShownBy() {
-		return shortcut.get("EdmIsShownBy")[0];
+		return getShortcutFirstValue("EdmIsShownBy");
 	}
 	
 	public String getIsShownAt() {
-		return shortcut.get("EdmIsShownAt")[0];
+		return getShortcutFirstValue("EdmIsShownAt");
 	}
 
 	/**
@@ -516,11 +508,7 @@ public class FullDocPage extends FullDocPreparation {
 	}
 
 	public String getObjectDcIdentifier() {
-		String[] id =  shortcut.get("DcIdentifier");
-		if(id != null && id.length > 0){
-			return shortcut.get("DcIdentifier")[0];			
-		}
-		return "";
+		return StringUtils.defaultIfBlank(getShortcutFirstValue("DcIdentifier"), "");			
 	}
 	
 	/**
@@ -531,8 +519,8 @@ public class FullDocPage extends FullDocPreparation {
 	@Override
 	public String getPageTitle() {
 		StringBuilder title = new StringBuilder(getBaseTitle());
-		if (shortcut != null && StringArrayUtils.isNotBlank(shortcut.get("DcCreator"))) {
-			String creator = shortcut.get("DcCreator")[0];
+		String creator = getShortcutFirstValue("DcCreator");
+		if (creator != null) {
 			// clean up creator first (..), [..], <..>, {..}
 			creator = creator.replaceAll("[\\<({\\[].*?[})\\>\\]]", "");
 			// strip , from begin or end
@@ -555,8 +543,8 @@ public class FullDocPage extends FullDocPreparation {
 
 		if (StringArrayUtils.isNotBlank(getDocument().getDcTitle())) {
 			dcTitle = getDocument().getDcTitle()[0];
-		} else if (StringArrayUtils.isNotBlank(shortcut.get("DctermsAlternative"))) {
-			dcTitle = shortcut.get("DctermsAlternative")[0];
+		} else if (getShortcutFirstValue("DctermsAlternative") != null) {
+			dcTitle = getShortcutFirstValue("DctermsAlternative");
 		} else if (StringArrayUtils.isNotBlank(getDocument().getDcDescription())) {
 			dcTitle = getDocument().getDcDescription()[0];
 			if (dcTitle.indexOf("<br/>\n") > 0) {
@@ -580,19 +568,17 @@ public class FullDocPage extends FullDocPreparation {
 	public String getUrlRef() {
 		if (urlRef == null) {
 			urlRef = "#";
-			if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt")) 
-				&& !StringUtils.isBlank(shortcut.get("EdmIsShownAt")[0])) {
-				urlRef = shortcut.get("EdmIsShownAt")[0].trim();
-			} else if (StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownBy"))
-				&& !StringUtils.isBlank(shortcut.get("EdmIsShownBy")[0])) {
-				urlRef = shortcut.get("EdmIsShownBy")[0].trim();
+			if (getShortcutFirstValue("EdmIsShownAt") != null) {
+				urlRef = getShortcutFirstValue("EdmIsShownAt").trim();
+			} else if (getShortcutFirstValue("EdmIsShownBy") != null) {
+				urlRef = getShortcutFirstValue("EdmIsShownBy").trim();
 			}
 		}
 		return urlRef;
 	}
 
 	public boolean isUrlRefIsShownBy() {
-		return (!StringArrayUtils.isNotBlank(shortcut.get("EdmIsShownAt")))
+		return (StringArrayUtils.isBlank(shortcut.get("EdmIsShownAt")))
 			&& isEuropeanaIsShownBy();
 	}
 
@@ -603,10 +589,8 @@ public class FullDocPage extends FullDocPreparation {
 	public String getShownAtProvider() {
 		if (isHasDataProvider() && !ArrayUtils.contains(shownAtProviderOverride, getCollectionId())) {
 			return getDocument().getEdmDataProvider()[0];
-		} else if (StringArrayUtils.isNotBlank(shortcut.get("EdmProvider"))) {
-			return shortcut.get("EdmProvider")[0];
 		}
-		return "";
+		return StringUtils.defaultIfBlank(getShortcutFirstValue("EdmProvider"), "");
 	}
 
 	/**
@@ -755,5 +739,12 @@ public class FullDocPage extends FullDocPreparation {
 
 	public boolean isUrlRefMms() {
 		return StringUtils.startsWith(getUrlRef(), "mms");
+	}
+	
+	private String getShortcutFirstValue(String name) {
+		if ( (shortcut != null) && StringArrayUtils.isNotBlank(shortcut.get(name))) {
+			return StringUtils.trimToNull(shortcut.get(name)[0]);
+		}
+		return null;
 	}
 }
