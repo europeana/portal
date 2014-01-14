@@ -41,7 +41,7 @@ public class Facet extends PageUtils {
 	public List<FacetItem> getItems() {
 		if (items.isEmpty()) {
 			for (WebElement e : findByCss(webElement, "ul li")) { 
-				items.add(new FacetItem(e));
+				items.add(new FacetItem(driver, e));
 			}
 		}
 		return items;

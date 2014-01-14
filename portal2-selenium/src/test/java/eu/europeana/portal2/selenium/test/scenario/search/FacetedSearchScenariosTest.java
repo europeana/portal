@@ -3,6 +3,7 @@ package eu.europeana.portal2.selenium.test.scenario.search;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -20,15 +21,16 @@ import eu.europeana.portal2.selenium.model.search.Facet;
 import eu.europeana.portal2.selenium.model.search.FacetItem;
 import eu.europeana.portal2.selenium.page.IndexPage;
 import eu.europeana.portal2.selenium.page.SearchPage;
+import eu.europeana.portal2.selenium.test.PortalConfig;
 import eu.europeana.portal2.selenium.test.abstracts.TestSetup;
 import eu.europeana.portal2.selenium.utils.PatternUtils;
 
 public class FacetedSearchScenariosTest extends TestSetup {
 
+	private final String LANGUAGE = "LANGUAGE";
 	private final String RIGHTS = "RIGHTS";
 	private final String RIGHTS_PREFIX = RIGHTS + ":";
 	private final String RIGHTS_REGEX = RIGHTS_PREFIX + "(\".*\"|.*\\*)$";
-	private final int ROWS = 24;
 	
 	@Test
 	public void searchForParisTest() {
@@ -36,7 +38,7 @@ public class FacetedSearchScenariosTest extends TestSetup {
 
 		List<String> queries = Arrays.asList(new String[] { "query=*:*" });
 		List<Pattern> patterns = PatternUtils.transformPatterns(queries);
-		patterns.add(PatternUtils.createPattern("rows=" + ROWS));
+		patterns.add(PatternUtils.createPattern("rows=" + PortalConfig.SEACH_COUNT_ROWS));
 
 		IndexPage indexPage = IndexPage.openPage(webDriver);
 		indexPage.setSearchQuery("*:*");
@@ -46,9 +48,9 @@ public class FacetedSearchScenariosTest extends TestSetup {
 		final int FACET_LANGUAGE = 3;
 		final int FACET_YEAR = 4;
 		final int FACET_COUNTRY = 5;
-		final int FACET_COPYRIGHT = 6;
-		final int FACET_PROVIDER = 7;
-		final int FACET_DATA_PROVIDER = 8;
+		final int FACET_COPYRIGHT = 7;
+		final int FACET_PROVIDER = 8;
+		final int FACET_DATA_PROVIDER = 9;
 
 		Map<Integer, List<String>> labels = new HashMap<Integer, List<String>>() {
 			private static final long serialVersionUID = 1L;
@@ -73,7 +75,7 @@ public class FacetedSearchScenariosTest extends TestSetup {
 		for (Facet facet : facetLists) {
 
 			i++;
-			if (i == 1 || i == FACET_DATA_PROVIDER || i == 9) { // skip add keyword, (hidden) data provider and ugc
+			if (i == 1 || i == FACET_DATA_PROVIDER || i == 6 ||  i == 9) { // skip add keyword, (hidden) data provider and ugc
 																// filter
 				continue;
 			}
@@ -86,6 +88,10 @@ public class FacetedSearchScenariosTest extends TestSetup {
 			assertTrue("click should open/close facet [" + i + "], visibility was " + facet.isListVisible()
 					+ " instead of " + (i != FACET_TYPE), facet.isListVisible() == (i != FACET_TYPE));
 			assertEquals(String.format("Facet label #%d should be %s", i, facetLabel), facet.label, facetLabel);
+			
+			if (!facet.isListVisible()) {
+				facet.click();
+			}
 
 			for (FacetItem item : facet.getItems()) {
 
@@ -131,7 +137,7 @@ public class FacetedSearchScenariosTest extends TestSetup {
 					}
 				}
 
-				assertTrue("Link contains rows", item.link.contains("&rows=" + ROWS));
+				assertTrue("Link contains rows", item.link.contains("&rows=" + PortalConfig.SEACH_COUNT_ROWS));
 				assertTrue("Link contains qf parameter", item.link.contains("&qf="));
 
 				if (type.equals(RIGHTS)) {
@@ -147,26 +153,26 @@ public class FacetedSearchScenariosTest extends TestSetup {
 						assertTrue("Rights prefix have to start with " + RIGHTS_PREFIX, qf.startsWith(RIGHTS_PREFIX));
 						assertTrue("Rights prefix have to match " + RIGHTS_REGEX, qf.matches(RIGHTS_REGEX));
 					}
-				} else {
+				} else if (!type.equals(LANGUAGE)) {
 
 					// non-rights facet checking
 					String linkTitle = item.label;
+					if (StringUtils.endsWith(linkTitle, "...")) {
+						linkTitle = StringUtils.substringBefore(linkTitle, "...");
+					} else
 					if (linkTitle.contains(" ")) {
 						linkTitle = '"' + linkTitle + '"';
 					}
 
-					String encoded = "";
 					try {
-						encoded = PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8"));
+						assertTrue(
+								String.format("Link contains FACET:VALUE as %s:%s but get %s", type, PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8")), item.link),
+								StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.link), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8"))) ||
+								StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.link), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode('"' + linkTitle, "UTF-8")))
+						);
 					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+						fail(e.getMessage());
 					}
-
-					assertTrue(
-							String.format("Link contains FACET:VALUE as %s:%s but get %s", type, encoded, item.link),
-							PatternUtils.encodeFix(item.link).contains("&qf=" + type + ":" + encoded)
-
-					);
 				}
 			}
 

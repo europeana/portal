@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eu.europeana.portal2.selenium.page.IndexPage;
+import eu.europeana.portal2.selenium.test.PortalConfig;
 import eu.europeana.portal2.selenium.test.abstracts.TestSetup;
 
 public class BlogItemsTest extends TestSetup {
@@ -21,7 +22,7 @@ public class BlogItemsTest extends TestSetup {
 
 	@Test
 	public void countBlogItemsTest() {
-		assertEquals("Not displaying 2 blog items", 2, page.countBlogItems());
+		assertEquals("Not displaying right amount of blog items", PortalConfig.SEACH_COUNT_ROWS, page.countBlogItems());
 	}
 
 }

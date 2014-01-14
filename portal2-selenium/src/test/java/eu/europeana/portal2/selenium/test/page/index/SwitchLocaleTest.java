@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eu.europeana.portal2.selenium.page.IndexPage;
+import eu.europeana.portal2.selenium.test.PortalConfig;
 import eu.europeana.portal2.selenium.test.abstracts.TestSetup;
 
 public class SwitchLocaleTest extends TestSetup {
@@ -22,7 +23,7 @@ public class SwitchLocaleTest extends TestSetup {
 
 	@Test
 	public void testLocaleMenu() {
-		assertEquals("Not having 30 locales", 30, page.countLocaleItems());
+		assertEquals("Not having right amount of locales", PortalConfig.INDEX_COUNT_LOCALES, page.countLocaleItems());
 	}
 	
 

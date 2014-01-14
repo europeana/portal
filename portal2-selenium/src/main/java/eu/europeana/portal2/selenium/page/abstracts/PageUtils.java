@@ -56,6 +56,16 @@ public abstract class PageUtils {
 	protected List<WebElement> findByCss(SearchContext context, String query) {
 		return context.findElements(By.cssSelector(query));
 	}
+	
+	// FIND BY NAME
+	
+	protected WebElement findOneByName(String name) {
+		return findOneByName(driver, name);
+	}
+
+	protected WebElement findOneByName(SearchContext context, String name) {
+		return context.findElement(By.name(name));
+	}
 
 	// FIND BY XPATH
 	
