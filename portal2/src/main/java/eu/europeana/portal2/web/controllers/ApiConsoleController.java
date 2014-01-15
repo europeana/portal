@@ -57,7 +57,7 @@ public class ApiConsoleController {
 			@RequestParam(value = "qf", required = false) String[] refinements,
 			@RequestParam(value = "profile", required = false) String[] profile,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
-			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows,
+			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "sort", required = false) String sort,
 			@RequestParam(value = "collectionId", required = false) String collectionId,
 			@RequestParam(value = "recordId", required = false) String recordId,
@@ -102,7 +102,7 @@ public class ApiConsoleController {
 		}
 
 		if (!model.getDefaultRows().contains(Integer.toString(rows))) {
-			rows = 12;
+			rows = 24;
 		}
 
 		if (!StringUtils.isBlank(recordId)) {

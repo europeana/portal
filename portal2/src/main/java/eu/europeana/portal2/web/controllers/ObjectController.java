@@ -135,7 +135,7 @@ public class ObjectController {
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
-			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows,
+			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "mlt", required = false, defaultValue = "false") String mlt,
 			HttpServletRequest request, 
 			HttpServletResponse response, 

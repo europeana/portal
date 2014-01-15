@@ -66,7 +66,7 @@ public class SearchController {
 			@RequestParam(value = "query", required = false, defaultValue = "*:*") String q,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
-			@RequestParam(value = "rows", required = false, defaultValue = "12") int rows,
+			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "sort", required = false, defaultValue = "") String sort,
 			@RequestParam(value = "profile", required = false, defaultValue = "portal") String profile,
 			HttpServletRequest request, Locale locale) {

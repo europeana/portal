@@ -47,7 +47,7 @@ public abstract class SearchPageData extends PortalPageData {
 	/**
 	 * Number of results
 	 */
-	private int rows = 12;
+	private int rows = 24;
 
 	/**
 	 * The Solr sort parameter
