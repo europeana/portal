@@ -6,19 +6,17 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import eu.europeana.portal2.selenium.page.abstracts.PageUtils;
+import eu.europeana.portal2.selenium.model.abstracts.ElementUtils;
 
-public class Facet extends PageUtils {
+public class Facet extends ElementUtils {
 
-	final private WebElement webElement;
 	private WebElement title;
 	private List<FacetItem> items = new ArrayList<FacetItem>();
 
 	final public String label;
 
 	public Facet(WebDriver webdriver, WebElement e) {
-		super(webdriver);
-		webElement = e;
+		super(webdriver, e);
 		title = findOneByCss(webElement, "h3 a");
 		label = title.getText();
 	}
