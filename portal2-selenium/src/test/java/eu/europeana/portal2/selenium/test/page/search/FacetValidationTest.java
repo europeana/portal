@@ -113,7 +113,7 @@ public class FacetValidationTest extends TestSetup {
 		String type = labels.get(facetIndex).get(1);
 		List<String> queries = Arrays.asList(new String[] { "query=*:*" });
 		List<Pattern> patterns = PatternUtils.transformPatterns(queries);
-		patterns.add(PatternUtils.createPattern("rows=" + PortalConfig.SEACH_COUNT_ROWS));
+		patterns.add(PatternUtils.createPattern("rows=" + PortalConfig.SEARCH_COUNT_ROWS));
 
 		facet.click();
 
@@ -169,7 +169,7 @@ public class FacetValidationTest extends TestSetup {
 				}
 			}
 
-			assertTrue("Link contains rows", item.link.contains("&rows=" + PortalConfig.SEACH_COUNT_ROWS));
+			assertTrue("Link contains rows", item.link.contains("&rows=" + PortalConfig.SEARCH_COUNT_ROWS));
 			assertTrue("Link contains qf parameter", item.link.contains("&qf="));
 
 			if (type.equals(RIGHTS)) {

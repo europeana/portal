@@ -24,13 +24,13 @@ public class SimpleSearchScenariosTest extends TestSetup {
 		// check the amount of search results
 		SearchPage searchPage = SearchPage.checkPage(webDriver);
 		assertNotNull("Search page not loaded", searchPage);
-		assertEquals("Not displaying " + PortalConfig.SEACH_COUNT_ROWS + " results", PortalConfig.SEACH_COUNT_ROWS,
+		assertEquals("Not displaying " + PortalConfig.SEARCH_COUNT_ROWS + " results", PortalConfig.SEARCH_COUNT_ROWS,
 				searchPage.countSearchResults());
 		assertTrue("Check search results page title",
 				searchPage.getPageTitle().toLowerCase().startsWith("paris - europeana - search results"));
 
-		assertTrue("Check there are at least " + PortalConfig.SEACH_COUNT_ROWS + " results",
-				StringUtils.startsWith(searchPage.getPaginationString(), "Results 1-"+PortalConfig.SEACH_COUNT_ROWS));
+		assertTrue("Check there are at least " + PortalConfig.SEARCH_COUNT_ROWS + " results",
+				StringUtils.startsWith(searchPage.getPaginationString(), "Results 1-"+PortalConfig.SEARCH_COUNT_ROWS));
 	}
 
 }

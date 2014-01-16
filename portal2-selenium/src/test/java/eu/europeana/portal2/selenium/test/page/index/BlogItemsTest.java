@@ -22,7 +22,7 @@ public class BlogItemsTest extends TestSetup {
 
 	@Test
 	public void countBlogItemsTest() {
-		assertEquals("Not displaying right amount of blog items", PortalConfig.SEACH_COUNT_ROWS, page.countBlogItems());
+		assertEquals("Not displaying right amount of blog items", PortalConfig.INDEX_COUNT_BLOG, page.countBlogItems());
 	}
 
 }
