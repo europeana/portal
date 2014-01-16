@@ -17,6 +17,9 @@ import com.saucelabs.selenium.client.factory.SeleniumFactory;
 public abstract class TestSetup {
 
 	protected WebDriver webDriver;
+	
+	protected boolean enableScreenshots = true;
+	protected boolean enableVideo = false;
 
 	@Rule
 	public TestName testName = new TestName();
@@ -26,7 +29,8 @@ public abstract class TestSetup {
 		if (StringUtils.isNotBlank(System.getenv("SELENIUM_BROWSER"))) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setCapability("name", this.getClass().getSimpleName() + " . " + testName.getMethodName());
-			capabilities.setCapability("record-video", false);
+			capabilities.setCapability("record-video", enableVideo);
+			capabilities.setCapability("record-screenshots", enableScreenshots);
 			driver = SeleniumFactory.createWebDriver(capabilities);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		} else {

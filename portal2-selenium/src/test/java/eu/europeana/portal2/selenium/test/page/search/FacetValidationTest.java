@@ -62,6 +62,7 @@ public class FacetValidationTest extends TestSetup {
 	@Before
 	@Override
 	public void setupPage() {
+		enableScreenshots = false;
 		super.setupPage(); // create webDriver instance
 		page = SearchPage.openPage(webDriver, "query=*:*");
 	}
