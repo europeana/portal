@@ -104,7 +104,10 @@ public class QueryUtil {
 	 * @return The URL encoded phrase
 	 */
 	public static String createPhraseValue(String fieldName, String value) {
-		value = StringUtils.trim(value).replace("/", "\\/");
+		value = StringUtils.trim(value);
+		if (StringUtils.contains(value, '/')) {
+			value = StringUtils.replaceChars(value, "/", "\\/");
+		}
 		if (fieldName.equals(TYPE) || value.indexOf(" ") == -1) {
 			return value;
 		} else {
