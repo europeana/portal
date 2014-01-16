@@ -19,13 +19,13 @@ public abstract class TestSetup {
 	protected WebDriver webDriver;
 	
 	@Rule
-	protected TestName name =  new TestName();
+	public TestName testName =  new TestName();
 
 	public WebDriver setupDriver() {
 	    WebDriver driver = null;
 	    if (StringUtils.isNotBlank(System.getenv("SELENIUM_BROWSER"))) {
 	    	DesiredCapabilities capabilities = new DesiredCapabilities();
-	    	capabilities.setCapability("name", name.getMethodName());
+	    	capabilities.setCapability("name", testName.getMethodName());
 	    	driver = SeleniumFactory.createWebDriver(capabilities);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	    } else {
