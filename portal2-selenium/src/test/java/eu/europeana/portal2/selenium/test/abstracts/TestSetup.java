@@ -15,37 +15,36 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import com.saucelabs.selenium.client.factory.SeleniumFactory;
 
 public abstract class TestSetup {
-	
+
 	protected WebDriver webDriver;
-	
+
 	@Rule
-	public TestName testName =  new TestName();
+	public TestName testName = new TestName();
 
 	public WebDriver setupDriver() {
-	    WebDriver driver = null;
-	    if (StringUtils.isNotBlank(System.getenv("SELENIUM_BROWSER"))) {
-	    	DesiredCapabilities capabilities = new DesiredCapabilities();
-	    	capabilities.setCapability("name", testName.getMethodName());
-	    	driver = SeleniumFactory.createWebDriver(capabilities);
+		WebDriver driver = null;
+		if (StringUtils.isNotBlank(System.getenv("SELENIUM_BROWSER"))) {
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+			capabilities.setCapability("name", this.getClass().getSimpleName() + " . " + testName.getMethodName());
+			capabilities.setCapability("record-video", false);
+			driver = SeleniumFactory.createWebDriver(capabilities);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	    } else {
-	    	driver = new FirefoxDriver();
-	    }
-	    return driver;
+		} else {
+			driver = new FirefoxDriver();
+		}
+		return driver;
 	}
-	
 
 	@Before
 	public void setupPage() {
 		webDriver = setupDriver();
 		String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
-        System.out.println("SauceOnDemandSessionID=" + sessionId);
+		System.out.println("SauceOnDemandSessionID=" + sessionId);
 	}
 
 	@After
 	public void closePage() {
 		webDriver.quit();
 	}
-
 
 }
