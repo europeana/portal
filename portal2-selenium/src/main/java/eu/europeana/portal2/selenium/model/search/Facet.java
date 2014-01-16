@@ -13,17 +13,15 @@ public class Facet extends ElementUtils {
 	private WebElement title;
 	private List<FacetItem> items = new ArrayList<FacetItem>();
 
-	final public String label;
+	private String label;
 
 	public Facet(WebDriver webdriver, WebElement e) {
 		super(webdriver, e);
-		title = findOneByCss(webElement, "h3 a");
-		label = title.getText();
 	}
 
 	public void click() {
 		final boolean isDisplaying = isListVisible();
-		title.click();
+		getTitle().click();
 		waitFor(new WaitCondition() {
 			@Override
 			public boolean condition() {
@@ -34,6 +32,20 @@ public class Facet extends ElementUtils {
 
 	public boolean isListVisible() {
 		return findOneByCss(webElement, "ul").isDisplayed();
+	}
+	
+	private WebElement getTitle() {
+		if (title == null) {
+			title = findOneByCss(webElement, "h3 a");
+		}
+		return title;
+	}
+	
+	public String getLabel() {
+		if (label == null) {
+			label = getTitle().getText();
+		}
+		return label;
 	}
 
 	public List<FacetItem> getItems() {

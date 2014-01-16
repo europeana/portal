@@ -31,6 +31,7 @@ public abstract class TestSetup {
 			capabilities.setCapability("name", this.getClass().getSimpleName() + " . " + testName.getMethodName());
 			capabilities.setCapability("record-video", enableVideo);
 			capabilities.setCapability("record-screenshots", enableScreenshots);
+			capabilities.setCapability("sauce-advisor", false);
 			driver = SeleniumFactory.createWebDriver(capabilities);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		} else {

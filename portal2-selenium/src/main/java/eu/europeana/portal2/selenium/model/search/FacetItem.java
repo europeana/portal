@@ -12,39 +12,63 @@ public class FacetItem extends PageUtils {
 	private WebElement checkbox;
 	private WebElement anchor;
 
-	public String label;
-	final public String id;
-	final public String link;
+	private String label;
+	private String id;
+	private String link;
 
 	public FacetItem(WebDriver driver, WebElement w) {
 		super(driver);
 		webElement = w;
-		anchor = findOneByCss(webElement, "h4 a"); 
-		setLabel(anchor.getText().length() > 0 ? anchor.getText() : findOneByCss(anchor,"label")
-				.getText());
-		checkbox = findOneByCss(webElement, "h4 input");
-		id = webElement.getAttribute("id");
-		link = anchor == null ? null : anchor.getAttribute("href");
 	}
 	
-	private void setLabel(String text) {
-		label = StringUtils.trim(StringUtils.substringBeforeLast(text, "("));
+	public String getLabel() {
+		if (label == null) {
+			String text = getAnchor().getText().length() > 0 ? getAnchor().getText() : findOneByCss(getAnchor(),"label")
+					.getText();
+			label = StringUtils.trim(StringUtils.substringBeforeLast(text, "("));
+		}
+		return label;
 	}
-
+	
 	public void click() {
 		webElement.click();
 	}
 
 	public void clickCheckbox() {
+		if (checkbox != null) {
+			checkbox = findOneByCss(webElement, "h4 input");
+		}
 		checkbox.click();
+	}
+	
+	public String getLink() {
+		if (link == null) {
+			link = getAnchor() == null ? null : getAnchor().getAttribute("href");
+		}
+		return link;
+	}
+	
+	public String getId() {
+		if (id != null) {
+			id = webElement.getAttribute("id");
+		}
+		return id;
 	}
 
 	public boolean hasLink() {
-		return anchor != null;
+		return getAnchor() != null;
 	}
 
 	public String getRel() {
-		return anchor == null ? null : anchor.getAttribute("rel");
+		return getAnchor() == null ? null : getAnchor().getAttribute("rel");
 	}
 
+
+	
+	private WebElement getAnchor() {
+		if (anchor != null) {
+			anchor = findOneByCss(webElement, "h4 a"); 
+		}
+		return anchor;
+	}
 }

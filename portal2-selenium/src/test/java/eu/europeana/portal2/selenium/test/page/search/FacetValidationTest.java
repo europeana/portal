@@ -120,7 +120,7 @@ public class FacetValidationTest extends TestSetup {
 
 		assertTrue("click should open/close facet [" + facetIndex + "], visibility was " + facet.isListVisible()
 				+ " instead of " + (facetIndex != FACET_TYPE), facet.isListVisible() == (facetIndex != FACET_TYPE));
-		assertEquals(String.format("Facet label #%d should be %s", facetIndex, facetLabel), facetLabel, facet.label);
+		assertEquals(String.format("Facet label #%d should be %s", facetIndex, facetLabel), facetLabel, facet.getLabel());
 		
 		if (!facet.isListVisible()) {
 			facet.click();
@@ -139,10 +139,10 @@ public class FacetValidationTest extends TestSetup {
 			assertEquals("@rel should be \"nofollow\"", "nofollow", item.getRel());
 
 			// check tooltips present
-			assertNotNull("Link should have title.", StringUtils.trimToNull(item.label));
+			assertNotNull("Link should have title.", StringUtils.trimToNull(item.getLabel()));
 
 			// check links include search
-			assertNotNull("@href expected on facet item", item.link);
+			assertNotNull("@href expected on facet item", item.getLink());
 
 			/*
 			 * WebWindow ww = new WebWindow(driver, link);
@@ -160,24 +160,24 @@ public class FacetValidationTest extends TestSetup {
 			 * ww.close();
 			 */
 
-			assertTrue("Link contains search URL: " + Pages.SEARCH, item.link.contains(Pages.SEARCH));
+			assertTrue("Link contains search URL: " + Pages.SEARCH, item.getLink().contains(Pages.SEARCH));
 
 			for (Pattern pattern : patterns) {
 				try {
-					assertTrue("Link should contain " + pattern + " but it is " + item.link,
-							pattern.matcher(item.link).find());
+					assertTrue("Link should contain " + pattern + " but it is " + item.getLink(),
+							pattern.matcher(item.getLink()).find());
 				} catch (AssertionError e) {
 				}
 			}
 
-			assertTrue("Link contains rows", item.link.contains("&rows=" + PortalConfig.SEARCH_COUNT_ROWS));
-			assertTrue("Link contains qf parameter", item.link.contains("&qf="));
+			assertTrue("Link contains rows", item.getLink().contains("&rows=" + PortalConfig.SEARCH_COUNT_ROWS));
+			assertTrue("Link contains qf parameter", item.getLink().contains("&qf="));
 
 			if (type.equals(RIGHTS)) {
 
 				// rights facet checking
 
-				String tempLink = item.link;
+				String tempLink = item.getLink();
 				while (tempLink.indexOf("&qf=" + RIGHTS_PREFIX) > -1) {
 					int start = tempLink.indexOf("&qf=" + RIGHTS_PREFIX) + 4;
 					int end = tempLink.indexOf("&", start);
@@ -189,7 +189,7 @@ public class FacetValidationTest extends TestSetup {
 			} else if (!type.equals(LANGUAGE)) {
 
 				// non-rights facet checking
-				String linkTitle = item.label;
+				String linkTitle = item.getLabel();
 				if (StringUtils.endsWith(linkTitle, "...")) {
 					linkTitle = StringUtils.substringBefore(linkTitle, "...");
 				} else
@@ -199,9 +199,9 @@ public class FacetValidationTest extends TestSetup {
 
 				try {
 					assertTrue(
-							String.format("Link contains FACET:VALUE as %s:%s but get %s", type, PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8")), item.link),
-							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.link), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8"))) ||
-							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.link), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode('"' + linkTitle, "UTF-8")))
+							String.format("Link contains FACET:VALUE as %s:%s but get %s", type, PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8")), item.getLink()),
+							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.getLink()), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8"))) ||
+							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.getLink()), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode('"' + linkTitle, "UTF-8")))
 					);
 				} catch (UnsupportedEncodingException e) {
 					fail(e.getMessage());
