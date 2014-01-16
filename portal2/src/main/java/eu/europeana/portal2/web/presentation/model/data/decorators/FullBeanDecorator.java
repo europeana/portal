@@ -18,9 +18,11 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -45,6 +47,11 @@ import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
+
+	static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	static {
+		formatter.setTimeZone(TimeZone.getTimeZone("GTM"));
+	}
 
 	private FullBean fulldoc;
 
@@ -445,15 +452,30 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getTimestampCreated();
 	}
 
+	public String getTimestampCreatedString() {
+		if (fulldoc.getTimestampCreated() != null) {
+			return formatter.format(fulldoc.getTimestampCreated());
+		}
+		return null;
+	}
+
 	@Override
 	public Date getTimestampUpdated() {
 		return fulldoc.getTimestampUpdated();
+	}
+
+	public String getTimestampUpdatedString() {
+		if (fulldoc.getTimestampUpdated() != null) {
+			return formatter.format(fulldoc.getTimestampUpdated());
+		}
+		return null;
 	}
 
 	@Override
 	public void setTimestampCreated(Date timestampCreated) {
 		fulldoc.setTimestampCreated(timestampCreated);
 	}
+
 
 	@Override
 	public void setTimestampUpdated(Date timestampUpdated) {

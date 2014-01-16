@@ -300,6 +300,8 @@ public class EdmSchemaMapping {
 					new FieldInfo(mapping, "provider", "provider", "String[]", mapName),
 					new FieldInfo(mapping, "language", "language", "String[]", mapName),
 					new FieldInfo(mapping, "timestamp", "timestamp", "Date", mapName),
+					new FieldInfo(mapping, "timestamp_created", "timestampCreatedString", "String", mapName),
+					new FieldInfo(mapping, "timestamp_updated", "timestampUpdatedString", "String", mapName),
 					new FieldInfo(mapping, "type", "type", "DocType", mapName),
 					new FieldInfo(mapping, "europeanaCompleteness", "europeanaCompleteness", "int", mapName),
 					new FieldInfo(mapping, "optOut", "optedOut", "boolean", mapName),
