@@ -41,17 +41,13 @@ import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
+import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
-
-	static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-	static {
-		formatter.setTimeZone(TimeZone.getTimeZone("GTM"));
-	}
 
 	private FullBean fulldoc;
 
@@ -454,7 +450,7 @@ public class FullBeanDecorator implements FullBean {
 
 	public String getTimestampCreatedString() {
 		if (fulldoc.getTimestampCreated() != null) {
-			return formatter.format(fulldoc.getTimestampCreated());
+			return DateUtils.format(fulldoc.getTimestampCreated());
 		}
 		return null;
 	}
@@ -466,7 +462,7 @@ public class FullBeanDecorator implements FullBean {
 
 	public String getTimestampUpdatedString() {
 		if (fulldoc.getTimestampUpdated() != null) {
-			return formatter.format(fulldoc.getTimestampUpdated());
+			return DateUtils.format(fulldoc.getTimestampUpdated());
 		}
 		return null;
 	}
