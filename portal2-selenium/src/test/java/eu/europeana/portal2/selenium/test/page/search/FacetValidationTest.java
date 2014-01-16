@@ -134,7 +134,7 @@ public class FacetValidationTest extends TestSetup {
 
 			// check rel attribute correct
 
-			assertTrue("link is present.", item.hasLink());
+			assertTrue("link is not present.", item.hasLink());
 			assertNotNull("@rel is mandatory.", item.getRel());
 			assertEquals("@rel should be \"nofollow\"", "nofollow", item.getRel());
 

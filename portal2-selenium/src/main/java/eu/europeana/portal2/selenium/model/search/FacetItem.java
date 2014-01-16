@@ -35,7 +35,7 @@ public class FacetItem extends PageUtils {
 	}
 
 	public void clickCheckbox() {
-		if (checkbox != null) {
+		if (checkbox == null) {
 			checkbox = findOneByCss(webElement, "h4 input");
 		}
 		checkbox.click();
@@ -49,7 +49,7 @@ public class FacetItem extends PageUtils {
 	}
 	
 	public String getId() {
-		if (id != null) {
+		if (id == null) {
 			id = webElement.getAttribute("id");
 		}
 		return id;
@@ -66,7 +66,7 @@ public class FacetItem extends PageUtils {
 
 	
 	private WebElement getAnchor() {
-		if (anchor != null) {
+		if (anchor == null) {
 			anchor = findOneByCss(webElement, "h4 a"); 
 		}
 		return anchor;
