@@ -25,7 +25,7 @@ public abstract class TestSetup {
 		WebDriver driver = null;
 		if (StringUtils.isNotBlank(System.getenv("SELENIUM_BROWSER"))) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			capabilities.setCapability("name", this.getClass().getName() + "." + testName.getMethodName());
+			capabilities.setCapability("name", this.getClass().getSimpleName() + " . " + testName.getMethodName());
 			capabilities.setCapability("record-video", false);
 			driver = SeleniumFactory.createWebDriver(capabilities);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
