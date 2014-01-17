@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ import eu.europeana.corelib.definitions.solr.model.Query;
 
 public class QueryUtil {
 
+	public static final Logger log = Logger.getLogger(QueryUtil.class.getCanonicalName());
 	public static final String FACETS = "facets";
 	public static final String REFINEMENTS = "refinements";
 	public static final String TYPE = "TYPE";
@@ -105,10 +107,10 @@ public class QueryUtil {
 	 */
 	public static String createPhraseValue(String fieldName, String value) {
 		value = StringUtils.trim(value);
-		if (StringUtils.contains(value, '/')) {
-			value = StringUtils.replaceChars(value, "/", "\\/");
-		}
-		if (fieldName.equals(TYPE) || value.indexOf(" ") == -1) {
+		if (fieldName.equals(TYPE) || StringUtils.containsNone(value, " ")) {
+			if (StringUtils.contains(value, '/')) {
+				value = StringUtils.replace(value, "/", "\\/");
+			}
 			return value;
 		} else {
 			return encode('"' + value + '"');

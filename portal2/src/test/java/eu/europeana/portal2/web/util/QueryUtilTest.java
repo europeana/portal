@@ -3,6 +3,7 @@ package eu.europeana.portal2.web.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 /**
@@ -33,7 +34,7 @@ public class QueryUtilTest {
 		assertNotSame(output, input);
 		assertEquals("Music Library of Greece \\\"Lilian Voudouri\\\" - Friends of Music Society", output);
 	}
-	
+
 	/**
 	 * Testing QueryUtil.escapeValue
 	 */
@@ -50,11 +51,30 @@ public class QueryUtilTest {
 		assertEquals("Music Library of Greece \\\"Lilian Voudouri\\\" - Friends of Music Society", output);
 	}
 
+	/**
+	 * Testing QueryUtil.removeTruncation
+	 */
 	@Test
 	public void testRemoveTruncation() {
 		String input = "http://creativecommons.org/publicdomain/mark/1.0/*";
 		String output = QueryUtil.removeTruncation(input);
 		assertNotSame(output, input);
 		assertEquals("http://creativecommons.org/publicdomain/mark/1.0/", output);
+	}
+
+	/**
+	 * Testing QueryUtil.createPhraseValue
+	 */
+	@Test
+	public void testCreatePhraseValue() {
+		String input = "Bulgariana/Ontotext";
+		String output = QueryUtil.createPhraseValue("PROVIDER", input);
+		assertNotSame(output, input);
+		assertEquals("Bulgariana\\/Ontotext", output);
+
+		input = "Bulgariana / Ontotext";
+		output = QueryUtil.createPhraseValue("PROVIDER", input);
+		assertNotSame(output, input);
+		assertEquals("%22Bulgariana+%2F+Ontotext%22", output);
 	}
 }
