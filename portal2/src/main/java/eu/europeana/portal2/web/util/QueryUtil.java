@@ -107,10 +107,7 @@ public class QueryUtil {
 	 */
 	public static String createPhraseValue(String fieldName, String value) {
 		value = StringUtils.trim(value);
-		if (fieldName.equals(TYPE) || StringUtils.containsNone(value, " ")) {
-			if (StringUtils.contains(value, '/')) {
-				value = StringUtils.replace(value, "/", "\\/");
-			}
+		if (fieldName.equals(TYPE) || (StringUtils.containsNone(value, " ") &&  StringUtils.containsNone(value, "/"))) {
 			return value;
 		} else {
 			return encode('"' + value + '"');
