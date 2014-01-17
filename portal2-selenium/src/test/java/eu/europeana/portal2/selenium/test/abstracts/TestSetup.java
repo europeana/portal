@@ -49,6 +49,7 @@ public abstract class TestSetup {
 
 	@After
 	public void closePage() {
+		webDriver.close();
 		webDriver.quit();
 	}
 
