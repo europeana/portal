@@ -70,7 +70,7 @@ public class QueryUtilTest {
 		String input = "Bulgariana/Ontotext";
 		String output = QueryUtil.createPhraseValue("PROVIDER", input);
 		assertNotSame(output, input);
-		assertEquals("Bulgariana\\/Ontotext", output);
+		assertEquals("%22Bulgariana%2FOntotext%22", output);
 
 		input = "Bulgariana / Ontotext";
 		output = QueryUtil.createPhraseValue("PROVIDER", input);
