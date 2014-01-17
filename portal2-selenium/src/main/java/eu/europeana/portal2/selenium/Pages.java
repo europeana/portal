@@ -14,10 +14,10 @@ public class Pages {
 			Ini ini = new Ini(Pages.class.getClassLoader().getResourceAsStream("conf.ini"));
 			Preferences prefs = new IniPreferences(ini);
 
-			url = prefs.node("server").get("url", "http://www.europeana.eu/");
+			url = prefs.node("server").get("url", "http://preview.europeana.eu/");
 			appSuffix = prefs.node("server").get("application", "/portal");
 		} catch (Exception e) {
-			url = "http://www.europeana.eu";
+			url = "http://preview.europeana.eu";
 			appSuffix = "/portal";
 		}
 

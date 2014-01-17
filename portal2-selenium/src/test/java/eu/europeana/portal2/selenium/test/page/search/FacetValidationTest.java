@@ -170,8 +170,8 @@ public class FacetValidationTest extends TestSetup {
 				}
 			}
 
-			assertTrue("Link contains rows", item.getLink().contains("&rows=" + PortalConfig.SEARCH_COUNT_ROWS));
-			assertTrue("Link contains qf parameter", item.getLink().contains("&qf="));
+			assertTrue("Link should contains rows=" + PortalConfig.SEARCH_COUNT_ROWS + " parameter", item.getLink().contains("&rows=" + PortalConfig.SEARCH_COUNT_ROWS));
+			assertTrue("Link should contains qf parameter", item.getLink().contains("&qf="));
 
 			if (type.equals(RIGHTS)) {
 
