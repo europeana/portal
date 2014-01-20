@@ -56,6 +56,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.utils.service.MltStopwordsService;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
@@ -65,6 +66,8 @@ import eu.europeana.portal2.services.ClickStreamLogService.UserAction;
 import eu.europeana.portal2.web.model.seealso.EuropeanaMlt;
 import eu.europeana.portal2.web.model.seealso.EuropeanaMltCategory;
 import eu.europeana.portal2.web.model.seealso.EuropeanaMltLink;
+import eu.europeana.portal2.web.model.seealso.MltCollector;
+import eu.europeana.portal2.web.model.seealso.MltSuggestion;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoCollector;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
@@ -102,6 +105,9 @@ public class ObjectController {
 	
 	@Resource
 	private SchemaOrgMapping schemaOrgMapping;
+
+	@Resource
+	private MltStopwordsService mltStopwordsService;
 
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
@@ -237,7 +243,8 @@ public class ObjectController {
 			model.setSeeAlsoCollector(createSeeAlsoCollector(fullBean));
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model.getSeeAlsoCollector()));
 			if (showEuropeanaMlt) {
-				model.setEuropeanaMlt(createEuropeanaMlt(model.getSeeAlsoCollector(), fullBean.getAbout()));
+				model.setMltCollector(createMltCollector(fullBean));
+				model.setEuropeanaMlt(createEuropeanaMlt(model.getMltCollector(), fullBean.getAbout()));
 			}
 			if (log.isDebugEnabled()) {
 				long tSeeAlso1 = (new Date()).getTime();
@@ -397,7 +404,7 @@ public class ObjectController {
 		return seeAlsoSuggestions;
 	}
 
-	private EuropeanaMlt createEuropeanaMlt(SeeAlsoCollector seeAlsoCollector, String europeanaId) {
+	private EuropeanaMlt createEuropeanaMlt(MltCollector mltCollector, String europeanaId) {
 		config.getSeeAlsoTranslations();
 		log.info("europeanaId: " + europeanaId);
 		long tSeeAlso0 = (new Date()).getTime();
@@ -405,17 +412,19 @@ public class ObjectController {
 		EuropeanaMlt mlt = new EuropeanaMlt();
 		for (String field : SEE_ALSO_FIELDS.keySet()) {
 			if (field.equals("DATA_PROVIDER")
-				|| seeAlsoCollector.get(field) == null
-				|| seeAlsoCollector.get(field).size() == 0) 
+				|| mltCollector.get(field) == null
+				|| mltCollector.get(field).size() == 0)
 			{
 				continue;
 			}
-			SeeAlsoSuggestion suggestion = seeAlsoCollector.get(field).get(0);
+			MltSuggestion suggestion = mltCollector.get(field).get(0);
 			// config.getSeeAlsoTranslations().get(field)
+
+			String translationField = field.equals("PROVIDER") ? "DATA_PROVIDER" : field;
 			EuropeanaMltCategory category = new EuropeanaMltCategory(
 				suggestion.getLabel(),
 				field,
-				config.getSeeAlsoTranslations().get(field)
+				config.getMltTranslations().get(translationField)
 			);
 			category.setQuery(suggestion.getEscapedQuery());
 			for (BriefBean bean : searchMltItem(suggestion.getEscapedQuery())) {
@@ -480,4 +489,33 @@ public class ObjectController {
 		}
 		return seeAlsoCollector;
 	}
+
+	private MltCollector createMltCollector(FullBean fullBean) {
+		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
+		MltCollector mltCollector = new MltCollector();
+		int countPerField = 0, id = 0;
+		for (String metaField : SEE_ALSO_FIELDS.keySet()) {
+			for (String edmField : SEE_ALSO_FIELDS.get(metaField)) {
+				String[] values = shortcut.get(edmField);
+				if (values != null) {
+					countPerField = 0;
+					for (String value : values) {
+						if (StringUtils.isNotBlank(value)
+							&& value.length() < 500
+							&& countPerField < MAX_COUNT_PER_FIELD
+							&& !mltStopwordsService.check(value)
+						)
+						{
+							MltSuggestion suggestion = new MltSuggestion(metaField, value, id);
+							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+							mltCollector.add(suggestion);
+							countPerField++; id++;
+						}
+					}
+				}
+			}
+		}
+		return mltCollector;
+	}
+
 }

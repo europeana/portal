@@ -27,6 +27,7 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.seealso.EuropeanaMlt;
+import eu.europeana.portal2.web.model.seealso.MltCollector;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoCollector;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
@@ -86,6 +87,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected Map<String, Element> edmElements;
 
 	protected SeeAlsoCollector seeAlsoCollector;
+	protected MltCollector mltCollector;
 	protected EuropeanaMlt europeanaMlt;
 
 	protected RightsValue rightsOption = null;
@@ -226,6 +228,14 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public SeeAlsoCollector getSeeAlsoCollector() {
 		return this.seeAlsoCollector;
+	}
+
+	public void setMltCollector(MltCollector mltCollector) {
+		this.mltCollector = mltCollector;
+	}
+
+	public MltCollector getMltCollector() {
+		return this.mltCollector;
 	}
 
 	public Map<String, List<FieldInfo>> getSchemaMap() {

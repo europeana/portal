@@ -7,26 +7,26 @@
 
 	<script type="text/javascript">
 		var mlt				= true;
-		var labelLoadMore	= '<spring:message code="see_also_load_more_t" />';
-		var labelLoadAll	= '<spring:message code="see_also_load_all_t" />';
+		var labelLoadMore	= '<spring:message code="mlt_load_more_t" />';
+		var labelLoadAll	= '<spring:message code="mlt_load_all_t" />';
 	</script>
-	
-	<strong class="see-also-header"><spring:message code="see_also_header_t" /></strong>
-	
+
+	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
+
 	<div id="mlt" class="accordion-tabs">
 
 		<c:forEach items="${model.europeanaMlt.categories}" var="category" varStatus="catStatus">
-		
+
 			<c:set var="api_query">${fn:replace(category.query, "\"", "&quot;")}</c:set>
-			
+
 			<a class="tab-header">
 				<spring:message code="${category.translationKey}" />: ${category.name}
 				<input id="similiar-category-${catStatus.index}" type="hidden" class="query" value="${fn:escapeXml(api_query)}">
 			</a>
-			
+
 			<div class="section">
 				<div class="content">
-					<div class="content-inner">						
+					<div class="content-inner">
 						<ul>
 							<c:forEach items="${category.urls}" var="link">
 								<c:url var="url" value="/record${link.id}.html">
@@ -43,7 +43,4 @@
 			
 		</c:forEach>
 	</div>
-	
 </c:if>
-
-
