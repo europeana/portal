@@ -174,7 +174,6 @@ public class ObjectController {
 		model.setRows(rows);
 		model.setShowEuropeanaMlt(showEuropeanaMlt);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
-		log.info("SoundCloudAwareCollections: " + StringUtils.join(model.getSoundCloudAwareCollections(), ", "));
 
 		// TODO: refactor this!!!
 		boolean showSimilarItems = false;
@@ -517,5 +516,4 @@ public class ObjectController {
 		}
 		return mltCollector;
 	}
-
 }
