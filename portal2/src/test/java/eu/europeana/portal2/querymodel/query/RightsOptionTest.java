@@ -10,10 +10,10 @@ public class RightsOptionTest {
 
 	String portalUrl = "http://europeana.eu/portal";
 
-	@Test
 	/**
 	 * Testing all methods on CC_ZERO item
 	 */
+	@Test
 	public void testCCZero() {
 		assertEquals("icon-cczero", RightsOption.CC_ZERO.getRightsIcon());
 		assertEquals(true, RightsOption.CC_ZERO.getShowExternalIcon());
@@ -25,6 +25,9 @@ public class RightsOptionTest {
 			RightsOption.CC_ZERO.getRelativeUrl(portalUrl));
 	}
 
+	/**
+	 * Testing safeValueByUrl() method
+	 */
 	@Test
 	public void testSafeValueByUrl() {
 		assertEquals(RightsOption.CC_ZERO,
@@ -59,10 +62,10 @@ public class RightsOptionTest {
 				RightsOption.safeValueByUrl("http://creativecommons.org/fake"));
 	}
 
-	@Test
 	/**
 	 * Testing whether Europeana copyrights has relative URLs
 	 */
+	@Test
 	public void testIsRelativeUrl() {
 		assertEquals("Europeana copyright has relative URL", true, RightsOption.EU_RR_F.isRelativeUrl());
 		assertEquals("Europeana copyright has relative URL", true, RightsOption.EU_RR_P.isRelativeUrl());
@@ -72,16 +75,19 @@ public class RightsOptionTest {
 		assertEquals("Europeana copyright has relative URL", true, RightsOption.OOC_NC.isRelativeUrl());
 	}
 
+	/**
+	 * Testing getRightsIcon() method
+	 */
 	@Test
 	public void testGetRightsIcon() {
 		assertEquals("icon-cc icon-by", RightsOption.CC_BY.getRightsIcon());
 		assertEquals("icon-cc icon-by icon-sa", RightsOption.CC_BY_SA.getRightsIcon());
 	}
 
-	@Test
 	/**
 	 * Testing the showExternalIcon() function
 	 */
+	@Test
 	public void testShowExternalIcon() {
 		assertEquals(true, RightsOption.CC_ZERO.getShowExternalIcon());
 		assertEquals(true, RightsOption.CC_BY_SA.getShowExternalIcon());
@@ -89,10 +95,10 @@ public class RightsOptionTest {
 		assertEquals(false, RightsOption.OOC_NC.getShowExternalIcon());
 	}
 
-	@Test
 	/**
 	 * Testing the getRightsText() function
 	 */
+	@Test
 	public void testGetRightsText() {
 		assertEquals("CC0", RightsOption.CC_ZERO.getRightsText());
 		assertEquals("CC BY-SA", RightsOption.CC_BY_SA.getRightsText());
@@ -100,10 +106,10 @@ public class RightsOptionTest {
 		assertEquals("Out of copyright - non commercial reuse", RightsOption.OOC_NC.getRightsText());
 	}
 
-	@Test
 	/**
 	 * Testing the getUrl() function
 	 */
+	@Test
 	public void testGetUrl() {
 		assertEquals("http://creativecommons.org/publicdomain/zero",
 			RightsOption.CC_ZERO.getUrl());
@@ -115,10 +121,10 @@ public class RightsOptionTest {
 				RightsOption.OOC_NC.getUrl());
 	}
 
-	@Test
 	/**
 	 * Testing the getRealtiveUrl() function
 	 */
+	@Test
 	public void testGetRelativeUrl() {
 		assertEquals("http://creativecommons.org/publicdomain/zero",
 			RightsOption.CC_ZERO.getRelativeUrl(portalUrl));
