@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.model.seealso;
+package eu.europeana.portal2.web.model.mlt;
 
 import java.util.ArrayList;
 import java.util.List;

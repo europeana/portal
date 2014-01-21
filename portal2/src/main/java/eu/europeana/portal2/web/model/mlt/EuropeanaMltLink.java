@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.model.seealso;
+package eu.europeana.portal2.web.model.mlt;
 
 public class EuropeanaMltLink {
 
