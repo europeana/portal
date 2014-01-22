@@ -15,6 +15,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,11 +32,13 @@ import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.DateIntervalUtils;
 import eu.europeana.corelib.web.support.Configuration;
+
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.AdminPage;
 import eu.europeana.portal2.web.util.CSVUtils;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.MsExcelUtils;
 
 /**
  * 
@@ -207,6 +210,49 @@ public class AdminController {
 	}
 
 	/**
+	 * Export API users to comma separated list
+	 * 
+	 * @param request
+	 * @param response
+	 * @param locale
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/exportUsers.xls")
+	public ModelAndView exportUsersInExcelHandler(HttpServletResponse response) throws Exception {
+		log.info("==== admin/exportUsers.html ====");
+		// response.setHeader("Content-Type", "text/csv");
+		// response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
+
+		Map<Long, User> users = new LinkedHashMap<Long, User>();
+		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(true);
+		for (ApiKey apiKey : apiKeys) {
+			User user = apiKey.getUser();
+			if (!users.containsKey(user.getId())) {
+				users.put(user.getId(), user);
+			}
+		}
+
+	String title = "API users";
+		StringBuilder sb = new StringBuilder();
+		List<String> header = new LinkedList<String>(Arrays.asList("id", "Date of registration", "First name",
+				"Last name", "Email", "Company", "Country", "Address", "Phone", "Website", "Field of work",
+				"Number of keys", "Keys (limit)"));
+		
+		List<List<String>> data = new ArrayList<List<String>>();
+		for (User user : users.values()) {
+			data.add(excelEncodeUser(user));
+		}
+
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		MsExcelUtils.build(title, header, data, workbook);
+		MsExcelUtils.flush(response, "users_with_apikeys", workbook);
+
+		return null;
+
+	}
+
+	/**
 	 * Create an CSV encoded record (list of fields) from a User object
 	 * 
 	 * @param user
@@ -235,6 +281,39 @@ public class AdminController {
 			keys.add(key.getId() + " (" + key.getUsageLimit() + ")");
 		}
 		fields.add(CSVUtils.encodeField(StringUtils.join(keys, ", ")));
+		return fields;
+	}
+
+	/**
+	 * Create an CSV encoded record (list of fields) from a User object
+	 * 
+	 * @param user
+	 * @return
+	 */
+	private List<String> excelEncodeUser(User user) {
+		List<String> fields = new LinkedList<String>();
+		fields.add(user.getId().toString());
+		if (user.getRegistrationDate() != null) {
+			fields.add(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate()));
+		} else {
+			fields.add("");
+		}
+		fields.add(user.getFirstName());
+		fields.add(user.getLastName());
+		fields.add(user.getEmail());
+		fields.add(user.getCompany());
+		fields.add(user.getCountry());
+		fields.add(user.getAddress());
+		fields.add(user.getPhone());
+		fields.add(user.getWebsite());
+		fields.add(user.getFieldOfWork());
+		fields.add(String.valueOf(user.getApiKeys().size()));
+		List<String> keys = new LinkedList<String>();
+		for (ApiKey key : user.getApiKeys()) {
+			keys.add(key.getId() + " (" + key.getUsageLimit() + ")");
+		}
+		fields.add(StringUtils.join(keys, ", "));
+
 		return fields;
 	}
 

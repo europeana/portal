@@ -9,9 +9,9 @@
 	">
 
 	<task:scheduler id="portal2_taskScheduler" pool-size="10" />
-	
+
 	<task:executor id="portal2_taskExecutor" pool-size="10"/>
-	
+
 	<bean name="portal2_feedService" class="eu.europeana.portal2.services.impl.FeedServiceImpl" />
 
 </beans>
