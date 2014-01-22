@@ -138,55 +138,55 @@ public class FullDocPage extends FullDocPreparation {
 
 		addMetaField(fields, Field.EUROPEANA_URI, document.getId());
 		addMetaField(fields, Field.EDM_COUNTRY, getDocument().getEdmCountry());
-		addMetaField(fields, Field.EDM_PROVIDER, shortcut.get("EdmProvider"));
+		addMetaField(fields, Field.EDM_PROVIDER, shortcut, "EdmProvider");
 		addMetaField(fields, Field.EDM_COLLECTIONNAME, document.getEuropeanaCollectionName());
-		addMetaField(fields, Field.EDM_ISSHOWNAT, shortcut.get("EdmIsShownAt"));
-		addMetaField(fields, Field.EDM_ISSHOWNBY, shortcut.get("EdmIsShownBy"));
+		addMetaField(fields, Field.EDM_ISSHOWNAT, shortcut, "EdmIsShownAt");
+		addMetaField(fields, Field.EDM_ISSHOWNBY, shortcut, "EdmIsShownBy");
 		// addMetaField(fields, Field.EUROPEANA_OBJECT, document.getThumbnails());
-		addMetaField(fields, Field.EDM_OBJECT, shortcut.get("EdmObject"));
+		addMetaField(fields, Field.EDM_OBJECT, shortcut, "EdmObject");
 		addMetaField(fields, Field.EDM_LANGUAGE, getDocument().getEdmLanguage());
 		// addMetaField(fields, Field.EUROPEANA_TYPE, document.getType().toString());
 		// addMetaField(fields, Field.EUROPEANA_USERTAG, document.getEdmUserTag());
 		// addMetaField(fields, Field.EUROPEANA_YEAR, getDocument().getEdmYear());
-		addMetaField(fields, Field.EDM_RIGHTS, shortcut.get("EdmRights"));
+		addMetaField(fields, Field.EDM_RIGHTS, shortcut, "EdmRights");
 		addMetaField(fields, Field.EDM_DATAPROVIDER, getDocument().getEdmDataProvider());
-		addMetaField(fields, Field.EDM_UGC, shortcut.get("EdmUGC"));
+		addMetaField(fields, Field.EDM_UGC, shortcut, "EdmUGC");
 
-		addMetaField(fields, Field.DCTERMS_ALTERNATIVE, shortcut.get("DctermsAlternative"));
-		addMetaField(fields, Field.DCTERMS_CONFORMSTO, shortcut.get("DctermsConformsTo"));
-		addMetaField(fields, Field.DCTERMS_CREATED, shortcut.get("DctermsCreated"));
-		addMetaField(fields, Field.DCTERMS_EXTENT, shortcut.get("DctermsExtent"));
-		addMetaField(fields, Field.DCTERMS_HASFORMAT, shortcut.get("DctermsHasFormat"));
-		addMetaField(fields, Field.DCTERMS_HASPART, shortcut.get("DctermsHasPart"));
+		addMetaField(fields, Field.DCTERMS_ALTERNATIVE, shortcut, "DctermsAlternative");
+		addMetaField(fields, Field.DCTERMS_CONFORMSTO, shortcut, "DctermsConformsTo");
+		addMetaField(fields, Field.DCTERMS_CREATED, shortcut, "DctermsCreated");
+		addMetaField(fields, Field.DCTERMS_EXTENT, shortcut, "DctermsExtent");
+		addMetaField(fields, Field.DCTERMS_HASFORMAT, shortcut, "DctermsHasFormat");
+		addMetaField(fields, Field.DCTERMS_HASPART, shortcut, "DctermsHasPart");
 		addMetaField(fields, Field.DCTERMS_HASVERSION, getDocument().getDctermsHasVersion());
 		addMetaField(fields, Field.DCTERMS_ISFORMATOF, getDocument().getDctermsIsFormatOf());
-		addMetaField(fields, Field.DCTERMS_ISPARTOF, shortcut.get("DctermsIsPartOf"));
-		addMetaField(fields, Field.DCTERMS_ISREFERENCEDBY, shortcut.get("DctermsIsReferencedBy"));
-		addMetaField(fields, Field.DCTERMS_ISREPLACEDBY, shortcut.get("DctermsIsReplacedBy"));
-		addMetaField(fields, Field.DCTERMS_ISREQUIREDBY, shortcut.get("DctermsIsRequiredBy"));
-		addMetaField(fields, Field.DCTERMS_ISSUED, shortcut.get("DctermsIssued"));
-		addMetaField(fields, Field.DCTERMS_ISVERSIONOF, shortcut.get("DctermsIsVersionOf"));
-		addMetaField(fields, Field.DCTERMS_MEDIUM, shortcut.get("DctermsMedium"));
-		addMetaField(fields, Field.DCTERMS_PROVENANCE, shortcut.get("DctermsProvenance"));
-		addMetaField(fields, Field.DCTERMS_REFERENCES, shortcut.get("DctermsReferences"));
-		addMetaField(fields, Field.DCTERMS_REPLACES, shortcut.get("DctermsReplaces"));
-		addMetaField(fields, Field.DCTERMS_REQUIRES, shortcut.get("DctermsRequires"));
-		addMetaField(fields, Field.DCTERMS_SPATIAL, shortcut.get("DctermsSpatial"));
-		addMetaField(fields, Field.DCTERMS_TABLEOFCONTENTS, shortcut.get("DctermsTableOfContents"));
-		addMetaField(fields, Field.DCTERMS_TEMPORAL, shortcut.get("DctermsTemporal"));
+		addMetaField(fields, Field.DCTERMS_ISPARTOF, shortcut, "DctermsIsPartOf");
+		addMetaField(fields, Field.DCTERMS_ISREFERENCEDBY, shortcut, "DctermsIsReferencedBy");
+		addMetaField(fields, Field.DCTERMS_ISREPLACEDBY, shortcut, "DctermsIsReplacedBy");
+		addMetaField(fields, Field.DCTERMS_ISREQUIREDBY, shortcut, "DctermsIsRequiredBy");
+		addMetaField(fields, Field.DCTERMS_ISSUED, shortcut, "DctermsIssued");
+		addMetaField(fields, Field.DCTERMS_ISVERSIONOF, shortcut, "DctermsIsVersionOf");
+		addMetaField(fields, Field.DCTERMS_MEDIUM, shortcut, "DctermsMedium");
+		addMetaField(fields, Field.DCTERMS_PROVENANCE, shortcut, "DctermsProvenance");
+		addMetaField(fields, Field.DCTERMS_REFERENCES, shortcut, "DctermsReferences");
+		addMetaField(fields, Field.DCTERMS_REPLACES, shortcut, "DctermsReplaces");
+		addMetaField(fields, Field.DCTERMS_REQUIRES, shortcut, "DctermsRequires");
+		addMetaField(fields, Field.DCTERMS_SPATIAL, shortcut, "DctermsSpatial");
+		addMetaField(fields, Field.DCTERMS_TABLEOFCONTENTS, shortcut, "DctermsTableOfContents");
+		addMetaField(fields, Field.DCTERMS_TEMPORAL, shortcut, "DctermsTemporal");
 
-		addMetaField(fields, Field.DC_CONTRIBUTOR, shortcut.get("DcContributor"));
-		addMetaField(fields, Field.DC_COVERAGE, shortcut.get("DcCoverage"));
-		addMetaField(fields, Field.DC_CREATOR, shortcut.get("DcCreator"));
+		addMetaField(fields, Field.DC_CONTRIBUTOR, shortcut, "DcContributor");
+		addMetaField(fields, Field.DC_COVERAGE, shortcut, "DcCoverage");
+		addMetaField(fields, Field.DC_CREATOR, shortcut, "DcCreator");
 		addMetaField(fields, Field.DC_DATE, getDocument().getDcDate());
 		addMetaField(fields, Field.DC_DESCRIPTION, getDocument().getDcDescription());
 		addMetaField(fields, Field.DC_FORMAT, getDocument().getDcFormat());
-		addMetaField(fields, Field.DC_IDENTIFIER, shortcut.get("DcIdentifier"));
+		addMetaField(fields, Field.DC_IDENTIFIER, shortcut, "DcIdentifier");
 		addMetaField(fields, Field.DC_LANGUAGE, getDocument().getDcLanguage());
-		addMetaField(fields, Field.DC_PUBLISHER, shortcut.get("DcPublisher"));
-		addMetaField(fields, Field.DC_RELATION, shortcut.get("DcRelation"));
+		addMetaField(fields, Field.DC_PUBLISHER, shortcut, "DcPublisher");
+		addMetaField(fields, Field.DC_RELATION, shortcut, "DcRelation");
 		addMetaField(fields, Field.DC_RIGHTS, getDocument().getDcRights());
-		addMetaField(fields, Field.DC_SOURCE, shortcut.get("DcSource"));
+		addMetaField(fields, Field.DC_SOURCE, shortcut, "DcSource");
 		addMetaField(fields, Field.DC_SUBJECT, getDocument().getDcSubject());
 		addMetaField(fields, Field.DC_TITLE, getDocument().getDcTitle());
 		addMetaField(fields, Field.DC_TYPE, getDocument().getDcType());
@@ -655,6 +655,12 @@ public class FullDocPage extends FullDocPreparation {
 		}
 	}
 
+	private void addMetaField(List<MetaDataFieldPresentation> metaDataFields, Field field, FullBeanShortcut shortcut, String key) {
+		if (shortcut != null) {
+			addMetaField(metaDataFields, field, shortcut.get(key)); 
+		}
+	}
+	
 	/**
 	 * Formats any url adding in any required addition parameters required for
 	 * the brief view page. Useful for embedded version which must keep track of
