@@ -72,6 +72,10 @@ public class AdminController {
 	private static final String TOTAL = "total";
 	private static final int LIMIT = 50;
 
+	private static List<String> header = new LinkedList<String>(Arrays.asList("id", "Date of registration", "First name",
+			"Last name", "Email", "Company", "Country", "Address", "Phone", "Website", "Field of work",
+			"Number of keys", "Keys (limit)"));
+
 	@RequestMapping("/admin.html")
 	public ModelAndView adminHandler(
 			@RequestParam(value = "page", required = false, defaultValue = "1") int pageNr
@@ -183,7 +187,7 @@ public class AdminController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/admin/exportUsers.html", produces = MediaType.TEXT_PLAIN_VALUE)
+	@RequestMapping(value = "/admin/exportUsers.csv", produces = MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String exportUsersHandler(HttpServletResponse response) throws Exception {
 		log.info("==== admin/exportUsers.html ====");
 		response.setHeader("Content-Type", "text/csv");
@@ -199,10 +203,7 @@ public class AdminController {
 		}
 
 		StringBuilder sb = new StringBuilder();
-		List<String> fieldNames = new LinkedList<String>(Arrays.asList("id", "Date of registration", "First name",
-				"Last name", "Email", "Company", "Country", "Address", "Phone", "Website", "Field of work",
-				"Number of keys", "Keys (limit)"));
-		sb.append(CSVUtils.encodeRecord(fieldNames));
+		sb.append(CSVUtils.encodeRecord(header));
 		for (User user : users.values()) {
 			sb.append(CSVUtils.encodeRecord(csvEncodeUser(user)));
 		}
@@ -220,9 +221,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/exportUsers.xls")
 	public ModelAndView exportUsersInExcelHandler(HttpServletResponse response) throws Exception {
-		log.info("==== admin/exportUsers.html ====");
-		// response.setHeader("Content-Type", "text/csv");
-		// response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
+		log.info("==== admin/exportUsers.xls ====");
 
 		Map<Long, User> users = new LinkedHashMap<Long, User>();
 		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(true);
@@ -233,15 +232,11 @@ public class AdminController {
 			}
 		}
 
-	String title = "API users";
-		StringBuilder sb = new StringBuilder();
-		List<String> header = new LinkedList<String>(Arrays.asList("id", "Date of registration", "First name",
-				"Last name", "Email", "Company", "Country", "Address", "Phone", "Website", "Field of work",
-				"Number of keys", "Keys (limit)"));
-		
+		String title = "API users";
+
 		List<List<String>> data = new ArrayList<List<String>>();
 		for (User user : users.values()) {
-			data.add(excelEncodeUser(user));
+			data.add(serializeUser(user));
 		}
 
 		HSSFWorkbook workbook = new HSSFWorkbook();
@@ -259,28 +254,12 @@ public class AdminController {
 	 * @return
 	 */
 	private List<String> csvEncodeUser(User user) {
-		List<String> fields = new LinkedList<String>();
-		fields.add(user.getId().toString());
-		if (user.getRegistrationDate() != null) {
-			fields.add(CSVUtils.encodeField(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate())));
-		} else {
-			fields.add("");
+		List<String> fields = serializeUser(user);
+
+		for (int i=1, size = fields.size(); i<size; i++) {
+			fields.set(i, CSVUtils.encodeField(fields.get(i)));
 		}
-		fields.add(CSVUtils.encodeField(user.getFirstName()));
-		fields.add(CSVUtils.encodeField(user.getLastName()));
-		fields.add(CSVUtils.encodeField(user.getEmail()));
-		fields.add(CSVUtils.encodeField(user.getCompany()));
-		fields.add(CSVUtils.encodeField(user.getCountry()));
-		fields.add(CSVUtils.encodeField(user.getAddress()));
-		fields.add(CSVUtils.encodeField(user.getPhone()));
-		fields.add(CSVUtils.encodeField(user.getWebsite()));
-		fields.add(CSVUtils.encodeField(user.getFieldOfWork()));
-		fields.add(String.valueOf(user.getApiKeys().size()));
-		List<String> keys = new LinkedList<String>();
-		for (ApiKey key : user.getApiKeys()) {
-			keys.add(key.getId() + " (" + key.getUsageLimit() + ")");
-		}
-		fields.add(CSVUtils.encodeField(StringUtils.join(keys, ", ")));
+
 		return fields;
 	}
 
@@ -290,7 +269,8 @@ public class AdminController {
 	 * @param user
 	 * @return
 	 */
-	private List<String> excelEncodeUser(User user) {
+	private List<String> serializeUser(User user) {
+
 		List<String> fields = new LinkedList<String>();
 		fields.add(user.getId().toString());
 		if (user.getRegistrationDate() != null) {
