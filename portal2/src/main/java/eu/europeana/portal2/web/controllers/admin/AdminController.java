@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.collect.ImmutableBiMap.Builder;
+import com.google.common.collect.ImmutableMap;
+
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.ApiLogService;
 import eu.europeana.corelib.db.service.UserService;
@@ -72,9 +75,22 @@ public class AdminController {
 	private static final String TOTAL = "total";
 	private static final int LIMIT = 50;
 
-	private static List<String> header = new LinkedList<String>(Arrays.asList("id", "Date of registration", "First name",
-			"Last name", "Email", "Company", "Country", "Address", "Phone", "Website", "Field of work",
-			"Number of keys", "Keys (limit)"));
+	private static List<Map<String, String>> header = new LinkedList<Map<String, String>>();
+	static {
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "id").put("type", "int").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Date of registration").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "First name").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Last name").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Email").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Company").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Country").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Address").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Phone").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Website").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Field of work").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Number of keys").put("type", "int").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Keys (limit)").put("type", "String").build());
+	}
 
 	@RequestMapping("/admin.html")
 	public ModelAndView adminHandler(
@@ -203,7 +219,11 @@ public class AdminController {
 		}
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(CSVUtils.encodeRecord(header));
+		List<String> fieldNames = new ArrayList<String>();
+		for (Map<String, String> entry : header) {
+			fieldNames.add(entry.get("name"));
+		}
+		sb.append(CSVUtils.encodeRecord(fieldNames));
 		for (User user : users.values()) {
 			sb.append(CSVUtils.encodeRecord(csvEncodeUser(user)));
 		}
@@ -244,7 +264,6 @@ public class AdminController {
 		MsExcelUtils.flush(response, "users_with_apikeys", workbook);
 
 		return null;
-
 	}
 
 	/**
