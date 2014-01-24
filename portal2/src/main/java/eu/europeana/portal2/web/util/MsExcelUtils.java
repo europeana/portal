@@ -34,11 +34,15 @@ public class MsExcelUtils {
 			HSSFRow row = sheet.createRow(rowNum++);
 			cellNum = 0;
 			for (String cell : cells) {
-				String type = headerData.get(cellNum).containsKey("type") ? headerData.get(cellNum).get("type") : "String";
-				if (StringUtils.equals(type, "int")) {
-					row.createCell(cellNum++).setCellValue(Double.parseDouble(cell));
-				} else {
+				if (StringUtils.isBlank(cell)) {
 					row.createCell(cellNum++).setCellValue(cell);
+				} else {
+					String type = headerData.get(cellNum).containsKey("type") ? headerData.get(cellNum).get("type") : "String";
+					if (StringUtils.equals(type, "int")) {
+						row.createCell(cellNum++).setCellValue(Double.parseDouble(cell));
+					} else {
+						row.createCell(cellNum++).setCellValue(cell);
+					}
 				}
 			}
 		}

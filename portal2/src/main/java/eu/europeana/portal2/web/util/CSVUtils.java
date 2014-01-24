@@ -32,6 +32,17 @@ public class CSVUtils {
 	/**
 	 * Encode a record (list of fields) for usage in CSV
 	 */
+	public static String encodeRecords(List<List<String>> rows) {
+		StringBuilder sb = new StringBuilder();
+		for (List<String> fields : rows) {
+			sb.append(encodeRecord(fields));
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Encode a record (list of fields) for usage in CSV
+	 */
 	public static String encodeRecord(List<String> fields) {
 		return String.format("%s%s", StringUtils.join(fields, FIELD_SEPARATOR), RECORD_SEPARATOR);
 	}

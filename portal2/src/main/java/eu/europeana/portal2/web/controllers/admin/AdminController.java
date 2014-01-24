@@ -77,6 +77,7 @@ public class AdminController {
 
 	private static List<Map<String, String>> header = new LinkedList<Map<String, String>>();
 	static {
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "count").put("type", "int").build());
 		header.add(new ImmutableMap.Builder<String, String>().put("name", "id").put("type", "int").build());
 		header.add(new ImmutableMap.Builder<String, String>().put("name", "Date of registration").put("type", "String").build());
 		header.add(new ImmutableMap.Builder<String, String>().put("name", "First name").put("type", "String").build());
@@ -89,7 +90,10 @@ public class AdminController {
 		header.add(new ImmutableMap.Builder<String, String>().put("name", "Website").put("type", "String").build());
 		header.add(new ImmutableMap.Builder<String, String>().put("name", "Field of work").put("type", "String").build());
 		header.add(new ImmutableMap.Builder<String, String>().put("name", "Number of keys").put("type", "int").build());
-		header.add(new ImmutableMap.Builder<String, String>().put("name", "Keys (limit)").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Key").put("type", "String").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Limit").put("type", "int").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Total usage").put("type", "int").build());
+		header.add(new ImmutableMap.Builder<String, String>().put("name", "Current usage").put("type", "int").build());
 	}
 
 	@RequestMapping("/admin.html")
@@ -103,14 +107,10 @@ public class AdminController {
 		model.setPageNr(pageNr);
 
 		long t0 = new Date().getTime();
-		// model.setUsers(userService.findAll());
-		Map<String, Map<String, Long>> usage = new HashMap<String, Map<String, Long>>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put(ACTUAL, new HashMap<String, Long>());
-				put(TOTAL, new HashMap<String, Long>());
-			}
-		};
+
+		Map<String, Map<String, Long>> usage = new HashMap<String, Map<String, Long>>();
+		usage.put(ACTUAL, new HashMap<String, Long>());
+		usage.put(TOTAL, new HashMap<String, Long>());
 
 		List<User> users = new ArrayList<User>();
 		long count = apiKeyService.count();
@@ -161,7 +161,9 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/removeUser.html")
-	public String removeUserHandler(@RequestParam(value = "id", required = true) long id) throws Exception {
+	public String removeUserHandler(
+			@RequestParam(value = "id", required = true) long id
+			) throws Exception {
 		log.info("==== admin.html ====");
 
 		User user = userService.findByID(id);
@@ -224,8 +226,9 @@ public class AdminController {
 			fieldNames.add(entry.get("name"));
 		}
 		sb.append(CSVUtils.encodeRecord(fieldNames));
+		int count = 0;
 		for (User user : users.values()) {
-			sb.append(CSVUtils.encodeRecord(csvEncodeUser(user)));
+			sb.append(CSVUtils.encodeRecords(csvEncodeUser(count++, user)));
 		}
 		return sb.toString();
 	}
@@ -255,8 +258,9 @@ public class AdminController {
 		String title = "API users";
 
 		List<List<String>> data = new ArrayList<List<String>>();
+		int count = 1;
 		for (User user : users.values()) {
-			data.add(serializeUser(user));
+			data.addAll(serializeUser(count++, user));
 		}
 
 		HSSFWorkbook workbook = new HSSFWorkbook();
@@ -272,14 +276,16 @@ public class AdminController {
 	 * @param user
 	 * @return
 	 */
-	private List<String> csvEncodeUser(User user) {
-		List<String> fields = serializeUser(user);
+	private List<List<String>> csvEncodeUser(int count, User user) {
+		List<List<String>> rows = serializeUser(count, user);
 
-		for (int i=1, size = fields.size(); i<size; i++) {
-			fields.set(i, CSVUtils.encodeField(fields.get(i)));
+		for (List<String> fields : rows) {
+			for (int i=1, size = fields.size(); i<size; i++) {
+				fields.set(i, CSVUtils.encodeField(fields.get(i)));
+			}
 		}
 
-		return fields;
+		return rows;
 	}
 
 	/**
@@ -288,9 +294,12 @@ public class AdminController {
 	 * @param user
 	 * @return
 	 */
-	private List<String> serializeUser(User user) {
+	private List<List<String>> serializeUser(int count, User user) {
 
+		List<List<String>> rows = new LinkedList<List<String>>();
 		List<String> fields = new LinkedList<String>();
+
+		fields.add(String.valueOf(count));
 		fields.add(user.getId().toString());
 		if (user.getRegistrationDate() != null) {
 			fields.add(new SimpleDateFormat("yyyy-MM-dd").format(user.getRegistrationDate()));
@@ -307,13 +316,25 @@ public class AdminController {
 		fields.add(user.getWebsite());
 		fields.add(user.getFieldOfWork());
 		fields.add(String.valueOf(user.getApiKeys().size()));
-		List<String> keys = new LinkedList<String>();
-		for (ApiKey key : user.getApiKeys()) {
-			keys.add(key.getId() + " (" + key.getUsageLimit() + ")");
-		}
-		fields.add(StringUtils.join(keys, ", "));
 
-		return fields;
+		int i = 0;
+		for (ApiKey key : user.getApiKeys()) {
+			long[] usage = getUsageByApiKey(key.getId());
+			if (i > 0) {
+				fields = new LinkedList<String>();
+				for (int j = 0; j < 13; j++) {
+					fields.add("");
+				}
+			}
+			fields.add(key.getId());
+			fields.add(String.valueOf(key.getUsageLimit()));
+			fields.add(String.valueOf(usage[1]));
+			fields.add(String.valueOf(usage[0]));
+			rows.add(fields);
+			i++;
+		}
+
+		return rows;
 	}
 
 	/**
