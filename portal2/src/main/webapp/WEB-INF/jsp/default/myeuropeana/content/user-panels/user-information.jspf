@@ -7,30 +7,26 @@
 	<div class="content">
 		<div class="content-inner">
 			<div id="user-information">
-				<strong><spring:message code="Username_t" />:</strong><br/>
-				${model.user.userName}<br/>
-				<br/>
+				<p><strong><spring:message code="Username_t" />:</strong><br/>
+				${model.user.userName}</p>
 
-				<strong><spring:message code="EmailAddress_t" />:</strong><br/>
-				${model.user.email}<br/>
-				<br/>
+				<p><strong><spring:message code="EmailAddress_t" />:</strong><br/>
+				${model.user.email}</p>
 
 				<c:if test="${model.user[firstName] != null}">
-					<strong><spring:message code="FirstName_t" />:</strong><br/>
-					${model.user.firstName}<br/>
-					<br/>
+					<p><strong><spring:message code="FirstName_t" />:</strong><br/>
+					${model.user.firstName}</p>
 				</c:if>
 
 				<c:if test="${model.user[lastName] != null}">
-					<strong><spring:message code="lastName_t" />:</strong><br/>
-					${model.user.lastName}
+					<p><strong><spring:message code="lastName_t" />:</strong><br/>
+					${model.user.lastName}</p>
 				</c:if>
 
-				<c:if test="${model.user.role == 'ROLE_GOD'}">
-					<c:url var="adminPage" value="/admin.html" />
-					<a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
+				<c:if test="${model.user.role == 'ROLE_GOD' || model.user.role == 'ROLE_ADMINISTRATOR'}">
+					<p><c:url var="adminPage" value="/admin.html" />
+					<a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a></p>
 				</c:if>
-
 			</div>
 		</div>
 	</div>

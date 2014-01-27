@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-    xmlns:beans="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans 
-                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-                    http://www.springframework.org/schema/security 
-                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/admin.html" access="ROLE_GOD"/>
-		<intercept-url pattern="/admin/*.html" access="ROLE_GOD"/>
-		<intercept-url pattern="/secure/*.html" access="ROLE_GOD"/>
+		<intercept-url pattern="/admin.html" access="ROLE_GOD, ROLE_ADMINISTRATOR" />
+		<intercept-url pattern="/admin/export/users.*" access="ROLE_GOD, ROLE_ADMINISTRATOR" />
+		<intercept-url pattern="/admin/*.html" access="ROLE_GOD" />
+		<intercept-url pattern="/secure/*.html" access="ROLE_GOD" />
 		<intercept-url pattern="/myeuropeana.html" access="ROLE_USER" />
 		<form-login login-page="/login.html" authentication-failure-url="/login.html?error=1" />
 		<logout logout-url="/logout.html" logout-success-url="/logout-success.html" />
@@ -18,10 +20,9 @@
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="portal2_userDetailsService">
-			<password-encoder hash="sha"/>
+			<password-encoder hash="sha" />
 		</authentication-provider>
 	</authentication-manager>
 
 	<beans:bean id="portal2_userDetailsService" class="eu.europeana.portal2.services.impl.UserDetailsServiceImpl" />
-	
 </beans:beans>

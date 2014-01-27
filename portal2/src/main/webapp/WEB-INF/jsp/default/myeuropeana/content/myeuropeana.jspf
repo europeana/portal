@@ -1,26 +1,20 @@
 <div class="row">
 
   <h1><spring:message code="MyEuropeana_t" /></h1>
-  
+
   <div id="user-panels">
-  
-  
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/user-information.jspf" %>
-    
+
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/saved-items.jspf" %>
-    
+
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/saved-searches.jspf" %>
-    
+
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/saved-tags.jspf" %>
 
     <%@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/api-keys.jspf" %>
-    
+
     <%--@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/remote-search-widget.jspf" --%>
 
   </div>
-  
-
   <a href="/${model.portalName}/logout.html" class="mobile-logout deans-button-1 europeana-button-1"><spring:message code="LogOut_t" /></a>
-  
-  
 </div>
