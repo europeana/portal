@@ -13,9 +13,13 @@ public class MltSuggestion {
 	private int count;
 
 	public MltSuggestion(String metaField, String label, int id) {
+		this(metaField, label, id, true);
+	}
+
+	public MltSuggestion(String metaField, String label, int id, boolean clear) {
 		this.metaField = metaField;
 		this.label = label;
-		this.query = ControllerUtil.clearSeeAlso(label);
+		this.query = clear ? ControllerUtil.clearSeeAlso(label) : label;
 		this.id = id;
 	}
 

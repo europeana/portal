@@ -405,25 +405,22 @@ public class ObjectController {
 
 	private EuropeanaMlt createEuropeanaMlt(MltCollector mltCollector, String europeanaId) {
 		config.getSeeAlsoTranslations();
-		log.info("europeanaId: " + europeanaId);
 		long tSeeAlso0 = (new Date()).getTime();
-		// List<String> ids = new ArrayList<String>();
 		EuropeanaMlt mlt = new EuropeanaMlt();
+		boolean hasDataProvider = (mltCollector.get("DATA_PROVIDER") != null);
 		for (String field : SEE_ALSO_FIELDS.keySet()) {
-			if (field.equals("DATA_PROVIDER")
+			if ((field.equals("PROVIDER") && hasDataProvider)
 				|| mltCollector.get(field) == null
 				|| mltCollector.get(field).size() == 0)
 			{
 				continue;
 			}
 			MltSuggestion suggestion = mltCollector.get(field).get(0);
-			// config.getSeeAlsoTranslations().get(field)
 
-			String translationField = field.equals("PROVIDER") ? "DATA_PROVIDER" : field;
 			EuropeanaMltCategory category = new EuropeanaMltCategory(
 				suggestion.getLabel(),
 				field,
-				config.getMltTranslations().get(translationField)
+				config.getMltTranslations().get(field)
 			);
 			category.setQuery(suggestion.getEscapedQuery());
 			for (BriefBean bean : searchMltItem(suggestion.getEscapedQuery())) {
@@ -505,7 +502,13 @@ public class ObjectController {
 							&& !mltStopwordsService.check(value)
 						)
 						{
-							MltSuggestion suggestion = new MltSuggestion(metaField, value, id);
+							boolean clear = true;
+							if (StringUtils.equals(metaField, "PROVIDER") ||
+							    StringUtils.equals(metaField, "DATA_PROVIDER")) {
+								clear = false;
+							}
+							log.info("new MltSuggestion(" + metaField + ", " + value + ", " + id + ")");
+							MltSuggestion suggestion = new MltSuggestion(metaField, value, id, clear);
 							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
 							mltCollector.add(suggestion);
 							countPerField++; id++;

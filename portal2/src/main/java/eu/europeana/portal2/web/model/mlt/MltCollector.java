@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Collector of SeeAlsoSuggestion objects
+ * Collector of MltSuggestion objects
  * 
  * You can add, and retrieve individual objects, get the objects belongs to a 
  * given field, and get the list of Solr facet queries.
