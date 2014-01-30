@@ -18,11 +18,9 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -52,7 +50,7 @@ public class FullBeanDecorator implements FullBean {
 	private FullBean fulldoc;
 
 	private FullBeanShortcut shortcut;
-	
+
 	private EuropeanaUrlService europeanaUrlService;
 
 	public FullBeanDecorator(FullBean fulldoc) {
@@ -404,7 +402,8 @@ public class FullBeanDecorator implements FullBean {
 	public EuropeanaAggregation getEuropeanaAggregation() {
 		EuropeanaAggregation europeanaAggregation = fulldoc.getEuropeanaAggregation();
 		String edmPreview = "";
-		if (this.getAggregations().get(0).getEdmObject() != null) {
+		if ((this.getAggregations() != null) && !this.getAggregations().isEmpty()
+				&& (this.getAggregations().get(0).getEdmObject() != null)) {
 			String url = this.getAggregations().get(0).getEdmObject();
 			if (StringUtils.isNotBlank(url)) {
 				edmPreview = europeanaUrlService.getThumbnailUrl(url, getType()).toString();
@@ -471,7 +470,6 @@ public class FullBeanDecorator implements FullBean {
 	public void setTimestampCreated(Date timestampCreated) {
 		fulldoc.setTimestampCreated(timestampCreated);
 	}
-
 
 	@Override
 	public void setTimestampUpdated(Date timestampUpdated) {
