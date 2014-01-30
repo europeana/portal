@@ -205,7 +205,7 @@ public class AdminController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/admin/exportUsers.csv", produces = MediaType.TEXT_PLAIN_VALUE)
+	@RequestMapping(value = "/admin/export/users.csv", produces = MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String exportUsersHandler(HttpServletResponse response) throws Exception {
 		log.info("==== admin/exportUsers.html ====");
 		response.setHeader("Content-Type", "text/csv");
@@ -242,7 +242,7 @@ public class AdminController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/admin/exportUsers.xls")
+	@RequestMapping(value = "/admin/export/users.xls")
 	public ModelAndView exportUsersInExcelHandler(HttpServletResponse response) throws Exception {
 		log.info("==== admin/exportUsers.xls ====");
 
