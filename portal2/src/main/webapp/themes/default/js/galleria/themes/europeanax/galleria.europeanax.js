@@ -21,11 +21,6 @@ var europeanaTheme = {
 		// set this to false if you want to show the caption all the time:
 		_toggleInfo: true
 	},
-
-	push:function(){
-	
-		alert('by chance????');
-	},
 	
 	init: function(options) {
 		//jQuery.noConflict();
@@ -34,11 +29,6 @@ var europeanaTheme = {
 	
 		/* europeana */
 		var thisGallery		= this;
-		
-		thisGallery.stuff = function(){
-			alert('stuff');			
-		};
-		
 		var dataSource		= this._options.dataSource;
 		var carouselId		= this.$('container').parent().attr("id");
 		var carouselMode	= $('#' + carouselId).hasClass('europeana-carousel');
@@ -126,13 +116,9 @@ var europeanaTheme = {
 				$(e).bind("mouseover", function(){					
 					thisGallery.trigger(Galleria.IDLE_EXIT);
 				});
-
 			});
 			*/
-			thisGallery.setEuropeanaInfo(dataSource);
-			
-			
-			
+			thisGallery.setEuropeanaInfo(dataSource);			
 			
 			thisGallery.bind("idle_enter",function(e) {
 				if(typeof thisGallery._options.suppressIdle == 'undefined' || !thisGallery._options.suppressIdle){
@@ -147,64 +133,18 @@ var europeanaTheme = {
 					thumbNavRight.removeClass('disabled');					
 					//console.log('idle exit removes disabled');
 				}
-				thumbNavRight.show();
-				thumbNavLeft.show();					  
+				
+				console.log('idle exit - show arrow');
+				if(!thumbNavLeft.hasClass('europeana-disabled')){
+					thumbNavLeft.show();					
+				}
+				if(!thumbNavRight.hasClass('europeana-disabled')){
+					thumbNavRight.show();					
+				}
 			});
 			
-			thisGallery.bind("europeana", function(e) {
-				
-				//alert("got europeana event! " + loadData.tabs[index].carouselMltData );
-				//alert("got europeana event! " + window.updatedCarouselData);
-				
-				/*
-				 	we need to reuse:
-				 	
-				 	the sizing
-				 	the clicking 
-				 	the info
-				 
-				 */ 
-				
-				/*
-				thumbs = thisGallery.$( 'container' ).find('.galleria-thumbnails');
-				
-				thumbs.find('.galleria-image .europeana-carousel-info').remove();
-				
-				alert("thumbs length "  +  thumbs.find('.galleria-image').length  );
-				
-				thumbs.find('.galleria-image').each(function(i, e){
-					$('<div class="europeana-carousel-info">' + dataSource[i].title + '</div>').appendTo(e);
-					
-					$(e).unbind("mouseover").bind("mouseover", function(){					
-						thisGallery.trigger(Galleria.IDLE_EXIT);
-					});
-
-				});
-				*/
-				
-				
-				//thisGallery.init(this._options);
-				
-			      // unload the current theme
-				//Galleria.unloadTheme();
-				//alert("europeanaTheme.init  = " + europeanaTheme.init)
-		        // load a new theme
-				//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
-				
-				//europeanaTheme.init(options);
-				
-				//alert("reodne them");
-		        // run Galleria again with the new theme
-				
-				//thisGallery._options = this._options.dataSource
-				//alert(this._options.dataSource.length);//  JSON.stringify(this._options.dataSource, null, 10) );
-				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
-				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
-				
-//				console.log( JSON.stringify(window.galleriaCarouselOptions.dataSource, null, 4) );
-				//alert('run???');
-				//Galleria.run('#mlt-carousel-0', window.galleriaCarouselOptions );//this._options );
-				
+			thisGallery.bind('europeana', function(e) {
+				console.log('europeana event');
 			});
 
 						
@@ -249,24 +189,27 @@ var europeanaTheme = {
 				thumb.css("max-width",	 "100%");
 				thumb.css("max-height",	 "100%");
 				
-				/* Galleria.updateCarousel() looks 1st for property "outerWidth" when calculating the total width of the thumbnail list.
-				 * If the width is too short the last item(s) will wrap and never be viewable.
-				 * If the width is too big there is spare space at the end of the scroll.
-				 * 
-				 * Here we help updateCarousel() by setting "outerWidth" to our box dimension plus the relative component margins and offsets. 
-				 *
-				 * thumb.outerWidth || $( thumb.container ).outerWidth( true );
-				 *  
-				 *  */
+				// Galleria.updateCarousel() looks 1st for property "outerWidth" when calculating the total width of the thumbnail list.
+				// If the width is too short the last item(s) will wrap and never be viewable.
+				// If the width is too big there is spare space at the end of the scroll.
+				// 
+				// Here we help updateCarousel() by setting "outerWidth" to our box dimension plus the relative component margins and offsets. 
+				//
+				// thumb.outerWidth || $( thumb.container ).outerWidth( true );
+				//  
+				//
 
 				thumbOb.outerWidth = tParent.outerWidth(true);
 
-				/* Vertical centering of individual images */
+//				console.log('thumbOb.outerWidth = ' + thumbOb.outerWidth);
+				
+				// Vertical centering of individual images 
 				var infoHeight = tParent.find('.europeana-carousel-info').height();
 				if( (imgBoxH - infoHeight) > thumb.height()+2){
 					var top = (imgBoxH - infoHeight - thumb.height() ) / 2;
 					thumb.css("top", top + "px");
 				}
+
 
 				completedCallBackCount ++;	// bump callback counter
 				
@@ -289,8 +232,66 @@ var europeanaTheme = {
 				}
 			};
 
-			var calculateLayout = function(){	// called once
+			// fix (override) for zoomed pages where carousel misaligns
+			
+			thisGallery._carousel.set = function(index, skipTimeout){
+
+
+				// translated copy of _carousel.set
 				
+				i = Math.max( index, 0 );
+	            while ( thisGallery._carousel.hooks[i - 1] + thisGallery._carousel.width >= thisGallery._carousel.max && i >= 0 ) {
+	                i--;
+	            }
+	            thisGallery._carousel.current = i;
+				thisGallery._carousel.animate();
+			
+				// overridden behaviour
+				
+				if(skipTimeout){
+					if(thisGallery.europeanaTimer){
+						window.clearTimeout(thisGallery.europeanaTimer);
+						thisGallery.europeanaTimer = null;
+					} 
+				}
+				else{
+					thisGallery.europeanaTimer = setTimeout(function(){
+						
+						var thumbCW     = thisGallery.$( 'container' ).find( '.galleria-thumbnails-container').width(); 
+						var firstImage  = thumbs.find('.galleria-image:first');
+						var firstImageW = parseInt(firstImage.css('width'));
+						var offset      = parseInt(thumbs.css('left'));
+						var imageMargin = parseInt(firstImage.css('margin-left'));
+						var singleSpan  = 2 * imageMargin + firstImageW; 
+
+//						var expectedOffset = thisGallery._carousel.current * singleSpan * -1;				
+						var expectedOffset = i * singleSpan * -1;				
+
+						
+//						console.log("expectedOffset(i=" + i + ") " + expectedOffset + ' V  ' + thumbs.width() + '  TOTAL = ' + (-1*(thumbs.width() + thumbCW + firstImageW) + (2 * imageMargin))   );
+
+						var maxOffset = thumbs.width() - (thumbCW + imageMargin + firstImageW);
+						
+//						console.log( 'maxOffset ' + maxOffset );
+						
+						if(expectedOffset < -1*maxOffset  ){
+							thumbNavRight.addClass('disabled');
+						}
+						
+						if(offset != expectedOffset){
+							thumbs.css('left', expectedOffset + 'px')
+						}
+						thisGallery.europeanaTimer = null;
+						
+					},  thisGallery._options.carouselSpeed ? thisGallery._options.carouselSpeed : 3000);
+				}
+				
+			};
+
+			
+			var calculateLayout = function(){	// called once
+
+
 				/* scaling */
 				var imgBoxW = 0;
 					
@@ -312,10 +313,13 @@ var europeanaTheme = {
 					maxItems = 1;
 				}
 					
-				var newMargin	= (containerWidth - (maxItems * itemWidth))   / (( Math.max(1,  maxItems-1)) * 2);
+				var spareSpace  = (containerWidth - (maxItems * itemWidth));
+				var newMargin	= spareSpace   / (( Math.max(1,  maxItems-1)) * 2);
+				newMargin    	= Math.floor( newMargin );
+				
+				//console.log('newMargin ' + newMargin + ', containerWidth = ' + containerWidth + ',  maxItems: ' + maxItems + '(* ' + itemWidth + ' =' + (maxItems * itemWidth) + '), divide-by = ' + (( Math.max(1,  maxItems-1)) * 2) + ',  spare space = '  + spareSpace  );
 
 				imgBoxW = Math.round(itemWidth);
-				
 				
 				/* store steps and width data in europeana config - adjust thumnail list (negative) margin to override first/last margins */
 				thisGallery._options.europeana.imgMargin	= newMargin;
@@ -325,6 +329,7 @@ var europeanaTheme = {
 				var imgMargin = newMargin;
 				
 				if(!window.showingPhone()){
+// PHONE TEST					
 					thumbnailsList.css("margin",	"0 -" + imgMargin + "px");
 				}
 				else{
@@ -356,11 +361,10 @@ var europeanaTheme = {
 			
 
 			// CLICK HANDLING
-			/*
+			
 			this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 				$(ob).unbind('click');
 				$(ob).bind("click", function(e){
-					alert('img click');
 					if(dataSource[i].linkTarget){
 						window.open(dataSource[i].link, dataSource[i].linkTarget);
 					}
@@ -369,7 +373,7 @@ var europeanaTheme = {
 					}
 				});
 			});			
-			*/
+			
 			if( ! $("html").hasClass('ie8') ){
 	
 				thisGallery.$( 'container' ).find( '.galleria-thumbnails-container .galleria-image').swipe({

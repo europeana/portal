@@ -408,6 +408,11 @@
 	content:'';
 }
 
+.galleria-thumbnails-container .europeana-disabled.icon-arrow-4,
+.galleria-thumbnails-container .europeana-disabled.icon-arrow-2 {
+	display: none;
+}
+
 
 .notouch .galleria-thumb-nav-left:hover,
 .notouch .galleria-thumb-nav-right:hover {

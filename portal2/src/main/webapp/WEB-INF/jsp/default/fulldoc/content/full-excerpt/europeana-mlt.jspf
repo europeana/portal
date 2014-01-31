@@ -21,7 +21,8 @@
 
 			<a class="tab-header">
 				<spring:message code="${category.translationKey}" />: ${category.name}
-				<input id="similiar-category-${catStatus.index}" type="hidden" class="query" value="${fn:escapeXml(api_query)}">
+				
+				<input id="similiar-category-${catStatus.index}" type="hidden" class="query" value="${   fn:escapeXml( fn:replace(api_query, "\\&", "%26"    )  )   }">
 			</a>
 
 			<div class="section">

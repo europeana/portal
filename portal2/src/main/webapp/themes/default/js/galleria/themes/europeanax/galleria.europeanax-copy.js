@@ -10,7 +10,8 @@
 (function($) {
 
 /*global jQuery, Galleria */
-var europeanaTheme = {
+
+Galleria.addTheme({
 	name: 'europeanax',
 	author: 'Andy MacLean',
 	css: eu.europeana.vars.galleria.css,
@@ -21,24 +22,11 @@ var europeanaTheme = {
 		// set this to false if you want to show the caption all the time:
 		_toggleInfo: true
 	},
-
-	push:function(){
-	
-		alert('by chance????');
-	},
-	
 	init: function(options) {
-		//jQuery.noConflict();
-		
 		Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
 	
 		/* europeana */
 		var thisGallery		= this;
-		
-		thisGallery.stuff = function(){
-			alert('stuff');			
-		};
-		
 		var dataSource		= this._options.dataSource;
 		var carouselId		= this.$('container').parent().attr("id");
 		var carouselMode	= $('#' + carouselId).hasClass('europeana-carousel');
@@ -91,20 +79,6 @@ var europeanaTheme = {
 			europeana.footer = 	$('#' + carouselId).parent().find(footerSelector);
 			thisGallery._options.europeana.similarItems = thisGallery.$( 'container' ).parent().parent().attr('id') == "similar-content";
 			
-			
-			thisGallery.setEuropeanaInfo = function(dataSource){
-				var dataSource = thisGallery._options.dataSource;
-				thumbs.find('.galleria-image').each(function(i, e){
-					$('<div class="europeana-carousel-info">' + dataSource[i].title + '</div>').appendTo(e);
-					
-					$(e).bind("mouseover", function(){					
-						thisGallery.trigger(Galleria.IDLE_EXIT);
-					});
-
-				});				
-			};
-			
-			
 			europeana.thumbRatios = [];
 			for(var i=0; i<dataSource.length; i++){
 				europeana.thumbRatios[i] = null;
@@ -119,7 +93,6 @@ var europeanaTheme = {
 				}
 			};
 			
-			/*
 			thumbs.find('.galleria-image').each(function(i, e){
 				$('<div class="europeana-carousel-info">' + dataSource[i].title + '</div>').appendTo(e);
 				
@@ -128,85 +101,17 @@ var europeanaTheme = {
 				});
 
 			});
-			*/
-			thisGallery.setEuropeanaInfo(dataSource);
-			
-			
-			
 			
 			thisGallery.bind("idle_enter",function(e) {
-				if(typeof thisGallery._options.suppressIdle == 'undefined' || !thisGallery._options.suppressIdle){
-					thumbNavRight.hide();
-					thumbNavLeft.hide();
-				}
+				thumbNavRight.hide();
+				thumbNavLeft.hide();					  
 			});
 			
 			thisGallery.bind("idle_exit",function(e) {
-				//console.log('idle exit ' + thisGallery._options.suppressIdle);
-				if(typeof thisGallery._options.suppressIdle != 'undefined' && thisGallery._options.suppressIdle){
-					thumbNavRight.removeClass('disabled');					
-					//console.log('idle exit removes disabled');
-				}
 				thumbNavRight.show();
 				thumbNavLeft.show();					  
 			});
 			
-			thisGallery.bind("europeana", function(e) {
-				
-				//alert("got europeana event! " + loadData.tabs[index].carouselMltData );
-				//alert("got europeana event! " + window.updatedCarouselData);
-				
-				/*
-				 	we need to reuse:
-				 	
-				 	the sizing
-				 	the clicking 
-				 	the info
-				 
-				 */ 
-				
-				/*
-				thumbs = thisGallery.$( 'container' ).find('.galleria-thumbnails');
-				
-				thumbs.find('.galleria-image .europeana-carousel-info').remove();
-				
-				alert("thumbs length "  +  thumbs.find('.galleria-image').length  );
-				
-				thumbs.find('.galleria-image').each(function(i, e){
-					$('<div class="europeana-carousel-info">' + dataSource[i].title + '</div>').appendTo(e);
-					
-					$(e).unbind("mouseover").bind("mouseover", function(){					
-						thisGallery.trigger(Galleria.IDLE_EXIT);
-					});
-
-				});
-				*/
-				
-				
-				//thisGallery.init(this._options);
-				
-			      // unload the current theme
-				//Galleria.unloadTheme();
-				//alert("europeanaTheme.init  = " + europeanaTheme.init)
-		        // load a new theme
-				//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
-				
-				//europeanaTheme.init(options);
-				
-				//alert("reodne them");
-		        // run Galleria again with the new theme
-				
-				//thisGallery._options = this._options.dataSource
-				//alert(this._options.dataSource.length);//  JSON.stringify(this._options.dataSource, null, 10) );
-				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
-				//this._options.dataSource = window.updatedCarouselData;// loadData.tabs[index].carouselMltData
-				
-//				console.log( JSON.stringify(window.galleriaCarouselOptions.dataSource, null, 4) );
-				//alert('run???');
-				//Galleria.run('#mlt-carousel-0', window.galleriaCarouselOptions );//this._options );
-				
-			});
-
 						
 			thisGallery._options.responsive = false; /* disable default responsive handling (because it's rubbish) and use custom fns */
 			
@@ -285,6 +190,7 @@ var europeanaTheme = {
 					
 					thumbNavLeft.css	("top", offsetTop + "px");
 					thumbNavRight.css	("top", offsetTop + "px");
+
 					completedCallBackCount = 0;
 				}
 			};
@@ -300,7 +206,7 @@ var europeanaTheme = {
 				
 				var thumbnailsList	= thisGallery.$( 'container' ).find('.galleria-thumbnails-list');
 				var maxItems		= 0;
-				var	itemWidth		= 200; //thisGallery._options.europeana.similarItems ? eu.europeana.fulldoc.getCarousel2Dimensions().w : 200;
+				var	itemWidth		= thisGallery._options.europeana.similarItems ? eu.europeana.fulldoc.getCarousel2Dimensions().w : 200;
 				
 				itemWidth = Math.max(itemWidth, 150);	// leave room for text where image is extremely narrow
 				
@@ -356,11 +262,10 @@ var europeanaTheme = {
 			
 
 			// CLICK HANDLING
-			/*
+			
 			this.$( 'thumbnails' ).find('.galleria-image').each(function(i, ob){
 				$(ob).unbind('click');
 				$(ob).bind("click", function(e){
-					alert('img click');
 					if(dataSource[i].linkTarget){
 						window.open(dataSource[i].link, dataSource[i].linkTarget);
 					}
@@ -369,7 +274,7 @@ var europeanaTheme = {
 					}
 				});
 			});			
-			*/
+
 			if( ! $("html").hasClass('ie8') ){
 	
 				thisGallery.$( 'container' ).find( '.galleria-thumbnails-container .galleria-image').swipe({
@@ -652,8 +557,6 @@ var europeanaTheme = {
 		navRight.css("visibility", "visible");
 		
 	}
-}
-Galleria.addTheme(europeanaTheme);
-
+});
 
 }(jQuery));
