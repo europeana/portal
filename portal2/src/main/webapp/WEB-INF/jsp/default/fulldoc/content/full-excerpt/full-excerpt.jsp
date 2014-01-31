@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
 <div id="excerpt">
@@ -57,10 +58,23 @@
       </c:forEach>
     </c:forEach>
 
-    <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
-    <c:if test="${model.formatLabels}">
-      <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/schema.jspf" %>
-    </c:if>
+    <c:choose>
+      <c:when test="${model.formatLabels}">
+        <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/schema.jspf" %>
+      </c:when>
+      <c:otherwise>
+        <c:choose>
+          <c:when test="${model.showContext}">
+            <%-- The new context display --%>
+            <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context.jspf" %>
+          </c:when>
+          <c:otherwise>
+            <%-- The new old context display --%>
+            <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
+          </c:otherwise>
+        </c:choose>
+      </c:otherwise>
+    </c:choose>
   </div>
 </div>
 

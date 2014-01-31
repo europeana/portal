@@ -102,6 +102,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected String urlRef = null;
 	protected boolean showSimilarItems = false;
 	protected boolean showEuropeanaMlt = false;
+	private boolean showContext;
 	protected List<String> soundCloudAwareCollections = new ArrayList<String>();
 
 	public void setEdmSchemaMappings(SchemaOrgMapping schema) {
@@ -253,5 +254,13 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	public void setSoundCloudAwareCollections(
 			List<String> soundCloudAwareCollections) {
 		this.soundCloudAwareCollections = soundCloudAwareCollections;
+	}
+
+	public void setShowContext(boolean showContext) {
+		this.showContext = showContext;
+	}
+
+	public boolean isShowContext() {
+		return showContext;
 	}
 }

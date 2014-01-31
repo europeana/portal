@@ -38,185 +38,187 @@
 --%>
 <c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
 
-  <c:set var="item_id" value="" />
-  <c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id"> id="item-description" </c:set></c:if>
-  <c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id"> id="item-subject" </c:set></c:if>
+	<c:set var="item_id" value="" />
+	<c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id"> id="item-description" </c:set></c:if>
+	<c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id"> id="item-subject" </c:set></c:if>
 
-  <c:set var="item_class" value=""/>
+	<c:set var="item_class" value=""/>
 
-  <%-- If the content is UGC we skip the dc:source display --%>
-  <c:if test="${!('dc:source' == data.fieldName && ugc)}">
-    <%-- Semantic attributes --%>
-    <c:set var="semanticAttributes" value="" />
-    <c:set var="semanticUrl" value="" />
-    <c:if test="${!data.optedOut}">
-      <c:set var="semanticAttributes" value="${data.semanticAttributes}" />
-      <c:set var="semanticUrl" value="${data.semanticUrl}" />
-    </c:if>
-
-    <<c:out value="${wrapper}"/>${' '}${item_id} class="item-metadata${item_class}">
-      <%-- field's label --%>
-
-	<c:set var="lightboxables" scope="request">Creator_t,europeana_dataProvider_t,Provider_t</c:set>
-	<c:set var="lightboxableNameClass" value=""/>
-	<c:set var="lightboxableValueClass" value=""/>
-	
-	<c:forEach items="${lightboxables}" var="lightboxable">
-		<c:if test="${lightboxable == data.fieldLabel}">
-			<c:set var="lightboxableNameClass" value="lbN"/>
-			<c:set var="lightboxableValueClass" value="lbV"/>
+	<%-- If the content is UGC we skip the dc:source display --%>
+	<c:if test="${!('dc:source' == data.fieldName && ugc)}">
+		<%-- Semantic attributes --%>
+		<c:set var="semanticAttributes" value="" />
+		<c:set var="semanticUrl" value="" />
+		<c:if test="${!data.optedOut}">
+			<c:set var="semanticAttributes" value="${data.semanticAttributes}" />
+			<c:set var="semanticUrl" value="${data.semanticUrl}" />
 		</c:if>
-	</c:forEach>
 
+		<<c:out value="${wrapper}" />${' '}${item_id} class="item-metadata${item_class}">
+			<%-- field's label --%>
+			<c:set var="lightboxables" scope="request">Creator_t,europeana_dataProvider_t,Provider_t</c:set>
+			<c:set var="lightboxableNameClass" value="" />
+			<c:set var="lightboxableValueClass" value="" />
 
+			<c:forEach items="${lightboxables}" var="lightboxable">
+				<c:if test="${lightboxable == data.fieldLabel}">
+					<c:set var="lightboxableNameClass" value="lbN" />
+					<c:set var="lightboxableValueClass" value="lbV" />
+				</c:if>
+			</c:forEach>
 
-	  <%--
-	  <c:set var="hasValue" value="0"/>
+			<%--
+			<c:set var="hasValue" value="0"/>
 
-      <c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
-	  	<c:set var="hasValue" value="1"/>
-	  	<c:out value="${fn:length(value.value)}"/>
-	  </c:forEach>
-	  
-	  <c:if test="${hasValue==2}">
-      </c:if>
-      --%>
-      
-      <span class="bold notranslate ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
-      
-      
-      <%-- iterate over possible values for the given label --%>
-      <c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+			<c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+				<c:set var="hasValue" value="1"/>
+				<c:out value="${fn:length(value.value)}"/>
+			</c:forEach>
 
-        <c:set var="localSemanticAttributes" value="${semanticAttributes}" />
-        <c:set var="localSemanticUrl" value="${semanticUrl}" />
-        <c:if test="${value.fieldName != data.fieldName && !value.optedOut}">
-          <c:set var="semanticAttributes" value="${value.semanticAttributes}" />
-          <c:set var="semanticUrl" value="${value.semanticUrl}" />
-        </c:if>
+			<c:if test="${hasValue==2}">
+			</c:if>
+			--%>
 
-        <%-- determine if value is translatable or not --%>
-        <c:set var="classAttr" value='notranslate' />
-        <c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
-          <c:set var="classAttr" value='translate' />
-        </c:if>
-        <c:set var="classAttr" value='${classAttr}${" "}${lightboxableValueClass}' />
-        
+			<span class="bold notranslate ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
 
-        <c:set var="separator" value='' />
-        <c:if test="${!valueStatus.last}">
-          <c:set var="separator" value='; ' />
-        </c:if>
+			<%-- iterate over possible values for the given label
+				data (FieldValue):
+					- value.value
+					- value.valueClean
+					- value.valueXML
+					- value.valueJSON
+					- value.valueURL
+					- value.fieldName
+					- value.optedOut (boolean)
+					- value.semanticAttributes (String)
+					- value.semanticUrl (boolean)
+					- value.contextualEntity (String)
+					- value.searchOn (String)
+			--%>
+			<c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+				<c:set var="localSemanticAttributes" value="${semanticAttributes}" />
+				<c:set var="localSemanticUrl" value="${semanticUrl}" />
+				<c:if test="${value.fieldName != data.fieldName && !value.optedOut}">
+					<c:set var="semanticAttributes" value="${value.semanticAttributes}" />
+					<c:set var="semanticUrl" value="${value.semanticUrl}" />
+				</c:if>
 
-        <%-- display the field's value
-           value.searchOn = the value has an href value that when clicked on will issue a search in the portal based on other metadata criteria available to the item
-           value.url = the value is actually a url that links to further information --%>
-        <c:set var="seo_wrapper" value="" />
+				<%-- determine if value is translatable or not --%>
+				<c:set var="classAttr" value='notranslate' />
+				<c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
+					<c:set var="classAttr" value='translate' />
+				</c:if>
+				<c:set var="classAttr" value='${classAttr}${" "}${lightboxableValueClass}' />
 
-        <c:if test="${'dcterms:alternative' == data.fieldName}">
-          <c:set var="seo_wrapper" value="h2" />
-        </c:if>
-        <c:if test="${'dc:creator' == data.fieldName}">
-          <c:set var="seo_wrapper" value="h2" />
-        </c:if>
+				<c:set var="separator" value='' />
+				<c:if test="${!valueStatus.last}">
+					<c:set var="separator" value='; ' />
+				</c:if>
 
-        <c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
+				<%-- display the field's value
+					value.searchOn = the value has an href value that when clicked on will issue a search in the portal based on other metadata criteria available to the item
+					value.url = the value is actually a url that links to further information --%>
+				<c:set var="seo_wrapper" value="" />
 
-        <c:choose>
-          <c:when test="${value.searchOn}">
-            <a href="${value.searchOn}" target="_top" class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
-          </c:when>
-          <c:when test="${value.url}">
-            <a href="${value.value}" target="_blank" class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if> rel="nofollow">${value.value}</a>${separator}
-          </c:when>
-          <c:otherwise>
-         
-            <span class="${classAttr}" <c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if><c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>
-            		><c:choose>
-            		
-            			<%--
-            				Stop the escaping of non-ascii characters as in:
-            					Creator: Tyšler, A.,
-            				on page:
-            					http://localhost:8081/portal/record/2022005/A8FDF4B2F3ECEBB6B469AE7E1D7AB98CBFF66675.html
-            			 --%>
-            		
-            			<c:when test="${localSemanticUrl}">
-		            		<c:out value="${(value.value)}"/>
-            			</c:when>
-            			<c:otherwise>
-            			
-		            		<c:set var="theVal" value="${value.value}" />
-		            		
-		            		<%-- respect <br>, <p> and <i> --%>
-		            		
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;BR&gt;',	'<br/>')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;br&gt;',	'<br/>')}" />
-		            		
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;I&gt;',	'<i>')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;i&gt;',	'<i>')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/I&gt;',	'</i>')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/i&gt;',	'</i>')}" />
+				<c:if test="${'dcterms:alternative' == data.fieldName}">
+					<c:set var="seo_wrapper" value="h2" />
+				</c:if>
+				<c:if test="${'dc:creator' == data.fieldName}">
+					<c:set var="seo_wrapper" value="h2" />
+				</c:if>
 
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;P&gt;',	'<p>')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;p&gt;',	'<p>')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/P&gt;',	'</p>')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/p&gt;',	'</p>')}" />
+				<c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
 
-   				            <%-- lose <b> and <li> --%>
-   				            
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;LI&gt;',	'')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;li&gt;',	'')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/LI&gt;',	'')}" />
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&lt;/li&gt;',	'')}" />
-		            		
-   				            <%-- escape >> used as arrows --%>
-		            		
-		            		<c:set var="theVal" value="${fn:replace(theVal, '>>',	'&rarr;')}" />
+				<c:choose>
+					<c:when test="${value.searchOn}">
+						<a href="${value.searchOn}" target="_top" class="${classAttr}"
+							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
+							rel="nofollow">${value.value}</a>${separator}
+					</c:when>
+					<c:when test="${value.url}">
+						<a href="${value.value}" target="_blank" class="${classAttr}"
+							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
+							rel="nofollow">${value.value}</a>${separator}
+					</c:when>
+					<c:otherwise>
+						<span class="${classAttr}"
+							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
+							<c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:choose>
 
-   				            <%-- remove double escaped quotes --%>
-		            		
-		            		<c:set var="theVal" value="${fn:replace(theVal, '&amp;quot;',	'\"')}" />
-		            		
-		            		
-		            		<c:out value="${theVal}" escapeXml="false"/>
-		            		
-            			</c:otherwise>
-            		</c:choose>
-            		
-            		
-              <c:if test="${value.value == '3D PDF'}">
-                <img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
-              </c:if>
-            </span><c:out value="${separator}" />
-          </c:otherwise>
-        </c:choose>
-        <c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
+								<%--
+								Stop the escaping of non-ascii characters as in:
+									Creator: Tyšler, A.,
+								on page:
+									http://localhost:8081/portal/record/2022005/A8FDF4B2F3ECEBB6B469AE7E1D7AB98CBFF66675.html
+								--%>
 
-        <%-- link to external services if field has them --%>
-        <%--
-        <c:if test="${!empty data.ESSEnabled && data.ESSEnabled && ess}">
-         | <a href="${model.essUrl}?field=${data.fieldName}&amp;value=${value.valueURL}" 
-           title="<spring:message code="essHelpIconAltText_t" />"
-           target="_blank" class="external-services toggle-menu-icon">${value.value}</a>
-        </c:if>
-        --%>
+								<c:when test="${localSemanticUrl}">
+									<c:out value="${(value.value)}" />
+								</c:when>
+								<c:otherwise>
 
-        <%-- handle inline or separate lines for multiple values --%>
-        <c:if test="${value_has_next}">
-          <c:choose>
-            <c:when test="{!empty data.seperateLines && data.seperateLines}">
-              <br /><br />
-            </c:when>
-            <c:otherwise>
-              <c:choose>
-                <c:when test="{!empty data.ESSEnabled && data.ESSEnabled && ess}">&#160;</c:when>
-                <c:otherwise>;</c:otherwise>
-              </c:choose>
-            </c:otherwise>
-          </c:choose>
-        </c:if>
-      </c:forEach>
-    </${wrapper}>
-  </c:if>
+									<c:set var="theVal" value="${value.value}" />
+
+									<%-- respect <br>, <p> and <i> --%>
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;BR&gt;',	'<br/>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;br&gt;',	'<br/>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;I&gt;',	'<i>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;i&gt;',	'<i>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/I&gt;',	'</i>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/i&gt;',	'</i>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;P&gt;',	'<p>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;p&gt;',	'<p>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/P&gt;',	'</p>')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/p&gt;',	'</p>')}" />
+
+									<%-- lose <b> and <li> --%>
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;LI&gt;',	'')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;li&gt;',	'')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/LI&gt;',	'')}" />
+									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/li&gt;',	'')}" />
+
+									<%-- escape >> used as arrows --%>
+									<c:set var="theVal" value="${fn:replace(theVal, '>>',	'&rarr;')}" />
+
+									<%-- remove double escaped quotes --%>
+									<c:set var="theVal" value="${fn:replace(theVal, '&amp;quot;',	'\"')}" />
+
+									<c:out value="${theVal}" escapeXml="false" />
+								</c:otherwise>
+							</c:choose> <c:if test="${value.value == '3D PDF'}">
+								<img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
+							</c:if>
+						</span>
+						<c:out value="${separator}" />
+					</c:otherwise>
+				</c:choose>
+				<c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
+
+				<%-- link to external services if field has them --%>
+				<%--
+					<c:if test="${!empty data.ESSEnabled && data.ESSEnabled && ess}">
+					| <a href="${model.essUrl}?field=${data.fieldName}&amp;value=${value.valueURL}"
+					title="<spring:message code="essHelpIconAltText_t" />"
+					target="_blank" class="external-services toggle-menu-icon">${value.value}</a>
+					</c:if>
+				--%>
+
+				<%-- handle inline or separate lines for multiple values --%>
+				<c:if test="${value_has_next}">
+					<c:choose>
+						<c:when test="{!empty data.seperateLines && data.seperateLines}">
+							<br />
+							<br />
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="{!empty data.ESSEnabled && data.ESSEnabled && ess}">&#160;</c:when>
+								<c:otherwise>;</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+			</c:forEach>
+		</${wrapper}>
+	</c:if>
 </c:forEach>

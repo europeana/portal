@@ -1,0 +1,94 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
+
+<c:set var="language" value="${model.locale.language}"></c:set>
+
+<c:if test="${!empty model.document.concepts}">
+  <h4><a href="" class="nofollow icon"><spring:message code="enrichment_category_what_t" /></a></h4>
+  <ul type="square">
+    <%-- model.document is a FullBeanDecorator object --%>
+    <c:forEach items="${model.document.concepts}" var="concept" varStatus="fieldStatus">
+      <c:set var="label">
+        <c:choose>
+          <c:when test="${!empty concept.prefLabel[language]}">${concept.prefLabel[language][0]}</c:when>
+          <c:when test="${!empty concept.prefLabel['def']}">${concept.prefLabel['def'][0]}</c:when>
+          <c:when test="${!empty concept.altLabel[language]}">${concept.altLabel[language][0]}</c:when>
+          <c:when test="${!empty concept.altLabel['def']}">${concept.altLabel['def'][0]}</c:when>
+          <c:otherwise></c:otherwise>
+        </c:choose>
+      </c:set>
+      <c:set var="note">
+        <c:choose>
+          <c:when test="${!empty concept.note[language]}">${concept.note[language][0]}</c:when>
+          <c:when test="${!empty concept.note['def']}">${concept.note['def'][0]}</c:when>
+          <c:otherwise></c:otherwise>
+        </c:choose>
+      </c:set>
+      <c:if test="${label != ''}">
+        <li><a href="${concept.about}">${label}</a><c:if test="${note != ''}"><p>${note}</p></c:if></li>
+      </c:if>
+    </c:forEach>
+  </ul>
+</c:if>
+
+<c:if test="${!empty model.document.places}">
+  <h4><spring:message code="enrichment_category_where_t" /></h4>
+  <ul type="square">
+    <%-- model.document is a FullBeanDecorator object --%>
+    <c:forEach items="${model.document.places}" var="place" varStatus="fieldStatus">
+      <c:set var="label">
+        <c:choose>
+          <c:when test="${!empty place.prefLabel[language]}">${place.prefLabel[language][0]}</c:when>
+          <c:when test="${!empty place.prefLabel['def']}">${place.prefLabel['def'][0]}</c:when>
+          <c:when test="${!empty place.altLabel[language]}">${place.altLabel[language][0]}</c:when>
+          <c:when test="${!empty place.altLabel['def']}">${place.altLabel['def'][0]}</c:when>
+          <c:otherwise></c:otherwise>
+        </c:choose>
+      </c:set>
+      <c:set var="note">
+        <c:choose>
+          <c:when test="${!empty place.note[language]}">${place.note[language][0]}</c:when>
+          <c:when test="${!empty place.note['def']}">${place.note['def'][0]}</c:when>
+          <c:otherwise></c:otherwise>
+        </c:choose>
+      </c:set>
+      <c:if test="${label != ''}">
+        <li>
+          <a href="${place.about}">${label}</a>
+          <c:if test="${note != ''}"><p>${note}</p></c:if>
+          <c:if test="${!empty place.latitude or !empty place.longitude or !empty place.altitude}">
+            <c:set var="location" value="" />
+            <c:if test="${!empty place.latitude}">
+              <c:set var="location" value="latitude: ${place.latitude}" />
+            </c:if>
+            <c:if test="${!empty place.longitude}">
+              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;</c:set></c:if>
+              <c:set var="location">${location}longitude: ${place.longitude}</c:set>
+            </c:if>
+            <c:if test="${!empty place.altitude}">
+              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;</c:set></c:if>
+              <c:set var="location">${location}altitude: ${place.altitude}</c:set>
+            </c:if>
+            <p>${location}</p>
+          </c:if>
+          <c:if test="${!empty place.dcTermsHasPart}">
+            <c:set var="dcTermsHasPart">
+              <c:choose>
+                <c:when test="${!empty place.dcTermsHasPart[language]}">${place.dcTermsHasPart[language]}</c:when>
+                <c:when test="${!empty place.dcTermsHasPart['def']}">${place.prefLabel['def']}</c:when>
+                <c:otherwise></c:otherwise>
+              </c:choose>
+            </c:set>
+            <c:if test="${!empty dcTermsHasPart}">
+              <c:forEach items="${dcTermsHasPart}" var="part" varStatus="pstatus">
+                <c:if test="${!pstatus.last}">, </c:if>${part}
+              </c:forEach>
+            </c:if>
+          </c:if>
+        </li>
+      </c:if>
+    </c:forEach>
+  </ul>
+</c:if>

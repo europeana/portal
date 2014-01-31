@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import eu.europeana.corelib.definitions.solr.entity.Agent;
+import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
@@ -198,6 +200,22 @@ public class FullBeanShortcut {
 			}
 		}
 
+		if (document.getAgents() != null) {
+			parent = "Agent";
+			for (Agent agent : document.getAgents()) {
+				add(parent, "AgentPrefLabel", agent.getPrefLabel()); // Map
+			}
+		}
+
+		if (document.getConcepts() != null) {
+			parent = "Concept";
+			for (Concept concept : document.getConcepts()) {
+				add(parent, "ConceptPrefLabel", concept.getPrefLabel()); // Map
+				add(parent, "ConceptBroader", concept.getBroader()); // String[]
+				add(parent, "ConceptAltLabel", concept.getAltLabel()); // Map
+			}
+		}
+
 		if (document.getEuropeanaAggregation() != null) {
 			parent = "EuropeanaAggregation";
 			EuropeanaAggregation aggregation = document.getEuropeanaAggregation();
@@ -205,7 +223,6 @@ public class FullBeanShortcut {
 			add(parent, "EdmLanguage", aggregation.getEdmLanguage()); // Map
 			add(parent, "EdmLandingPage", aggregation.getEdmLandingPage()); // String
 		}
-
 	}
 
 	/**

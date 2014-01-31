@@ -117,18 +117,17 @@ public class ObjectController {
 	@Resource
 	private ReloadableResourceBundleMessageSource messageSource;
 
-	public static final Map<String, List<String>> SEE_ALSO_FIELDS = new LinkedHashMap<String, List<String>>() {
-		private static final long serialVersionUID = 1L;
-		{
-			put("title", Arrays.asList(new String[] { "DcTitle", "DctermsAlternative" }));
-			put("who", Arrays.asList(new String[] { "DcContributor", "DcCreator" }));
-			put("what", Arrays.asList(new String[] { "DcType", "DcSubject", "DcFormat" }));
-			// put("when", Arrays.asList(new String[]{"DcCoverage", "DcDate", "DcSubject", "DctermsCreated",
-			// "DctermsTemporal"}));
-			// put("where", Arrays.asList(new String[]{"DcCoverage", "DcSubject", "DctermsSpatial"}));
-			put("DATA_PROVIDER", Arrays.asList(new String[] { "DataProvider" }));
-			put("PROVIDER", Arrays.asList(new String[] { "EdmProvider" }));
-		}
+	public static final Map<String, List<String>> SEE_ALSO_FIELDS = new LinkedHashMap<String, List<String>>();
+	static {
+		// proxy_dc_title, proxy_dcterms_alternative
+		SEE_ALSO_FIELDS.put("title", Arrays.asList(new String[] { "DcTitle", "DctermsAlternative" }));
+		// proxy_dc_creator, ag_skos_prefLabel -- missing: ag_skos_altLabel, ag_foaf_name
+		SEE_ALSO_FIELDS.put("who", Arrays.asList(new String[] { "DcCreator", "AgentPrefLabel" }));
+		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel, cc_skos_broaderLabel, cc_skos_prefLabel
+		SEE_ALSO_FIELDS.put("what", Arrays.asList(new String[] { 
+				"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel" }));
+		SEE_ALSO_FIELDS.put("DATA_PROVIDER", Arrays.asList(new String[] { "DataProvider" }));
+		SEE_ALSO_FIELDS.put("PROVIDER", Arrays.asList(new String[] { "EdmProvider" }));
 	};
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
@@ -143,6 +142,7 @@ public class ObjectController {
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "mlt", required = false, defaultValue = "false") String mlt,
+			@RequestParam(value = "context", required = false, defaultValue = "false") String context,
 			HttpServletRequest request, 
 			HttpServletResponse response, 
 			Locale locale) throws EuropeanaQueryException {
@@ -157,6 +157,10 @@ public class ObjectController {
 		boolean showEuropeanaMlt = false;
 		if (StringUtils.isNotBlank(mlt) && Boolean.parseBoolean(mlt)) {
 			showEuropeanaMlt = true;
+		}
+		boolean showContext = false;
+		if (StringUtils.isNotBlank(context) && Boolean.parseBoolean(context)) {
+			showContext = true;
 		}
 
 		FullDocPage model = new FullDocPage();
@@ -173,6 +177,7 @@ public class ObjectController {
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
 		model.setShowEuropeanaMlt(showEuropeanaMlt);
+		model.setShowContext(showContext);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 
 		// TODO: refactor this!!!
