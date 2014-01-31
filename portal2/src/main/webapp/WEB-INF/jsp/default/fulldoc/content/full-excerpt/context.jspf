@@ -4,9 +4,10 @@
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
 <c:set var="language" value="${model.locale.language}"></c:set>
+<c:set var="edmLanguage" value="${model.document.europeanaAggregation.edmLanguage.def[0]}"></c:set>
 
 <c:if test="${!empty model.document.concepts}">
-  <h4><a href="" class="nofollow icon"><spring:message code="enrichment_category_what_t" /></a></h4>
+  <h4><spring:message code="enrichment_category_what_t" /></h4>
   <ul type="square">
     <%-- model.document is a FullBeanDecorator object --%>
     <c:forEach items="${model.document.concepts}" var="concept" varStatus="fieldStatus">
@@ -14,8 +15,10 @@
         <c:choose>
           <c:when test="${!empty concept.prefLabel[language]}">${concept.prefLabel[language][0]}</c:when>
           <c:when test="${!empty concept.prefLabel['def']}">${concept.prefLabel['def'][0]}</c:when>
+          <c:when test="${!empty concept.prefLabel[edmLanguage]}">${concept.prefLabel[edmLanguage][0]}</c:when>
           <c:when test="${!empty concept.altLabel[language]}">${concept.altLabel[language][0]}</c:when>
           <c:when test="${!empty concept.altLabel['def']}">${concept.altLabel['def'][0]}</c:when>
+          <c:when test="${!empty concept.altLabel['edmLanguage']}">${concept.altLabel['edmLanguage'][0]}</c:when>
           <c:otherwise></c:otherwise>
         </c:choose>
       </c:set>
@@ -27,7 +30,24 @@
         </c:choose>
       </c:set>
       <c:if test="${label != ''}">
-        <li><a href="${concept.about}">${label}</a><c:if test="${note != ''}"><p>${note}</p></c:if></li>
+        <li>
+          <a href="${concept.about}">${label}</a>
+          <c:if test="${note != ''}"><p>${note}</p></c:if>
+          <c:if test="${!empty concept.closeMatch}">
+            <p>
+              Close matches:
+              <c:forEach items="${concept.closeMatch}" var="match" varStatus="pstatus">
+                <c:if test="${!pstatus.last}">, </c:if>
+                <c:choose>
+                  <c:when test="${fn:startsWith(match, 'http://')}">
+                    <a href="${match}">${match}</a>
+                  </c:when>
+                  <c:otherwise>${match}</c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </p>
+          </c:if>
+        </li>
       </c:if>
     </c:forEach>
   </ul>
@@ -42,8 +62,10 @@
         <c:choose>
           <c:when test="${!empty place.prefLabel[language]}">${place.prefLabel[language][0]}</c:when>
           <c:when test="${!empty place.prefLabel['def']}">${place.prefLabel['def'][0]}</c:when>
+          <c:when test="${!empty place.prefLabel[edmLanguage]}">${place.prefLabel[edmLanguage][0]}</c:when>
           <c:when test="${!empty place.altLabel[language]}">${place.altLabel[language][0]}</c:when>
           <c:when test="${!empty place.altLabel['def']}">${place.altLabel['def'][0]}</c:when>
+          <c:when test="${!empty place.altLabel[edmLanguage]}">${place.altLabel[edmLanguage][0]}</c:when>
           <c:otherwise></c:otherwise>
         </c:choose>
       </c:set>
@@ -58,6 +80,7 @@
         <li>
           <a href="${place.about}">${label}</a>
           <c:if test="${note != ''}"><p>${note}</p></c:if>
+
           <c:if test="${!empty place.latitude or !empty place.longitude or !empty place.altitude}">
             <c:set var="location" value="" />
             <c:if test="${!empty place.latitude}">
@@ -73,6 +96,7 @@
             </c:if>
             <p>${location}</p>
           </c:if>
+
           <c:if test="${!empty place.dcTermsHasPart}">
             <c:set var="dcTermsHasPart">
               <c:choose>
@@ -86,6 +110,21 @@
                 <c:if test="${!pstatus.last}">, </c:if>${part}
               </c:forEach>
             </c:if>
+          </c:if>
+
+          <c:if test="${!empty place.owlSameAs}">
+            <p>
+              Same as:
+              <c:forEach items="${place.owlSameAs}" var="match" varStatus="pstatus">
+                <c:if test="${!pstatus.last}">, </c:if>
+                <c:choose>
+                  <c:when test="${fn:startsWith(match, 'http://')}">
+                    <a href="${match}">${match}</a>
+                  </c:when>
+                  <c:otherwise>${match}</c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </p>
           </c:if>
         </li>
       </c:if>
