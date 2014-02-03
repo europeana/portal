@@ -6,33 +6,30 @@
 <c:set var="language" value="${model.locale.language}"></c:set>
 <c:set var="edmLanguage" value="${model.document.europeanaAggregation.edmLanguage.def[0]}"></c:set>
 
+<style>
+<!--
+div.concept ul li p {marging: 0}
+-->
+</style>
+
+<%-- model.document is FullBeanDecorator --%>
+<%-- CONCEPT --%>
 <c:if test="${!empty model.document.concepts}">
+<div class="concept">
   <h4><spring:message code="enrichment_category_what_t" /></h4>
   <ul type="square">
-    <%-- model.document is a FullBeanDecorator object --%>
-    <c:forEach items="${model.document.concepts}" var="concept" varStatus="fieldStatus">
-      <c:set var="label">
-        <c:choose>
-          <c:when test="${!empty concept.prefLabel[language]}">${concept.prefLabel[language][0]}</c:when>
-          <c:when test="${!empty concept.prefLabel['def']}">${concept.prefLabel['def'][0]}</c:when>
-          <c:when test="${!empty concept.prefLabel[edmLanguage]}">${concept.prefLabel[edmLanguage][0]}</c:when>
-          <c:when test="${!empty concept.altLabel[language]}">${concept.altLabel[language][0]}</c:when>
-          <c:when test="${!empty concept.altLabel['def']}">${concept.altLabel['def'][0]}</c:when>
-          <c:when test="${!empty concept.altLabel['edmLanguage']}">${concept.altLabel['edmLanguage'][0]}</c:when>
-          <c:otherwise></c:otherwise>
-        </c:choose>
-      </c:set>
-      <c:set var="note">
-        <c:choose>
-          <c:when test="${!empty concept.note[language]}">${concept.note[language][0]}</c:when>
-          <c:when test="${!empty concept.note['def']}">${concept.note['def'][0]}</c:when>
-          <c:otherwise></c:otherwise>
-        </c:choose>
-      </c:set>
-      <c:if test="${label != ''}">
+    <c:forEach items="${model.document.decoratedConcepts}" var="concept" varStatus="fieldStatus">
+      <c:if test="${!empty concept.labels}">
         <li>
-          <a href="${concept.about}">${label}</a>
-          <c:if test="${note != ''}"><p>${note}</p></c:if>
+          <a href="${concept.about}"><c:forEach items="${concept.labels}" var="item" varStatus="t"><c:if test="!t.first">, </c:if>${item}</c:forEach></a>
+          <c:if test="${!empty concept.notes}">
+            <p>
+              <c:forEach items="${concept.notes}" var="item" varStatus="t">
+                <c:if test="!t.first"><br/></c:if>
+                ${item}
+              </c:forEach>
+            </p>
+          </c:if>
           <c:if test="${!empty concept.closeMatch}">
             <p>
               Close matches:
@@ -51,35 +48,26 @@
       </c:if>
     </c:forEach>
   </ul>
+</div>
 </c:if>
 
+<%-- PLACE --%>
 <c:if test="${!empty model.document.places}">
+<div class="concept">
   <h4><spring:message code="enrichment_category_where_t" /></h4>
   <ul type="square">
-    <%-- model.document is a FullBeanDecorator object --%>
-    <c:forEach items="${model.document.places}" var="place" varStatus="fieldStatus">
-      <c:set var="label">
-        <c:choose>
-          <c:when test="${!empty place.prefLabel[language]}">${place.prefLabel[language][0]}</c:when>
-          <c:when test="${!empty place.prefLabel['def']}">${place.prefLabel['def'][0]}</c:when>
-          <c:when test="${!empty place.prefLabel[edmLanguage]}">${place.prefLabel[edmLanguage][0]}</c:when>
-          <c:when test="${!empty place.altLabel[language]}">${place.altLabel[language][0]}</c:when>
-          <c:when test="${!empty place.altLabel['def']}">${place.altLabel['def'][0]}</c:when>
-          <c:when test="${!empty place.altLabel[edmLanguage]}">${place.altLabel[edmLanguage][0]}</c:when>
-          <c:otherwise></c:otherwise>
-        </c:choose>
-      </c:set>
-      <c:set var="note">
-        <c:choose>
-          <c:when test="${!empty place.note[language]}">${place.note[language][0]}</c:when>
-          <c:when test="${!empty place.note['def']}">${place.note['def'][0]}</c:when>
-          <c:otherwise></c:otherwise>
-        </c:choose>
-      </c:set>
-      <c:if test="${label != ''}">
+    <c:forEach items="${model.document.decoratedPlaces}" var="place" varStatus="fieldStatus">
+      <c:if test="${!empty place.labels}">
         <li>
-          <a href="${place.about}">${label}</a>
-          <c:if test="${note != ''}"><p>${note}</p></c:if>
+          <a href="${place.about}"><c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="!t.first">, </c:if>${label}</c:forEach></a>
+          <c:if test="${!empty place.notes}">
+            <p>
+              <c:forEach items="${place.notes}" var="item" varStatus="t">
+                <c:if test="!t.first"><br/></c:if>
+                ${item}
+              </c:forEach>
+            </p>
+          </c:if>
 
           <c:if test="${!empty place.latitude or !empty place.longitude or !empty place.altitude}">
             <c:set var="location" value="" />
@@ -94,22 +82,19 @@
               <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;</c:set></c:if>
               <c:set var="location">${location}altitude: ${place.altitude}</c:set>
             </c:if>
-            <p>${location}</p>
+            <c:if test="${location != ''}"><p>${location}</p></c:if>
           </c:if>
 
-          <c:if test="${!empty place.dcTermsHasPart}">
-            <c:set var="dcTermsHasPart">
-              <c:choose>
-                <c:when test="${!empty place.dcTermsHasPart[language]}">${place.dcTermsHasPart[language]}</c:when>
-                <c:when test="${!empty place.dcTermsHasPart['def']}">${place.prefLabel['def']}</c:when>
-                <c:otherwise></c:otherwise>
-              </c:choose>
-            </c:set>
-            <c:if test="${!empty dcTermsHasPart}">
-              <c:forEach items="${dcTermsHasPart}" var="part" varStatus="pstatus">
-                <c:if test="${!pstatus.last}">, </c:if>${part}
-              </c:forEach>
-            </c:if>
+          <c:if test="${!empty place.dcTermsHasPartList}">
+            <p>
+            <c:forEach items="${place.dcTermsHasPartList}" var="label" varStatus="t"><c:if test="!t.first">, </c:if>${label}</c:forEach>
+            </p>
+          </c:if>
+
+          <c:if test="${!empty place.isPartOfList}">
+            <p>
+            <c:forEach items="${place.isPartOfList}" var="label" varStatus="t"><c:if test="!t.first">, </c:if>${label}</c:forEach>
+            </p>
           </c:if>
 
           <c:if test="${!empty place.owlSameAs}">
@@ -130,4 +115,5 @@
       </c:if>
     </c:forEach>
   </ul>
+</div>
 </c:if>

@@ -64,7 +64,7 @@ public class FullBeanViewDecorator implements FullBeanView {
 	@Override
 	public FullBean getFullDoc() {
 		if (fullBeanView != null) {
-			return new FullBeanDecorator(fullBeanView.getFullDoc());
+			return new FullBeanDecorator(fullBeanView.getFullDoc(), model.getLocale().getLanguage());
 		}
 		return null;
 	}
