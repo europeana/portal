@@ -18,9 +18,11 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -38,6 +40,7 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
@@ -47,16 +50,25 @@ import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
 
+	private static final Logger log = Logger.getLogger(FullBeanDecorator.class.getCanonicalName());
 	private FullBean fulldoc;
 
 	private FullBeanShortcut shortcut;
 
 	private EuropeanaUrlService europeanaUrlService;
+	private String userLanguage;
+	List<ConceptDecorator> concepts;
+	List<PlaceDecorator> places;
 
 	public FullBeanDecorator(FullBean fulldoc) {
 		this.fulldoc = fulldoc;
 		this.shortcut = new FullBeanShortcut((FullBeanImpl) fulldoc);
 		europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
+	}
+
+	public FullBeanDecorator(FullBean fulldoc, String userLanguage) {
+		this(fulldoc);
+		this.userLanguage = userLanguage;
 	}
 
 	/**
@@ -288,6 +300,17 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getPlaces();
 	}
 
+	public List<? extends Place> getDecoratedPlaces() {
+		if (places == null) {
+			places = new ArrayList<PlaceDecorator>();
+			String edmLanguage = shortcut.get("EdmLanguage")[0];
+			for (Place place : fulldoc.getPlaces()) {
+				places.add(new PlaceDecorator(place, userLanguage, edmLanguage));
+			}
+		}
+		return places;
+	}
+
 	@Override
 	public void setPlaces(List<? extends Place> places) {
 		fulldoc.setPlaces(places);
@@ -311,6 +334,18 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public List<? extends Concept> getConcepts() {
 		return fulldoc.getConcepts();
+	}
+
+	public List<? extends Concept> getDecoratedConcepts() {
+		if (concepts == null) {
+			concepts = new ArrayList<ConceptDecorator>();
+			String edmLanguage = shortcut.get("EdmLanguage")[0];
+			log.info("==edmLanguage: " + edmLanguage);
+			for (Concept concept : fulldoc.getConcepts()) {
+				concepts.add(new ConceptDecorator(concept, userLanguage, edmLanguage));
+			}
+		}
+		return concepts;
 	}
 
 	@Override
