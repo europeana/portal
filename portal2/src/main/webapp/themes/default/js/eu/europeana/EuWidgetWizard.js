@@ -15,6 +15,7 @@
  * 
  * */
 
+
 var EuWidgetWizard = function(cmpIn, options){
 	
 	var self             = this;
@@ -29,8 +30,15 @@ var EuWidgetWizard = function(cmpIn, options){
 	
     
 	var cleanName = function(name){
-//		return  name.replace(/"/g, '\\\"').replace(/ *\([^)]*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
-		return  name.replace(/"/g, '\\\"').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		
+//		return  name.replace(/"/g, '\\\"').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+
+		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ {2}/g, '\+\+').replace(/ {1}/g, '\+').replace(/\%20/g, '\+');
+		
+		var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
+		
+		return result;
 	};
 
 	
