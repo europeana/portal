@@ -22,12 +22,14 @@
 			</div>
 		</div>
 
-		<c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
-			<div class="row">
-				<div class="sidebar-right show-on-x">
-					<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+		<c:if test="${model.europeanaMlt == null || empty model.europeanaMlt}">
+			<c:if test="${!empty model.seeAlsoSuggestions && fn:length(model.seeAlsoSuggestions.fields) > 0}">
+				<div class="row">
+					<div class="sidebar-right show-on-x">
+						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/see-also.jspf" %>
+					</div>
 				</div>
-			</div>
+			</c:if>
 		</c:if>
 
 		<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">
