@@ -78,8 +78,6 @@ public class SearchController {
 		if (params.get("qf") != null && params.get("qf").length != qf.length) {
 			qf = params.get("qf");
 		}
-		boolean hasReusabilityFilter = hasReusabilityFilter(qf);
-
 		SearchPage model = new SearchPage();
 		model.setRequest(request);
 		model.setRefinements(qf);

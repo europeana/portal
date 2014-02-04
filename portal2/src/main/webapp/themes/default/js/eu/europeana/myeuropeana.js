@@ -19,6 +19,7 @@ eu.europeana.myeuropeana = {
 		this.addHashListener();
 		this.addItemHighlight();
 		this.fmtSavedSearches();
+		$('.item-apikey-save').bind('submit', this.handleSaveApiKeySubmit );
 	},
 	
 	fmtSavedSearches : function(){
@@ -243,6 +244,43 @@ eu.europeana.myeuropeana = {
 			unshade
 		);
 		
+	},
+	
+	handleSaveApiKeySubmit : function( e ) {
+		e.preventDefault();
+		if ( $('#item-tag').val() < 1 ){
+			return;
+		}
+
+		var ajax_feedback = {
+			saved_tags_count : 0,
+			$saved_tags : $('#saved-tags-count'),
+			success : function() {
+				var html =
+					'<span id="save-tag-feedback">' +
+						eu.europeana.vars.msg.saved_tag +
+					'</span>';
+				eu.europeana.ajax.methods.addFeedbackContent( html );
+				eu.europeana.ajax.methods.showFeedbackContainer();
+				ajax_feedback.saved_tags_count = parseInt( ajax_feedback.$saved_tags.html(), 10 );
+				ajax_feedback.$saved_tags.html( ajax_feedback.saved_tags_count + 1 );
+			},
+			failure : function() {
+				var html =
+					'<span id="save-tag-feedback" class="error">' +
+						eu.europeana.vars.msg.save_tag_failed +
+					'</span>';
+				eu.europeana.ajax.methods.addFeedbackContent( html );
+				eu.europeana.ajax.methods.showFeedbackContainer();
+			}
+		},
+		
+		ajax_data = {
+			className : "ApiKey",
+			apikey : encodeURIComponent( $('#item-tag').val() ),
+			appName : "TODO" // TODO: how to get the values?
+		};
+		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	}
 	
 };

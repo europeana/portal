@@ -21,6 +21,7 @@
 			            <th><spring:message code="myeuropeana_ApiKey_t" /></th>
 			            <th><spring:message code="myeuropeana_PrivateKey_t" /></th>
 			            <th><spring:message code="myeuropeana_Limit_t" /></th>
+			            <th><spring:message code="myeuropeana_appName_t" /></th>
 			          </tr>
 			        </thead>
 			        <c:forEach items="${model.user.apiKeys}" var="apiKey">
@@ -28,6 +29,16 @@
 			            <td><code>${apiKey.id}</code></td>
 			            <td><code>${apiKey.privateKey}</code></td>
 			            <td><code>${apiKey.usageLimit}</code></td>
+			            <td>
+			            	<div style="display:table">
+			            		<form class="item-apikey-save" id="apikey-${apiKey.id}">
+						            <input type="text" id="apikey_appName" maxlength="50" value="${apiKey.applicationName}"/>
+									<span>
+										<input type="submit" class="submit-button deans-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
+									</span>
+								</form>
+							</div>
+						</td>
 			          </tr>
 			        </c:forEach>
 			      </table>

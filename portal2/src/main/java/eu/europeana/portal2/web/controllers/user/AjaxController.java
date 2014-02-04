@@ -14,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
@@ -36,6 +38,9 @@ public class AjaxController {
 
 	@Resource
 	private UserService userService;
+
+	@Resource
+	private ApiKeyService apiKeyService;
 
 	@Resource
 	private Configuration config;
@@ -60,7 +65,6 @@ public class AjaxController {
 	@RequestMapping("/save.ajax")
 	public ModelAndView handleAjaxSaveRequest(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		log.info("================ save.json ================");
 		AjaxPage model = new AjaxPage();
 		try {
 			if (!hasJavascriptInjection(request)) {
@@ -105,6 +109,10 @@ public class AjaxController {
 			user = userService.createSocialTag(user.getId(), uri, tag);
 			clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
 			break;
+		case API_KEY:
+			String key = URLDecoder.decode(getStringParameter("apikey", FieldSize.TAG, request), "utf-8");
+			String appName = URLDecoder.decode(getStringParameter("appName", FieldSize.TAG, request), "utf-8");
+			apiKeyService.updateApplicationName(user.getId(), key, appName);
 		default:
 			throw new IllegalArgumentException("Unhandled ajax action: " + className);
 		}
@@ -146,7 +154,7 @@ public class AjaxController {
 		model.setSuccess(true);
 	}
 
-	private static Modifiable findModifiable(String className) {
+	private Modifiable findModifiable(String className) {
 		for (Modifiable modifiable : Modifiable.values()) {
 			if (modifiable.matches(className)) {
 				return modifiable;
@@ -157,7 +165,7 @@ public class AjaxController {
 
 	private enum Modifiable {
 		SAVED_ITEM(SavedItem.class), SAVED_SEARCH(SavedSearch.class), SEARCH_TERM(SearchTerm.class), SOCIAL_TAG(
-				SocialTag.class);
+				SocialTag.class), API_KEY(ApiKey.class);
 
 		private String className;
 

@@ -161,7 +161,7 @@ public class RegisterApiPageController {
 			String token = model.getToken();
 			log.info("token: " + token);
 			apiKeyService.createApiKey(token, model.getEmail(), model.getApiKey(), model.getPrivateKey(),
-					DEFAULT_USAGE_LIMIT,
+					DEFAULT_USAGE_LIMIT, model.getApplicationName(), 
 					model.getEmail(), // use email for username
 					model.getCompany(), model.getCountry(), model.getFirstName(), model.getLastName(),
 					model.getWebsite(), model.getAddress(), model.getPhone(), model.getFieldOfWork());

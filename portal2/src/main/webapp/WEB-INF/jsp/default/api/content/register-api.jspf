@@ -178,6 +178,17 @@
 							</sf:select>
 						</div>
 					</div>
+					<div class="row">
+									<!-- APPLICATION NAME -->
+					
+						<div class="five columns">
+							<label for="fieldOfWork"><spring:message code="registration_applicationName_t" />:</label>
+						</div>
+						<div class="six columns">
+							<sf:input id="applicationName" path="applicationName"  />
+							<i><sf:errors path="applicationName" cssClass="error" /></i>
+						</div>						
+					</div>
 				</div>
 			</div>
 
