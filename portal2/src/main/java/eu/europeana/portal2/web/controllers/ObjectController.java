@@ -438,7 +438,7 @@ public class ObjectController {
 				category.getUrls().remove(10);
 			}
 
-			if (category.getUrls().size() > 1) {
+			if (category.getUrls().size() > 0) {
 				mlt.addCategory(category);
 			}
 		}
@@ -512,7 +512,6 @@ public class ObjectController {
 							    StringUtils.equals(metaField, "DATA_PROVIDER")) {
 								clear = false;
 							}
-							log.info("new MltSuggestion(" + metaField + ", " + value + ", " + id + ")");
 							MltSuggestion suggestion = new MltSuggestion(metaField, value, id, clear);
 							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
 							mltCollector.add(suggestion);
