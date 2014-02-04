@@ -20,9 +20,15 @@
 			<c:set var="api_query">${fn:replace(category.query, "\"", "&quot;")}</c:set>
 
 			<a class="tab-header">
-				<spring:message code="${category.translationKey}" />: ${category.name}
+				<spring:message code="${category.translationKey}" />: ${category.name} (${category.totalResults-1})
 				
-				<input id="similiar-category-${catStatus.index}" type="hidden" class="query" value="${   fn:escapeXml( fn:replace(api_query, "\\&", "%26"    )  )   }">
+				<%-- Peter: I'm using ${category.totalResults-1} on the assumption that similar items always contain themselves--%>
+				
+				<input	id="similiar-category-${catStatus.index}"
+						type="hidden"
+						class="query"
+						data-total="${category.totalResults-1}"
+						value="${   fn:escapeXml( fn:replace(api_query, "\\&", "%26") )}">
 			</a>
 
 			<div class="section">

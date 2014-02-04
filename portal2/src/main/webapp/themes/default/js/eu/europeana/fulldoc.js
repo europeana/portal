@@ -53,7 +53,7 @@ eu.europeana.fulldoc = {
 			com.google.analytics.europeanaEventTrack("Click-link " + $(e.target).attr('href'), "Search-Also-For");
 		});
 		
-		js.console.log(JSON.stringify(carouselData));
+		//js.console.log(JSON.stringify(carouselData));
 	},
 
 	loadComponents : function() {
@@ -956,7 +956,7 @@ eu.europeana.fulldoc = {
 
 			// structure to track what's loaded
 			
-			var loadData = { tabs:[ {}, {}, {}, {}, {} ] };
+			var loadData = loadData = { tabs:[ {}, {}, {}, {}, {} ] };
 
 			var getActiveSection = function(){
 				return $('#mlt .section.active');
@@ -969,35 +969,40 @@ eu.europeana.fulldoc = {
 				}
 		    	section.append('<div class="ajax-overlay">');	
 		    	$('.ajax-overlay').css('top', $('.ajax-overlay').parent().scrollTop() + 'px');
+		    	
+		    	section.find('.galleria-thumbnails').css('top', '1000px');		    	
 		    };
 		    
 			var hideSpinner = function(){
 				var section = getActiveSection();
 				section.find('.ajax-overlay').remove();				
 				section.removeClass('loading');	
+				
+		    	section.find('.galleria-thumbnail').css('top', '0px');
 			};
 		
 			var getQuery = function(){
-				return $('#mlt a.tab-header.active input.query').val();
+				
+				var querySuffix = window.location.href;
+
+				querySuffix = querySuffix.substring(querySuffix.indexOf('/record')+7, querySuffix.indexOf('.html') ); 
+				querySuffix = '+NOT+europeana_id:&quot;' + querySuffix  + '&quot;';
+				console.log("querySuffix = " + querySuffix )
+				
+				return $('#mlt a.tab-header.active input.query').val() + querySuffix;
 			}
-			
+
+			var getTotal = function(){
+				return parseInt($('#mlt a.tab-header.active input.query').data('total'));
+			}
+
             var fnInView = function(){
-       //     	console.log('fnInView  ')
             	var activeS = getActiveSection();
-
-     //       	console.log('fnInView  - as ' + activeS.length )
-
             	var cw      = activeS.find('.galleria-thumbnails-container').width();
-            	
-//            	console.log('fnInView  - cw ' + cw )
-  ///          	console.log('fnInView  - img count:    ' +     $('.galleria-thumbnails-container .galleria-image').length       )
-
-            	var first   = activeS.find('.galleria-thumbnails-container .galleria-image:first');
-            	
+            	var first   = activeS.find('.galleria-thumbnails-container .galleria-image:first');            	
             	var firstW  = parseInt(first.css('width'));
 				var firstM  = parseInt(first.css('margin-left'));
-				
-				var res = Math.ceil(cw / ( firstW + 2*firstM ));
+				var res     = Math.ceil(cw / ( firstW + 2*firstM ));
 				
 				console.log('fnInView returns ' + res)
 				return res
@@ -1008,7 +1013,7 @@ eu.europeana.fulldoc = {
 				//console.log('loadMore start');
 				
 				var start	= loadData.tabs[index].loaded + 1;
-				var qty		= fnInView();// $("#mobile-menu").is(":visible") ? 2 : 4;
+				var qty		= fnInView();
 				var query   = getQuery();
 				
 				loadData.tabs[index].expectedThumbCount = ((loadData.tabs[index].loaded + qty) -1)  > loadData.tabs[index].total ?  loadData.tabs[index].total -1 : ((loadData.tabs[index].loaded + qty) -1);
@@ -1017,8 +1022,7 @@ eu.europeana.fulldoc = {
 				
 				loadMltData(query, processResult, start, qty)
 				
-				//console.log('loadMore end');
-				
+				//console.log('loadMore end');				
 			};
             
 			/////////////////////////////////////////////////////
@@ -1034,8 +1038,6 @@ eu.europeana.fulldoc = {
 				imagePan:		false,
 				lightbox:		false,
 				responsive:		true,
-				
-				europeanaId:    'meaningless', /* eu.europeana.fulldoc.mltTabs.getOpenTabIndex(), */
 				suppressIdle:   true,
 
 				thumbnails: 	true,
@@ -1074,11 +1076,13 @@ eu.europeana.fulldoc = {
 					
 						var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 						
-						console.log(
-							'thumbnail event (e.index=' + e.index + '),'
-							+ 'loadData.tabs[index].current=' + loadData.tabs[index].current
-							+ 'expected full load?  = ' + loadData.tabs[index].expectedThumbCount
-						);
+						
+						//console.log(
+						//	'thumbnail event (e.index=' + e.index + '),'
+						//	+ 'loadData.tabs[index].current= ' + loadData.tabs[index].current
+						//	+ ', expected full load?  = ' + loadData.tabs[index].expectedThumbCount
+						//);
+						
 						
 						// we only execute on the last thumbnail....
 						if( e.index != loadData.tabs[index].expectedThumbCount){
@@ -1129,33 +1133,32 @@ eu.europeana.fulldoc = {
 						
 						$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').unbind('click').bind('click', function(e){
 			                e.preventDefault();
+			                
 			                var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 							var x     = thisGallery;
 			                var xOps  = x._options;
 							var xCar  = x._carousel;
 
-							console.log('update current to: ' + (xCar.current + xOps.carouselSteps) );
+							//console.log('update current to: ' + (xCar.current + xOps.carouselSteps) );
 
 
 							loadData.tabs[index].current = (xCar.current + xOps.carouselSteps);  // write next val
-							console.log('set loadData.tabs[index].current to ' + loadData.tabs[index].current);
+							//console.log('set loadData.tabs[index].current to ' + loadData.tabs[index].current);
 							
-			                // this line is destined to break - review it
-			                //var inView      = Math.ceil($('#mlt .section.active .galleria-thumbnails-container').width() / (200 + 45 + 45) )  ;
 							inView = fnInView();
 			                
 			                var loadedCount = xCar.hooks.length -1;
 			                var current     = xCar.current + 1;
 
 			                if( (current + inView) >= loadedCount){
-			                	console.log('load more then navigate (tabIndex[' + index + '])');
+			                	//console.log('load more then navigate (tabIndex[' + index + '])');
 			                	loadMore(eu.europeana.fulldoc.mltTabs.getOpenTabIndex());
 			                }
 			                else{
 			                	xCar.set(loadData.tabs[index].current);
 			                	
 								if(loadData.tabs[index].loaded < loadData.tabs[index].total){
-									console.log('normal nav and show the arrow  (' + $('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').length + ')');
+									//console.log('normal nav and show the arrow  (' + $('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').length + ')');
 									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').show();
 								}
 				                
@@ -1168,45 +1171,26 @@ eu.europeana.fulldoc = {
 
 					
 						if(typeof loadData.tabs[index].current == 'undefined'){
-							console.log("loadData.tabs[index].current == 'undefined' so set to 0");
+							//console.log("loadData.tabs[index].current == 'undefined' so set to 0");
 							loadData.tabs[index].current = 0;			
 						}
 						else {
 							
 							var xCar  = x._carousel;
-							// do the nav
+
 							//console.log('post process [' + index + '] nav kicking in now.... curr1 (internal): ' + xCar.current + ',  curr2 (tracked): ' + loadData.tabs[index].current);
 							
 							var prevCurrent = loadData.tabs[index].current - loadData.tabs[index].loadSize;
 							var oldSpeed = thisGallery._options.carouselSpeed;
-			//alert('prevCurrent = ' + prevCurrent + '  (' + loadData.tabs[index].current + ' - ' + loadData.tabs[index].loadSize + ')\n\n new loadData.tabs[index].current = ' + loadData.tabs[index].current)				
 
 							thisGallery.setOptions( 'carouselSpeed', 0 );
 
-				//			getActiveSection().css('visibility', 'hidden');
-			
-//							alert('loadData.tabs[index].leftOffset ' + loadData.tabs[index].leftOffset);
-							
-	//						getActiveSection().find('.galleria-thumbnails').css('left', loadData.tabs[index].leftOffset);
-		//					console.log('set left to ' + loadData.tabs[index].leftOffset);
-							//xCar.current = loadData.tabs[index].current;
-							
 							xCar.set(prevCurrent, true);
-							
 							thisGallery.setOptions( 'carouselSpeed', oldSpeed);
-
 							hideSpinner();
-							
 							xCar.set(loadData.tabs[index].current);
-//					
-							
-							//var x = getActiveSection().find('.carousel .galleria-thumbnails').css('left');
-							//console.log('LEFT 1 = ' + x);
 						}
 						
-//var rightArrow = $('#mlt .section.active .carousel').find('.galleria-thumb-nav-right');
-
-
 						// Show or hide the "Next" button....
 						// ...Galleria shows the arrows on idle_exit, so "europeana-disabled" class is used here 
 						
@@ -1223,13 +1207,6 @@ eu.europeana.fulldoc = {
 							rightArrow.addClass('disabled');
 							rightArrow.addClass('europeana-disabled');
 						}
-						
-						
-						
-						
-//						getActiveSection().find('.galleria-thumb-nav-right').removeClass('disabled');
-	//					getActiveSection().find('.galleria-thumb-nav-right').show();
-						
 					}); // end loadFinish
 					
 				} // end extend
@@ -1366,15 +1343,17 @@ eu.europeana.fulldoc = {
 						url = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo";
 					}
 
+					var total = getTotal();
+					
 					url += '&query='	+ query;  //decodeURIComponent(query);
 					url += '&start='	+ (start ? start : 1);
-					url += '&rows='		+ (qty ? qty : 4);
+					url += '&rows='		+ (qty ? qty : total > 4 ? 4 : total);
 					url += '&profile=portal';
 					
 					var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 					
 					if(typeof loadData.tabs[index].expectedThumbCount == 'undefined'){
-						loadData.tabs[index].expectedThumbCount = (qty ? qty-1 : 3); 
+						loadData.tabs[index].expectedThumbCount = (qty ? qty-1 : total > 4 ? 3 : total -1 ); 
 					}
 					
 					loadData.tabs[index].loadSize = (qty ? qty : 4);

@@ -429,7 +429,11 @@ public class ObjectController {
 				field,
 				config.getMltTranslations().get(field)
 			);
+			
+			//category.setQuery(suggestion.getEscapedQuery() + "+NOT+europeana_id:&quot;" + europeanaId + "&quot;");
 			category.setQuery(suggestion.getEscapedQuery());
+			
+			
 			ResultSet<? extends BriefBean> results = searchMltItem(suggestion.getEscapedQuery());
 			for (BriefBean bean : results.getResults()) {
 				if (!bean.getId().equals(europeanaId)) {
