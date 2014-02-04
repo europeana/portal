@@ -8,6 +8,7 @@ public class EuropeanaMltCategory {
 	private String field;
 	private String translationKey;
 	private String query;
+	private long totalResults = 0;
 	private List<EuropeanaMltLink> urls;
 
 	public EuropeanaMltCategory(String name, String field, String translationKey) {
@@ -59,5 +60,17 @@ public class EuropeanaMltCategory {
 
 	public void addUrl(EuropeanaMltLink url) {
 		this.urls.add(url);
+	}
+
+	public long getTotalResults() {
+		return totalResults;
+	}
+
+	public void setTotalResults(long totalResults) {
+		this.totalResults = totalResults;
+	}
+
+	public void addResultSize(long totalResults) {
+		this.totalResults += totalResults;
 	}
 }

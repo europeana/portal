@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -428,7 +430,8 @@ public class ObjectController {
 				config.getMltTranslations().get(field)
 			);
 			category.setQuery(suggestion.getEscapedQuery());
-			for (BriefBean bean : searchMltItem(suggestion.getEscapedQuery())) {
+			ResultSet<? extends BriefBean> results = searchMltItem(suggestion.getEscapedQuery());
+			for (BriefBean bean : results.getResults()) {
 				if (!bean.getId().equals(europeanaId)) {
 					String title = (StringArrayUtils.isNotBlank(bean.getTitle()) ? bean.getTitle()[0] : bean.getId());
 					category.addUrl(new EuropeanaMltLink(bean.getId(), title));
@@ -437,6 +440,7 @@ public class ObjectController {
 			if (category.getUrls().size() == 11) {
 				category.getUrls().remove(10);
 			}
+			category.addResultSize(results.getResultSize());
 
 			if (category.getUrls().size() > 0) {
 				mlt.addCategory(category);
@@ -448,7 +452,7 @@ public class ObjectController {
 		return mlt;
 	}
 
-	private List<? extends BriefBean> searchMltItem(String queryTerm) {
+	private ResultSet<? extends BriefBean> searchMltItem(String queryTerm) {
 		Query query = new Query(queryTerm)
 			.setPageSize(11)
 			.setStart(0) // Solr starts from 0
@@ -457,7 +461,7 @@ public class ObjectController {
 		;
 		try {
 			ResultSet<? extends BriefBean> resultSet = searchService.search(BriefBean.class, query);
-			return resultSet.getResults();
+			return resultSet;
 		} catch (SolrTypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
