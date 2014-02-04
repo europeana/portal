@@ -827,116 +827,7 @@ eu.europeana.fulldoc = {
 		}); // end Galleria.run
 	},
 	
-	/*
-	initBottomCarousel : function(){
-		if(!eu.europeana.vars.isShowSimilarItems){
-			return;
-		}
-		
-		alert('delete this and all references to initBottomCarousel / ' + eu.europeana.vars.isShowSimilarItems);
-		
-		
-		if(typeof carousel2Data != 'undefined'){
-			var carousel2selector = '#carousel-2';  //  $('#carousel-2-tabbed').is(":visible") ? '#carousel-2-tabbed' : '#carousel-2'; 
-			
-			// 150 too small for iphone: make min height 200
-   			$(carousel2selector).css("height", Math.max(200, eu.europeana.fulldoc.getCarousel2Dimensions().h) + "px");
-			
-   			var x = Galleria.run(carousel2selector, {
-   				debug:			js.debug,
-				transition:		'fadeslide',
-				carousel:		true,
-				carouselSpeed:	1200,
-				carouselSteps:	1,
-				easing:			'galleriaOut',
-				imageCrop:		false,
-				imagePan:		false,
-				lightbox:		false,
-				responsive:		true,
-				dataSource:		carousel2Data,
-				thumbnails: 	true,
-				extend: function(e){
-					
-					var thisGallery = this;
-					
-					var doEllipsis = function(){
-						var ellipsisObjects = [];
-						$(carousel2selector + ' .europeana-carousel-info').each(
-							function(i, ob){
-								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-							}
-						);
 
-						
-						//$(window).euRsz(function(){
-						//	if(eu.europeana.vars.suppresResize){
-						//		return;
-						//	}
-						//	for(var i=0; i<ellipsisObjects.length; i++ ){
-						//		ellipsisObjects[i].respond();
-						//	}							
-						//});
-						
-					};
-					
-					$(this).ready(function(e) {
-						setTimeout(doEllipsis, 1000);
-					});
-	
-					this.bind("loadfinish", function(e) {
-						// Google Analytics
-						if(!eu.europeana.fulldoc.setupAnalytics){
-							
-							var clicked = function(clickData){
-								com.google.analytics.europeanaEventTrack(
-									clickData.ga.action,
-									clickData.ga.category,
-									clickData.ga.url
-								);
-								if(clickData.open){
-									window.location = clickData.open;
-								}									
-							};
-							
-							$('#explore-further .galleria-thumb-nav-right,  #explore-further .galleria-thumb-nav-left').click(function(e){
-								clicked({
-									"open" : false,
-									"ga" : {
-										"action"	: "Navigate",
-										"category"	: "Similar-Items-Carousel",
-										"url"		: ""
-									}	
-								});
-							});
-							
-							var dataSource		= this._options.dataSource;
-			
-							$('#explore-further .galleria-thumbnails .galleria-image').each(function(i, ob){
-								$(ob).unbind('click');
-								$(ob).click(function(e){
-									clicked({
-										//"open" : dataSource[i].europeanaLink,
-										"open" : js.utils.fixSearchRowLinks(dataSource[i].europeanaLink),
-										"ga" : {
-											"action"	: "Click-Through (link index " + i + ")",
-											"category"	: "Similar-Items-Carousel",
-											"url"		: dataSource[i].europeanaLink
-										}	
-									});
-									e.stopPropagation();
-								});
-								$(ob).find('img').attr('alt', carousel2Data[i].title);
-								$(ob).find('img').attr('title', carousel2Data[i].title);
-							});
-							eu.europeana.fulldoc.setupAnalytics = true;
-						}
-					});
-				}
-	   		});
-		}
-	},
-	*/
-	
 	getLightboxableCount:function(){
 		var lightboxableCount = 0;
 		for(var i=0; i<carouselData.length; i++){
@@ -1054,32 +945,10 @@ eu.europeana.fulldoc = {
 			}
 		});
 
-		/*
-		$("#carousel-2-img-measure img").imagesLoaded( function($images, $proper, $broken){
-			
-			eu.europeana.fulldoc.getCarousel2Dimensions = function(){
-				
-				$("#carousel-2-img-measure img").css("display", "inline-block");
-  				var tallestImageH = $("#carousel-2-img-measure").height();
-  				
-  				$("#carousel-2-img-measure img").css("display", "block");  				
-  				var widestImageW = $("#carousel-2-img-measure").width();
-  				
-  				$("#carousel-2-img-measure img").css("display", "none");
-  				
-  				return {w:widestImageW, h:tallestImageH};
-			};
-			
-			$("#carousel-2-img-measure img").css("display", "none");
-			eu.europeana.fulldoc.bottomTabs =  new AccordionTabs( $('#explore-further') );
-			eu.europeana.fulldoc.initBottomCarousel();
-		});
-		*/
-		
 		
 		/**
 		 * 
-		 * START NEW MLT 
+		 * MLT 
 		 * 
 		 * */
 		
@@ -1109,39 +978,9 @@ eu.europeana.fulldoc = {
 			};
 		
 			var getQuery = function(){
-				var res = $('#mlt a.tab-header.active input.query').val();
-				
-				//console.log('getQuery res = ' + res);
-				//res = res.replace('&', '%26');
-				//console.log('getQuery res2 = ' + res);
-				
-				return res;
+				return $('#mlt a.tab-header.active input.query').val();
 			}
 			
-			var loadMore = function(index){
-				
-				console.log('loadMore start');
-				
-				var start	= loadData.tabs[index].loaded + 1;
-				var qty		= $("#mobile-menu").is(":visible") ? 2 : 4;
-				var query   = getQuery();
-				
-				loadData.tabs[index].expectedThumbCount = ((loadData.tabs[index].loaded + qty) -1)  > loadData.tabs[index].total ?  loadData.tabs[index].total -1 : ((loadData.tabs[index].loaded + qty) -1);
-				
-//				if(loadData.tabs[index].expectedThumbCount > loadData.tabs[index].total){
-	//				loadData.tabs[index].total
-		//		}
-				
-//				alert( loadData.tabs[index].total );
-				console.log('set loadData.tabs[' + index + '].expectedThumbCount to ' + loadData.tabs[index].expectedThumbCount);
-				
-				loadMltData(query, processResult, start, qty)
-				
-				console.log('loadMore end');
-				
-			};
-
-
             var fnInView = function(){
        //     	console.log('fnInView  ')
             	var activeS = getActiveSection();
@@ -1164,6 +1003,24 @@ eu.europeana.fulldoc = {
 				return res
             }
 			
+			var loadMore = function(index){
+				
+				//console.log('loadMore start');
+				
+				var start	= loadData.tabs[index].loaded + 1;
+				var qty		= fnInView();// $("#mobile-menu").is(":visible") ? 2 : 4;
+				var query   = getQuery();
+				
+				loadData.tabs[index].expectedThumbCount = ((loadData.tabs[index].loaded + qty) -1)  > loadData.tabs[index].total ?  loadData.tabs[index].total -1 : ((loadData.tabs[index].loaded + qty) -1);
+
+				//console.log('set loadData.tabs[' + index + '].expectedThumbCount to ' + loadData.tabs[index].expectedThumbCount);
+				
+				loadMltData(query, processResult, start, qty)
+				
+				//console.log('loadMore end');
+				
+			};
+            
 			/////////////////////////////////////////////////////
 			
 			var mltGalleriaOpTemplate = {
@@ -1229,62 +1086,38 @@ eu.europeana.fulldoc = {
 						}
 							
 						
-						if(!loadData.tabs[index].setup){
+						// bind swipe events
+						if( ! $("html").hasClass('ie8') ){
 							
-							// bind swipe events
-							if( ! $("html").hasClass('ie8') ){
-								
-								thisGallery.$( 'container' ).find( '.galleria-thumbnails-container .galleria-image').swipe({
-										swipeStatus:function(event, phase, direction, distance, fingerCount) {
-											if(phase=="end"){
-												if(direction == "left"){
-													thisGallery.$( 'container' ).find('.galleria-thumb-nav-right').click();
-												}
-												if(direction == "right"){
-													thisGallery.$( 'container' ).find('.galleria-thumb-nav-left').click();
-												}
+							thisGallery.$( 'container' ).find( '.galleria-thumbnails-container .galleria-image').swipe({
+									swipeStatus:function(event, phase, direction, distance, fingerCount) {
+										if(phase=="end"){
+											if(direction == "left"){
+												thisGallery.$( 'container' ).find('.galleria-thumb-nav-right').click();
 											}
-										},
-										triggerOnTouchEnd:false,
-										threshold:100
-									}
-								);
-							}
-							
-							
-							// bind click events
-							
-							var clicked = function(clickData){
-								if(clickData.open){
-									window.location = clickData.open;
-								}									
-							};
-								
-							var dataSource = this._options.dataSource;
-
-							
-							$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
-								
-								$(ob).unbind('click');
-								$(ob).click(function(e){
-									clicked({
-										"open" : js.utils.fixSearchRowLinks(dataSource[i].europeanaLink)
-										,
-										"ga" : {
-											"action"	: "Click-Through (link index " + i + ")",
-											"category"	: "Similar-Items-Carousel",
-											"url"		: dataSource[i].europeanaLink
+											if(direction == "right"){
+												thisGallery.$( 'container' ).find('.galleria-thumb-nav-left').click();
+											}
 										}
-										
-									});
-									e.stopPropagation();
-								});
-								$(ob).find('img').attr({
-									'alt'	:	loadData.tabs[index].carouselMltData[i].title,
-									'title'	: loadData.tabs[index].carouselMltData[i].title
-								});
-								
+									},
+									triggerOnTouchEnd:false,
+									threshold:100
+								}
+							);
+						}
+
+						//var dataSource = this._options.dataSource;
+
+						
+						$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
+							$(ob).find('img').attr({
+								'alt'	:	loadData.tabs[index].carouselMltData[i].title,
+								'title'	: loadData.tabs[index].carouselMltData[i].title
 							});
+							
+						});
+							
+						if(!loadData.tabs[index].setup){
 							hideSpinner();
 							loadData.tabs[index].setup = true;
 						}
@@ -1446,11 +1279,12 @@ eu.europeana.fulldoc = {
 					var imgUrl = ((typeof ob.edmPreview != 'undefined' && ob.edmPreview.length) ? ob.edmPreview[0] : 'http://europeanastatic.eu/api/image?size=FULL_DOC&type=' + ob.type.toUpperCase()).replace('size=LARGE', 'size=MEDIUM');
 					
 					sectionImages.append('<img src="' + imgUrl + '">');
-					
+	
 					loadData.tabs[index].carouselMltData[loadData.tabs[index].carouselMltData.length] = {
-						image:			imgUrl,
-						title:			ob.title[0],
-						europeanaLink:	ob.link.substr(0, ob.link.indexOf('.json') ).replace('/api/v2/', '/portal/') + '.html'
+						image:	imgUrl,
+						title:	ob.title[0],
+						link:	ob.link.substr(0, ob.link.indexOf('.json') ).replace('/api/v2/', '/portal/') + '.html'
+						/* set linkTarget here to open in new window */
 					};
 				});
 				
@@ -1492,19 +1326,14 @@ eu.europeana.fulldoc = {
 					
 					var mltGalleriaOps        = $.extend(true, {}, mltGalleriaOpTemplate);
 					mltGalleriaOps.dataSource = loadData.tabs[index].carouselMltData;
-					//mltGalleriaOps.identifier = index;
 
 					loadData.tabs[index].leftOffset = getActiveSection().find('.galleria-thumbnails').css('left');
-					
-//					alert('loadData.tabs[index].leftOffset ' + loadData.tabs[index].leftOffset);
 					
 					loadData.tabs[index].carousel.destroy();
 					
 					Galleria.run('#mlt-carousel-' + index, mltGalleriaOps );
 					var allGalleries = Galleria.get();
 					loadData.tabs[index].carousel = allGalleries[allGalleries.length-1];
-					//alert('reinitialised existing carousel....');
-					
 				}
 
 				
@@ -1521,30 +1350,6 @@ eu.europeana.fulldoc = {
 				loadData.tabs[index].loaded	= typeof loadData.tabs[index].loaded == 'undefined' ? data.itemsCount : loadData.tabs[index].loaded + data.itemsCount;
 				loadData.tabs[index].total	= data.totalResults;
 				
-				// Add load-more links
-				/*
-				if(loadData.tabs[index].loaded < loadData.tabs[index].total){
-					if(!section.hasClass('loaded')){
-						var loadMoreLink = $('<a class="load-more" href="javascript:void(0);">' + labelLoadMore + '</a>').appendTo(section);
-						loadMoreLink.click(function(e){
-							e.preventDefault();
-							loadMore(function(){ return index }());
-						});
-					}
-				}
-				else{
-					section.remove('.load-more');
-				}
-				*/
-
-				/*
-				setTimeout(function(){
-					alert('call p-p');
-					section.trigger('post-process');						
-				}, 4000);
-				*/
-
-
 			}; // end process result
 
 			
@@ -1561,7 +1366,6 @@ eu.europeana.fulldoc = {
 						url = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo";
 					}
 
-					//url += '&query='	+ decodeURIComponent(query);
 					url += '&query='	+ query;  //decodeURIComponent(query);
 					url += '&start='	+ (start ? start : 1);
 					url += '&rows='		+ (qty ? qty : 4);
@@ -1575,27 +1379,24 @@ eu.europeana.fulldoc = {
 					
 					loadData.tabs[index].loadSize = (qty ? qty : 4);
 					
-console.log('load data ajax url: ' +  url.indexOf('%20') + '   ' + url.replace(/&quot;/g, '"') ) ;// .replace(/\&/g, '\%26')    );
-
 					$.ajax({
 						"url":				url.replace(/&quot;/g, '"'),
 				        "dataType":			"json", 
 				        "crossDomain":		true,
 				        "type":				"POST",
 				        "fail":function(e){
-				    		alert("ERROR " + e);
+				    		console.log("Ajax error: " + e);
 				    		hideSpinner();
 				        },
 				        "success":function(data){
 				        	fn(data);
-				        	//hideSpinner();
 				        	return 0;
 						}
 					});
 				}
 				catch(e){
 					hideSpinner();
-					alert('error in ajax ' + e);
+					console.log("Ajax error: " + e);
 				}
 			}
 			
@@ -1616,10 +1417,7 @@ console.log('load data ajax url: ' +  url.indexOf('%20') + '   ' + url.replace(/
 					}
 				}
 			);
-			
 		}
-		
-		
 	},
 	
 };
