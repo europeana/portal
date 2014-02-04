@@ -21,18 +21,46 @@ div.concept ul li p {marging: 0}
     <c:forEach items="${model.document.decoratedConcepts}" var="concept" varStatus="fieldStatus">
       <c:if test="${!empty concept.labels}">
         <li>
-          <a href="${concept.about}"><c:forEach items="${concept.labels}" var="item" varStatus="t"><c:if test="!t.first">, </c:if>${item}</c:forEach></a>
+          <a href="${concept.about}">
+            <c:forEach items="${concept.labels}" var="item" varStatus="t">
+              <c:if test="${!t.first}">, </c:if>
+              ${item}
+            </c:forEach>
+          </a>
           <c:if test="${!empty concept.notes}">
             <p>
               <c:forEach items="${concept.notes}" var="item" varStatus="t">
-                <c:if test="!t.first"><br/></c:if>
+                <c:if test="${!t.first}"><br/></c:if>
                 ${item}
               </c:forEach>
             </p>
           </c:if>
+
+          <c:if test="${!empty concept.broader}">
+            <p>
+              <c:choose>
+                <c:when test="${fn:length(concept.broader) == 1}"><spring:message code="context_concept_Broader_t" />:</c:when>
+                <c:otherwise><spring:message code="context_concept_Broaders_t" />:</c:otherwise>
+              </c:choose>
+
+              <c:forEach items="${concept.broader}" var="term" varStatus="pstatus">
+                <c:if test="${!pstatus.last}">, </c:if>
+                <c:choose>
+                  <c:when test="${fn:startsWith(term, 'http://')}">
+                    <a href="${term}">${term}</a>
+                  </c:when>
+                  <c:otherwise>${term}</c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </p>
+          </c:if>
+
           <c:if test="${!empty concept.closeMatch}">
             <p>
-              Close matches:
+              <c:choose>
+                <c:when test="${fn:length(concept.closeMatch) == 1}">Close match:</c:when>
+                <c:otherwise>Close matches:</c:otherwise>
+              </c:choose>
               <c:forEach items="${concept.closeMatch}" var="match" varStatus="pstatus">
                 <c:if test="${!pstatus.last}">, </c:if>
                 <c:choose>
@@ -59,11 +87,11 @@ div.concept ul li p {marging: 0}
     <c:forEach items="${model.document.decoratedPlaces}" var="place" varStatus="fieldStatus">
       <c:if test="${!empty place.labels}">
         <li>
-          <a href="${place.about}"><c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="!t.first">, </c:if>${label}</c:forEach></a>
+          <a href="${place.about}"><c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach></a>
           <c:if test="${!empty place.notes}">
             <p>
               <c:forEach items="${place.notes}" var="item" varStatus="t">
-                <c:if test="!t.first"><br/></c:if>
+                <c:if test="${!t.first}"><br/></c:if>
                 ${item}
               </c:forEach>
             </p>
@@ -87,13 +115,13 @@ div.concept ul li p {marging: 0}
 
           <c:if test="${!empty place.dcTermsHasPartList}">
             <p>
-            <c:forEach items="${place.dcTermsHasPartList}" var="label" varStatus="t"><c:if test="!t.first">, </c:if>${label}</c:forEach>
+            <c:forEach items="${place.dcTermsHasPartList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </p>
           </c:if>
 
           <c:if test="${!empty place.isPartOfList}">
             <p>
-            <c:forEach items="${place.isPartOfList}" var="label" varStatus="t"><c:if test="!t.first">, </c:if>${label}</c:forEach>
+            <c:forEach items="${place.isPartOfList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </p>
           </c:if>
 

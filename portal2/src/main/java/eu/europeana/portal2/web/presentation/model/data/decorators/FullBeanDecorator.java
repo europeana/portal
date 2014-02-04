@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
+import eu.europeana.api2.v2.model.xml.kml.Document;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -57,6 +58,7 @@ public class FullBeanDecorator implements FullBean {
 
 	private EuropeanaUrlService europeanaUrlService;
 	private String userLanguage;
+	private String edmLanguage;
 	List<ConceptDecorator> concepts;
 	List<PlaceDecorator> places;
 
@@ -69,6 +71,7 @@ public class FullBeanDecorator implements FullBean {
 	public FullBeanDecorator(FullBean fulldoc, String userLanguage) {
 		this(fulldoc);
 		this.userLanguage = userLanguage;
+		this.edmLanguage = fulldoc.getEuropeanaAggregation().getEdmLanguage().get("def").get(0);
 	}
 
 	/**
@@ -303,7 +306,6 @@ public class FullBeanDecorator implements FullBean {
 	public List<? extends Place> getDecoratedPlaces() {
 		if (places == null) {
 			places = new ArrayList<PlaceDecorator>();
-			String edmLanguage = shortcut.get("EdmLanguage")[0];
 			for (Place place : fulldoc.getPlaces()) {
 				places.add(new PlaceDecorator(place, userLanguage, edmLanguage));
 			}
@@ -339,8 +341,6 @@ public class FullBeanDecorator implements FullBean {
 	public List<? extends Concept> getDecoratedConcepts() {
 		if (concepts == null) {
 			concepts = new ArrayList<ConceptDecorator>();
-			String edmLanguage = shortcut.get("EdmLanguage")[0];
-			log.info("==edmLanguage: " + edmLanguage);
 			for (Concept concept : fulldoc.getConcepts()) {
 				concepts.add(new ConceptDecorator(concept, userLanguage, edmLanguage));
 			}

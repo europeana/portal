@@ -56,6 +56,8 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	protected FullBeanView fullBeanView;
 
+	protected FullBeanViewDecorator fullBeanViewDecorator;
+
 	protected FullBean document;
 
 	protected FullBeanShortcut shortcut;
@@ -126,7 +128,10 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	}
 
 	public FullBeanViewDecorator getFullBeanView() {
-		return new FullBeanViewDecorator(this, fullBeanView);
+		if (fullBeanViewDecorator == null) {
+			fullBeanViewDecorator = new FullBeanViewDecorator(this, fullBeanView);
+		}
+		return fullBeanViewDecorator;
 	}
 
 	public void setShowFields(boolean showFields) {
@@ -139,7 +144,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public FullBeanDecorator getDocument() {
 		if (decorator == null) {
-			decorator = new FullBeanDecorator(document);
+			decorator = new FullBeanDecorator(document, getLocale().getLanguage());
 		}
 		return decorator;
 	}
