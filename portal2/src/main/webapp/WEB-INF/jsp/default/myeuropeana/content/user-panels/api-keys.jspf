@@ -20,25 +20,27 @@
 			          <tr>
 			            <th><spring:message code="myeuropeana_ApiKey_t" /></th>
 			            <th><spring:message code="myeuropeana_PrivateKey_t" /></th>
-			            <th><spring:message code="myeuropeana_Limit_t" /></th>
-			            <th><spring:message code="myeuropeana_appName_t" /></th>
+			            <th class="hide-cell-on-phones"><spring:message code="myeuropeana_appName_t" /></th>
+			            <th class="numeric"><spring:message code="myeuropeana_Limit_t" /></th>
 			          </tr>
 			        </thead>
 			        <c:forEach items="${model.user.apiKeys}" var="apiKey">
 			          <tr>
 			            <td><code>${apiKey.id}</code></td>
 			            <td><code>${apiKey.privateKey}</code></td>
-			            <td><code>${apiKey.usageLimit}</code></td>
-			            <td>
-			            	<div >
-			            		<form style="display:table" class="item-apikey-save" id="apikey-${apiKey.id}">
-						            <input style="display:table-cell; width:100%;" type="text" class="apikey_appName" maxlength="50" value="${apiKey.applicationName}"/>
+						<td class="hide-cell-on-phones">
+							
+							<div>
+			            		<form class="item-apikey-save" id="apikey-${apiKey.id}">
+						            <input type="text" class="apikey_appName" maxlength="50" value="${apiKey.applicationName}"/>
 						            <input type="hidden" class="apikey_id" value="${apiKey.id}"/>
-								
-										<button style="display:table-cell; width:1px;" type="submit" class="submit-button deans-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
+									<input type="submit" class="submit-button deans-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
 								</form>
 							</div>
+							
 						</td>
+			            <td class="numeric"><code>${apiKey.usageLimit}</code></td>
+						
 			          </tr>
 			        </c:forEach>
 			      </table>
