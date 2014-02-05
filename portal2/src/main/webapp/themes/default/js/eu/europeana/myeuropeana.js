@@ -248,6 +248,7 @@ eu.europeana.myeuropeana = {
 	
 	handleSaveApiKeySubmit : function( e ) {
 		e.preventDefault();
+		
 		if ( $('#item-tag').val() < 1 ){
 			return;
 		}
@@ -268,7 +269,7 @@ eu.europeana.myeuropeana = {
 			failure : function() {
 				var html =
 					'<span id="save-tag-feedback" class="error">' +
-						eu.europeana.vars.msg.save_tag_failed +
+						'eu.europeana.vars.msg.save_tag_failed' +
 					'</span>';
 				eu.europeana.ajax.methods.addFeedbackContent( html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
@@ -277,8 +278,8 @@ eu.europeana.myeuropeana = {
 		
 		ajax_data = {
 			className : "ApiKey",
-			apikey : encodeURIComponent( $('#item-tag').val() ),
-			appName : "TODO" // TODO: how to get the values?
+			apikey : $(e.target).closest('form').find('.apikey_id').val(),
+			appName : encodeURIComponent( $(e.target).closest('form').find('.apikey_appName').val() )
 		};
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	}

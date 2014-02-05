@@ -30,12 +30,12 @@
 			            <td><code>${apiKey.privateKey}</code></td>
 			            <td><code>${apiKey.usageLimit}</code></td>
 			            <td>
-			            	<div style="display:table">
-			            		<form class="item-apikey-save" id="apikey-${apiKey.id}">
-						            <input type="text" id="apikey_appName" maxlength="50" value="${apiKey.applicationName}"/>
-									<span>
-										<input type="submit" class="submit-button deans-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
-									</span>
+			            	<div >
+			            		<form style="display:table" class="item-apikey-save" id="apikey-${apiKey.id}">
+						            <input style="display:table-cell; width:100%;" type="text" class="apikey_appName" maxlength="50" value="${apiKey.applicationName}"/>
+						            <input type="hidden" class="apikey_id" value="${apiKey.id}"/>
+								
+										<button style="display:table-cell; width:1px;" type="submit" class="submit-button deans-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
 								</form>
 							</div>
 						</td>
