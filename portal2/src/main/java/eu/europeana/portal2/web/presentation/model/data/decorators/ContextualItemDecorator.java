@@ -90,6 +90,8 @@ public class ContextualItemDecorator implements ContextualClass {
 			list = map.get("def");
 		} else if (map.containsKey(edmLanguage)) {
 			list = map.get(edmLanguage);
+		} else {
+			list = map.get(map.keySet().iterator().next());
 		}
 		return list;
 	}
