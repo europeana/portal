@@ -68,36 +68,15 @@ public class ContextualItemDecorator implements ContextualClass {
 	public void setNote(Map<String, List<String>> note) {}
 
 	public List<String> getLabels() {
-		List<String> labels = null;
-		if (item.getPrefLabel().containsKey(userLanguage)) {
-			labels = item.getPrefLabel().get(userLanguage);
-		} else if (item.getPrefLabel().containsKey("def")) {
-			labels = item.getPrefLabel().get("def");
-		} else if (item.getPrefLabel().containsKey(edmLanguage)) {
-			labels = item.getPrefLabel().get(edmLanguage);
-		} else if (item.getAltLabel().containsKey(userLanguage)) {
-			labels = item.getAltLabel().get(userLanguage);
-		} else if (item.getAltLabel().containsKey("def")) {
-			labels = item.getAltLabel().get("def");
-		} else if (item.getAltLabel().containsKey(edmLanguage)) {
-			labels = item.getAltLabel().get(edmLanguage);
+		List<String> labels = getLanguageVersion(item.getPrefLabel());
+		if (labels == null) {
+			labels = getLanguageVersion(item.getAltLabel());
 		}
 		return labels;
 	}
 
 	public List<String> getNotes() {
-		List<String> notes = null;
-		if (item.getNote() == null) {
-			return notes;
-		}
-		if (item.getNote().containsKey(userLanguage)) {
-			notes = item.getNote().get(userLanguage);
-		} else if (item.getNote().containsKey("def")) {
-			notes = item.getNote().get("def");
-		} else if (item.getNote().containsKey(edmLanguage)) {
-			notes = item.getNote().get(edmLanguage);
-		}
-		return notes;
+		return getLanguageVersion(item.getNote());
 	}
 
 	public List<String> getLanguageVersion(Map<String, List<String>> map) {
@@ -113,6 +92,5 @@ public class ContextualItemDecorator implements ContextualClass {
 			list = map.get(edmLanguage);
 		}
 		return list;
-
 	}
 }

@@ -21,7 +21,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -336,9 +338,15 @@ public class FullBeanDecorator implements FullBean {
 
 	public List<? extends Concept> getDecoratedConcepts() {
 		if (concepts == null) {
+			Map<String, String> ids = new HashMap<String, String>();
 			concepts = new ArrayList<ConceptDecorator>();
 			for (Concept concept : fulldoc.getConcepts()) {
-				concepts.add(new ConceptDecorator(concept, userLanguage, edmLanguage));
+				ConceptDecorator decorator = new ConceptDecorator(concept, userLanguage, edmLanguage);
+				concepts.add(decorator);
+				ids.put(concept.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+			}
+			for (ConceptDecorator concept : concepts) {
+				concept.makeLinks(ids);
 			}
 		}
 		return concepts;

@@ -1,5 +1,6 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
 <%@ attribute name="item" required="true" rtexprvalue="true" %>
+<%@ attribute name="label" required="false" rtexprvalue="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -8,7 +9,17 @@
  * Parameter:
  * @item: the item
  --%>
+
 <c:choose>
-  <c:when test="${fn:startsWith(item, 'http://')}"><a href="${item}">${item}</a></c:when>
+  <c:when test="${fn:startsWith(item, 'http://')}">
+    <c:choose>
+      <c:when test="${!empty label}">
+        <a href="#${fn:replace(item, '/', '.')}">${label}</a>
+      </c:when>
+      <c:otherwise>
+        <a href="${item}">${item}</a>
+      </c:otherwise>
+    </c:choose>
+  </c:when>
   <c:otherwise>${item}</c:otherwise>
 </c:choose>
