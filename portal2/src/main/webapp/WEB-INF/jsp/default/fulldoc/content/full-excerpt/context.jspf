@@ -23,53 +23,58 @@ div.concept ul li p {marging: 0}
         <li>
           <a href="${concept.about}">
             <c:forEach items="${concept.labels}" var="item" varStatus="t">
-              <c:if test="${!t.first}">, </c:if>
-              ${item}
+              ${item}<c:if test="${!t.last}">, </c:if>
             </c:forEach>
           </a>
           <c:if test="${!empty concept.notes}">
             <p>
               <c:forEach items="${concept.notes}" var="item" varStatus="t">
-                <c:if test="${!t.first}"><br/></c:if>
-                ${item}
+                ${item}<c:if test="${!t.last}"><br/></c:if>
               </c:forEach>
             </p>
           </c:if>
 
           <c:if test="${!empty concept.broader}">
             <p>
-              <c:choose>
-                <c:when test="${fn:length(concept.broader) == 1}"><spring:message code="context_concept_Broader_t" />:</c:when>
-                <c:otherwise><spring:message code="context_concept_Broaders_t" />:</c:otherwise>
-              </c:choose>
+              <c:set var="msg_key" value="context_concept_Broader_t" />
+              <c:if test="${fn:length(concept.broader) > 1}">
+                <c:set var="msg_key" value="context_concept_Broaders_t" />
+              </c:if>
+              <spring:message code="${msg_key}" />: 
+              <europeana:optionalList list="${concept.broader}" />
+            </p>
+          </c:if>
 
-              <c:forEach items="${concept.broader}" var="term" varStatus="pstatus">
-                <c:if test="${!pstatus.last}">, </c:if>
-                <c:choose>
-                  <c:when test="${fn:startsWith(term, 'http://')}">
-                    <a href="${term}">${term}</a>
-                  </c:when>
-                  <c:otherwise>${term}</c:otherwise>
-                </c:choose>
-              </c:forEach>
+          <c:if test="${!empty concept.narrower}">
+            <p>
+              <c:set var="msg_key" value="context_concept_Narrower_t" />
+              <c:if test="${fn:length(concept.narrower) > 1}">
+                <c:set var="msg_key" value="context_concept_Narrowers_t" />
+              </c:if>
+              <spring:message code="${msg_key}" />: 
+              <europeana:optionalList list="${concept.narrower}" />
+            </p>
+          </c:if>
+
+          <c:if test="${!empty concept.related}">
+            <p>
+              <c:set var="msg_key" value="context_concept_Related_t" />
+              <c:if test="${fn:length(concept.related) > 1}">
+                <c:set var="msg_key" value="context_concept_Relateds_t" />
+              </c:if>
+              <spring:message code="${msg_key}" />: 
+              <europeana:optionalList list="${concept.related}" />
             </p>
           </c:if>
 
           <c:if test="${!empty concept.closeMatch}">
             <p>
-              <c:choose>
-                <c:when test="${fn:length(concept.closeMatch) == 1}">Close match:</c:when>
-                <c:otherwise>Close matches:</c:otherwise>
-              </c:choose>
-              <c:forEach items="${concept.closeMatch}" var="match" varStatus="pstatus">
-                <c:if test="${!pstatus.last}">, </c:if>
-                <c:choose>
-                  <c:when test="${fn:startsWith(match, 'http://')}">
-                    <a href="${match}">${match}</a>
-                  </c:when>
-                  <c:otherwise>${match}</c:otherwise>
-                </c:choose>
-              </c:forEach>
+              <c:set var="msg_key" value="context_concept_closeMatch_t" />
+              <c:if test="${fn:length(concept.closeMatch) > 1}">
+                <c:set var="msg_key" value="context_concept_closeMatches_t" />
+              </c:if>
+              <spring:message code="${msg_key}" />: 
+              <europeana:optionalList list="${concept.closeMatch}" />
             </p>
           </c:if>
         </li>
@@ -103,11 +108,11 @@ div.concept ul li p {marging: 0}
               <c:set var="location" value="latitude: ${place.latitude}" />
             </c:if>
             <c:if test="${!empty place.longitude}">
-              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;</c:set></c:if>
+              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;&nbsp;</c:set></c:if>
               <c:set var="location">${location}longitude: ${place.longitude}</c:set>
             </c:if>
             <c:if test="${!empty place.altitude}">
-              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;</c:set></c:if>
+              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;&nbsp;</c:set></c:if>
               <c:set var="location">${location}altitude: ${place.altitude}</c:set>
             </c:if>
             <c:if test="${location != ''}"><p>${location}</p></c:if>
@@ -115,28 +120,27 @@ div.concept ul li p {marging: 0}
 
           <c:if test="${!empty place.dcTermsHasPartList}">
             <p>
-            <c:forEach items="${place.dcTermsHasPartList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              <c:set var="msg_key" value="context_place_dcTermsHasPart_t" />
+              <c:if test="${fn:length(place.dcTermsHasPartList) > 1}">
+                <c:set var="msg_key" value="context_place_dcTermsHasParts_t" />
+              </c:if>
+              <spring:message code="${msg_key}" />: 
+
+              <c:forEach items="${place.dcTermsHasPartList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </p>
           </c:if>
 
           <c:if test="${!empty place.isPartOfList}">
             <p>
-            <c:forEach items="${place.isPartOfList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              <spring:message code="context_place_isPartOf_t" />: 
+              <c:forEach items="${place.isPartOfList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </p>
           </c:if>
 
           <c:if test="${!empty place.owlSameAs}">
             <p>
-              Same as:
-              <c:forEach items="${place.owlSameAs}" var="match" varStatus="pstatus">
-                <c:if test="${!pstatus.last}">, </c:if>
-                <c:choose>
-                  <c:when test="${fn:startsWith(match, 'http://')}">
-                    <a href="${match}">${match}</a>
-                  </c:when>
-                  <c:otherwise>${match}</c:otherwise>
-                </c:choose>
-              </c:forEach>
+              <spring:message code="context_place_owlSameAs_t" />: 
+              <europeana:optionalList list="${place.owlSameAs}" />
             </p>
           </c:if>
         </li>
