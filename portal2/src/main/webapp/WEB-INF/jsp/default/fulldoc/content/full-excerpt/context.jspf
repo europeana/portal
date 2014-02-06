@@ -22,15 +22,15 @@ div.concept ul li p {margin: 0; padding: 0}
       <c:if test="${!empty concept.labels}">
         <li>
           <p>
-            <a href="${concept.about}" id="${fn:replace(concept.about, '/', '.')}">
+            <c:url var="searchUrl" value="/search.html">
+              <c:param name="query">edm_concept:"${concept.about}"</c:param>
+            </c:url>
+            <a href="${searchUrl}" id="${fn:replace(concept.about, '/', '.')}">
               <c:forEach items="${concept.labels}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
               </c:forEach>
             </a>
-            <c:url var="searchUrl" value="/search.html">
-              <c:param name="query">edm_concept:"${concept.about}"</c:param>
-            </c:url>
-            <a href="${searchUrl}">[&rarr;]</a>
+            <a href="${concept.about}" target="blank">[&rarr;]</a>
           </p>
           <c:if test="${!empty concept.notes}">
             <p>
@@ -156,13 +156,13 @@ div.concept ul li p {margin: 0; padding: 0}
       <c:if test="${!empty place.labels}">
         <li>
           <p>
-            <a href="${place.about}">
-              <c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
-            </a>
             <c:url var="searchUrl" value="/search.html">
               <c:param name="query">edm_place:"${place.about}"</c:param>
             </c:url>
-            <a href="${searchUrl}">[&rarr;]</a>
+            <a href="${searchUrl}" id="${fn:replace(place.about, '/', '.')}">
+              <c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+            </a>
+            <a href="${place.about}" target="blank">[&rarr;]</a>
           </p>
 
           <c:if test="${!empty place.notes}">
@@ -222,7 +222,7 @@ div.concept ul li p {margin: 0; padding: 0}
 </div>
 </c:if>
 
-<%-- CONCEPT --%>
+<%-- TIMESTAMP --%>
 <c:if test="${!empty model.document.timespans}">
 <div class="concept">
   <h4><spring:message code="enrichment_category_what_t" /></h4>
@@ -231,15 +231,15 @@ div.concept ul li p {margin: 0; padding: 0}
       <c:if test="${!empty timespan.labels}">
         <li>
           <p>
-            <a href="${timespan.about}" id="${fn:replace(timespan.about, '/', '.')}">
+            <c:url var="searchUrl" value="/search.html">
+              <c:param name="query">edm_timespan:"${timespan.about}"</c:param>
+            </c:url>
+            <a href="${searchUrl}" id="${fn:replace(timespan.about, '/', '.')}">
               <c:forEach items="${timespan.labels}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
               </c:forEach>
             </a>
-            <c:url var="searchUrl" value="/search.html">
-              <c:param name="query">edm_timespan:"${timespan.about}"</c:param>
-            </c:url>
-            <a href="${searchUrl}">[&rarr;]</a>
+            <a href="${timespan.about}" target="blank">[&rarr;]</a>
           </p>
           <c:if test="${!empty timespan.notes}">
             <p>
