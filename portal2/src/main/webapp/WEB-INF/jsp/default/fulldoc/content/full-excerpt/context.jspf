@@ -23,7 +23,7 @@ div.concept ul li p {margin: 0; padding: 0}
         <li>
           <p>
             <c:url var="searchUrl" value="/search.html">
-              <c:param name="query">edm_concept:"${concept.about}"</c:param>
+              <c:param name="query">skos_concept:"${concept.about}"</c:param>
             </c:url>
             <a href="${searchUrl}" id="${fn:replace(concept.about, '/', '.')}">
               <c:forEach items="${concept.labels}" var="item" varStatus="t">
@@ -225,7 +225,7 @@ div.concept ul li p {margin: 0; padding: 0}
 <%-- TIMESTAMP --%>
 <c:if test="${!empty model.document.timespans}">
 <div class="concept">
-  <h4><spring:message code="enrichment_category_what_t" /></h4>
+  <h4><spring:message code="enrichment_category_when_t" /></h4>
   <ul type="square">
     <c:forEach items="${model.document.decoratedTimespans}" var="timespan" varStatus="fieldStatus">
       <c:if test="${!empty timespan.labels}">
