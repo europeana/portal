@@ -259,7 +259,7 @@ eu.europeana.myeuropeana = {
 			success : function() {
 				var html =
 					'<span id="save-tag-feedback">' +
-						eu.europeana.vars.msg.saved_tag +
+						eu.europeana.vars.msg.saved_apikey +
 					'</span>';
 				eu.europeana.ajax.methods.addFeedbackContent( html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
@@ -269,7 +269,7 @@ eu.europeana.myeuropeana = {
 			failure : function() {
 				var html =
 					'<span id="save-tag-feedback" class="error">' +
-						'eu.europeana.vars.msg.save_tag_failed' +
+						eu.europeana.vars.msg.save_apikey_failed +
 					'</span>';
 				eu.europeana.ajax.methods.addFeedbackContent( html );
 				eu.europeana.ajax.methods.showFeedbackContainer();

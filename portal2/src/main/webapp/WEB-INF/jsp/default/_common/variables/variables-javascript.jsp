@@ -44,6 +44,8 @@
 <c:set var="see_less"><spring:message code="SeeLess_t" /></c:set>
 <c:set var="see_more"><spring:message code="SeeMore_t" /></c:set>
 <c:set var="select_language"><spring:message code="SelectLanguage_t" /></c:set>
+<c:set var="save_apikey"><spring:message code="myeuropeana_appName_saved_t" /></c:set>
+<c:set var="save_apikey_failed"><spring:message code="myeuropeana_appName_save_failed_t" /></c:set>
 <c:set var="startFrom" value="" />
 <c:if test="${!empty RequestParameters.startFrom}">
 	<c:set var="startFrom" value="${RequestParameters.startFrom}" />
@@ -213,6 +215,8 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.msg.no_saved_items = '${no_saved_items}';
 				eu.europeana.vars.msg.saved_tag_removed = '${saved_tag_removed}';
 				eu.europeana.vars.msg.no_saved_tags = '${no_saved_tags}';
+				eu.europeana.vars.msg.saved_apikey = '${save_apikey}';
+				eu.europeana.vars.msg.save_apikey_failed = '${save_apikey_failed}';
 			</c:when>
 			<c:otherwise>
 				eu.europeana.vars.user = false;

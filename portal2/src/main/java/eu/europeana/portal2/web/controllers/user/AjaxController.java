@@ -113,6 +113,7 @@ public class AjaxController {
 			String key = URLDecoder.decode(getStringParameter("apikey", FieldSize.TAG, request), "utf-8");
 			String appName = URLDecoder.decode(getStringParameter("appName", FieldSize.TAG, request), "utf-8");
 			apiKeyService.updateApplicationName(user.getId(), key, appName);
+			break;
 		default:
 			throw new IllegalArgumentException("Unhandled ajax action: " + className);
 		}
