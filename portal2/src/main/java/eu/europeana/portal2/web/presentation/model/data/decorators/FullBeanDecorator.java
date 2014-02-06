@@ -59,6 +59,7 @@ public class FullBeanDecorator implements FullBean {
 	private String edmLanguage;
 	List<ConceptDecorator> concepts;
 	List<PlaceDecorator> places;
+	List<TimespanDecorator> timespans;
 
 	public FullBeanDecorator(FullBean fulldoc) {
 		this.fulldoc = fulldoc;
@@ -329,6 +330,22 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public List<? extends Timespan> getTimespans() {
 		return fulldoc.getTimespans();
+	}
+
+	public List<? extends Timespan> getDecoratedTimespans() {
+		if (timespans == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			timespans = new ArrayList<TimespanDecorator>();
+			for (Timespan timespan : fulldoc.getTimespans()) {
+				TimespanDecorator decorator = new TimespanDecorator(timespan, userLanguage, edmLanguage);
+				timespans.add(decorator);
+				ids.put(timespan.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+			}
+			for (TimespanDecorator timespan : timespans) {
+				timespan.makeLinks(ids);
+			}
+		}
+		return timespans;
 	}
 
 	@Override
