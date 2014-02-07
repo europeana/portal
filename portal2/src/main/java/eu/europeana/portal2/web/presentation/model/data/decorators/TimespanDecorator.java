@@ -21,9 +21,17 @@ public class TimespanDecorator extends ContextualItemDecorator implements Timesp
 		return timespan.getBegin();
 	}
 
+	public List<String> getBeginLang() {
+		return getLanguageVersion(timespan.getBegin());
+	}
+
 	@Override
 	public Map<String, List<String>> getEnd() {
 		return timespan.getEnd();
+	}
+
+	public List<String> getEndLang() {
+		return getLanguageVersion(timespan.getEnd());
 	}
 
 	@Override

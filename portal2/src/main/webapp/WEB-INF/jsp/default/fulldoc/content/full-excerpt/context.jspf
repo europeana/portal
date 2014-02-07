@@ -263,10 +263,17 @@ div.concept ul li p {margin: 0; padding: 0}
             </p>
           </c:if>
 
-          <c:if test="${!empty place.isPartOfLang}">
+          <c:if test="${!empty timespan.beginLang}">
             <p>
-              <spring:message code="context_place_isPartOf_t" />: 
-              <c:forEach items="${place.isPartOfList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              <spring:message code="context_timespan_begin_t" />: 
+              <c:forEach items="${timespan.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+            </p>
+          </c:if>
+
+          <c:if test="${!empty timespan.endLang}">
+            <p>
+              <spring:message code="context_timespan_end_t" />: 
+              <c:forEach items="${timespan.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </p>
           </c:if>
 
