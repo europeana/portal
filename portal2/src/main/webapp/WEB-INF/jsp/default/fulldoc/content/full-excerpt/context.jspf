@@ -31,10 +31,15 @@ div.concept ul li p {margin: 0; padding: 0}
               </c:forEach>
             </a>
             <a href="${concept.about}" target="blank">[&rarr;]</a>
+            <c:if test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
+              <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">
+                ${item}<c:if test="${!t.last}">, </c:if>
+              </c:forEach>
+            </c:if>
           </p>
-          <c:if test="${!empty concept.notes}">
+          <c:if test="${!empty concept.noteLang}">
             <p>
-              <c:forEach items="${concept.notes}" var="item" varStatus="t">
+              <c:forEach items="${concept.noteLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}"><br/></c:if>
               </c:forEach>
             </p>
@@ -163,11 +168,16 @@ div.concept ul li p {margin: 0; padding: 0}
               <c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </a>
             <a href="${place.about}" target="blank">[&rarr;]</a>
+            <c:if test="${!empty place.prefLabelLang && !empty place.altLabelLang}">
+              <c:forEach items="${place.altLabelLang}" var="item" varStatus="t">
+                ${item}<c:if test="${!t.last}">, </c:if>
+              </c:forEach>
+            </c:if>
           </p>
 
-          <c:if test="${!empty place.notes}">
+          <c:if test="${!empty place.noteLang}">
             <p>
-              <c:forEach items="${place.notes}" var="item" varStatus="t">
+              <c:forEach items="${place.noteLang}" var="item" varStatus="t">
                 <c:if test="${!t.first}"><br/></c:if>
                 ${item}
               </c:forEach>
@@ -190,22 +200,22 @@ div.concept ul li p {margin: 0; padding: 0}
             <c:if test="${location != ''}"><p>${location}</p></c:if>
           </c:if>
 
-          <c:if test="${!empty place.dcTermsHasPartList}">
+          <c:if test="${!empty place.dcTermsHasPartLang}">
             <p>
               <c:set var="msg_key" value="context_place_dcTermsHasPart_t" />
-              <c:if test="${fn:length(place.dcTermsHasPartList) > 1}">
+              <c:if test="${fn:length(place.dcTermsHasPartLang) > 1}">
                 <c:set var="msg_key" value="context_place_dcTermsHasParts_t" />
               </c:if>
               <spring:message code="${msg_key}" />: 
 
-              <c:forEach items="${place.dcTermsHasPartList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              <c:forEach items="${place.dcTermsHasPartLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </p>
           </c:if>
 
-          <c:if test="${!empty place.isPartOfList}">
+          <c:if test="${!empty place.isPartOfLang}">
             <p>
               <spring:message code="context_place_isPartOf_t" />: 
-              <c:forEach items="${place.isPartOfList}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              <c:forEach items="${place.isPartOfLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
             </p>
           </c:if>
 
@@ -240,10 +250,25 @@ div.concept ul li p {margin: 0; padding: 0}
               </c:forEach>
             </a>
             <a href="${timespan.about}" target="blank">[&rarr;]</a>
+            <c:if test="${!empty timespan.prefLabelLang && !empty timespan.altLabelLang}">
+              <c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">
+                ${item}<c:if test="${!t.last}">, </c:if>
+              </c:forEach>
+            </c:if>
           </p>
-          <c:if test="${!empty timespan.notes}">
+
+          <c:if test="${!empty place.noteLang}">
             <p>
-              <c:forEach items="${timespan.notes}" var="item" varStatus="t">
+              <c:forEach items="${place.noteLang}" var="item" varStatus="t">
+                <c:if test="${!t.first}"><br/></c:if>
+                ${item}
+              </c:forEach>
+            </p>
+          </c:if>
+
+          <c:if test="${!empty timespan.noteLang}">
+            <p>
+              <c:forEach items="${timespan.noteLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}"><br/></c:if>
               </c:forEach>
             </p>
@@ -251,134 +276,28 @@ div.concept ul li p {margin: 0; padding: 0}
 
           <c:if test="${!empty timespan.isPartOfLinks}">
             <p>
-              <spring:message code="context_place_isPartOf_t" />: 
-              <%--
-              <c:set var="msg_key" value="context_concept_Broader_t" />
-              <c:if test="${fn:length(concept.broaderLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_Broaders_t" />
-              </c:if>
-              <spring:message code="${msg_key}" />:
-               --%> 
+              <spring:message code="context_isPartOf_t" />: 
               <europeana:optionalMapList map="${timespan.isPartOfLinks}" />
             </p>
           </c:if>
 
-          <c:if test="${!empty timespan.beginLang}">
+          <c:if test="${!empty timespan.beginLang || !empty timespan.endLang}">
             <p>
-              <spring:message code="context_timespan_begin_t" />: 
-              <c:forEach items="${timespan.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
-            </p>
-          </c:if>
-
-          <c:if test="${!empty timespan.endLang}">
-            <p>
-              <spring:message code="context_timespan_end_t" />: 
-              <c:forEach items="${timespan.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
-            </p>
-          </c:if>
-
-<%--
-          <c:if test="${!empty concept.notationLang}">
-            <p>
-              <c:set var="msg_key" value="context_concept_Notation_t" />
-              <c:if test="${fn:length(concept.broaderLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_Notations_t" />
+              <c:if test="${!empty timespan.beginLang}">
+                <spring:message code="context_timespan_begin_t" />: 
+                <c:forEach items="${timespan.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
               </c:if>
-              <spring:message code="${msg_key}" />: 
-              <c:forEach items="${concept.notationLang}" var="item" varStatus="t">
-                ${item}<c:if test="${!t.last}"><br/></c:if>
-              </c:forEach>
-            </p>
-          </c:if>
 
-          <c:if test="${!empty concept.broaderLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_Broader_t" />
-              <c:if test="${fn:length(concept.broaderLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_Broaders_t" />
+              <c:if test="${!empty timespan.beginLang && !empty timespan.endLang}">
+                &mdash;
               </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.broaderLinks}" />
-            </p>
-          </c:if>
 
-          <c:if test="${!empty concept.narrowerLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_Narrower_t" />
-              <c:if test="${fn:length(concept.narrowerLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_Narrowers_t" />
+              <c:if test="${!empty timespan.endLang}">
+                <spring:message code="context_timespan_end_t" />: 
+                <c:forEach items="${timespan.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
               </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.narrowerLinks}" />
             </p>
           </c:if>
-
-          <c:if test="${!empty concept.relatedLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_Related_t" />
-              <c:if test="${fn:length(concept.relatedLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_Relateds_t" />
-              </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.relatedLinks}" />
-            </p>
-          </c:if>
-
-          <c:if test="${!empty concept.broadMatchLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_broadMatch_t" />
-              <c:if test="${fn:length(concept.broadMatchLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_broadMatches_t" />
-              </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.broadMatchLinks}" />
-            </p>
-          </c:if>
-
-          <c:if test="${!empty concept.narrowMatchLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_narrowMatch_t" />
-              <c:if test="${fn:length(concept.narrowMatchLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_narrowMatches_t" />
-              </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.narrowMatchLinks}" />
-            </p>
-          </c:if>
-
-          <c:if test="${!empty concept.relatedMatchLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_relatedMatch_t" />
-              <c:if test="${fn:length(concept.relatedMatchLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_relatedMatches_t" />
-              </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.relatedMatchLinks}" />
-            </p>
-          </c:if>
-
-          <c:if test="${!empty concept.exactMatchLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_exactMatch_t" />
-              <c:if test="${fn:length(concept.exactMatchLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_exactMatches_t" />
-              </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.exactMatchLinks}" />
-            </p>
-          </c:if>
-
-          <c:if test="${!empty concept.closeMatchLinks}">
-            <p>
-              <c:set var="msg_key" value="context_concept_closeMatch_t" />
-              <c:if test="${fn:length(concept.closeMatchLinks) > 1}">
-                <c:set var="msg_key" value="context_concept_closeMatches_t" />
-              </c:if>
-              <spring:message code="${msg_key}" />: 
-              <europeana:optionalMapList map="${concept.closeMatchLinks}" />
-            </p>
-          </c:if>
- --%>
         </li>
       </c:if>
      </c:forEach>

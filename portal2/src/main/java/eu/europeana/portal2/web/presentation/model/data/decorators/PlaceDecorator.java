@@ -19,6 +19,19 @@ public class PlaceDecorator extends ContextualItemDecorator implements Place {
 		return place.getIsPartOf();
 	}
 
+	public List<String> getIsPartOfLang() {
+		return getLanguageVersion(place.getIsPartOf());
+	}
+
+	@Override
+	public Map<String, List<String>> getDcTermsHasPart() {
+		return place.getDcTermsHasPart();
+	}
+
+	public List<String> getDcTermsHasPartLang() {
+		return getLanguageVersion(place.getDcTermsHasPart());
+	}
+
 	@Override
 	public Float getLatitude() {
 		return place.getLatitude();
@@ -40,23 +53,11 @@ public class PlaceDecorator extends ContextualItemDecorator implements Place {
 	}
 
 	@Override
-	public Map<String, List<String>> getDcTermsHasPart() {
-		return place.getDcTermsHasPart();
-	}
-
-	@Override
 	public String[] getOwlSameAs() {
 		return place.getOwlSameAs();
 	}
 
-	public List<String> getDcTermsHasPartList() {
-		return getLanguageVersion(place.getDcTermsHasPart());
-	}
-
-	public List<String> getIsPartOfList() {
-		return getLanguageVersion(place.getIsPartOf());
-	}
-
+	///////////// Setters
 	@Override
 	public void setIsPartOf(Map<String, List<String>> isPartOf) {}
 
@@ -77,5 +78,4 @@ public class PlaceDecorator extends ContextualItemDecorator implements Place {
 
 	@Override
 	public void setOwlSameAs(String[] owlSameAs) {}
-
 }
