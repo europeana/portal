@@ -26,9 +26,9 @@ div.concept ul li p {margin: 0; padding: 0}
               <c:param name="query">skos_concept:"${concept.about}"</c:param>
             </c:url>
             <a href="${searchUrl}" id="${fn:replace(concept.about, '/', '.')}">
-              <c:forEach items="${concept.labels}" var="item" varStatus="t">
+              (<c:forEach items="${concept.labels}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
-              </c:forEach>
+              </c:forEach>)
             </a>
             <a href="${concept.about}" target="blank">[&rarr;]</a>
             <c:if test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
@@ -169,9 +169,9 @@ div.concept ul li p {margin: 0; padding: 0}
             </a>
             <a href="${place.about}" target="blank">[&rarr;]</a>
             <c:if test="${!empty place.prefLabelLang && !empty place.altLabelLang}">
-              <c:forEach items="${place.altLabelLang}" var="item" varStatus="t">
+              (<c:forEach items="${place.altLabelLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
-              </c:forEach>
+              </c:forEach>)
             </c:if>
           </p>
 
@@ -251,9 +251,9 @@ div.concept ul li p {margin: 0; padding: 0}
             </a>
             <a href="${timespan.about}" target="blank">[&rarr;]</a>
             <c:if test="${!empty timespan.prefLabelLang && !empty timespan.altLabelLang}">
-              <c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">
+              (<c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
-              </c:forEach>
+              </c:forEach>)
             </c:if>
           </p>
 
