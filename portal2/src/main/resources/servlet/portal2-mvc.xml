@@ -21,7 +21,7 @@
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<property name="defaultLocale" value="en" />
 		<property name="cookieName" value="portalLanguage"/>
-    	<property name="cookieMaxAge" value="100000">
+    	<property name="cookieMaxAge" value="100000"/>
 	</bean>
 
 	<mvc:default-servlet-handler />
