@@ -59,6 +59,8 @@ public class FullBeanDecorator implements FullBean {
 	private String edmLanguage;
 	List<ConceptDecorator> concepts;
 	List<PlaceDecorator> places;
+	List<TimespanDecorator> timespans;
+	List<AgentDecorator> agents;
 
 	public FullBeanDecorator(FullBean fulldoc) {
 		this.fulldoc = fulldoc;
@@ -321,6 +323,22 @@ public class FullBeanDecorator implements FullBean {
 		return fulldoc.getAgents();
 	}
 
+	public List<? extends Agent> getDecoratedAgents() {
+		if (agents == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			agents = new ArrayList<AgentDecorator>();
+			for (Agent agent : fulldoc.getAgents()) {
+				AgentDecorator decorator = new AgentDecorator(agent, userLanguage, edmLanguage);
+				agents.add(decorator);
+				ids.put(agent.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+			}
+			for (AgentDecorator agent : agents) {
+				agent.makeLinks(ids);
+			}
+		}
+		return agents;
+	}
+
 	@Override
 	public void setAgents(List<? extends Agent> agents) {
 		fulldoc.setAgents(agents);
@@ -329,6 +347,22 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public List<? extends Timespan> getTimespans() {
 		return fulldoc.getTimespans();
+	}
+
+	public List<? extends Timespan> getDecoratedTimespans() {
+		if (timespans == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			timespans = new ArrayList<TimespanDecorator>();
+			for (Timespan timespan : fulldoc.getTimespans()) {
+				TimespanDecorator decorator = new TimespanDecorator(timespan, userLanguage, edmLanguage);
+				timespans.add(decorator);
+				ids.put(timespan.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+			}
+			for (TimespanDecorator timespan : timespans) {
+				timespan.makeLinks(ids);
+			}
+		}
+		return timespans;
 	}
 
 	@Override

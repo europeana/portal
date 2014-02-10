@@ -34,9 +34,17 @@ public class ContextualItemDecorator implements ContextualClass {
 		return item.getPrefLabel();
 	}
 
+	public List<String> getPrefLabelLang() {
+		return getLanguageVersion(item.getPrefLabel());
+	}
+
 	@Override
 	public Map<String, List<String>> getAltLabel() {
 		return item.getAltLabel();
+	}
+
+	public List<String> getAltLabelLang() {
+		return getLanguageVersion(item.getAltLabel());
 	}
 
 	@Override
@@ -47,6 +55,10 @@ public class ContextualItemDecorator implements ContextualClass {
 	@Override
 	public Map<String, List<String>> getNote() {
 		return item.getNote();
+	}
+
+	public List<String> getNoteLang() {
+		return getLanguageVersion(item.getNote());
 	}
 
 	@Override
@@ -73,10 +85,6 @@ public class ContextualItemDecorator implements ContextualClass {
 			labels = getLanguageVersion(item.getAltLabel());
 		}
 		return labels;
-	}
-
-	public List<String> getNotes() {
-		return getLanguageVersion(item.getNote());
 	}
 
 	public List<String> getLanguageVersion(Map<String, List<String>> map) {
