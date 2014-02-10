@@ -977,7 +977,7 @@ eu.europeana.fulldoc = {
 				var section = getActiveSection();
 				section.find('.ajax-overlay').remove();				
 				section.removeClass('loading');	
-				
+				section.find('.galleria-thumbnails-container .galleria-image').first().find('img').focus();
 		    	section.find('.galleria-thumbnail').css('top', '0px');
 			};
 		
@@ -1016,9 +1016,9 @@ eu.europeana.fulldoc = {
 				var qty		= fnInView();
 				var query   = getQuery();
 				
-				loadData.tabs[index].expectedThumbCount = ((loadData.tabs[index].loaded + qty) -1)  > loadData.tabs[index].total ?  loadData.tabs[index].total -1 : ((loadData.tabs[index].loaded + qty) -1);
+				loadData.tabs[index].expectedThumbCount = ((loadData.tabs[index].loaded + qty) -1)  >= loadData.tabs[index].total ?  loadData.tabs[index].total -1 : ((loadData.tabs[index].loaded + qty) -1);
 
-				//console.log('set loadData.tabs[' + index + '].expectedThumbCount to ' + loadData.tabs[index].expectedThumbCount);
+				console.log('set loadData.tabs[' + index + '].expectedThumbCount to ' + loadData.tabs[index].expectedThumbCount + ', total is ' + loadData.tabs[index].total  + '    ');
 				
 				loadMltData(query, processResult, start, qty)
 				
@@ -1055,7 +1055,7 @@ eu.europeana.fulldoc = {
 								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 							}
 						);
-						
+												
 						$(window).euRsz(function(){
 							if(eu.europeana.vars.suppresResize){
 								return;
@@ -1075,15 +1075,7 @@ eu.europeana.fulldoc = {
 					this.bind("thumbnail", function(e) {
 					
 						var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
-						
-						
-						//console.log(
-						//	'thumbnail event (e.index=' + e.index + '),'
-						//	+ 'loadData.tabs[index].current= ' + loadData.tabs[index].current
-						//	+ ', expected full load?  = ' + loadData.tabs[index].expectedThumbCount
-						//);
-						
-						
+												
 						// we only execute on the last thumbnail....
 						if( e.index != loadData.tabs[index].expectedThumbCount){
 							return;
@@ -1110,13 +1102,36 @@ eu.europeana.fulldoc = {
 							);
 						}
 
+						// bind key events
+							
+						thisGallery.$( 'container' ).find('.galleria-thumbnails-container  .galleria-image'  )
+						.keypress(function(e){
+							if(e.keyCode == 39){
+								var right = thisGallery.$( 'container' ).find('.galleria-thumb-nav-right');
+								if(!right.hasClass('europeana-disabled')){
+									right.click();									
+								}
+							}
+							else if(e.keyCode == 37){
+								var left = thisGallery.$( 'container' ).find('.galleria-thumb-nav-left');
+								if(!left.hasClass('europeana-disabled')){
+									left.click();									
+								}
+							}
+					   	});
+						
 						//var dataSource = this._options.dataSource;
 
-						
+						thisGallery.$( 'container' ).find('.galleria-thumb-nav-left').attr('tabindex', 0);
+						thisGallery.$( 'container' ).find('.galleria-thumb-nav-right').attr('tabindex', 1);
+						thisGallery.$( 'container' ).find('.galleria-thumbnails-list').attr('tabindex', 2);
+
+
 						$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
 							$(ob).find('img').attr({
 								'alt'	:	loadData.tabs[index].carouselMltData[i].title,
-								'title'	: loadData.tabs[index].carouselMltData[i].title
+								'title'	: loadData.tabs[index].carouselMltData[i].title,
+								'tabindex' : i+3
 							});
 							
 						});
@@ -1129,7 +1144,11 @@ eu.europeana.fulldoc = {
 						
 						///////////////////////////////////////////////////////////////////////////////////////////
 					
-						// rebind right arrow
+						// rebind right arrow / extra handler for left arrow
+						$('#mlt .section.active .carousel').find('.galleria-thumb-nav-left').bind('click', function(e){
+							rightArrow.removeClass('europeana-disabled');							
+							rightArrow.removeClass('disabled');							
+						});
 						
 						$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').unbind('click').bind('click', function(e){
 			                e.preventDefault();
