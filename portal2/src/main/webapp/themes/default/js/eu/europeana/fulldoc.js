@@ -1172,6 +1172,8 @@ eu.europeana.fulldoc = {
 			                if( (current + inView) >= loadedCount){
 			                	//console.log('load more then navigate (tabIndex[' + index + '])');
 			                	loadMore(eu.europeana.fulldoc.mltTabs.getOpenTabIndex());
+
+			                	
 			                }
 			                else{
 			                	xCar.set(loadData.tabs[index].current);
@@ -1179,6 +1181,10 @@ eu.europeana.fulldoc = {
 								if(loadData.tabs[index].loaded < loadData.tabs[index].total){
 									//console.log('normal nav and show the arrow  (' + $('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').length + ')');
 									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').show();
+								}
+								else{
+									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').addClass('europeana-disabled');
+									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').css('display', 'none');
 								}
 				                
 			                }
@@ -1217,9 +1223,13 @@ eu.europeana.fulldoc = {
 						
 						
 						if((loadData.tabs[index].current + fnInView()) < loadData.tabs[index].total){
+							
+							if(rightArrow.hasClass('europeana-disabled') ){
+								alert('re-enable here, undoes the fix....');
+							}
 							rightArrow.show();
 							rightArrow.removeClass('disabled');
-							rightArrow.removeClass('europeana-disabled');							
+							rightArrow.removeClass('europeana-disabled');
 						}
 						else{
 							rightArrow.hide();
