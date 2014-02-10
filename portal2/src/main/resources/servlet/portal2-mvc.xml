@@ -18,9 +18,10 @@
 
 	<import resource="../corelib-definitions-context.xml" />
 
-	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<property name="defaultLocale" value="en" />
+		<property name="cookieName" value="portalLanguage"/>
+    	<property name="cookieMaxAge" value="100000">
 	</bean>
 
 	<mvc:default-servlet-handler />

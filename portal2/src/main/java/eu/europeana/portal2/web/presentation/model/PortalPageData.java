@@ -25,6 +25,10 @@ public abstract class PortalPageData extends PageData {
 	private boolean minify = false;
 
 	private Locale locale;
+	
+	private Locale browserLocale;
+	
+	private String localeMessage;
 
 	private String portalUrl;
 	
@@ -117,5 +121,21 @@ public abstract class PortalPageData extends PageData {
 
 	public void setBlogFeedUrl(String blogFeedUrl) {
 		this.blogFeedUrl = blogFeedUrl;
+	}
+
+	public Locale getBrowserLocale() {
+		return browserLocale;
+	}
+
+	public void setBrowserLocale(Locale browserLocale) {
+		this.browserLocale = browserLocale;
+	}
+
+	public String getLocaleMessage() {
+		return localeMessage;
+	}
+
+	public void setLocaleMessage(String localeMessage) {
+		this.localeMessage = localeMessage;
 	}
 }
