@@ -1,8 +1,10 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
 import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
@@ -101,6 +103,16 @@ public class ContextualItemDecorator implements ContextualClass {
 		} else {
 			list = map.get(map.keySet().iterator().next());
 		}
-		return list;
+		return clearList(list);
+	}
+
+	public List<String> clearList(List<String> original) {
+		List<String> cleared = new ArrayList<String>();
+		for (String item : original) {
+			if (StringUtils.isNotBlank(item)) {
+				cleared.add(item);
+			}
+		}
+		return cleared;
 	}
 }

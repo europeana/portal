@@ -257,15 +257,6 @@ div.concept ul li p {margin: 0; padding: 0}
             </c:if>
           </p>
 
-          <c:if test="${!empty place.noteLang}">
-            <p>
-              <c:forEach items="${place.noteLang}" var="item" varStatus="t">
-                <c:if test="${!t.first}"><br/></c:if>
-                ${item}
-              </c:forEach>
-            </p>
-          </c:if>
-
           <c:if test="${!empty timespan.noteLang}">
             <p>
               <c:forEach items="${timespan.noteLang}" var="item" varStatus="t">
@@ -301,6 +292,96 @@ div.concept ul li p {margin: 0; padding: 0}
         </li>
       </c:if>
      </c:forEach>
+  </ul>
+</div>
+</c:if>
+
+<%-- AGENT --%>
+decoratedAgents: ${fn:length(model.document.decoratedAgents)}
+agents: ${fn:length(model.document.agents)}
+<c:if test="${!empty model.document.agents}">
+<div class="concept">
+  <h4><spring:message code="enrichment_category_who_t" /></h4>
+  <ul type="square">
+    <c:forEach items="${model.document.decoratedAgents}" var="agent" varStatus="fieldStatus">
+      <c:if test="${!empty agent.labels}">
+        <li>
+          <p>
+            <c:url var="searchUrl" value="/search.html">
+              <c:param name="query">edm_agent:"${agent.about}"</c:param>
+            </c:url>
+            <a href="${searchUrl}" id="${fn:replace(agent.about, '/', '.')}">
+              <c:forEach items="${agent.labels}" var="item" varStatus="t">
+                ${item}<c:if test="${!t.last}">, </c:if>
+              </c:forEach>
+            </a>
+            <a href="${agent.about}" target="blank">[&rarr;]</a>
+            <c:if test="${!empty agent.prefLabelLang && !empty agent.altLabelLang}">
+              (<c:forEach items="${agent.altLabelLang}" var="item" varStatus="t">
+                ${item}<c:if test="${!t.last}">; </c:if>
+              </c:forEach>)
+            </c:if>
+          </p>
+
+          <c:if test="${!empty agent.beginLang || !empty agent.endLang}">
+            <p>
+              <c:if test="${!empty agent.beginLang}">
+                <spring:message code="context_agent_begin_t" />: 
+                <c:forEach items="${agent.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              </c:if>
+
+              <c:if test="${!empty agent.beginLang && !empty agent.endLang}">
+                &mdash;
+              </c:if>
+
+              <c:if test="${!empty agent.endLang}">
+                <spring:message code="context_agent_end_t" />: 
+                <c:forEach items="${agent.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              </c:if>
+            </p>
+          </c:if>
+
+          <c:if test="${!empty agent.noteLang}">
+            <p>
+              <c:forEach items="${agent.noteLang}" var="item" varStatus="t">
+                <c:if test="${!t.first}"><br/></c:if>
+                ${item}
+              </c:forEach>
+            </p>
+          </c:if>
+
+          <c:if test="${!empty agent.edmIsRelatedToLang}">
+            <p>
+              <c:set var="msg_key" value="context_concept_Related_t" />
+              <c:if test="${fn:length(concept.edmIsRelatedToLang) > 1}">
+                <c:set var="msg_key" value="context_concept_Relateds_t" />
+              </c:if>
+              <spring:message code="${msg_key}" />: 
+              <c:forEach items="${agent.edmIsRelatedToLang}" var="label" varStatus="t">
+                <c:if test="${!empty label}">
+	              <c:if test="${!t.first}">, </c:if>${label}
+	            </c:if>
+	          </c:forEach>
+              
+              <%--
+              <europeana:optionalMapList map="${concept.relatedLinks}" />
+               --%>
+            </p>
+          </c:if>
+
+<%-- 
+
+          <c:if test="${!empty timespan.isPartOfLinks}">
+            <p>
+              <spring:message code="context_isPartOf_t" />: 
+              <europeana:optionalMapList map="${timespan.isPartOfLinks}" />
+            </p>
+          </c:if>
+
+--%>
+        </li>
+      </c:if>
+    </c:forEach>
   </ul>
 </div>
 </c:if>

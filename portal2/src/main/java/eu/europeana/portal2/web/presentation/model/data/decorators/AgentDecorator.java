@@ -19,9 +19,17 @@ public class AgentDecorator extends ContextualItemDecorator implements Agent {
 		return agent.getBegin();
 	}
 
+	public List<String> getBeginLang() {
+		return getLanguageVersion(agent.getBegin());
+	}
+
 	@Override
 	public Map<String, List<String>> getEnd() {
 		return agent.getEnd();
+	}
+
+	public List<String> getEndLang() {
+		return getLanguageVersion(agent.getEnd());
 	}
 
 	@Override
