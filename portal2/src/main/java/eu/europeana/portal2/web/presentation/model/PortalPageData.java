@@ -28,7 +28,7 @@ public abstract class PortalPageData extends PageData {
 	
 	private Locale browserLocale;
 	
-	private String localeMessage;
+	private String[] localeMessages;
 
 	private String portalUrl;
 	
@@ -131,11 +131,11 @@ public abstract class PortalPageData extends PageData {
 		this.browserLocale = browserLocale;
 	}
 
-	public String getLocaleMessage() {
-		return localeMessage;
+	public String[] getLocaleMessages() {
+		return localeMessages;
 	}
 
-	public void setLocaleMessage(String localeMessage) {
-		this.localeMessage = localeMessage;
+	public void setLocaleMessages(String[] localeMessage) {
+		this.localeMessages = localeMessage;
 	}
 }

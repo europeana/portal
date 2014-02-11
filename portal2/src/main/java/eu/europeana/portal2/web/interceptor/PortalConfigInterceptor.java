@@ -61,7 +61,11 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 					sb.append(messageSource.getMessage(languageLabel, null, browser)).append(", ");
 					sb.append(messageSource.getMessage("browser_language_preference2_t", null, browser)).append(" ");
 					sb.append(messageSource.getMessage(languageLabel, null, browser)).append("?");
-					model.setLocaleMessage(sb.toString());
+					String[] messages = new String[3];
+					messages[0] = sb.toString();
+					messages[1] = messageSource.getMessage("yes_t", null, browser);
+					messages[2] = messageSource.getMessage("no_t", null, browser);
+					model.setLocaleMessages(messages);
 				}
 			}
 		}
