@@ -61,7 +61,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 		String[] queryRefinements = query.getRefinements(false);
 		Map<String, RightsOption> qfRights = new HashMap<String, RightsOption>();
-		
+
 		for (LabelFrequency item : facetField.getFields()) {
 			if (isTemporarilyPreventYear0000(this.type, item.getLabel())) {
 				continue;
@@ -96,11 +96,14 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 						}
 
 						if (doAppend) {
-							if (qfField.equals(RIGHTS_FACET) && !qfValue.endsWith("*") && !qfValue.endsWith("\"")) {
-								qfValue = '"' + qfValue + '"';
+							if (qfField.equals(RIGHTS_FACET)) {
+								if (!qfValue.endsWith("*") && !qfValue.endsWith("\"")) {
+									qfValue = '"' + qfValue + '"';
+								}
+							} else {
+								qfValue = QueryUtil.createPhraseValue(qfField, qfValue);
 							}
-							url.append(FACET_PROMPT).append(qfField).append(':')
-								.append(QueryUtil.createPhraseValue(qfField, qfValue));
+							url.append(FACET_PROMPT).append(qfField).append(':').append(qfValue);
 						}
 					}
 				}
