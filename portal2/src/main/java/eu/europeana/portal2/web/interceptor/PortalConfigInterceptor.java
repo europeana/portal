@@ -49,15 +49,15 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			model.setPortalUrl(configuration.getPortalUrl());
 			model.setBlogFeedUrl(configuration.getBlogUrl());
 			// set locale message when required
+			Locale browser = request.getLocale();
 			if (!hasCookie(request, "portalLanguage") && 			
-					(request.getLocale() != null) && !locale.equals(request.getLocale())) {
-				Locale browser = request.getLocale();
+					(browser != null) && !StringUtils.equalsIgnoreCase(browser.getLanguage(), locale.getLanguage())) {
 				model.setBrowserLocale(browser);
 				String languageLabel = "language_" + browser.getLanguage() + "_t";
 				StringBuilder sb = new StringBuilder();
-				sb.append(messageSource.getMessage("browser_language_preference1_t", null, browser));
+				sb.append(messageSource.getMessage("browser_language_preference1_t", null, browser)).append(" ");
 				sb.append(messageSource.getMessage(languageLabel, null, browser)).append(", ");
-				sb.append(messageSource.getMessage("browser_language_preference2_t", null, browser));
+				sb.append(messageSource.getMessage("browser_language_preference2_t", null, browser)).append(" ");
 				sb.append(messageSource.getMessage(languageLabel, null, browser)).append("?");
 				model.setLocaleMessage(sb.toString());
 			}
@@ -65,9 +65,11 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 	}
 	
 	public boolean hasCookie(HttpServletRequest request, String cookiename) {
-		for (Cookie cookie: request.getCookies()) {
-			if (StringUtils.equalsIgnoreCase(cookiename, cookie.getName())) {
-				return true;
+		if ( (request != null) && (request.getCookies() != null)) {
+			for (Cookie cookie: request.getCookies()) {
+				if (StringUtils.equalsIgnoreCase(cookiename, cookie.getName())) {
+					return true;
+				}
 			}
 		}
 		return false;
