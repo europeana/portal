@@ -29,7 +29,7 @@
 .underline { text-decoration: underline; }
 .clear { clear: both; }
 .small { font-size: 0.7em; }
-	
+
 
 
 /* sidebar */
@@ -82,7 +82,7 @@
 .social-link.icon-google{
 	color:		#db4a39;
 }
- 
+
 .social-link-wrap a:focus .text{
 	text-decoration:	underline;
 }
@@ -96,7 +96,7 @@
 	color:			#333;
 	margin-left:	0.25em;
 }
-	
+
 /* used for social share icons in the footer */
 .stretch {
 	width:			100%;
@@ -122,10 +122,10 @@
 */
 
 .overlaid-content{
-	
+
 	background: rgb(255, 255, 255);
 	background: rgba(255, 255, 255, 0.9);
-	
+
 	height:				100%;
 	position:			fixed;
 	text-align:			center;
@@ -158,7 +158,7 @@
 .iframe-wrap iframe{
 	box-shadow:			0 0 90px 5px #000000;
 	border:				1px solid #666666;
-	
+
 	padding:			.5em 0 0 0;
 	background-color:	white;
 	height:			14em;
@@ -171,24 +171,24 @@
 	margin:			1em auto;
 	position:		relative;
 	width:			80%;
-	cursor:			pointer;	
+	cursor:			pointer;
 }
 
 
 @media only screen and ( min-width:48em ){
-	
+
 	#newsletter-trigger{
 		margin:			1em auto;
-		width:			auto;	
+		width:			auto;
 	}
-		
+
 }
 
 
 .iframe-wrap .close {
     background-image:	url("/portal/themes/default/images/icons/close-lightbox.png");
     position:			absolute;
-    
+
 	cursor:				pointer;
     height:				35px;
     width:				35px;
@@ -200,8 +200,8 @@
 
 /*
 	display:			inline-block;
-    
-  */  
+
+  */
 }
 
 .iframe-wrap #lightbox .close{
@@ -220,8 +220,8 @@
 }
 
 #newsletter-wrapper span{
-	margin-top:		1.5em;	
-	margin-bottom:	1em;	
+	margin-top:		1.5em;
+	margin-bottom:	1em;
 }
 
 #newsletter-wrapper span{
@@ -247,14 +247,14 @@
 .deans-button-1{
 	background-color:		#0048ff;
 	color:					white !important;
-	
+
 	color: #ffffff;
 	background: -moz-linear-gradient(
 		top,
 		#0048ff 0%,
 		#4c7ecf);
 	background: -webkit-gradient(
-		linear, left top, left bottom, 
+		linear, left top, left bottom,
 		from(#0048ff),
 		to(#4c7ecf));
 	-moz-box-shadow:
@@ -266,9 +266,9 @@
 	box-shadow:
 		3px 3px 13px rgba(51,51,51,0.5),
 		inset 0px 0px 0px rgba(255,255,255,0);
-	
+
 }
-	
+
 #e2ma_signup_submit_button,
 .europeana-button-1{
 	border:					0 !important;
@@ -283,7 +283,7 @@
 .deans-button-1:focus,
 .europeana-button-1:focus{
 	outline:			none !important;
-	text-decoration:	underline;	
+	text-decoration:	underline;
 }
 
 #id_email::-webkit-input-placeholder{
@@ -300,7 +300,7 @@
 
 
 #footer-links-all{
-	margin-top:	1em;	
+	margin-top:	1em;
 }
 
 .footer-links{
@@ -311,13 +311,13 @@
 
 #footer-links-all .four:nth-child(3) .footer-links{
 	margin-bottom:		0;
-} 
+}
 
 .footer-links li{
 	padding-right:	2em;
 	color:			white;
-	
-	
+
+
 	position:relative;
 }
 
@@ -332,7 +332,7 @@
 .footer-links.with-icons a{
 	margin-left:1.4em;/*space for logo*/
 }
-	
+
 .footer-bottom-links{
 	margin-top:		0;
 	border-top:		solid 1px #E4E4E4;
@@ -340,7 +340,7 @@
 	margin-bottom:	1em;
 	position:		relative;
 }
-	
+
 .footer-bottom-link{
 	display:		block;
 }
@@ -368,14 +368,14 @@
 .footer-funded-by{
 	color:		#333 !important;
 	right:		1em;
-	
-	
+
+
 	position:	static;
 	display:	block;
-	
+
 	width:		100%;
 	text-align:	right;
-	
+
 	font-size:	0.7em;
 }
 
@@ -383,33 +383,33 @@
 	background-color:	blue;
 	color:				yellow;
 	margin-left:		1em;
-	
+
 }
 
 
 
 @media only screen and ( min-width:48em ){
-	
+
 	#shareicons {
 		left: auto;
 		right: 10px;
-		margin-left: auto;		
+		margin-left: auto;
 	}
-	
+
 	.footer-bottom-link{
 		display:		inline;
 		margin-right:	1em;
 	}
-	
+
 	.footer-bottom-link:first-child{
 		margin-left:	1em;
 	}
-	
+
 	.footer-bottom-links{
 		margin-top:		1em;
 	}
-	
-	
+
+
 	.footer-funded-by{
 		right:		0;
 		bottom:		auto;
@@ -417,7 +417,7 @@
 		float:		right;
 		width:		auto;
 	}
-	
+
 	.footer-links{
 		margin-bottom:	1em;
 	}
@@ -425,30 +425,30 @@
 	.icon-euflag{
 		margin-right:		0;
 	}
-	
+
 
 	#newsletter-wrapper{
 		position:	relative;
 		left:		1em;
 		margin-top:	0;
-		
+
 	}
-	
+
 	#newsletter-wrapper span{
 		display:		inline;
 	}
-	
+
 	#newsletter-wrapper span,
 	#newsletter-trigger{
 		margin:			1em 0;
 		text-align:		left;
 	}
-} 
+}
 
 
 
 
-	
+
 #link-logo-1{
 	color:	#;
 }
@@ -468,7 +468,7 @@
 #link-logo-5{
 	color:	#;
 }
- 
+
 
 /*
 .footer h3,
@@ -477,7 +477,7 @@
 	color:			white;
 }
 */
-	
+
 .italic-heading{
 	font-weight:	normal;
 	font-style:		italic;
@@ -488,40 +488,40 @@
 
 
 @media only screen and ( min-width:48em ){
-	
+
 	#footer-links-all{
-		margin-top:	2em;	
+		margin-top:	2em;
 	}
-	
+
 	#social-links .social-link{
 		margin-bottom:	0;
 	}
-	
+
 	#social-links .social-link-wrap{
 		min-width:		50%;
 		float:			left;
 	}
-	
+
 	#social-links .social-link span.text{
 		display:		inline;
 	}
-	
+
 	#iframe-newsletter{
 		background-color:red !important;
 		margin-top:			0;
 	}
-	
+
 	#iframe-newsletter input{
 		width:				45%;
 		max-width:			45%;
-		
+
 		float:				right;
 		margin-top:			0.8em;
 		margin-bottom:		1em;
 
 		color:				#333;
 		border:				1px solid #a0a0a0;
-		font-size:			1.2em;		
+		font-size:			1.2em;
 
 	}
 	#iframe-newsletter input[type=text],
@@ -530,7 +530,7 @@
 		margin-top:			1em;
 		padding:			0.3em;
 	}
-	
+
 	#iframe-newsletter span{
 		display:	block;
 		clear:		both;
@@ -543,7 +543,7 @@
 @media only screen and ( min-width:48em )  and ( max-width:58em ){
 	#footer-links-all h3{
 		font-size:	1em;
-	}	
+	}
 }
 
 
@@ -555,7 +555,7 @@
 .error-border {
 	border: 1px dotted red !important;
 }
-	
+
 .ui-info { color: blue; }
 
 .black { color: #000; }
@@ -564,8 +564,23 @@
 
 /* search-results */
 
-	
-/* Fix for IE7 (hid text but overflow icons were still visible) */	
+
+/* Fix for IE7 (hid text but overflow icons were still visible) */
 #item-subject{
 	position:relative;
+}
+
+#browser-language-query {
+	background-color: #000;
+	color: #dfdfdf;
+	position: relative;
+	top: 0;
+	width: 100%;
+	padding: 1em;
+}
+
+#browser-language-query label {
+	font-size: 90%;
+	font-weight: bold;
+	font-style: italic;
 }

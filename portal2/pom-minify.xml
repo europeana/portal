@@ -19,7 +19,7 @@
 
 	<build>
 		<plugins>
-		
+
 			<plugin><!-- START MINIFY-MAVEN-PLUGIN -->
 				<groupId>com.samaxes.maven</groupId>
 				<artifactId>minify-maven-plugin</artifactId>
@@ -57,7 +57,7 @@
 
 
 					<!-- widget.css (as common.css but with absolute font-icon paths + search.css) -->
-					
+
 					<execution>
 						<id>minify-search-widget.css</id>
 						<phase>process-resources</phase>
@@ -86,7 +86,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 
 					<!-- separate file for newsletter -->
 					<execution>
@@ -137,7 +137,7 @@
 								<cssSourceInclude>eu-accordion-tabs.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
-								
+
 								<!-- cssSourceInclude>tabbed-navigation.css</cssSourceInclude  -->
 							</cssSourceIncludes>
 						</configuration>
@@ -563,7 +563,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-collapsible-widget.js</id>
 						<phase>process-resources</phase>
@@ -614,7 +614,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-<!-- 
+<!--
 					<execution>
 						<id>minify-emma.js</id>
 						<phase>process-resources</phase>
@@ -872,6 +872,23 @@
 					</execution>
 
 					<execution>
+						<id>minify-jquery.cookie.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/github/carhartl</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/github/carhartl</jsSourceDir>
+							<jsFinalFile>jquery.cookie.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>jquery.cookie.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-js.js</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -932,6 +949,23 @@
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
 								<jsSourceInclude>map.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-multilang.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>multilang.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>multilang.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
@@ -1006,7 +1040,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-eu-pagination.js</id>
 						<phase>process-resources</phase>
@@ -1023,7 +1057,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-										
+
 
 					<execution>
 						<id>minify-accordion-tabs.js</id>
@@ -1058,7 +1092,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 
 					<execution>
 						<id>minify-translation-services.js</id>
@@ -1161,10 +1195,10 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
-					
+
+
 					<!-- Search Widget js -->
-					
+
 					<execution>
 						<id>minify-search-widget.js</id>
 						<phase>process-resources</phase>
@@ -1172,7 +1206,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
 							<jsFinalFile>EuSearchWidget.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>							
+							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
 								<jsSourceInclude>EuSearchWidget.js</jsSourceInclude>
 							</jsSourceIncludes>
@@ -1182,8 +1216,8 @@
 						</goals>
 					</execution>
 
-					
-					
+
+
 					<!-- END INIDVIDUAL JS FILES -->
 				</executions>
 			</plugin>

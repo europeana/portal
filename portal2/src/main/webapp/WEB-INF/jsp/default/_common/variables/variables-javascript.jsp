@@ -101,6 +101,7 @@ js.console = js.empty_console;
 eu.europeana.vars.portal_name = '${model.portalName}';
 eu.europeana.vars.page_name = '${model.pageName}';
 eu.europeana.vars.branding = '/${branding}';
+eu.europeana.vars.browser_locale = '${model.browserLocale}';
 eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
 eu.europeana.vars.msg.search_error = '${search_error}';
@@ -122,7 +123,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			</c:otherwise>
 		</c:choose>
 	</c:when>
-	
+
 	<c:when test="${model.pageName == 'full-doc.html'}">
 		eu.europeana.vars.msg.translate_with = '${fn:escapeXml(translate_with)}';
 		eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
@@ -178,7 +179,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
 			eu.europeana.vars.msg.saved_item = '${saved_item}';
 			eu.europeana.vars.msg.save_item_failed = '${save_item_failed}';
-			eu.europeana.vars.msg.saved_tag = '${saved_tag}';	
+			eu.europeana.vars.msg.saved_tag = '${saved_tag}';
 			eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
 			eu.europeana.vars.item.uri = '${model.document.about}';
 		</c:if>
