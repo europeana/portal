@@ -20,7 +20,7 @@ europeana.properties
 
 portal2/src/main/webapp/themes/default/css/min/
 portal2/src/main/webapp/themes/default/js/com/addthis/min/
-portal2/src/main/webapp/themes/default/js/com/github/carhartl/min/
+portal2/src/main/webapp/themes/common/js/com/github/carhartl/min/
 portal2/src/main/webapp/themes/default/js/com/google/analytics/min/
 portal2/src/main/webapp/themes/default/js/com/google/translator/min/
 portal2/src/main/webapp/themes/default/js/com/microsoft/min/

@@ -875,8 +875,8 @@
 						<id>minify-jquery.cookie.js</id>
 						<phase>process-resources</phase>
 						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/github/carhartl</webappTargetDir>
-							<jsSourceDir>/themes/default/js/com/github/carhartl</jsSourceDir>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/common/js/com/github/carhartl</webappTargetDir>
+							<jsSourceDir>/themes/common/js/com/github/carhartl</jsSourceDir>
 							<jsFinalFile>jquery.cookie.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
