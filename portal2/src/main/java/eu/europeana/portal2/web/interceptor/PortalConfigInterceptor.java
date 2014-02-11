@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -52,19 +53,30 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			Locale browser = request.getLocale();
 			if (!hasCookie(request, "portalLanguage") && 			
 					(browser != null) && !StringUtils.equalsIgnoreCase(browser.getLanguage(), locale.getLanguage())) {
-				model.setBrowserLocale(browser);
 				String languageLabel = "language_" + browser.getLanguage() + "_t";
-				StringBuilder sb = new StringBuilder();
-				sb.append(messageSource.getMessage("browser_language_preference1_t", null, browser)).append(" ");
-				sb.append(messageSource.getMessage(languageLabel, null, browser)).append(", ");
-				sb.append(messageSource.getMessage("browser_language_preference2_t", null, browser)).append(" ");
-				sb.append(messageSource.getMessage(languageLabel, null, browser)).append("?");
-				model.setLocaleMessage(sb.toString());
+				if (hasMessage(languageLabel)) {
+					model.setBrowserLocale(browser);
+					StringBuilder sb = new StringBuilder();
+					sb.append(messageSource.getMessage("browser_language_preference1_t", null, browser)).append(" ");
+					sb.append(messageSource.getMessage(languageLabel, null, browser)).append(", ");
+					sb.append(messageSource.getMessage("browser_language_preference2_t", null, browser)).append(" ");
+					sb.append(messageSource.getMessage(languageLabel, null, browser)).append("?");
+					model.setLocaleMessage(sb.toString());
+				}
 			}
 		}
 	}
 	
-	public boolean hasCookie(HttpServletRequest request, String cookiename) {
+	private boolean hasMessage(String label) {
+		try {
+			String m = messageSource.getMessage(label, null, Locale.ENGLISH);
+			return StringUtils.isNotBlank(m) && !StringUtils.equals(m, label);
+		} catch (NoSuchMessageException e) {
+		}
+		return false;
+	}
+	
+	private boolean hasCookie(HttpServletRequest request, String cookiename) {
 		if ( (request != null) && (request.getCookies() != null)) {
 			for (Cookie cookie: request.getCookies()) {
 				if (StringUtils.equalsIgnoreCase(cookiename, cookie.getName())) {
