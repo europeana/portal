@@ -3,7 +3,7 @@
 
 	var multilang = {
 		addListeners: function() {
-			$( '#browser-language-change-no, #browser-language-change-yes' )
+			$( '.browser-language-change' )
 				.on( 'click', multilang.handleClick );
 		},
 
