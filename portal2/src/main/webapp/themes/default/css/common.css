@@ -573,10 +573,11 @@
 #browser-language-query {
 	position: relative;
 	display: none;
+	margin: 0 0 1px 0;
+	padding: 1em;
 	width: 100%;
 	background-color: #333;
 	color: #dfdfdf;
-	padding: 1em;
 }
 
 #browser-language-query label {
