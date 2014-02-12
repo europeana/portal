@@ -18,13 +18,11 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
@@ -32,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -70,6 +67,7 @@ import eu.europeana.portal2.web.model.mlt.EuropeanaMltCategory;
 import eu.europeana.portal2.web.model.mlt.EuropeanaMltLink;
 import eu.europeana.portal2.web.model.mlt.MltCollector;
 import eu.europeana.portal2.web.model.mlt.MltSuggestion;
+import eu.europeana.portal2.web.model.mlt.MltConfiguration;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoCollector;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
@@ -119,17 +117,18 @@ public class ObjectController {
 	@Resource
 	private ReloadableResourceBundleMessageSource messageSource;
 
-	public static final Map<String, List<String>> SEE_ALSO_FIELDS = new LinkedHashMap<String, List<String>>();
+	// public static final Map<String, List<String>> SEE_ALSO_FIELDS = new LinkedHashMap<String, List<String>>();
+	public static final Map<String, MltConfiguration> SEE_ALSO_FIELDS = new LinkedHashMap<String, MltConfiguration>();
 	static {
 		// proxy_dc_title, proxy_dcterms_alternative
-		SEE_ALSO_FIELDS.put("title", Arrays.asList(new String[] { "DcTitle", "DctermsAlternative" }));
+		SEE_ALSO_FIELDS.put("title", new MltConfiguration("title", "mlt_title_t", 1.0, "DcTitle", "DctermsAlternative"));
 		// proxy_dc_creator, ag_skos_prefLabel -- missing: ag_skos_altLabel, ag_foaf_name
-		SEE_ALSO_FIELDS.put("who", Arrays.asList(new String[] { "DcCreator", "AgentPrefLabel" }));
+		SEE_ALSO_FIELDS.put("who", new MltConfiguration("who", "mlt_who_t", 1.0, "DcCreator", "AgentPrefLabel"));
 		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel, cc_skos_broaderLabel, cc_skos_prefLabel
-		SEE_ALSO_FIELDS.put("what", Arrays.asList(new String[] { 
-				"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel" }));
-		SEE_ALSO_FIELDS.put("DATA_PROVIDER", Arrays.asList(new String[] { "DataProvider" }));
-		SEE_ALSO_FIELDS.put("PROVIDER", Arrays.asList(new String[] { "EdmProvider" }));
+		SEE_ALSO_FIELDS.put("what", new MltConfiguration("what", "mlt_what_t", 1.0, 
+				"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel"));
+		SEE_ALSO_FIELDS.put("DATA_PROVIDER", new MltConfiguration("DATA_PROVIDER", "mlt_provider_t", 1.0, "DataProvider"));
+		SEE_ALSO_FIELDS.put("PROVIDER", new MltConfiguration("PROVIDER", "mlt_data_provider_t", 1.0, "EdmProvider"));
 	};
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
@@ -210,6 +209,7 @@ public class ObjectController {
 				response.setHeader("Location", location.toString());
 				return null;
 			} else {
+				log.error("REQUESTED RECORD NOT FOUND: " + EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId));
 				throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
 			}
 		}
@@ -415,6 +415,7 @@ public class ObjectController {
 		long tSeeAlso0 = (new Date()).getTime();
 		EuropeanaMlt mlt = new EuropeanaMlt();
 		boolean hasDataProvider = (mltCollector.get("DATA_PROVIDER") != null);
+		List<String> queryList = new ArrayList<String>();
 		for (String field : SEE_ALSO_FIELDS.keySet()) {
 			if ((field.equals("PROVIDER") && hasDataProvider)
 				|| mltCollector.get(field) == null
@@ -422,33 +423,25 @@ public class ObjectController {
 			{
 				continue;
 			}
-			MltSuggestion suggestion = mltCollector.get(field).get(0);
+			String query = mltCollector.getQuery(field, SEE_ALSO_FIELDS.get(field).getWeight());
+			queryList.add(query);
+		}
 
-			EuropeanaMltCategory category = new EuropeanaMltCategory(
-				suggestion.getLabel(),
-				field,
-				config.getMltTranslations().get(field)
-			);
+		String query = String.format("(%s) NOT europeana_id:\"%s\"", StringUtils.join(queryList, " OR "), europeanaId);
+		EuropeanaMltCategory category = new EuropeanaMltCategory("all", "all", "mlt_similar_t", query);
 
-			//category.setQuery(suggestion.getEscapedQuery() + "+NOT+europeana_id:&quot;" + europeanaId + "&quot;");
-			category.setQuery(suggestion.getEscapedQuery());
-
-			ResultSet<? extends BriefBean> results = searchMltItem(suggestion.getEscapedQuery());
-			for (BriefBean bean : results.getResults()) {
-				if (!bean.getId().equals(europeanaId)) {
-					String title = (StringArrayUtils.isNotBlank(bean.getTitle()) ? bean.getTitle()[0] : bean.getId());
-					category.addUrl(new EuropeanaMltLink(bean.getId(), title));
-				}
-			}
-			if (category.getUrls().size() == 11) {
-				category.getUrls().remove(10);
-			}
-			category.addResultSize(results.getResultSize());
-
-			if (category.getUrls().size() > 0) {
-				mlt.addCategory(category);
+		ResultSet<? extends BriefBean> results = searchMltItem(query);
+		for (BriefBean bean : results.getResults()) {
+			if (!bean.getId().equals(europeanaId)) {
+				String title = (StringArrayUtils.isNotBlank(bean.getTitle()) ? bean.getTitle()[0] : bean.getId());
+				category.addUrl(new EuropeanaMltLink(bean.getId(), title));
 			}
 		}
+		category.addResultSize(results.getResultSize());
+		if (category.getUrls().size() > 0) {
+			mlt.addCategory(category);
+		}
+
 		long tSeeAlso1 = (new Date()).getTime();
 		log.info("createEuropeanaMlt takes: " + (tSeeAlso1 - tSeeAlso0));
 
@@ -457,7 +450,7 @@ public class ObjectController {
 
 	private ResultSet<? extends BriefBean> searchMltItem(String queryTerm) {
 		Query query = new Query(queryTerm)
-			.setPageSize(11)
+			.setPageSize(1)
 			.setStart(0) // Solr starts from 0
 			.setAllowSpellcheck(false)
 			.setAllowFacets(false)
@@ -477,7 +470,7 @@ public class ObjectController {
 		SeeAlsoCollector seeAlsoCollector = new SeeAlsoCollector();
 		int countPerField = 0, id = 0;
 		for (String metaField : SEE_ALSO_FIELDS.keySet()) {
-			for (String edmField : SEE_ALSO_FIELDS.get(metaField)) {
+			for (String edmField : SEE_ALSO_FIELDS.get(metaField).getEdmFields()) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
 					countPerField = 0;
@@ -487,7 +480,11 @@ public class ObjectController {
 							&& countPerField < MAX_COUNT_PER_FIELD)
 						{
 							SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(metaField, value, id);
-							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+							if (suggestion.getQuery().startsWith("http://")) {
+								suggestion.makeEscapedQuery(suggestion.getQuery());
+							} else {
+								suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+							}
 							seeAlsoCollector.add(suggestion);
 							countPerField++; id++;
 						}
@@ -503,7 +500,7 @@ public class ObjectController {
 		MltCollector mltCollector = new MltCollector();
 		int countPerField = 0, id = 0;
 		for (String metaField : SEE_ALSO_FIELDS.keySet()) {
-			for (String edmField : SEE_ALSO_FIELDS.get(metaField)) {
+			for (String edmField : SEE_ALSO_FIELDS.get(metaField).getEdmFields()) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
 					countPerField = 0;
@@ -520,7 +517,11 @@ public class ObjectController {
 								clear = false;
 							}
 							MltSuggestion suggestion = new MltSuggestion(metaField, value, id, clear);
-							suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+							if (suggestion.getQuery().startsWith("http://")) {
+								suggestion.makeEscapedQuery(suggestion.getQuery());
+							} else {
+								suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+							}
 							mltCollector.add(suggestion);
 							countPerField++; id++;
 						}

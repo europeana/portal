@@ -18,6 +18,11 @@ public class EuropeanaMltCategory {
 		this.urls = new ArrayList<EuropeanaMltLink>();
 	}
 
+	public EuropeanaMltCategory(String name, String field, String translationKey, String query) {
+		this(name, field, translationKey);
+		this.query = query;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -1377,7 +1377,7 @@ eu.europeana.fulldoc = {
 					url += '&query='	+ query;  //decodeURIComponent(query);
 					url += '&start='	+ (start ? start : 1);
 					url += '&rows='		+ (qty ? qty : total > 4 ? 4 : total);
-					url += '&profile=portal';
+					url += '&profile=minimal';
 					
 					var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 					

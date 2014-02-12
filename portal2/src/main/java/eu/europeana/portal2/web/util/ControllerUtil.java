@@ -189,6 +189,10 @@ public class ControllerUtil {
 	}
 
 	public static String clearSeeAlso(String value) {
+		if (value.startsWith("http://")) {
+			return value;
+		}
+
 		value = value.replaceAll("\n", " ")
 				.replaceAll("\\s+", " ")
 		;

@@ -8,6 +8,7 @@ public class MltSuggestion {
 	private String metaField;
 	private String label;
 	private String query;
+	private String solrEscapedQuery;
 	private String escapedQuery;
 	private String taggedEscapedQuery;
 	private int count;
@@ -24,6 +25,7 @@ public class MltSuggestion {
 	}
 
 	public void makeEscapedQuery(String solrEscapedQuery) {
+		this.solrEscapedQuery = '"' + solrEscapedQuery + '"';
 		this.escapedQuery = String.format("%s:\"%s\"", metaField, solrEscapedQuery);
 		this.taggedEscapedQuery = String.format("{!id=%d}%s", id, this.escapedQuery);
 	}
@@ -74,6 +76,14 @@ public class MltSuggestion {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getSolrEscapedQuery() {
+		return solrEscapedQuery;
+	}
+
+	public void setSolrEscapedQuery(String solrEscapedQuery) {
+		this.solrEscapedQuery = solrEscapedQuery;
 	}
 
 	@Override

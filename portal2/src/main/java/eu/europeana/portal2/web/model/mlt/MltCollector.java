@@ -23,6 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
+import eu.europeana.corelib.logging.Logger;
+
 /**
  * Collector of MltSuggestion objects
  * 
@@ -30,6 +34,8 @@ import java.util.Set;
  * given field, and get the list of Solr facet queries.
  */
 public class MltCollector {
+
+	Logger log = Logger.getLogger(MltCollector.class.getCanonicalName());
 
 	private List<MltSuggestion> suggestions = new ArrayList<MltSuggestion>();
 	private Map<String, List<Integer>> fieldIndex = new HashMap<String, List<Integer>>();
@@ -71,6 +77,21 @@ public class MltCollector {
 			return suggestions4field;
 		}
 		return null;
+	}
+
+	public String getQuery(String field, double weight) {
+		String query = null;
+		if (fieldIndex.containsKey(field)) {
+			List<String> suggestions4field = new ArrayList<String>();
+			for (int i : fieldIndex.get(field)) {
+				MltSuggestion suggestion = suggestions.get(i);
+				suggestions4field.add(suggestion.getSolrEscapedQuery());
+			}
+			if (suggestions4field.size() > 0) {
+				query = String.format("%s:(%s)^%s", field, StringUtils.join(suggestions4field, " OR "), weight);
+			}
+		}
+		return query;
 	}
 
 	/**
