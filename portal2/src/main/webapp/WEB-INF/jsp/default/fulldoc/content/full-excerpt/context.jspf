@@ -6,17 +6,17 @@
 <c:set var="language" value="${model.locale.language}"></c:set>
 <c:set var="edmLanguage" value="${model.document.europeanaAggregation.edmLanguage.def[0]}"></c:set>
 
-<style>
-<!--
-div.concept ul li p {margin: 0; padding: 0}
--->
-</style>
 
 <%-- model.document is FullBeanDecorator --%>
-<%-- CONCEPT --%>
+<%-- CONCEPTS (WHAT) --%>
 <c:if test="${!empty model.document.concepts}">
 <div class="concept">
-  <h4><spring:message code="enrichment_category_what_t" /></h4>
+  <span class="item-context-data">
+  		<span class="bold notranslate"><spring:message code="enrichment_category_what_t" />: </span>
+  		<span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
+  </span>
+  
+  
   <ul type="square">
     <c:forEach items="${model.document.decoratedConcepts}" var="concept" varStatus="fieldStatus">
       <c:if test="${!empty concept.labels}">
@@ -25,12 +25,12 @@ div.concept ul li p {margin: 0; padding: 0}
             <c:url var="searchUrl" value="/search.html">
               <c:param name="query">skos_concept:"${concept.about}"</c:param>
             </c:url>
-            <a href="${searchUrl}" id="${fn:replace(concept.about, '/', '.')}">
+            <a href="${searchUrl}" id="${fn:replace(concept.about, '/', '.')}" class="icon-external-right">
               (<c:forEach items="${concept.labels}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
               </c:forEach>)
             </a>
-            <a href="${concept.about}" target="blank">[&rarr;]</a>
+
             <c:if test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
               <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
@@ -152,10 +152,13 @@ div.concept ul li p {margin: 0; padding: 0}
 </div>
 </c:if>
 
-<%-- PLACE --%>
+<%-- PLACE (WHERE) --%>
 <c:if test="${!empty model.document.places}">
 <div class="concept">
-  <h4><spring:message code="enrichment_category_where_t" /></h4>
+  <span class="item-context-data">
+  		<span class="bold notranslate"><spring:message code="enrichment_category_where_t" />: </span>
+  		<span class="smaller">(</span><a class="more-info smaller" data-event="init-map"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
+  </span>
   <ul type="square">
     <c:forEach items="${model.document.decoratedPlaces}" var="place" varStatus="fieldStatus">
       <c:if test="${!empty place.labels}">
@@ -164,10 +167,11 @@ div.concept ul li p {margin: 0; padding: 0}
             <c:url var="searchUrl" value="/search.html">
               <c:param name="query">edm_place:"${place.about}"</c:param>
             </c:url>
-            <a href="${searchUrl}" id="${fn:replace(place.about, '/', '.')}">
+            <a href="${searchUrl}" id="${fn:replace(place.about, '/', '.')}" class="icon-external-right">
               <c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              <c:forEach items="${place.labels}" var="label"><input type="hidden" name="placename" value="${label}"></c:forEach>
             </a>
-            <a href="${place.about}" target="blank">[&rarr;]</a>
+            
             <c:if test="${!empty place.prefLabelLang && !empty place.altLabelLang}">
               (<c:forEach items="${place.altLabelLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
@@ -185,21 +189,21 @@ div.concept ul li p {margin: 0; padding: 0}
           </c:if>
 
           <c:if test="${!empty place.latitude or !empty place.longitude or !empty place.altitude}">
-            <c:set var="location" value="" />
+            <%--c:set var="location" value="" / --%>
             <c:if test="${!empty place.latitude}">
-              <c:set var="location" value="latitude: ${place.latitude}" />
+              <%--c:set var="location" value="latitude: ${place.latitude}" /--%>
               <input type="hidden" id="latitude" value="${place.latitude}">
             </c:if>
             <c:if test="${!empty place.longitude}">
-              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;&nbsp;</c:set></c:if>
+              <%--c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;&nbsp;</c:set></c:if--%>
               <input type="hidden" id="longitude" value="${place.longitude}">
-              <c:set var="location">${location}longitude: ${place.longitude}</c:set>
+              <%--c:set var="location">${location}longitude: ${place.longitude}</c:set--%>
             </c:if>
             <c:if test="${!empty place.altitude}">
-              <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;&nbsp;</c:set></c:if>
-              <c:set var="location">${location}altitude: ${place.altitude}</c:set>
+              <%--c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;&nbsp;</c:set></c:if--%>
+              <%--c:set var="location">${location}altitude: ${place.altitude}</c:set--%>
             </c:if>
-            <c:if test="${location != ''}"><p>${location}</p></c:if>
+            <%--c:if test="${location != ''}"><p>${location}</p></c:if--%>
           </c:if>
 
           <c:if test="${!empty place.dcTermsHasPartLang}">
@@ -234,10 +238,14 @@ div.concept ul li p {margin: 0; padding: 0}
 </div>
 </c:if>
 
-<%-- TIMESTAMP --%>
+<%-- TIMESTAMP (WHEN) --%>
 <c:if test="${!empty model.document.timespans}">
 <div class="concept">
-  <h4><spring:message code="enrichment_category_when_t" /></h4>
+
+  <span class="item-context-data">
+  		<span class="bold notranslate"><spring:message code="enrichment_category_when_t" />: </span>
+  		<span class="smaller">(</span><a class="more-info smaller" data-event="init-map"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
+  </span>
   <ul type="square">
     <c:forEach items="${model.document.decoratedTimespans}" var="timespan" varStatus="fieldStatus">
       <c:if test="${!empty timespan.labels}">
@@ -246,13 +254,12 @@ div.concept ul li p {margin: 0; padding: 0}
             <c:url var="searchUrl" value="/search.html">
               <c:param name="query">edm_timespan:"${timespan.about}"</c:param>
             </c:url>
-            <a href="${searchUrl}" id="${fn:replace(timespan.about, '/', '.')}">
+            <a href="${searchUrl}" id="${fn:replace(timespan.about, '/', '.')}" class="icon-external-right">
               <c:forEach items="${timespan.labels}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
-                <input type="hidden" name="placename" value="${label}">
               </c:forEach>
             </a>
-            <a href="${timespan.about}" target="blank">[&rarr;]</a>
+            
             <c:if test="${!empty timespan.prefLabelLang && !empty timespan.altLabelLang}">
               (<c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
@@ -300,11 +307,20 @@ div.concept ul li p {margin: 0; padding: 0}
 </c:if>
 
 <%-- AGENT --%>
+<br/>
+<br/>
 decoratedAgents: ${fn:length(model.document.decoratedAgents)}
 agents: ${fn:length(model.document.agents)}
+
 <c:if test="${!empty model.document.agents}">
+
+<%-- AGENTS (WHO) --%>
 <div class="concept">
-  <h4><spring:message code="enrichment_category_who_t" /></h4>
+  <span class="item-context-data">
+  		<span class="bold notranslate"><spring:message code="enrichment_category_who_t" />: </span>
+  		<span class="smaller">(</span><a class="more-info smaller" data-event="init-map"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
+  </span>
+    
   <ul type="square">
     <c:forEach items="${model.document.decoratedAgents}" var="agent" varStatus="fieldStatus">
       <c:if test="${!empty agent.labels}">
@@ -313,12 +329,12 @@ agents: ${fn:length(model.document.agents)}
             <c:url var="searchUrl" value="/search.html">
               <c:param name="query">edm_agent:"${agent.about}"</c:param>
             </c:url>
-            <a href="${searchUrl}" id="${fn:replace(agent.about, '/', '.')}">
+            <a href="${searchUrl}" id="${fn:replace(agent.about, '/', '.')}" class="icon-external-right">
               <c:forEach items="${agent.labels}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
               </c:forEach>
             </a>
-            <a href="${agent.about}" target="blank">[&rarr;]</a>
+
             <c:if test="${!empty agent.prefLabelLang && !empty agent.altLabelLang}">
               (<c:forEach items="${agent.altLabelLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">; </c:if>

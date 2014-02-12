@@ -219,7 +219,7 @@ eu.europeana.fulldoc = {
 		
 		var self = this;
 		
-		$('#fields-enrichment h3 a, #fields-enrichment h4 a').each(function( key, value ) {
+		$('#fields-enrichment h3 a, #fields-enrichment h4 a, .concept .item-context-data a.more-info').each(function( key, value ) {
 			
 			$(value).bind('click', self.handleAutoTagClick );
 			$(value).addClass(eu.europeana.fulldoc.more_icon_class);
@@ -232,6 +232,12 @@ eu.europeana.fulldoc = {
 		e.preventDefault();
 		var $elm = $(this);
 		
+		var event = $elm.data('event');
+		if(event){
+    	   	$(window).trigger(event, $elm.parent().next() );
+		}
+		
+		console.log('toggle ' + $elm.parent().next()[0].nodeName )
 		$elm.parent().next().slideToggle();
 		
 		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {
@@ -1371,8 +1377,6 @@ eu.europeana.fulldoc = {
 					url += '&rows='		+ (qty ? qty : mltTotal > 4 ? 4 : mltTotal);
 					url += '&profile=minimal';
 					
-//					var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
-					
 					if(typeof loadData.expectedThumbCount == 'undefined'){
 						
 						// TODO - hard-coded "4" - shouldn't we use inView()   ????
@@ -1404,25 +1408,6 @@ eu.europeana.fulldoc = {
 					console.log("Ajax error: " + e);
 				}
 			}
-			
-		
-			//  Make accordion-tabs for carousels - change callback makes initial load if needed
-			/*
-			eu.europeana.fulldoc.mltTabs = new AccordionTabs( 
-				$('#mlt'),
-				function(index){
-					if(typeof index == 'number'){
-						var section = getActiveSection();				
-						if(typeof loadData.tabs[index].loaded != 'undefined'){
-							return;
-						}				
-						section.empty();
-						$('<div class="carousel europeana-carousel" id="mlt-carousel-' + index + '">').appendTo(section);
-						loadMltData(getQuery(), processResult);
-					}
-				}
-			);
-			*/
 
 			var initIfBigEnough = function(){
 				var mobile = $('#mobile-menu').is(':visible');
@@ -1452,8 +1437,13 @@ eu.europeana.fulldoc = {
 		 * geo-location
 		 * 
 		 * */
-		if(false){
-			
+	   	$(window).bind('init-map', function(e, tgtDiv){
+	   		var mapId     = 'geo-map';
+	   		var mapInfoId = 'geo-map-info';
+	   		
+	   		if($('#' + mapId).length){
+	   			return;
+	   		}
 			var longitude = $('#longitude');
 			var latitude  = $('#latitude');
 			
@@ -1480,58 +1470,56 @@ eu.europeana.fulldoc = {
 						$('head').append('<link rel="stylesheet" href="' + path + stylesheet + '" type="text/css"/>');				
 					}
 				);
-	
+				
 				var initMap = function(){
-					$('#item-details').append('<div id="map-info">');
-					$('#item-details').append('<div id="map">');
+					$(tgtDiv).append('<li><div id="' + mapId + '"></div><div id="' + mapInfoId + '"></div></li>');
 	    			var mqTilesAttr = 'Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />';
 	    			
 	    			// map quest
 	    			var mq = new L.TileLayer(
 	    				'http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png',
 	    				{
-	    					minZoom: 3,
-	    					maxZoom: 18,
-	    					attribution: mqTilesAttr,
-	    					subdomains: '1234',
-	    					type: 'osm'
+        					minZoom: 4,
+        					maxZoom: 18,
+        					attribution: mqTilesAttr,
+        					subdomains: '1234',
+        					type: 'osm'
 	    				}
 	    			);
-	    			var map = L.map('map', {
+	    			var map = L.map(mapId, {
 	    			    center: new L.LatLng(latitude, longitude),
 	    			    zoomControl: true,
-	    			    zoom: 5
+	    			    zoom: 8
 	    			});
 	    			map.addLayer(mq);
+	    			map.invalidateSize(); 			
 	    			
-	    			var placeName = $('input[name="placename"]').length ? 
-	    					$('input[name="placename"]').length > 1 ? 
-	    							$('input[name="placename"]').map(function() { return this.value; }).get().join(', ') 
-	    							:
-	    							$('input[name="placename"]').val() 
-	    					:
-	  				'';  
-	    			$('#map-info').html(placeName + ' ' + eu.europeana.vars.map.coordinates + ': ' +  latitude + ' ' +  (latitude > 0 ? eu.europeana.vars.map.north : eu.europeana.vars.map.south)  + ', ' +  longitude + ' ' + (longitude > 0 ? eu.europeana.vars.map.east : eu.europeana.vars.map.west ) 	);
+	    			L.marker([latitude, longitude]).addTo(map);
 	    			
-	    			
-	    			/*
-	          			Vienna co-ordinates: 48.2083' N, 16.3731' E
-	          
-	          			Vienna map_coordinates_t: (map_compass_N_t | map_compass_S_t), (map_compass_E_t | map_compass_W_t) 
-	
-	    			 */
-	
+	    			var placeName = '';
+	    			switch($('input[name="placename"]').length)
+	    			{
+		    			case 1:
+		    				placeName = $('input[name="placename"]').val();
+		    				break;
+		    			case 2: {
+		    				var names = $('input[name="placename"]').map(function() { return this.value; }).get();
+		    				var uniqueNames = [];
+			    			$.each(names, function(i, el){
+			    			    if($.inArray(el, uniqueNames) === -1){
+			    			    	uniqueNames.push(el);
+			    			    } 
+			    			});
+		    				placeName = uniqueNames.join(', ');
+		    				break;		    				
+		    			}
+	    			} 
+
+	    			if(!$('input[name="placename"]').length || !$('input[name="placename"]').val().length){
+	    				$('#' + mapInfoId).addClass('uppercase');
+	    			}
+	    			$('#' + mapInfoId).html(placeName + ' ' + eu.europeana.vars.map.coordinates + ': ' +  latitude + '&deg; ' +  (latitude > 0 ? eu.europeana.vars.map.north : eu.europeana.vars.map.south)  + ', ' +  longitude + '&deg; ' + (longitude > 0 ? eu.europeana.vars.map.east : eu.europeana.vars.map.west ) 	);
 				};
-	
-				/*
-				var dependencies = [
-				    'http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;key=AIzaSyARYUuCXOrUv11afTLg72TqBN2n-o4XmCI',
-					'leaflet.js',
-					'Leaflet-MiniMap-master/src/Control.MiniMap.js',
-					'Leaflet-Pan/L.Control.Pan.js',
-					'leaflet-plugins-master/layer/tile/Google.js',				
-				];
-				 */
 	
 				js.loader.loadScripts([
 	   			    {
@@ -1556,7 +1544,7 @@ eu.europeana.fulldoc = {
 				]);
 	
 			}
-		}
+		});
 		
 	}
 	

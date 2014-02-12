@@ -83,10 +83,15 @@
 	margin-top: 1.25em
 }
 
-#map{
-	height: 25em;	
+#geo-map{
+	height:     25em;
+	margin-top: 1.5em;
 }
 
+#geo-map-info.uppercase {
+	text-transform: capitalize;
+}
+ 
 /*
 #mlt .section{
 	padding-bottom:  1em;
@@ -457,6 +462,14 @@ img.trigger{
 	margin-left: 1.5em;
 }
 
+.concept ul li,
+.concept ul li p{
+	margin-bottom:	0.25em;
+	margin-top:		0.25em;
+}
+
+.concept,
+.item-context-data,
 .item-metadata {
 	margin-bottom:	0.5em;
 }
@@ -648,21 +661,38 @@ h1 {
 	font-weight: normal;
 }
 
+
+.concept li,
 #fields-enrichment {
 	margin: 0;
 	padding: 0;
 }
 
+.concept li,
 #fields-enrichment li {
 	list-style: none;
 }
 
+.concept ul,
 #fields-enrichment ul {
 	margin: 0;
-	padding: 0;
+	padding: 0.5em 0;
 	display: none;
 }
 
+.concept .smaller{
+	font-size: 0.8em;
+}
+.concept .smaller.icon-arrow-6-right:after,
+.concept .smaller.icon-arrow-7-right:after {
+	font-size: 1.2em;
+	position: relative;
+	top: 0.2em;
+}
+
+.concept a.more-info{
+	color: #333;
+}
 
 div.lb-trigger{
 	position:	absolute;
