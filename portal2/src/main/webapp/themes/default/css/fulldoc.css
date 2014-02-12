@@ -9,13 +9,13 @@
 /* start carousel pre-load height calculation */
 
 #carousel-1-img-measure img,
-#mlt .images img{
+#more-like-this .images img{
 	display:			inline-block;
 	vertical-align :	bottom;
 }
 
 #carousel-1-img-measure,
-#mlt .images{
+#more-like-this .images{
 	position:		absolute;
 	white-space:	nowrap;
 }
@@ -55,26 +55,39 @@
 	display: inline-block;
 }
 
-
+/*
 #mlt .section{
 	padding-top:   1.5em;
 	padding-left:  1em;
 	padding-right: 1em;
 }
+*/
 
-#mlt .load-more{
+#more-like-this{
+	padding:       1.5em 1em 3.5em 1em;
+	border:        1px solid #d6d6d6;
+	border-radius: 0.5em;
+	position: relative;	
+}
+
+#more-like-this .load-more{
 	float: left;
 }
 
-#mlt .load-all{
+#more-like-this .load-all{
 	float: right;
 }
 
-#mlt .load-all,
-#mlt .load-more{
+#more-like-this .load-all,
+#more-like-this .load-more{
 	margin-top: 1.25em
 }
 
+#map{
+	height: 25em;	
+}
+
+/*
 #mlt .section{
 	padding-bottom:  1em;
 }
@@ -82,7 +95,7 @@
 #mlt .section.loading{
 	height:		 15em;
 }
-
+*/
 
 #translate-container{
 	position:	relative;
@@ -100,7 +113,7 @@
 }
 
 
-#mlt .carousel{
+#more-like-this .carousel{
 	width:		100%;				/* height set programatically. */
 }
 

@@ -8,11 +8,20 @@
 	<script type="text/javascript">
 		var mlt				= true;
 		var labelLoadMore	= '<spring:message code="mlt_load_more_t" />';
-		var labelLoadAll	= '<spring:message code="mlt_load_all_t" />';
+		var labelLoadAll	= '<spring:message code="mlt_load_all_t" arguments="${model.europeanaMlt.categories[0].totalResults-1}"/>';
+		var mltTotal		= ${model.europeanaMlt.categories[0].totalResults-1};
+		var mltQuery  		= '${  fn:replace(  fn:replace(model.europeanaMlt.categories[0].query, "\"", "&quot;"), "\\&", "%26")  }';
 	</script>
 
 	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
 
+	<div id="more-like-this">
+		${model.europeanaMlt.categories[0].urls[0].title  }
+		<br/>
+		${model.europeanaMlt.categories[0].urls[0].id  }
+	</div>
+
+<%--
 	<div id="mlt" class="accordion-tabs">
 
 		<c:forEach items="${model.europeanaMlt.categories}" var="category" varStatus="catStatus">
@@ -22,7 +31,6 @@
 			<a class="tab-header">
 				<spring:message code="${category.translationKey}" />: ${category.name} (${category.totalResults-1})
 				
-				<%-- Peter: I'm using ${category.totalResults-1} on the assumption that similar items always contain themselves--%>
 				
 				<input	id="similiar-category-${catStatus.index}"
 						type="hidden"
@@ -50,4 +58,6 @@
 			
 		</c:forEach>
 	</div>
+ --%>
+ 
 </c:if>

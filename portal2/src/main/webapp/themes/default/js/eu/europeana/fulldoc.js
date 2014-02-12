@@ -956,29 +956,31 @@ eu.europeana.fulldoc = {
 
 			// structure to track what's loaded
 			
-			var loadData = loadData = { tabs:[ {}, {}, {}, {}, {} ] };
+			var loadData = {};
 
 			var getActiveSection = function(){
 				return $('#mlt .section.active');
 			}
 			
-			var showSpinner = function(){	
-				var section = getActiveSection();
-				if(section.find('.carousel').html().length == 0){
-					section.addClass('loading');		    		
+			var showSpinner = function(){
+				var section = $('#mlt-carousel');
+				if(section.html().length == 0){
+					section.addClass('loading');		
 				}
-		    	section.append('<div class="ajax-overlay">');	
+		    	section.append('<div class="ajax-overlay">');
 		    	$('.ajax-overlay').css('top', $('.ajax-overlay').parent().scrollTop() + 'px');
-		    	
-		    	section.find('.galleria-thumbnails').css('top', '1000px');		    	
+		    	section.find('.galleria-thumbnails').css('top', '1000px');
 		    };
 		    
 			var hideSpinner = function(){
-				var section = getActiveSection();
+				return;
+				/*
+				var section = $('#mlt-carousel');//$('#more-like-this');
 				section.find('.ajax-overlay').remove();				
 				section.removeClass('loading');	
 				section.find('.galleria-thumbnails-container .galleria-image').first().find('img').focus();
 		    	section.find('.galleria-thumbnail').css('top', '0px');
+		    	*/
 			};
 		
 			var getQuery = function(){
@@ -989,36 +991,34 @@ eu.europeana.fulldoc = {
 				querySuffix = '+NOT+europeana_id:&quot;' + querySuffix  + '&quot;';
 				console.log("querySuffix = " + querySuffix )
 				
-				return $('#mlt a.tab-header.active input.query').val() + querySuffix;
+				return mltQuery + querySuffix;
 			}
 
-			var getTotal = function(){
-				return parseInt($('#mlt a.tab-header.active input.query').data('total'));
-			}
 
             var fnInView = function(){
-            	var activeS = getActiveSection();
-            	var cw      = activeS.find('.galleria-thumbnails-container').width();
-            	var first   = activeS.find('.galleria-thumbnails-container .galleria-image:first');            	
+            	var cw      = $('#more-like-this .galleria-thumbnails-container').width();
+            	var first   = $('#more-like-this .galleria-thumbnails-container .galleria-image:first');            	
             	var firstW  = parseInt(first.css('width'));
 				var firstM  = parseInt(first.css('margin-left'));
 				var res     = Math.ceil(cw / ( firstW + 2*firstM ));
+				var max     = 4;
 				
-				console.log('fnInView returns ' + res)
-				return res
+				//console.log('fnInView returns ' + res)
+				
+				return Math.floor(max, res);
             }
 			
-			var loadMore = function(index){
+			var loadMore = function(){
 				
 				//console.log('loadMore start');
 				
-				var start	= loadData.tabs[index].loaded + 1;
+				var start	= loadData.loaded + 1;
 				var qty		= fnInView();
 				var query   = getQuery();
 				
-				loadData.tabs[index].expectedThumbCount = ((loadData.tabs[index].loaded + qty) -1)  >= loadData.tabs[index].total ?  loadData.tabs[index].total -1 : ((loadData.tabs[index].loaded + qty) -1);
+				loadData.expectedThumbCount = ((loadData.loaded + qty) -1)  >= loadData.total ?  loadData.total -1 : ((loadData.loaded + qty) -1);
 
-				console.log('set loadData.tabs[' + index + '].expectedThumbCount to ' + loadData.tabs[index].expectedThumbCount + ', total is ' + loadData.tabs[index].total  + '    ');
+				console.log('set loadData.expectedThumbCount to ' + loadData.expectedThumbCount + ', total is ' + loadData.total);
 				
 				loadMltData(query, processResult, start, qty)
 				
@@ -1047,10 +1047,10 @@ eu.europeana.fulldoc = {
 					var doEllipsis = function(){
 						
 						var ellipsisObjects = [];
-						var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
-						var sectionCarousel = $('#mlt-carousel-' + index);  // TODO can't I just access the object element directly?
+						//var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
+						var carousel = $('#more-like-this');// $('#mlt-carousel-' + index);  // TODO can't I just access the object element directly?
 						
-						$(sectionCarousel.find('.europeana-carousel-info')).each(
+						$(carousel.find('.europeana-carousel-info')).each(
 							function(i, ob){
 								ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
 							}
@@ -1074,10 +1074,10 @@ eu.europeana.fulldoc = {
 					//this.bind("loadfinish", function(e) {
 					this.bind("thumbnail", function(e) {
 					
-						var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
+						//var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 												
 						// we only execute on the last thumbnail....
-						if( e.index != loadData.tabs[index].expectedThumbCount){
+						if( e.index != loadData.expectedThumbCount){
 							return;
 						}
 							
@@ -1127,33 +1127,33 @@ eu.europeana.fulldoc = {
 						thisGallery.$( 'container' ).find('.galleria-thumbnails-list').attr('tabindex', 2);
 
 
-						$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
+//						$('#mlt .section.active .galleria-thumbnails .galleria-image').each(function(i, ob){
+						$('#more-like-this .galleria-thumbnails .galleria-image').each(function(i, ob){
 							$(ob).find('img').attr({
-								'alt'	:	loadData.tabs[index].carouselMltData[i].title,
-								'title'	: loadData.tabs[index].carouselMltData[i].title,
+								'alt'	:	loadData.carouselMltData[i].title,
+								'title'	: loadData.carouselMltData[i].title,
 								'tabindex' : i+3
 							});
-							
 						});
 							
-						if(!loadData.tabs[index].setup){
+						if(!loadData.setup){
 							hideSpinner();
-							loadData.tabs[index].setup = true;
+							loadData.setup = true;
 						}
 						
 						
 						///////////////////////////////////////////////////////////////////////////////////////////
 					
 						// rebind right arrow / extra handler for left arrow
-						$('#mlt .section.active .carousel').find('.galleria-thumb-nav-left').bind('click', function(e){
+						$('#more-like-this .carousel').find('.galleria-thumb-nav-left').bind('click', function(e){
 							rightArrow.removeClass('europeana-disabled');							
 							rightArrow.removeClass('disabled');							
 						});
 						
-						$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').unbind('click').bind('click', function(e){
+						$('#more-like-this .carousel').find('.galleria-thumb-nav-right').unbind('click').bind('click', function(e){
 			                e.preventDefault();
 			                
-			                var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
+			                //var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 							var x     = thisGallery;
 			                var xOps  = x._options;
 							var xCar  = x._carousel;
@@ -1161,7 +1161,7 @@ eu.europeana.fulldoc = {
 							//console.log('update current to: ' + (xCar.current + xOps.carouselSteps) );
 
 
-							loadData.tabs[index].current = (xCar.current + xOps.carouselSteps);  // write next val
+							loadData.current = (xCar.current + xOps.carouselSteps);  // write next val
 							//console.log('set loadData.tabs[index].current to ' + loadData.tabs[index].current);
 							
 							inView = fnInView();
@@ -1171,33 +1171,28 @@ eu.europeana.fulldoc = {
 
 			                if( (current + inView) >= loadedCount){
 			                	//console.log('load more then navigate (tabIndex[' + index + '])');
-			                	loadMore(eu.europeana.fulldoc.mltTabs.getOpenTabIndex());
-
-			                	
+			                	loadMore();
 			                }
 			                else{
-			                	xCar.set(loadData.tabs[index].current);
+			                	xCar.set(loadData.current);
 			                	
-								if(loadData.tabs[index].loaded < loadData.tabs[index].total){
+								if(loadData.loaded < loadData.total){
 									//console.log('normal nav and show the arrow  (' + $('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').length + ')');
-									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').show();
+									$('#more-like-this .carousel').find('.galleria-thumb-nav-right').show();
 								}
 								else{
-									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').addClass('europeana-disabled');
-									$('#mlt .section.active .carousel').find('.galleria-thumb-nav-right').css('display', 'none');
+									$('#more-like-this .carousel').find('.galleria-thumb-nav-right').addClass('europeana-disabled');
+									$('#more-like-this .carousel').find('.galleria-thumb-nav-right').css('display', 'none');
 								}
-				                
 			                }
 						});
 						
-		                var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 						var x     = thisGallery;
 		                var xOps  = x._options;
 
-					
-						if(typeof loadData.tabs[index].current == 'undefined'){
+						if(typeof loadData.current == 'undefined'){
 							//console.log("loadData.tabs[index].current == 'undefined' so set to 0");
-							loadData.tabs[index].current = 0;			
+							loadData.current = 0;			
 						}
 						else {
 							
@@ -1205,7 +1200,7 @@ eu.europeana.fulldoc = {
 
 							//console.log('post process [' + index + '] nav kicking in now.... curr1 (internal): ' + xCar.current + ',  curr2 (tracked): ' + loadData.tabs[index].current);
 							
-							var prevCurrent = loadData.tabs[index].current - loadData.tabs[index].loadSize;
+							var prevCurrent = loadData.current - loadData.loadSize;
 							var oldSpeed = thisGallery._options.carouselSpeed;
 
 							thisGallery.setOptions( 'carouselSpeed', 0 );
@@ -1213,16 +1208,15 @@ eu.europeana.fulldoc = {
 							xCar.set(prevCurrent, true);
 							thisGallery.setOptions( 'carouselSpeed', oldSpeed);
 							hideSpinner();
-							xCar.set(loadData.tabs[index].current);
+							xCar.set(loadData.current);
 						}
 						
 						// Show or hide the "Next" button....
 						// ...Galleria shows the arrows on idle_exit, so "europeana-disabled" class is used here 
 						
-						var rightArrow = getActiveSection().find('.carousel .galleria-thumb-nav-right');
+						var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
 						
-						
-						if((loadData.tabs[index].current + fnInView()) < loadData.tabs[index].total){
+						if((loadData.current + fnInView()) < loadData.total){
 							
 							if(rightArrow.hasClass('europeana-disabled') ){
 								alert('re-enable here, undoes the fix....');
@@ -1242,24 +1236,24 @@ eu.europeana.fulldoc = {
 			};
 
 			
-			var carouselInit = function(index){
+			var carouselInit = function(){
 								
 				// Defines the ops and calls run to init carousel
 
 				// 150 too small for iphone: make min height 200
-				var maxHeight = Math.max(200, loadData.tabs[index].fnGetCarouselDimensions().h) + "px";
+				var maxHeight = Math.max(200, loadData.fnGetCarouselDimensions().h) + "px";
 				
-				$('#mlt-carousel-' + index).css("height", maxHeight);
+				$('#mlt-carousel').css("height", maxHeight);
 							
 				
 				var mltGalleriaOps = $.extend(true, {}, mltGalleriaOpTemplate);
-				mltGalleriaOps.dataSource = loadData.tabs[index].carouselMltData;
+				mltGalleriaOps.dataSource = loadData.carouselMltData;
 				//mltGalleriaOps.identifier = index;
 				
 				//console.log(JSON.stringify(mltGalleriaOps));
-				Galleria.run('#mlt-carousel-' + index, mltGalleriaOps);
+				Galleria.run('#mlt-carousel', mltGalleriaOps);
 				var allGalleries = Galleria.get();
-				loadData.tabs[index].carousel = allGalleries[allGalleries.length-1];
+				loadData.carousel = allGalleries[allGalleries.length-1];
 
 //				alert('ADDED A CAROUSEL TO [' + index + ']  - length  = ' + length + ' ( ' + allGalleries + ')    ' + (typeof index)  + '\n\n  ' + loadData.tabs[index].carousel)
 			} // end carouselInit()
@@ -1269,15 +1263,13 @@ eu.europeana.fulldoc = {
 			
 			var processResult = function(data){
 
-			
-				var index         = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
-				var section       = getActiveSection();
-				var sectionImages = $('#mlt .section.active .images');
+				var section       = $('#more-like-this');
+				var sectionImages = $('#more-like-this .images');
 
 				// Append image data to measure div and build carousel data structure
 				
-				if(typeof loadData.tabs[index].carouselMltData == 'undefined'){
-					loadData.tabs[index].carouselMltData = [];
+				if(typeof loadData.carouselMltData == 'undefined'){
+					loadData.carouselMltData = [];
 				}
 				
 				$.each(data.items, function(i, ob){
@@ -1286,7 +1278,7 @@ eu.europeana.fulldoc = {
 					
 					sectionImages.append('<img src="' + imgUrl + '">');
 	
-					loadData.tabs[index].carouselMltData[loadData.tabs[index].carouselMltData.length] = {
+					loadData.carouselMltData[loadData.carouselMltData.length] = {
 						image:	imgUrl,
 						title:	ob.title[0],
 						link:	ob.link.substr(0, ob.link.indexOf('.json') ).replace('/api/v2/', '/portal/') + '.html'
@@ -1297,11 +1289,11 @@ eu.europeana.fulldoc = {
 
 				// First load initialises the carousel for this tab
 				
-				if(typeof(loadData.tabs[index].carousel) == 'undefined'){
+				if(typeof(loadData.carousel) == 'undefined'){
 
 					sectionImages.imagesLoaded( function($images, $proper, $broken){
 						
-						loadData.tabs[index].fnGetCarouselDimensions = function(){
+						loadData.fnGetCarouselDimensions = function(){
 							
 							sectionImages.css("display", "inline-block");
 							
@@ -1317,44 +1309,43 @@ eu.europeana.fulldoc = {
 						};
 						
 						sectionImages.css("display", "none");
-						carouselInit(index);
+						carouselInit();
 					});
 				}
 				else{
 					// carousel is defined
 					
 					// use in relaod or get rid
-					var storedCarousel		= loadData.tabs[index].carousel;//.get(0);
-					var storedCarouselData	= loadData.tabs[index].carouselMltData;
+					var storedCarousel		= loadData.carousel;
+					var storedCarouselData	= loadData.carouselMltData;
 					
 					// extra hide 
 					sectionImages.css("display", "none");
 					
 					var mltGalleriaOps        = $.extend(true, {}, mltGalleriaOpTemplate);
-					mltGalleriaOps.dataSource = loadData.tabs[index].carouselMltData;
-
-					loadData.tabs[index].leftOffset = getActiveSection().find('.galleria-thumbnails').css('left');
+					mltGalleriaOps.dataSource = loadData.carouselMltData;
+					loadData.leftOffset       = $('#more-like-this .galleria-thumbnails').css('left');
 					
-					loadData.tabs[index].carousel.destroy();
+					loadData.carousel.destroy();
 					
-					Galleria.run('#mlt-carousel-' + index, mltGalleriaOps );
+					Galleria.run('#mlt-carousel', mltGalleriaOps );
 					var allGalleries = Galleria.get();
-					loadData.tabs[index].carousel = allGalleries[allGalleries.length-1];
+					loadData.carousel = allGalleries[allGalleries.length-1];
 				}
 
 				
 				// load all link
 				if(data.totalResults > 12){
-					if(typeof loadData.tabs[index].loaded == 'undefined'){
-						section.append('<a class="load-all" href="/portal/search.html?query=' + $('#mlt a.tab-header.active input.query').val() + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>');
+					if(typeof loadData.loaded == 'undefined'){
+						section.append('<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>');
 					}
 				}
 
 				
 				// Update data tracking model
 
-				loadData.tabs[index].loaded	= typeof loadData.tabs[index].loaded == 'undefined' ? data.itemsCount : loadData.tabs[index].loaded + data.itemsCount;
-				loadData.tabs[index].total	= data.totalResults;
+				loadData.loaded	= typeof loadData.loaded == 'undefined' ? data.itemsCount : loadData.loaded + data.itemsCount;
+				loadData.total	= data.totalResults;
 				
 			}; // end process result
 
@@ -1371,21 +1362,27 @@ eu.europeana.fulldoc = {
 					if(url.indexOf('localhost')>-1){
 						url = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo";
 					}
-
-					var total = getTotal();
 					
 					url += '&query='	+ query;  //decodeURIComponent(query);
 					url += '&start='	+ (start ? start : 1);
-					url += '&rows='		+ (qty ? qty : total > 4 ? 4 : total);
+					
+					// TODO - hard-coded "4" - shouldn't we use inView()   ????
+					
+					url += '&rows='		+ (qty ? qty : mltTotal > 4 ? 4 : mltTotal);
 					url += '&profile=minimal';
 					
-					var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
+//					var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 					
-					if(typeof loadData.tabs[index].expectedThumbCount == 'undefined'){
-						loadData.tabs[index].expectedThumbCount = (qty ? qty-1 : total > 4 ? 3 : total -1 ); 
+					if(typeof loadData.expectedThumbCount == 'undefined'){
+						
+						// TODO - hard-coded "4" - shouldn't we use inView()   ????
+
+						loadData.expectedThumbCount = (qty ? qty-1 : mltTotal > 4 ? 3 : mltTotal -1 ); 
 					}
 					
-					loadData.tabs[index].loadSize = (qty ? qty : 4);
+					// TODO - hard-coded "4" - shouldn't we use inView()   ????
+
+					loadData.loadSize = (qty ? qty : 4);
 					
 					$.ajax({
 						"url":				url.replace(/&quot;/g, '"'),
@@ -1410,7 +1407,7 @@ eu.europeana.fulldoc = {
 			
 		
 			//  Make accordion-tabs for carousels - change callback makes initial load if needed
-			
+			/*
 			eu.europeana.fulldoc.mltTabs = new AccordionTabs( 
 				$('#mlt'),
 				function(index){
@@ -1425,8 +1422,143 @@ eu.europeana.fulldoc = {
 					}
 				}
 			);
+			*/
+
+			var initIfBigEnough = function(){
+				var mobile = $('#mobile-menu').is(':visible');
+				if(!mobile){
+					if(  $('#more-like-this').find('#mlt-carousel').length == 0 ){
+						
+						$('#more-like-this').empty();
+						$('<div class="carousel europeana-carousel" id="mlt-carousel">').appendTo($('#more-like-this'));
+						loadMltData(getQuery(), processResult);
+
+					}
+				}				
+			};
+			
+			$(window).euRsz(function(){
+				initIfBigEnough();
+			});
+			
+			initIfBigEnough();
+
+			
+		} // end if mlt
+
+		
+		/**
+		 * 
+		 * geo-location
+		 * 
+		 * */
+		if(false){
+			
+			var longitude = $('#longitude');
+			var latitude  = $('#latitude');
+			
+			if(longitude.length && latitude.length){
+				
+				longitude = longitude.val();
+				latitude =  latitude.val();
+	
+				if( ! [latitude, longitude].join(',').match(/^\s*-?\d+\.\d+\,\s?-?\d+\.\d+\s*$/) ){
+					console.log('invalid coordinates (' + latitude + ', ' + longitude + ') - exit map');
+					return;
+				}
+				
+				longitude = parseFloat(longitude);
+				latitude =  parseFloat(latitude);
+	
+				var path = eu.europeana.vars.branding + '/js/com/leaflet/';
+	
+				$.each(
+					['leaflet.min.css',
+				     'leaflet.ie.css',
+				     'Leaflet-MiniMap-master/src/Control.MiniMap.css'],
+				    function(i, stylesheet){
+						$('head').append('<link rel="stylesheet" href="' + path + stylesheet + '" type="text/css"/>');				
+					}
+				);
+	
+				var initMap = function(){
+					$('#item-details').append('<div id="map-info">');
+					$('#item-details').append('<div id="map">');
+	    			var mqTilesAttr = 'Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />';
+	    			
+	    			// map quest
+	    			var mq = new L.TileLayer(
+	    				'http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png',
+	    				{
+	    					minZoom: 3,
+	    					maxZoom: 18,
+	    					attribution: mqTilesAttr,
+	    					subdomains: '1234',
+	    					type: 'osm'
+	    				}
+	    			);
+	    			var map = L.map('map', {
+	    			    center: new L.LatLng(latitude, longitude),
+	    			    zoomControl: true,
+	    			    zoom: 5
+	    			});
+	    			map.addLayer(mq);
+	    			
+	    			var placeName = $('input[name="placename"]').length ? 
+	    					$('input[name="placename"]').length > 1 ? 
+	    							$('input[name="placename"]').map(function() { return this.value; }).get().join(', ') 
+	    							:
+	    							$('input[name="placename"]').val() 
+	    					:
+	  				'';  
+	    			$('#map-info').html(placeName + ' ' + eu.europeana.vars.map.coordinates + ': ' +  latitude + ' ' +  (latitude > 0 ? eu.europeana.vars.map.north : eu.europeana.vars.map.south)  + ', ' +  longitude + ' ' + (longitude > 0 ? eu.europeana.vars.map.east : eu.europeana.vars.map.west ) 	);
+	    			
+	    			
+	    			/*
+	          			Vienna co-ordinates: 48.2083' N, 16.3731' E
+	          
+	          			Vienna map_coordinates_t: (map_compass_N_t | map_compass_S_t), (map_compass_E_t | map_compass_W_t) 
+	
+	    			 */
+	
+				};
+	
+				/*
+				var dependencies = [
+				    'http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;key=AIzaSyARYUuCXOrUv11afTLg72TqBN2n-o4XmCI',
+					'leaflet.js',
+					'Leaflet-MiniMap-master/src/Control.MiniMap.js',
+					'Leaflet-Pan/L.Control.Pan.js',
+					'leaflet-plugins-master/layer/tile/Google.js',				
+				];
+				 */
+	
+				js.loader.loadScripts([
+	   			    {
+						"file" : 'leaflet.js',
+						"path" : path,
+						"name" : "leaflet"
+					},
+				    {
+						"file" : 'Leaflet-Pan/L.Control.Pan.js',
+						"path" : path,
+						"name" : "pan",
+						dependencies : ["leaflet"]
+					},
+					{
+						"path" : path,
+						"file" : "Leaflet-MiniMap-master/src/Control.MiniMap.js",
+						dependencies : ["leaflet", "pan"],
+						callback : function() {
+							initMap();
+						}
+					}
+				]);
+	
+			}
 		}
-	},
+		
+	}
 	
 };
 

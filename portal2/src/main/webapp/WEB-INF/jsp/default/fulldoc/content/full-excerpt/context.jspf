@@ -188,9 +188,11 @@ div.concept ul li p {margin: 0; padding: 0}
             <c:set var="location" value="" />
             <c:if test="${!empty place.latitude}">
               <c:set var="location" value="latitude: ${place.latitude}" />
+              <input type="hidden" id="latitude" value="${place.latitude}">
             </c:if>
             <c:if test="${!empty place.longitude}">
               <c:if test="${fn:length(location) > 0}"><c:set var="location">${location} &mdash;&nbsp;</c:set></c:if>
+              <input type="hidden" id="longitude" value="${place.longitude}">
               <c:set var="location">${location}longitude: ${place.longitude}</c:set>
             </c:if>
             <c:if test="${!empty place.altitude}">
@@ -247,6 +249,7 @@ div.concept ul li p {margin: 0; padding: 0}
             <a href="${searchUrl}" id="${fn:replace(timespan.about, '/', '.')}">
               <c:forEach items="${timespan.labels}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>
+                <input type="hidden" name="placename" value="${label}">
               </c:forEach>
             </a>
             <a href="${timespan.about}" target="blank">[&rarr;]</a>

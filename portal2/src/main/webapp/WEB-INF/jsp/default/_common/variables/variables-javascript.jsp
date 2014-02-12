@@ -68,6 +68,12 @@
 	</c:choose>
 </c:set>
 
+<c:set var="mapCoordinates"><spring:message code="map_coordinates_t" /></c:set>
+<c:set var="mapCompassN"><spring:message code="map_compass_N_t" /></c:set>
+<c:set var="mapCompassS"><spring:message code="map_compass_S_t" /></c:set>
+<c:set var="mapCompassE"><spring:message code="map_compass_E_t" /></c:set>
+<c:set var="mapCompassW"><spring:message code="map_compass_W_t" /></c:set>
+
 <script type="text/javascript">
 
 window.eu = { europeana : { vars : { msg : { cite:{} }, item : {}, suppresResize: false } } };
@@ -160,6 +166,15 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			</c:otherwise>
 		</c:choose>
 
+		eu.europeana.vars.map = {
+				"coordinates": "${mapCoordinates}",
+				"north":       "${mapCompassN}",
+				"south":       "${mapCompassS}",
+				"east":        "${mapCompassE}",
+				"west":        "${mapCompassW}"
+		};
+
+		
 		// Translation data for lightbox triggers: map lightboxble type to message
 		eu.europeana.vars.external = {
 			triggers: {
