@@ -585,3 +585,50 @@
 	font-weight: bold;
 	font-style: italic;
 }
+
+#main-menu-logo {
+	float: left;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url( '/portal/themes/default/images/logos/europeana/europeana-logo-white.png' );
+	width: 40px;
+	height: 48px;
+}
+
+#cog {
+	float: right;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url( '/portal/themes/default/images/icons/psd-gears-icons.png' );
+	width: 24px;
+	height: 24px;
+	text-indent: -9999px;
+	opacity: 0.7;
+	transition: opacity .3s ease-in;
+	-o-transition: opacity .3s ease-in;
+	-ms-transition: opacity .3s ease-in;
+	-moz-transition: opacity .3s ease-in;
+	-webkit-transition: opacity .3s ease-in;
+}
+
+#cog:hover {
+	opacity: 1.0;
+	transition: opacity .3s ease-in;
+	-o-transition: opacity .3s ease-in;
+	-ms-transition: opacity .3s ease-in;
+	-moz-transition: opacity .3s ease-in;
+	-webkit-transition: opacity .3s ease-in;
+}
+
+#language-selector {
+	float: right;
+}
+
+/* override line 364 in this file */
+.footer-bottom-links div:first-child {
+	margin-bottom: auto;
+}
+
+div.footer-bottom-links {
+	padding-bottom: 1em;
+}
