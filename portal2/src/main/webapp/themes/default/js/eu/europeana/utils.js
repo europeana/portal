@@ -168,7 +168,6 @@ js.utils = {
 	},
 	
 	phoneTest : function(){
-		console.log('phoneTest (' + $('.phone-test').length + ') ' + $('.phone-test').width() );
 		return $('.phone-test').width();
 	},
 	
