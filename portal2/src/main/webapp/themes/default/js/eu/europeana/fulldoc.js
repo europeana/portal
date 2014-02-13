@@ -240,14 +240,19 @@ eu.europeana.fulldoc = {
 		console.log('toggle ' + $elm.parent().next()[0].nodeName )
 		$elm.parent().next().slideToggle();
 		
-		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {
-			
+		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {			
 			$elm.removeClass(eu.europeana.fulldoc.more_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.less_icon_class);
-		} else {
-			
+		}
+		else {			
 			$elm.removeClass(eu.europeana.fulldoc.less_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.more_icon_class);
+		}
+		if ( $elm.html() == eu.europeana.vars.show.more) {			
+			$elm.html(eu.europeana.vars.show.less);
+		}
+		else {
+			$elm.html(eu.europeana.vars.show.more);
 		}
 		
 	},

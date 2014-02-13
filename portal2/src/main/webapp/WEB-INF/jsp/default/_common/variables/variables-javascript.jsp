@@ -43,6 +43,8 @@
 <c:set var="search_save_failed"><spring:message code="SearchSavedFailed_t" /></c:set>
 <c:set var="see_less"><spring:message code="SeeLess_t" /></c:set>
 <c:set var="see_more"><spring:message code="SeeMore_t" /></c:set>
+<c:set var="showMore"><spring:message code="enrichment_category_more_info_t" /></c:set>
+<c:set var="showLess"><spring:message code="enrichment_category_less_info_t" /></c:set>
 <c:set var="select_language"><spring:message code="SelectLanguage_t" /></c:set>
 <c:set var="save_apikey"><spring:message code="myeuropeana_appName_saved_t" /></c:set>
 <c:set var="save_apikey_failed"><spring:message code="myeuropeana_appName_save_failed_t" /></c:set>
@@ -135,6 +137,11 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
 		eu.europeana.vars.msg.more = '${see_more}';
 		eu.europeana.vars.msg.less = '${see_less}';
+		
+
+		eu.europeana.vars.show = {};
+		eu.europeana.vars.show.more = '${showMore}';
+		eu.europeana.vars.show.less = '${showLess}';
 		eu.europeana.vars.msg.select_language = '${select_language}';
 		<c:if test="${model[googleTranslateId]}">
 			eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
@@ -166,6 +173,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			</c:otherwise>
 		</c:choose>
 
+		
 		eu.europeana.vars.map = {
 				"coordinates": "${mapCoordinates}",
 				"north":       "${mapCompassN}",
