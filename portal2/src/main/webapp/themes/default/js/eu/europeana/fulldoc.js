@@ -99,7 +99,7 @@ eu.europeana.fulldoc = {
 				// comment out this line to save 300 - 385 milliseconds of initial load time
 				// leave this line in place to have the translator automatically opened 
 				function(){
-					if(! $("#mobile-menu").is(":visible") ){
+					if(! js.utils.phoneTest() ){
 						$("#translate-item").trigger('click');
 						$("#translate-item").unbind('click');
 						$("#translate-item").bind('click', function(e){e.preventDefault();});
@@ -481,7 +481,7 @@ eu.europeana.fulldoc = {
 							)
 						)
 						&&
-						!$("#mobile-menu").is(":visible");
+						!js.utils.phoneTest();
 		
 		
 		if(e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel){
@@ -662,7 +662,7 @@ eu.europeana.fulldoc = {
 	 * */
 	showExternalTrigger : function(show, type, gallery){
 		
-		if($("#mobile-menu").is(":visible") ){
+		if(js.utils.phoneTest()){
 			return;
 		}
 		
@@ -709,7 +709,7 @@ eu.europeana.fulldoc = {
 		}]);		  
 		*/
 		
-		if(!window.showingPhone()){
+		if(!js.utils.phoneTest()){
 			var lightboxJsFile = 'lightbox' + js.min_suffix + '.js' + js.cache_helper;
 			
 			if( js.loader.loader_status[lightboxJsFile]){
@@ -922,7 +922,7 @@ eu.europeana.fulldoc = {
 							eu.europeana.fulldoc.getCarousel1Height = function(){
 								var tallestImageH = $("#carousel-1-img-measure").height();
 								var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
-								if( window.showingPhone() ){
+								if( js.utils.phoneTest() ){
 									galleriaOffsetY	= 120;	
 								}
 								
@@ -1415,7 +1415,7 @@ eu.europeana.fulldoc = {
 			}
 
 			var initIfBigEnough = function(){
-				var mobile = $('#mobile-menu').is(':visible');
+				var mobile = js.utils.phoneTest();
 				if(!mobile){
 					if(  $('#more-like-this').find('#mlt-carousel').length == 0 ){
 						

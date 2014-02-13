@@ -3,6 +3,13 @@
 </c:if>
 
 <div id="header" role="banner" class="row">
+
+	<%-- we used to use the presence of the "hamburger" for javascript to detect we were on phones.
+		 that broke when we moved to the cog.
+		 this offscreen-div together with the styling defined in header.css and the phoneTest fn defined in utils replaces that
+	--%>
+	<div class="phone-test"></div>
+
 	<div id="logo-and-search">
 		<c:if test="${empty isSearchWidget}">
 			<div id="logo">

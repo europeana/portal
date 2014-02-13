@@ -33,7 +33,7 @@ eu.europeana.header = {
 		$('.submit-cell button').css("border-left",	"solid 1px #4C7ECF");	// do this after the resize to stop 1px gap in FF
 	
 
-		this.initResponsiveUtility();
+		//this.initResponsiveUtility();
 		this.addLanguageChangeHandler();
 		//this.addRefineSearchClickHandler();		
 		this.addAjaxMethods();
@@ -148,14 +148,9 @@ eu.europeana.header = {
 		else if(eu.europeana.vars.page_name == 'login.html'){
 		//	alert("login ");
 		}
-
-
 		
 	},
 	
-	initResponsiveUtility : function(){
-		window.showingPhone = function(){ return $("#mobile-menu").is(":visible"); };
-	},
 	
 	setCookie: function(val){
 		document.cookie = "europeana_rows=" + val;
@@ -194,7 +189,7 @@ eu.europeana.header = {
 					rowsField.val(cookie);
 				}
 				else{
-					if( $("#mobile-menu").is(":visible") ){
+					if( js.utils.phoneTest() ){
 						rowsField.val("12");
 					}
 					else{

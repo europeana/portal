@@ -109,15 +109,7 @@ eu.europeana.citation = {
 		var self = e.data.self;
 		
 		var callback = function(index, id){
-			//if($("#mobile-menu").is(":visible") ){
-				
-				
-				
-				eu.europeana.citation.selectElementContents(   $(self.options.container).find('.section.active .content-inner .copy')[0]   );					
-				//}
-				//else{
-				//eu.europeana.citation.selectElementContents($(self.options.container).find('.tab_content>.copy')[0]);
-				//}
+			eu.europeana.citation.selectElementContents(   $(self.options.container).find('.section.active .content-inner .copy')[0]   );					
 		};
 		eu.europeana.citation.tabs = new AccordionTabs( $('#citation-tabs'), callback );			
 		

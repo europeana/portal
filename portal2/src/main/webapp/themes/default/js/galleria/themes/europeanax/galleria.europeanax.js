@@ -309,7 +309,7 @@ var europeanaTheme = {
 				 	maxItems	= parseInt(		(containerWidth + 2 * minMargin) / (itemWidth + (2 * minMargin))		);
 					maxItems	= Math.max(maxItems, 1); // avoid division by zero!
 
-				if(window.showingPhone()){
+				if(js.utils.phoneTest()){
 					maxItems = 1;
 				}
 					
@@ -328,8 +328,7 @@ var europeanaTheme = {
 
 				var imgMargin = newMargin;
 				
-				if(!window.showingPhone()){
-// PHONE TEST					
+				if(!js.utils.phoneTest()){
 					thumbnailsList.css("margin",	"0 -" + imgMargin + "px");
 				}
 				else{
@@ -496,7 +495,7 @@ var europeanaTheme = {
 	   			container.parent().css	("height", containerCalculatedHeight + "px");	// resize container to make space for bigger thumbs
 	   			container.css			("height", containerCalculatedHeight + "px");
 	
-	   			if( window.showingPhone() ){
+	   			if( js.utils.phoneTest() ){
 		   			stage.css("bottom", stageBottomPhone + "px");
 	   			}
 	   			else{

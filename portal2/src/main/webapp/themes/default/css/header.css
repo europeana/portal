@@ -92,10 +92,19 @@
 }
 */
 
-
+.phone-test{
+	width:    1px;
+	position: absolute;
+	top:      -500em;
+	height:   0px;
+}
 
 @media only screen and ( min-width:48em ){
 
+	.phone-test{
+		width: 0px;
+	}
+	
 	.logo,
 	.logo-t-and-c{
 		width:				206px;
