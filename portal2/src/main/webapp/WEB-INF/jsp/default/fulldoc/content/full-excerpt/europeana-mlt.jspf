@@ -16,9 +16,11 @@
 	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
 
 	<div id="more-like-this">
-		${model.europeanaMlt.categories[0].urls[0].title  }
+		<c:set var="doc" value="${model.europeanaMlt.categories[0].urls[0]}" />
+		${doc.title}
 		<br/>
-		${model.europeanaMlt.categories[0].urls[0].id  }
+		${doc.id}
+		<a href="${fn:replace(doc.fullDocUrl, '"', '&quot;')}" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
 	</div>
 
 <%--

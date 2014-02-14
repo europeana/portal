@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
@@ -117,19 +118,7 @@ public class ObjectController {
 	@Resource
 	private ReloadableResourceBundleMessageSource messageSource;
 
-	// public static final Map<String, List<String>> SEE_ALSO_FIELDS = new LinkedHashMap<String, List<String>>();
 	public static final Map<String, MltConfiguration> SEE_ALSO_FIELDS = new LinkedHashMap<String, MltConfiguration>();
-	static {
-		// proxy_dc_title, proxy_dcterms_alternative
-		SEE_ALSO_FIELDS.put("title", new MltConfiguration("title", "mlt_title_t", 1.0, "DcTitle", "DctermsAlternative"));
-		// proxy_dc_creator, ag_skos_prefLabel -- missing: ag_skos_altLabel, ag_foaf_name
-		SEE_ALSO_FIELDS.put("who", new MltConfiguration("who", "mlt_who_t", 1.0, "DcCreator", "AgentPrefLabel"));
-		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel, cc_skos_broaderLabel, cc_skos_prefLabel
-		SEE_ALSO_FIELDS.put("what", new MltConfiguration("what", "mlt_what_t", 1.0, 
-				"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel"));
-		SEE_ALSO_FIELDS.put("DATA_PROVIDER", new MltConfiguration("DATA_PROVIDER", "mlt_provider_t", 1.0, "DataProvider"));
-		SEE_ALSO_FIELDS.put("PROVIDER", new MltConfiguration("PROVIDER", "mlt_data_provider_t", 1.0, "EdmProvider"));
-	};
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
@@ -149,6 +138,11 @@ public class ObjectController {
 			Locale locale) throws EuropeanaQueryException {
 
 		long t0 = (new Date()).getTime();
+
+		if (SEE_ALSO_FIELDS.isEmpty()) {
+			initializeMltConfiguration();
+		}
+
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");
 		if (_qf != null && _qf.length != qf.length) {
@@ -250,7 +244,7 @@ public class ObjectController {
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model.getSeeAlsoCollector()));
 			if (showEuropeanaMlt) {
 				model.setMltCollector(createMltCollector(fullBean));
-				model.setEuropeanaMlt(createEuropeanaMlt(model.getMltCollector(), fullBean.getAbout()));
+				model.setEuropeanaMlt(createEuropeanaMlt(model, fullBean.getAbout()));
 			}
 			if (log.isDebugEnabled()) {
 				long tSeeAlso1 = (new Date()).getTime();
@@ -266,6 +260,23 @@ public class ObjectController {
 		}
 
 		return page;
+	}
+
+	private void initializeMltConfiguration() {
+		// proxy_dc_title, proxy_dcterms_alternative
+		SEE_ALSO_FIELDS.put("title",
+			new MltConfiguration("title", "mlt_title_t", config.getWeightTitle(), "DcTitle", "DctermsAlternative"));
+		// proxy_dc_creator, ag_skos_prefLabel -- missing: ag_skos_altLabel, ag_foaf_name
+		SEE_ALSO_FIELDS.put("who",
+			new MltConfiguration("who", "mlt_who_t", config.getWeightWho(), "DcCreator", "AgentPrefLabel"));
+		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel, cc_skos_broaderLabel, cc_skos_prefLabel
+		SEE_ALSO_FIELDS.put("what",
+			new MltConfiguration("what", "mlt_what_t", config.getWeightWhat(),
+				"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel"));
+		SEE_ALSO_FIELDS.put("DATA_PROVIDER",
+			new MltConfiguration("DATA_PROVIDER", "mlt_provider_t", config.getWeightDataProvider(), "DataProvider"));
+		SEE_ALSO_FIELDS.put("PROVIDER",
+			new MltConfiguration("PROVIDER", "mlt_data_provider_t", config.getWeightProvider(), "EdmProvider"));
 	}
 
 	/**
@@ -410,7 +421,8 @@ public class ObjectController {
 		return seeAlsoSuggestions;
 	}
 
-	private EuropeanaMlt createEuropeanaMlt(MltCollector mltCollector, String europeanaId) {
+	private EuropeanaMlt createEuropeanaMlt(FullDocPage model, String europeanaId) {
+		MltCollector mltCollector = model.getMltCollector();
 		config.getSeeAlsoTranslations();
 		long tSeeAlso0 = (new Date()).getTime();
 		EuropeanaMlt mlt = new EuropeanaMlt();
@@ -433,8 +445,18 @@ public class ObjectController {
 		ResultSet<? extends BriefBean> results = searchMltItem(query);
 		for (BriefBean bean : results.getResults()) {
 			if (!bean.getId().equals(europeanaId)) {
-				String title = (StringArrayUtils.isNotBlank(bean.getTitle()) ? bean.getTitle()[0] : bean.getId());
-				category.addUrl(new EuropeanaMltLink(bean.getId(), title));
+				BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
+				String title = bean.getId();
+				if (StringArrayUtils.isNotBlank(doc.getTitleBidi())) {
+					for (String t : doc.getTitleBidi()) {
+						if (StringUtils.isNotBlank(t)) {
+							title = t;
+							break;
+						}
+					}
+				}
+				String thumbnail = doc.getThumbnail();
+				category.addUrl(new EuropeanaMltLink(bean.getId(), title, doc.getFullDocUrl(), thumbnail));
 			}
 		}
 		category.addResultSize(results.getResultSize());

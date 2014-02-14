@@ -29,7 +29,7 @@ import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
 import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 
-public abstract class SearchPreparation extends SearchData{
+public abstract class SearchPreparation extends SearchData {
 
 	/**
 	 * pack into decorator class
