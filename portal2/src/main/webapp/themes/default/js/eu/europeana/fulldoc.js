@@ -1266,8 +1266,13 @@ eu.europeana.fulldoc = {
 				var allGalleries = Galleria.get();
 				loadData.carousel = allGalleries[allGalleries.length-1];
 
-//				alert('ADDED A CAROUSEL TO [' + index + ']  - length  = ' + length + ' ( ' + allGalleries + ')    ' + (typeof index)  + '\n\n  ' + loadData.tabs[index].carousel)
 			} // end carouselInit()
+
+			
+			// load all link
+			var getLoadAllLink = function(){
+				return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
+			}
 
 
 			// function executed on ajax return
@@ -1343,12 +1348,14 @@ eu.europeana.fulldoc = {
 					var allGalleries = Galleria.get();
 					loadData.carousel = allGalleries[allGalleries.length-1];
 				}
-
 				
 				// load all link
-				if(data.totalResults > 12){
+				//if(data.totalResults > 12){
+				if(data.totalResults > fnInView() ){
 					if(typeof loadData.loaded == 'undefined'){
-						section.append('<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>');
+						if( $('.load-all').length ==0 ){
+							section.append(getLoadAllLink());							
+						}
 					}
 				}
 
@@ -1374,24 +1381,16 @@ eu.europeana.fulldoc = {
 						url = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo";
 					}
 					
-					url += '&query='	+ query;  //decodeURIComponent(query);
+					url += '&query='	+ query;
 					url += '&start='	+ (start ? start : 1);
-					
-					// TODO - hard-coded "4" - shouldn't we use inView()   ????
-					
-					url += '&rows='		+ (qty ? qty : mltTotal > 4 ? 4 : mltTotal);
+					url += '&rows='		+ (qty ? qty : mltTotal > fnInView() ? fnInView() : mltTotal);
 					url += '&profile=minimal';
 					
 					if(typeof loadData.expectedThumbCount == 'undefined'){
-						
-						// TODO - hard-coded "4" - shouldn't we use inView()   ????
-
-						loadData.expectedThumbCount = (qty ? qty-1 : mltTotal > 4 ? 3 : mltTotal -1 ); 
+						loadData.expectedThumbCount = (qty ? qty-1 : mltTotal > fnInView() ? fnInView()-1 : mltTotal -1 ); 
 					}
 					
-					// TODO - hard-coded "4" - shouldn't we use inView()   ????
-
-					loadData.loadSize = (qty ? qty : 4);
+					loadData.loadSize = (qty ? qty : fnInView());
 					
 					$.ajax({
 						"url":				url.replace(/&quot;/g, '"'),
@@ -1416,7 +1415,20 @@ eu.europeana.fulldoc = {
 
 			var initIfBigEnough = function(){
 				var mobile = js.utils.phoneTest();
-				if(!mobile){
+				
+				if(mobile){
+					var sel = '.mlt-title';
+					var mltEllipsis = new Ellipsis($(sel));
+
+					mltEllipsis.respond();
+
+					if(mltTotal > 1){						
+						if( $('.load-all').length ==0 ){
+							$('#more-like-this').append(getLoadAllLink());
+						}
+					}
+				}
+				else{
 					if(  $('#more-like-this').find('#mlt-carousel').length == 0 ){
 						
 						$('#more-like-this').empty();
@@ -1430,9 +1442,7 @@ eu.europeana.fulldoc = {
 			$(window).euRsz(function(){
 				initIfBigEnough();
 			});
-			
 			initIfBigEnough();
-
 			
 		} // end if mlt
 

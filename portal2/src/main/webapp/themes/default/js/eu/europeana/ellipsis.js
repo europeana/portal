@@ -18,6 +18,9 @@ var Ellipsis = function(cmp, ops, onShow) {
 
 
 	var fn = function(){
+		if(typeof $inner[0] == 'undefined'){
+			return;
+		}
 		return ( $inner[0].offsetHeight > $cmp.height()+3 );/* chrome +3 for border */
 	};
 

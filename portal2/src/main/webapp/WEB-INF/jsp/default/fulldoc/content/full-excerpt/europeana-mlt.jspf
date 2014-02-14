@@ -16,50 +16,61 @@
 	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
 
 	<div id="more-like-this">
-		<c:set var="doc" value="${model.europeanaMlt.categories[0].urls[0]}" />
-		${doc.title}
-		<br/>
-		${doc.id}
-		<a href="${fn:replace(doc.fullDocUrl, '"', '&quot;')}" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
-	</div>
-
-<%--
-	<div id="mlt" class="accordion-tabs">
-
-		<c:forEach items="${model.europeanaMlt.categories}" var="category" varStatus="catStatus">
-
-			<c:set var="api_query">${fn:replace(category.query, "\"", "&quot;")}</c:set>
-
-			<a class="tab-header">
-				<spring:message code="${category.translationKey}" />: ${category.name} (${category.totalResults-1})
-				
-				
-				<input	id="similiar-category-${catStatus.index}"
-						type="hidden"
-						class="query"
-						data-total="${category.totalResults-1}"
-						value="${   fn:escapeXml( fn:replace(api_query, "\\&", "%26") )}">
-			</a>
-
-			<div class="section">
-				<div class="content">
-					<div class="content-inner">
-						<ul>
-							<c:forEach items="${category.urls}" var="link">
-								<c:url var="url" value="/record${link.id}.html">
-									<c:param name="query" value="${category.query}" />
-									<c:param name="mlt" value="${model.showEuropeanaMlt}" />
-								</c:url>
-								<!-- #312: the fix for special characters was to REMOVE fn:escapeXML and just output the value directly. -->
-								<li><a class="europeana" dir="ltr" href="${url}">${link.title}</a></li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
-			</div>
+		<style>
+			.mlt-title{
+				border-radius:		0 0 0.5em 0.5em;
+				color:				#fff;
+				background-color:	rgba(0, 0, 0, 0.698);
+				bottom:				0;
+				height:				2.7em;
+				max-height:			2.7em;
+				position:			absolute;
+				width:				100%;
+				text-align:			left;
+				padding:			0.2em;
+			}
 			
-		</c:forEach>
+			.mlt-single-wrapper{
+				margin:             auto;
+				border:             1px solid #E4E4E4 !important;
+				border-radius:      0.5em;			
+				position:			relative;	
+				text-align:			center;
+			}
+
+			.mlt-title,
+			.mlt-single-wrapper{
+				box-sizing:			border-box;
+				-moz-box-sizing:	border-box;
+				-webkit-box-sizing:	border-box;
+			}
+			.mlt-single-wrapper,
+			.mlt-single-wrapper a{
+				width:              200px;
+				height:             200px;
+			}
+			
+			.mlt-single-wrapper a{
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			.mlt-single-wrapper img{
+				vertical-align:     middle;
+				margin-bottom:	2em;
+			}
+		</style>
+		<c:set var="doc" value="${model.europeanaMlt.categories[0].urls[0]}" />
+		<div class="mlt-single-wrapper">
+			<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
+			
+			<div class="mlt-title">
+				${doc.title} which may get bigger than the space.
+			</div>
+		</div>
+
+		
 	</div>
- --%>
+ 
  
 </c:if>
