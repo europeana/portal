@@ -22,7 +22,7 @@
 			<c:set var="qHref">${fn:replace(model.query, '"', '&quot;')}${fn:replace(facet_item.url, '"', '&quot;')}${rowsParam}</c:set>
 			<a href="/${model.portalName}/${model.pageName}?query=${fn:replace(qHref, '#', '%23')}"
 				title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-				<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
+				<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline">${label} (${facet_item.count}) </label>
 			</a>
 		</h4>
 	</li>

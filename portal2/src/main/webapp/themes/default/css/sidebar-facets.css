@@ -39,7 +39,7 @@
 }
 
 #filter-search>li>ul>li h4{
-	padding-left: 1.25em;
+	padding-left: 1.5em;
 }
 
 /*
@@ -236,11 +236,6 @@ a.action-link span,
 #filter-search #refinements{
 	overflow:	hidden;	
 	display:block;
-}
-
-
-#filter-search li.data-provider{
-	display:	none;
 }
 
 #filter-search h4 {

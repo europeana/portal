@@ -53,17 +53,6 @@ eu.europeana.search = {
 			return eu.europeana.search.checkKeywordSupplied();
 		});
 		
-		$(window).bind('collapsibleExpanded',
-			function(event, elements){
-				var providerFacet = $('#filter-search>li.provider')[0];
-				$(elements).each(function(i, ob){
-					if(providerFacet == ob){
-						$('#filter-search>li.data-provider').show();
-					}
-				});
-			}
-		);
-		
 		// make facet checkboxes clickable
 		$("#filter-search li input[type='checkbox']").click(function(){
 			var label = $("#filter-search li label[for='" + $(this).attr('id') + "']");
