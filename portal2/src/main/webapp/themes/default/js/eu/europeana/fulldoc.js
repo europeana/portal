@@ -141,12 +141,7 @@ eu.europeana.fulldoc = {
 
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
-		
-		alert(1);
 		if ( $('#item-tag').val() < 1 ){
-			
-			alert("no val - return");
-
 			return;
 		}
 
@@ -154,8 +149,6 @@ eu.europeana.fulldoc = {
 			saved_tags_count : 0,
 			$saved_tags : $('#saved-tags-count'),
 			success : function() {
-				alert('success');
-
 				var html =
 					'<span id="save-tag-feedback">' +
 						eu.europeana.vars.msg.saved_tag +
@@ -166,8 +159,6 @@ eu.europeana.fulldoc = {
 				ajax_feedback.$saved_tags.html( ajax_feedback.saved_tags_count + 1 );
 			},
 			failure : function() {
-				
-				alert('fail');
 				var html =
 					'<span id="save-tag-feedback" class="error">' +
 						eu.europeana.vars.msg.save_tag_failed +
@@ -182,9 +173,7 @@ eu.europeana.fulldoc = {
 			tag : encodeURIComponent( $('#item-tag').val() ),
 			europeanaUri : eu.europeana.vars.item.uri
 		};
-		alert(2);
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-		alert(3);
 	},
 	
 	handleSaveItemClick : function( e ) {
