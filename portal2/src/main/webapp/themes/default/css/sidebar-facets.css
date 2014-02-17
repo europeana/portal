@@ -29,6 +29,26 @@
 	padding:		0;
 }
 
+#filter-search>li>ul>li{
+	position:relative;
+	xxxxxmargin-left:2em;
+}
+#filter-search>li>ul>li h4 input{
+	position:  absolute;
+	left: 0;
+}
+
+#filter-search>li>ul>li h4{
+	padding-left: 1.25em;
+}
+
+/*
+#filter-search>li>ul>li h4 a,
+#filter-search>li>ul>li h4 a label{
+	margin-left: 1.5em;
+}
+*/
+
 #share-subscribe{
 	padding:	0.5em 1em 1em;
 }

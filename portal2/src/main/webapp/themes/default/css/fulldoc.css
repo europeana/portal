@@ -221,10 +221,22 @@ span.icon-share:after{
     white-space:	pre;
 }
 
-.icon-translate,
-label.icon-tag{
+.icon-translate{
 	font-size:		2em;
 	margin-right:	4px;	
+}
+
+.icon-tag{
+	font-size:		2em;
+	margin-right:	4px;	
+}
+
+.icon-tag span{
+	position:relative;
+	left: -0.3em;
+}
+.icon-tag:before{
+	margin-left: 0.2em;
 }
 
 
@@ -300,6 +312,10 @@ a.action-link span,
 .navigation li a{
 	max-height:		1.48em;	/* stop link hover underline pushing content around */
 	line-height:	1.48em;
+}
+
+#item-save-tag{
+	margin-bottom: 1em;
 }
 
 #item-save-tag div{
