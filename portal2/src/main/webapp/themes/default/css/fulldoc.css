@@ -321,7 +321,7 @@ a.action-link span,
 #item-save-tag input[type='text']{
 	border:		1px solid #A0A0A0;
 	display:	table-cell;
-	width:		100%;
+	XXXwidth:		100%;
 }
 
 #item-save-tag input[type='submit']{
@@ -348,7 +348,7 @@ a.action-link span,
 #item-save-tag div span {
 	display: table-cell;
 	white-space: nowrap;
-	width: 1px;
+	XXXwidth: 1px;
 }
 
 
