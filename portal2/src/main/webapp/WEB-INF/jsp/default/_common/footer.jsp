@@ -115,8 +115,4 @@
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_sitemap_url_t"/>" target="<spring:message code="footer_menu_sitemap_target_t"/>" title="<spring:message code="footer_menu_sitemap_title_t"/>"><spring:message code="footer_menu_sitemap_text_t"/></a>
 		<span class="footer-funded-by"><spring:message code="FundedBy_t"/><span class="icon-euflag"></span></span>
 	</div>
-	<c:if test="${!empty model.debug && model.debug}">
-		<%-- Choose a language --%>
-		<%@ include file="/WEB-INF/jsp/default/_common/menus/language.jsp" %>
-	</c:if>
 </div>
