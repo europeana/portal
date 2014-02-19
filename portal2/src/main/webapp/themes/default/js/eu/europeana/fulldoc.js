@@ -1251,10 +1251,13 @@ eu.europeana.fulldoc = {
 						console.log('loadData.total = ' + loadData.total)
 
 		                if( (thisGallery._carousel.current + fnInView() ) <= loadData.total){
+		                	alert('showing right arrow...');
 		                	var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
 		                	rightArrow.removeClass('disabled');
 		                	rightArrow.show();
-		                	alert('showing right arrow');
+		                }
+		                else{
+		                	alert('end of dataset - do not show right arrow...')
 		                }
 					});
 					
