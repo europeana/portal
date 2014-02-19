@@ -983,7 +983,10 @@ eu.europeana.fulldoc = {
 		    	section.find('.galleria-thumbnails').css('top', '1000px');
 		    };
 		    
-			var hideSpinner = function(){
+			var hideSpinner = function(thisGallery){
+				//alert('thisGallery ' + thisGallery)
+				//thisGallery.trigger(Galleria.IDLE_EXIT);
+
 				return;
 				/*
 				var section = $('#mlt-carousel');//$('#more-like-this');
@@ -1148,13 +1151,11 @@ eu.europeana.fulldoc = {
 						});
 							
 						if(!loadData.setup){
-							hideSpinner();
+							hideSpinner(thisGallery);
 							loadData.setup = true;
 						}
+
 						
-						
-						///////////////////////////////////////////////////////////////////////////////////////////
-					
 						// rebind right arrow / extra handler for left arrow
 						$('#more-like-this .carousel').find('.galleria-thumb-nav-left').bind('click', function(e){
 							rightArrow.removeClass('europeana-disabled');							
@@ -1218,7 +1219,7 @@ eu.europeana.fulldoc = {
 
 							xCar.set(prevCurrent, true);
 							thisGallery.setOptions( 'carouselSpeed', oldSpeed);
-							hideSpinner();
+							hideSpinner(thisGallery);
 							xCar.set(loadData.current);
 						}
 						
@@ -1228,7 +1229,6 @@ eu.europeana.fulldoc = {
 						var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
 						
 						if((loadData.current + fnInView()) < loadData.total){
-							
 							if(rightArrow.hasClass('europeana-disabled') ){
 								alert('re-enable here, undoes the fix....');
 							}
@@ -1242,6 +1242,19 @@ eu.europeana.fulldoc = {
 							rightArrow.addClass('europeana-disabled');
 						}
 					}); // end loadFinish
+					
+
+					thisGallery.bind("idle_enter",function(e) {
+
+						console.log('current = ' + thisGallery._carousel.current)
+						console.log('inview = ' + fnInView())
+						console.log('loadData.total = ' + loadData.total)
+
+		                if( (thisGallery._carousel.current + fnInView() ) <= loadData.total){
+		                	var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
+		                	rightArrow.removeClass('disabled');
+		                }
+					});
 					
 				} // end extend
 			};
@@ -1350,7 +1363,6 @@ eu.europeana.fulldoc = {
 				}
 				
 				// load all link
-				//if(data.totalResults > 12){
 				if(data.totalResults > fnInView() ){
 					if(typeof loadData.loaded == 'undefined'){
 						if( $('.load-all').length ==0 ){
@@ -1408,7 +1420,7 @@ eu.europeana.fulldoc = {
 					});
 				}
 				catch(e){
-					hideSpinner();
+					hideSpinner(thisGallery);
 					console.log("Ajax error: " + e);
 				}
 			}
