@@ -52,7 +52,8 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			// set locale message when required
 			Locale browser = request.getLocale();
 			if (!hasCookie(request, "portalLanguage") && 			
-					(browser != null) && !StringUtils.equalsIgnoreCase(browser.getLanguage(), locale.getLanguage())) {
+					(browser != null) && !StringUtils.equalsIgnoreCase(browser.getLanguage(), "undefined") &&
+					!StringUtils.equalsIgnoreCase(browser.getLanguage(), locale.getLanguage())) {
 				String languageLabel = "language_" + browser.getLanguage() + "_t";
 				if (hasMessage(languageLabel)) {
 					model.setBrowserLocale(browser);
