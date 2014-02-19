@@ -1253,6 +1253,8 @@ eu.europeana.fulldoc = {
 		                if( (thisGallery._carousel.current + fnInView() ) <= loadData.total){
 		                	var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
 		                	rightArrow.removeClass('disabled');
+		                	rightArrow.show();
+		                	alert('showing right arrow');
 		                }
 					});
 					
