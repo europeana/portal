@@ -36,8 +36,8 @@
 				<li>
 					<c:choose>
 						<c:when test="${!empty filter.removeLinkUrl}">
-							<a href="${fn:escapeXml(filter.breadcrumbLinkUrl)}" class="europeana">${linkLabel}</a>
-							<a href="${fn:escapeXml(filter.removeLinkUrl)}">
+							<a href="${fn:replace(fn:escapeXml(filter.breadcrumbLinkUrl), '#', '%23')}" class="europeana">${linkLabel}</a>
+							<a href="${fn:replace(fn:escapeXml(filter.removeLinkUrl), '#', '%23')}">
 								<span class="icon-remove">&nbsp;</span>&nbsp;
 							</a>
 						</c:when>
