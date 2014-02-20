@@ -121,6 +121,7 @@ var europeanaTheme = {
 			thisGallery.setEuropeanaInfo(dataSource);			
 			
 			thisGallery.bind("idle_enter",function(e) {
+				
 				if(typeof thisGallery._options.suppressIdle == 'undefined' || !thisGallery._options.suppressIdle){
 					thumbNavRight.hide();
 					thumbNavLeft.hide();
@@ -264,23 +265,23 @@ var europeanaTheme = {
 						var imageMargin = parseInt(firstImage.css('margin-left'));
 						var singleSpan  = 2 * imageMargin + firstImageW; 
 
-//						var expectedOffset = thisGallery._carousel.current * singleSpan * -1;				
 						var expectedOffset = i * singleSpan * -1;				
-
-						
-//						console.log("expectedOffset(i=" + i + ") " + expectedOffset + ' V  ' + thumbs.width() + '  TOTAL = ' + (-1*(thumbs.width() + thumbCW + firstImageW) + (2 * imageMargin))   );
 
 						var maxOffset = thumbs.width() - (thumbCW + imageMargin + firstImageW);
 						
-//						console.log( 'maxOffset ' + maxOffset );
 						
 						if(expectedOffset < -1*maxOffset  ){
-							thumbNavRight.addClass('disabled');
+							if(!thisGallery._options.isIncrementalLoad){
+								thumbNavRight.addClass('disabled');								
+							}
 						}
-						
+
 						if(offset != expectedOffset){
-							thumbs.css('left', expectedOffset + 'px')
+							thumbs.css('left', expectedOffset + 'px');
 						}
+						thisGallery.trigger( Galleria.RESCALE );
+						
+						$('#newsletter-wrapper').html(		$('#newsletter-wrapper').html() + ' RERENDER');
 						thisGallery.europeanaTimer = null;
 						
 					},  thisGallery._options.carouselSpeed ? thisGallery._options.carouselSpeed : 3000);
@@ -600,16 +601,17 @@ var europeanaTheme = {
 
 		// some stuff for non-touch browsers
 		if (! touch ) {
+			
 			this.addIdleState( this.get('image-nav-left'), { left:-50 });
 			this.addIdleState( this.get('image-nav-right'), { right:-50 });
 			
 			this.addIdleState( this.get('counter'), { opacity:0 });
 
-			if(carouselMode){
-				this.addIdleState( this.get('galleria-thumb-nav-left'), { left:-50 });
-				this.addIdleState( this.get('galleria-thumb-nav-right'), { right:-50 });
-			}			
 		}
+		if(carouselMode){
+			this.addIdleState( this.get('galleria-thumb-nav-left'), { left:-50 });
+			this.addIdleState( this.get('galleria-thumb-nav-right'), { right:-50 });
+		}			
 		
 		
 		this.bind('thumbnail', function(e) {

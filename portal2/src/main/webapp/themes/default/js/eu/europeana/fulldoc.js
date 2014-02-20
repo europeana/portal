@@ -962,7 +962,7 @@ eu.europeana.fulldoc = {
 		 * MLT 
 		 * 
 		 * */
-		
+				
 		if(typeof(mlt) != 'undefined'){
 
 			// structure to track what's loaded
@@ -984,9 +984,6 @@ eu.europeana.fulldoc = {
 		    };
 		    
 			var hideSpinner = function(thisGallery){
-				//alert('thisGallery ' + thisGallery)
-				//thisGallery.trigger(Galleria.IDLE_EXIT);
-
 				return;
 				/*
 				var section = $('#mlt-carousel');//$('#more-like-this');
@@ -1052,6 +1049,9 @@ eu.europeana.fulldoc = {
 				imagePan:		false,
 				lightbox:		false,
 				responsive:		true,
+				
+				XXXidleMode: false,
+				isIncrementalLoad: true,
 				suppressIdle:   true,
 
 				thumbnails: 	true,
@@ -1216,11 +1216,13 @@ eu.europeana.fulldoc = {
 							var oldSpeed = thisGallery._options.carouselSpeed;
 
 							thisGallery.setOptions( 'carouselSpeed', 0 );
-
 							xCar.set(prevCurrent, true);
 							thisGallery.setOptions( 'carouselSpeed', oldSpeed);
+
 							hideSpinner(thisGallery);
+							
 							xCar.set(loadData.current);
+							
 						}
 						
 						// Show or hide the "Next" button....
@@ -1246,12 +1248,11 @@ eu.europeana.fulldoc = {
 
 					thisGallery.bind("idle_enter",function(e) {
 
-						console.log('current = ' + thisGallery._carousel.current)
-						console.log('inview = ' + fnInView())
-						console.log('loadData.total = ' + loadData.total)
+						//console.log('current = ' + thisGallery._carousel.current)
+						//console.log('inview = ' + fnInView())
+						//console.log('loadData.total = ' + loadData.total)
 
 		                if( (thisGallery._carousel.current + fnInView() ) <= loadData.total){
-		                	//alert('showing right arrow...');
 		                	var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
 		                	rightArrow.removeClass('disabled');
 		                	rightArrow.show();
@@ -1268,7 +1269,8 @@ eu.europeana.fulldoc = {
 			var carouselInit = function(){
 								
 				// Defines the ops and calls run to init carousel
-
+				
+				
 				// 150 too small for iphone: make min height 200
 				var maxHeight = Math.max(200, loadData.fnGetCarouselDimensions().h) + "px";
 				
@@ -1277,9 +1279,8 @@ eu.europeana.fulldoc = {
 				
 				var mltGalleriaOps = $.extend(true, {}, mltGalleriaOpTemplate);
 				mltGalleriaOps.dataSource = loadData.carouselMltData;
-				//mltGalleriaOps.identifier = index;
-				
-				//console.log(JSON.stringify(mltGalleriaOps));
+
+
 				Galleria.run('#mlt-carousel', mltGalleriaOps);
 				var allGalleries = Galleria.get();
 				loadData.carousel = allGalleries[allGalleries.length-1];
@@ -1392,12 +1393,12 @@ eu.europeana.fulldoc = {
 				
 				try{
 					showSpinner();
-					
+
 					var url = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo';
-					if(url.indexOf('localhost')>-1){
+					if(url.indexOf('localhost')>-1 || url.indexOf('http://192')>-1){
 						url = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo";
 					}
-					
+
 					url += '&query='	+ query;
 					url += '&start='	+ (start ? start : 1);
 					url += '&rows='		+ (qty ? qty : mltTotal > fnInView() ? fnInView() : mltTotal);
@@ -1419,7 +1420,7 @@ eu.europeana.fulldoc = {
 				    		hideSpinner();
 				        },
 				        "success":function(data){
-				        	fn(data);
+			        		fn(data);				        		
 				        	return 0;
 						}
 					});
