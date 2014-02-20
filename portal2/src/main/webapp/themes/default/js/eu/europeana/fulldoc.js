@@ -1198,6 +1198,32 @@ eu.europeana.fulldoc = {
 								}
 			                }
 						});
+
+						
+						// Show or hide the "Next" button....
+						// ...Galleria shows the arrows on idle_exit, so "europeana-disabled" class is used here 
+						var showArrows = function(){
+							var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
+							
+							if((loadData.current + fnInView()) < loadData.total){
+								if(rightArrow.hasClass('europeana-disabled') ){
+									//alert('re-enable here, undoes the fix....');
+								}
+								rightArrow.show();
+								rightArrow.removeClass('disabled');
+								rightArrow.removeClass('europeana-disabled');
+							}
+							else{
+								rightArrow.hide();
+								rightArrow.addClass('disabled');
+								rightArrow.addClass('europeana-disabled');
+							}
+							
+							setTimeout(function(){
+								thisGallery.trigger( Galleria.RESCALE );
+							}, 150);
+						};
+						
 						
 						var x     = thisGallery;
 		                var xOps  = x._options;
@@ -1213,6 +1239,9 @@ eu.europeana.fulldoc = {
 							//console.log('post process [' + index + '] nav kicking in now.... curr1 (internal): ' + xCar.current + ',  curr2 (tracked): ' + loadData.tabs[index].current);
 							
 							var prevCurrent = loadData.current - loadData.loadSize;
+							
+//							alert('prevCurrent ' + prevCurrent);
+							
 							var oldSpeed = thisGallery._options.carouselSpeed;
 
 							thisGallery.setOptions( 'carouselSpeed', 0 );
@@ -1220,29 +1249,21 @@ eu.europeana.fulldoc = {
 							thisGallery.setOptions( 'carouselSpeed', oldSpeed);
 
 							hideSpinner(thisGallery);
-							
-							xCar.set(loadData.current);
-							
+
+							setTimeout(function(){
+								xCar.set(loadData.current);
+								showArrows();
+
+							//	thisGallery.trigger( Galleria.RESCALE );
+
+							}, 1);
+
+	//						alert('current ' + loadData.current);
+
 						}
 						
-						// Show or hide the "Next" button....
-						// ...Galleria shows the arrows on idle_exit, so "europeana-disabled" class is used here 
-						
-						var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
-						
-						if((loadData.current + fnInView()) < loadData.total){
-							if(rightArrow.hasClass('europeana-disabled') ){
-								//alert('re-enable here, undoes the fix....');
-							}
-							rightArrow.show();
-							rightArrow.removeClass('disabled');
-							rightArrow.removeClass('europeana-disabled');
-						}
-						else{
-							rightArrow.hide();
-							rightArrow.addClass('disabled');
-							rightArrow.addClass('europeana-disabled');
-						}
+
+						showArrows();
 					}); // end loadFinish
 					
 

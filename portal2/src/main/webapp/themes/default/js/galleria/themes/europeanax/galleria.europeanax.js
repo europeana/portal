@@ -281,7 +281,7 @@ var europeanaTheme = {
 						}
 						thisGallery.trigger( Galleria.RESCALE );
 						
-						$('#newsletter-wrapper').html(		$('#newsletter-wrapper').html() + ' RERENDER');
+						//$('#newsletter-wrapper').html(		$('#newsletter-wrapper').html() + ' RERENDER');
 						thisGallery.europeanaTimer = null;
 						
 					},  thisGallery._options.carouselSpeed ? thisGallery._options.carouselSpeed : 3000);
