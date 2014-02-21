@@ -227,10 +227,7 @@
 					</label>
 					
 					<div style="display:table">
-						<input type="text" id="item-tag" maxlength="50" />
-						<span>
-							<input type="submit" class="submit-button deans-button-1" value="<spring:message code="Add_t" />" />
-						</span>
+						<input type="text" id="item-tag" maxlength="50" /><span><input type="submit" class="submit-button deans-button-1" value="<spring:message code="Add_t" />" /></span>
 					</div>
 					
 				</fieldset>
