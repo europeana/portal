@@ -1221,7 +1221,7 @@ eu.europeana.fulldoc = {
 							
 							setTimeout(function(){
 								thisGallery.trigger( Galleria.RESCALE );
-							}, 150);
+							}, 350);
 						};
 						
 						
