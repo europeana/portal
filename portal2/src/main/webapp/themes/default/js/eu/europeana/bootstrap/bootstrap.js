@@ -148,7 +148,7 @@ var europeana_bootstrap = function(){
 		loadScripts(scripts);
 	}
 
-	if(eu.europeana.vars.page_name == 'api/registration.html'){
+	if(eu.europeana.vars.page_name == 'api/registration.html' || eu.europeana.vars.page_name ==  'api/registration-success.html'){
 		loadScripts(scripts);
 	}
 
