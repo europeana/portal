@@ -15,60 +15,86 @@
 
 	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
 
-	<div id="more-like-this-wrapper">
-		<div id="more-like-this">
-			<style>
-				.mlt-title{
-					border-radius:		0 0 0.5em 0.5em;
-					color:				#fff;
-					background-color:	rgba(0, 0, 0, 0.698);
-					bottom:				0;
-					height:				2.7em;
-					max-height:			2.7em;
-					position:			absolute;
-					width:				100%;
-					text-align:			left;
-					padding:			0.2em;
-				}
-				
-				.mlt-single-wrapper{
-					margin:             auto;
-					border:             1px solid #E4E4E4 !important;
-					border-radius:      0.5em;			
-					position:			relative;	
-					text-align:			center;
-				}
+	<style>
+		#more-like-this{
+			height: 200px;
+		}
+		.mlt-title{
+			border-radius:		0 0 0.5em 0.5em;
+			color:				#fff;
+			background-color:	rgba(0, 0, 0, 0.698);
+			bottom:				0;
+			height:				2.7em;
+			max-height:			2.7em;
+			position:			absolute;
+			width:				100%;
+			text-align:			left;
+			padding:			0.2em;
+		}
+		
+		.mlt-single-wrapper{
+			margin:             auto;
+			border:             1px solid #E4E4E4 !important;
+			border-radius:      0.5em;			
+			position:			relative;	
+			text-align:			center;
+		}
+
+		.mlt-title,
+		.mlt-single-wrapper{
+			box-sizing:			border-box;
+			-moz-box-sizing:	border-box;
+			-webkit-box-sizing:	border-box;
+		}
+		.mlt-single-wrapper,
+		.mlt-single-wrapper a{
+			width:              200px;
+			height:             200px;
+		}
+		
+		.mlt-single-wrapper a{
+			display: table-cell;
+			vertical-align: middle;
+		}
+		
+		.mlt-single-wrapper img{
+			vertical-align:     middle;
+			margin-bottom:	2em;
+		}
+	</style>
 	
-				.mlt-title,
-				.mlt-single-wrapper{
-					box-sizing:			border-box;
-					-moz-box-sizing:	border-box;
-					-webkit-box-sizing:	border-box;
-				}
-				.mlt-single-wrapper,
-				.mlt-single-wrapper a{
-					width:              200px;
-					height:             200px;
-				}
-				
-				.mlt-single-wrapper a{
-					display: table-cell;
-					vertical-align: middle;
-				}
-				
-				.mlt-single-wrapper img{
-					vertical-align:     middle;
-					margin-bottom:	2em;
-				}
-			</style>
-			<c:set var="doc" value="${model.europeanaMlt.categories[0].urls[0]}" />
-			<div class="mlt-single-wrapper">
-				<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
-				
-				<div class="mlt-title">
-					${doc.title} which may get bigger than the space.
-				</div>
-			</div>		
+	<div id="more-like-this-wrapper">
+		<div id="more-like-this" class="europeana-carousel">
+			<c:forEach items="${model.europeanaMlt.categories[0].urls}" var="doc" varStatus="status">
+			 	<c:choose>
+				      <c:when test="${status.first}">
+						<div class="mlt-single-wrapper">
+							<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" title="${doc.title}"><img src="${doc.thumbnail}" /></a>				
+							<div class="mlt-title">
+								${doc.title}
+							</div>
+						</div>
+				      </c:when>
+				      <c:otherwise>
+							<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" style="visibility:hidden;" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
+				      </c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+			<script type="text/javascript">
+			var mltData = [<%--
+			--%><c:forEach items="${model.europeanaMlt.categories[0].urls}" var="doc" varStatus="status"><%--
+	          --%>{<%--
+	            --%>"thumb": "${doc.thumbnail}",<%--
+	            --%>"title": "${fn:escapeXml(doc.title)}",<%--
+	            --%>"link":  "${fn:replace(doc.fullDocUrl, "\"", '&quot;')}",<%--
+	            --%>"linkTarget": "_self"<%--
+	          --%>}<%--
+	          --%><c:if test="${not status.last}">,</c:if><%--
+			--%></c:forEach>];
+			</script>
+
+			
 		</div>
 	</div>
  
