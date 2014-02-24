@@ -133,6 +133,7 @@ public class ObjectController {
 			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "mlt", required = false, defaultValue = "false") String mlt,
 			@RequestParam(value = "context", required = false, defaultValue = "false") String context,
+			@RequestParam(value = "ho", required = false, defaultValue = "false") String ho,
 			HttpServletRequest request, 
 			HttpServletResponse response, 
 			Locale locale) throws EuropeanaQueryException {
@@ -157,6 +158,10 @@ public class ObjectController {
 		if (StringUtils.isNotBlank(context) && Boolean.parseBoolean(context)) {
 			showContext = true;
 		}
+		boolean showHierarchical = false;
+		if (StringUtils.isNotBlank(ho) && Boolean.parseBoolean(ho)) {
+			showHierarchical = true;
+		}
 
 		FullDocPage model = new FullDocPage();
 		model.setCollectionId(collectionId);
@@ -173,6 +178,7 @@ public class ObjectController {
 		model.setRows(rows);
 		model.setShowEuropeanaMlt(showEuropeanaMlt);
 		model.setShowContext(showContext);
+		model.setShowHierarchical(showHierarchical);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 
 		// TODO: refactor this!!!
