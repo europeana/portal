@@ -1261,7 +1261,8 @@ eu.europeana.fulldoc = {
 
 							//	thisGallery.trigger( Galleria.RESCALE );
 
-							}, thisGallery._options.carouselSpeed);
+							//}, thisGallery._options.carouselSpeed);
+							}, 2000);
 
 	//						alert('current ' + loadData.current);
 
