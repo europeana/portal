@@ -33,6 +33,7 @@ import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.impl.ResponsiveImageCache;
@@ -91,7 +92,9 @@ public class StaticPageController {
 	@RequestMapping("/{pageName}.html")
 	public ModelAndView fetchStaticPage(
 			@PathVariable String pageName,
-			HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale) throws Exception {
 		pageName = "/" + pageName + getSuffix(pageName) + ".html";
 		StaticPage model = new StaticPage();
 
@@ -101,13 +104,16 @@ public class StaticPageController {
 			response.setStatus(404);
 		}
 
+		clickStreamLogger.logStaticPageView(request, PortalPageInfo.STATICPAGE);
 		return page;
 	}
 
 	@RequestMapping("/rights/{pageName}.html")
 	public ModelAndView fetchStaticRightsPage(
 			@PathVariable String pageName,
-			HttpServletResponse response, Locale locale) throws Exception {
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Locale locale) throws Exception {
 		pageName = "/rights/" + pageName + getSuffix(pageName) + ".html";
 		StaticPage model = new StaticPage();
 
@@ -117,6 +123,7 @@ public class StaticPageController {
 			response.setStatus(404);
 		}
 
+		clickStreamLogger.logStaticPageView(request, PortalPageInfo.STATICPAGE);
 		return page;
 	}
 

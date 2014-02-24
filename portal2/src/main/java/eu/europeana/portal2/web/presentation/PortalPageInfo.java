@@ -42,7 +42,7 @@ public enum PortalPageInfo implements PageInfo {
 
 	// Exceptions
 	EXCEPTION("exception.html", "Europeana - Exception", "exception/exception"),
-	ERROR("exception.html","error/error"),
+	ERROR("exception.html", "error/error"),
 
 	// Administration-related things
 	ADMIN("admin.html", "admin/admin"),

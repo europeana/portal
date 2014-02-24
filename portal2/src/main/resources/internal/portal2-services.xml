@@ -27,8 +27,8 @@
 	">
 
 	<bean name="portal2_responsiveImageService" class="eu.europeana.portal2.services.impl.ResponsiveImageServiceImpl"/>
-	
-	<bean name="portal2_clickStreamLogService" class="eu.europeana.portal2.services.impl.ClickStreamLogServiceImpl"/>
+
+	<bean name="portal2_clickStreamLogService" class="eu.europeana.portal2.services.impl.ClickStreamJsonLogServiceImpl"/>
 
 	<bean name="portal2_staticPageCache" class="eu.europeana.portal2.services.impl.StaticPageCache" />
 

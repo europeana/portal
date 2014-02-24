@@ -17,6 +17,7 @@
 
 package eu.europeana.portal2.services.impl;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -27,6 +28,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.joda.time.DateTime;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,6 +43,12 @@ import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
+import eu.europeana.portal2.web.presentation.model.data.submodel.clickstream.AffixDAO;
+import eu.europeana.portal2.web.presentation.model.data.submodel.clickstream.BriefViewDAO;
+import eu.europeana.portal2.web.presentation.model.data.submodel.clickstream.CustomLogDAO;
+import eu.europeana.portal2.web.presentation.model.data.submodel.clickstream.FullViewDAO;
+import eu.europeana.portal2.web.presentation.model.data.submodel.clickstream.LanguageChangeDAO;
+import eu.europeana.portal2.web.presentation.model.data.submodel.clickstream.UserActionDAO;
 import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
 import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
@@ -46,71 +57,86 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 /**
  * @author Sjoerd Siebinga <sjoerd.siebinga@gmail.com>
  */
-public class ClickStreamLogServiceImpl implements ClickStreamLogService {
+public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 
 	@Log
-	private Logger log;
+	private static Logger log;
 
 	public static String VERSION = "2.0";
 
 	@Override
 	public void logUserAction(HttpServletRequest request, UserAction action, ModelAndView page) {
-		log.info(MessageFormat.format("[action={0}, view={1}, {2}]", action, page.getViewName(), printLogAffix(request, page)));
+		UserActionDAO dao = new UserActionDAO();
+		setLogAffix(request, page, dao);
+		dao.setAction(action.toString());
+		dao.setView(page.getViewName());
+		log.info(toJson(dao));
 	}
 
 	/**
 	 * This method is used the basic information from the
 	 * <code>HttpServletRequest<code>
-	 * (@See <code>printLogAffix</code> )
+	 * (@See <code>setLogAffix</code> )
 	 * 
 	 * @param request
 	 *            the HttpServletRequest from the controller
 	 * @param action
 	 *            the UserAction performed in the controller
 	 */
-
 	@Override
 	public void logUserAction(HttpServletRequest request, UserAction action) {
-		log.info(MessageFormat.format("[action={0}, {1}]", action, printLogAffix(request)));
+		UserActionDAO dao = new UserActionDAO();
+		setLogAffix(request, null, dao);
+		dao.setAction(action.toString());
+		log.info(toJson(dao));
 	}
 
 	@Override
 	public void logCustomUserAction(HttpServletRequest request, UserAction action, String logString) {
-		log.info(MessageFormat.format("[action={0}, {2}, {1}]", action, printLogAffix(request), logString));
+		CustomLogDAO dao = new CustomLogDAO();
+		setLogAffix(request, null, dao);
+		dao.setAction(action.toString());
+		dao.setMessage(logString);
+		log.info(toJson(dao));
 	}
 
 	@Override
 	public void logStaticPageView(HttpServletRequest request, PageInfo pageType) {
-		log.info(MessageFormat.format("[action={0}, view={1}, {2}]", UserAction.STATICPAGE, pageType.getTemplate(), printLogAffix(request)));
+		UserActionDAO dao = new UserActionDAO();
+		setLogAffix(request, null, dao);
+		dao.setAction(UserAction.STATICPAGE.toString());
+		dao.setView(pageType.getTemplate());
+		log.info(toJson(dao));
 	}
 
 	@Override
 	public void logLanguageChange(HttpServletRequest request, Locale oldLocale, UserAction languageChange) {
-		log.info(MessageFormat.format("[action={0}, oldLang={1}, {2}]", languageChange, oldLocale.getLanguage(), printLogAffix(request)));
+		LanguageChangeDAO dao = new LanguageChangeDAO();
+		setLogAffix(request, null, dao);
+		dao.setAction(languageChange.toString());
+		dao.setOldLanguage(oldLocale.getLanguage());
+		log.info(toJson(dao));
 	}
 
 	@Override
 	public void logBriefResultView(HttpServletRequest request, BriefBeanView briefBeanView, Query solrQuery, ModelAndView page) {
-		// initial values
-		int pageNr = 1;
-		int nrResults = 0;
-		String languageFacets = null;
-		String countryFacet = null;
-		String query = "";
-		String queryConstraints = "";
+		BriefViewDAO dao = new BriefViewDAO();
+		setLogAffix(request, page, dao);
+		dao.setQueryType(solrQuery.getQueryType());
 
 		if (briefBeanView != null) {
-			pageNr = briefBeanView.getPagination().getPageNumber();
-			nrResults = briefBeanView.getPagination().getNumFound();
-			languageFacets = briefBeanView.getFacetLogs().get("LANGUAGE");
-			countryFacet = briefBeanView.getFacetLogs().get("COUNTRY");
-			query = (briefBeanView.getPagination() == null) ? null : briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery();
+			dao.setPageNr(briefBeanView.getPagination().getPageNumber());
+			dao.setNrResults(briefBeanView.getPagination().getNumFound());
+			dao.setLanguageFacets(briefBeanView.getFacetLogs().get("LANGUAGE"));
+			dao.setCountryFacet(briefBeanView.getFacetLogs().get("COUNTRY"));
+			if (briefBeanView.getPagination() != null) {
+				dao.setQuery(briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery());
+			}
 			if (solrQuery.getRefinements() != null) {
-				queryConstraints = StringUtils.join(solrQuery.getRefinements(), ",");
+				dao.setQueryConstraints(StringUtils.join(solrQuery.getRefinements(), ","));
 			}
 		}
-		// String pageId;
-		// private String state;
+
 		UserAction userAction = UserAction.BRIEF_RESULT;
 		Map<String, String[]> params = RequestUtils.getParameterMap(request); 
 		if (params.containsKey("bt")) {
@@ -123,22 +149,23 @@ public class ClickStreamLogServiceImpl implements ClickStreamLogService {
 				&& request.getParameter("rtr").equalsIgnoreCase("true")) {
 			userAction = UserAction.RETURN_TO_RESULTS;
 		}
-		log.info(MessageFormat.format(
-			"[action={0}, view={1}, query={2}, queryType={7}, queryConstraints=\"{3}\", page={4}, numFound={5}, langFacet={8}, countryFacet={9}, {6}]",
-			userAction, page.getViewName(), query, queryConstraints, pageNr, nrResults,
-			printLogAffix(request, page), solrQuery.getQueryType(), languageFacets, countryFacet));
+		dao.setUserAction(userAction.toString());
+		dao.setView(page.getViewName());
+
+		log.info(toJson(dao));
 	}
 
 	@Override
 	public void logFullResultView(HttpServletRequest request, UserAction userAction, FullBeanView fullResultView, ModelAndView page, String europeanaUri) {
-		String originalQuery = "";
-		String startPage = "";
-		String numFound = "";
+		FullViewDAO dao = new FullViewDAO();
+		setLogAffix(request, page, dao);
+		dao.setEuropeanaUri(europeanaUri);
+
 		try {
 			DocIdWindowPager idWindowPager = fullResultView.getDocIdWindowPager();
-			originalQuery = idWindowPager.getQuery();
-			startPage = String.valueOf(idWindowPager.getFullDocUriInt());
-			numFound = idWindowPager.getDocIdWindow().getHitCount().toString();
+			dao.setQuery(idWindowPager.getQuery());
+			dao.setStartPage(idWindowPager.getFullDocUriInt());
+			dao.setNumFound(idWindowPager.getDocIdWindow().getHitCount());
 		} catch (UnsupportedEncodingException e) {
 			// TODO decide what to do with this error
 		} catch (Exception e) {
@@ -157,18 +184,13 @@ public class ClickStreamLogServiceImpl implements ClickStreamLogService {
 				userAction = UserAction.FULL_RESULT_FROM_TIME_LINE_VIEW;
 			}
 		}
-		log.info(MessageFormat.format("[action={0}, europeana_uri={2}, query={4}, start={3}, numFound={5}, {1}]",
-				userAction, printLogAffix(request, page), europeanaUri, startPage, originalQuery, numFound));
+		dao.setUserAction(userAction.toString());
+		log.info(toJson(dao));
 	}
 
-	private static String printLogAffix(HttpServletRequest request) {
-		return printLogAffix(request, null);
-	}
-
-	private static String printLogAffix(HttpServletRequest request, ModelAndView page) {
-		DateTime date = new DateTime();
-		String ip = request.getRemoteAddr();
-		String reqUrl = getRequestUrl(request);
+	private static void setLogAffix(HttpServletRequest request, ModelAndView page, AffixDAO dao) {
+		dao.setIp(request.getRemoteAddr());
+		dao.setReqUrl(getRequestUrl(request));
 		User user = null;
 		if (page != null) {
 			PageData model = (PageData)page.getModel().get(PageData.PARAM_MODEL);
@@ -180,31 +202,24 @@ public class ClickStreamLogServiceImpl implements ClickStreamLogService {
 		} else {
 			userId = "";
 		}
-		String language = ControllerUtil.getLocale(request).toString();
-		String userAgent = request.getHeader("User-Agent");
-		String referer = request.getHeader("referer");
+		dao.setUserId(userId);
+		dao.setLanguage(ControllerUtil.getLocale(request).toString());
+		dao.setUserAgent(request.getHeader("User-Agent"));
+		dao.setReferer(request.getHeader("referer"));
 		Cookie[] cookies = request.getCookies();
-		String utma = "";
-		String utmb = "";
-		String utmc = "";
-		String trac_session = "";
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equalsIgnoreCase("__utma")) {
-					utma = cookie.getValue();
+					dao.setUtma(cookie.getValue());
 				} else if (cookie.getName().equalsIgnoreCase("__utmb")) {
-					utmb = cookie.getValue();
+					dao.setUtmb(cookie.getValue());
 				} else if (cookie.getName().equalsIgnoreCase("__utmc")) {
-					utmc = cookie.getValue();
-				} else if (cookie.getName().equalsIgnoreCase("trac_session")) {
-					utmc = cookie.getValue();
+					dao.setUtmc(cookie.getValue());
+				} else if (cookie.getName().equalsIgnoreCase("track_session")) {
+					dao.setTracSession(cookie.getValue());
 				}
 			}
 		}
-
-		return MessageFormat.format(
-			"userId={0}, lang={1}, req={4}, date={2}, ip={3}, user-agent={5}, referer={6}, utma={8}, utmb={9}, utmc={10}, trac_session={11}, v={7}", 
-			userId, language, date, ip, reqUrl, userAgent, referer, VERSION, utma, utmb, utmc, trac_session);
 	}
 
 	private static String getRequestUrl(HttpServletRequest request) {
@@ -231,5 +246,20 @@ public class ClickStreamLogServiceImpl implements ClickStreamLogService {
 			queryString = out.toString();
 		}
 		return queryString;
+	}
+
+	private static String toJson(Object object) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.setSerializationInclusion(Inclusion.NON_NULL);
+		try {
+			return objectMapper.writeValueAsString(object);
+		} catch (JsonGenerationException e) {
+			log.error("Json Generation Exception: " + e.getMessage(),e);
+		} catch (JsonMappingException e) {
+			log.error("Json Mapping Exception: " + e.getMessage(),e);
+		} catch (IOException e) {
+			log.error("I/O Exception: " + e.getMessage(),e);
+		}
+		return null;
 	}
 }
