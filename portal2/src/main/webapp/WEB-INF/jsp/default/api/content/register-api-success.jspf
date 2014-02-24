@@ -2,10 +2,12 @@
   <h1><spring:message code="RegisterAPI_t" /></h1>
   <div class="twelve columns">
     <div id="register-success">
-      <p>Congratulation! You successfully registered Europeana API services.</p>
-      <p>Your API Key is <code>${model.apiKey}</code></p>
-      <p>Your Private Key is <code>${model.privateKey}</code></p>
+      <p><spring:message code="myeuropeana_api_success_text_1_t" /></p>
+      <p><spring:message code="myeuropeana_api_success_text_2_t" />: <code>${model.apiKey}</code></p>
+      <p><spring:message code="myeuropeana_api_success_text_3_t" />: <code>${model.privateKey}</code></p>
       <div id="login-response"></div>
     </div>
   </div>
 </div>
+
+
