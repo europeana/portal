@@ -985,6 +985,8 @@ eu.europeana.fulldoc = {
 		    };
 		    
 			var hideSpinner = function(thisGallery){
+				tabletDebug('hide spinner');
+				
 				$('#more-like-this-wrapper').find('.ajax-overlay').remove();
 
 				return;
@@ -1039,6 +1041,9 @@ eu.europeana.fulldoc = {
 			};
             
 			/////////////////////////////////////////////////////
+			var tabletDebug = function(msg){
+				//$('.load-all').html(msg);
+			};
 			
 			var mltGalleriaOpTemplate = {
 				debug:			js.debug,
@@ -1052,7 +1057,7 @@ eu.europeana.fulldoc = {
 				lightbox:		false,
 				responsive:		true,
 				
-				XXXidleMode: false,
+				idleMode: false,
 				isIncrementalLoad: true,
 				suppressIdle:   true,
 
@@ -1092,6 +1097,7 @@ eu.europeana.fulldoc = {
 					
 						//var index = eu.europeana.fulldoc.mltTabs.getOpenTabIndex();
 												
+						tabletDebug('thumb - ' + e.index + ' waiting for ' + loadData.expectedThumbCount );
 						// we only execute on the last thumbnail....
 						if( e.index != loadData.expectedThumbCount){
 							return;
@@ -1225,6 +1231,9 @@ eu.europeana.fulldoc = {
 							
 							setTimeout(function(){
 								thisGallery.trigger( Galleria.RESCALE );
+								tabletDebug('rescaled');
+
+
 							}, 350);
 						};
 						
@@ -1254,16 +1263,17 @@ eu.europeana.fulldoc = {
 							thisGallery.setOptions( 'carouselSpeed', oldSpeed);
 
 							hideSpinner(thisGallery);
+							tabletDebug('set timeout for show arrows: ' + thisGallery._options.carouselSpeed  );
 
 							setTimeout(function(){
 								xCar.set(loadData.current);
-								showArrows();
+								showArrows(thisGallery);
 
 							//	thisGallery.trigger( Galleria.RESCALE );
 
-							//}, thisGallery._options.carouselSpeed);
-							}, 2000);
+							}, thisGallery._options.carouselSpeed);
 
+							return;
 	//						alert('current ' + loadData.current);
 
 						}
@@ -1278,6 +1288,15 @@ eu.europeana.fulldoc = {
 						//console.log('current = ' + thisGallery._carousel.current)
 						//console.log('inview = ' + fnInView())
 						//console.log('loadData.total = ' + loadData.total)
+						
+						
+						setTimeout(function(){
+							showArrows(thisGallery);
+						//	thisGallery.trigger( Galleria.RESCALE );
+						}, thisGallery._options.carouselSpeed);
+						
+						/*
+						showArrows();
 
 		                if( (thisGallery._carousel.current + fnInView() ) <= loadData.total){
 		                	var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
@@ -1287,6 +1306,7 @@ eu.europeana.fulldoc = {
 		                else{
 		                	//alert('end of dataset - do not show right arrow...')
 		                }
+		                */
 					});
 					
 				} // end extend
