@@ -478,7 +478,7 @@ public class ObjectController {
 
 	private ResultSet<? extends BriefBean> searchMltItem(String queryTerm) {
 		Query query = new Query(queryTerm)
-			.setPageSize(1)
+			.setPageSize(12)
 			.setStart(0) // Solr starts from 0
 			.setAllowSpellcheck(false)
 			.setAllowFacets(false)
