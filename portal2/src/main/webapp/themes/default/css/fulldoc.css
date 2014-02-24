@@ -63,11 +63,14 @@
 }
 */
 
+#more-like-this-wrapper{
+	position: relative;		
+}
+
 #more-like-this{
 	padding:       1.5em 1em 3.5em 1em;
 	border:        1px solid #d6d6d6;
 	border-radius: 0.5em;
-	position: relative;	
 }
 
 #more-like-this .load-more{
@@ -92,15 +95,6 @@
 	text-transform: capitalize;
 }
  
-/*
-#mlt .section{
-	padding-bottom:  1em;
-}
-
-#mlt .section.loading{
-	height:		 15em;
-}
-*/
 
 #translate-container{
 	position:	relative;

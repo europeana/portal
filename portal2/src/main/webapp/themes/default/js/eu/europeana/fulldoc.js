@@ -1,5 +1,6 @@
 js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
+
 eu.europeana.fulldoc = {
 
 	lightboxOb :  null,
@@ -974,20 +975,21 @@ eu.europeana.fulldoc = {
 			}
 			
 			var showSpinner = function(){
-				var section = $('#mlt-carousel');
-				if(section.html().length == 0){
-					section.addClass('loading');		
-				}
-		    	section.append('<div class="ajax-overlay">');
+				var div = $('#more-like-this-wrapper');
+				//if(section.html().length == 0){
+				//	section.addClass('loading');
+				//}
+		    	div.append('<div class="ajax-overlay">');
 		    	$('.ajax-overlay').css('top', $('.ajax-overlay').parent().scrollTop() + 'px');
-		    	section.find('.galleria-thumbnails').css('top', '1000px');
+		    	div.find('.galleria-thumbnails').css('top', '1000px');
 		    };
 		    
 			var hideSpinner = function(thisGallery){
+				$('#more-like-this-wrapper').find('.ajax-overlay').remove();
+
 				return;
 				/*
 				var section = $('#mlt-carousel');//$('#more-like-this');
-				section.find('.ajax-overlay').remove();				
 				section.removeClass('loading');	
 				section.find('.galleria-thumbnails-container .galleria-image').first().find('img').focus();
 		    	section.find('.galleria-thumbnail').css('top', '0px');
@@ -1203,6 +1205,8 @@ eu.europeana.fulldoc = {
 						// Show or hide the "Next" button....
 						// ...Galleria shows the arrows on idle_exit, so "europeana-disabled" class is used here 
 						var showArrows = function(){
+				//			alert('enter show arrow');
+							
 							var rightArrow = $('#more-like-this .carousel .galleria-thumb-nav-right');
 							
 							if((loadData.current + fnInView()) < loadData.total){
@@ -1240,7 +1244,8 @@ eu.europeana.fulldoc = {
 							
 							var prevCurrent = loadData.current - loadData.loadSize;
 							
-//							alert('prevCurrent ' + prevCurrent);
+							
+//							alert('reinit');
 							
 							var oldSpeed = thisGallery._options.carouselSpeed;
 
@@ -1256,7 +1261,7 @@ eu.europeana.fulldoc = {
 
 							//	thisGallery.trigger( Galleria.RESCALE );
 
-							}, 1);
+							}, thisGallery._options.carouselSpeed);
 
 	//						alert('current ' + loadData.current);
 
@@ -1447,8 +1452,8 @@ eu.europeana.fulldoc = {
 					});
 				}
 				catch(e){
-					hideSpinner(thisGallery);
 					console.log("Ajax error: " + e);
+					hideSpinner(thisGallery);
 				}
 			}
 
