@@ -59,7 +59,7 @@ public class MyEuropeanaController {
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU);
 	}
 	
-	@RequestMapping("/myeuropeana/")
+	@RequestMapping({"/myeuropeana/","/myeuropeana"})
 	public ModelAndView myEuropeanaIndexHandler(HttpServletRequest request, Locale locale) throws Exception {
 		MyEuropeanaPage model = new MyEuropeanaPage();
 		
