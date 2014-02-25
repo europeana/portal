@@ -1,5 +1,12 @@
 js.utils.registerNamespace( 'eu.europeana.search' );
 
+if( !(window.ActiveXObject) && "ActiveXObject" ){
+	alert('ie 11');
+	$('.submit-new-keyword').css('vertical-align', 'top');
+	alert('fixed');
+	
+}
+
 eu.europeana.search = {
 	
 	facet_sections : [],

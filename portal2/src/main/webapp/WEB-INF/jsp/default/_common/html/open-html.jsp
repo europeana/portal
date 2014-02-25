@@ -12,13 +12,6 @@
 	<html ${xmlns} class="ie ie9" lang="${lang}">
 <![endif]-->
 
-<!--[if IE 10]>
-	<html ${xmlns} class="ie ie10" lang="${lang}">
-<![endif]-->
-
-<!--[if IE 11]>
-	<html ${xmlns} class="ie ie11" lang="${lang}">
-<![endif]-->
 
 
 <!--[if !IE]>-->
