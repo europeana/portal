@@ -1,10 +1,7 @@
 js.utils.registerNamespace( 'eu.europeana.search' );
 
 if( !(window.ActiveXObject) && "ActiveXObject" ){
-	alert('ie 11');
-	$('.submit-new-keyword').css('vertical-align', 'top');
-	alert('fixed');
-	
+	$('.submit-new-keyword').parent().css('vertical-align', 'top');	
 }
 
 eu.europeana.search = {
