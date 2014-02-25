@@ -119,10 +119,11 @@ public class RegisterApiPageController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	protected ModelAndView formSubmit(
-			@Valid @ModelAttribute("model") RegisterApiPage model, 
+			@Valid @ModelAttribute("model") RegisterApiPage model,
 			BindingResult result,
-			HttpServletRequest request, Locale locale) throws EuropeanaQueryException,
-			DatabaseException {
+			HttpServletRequest request,
+			Locale locale)
+					throws EuropeanaQueryException, DatabaseException {
 		log.info("================= /api/registration.html POST ==================");
 
 		if (result.hasErrors()) {
@@ -137,42 +138,44 @@ public class RegisterApiPageController {
 		log.info("requestedAction: " + model.getRequestedAction());
 		// Register for API
 		PageInfo target = PortalPageInfo.API_REQUEST;
-		if (model.getRequestedAction().equals(REQUEST_API)) {
+		if (model.getRequestedAction() != null) {
+			if (model.getRequestedAction().equals(REQUEST_API)) {
 
-			if (!ControllerUtil.validEmailAddress(model.getEmail())) {
-				model.setFailureFormat(true);
-			} else {
-				log.info("Sending API registration email");
-				Token token = tokenService.create(model.getEmail());
-				String url = baseUrl + "/api/registration.html";
-				log.info("token: " + token);
-				log.info("registerUri: " + url);
-				try {
-					emailService.sendApiToken(token, url);
-				} catch (EmailServiceException e) {
-					log.error("Error during API token sending. " + e.getLocalizedMessage());
-					e.printStackTrace();
+				if (!ControllerUtil.validEmailAddress(model.getEmail())) {
+					model.setFailureFormat(true);
+				} else {
+					log.info("Sending API registration email");
+					Token token = tokenService.create(model.getEmail());
+					String url = baseUrl + "/api/registration.html";
+					log.info("token: " + token);
+					log.info("registerUri: " + url);
+					try {
+						emailService.sendApiToken(token, url);
+					} catch (EmailServiceException e) {
+						log.error("Error during API token sending. " + e.getLocalizedMessage());
+						e.printStackTrace();
+					}
+					model.setSuccess(true);
+					target = PortalPageInfo.API_REQUEST;
 				}
-				model.setSuccess(true);
-				target = PortalPageInfo.API_REQUEST;
-			}
-		} else {
-			log.info("Creating API user");
-			String token = model.getToken();
-			log.info("token: " + token);
-			apiKeyService.createApiKey(token, model.getEmail(), model.getApiKey(), model.getPrivateKey(),
+			} else {
+				log.info("Creating API user");
+				String token = model.getToken();
+				log.info("token: " + token);
+				apiKeyService.createApiKey(token, model.getEmail(), model.getApiKey(), model.getPrivateKey(),
 					DEFAULT_USAGE_LIMIT, model.getApplicationName(), 
 					model.getEmail(), // use email for username
 					model.getCompany(), model.getCountry(), model.getFirstName(), model.getLastName(),
 					model.getWebsite(), model.getAddress(), model.getPhone(), model.getFieldOfWork());
-			ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
+				ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 
-			log.info("User: " + apiKey.getUser());
-			log.info("ApiKey: " + apiKey);
-			tokenService.remove(tokenService.findByID(token));
-			log.info("token is removed: " + model.getToken());
-			sendNotificationEmails(apiKey.getUser(), apiKey);
-			target = PortalPageInfo.API_REGISTER_SUCCESS;
+				log.info("User: " + apiKey.getUser());
+				log.info("ApiKey: " + apiKey);
+				tokenService.remove(tokenService.findByID(token));
+				log.info("token is removed: " + model.getToken());
+				sendNotificationEmails(apiKey.getUser(), apiKey);
+				target = PortalPageInfo.API_REGISTER_SUCCESS;
+			}
 		}
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API_SUCCESS);
@@ -229,6 +232,10 @@ public class RegisterApiPageController {
 		@Override
 		public void validate(Object o, Errors errors) {
 			RegisterApiPage form = (RegisterApiPage) o;
+			if (form == null || StringUtils.isBlank(form.getRequestedAction())) {
+				return;
+			}
+
 			final int PASS_MIN = 6;
 			final int PASS_MAX = 30;
 
