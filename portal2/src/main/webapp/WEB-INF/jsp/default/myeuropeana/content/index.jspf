@@ -1,0 +1,49 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<div id="myeuropeana" class="row">
+	<h2><spring:message code="MyEuropeana_t" /></h2>
+	
+	<ul class="columns two">
+		<li><a href=""><spring:message code="LogIn_t" /></a></li>
+		<li><a href=""><spring:message code="UserInformation_t" /></a></li>
+		<li><a href=""><spring:message code="LanguageSettings_t" /></a></li>
+		<li><a href=""><spring:message code="SavedItems_t" /></a></li>
+		<li><a href=""><spring:message code="SavedSearches_t" /></a></li>
+		<li><a href=""><spring:message code="SavedTags_t" /></a></li>
+		<li><a href=""><spring:message code="myeuropeana_ApiKeys_t" /></a></li>
+	</ul>
+	
+	<ul class="columns eight">
+		<li>
+			<h3><spring:message code="rswLabel_defaultLanguage_t" /></h3>
+			<label>
+				<select name="portalLanguage">
+					<c:forEach items="${model.portalLanguages}" var="language">
+						<option value="${language.languageCode}"> ${language.languageName}</option>
+					</c:forEach>
+				</select>
+			</label>
+		</li>
+		
+		<li>
+			<h3><spring:message code="translate_keywords_t" /></h3>
+			<c:forEach items="${model.portalLanguages}" var="language">
+				<label><input type="checkbox" name="searchLanguage" value="${language.languageCode}"/> ${language.languageName}</label>
+			</c:forEach>
+			<p><spring:message code="translate_keywords_explanation_t" /></p>
+		</li>
+		
+		<li>
+			<h3><spring:message code="translate_items_t" /></h3>
+			<label>
+				<input type="checkbox" name="itemLanguage" value="" /><spring:message code="translate_items_select_t" />&nbsp;
+				<select id="item-language-select">
+					<c:forEach items="${model.portalLanguages}" var="language">
+						<option value="${language.languageCode}"> ${language.languageName}</option>
+					</c:forEach>
+				</select>
+			</label>
+		</li>
+	</ul>
+</div>

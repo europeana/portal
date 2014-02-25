@@ -137,4 +137,9 @@ li.saved-tags{
 	height: 21px;
 }
 */	
-	 	
+
+#myeuropeana ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}

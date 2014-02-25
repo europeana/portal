@@ -114,6 +114,10 @@
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
 			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 		</c:when>
+		
+		<c:when test="${model.pageName == 'myeuropeana/index'}">
+			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
+		</c:when>
 	
 		<c:when test="${model.pageName == 'register.html'}">
 			<link rel="stylesheet" href="/${branding}/css/register.css" />
