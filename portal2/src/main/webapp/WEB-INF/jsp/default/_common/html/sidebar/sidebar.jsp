@@ -33,7 +33,7 @@
 							<li>
 								<input id="newKeyword" type="text" name="qf"/>
 								<span>
-									<input class="submit deans-button-1" type="submit" value="<spring:message code="AddKeywordsSubmitLabel_t" />">
+									<input class="submit deans-button-1" type="submit" class="submit-new-keyword" value="<spring:message code="AddKeywordsSubmitLabel_t" />">
 								</span>
 							</li>
 						</ul>

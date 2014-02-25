@@ -57,6 +57,11 @@
 	<html ${xmlns} class="ie ie9" lang="${lang}" >
 <![endif]-->
 
+<!--[if IE 10]>
+	<html ${xmlns} class="ie ie10" lang="${lang}" >
+<![endif]-->
+
+
 <!--[if !IE]>-->
 <html ${xmlns} lang="${lang}">
 <!--<![endif]-->

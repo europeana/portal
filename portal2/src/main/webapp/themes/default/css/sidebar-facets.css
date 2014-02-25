@@ -21,6 +21,10 @@
 	margin-bottom: 1em;
 }
 
+.ie10 .submit-new-keyword{
+	vertical-align: top;	
+}
+
 #search-filter,
 #filter-search,
 #filter-search ul{
