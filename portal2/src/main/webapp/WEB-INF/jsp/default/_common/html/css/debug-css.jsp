@@ -79,7 +79,11 @@
 		</c:when>
 	
 		<c:when test="${model.pageName == 'full-doc.html'}">
+		
+		
 			<link rel="stylesheet" href="/${branding}/css/fulldoc.css" />
+			
+			<link rel="stylesheet" href="/${branding}/css/eu-carousel.css" />
 			
 			<link rel="stylesheet" href="/${branding}/css/lightbox.css" />
 			
@@ -95,6 +99,7 @@
 		</c:when>
 	
 		<c:when test="${model.pageName == 'index.html'}">
+			<link rel="stylesheet" href="/${branding}/css/eu-carousel.css" />		
 			<link rel="stylesheet" href="/${branding}/css/index.css" />
 		</c:when>
 	

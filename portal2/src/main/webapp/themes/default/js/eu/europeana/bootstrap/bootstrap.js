@@ -248,6 +248,12 @@ var europeana_bootstrap = function(){
 			path : '//w.sharethis.com/button/'
 		});
 		*/
+		scripts.push({
+			name: 'imagesloaded',
+			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			dependencies : [ 'jquery' ]
+		});
 
 		scripts.push({
 			name : 'galleria',
@@ -258,10 +264,17 @@ var europeana_bootstrap = function(){
 		});
 
 		scripts.push({
+			name: 'EuCarousel',
+			file : 'EuCarousel.js',
+			path : eu.europeana.vars.branding + '/js/eu/europeana/',
+			dependencies : [ 'jquery', 'touchswipe', 'imagesloaded', 'ellipsis'  ]
+		});
+
+		scripts.push({
 			name : 'fulldoc',
 			file : 'fulldoc' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils', 'galleria', 'EuMenu' ]
+			dependencies : [ 'utils', 'galleria', 'EuMenu', 'EuCarousel' ]
 		});
 
 
@@ -300,8 +313,8 @@ var europeana_bootstrap = function(){
 		});
 
 		scripts.push({
+			name : 'EuCarousel',
 			file : 'EuCarousel.js',
-//			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/',
 			dependencies : [ 'jquery', 'touchswipe', 'imagesloaded', 'ellipsis'  ]
 		});
@@ -310,7 +323,7 @@ var europeana_bootstrap = function(){
 			name : 'index',
 			file : 'index' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : ['collapsible', 'utils', 'galleria', 'EuMenu']
+			dependencies : ['collapsible', 'utils', 'galleria', 'EuMenu', 'EuCarousel']
 		});
 
 		loadScripts(scripts);

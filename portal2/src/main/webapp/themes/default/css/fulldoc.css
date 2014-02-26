@@ -73,17 +73,18 @@
 	border-radius: 0.5em;
 }
 
-#more-like-this .load-more{
-	float: left;
-}
-
+#more-like-this-wrapper .load-all,
 #more-like-this .load-all{
 	float: right;
 }
 
-#more-like-this .load-all,
-#more-like-this .load-more{
+#more-like-this .load-all{
 	margin-top: 1.25em
+}
+
+#more-like-this-wrapper .load-all{
+	margin-top: -1.75em;
+	margin-right: 1em;
 }
 
 #geo-map{
