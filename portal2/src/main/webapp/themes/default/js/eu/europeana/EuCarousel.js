@@ -17,7 +17,7 @@ var EuCarousel = function(cmp, data){
 		animating = true;
 		cmp.css('overflow-x', 'auto');
 		items.css('left', '0');
-		cmp.scrollTo( items.find('.carousel-item:nth-child(' + position + ')'), 1000, {"axis":"x",  "onAfter":function(){
+		cmp.scrollTo( items.find('.carousel-item:nth-child(' + position + ')'), inView == 1 ? 0 : 1000, {"axis":"x",  "onAfter":function(){
 			
 			var done = function(){
 				cmp.css('overflow-x', 'hidden');
@@ -95,7 +95,7 @@ var EuCarousel = function(cmp, data){
 		cmp.css('overflow-x', 'auto');
 		items.css('left', '0');
 
-		cmp.scrollTo( prevItem, 1000, {"axis":"x",  "onAfter":function(){
+		cmp.scrollTo( prevItem, inView == 1 ? 0 : 1000, {"axis":"x",  "onAfter":function(){
 			
 			var done = function(){
 				cmp.css('overflow-x', 'hidden');
@@ -129,7 +129,7 @@ var EuCarousel = function(cmp, data){
 		cmp.css('overflow-x', 'auto');
 
 		items.css('left', '0');
-		cmp.scrollTo( nextItem, 1000, {"axis":"x", "onAfter":function(){
+		cmp.scrollTo( nextItem, inView == 1 ? 0 : 1000, {"axis":"x", "onAfter":function(){
 			
 			var done = function(){
 				cmp.css('overflow-x', 'hidden');
