@@ -2,6 +2,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
+
+
 <div class="twelve columns">
 	<h3 id="collapse-header-3">
 		<span class="left collapse-header-text">

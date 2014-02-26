@@ -69,30 +69,17 @@
 			 	<c:choose>
 				      <c:when test="${status.first}">
 						<div class="mlt-single-wrapper">
-							<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" title="${doc.title}"><img src="${doc.thumbnail}" /></a>				
+							<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" class="mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>				
 							<div class="mlt-title">
 								${doc.title}
 							</div>
 						</div>
 				      </c:when>
 				      <c:otherwise>
-							<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" style="visibility:hidden;" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
+							<a href="${fn:replace(doc.fullDocUrl, "\"", '&quot;')}" class="hidden mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
 				      </c:otherwise>
 				</c:choose>
 			</c:forEach>
-
-			<script type="text/javascript">
-			var mltData = [<%--
-			--%><c:forEach items="${model.europeanaMlt.categories[0].urls}" var="doc" varStatus="status"><%--
-	          --%>{<%--
-	            --%>"thumb": "${doc.thumbnail}",<%--
-	            --%>"title": "${fn:escapeXml(doc.title)}",<%--
-	            --%>"link":  "${fn:replace(doc.fullDocUrl, "\"", '&quot;')}",<%--
-	            --%>"linkTarget": "_self"<%--
-	          --%>}<%--
-	          --%><c:if test="${not status.last}">,</c:if><%--
-			--%></c:forEach>];
-			</script>
 
 			
 		</div>
