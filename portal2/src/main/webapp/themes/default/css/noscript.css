@@ -2,7 +2,7 @@
 	#header {
 		margin-top: 24px;
 	}
-	
+
 	#noscript-msg {
 		position: fixed;
 		z-index: 2000;
@@ -14,17 +14,17 @@
 		background-color: #FFCC00;
 		text-align: center;
 	}
-	
+
 	#noscript-msg a:link, #noscript-msg a:visited {
 		color: blue;
 	}
-	
+
 	#refine-search,
 	#close-refine-search {
 		display: none;
 	}
-	
-	#refine-search-form {	
+
+	#refine-search-form {
 		display: block;
 		top: 0;
 		height: auto;
@@ -38,8 +38,8 @@
 		opacity: 1;
 		filter: alpha(opacity=0);
 	}
-	
-	
+
+
 /* translation-services */
 
 	#translate-item { display: none; }
@@ -49,7 +49,7 @@
 
 	#citation-link { display: none; }
 	#citation { display: block; overflow: auto; }
-	
+
 
 /* full-excerpt */
 	#item-description, #item-subject, .item-moreless {
@@ -57,34 +57,34 @@
     	height: auto;
     	overflow: auto;
     }
-    
+
 /* explore further */
 
 	#similar-content,
    	#related-content,
    	#mapview
    	{ display: block; }
-   	
-   	
+
+
 /* fields-enrichment */
 
 	#fields-enrichment ul {
 		display: block;
 	}
-	
+
 /* contributors */
 
 	.data-providers {
 		display: block;
 	}
-	
+
 /* search-widget */
 
 	#widget-help {
 		display: block;
 	}
-	
-	
+
+
 /* my europeana login */
 
 	#login,
@@ -94,32 +94,35 @@
     #login-response {
     	display: block;
     }
-    
+
     #login-boxes {
     	width: 686px;
     	margin: auto;
     	overflow: auto;
     }
-    
+
     .login-box {
     	float: left;
     }
-    
+
     #login { margin-right: 20px; }
-    
+
     #login-response {
     	clear: left;
     	width: auto;
     	padding-top: 15px;
     }
-    
-    
+
+	#myeuropeana input[type=submit] {
+		display: block;
+	}
+
 /* contact */
 
 	#contact-details{
 		height: auto;
 	}
-	
+
 	#thank-you {
 		display: block;
 		position: relative;

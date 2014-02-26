@@ -339,6 +339,16 @@ var europeana_bootstrap = function(){
 
 		loadScripts(scripts);
 	}
+	else if(eu.europeana.vars.page_name == 'myeuropeana/index'){
+		scripts.push({
+			name : 'myeuropeana',
+			file : 'myeuropeana-index' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'utils' ]
+		});
+
+		loadScripts(scripts);
+	}
 	else if(eu.europeana.vars.page_name == 'register.html'){
 		loadScripts(scripts);
 	}

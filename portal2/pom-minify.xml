@@ -991,6 +991,23 @@
 					</execution>
 
 					<execution>
+						<id>minify-myeuropeana-index.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>myeuropeana-index.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>myeuropeana-index.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-providers.js</id>
 						<phase>process-resources</phase>
 						<configuration>
