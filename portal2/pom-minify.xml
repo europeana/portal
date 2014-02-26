@@ -137,6 +137,7 @@
 								<cssSourceInclude>eu-accordion-tabs.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
+								<cssSourceInclude>eu-carousel.css</cssSourceInclude>
 
 								<!-- cssSourceInclude>tabbed-navigation.css</cssSourceInclude  -->
 							</cssSourceIncludes>
@@ -332,6 +333,7 @@
 							<cssTargetDir>min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>index.css</cssSourceInclude>
+								<cssSourceInclude>eu-carousel.css</cssSourceInclude>
 							</cssSourceIncludes>
 						</configuration>
 						<goals>
