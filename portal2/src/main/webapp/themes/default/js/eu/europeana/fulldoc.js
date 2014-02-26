@@ -971,6 +971,29 @@ eu.europeana.fulldoc = {
 			};
 
 			var initMlt = function(){
+				
+				if( $('#more-like-this .galleria-container').length ){
+					return;
+				}
+				
+				
+				
+				var mltData = [];
+				
+				
+				$('.mlt-link').each(function(i, ob){
+					ob = $(ob);
+					mltData[mltData.length] = {
+							"thumb" : ob.find('img').attr('src'),
+							"title" : ob.attr('title'),
+							"link" : ob.attr('href'),
+							"linkTarget" : "_self" 
+					}
+				});
+				
+				console.log('mltData = ' + JSON.stringify(mltData) );
+				
+				
 				$('#more-like-this').galleria({
 					dataSource: mltData,
 					extend: function(e){
@@ -1052,20 +1075,21 @@ eu.europeana.fulldoc = {
 				var mobile = js.utils.phoneTest();
 				
 				if(mobile){
-					var sel = '.mlt-title';
-					var mltEllipsis = new Ellipsis($(sel));
-
-					mltEllipsis.respond();
-
-					if(mltTotal > 1){						
-						if( $('.load-all').length ==0 ){
-							$('#more-like-this').append(getLoadAllLink());
-						}
+					if( ! $('.mlt-title').find('.ellipsis-inner').length ){
+						mltEllipsis = new Ellipsis($('.mlt-title')).respond();
+						console.log('added ellipsis to phone mode');
 					}
 				}
 				else{
+					console.log('init mlt');
 					initMlt();
-				}				
+				}
+				if(mltTotal > 1){						
+					if( $('.load-all').length ==0 ){
+						$('#more-like-this-wrapper').append(getLoadAllLink());
+					}
+				}
+
 			};
 			
 			$(window).euRsz(function(){

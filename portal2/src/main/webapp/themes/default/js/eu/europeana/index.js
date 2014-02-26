@@ -87,9 +87,7 @@
 
 
 			$("#carousel-1").imagesLoaded(
-					
 				function($images, $proper, $broken) {
-					
 					var imgW			= $(this).find("img").width();
 					var imgH			= $(this).find("img").height();
 					
@@ -303,13 +301,7 @@
 	
 	var init = function() {
 		
-		js.loader.loadScripts([{
-			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
-			callback : function() {
-				initCarousels();
-			}
-		}]);
+		initCarousels();
 		
 		initResponsiveImages();
 		
@@ -395,83 +387,24 @@
 						url: '/portal/indexFragment.json?fragment=pinterest',
 						dataType: 'json',
 						success: function(data){
-							$("#section-pinterest .collapse-content").html(data.markup);
-							var carousel3Data = data.data.carousel3Data;
-							$('#carousel-3').galleria({
-								dataSource:carousel3Data,
-								extend: function(e){
-									
-							    	var thisGallery		= this;
-									
-									// add ellipsis
-									var doEllipsis = function(callback){
-										var ellipsisObjects = [];
-										$('.europeana-carousel-info').each(
-											function(i, ob){
-												ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-											}
-										);
-										
-										setTimeout(function(){
-											for(var i=0; i<ellipsisObjects.length; i++ ){
-												ellipsisObjects[i].respond();
-											}
-										}, 1000);
-										
-										
-										$(window).euRsz(function(){
-											for(var i=0; i<ellipsisObjects.length; i++ ){
-												ellipsisObjects[i].respond();
-											}
-										});
-										
-										if(callback){
-											callback();
-										}
-									};
+							$("#section-pinterest .collapse-content").html('<div class="carousel-wrapper"><div id="pinterest-carousel"></div></div>');
 
-									var infoSelector = '#carousel-3 .galleria-thumbnails .galleria-image .europeana-carousel-info';
-									var imgSelector = '#carousel-3 .galleria-thumbnails .galleria-image img';
-									
-									$(infoSelector).click(function(){
-										var clicked	= this;
-										$(infoSelector).each(function(i, ob){
-											if(ob == clicked){
-												com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
-											}
-										});
-									});
-
-									$(imgSelector).click(function(){
-										var clicked	= this;
-										$(imgSelector).each(function(i, ob){
-											if(ob == clicked){
-												com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
-											}
-										});
-									});
-									
-									$(this).ready(function(e) {
-										eu.europeana.vars.suppresResize = false;
-										setTimeout(
-											function(){
-												doEllipsis(
-													function(){
-														$(imgSelector).each(function(i, ob){
-															ob = $(ob);
-															ob.attr("title", carousel3Data[i].title ? carousel3Data[i].title : '');
-															ob.attr("alt", carousel3Data[i].title ? carousel3Data[i].title : '');
-														});
-													}
-												);
-												
-											}
-											, 100);
-									});
-								} 
+							var pinterestCarousel = new EuCarousel($('#pinterest-carousel'), data.data);
+							
+							$('#pinterest-carousel a').click(function(){
+								var clicked	= this;
+								$('#pinterest-carousel a').each(function(i, ob){
+									if(ob == clicked){
+										com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", data.data[i].link);
+									}
+								});
 							});
 							
-							
+		            	   	$(window).bind('collapsibleExpanded', function(data){
+		            	   		console.log('collapsibleExpanded, data =  ' + data)
+		            	   		pinterestCarousel.resize();
+		            	   	} );        		
+
 						},
 						error: function(x, status, e){
 							js.console.log("error = " + JSON.stringify(e));

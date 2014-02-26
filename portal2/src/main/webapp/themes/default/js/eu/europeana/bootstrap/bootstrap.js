@@ -116,6 +116,13 @@ var europeana_bootstrap = function(){
 		},
 
 		{
+			name : 'scrollTo',
+			file : 'jquery.scrollTo-1.4.3.1.js',
+			path : eu.europeana.vars.branding + '/js/com/',
+			dependencies : [ 'jquery' ]
+		},
+
+		{
 			name : 'ellipsis',
 			file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
@@ -269,7 +276,14 @@ var europeana_bootstrap = function(){
 			path : '//w.sharethis.com/button/'
 		});
 		*/
-
+		scripts.push({
+			name: 'imagesloaded',
+			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			dependencies : [ 'jquery' ]
+		});
+		
+		
 		scripts.push({
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
@@ -283,6 +297,13 @@ var europeana_bootstrap = function(){
 			file : 'galleria-1.3.2' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
+		});
+
+		scripts.push({
+			file : 'EuCarousel.js',
+//			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/',
+			dependencies : [ 'jquery', 'touchswipe', 'imagesloaded', 'ellipsis'  ]
 		});
 
 		scripts.push({
