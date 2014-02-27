@@ -111,7 +111,6 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 						title = WordUtils.capitalizeFully(title);
 					}
 				}
-				title = StringUtils.abbreviate(title, 20);
 			}
 		}
 		return title;
