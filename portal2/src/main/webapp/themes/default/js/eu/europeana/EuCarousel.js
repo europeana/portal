@@ -107,10 +107,7 @@ var EuCarousel = function(cmp, data){
 				var margin = items.find('.carousel-item:first').css('margin-left');
 				items.css('left', spacing + 'px');
 			}
-//			else{
-	//			items.css('left', '0');
-		//	}
-
+			
 			done();
 			
 		} } );
@@ -141,9 +138,6 @@ var EuCarousel = function(cmp, data){
 				var margin = items.find('.carousel-item:first').css('margin-left');
 				items.css('left', spacing + 'px');
 			}
-			//else{
-			//	items.css('left', '0');
-			//}
 
 			done();
 
@@ -160,7 +154,7 @@ var EuCarousel = function(cmp, data){
 		right = $('<div class="carousel-right icon-arrow-2"></div>').appendTo(cmp);
 		
 		$.each(data, function(i, ob){
-			items.append('<a class="carousel-item" href="' + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
+			items.append('<span class="carousel-item" href="' + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></span>');
 		});
 		
 		$('.carousel-item .info').each(function(i, ob){
@@ -168,7 +162,11 @@ var EuCarousel = function(cmp, data){
 		});
 		
 		cmp.css('overflow-y', 'hidden');
+
 		/*
+		 * 
+		 * TODO - we're not using this so remove the dependency
+		 * 
 		cmp.imagesLoaded(
 			function($images, $proper, $broken) {
 				$images.each(function(i, ob){
@@ -180,6 +178,18 @@ var EuCarousel = function(cmp, data){
 		);
 		*/
 
+		$('.carousel-item').click(function(){
+			var item = $(this);
+			var href = item.attr('href');
+			var trgt = item.attr('target');
+			if(trgt == '_self'){
+				window.location.href = href;
+			}
+			else{
+				window.open(href);
+			}
+		});
+		
 		
 		left.click(function(){
 			if(!animating){
