@@ -160,10 +160,14 @@ li.saved-tags{
 	margin-bottom: 1em;
 }
 
-#translate-search-keywords {
+#translate-keyword-languages {
 	overflow: auto;
 }
 
 #myeuropeana input[type=submit] {
 	display: none;
+}
+
+.disabled {
+	color: #ccc;
 }

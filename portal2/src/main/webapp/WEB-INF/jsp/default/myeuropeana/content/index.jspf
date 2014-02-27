@@ -38,25 +38,25 @@
 			<input type="submit" value="<spring:message code="Submit_t" />" />
 		</form>
 
-		<%-- translate-search-keywords --%>
+		<%-- translate-keywords-into --%>
 		<c:set var="portal_languages_count" value="${fn:length(model.portalLanguages)}" />
 		<c:set var="portal_languages_column" value="${portal_languages_count/4}" />
-		<c:set var="search_language_count" value="0" />
+		<c:set var="translate_keywords_into_count" value="0" />
 		<h3><spring:message code="translate_keywords_t" /></h3>
 		<form action="${language_menu_action}" method="get">
-			<div id="translate-search-keywords">
+			<div id="translate-keyword-languages">
 				<c:forEach items="${model.portalLanguages}" var="language">
-					<c:if test="${search_language_count == 0}">
+					<c:if test="${translate_keywords_into_count == 0}">
 						<div class="column three">
 					</c:if>
-					<label><input type="checkbox" name="sl" value="${language.languageCode}"/> ${language.languageName}</label>
-					<c:set var="search_language_count" value="${search_language_count + 1}"/>
-					<c:if test="${search_language_count ge portal_languages_column}">
+					<label><input type="checkbox" name="tki" value="${language.languageCode}"/> ${language.languageName}</label>
+					<c:set var="translate_keywords_into_count" value="${translate_keywords_into_count + 1}"/>
+					<c:if test="${translate_keywords_into_count ge portal_languages_column}">
 						</div>
-						<c:set var="search_language_count" value="0" />
+						<c:set var="translate_keywords_into_count" value="0" />
 					</c:if>
 				</c:forEach>
-				<c:if test="${search_language_count < portal_languages_column}">
+				<c:if test="${translate_keywords_into_count < portal_languages_column}">
 					</div>
 				</c:if>
 			</div>
@@ -69,7 +69,7 @@
 		<form action="${language_menu_action}" method="get">
 			<label>
 				<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes"/> <spring:message code="translate_items_select_t" />&nbsp;
-				<select id="itemLanguage" name="il">
+				<select id="item-language" name="il">
 					<c:forEach items="${model.portalLanguages}" var="language">
 						<c:choose>
 							<c:when test="${language.languageCode == model.locale}">
