@@ -86,6 +86,8 @@ public enum PortalPageInfo implements PageInfo {
 	NEWSLETTER("newsletter.html", "Europeana - Newsletter", "newsletter/newsletter"),
 
 	PROVIDERS("europeana-providers.html", "Europeana - Providers", "providers/providers"),
+	DATA_HIERARCHY_XML("europeana-providers.html", "Europeana - Data hierarchy", "providers/data-hierarchy-xml"),
+	DATA_HIERARCHY_TXT("europeana-providers.html", "Europeana - Data hierarchy", "providers/data-hierarchy-txt"),
 
 	SEARCH_HTML("search.html", "Europeana - Search results", "search/search"),
 	SEARCH_KML("search.kml", "search/search-kml"),
