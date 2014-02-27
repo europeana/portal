@@ -972,10 +972,7 @@ eu.europeana.fulldoc = {
 
 			var initMlt = function(){
 				
-				
-				
 				if( $('#more-like-this .carousel-wrapper').length ){
-			alert('already injitalised');
 					return;
 				}
 				
