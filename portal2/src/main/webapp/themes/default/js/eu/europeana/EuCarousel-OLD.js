@@ -1,6 +1,6 @@
 
 log = function(msg){
-	//console.log(msg);
+	console.log(msg);
 }
 
 var EuCarousel = function(cmp, data){
@@ -15,7 +15,7 @@ var EuCarousel = function(cmp, data){
 	
 	var anchor = function(){
 		animating = true;
-		cmp.css('overflow-x', 'hidden');
+		cmp.css('overflow-x', 'auto');
 		items.css('left', '0');
 		cmp.scrollTo( items.find('.carousel-item:nth-child(' + position + ')'), inView == 1 ? 0 : 1000, {"axis":"x",  "onAfter":function(){
 			
@@ -29,9 +29,9 @@ var EuCarousel = function(cmp, data){
 				var margin = items.find('.carousel-item:first').css('margin-left');
 				items.css('left', spacing + 'px');
 			}
-			else{
-				items.css('left', '0');
-			}
+//			else{
+	//			items.css('left', '0');
+		//	}
 			
 			done();
 			
@@ -40,7 +40,7 @@ var EuCarousel = function(cmp, data){
 	
 
 	var resize = function(){
-
+		
 		log('resizing');
 		
 		var w    = cmp.width();
@@ -61,14 +61,11 @@ var EuCarousel = function(cmp, data){
 		items.find('.carousel-item').css('margin-left', parseInt(spacing) + 'px');
 				
 		log('w: ' + w + ', itemW: ' + itemW + ', maxFit ' + maxFit);
-		if(maxFit != 1){
+		if(maxFit != 11111){
 			items.find('.carousel-item:first').css('margin-left', '0px');
 		}
 		items.css('width', w + (total * (itemW + spacing) ) );
-
-
 		anchor();
-		
 	};
 	
 	var setArrowState = function(){
@@ -95,7 +92,7 @@ var EuCarousel = function(cmp, data){
 		
 		prevItem = items.find('.carousel-item:nth-child(' + prevItem + ')');
 
-		cmp.css('overflow-x', 'hidden');
+		cmp.css('overflow-x', 'auto');
 		items.css('left', '0');
 
 		cmp.scrollTo( prevItem, inView == 1 ? 0 : 1000, {"axis":"x",  "onAfter":function(){
@@ -110,10 +107,7 @@ var EuCarousel = function(cmp, data){
 				var margin = items.find('.carousel-item:first').css('margin-left');
 				items.css('left', spacing + 'px');
 			}
-			else{
-				items.css('left', '0');
-			}
-
+			
 			done();
 			
 		} } );
@@ -129,10 +123,9 @@ var EuCarousel = function(cmp, data){
 		log('next index = ' + nextItem);
 		nextItem = items.find('.carousel-item:nth-child(' + nextItem + ')');
 		
-		cmp.css('overflow-x', 'hidden');
+		cmp.css('overflow-x', 'auto');
 
 		items.css('left', '0');
-
 		cmp.scrollTo( nextItem, inView == 1 ? 0 : 1000, {"axis":"x", "onAfter":function(){
 			
 			var done = function(){
@@ -145,9 +138,6 @@ var EuCarousel = function(cmp, data){
 				var margin = items.find('.carousel-item:first').css('margin-left');
 				items.css('left', spacing + 'px');
 			}
-			else{
-				items.css('left', '0');
-			}
 
 			done();
 
@@ -159,12 +149,12 @@ var EuCarousel = function(cmp, data){
 	
 	var init = function(){
 
+		left  = $('<div class="carousel-left icon-arrow-4"></div>').appendTo(cmp);
 		items = $('<div class="carousel-items">').appendTo(cmp);
-		left  = $('<a class="carousel-left icon-arrow-4"></a>').appendTo(cmp);
-		right = $('<a class="carousel-right icon-arrow-2"></a>').appendTo(cmp);
-
+		right = $('<div class="carousel-right icon-arrow-2"></div>').appendTo(cmp);
+		
 		$.each(data, function(i, ob){
-			items.append('<a class="carousel-item" href="' + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
+			items.append('<span class="carousel-item" href="' + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></span>');
 		});
 		
 		$('.carousel-item .info').each(function(i, ob){
@@ -173,8 +163,10 @@ var EuCarousel = function(cmp, data){
 		
 		cmp.css('overflow-y', 'hidden');
 
-
 		/*
+		 * 
+		 * TODO - we're not using this so remove the dependency
+		 * 
 		cmp.imagesLoaded(
 			function($images, $proper, $broken) {
 				$images.each(function(i, ob){
@@ -186,59 +178,35 @@ var EuCarousel = function(cmp, data){
 		);
 		*/
 
-
-		$('.carousel-item').click(function(e){
-			//e.preventDefault();
-			//e.stopPropagation();
-			//alert('clicked item');
+		$('.carousel-item').click(function(){
+			var item = $(this);
+			var href = item.attr('href');
+			var trgt = item.attr('target');
+			if(trgt == '_self'){
+				window.location.href = href;
+			}
+			else{
+				window.open(href);
+			}
 		});
-
-
-		left.click(function(e){
+		
+		
+		left.click(function(){
 			if(!animating){
-				//log('go left....');				
+				log('go left....');				
 				goLeft();					
 			}
-			e.stopPropagation();
-			return false;
 		});
 
-		right.click(function(e){
-			//alert('right');
+		right.click(function(){
 			if(!animating){
 				log('go right....');
 				goRight();
 			}
-			e.stopPropagation();
-			return false;
 		});
 
 
 		if(! $("html").hasClass("ie8")){
-
-			var leftRight = function(direction){
-				if(animating){
-					alert('return because animating');
-					return;
-				}
-				else{
-					alert(direction)
-				}
-			};
-
-			cmp.touchwipe({
-
-				wipeLeft: function() { right.click(); },
-     				wipeRight: function() { left.click(); },
-				wipeUp: function() {  },
-				wipeDown: function() { },
-     				min_move_x: 20,
-     				min_move_y: 20,
-     				preventDefaultEvents: true
-			});
-
-			/*
-
 			cmp.swipe({
 				swipeStatus:function(event, phase, direction, distance, fingerCount) {
 
@@ -274,19 +242,25 @@ var EuCarousel = function(cmp, data){
 					}
 
 					if(phase=="end" || phase=="cancel"){
-						//log('skip anchor')
 						cmp.css('overflow-x', 'hidden');
 						anchor();
 					}
 					
-
-					
+						/*
+					if(phase=="end"){
+						if(direction == "left"){
+							self.navOb.prev();
+						}
+						else if(direction == "right"){
+							self.navOb.next();
+						}
+					}
+					*/
 				},
 				triggerOnTouchEnd:false,
 				threshold:100
 				}
 			);
-			*/
 		}
 
 
@@ -313,3 +287,4 @@ var EuCarousel = function(cmp, data){
 		}
 	}
 };
+

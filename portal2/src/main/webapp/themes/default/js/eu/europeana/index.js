@@ -391,7 +391,7 @@
 
 							var pinterestCarousel = new EuCarousel($('#pinterest-carousel'), data.data);
 							
-							$('#pinterest-carousel a').click(function(){
+							$('#pinterest-carousel a.carousel-item').click(function(){
 								var clicked	= this;
 								$('#pinterest-carousel a').each(function(i, ob){
 									if(ob == clicked){

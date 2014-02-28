@@ -66,12 +66,15 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'jquery-ui' ]
 		},
 
+		/*
+		Dan - I disabled this because it's causing errors.
 		{
 			name : 'timer',
 			file : 'timer' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery-ui' ]
 		},
+		*/
 
 		{
 			name : 'analytics',
@@ -120,7 +123,7 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'utils', 'jquery' ]
 		},
-
+		
 		{
 			name : 'scrollTo',
 			file : 'jquery.scrollTo-1.4.3.1.js',
@@ -269,11 +272,19 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
 
+		
+		scripts.push({
+			name : 'touchwipe',
+			file : 'jquery.touchwipe.1.1.1' + js.min_suffix + '.js',
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			dependencies : [ 'jquery' ]
+		});
+
 		scripts.push({
 			name: 'EuCarousel',
-			file : 'EuCarousel.js',
-			path : eu.europeana.vars.branding + '/js/eu/europeana/',
-			dependencies : [ 'jquery', 'touchswipe', 'imagesloaded', 'ellipsis'  ]
+			file : 'EuCarousel' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'jquery', 'touchwipe', 'imagesloaded', 'ellipsis'  ]
 		});
 
 		scripts.push({
@@ -317,12 +328,27 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
+/*
+		scripts.push({
+			name : 'galleria',
+			file : 'galleria-1.3.2' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/galleria/',
+			dependencies : [ 'jquery', 'touchswipe'  ]
+		});
+*/		
+		scripts.push({
+			name : 'touchwipe',
+			file : 'jquery.touchwipe.1.1.1' + js.min_suffix + '.js',
+			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			dependencies : [ 'jquery' ]
+		});
 
+		
 		scripts.push({
 			name : 'EuCarousel',
 			file : 'EuCarousel.js',
 			path : eu.europeana.vars.branding + '/js/eu/europeana/',
-			dependencies : [ 'jquery', 'touchswipe', 'imagesloaded', 'ellipsis'  ]
+			dependencies : [ 'jquery', 'touchwipe', 'imagesloaded', 'ellipsis'  ]
 		});
 
 		scripts.push({
