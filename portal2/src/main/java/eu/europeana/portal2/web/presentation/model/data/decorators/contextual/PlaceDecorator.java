@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators;
+package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ public class PlaceDecorator extends ContextualItemDecorator implements Place {
 
 	private Place place;
 
-	PlaceDecorator(Place place, String userLanguage, String edmLanguage) {
+	public PlaceDecorator(Place place, String userLanguage, String edmLanguage) {
 		super(place, userLanguage, edmLanguage);
 		this.place = place;
 	}

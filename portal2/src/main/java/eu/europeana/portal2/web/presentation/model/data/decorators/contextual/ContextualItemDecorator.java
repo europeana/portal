@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators;
+package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,9 @@ public class ContextualItemDecorator implements ContextualClass {
 	private ContextualClass item;
 	protected String userLanguage;
 	protected String edmLanguage;
+	protected boolean showInContext = false;
+	protected boolean matchPrefLabel = false;
+	protected boolean matchUrl = false;
 
 	ContextualItemDecorator(ContextualClass item, String userLanguage, String edmLanguage) {
 		this.item = item;
@@ -96,8 +99,8 @@ public class ContextualItemDecorator implements ContextualClass {
 		}
 		if (map.containsKey(userLanguage)) {
 			list = map.get(userLanguage);
-		} else if (map.containsKey("def")) {
-			list = map.get("def");
+		} else if (map.containsKey("en")) {
+			list = map.get("en");
 		} else if (map.containsKey(edmLanguage)) {
 			list = map.get(edmLanguage);
 		} else {
@@ -114,5 +117,29 @@ public class ContextualItemDecorator implements ContextualClass {
 			}
 		}
 		return cleared;
+	}
+
+	public boolean isShowInContext() {
+		return showInContext;
+	}
+
+	public void setShowInContext(boolean showInContext) {
+		this.showInContext = showInContext;
+	}
+
+	public boolean isMatchPrefLabel() {
+		return matchPrefLabel;
+	}
+
+	public void setMatchPrefLabel(boolean matchPrefLabel) {
+		this.matchPrefLabel = matchPrefLabel;
+	}
+
+	public boolean isMatchUrl() {
+		return matchUrl;
+	}
+
+	public void setMatchUrl(boolean matchUrl) {
+		this.matchUrl = matchUrl;
 	}
 }

@@ -25,17 +25,44 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
+import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 
 public class FieldValue {
 
 	private FullDocData model;
 	private Field field;
 	private String value;
+	// private String contextualEntityType;
+	// private int contextualEntityRef;
+	private FullBeanDecorator.ContextualEntity entityType = null;
+	private Object decorator;
 
 	public FieldValue(FullDocData model, Field field, String value) {
 		this.model = model;
 		this.field = field;
 		this.value = value;
+		bindDecorator();
+	}
+
+	private void bindDecorator() {
+		if (field.equals(Field.DC_CREATOR)
+				|| field.equals(Field.DC_CONTRIBUTOR)) {
+			entityType = FullBeanDecorator.ContextualEntity.AGENT;
+		} else if (field.equals(Field.DC_SUBJECT)
+				|| field.equals(Field.DC_TYPE)) {
+			entityType = FullBeanDecorator.ContextualEntity.CONCEPT;
+		} else if (field.equals(Field.DCTERMS_SPATIAL)
+				|| field.equals(Field.DC_COVERAGE)) {
+			entityType = FullBeanDecorator.ContextualEntity.PLACE;
+		} else if (field.equals(Field.DC_DATE) 
+				|| field.equals(Field.DC_COVERAGE)
+				|| field.equals(Field.DCTERMS_TEMPORAL)
+				|| field.equals(Field.EDM_YEAR)) {
+			entityType = FullBeanDecorator.ContextualEntity.PLACE;
+		}
+		if (entityType != null) {
+			this.decorator = model.getDocument().getContextualConnections(entityType, value);
+		}
 	}
 
 	public String getValue() {
@@ -128,6 +155,18 @@ public class FieldValue {
 
 	public boolean isOptedOut() {
 		return field.isOptOutAware() && model.isOptedOut();
+	}
+
+	public Object getDecorator() {
+		return decorator;
+	}
+
+	public void setDecorator(Object decorator) {
+		this.decorator = decorator;
+	}
+
+	public FullBeanDecorator.ContextualEntity getEntityType() {
+		return entityType;
 	}
 
 	@Override

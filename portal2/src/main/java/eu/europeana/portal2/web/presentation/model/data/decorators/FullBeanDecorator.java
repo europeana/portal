@@ -28,6 +28,7 @@ import java.util.Map;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.zookeeper.proto.op_result_t;
 import org.bson.types.ObjectId;
 
 import eu.europeana.corelib.definitions.solr.DocType;
@@ -36,6 +37,7 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
+import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
@@ -46,9 +48,16 @@ import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.AgentDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ConceptDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.PlaceDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.TimespanDecorator;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
+
+	public enum ContextualEntity {AGENT, CONCEPT, PLACE, TIMESPAN};
 
 	private FullBean fulldoc;
 
@@ -313,6 +322,16 @@ public class FullBeanDecorator implements FullBean {
 		return places;
 	}
 
+	public int getNumberOfUnreferencedPlaces() {
+		int counter = 0;
+		for (Place p : getDecoratedPlaces()) {
+			if (!((PlaceDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
 	@Override
 	public void setPlaces(List<? extends Place> places) {
 		fulldoc.setPlaces(places);
@@ -337,6 +356,16 @@ public class FullBeanDecorator implements FullBean {
 			}
 		}
 		return agents;
+	}
+
+	public int getNumberOfUnreferencedAgents() {
+		int counter = 0;
+		for (Agent p : getDecoratedAgents()) {
+			if (!((AgentDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	@Override
@@ -365,6 +394,16 @@ public class FullBeanDecorator implements FullBean {
 		return timespans;
 	}
 
+	public int getNumberOfUnreferencedTimespans() {
+		int counter = 0;
+		for (Timespan p : getDecoratedTimespans()) {
+			if (!((TimespanDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
 	@Override
 	public List<? extends Concept> getConcepts() {
 		return fulldoc.getConcepts();
@@ -384,6 +423,16 @@ public class FullBeanDecorator implements FullBean {
 			}
 		}
 		return concepts;
+	}
+
+	public int getNumberOfUnreferencedConcepts() {
+		int counter = 0;
+		for (Concept p : getDecoratedConcepts()) {
+			if (!((ConceptDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	@Override
@@ -547,5 +596,55 @@ public class FullBeanDecorator implements FullBean {
 	@Override
 	public void setTimestampUpdated(Date timestampUpdated) {
 		fulldoc.setTimestampUpdated(timestampUpdated);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Object getContextualConnections(ContextualEntity type, String value) {
+		List<? extends ContextualItemDecorator> entities = null;
+		if (type.equals(ContextualEntity.AGENT)) {
+			entities = (List<? extends ContextualItemDecorator>)getDecoratedAgents();
+		} else if (type.equals(ContextualEntity.CONCEPT)) {
+			entities = (List<? extends ContextualItemDecorator>)getDecoratedConcepts();
+		} else if (type.equals(ContextualEntity.PLACE)) {
+			entities = (List<? extends ContextualItemDecorator>)getDecoratedPlaces();
+		} else if (type.equals(ContextualEntity.TIMESPAN)) {
+			entities = (List<? extends ContextualItemDecorator>)getDecoratedTimespans();
+		}
+
+		if (entities == null) {
+			return null;
+		}
+
+		for (ContextualItemDecorator entity : entities) {
+			if (value.startsWith("http://")) {
+				if (entity.getAbout().equals(value)) {
+					entity.setShowInContext(true);
+					entity.setMatchUrl(true);
+					return entity;
+				}
+			} else {
+				for (List<String> nameList : entity.getPrefLabel().values()) {
+					for (String name : nameList) {
+						if (StringUtils.equalsIgnoreCase(value, name)) {
+							entity.setShowInContext(true);
+							entity.setMatchPrefLabel(true);
+							return entity;
+						}
+					}
+				}
+				if (entity.getAltLabel() != null) {
+					for (List<String> nameList : entity.getAltLabel().values()) {
+						for (String name : nameList) {
+							if (StringUtils.equalsIgnoreCase(value, name)) {
+								entity.setShowInContext(true);
+								return entity;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 }

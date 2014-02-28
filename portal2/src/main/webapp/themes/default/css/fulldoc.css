@@ -685,7 +685,8 @@ h1 {
 }
 
 .concept ul,
-#fields-enrichment ul {
+#fields-enrichment ul,
+.contextual-body {
 	margin: 0;
 	padding: 0.5em 0;
 	display: none;

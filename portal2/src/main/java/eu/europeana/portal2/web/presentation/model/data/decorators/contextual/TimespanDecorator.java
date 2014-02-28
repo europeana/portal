@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators;
+package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ public class TimespanDecorator extends ContextualItemDecorator implements Timesp
 	private Timespan timespan;
 	Map<String, String> isPartOfLinks;
 
-	TimespanDecorator(Timespan timespan, String userLanguage, String edmLanguage) {
+	public TimespanDecorator(Timespan timespan, String userLanguage, String edmLanguage) {
 		super(timespan, userLanguage, edmLanguage);
 		this.timespan = timespan;
 	}
