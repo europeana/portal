@@ -1,10 +1,39 @@
+/*global jQuery */
+/*jslint browser: true, white: true */
 (function( $ ) {
 	'use strict';
+
+	var panels = {
+		default_panel: 'language-settings',
+		hash: null,
+
+		checkHash: function() {
+			var hash = window.location.hash.substring(1);
+
+			if ( hash !== panels.hash ) {
+				if ( hash === '' && panels.hash === null ) {
+					panels.hash = panels.default_panel;
+				} else {
+					panels.hash = hash;
+				}
+				$('#'+panels.hash).fadeIn();
+			}
+
+		},
+
+		init: function() {
+			eu.europeana.timer.addCallback({
+				timer: 100,
+				fn: panels.checkHash,
+				context: this
+			});
+		}
+	},
 
 	/**
 	 * portal language
 	 */
-	var pl = {
+	pl = {
 
 		addPortalLanguageListener: function() {
 			$('#portalLanguage').on( 'change', this.handlePortalLanguageChange );
@@ -28,6 +57,7 @@
 		$translate_keyword_languages: $( '#translate-keyword-languages input' ),
 		translate_keyword_languages_count: 0,
 		translate_keyword_language_limit: 3,
+		translate_keyword_language_user_limit: 6,
 		translate_keyword_languages_disabled: false,
 		cookie_field: 'searchLanguages',
 		cookie_value_delimeter: ',',
@@ -78,7 +108,12 @@
 			} else if ( tkl.translate_keyword_languages_disabled ) {
 				tkl.enableTranslateKeywords();
 			}
+		},
 
+		checkLimit: function() {
+			if ( eu.europeana.vars.user ) {
+				this.translate_keyword_language_limit = this.translate_keyword_language_user_limit;
+			}
 		},
 
 		disableTranslateKeywordLanguages: function() {
@@ -110,7 +145,7 @@
 				: undefined;
 		},
 
-		handleTranslateKeywordLanguageClick: function( evt ) {
+		handleTranslateKeywordLanguageClick: function() {
 			var $elm = $(this);
 
 			if ( $elm.prop('checked') ) {
@@ -126,6 +161,7 @@
 
 		init: function() {
 			this.addTranslateKeywordLanguagesListener();
+			this.checkLimit();
 			this.checkCurrentCookie();
 		},
 
@@ -213,5 +249,6 @@
 	pl.init();
 	tkl.init();
 	til.init();
+	panels.init();
 
 }( jQuery ));

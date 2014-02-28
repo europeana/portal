@@ -137,7 +137,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
 		eu.europeana.vars.msg.more = '${see_more}';
 		eu.europeana.vars.msg.less = '${see_less}';
-		
+
 
 		eu.europeana.vars.show = {};
 		eu.europeana.vars.show.more = '${showMore}';
@@ -173,7 +173,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			</c:otherwise>
 		</c:choose>
 
-		
+
 		eu.europeana.vars.map = {
 				"coordinates": "${mapCoordinates}",
 				"north":       "${mapCompassN}",
@@ -182,7 +182,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				"west":        "${mapCompassW}"
 		};
 
-		
+
 		// Translation data for lightbox triggers: map lightboxble type to message
 		eu.europeana.vars.external = {
 			triggers: {
@@ -217,6 +217,17 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 	</c:when>
 
 	<c:when test="${model.pageName == 'login.html'}">
+		<c:choose>
+			<c:when test="${!empty model.user}">
+				eu.europeana.vars.user = true;
+			</c:when>
+			<c:otherwise>
+				eu.europeana.vars.user = false;
+			</c:otherwise>
+		</c:choose>
+	</c:when>
+
+	<c:when test="${model.pageName == 'myeuropeana/index'}">
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				eu.europeana.vars.user = true;

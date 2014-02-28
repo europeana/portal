@@ -7,83 +7,32 @@
 	<h2><spring:message code="MyEuropeana_t" /></h2>
 
 	<ul class="columns three">
-		<li><a href=""><spring:message code="LogIn_t" /></a></li>
-		<li><a href=""><spring:message code="UserInformation_t" /></a></li>
-		<li><a href=""><spring:message code="LanguageSettings_t" /></a></li>
-		<li><a href=""><spring:message code="SavedItems_t" /></a></li>
-		<li><a href=""><spring:message code="SavedSearches_t" /></a></li>
-		<li><a href=""><spring:message code="SavedTags_t" /></a></li>
-		<li><a href=""><spring:message code="myeuropeana_ApiKeys_t" /></a></li>
+		<c:choose>
+			<c:when test="${!empty model.user}">
+				<li data-settings-panel="#logout"><a href="#logout"><spring:message code="LogOut_t" /></a></li>
+				<li data-settings-panel="#user-information"><a href="#user-information"><spring:message code="UserInformation_t" /></a></li>
+				<li data-settings-panel="#language-settings"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
+				<li data-settings-panel="#saved-items"><a href="#saved-items"><spring:message code="SavedItems_t" /></a></li>
+				<li data-settings-panel="#saved-searches"><a href="#saved-searches"><spring:message code="SavedSearches_t" /></a></li>
+				<li data-settings-panel="#saved-tags"><a href="#saved-tags"><spring:message code="SavedTags_t" /></a></li>
+				<li data-settings-panel="#api-keys"><a href="#api-keys"><spring:message code="myeuropeana_ApiKeys_t" /></a></li>
+			</c:when>
+			<c:otherwise>
+				<li data-settings-panel="#login"><a href="#login"><spring:message code="LogIn_t" /></a></li>
+				<li data-settings-panelg="#language-settings"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
+			</c:otherwise>
+		</c:choose>
 	</ul>
 
 	<div class="columns nine">
-
-		<%-- portal-default-language --%>
-		<h3><spring:message code="rswLabel_defaultLanguage_t" /></h3>
-		<form action="${language_menu_action}" method="get">
-			<label>
-				<select id="portalLanguage" name="lang">
-					<c:forEach items="${model.portalLanguages}" var="language">
-						<c:choose>
-							<c:when test="${language.languageCode == model.locale}">
-								<option value="${language.languageCode}" selected> ${language.languageName}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${language.languageCode}"> ${language.languageName}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
-			</label>
-			<input type="submit" value="<spring:message code="Submit_t" />" />
-		</form>
-
-		<%-- translate-keywords-into --%>
-		<c:set var="portal_languages_count" value="${fn:length(model.portalLanguages)}" />
-		<c:set var="portal_languages_column" value="${portal_languages_count/4}" />
-		<c:set var="translate_keywords_into_count" value="0" />
-		<h3><spring:message code="translate_keywords_t" /></h3>
-		<form action="${language_menu_action}" method="get">
-			<div id="translate-keyword-languages">
-				<c:forEach items="${model.portalLanguages}" var="language">
-					<c:if test="${translate_keywords_into_count == 0}">
-						<div class="column three">
-					</c:if>
-					<label><input type="checkbox" name="tki" value="${language.languageCode}"/> ${language.languageName}</label>
-					<c:set var="translate_keywords_into_count" value="${translate_keywords_into_count + 1}"/>
-					<c:if test="${translate_keywords_into_count ge portal_languages_column}">
-						</div>
-						<c:set var="translate_keywords_into_count" value="0" />
-					</c:if>
-				</c:forEach>
-				<c:if test="${translate_keywords_into_count < portal_languages_column}">
-					</div>
-				</c:if>
+		<c:if test="${empty model.user}">
+			<div id="login" class="settings-panel">
+				<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/login/login-form.jspf" %>
 			</div>
-			<p><spring:message code="translate_keywords_explanation_t" /></p>
-			<input type="submit" value="<spring:message code="Submit_t" />" />
-		</form>
-
-		<%-- translate-item-language --%>
-		<h3><spring:message code="translate_items_t" /></h3>
-		<form action="${language_menu_action}" method="get">
-			<label>
-				<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes"/> <spring:message code="translate_items_select_t" />&nbsp;
-				<select id="item-language" name="il">
-					<c:forEach items="${model.portalLanguages}" var="language">
-						<c:choose>
-							<c:when test="${language.languageCode == model.locale}">
-								<option value="${language.languageCode}" selected> ${language.languageName}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${language.languageCode}"> ${language.languageName}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
-			</label>
-			<input type="submit" value="<spring:message code="Submit_t" />" />
-		</form>
+		</c:if>
+		<div id="language-settings" class="settings-panel">
+			<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/language-settings.jspf" %>
+		</div>
 	</div>
 
 </div>

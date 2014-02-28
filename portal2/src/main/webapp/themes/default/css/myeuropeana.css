@@ -157,7 +157,7 @@ li.saved-tags{
 }
 
 #myeuropeana ul li {
-	margin-bottom: 1em;
+	margin-bottom: .5em;
 }
 
 #translate-keyword-languages {
@@ -170,4 +170,8 @@ li.saved-tags{
 
 .disabled {
 	color: #ccc;
+}
+
+.settings-panel {
+	display: none;
 }

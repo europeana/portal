@@ -59,10 +59,16 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'jquery' ]
 		},
 
-//		{	name : 'utils',				file : 'utils' + js.min_suffix + '.js' + js.cache_helper,						path : eu.europeana.vars.branding + '/js/js/' + js.min_directory,											dependencies : [ 'jquery-ui' ]	},
 		{
 			name : 'utils',
 			file : 'utils' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'jquery-ui' ]
+		},
+
+		{
+			name : 'timer',
+			file : 'timer' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery-ui' ]
 		},
@@ -295,8 +301,8 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		});
-		
-		
+
+
 		scripts.push({
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,

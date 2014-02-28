@@ -448,6 +448,23 @@
 					<!-- @see WEB-INF/jsp/default/_common/html/css/production-css.jsp -->
 					<!-- INDIVIDUAL JS FILES -->
 					<execution>
+						<id>minify-accordion-tabs.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuAccordionTabs.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuAccordionTabs.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-admin.js</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -645,6 +662,23 @@
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
 								<jsSourceInclude>embed.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-eu-pagination.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuPagination.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuPagination.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
@@ -1061,33 +1095,15 @@
 					</execution>
 
 					<execution>
-						<id>minify-eu-pagination.js</id>
+						<id>minify-search-widget.js</id>
 						<phase>process-resources</phase>
 						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>EuPagination.js</jsFinalFile>
+							<jsFinalFile>EuSearchWidget.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
-								<jsSourceInclude>EuPagination.js</jsSourceInclude>
-							</jsSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-
-
-					<execution>
-						<id>minify-accordion-tabs.js</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
-							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>EuAccordionTabs.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
-							<jsSourceIncludes>
-								<jsSourceInclude>EuAccordionTabs.js</jsSourceInclude>
+								<jsSourceInclude>EuSearchWidget.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
@@ -1096,22 +1112,21 @@
 					</execution>
 
 					<execution>
-						<id>minify-widget-wizard.js</id>
+						<id>minify-timer.js</id>
 						<phase>process-resources</phase>
 						<configuration>
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
 							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>EuWidgetWizard.js</jsFinalFile>
+							<jsFinalFile>timer.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
-								<jsSourceInclude>EuWidgetWizard.js</jsSourceInclude>
+								<jsSourceInclude>timer.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
 							<goal>minify</goal>
 						</goals>
 					</execution>
-
 
 					<execution>
 						<id>minify-translation-services.js</id>
@@ -1199,6 +1214,23 @@
 					</execution>
 
 					<execution>
+						<id>minify-widget-wizard.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuWidgetWizard.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuWidgetWizard.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-window-open.js</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -1214,29 +1246,6 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-
-
-					<!-- Search Widget js -->
-
-					<execution>
-						<id>minify-search-widget.js</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
-							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
-							<jsFinalFile>EuSearchWidget.js</jsFinalFile>
-							<jsTargetDir>min</jsTargetDir>
-							<jsSourceIncludes>
-								<jsSourceInclude>EuSearchWidget.js</jsSourceInclude>
-							</jsSourceIncludes>
-						</configuration>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-
-
-
 					<!-- END INIDVIDUAL JS FILES -->
 				</executions>
 			</plugin>
