@@ -1,6 +1,6 @@
 
 log = function(msg){
-	console.log(msg);
+	//console.log(msg);
 }
 
 var EuCarousel = function(cmp, data){
