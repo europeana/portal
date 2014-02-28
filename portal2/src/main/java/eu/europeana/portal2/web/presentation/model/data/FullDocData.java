@@ -104,8 +104,8 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	protected String urlRef = null;
 	protected boolean showSimilarItems = false;
 	protected boolean showEuropeanaMlt = false;
-	private boolean showContext;
-	private boolean showHierarchical;
+	private boolean showContext = false;
+	private boolean showHierarchical = false;
 	protected List<String> soundCloudAwareCollections = new ArrayList<String>();
 
 	public void setEdmSchemaMappings(SchemaOrgMapping schema) {
@@ -272,5 +272,9 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public void setShowHierarchical(boolean showHierarchical) {
 		this.showHierarchical = showHierarchical;
+	}
+
+	public boolean isShowHierarchical() {
+		return showHierarchical;
 	}
 }
