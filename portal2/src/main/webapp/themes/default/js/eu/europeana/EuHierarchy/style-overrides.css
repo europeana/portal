@@ -1,0 +1,168 @@
+#hierarchy.jstree-default .jstree-anchor{
+	white-space:nowrap;
+	white-space:normal;
+	height: auto;
+}	
+
+		
+.hierarchy-container{
+	border:		1px solid #dadada;
+	font-size:	1em;
+	overflow:	hidden;
+	
+	position: relative;
+}
+
+	 /* force scrollability: this em value should correspond to the js variable defaultChunk */
+	 /* force scrollability: this em value should correspond to the js variable defaultChunk */
+.hierarchy-container{
+	max-height: 6em;
+	max-width:  50%;
+	margin:     2em 0 2em 0;
+}
+
+		
+#hierarchy{
+	position: relative;
+	padding-bottom: 6em;
+}
+		
+		
+ /*
+ 	style
+*/
+
+#hierarchy.jstree-default .jstree-node,
+#hierarchy.jstree-default .jstree-anchor{
+	line-height: 1em;
+}
+
+#hierarchy.jstree-default-responsive .jstree-anchor,
+#hierarchy.jstree-default-responsive .jstree-anchor{
+	line-height: 1em;		
+}
+
+#hierarchy.jstree-default .jstree-node {
+  margin-left: 1em;
+  min-height:  1em;
+  min-width:   1em;
+}
+
+/* icons */
+
+#hierarchy.jstree-default .jstree-leaf > .jstree-ocl{
+	background-image:    url(connector-leaf.png);
+	background-position: 0 0;
+	background-size: 1em 1em;
+}
+
+#hierarchy.jstree-default .jstree-leaf.jstree-last > .jstree-ocl{
+	background-image:    url(connector-leaf-last.png);
+}
+
+#hierarchy.jstree-default .jstree-open > .jstree-ocl{
+	background-image:    url(connector-opened.png);
+	background-position: 0 0;
+	background-size: 1em 1em;
+}
+
+#hierarchy.jstree-default .jstree-open.jstree-last > .jstree-ocl{
+	background-image:    url(connector-opened-last.png);			
+}
+
+#hierarchy.jstree-default .jstree-closed > .jstree-ocl{
+	background-image:    url(connector-closed.png);
+	background-position: 0 0;
+	background-size: 1em 1em;
+}
+
+#hierarchy.jstree-default .jstree-closed.jstree-last > .jstree-ocl{
+	background-image:    url(connector-closed-last.png);			
+}
+
+#hierarchy.jstree-default .jstree-node{
+	background-image:    url(connector-vertical.png);			
+	background-position: 0 0;
+	background-size: 1em 1em;
+	background-repeat: repeat-y;
+}
+
+#hierarchy.jstree-default .jstree-last{
+	background-image:    none;
+}
+
+#hierarchy.jstree-default .jstree-anchor > .jstree-themeicon{
+	background-image:    url(connector-horizontal.png);			
+	background-position: 0 0;
+	background-size: 1em 1em;
+	background-repeat: repeat-y;
+	
+}
+
+
+/* wrapping fix */
+
+#hierarchy.jstree-default .jstree-anchor{
+	/* facet tidy*/
+padding-left: 1em;
+	XXXmargin-left: 1em;
+	padding-right: 1em;
+	position: relative;
+	-moz-box-sizing: border-box;
+	
+}	
+#hierarchy.jstree-default .jstree-open > .jstree-anchor{
+
+	background-image:    url(connector-vertical.png);			
+	background-position: 0 0;
+	background-size: 1em 1em;
+	background-repeat: repeat-y;
+
+}
+#hierarchy.jstree-default .jstree-anchor > .jstree-themeicon{
+	background-color: white;
+	position: absolute;
+	left: 0;
+}
+#hierarchy.jstree-default .jstree-anchor.jstree-hovered > .jstree-themeicon{
+	background-color: #E7F4F9;
+}
+#hierarchy.jstree-default .jstree-anchor.jstree-clicked > .jstree-themeicon{
+	background-color: #BEEBFF;
+}
+
+
+/* wrapping fix */
+		
+		
+
+
+
+#hierarchy.jstree-default .jstree-node.jstree-open > .jstree-anchor > .jstree-themeicon{
+	background-image:    url(opened.png);			
+	background-position: 0 0;
+	background-size: 1em 1em;
+}
+
+
+#hierarchy.jstree-default .jstree-icon:empty {
+  height:      1em;
+  line-height: 1em;
+  width:       1em;
+}
+#hierarchy.jstree-default .jstree-icon:empty {
+  xxxvisibility:  hidden;
+}
+
+/* overlay */
+.ajax-overlay{
+    position:	absolute;
+    width:		100%;
+    height:		100%;
+    background:	black url(../../../../images/spinner.gif) center center no-repeat;
+    opacity:	.5;
+    z-index:	12;
+    left:		0;
+    top:		0;
+}		
+

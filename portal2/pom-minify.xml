@@ -633,6 +633,42 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
+					
+					<execution>
+						<id>minify-touchwipe.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/jquery</webappTargetDir>
+							<jsSourceDir>/themes/default/js/jquery</jsSourceDir>
+							<jsFinalFile>jquery.touchwipe.1.1.1.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>jquery.touchwipe.1.1.1.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>minify-eucarousel.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuCarousel.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuCarousel.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					
 <!--
 					<execution>
 						<id>minify-emma.js</id>

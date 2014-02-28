@@ -32,6 +32,13 @@
 			</c:if>
 		</c:if>
 
+		<c:if test="${true || model.showHierarchical}">
+			<script type="text/javascript">
+				var hierarchical = true;
+			</script>
+			<div class="hierarchy-container"><div id="hierarchy"></div></div>
+		</c:if>
+
 		<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">
 			<div class="row">
 				<div class="twelve columns">
@@ -39,7 +46,7 @@
 				</div>
 			</div>
 		</c:if>
-
+		
 		<%-- 
 		<c:if test="${model.moreLikeThis != null && !empty model.moreLikeThis}">
 

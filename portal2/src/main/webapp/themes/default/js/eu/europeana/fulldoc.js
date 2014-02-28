@@ -958,6 +958,56 @@ eu.europeana.fulldoc = {
 		});
 
 		
+		
+		/**
+		 * 
+		 * HIERARCHICAL OBJECTS  
+		 * 
+		 * */
+
+		if(typeof(hierarchical) != 'undefined'){
+			var scripts = [];
+			
+			scripts.push({
+				"name" : "scrollTo",
+				"file" : "jquery.scrollTo-1.4.3.1.js",
+				"path" : eu.europeana.vars.branding + '/js/jquery/'
+			});
+
+			scripts.push({
+				"name" : "jstree",
+				"file" : "jstree.js",
+				"path" : eu.europeana.vars.branding + '/js/jquery/jsTree/' + js.min_directory,
+			});
+
+			scripts.push({
+				"name" : "hoData",
+				"file" : "EuHierarchyData.js",
+				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/',
+			});
+
+			scripts.push({
+				"file" : "EuHierarchy.js",
+				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
+				"dependencies" : ["hoData", "scrollTo", "jstree"],
+				callback : function(){
+					
+					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
+					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');
+					var tree = $('#hierarchy').jstree({
+						"core" : {
+							"data" : dataGen.base(),
+							"check_callback" : true
+						},
+						"plugins" : [ "themes", "json_data", "ui" ]
+					});
+
+				}
+			});
+
+			js.loader.loadScripts(scripts);
+		}
+		
 		/**
 		 * 
 		 * MLT 
@@ -993,101 +1043,7 @@ eu.europeana.fulldoc = {
 				
 				$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
 				var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
-
-/*
 				
-				$('#pinterest-carousel a').click(function(){
-					var clicked	= this;
-					$('#pinterest-carousel a').each(function(i, ob){
-						if(ob == clicked){
-							com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", data.data[i].link);
-						}
-					});
-				});
-				
-        	   	$(window).bind('collapsibleExpanded', function(data){
-        	   		console.log('collapsibleExpanded, data =  ' + data)
-        	   		pinterestCarousel.resize();
-        	   	} );        		
-*/
-				
-				/*
-				$('#more-like-this').galleria({
-					dataSource: mltData,
-					extend: function(e){
-						
-				    	var thisGallery		= this;
-						
-						// add ellipsis
-						var doEllipsis = function(callback){
-							var ellipsisObjects = [];
-							$('.europeana-carousel-info').each(
-								function(i, ob){
-									ellipsisObjects[ellipsisObjects.length] = new Ellipsis($(ob));					
-								}
-							);
-							
-							setTimeout(function(){
-								for(var i=0; i<ellipsisObjects.length; i++ ){
-									ellipsisObjects[i].respond();
-								}
-							}, 1000);
-							
-							
-							$(window).euRsz(function(){
-								for(var i=0; i<ellipsisObjects.length; i++ ){
-									ellipsisObjects[i].respond();
-								}
-							});
-							
-							if(callback){
-								callback();
-							}
-						};
-
-						var infoSelector = '#more-like-this .galleria-thumbnails .galleria-image .europeana-carousel-info';
-						var imgSelector = '#more-like-this .galleria-thumbnails .galleria-image img';
-						
-						$(infoSelector).click(function(){
-							var clicked	= this;
-							$(infoSelector).each(function(i, ob){
-								if(ob == clicked){
-									alert('clicked ' + thisGallery._options.dataSource[i].link )
-									//com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
-								}
-							});
-						});
-
-						$(imgSelector).click(function(){
-							var clicked	= this;
-							$(imgSelector).each(function(i, ob){
-								if(ob == clicked){
-									alert('clicked ' + thisGallery._options.dataSource[i].link )
-									//com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", thisGallery._options.dataSource[i].link);
-								}
-							});
-						});
-						
-						$(this).ready(function(e) {
-							eu.europeana.vars.suppresResize = false;
-							setTimeout(
-								function(){
-									doEllipsis(
-										function(){
-											$(imgSelector).each(function(i, ob){
-												ob = $(ob);
-												ob.attr("title", mltData[i].title ? mltData[i].title : '');
-												ob.attr("alt", mltData[i].title ? mltData[i].title : '');
-											});
-										}
-									);
-									
-								}
-								, 100);
-						});
-					} 
-				});		
-				*/		
 			}; // end initMlt
 			
 			var initMltIfBigEnough = function(){

@@ -38,6 +38,8 @@
           <c:if test="${field.schemaOrgElementIsURL}">${" "}href="${docElement[field.propertyName]}"</c:if>
         </c:if>
       </c:set>
+      <%--
+      
       <td<c:if test="${!empty semanticAttributes && (!field.multiValue || fn:length(docElement[field.propertyName]) == 1) && !field.mapsOfLists}">${" "}${semanticAttributes}</c:if>><c:choose>
 
           <c:when test="${field.schemaName == 'edm:WebResource'}">
@@ -96,6 +98,7 @@
           <c:otherwise>${docElement[field.propertyName]}</c:otherwise>
         </c:choose>
       </td>
+       --%>
     </tr>
   </c:if>
 </c:forEach>
