@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators;
+package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	private Map<String, String> closeMatchLinks;
 	private Map<String, String> exactMatchLinks;
 
-	ConceptDecorator(Concept concept, String userLanguage, String edmLanguage) {
+	public ConceptDecorator(Concept concept, String userLanguage, String edmLanguage) {
 		super(concept, userLanguage, edmLanguage);
 		this.concept = concept;
 	}

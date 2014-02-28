@@ -104,6 +104,7 @@ public class FullBeanShortcut {
 		if (!mapValues.containsKey(qualifiedProperty)) {
 			mapValues.put(qualifiedProperty, new ArrayList<Map<String, List<String>>>());
 		}
+		
 		mapValues.get(property).add(value);
 		mapValues.get(qualifiedProperty).add(value);
 	}

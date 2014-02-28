@@ -130,6 +130,27 @@
 				<c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
 
 				<c:choose>
+					<c:when test="${!empty value.decorator}">
+						<c:set var="inContext" value="1" />
+						<c:choose>
+							<c:when test="${value.entityType == 'AGENT'}">
+								<c:set var="agent" value="${value.decorator}" />
+								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/agent.jspf" %>
+							</c:when>
+							<c:when test="${value.entityType == 'CONCEPT'}">
+								<c:set var="concept" value="${value.decorator}" />
+								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/concept.jspf" %>
+							</c:when>
+							<c:when test="${value.entityType == 'PLACE'}">
+								<c:set var="place" value="${value.decorator}" />
+								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/place.jspf" %>
+							</c:when>
+							<c:when test="${value.entityType == 'TIMESPAN'}">
+								<c:set var="timespan" value="${value.decorator}" />
+								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timespan.jspf" %>
+							</c:when>
+						</c:choose>
+					</c:when>
 					<c:when test="${value.searchOn}">
 						<a href="${value.searchOn}" target="_top" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>

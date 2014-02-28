@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators;
+package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ public class AgentDecorator extends ContextualItemDecorator implements Agent {
 
 	private Agent agent;
 
-	AgentDecorator(Agent agent, String userLanguage, String edmLanguage) {
+	public AgentDecorator(Agent agent, String userLanguage, String edmLanguage) {
 		super(agent, userLanguage, edmLanguage);
 		this.agent = agent;
 	}
@@ -80,9 +80,17 @@ public class AgentDecorator extends ContextualItemDecorator implements Agent {
 		return agent.getRdaGr2DateOfBirth();
 	}
 
+	public List<String> getRdaGr2DateOfBirthLang() {
+		return getLanguageVersion(agent.getRdaGr2DateOfBirth());
+	}
+
 	@Override
 	public Map<String, List<String>> getRdaGr2DateOfDeath() {
 		return agent.getRdaGr2DateOfDeath();
+	}
+
+	public List<String> getRdaGr2DateOfDeathLang() {
+		return getLanguageVersion(agent.getRdaGr2DateOfDeath());
 	}
 
 	@Override
