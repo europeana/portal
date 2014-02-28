@@ -123,15 +123,6 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'utils', 'jquery' ]
 		},
-
-		{
-			name : 'touchwipe',
-			file : 'jquery.touchwipe.1.1.1.js',
-			path : eu.europeana.vars.branding + '/js/jquery/',
-			XXXfile : 'touch-swipe' + js.min_suffix + '.js' + js.cache_helper,
-			XXXpath : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
-			dependencies : [ 'jquery' ]
-		},
 		
 		{
 			name : 'scrollTo',
@@ -282,10 +273,19 @@ var europeana_bootstrap = function(){
 		});
 
 		scripts.push({
+			name : 'touchwipe',
+			file : 'jquery.touchwipe.1.1.1.js',
+			path : eu.europeana.vars.branding + '/js/jquery/',
+			XXXfile : 'touch-swipe' + js.min_suffix + '.js' + js.cache_helper,
+			XXXpath : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			dependencies : [ 'jquery' ]
+		});
+
+		scripts.push({
 			name: 'EuCarousel',
 			file : 'EuCarousel.js',
 			path : eu.europeana.vars.branding + '/js/eu/europeana/',
-			dependencies : [ 'jquery', 'touchswipe', 'imagesloaded', 'ellipsis'  ]
+			dependencies : [ 'jquery', 'touchwipe', 'imagesloaded', 'ellipsis'  ]
 		});
 
 		scripts.push({
@@ -338,10 +338,20 @@ var europeana_bootstrap = function(){
 		});
 */		
 		scripts.push({
+			name : 'touchwipe',
+			file : 'jquery.touchwipe.1.1.1.js',
+			path : eu.europeana.vars.branding + '/js/jquery/',
+			XXXfile : 'touch-swipe' + js.min_suffix + '.js' + js.cache_helper,
+			XXXpath : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			dependencies : [ 'jquery' ]
+		});
+
+		
+		scripts.push({
 			name : 'EuCarousel',
 			file : 'EuCarousel.js',
 			path : eu.europeana.vars.branding + '/js/eu/europeana/',
-			dependencies : [ 'jquery', 'touchswipe', 'touchwipe', 'imagesloaded', 'ellipsis'  ]
+			dependencies : [ 'jquery', 'touchwipe', 'imagesloaded', 'ellipsis'  ]
 		});
 
 		scripts.push({
