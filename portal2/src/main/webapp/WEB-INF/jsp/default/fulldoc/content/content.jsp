@@ -32,7 +32,7 @@
 			</c:if>
 		</c:if>
 
-		<c:if test="${true || model.showHierarchical}">
+		<c:if test="${model.showHierarchical}">
 			<script type="text/javascript">
 				var hierarchical = true;
 			</script>
