@@ -4,21 +4,24 @@
 	'use strict';
 
 	var panels = {
+		$panel_links: $('#panel-links li'),
 		default_panel: 'language-settings',
+		active_panel: null,
 		hash: null,
 
 		checkHash: function() {
 			var hash = window.location.hash.substring(1);
 
 			if ( hash !== panels.hash ) {
-				if ( hash === '' && panels.hash === null ) {
+				if ( hash === '' || panels.hash === null ) {
 					panels.hash = panels.default_panel;
+					window.location.hash = panels.hash;
 				} else {
 					panels.hash = hash;
 				}
-				$('#'+panels.hash).fadeIn();
-			}
 
+				panels.setActivePanel();
+			}
 		},
 
 		init: function() {
@@ -26,6 +29,33 @@
 				timer: 100,
 				fn: panels.checkHash,
 				context: this
+			});
+		},
+
+		setActivePanel: function() {
+			panels.setActivePanelLink();
+			$('#' + panels.hash).fadeIn();
+		},
+
+		setActivePanelLink: function() {
+			panels.$panel_links.each(function() {
+				var $elm = $(this),
+					$a = $('<a>'),
+					$panel_a = $elm.find('a'),
+					panel = $elm.attr('data-settings-panel'),
+					panel_text = $elm.attr('data-settings-panel-text');
+
+				if ( panel === panels.hash ) {
+					if ( $a.length > 0 ) {
+						$elm.text( panel_text );
+					}
+				} else {
+					if ( $panel_a.length < 1 ) {
+						$('#' + panel).hide();
+						$a.attr('href', '#' + panel).text(panel_text);
+						$elm.html($a);
+					}
+				}
 			});
 		}
 	},

@@ -66,15 +66,20 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'jquery-ui' ]
 		},
 
-		/*
-		Dan - I disabled this because it's causing errors.
+		/**
+		 * Dan - I disabled this because it's causing errors.
+		 *
+		 * @andy or whoever disabled this,
+		 *   after re-activating this code i don't see any errors
+		 *   where are you seeing errors?
+		 *   what are the errors?
+		 */
 		{
 			name : 'timer',
 			file : 'timer' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery-ui' ]
 		},
-		*/
 
 		{
 			name : 'analytics',
@@ -272,14 +277,14 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
 
-		
+
 		scripts.push({
 			name : 'scrollTo',
 			file : 'jquery.scrollTo-1.4.3.1.js',
 			path : eu.europeana.vars.branding + '/js/jquery/',
 			dependencies : [ 'jquery' ]
 		});
-		
+
 		scripts.push({
 			name : 'touchwipe',
 			file : 'jquery.touchwipe.1.1.1' + js.min_suffix + '.js',
@@ -342,8 +347,8 @@ var europeana_bootstrap = function(){
 			path : eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
-*/		
-		
+*/
+
 		scripts.push({
 			name : 'scrollTo',
 			file : 'jquery.scrollTo-1.4.3.1.js',
@@ -358,7 +363,7 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'jquery' ]
 		});
 
-		
+
 		scripts.push({
 			name : 'EuCarousel',
 			file : 'EuCarousel.js',
@@ -425,7 +430,7 @@ var europeana_bootstrap = function(){
 			name : 'myeuropeana',
 			file : 'myeuropeana-index' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			dependencies : [ 'utils' ]
+			dependencies : [ 'utils', 'timer' ]
 		});
 
 		loadScripts(scripts);
