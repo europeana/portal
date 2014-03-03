@@ -19,7 +19,10 @@
 }
 
 .carousel-items .info {
-  -moz-box-sizing: border-box;
+  box-sizing:		  border-box;
+  -moz-box-sizing:	  border-box;
+  -webkit-box-sizing: border-box;
+  
   background-color: rgba(0, 0, 0, 0.698);
   border-radius: 0 0 0.5em 0.5em;
   bottom: 0;
@@ -33,7 +36,10 @@
 }
 
 .carousel-item {
-    -moz-box-sizing: border-box;
+  box-sizing:		  border-box;
+  -moz-box-sizing:	  border-box;
+  -webkit-box-sizing: border-box;
+    
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #E4E4E4;
     border-radius: 0.5em;
