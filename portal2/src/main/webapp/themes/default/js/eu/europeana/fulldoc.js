@@ -1056,7 +1056,10 @@ eu.europeana.fulldoc = {
 					console.log('init mlt');
 					initMlt();
 				}
-				if(mltTotal > 1){						
+				if(mltTotal > 1){	
+					
+					//alert('mltTotal ' + mltTotal)
+					
 					if( $('.load-all').length ==0 ){
 						$('#more-like-this-wrapper').append(getLoadAllLink());
 					}

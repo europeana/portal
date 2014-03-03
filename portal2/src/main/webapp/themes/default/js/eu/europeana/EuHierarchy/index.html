@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Hierarchy</title>
+
+	<!--link rel="stylesheet" href="jstree/dist/themes/europeana/style.css" /-->
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="style-overrides.css" />
+
+
+	<script src="../../../jquery/jquery-1.8.1.js"></script>
+	
+	<!-- script src="jstree/dist/jstree.js"></script-->
+	<script src="jstree.js"></script>
+	<script src="../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
+
+
+	<style>
+		body{
+			font-size: 2em;
+			line-height: 1em;
+		}
+
+		/*  wrapping */
+
+/*
+		#tree1.jstree-default .jstree-node{
+			display: table-row;
+		}
+
+		#tree1.jstree-default .jstree-anchor,
+		#tree1.jstree-default .jstree-icon{
+			display: table-cell;
+		}		
+	*/	
+		/*
+		.hierarchy-container,
+		.hierarchy-container li,
+		.hierarchy-container ul,
+		.XXXXXXhierarchy-container a,
+		.hierarchy-container span{
+			-moz-box-sizing: border-box;
+			max-width: 100%;
+		}
+		.hierarchy-container span{
+			display: inline-block;
+			margin-right: 1em;
+		}
+				
+		
+		/*  end wrapping */
+
+		#tree1.jstree-default .jstree-anchor{
+			white-space:nowrap;
+			white-space:normal;
+			height: auto;
+		}	
+		
+		
+		
+		.hierarchy-container{
+			border:		1px solid #dadada;
+			font-size:	1em;
+			overflow:	hidden;
+			
+			position: relative;
+		}
+
+		 /* force scrollability: this em value should correspond to the js variable defaultChunk */
+		.hierarchy-container{
+			height:     6em;
+			max-height: 6em;
+			max-width:  50%;
+		}
+	</style>
+</head>
+<body onLoad="javascript:document.getElementById('chunk').focus();">
+
+
+	<div>
+		<a class="lock"    style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[unlock]</a>
+		<a class="prepend" style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[prepend]</a>
+		<a class="spin"    style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[spin]</a>
+		<a class="load-more">load more...</a>
+		<br/>
+		<br/>
+		<a class="view-prev" style="font-weight:bold; cursor:pointer;">...view previous</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="view-next" style="font-weight:bold; cursor:pointer;">view next...</a>
+	
+		<br/>
+		<br/>
+		<input id="chunk" type="number" tab-index="1">
+		<br/>
+		<br/>
+		
+		<div class="hierarchy-container">
+			<div id="hierarchy"></div>
+		</div>
+		
+		<img src="https://bigfiles.assembla.com/spaces/europeana/documents/download/dRFgfOLv0r44oGacwqjQYw"/>
+
+		<script type="text/javascript">
+//			alert('dataGen.base() = ' + JSON.stringify(dataGen.base()));
+			$(document).ready(function(){
+				
+				setTimeout(function(){
+					var tree = $('#hierarchy').jstree({
+						"core" : {
+							"data" : dataGen.base(),
+							"check_callback" : true
+						},
+						"plugins" : [ "themes", "json_data", "ui" ]
+					});
+					//alert('made tree')				
+				}, 1000);
+			});
+		</script>
+	</div>
+	<script src="EuHierarchyData.js"></script>
+	<script src="EuHierarchy.js"></script>
+	
+</body>
+
+</html>
+
+

@@ -21,7 +21,6 @@ $(document).ready(function() {
 	var createdNodes = [];
 
 	var locked = true;
-	var quit = false;
 	var spin = false;
 
 
@@ -38,10 +37,6 @@ $(document).ready(function() {
 
 	var loadAndAppendData = function(node, callback) {
 
-		if (quit) {
-			x = x / 0; // force error
-		}
-		
 		// get url
 
 		var start = node.data.loaded ? node.data.loaded : 0;
@@ -356,14 +351,34 @@ $(document).ready(function() {
 			$('.hierarchy-container').css('overflow', 'auto');
 		}
 	});
-	$('.quit').click(function() {
-		quit = !quit;
-		if (quit) {
-			$(this).html('[unquit]');
-		} else {
-			$(this).html('[quit]');
-		}
+	
+	$('.prepend').click(function() {
+
+		createdNodes = []; // reset global
+		
+		var newData = [
+	        {
+	        	"text" : "New Root???",
+	        	"id" : "new_root",
+	        	"name" : "root"
+	        	/*	
+				, "data": {
+					"url":	"dataGen.books()",
+					"total": 14
+				}
+				*/			        	
+	        }
+		];
+		$.each(newData, function(i, ob) {
+	//      $.jstree.reference("#myjstreediv").create_node(parent_node, {attr : {id: "g3", parent : "#" }, data: "My New Group" }, "first",false,true);
+			tree.jstree("create_node", '#', ob, "first", function(){ alert('new node callback'); }, true);
+		});
+		var created = createdNodes;
+
+		
 	});
+	
+	
 	$('.spin').click(function() {
 		spin = !spin;
 		if (spin) {
@@ -403,9 +418,7 @@ $(document).ready(function() {
 	});
 
 	// LOADED
-
 	tree.bind("loaded.jstree", function(event, data) {
-
 		// set active and load
 		getRootEl().click();
 		setTimeout(function() {
