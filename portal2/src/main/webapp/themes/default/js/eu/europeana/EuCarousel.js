@@ -121,6 +121,11 @@ var EuCarousel = function(cmp, data){
 	};
 	
 	var goRight = function(){
+		
+		if((position + inView) > total){
+			return;
+		}
+		
 		animating = true;
 		var nextItem = position + inView;
 		
