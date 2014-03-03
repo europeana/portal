@@ -7,7 +7,7 @@ var EuCarousel = function(cmp, data){
 	var position = 1;
 	var left, right, items;
 	var cmp = $(cmp);
-	var minSpacingPx = 20;
+	var minSpacingPx = 15;
 	var spacing = minSpacingPx;
 	var inView = 0;
 	var total = data.length;

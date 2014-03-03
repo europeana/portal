@@ -370,8 +370,16 @@ $(document).ready(function() {
 	        }
 		];
 		$.each(newData, function(i, ob) {
-	//      $.jstree.reference("#myjstreediv").create_node(parent_node, {attr : {id: "g3", parent : "#" }, data: "My New Group" }, "first",false,true);
-			tree.jstree("create_node", '#', ob, "first", function(){ alert('new node callback'); }, true);
+			//tree.jstree("create_node", '#', ob, "first", function(){ alert('new node callback'); }, true);
+		//: $.jstree.reference("#myjstreediv").create_node(     {attr : {id: "g3", parent : "#" }, data: "My New Group" }, "first",false,true);
+
+			//$.jstree.reference("#hierarchy").create_node('#', {attr : {id: "g3", parent : "#" }, data: "My New Group" }, "first",false,true);
+			
+
+			var grRef = $.jstree.reference("#hierarchy");
+			var $el = $("#hierarchy>ul>li:first-child");
+			grRef.create_node(grRef.get_parent($el), "data: {}","first",false,true);
+			
 		});
 		var created = createdNodes;
 
