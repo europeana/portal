@@ -225,11 +225,9 @@
 					<label for="add-tag" class="icon-tag action-link">
 						<span class="action-title"><spring:message code="AddATag_t" /></span>
 					</label>
-					
-					<div style="display:table">
-						<input type="text" id="item-tag" maxlength="50" /><span><input type="submit" class="submit-button deans-button-1" value="<spring:message code="Add_t" />" /></span>
+					<div>
+						<input type="text" id="item-tag" maxlength="50" /><span style="display:table-cell;"><input type="submit" class="submit-button deans-button-1 submit-tag" value="<spring:message code="Add_t" />" /></span>
 					</div>
-					
 				</fieldset>
 			</form>
 		</c:if>
