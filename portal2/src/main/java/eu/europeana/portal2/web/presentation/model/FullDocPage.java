@@ -34,7 +34,6 @@ import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
-import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
@@ -497,9 +496,8 @@ public class FullDocPage extends FullDocPreparation {
 			}
 		}
 
-		FullBeanShortcut fbShourtcut = new FullBeanShortcut((FullBeanImpl)getFullBeanView().getFullDoc());
 		return KmlPresentation.getKmlDescriptor(getMetaCanonicalUrl(),
-				getCacheUrl(), CollectionUtils.returnFirst(fbShourtcut.get("EdmObject"), ""),
+				getCacheUrl(), CollectionUtils.returnFirst(getShortcut().get("EdmObject"), ""),
 				CollectionUtils.returnFirst(doc.getTitle(), ""), sDate, sPlace);
 	}
 
@@ -748,7 +746,7 @@ public class FullDocPage extends FullDocPreparation {
 	}
 	
 	private String getShortcutFirstValue(String name) {
-		if ( (shortcut != null) && StringArrayUtils.isNotBlank(shortcut.get(name))) {
+		if ((shortcut != null) && StringArrayUtils.isNotBlank(shortcut.get(name))) {
 			return StringUtils.trimToNull(shortcut.get(name)[0]);
 		}
 		return null;

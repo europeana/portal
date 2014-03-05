@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
@@ -47,7 +46,6 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.MongoDBException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -138,7 +136,7 @@ public class ObjectController {
 			HttpServletResponse response, 
 			Locale locale) throws EuropeanaQueryException {
 
-		long t0 = (new Date()).getTime();
+		long t0 = new Date().getTime();
 
 		if (SEE_ALSO_FIELDS.isEmpty()) {
 			initializeMltConfiguration();
@@ -180,6 +178,7 @@ public class ObjectController {
 		model.setShowContext(showContext);
 		model.setShowHierarchical(showHierarchical);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
+		model.setStartTime(t0);
 
 		// TODO: refactor this!!!
 		boolean showSimilarItems = false;
@@ -195,7 +194,7 @@ public class ObjectController {
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setEdmSchemaMappings(schemaOrgMapping);
 
-		long tgetFullBean0 = (new Date()).getTime();
+		long tgetFullBean0 = new Date().getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, showSimilarItems);
 		if (fullBean == null) {
 			String newRecordId = resolveNewRecordId(collectionId, recordId);
@@ -215,11 +214,16 @@ public class ObjectController {
 		}
 
 		if (log.isDebugEnabled()) {
-			long tgetFullBean1 = (new Date()).getTime();
+			long tgetFullBean1 = new Date().getTime();
 			log.debug("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		}
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
+			long tFullBeanView0 = 0;
+			if (log.isDebugEnabled()) {
+				tFullBeanView0 = new Date().getTime();
+			}
+
 			model.setOptedOut(optOutService.check(fullBean.getAbout()));
 			Query query = new Query(queryString)
 				.setRefinements(qf)
@@ -230,6 +234,10 @@ public class ObjectController {
 			// full bean view
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, RequestUtils.getParameterMap(request), query, searchService);
 			model.setFullBeanView(fullBeanView);
+			if (log.isDebugEnabled()) {
+				long tFullBeanView1 = new Date().getTime();
+				log.debug("fullBeanView takes: " + (tFullBeanView1 - tFullBeanView0));
+			}
 
 			// more like this
 			if (model.isShowSimilarItems()) {
@@ -244,24 +252,34 @@ public class ObjectController {
 
 			long tSeeAlso0 = 0;
 			if (log.isDebugEnabled()) {
-				tSeeAlso0 = (new Date()).getTime();
+				tSeeAlso0 = new Date().getTime();
 			}
-			model.setSeeAlsoCollector(createSeeAlsoCollector(fullBean));
+			model.setSeeAlsoCollector(createSeeAlsoCollector(model.getShortcut()));
 			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model.getSeeAlsoCollector()));
+			if (log.isDebugEnabled()) {
+				long tSeeAlso1 = new Date().getTime();
+				log.debug("see also takes: " + (tSeeAlso1 - tSeeAlso0));
+			}
+
+			long tMlt0 = 0;
+			if (log.isDebugEnabled()) {
+				tMlt0 = new Date().getTime();
+			}
 			if (showEuropeanaMlt) {
-				model.setMltCollector(createMltCollector(fullBean));
+				model.setMltCollector(createMltCollector(model.getShortcut()));
 				model.setEuropeanaMlt(createEuropeanaMlt(model, fullBean.getAbout()));
 			}
 			if (log.isDebugEnabled()) {
-				long tSeeAlso1 = (new Date()).getTime();
-				log.debug("see also takes: " + (tSeeAlso1 - tSeeAlso0));
+				long tMlt1 = new Date().getTime();
+				log.debug("MLT takes: " + (tMlt1 - tMlt0));
 			}
+
 			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView
 					.getFullDoc().getAbout());
 		}
 
 		if (log.isDebugEnabled()) {
-			long t1 = (new Date()).getTime();
+			long t1 = new Date().getTime();
 			log.debug("object page takes: " + (t1 - t0));
 		}
 
@@ -430,7 +448,7 @@ public class ObjectController {
 	private EuropeanaMlt createEuropeanaMlt(FullDocPage model, String europeanaId) {
 		MltCollector mltCollector = model.getMltCollector();
 		config.getSeeAlsoTranslations();
-		long tSeeAlso0 = (new Date()).getTime();
+		long tSeeAlso0 = new Date().getTime();
 		EuropeanaMlt mlt = new EuropeanaMlt();
 		boolean hasDataProvider = (mltCollector.get("DATA_PROVIDER") != null);
 		List<String> queryList = new ArrayList<String>();
@@ -470,7 +488,7 @@ public class ObjectController {
 			mlt.addCategory(category);
 		}
 
-		long tSeeAlso1 = (new Date()).getTime();
+		long tSeeAlso1 = new Date().getTime();
 		log.info("createEuropeanaMlt takes: " + (tSeeAlso1 - tSeeAlso0));
 
 		return mlt;
@@ -493,8 +511,7 @@ public class ObjectController {
 		return null;
 	}
 
-	private SeeAlsoCollector createSeeAlsoCollector(FullBean fullBean) {
-		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
+	private SeeAlsoCollector createSeeAlsoCollector(FullBeanShortcut shortcut) {
 		SeeAlsoCollector seeAlsoCollector = new SeeAlsoCollector();
 		int countPerField = 0, id = 0;
 		for (String metaField : SEE_ALSO_FIELDS.keySet()) {
@@ -523,8 +540,7 @@ public class ObjectController {
 		return seeAlsoCollector;
 	}
 
-	private MltCollector createMltCollector(FullBean fullBean) {
-		FullBeanShortcut shortcut = new FullBeanShortcut((FullBeanImpl) fullBean);
+	private MltCollector createMltCollector(FullBeanShortcut shortcut) {
 		MltCollector mltCollector = new MltCollector();
 		int countPerField = 0, id = 0;
 		for (String metaField : SEE_ALSO_FIELDS.keySet()) {

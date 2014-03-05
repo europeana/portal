@@ -20,7 +20,7 @@ public class FacetItem extends PageUtils {
 		super(driver);
 		webElement = w;
 	}
-	
+
 	public String getLabel() {
 		if (label == null) {
 			String text = getAnchor().getText().length() > 0 ? getAnchor().getText() : findOneByCss(getAnchor(),"label")
@@ -29,7 +29,7 @@ public class FacetItem extends PageUtils {
 		}
 		return label;
 	}
-	
+
 	public void click() {
 		webElement.click();
 	}
@@ -63,8 +63,6 @@ public class FacetItem extends PageUtils {
 		return getAnchor() == null ? null : getAnchor().getAttribute("rel");
 	}
 
-
-	
 	private WebElement getAnchor() {
 		if (anchor == null) {
 			anchor = findOneByCss(webElement, "h4 a"); 

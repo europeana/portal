@@ -7,7 +7,7 @@
         <c:if test="${inContext == 1}">
           <div class="contextual-header">
             <c:choose>
-              <c:when test="${place.matchPrefLabel || place.matchUrl}">${place.prefLabelLang[0]}</c:when>
+              <c:when test="${place.matchPrefLabel}">${place.prefLabelLang[0]}</c:when>
               <c:otherwise>${value.value}</c:otherwise>
             </c:choose>
             &nbsp;<span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
@@ -23,7 +23,7 @@
               <c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
               <c:forEach items="${place.labels}" var="label"><input type="hidden" name="placename" value="${label}"></c:forEach>
             </a>
-            
+
             <c:if test="${!empty place.prefLabelLang && !empty place.altLabelLang}">
               (<c:forEach items="${place.altLabelLang}" var="item" varStatus="t">
                 ${item}<c:if test="${!t.last}">, </c:if>

@@ -36,6 +36,7 @@ public class FieldValue {
 	// private int contextualEntityRef;
 	private FullBeanDecorator.ContextualEntity entityType = null;
 	private Object decorator;
+	private boolean resourceUri = false;
 
 	public FieldValue(FullDocData model, Field field, String value) {
 		this.model = model;
@@ -60,8 +61,17 @@ public class FieldValue {
 				|| field.equals(Field.EDM_YEAR)) {
 			entityType = FullBeanDecorator.ContextualEntity.PLACE;
 		}
+
+		// model.getShortcut().isEnriched(field.name())
 		if (entityType != null) {
-			this.decorator = model.getDocument().getContextualConnections(entityType, value);
+			resourceUri = model.getShortcut().isResourceUri(field.name(), value);
+
+			if (resourceUri) {
+				return;
+			}
+			Resource resource = model.getShortcut().getResource(field.name(), value);
+
+			this.decorator = model.getDocument().getContextualConnections(entityType, value, resource);
 		}
 	}
 
@@ -167,6 +177,10 @@ public class FieldValue {
 
 	public FullBeanDecorator.ContextualEntity getEntityType() {
 		return entityType;
+	}
+
+	public boolean isResourceUri() {
+		return resourceUri;
 	}
 
 	@Override

@@ -99,7 +99,10 @@ public class FieldPresentation {
 			if (this.fieldValues == null) {
 				this.fieldValues = new ArrayList<FieldValue>();
 			}
-			this.fieldValues.add(new FieldValue(model, field, fieldValue));
+			FieldValue fieldValueObj = new FieldValue(model, field, fieldValue);
+			if (!fieldValueObj.isResourceUri()) {
+				this.fieldValues.add(fieldValueObj);
+			}
 		}
 	}
 
@@ -114,7 +117,10 @@ public class FieldPresentation {
 				}
 				for (String value : fieldValue.getValue()) {
 					if (!StringUtils.isBlank(value)) {
-						this.fieldValues.add(new FieldValue(model, fieldValue.getKey(), value));
+						FieldValue fieldValueObj = new FieldValue(model, fieldValue.getKey(), value);
+						if (!fieldValueObj.isResourceUri()) {
+							this.fieldValues.add(fieldValueObj);
+						}
 					}
 				}
 			}

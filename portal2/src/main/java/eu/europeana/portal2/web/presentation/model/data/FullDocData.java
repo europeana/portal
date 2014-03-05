@@ -18,6 +18,7 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	private boolean showContext = false;
 	private boolean showHierarchical = false;
 	protected List<String> soundCloudAwareCollections = new ArrayList<String>();
+	private long startTime;
 
 	public void setEdmSchemaMappings(SchemaOrgMapping schema) {
 		this.edmTopLevels = EdmSchemaMapping.getTopLevel(schema);
@@ -130,7 +132,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public FullBeanViewDecorator getFullBeanView() {
 		if (fullBeanViewDecorator == null) {
-			fullBeanViewDecorator = new FullBeanViewDecorator(this, fullBeanView);
+			fullBeanViewDecorator = new FullBeanViewDecorator(this, fullBeanView, getDocument());
 		}
 		return fullBeanViewDecorator;
 	}
@@ -145,7 +147,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public FullBeanDecorator getDocument() {
 		if (decorator == null) {
-			decorator = new FullBeanDecorator(document, getLocale().getLanguage());
+			decorator = new FullBeanDecorator(document, shortcut, getLocale().getLanguage());
 		}
 		return decorator;
 	}
@@ -276,5 +278,14 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public boolean isShowHierarchical() {
 		return showHierarchical;
+	}
+
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
+
+	public long getDuration() {
+		long endTime = (new Date()).getTime();
+		return (endTime - startTime);
 	}
 }

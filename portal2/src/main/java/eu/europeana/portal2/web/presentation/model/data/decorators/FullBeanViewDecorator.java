@@ -32,14 +32,17 @@ public class FullBeanViewDecorator implements FullBeanView {
 
 	private FullDocData model;
 	private FullBeanView fullBeanView;
+	private FullBeanDecorator fullBeanDecorator;
 
 	private List<BriefBeanDecorator> relatedItems = null;
 	private List<BriefBeanDecorator> parents = null;
 	private List<BriefBeanDecorator> children = null;
 
-	public FullBeanViewDecorator(FullDocData model, FullBeanView fullBeanView) {
+	public FullBeanViewDecorator(FullDocData model, FullBeanView fullBeanView,
+			FullBeanDecorator fullBeanDecorator) {
 		this.model = model;
 		this.fullBeanView = fullBeanView;
+		this.fullBeanDecorator = fullBeanDecorator;
 	}
 
 	@Override
@@ -63,10 +66,7 @@ public class FullBeanViewDecorator implements FullBeanView {
 
 	@Override
 	public FullBean getFullDoc() {
-		if (fullBeanView != null) {
-			return new FullBeanDecorator(fullBeanView.getFullDoc(), model.getLocale().getLanguage());
-		}
-		return null;
+		return fullBeanDecorator;
 	}
 
 	@Override

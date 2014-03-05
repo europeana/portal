@@ -28,7 +28,6 @@ import java.util.Map;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.zookeeper.proto.op_result_t;
 import org.bson.types.ObjectId;
 
 import eu.europeana.corelib.definitions.solr.DocType;
@@ -37,13 +36,11 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
-import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
-import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
@@ -53,6 +50,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.Co
 import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.PlaceDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.TimespanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean {
@@ -71,14 +69,14 @@ public class FullBeanDecorator implements FullBean {
 	List<TimespanDecorator> timespans;
 	List<AgentDecorator> agents;
 
-	public FullBeanDecorator(FullBean fulldoc) {
+	public FullBeanDecorator(FullBean fulldoc, FullBeanShortcut shortcut) {
 		this.fulldoc = fulldoc;
-		this.shortcut = new FullBeanShortcut((FullBeanImpl) fulldoc);
+		this.shortcut = shortcut;
 		europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
 	}
 
-	public FullBeanDecorator(FullBean fulldoc, String userLanguage) {
-		this(fulldoc);
+	public FullBeanDecorator(FullBean fulldoc, FullBeanShortcut shortcut, String userLanguage) {
+		this(fulldoc, shortcut);
 		this.userLanguage = userLanguage;
 		this.edmLanguage = fulldoc.getEuropeanaAggregation().getEdmLanguage().get("def").get(0);
 	}
@@ -599,7 +597,7 @@ public class FullBeanDecorator implements FullBean {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object getContextualConnections(ContextualEntity type, String value) {
+	public Object getContextualConnections(ContextualEntity type, String value, Resource resource) {
 		List<? extends ContextualItemDecorator> entities = null;
 		if (type.equals(ContextualEntity.AGENT)) {
 			entities = (List<? extends ContextualItemDecorator>)getDecoratedAgents();
@@ -616,7 +614,11 @@ public class FullBeanDecorator implements FullBean {
 		}
 
 		for (ContextualItemDecorator entity : entities) {
-			if (value.startsWith("http://")) {
+			if (resource != null && entity.getAbout().equals(resource.getUri())) {
+				entity.setShowInContext(true);
+				entity.setMatchUrl(true);
+				return entity;
+			} else if (value.startsWith("http://")) {
 				if (entity.getAbout().equals(value)) {
 					entity.setShowInContext(true);
 					entity.setMatchUrl(true);
@@ -627,7 +629,9 @@ public class FullBeanDecorator implements FullBean {
 					for (String name : nameList) {
 						if (StringUtils.equalsIgnoreCase(value, name)) {
 							entity.setShowInContext(true);
-							entity.setMatchPrefLabel(true);
+							if (StringUtils.equals(value, name)) {
+								entity.setMatchPrefLabel(true);
+							}
 							return entity;
 						}
 					}

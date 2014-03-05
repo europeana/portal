@@ -56,16 +56,17 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 			SearchService searchService, 
 			Class<? extends BriefBean> clazz) throws SolrTypeException {
 
+
 		DocIdWindowPagerImpl pager = new DocIdWindowPagerImpl();
 		pager.query = query.getQuery();
-		int fullDocUriInt = getFullDocInt(httpParameters, query, pager);
 
+		int fullDocUriInt = getFullDocInt(httpParameters, query, pager);
 		// negative parameters should return null so no pager is rendered
 		if (fullDocUriInt < 1 || Integer.parseInt(fetchParameter(httpParameters, "startPage", "1")) < 1
 				|| StringUtils.isBlank(query.getQuery())) {
-
 			return null;
 		}
+
 		int solrStartRow = getSolrStart(pager, fullDocUriInt);
 		// query.setAllowSpellcheck(false);
 		// query.setAllowFacets(false);
@@ -78,6 +79,7 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 		}
 
 		List<? extends IdBean> list = queryResponse.getResults(); // <? extends IdBean>
+
 		int numFound = (int) queryResponse.getResultSize();
 		setNextAndPrevious(pager, fullDocUriInt, list, solrStartRow, numFound);
 		pager.docIdWindow = new DocIdWindowImpl(list, solrStartRow, numFound);

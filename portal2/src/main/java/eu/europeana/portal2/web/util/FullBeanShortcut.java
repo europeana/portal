@@ -15,6 +15,8 @@ import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
 import eu.europeana.corelib.solr.entity.PlaceImpl;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.portal2.web.presentation.enums.Field;
+import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 
 /**
  * This class provides shortcuts to Aggregation or Proxy properties
@@ -29,13 +31,19 @@ public class FullBeanShortcut {
 		this.document = document;
 	}
 
-	private Map<String, List<String>> values;
+	private Map<String, List<String>> valuesListMap;
 
 	private Map<String, List<Map<String, List<String>>>> mapValues;
 
 	private Map<String, List<Float>> floats;
 
 	private Map<String, Float[]> floatArrays;
+
+	private Map<String, EnrichmentFieldMapper> enrichedMap;
+
+	private Map<String, Map<String, Resource>> resourceValueMap;
+
+	private Map<String, List<String>> resourceUris;
 
 	/**
 	 * Adds multiple values
@@ -45,15 +53,15 @@ public class FullBeanShortcut {
 	 *   The array of values
 	 */
 	private void add(String parent, String property, String[] _values) {
-		if (!values.containsKey(property)) {
-			values.put(property, new ArrayList<String>());
+		if (!valuesListMap.containsKey(property)) {
+			valuesListMap.put(property, new ArrayList<String>());
 		}
 		String qualifiedProperty = parent + "/" + property;
-		if (!values.containsKey(qualifiedProperty)) {
-			values.put(qualifiedProperty, new ArrayList<String>());
+		if (!valuesListMap.containsKey(qualifiedProperty)) {
+			valuesListMap.put(qualifiedProperty, new ArrayList<String>());
 		}
-		StringArrayUtils.addToList(values.get(property), _values);
-		StringArrayUtils.addToList(values.get(qualifiedProperty), _values);
+		StringArrayUtils.addToList(valuesListMap.get(property), _values);
+		StringArrayUtils.addToList(valuesListMap.get(qualifiedProperty), _values);
 	}
 
 	/**
@@ -65,15 +73,15 @@ public class FullBeanShortcut {
 	 *   The value
 	 */
 	private void add(String parent, String property, String value) {
-		if (!values.containsKey(property)) {
-			values.put(property, new ArrayList<String>());
+		if (!valuesListMap.containsKey(property)) {
+			valuesListMap.put(property, new ArrayList<String>());
 		}
 		String qualifiedProperty = parent + "/" + property;
-		if (!values.containsKey(qualifiedProperty)) {
-			values.put(qualifiedProperty, new ArrayList<String>());
+		if (!valuesListMap.containsKey(qualifiedProperty)) {
+			valuesListMap.put(qualifiedProperty, new ArrayList<String>());
 		}
-		values.get(property).add(value);
-		values.get(qualifiedProperty).add(value);
+		valuesListMap.get(property).add(value);
+		valuesListMap.get(qualifiedProperty).add(value);
 	}
 
 	private void add(String parent, String property, Map<String, List<String>> value) {
@@ -81,16 +89,16 @@ public class FullBeanShortcut {
 			return;
 		}
 
-		if (!values.containsKey(property)) {
-			values.put(property, new ArrayList<String>());
+		if (!valuesListMap.containsKey(property)) {
+			valuesListMap.put(property, new ArrayList<String>());
 		}
 		String qualifiedProperty = parent + "/" + property;
-		if (!values.containsKey(qualifiedProperty)) {
-			values.put(qualifiedProperty, new ArrayList<String>());
+		if (!valuesListMap.containsKey(qualifiedProperty)) {
+			valuesListMap.put(qualifiedProperty, new ArrayList<String>());
 		}
 
-		List<String> propertyValues = values.get(property);
-		List<String> qPropertyValues = values.get(qualifiedProperty);
+		List<String> propertyValues = valuesListMap.get(property);
+		List<String> qPropertyValues = valuesListMap.get(qualifiedProperty);
 		for (Entry<String, List<String>> entry : value.entrySet()) {
 			// adding only the value, not the language
 			propertyValues.addAll(entry.getValue());
@@ -104,7 +112,7 @@ public class FullBeanShortcut {
 		if (!mapValues.containsKey(qualifiedProperty)) {
 			mapValues.put(qualifiedProperty, new ArrayList<Map<String, List<String>>>());
 		}
-		
+
 		mapValues.get(property).add(value);
 		mapValues.get(qualifiedProperty).add(value);
 	}
@@ -125,7 +133,7 @@ public class FullBeanShortcut {
 	 * Initializes the values
 	 */
 	private void initialize() {
-		values = new HashMap<String, List<String>>();
+		valuesListMap = new HashMap<String, List<String>>();
 		mapValues = new HashMap<String, List<Map<String, List<String>>>>();
 
 		String parent = null;
@@ -198,7 +206,17 @@ public class FullBeanShortcut {
 				add(parent, "EdmIsSuccessorOf", proxy.getEdmIsSuccessorOf());
 				add(parent, "EdmRealizes", proxy.getEdmRealizes());
 				add(parent, "EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
+
+				saveEnrichmentCandidate(Field.DC_CREATOR.name(), proxy.isEuropeanaProxy(), proxy.getDcCreator());
+				saveEnrichmentCandidate(Field.DC_CONTRIBUTOR.name(), proxy.isEuropeanaProxy(), proxy.getDcContributor());
+				saveEnrichmentCandidate(Field.DC_SUBJECT.name(), proxy.isEuropeanaProxy(), proxy.getDcSubject());
+				saveEnrichmentCandidate(Field.DC_TYPE.name(), proxy.isEuropeanaProxy(), proxy.getDcType());
+				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsSpatial());
+				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), proxy.isEuropeanaProxy(), proxy.getDcCoverage());
+				saveEnrichmentCandidate(Field.DC_DATE.name(), proxy.isEuropeanaProxy(), proxy.getDcDate());
+				saveEnrichmentCandidate(Field.DCTERMS_TEMPORAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsTemporal());
 			}
+			mapEnrichments();
 		}
 
 		if (document.getAgents() != null) {
@@ -227,6 +245,115 @@ public class FullBeanShortcut {
 	}
 
 	/**
+	 * Maps the enrichments, and see whether a Europeana provided field could
+	 * refer to a provider provided field. Creates Resource objects if that
+	 * happens, and updates auxiliary variables for sake of findability
+	 */
+	private void mapEnrichments() {
+		resourceValueMap = new HashMap<String, Map<String, Resource>>();
+		resourceUris = new HashMap<String, List<String>>();
+
+		for (String name : enrichedMap.keySet()) {
+			EnrichmentFieldMapper cardinalities = enrichedMap.get(name);
+			cardinalities.setEnriched();
+			List<Resource> resources = cardinalities.getResources();
+			if (resources != null) {
+				Map<String, Resource> resourceValueMapEntry = new HashMap<String, Resource>();
+				resourceValueMap.put(name, resourceValueMapEntry);
+				List<String> resourceUrisEntry = new ArrayList<String>();
+				resourceUris.put(name, resourceUrisEntry);
+				for (Resource resource : resources) {
+					resourceValueMapEntry.put(resource.getValue(), resource);
+					resourceUrisEntry.add(resource.getUri());
+				}
+			}
+		}
+	}
+
+	public boolean isEnriched(String fieldName) {
+		if (enrichedMap.containsKey(fieldName)) {
+			return enrichedMap.get(fieldName).isEnriched();
+		}
+		return false;
+	}
+
+	public boolean isResourceValue(String fieldName, String fieldValue) {
+		if (resourceValueMap.containsKey(fieldName)
+			&& resourceValueMap.get(fieldName).keySet().contains(fieldValue)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Get Resource object belongs to this field instance
+	 * @param fieldName
+	 *   EDM field name
+	 * @param fieldValue
+	 *   A single field value
+	 * @return
+	 *   The Resource object belongs to the instance
+	 */
+	public Resource getResource(String fieldName, String fieldValue) {
+		if (resourceValueMap.containsKey(fieldName)
+			&& resourceValueMap.get(fieldName).keySet().contains(fieldValue)) {
+			return resourceValueMap.get(fieldName).get(fieldValue);
+		}
+		return null;
+	}
+
+	/**
+	 * Returns true is the field value is a URI of a Resource object
+	 * @param fieldName
+	 *   EDM field name
+	 * @param fieldValue
+	 *   A simple field value
+	 * @return
+	 */
+	public boolean isResourceUri(String fieldName, String fieldValue) {
+		if (resourceValueMap.containsKey(fieldName)
+			&& resourceUris.get(fieldName).contains(fieldValue)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Save enrichments temporary
+	 * @param name
+	 *   EDM field name
+	 * @param europeanaProxy
+	 *   Flag denotes whether the field comes from an Europeana proxy or a provider proxy
+	 * @param fieldValues
+	 *   Multilingual field values
+	 */
+	private void saveEnrichmentCandidate(String name, boolean europeanaProxy,
+			Map<String, List<String>> fieldValues) {
+		if (fieldValues == null) {
+			return;
+		}
+
+		if (enrichedMap == null) {
+			enrichedMap = new HashMap<String, EnrichmentFieldMapper>();
+		}
+
+		EnrichmentFieldMapper enrichmentFieldMapper;
+		if (!enrichedMap.containsKey(name)) {
+			enrichmentFieldMapper = new EnrichmentFieldMapper();
+			enrichedMap.put(name, enrichmentFieldMapper);
+		} else {
+			enrichmentFieldMapper = enrichedMap.get(name);
+		}
+
+		MultilangFieldValue cardinality = new MultilangFieldValue(fieldValues);
+		if (europeanaProxy) {
+			enrichmentFieldMapper.setEuropeana(cardinality);
+		} else {
+			enrichmentFieldMapper.setProvided(cardinality);
+		}
+	}
+
+	/**
 	 * Gets values of a property
 	 *
 	 * @param property
@@ -235,12 +362,12 @@ public class FullBeanShortcut {
 	 *   All the values registered for that property
 	 */
 	public String[] get(String property) {
-		if (values == null) {
+		if (valuesListMap == null) {
 			initialize();
 		}
 
-		if (values.containsKey(property)) {
-			return StringArrayUtils.toArray(values.get(property));
+		if (valuesListMap.containsKey(property)) {
+			return StringArrayUtils.toArray(valuesListMap.get(property));
 		}
 		return null;
 	}
@@ -250,12 +377,12 @@ public class FullBeanShortcut {
 	}
 
 	public List<String> getList(String property) {
-		if (values == null) {
+		if (valuesListMap == null) {
 			initialize();
 		}
 
-		if (values.containsKey(property)) {
-			return values.get(property);
+		if (valuesListMap.containsKey(property)) {
+			return valuesListMap.get(property);
 		}
 		return null;
 	}
@@ -301,5 +428,90 @@ public class FullBeanShortcut {
 
 	public Float[] getEdmPlaceLongitude() {
 		return getFloat("EdmPlaceLongitude");
+	}
+
+	private class EnrichmentFieldMapper {
+
+		private MultilangFieldValue provided;
+		private MultilangFieldValue europeana;
+		private Boolean isEnriched = false;
+		private List<Resource> resources = null;
+
+		public void setProvided(MultilangFieldValue provided) {
+			this.provided = provided;
+		}
+
+		public void setEuropeana(MultilangFieldValue europeana) {
+			this.europeana = europeana;
+		}
+
+		public Boolean isEnriched() {
+			return isEnriched;
+		}
+
+		public void setEnriched() {
+			if (europeana == null) {
+				isEnriched = false;
+			} else {
+				isEnriched = provided.isSimilar(europeana);
+			}
+			if (isEnriched) {
+				createResources();
+			}
+		}
+
+		private List<Resource> getResources() {
+			return resources;
+		}
+
+		private void createResources() {
+			resources = new ArrayList<Resource>();
+			for (String lang : provided.getLangs()) {
+				resources.add(new Resource(provided.get(lang).get(0), europeana.get(lang).get(0)));
+			}
+		}
+	}
+
+	private class MultilangFieldValue {
+
+		private Map<String, List<String>> langValueMap;
+
+		public MultilangFieldValue(Map<String, List<String>> langValueMap) {
+			this.langValueMap = langValueMap;
+		}
+
+		public boolean has(String lang) {
+			return langValueMap.containsKey(lang);
+		}
+
+		public List<String> get(String lang) {
+			return langValueMap.get(lang);
+		}
+
+		public Integer getSize(String lang) {
+			return langValueMap.get(lang).size();
+		}
+
+		public List<String> getLangs() {
+			List<String> langs = new ArrayList<String>();
+			langs.addAll(langValueMap.keySet());
+			return langs;
+		}
+
+		public boolean isSimilar(MultilangFieldValue other) {
+			boolean similar = false;
+			for (String lang : langValueMap.keySet()) {
+				if (!other.has(lang)) {
+					similar = false;
+					break;
+				}
+				if (getSize(lang) != 1 || other.getSize(lang) != 1) {
+					similar = false;
+					break;
+				}
+				similar = true;
+			}
+			return similar;
+		}
 	}
 }

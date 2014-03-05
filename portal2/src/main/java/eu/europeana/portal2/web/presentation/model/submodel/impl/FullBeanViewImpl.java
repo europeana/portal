@@ -46,7 +46,7 @@ import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
  */
 public class FullBeanViewImpl implements FullBeanView {
 	private static final long serialVersionUID = -4971453940874288310L;
-	
+
 	private final Logger log = Logger.getLogger(FullBeanViewImpl.class);
 
 	// Do not ever touch these fields as they are persisted as document cache
