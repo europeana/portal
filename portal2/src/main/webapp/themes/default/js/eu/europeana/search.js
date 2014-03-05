@@ -1,5 +1,6 @@
 js.utils.registerNamespace( 'eu.europeana.search' );
 
+/* IE10 fix */
 if( !(window.ActiveXObject) && "ActiveXObject" ){
 	$('.submit-new-keyword').parent().css('vertical-align', 'top');	
 }
