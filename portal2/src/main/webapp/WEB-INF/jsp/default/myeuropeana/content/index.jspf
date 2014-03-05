@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
 <div id="myeuropeana" class="row">
 
 	<h2><spring:message code="MyEuropeana_t" /></h2>
@@ -9,7 +8,7 @@
 	<ul id="panel-links" class="columns three" role="menu">
 		<c:choose>
 			<c:when test="${!empty model.user}">
-				<li data-settings-panel="logout" data-settings-panel-text="<spring:message code="LogOut_t" />"><a href="#logout"><spring:message code="LogOut_t" /></a></li>
+				<li><a href="/${model.portalName}/logout.html"><spring:message code="LogOut_t" /></a></li>
 				<li data-settings-panel="user-information" data-settings-panel-text="<spring:message code="UserInformation_t" />"><a href="#user-information"><spring:message code="UserInformation_t" /></a></li>
 				<li data-settings-panel="language-settings" data-settings-panel-text="<spring:message code="LanguageSettings_t" />"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
 				<li data-settings-panel="saved-items" data-settings-panel-text="<spring:message code="SavedItems_t" />"><a href="#saved-items"><spring:message code="SavedItems_t" /></a></li>
@@ -25,14 +24,20 @@
 	</ul>
 
 	<div class="columns nine">
-		<c:if test="${empty model.user}">
-			<div id="login" class="settings-panel">
-				<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/login/login-form.jspf" %>
-			</div>
-		</c:if>
-		<div id="language-settings" class="settings-panel">
-			<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/language-settings.jspf" %>
-		</div>
+		<c:choose>
+			<c:when test="${!empty model.user}">
+				<div id="user-information" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/user-information.jspf" %></div>
+				<div id="language-settings" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
+				<div id="saved-items" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-items.jspf" %></div>
+				<div id="saved-searches" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-searches.jspf" %></div>
+				<div id="saved-tags" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-tags.jspf" %></div>
+				<div id="api-keys" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/api-keys.jspf" %></div>
+			</c:when>
+			<c:otherwise>
+				<div id="login" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/login.jspf" %></div>
+				<div id="language-settings" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 </div>

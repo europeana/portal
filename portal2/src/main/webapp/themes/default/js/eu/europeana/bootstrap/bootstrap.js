@@ -66,24 +66,6 @@ var europeana_bootstrap = function(){
 			dependencies : [ 'jquery-ui' ]
 		},
 
-		/**
-		 * Dan - I disabled this because it's causing errors.
-		 *
-		 * @andy or whoever disabled this,
-		 *   after re-activating this code i don't see any errors
-		 *   where are you seeing errors?
-		 *   what are the errors?
-		 *  
-		 * @dan
-		 * 
-		 *  TypeError: js.utils is undefined
-		 *  http://localhost:8080/portal/themes/default/js/eu/europeana/timer.js?1393841896043
-		 *  Line 15
-		 *  
-		 *   - this on the object page - some of the time depending on what loads first.
-		 *   
-		 *  Fixed by adding the dependnecy.
-		 */
 		{
 			name : 'timer',
 			file : 'timer' + js.min_suffix + '.js' + js.cache_helper,

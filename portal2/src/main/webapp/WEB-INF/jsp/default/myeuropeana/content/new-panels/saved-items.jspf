@@ -1,0 +1,60 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<h3><spring:message code="SavedItems_t" /></h3>
+<c:choose>
+	<c:when test="${fn:length(model.savedItems) < 1 }">
+		<spring:message code="NoSavedItems_t" />
+	</c:when>
+	<c:otherwise>
+		<%-- Iterate over Saved Items --%>
+		<c:forEach items="${model.savedItems}" var="item" varStatus="status">
+			<div class="saved-item ${item.id}">
+				<%-- Item Image --%>
+				<%-- Determine fallback image for this item --%>
+				<c:set var="iconClass" value="item-image.gif" />
+				<c:set var="docType" value="${item.docType}" />
+				<c:choose>
+					<c:when test="${docType == 'IMAGE'}">
+						<c:set var="iconClass" value="icon-image" />
+					</c:when>
+					<c:when test="${docType == 'VIDEO'}">
+						<c:set var="iconClass" value="icon-video" />
+					</c:when>
+					<c:when test="${docType == 'SOUND'}">
+						<c:set var="iconClass" value="icon-sound" />
+					</c:when>
+					<c:when test="${docType == 'TEXT'}">
+						<c:set var="iconClass" value="icon-text" />
+					</c:when>
+					<c:when test="${docType == '_3D'}">
+						<c:set var="iconClass" value="icon-3d" />
+						<c:set var="docType" value="3d" />
+					</c:when>
+				</c:choose>
+				<%-- Place Image --%>
+				<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
+						<c:set var="imageWritten" value="" />
+						<c:catch var="exception">
+							<c:if test="${item.europeanaObject && !empty item.europeanaObject}"></c:if>
+							<c:set var="imageWritten" value="true" />
+						</c:catch>
+						<c:if test="${!empty imageWritten}" >
+							<img src="${model.cacheUrl}uri=${item.europeanaObject}&size=BRIEF_DOC&type=${docType}" alt="${item.title}"/>
+						</c:if>
+						<c:if test="${empty imageWritten}" >
+							<span class="${iconClass}" alt="${item.title}"></span>
+						</c:if>
+				</a>
+				<%-- Item Info --%>
+				<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold"><europeana:stringLimiter theStr="${item.title}" size="50"/></a><br/>
+				<spring:message code="Creator_t" />: <em>${item.author}</em><br/>
+				<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
+				<%-- Delete Saved Item button --%>
+				<button id="${item.id}" class="remove-saved-item deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
+			</div>
+		</c:forEach>
+	</c:otherwise>
+</c:choose>
