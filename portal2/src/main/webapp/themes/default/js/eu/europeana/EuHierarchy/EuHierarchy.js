@@ -697,26 +697,14 @@ var EuHierarchy = function(cmp) {
 	
 	$('.hierarchy-next').click(function(){
 		showSpinner();
+
+		// TODO - firefox bug jumps down too far
 		
 		var visibleNodes = getVisibleNodes();
-		//alert('when done will scroll to ' + visibleNodes[1].text);
 		
 		viewPrevOrNext(visibleNodes[0], false, defaultChunk, true, function(){
-
-			/*
-			self.scrollDuration = 0;
-			doScrollTo(0);
-			doScrollTo('#' + visibleNodes[0].id);
-			self.scrollDuration = 1000;
-			*/
 			hideSpinner();
-//			alert('#' + visibleNodes[1].id + '\n\n' + $('#' + visibleNodes[1].id).length )
 			doScrollTo('#' + visibleNodes[1].id);
-			setTimeout(function(){
-				doScrollTo('#' + visibleNodes[1].id);
-				
-			},10000);
-				
 		})
 	});
 
@@ -1097,30 +1085,18 @@ var EuHierarchy = function(cmp) {
  *  
  *  
  * BEHAVIOUR:
- *  1.		parent tree
- *  2.		previous button
- * 
- *  1.	Keying into the container should not draw focus up to the root element, but onto the pageNode
  * 
  * THEME:
- * 
- *  - Loading zoomed, scrolling and reseting zoom to zero loses position (or loses entire tree)
- *  - DONE remove unwanted responsive class 
  *  
  *  - Load flicker - show spinner on actual load - set enbaler flag (reset on showSpinner call) 
  *  
  *  
  *  TODO:
  *  
- *  - Previous can send us into blank
- * 		- overscroll
- * 
  *  
  *  - clicking and opening and clicking again....   runs out of content.
  *  
  *       this is common to key down
- *       
- *  - then there's key up....
  *  
  */
 
