@@ -36,7 +36,19 @@
 			<script type="text/javascript">
 				var hierarchical = true;
 			</script>
-			<div class="hierarchy-container"><div id="hierarchy"></div></div>
+			
+			<div class="hierarchy-objects">
+				<div class="hierarchy-top-panel">
+					<div class="hierarchy-prev">view all items above</div>
+				</div>
+				<div class="hierarchy-container">
+					<div id="hierarchy"></div>
+				</div>		
+				<div class="hierarchy-bottom-panel">
+					<div class="hierarchy-next">view all items below</div>
+				</div>
+			</div>
+			
 		</c:if>
 
 		<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">

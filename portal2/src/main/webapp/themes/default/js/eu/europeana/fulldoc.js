@@ -397,6 +397,7 @@ eu.europeana.fulldoc = {
 			// rights
 			var rightsVal = $('.original-context .rights-badge').clone().wrap('<p>').parent().html();
 
+			// TRY WEBRESOURCES HERE
 			/*
 			cmp.find('#lightbox_info ul li.bottom').append(
 				 (rightsVal ? rightsVal : '') 
@@ -996,14 +997,11 @@ eu.europeana.fulldoc = {
 					
 					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
 					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');
-					var tree = $('#hierarchy').jstree({
-						"core" : {
-							"data" : dataGen.base(),
-							"check_callback" : true
-						},
-						"plugins" : [ "themes", "json_data", "ui" ]
-					});
 
+					$(document).ready(function(){
+						new EuHierarchy($('#hierarchy')).init("dataGen.base()");
+					});
+					
 				}
 			});
 
