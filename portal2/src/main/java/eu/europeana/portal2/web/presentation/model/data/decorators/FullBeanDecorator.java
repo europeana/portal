@@ -53,7 +53,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.Ti
 import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
-public class FullBeanDecorator implements FullBean {
+public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	public enum ContextualEntity {AGENT, CONCEPT, PLACE, TIMESPAN};
 
@@ -68,6 +68,15 @@ public class FullBeanDecorator implements FullBean {
 	List<PlaceDecorator> places;
 	List<TimespanDecorator> timespans;
 	List<AgentDecorator> agents;
+
+	private Proxy europeanaProxy;
+	private List<Proxy> providedProxies;
+	private Boolean singletonProvidedProxy;
+
+	private Map<String, Agent> agentMap;
+	private Map<String, Concept> conceptMap;
+	private Map<String, Place> placeMap;
+	private Map<String, Timespan> timespanMap;
 
 	public FullBeanDecorator(FullBean fulldoc, FullBeanShortcut shortcut) {
 		this.fulldoc = fulldoc;
@@ -649,6 +658,114 @@ public class FullBeanDecorator implements FullBean {
 			}
 		}
 
+		return null;
+	}
+
+	private void setUpProxies() {
+		List<Proxy> providedProxies = new ArrayList<Proxy>();
+		for (Proxy proxy : getProvidedProxies()) {
+			if (proxy.isEuropeanaProxy()) {
+				europeanaProxy = proxy;
+			} else {
+				providedProxies.add(proxy);
+			}
+		}
+		singletonProvidedProxy = providedProxies.size() == 1;
+	}
+
+	@Override
+	public Proxy getEuropeanaProxy() {
+		if (europeanaProxy == null) {
+			setUpProxies();
+		}
+		return europeanaProxy;
+	}
+
+	@Override
+	public List<Proxy> getProvidedProxies() {
+		if (providedProxies == null) {
+			setUpProxies();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isSingletonProxy() {
+		if (singletonProvidedProxy == null) {
+			setUpProxies();
+		}
+		return singletonProvidedProxy;
+	}
+
+	private void initializeAgentMap() {
+		agentMap = new HashMap<String, Agent>();
+		for (Agent agent : getDecoratedAgents()) {
+			agentMap.put(agent.getAbout(), agent);
+		}
+	}
+
+	private void initializeConceptMap() {
+		conceptMap = new HashMap<String, Concept>();
+		for (Concept item : getDecoratedConcepts()) {
+			conceptMap.put(item.getAbout(), item);
+		}
+	}
+
+	private void initializePlaceMap() {
+		placeMap = new HashMap<String, Place>();
+		for (Place item : getDecoratedPlaces()) {
+			placeMap.put(item.getAbout(), item);
+		}
+	}
+
+	private void initializeTimespanMap() {
+		timespanMap = new HashMap<String, Timespan>();
+		for (Timespan item : getDecoratedTimespans()) {
+			timespanMap.put(item.getAbout(), item);
+		}
+	}
+
+	@Override
+	public Agent getAgentByURI(String uri) {
+		if (agentMap == null) {
+			initializeAgentMap();
+		}
+		if (agentMap.containsKey(uri)) {
+			return agentMap.get(uri);
+		}
+		return null;
+	}
+
+	@Override
+	public Concept getConceptByURI(String uri) {
+		if (conceptMap == null) {
+			initializeConceptMap();
+		}
+		if (conceptMap.containsKey(uri)) {
+			return conceptMap.get(uri);
+		}
+		return null;
+	}
+
+	@Override
+	public Place getPlaceByURI(String uri) {
+		if (placeMap == null) {
+			initializePlaceMap();
+		}
+		if (placeMap.containsKey(uri)) {
+			return placeMap.get(uri);
+		}
+		return null;
+	}
+
+	@Override
+	public Timespan getTimespanByURI(String uri) {
+		if (timespanMap == null) {
+			initializeTimespanMap();
+		}
+		if (timespanMap.containsKey(uri)) {
+			return timespanMap.get(uri);
+		}
 		return null;
 	}
 }
