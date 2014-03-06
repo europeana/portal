@@ -1,24 +1,42 @@
+.hierarchy-objects{
+	font-family: Arial,Verdana,Serif;
+	font-size:   1em;
+	line-height: 1em;
+}
+
+.hierarchy-objects{
+	max-width:  50%;
+	width:      50%;
+	float:      left;
+	margin-top: 1em;
+}
+
+.hierarchy-top-panel,
+.hierarchy-bottom-panel{
+	height: 2em;
+	width: 100%;
+	background-color:#ffee44;
+}
+
+
+.hierarchy-container{
+	border:		1px solid #dadada;
+	font-size:	1.5em;
+	overflow:	hidden;	
+	position: relative;
+}
+
+ /* force scrollability: this em value should correspond to the js variable defaultChunk */
+.hierarchy-container{
+	height:     6em;
+	max-height: 6em;
+}
+
+
 #hierarchy.jstree-default .jstree-anchor{
 	white-space:nowrap;
 	white-space:normal;
 	height: auto;
-}	
-
-		
-.hierarchy-container{
-	border:		1px solid #dadada;
-	font-size:	1em;
-	overflow:	hidden;
-	
-	position: relative;
-}
-
-	 /* force scrollability: this em value should correspond to the js variable defaultChunk */
-	 /* force scrollability: this em value should correspond to the js variable defaultChunk */
-.hierarchy-container{
-	max-height: 6em;
-	max-width:  50%;
-	margin:     2em 0 2em 0;
 }
 
 		
@@ -153,6 +171,11 @@ padding-left: 1em;
 #hierarchy.jstree-default .jstree-icon:empty {
   xxxvisibility:  hidden;
 }
+
+#hierarchy .jstree-disabled {
+  display:none;
+}
+
 
 /* overlay */
 .ajax-overlay{

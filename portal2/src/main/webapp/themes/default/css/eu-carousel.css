@@ -59,13 +59,17 @@
 
 .carousel-left,
 .carousel-right {
-	line-height: 200px;
-    font-size:   6em;
-    z-index:     1;
-    position:    absolute;	
+	/* line-height: 200px; */
+	
+    font-size:        6em;
+    z-index:          1;
+    position:         absolute;	
     background-color: rgba(0, 0, 0, 0) !important;
-    color: #FFFFFF;
-    text-shadow: 0 0 10px #000000;
+    color:            #FFFFFF;
+    text-shadow:      0 0 10px #000000;
+    cursor:           pointer;
+    top:              0.33em;
+    
 }
 
 
