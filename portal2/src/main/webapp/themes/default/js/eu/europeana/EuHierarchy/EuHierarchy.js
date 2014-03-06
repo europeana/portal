@@ -175,7 +175,7 @@ var EuHierarchy = function(cmp) {
 
 	// START DOM HELPER FUNCTIONS
 	var getRootEl = function() {
-		return self.treeCmp.find(">ul>li:first-child a");
+		return self.treeCmp.find(">ul>li:first-child");
 	};
 	
 	var getPageNodeEl = function() {
@@ -647,32 +647,47 @@ var EuHierarchy = function(cmp) {
 	$('.view-next').click(function(){ alert('no handler'); });
 	
 	$('.hierarchy-prev').click(function(){
-		/* TODO: 
-		 * 		if 
-		 * 			offset - (disabled.length) * 1em height)
-		 * 		then
-		 * 			change the offset - don't bother to load
-		 * 
-		 */
+		
 		showSpinner();
 		
-		var visibleNodes = getVisibleNodes();
+		// scroll tracking
+		
+		var heightMeasure   = $('.jstree-container-ul>.jstree-node>.jstree-children')
+		var disabledMeasure = $('.jstree-container-ul .jstree-disabled').first().height();
+		var disabledCount   = $('.jstree-container-ul .jstree-disabled').length;
+		var origHeight      = heightMeasure.height();
+		var origScrollTop   = parseInt(self.container.scrollTop());
+
+		// load nodes
 		
 		viewPrevOrNext(jstActiveNode, true,  defaultChunk, false, function(){
 			
+			var newHeight   = heightMeasure.height();
+			var diffHeight  = newHeight - origHeight;
+			var newScrollTo = origScrollTop + diffHeight;
+
+			// reset view
 			self.scrollDuration = 0;
-			doScrollTo('#' + visibleNodes[0].id, function(){
-				self.scrollDuration = 1000;
+			
+			doScrollTo(newScrollTo, function(){
+
+				self.scrollDuration  = 1000;
+
+				var containerH       = parseInt(self.container.height());
+				var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
+				var extraDiff        = disabledMeasure * (disabledCount - newDisabledCount)
 				
-				var scrollTop  = parseInt(self.container.scrollTop());
-				var containerH = parseInt(self.container.scrollTop());
-				var newScollTo = scrollTop - containerH;
+				diffHeight += extraDiff;
 				
-				console.log('scroll up ST ' + scrollTop  + '  ' + typeof scrollTop )
-				console.log('scroll up CH ' + containerH + '  ' + typeof containerH )
-				console.log('scroll up NW ' + newScollTo + '  ' + typeof newScollTo )
-				
-				doScrollTo(newScollTo);
+				if(containerH > diffHeight && newHeight < (containerH + newScrollTo) ){
+					newScrollTo -= diffHeight						
+				}	
+				else{
+					newScrollTo -= containerH
+				}
+						
+				newScrollTo = Math.max(0, newScrollTo);
+				doScrollTo(newScrollTo);
 			});
 			
 			hideSpinner();
@@ -682,10 +697,26 @@ var EuHierarchy = function(cmp) {
 	
 	$('.hierarchy-next').click(function(){
 		showSpinner();
+		
 		var visibleNodes = getVisibleNodes();
+		//alert('when done will scroll to ' + visibleNodes[1].text);
+		
 		viewPrevOrNext(visibleNodes[0], false, defaultChunk, true, function(){
+
+			/*
+			self.scrollDuration = 0;
+			doScrollTo(0);
+			doScrollTo('#' + visibleNodes[0].id);
+			self.scrollDuration = 1000;
+			*/
 			hideSpinner();
-			doScrollTo('#'+visibleNodes[1].id);
+//			alert('#' + visibleNodes[1].id + '\n\n' + $('#' + visibleNodes[1].id).length )
+			doScrollTo('#' + visibleNodes[1].id);
+			setTimeout(function(){
+				doScrollTo('#' + visibleNodes[1].id);
+				
+			},10000);
+				
 		})
 	});
 
@@ -769,7 +800,7 @@ var EuHierarchy = function(cmp) {
 			}
 		}
 
-		var root = self.treeCmp.jstree('get_node', getRootEl().parent().attr('id') );
+		var root = self.treeCmp.jstree('get_node', getRootEl().attr('id') );
 		countNodes(root);
 		
 		topEntry    = topEntry    ? topEntry    : root;
@@ -1078,16 +1109,20 @@ var EuHierarchy = function(cmp) {
  *  
  *  - Load flicker - show spinner on actual load - set enbaler flag (reset on showSpinner call) 
  *  
- * TODO:  
  *  
+ *  TODO:
  *  
- *  loaded tracking --> collect indexes and compae to total.
- *  + start from
- *  + allow direction
- *
- *  OR
+ *  - Previous can send us into blank
+ * 		- overscroll
+ * 
  *  
- *  Get childIndex from node / parent data and subtract from array created in slice....
- *  var loaded = loaded + loadedBack + (childIndex ? 1 : 0)
+ *  - clicking and opening and clicking again....   runs out of content.
+ *  
+ *       this is common to key down
+ *       
+ *  - then there's key up....
  *  
  */
+
+
+

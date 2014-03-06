@@ -127,6 +127,8 @@ padding-left: 1em;
 	padding-right: 1em;
 	position: relative;
 	-moz-box-sizing: border-box;
+	-webkit-box-sizing:	border-box;
+	box-sizing: border-box;
 	
 }	
 #hierarchy.jstree-default .jstree-open > .jstree-anchor{
