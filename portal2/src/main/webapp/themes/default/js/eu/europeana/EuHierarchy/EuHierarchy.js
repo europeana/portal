@@ -8,7 +8,6 @@ var EuHierarchy = function(cmp) {
 	self.container      = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration = 0;		
 
-	var jstActiveNode;		    // the last selected node	
 	var newestNode = false;
 	var createdNodes = [];
 	
@@ -80,16 +79,6 @@ var EuHierarchy = function(cmp) {
 
 	};
 
-	var loadMore = function() {
-		if (jstActiveNode) {
-			if (jstActiveNode.data) {
-				loadAndAppendData(jstActiveNode, function(data) {
-					// console.log('loaded and appended more (' + data.length + ') - (this is the callback)');
-				});
-				doScrollTo($('#' + jstActiveNode.id)[0]);
-			}
-		};
-	};
 
 	// loads the node's children
 
@@ -195,17 +184,24 @@ var EuHierarchy = function(cmp) {
 	/*
 	 * Positions In Loaded Open Tree (PILOT)
 	 * 
-	 * @return [int, int]
+	 * @return false if there's no load point, otherwise [int, int]
 	 * 
-	 * node count from root to the the last load point
-	 * node count from root to @node
+	 * 	- node count from root to the the last load point
+	 * 	- node count from root to @node
 	 *  
 	 */
 	var getPILOT = function(node) {
 		
+		var loadPoint         = $('.loadPoint');		// TODO - remove load points and re-set on node_select / node_open
+		
+		if(!loadPoint.length){
+			//console.log('added load position to ' + node.text)
+			//$('#' + node.id).addClass(loadPoint);
+			return false;
+		}
+		loadPoint = loadPoint.attr('id');
 		var loadPointPosition = 0;
-		var nodePosition = 0;
-		var loadPoint = $('.loadPoint').length ? $('.loadPoint').attr('id') : jstActiveNode.id;
+		var nodePosition      = 0;
 		
 
 		// inner function: 
@@ -214,29 +210,28 @@ var EuHierarchy = function(cmp) {
 			total = total ? total : 0;
 
 			$.each(startNode.children, function(i, ob) {
-
-				var cNode = self.treeCmp.jstree('get_node', ob);
-				
 				total++;
-
+				var cNode = self.treeCmp.jstree('get_node', ob);
 				if (cNode.id == loadPoint) {
 					loadPointPosition = total;
 				}
 				if (cNode == node) {
 					nodePosition = total;
 				}
-
 				if (cNode.state.opened) {
 					total = countNodes(cNode, total);
 				}
 			});
 			return total;
 		}
-
-		countNodes(self.treeCmp.jstree('get_node', 'root'));
+		
+		countNodes(self.treeCmp.jstree('get_node', getRootEl().attr('id')));
+		
 		return [ loadPointPosition, nodePosition ];
 	};
+	
 
+	
 	/*
 	 * Simple next sibling finder - TODO - find native way
 	 */
@@ -273,67 +268,6 @@ var EuHierarchy = function(cmp) {
 	
 	// END DOM HELPER FUNCTIONS
 
-	// loads up the hierarchy - next or parent.
-	// child loads not deducted from @leftToLoad
-	var viewNextRecurse = function(node, leftToLoad, callbackComplete) {
-
-		// inner function - logic for recursion
-		var recurse = function() {
-			
-			//if(!confirm('cont?')){
-			//	return;
-			//}
-			
-			// strategy - get next sibling nodes that are open and load their content.
-			// if there's still data to load after that we recurse from the parent node
-			// console.log('vnr: recurse - remaining = ' + leftToLoad );
-
-			var next = getNext(node);
-
-			if (next) {
-				// recurse
-				viewNextRecurse(next, leftToLoad, callbackComplete);
-			}
-			else {
-				var parent = self.treeCmp.jstree('get_node',	node.parent);
-				if (typeof parent == 'object' && parent.id != self.pageNodeId) {
-					// recurse
-					viewNextRecurse(parent, leftToLoad, callbackComplete);
-				}
-				else{
-					callbackComplete('no parent (left to load = ' + leftToLoad );
-				}
-			}
-		};
-
-		if (node.data && node.state.opened) {
-
-			// load initial child data
-			loadAndAppendData(node, function(data) {
-				
-				leftToLoad -= data.length;
-				var newNodes = filterChildList(data);
-
-				chainLoad(newNodes, loadChildren, function() { // executed when all newNodes have been processed
-					if (leftToLoad > 0) {
-						recurse();
-					}
-					else{
-						callbackComplete('loaded all (A)');
-					}
-				});
-			});
-		}
-		else { // no data or node closed
-			if (leftToLoad > 0) {
-				recurse();
-			}
-			else{
-				callbackComplete('loaded all (B)');
-			}
-		}
-	};
-
 	
 	// returns a url for backwards node load
 	var getUrlSuffix = function(node, backwards, max){
@@ -366,19 +300,8 @@ var EuHierarchy = function(cmp) {
 
 		keys = keys.sort(function(a, b){ return b - a });
 
-
 		if(keys.length > max){
-			
 			keys = backwards ? keys.slice(0, max) : keys.slice(keys.length - max);
-			/*
-			if(backwards){
-				keys = keys.slice(0, max);
-			}
-			else{
-				keys = keys.slice(keys.length - max);			
-			}
-			console.log('range trimmed to ' + JSON.stringify( keys ));
-			*/
 		} 
 		
 		var last            = false;
@@ -398,26 +321,13 @@ var EuHierarchy = function(cmp) {
 		  case 0:
 			  break;
 		  case 1:
-			  //console.log('case 1');
 			  res = '.slice(' + consecutiveKeys[0] + ', ' + (consecutiveKeys[0] + 1) + ')';
 			  break;
 		  default:
-			  //console.log('case 2: ' + JSON.stringify(consecutiveKeys));
 			  res = '.slice(' + consecutiveKeys[consecutiveKeys.length-1] + ', ' +  (consecutiveKeys[0]+1) + ')';
 		}
 		return res;
 	};
-	
-	// DONE: TODO: limit to left-to-load (done for 17 nodes)
-	// DONE: TODO: chain this to make many calls	
-	// DONE: TODO: if going backwards start enabling parents
-	
-	// TODO: if called with active node "Book 2, Volume 1, Chapter 3" everything is reloaded (due to missing indexes probably)
-	//		 - can't reproduce
-	// TODO: book 1 isn't showing due to "loaded" val being set.
-	// TODO: clicking down to node should load more.
-	//
-	// Can't we do all loading like this????
 	
 	var loadFirstChild = function(node, callback){
 		if(node.data && node.data.childrenUrl && !node.children.length){
@@ -433,6 +343,8 @@ var EuHierarchy = function(cmp) {
 			callback();					
 		}
 	};
+
+	// TODO - remove scroll parameter
 	
 	var viewPrevOrNext = function(node, backwards, leftToLoad, scroll, callback) {
 			
@@ -440,22 +352,14 @@ var EuHierarchy = function(cmp) {
 		
 		if(!backwards){
 			var switchTrackNode = node;
-
-			//console.log('going deep... ' + switchTrackNode.text);
 			
 			// find deepest opened with children
 			while(switchTrackNode.children.length && switchTrackNode.state.opened){
-				
-				//console.log('  ...deeper... ' + JSON.stringify(switchTrackNode.children[0]) );
-				
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.children[0]);
 			}
 
-	//		console.log('went deep to  ' + switchTrackNode.text);
-
 			var parentLoaded = function(node){
 				var parent = self.treeCmp.jstree('get_node', node.parent);
-
 				if(!parent.data){					
 					console.log('no parent data for node ' + parent.text);
 					return false;
@@ -468,16 +372,14 @@ var EuHierarchy = function(cmp) {
 			
 			// pull back up
 			while(parentLoaded(switchTrackNode)){
-		//		console.log('while 2 ' + switchTrackNode.text);
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.parent);
 			}
-			
 
 			node = switchTrackNode;			 
 		}
 		
 		if(node.parent){
-			var parent    = self.treeCmp.jstree('get_node', node.parent);
+			var parent = self.treeCmp.jstree('get_node', node.parent);
 			
 			if(parent.data){
 				var urlSuffix = getUrlSuffix( node, backwards, leftToLoad );
@@ -493,8 +395,6 @@ var EuHierarchy = function(cmp) {
 
 							loadFirstChild(newNode);
 							
-//							console.log('appended new node ' + newNode.text);
-							
 							if(i+1==data.length){
 								leftToLoad -= data.length;
 								if(leftToLoad > 0){
@@ -508,12 +408,9 @@ var EuHierarchy = function(cmp) {
 								}
 							}							
 						});
-						
 					});
-					
 				}
 				else{
-//					console.log('No suffix - already loaded everyhing (still looking to load another ' + leftToLoad + ')');
 					if(backwards){
 						
 						if(self.treeCmp.jstree( 'is_disabled', parent )){
@@ -531,14 +428,13 @@ var EuHierarchy = function(cmp) {
 						}
 						else{
 							console.log('recurse point three')
-							///viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
 							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
 						}
 					}
 					else{
 						// forwards
 						
-						console.log('recurse point four -fwd no suffix for parent ' + parent.text)
+						//console.log('recurse point four -fwd no suffix for parent ' + parent.text)
 						
 						// we may have no suffix because we're at the end.
 						// we may not really be at the end if there are previous nodes.
@@ -556,7 +452,7 @@ var EuHierarchy = function(cmp) {
 				}
 			}// end if parent.data
 			else{
-				console.log('no parent data - callback = ' + callback);
+				console.log('no parent data');
 				if(callback){
 					callback();
 				}
@@ -572,23 +468,14 @@ var EuHierarchy = function(cmp) {
 	// UI FUNCTIONS
 
 	var showSpinner = function(){
-
 		if(!self.container.prev('.ajax-overlay').length){
 			self.container.before('<div class="ajax-overlay">');
-			//self.container.find('.ajax-overlay').css('top', self.container.scrollTop() + 'px');			
 		}
 		self.container.prev('.ajax-overlay').show();
-/*
-		if(!self.container.find('.ajax-overlay').length){
-			self.container.append('<div class="ajax-overlay">');
-			self.container.find('.ajax-overlay').css('top', self.container.scrollTop() + 'px');			
-		}
-*/
 	};
 	
 	var hideSpinner = function(){
 		self.container.prev('.ajax-overlay').hide();
-		//self.container.find('.ajax-overlay').remove();
 	};
 	
 	/**
@@ -631,7 +518,6 @@ var EuHierarchy = function(cmp) {
 			console.log('doScrollTo error - undefined @el');
 			return;
 		}
-
 		self.container.css('overflow', 'auto');
 		self.container.scrollTo(el, self.scrollDuration, {
 			"axis" : "y",
@@ -648,7 +534,7 @@ var EuHierarchy = function(cmp) {
 
 	// UI BINDING
 
-	$('.load-more').click(loadMore);
+	$('.load-more').click(function(){ alert('no handler'); });
 	$('.view-next').click(function(){ alert('no handler'); });
 	
 	$('.hierarchy-prev').click(function(){
@@ -657,15 +543,15 @@ var EuHierarchy = function(cmp) {
 		
 		// scroll tracking
 		
-		var heightMeasure   = $('.jstree-container-ul>.jstree-node>.jstree-children')
+		var heightMeasure   = $('.jstree-container-ul>.jstree-node>.jstree-children');
 		var disabledMeasure = $('.jstree-container-ul .jstree-disabled').first().height();
 		var disabledCount   = $('.jstree-container-ul .jstree-disabled').length;
 		var origHeight      = heightMeasure.height();
 		var origScrollTop   = parseInt(self.container.scrollTop());
 
 		// load nodes
-		
-		viewPrevOrNext(jstActiveNode, true,  defaultChunk, false, function(){
+
+		viewPrevOrNext(getVisibleNodes()[0], true,  defaultChunk, false, function(){
 			
 			var newHeight   = heightMeasure.height();
 			var diffHeight  = newHeight - origHeight;
@@ -689,20 +575,22 @@ var EuHierarchy = function(cmp) {
 					diffHeight = containerH;
 				}
 				
-				if(containerH > diffHeight && newHeight < (containerH + newScrollTo) ){
+				newScrollTo -= (containerH > diffHeight && newHeight < (containerH + newScrollTo)) ? diffHeight : containerH;
+					
+				/*if(containerH > diffHeight && newHeight < (containerH + newScrollTo) ){
 					newScrollTo -= diffHeight						
 				}	
 				else{
 					newScrollTo -= containerH
-				}
+				}*/
 						
 				newScrollTo = Math.max(0, newScrollTo);
 				doScrollTo(newScrollTo, function(){
 					togglePrevNextLinks();
+					hideSpinner();
 				});
 			});
 			
-			hideSpinner();
 		});
 	});
 	
@@ -715,8 +603,10 @@ var EuHierarchy = function(cmp) {
 		var visibleNodes = getVisibleNodes();
 		
 		viewPrevOrNext(visibleNodes[0], false, defaultChunk, true, function(){
-			hideSpinner();
-			doScrollTo('#' + visibleNodes[1].id);
+			doScrollTo('#' + visibleNodes[1].id, function(){
+				togglePrevNextLinks();
+				hideSpinner();
+			});
 		});
 	});
 
@@ -746,9 +636,9 @@ var EuHierarchy = function(cmp) {
 		var topEntry    = false;
 		var bottomEntry = false;
 		var lastEntry   = false;	// if the bottom node is above the bottom of the viewport we return this as the bottom
-		var totalH      = 0;
+		var totalH      = -2;		// start negative to keep a couple of pixels inside - focussed borders and outlines can knock this off otherwise
 		var offset      = self.container.scrollTop();
-		var offsetB     = -2 + offset + self.container.height();
+		var offsetB     = -4 + offset + self.container.height();
 
 		var set = function(node){
 			if(totalH >= offset){
@@ -771,24 +661,20 @@ var EuHierarchy = function(cmp) {
 				totalH += $('#' + startNode.id + '>.jstree-icon').height();
 			}
 			else{
-				//console.log('S: ' + startNode.id + ' anchor ++  ' + anchor.height())
 				totalH += anchor.height();
 			}
 			set(startNode);
 			
 			if(!topEntry || !bottomEntry){
 				
-				//console.log('loop children: ' + startNode.id + ' x ' + startNode.children.length )
-				
-				$.each(startNode.children, function(i, ob) {
+				$.each(startNode.children, function(i, ob){
 					if(topEntry && bottomEntry){
-						//console.log('got both -> return');
-						return false;
+						return false;		// break
 					}
 					var cNode = self.treeCmp.jstree('get_node', ob);
 					lastEntry = cNode;					
 					
-					if (! cNode.state.opened) {
+					if (! cNode.state.opened){
 						var anchor = $('#' + cNode.id + '>.jstree-anchor');
 						totalH += anchor.height();
 						set(cNode);
@@ -805,14 +691,7 @@ var EuHierarchy = function(cmp) {
 		
 		topEntry    = topEntry    ? topEntry    : root;
 		bottomEntry = bottomEntry ? bottomEntry : lastEntry;
-		/*
-		$('#' +  topEntry.id)   .css('background-color', 'red');
-		$('#' +  bottomEntry.id).css('background-color', 'blue');			
-		setTimeout(function(){
-			$('#' +  topEntry.id)   .css('background-color', 'white');
-			$('#' +  bottomEntry.id).css('background-color', 'white');
-		}, 1000);
-		*/
+		
 		return [topEntry, bottomEntry];
 	};
 	
@@ -821,20 +700,23 @@ var EuHierarchy = function(cmp) {
 	
 	
 	$('.spin').click(function() {
-		console.log('get limits...')
+
+		console.log('get limits...');
+		
 		var limits = getVisibleNodes();
-		console.log(limits[0].id + '   ' + limits[1].id)
+		
+		console.log(limits[0].id + ' <--> ' + limits[1].id);
+		
+		$('#' +  limits[0].id).css('background-color', 'red');
+		$('#' +  limits[1].id).css('background-color', 'blue');			
+		
+		setTimeout(function(){
+			$('#' +  limits[0].id).css('background-color', 'white');
+			$('#' +  limits[1].id).css('background-color', 'white');
+		}, 1000);
+
+		
 		return;
-		/*
-		if(jstActiveNode){
-			var el = $('#' + jstActiveNode.id).find('>.jstree-anchor');
-			var bg = el.css('background-color');
-			el.css('background-color', 'red');
-			setTimeout(function(){
-				el.css('background-color', bg);
-			}, 500);
-		};
-		*/
 		
 		spin = !spin;
 		if (spin) {
@@ -858,6 +740,7 @@ var EuHierarchy = function(cmp) {
 
 		// create
 
+		// TODO - delete this if not used
 		self.treeCmp.bind('create_node.jstree', function(e, data) {
 			if (!newestNode) {
 				newestNode = data.node.id;
@@ -872,19 +755,21 @@ var EuHierarchy = function(cmp) {
 
 		self.treeCmp.bind("select_node.jstree", function(event, data) {
 			
-			// commenting this out - we're not using jstActiveNode withthe new load fns.
-			jstActiveNode = data.node;
-
 			showSpinner();
-
+			
 			viewPrevOrNext(data.node, false, defaultChunk, false, function(){
 				doScrollTo($('#' + data.node.id), function(){
 					togglePrevNextLinks();
+
+					$('.loadPoint').removeClass('loadPoint');
+					$('#' + data.node.id).addClass('loadPoint');
+					$('#' + data.node.id + '>a').focus();
+
 					hideSpinner();
 				});
 			});
 			
-			$('.debug-area').html(JSON.stringify(jstActiveNode));
+			$('.debug-area').html(JSON.stringify(data.node));
 			return data.node;
 		});
 
@@ -893,17 +778,17 @@ var EuHierarchy = function(cmp) {
 		self.treeCmp.bind("loaded.jstree", function(event, data) {
 			
 			// set active and load
-			
+
 			getPageNodeEl().click(); // used to scroll beyond disabled parents
-			
 			self.scrollDuration = 1000;
+			
 			setTimeout(function() {
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
 				loadFirstChild(pageNode, function(){
-					$('.hierarchy-next').click();					
+					
+					getPageNodeEl().click(); // used again to load immediate siblings
+					
 				});
-				
-				//viewPrevOrNext( pageNode, false, defaultChunk);
 			}, 1);
 		});
 
@@ -912,31 +797,63 @@ var EuHierarchy = function(cmp) {
 		// arrow down
 
 		self.treeCmp.bind('keydown.jstree', function(e) {
-			if (e.key == 'Down') {
-				var hoveredNode = self.treeCmp.jstree('get_node', self.treeCmp.find('.jstree-hovered').parent());
-				var positions = getPILOT(hoveredNode);
 
-				//console.log('pilot poistions = ' + JSON.stringify(positions) );
+			
+			// 'Down' || 'Up'
+			
+			if (e.which == 40 || e.which == 38) { 
+
+				var hoveredNodeEl = self.treeCmp.find('.jstree-hovered');
+				var hoveredNode   = self.treeCmp.jstree('get_node', hoveredNodeEl.parent());
+				var doLoad        = false;
+				var initiatingNode;
+				var backwards;
 				
-				if (positions[0] > positions[1]   ||  positions[1] - positions[0] > (defaultChunk / 2)) {
-					console.log('load next from hovered');
-					showSpinner();
-					viewNextRecurse(hoveredNode, defaultChunk, function(msg){
-
-						// make this the marker node
-						//console.log('Done Down load' + (typeof msg == 'undefined' ? '' : ': msg = ' + msg) );
-
-						$('.loadPoint').removeClass('loadPoint');
-						$('#' + hoveredNode.id).addClass('loadPoint');
-						
-						hideSpinner();
-						
-						// regain focus
-						$('#' + hoveredNode.id + ' a').focus();
-
-						
-					});
+				if(hoveredNodeEl.hasClass('jstree-disabled')){
+					doLoad         = true;
+					initiatingNode = self.treeCmp.jstree('get_node', $('.loadPoint').attr('id'));
+					backwards      = true;
+				}
+				else {
+					var positions = getPILOT(hoveredNode);
+					    positions = positions ? e.which == 38 ? positions.reverse() : positions : false;
 					
+					if(!positions || positions[0] > positions[1]   ||  positions[1] - positions[0] > (defaultChunk / 2) ){
+						doLoad         = true;
+						initiatingNode = hoveredNode;
+						backwards      = e.which == 38;
+					}
+				}
+				if(doLoad){
+					showSpinner();
+					viewPrevOrNext(initiatingNode, backwards,  defaultChunk, false, function(){
+						$('.loadPoint').removeClass('loadPoint');
+						$('#' + initiatingNode.id).addClass('loadPoint');
+						
+						// TODO: unnatural scroll
+						// Look at previous fix for this applied to (view next? select?)
+						// All calls ot vpon need wrapped in a scroll handler *
+						//
+						// This scroll DOES fix the line-height misalign (chrome & maybe ff)...
+						// ...however 
+						// ...maybe the scroll can be made to either:
+						// 
+						// - rest at the point where it started (but aligned to node)
+						//    - good for keying
+						//    - good for opening... though not needed as opening can only load down
+						//    - override if start point was at viewport edge
+						//  OR
+						//    - move the smallest between (the height of the viewport / the height of the data added)
+						//
+						// * this scroll handler would benefit from knowing (or it may have to know) how many nodes had been added and where
+						//   in order to work around firefox bug...
+						
+						doScrollTo('#' + initiatingNode.id, function(){
+							hideSpinner();
+							$('#' + initiatingNode.id + '>a').focus();							
+						});
+
+					});
 				}
 			}
 		});
@@ -950,26 +867,16 @@ var EuHierarchy = function(cmp) {
 			
 			var fChild = self.treeCmp.jstree('get_node', data.node.children[0]);
 			
-			if(fChild.data && fChild.data.childrenUrl){
-				
-				loadFirstChild(fChild, function(){	// load first child of subsquent nodes
-					viewPrevOrNext(fChild, false, defaultChunk, false, function(){
-						hideSpinner();
-					})
-				
-				});
-			}
-			else{
-				// load first child of subsquent nodes				
+			loadFirstChild(fChild, function(){
 				viewPrevOrNext(fChild, false, defaultChunk, false, function(){
+					$('.loadPoint').removeClass('loadPoint');
+					$('#' + data.node.id).addClass('loadPoint');
+					$('#' + data.node.id + '>a').focus();
 					hideSpinner();
+
 				})
-			}
-			return;
-			//showSpinner();
-			//loadGrandChildren(data.node, function(){
-			//	hideSpinner();
-			//});
+			});
+
 		});
 
 		// CLOSE
@@ -980,14 +887,13 @@ var EuHierarchy = function(cmp) {
 
 		// END TREE BINDING
 		
-		
-
 		var chainUp = function(url, data, callbackWhenDone) {
 			if(!url){
 				callbackWhenDone(data);
 				return;
 			}
-			console.log('data.parentUrl ' + data.parentUrl + ', data.index ' + data.index );
+			
+			// console.log('data.parentUrl ' + data.parentUrl + ', data.index ' + data.index );
 			
 			loadData(url, function(newData){
 				if(!data){
@@ -1002,7 +908,6 @@ var EuHierarchy = function(cmp) {
 				}
 				if(data.data){
 					data.data.backwards = true;
-					//data.data.loaded    = 1; // todo - remove
 					if(data.data.parentUrl && data.data.index){
 						chainUp(data.data.parentUrl, data, callbackWhenDone);
 					}
@@ -1039,67 +944,31 @@ var EuHierarchy = function(cmp) {
 
 /*
  * TODO
- * 
- * LOADING BUG:
- * 
- * Only 6 out of 10 children loaded from the following sequence:
- * 
- *  - open book 1
- *  - open volume 3
- *  - scroll down to next load		- important step (it shifts the loadPoint to below )
- *  - go back and open volume 1
- *  - open volume 1 chapter 2
- *      - only 6 verses 
- *   
- *   FIXED:
- * 
- *   the condition to load on hover was changed from:
- *   	if (positions[1] - positions[0] > (defaultChunk / 2))
- * 	 to:
- * 		if (positions[0] > positions[1]   ||  positions[1] - positions[0] > (defaultChunk / 2))
- * 
- * 
- * 
- * LOADING BUG:
- * 
- * Open "Parent Test" and load down Book 1, Volume 1 chapter 1.
- * 
- * FIXED:
- * 
- * in viewNextRecurse() recursion via the parent will not happen if th parent id equals self.pageNodeId
- * 
- * 
- * Loading "down the tree" should never recurse back beyond the original item that was loaded.
- * Other children of the parents of the root node are loaded with a previous sibling load.
- * We need to distinguish between the root node and the page node - the one corresponding to the page we're on.
- * 
- * Possible problem with this strategy?  Consider the following:
- * 
- * Parent Top
- *  |
- *  |_ Some Node
- *  |    |
- *  |    |_ child 1
- *  |    |_ child 2
- *  |
- *  |_ Page Node
- *  |    |
- *  |    |_Book 1
- *  |
- *  |_ Further Nodes
- *  
- *  If I back-pedal to "Some Node" and open it will the load work?
- *   - we're "beyond" the pageNode.... will
- *  
- *  
+
  * BEHAVIOUR:
  * 
  * THEME:
  *  
  *  - Load flicker - show spinner on actual load - set enbaler flag (reset on showSpinner call) 
  *  
+ *  TODO:
  *  
+ *  
+ *  scrolling 
+ *   - particularly up the way
+ *   - common handler needed 
+ *   
+ *  showing
+ *   - labels
+ *   - when to show
+ *  
+ *  sizing
+ *   - configure viewport height
+ *     - let js configue the css
+ *   - remove size limit on load all?
  */
+
+
 
 
 

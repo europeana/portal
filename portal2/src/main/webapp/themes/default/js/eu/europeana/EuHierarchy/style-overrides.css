@@ -40,13 +40,23 @@
 	height: auto;
 }
 
-		
+
 #hierarchy{
 	position: relative;
 	padding-bottom: 6em;
 }
-		
-		
+
+#hierarchy a,
+#hierarchy a:hover,
+#hierarchy a:active,
+#hierarchy a:focus {
+	outline: none !important;	/* outline upsets visible node calculations */
+	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing:	border-box;
+	box-sizing: border-box;
+}
+
  /*
  	style
 */
@@ -122,9 +132,9 @@
 /* wrapping fix */
 
 #hierarchy.jstree-default .jstree-anchor{
-	/* facet tidy*/
-padding-left: 1em;
-	XXXmargin-left: 1em;
+	
+	padding-left: 1em;
+
 	padding-right: 1em;
 	position: relative;
 	-moz-box-sizing: border-box;
