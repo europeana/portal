@@ -11,7 +11,10 @@
 		var labelLoadAll	= '<spring:message code="mlt_load_all_t" arguments="${model.europeanaMlt.categories[0].totalResults-1}"/>';
 		var mltTotal		= ${model.europeanaMlt.categories[0].totalResults-1};
 		//var mltQuery  		= '${  fn:replace(  fn:replace(model.europeanaMlt.categories[0].query, "\"", "&quot;"), "\\&", "%26")  }';
-		var mltQuery  		= '${  fn:escapeXml(model.europeanaMlt.categories[0].query	)  }';
+
+		//var mltQuery  		= '${  fn:escapeXml(model.europeanaMlt.categories[0].query	)  }';
+		
+		var mltQuery  		= '${  fn:escapeXml(    fn:replace(  model.europeanaMlt.categories[0].query, "\\&", "%26")     	)  }';
 	</script>
 
 	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
