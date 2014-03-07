@@ -37,7 +37,12 @@
 								</span>
 							</li>
 						</ul>
-
+						<script type="text/javascript">
+							/* IE10 / iPhone fix */
+							if( (!(window.ActiveXObject) && "ActiveXObject")  ||  navigator.userAgent.match(/iPhone/i)   ){
+								$('.submit-new-keyword').parent().css('vertical-align', 'top');	
+							}
+						</script>
 					</form>
 				</li>
 

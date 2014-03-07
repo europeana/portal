@@ -230,6 +230,14 @@
 					</div>
 				</fieldset>
 			</form>
+			
+			<script type="text/javascript">
+				/* IE10 / iPhone fix */
+				if( (!(window.ActiveXObject) && "ActiveXObject")  ||  navigator.userAgent.match(/iPhone/i)   ){
+					$('.submit-tag').parent().css('vertical-align', 'top');	
+				}
+			</script>
+			
 		</c:if>
 
 		<div id="translate-container">
