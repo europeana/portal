@@ -51,12 +51,13 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			model.setBlogFeedUrl(configuration.getBlogUrl());
 			// set locale message when required
 			Locale browser = request.getLocale();
-			if (!hasCookie(request, "portalLanguage") && 			
-					(browser != null) && !StringUtils.equalsIgnoreCase(browser.getLanguage(), "undefined") &&
-					!StringUtils.equalsIgnoreCase(browser.getLanguage(), locale.getLanguage())) {
-				String languageLabel = "language_" + browser.getLanguage() + "_t";
+			String language = ((browser != null) && !StringUtils.equalsIgnoreCase(browser.getLanguage(), "undefined") ? StringUtils
+					.left(browser.getLanguage(), 2) : null);
+			if (!hasCookie(request, "portalLanguage") && language != null
+					&& !StringUtils.equalsIgnoreCase(language, StringUtils.left(locale.getLanguage(), 2))) {
+				String languageLabel = "language_" + language + "_t";
 				if (hasMessage(languageLabel)) {
-					model.setBrowserLocale(browser);
+					model.setBrowserLanguage(language);
 					StringBuilder sb = new StringBuilder();
 					sb.append(messageSource.getMessage("browser_language_preference1_t", null, browser)).append(" ");
 					sb.append(messageSource.getMessage(languageLabel, null, browser)).append(", ");

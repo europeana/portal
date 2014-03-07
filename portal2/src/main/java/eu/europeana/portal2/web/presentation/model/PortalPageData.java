@@ -26,7 +26,7 @@ public abstract class PortalPageData extends PageData {
 
 	private Locale locale;
 	
-	private Locale browserLocale;
+	private String browserLanguage;
 	
 	private String[] localeMessages;
 
@@ -123,19 +123,19 @@ public abstract class PortalPageData extends PageData {
 		this.blogFeedUrl = blogFeedUrl;
 	}
 
-	public Locale getBrowserLocale() {
-		return browserLocale;
-	}
-
-	public void setBrowserLocale(Locale browserLocale) {
-		this.browserLocale = browserLocale;
-	}
-
 	public String[] getLocaleMessages() {
 		return localeMessages;
 	}
 
 	public void setLocaleMessages(String[] localeMessage) {
 		this.localeMessages = localeMessage;
+	}
+	
+	public String getBrowserLanguage() {
+		return browserLanguage;
+	}
+	
+	public void setBrowserLanguage(String browserLanguage) {
+		this.browserLanguage = browserLanguage;
 	}
 }

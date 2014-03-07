@@ -41,6 +41,7 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
@@ -55,9 +56,11 @@ import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
+	Logger log = Logger.getLogger(FullBeanDecorator.class.getCanonicalName());
+
 	public enum ContextualEntity {AGENT, CONCEPT, PLACE, TIMESPAN};
 
-	private FullBean fulldoc;
+	private FullBean fullBean;
 
 	private FullBeanShortcut shortcut;
 
@@ -78,16 +81,16 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 	private Map<String, Place> placeMap;
 	private Map<String, Timespan> timespanMap;
 
-	public FullBeanDecorator(FullBean fulldoc, FullBeanShortcut shortcut) {
-		this.fulldoc = fulldoc;
-		this.shortcut = shortcut;
+	public FullBeanDecorator(FullBean fullBean) {
+		log.info("creating FullBeanDecorator");
+		this.fullBean = fullBean;
 		europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
 	}
 
-	public FullBeanDecorator(FullBean fulldoc, FullBeanShortcut shortcut, String userLanguage) {
-		this(fulldoc, shortcut);
+	public FullBeanDecorator(FullBean fullBean, String userLanguage) {
+		this(fullBean);
 		this.userLanguage = userLanguage;
-		this.edmLanguage = fulldoc.getEuropeanaAggregation().getEdmLanguage().get("def").get(0);
+		this.edmLanguage = fullBean.getEuropeanaAggregation().getEdmLanguage().get("def").get(0);
 	}
 
 	/**
@@ -146,17 +149,17 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public String[] getTitle() {
-		return fulldoc.getTitle();
+		return fullBean.getTitle();
 	}
 
 	@Override
 	public String[] getYear() {
-		return fulldoc.getYear();
+		return fullBean.getYear();
 	}
 
 	@Override
 	public String[] getProvider() {
-		return fulldoc.getProvider();
+		return fullBean.getProvider();
 	}
 
 	public String[] getDataProvider() {
@@ -165,16 +168,16 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public String[] getLanguage() {
-		return fulldoc.getLanguage();
+		return fullBean.getLanguage();
 	}
 
 	@Override
 	public DocType getType() {
-		return fulldoc.getType();
+		return fullBean.getType();
 	}
 
 	public String getEdmType() {
-		for (Proxy proxy : fulldoc.getProxies()) {
+		for (Proxy proxy : fullBean.getProxies()) {
 			return proxy.getEdmType().toString();
 		}
 		return null;
@@ -182,16 +185,16 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public int getEuropeanaCompleteness() {
-		return fulldoc.getEuropeanaCompleteness();
+		return fullBean.getEuropeanaCompleteness();
 	}
 
 	public String getCannonicalUrl() {
-		return europeanaUrlService.getPortalResolve(fulldoc.getAbout());
+		return europeanaUrlService.getPortalResolve(fullBean.getAbout());
 	}
 
 	@Override
 	public String getId() {
-		return fulldoc.getId();
+		return fullBean.getId();
 	}
 
 	public String[] getEdmCountry() {
@@ -286,44 +289,50 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public String[] getEuropeanaCollectionName() {
-		return fulldoc.getEuropeanaCollectionName();
+		return fullBean.getEuropeanaCollectionName();
 	}
 
 	@Override
 	public Date getTimestamp() {
-		return fulldoc.getTimestamp();
+		return fullBean.getTimestamp();
 	}
 
 	@Override
 	public String[] getCountry() {
-		return fulldoc.getCountry();
+		return fullBean.getCountry();
 	}
 
 	@Override
 	public void setCountry(String[] country) {
-		fulldoc.setCountry(country);
+		fullBean.setCountry(country);
 	}
 
 	@Override
 	public void setEuropeanaCollectionName(String[] europeanaCollectionName) {
-		fulldoc.setEuropeanaCollectionName(europeanaCollectionName);
+		fullBean.setEuropeanaCollectionName(europeanaCollectionName);
 	}
 
 	@Override
 	public String[] getUserTags() {
-		return fulldoc.getUserTags();
+		return fullBean.getUserTags();
 	}
 
 	@Override
 	public List<? extends Place> getPlaces() {
-		return fulldoc.getPlaces();
+		return fullBean.getPlaces();
 	}
 
 	public List<? extends Place> getDecoratedPlaces() {
 		if (places == null) {
+			Map<String, String> ids = new HashMap<String, String>();
 			places = new ArrayList<PlaceDecorator>();
-			for (Place place : fulldoc.getPlaces()) {
-				places.add(new PlaceDecorator(place, userLanguage, edmLanguage));
+			for (Place place : fullBean.getPlaces()) {
+				PlaceDecorator decorator = new PlaceDecorator(this, place, userLanguage, edmLanguage);
+				places.add(decorator);
+				ids.put(place.getAbout(), decorator.getLabel());
+			}
+			for (PlaceDecorator agent : places) {
+				agent.makeLinks(ids);
 			}
 		}
 		return places;
@@ -341,22 +350,22 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public void setPlaces(List<? extends Place> places) {
-		fulldoc.setPlaces(places);
+		fullBean.setPlaces(places);
 	}
 
 	@Override
 	public List<? extends Agent> getAgents() {
-		return fulldoc.getAgents();
+		return fullBean.getAgents();
 	}
 
 	public List<? extends Agent> getDecoratedAgents() {
 		if (agents == null) {
 			Map<String, String> ids = new HashMap<String, String>();
 			agents = new ArrayList<AgentDecorator>();
-			for (Agent agent : fulldoc.getAgents()) {
-				AgentDecorator decorator = new AgentDecorator(agent, userLanguage, edmLanguage);
+			for (Agent agent : fullBean.getAgents()) {
+				AgentDecorator decorator = new AgentDecorator(this, agent, userLanguage, edmLanguage);
 				agents.add(decorator);
-				ids.put(agent.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+				ids.put(agent.getAbout(), decorator.getLabel());
 			}
 			for (AgentDecorator agent : agents) {
 				agent.makeLinks(ids);
@@ -377,22 +386,22 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public void setAgents(List<? extends Agent> agents) {
-		fulldoc.setAgents(agents);
+		fullBean.setAgents(agents);
 	}
 
 	@Override
 	public List<? extends Timespan> getTimespans() {
-		return fulldoc.getTimespans();
+		return fullBean.getTimespans();
 	}
 
 	public List<? extends Timespan> getDecoratedTimespans() {
 		if (timespans == null) {
 			Map<String, String> ids = new HashMap<String, String>();
 			timespans = new ArrayList<TimespanDecorator>();
-			for (Timespan timespan : fulldoc.getTimespans()) {
-				TimespanDecorator decorator = new TimespanDecorator(timespan, userLanguage, edmLanguage);
+			for (Timespan timespan : fullBean.getTimespans()) {
+				TimespanDecorator decorator = new TimespanDecorator(this, timespan, userLanguage, edmLanguage);
 				timespans.add(decorator);
-				ids.put(timespan.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+				ids.put(timespan.getAbout(), decorator.getLabel());
 			}
 			for (TimespanDecorator timespan : timespans) {
 				timespan.makeLinks(ids);
@@ -413,17 +422,17 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public List<? extends Concept> getConcepts() {
-		return fulldoc.getConcepts();
+		return fullBean.getConcepts();
 	}
 
 	public List<? extends Concept> getDecoratedConcepts() {
 		if (concepts == null) {
 			Map<String, String> ids = new HashMap<String, String>();
 			concepts = new ArrayList<ConceptDecorator>();
-			for (Concept concept : fulldoc.getConcepts()) {
-				ConceptDecorator decorator = new ConceptDecorator(concept, userLanguage, edmLanguage);
+			for (Concept concept : fullBean.getConcepts()) {
+				ConceptDecorator decorator = new ConceptDecorator(this, concept, userLanguage, edmLanguage);
 				concepts.add(decorator);
-				ids.put(concept.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+				ids.put(concept.getAbout(), decorator.getLabel());
 			}
 			for (ConceptDecorator concept : concepts) {
 				concept.makeLinks(ids);
@@ -444,92 +453,92 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public void setConcepts(List<? extends Concept> concepts) {
-		fulldoc.setConcepts(concepts);
+		fullBean.setConcepts(concepts);
 	}
 
 	@Override
 	public void setAggregations(List<? extends Aggregation> aggregations) {
-		fulldoc.setAggregations(aggregations);
+		fullBean.setAggregations(aggregations);
 	}
 
 	@Override
 	public List<? extends Proxy> getProxies() {
-		return fulldoc.getProxies();
+		return fullBean.getProxies();
 	}
 
 	@Override
 	public void setProxies(List<? extends Proxy> proxies) {
-		fulldoc.setProxies(proxies);
+		fullBean.setProxies(proxies);
 	}
 
 	@Override
 	public void setEuropeanaId(ObjectId europeanaId) {
-		fulldoc.setEuropeanaId(europeanaId);
+		fullBean.setEuropeanaId(europeanaId);
 	}
 
 	@Override
 	public void setTitle(String[] title) {
-		fulldoc.setTitle(title);
+		fullBean.setTitle(title);
 	}
 
 	@Override
 	public void setYear(String[] year) {
-		fulldoc.setYear(year);
+		fullBean.setYear(year);
 	}
 
 	@Override
 	public void setProvider(String[] provider) {
-		fulldoc.setProvider(provider);
+		fullBean.setProvider(provider);
 	}
 
 	@Override
 	public void setLanguage(String[] language) {
-		fulldoc.setLanguage(language);
+		fullBean.setLanguage(language);
 	}
 
 	@Override
 	public void setType(DocType type) {
-		fulldoc.setType(type);
+		fullBean.setType(type);
 	}
 
 	@Override
 	public void setEuropeanaCompleteness(int europeanaCompleteness) {
-		fulldoc.setEuropeanaCompleteness(europeanaCompleteness);
+		fullBean.setEuropeanaCompleteness(europeanaCompleteness);
 	}
 
 	@Override
 	public void setTimespans(List<? extends Timespan> timespans) {
-		fulldoc.setTimespans(timespans);
+		fullBean.setTimespans(timespans);
 	}
 
 	@Override
 	public List<? extends Aggregation> getAggregations() {
-		return fulldoc.getAggregations();
+		return fullBean.getAggregations();
 	}
 
 	@Override
 	public List<? extends ProvidedCHO> getProvidedCHOs() {
-		return fulldoc.getProvidedCHOs();
+		return fullBean.getProvidedCHOs();
 	}
 
 	@Override
 	public void setProvidedCHOs(List<? extends ProvidedCHO> providedCHOs) {
-		fulldoc.setProvidedCHOs(providedCHOs);
+		fullBean.setProvidedCHOs(providedCHOs);
 	}
 
 	@Override
 	public String getAbout() {
-		return fulldoc.getAbout();
+		return fullBean.getAbout();
 	}
 
 	@Override
 	public void setAbout(String about) {
-		fulldoc.setAbout(about);
+		fullBean.setAbout(about);
 	}
 
 	@Override
 	public EuropeanaAggregation getEuropeanaAggregation() {
-		EuropeanaAggregation europeanaAggregation = fulldoc.getEuropeanaAggregation();
+		EuropeanaAggregation europeanaAggregation = fullBean.getEuropeanaAggregation();
 		String edmPreview = "";
 		if ((this.getAggregations() != null) && !this.getAggregations().isEmpty()
 				&& (this.getAggregations().get(0).getEdmObject() != null)) {
@@ -544,69 +553,92 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@Override
 	public void setEuropeanaAggregation(EuropeanaAggregation europeanaAggregation) {
-		fulldoc.setEuropeanaAggregation(europeanaAggregation);
+		fullBean.setEuropeanaAggregation(europeanaAggregation);
 	}
 
 	@Override
 	public Boolean isOptedOut() {
-		return fulldoc.isOptedOut();
+		return fullBean.isOptedOut();
 	}
 
 	public Boolean getOptedOut() {
-		return fulldoc.isOptedOut();
+		return fullBean.isOptedOut();
 	}
 
 	@Override
 	public List<? extends BriefBean> getSimilarItems() {
-		return fulldoc.getSimilarItems();
+		return fullBean.getSimilarItems();
 	}
 
 	@Override
 	public void setSimilarItems(List<? extends BriefBean> similarItems) {
-		fulldoc.setSimilarItems(similarItems);
+		fullBean.setSimilarItems(similarItems);
 	}
 
 	@Override
 	public void setOptOut(boolean optOut) {
-		fulldoc.setOptOut(optOut);
+		fullBean.setOptOut(optOut);
 	}
 
 	@Override
 	public Date getTimestampCreated() {
-		return fulldoc.getTimestampCreated();
+		return fullBean.getTimestampCreated();
 	}
 
 	public String getTimestampCreatedString() {
-		if (fulldoc.getTimestampCreated() != null) {
-			return DateUtils.format(fulldoc.getTimestampCreated());
+		if (fullBean.getTimestampCreated() != null) {
+			return DateUtils.format(fullBean.getTimestampCreated());
 		}
 		return null;
 	}
 
 	@Override
 	public Date getTimestampUpdated() {
-		return fulldoc.getTimestampUpdated();
+		return fullBean.getTimestampUpdated();
 	}
 
 	public String getTimestampUpdatedString() {
-		if (fulldoc.getTimestampUpdated() != null) {
-			return DateUtils.format(fulldoc.getTimestampUpdated());
+		if (fullBean.getTimestampUpdated() != null) {
+			return DateUtils.format(fullBean.getTimestampUpdated());
 		}
 		return null;
 	}
 
 	@Override
 	public void setTimestampCreated(Date timestampCreated) {
-		fulldoc.setTimestampCreated(timestampCreated);
+		fullBean.setTimestampCreated(timestampCreated);
 	}
 
 	@Override
 	public void setTimestampUpdated(Date timestampUpdated) {
-		fulldoc.setTimestampUpdated(timestampUpdated);
+		fullBean.setTimestampUpdated(timestampUpdated);
+	}
+
+	public void setShortcut(FullBeanShortcut shortcut) {
+		this.shortcut = shortcut;
 	}
 
 	@SuppressWarnings("unchecked")
 	public Object getContextualConnections(ContextualEntity type, String value, Resource resource) {
+
+		if (resource != null) {
+			ContextualItemDecorator entity = null;
+			if (type.equals(ContextualEntity.AGENT)) {
+				entity = (ContextualItemDecorator)getAgentByURI(resource.getUri());
+			} else if (type.equals(ContextualEntity.CONCEPT)) {
+				entity = (ContextualItemDecorator)getConceptByURI(resource.getUri());
+			} else if (type.equals(ContextualEntity.PLACE)) {
+				entity = (ContextualItemDecorator)getPlaceByURI(resource.getUri());
+			} else if (type.equals(ContextualEntity.TIMESPAN)) {
+				entity = (ContextualItemDecorator)getTimespanByURI(resource.getUri());
+			}
+			if (entity != null) {
+				entity.setShowInContext(true);
+				entity.setMatchUrl(true);
+				return entity;
+			}
+		}
+
 		List<? extends ContextualItemDecorator> entities = null;
 		if (type.equals(ContextualEntity.AGENT)) {
 			entities = (List<? extends ContextualItemDecorator>)getDecoratedAgents();
@@ -634,26 +666,12 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 					return entity;
 				}
 			} else {
-				for (List<String> nameList : entity.getPrefLabel().values()) {
-					for (String name : nameList) {
-						if (StringUtils.equalsIgnoreCase(value, name)) {
-							entity.setShowInContext(true);
-							if (StringUtils.equals(value, name)) {
-								entity.setMatchPrefLabel(true);
-							}
-							return entity;
-						}
-					}
-				}
-				if (entity.getAltLabel() != null) {
-					for (List<String> nameList : entity.getAltLabel().values()) {
-						for (String name : nameList) {
-							if (StringUtils.equalsIgnoreCase(value, name)) {
-								entity.setShowInContext(true);
-								return entity;
-							}
-						}
-					}
+				if (entity.hasPrefLabel(value)) {
+					entity.setShowInContext(true);
+					return entity;
+				} else if (entity.hasAltLabel(value)) {
+					entity.setShowInContext(true);
+					return entity;
 				}
 			}
 		}

@@ -70,10 +70,10 @@
             </p>
           </c:if>
 
-          <c:if test="${!empty place.isPartOfLang}">
+          <c:if test="${!empty place.isPartOfLinks}">
             <p>
               <spring:message code="context_place_isPartOf_t" />: 
-              <c:forEach items="${place.isPartOfLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
+              <europeana:optionalMapList map="${place.isPartOfLinks}" />
             </p>
           </c:if>
 

@@ -1,16 +1,20 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Place;
+import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 
 public class PlaceDecorator extends ContextualItemDecorator implements Place {
 
 	private Place place;
+	private Map<String, String> isPartOfLinks;
 
-	public PlaceDecorator(Place place, String userLanguage, String edmLanguage) {
-		super(place, userLanguage, edmLanguage);
+	public PlaceDecorator(FullBeanDecorator fullBeanDecorator, Place place,
+			String userLanguage, String edmLanguage) {
+		super(fullBeanDecorator, place, userLanguage, edmLanguage);
 		this.place = place;
 	}
 
@@ -55,6 +59,19 @@ public class PlaceDecorator extends ContextualItemDecorator implements Place {
 	@Override
 	public String[] getOwlSameAs() {
 		return place.getOwlSameAs();
+	}
+
+	public void makeLinks(Map<String, String> ids) {
+		isPartOfLinks = new LinkedHashMap<String, String>();
+		if (getIsPartOf() != null) {
+			for (String term : getLanguageVersion(getIsPartOf())) {
+				isPartOfLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
+			}
+		}
+	}
+
+	public Map<String, String> getIsPartOfLinks() {
+		return isPartOfLinks;
 	}
 
 	///////////// Setters

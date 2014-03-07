@@ -25,7 +25,6 @@ import java.util.Map;
 
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.mlt.EuropeanaMlt;
 import eu.europeana.portal2.web.model.mlt.MltCollector;
@@ -126,8 +125,10 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 
 	public void setFullBeanView(FullBeanView fullBeanView) {
 		this.fullBeanView = fullBeanView;
-		this.document = fullBeanView.getFullDoc();
-		this.shortcut = new FullBeanShortcut((FullBeanImpl) this.document);
+		document = fullBeanView.getFullDoc();
+		decorator = new FullBeanDecorator(document, getLocale().getLanguage());
+		shortcut = new FullBeanShortcut(decorator);
+		decorator.setShortcut(shortcut);
 	}
 
 	public FullBeanViewDecorator getFullBeanView() {
@@ -146,9 +147,6 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 	}
 
 	public FullBeanDecorator getDocument() {
-		if (decorator == null) {
-			decorator = new FullBeanDecorator(document, shortcut, getLocale().getLanguage());
-		}
 		return decorator;
 	}
 
