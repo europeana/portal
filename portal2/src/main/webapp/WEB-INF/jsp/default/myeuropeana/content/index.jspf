@@ -18,6 +18,8 @@
 			</c:when>
 			<c:otherwise>
 				<li data-settings-panel="login" data-settings-panel-text="<spring:message code="LogIn_t" />"><a href="#login"><spring:message code="LogIn_t" /></a></li>
+				<li data-settings-panel="register" data-settings-panel-text="<spring:message code="Register_t" />" class="noscript"><a href="#register"><spring:message code="Register_t" /></a></li>
+				<li data-settings-panel="request-password" data-settings-panel-text="<spring:message code="Request_t" />" class="noscript"><a href="#request-password"><spring:message code="Request_t" /></a></li>
 				<li data-settings-panel="language-settings" data-settings-panel-text="<spring:message code="LanguageSettings_t" />"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
 			</c:otherwise>
 		</c:choose>
@@ -26,16 +28,18 @@
 	<div class="columns nine">
 		<c:choose>
 			<c:when test="${!empty model.user}">
-				<div id="user-information" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/user-information.jspf" %></div>
-				<div id="language-settings" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
-				<div id="saved-items" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-items.jspf" %></div>
-				<div id="saved-searches" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-searches.jspf" %></div>
-				<div id="saved-tags" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-tags.jspf" %></div>
-				<div id="api-keys" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/api-keys.jspf" %></div>
+				<div id="user-information" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/user-information.jspf" %></div>
+				<div id="language-settings" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
+				<div id="saved-items" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-items.jspf" %></div>
+				<div id="saved-searches" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-searches.jspf" %></div>
+				<div id="saved-tags" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-tags.jspf" %></div>
+				<div id="api-keys" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/api-keys.jspf" %></div>
 			</c:when>
 			<c:otherwise>
-				<div id="login" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/login.jspf" %></div>
-				<div id="language-settings" class="settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
+				<div id="login" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/login.jspf" %></div>
+				<div id="register" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/register.jspf" %></div>
+				<div id="request-password" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/request-password.jspf" %></div>
+				<div id="language-settings" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
 			</c:otherwise>
 		</c:choose>
 	</div>

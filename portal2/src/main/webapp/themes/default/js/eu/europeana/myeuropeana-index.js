@@ -13,7 +13,7 @@
 			var hash = window.location.hash.substring(1);
 
 			if ( hash !== panels.hash ) {
-				if ( hash === '' || panels.hash === null ) {
+				if ( hash === '' ) {
 					panels.hash = panels.default_panel;
 					window.location.hash = panels.hash;
 				} else {
@@ -35,6 +35,12 @@
 		setActivePanel: function() {
 			panels.setActivePanelLink();
 			$('#' + panels.hash).fadeIn();
+
+			switch ( panels.hash ) {
+				case'login': $('#j_username').focus();
+				case'register': $('#register_email').focus();
+				case'request-password': $('#forgot_email').focus();
+			}
 		},
 
 		setActivePanelLink: function() {
@@ -94,7 +100,7 @@
 
 		addTranslateKeywordLanguagesListener: function() {
 			this.$translate_keyword_languages.each(function() {
-				$(this).on( 'click', tkl.handleTranslateKeywordLanguageClick );
+				$(this).on( 'click', tkl.handleTranslateKeywordsClick );
 			});
 		},
 
@@ -134,7 +140,7 @@
 			if ( tkl.translate_keyword_languages_count
 				>= tkl.translate_keyword_language_limit
 			) {
-				tkl.disableTranslateKeywordLanguages();
+				tkl.disableTranslateKeywords();
 			} else if ( tkl.translate_keyword_languages_disabled ) {
 				tkl.enableTranslateKeywords();
 			}
@@ -146,7 +152,7 @@
 			}
 		},
 
-		disableTranslateKeywordLanguages: function() {
+		disableTranslateKeywords: function() {
 			tkl.$translate_keyword_languages.each(function() {
 				var $elm = $(this);
 
@@ -175,7 +181,7 @@
 				: undefined;
 		},
 
-		handleTranslateKeywordLanguageClick: function() {
+		handleTranslateKeywordsClick: function() {
 			var $elm = $(this);
 
 			if ( $elm.prop('checked') ) {

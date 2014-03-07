@@ -1,0 +1,37 @@
+#myeuropeana ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#myeuropeana label {
+	display: block;
+}
+
+#myeuropeana h2 {
+	margin: .5em 0;
+}
+
+#myeuropeana h3:not(:first-child) {
+	margin-top: 1em;
+}
+
+#myeuropeana ul li {
+	margin-bottom: .5em;
+}
+
+#translate-keyword-languages {
+	overflow: auto;
+}
+
+.disabled {
+	color: #ccc;
+}
+
+.settings-panel {
+	margin-bottom: 2em;
+}
+
+#login a {
+	display: block;
+}

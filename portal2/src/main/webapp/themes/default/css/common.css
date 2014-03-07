@@ -29,7 +29,7 @@
 .underline { text-decoration: underline; }
 .clear { clear: both; }
 .small { font-size: 0.7em; }
-
+.noscript { display: none; }
 
 
 /* sidebar */

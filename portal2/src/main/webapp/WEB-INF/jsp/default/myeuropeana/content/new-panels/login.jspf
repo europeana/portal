@@ -1,7 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<form action="j_spring_security_check" method="post" id="login">
-	<spring:message code="LogIntoMyEuropeana_t" />
+
+<form action="/${model.portalName}/${model.pageName}#login" method="post" class="login-box">
 	<h3><spring:message code="LogIn_t" /></h3>
+	<p><spring:message code="LogIntoMyEuropeana_t" /></p>
+
 	<fieldset>
 		<label for="j_username"><spring:message code="EmailAddress_t" /></label>
 		<input type='text' id="j_username" name="j_username" value="" maxlength="50"/>
@@ -13,7 +15,7 @@
 			That's why this is a hidden field and not a checkbox
 		--%>
 		<input type="hidden" name="_spring_security_remember_me" value="true"/>
-		<input type="submit" name="submit_login" value="<spring:message code="LogIn_t" />"/>
+		<input type="submit" name="submit_login" class="europeana-button-1 deans-button-1" value="<spring:message code="LogIn_t" />"/>
 		<a href="#register" rel="nofollow"><spring:message code="Register_t" /></a>
 		<a href="#request-password" rel="nofollow"><spring:message code="ForgotPassword_t" /></a>
 	</fieldset>

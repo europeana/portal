@@ -127,3 +127,8 @@
 		display: block;
 		position: relative;
 	}
+
+
+.noscript {
+	display: block;
+}

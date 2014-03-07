@@ -43,6 +43,11 @@
 		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana.min.css" />
 	</c:when>
 
+	<c:when test="${model.pageName == 'myeuropeana/index'}">
+		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana-index.min.css" />
+		<link rel="stylesheet" href="/${branding}/css/min/login.min.css" />
+	</c:when>
+
 	<c:when test="${model.pageName == 'register.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/register.min.css" />
 	</c:when>
@@ -61,22 +66,22 @@
 	<c:when test="${model.pageName == 'staticpage.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/staticpages.min.css" />
 	</c:when>
-	
-	
+
+
 	<c:when test="${model.pageName == 'api/registration.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana.min.css" />
 		<link rel="stylesheet" href="/${branding}/css/min/login.min.css" />
 		<link rel="stylesheet" href="/${branding}/css/min/register.min.css" />
 	</c:when>
-	
+
 	<c:when test="${model.pageName == 'widget/editor.html'}">
-		<link rel="stylesheet" href="/${branding}/css/common.css" />	
+		<link rel="stylesheet" href="/${branding}/css/common.css" />
 		<link rel="stylesheet" href="/${branding}/css/sidebar-facets.css" />
 		<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 		<link rel="stylesheet" href="/${branding}/js/com/mediaelement/build/mediaelementplayer.css" />
 	</c:when>
 
-	
+
 </c:choose>
 
 
@@ -113,7 +118,7 @@
 
 </style>
 
-	
+
 <!--[if IE]><link rel="stylesheet" href="/${branding}/css/min/ie.min.css" /><![endif]-->
 <!--[if lte IE 7]><link rel="stylesheet" href="/${branding}/css/min/ie7.min.css" /><![endif]-->
 <!--[if lte IE 8]><link rel="stylesheet" href="/${branding}/css/min/ie8.min.css" /><![endif]-->

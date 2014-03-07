@@ -15,7 +15,7 @@
 			</c:forEach>
 		</select>
 	</label>
-	<input type="submit" value="<spring:message code="Submit_t" />" />
+	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>
 
 <%-- translate-keywords-into --%>
@@ -40,8 +40,15 @@
 			</div>
 		</c:if>
 	</div>
-	<p><spring:message code="translate_keywords_explanation_t" /></p>
-	<input type="submit" value="<spring:message code="Submit_t" />" />
+	<c:choose>
+			<c:when test="${!empty model.user}">
+				<p class="noscript"><spring:message code="Registered6Options_t" /></p>
+			</c:when>
+			<c:otherwise>
+				<p class="noscript"><spring:message code="Unregistered3Options_t" /></p>
+			</c:otherwise>
+	</c:choose>
+	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>
 
 <%-- translate-item-language --%>
@@ -62,5 +69,5 @@
 			</c:forEach>
 		</select>
 	</label>
-	<input type="submit" value="<spring:message code="Submit_t" />" />
+	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>

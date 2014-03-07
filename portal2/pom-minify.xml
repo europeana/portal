@@ -359,6 +359,23 @@
 					</execution>
 
 					<execution>
+						<id>minify-myeuropeana-index.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>myeuropeana-index.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>myeuropeana-index.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-noscript.css</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -633,7 +650,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-touchwipe.js</id>
 						<phase>process-resources</phase>
@@ -650,7 +667,7 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>minify-eucarousel.js</id>
 						<phase>process-resources</phase>
@@ -667,8 +684,8 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					
-					
+
+
 <!--
 					<execution>
 						<id>minify-emma.js</id>
