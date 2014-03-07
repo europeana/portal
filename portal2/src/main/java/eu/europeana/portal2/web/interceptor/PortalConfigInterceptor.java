@@ -57,7 +57,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 					&& !StringUtils.equalsIgnoreCase(language, StringUtils.left(locale.getLanguage(), 2))) {
 				String languageLabel = "language_" + language + "_t";
 				if (hasMessage(languageLabel)) {
-					model.setBrowserLocale(browser);
+					model.setBrowserLanguage(language);
 					StringBuilder sb = new StringBuilder();
 					sb.append(messageSource.getMessage("browser_language_preference1_t", null, browser)).append(" ");
 					sb.append(messageSource.getMessage(languageLabel, null, browser)).append(", ");
