@@ -560,7 +560,7 @@ var EuHierarchy = function(cmp) {
 				}
 			}// end if parent.data
 			else{
-				console.log('no parent data');
+				console.log('no parent data - callback = ' + callback);
 				if(callback){
 					callback();
 				}
@@ -668,7 +668,7 @@ var EuHierarchy = function(cmp) {
 
 			// reset view
 			self.scrollDuration = 0;
-			
+
 			doScrollTo(newScrollTo, function(){
 
 				self.scrollDuration  = 1000;
@@ -678,6 +678,11 @@ var EuHierarchy = function(cmp) {
 				var extraDiff        = disabledMeasure * (disabledCount - newDisabledCount)
 				
 				diffHeight += extraDiff;
+
+				// no data loaded - we still should scrol up
+				if(diffHeight == 0){
+					diffHeight = containerH;
+				}
 				
 				if(containerH > diffHeight && newHeight < (containerH + newScrollTo) ){
 					newScrollTo -= diffHeight						
