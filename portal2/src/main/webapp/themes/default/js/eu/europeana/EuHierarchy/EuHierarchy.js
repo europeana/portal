@@ -526,10 +526,10 @@ var EuHierarchy = function(cmp) {
 						}
 						if(scroll){
 							//doScrollTo($('#' + parent.id), function(){
-							//	togglePrevLink();				
+							//	togglePrevNextLinks();				
 							//	viewPrevOrNext(parent, backwards, leftToLoad, scroll)
 							//});														
-							togglePrevLink();
+							togglePrevNextLinks();
 							console.log('recurse point two')
 							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
 						}
@@ -598,7 +598,7 @@ var EuHierarchy = function(cmp) {
 	 * - init
 	 * 
 	 * */
-	var togglePrevLink = function(){
+	var togglePrevNextLinks = function(){
 		var offset = self.container.scrollTop();
 
 		if(self.container.scrollTop() > 1){
@@ -692,7 +692,9 @@ var EuHierarchy = function(cmp) {
 				}
 						
 				newScrollTo = Math.max(0, newScrollTo);
-				doScrollTo(newScrollTo);
+				doScrollTo(newScrollTo, function(){
+					togglePrevNextLinks();
+				});
 			});
 			
 			hideSpinner();
@@ -866,7 +868,7 @@ var EuHierarchy = function(cmp) {
 		self.treeCmp.bind("select_node.jstree", function(event, data) {
 			jstActiveNode = data.node;
 			doScrollTo($('#' + jstActiveNode.id), function(){
-				togglePrevLink();				
+				togglePrevNextLinks();				
 			});
 			
 			$('.debug-area').html(JSON.stringify(jstActiveNode));
