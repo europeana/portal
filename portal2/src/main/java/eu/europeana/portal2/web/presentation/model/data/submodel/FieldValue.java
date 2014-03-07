@@ -59,7 +59,7 @@ public class FieldValue {
 				|| field.equals(Field.DC_COVERAGE)
 				|| field.equals(Field.DCTERMS_TEMPORAL)
 				|| field.equals(Field.EDM_YEAR)) {
-			entityType = FullBeanDecorator.ContextualEntity.PLACE;
+			entityType = FullBeanDecorator.ContextualEntity.TIMESPAN;
 		}
 
 		// model.getShortcut().isEnriched(field.name())

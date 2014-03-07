@@ -6,16 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang.StringUtils;
+
 import eu.europeana.corelib.definitions.solr.entity.Agent;
+import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
+import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
-import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
-import eu.europeana.corelib.solr.entity.AggregationImpl;
-import eu.europeana.corelib.solr.entity.PlaceImpl;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
+import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
 import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 
 /**
@@ -25,9 +29,11 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
  */
 public class FullBeanShortcut {
 
-	private FullBeanImpl document;
+	Logger log = Logger.getLogger(FullBeanShortcut.class.getCanonicalName());
 
-	public FullBeanShortcut(FullBeanImpl document) {
+	private FullBeanDecorator document;
+
+	public FullBeanShortcut(FullBeanDecorator document) {
 		this.document = document;
 	}
 
@@ -135,11 +141,12 @@ public class FullBeanShortcut {
 	private void initialize() {
 		valuesListMap = new HashMap<String, List<String>>();
 		mapValues = new HashMap<String, List<Map<String, List<String>>>>();
+		log.info("Initialize shortcut");
 
 		String parent = null;
 		if (document.getAggregations() != null) {
 			parent = "Aggregation";
-			for (AggregationImpl aggregation : document.getAggregations()) {
+			for (Aggregation aggregation : document.getAggregations()) {
 				add(parent, "EdmIsShownBy", aggregation.getEdmIsShownBy());
 				add(parent, "EdmIsShownAt", aggregation.getEdmIsShownAt());
 				add(parent, "EdmRights", aggregation.getEdmRights()); // Map
@@ -207,14 +214,14 @@ public class FullBeanShortcut {
 				add(parent, "EdmRealizes", proxy.getEdmRealizes());
 				add(parent, "EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
 
-				saveEnrichmentCandidate(Field.DC_CREATOR.name(), proxy.isEuropeanaProxy(), proxy.getDcCreator());
-				saveEnrichmentCandidate(Field.DC_CONTRIBUTOR.name(), proxy.isEuropeanaProxy(), proxy.getDcContributor());
-				saveEnrichmentCandidate(Field.DC_SUBJECT.name(), proxy.isEuropeanaProxy(), proxy.getDcSubject());
-				saveEnrichmentCandidate(Field.DC_TYPE.name(), proxy.isEuropeanaProxy(), proxy.getDcType());
-				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsSpatial());
-				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), proxy.isEuropeanaProxy(), proxy.getDcCoverage());
-				saveEnrichmentCandidate(Field.DC_DATE.name(), proxy.isEuropeanaProxy(), proxy.getDcDate());
-				saveEnrichmentCandidate(Field.DCTERMS_TEMPORAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsTemporal());
+				saveEnrichmentCandidate(Field.DC_CREATOR.name(), proxy.isEuropeanaProxy(), proxy.getDcCreator(), FullBeanDecorator.ContextualEntity.AGENT);
+				saveEnrichmentCandidate(Field.DC_CONTRIBUTOR.name(), proxy.isEuropeanaProxy(), proxy.getDcContributor(), FullBeanDecorator.ContextualEntity.AGENT);
+				saveEnrichmentCandidate(Field.DC_SUBJECT.name(), proxy.isEuropeanaProxy(), proxy.getDcSubject(), FullBeanDecorator.ContextualEntity.CONCEPT);
+				saveEnrichmentCandidate(Field.DC_TYPE.name(), proxy.isEuropeanaProxy(), proxy.getDcType(), FullBeanDecorator.ContextualEntity.CONCEPT);
+				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsSpatial(), FullBeanDecorator.ContextualEntity.PLACE);
+				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), proxy.isEuropeanaProxy(), proxy.getDcCoverage(), FullBeanDecorator.ContextualEntity.PLACE);
+				saveEnrichmentCandidate(Field.DC_DATE.name(), proxy.isEuropeanaProxy(), proxy.getDcDate(), FullBeanDecorator.ContextualEntity.TIMESPAN);
+				saveEnrichmentCandidate(Field.DCTERMS_TEMPORAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsTemporal(), FullBeanDecorator.ContextualEntity.TIMESPAN);
 			}
 			mapEnrichments();
 		}
@@ -255,7 +262,7 @@ public class FullBeanShortcut {
 
 		for (String name : enrichedMap.keySet()) {
 			EnrichmentFieldMapper cardinalities = enrichedMap.get(name);
-			cardinalities.setEnriched();
+			cardinalities.createResources();
 			List<Resource> resources = cardinalities.getResources();
 			if (resources != null) {
 				Map<String, Resource> resourceValueMapEntry = new HashMap<String, Resource>();
@@ -268,13 +275,6 @@ public class FullBeanShortcut {
 				}
 			}
 		}
-	}
-
-	public boolean isEnriched(String fieldName) {
-		if (enrichedMap.containsKey(fieldName)) {
-			return enrichedMap.get(fieldName).isEnriched();
-		}
-		return false;
 	}
 
 	public boolean isResourceValue(String fieldName, String fieldValue) {
@@ -328,7 +328,7 @@ public class FullBeanShortcut {
 	 *   Multilingual field values
 	 */
 	private void saveEnrichmentCandidate(String name, boolean europeanaProxy,
-			Map<String, List<String>> fieldValues) {
+			Map<String, List<String>> fieldValues, FullBeanDecorator.ContextualEntity entityType) {
 		if (fieldValues == null) {
 			return;
 		}
@@ -339,7 +339,7 @@ public class FullBeanShortcut {
 
 		EnrichmentFieldMapper enrichmentFieldMapper;
 		if (!enrichedMap.containsKey(name)) {
-			enrichmentFieldMapper = new EnrichmentFieldMapper();
+			enrichmentFieldMapper = new EnrichmentFieldMapper(entityType);
 			enrichedMap.put(name, enrichmentFieldMapper);
 		} else {
 			enrichmentFieldMapper = enrichedMap.get(name);
@@ -396,7 +396,7 @@ public class FullBeanShortcut {
 		floatArrays = new HashMap<String, Float[]>();
 		if (document.getPlaces() != null && document.getPlaces().size() > 0) {
 			String parent = "Place";
-			for (PlaceImpl place : document.getPlaces()) {
+			for (Place place : document.getPlaces()) {
 				addFloat(parent, "EdmPlaceLatitude", place.getLatitude());
 				addFloat(parent, "EdmPlaceLongitude", place.getLongitude());
 				addFloat(parent, "EdmPlaceAltitude", place.getAltitude());
@@ -434,8 +434,12 @@ public class FullBeanShortcut {
 
 		private MultilangFieldValue provided;
 		private MultilangFieldValue europeana;
-		private Boolean isEnriched = false;
 		private List<Resource> resources = null;
+		private FullBeanDecorator.ContextualEntity entityType;
+
+		public EnrichmentFieldMapper(FullBeanDecorator.ContextualEntity entityType) {
+			this.entityType = entityType;
+		}
 
 		public void setProvided(MultilangFieldValue provided) {
 			this.provided = provided;
@@ -445,35 +449,59 @@ public class FullBeanShortcut {
 			this.europeana = europeana;
 		}
 
-		public Boolean isEnriched() {
-			return isEnriched;
-		}
-
-		public void setEnriched() {
-			if (europeana == null) {
-				isEnriched = false;
-			} else {
-				isEnriched = provided.isSimilar(europeana);
-			}
-			if (isEnriched) {
-				createResources();
-			}
-		}
-
 		private List<Resource> getResources() {
 			return resources;
 		}
 
 		private void createResources() {
 			resources = new ArrayList<Resource>();
+			if (europeana == null) {
+				return;
+			}
+
 			for (String lang : provided.getLangs()) {
-				resources.add(new Resource(provided.get(lang).get(0), europeana.get(lang).get(0)));
+				if (!europeana.has(lang)) {
+					break;
+				}
+				if (provided.getSize(lang) == 1 || europeana.getSize(lang) == 1) {
+					if (StringUtils.isNotBlank(provided.get(lang).get(0))
+						&& StringUtils.isNotBlank(europeana.get(lang).get(0))) {
+						resources.add(new Resource(provided.get(lang).get(0), europeana.get(lang).get(0)));
+					}
+				} else {
+					for (String value : provided.get(lang)) {
+						if (StringUtils.isBlank(value)) {
+							continue;
+						}
+						for (String uri: europeana.get(lang)) {
+							if (StringUtils.isBlank(uri)) {
+								continue;
+							}
+							ContextualItemDecorator entity = null;
+							if (entityType.equals(FullBeanDecorator.ContextualEntity.AGENT)) {
+								entity = (ContextualItemDecorator)document.getAgentByURI(uri);
+							} else if (entityType.equals(FullBeanDecorator.ContextualEntity.CONCEPT)) {
+								entity = (ContextualItemDecorator)document.getConceptByURI(uri);
+							} else if (entityType.equals(FullBeanDecorator.ContextualEntity.PLACE)) {
+								entity = (ContextualItemDecorator)document.getPlaceByURI(uri);
+							} else if (entityType.equals(FullBeanDecorator.ContextualEntity.TIMESPAN)) {
+								entity = (ContextualItemDecorator)document.getTimespanByURI(uri);
+							}
+							if (entity != null) {
+								if (entity.hasAnyLabel(value)) {
+									resources.add(new Resource(value, uri));
+								}
+							} else {
+								log.error("without contextual entity!");
+							}
+						}
+					}
+				}
 			}
 		}
 	}
 
 	private class MultilangFieldValue {
-
 		private Map<String, List<String>> langValueMap;
 
 		public MultilangFieldValue(Map<String, List<String>> langValueMap) {
@@ -496,22 +524,6 @@ public class FullBeanShortcut {
 			List<String> langs = new ArrayList<String>();
 			langs.addAll(langValueMap.keySet());
 			return langs;
-		}
-
-		public boolean isSimilar(MultilangFieldValue other) {
-			boolean similar = false;
-			for (String lang : langValueMap.keySet()) {
-				if (!other.has(lang)) {
-					similar = false;
-					break;
-				}
-				if (getSize(lang) != 1 || other.getSize(lang) != 1) {
-					similar = false;
-					break;
-				}
-				similar = true;
-			}
-			return similar;
 		}
 	}
 }

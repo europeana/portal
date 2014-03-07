@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Concept;
+import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 
 public class ConceptDecorator extends ContextualItemDecorator implements Concept {
 
@@ -18,8 +19,9 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	private Map<String, String> closeMatchLinks;
 	private Map<String, String> exactMatchLinks;
 
-	public ConceptDecorator(Concept concept, String userLanguage, String edmLanguage) {
-		super(concept, userLanguage, edmLanguage);
+	public ConceptDecorator(FullBeanDecorator fullBeanDecorator, Concept concept,
+			String userLanguage, String edmLanguage) {
+		super(fullBeanDecorator, concept, userLanguage, edmLanguage);
 		this.concept = concept;
 	}
 
@@ -127,7 +129,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		//
 	}
 
-	public void makeLinks(Map<String, String> ids) {
+	public void makeLinks(Map<String, String> ids, FullBeanDecorator decorator) {
 		broaderLinks = new LinkedHashMap<String, String>();
 		if (getBroader() != null) {
 			for (String term : getBroader()) {
@@ -152,7 +154,8 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		broadMatchLinks = new LinkedHashMap<String, String>();
 		if (getBroadMatch() != null) {
 			for (String term : getBroadMatch()) {
-				broadMatchLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
+				ConceptDecorator other = (ConceptDecorator)decorator.getConceptByURI(term);
+				broadMatchLinks.put(term, (other != null && other.getLabel() != null ? other.getLabel() : ""));
 			}
 		}
 

@@ -8,17 +8,23 @@ import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
 import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
+import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 
 public class ContextualItemDecorator implements ContextualClass {
 
+	protected FullBeanDecorator fullBeanDecorator;
 	private ContextualClass item;
 	protected String userLanguage;
 	protected String edmLanguage;
 	protected boolean showInContext = false;
 	protected boolean matchPrefLabel = false;
 	protected boolean matchUrl = false;
+	private List<String> labels;
+	private boolean labelsInitialized = false;
 
-	ContextualItemDecorator(ContextualClass item, String userLanguage, String edmLanguage) {
+	ContextualItemDecorator(FullBeanDecorator fullBeanDecorator, ContextualClass item,
+			String userLanguage, String edmLanguage) {
+		this.fullBeanDecorator = fullBeanDecorator;
 		this.item = item;
 		this.userLanguage = userLanguage;
 		this.edmLanguage = edmLanguage;
@@ -85,11 +91,18 @@ public class ContextualItemDecorator implements ContextualClass {
 	public void setNote(Map<String, List<String>> note) {}
 
 	public List<String> getLabels() {
-		List<String> labels = getLanguageVersion(item.getPrefLabel());
-		if (labels == null) {
-			labels = getLanguageVersion(item.getAltLabel());
+		if (labelsInitialized == false) {
+			labels = getLanguageVersion(item.getPrefLabel());
+			if (labels == null) {
+				labels = getLanguageVersion(item.getAltLabel());
+			}
+			labelsInitialized = true;
 		}
 		return labels;
+	}
+
+	public String getLabel() {
+		return getLabels().size() > 0 ? getLabels().get(0) : null;
 	}
 
 	public List<String> getLanguageVersion(Map<String, List<String>> map) {
@@ -141,5 +154,34 @@ public class ContextualItemDecorator implements ContextualClass {
 
 	public void setMatchUrl(boolean matchUrl) {
 		this.matchUrl = matchUrl;
+	}
+
+	private boolean hasLabel(String label, Map<String, List<String>> labels) {
+		if (labels == null) {
+			return false;
+		}
+		for (List<String> labelList : labels.values()) {
+			if (labelList == null) {
+				continue;
+			}
+			for (String storedLabel : labelList) {
+				if (StringUtils.equalsIgnoreCase(label, storedLabel)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean hasPrefLabel(String label) {
+		return hasLabel(label, getPrefLabel());
+	}
+
+	public boolean hasAltLabel(String label) {
+		return hasLabel(label, getAltLabel());
+	}
+
+	public boolean hasAnyLabel(String label) {
+		return hasLabel(label, getPrefLabel()) || hasLabel(label, getAltLabel());
 	}
 }

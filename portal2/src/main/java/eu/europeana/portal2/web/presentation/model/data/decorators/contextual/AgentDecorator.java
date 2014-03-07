@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Agent;
+import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 
 public class AgentDecorator extends ContextualItemDecorator implements Agent {
 
 	private Agent agent;
 
-	public AgentDecorator(Agent agent, String userLanguage, String edmLanguage) {
-		super(agent, userLanguage, edmLanguage);
+	public AgentDecorator(FullBeanDecorator fullBeanDecorator, Agent agent,
+			String userLanguage, String edmLanguage) {
+		super(fullBeanDecorator, agent, userLanguage, edmLanguage);
 		this.agent = agent;
 	}
 

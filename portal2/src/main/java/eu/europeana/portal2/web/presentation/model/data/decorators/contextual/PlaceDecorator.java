@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Place;
+import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 
 public class PlaceDecorator extends ContextualItemDecorator implements Place {
 
 	private Place place;
 
-	public PlaceDecorator(Place place, String userLanguage, String edmLanguage) {
-		super(place, userLanguage, edmLanguage);
+	public PlaceDecorator(FullBeanDecorator fullBeanDecorator, Place place,
+			String userLanguage, String edmLanguage) {
+		super(fullBeanDecorator, place, userLanguage, edmLanguage);
 		this.place = place;
 	}
 
