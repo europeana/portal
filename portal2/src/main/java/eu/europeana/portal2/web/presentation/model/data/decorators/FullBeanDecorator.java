@@ -324,9 +324,15 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	public List<? extends Place> getDecoratedPlaces() {
 		if (places == null) {
+			Map<String, String> ids = new HashMap<String, String>();
 			places = new ArrayList<PlaceDecorator>();
 			for (Place place : fullBean.getPlaces()) {
-				places.add(new PlaceDecorator(this, place, userLanguage, edmLanguage));
+				PlaceDecorator decorator = new PlaceDecorator(this, place, userLanguage, edmLanguage);
+				places.add(decorator);
+				ids.put(place.getAbout(), decorator.getLabel());
+			}
+			for (PlaceDecorator agent : places) {
+				agent.makeLinks(ids);
 			}
 		}
 		return places;
@@ -359,7 +365,7 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 			for (Agent agent : fullBean.getAgents()) {
 				AgentDecorator decorator = new AgentDecorator(this, agent, userLanguage, edmLanguage);
 				agents.add(decorator);
-				ids.put(agent.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+				ids.put(agent.getAbout(), decorator.getLabel());
 			}
 			for (AgentDecorator agent : agents) {
 				agent.makeLinks(ids);
@@ -395,7 +401,7 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 			for (Timespan timespan : fullBean.getTimespans()) {
 				TimespanDecorator decorator = new TimespanDecorator(this, timespan, userLanguage, edmLanguage);
 				timespans.add(decorator);
-				ids.put(timespan.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+				ids.put(timespan.getAbout(), decorator.getLabel());
 			}
 			for (TimespanDecorator timespan : timespans) {
 				timespan.makeLinks(ids);
@@ -426,10 +432,10 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 			for (Concept concept : fullBean.getConcepts()) {
 				ConceptDecorator decorator = new ConceptDecorator(this, concept, userLanguage, edmLanguage);
 				concepts.add(decorator);
-				ids.put(concept.getAbout(), StringUtils.join(decorator.getLabels(), ", "));
+				ids.put(concept.getAbout(), decorator.getLabel());
 			}
 			for (ConceptDecorator concept : concepts) {
-				concept.makeLinks(ids, this);
+				concept.makeLinks(ids);
 			}
 		}
 		return concepts;
@@ -614,6 +620,25 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 
 	@SuppressWarnings("unchecked")
 	public Object getContextualConnections(ContextualEntity type, String value, Resource resource) {
+
+		if (resource != null) {
+			ContextualItemDecorator entity = null;
+			if (type.equals(ContextualEntity.AGENT)) {
+				entity = (ContextualItemDecorator)getAgentByURI(resource.getUri());
+			} else if (type.equals(ContextualEntity.CONCEPT)) {
+				entity = (ContextualItemDecorator)getConceptByURI(resource.getUri());
+			} else if (type.equals(ContextualEntity.PLACE)) {
+				entity = (ContextualItemDecorator)getPlaceByURI(resource.getUri());
+			} else if (type.equals(ContextualEntity.TIMESPAN)) {
+				entity = (ContextualItemDecorator)getTimespanByURI(resource.getUri());
+			}
+			if (entity != null) {
+				entity.setShowInContext(true);
+				entity.setMatchUrl(true);
+				return entity;
+			}
+		}
+
 		List<? extends ContextualItemDecorator> entities = null;
 		if (type.equals(ContextualEntity.AGENT)) {
 			entities = (List<? extends ContextualItemDecorator>)getDecoratedAgents();
@@ -641,26 +666,12 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 					return entity;
 				}
 			} else {
-				for (List<String> nameList : entity.getPrefLabel().values()) {
-					for (String name : nameList) {
-						if (StringUtils.equalsIgnoreCase(value, name)) {
-							entity.setShowInContext(true);
-							if (StringUtils.equals(value, name)) {
-								entity.setMatchPrefLabel(true);
-							}
-							return entity;
-						}
-					}
-				}
-				if (entity.getAltLabel() != null) {
-					for (List<String> nameList : entity.getAltLabel().values()) {
-						for (String name : nameList) {
-							if (StringUtils.equalsIgnoreCase(value, name)) {
-								entity.setShowInContext(true);
-								return entity;
-							}
-						}
-					}
+				if (entity.hasPrefLabel(value)) {
+					entity.setShowInContext(true);
+					return entity;
+				} else if (entity.hasAltLabel(value)) {
+					entity.setShowInContext(true);
+					return entity;
 				}
 			}
 		}

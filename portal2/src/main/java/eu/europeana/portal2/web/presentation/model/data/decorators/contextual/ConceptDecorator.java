@@ -129,7 +129,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		//
 	}
 
-	public void makeLinks(Map<String, String> ids, FullBeanDecorator decorator) {
+	public void makeLinks(Map<String, String> ids) {
 		broaderLinks = new LinkedHashMap<String, String>();
 		if (getBroader() != null) {
 			for (String term : getBroader()) {
@@ -154,7 +154,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		broadMatchLinks = new LinkedHashMap<String, String>();
 		if (getBroadMatch() != null) {
 			for (String term : getBroadMatch()) {
-				ConceptDecorator other = (ConceptDecorator)decorator.getConceptByURI(term);
+				ConceptDecorator other = (ConceptDecorator)fullBeanDecorator.getConceptByURI(term);
 				broadMatchLinks.put(term, (other != null && other.getLabel() != null ? other.getLabel() : ""));
 			}
 		}
