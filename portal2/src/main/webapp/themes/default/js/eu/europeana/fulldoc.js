@@ -1,5 +1,9 @@
 js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
+/* IE10 Fix */
+if( (!(window.ActiveXObject) && "ActiveXObject") ){
+	$('.submit-tag').parent().css('vertical-align', 'top');	
+}
 
 eu.europeana.fulldoc = {
 
