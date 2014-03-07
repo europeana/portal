@@ -363,9 +363,9 @@ var EuHierarchy = function(cmp) {
 				keys.push(parseInt(key) -1 );  // tweak for zero counting here
 			}
 		});
-		keys = keys.sort(function(a, b){ return parseInt(a) > parseInt(b)}).reverse();
-		
-		//console.log('range (keys) is ' + JSON.stringify( keys ) );
+
+		keys = keys.sort(function(a, b){ return b - a });
+
 
 		if(keys.length > max){
 			
@@ -441,17 +441,17 @@ var EuHierarchy = function(cmp) {
 		if(!backwards){
 			var switchTrackNode = node;
 
-			console.log('going deep... ' + switchTrackNode.text);
+			//console.log('going deep... ' + switchTrackNode.text);
 			
 			// find deepest opened with children
 			while(switchTrackNode.children.length && switchTrackNode.state.opened){
 				
-				console.log('  ...deeper... ' + JSON.stringify(switchTrackNode.children[0]) );
+				//console.log('  ...deeper... ' + JSON.stringify(switchTrackNode.children[0]) );
 				
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.children[0]);
 			}
 
-			console.log('went deep to  ' + switchTrackNode.text);
+	//		console.log('went deep to  ' + switchTrackNode.text);
 
 			var parentLoaded = function(node){
 				var parent = self.treeCmp.jstree('get_node', node.parent);
@@ -468,15 +468,11 @@ var EuHierarchy = function(cmp) {
 			
 			// pull back up
 			while(parentLoaded(switchTrackNode)){
-				console.log('while 2 ' + switchTrackNode.text);
+		//		console.log('while 2 ' + switchTrackNode.text);
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.parent);
 			}
-			console.log(
-	'after while '+				switchTrackNode.id + '  ' + switchTrackNode.text
-					)
-//			if(){
-	//			alert();
-		//	}
+			
+
 			node = switchTrackNode;			 
 		}
 		
@@ -576,14 +572,23 @@ var EuHierarchy = function(cmp) {
 	// UI FUNCTIONS
 
 	var showSpinner = function(){
+
+		if(!self.container.prev('.ajax-overlay').length){
+			self.container.before('<div class="ajax-overlay">');
+			//self.container.find('.ajax-overlay').css('top', self.container.scrollTop() + 'px');			
+		}
+		self.container.prev('.ajax-overlay').show();
+/*
 		if(!self.container.find('.ajax-overlay').length){
 			self.container.append('<div class="ajax-overlay">');
 			self.container.find('.ajax-overlay').css('top', self.container.scrollTop() + 'px');			
 		}
+*/
 	};
 	
 	var hideSpinner = function(){
-		self.container.find('.ajax-overlay').remove();
+		self.container.prev('.ajax-overlay').hide();
+		//self.container.find('.ajax-overlay').remove();
 	};
 	
 	/**
@@ -712,7 +717,7 @@ var EuHierarchy = function(cmp) {
 		viewPrevOrNext(visibleNodes[0], false, defaultChunk, true, function(){
 			hideSpinner();
 			doScrollTo('#' + visibleNodes[1].id);
-		})
+		});
 	});
 
 	
@@ -866,9 +871,17 @@ var EuHierarchy = function(cmp) {
 		// select (invoke by loaded callback below)
 
 		self.treeCmp.bind("select_node.jstree", function(event, data) {
+			
+			// commenting this out - we're not using jstActiveNode withthe new load fns.
 			jstActiveNode = data.node;
-			doScrollTo($('#' + jstActiveNode.id), function(){
-				togglePrevNextLinks();				
+
+			showSpinner();
+
+			viewPrevOrNext(data.node, false, defaultChunk, false, function(){
+				doScrollTo($('#' + data.node.id), function(){
+					togglePrevNextLinks();
+					hideSpinner();
+				});
 			});
 			
 			$('.debug-area').html(JSON.stringify(jstActiveNode));
@@ -879,18 +892,17 @@ var EuHierarchy = function(cmp) {
 		
 		self.treeCmp.bind("loaded.jstree", function(event, data) {
 			
-			// post init:
-			self.treeCmp.find('a').focus(function(){
-			});
-			
 			// set active and load
-			//getRootEl().click();
-			getPageNodeEl().click();
+			
+			getPageNodeEl().click(); // used to scroll beyond disabled parents
+			
 			self.scrollDuration = 1000;
 			setTimeout(function() {
-				//loadMore();
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
-				loadFirstChild(pageNode);
+				loadFirstChild(pageNode, function(){
+					$('.hierarchy-next').click();					
+				});
+				
 				//viewPrevOrNext( pageNode, false, defaultChunk);
 			}, 1);
 		});
@@ -941,27 +953,17 @@ var EuHierarchy = function(cmp) {
 			if(fChild.data && fChild.data.childrenUrl){
 				
 				loadFirstChild(fChild, function(){	// load first child of subsquent nodes
-				
 					viewPrevOrNext(fChild, false, defaultChunk, false, function(){
 						hideSpinner();
 					})
 				
 				});
-				/*
-				var firstChildUrl = fChild.data.childrenUrl + '[0]';  // load first child of new node
-				loadData(firstChildUrl, function(fcData){
-					self.treeCmp.jstree("create_node", fChild, fcData, "first", false, true);
-					
-					viewPrevOrNext(fChild, false, defaultChunk);  // load first child of subsquent nodes				
-				});
-				*/
 			}
 			else{
 				// load first child of subsquent nodes				
 				viewPrevOrNext(fChild, false, defaultChunk, false, function(){
 					hideSpinner();
 				})
-
 			}
 			return;
 			//showSpinner();
@@ -997,7 +999,6 @@ var EuHierarchy = function(cmp) {
 					newData.state    = {"opened" : true, "disabled" : true};
 					newData.children = [data];
 					data             = newData;
-					//data.loaded      = count;
 				}
 				if(data.data){
 					data.data.backwards = true;
@@ -1097,13 +1098,6 @@ var EuHierarchy = function(cmp) {
  *  
  *  - Load flicker - show spinner on actual load - set enbaler flag (reset on showSpinner call) 
  *  
- *  
- *  TODO:
- *  
- *  
- *  - clicking and opening and clicking again....   runs out of content.
- *  
- *       this is common to key down
  *  
  */
 

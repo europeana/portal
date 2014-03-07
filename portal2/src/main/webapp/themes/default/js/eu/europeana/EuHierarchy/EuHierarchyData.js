@@ -22,7 +22,6 @@ var dataGen = function(){
 			return {
 		        	"text" : "Cultural Heritage Library (14 books - child 9)",
 			        	"id" : "root",
-			        	"name" : "root",     							
 						"data": {
 							"parentUrl":	"dataGen.parent1()",
 							"index":        9,
