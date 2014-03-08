@@ -90,11 +90,12 @@
 	 */
 	tkl = {
 
+		animation_delay: 12,
 		$translate_keyword_languages: $( '#translate-keyword-languages input' ),
 		translate_keyword_languages_count: 0,
 		translate_keyword_language_limit: 3,
 		translate_keyword_language_user_limit: 6,
-		translate_keyword_languages_disabled: false,
+		translate_keywords_disabled: false,
 		cookie_field: 'searchLanguages',
 		cookie_value_delimeter: ',',
 
@@ -141,8 +142,10 @@
 				>= tkl.translate_keyword_language_limit
 			) {
 				tkl.disableTranslateKeywords();
-			} else if ( tkl.translate_keyword_languages_disabled ) {
+				tkl.toggleDisabledKeywordsMessage();
+			} else if ( tkl.translate_keywords_disabled ) {
 				tkl.enableTranslateKeywords();
+				tkl.toggleDisabledKeywordsMessage();
 			}
 		},
 
@@ -153,23 +156,36 @@
 		},
 
 		disableTranslateKeywords: function() {
-			tkl.$translate_keyword_languages.each(function() {
+			var ii = tkl.$translate_keyword_languages.size(),
+				r = tkl.randsort(ii);
+
+			tkl.$translate_keyword_languages.each(function(i) {
 				var $elm = $(this);
 
 				if ( $elm.prop('checked') === false ) {
-					$elm.closest('label').addClass('disabled');
-					$elm.prop('disabled', true);
+					setTimeout(function(){
+						$elm.closest('label').addClass('disabled');
+						$elm.prop('disabled', true);
+					}, r[i] * tkl.animation_delay);
 				}
 			});
 
-			tkl.translate_keyword_languages_disabled = true;
+			tkl.translate_keywords_disabled = true;
 		},
 
 		enableTranslateKeywords: function() {
-			tkl.$translate_keyword_languages.each(function() {
+			var ii = tkl.$translate_keyword_languages.size(),
+				r = tkl.randsort(ii);
+
+			tkl.$translate_keyword_languages.each(function(i) {
 				var $elm = $(this);
-				$elm.closest('label').removeClass('disabled');
-				$elm.prop('disabled', false);
+
+				setTimeout(function(){
+					$elm.closest('label').removeClass('disabled');
+					$elm.prop('disabled', false);
+				}, r[i] * tkl.animation_delay);
+
+
 			});
 
 			tkl.translate_keywords_disabled = false;
@@ -201,6 +217,21 @@
 			this.checkCurrentCookie();
 		},
 
+		randsort: function(c) {
+			var o = [];
+
+			for (var i = 0; i < c; i++) {
+				var n = Math.floor(Math.random()*c);
+				if ( jQuery.inArray(n, o) > 0 ) {
+					--i;
+				} else {
+					o.push(n);
+				}
+			}
+
+			return o;
+		},
+
 		removeValueFromCookie: function( value ) {
 			var i,
 				cookie_value = this.getCookie(),
@@ -215,6 +246,10 @@
 
 				$.cookie( this.cookie_field, new_cookie_value.join( this.cookie_value_delimeter ) );
 			}
+		},
+
+		toggleDisabledKeywordsMessage: function() {
+			$('#disabled-translate-keywords-msg').slideToggle();
 		}
 
 	},
