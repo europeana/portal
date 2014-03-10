@@ -998,7 +998,7 @@ eu.europeana.fulldoc = {
 					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');
 
 					$(document).ready(function(){
-						new EuHierarchy($('#hierarchy')).init("dataGen.base()");
+						new EuHierarchy($('#hierarchy'), 8).init("dataGen.base()");
 					});
 					
 				}
