@@ -3,41 +3,35 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Hierarchy</title>
-
-	<!--link rel="stylesheet" href="jstree/dist/themes/europeana/style.css" /-->
+	<title>Hierarchical Objects Test Page</title>
 	<link rel="stylesheet" href="style.css" />
 	<link rel="stylesheet" href="style-overrides.css" />
-
-
-	<script src="../../../jquery/jquery-1.8.1.js"></script>
-	
-	<!-- script src="jstree/dist/jstree.js"></script-->
+	<script src="../../../jquery/jquery-1.8.1.js"></script>	
 	<script src="jstree.js"></script>
 	<script src="../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
-
+	
+	<style>
+		.loadPoint>a{
+			background-color: orange !important;
+		}
+	</style>
 
 </head>
-<body onLoad="javascript:document.getElementById('chunk').focus();">
-
-
+<body>
 	<div>
 		<a class="lock"    style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[unlock]</a>
-		<a class="prepend" style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[prepend]</a>
 		<a class="spin"    style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[spin]</a>
 		<a class="enable"  style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[enable]</a>
 		<a class="load-more">load more...</a>
 		<br/>
 		<br/>
 		<a class="view-next" style="font-weight:bold; cursor:pointer;">view next...</a>
-	
 		<br/>
 		<br/>
 		<input id="chunk" type="number" tab-index="1">
 		<br/>
 		<br/>
-
-
+		
 		<div class="hierarchy-objects">
 			<div class="hierarchy-top-panel">
 				<div class="hierarchy-prev">view all items above</div>
@@ -50,29 +44,24 @@
 			</div>
 		</div>
 		
-		
 		<div class="debug-area" style="float:left; word-wrap:break-word; width:48%; height:10em; overflow-y:auto; overflow-x:hidden; margin-bottom:2em;background-color:#ededed;'">
 		</div>
 		
-		<!-- img src="https://bigfiles.assembla.com/spaces/europeana/documents/download/dRFgfOLv0r44oGacwqjQYw"/-->
+		<img src="https://bigfiles.assembla.com/spaces/europeana/documents/download/dRFgfOLv0r44oGacwqjQYw"/>
 
-		<style>
-			.loadPoint>a{
-				background-color: orange !important;
-			}
-		</style>
 		<script type="text/javascript">
-
 			$(document).ready(function(){
-				new EuHierarchy($('#hierarchy')).init("dataGen.base()");
+				var hierarchy = new EuHierarchy($('#hierarchy'), 8);
+				hierarchy.init("dataGen.base()")
+				new EuHierarchyTools(hierarchy);
 			});
 		</script>
 	</div>
 	<script src="EuHierarchyData.js"></script>
 	<script src="EuHierarchy.js"></script>
+	<script src="EuHierarchyTools.js"></script>
 	
 </body>
-
 </html>
 
 

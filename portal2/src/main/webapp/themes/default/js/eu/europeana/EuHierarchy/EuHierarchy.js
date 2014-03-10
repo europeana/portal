@@ -1,31 +1,30 @@
-var EuHierarchy = function(cmp) {
+var EuHierarchy = function(cmp, rows) {
 
 	var self            = this;
-	var defaultChunk    = 6;
+	var rows            = rows;
+	var defaultChunk    = rows;
 	
 	self.treeCmp        = cmp;
 	self.pageNodeId     = false;	// the id of the node corresponding to the full-doc page we're on
 	self.container      = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration = 0;		
 
-	var newestNode = false;
-	var createdNodes = [];
+	var newestNode      = false;
+	var createdNodes    = [];
 	
 	
 	// debug vars
 	var locked = true;
 	var spin = false;
 
-	// START LOAD FUNCTIONS
-
 	// this simulates what will be an ajax call
 
 	var loadData = function(url, callback) {
 		if(!url){
+			alert('delete this check?')
 			callback([]);
 			return;
 		}
-		//console.log(url)
 		var data = eval(url);
 		
 		// sanity
@@ -42,144 +41,16 @@ var EuHierarchy = function(cmp) {
 		}, 500);
 	};
 
-	var loadAndAppendData = function(node, callback) {
-
-		// get url
-
-		var start = node.data.loaded ? node.data.loaded : 0;
-		var end = start + Math.min(node.data.total - start, defaultChunk);
-		var url = node.data.childrenUrl;
-		
-		if(url && url.length){
-			url += '.slice(' + start + ',' + end + ')';
-
-			loadData(url, function(newData) {
-
-				createdNodes = []; // reset global
-				$.each(newData, function(i, ob) {
-					self.treeCmp.jstree("create_node", node, ob, "last", function(){}, true);
-				});
-				var created = createdNodes;
-				createdNodes = null; // re-nullify global
-
-				// update tracking variables
-				node.data.loaded = node.data.loaded ? node.data.loaded + newData.length : newData.length;
-
-				// callback
-				if (callback) {
-					callback(created);
-				}
-			});
-		}
-		else if (callback) {
-			alert("missing out on this callback:\n\n" + callback)
-			callback(created);
-		}
-		// load and append
-
-	};
-
-
-	// loads the node's children
-
-	var loadChildren = function(node, callback) {
-		if (node.data) {
-			loadAndAppendData(node, function(data) {
-				if (callback) {
-					callback();
-				}
-			});
-		}
-		else {
-			if (callback) {
-				callback();
-			}
-		}
-	};
-
-	// chainLoad utility: performs @fn for @nodes - in
-	// callbacked sequence - and executes @callbackWhenDone when
-	// done
-	var chainLoad = function(nodes, fn, callbackWhenDone) {
-
-		var index = 0;
-		var recursiveLoad = function() {
-
-			if (index < nodes.length){
-				fn(nodes[index], function(){
-					index++;
-					recursiveLoad()
-				});
-			}
-			else {
-				if (callbackWhenDone) {
-					callbackWhenDone();
-				}
-			}
-		};
-		recursiveLoad();
-	};
-
-	
-	var filterChildList = function(arr, startAt) {
-		var startAt = startAt ? startAt : 0;
-		var result = [];
-
-		$(arr).each(function(i, ob) {
-			if (i >= startAt) {
-				var child = self.treeCmp.jstree('get_node', ob);
-				if (child.data ? (child.data.loaded == 0 || typeof child.data.loaded == 'undefined') : false) {
-					
-					//console.log('child.data.loaded pushed ' + child.data.loaded + '  nodename ' + child.text );
-					result.push(child);
-				}
-			}
-		});
-		return result;
-	};
-
-	// loads the children's children
-
-	var loadGrandChildren = function(node, callback, startAt) {
-
-		if (node.children.length) {
-			var index = 0;
-			var children = filterChildList(node.children, startAt ? startAt : 0);
-			
-			
-			if (children.length) {
-				chainLoad(children, loadAndAppendData, callback);
-			}
-			else{
-				callback();
-			}
-		}
-		else{
-			consol.log('loadGrandChildren returns without creating anything');
-			callback();
-		}
-	};
-
-	// END LOAD FUNCTIONS
 
 	// START DOM HELPER FUNCTIONS
+	
 	var getRootEl = function() {
 		return self.treeCmp.find(">ul>li:first-child");
 	};
 	
 	var getPageNodeEl = function() {
-		var res = self.treeCmp.find("#" + self.pageNodeId + " a");
-		
-		/*
-		res.attr('style', 'background-color:red');		
-		setTimeout(function(){
-			res.attr('style', 'background-color:white');
-		}, 2000);
-		*/
-		
-		return res;
-	};
-	
+		return self.treeCmp.find("#" + self.pageNodeId + " a");
+	};	
 
 	/*
 	 * Positions In Loaded Open Tree (PILOT)
@@ -195,8 +66,6 @@ var EuHierarchy = function(cmp) {
 		var loadPoint         = $('.loadPoint');		// TODO - remove load points and re-set on node_select / node_open
 		
 		if(!loadPoint.length){
-			//console.log('added load position to ' + node.text)
-			//$('#' + node.id).addClass(loadPoint);
 			return false;
 		}
 		loadPoint = loadPoint.attr('id');
@@ -538,8 +407,17 @@ var EuHierarchy = function(cmp) {
 	$('.view-next').click(function(){ alert('no handler'); });
 	
 	$('.hierarchy-prev').click(function(){
-		
-		showSpinner();
+		goUp();
+	});
+
+	/**
+	 * This is a scroll wrapper.
+	 * 
+	 * The key up should use this.
+	 * 
+	 * 
+	 * */
+	var goUp = function(){
 		
 		// scroll tracking
 		
@@ -551,48 +429,51 @@ var EuHierarchy = function(cmp) {
 
 		// load nodes
 
+		showSpinner();
+
 		viewPrevOrNext(getVisibleNodes()[0], true,  defaultChunk, false, function(){
+
+			hideSpinner();
 			
-			var newHeight   = heightMeasure.height();
-			var diffHeight  = newHeight - origHeight;
-			var newScrollTo = origScrollTop + diffHeight;
-
-			// reset view
-			self.scrollDuration = 0;
-
-			doScrollTo(newScrollTo, function(){
-
-				self.scrollDuration  = 1000;
-
-				var containerH       = parseInt(self.container.height());
-				var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
-				var extraDiff        = disabledMeasure * (disabledCount - newDisabledCount)
+			var newHeight        = heightMeasure.height();
+			var containerH       = self.container.height();
+			var diffHeight       = newHeight - origHeight;
+			var resetScrollTop   = origScrollTop + diffHeight;
+			var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
+			var extraDiff        = (disabledCount - newDisabledCount) * disabledMeasure;
+			    diffHeight      += extraDiff;
+			
+			var finalScroll      = function(){
 				
-				diffHeight += extraDiff;
-
-				// no data loaded - we still should scrol up
-				if(diffHeight == 0){
-					diffHeight = containerH;
-				}
-				
-				newScrollTo -= (containerH > diffHeight && newHeight < (containerH + newScrollTo)) ? diffHeight : containerH;
-					
-				/*if(containerH > diffHeight && newHeight < (containerH + newScrollTo) ){
-					newScrollTo -= diffHeight						
+				var newScrollTop = resetScrollTop - ( (containerH > diffHeight && newHeight < (containerH + resetScrollTop)) ? diffHeight : containerH  );
+				/*
+				var newScrollTop;
+				if(containerH > diffHeight && newHeight < (containerH + newScrollTo) ){
+					newScrollTop -= diffHeight						
 				}	
 				else{
-					newScrollTo -= containerH
+					newScrollTop -= containerH
 				}*/
-						
-				newScrollTo = Math.max(0, newScrollTo);
-				doScrollTo(newScrollTo, function(){
+				
+				newScrollTop = Math.max(0, newScrollTop);				
+				doScrollTo(newScrollTop, function(){
 					togglePrevNextLinks();
-					hideSpinner();
+				});	
+			};
+	
+			if(diffHeight == 0){
+				diffHeight = containerH; // this is a max - trimmed within function if too big 
+				finalScroll();
+			}
+			else{
+				self.scrollDuration = 0;
+				doScrollTo(resetScrollTop, function(){
+					self.scrollDuration  = 1000;				
+					finalScroll();			// scroll from reset scroll view 
 				});
-			});
-			
+			}
 		});
-	});
+	};
 	
 	
 	$('.hierarchy-next').click(function(){
@@ -610,26 +491,6 @@ var EuHierarchy = function(cmp) {
 		});
 	});
 
-	
-	$('.lock').click(function() {
-		locked = !locked;
-		if (locked) {
-			$(this).html('[unlock]');
-			self.container.css('overflow', 'hidden');
-		} else {
-			$(this).html('[lock]');
-			self.container.css('overflow', 'auto');
-		}
-	});
-	
-	
-	$('.enable').click(function() {
-		$('.jstree-disabled').each(function(){
-			var node = self.treeCmp.jstree( 'get_node', $(this).closest('.jstree-node') );			
-			self.treeCmp.jstree("enable_node", node );
-		});		
-	});
-	
 	
 	var getVisibleNodes = function(){
 		
@@ -695,39 +556,6 @@ var EuHierarchy = function(cmp) {
 		return [topEntry, bottomEntry];
 	};
 	
-	
-	
-	
-	
-	$('.spin').click(function() {
-
-		console.log('get limits...');
-		
-		var limits = getVisibleNodes();
-		
-		console.log(limits[0].id + ' <--> ' + limits[1].id);
-		
-		$('#' +  limits[0].id).css('background-color', 'red');
-		$('#' +  limits[1].id).css('background-color', 'blue');			
-		
-		setTimeout(function(){
-			$('#' +  limits[0].id).css('background-color', 'white');
-			$('#' +  limits[1].id).css('background-color', 'white');
-		}, 1000);
-
-		
-		return;
-		
-		spin = !spin;
-		if (spin) {
-			$(this).html('[unspin]');
-			showSpinner();
-		} else {
-			$(this).html('[spin]');
-			hideSpinner();
-		}
-	});
-
 	// END UI BINDING
 
 
@@ -735,6 +563,12 @@ var EuHierarchy = function(cmp) {
 	// Instantiate tree here.
 	// We load up the tree to get the absolute root.
 	var init = function(baseUrl){
+		
+		// UI viewport size
+		
+		self.container.css('height',         rows + 'em');
+		self.container.css('max-height',     rows + 'em');
+		self.treeCmp  .css('padding-bottom', rows-1 + 'em');
 		
 		// TREE BINDING
 
@@ -830,23 +664,6 @@ var EuHierarchy = function(cmp) {
 						$('.loadPoint').removeClass('loadPoint');
 						$('#' + initiatingNode.id).addClass('loadPoint');
 						
-						// TODO: unnatural scroll
-						// Look at previous fix for this applied to (view next? select?)
-						// All calls ot vpon need wrapped in a scroll handler *
-						//
-						// This scroll DOES fix the line-height misalign (chrome & maybe ff)...
-						// ...however 
-						// ...maybe the scroll can be made to either:
-						// 
-						// - rest at the point where it started (but aligned to node)
-						//    - good for keying
-						//    - good for opening... though not needed as opening can only load down
-						//    - override if start point was at viewport edge
-						//  OR
-						//    - move the smallest between (the height of the viewport / the height of the data added)
-						//
-						// * this scroll handler would benefit from knowing (or it may have to know) how many nodes had been added and where
-						//   in order to work around firefox bug...
 						
 						doScrollTo('#' + initiatingNode.id, function(){
 							hideSpinner();
@@ -933,11 +750,25 @@ var EuHierarchy = function(cmp) {
 			
 
 		});
+		
+		//return this;
 	};
 	
 	return {
 		init : function(baseUrl){
 			init(baseUrl);
+		},
+		getContainer : function(){
+			return self.container;
+		},
+		getVisibleNodes : function(){
+			return getVisibleNodes();
+		},
+		getLocked : function(){
+			return self.locked;
+		},
+		setLocked : function(val){
+			self.locked = val;
 		}	
 	}
 };
@@ -951,8 +782,13 @@ var EuHierarchy = function(cmp) {
  *  
  *  - Load flicker - show spinner on actual load - set enbaler flag (reset on showSpinner call) 
  *  
- *  TODO:
+ *  TODO - BUG! 
  *  
+ *  - Open root node.  Go down (link).  Go up (link).  Focus off component.  Tab back in = 
+ *    - you see the hidden parent nodes.
+ *    - perahps adding (and removing) the disabled attribute would prevent this.
+ *  
+ *  TODO: 
  *  
  *  scrolling 
  *   - particularly up the way
@@ -966,8 +802,35 @@ var EuHierarchy = function(cmp) {
  *   - configure viewport height
  *     - let js configue the css
  *   - remove size limit on load all?
+ *   
+ *   
  */
 
+
+
+
+
+// TODO: unnatural scroll
+// Look at previous fix for this applied to (view next? select?)
+// All calls ot vpon need wrapped in a scroll handler *
+//
+// This scroll DOES fix the line-height misalign (chrome & maybe ff)...
+// ...however 
+// ...maybe the scroll can be made to either:
+// 
+// - rest at the point where it started (but aligned to node)
+//    - good for keying
+//    - good for opening... though not needed as opening can only load down
+//    - override if start point was at viewport edge
+//  OR
+//    - move the smallest between (the height of the viewport / the height of the data added)
+//
+// * this scroll handler would benefit from knowing how many nodes had been added (and where)
+//   - (may have to know) in order to work around firefox bug...
+//   - scrolling without spinning if no load occured
+//
+//
+// 
 
 
 

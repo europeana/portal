@@ -5,6 +5,8 @@
 	position:    relative;
 }
 
+/* TODO: fill viewport on narrow breakpoints */
+
 .hierarchy-objects{
 	max-width:  50%;
 	width:      50%;
@@ -28,11 +30,12 @@
 }
 
  /* force scrollability: this em value should correspond to the js variable defaultChunk */
+ /*
 .hierarchy-container{
 	height:     6em;
 	max-height: 6em;
 }
-
+*/
 
 #hierarchy.jstree-default .jstree-anchor{
 	white-space:nowrap;
@@ -43,7 +46,9 @@
 
 #hierarchy{
 	position: relative;
+	/*
 	padding-bottom: 6em;
+	*/
 }
 
 #hierarchy a,
