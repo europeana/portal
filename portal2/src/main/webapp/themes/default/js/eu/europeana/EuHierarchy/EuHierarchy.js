@@ -287,19 +287,19 @@ var EuHierarchy = function(cmp, rows) {
 							self.treeCmp.jstree("enable_node", parent );
 							leftToLoad --;
 						}
-						if(scroll){
+						//if(scroll){
 							//doScrollTo($('#' + parent.id), function(){
 							//	togglePrevNextLinks();				
 							//	viewPrevOrNext(parent, backwards, leftToLoad, scroll)
 							//});														
-							togglePrevNextLinks();
-							console.log('recurse point two')
-							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
-						}
-						else{
+						//	togglePrevNextLinks();
+						///	console.log('recurse point two')
+						//	viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
+						//}
+						//else{
 							console.log('recurse point three')
 							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
-						}
+						//}
 					}
 					else{
 						// forwards
@@ -373,7 +373,8 @@ var EuHierarchy = function(cmp, rows) {
 		var ch = self.container.height();
 		var th = self.treeCmp.height();
 		
-		console.log('cont height: ' + ch  + ', tre height: ' + th + ', offset: ' + offset );
+		//console.log('cont height: ' + ch  + ', tre height: ' + th + ', offset: ' + offset );
+		
 		if(true){
 			$('.hierarchy-next').show();
 		}
@@ -385,7 +386,7 @@ var EuHierarchy = function(cmp, rows) {
 	
 	var doScrollTo = function(el, callback) {
 		if (typeof el == 'undefined') {
-			console.log('doScrollTo error - undefined @el');
+			//console.log('doScrollTo error - undefined @el');
 			return;
 		}
 		self.container.css('overflow', 'auto');
@@ -408,8 +409,7 @@ var EuHierarchy = function(cmp, rows) {
 	$('.view-next').click(function(){ alert('no handler'); });
 	
 	$('.hierarchy-prev').click(function(){
-		goUp(getVisibleNodes()[0], true, function(){
-//			alert('done prev by link');
+		loadAndScroll(getVisibleNodes()[0], true, function(){
 		});
 	});
 
@@ -418,7 +418,7 @@ var EuHierarchy = function(cmp, rows) {
 	 * 
 	 * @initiatingNode - node to load from
 	 * */
-	var goUp = function(initiatingNode, backwards, callback){
+	var loadAndScroll = function(initiatingNode, backwards, callback){
 		
 		console.log('doUp: INITITATING NODE: ' + initiatingNode.text);
 		
@@ -446,8 +446,6 @@ var EuHierarchy = function(cmp, rows) {
 			var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
 			var extraDiff        = (disabledCount - newDisabledCount) * disabledMeasure;
 			    diffHeight      += extraDiff;
-
-//console.log('diffHeight = ' + diffHeight );
 
 			var finalScroll      = function(){
 				
@@ -526,7 +524,7 @@ var EuHierarchy = function(cmp, rows) {
 		
 		var visibleNodes = getVisibleNodes();
 		
-		goUp(visibleNodes[0], false, function(){
+		loadAndScroll(visibleNodes[0], false, function(){
 			togglePrevNextLinks();
 //			alert('done next by link');
 		});
@@ -714,7 +712,7 @@ var EuHierarchy = function(cmp, rows) {
 				}
 				
 				if(doLoad){
-					goUp(initiatingNode, backwards, function(){
+					loadAndScroll(initiatingNode, backwards, function(){
 						
 						$('.loadPoint').removeClass('loadPoint');
 						$('#' + initiatingNode.id).addClass('loadPoint');
@@ -723,8 +721,11 @@ var EuHierarchy = function(cmp, rows) {
 						//var offset = self.container.scrollTop();
 						
 						$('#' + initiatingNode.id + '>a').focus();
-						doScrollTo('#' + initiatingNode.id, function(){
-							console.log('don scroll to');
+						
+						//doScrollTo('#' + initiatingNode.id, function(){
+							
+						doScrollTo('#' + getVisibleNodes()[0].id, function(){
+							console.log('done scroll to');
 						});
 						//self.container.scrollTop(offset);
 
@@ -855,9 +856,7 @@ console.log('fix wonky ' + getVisibleNodes()[0].text );
  * BEHAVIOUR:
  * 
  * THEME:
- *  
- *  - Load flicker - show spinner on actual load - set enbaler flag (reset on showSpinner call) 
- *  
+ *   *  
  *  TODO - BUG! 
  *  
  *  - Open root node.  Go down (link).  Go up (link).  Focus off component.  Tab back in = 
@@ -865,10 +864,6 @@ console.log('fix wonky ' + getVisibleNodes()[0].text );
  *    - perahps adding (and removing) the disabled attribute would prevent this.
  *  
  *  TODO: 
- *  
- *  scrolling 
- *   - particularly up the way
- *   - common handler needed 
  *   
  *  showing
  *   - labels
