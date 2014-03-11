@@ -308,6 +308,7 @@ public class EdmSchemaMapping {
 					new FieldInfo(mapping, "country", "country", "String[]", mapName),
 					new FieldInfo(mapping, "userTags", "userTags", "String[]", mapName),
 					new FieldInfo(mapping, "europeanaCollectionName", "europeanaCollectionName", "String[]", mapName),
+					new FieldInfo(mapping, "edm:datasetName", "europeanaCollectionName", "String[]", mapName),
 					new FieldInfo(mapping, "[id]", "id", "ObjectId", mapName)
 				)));
 			}
