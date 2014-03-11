@@ -432,7 +432,9 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 			for (Concept concept : fullBean.getConcepts()) {
 				ConceptDecorator decorator = new ConceptDecorator(this, concept, userLanguage, edmLanguage);
 				concepts.add(decorator);
-				ids.put(concept.getAbout(), decorator.getLabel());
+				if (decorator.getLabel() != null) {
+					ids.put(concept.getAbout(), decorator.getLabel());
+				}
 			}
 			for (ConceptDecorator concept : concepts) {
 				concept.makeLinks(ids);

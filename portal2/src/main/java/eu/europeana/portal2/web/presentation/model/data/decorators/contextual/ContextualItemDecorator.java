@@ -102,7 +102,7 @@ public class ContextualItemDecorator implements ContextualClass {
 	}
 
 	public String getLabel() {
-		return getLabels().size() > 0 ? getLabels().get(0) : null;
+		return (getLabels() != null && getLabels().size() > 0) ? getLabels().get(0) : null;
 	}
 
 	public List<String> getLanguageVersion(Map<String, List<String>> map) {
