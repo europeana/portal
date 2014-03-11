@@ -7,7 +7,8 @@ var EuHierarchy = function(cmp, rows) {
 	self.treeCmp        = cmp;
 	self.pageNodeId     = false;	// the id of the node corresponding to the full-doc page we're on
 	self.container      = self.treeCmp.closest('.hierarchy-container');
-	self.scrollDuration = 0;		
+	self.scrollDuration = 0;
+	
 
 	var newestNode      = false;
 	var createdNodes    = [];
@@ -286,19 +287,19 @@ var EuHierarchy = function(cmp, rows) {
 							self.treeCmp.jstree("enable_node", parent );
 							leftToLoad --;
 						}
-						if(scroll){
+						//if(scroll){
 							//doScrollTo($('#' + parent.id), function(){
 							//	togglePrevNextLinks();				
 							//	viewPrevOrNext(parent, backwards, leftToLoad, scroll)
 							//});														
-							togglePrevNextLinks();
-							console.log('recurse point two')
-							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
-						}
-						else{
+						//	togglePrevNextLinks();
+						///	console.log('recurse point two')
+						//	viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
+						//}
+						//else{
 							console.log('recurse point three')
 							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
-						}
+						//}
 					}
 					else{
 						// forwards
@@ -372,7 +373,8 @@ var EuHierarchy = function(cmp, rows) {
 		var ch = self.container.height();
 		var th = self.treeCmp.height();
 		
-		console.log('cont height: ' + ch  + ', tre height: ' + th + ', offset: ' + offset );
+		//console.log('cont height: ' + ch  + ', tre height: ' + th + ', offset: ' + offset );
+		
 		if(true){
 			$('.hierarchy-next').show();
 		}
@@ -384,7 +386,7 @@ var EuHierarchy = function(cmp, rows) {
 	
 	var doScrollTo = function(el, callback) {
 		if (typeof el == 'undefined') {
-			console.log('doScrollTo error - undefined @el');
+			//console.log('doScrollTo error - undefined @el');
 			return;
 		}
 		self.container.css('overflow', 'auto');
@@ -407,19 +409,21 @@ var EuHierarchy = function(cmp, rows) {
 	$('.view-next').click(function(){ alert('no handler'); });
 	
 	$('.hierarchy-prev').click(function(){
-		goUp();
+		loadAndScroll(getVisibleNodes()[0], true, function(){
+		});
 	});
 
 	/**
 	 * This is a scroll wrapper.
 	 * 
-	 * The key up should use this.
-	 * 
-	 * 
+	 * @initiatingNode - node to load from
 	 * */
-	var goUp = function(){
+	var loadAndScroll = function(initiatingNode, backwards, callback){
 		
-		// scroll tracking
+		console.log('doUp: INITITATING NODE: ' + initiatingNode.text);
+		
+		// Scroll tracking:
+		// Get the tree height and offset
 		
 		var heightMeasure   = $('.jstree-container-ul>.jstree-node>.jstree-children');
 		var disabledMeasure = $('.jstree-container-ul .jstree-disabled').first().height();
@@ -431,7 +435,7 @@ var EuHierarchy = function(cmp, rows) {
 
 		showSpinner();
 
-		viewPrevOrNext(getVisibleNodes()[0], true,  defaultChunk, false, function(){
+		viewPrevOrNext(initiatingNode, backwards,  defaultChunk, false, function(){
 
 			hideSpinner();
 			
@@ -442,22 +446,59 @@ var EuHierarchy = function(cmp, rows) {
 			var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
 			var extraDiff        = (disabledCount - newDisabledCount) * disabledMeasure;
 			    diffHeight      += extraDiff;
-			
+
 			var finalScroll      = function(){
 				
-				var newScrollTop = resetScrollTop - ( (containerH > diffHeight && newHeight < (containerH + resetScrollTop)) ? diffHeight : containerH  );
-				/*
-				var newScrollTop;
-				if(containerH > diffHeight && newHeight < (containerH + newScrollTo) ){
-					newScrollTop -= diffHeight						
-				}	
-				else{
-					newScrollTop -= containerH
-				}*/
+				//var newScrollTop = resetScrollTop - ( (containerH > diffHeight && newHeight < (containerH + resetScrollTop)) ? diffHeight : containerH  );
+				var newScrollTop = resetScrollTop;
+				var visibleNodes = getVisibleNodes();
 				
-				newScrollTop = Math.max(0, newScrollTop);				
+//				if(initiatingNode != visibleNodes[0]){
+//					alert("don't bother scrolling...");
+//				}
+//				else{					
+//					alert("do bother scrolling !!!!");
+				
+				if(initiatingNode == visibleNodes[0]){
+
+					var newScrollTop = resetScrollTop;
+					//if(false && containerH > diffHeight && newHeight < (containerH + newScrollTop) ){
+					//	newScrollTop -= diffHeight;
+					//	console.log('newScrollTop (A)');
+					//}	
+					//else{
+						var singleNodeMeasure = self.container.find('.jstree-anchor').first().height();
+
+						//alert('hello')
+
+						//newScrollTop -= containerH;
+						//newScrollTop += singleNodeMeasure;
+
+						if(backwards){
+							newScrollTop -= containerH;
+							newScrollTop += singleNodeMeasure;							
+						}
+						else{
+							newScrollTop += containerH;
+							newScrollTop -= singleNodeMeasure;							
+						}
+						
+						//console.log('newScrollTop (B) - should trim by ' + singleNodeMeasure + ' CONTAINERHEIGHT=' + containerH + ', resetScrollTop = ' + resetScrollTop + ', ' + newScrollTop );
+					//}
+					newScrollTop = Math.max(0, newScrollTop);				
+				}
+			
+
+				if(newScrollTop == resetScrollTop){
+					self.scrollDuration = 0;
+				}
+				
 				doScrollTo(newScrollTop, function(){
+					self.scrollDuration = 1000;
 					togglePrevNextLinks();
+					if(callback){
+						callback();
+					}
 				});	
 			};
 	
@@ -477,18 +518,30 @@ var EuHierarchy = function(cmp, rows) {
 	
 	
 	$('.hierarchy-next').click(function(){
-		showSpinner();
+		//showSpinner();
 
 		// TODO - firefox bug jumps down too far
 		
 		var visibleNodes = getVisibleNodes();
 		
-		viewPrevOrNext(visibleNodes[0], false, defaultChunk, true, function(){
+		loadAndScroll(visibleNodes[0], false, function(){
+			togglePrevNextLinks();
+//			alert('done next by link');
+		});
+		
+		
+		
+		return
+		
+		showSpinner();
+		
+		viewPrevOrNext(visibleNodes[0], false, defaultChunk, false, function(){
 			doScrollTo('#' + visibleNodes[1].id, function(){
 				togglePrevNextLinks();
 				hideSpinner();
 			});
 		});
+		
 	});
 
 	
@@ -632,45 +685,69 @@ var EuHierarchy = function(cmp, rows) {
 
 		self.treeCmp.bind('keydown.jstree', function(e) {
 
-			
-			// 'Down' || 'Up'
+			// Catch 'Down' || 'Up' keystrokes
 			
 			if (e.which == 40 || e.which == 38) { 
 
 				var hoveredNodeEl = self.treeCmp.find('.jstree-hovered');
 				var hoveredNode   = self.treeCmp.jstree('get_node', hoveredNodeEl.parent());
 				var doLoad        = false;
+				var backwards     = e.which == 38;
 				var initiatingNode;
-				var backwards;
+
+				// we've keyed up to a disabled parent
 				
 				if(hoveredNodeEl.hasClass('jstree-disabled')){
 					doLoad         = true;
 					initiatingNode = self.treeCmp.jstree('get_node', $('.loadPoint').attr('id'));
-					backwards      = true;
 				}
 				else {
 					var positions = getPILOT(hoveredNode);
-					    positions = positions ? e.which == 38 ? positions.reverse() : positions : false;
-					
+					    positions = positions ? backwards ? positions.reverse() : positions : false;
+					    
 					if(!positions || positions[0] > positions[1]   ||  positions[1] - positions[0] > (defaultChunk / 2) ){
 						doLoad         = true;
 						initiatingNode = hoveredNode;
-						backwards      = e.which == 38;
 					}
 				}
+				
 				if(doLoad){
-					showSpinner();
-					viewPrevOrNext(initiatingNode, backwards,  defaultChunk, false, function(){
+					loadAndScroll(initiatingNode, backwards, function(){
+						
 						$('.loadPoint').removeClass('loadPoint');
 						$('#' + initiatingNode.id).addClass('loadPoint');
+
+						// refocussing can also break the offset
+						//var offset = self.container.scrollTop();
 						
+						$('#' + initiatingNode.id + '>a').focus();
 						
-						doScrollTo('#' + initiatingNode.id, function(){
-							hideSpinner();
-							$('#' + initiatingNode.id + '>a').focus();							
+						//doScrollTo('#' + initiatingNode.id, function(){
+							
+						doScrollTo('#' + getVisibleNodes()[0].id, function(){
+							console.log('done scroll to');
 						});
+						//self.container.scrollTop(offset);
+
+//						alert('made call via keys: backwards = ' + backwards);
+						
+						console.log('callback executed???? ');
 
 					});
+					
+console.log('may go wonky ');
+
+				}
+				else{ // fix wonky offset on way up
+					//if(backwards){
+console.log('fix wonky ' + getVisibleNodes()[0].text );
+
+					
+						self.scrollDuration = 0;
+						doScrollTo('#' + getVisibleNodes()[0].id, function(){
+							self.scrollDuration = 1000;
+						});
+					//}
 				}
 			}
 		});
@@ -779,9 +856,7 @@ var EuHierarchy = function(cmp, rows) {
  * BEHAVIOUR:
  * 
  * THEME:
- *  
- *  - Load flicker - show spinner on actual load - set enbaler flag (reset on showSpinner call) 
- *  
+ *   *  
  *  TODO - BUG! 
  *  
  *  - Open root node.  Go down (link).  Go up (link).  Focus off component.  Tab back in = 
@@ -789,10 +864,6 @@ var EuHierarchy = function(cmp, rows) {
  *    - perahps adding (and removing) the disabled attribute would prevent this.
  *  
  *  TODO: 
- *  
- *  scrolling 
- *   - particularly up the way
- *   - common handler needed 
  *   
  *  showing
  *   - labels
