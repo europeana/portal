@@ -41,6 +41,7 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
@@ -80,6 +81,8 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 	private Map<String, Concept> conceptMap;
 	private Map<String, Place> placeMap;
 	private Map<String, Timespan> timespanMap;
+
+	private Map<String, WebResource> webResourceMap;
 
 	public FullBeanDecorator(FullBean fullBean) {
 		log.info("creating FullBeanDecorator");
@@ -787,5 +790,45 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 			return timespanMap.get(uri);
 		}
 		return null;
+	}
+
+	public WebResource getWebResourceByUrl(String url) {
+		if (webResourceMap == null) {
+			webResourceMap = new HashMap<String, WebResource>();
+			for (Aggregation aggregation : getAggregations()) {
+				for (WebResource webResource : aggregation.getWebResources()) {
+					webResourceMap.put(webResource.getAbout(), webResource);
+				}
+			}
+			for (WebResource webResource : getEuropeanaAggregation().getWebResources()) {
+				webResourceMap.put(webResource.getAbout(), webResource);
+			}
+		}
+		if (webResourceMap.containsKey(url)) {
+			return webResourceMap.get(url);
+		}
+		return null;
+	}
+
+	public String getWebResourceEdmRightsByUrl(String url) {
+		String rightString = null;
+		WebResource webResource = getWebResourceByUrl(url);
+		if (webResource != null) {
+			Map<String, List<String>> rights = webResource.getWebResourceEdmRights();
+			if (rights != null) {
+				OUTER:
+				for (List<String> rList : rights.values()) {
+					if (!rList.isEmpty()) {
+						for (String r : rList) {
+							if (StringUtils.isNotBlank(r)) {
+								rightString = r;
+								break OUTER;
+							}
+						}
+					}
+				}
+			}
+		}
+		return rightString;
 	}
 }

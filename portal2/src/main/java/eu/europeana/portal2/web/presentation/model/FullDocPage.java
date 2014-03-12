@@ -384,6 +384,7 @@ public class FullDocPage extends FullDocPreparation {
 			String firstImageType = getImageType(firstImageFull, docType);
 
 			Image firstImage = new Image(firstImageThumbnailUrl, firstImageFull, firstImageType, getLightboxRefField());
+			firstImage.setRights(getDocument().getWebResourceEdmRightsByUrl(firstImageFull));
 			imagesToShow.add(firstImage);
 
 			Map<String, String> images = getImages();
@@ -394,6 +395,9 @@ public class FullDocPage extends FullDocPreparation {
 					img = new Image(createImageUrl(imageUrl, imageType, "BRIEF_DOC"), imageUrl, imageType);
 				} else {
 					img = new Image(createImageUrl("", imageType, "BRIEF_DOC"), imageUrl, imageType);
+				}
+				if (img != null) {
+					img.setRights(getDocument().getWebResourceEdmRightsByUrl(imageUrl));
 				}
 				imagesToShow.add(img);
 			}
@@ -453,7 +457,7 @@ public class FullDocPage extends FullDocPreparation {
 			for (String imageField : IMAGE_FIELDS.keySet()) {
 				if (shortcut.get(imageField) != null && shortcut.get(imageField).length > 0) {
 					for (String imageUrl : shortcut.get(imageField)) {
-						if (!StringUtils.isBlank(imageUrl)) {// && !isShownAt.contains(image)) {
+						if (StringUtils.isNotBlank(imageUrl)) {// && !isShownAt.contains(image)) {
 							if (!imageUrl.equals(getIsShownBy())) {
 								if (!allImages.containsKey(imageUrl)) {
 									allImages.put(imageUrl, IMAGE_FIELDS.get(imageField));

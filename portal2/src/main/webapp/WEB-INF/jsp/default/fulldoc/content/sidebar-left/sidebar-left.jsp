@@ -79,19 +79,18 @@
 							"unescaped_url" : "${image.full}",
 							"url" 	: "${image.escapedFull}",
 							"type"	: "${fn:toLowerCase(image.type)}"
+							"rights": "${image.rights}",
 						}
 					</c:if>
-						
+
 					<c:if test="${collectionId == '2021613'}">
 						carouselData[carouselData.length-1].external = {
 							"unescaped_url" : "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
 							"url" 			: "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
 							"type"			: "sound"
+							"rights": "${image.rights}",
 						}
 					</c:if>
-						
-						
-						
 				</c:forEach>
 			</c:if>
 
