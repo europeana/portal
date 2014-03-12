@@ -173,7 +173,7 @@ public class RegisterApiPageController {
 				log.info("ApiKey: " + apiKey);
 				tokenService.remove(tokenService.findByID(token));
 				log.info("token is removed: " + model.getToken());
-				sendNotificationEmails(apiKey.getUser(), apiKey);
+				sendNotificationEmails(apiKey.getUser(), apiKey, locale);
 				target = PortalPageInfo.API_REGISTER_SUCCESS;
 			}
 		}
@@ -182,10 +182,10 @@ public class RegisterApiPageController {
 		return ControllerUtil.createModelAndViewPage(model, locale, target);
 	}
 
-	private void sendNotificationEmails(User user, ApiKey apiKey) {
+	private void sendNotificationEmails(User user, ApiKey apiKey, Locale locale) {
 		log.info("Sending emails about the successfull API registration");
 		try {
-			emailService.sendRegisterApiNotifyUser(apiKey);
+			emailService.sendRegisterApiNotifyUser(apiKey, locale);
 			emailService.sendRegisterApiNotifyAdmin(user);
 		} catch (Exception e) {
 			log.error("Unable to send email to sys: " + e.getLocalizedMessage(),e);
