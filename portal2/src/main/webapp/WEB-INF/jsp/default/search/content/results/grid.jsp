@@ -31,7 +31,7 @@
 			<c:set var="titleBidi"> title="${title}"</c:set>
 		</c:if>
 		
-		<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}" ${targetArg} rel="nofollow" ${titleBidi}>
+		<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}" ${targetArg} ${titleBidi}>
 			<div class="ellipsis">
 				<c:choose>
 					<c:when test="${!empty cell.titleBidi}">${title}</c:when>

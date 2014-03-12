@@ -609,7 +609,7 @@
 
 								<li class="facet-header">
 									<h3>
-										<a class="facet-section" rel="nofollow">
+										<a class="facet-section">
 											<span class="section-label unmodified"><spring:message code="wizard_tab2_filter_search_provider_header_1" /></span>
 											<span class="section-label modified"><spring:message code="wizard_tab2_filter_search_provider_header_2" /></span>
 											<span class="change">

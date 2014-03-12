@@ -4,8 +4,7 @@
 <c:if test="${!empty cell.thumbnail}">
 	<a href="${fn:replace(cell.fullDocUrl, '"', '&quot;')}&rows=${model.rows}"
 		title="${cell.titleBidi[0]}"
-		${targetArg}
-		rel="nofollow">
+		${targetArg}>
 		<img class="thumbnail" src="${cell.thumbnail}" alt="${cell.title[0]}" data-type="${fn:toLowerCase(cell.type)}" />
 	</a>
 </c:if>
