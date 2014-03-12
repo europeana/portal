@@ -61,7 +61,8 @@
 				// var carouselDataIsAt	= 	${model.europeanaIsShownAt};
 				var isShownBy			= 	"${model.isShownBy}";
 				var isShownAt			= 	"${model.isShownAt}";
-				
+				var edmRights = [<c:forEach items="${model.document.edmRights}" var="rights" varStatus="s">"${rights}"<c:if test="${!s.last}">,</c:if></c:forEach>];
+
 				<c:forEach items="${model.allImages}" var="image">
 
 					<c:set var="title">${fn:replace(model.objectTitle, newLineChar1, ' ')}</c:set>

@@ -831,4 +831,8 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 		}
 		return rightString;
 	}
+
+	public List<String> getEdmRights() {
+		return shortcut.getList("EdmRights");
+	}
 }
