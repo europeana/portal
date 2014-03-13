@@ -7,6 +7,7 @@ public class Image {
 	String thumbnail;
 	String full;
 	String escapedFull;
+	String rights;
 
 	/**
 	 * The type of image (text, video, image, 3d)
@@ -30,6 +31,11 @@ public class Image {
 	public Image(String thumbnail, String full, String type, String edmField) {
 		this(thumbnail, full, type);
 		this.edmField = edmField;
+	}
+
+	public Image(String thumbnail, String full, String type, String edmField, String rights) {
+		this(thumbnail, full, type, edmField);
+		this.rights = rights;
 	}
 
 	public String getThumbnail() {
@@ -70,6 +76,14 @@ public class Image {
 
 	public void setEdmField(String edmField) {
 		this.edmField = edmField;
+	}
+
+	public String getRights() {
+		return rights;
+	}
+
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 
 	@Override
