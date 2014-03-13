@@ -42,6 +42,46 @@
 	<c:if test='${"dc:description" == data.fieldName}'><c:set var="item_id"> id="item-description" </c:set></c:if>
 	<c:if test='${"dc:subject" == data.fieldName}'><c:set var="item_id"> id="item-subject" </c:set></c:if>
 
+
+	<%-- #1347 set canned types --%>
+
+	<c:choose>
+	
+		<c:when test='${"dc:subject"       == data.fieldName}'>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=what%3a%22CANNED_VALUE%22"/>
+		</c:when>
+		
+		<c:when test='${"dc:type"          == data.fieldName}'>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=what%3a%22CANNED_VALUE%22"/>
+		</c:when>
+		
+		<c:when test='${"dc:contributor"   == data.fieldName}'>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a%22CANNED_VALUE%22"/>
+		</c:when>
+		
+		<c:when test='${"dc:creator"       == data.fieldName}'>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a%22CANNED_VALUE%22"/>
+		</c:when>
+		
+		<c:when test='${"dc:coverage"      == data.fieldName}'>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=where%3a%22CANNED_VALUE%22"/>
+		</c:when>
+
+		<c:when test='${"dc:provider"     == data.fieldName || "edm:provider"     == data.fieldName}'>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?qf=PROVIDER%3a%22CANNED_VALUE%22"/>
+		</c:when>
+		
+		<c:when test='${"dc:dataProvider" == data.fieldName || "edm:dataProvider" == data.fieldName}'>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?qf=DATA_PROVIDER%3a%22CANNED_VALUE%22"/>
+		</c:when>
+		
+		<c:otherwise><c:set var="cannedUrl" value="" /></c:otherwise>
+	</c:choose>
+	
+	<%-- #1347 --%>
+
+
+
 	<c:set var="item_class" value=""/>
 
 	<%-- If the content is UGC we skip the dc:source display --%>
@@ -67,17 +107,6 @@
 				</c:if>
 			</c:forEach>
 
-			<%--
-			<c:set var="hasValue" value="0"/>
-
-			<c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
-				<c:set var="hasValue" value="1"/>
-				<c:out value="${fn:length(value.value)}"/>
-			</c:forEach>
-
-			<c:if test="${hasValue==2}">
-			</c:if>
-			--%>
 
 			<span class="bold notranslate ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
 
@@ -95,6 +124,7 @@
 					- value.contextualEntity (String)
 					- value.searchOn (String)
 			--%>
+			
 			<c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
 				<c:set var="localSemanticAttributes" value="${semanticAttributes}" />
 				<c:set var="localSemanticUrl" value="${semanticUrl}" />
@@ -177,7 +207,6 @@
 									<c:out value="${(value.value)}" />
 								</c:when>
 								<c:otherwise>
-
 									<c:set var="theVal" value="${value.value}" />
 
 									<%-- respect <br>, <p> and <i> --%>
@@ -204,7 +233,16 @@
 									<%-- remove double escaped quotes --%>
 									<c:set var="theVal" value="${fn:replace(theVal, '&amp;quot;',	'\"')}" />
 
-									<c:out value="${theVal}" escapeXml="false" />
+									<%-- wrap in canned link if available --%>
+									<c:choose>
+										<c:when test="${fn:length(cannedUrl)>0}">
+									      <a class="europeana" href="${fn:replace( cannedUrl, 'CANNED_VALUE', fn:replace(theVal, '&', '%26')  ) }"><c:out value="${theVal}" escapeXml="false" /></a> 
+										</c:when>
+										<c:otherwise>
+											<c:out value="${theVal}" escapeXml="false" />
+										</c:otherwise>
+									</c:choose>
+
 								</c:otherwise>
 							</c:choose> <c:if test="${value.value == '3D PDF'}">
 								<img src="/${branding}/images/icons/file-pdf.png" alt="To view this item you need Acrobat Reader 9 or higher">
