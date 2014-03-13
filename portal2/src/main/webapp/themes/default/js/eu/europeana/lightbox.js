@@ -27,8 +27,8 @@ eu.europeana.lightbox = function(){
 			var NavOb = function(){
 				var self = this;
 				self.index		= 0;
-				var subModel	= [];
-				var subModelMap	= {};
+				var subModel	= [];	// index tracking
+				var subModelMap	= {};	// index tracking
 				var imgIndex	= 0;
 				
 				for(var i=0; i<carouselData.length; i++){
@@ -47,6 +47,7 @@ eu.europeana.lightbox = function(){
 					subModelMap[i] = (imgIndex-1); 
 				}
 
+				
 				var nav = function(direction){
 					var newIndex = self.index + direction;
 					if(newIndex>=subModel.length){
@@ -60,8 +61,9 @@ eu.europeana.lightbox = function(){
 
 					com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Lightbox", "External (lightbox nav)");
 					
-					var imgUrl = carouselData[subModel[self.index]].external.url;
-					switchImg(imgUrl);
+					var imgUrl    = carouselData[subModel[self.index]].external.url;
+					var imgRights = carouselData[subModel[self.index]].external.rights;
+					switchImg(imgUrl, imgRights);
 					
 					if(typeof onNav != "undefined"){
 						onNav(imgUrl);
@@ -78,10 +80,10 @@ eu.europeana.lightbox = function(){
 					},
 					"goTo" : function(i){						
 						self.index = subModelMap[i];
+						
 						switchImg(
-								carouselData[subModel[self.index]]
-								.external
-								.url
+								carouselData[subModel[self.index]].external.url,
+								carouselData[subModel[self.index]].external.rights
 						);
 					}
 				};
@@ -96,13 +98,16 @@ eu.europeana.lightbox = function(){
 		});
 	};
 
-	var switchImg = function(url){
+	var switchImg = function(url, rights){
 
 		var img = self.cmp.find('#lightbox_image');
 		
 		if(img.attr('src')==url){
 			return;
 		}
+
+		self.cmp.find('.rights-item').html(rights.length > 0 ? rights : carouselData.defaultRightsVal);
+		
 		imgMeasure(url, function(w, h){
 			self.origImgW = w;
 			self.origImgH = h;

@@ -393,18 +393,21 @@ eu.europeana.fulldoc = {
 				+ ocValue + '</li>'
 			);
 
-			// rights
-			var rightsVal = $('.original-context .rights-badge').clone().wrap('<p>').parent().html();
-
-			// TRY WEBRESOURCES HERE
-			/*
-			cmp.find('#lightbox_info ul li.bottom').append(
-				 (rightsVal ? rightsVal : '') 
-			);
-			*/				
+			// Rights
+			
+			var defaultRightsVal          = $('.original-context .rights-badge').clone().wrap('<p>').parent().html();			
+			defaultRightsVal              = defaultRightsVal ? defaultRightsVal : '';
+			var rightsVal                 = defaultRightsVal;
+			carouselData.defaultRightsVal = defaultRightsVal;
+			
+			// Set rights from web-resource data
+			
+			if(carouselData[0].external.rights){
+				rightsVal = carouselData[0].external.rights;
+			}
 
 			cmp.find('#lightbox_info ul li.bottom').before(
-				'<li>' + 	(rightsVal ? rightsVal : '') + '</li>' 
+				'<li class="rights-item">' + rightsVal + '</li>' 
 			);
 
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();

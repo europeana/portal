@@ -69,27 +69,36 @@
 					<c:set var="title">${fn:replace(title, newLineChar2, ' ')}</c:set>
 				
 					carouselData[carouselData.length] = {
-						"image":		decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
-						"title":		('${fn:escapeXml(title)}'),
-						"dataType":		"${fn:toLowerCase(dataType)}",
+						"image":	decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
+						"title":	('${fn:escapeXml(title)}'),
+						"dataType":	"${fn:toLowerCase(dataType)}",
 						"edmField": "${image.edmField}"
 					};
 
 					<c:if test="${fn:length(image.full) > 0}">
+
+						<% pageContext.setAttribute("newLineChar", "\n"); %>						
+						<c:set var="rightsToParse" value="${image.rightsValue}" />			
+						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>						
+						
 						carouselData[carouselData.length-1].external = {
 							"unescaped_url" : "${image.full}",
 							"url" 	: "${image.escapedFull}",
-							"type"	: "${fn:toLowerCase(image.type)}"
-							"rights": "${image.rights}",
+							"type"	: "${fn:toLowerCase(image.type)}",
+							"rights": '${fn:replace(rightsString, newLineChar, "")}'
 						}
 					</c:if>
 
 					<c:if test="${collectionId == '2021613'}">
+						<% pageContext.setAttribute("newLineChar", "\n"); %>						
+						<c:set var="rightsToParse" value="${image.rightsValue}" />			
+						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
+
 						carouselData[carouselData.length-1].external = {
 							"unescaped_url" : "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
 							"url" 			: "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
-							"type"			: "sound"
-							"rights": "${image.rights}",
+							"type"			: "sound",
+							"rights"        : '${fn:replace(rightsString, newLineChar, '')}'
 						}
 					</c:if>
 				</c:forEach>
@@ -107,6 +116,8 @@
 	<div class="original-context">
 
 		<%-- Rights --%>
+		
+		<c:set var="rightsToParse" value="${model.rightsOption}" />		
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 
   		<c:if test="${model.document.userGeneratedContent}">

@@ -549,8 +549,10 @@ h1 {
 }
 
 .rights-badge span.icon-external-right{
+	/*
 	position:		relative;
 	top:			0.2em;	
+	*/
 }
 
 .rights-badge span.rights-text{
