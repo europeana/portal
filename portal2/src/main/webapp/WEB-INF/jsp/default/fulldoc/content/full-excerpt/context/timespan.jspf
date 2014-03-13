@@ -7,7 +7,7 @@
         <c:if test="${inContext == 1}">
           <div class="contextual-header">
             <c:choose>
-              <c:when test="${timespan.matchPrefLabel}">${timespan.prefLabelLang[0]}</c:when>
+              <c:when test="${timespan.matchUrl}">${timespan.prefLabelLang[0]}</c:when>
               <c:otherwise>${value.value}</c:otherwise>
             </c:choose>
             &nbsp;<span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
