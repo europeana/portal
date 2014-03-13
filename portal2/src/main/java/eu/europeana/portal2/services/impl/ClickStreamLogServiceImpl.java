@@ -197,7 +197,7 @@ public class ClickStreamLogServiceImpl implements ClickStreamLogService {
 				} else if (cookie.getName().equalsIgnoreCase("__utmc")) {
 					utmc = cookie.getValue();
 				} else if (cookie.getName().equalsIgnoreCase("trac_session")) {
-					utmc = cookie.getValue();
+					trac_session = cookie.getValue();
 				}
 			}
 		}
