@@ -61,15 +61,14 @@ div.actions{
 	padding:		0 1em 1em 1em;
 }
 
-#refinements li{
-	width:		100%;
-	display:	table;
+#refinements{
+	overflow:	hidden;
+	display:	block;
 }
 
-#refinements li span{
-	display:		table-cell;
-	width:			1px;
-	white-space:	nowrap;
+#refinements span{
+	overflow:	hidden;
+	display:	block;
 }
 
 /* fix for Opera (opera-condiotjnal css) */
@@ -87,9 +86,10 @@ x:-o-prefocus, #refinements input{
 	font-size:				1.1em;
 }
 
-#refinements input[type='text']{
+#refinements #newKeyword{
 	border:		1px solid #A0A0A0;
 	display:	table-cell;
+	float:		left;
 	width:		100%;
 	
 	-moz-border-radius:		0.5em 0 0 0.5em;
@@ -99,7 +99,7 @@ x:-o-prefocus, #refinements input{
 	margin-bottom:	1px;	/* chrome at certain zoom levels cuts bottom edge off input - this fixes */
 }
 
-#refinements input[type='submit']{
+#refinements .submit-new-keyword{
 	color:								white;
 	background-color:					blue;
 	margin-left:						0px;
@@ -108,7 +108,14 @@ x:-o-prefocus, #refinements input{
 
 	border:								0;
 	border:								1px solid blue;
+
+	float:								right;
 	
+	-moz-border-radius:					0.5em;
+	-webkit-border-radius:				0.5em;
+	border-radius:						0.5em;
+	
+		
 	-moz-border-top-left-radius:		0;
 	-moz-border-bottom-left-radius:		0;
 
@@ -118,9 +125,6 @@ x:-o-prefocus, #refinements input{
 	border-top-left-radius:				0;
 	border-bottom-left-radius:			0;
 	
-	-moz-border-radius:					0 0.5em 0.5em 0;
-	-webkit-border-radius:				0 0.5em 0.5em 0;
-	border-radius:						0 0.5em 0.5em 0;
 	
 	box-shadow:							none;	/* override deans-button-1 */
 }

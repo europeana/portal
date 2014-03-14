@@ -327,7 +327,21 @@ a.action-link span,
 #item-save-tag #item-tag{
 	border:	1px solid #A0A0A0;
 	float:	left;
-	width:	100%;	
+	width:	100%;
+	
+	-moz-border-radius:					0.5em;
+	-webkit-border-radius:				0.5em;
+	border-radius:						0.5em;
+	
+	-moz-border-top-right-radius:		0;
+	-moz-border-bottom-right-radius:	0;
+
+	-webkit-border-top-right-radius:	0;
+	-webkit-border-bottom-right-radius:	0;
+
+	border-top-right-radius:			0;
+	border-bottom-right-radius:			0;
+	
 }
 
 #item-save-tag #item-tag-submit{
@@ -341,6 +355,10 @@ a.action-link span,
 	border:								1px solid blue;
 	
 	float:								right;
+
+	-moz-border-radius:					0.5em;
+	-webkit-border-radius:				0.5em;
+	border-radius:						0.5em;
 	
 	-moz-border-top-left-radius:		0;
 	-moz-border-bottom-left-radius:		0;
@@ -354,10 +372,8 @@ a.action-link span,
 
 
 #item-save-tag span {
-	
 	overflow:	hidden;
 	display:	block;
-
 }
 
 

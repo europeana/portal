@@ -29,14 +29,12 @@
 							<input type="hidden" name="qf" value="<c:out value="${refinement}"/>"/>
 						</c:forEach>
 
-						<ul id="refinements">
-							<li>
+						<div id="refinements">
+							<input class="submit deans-button-1 submit-new-keyword" type="submit" value="<spring:message code="AddKeywordsSubmitLabel_t" />">
+							<span>
 								<input id="newKeyword" type="text" name="qf"/>
-								<span>
-									<input class="submit deans-button-1 submit-new-keyword" type="submit" value="<spring:message code="AddKeywordsSubmitLabel_t" />">
-								</span>
-							</li>
-						</ul>
+							</span>
+						</div>
 					</form>
 				</li>
 
