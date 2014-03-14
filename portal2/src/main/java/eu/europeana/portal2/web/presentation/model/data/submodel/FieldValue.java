@@ -26,16 +26,17 @@ import org.apache.commons.lang.StringUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
 
 public class FieldValue {
+
+	// Logger log = Logger.getLogger(FieldValue.class.getCanonicalName());
 
 	private FullDocData model;
 	private Field field;
 	private String value;
-	// private String contextualEntityType;
-	// private int contextualEntityRef;
 	private FullBeanDecorator.ContextualEntity entityType = null;
-	private Object decorator;
+	private ContextualItemDecorator decorator;
 	private boolean resourceUri = false;
 
 	public FieldValue(FullDocData model, Field field, String value) {
@@ -171,7 +172,7 @@ public class FieldValue {
 		return decorator;
 	}
 
-	public void setDecorator(Object decorator) {
+	public void setDecorator(ContextualItemDecorator decorator) {
 		this.decorator = decorator;
 	}
 

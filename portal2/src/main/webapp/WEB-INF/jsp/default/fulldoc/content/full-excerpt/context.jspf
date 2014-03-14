@@ -17,10 +17,10 @@
   </span>
 
   <ul type="square">
-    <c:forEach items="${model.document.decoratedConcepts}" var="concept" varStatus="fieldStatus">
-      <c:if test="${!empty concept.labels && !concept.showInContext}">
+    <c:forEach items="${model.document.decoratedConcepts}" var="contextualItem" varStatus="fieldStatus">
+      <c:if test="${!empty contextualItem.labels && !contextualItem.showInContext}">
         <li>
-          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/concept.jspf" %>
+          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/concept.jsp" %>
         </li>
       </c:if>
     </c:forEach>
@@ -37,10 +37,10 @@
   </span>
 
   <ul type="square">
-    <c:forEach items="${model.document.decoratedPlaces}" var="place" varStatus="fieldStatus">
-      <c:if test="${!empty place.labels && !place.showInContext}">
+    <c:forEach items="${model.document.decoratedPlaces}" var="contextualItem" varStatus="fieldStatus">
+      <c:if test="${!empty contextualItem.labels && !contextualItem.showInContext}">
         <li>
-          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/place.jspf" %>
+          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/place.jsp" %>
         </li>
       </c:if>
     </c:forEach>
@@ -58,10 +58,10 @@
   </span>
 
   <ul type="square">
-    <c:forEach items="${model.document.decoratedTimespans}" var="timespan" varStatus="fieldStatus">
-      <c:if test="${!empty timespan.labels && !timespan.showInContext}">
+    <c:forEach items="${model.document.decoratedTimespans}" var="contextualItem" varStatus="fieldStatus">
+      <c:if test="${!empty contextualItem.labels && !contextualItem.showInContext}">
         <li>
-          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timespan.jspf" %>
+          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timespan.jsp" %>
         </li>
       </c:if>
      </c:forEach>
@@ -80,10 +80,10 @@
   </span>
 
   <ul type="square">
-    <c:forEach items="${model.document.decoratedAgents}" var="agent" varStatus="fieldStatus">
-      <c:if test="${!empty agent.labels && !agent.showInContext}">
+    <c:forEach items="${model.document.decoratedAgents}" var="contextualItem" varStatus="fieldStatus">
+      <c:if test="${!empty contextualItem.labels && !contextualItem.showInContext}">
         <li>
-          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/agent.jspf" %>
+          <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/agent.jsp" %>
         </li>
       </c:if>
     </c:forEach>

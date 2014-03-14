@@ -46,23 +46,22 @@
 	<%-- #1347 set canned types --%>
 
 	<c:choose>
-	
 		<c:when test='${"dc:subject"       == data.fieldName}'>
 			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=what%3a%22CANNED_VALUE%22"/>
 		</c:when>
-		
+
 		<c:when test='${"dc:type"          == data.fieldName}'>
 			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=what%3a%22CANNED_VALUE%22"/>
 		</c:when>
-		
+
 		<c:when test='${"dc:contributor"   == data.fieldName}'>
 			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a%22CANNED_VALUE%22"/>
 		</c:when>
-		
+
 		<c:when test='${"dc:creator"       == data.fieldName}'>
 			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a%22CANNED_VALUE%22"/>
 		</c:when>
-		
+
 		<c:when test='${"dc:coverage"      == data.fieldName}'>
 			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=where%3a%22CANNED_VALUE%22"/>
 		</c:when>
@@ -70,17 +69,15 @@
 		<c:when test='${"dc:provider"     == data.fieldName || "edm:provider"     == data.fieldName}'>
 			<c:set var="cannedUrl" value="/${model.portalName}/search.html?qf=PROVIDER%3a%22CANNED_VALUE%22"/>
 		</c:when>
-		
+
 		<c:when test='${"dc:dataProvider" == data.fieldName || "edm:dataProvider" == data.fieldName}'>
 			<c:set var="cannedUrl" value="/${model.portalName}/search.html?qf=DATA_PROVIDER%3a%22CANNED_VALUE%22"/>
 		</c:when>
-		
+
 		<c:otherwise><c:set var="cannedUrl" value="" /></c:otherwise>
 	</c:choose>
-	
+
 	<%-- #1347 --%>
-
-
 
 	<c:set var="item_class" value=""/>
 
@@ -125,7 +122,8 @@
 					- value.searchOn (String)
 			--%>
 			
-			<c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+			<c:forEach items="${data.fieldValues}" var="_value" varStatus="valueStatus">
+				<c:set var="value" value="${_value}" scope="request" />
 				<c:set var="localSemanticAttributes" value="${semanticAttributes}" />
 				<c:set var="localSemanticUrl" value="${semanticUrl}" />
 				<c:if test="${value.fieldName != data.fieldName && !value.optedOut}">
@@ -161,25 +159,16 @@
 
 				<c:choose>
 					<c:when test="${!empty value.decorator}">
-						<c:set var="inContext" value="1" />
-						<c:choose>
-							<c:when test="${value.entityType == 'AGENT'}">
-								<c:set var="agent" value="${value.decorator}" />
-								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/agent.jspf" %>
-							</c:when>
-							<c:when test="${value.entityType == 'CONCEPT'}">
-								<c:set var="concept" value="${value.decorator}" />
-								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/concept.jspf" %>
-							</c:when>
-							<c:when test="${value.entityType == 'PLACE'}">
-								<c:set var="place" value="${value.decorator}" />
-								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/place.jspf" %>
-							</c:when>
-							<c:when test="${value.entityType == 'TIMESPAN'}">
-								<c:set var="timespan" value="${value.decorator}" />
-								<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timespan.jspf" %>
-							</c:when>
-						</c:choose>
+						<c:set var="inContext" value="1" scope="request" />
+						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
+						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
+						<jsp:include page="${page}" flush="true" />
+						<c:if test="${!empty value.decorator.allRelatedItems}">
+							<c:forEach items="${value.decorator.allRelatedItems}" var="_contextualItem">
+								<c:set var="contextualItem" value="${_contextualItem}" scope="request" />
+								<jsp:include page="${page}" flush="true" />
+							</c:forEach>
+						</c:if>
 					</c:when>
 					<c:when test="${value.searchOn}">
 						<a href="${value.searchOn}" target="_top" class="${classAttr}"

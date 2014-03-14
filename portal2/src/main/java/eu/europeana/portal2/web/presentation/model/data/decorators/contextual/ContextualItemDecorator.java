@@ -8,9 +8,12 @@ import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
 import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 
 public class ContextualItemDecorator implements ContextualClass {
+
+	Logger log = Logger.getLogger(ContextualItemDecorator.class.getCanonicalName());
 
 	protected FullBeanDecorator fullBeanDecorator;
 	private ContextualClass item;
@@ -21,6 +24,7 @@ public class ContextualItemDecorator implements ContextualClass {
 	protected boolean matchUrl = false;
 	private List<String> labels;
 	private boolean labelsInitialized = false;
+	List<ContextualItemDecorator> allRelatedItems;
 
 	ContextualItemDecorator(FullBeanDecorator fullBeanDecorator, ContextualClass item,
 			String userLanguage, String edmLanguage) {
@@ -183,5 +187,44 @@ public class ContextualItemDecorator implements ContextualClass {
 
 	public boolean hasAnyLabel(String label) {
 		return hasLabel(label, getPrefLabel()) || hasLabel(label, getAltLabel());
+	}
+
+	public List<ContextualItemDecorator> getRelatedContextualItem() {
+		log.info("getRelatedContextualItem");
+		List<ContextualItemDecorator> items = new ArrayList<ContextualItemDecorator>();
+		return items;
+	}
+
+	public List<ContextualItemDecorator> getAllRelatedItems() {
+		if (allRelatedItems == null) {
+			List<String> investigated = new ArrayList<String>();
+			boolean hasMore = true;
+			allRelatedItems = getRelatedContextualItem();
+			investigated.add(getAbout());
+			while (hasMore) {
+				hasMore = false;
+				List<ContextualItemDecorator> newElements = new ArrayList<ContextualItemDecorator>();
+				for (ContextualItemDecorator related : allRelatedItems) {
+					if (!related.isMatchUrl()) {
+						related.setMatchUrl(true);
+					}
+					if (investigated.contains(related.getAbout())) {
+						continue;
+					}
+					List<ContextualItemDecorator> candidates = related.getRelatedContextualItem();
+					for (ContextualItemDecorator candidate : candidates) {
+						if (!StringUtils.equals(candidate.getAbout(), getAbout())
+							&& !allRelatedItems.contains(candidate)) {
+							candidate.setMatchUrl(true);
+							newElements.add(candidate);
+						}
+					}
+					investigated.add(related.getAbout());
+				}
+				hasMore = !newElements.isEmpty();
+				allRelatedItems.addAll(newElements);
+			}
+		}
+		return allRelatedItems;
 	}
 }

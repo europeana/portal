@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,12 @@ public class PlaceDecorator extends ContextualItemDecorator implements Place {
 
 	public Map<String, String> getIsPartOfLinks() {
 		return isPartOfLinks;
+	}
+
+	@Override
+	public List<ContextualItemDecorator> getRelatedContextualItem() {
+		List<ContextualItemDecorator> items = new ArrayList<ContextualItemDecorator>();
+		return items;
 	}
 
 	///////////// Setters

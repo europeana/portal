@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -170,6 +171,11 @@ public class AgentDecorator extends ContextualItemDecorator implements Agent {
 	public void setRdaGr2BiographicalInformation(Map<String, List<String>> rdaGr2BiographicalInformation) {}
 
 	public void makeLinks(Map<String, String> ids) {
-		
+	}
+
+	@Override
+	public List<ContextualItemDecorator> getRelatedContextualItem() {
+		List<ContextualItemDecorator> items = new ArrayList<ContextualItemDecorator>();
+		return items;
 	}
 }

@@ -624,7 +624,7 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object getContextualConnections(ContextualEntity type, String value, Resource resource) {
+	public ContextualItemDecorator getContextualConnections(ContextualEntity type, String value, Resource resource) {
 
 		if (resource != null) {
 			ContextualItemDecorator entity = null;

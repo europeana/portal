@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	private Map<String, String> relatedMatchLinks;
 	private Map<String, String> closeMatchLinks;
 	private Map<String, String> exactMatchLinks;
+	List<ContextualItemDecorator> relatedItems = new ArrayList<ContextualItemDecorator>();
 
 	public ConceptDecorator(FullBeanDecorator fullBeanDecorator, Concept concept,
 			String userLanguage, String edmLanguage) {
@@ -133,6 +135,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		broaderLinks = new LinkedHashMap<String, String>();
 		if (getBroader() != null) {
 			for (String term : getBroader()) {
+				addRelation(term);
 				broaderLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
 			}
 		}
@@ -140,6 +143,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		narrowerLinks = new LinkedHashMap<String, String>();
 		if (getNarrower() != null) {
 			for (String term : getNarrower()) {
+				addRelation(term);
 				narrowerLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
 			}
 		}
@@ -147,6 +151,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		relatedLinks = new LinkedHashMap<String, String>();
 		if (getRelated() != null) {
 			for (String term : getRelated()) {
+				addRelation(term);
 				relatedLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
 			}
 		}
@@ -154,6 +159,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		broadMatchLinks = new LinkedHashMap<String, String>();
 		if (getBroadMatch() != null) {
 			for (String term : getBroadMatch()) {
+				addRelation(term);
 				ConceptDecorator other = (ConceptDecorator)fullBeanDecorator.getConceptByURI(term);
 				broadMatchLinks.put(term, (other != null && other.getLabel() != null ? other.getLabel() : ""));
 			}
@@ -162,6 +168,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		narrowMatchLinks = new LinkedHashMap<String, String>();
 		if (getNarrowMatch() != null) {
 			for (String term : getNarrowMatch()) {
+				addRelation(term);
 				narrowMatchLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
 			}
 		}
@@ -169,6 +176,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		relatedMatchLinks = new LinkedHashMap<String, String>();
 		if (getRelatedMatch() != null) {
 			for (String term : getRelatedMatch()) {
+				addRelation(term);
 				relatedMatchLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
 			}
 		}
@@ -176,6 +184,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		closeMatchLinks = new LinkedHashMap<String, String>();
 		if (getCloseMatch() != null) {
 			for (String term : getCloseMatch()) {
+				addRelation(term);
 				closeMatchLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
 			}
 		}
@@ -183,6 +192,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		exactMatchLinks = new LinkedHashMap<String, String>();
 		if (getExactMatch() != null) {
 			for (String term : getExactMatch()) {
+				addRelation(term);
 				exactMatchLinks.put(term, (ids.containsKey(term) ? ids.get(term) : ""));
 			}
 		}
@@ -218,5 +228,17 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 
 	public Map<String, String> getExactMatchLinks() {
 		return exactMatchLinks;
+	}
+
+	@Override
+	public List<ContextualItemDecorator> getRelatedContextualItem() {
+		return relatedItems;
+	}
+
+	private void addRelation(String uri) {
+		ConceptDecorator relation = (ConceptDecorator)fullBeanDecorator.getConceptByURI(uri);
+		if (relation != null && !relatedItems.contains(relation)) {
+			relatedItems.add(relation);
+		}
 	}
 }

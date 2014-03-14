@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
+<c:set var="concept" value="${contextualItem}" />
       <c:if test="${!empty concept.labels && (inContext == 1 || !concept.showInContext)}">
         <c:if test="${inContext == 1}">
           <div class="contextual-header">
