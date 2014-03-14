@@ -231,14 +231,27 @@
 		</c:if>
 
 		<c:if test="${!empty model.user}">
+		
+			<label for="add-tag" class="icon-tag action-link">
+				<span class="action-title"><spring:message code="AddATag_t" /></span>
+			</label>
+
+
+				<style>
+				.submit-tag{
+					-moz-box-sizing:border-box;
+				}
+
+				</style>
+
 			<form id="item-save-tag">
 				<fieldset>
-					<label for="add-tag" class="icon-tag action-link">
-						<span class="action-title"><spring:message code="AddATag_t" /></span>
-					</label>
-					<div>
-						<input type="text" id="item-tag" maxlength="50" /><span style="display:table-cell;"><input type="submit" class="submit-button deans-button-1 submit-tag" value="<spring:message code="Add_t" />" /></span>
-					</div>
+								
+						<input id="item-tag-submit" type="submit" class="submit-button deans-button-1 submit-tag" value="<spring:message code="Add_t" />" />
+						<span>
+							<input type="text" id="item-tag" maxlength="50" />
+						</span>
+					
 				</fieldset>
 			</form>
 			

@@ -313,11 +313,6 @@ a.action-link span,
 	margin-bottom: 1em;
 }
 
-#item-save-tag div{
-	display:	table;
-	width:		100%;
-	
-}
 
 #item-save-tag input{
 	outline-width:			0;
@@ -329,13 +324,13 @@ a.action-link span,
 }
 
 
-#item-save-tag input[type='text']{
-	border:		1px solid #A0A0A0;
-	display:	table-cell;
-	XXXwidth:		100%;
+#item-save-tag #item-tag{
+	border:	1px solid #A0A0A0;
+	float:	left;
+	width:	100%;	
 }
 
-#item-save-tag input[type='submit']{
+#item-save-tag #item-tag-submit{
 	color:								white;
 	background-color:					blue;
 	margin-left:						0px;
@@ -344,6 +339,8 @@ a.action-link span,
 
 	border:								0;
 	border:								1px solid blue;
+	
+	float:								right;
 	
 	-moz-border-top-left-radius:		0;
 	-moz-border-bottom-left-radius:		0;
@@ -356,10 +353,11 @@ a.action-link span,
 }
 
 
-#item-save-tag div span {
-	display: table-cell;
-	white-space: nowrap;
-	XXXwidth: 1px;
+#item-save-tag span {
+	
+	overflow:	hidden;
+	display:	block;
+
 }
 
 
@@ -573,8 +571,10 @@ h1 {
 }
    
 #item-save-tag fieldset {
-	margin: 0;
-	padding: 0;
+	margin:   0;
+	padding:  0;
+	overflow: hidden;
+	display:  block;
 }
 
 /*
