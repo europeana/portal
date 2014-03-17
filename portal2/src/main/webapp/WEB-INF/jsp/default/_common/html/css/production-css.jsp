@@ -7,7 +7,6 @@
 </c:if>
 
 <c:choose>
-
 	<c:when test="${model.pageName == 'contact.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/contact.min.css" />
 	</c:when>
@@ -67,6 +66,9 @@
 		<link rel="stylesheet" href="/${branding}/css/min/staticpages.min.css" />
 	</c:when>
 
+	<c:when test="${model.pageName == 'api/console.html'}">
+		<link rel="stylesheet" href="/${branding}/css/min/api-console.min.css" />
+	</c:when>
 
 	<c:when test="${model.pageName == 'api/registration.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana.min.css" />

@@ -2,106 +2,12 @@
 <%@ include file="/WEB-INF/jsp/default/_common/variables/variables.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/html-open.jsp" %>
 
+
 <div class="container">
+<c:if test="${!model.embeddedConsole}">
   <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
+</c:if>
 
-<style type="text/css">
-#submit-wrapper {
-  width: 100%;
-  text-align: center;
-}
-
-.api-submit {
-  border: 1px solid #A0A0A0;
-  color: #333333;
-  font-size: 1.2em;
-  padding: 0.3em;
-}
-
-#api-form fieldset {
-  border: 1px solid #ccc;
-  margin-top: 1em;
-}
-
-#api-form fieldset legend {
-  font-weight: bold;
-}
-
-#api-form p.section {
-  margin-bottom: 0.5em;
-}
-
-#request-url, #request-status, #response {
-  padding: 0.75em;
-}
-
-#api-result, #request-url-title, #request-url, #response-title, #response, #request-status-title, #request-status {
-  xmargin-left: 1em;
-  xmargin-right: 1em;
-}
-
-#api-result #request-url, #api-result #response, #api-result #request-status {
-  font-family: sans-serif;
-  font-size: 0.8em;
-}
-
-h2 {
-  font-family: sans-serif;
-  margin: 0 0 0.5em;
-}
-
-#request-url, #response, #request-status {
-  background: none repeat scroll 0 0 #F0F4F5;
-  border: 1px solid #999999;
-  margin-bottom: 1em;
-}
-
-fieldset {
-  padding: 1em;
-}
-
-#search-panel input[type=text],
-#record-panel input[type=text],
-#suggestions-panel input[type=text]
-{
-  width: 100%;
-  border: 1px solid #333;
-  padding: 0.3em;
-}
-
-p.global-radios {
-  padding-bottom: 2em !important;
-}
-
-.section {
-  padding-bottom: 1em;
-}
-
-.section input[type=radio], .section label {
-  float: left;
-}
-
-.api-form-inner {
-  padding: 1em 1em 1em 0;
-}
-
-.api-result-inner {
-  padding: 1em 0 1em 1em;
-}
-
-#search-panel input.api-latlong {
-  width: 40px;
-  padding: 0.3em;
-}
-#search-panel span.api-latlong {
-  width: 90px;
-  display: block;
-  float: left;
-}
-.api-help {
-  font-size: 0.8em;
-}
-</style>
 <script type="text/javascript">
 <!--
 var selectedPanel = '${model.function}';
@@ -121,8 +27,11 @@ var selectedPanel = '${model.function}';
 
         <fieldset id="search-panel">
           <legend><spring:message code="apiconsole_search_parameters_t" /></legend>
+
           <form>
             <input type="hidden" name="function" value="search" />
+            <input type="hidden" name="embedded" value="${model.embeddedConsole}" />
+
             <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
             <c:set var="searchQuery" value="" />
             <c:if test="${model.function == 'search'}">
@@ -203,17 +112,19 @@ var selectedPanel = '${model.function}';
 
           <form>
             <input type="hidden" name="function" value="record" />
+            <input type="hidden" name="embedded" value="${model.embeddedConsole}" />
+
             <%--
             <label for="api-collectionId">Collection id:</label><br/>
             <input type="text" id="api-collectionId" name="collectionId" value="${model.collectionId}" /><br/>
            --%>
 
-              <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
-              <c:forEach items="${model.defaultObjectProfiles}" var="profile">
-                <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
-                <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
-                <label for="api-profile-${profile.key}">${profile.key}</label><br/>
-              </c:forEach>
+            <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
+            <c:forEach items="${model.defaultObjectProfiles}" var="profile">
+              <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
+              <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
+              <label for="api-profile-${profile.key}">${profile.key}</label><br/>
+            </c:forEach>
 
             <label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>
             <input type="text" id="api-recordId" name="recordId" value="${model.recordId}" /><br/>
@@ -235,6 +146,8 @@ var selectedPanel = '${model.function}';
 
           <form>
             <input type="hidden" name="function" value="suggestions" />
+            <input type="hidden" name="embedded" value="${model.embeddedConsole}" />
+
             <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
 
             <c:set var="suggestionsQuery" value="" />
@@ -278,13 +191,10 @@ var selectedPanel = '${model.function}';
       </div>
     </div>
   </div>
+<c:if test="${!model.embeddedConsole}">
   <%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
+</c:if>
 </div>
-
-<%--
-<%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
-<%@ include file="/WEB-INF/jsp/default/_common/html-close.jsp" %>
- --%>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/html/close-html.jsp" %>

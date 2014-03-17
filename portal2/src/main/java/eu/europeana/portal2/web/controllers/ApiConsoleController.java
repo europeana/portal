@@ -70,6 +70,7 @@ public class ApiConsoleController {
 			@RequestParam(value = "yearMin", required = false) String yearMin, // temporal search values
 			@RequestParam(value = "yearMax", required = false) String yearMax,
 			@RequestParam(value = "reusability", required = false) String[] reusabilities,
+			@RequestParam(value = "embedded", required = false) String embedded,
 			HttpServletRequest request, Locale locale) {
 		log.info("===== /api/console.html =====");
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
@@ -85,6 +86,12 @@ public class ApiConsoleController {
 
 		ApiConsolePage model = new ApiConsolePage();
 		model.setDebug(config.getDebugMode());
+
+		boolean isEmbeddedConsole = false;
+		if (StringUtils.isNotBlank(embedded) && Boolean.parseBoolean(embedded)) {
+			isEmbeddedConsole = true;
+		}
+		model.setEmbeddedConsole(isEmbeddedConsole);
 
 		if (!model.getSupportedFunctions().contains(function)) {
 			function = SEARCH;

@@ -1,0 +1,95 @@
+#submit-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.api-submit {
+  border: 1px solid #A0A0A0;
+  color: #333333;
+  font-size: 1.2em;
+  padding: 0.3em;
+}
+
+#api-form fieldset {
+  border: 1px solid #ccc;
+  margin-top: 1em;
+}
+
+#api-form fieldset legend {
+  font-weight: bold;
+}
+
+#api-form p.section {
+  margin-bottom: 0.5em;
+}
+
+#request-url, #request-status, #response {
+  padding: 0.75em;
+}
+
+#api-result, #request-url-title, #request-url, #response-title, #response, #request-status-title, #request-status {
+  xmargin-left: 1em;
+  xmargin-right: 1em;
+}
+
+#api-result #request-url, #api-result #response, #api-result #request-status {
+  font-family: sans-serif;
+  font-size: 0.8em;
+}
+
+h2 {
+  font-family: sans-serif;
+  margin: 0 0 0.5em;
+}
+
+#request-url, #response, #request-status {
+  background: none repeat scroll 0 0 #F0F4F5;
+  border: 1px solid #999999;
+  margin-bottom: 1em;
+}
+
+fieldset {
+  padding: 1em;
+}
+
+#search-panel input[type=text],
+#record-panel input[type=text],
+#suggestions-panel input[type=text]
+{
+  width: 100%;
+  border: 1px solid #333;
+  padding: 0.3em;
+}
+
+p.global-radios {
+  padding-bottom: 2em !important;
+}
+
+.section {
+  padding-bottom: 1em;
+}
+
+.section input[type=radio], .section label {
+  float: left;
+}
+
+.api-form-inner {
+  padding: 1em 1em 1em 0;
+}
+
+.api-result-inner {
+  padding: 1em 0 1em 1em;
+}
+
+#search-panel input.api-latlong {
+  width: 40px;
+  padding: 0.3em;
+}
+#search-panel span.api-latlong {
+  width: 90px;
+  display: block;
+  float: left;
+}
+.api-help {
+  font-size: 0.8em;
+}

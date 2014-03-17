@@ -49,6 +49,8 @@ public class ApiConsolePage extends ApiData {
 	// suggestions parameters
 	private boolean phrases;
 
+	private boolean isEmbeddedConsole;
+
 	private static List<String> supportedFunctions = new ArrayList<String>();
 	static {
 		supportedFunctions.add("search");
@@ -300,5 +302,13 @@ public class ApiConsolePage extends ApiData {
 
 	public Map<String, String> getSupportedReusabilityValues() {
 		return RightReusabilityCategorizer.getReusabilityValueMap();
+	}
+
+	public boolean isEmbeddedConsole() {
+		return isEmbeddedConsole;
+	}
+
+	public void setEmbeddedConsole(boolean isEmbeddedConsole) {
+		this.isEmbeddedConsole = isEmbeddedConsole;
 	}
 }
