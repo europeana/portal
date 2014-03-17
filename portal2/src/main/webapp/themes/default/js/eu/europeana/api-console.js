@@ -8,7 +8,7 @@ eu.europeana.apiconsole = {
 		// initialize panels
 		for (i in eu.europeana.apiconsole.panels) {
 			var id = '#' + eu.europeana.apiconsole.panels[i] + '-panel';
-			if (eu.europeana.apiconsole.panels[i] == apiconsoleSelectedPanel) {
+			if (eu.europeana.apiconsole.panels[i] == apiconsole.selectedPanel) {
 				$(id).show();
 			} else {
 				$(id).hide();
@@ -19,10 +19,10 @@ eu.europeana.apiconsole = {
 			$(".request-http-headers-title").toggle('slow');
 			$(".request-http-headers").toggle('slow');
 			if (eu.europeana.apiconsole.status == 'hidden') {
-				$("#show-http-headers a").text(apiconsoleHideHeaderText);
+				$("#show-http-headers a").text(apiconsole.hideHeaderText);
 				eu.europeana.apiconsole.status = 'shown';
 			} else {
-				$("#show-http-headers a").text(apiconsoleShowHeaderText);
+				$("#show-http-headers a").text(apiconsole.showHeaderText);
 				eu.europeana.apiconsole.status = 'hidden';
 			}
 		});

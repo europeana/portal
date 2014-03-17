@@ -82,44 +82,34 @@
 		<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
 		<link rel="stylesheet" href="/${branding}/js/com/mediaelement/build/mediaelementplayer.css" />
 	</c:when>
-
-
 </c:choose>
-
 
 <!--[if IE 8]><link rel="stylesheet" href="/${branding}/css/min/ie8.min.css" /><![endif]-->
 <!--[if IE 9]><link rel="stylesheet" href="/${branding}/css/min/ie9.min.css" /><![endif]-->
 
 <!-- responsive image breakpoints -->
-
 <style>
-
 	@media all and (min-width: 20em){
 		.euresponsive {
 			width: 0px;
 		}
 	}
-
 	@media all and (min-width:30em){
 		.euresponsive {
 			width: 1px;
 		}
 	}
-
 	@media all and (min-width:47em){
 		.euresponsive {
 			width: 2px;
 		}
 	}
-
 	@media all and (min-width:49em){
 		.euresponsive {
 			width: 3px;
 		}
 	}
-
 </style>
-
 
 <!--[if IE]><link rel="stylesheet" href="/${branding}/css/min/ie.min.css" /><![endif]-->
 <!--[if lte IE 7]><link rel="stylesheet" href="/${branding}/css/min/ie7.min.css" /><![endif]-->

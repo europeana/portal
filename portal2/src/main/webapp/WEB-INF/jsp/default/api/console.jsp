@@ -10,9 +10,11 @@
 
 <script type="text/javascript">
 <!--
-var apiconsoleSelectedPanel = '${model.function}';
-var apiconsoleShowHeaderText = "<spring:message code="apiconsole_show_headers_t" />";
-var apiconsoleHideHeaderText = "<spring:message code="apiconsole_hide_headers_t" />";
+var apiconsole = {
+	selectedPanel: '${model.function}',
+	showHeaderText: '<spring:message code="apiconsole_show_headers_t" />',
+	hideHeaderText: '<spring:message code="apiconsole_hide_headers_t" />'
+};
 //-->
 </script>
 
