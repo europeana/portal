@@ -19,9 +19,12 @@ package eu.europeana.portal2.web.util.apiconsole;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -71,6 +74,8 @@ public class ApiWrapper {
 	protected String wskeyInstanceReplacement;
 	protected String utmCampaign;
 	protected String utmCampaignReplacement;
+	private Map<String, String> requestHeaders;
+	private Map<String, String> responseHeaders;
 
 	public ApiWrapper(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		this.apiUrl = apiUrl;
@@ -171,6 +176,19 @@ public class ApiWrapper {
 			}
 			*/
 
+			Header[] headers;
+			requestHeaders = new LinkedHashMap<String, String>();
+			headers = method.getRequestHeaders();
+			for (Header header : headers) {
+				requestHeaders.put(header.getName(), header.getValue());
+			}
+
+			responseHeaders = new LinkedHashMap<String, String>();
+			headers = method.getResponseHeaders();
+			for (Header header : headers) {
+				responseHeaders.put(header.getName(), header.getValue());
+			}
+
 			// Read the response body.
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(method.getResponseBodyAsStream(), writer, "UTF-8");
@@ -234,5 +252,13 @@ public class ApiWrapper {
 
 	public String getUrl() {
 		return lastUrl == null ? null : lastUrl.replace(api2key, wskeyReplacement);
+	}
+
+	public Map<String, String> getRequestHeaders() {
+		return requestHeaders;
+	}
+
+	public Map<String, String> getResponseHeaders() {
+		return responseHeaders;
 	}
 }

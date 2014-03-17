@@ -91,6 +91,8 @@ public class ApiConsolePage extends ApiData {
 	}
 
 	private List<String> profiles;
+	private Map<String, String> requestHeaders;
+	private Map<String, String> responseHeaders;
 
 	public String getFunction() {
 		return function;
@@ -310,5 +312,21 @@ public class ApiConsolePage extends ApiData {
 
 	public void setEmbeddedConsole(boolean isEmbeddedConsole) {
 		this.isEmbeddedConsole = isEmbeddedConsole;
+	}
+
+	public void setResponseHeaders(Map<String, String> httpHeaders) {
+		this.responseHeaders = httpHeaders;
+	}
+
+	public Map<String, String> getResponseHeaders() {
+		return responseHeaders;
+	}
+
+	public void setRequestHeaders(Map<String, String> httpHeaders) {
+		this.requestHeaders = httpHeaders;
+	}
+
+	public Map<String, String> getRequestHeaders() {
+		return requestHeaders;
 	}
 }

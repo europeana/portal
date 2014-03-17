@@ -45,7 +45,6 @@
 		}
 	</style>
 
-
 	<c:if test="${!empty model.announceMsg}">
 		<link rel="stylesheet" href="/${branding}/css/announce.css" />
 	</c:if>
@@ -73,23 +72,17 @@
 			<link rel="stylesheet" href="/${branding}/js/com/mediaelement/build/mediaelementplayer.css" />
 		</c:when>
 
-
 		<c:when test="${model.pageName == 'forgotPassword.html'}">
 			<link rel="stylesheet" href="/${branding}/css/login.css" />
 		</c:when>
 
 		<c:when test="${model.pageName == 'full-doc.html'}">
-
-
 			<link rel="stylesheet" href="/${branding}/css/fulldoc.css" />
-
 			<link rel="stylesheet" href="/${branding}/css/eu-carousel.css" />
-
 			<link rel="stylesheet" href="/${branding}/css/lightbox.css" />
 
 			<!-- accordion-tabs before fulldoc-ess -->
 			<link rel="stylesheet" href="/${branding}/css/eu-accordion-tabs.css" />
-
 			<link rel="stylesheet" href="/${branding}/css/fulldoc-ess.css" />
 
 			<%--
@@ -102,7 +95,6 @@
 			<link rel="stylesheet" href="/${branding}/css/eu-carousel.css" />
 			<link rel="stylesheet" href="/${branding}/css/index.css" />
 		</c:when>
-
 
 		<c:when test="${model.pageName == 'login.html'}">
 			<link rel="stylesheet" href="/${branding}/css/login.css" />
@@ -117,7 +109,6 @@
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
 			<link rel="stylesheet" href="/${branding}/css/login.css" />
 		</c:when>
-
 
 		<c:when test="${model.pageName == 'myeuropeana.html'}">
 			<link rel="stylesheet" href="/${branding}/css/myeuropeana.css" />
@@ -140,7 +131,6 @@
 		<c:when test="${model.pageName == 'search.html'}">
 			<link rel="stylesheet" href="/${branding}/css/search.css" />
 			<link rel="stylesheet" href="/${branding}/css/search-pagination.css" />
-
 			<link rel="stylesheet" href="/${branding}/css/sidebar-facets.css" />
 			<c:if test="${model.embedded}">
 				<link rel="stylesheet" href="/${branding}/css/search-embed.css" />
@@ -150,12 +140,10 @@
 		<c:when test="${model.pageName == 'staticpage.html'}">
 			<link rel="stylesheet" href="/${branding}/css/staticpages.css" />
 		</c:when>
-
 	</c:choose>
 
 	<!--[if IE 8]><link rel="stylesheet" href="/${branding}/css/ie8.css" /><![endif]-->
 	<!--[if IE 9]><link rel="stylesheet" href="/${branding}/css/ie9.css" /><![endif]-->
 	<noscript><link rel="stylesheet" href="/${branding}/css/noscript.css" /></noscript>
-
 
 </c:if>

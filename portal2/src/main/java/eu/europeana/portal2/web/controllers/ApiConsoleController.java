@@ -210,6 +210,8 @@ public class ApiConsoleController {
 
 			model.setJsonString(niceJsonString);
 			model.setApiUrl(api.getUrl());
+			model.setRequestHeaders(api.getRequestHeaders());
+			model.setResponseHeaders(api.getResponseHeaders());
 			model.setHttpStatusCode(apiResult.getHttpStatusCode());
 		}
 

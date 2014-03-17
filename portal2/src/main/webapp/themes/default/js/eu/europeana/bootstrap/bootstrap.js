@@ -417,29 +417,27 @@ var europeana_bootstrap = function(){
 
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'myeuropeana/index'){
+	else if (eu.europeana.vars.page_name == 'myeuropeana/index') {
 		scripts.push({
 			name : 'myeuropeana',
 			file : 'myeuropeana-index' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils', 'timer' ]
 		});
-
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'register.html'){
+	else if (eu.europeana.vars.page_name == 'register.html') {
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'register-success.html'){	// change password success
+	else if (eu.europeana.vars.page_name == 'register-success.html') { // change password success
 		scripts.push({
 			name : 'register-success',
 			file : 'register-success' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
 		});
-
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'search.html'){
+	else if (eu.europeana.vars.page_name == 'search.html') {
 		/*
 		scripts.push({
 			name : 'sharethis',
@@ -472,7 +470,7 @@ var europeana_bootstrap = function(){
 
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'staticpage.html'){
+	else if (eu.europeana.vars.page_name == 'staticpage.html') {
 		//scripts.push({
 			//file : 'addthis' + js.min_suffix + '.js' + js.cache_helper,
 			//path : eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
@@ -480,7 +478,7 @@ var europeana_bootstrap = function(){
 		//});
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'timeline.html'){
+	else if (eu.europeana.vars.page_name == 'timeline.html') {
 		scripts.push({
 			file : 'timeline' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
@@ -488,7 +486,7 @@ var europeana_bootstrap = function(){
 		});
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'search-widget.html'){
+	else if (eu.europeana.vars.page_name == 'search-widget.html') {
 		scripts.push({
 			file : 'search-widget' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
@@ -496,13 +494,24 @@ var europeana_bootstrap = function(){
 		});
 		loadScripts(scripts);
 	}
-	else if(eu.europeana.vars.page_name == 'admin.html'){
+	else if (eu.europeana.vars.page_name == 'admin.html') {
 		scripts.push({
 			file : 'admin' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery', 'utils' ],
 			callback : function() {
 				eu.europeana.admin.init();
+			}
+		});
+		loadScripts(scripts);
+	}
+	else if (eu.europeana.vars.page_name == 'api/console.html') {
+		scripts.push({
+			file : 'api-console' + js.min_suffix + '.js' + js.cache_helper,
+			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			dependencies : [ 'jquery', 'utils' ],
+			callback : function() {
+				eu.europeana.apiconsole.init();
 			}
 		});
 		loadScripts(scripts);

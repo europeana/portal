@@ -23,29 +23,29 @@
   margin-bottom: 0.5em;
 }
 
-#request-url, #request-status, #response {
+#api-result #request-url, #api-result #response, #api-result #request-status, #api-result .request-http-headers {
+  font-family: sans-serif;
+  font-size: 0.8em;
+}
+
+#request-url, #response, #request-status, .request-http-headers {
+  background: none repeat scroll 0 0 #F0F4F5;
+  border: 1px solid #999999;
+  margin-bottom: 1em;
   padding: 0.75em;
 }
 
-#api-result, #request-url-title, #request-url, #response-title, #response, #request-status-title, #request-status {
-  xmargin-left: 1em;
-  xmargin-right: 1em;
+.request-http-headers-title, .request-http-headers {
+  display: none;
 }
 
-#api-result #request-url, #api-result #response, #api-result #request-status {
-  font-family: sans-serif;
-  font-size: 0.8em;
+#show-http-headers {
+	text-align: right;
 }
 
 h2 {
   font-family: sans-serif;
   margin: 0 0 0.5em;
-}
-
-#request-url, #response, #request-status {
-  background: none repeat scroll 0 0 #F0F4F5;
-  border: 1px solid #999999;
-  margin-bottom: 1em;
 }
 
 fieldset {
