@@ -47,9 +47,9 @@ public class ApiConsolePage extends ApiData {
 	private String recordId;
 
 	// suggestions parameters
-	private boolean phrases;
-
-	private boolean isEmbeddedConsole;
+	private boolean phrases = false;
+	// is console embedded?
+	private boolean isEmbeddedConsole = false;
 
 	private static List<String> supportedFunctions = new ArrayList<String>();
 	static {
