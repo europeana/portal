@@ -10,7 +10,9 @@
 
 <script type="text/javascript">
 <!--
-var selectedPanel = '${model.function}';
+var apiconsoleSelectedPanel = '${model.function}';
+var apiconsoleShowHeaderText = "<spring:message code="apiconsole_show_headers_t" />";
+var apiconsoleHideHeaderText = "<spring:message code="apiconsole_hide_headers_t" />";
 //-->
 </script>
 
@@ -186,7 +188,7 @@ var selectedPanel = '${model.function}';
         <div id="request-url">${model.apiUrl}</div>
         <div id="request-status-title"><h2><spring:message code="apiconsole_http_status_code_t" /></h2></div>
         <div id="request-status">${model.httpStatusCode}</div>
-        <div id="show-http-headers"><a href="#">Show HTTP headers</a></div>
+        <div id="show-http-headers"><a href="#"><spring:message code="apiconsole_show_headers_t" /></a></div>
         <div class="request-http-headers-title"><h2><spring:message code="apiconsole_request_headers_t" /></h2></div>
         <div class="request-http-headers">
           <c:forEach items="${model.requestHeaders}" var="entry">${entry.key}: ${entry.value}<br/></c:forEach>
