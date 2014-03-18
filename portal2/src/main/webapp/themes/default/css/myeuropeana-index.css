@@ -53,11 +53,3 @@
 h3 {
 	margin-bottom: .5em;
 }
-
-select, input[type=checkbox], input[type=reset], input[type=submit] {
-	font-size: 1em;
-}
-
-input[type=checkbox] {
-	vertical-align: text-bottom;
-}

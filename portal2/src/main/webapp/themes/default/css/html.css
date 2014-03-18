@@ -1,7 +1,7 @@
 /* html */
 
 html{
-	font-size:		100%; 
+	font-size:		100%;
 	z-index:		1;
 }
 
@@ -53,8 +53,15 @@ input[type="submit"]{
 	cursor:	pointer;
 }
 
+select, input {
+	font-size: 1.2em;
+}
 
-			
+input[type=checkbox] {
+	vertical-align: text-bottom;
+}
+
+
 /* links */
 a { text-decoration: none; color: #2A85E8; outline: 0; }
 a:visited { color: #2A85E8; }
