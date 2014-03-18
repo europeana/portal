@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/jsp/default/_common/html-open.jsp" %>
 
 <c:if test="${!model.embeddedConsole}">
+<div class="container">
   <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 </c:if>
 
@@ -204,6 +205,9 @@ var apiconsole = {
   </div>
 <c:if test="${!model.embeddedConsole}">
   <%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
+</c:if>
+<c:if test="${!model.embeddedConsole}">
+</div>
 </c:if>
 
 <%@ include file="/WEB-INF/jsp/default/_common/html/javascripts.jsp" %>
