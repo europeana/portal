@@ -50,7 +50,7 @@
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes"/> <spring:message code="translate_items_select_t" />&nbsp;
-				<select id="item-language" name="il" disabled>
+				<select id="item-language" name="il">
 					<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 				</select>
 				<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
