@@ -42,8 +42,8 @@ public class SitemapPage<T> extends SitemapData<T> {
 
 		// override or remove these params, because they are based on internal
 		// search actions...
-		if (getQuery() != null) { // prevent nullpointer on empty Query...
-			url.addParam("query", URLEncoder.encode(getQuery(), "utf-8"), true);
+		if (getQuery() != null) {
+			url.addParam("query", getQuery(), true);
 		}
 		url.addParam("qf", getRefinements(), true);
 		url.removeParam("pageId");

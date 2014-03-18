@@ -60,11 +60,10 @@ public class SearchPage extends SearchPreparation {
 
 	@Override
 	public UrlBuilder enrichFullDocUrl(UrlBuilder builder) throws UnsupportedEncodingException {
-
 		if (getBriefBeanView() != null) {
 			builder.addParamsFromURL(getBriefBeanView().getPagination().getPresentationQuery()
 					.getQueryForPresentation());
-			builder.addParam("startPage", Integer.toString(getBriefBeanView().getPagination().getStart()), true);
+			builder.addParam("startPage", getBriefBeanView().getPagination().getStart(), true);
 		}
 		builder = getPortalFormattedUrl(builder);
 		return builder;
@@ -171,7 +170,7 @@ public class SearchPage extends SearchPreparation {
 			return null;
 		}
 		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(), Integer.toString(start));
-		builder.addParam("rows", Integer.toString(getRows()), true);
+		builder.addParam("rows", getRows(), true);
 		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(),
 				"query", "qf", "start", "rows");
 		return getPortalFormattedUrl(builder).toString();
@@ -319,8 +318,8 @@ public class SearchPage extends SearchPreparation {
 		url.append("/").append(getPortalName()).append("/").append(pageName).append("?").append(queryForPresentation);
 
 		UrlBuilder builder = new UrlBuilder(url.toString());
-		builder.addParam("start", Integer.toString(getStart()), true);
-		builder.addParam("startPage", Integer.toString(getStartPage()), true);
+		builder.addParam("start", getStart(), true);
+		builder.addParam("startPage", getStartPage(), true);
 		if (briefBeanView == null && getRefinements() != null) {
 			// add refinements back if there is no BriefBeanView available.
 			for (String _qf : getRefinements()) {
@@ -340,7 +339,7 @@ public class SearchPage extends SearchPreparation {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
-		url.addParam("query", URLEncoder.encode(searchTerm, "UTF-8"), true);
+		url.addParam("query", searchTerm, true);
 		if (qf != null) {
 			for (String _qf : qf) {
 				url.addMultiParam("qf", URLEncoder.encode(_qf, "UTF-8"));

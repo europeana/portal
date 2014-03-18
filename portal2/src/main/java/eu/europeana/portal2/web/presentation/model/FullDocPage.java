@@ -329,15 +329,6 @@ public class FullDocPage extends FullDocPreparation {
 		}
 
 		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
-
-		/*
-		UrlBuilder url = new UrlBuilder(getCacheUrl());
-		url.addParam("uri", thumbnail, true);
-		url.addParam("size", "FULL_DOC", true);
-		url.addParam("type", getDocument().getEdmType(), true);
-
-		return prepareFullDocUrl(url).toString();
-		*/
 	}
 
 	public String getThumbnailUrlUnescaped() throws UnsupportedEncodingException {
@@ -680,7 +671,7 @@ public class FullDocPage extends FullDocPreparation {
 		// override or remove these params, because they are based on internal
 		// search actions...
 		if (getQuery() != null) { // prevent nullpointer on empty Query...
-			url.addParam("query", URLEncoder.encode(getQuery(), "utf-8"), true);
+			url.addParam("query", getQuery(), true);
 		}
 		url.addParam("qf", getRefinements(), true);
 		url.removeParam("pageId");

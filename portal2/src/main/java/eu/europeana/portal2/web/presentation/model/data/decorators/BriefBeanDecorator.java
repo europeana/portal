@@ -18,7 +18,6 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +28,15 @@ import org.apache.commons.lang.time.DateFormatUtils;
 
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 
 public class BriefBeanDecorator implements BriefBean {
+
+	Logger log = Logger.getLogger(BriefBeanDecorator.class.getCanonicalName());
 
 	protected BriefBean briefBean;
 	private UrlAwareData<?> model;
@@ -82,11 +84,11 @@ public class BriefBeanDecorator implements BriefBean {
 			UrlBuilder url = EuropeanaUrlServiceImpl.getBeanInstance().getPortalRecord(true, briefBean.getId());
 
 			if (addParams) {
-				url.addParam("start", Integer.toString(getIndex()), true);
+				url.addParam("start", getIndex(), true);
 				try {
 					model.enrichFullDocUrl(url);
 				} catch (UnsupportedEncodingException e) {
-					// never happen
+					log.error("Unsupported Encoding Exception: " + e.getLocalizedMessage());
 				}
 			}
 			fullDocUrl = url.toString();
@@ -172,7 +174,7 @@ public class BriefBeanDecorator implements BriefBean {
 			}
 			UrlBuilder url = null;
 			url = new UrlBuilder("http://europeanastatic.eu/api/image");
-			url.addParam("uri", URLEncoder.encode(tn, "UTF-8"), true);
+			url.addParam("uri", tn, true);
 			url.addParam("size", size, true);
 			url.addParam("type", getType().toString(), true);
 

@@ -42,7 +42,7 @@ import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentation;
 
 public abstract class FullDocPreparation extends FullDocData {
-	
+
 	private final Logger log = Logger.getLogger(FullDocPreparation.class);
 
 	// caching fields

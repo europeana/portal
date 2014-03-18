@@ -109,7 +109,7 @@ public class SearchUtils {
 		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
 		if (searchTerm != null) {
-			url.addParam("query", URLEncoder.encode(searchTerm, "UTF-8"), true);
+			url.addParam("query", searchTerm, true);
 		}
 		if (qf != null) {
 			url.addParam("qf", qf, true);
