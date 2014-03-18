@@ -63,7 +63,5 @@
 				<noscript><input type="submit" value="<spring:message code="Submit_t" />" disabled/></noscript>
 			</c:otherwise>
 		</c:choose>
-
-
 	</label>
 </form>
