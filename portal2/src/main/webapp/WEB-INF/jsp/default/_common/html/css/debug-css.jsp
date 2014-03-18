@@ -19,25 +19,21 @@
 	<!-- responsive image breakpoints -->
 
 	<style>
-
 		@media all and (min-width: 20em){
 			.euresponsive {
 				width: 0px;
 			}
 		}
-
 		@media all and (min-width:30em){
 			.euresponsive {
 				width: 1px;
 			}
 		}
-
 		@media all and (min-width:47em){
 			.euresponsive {
 				width: 2px;
 			}
 		}
-
 		@media all and (min-width:49em){
 			.euresponsive {
 				width: 3px;
@@ -102,7 +98,7 @@
 
 		<c:when test="${model.pageName == 'api/console.html'}">
 			<link rel="stylesheet" href="/${branding}/css/api-console.css" />
-			<c:if test="${model.consoleEmbedded}">
+			<c:if test="${model.embeddedConsole}">
 				<link rel="stylesheet" href="/${branding}/css/api-console-embedded.css" />
 			</c:if>
 		</c:when>

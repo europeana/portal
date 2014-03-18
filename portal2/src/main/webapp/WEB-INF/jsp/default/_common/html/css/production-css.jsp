@@ -68,6 +68,9 @@
 
 	<c:when test="${model.pageName == 'api/console.html'}">
 		<link rel="stylesheet" href="/${branding}/css/min/api-console.min.css" />
+		<c:if test="${model.embeddedConsole}">
+			<link rel="stylesheet" href="/${branding}/css/api-console-embedded.css" />
+		</c:if>
 	</c:when>
 
 	<c:when test="${model.pageName == 'api/registration.html'}">
