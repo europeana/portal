@@ -3,7 +3,6 @@ package eu.europeana.portal2.web.presentation.model.submodel.impl;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,7 @@ import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindow;
 import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
 import eu.europeana.portal2.web.util.QueryUtil;
@@ -225,38 +225,37 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 	}
 
 	private void setNextFullDocUrl(Map<String, String[]> httpParameters) {
-		StringBuilder out = new StringBuilder();
-		out.append(MessageFormat.format("{0}.html?", nextUri.replace("http://www.europeana.eu/resolve", "")));
-		out.append("query=").append(encode(query));
+		UrlBuilder url = new UrlBuilder(nextUri.replace("http://www.europeana.eu/resolve", "") + ".html");
+		if (query != null) {
+			url.addParam("query", query, true);
+		}
 		final String[] filterQueries = httpParameters.get("qf");
 		if (filterQueries != null) {
 			for (String filterQuery : filterQueries) {
-				out.append("&qf=").append(filterQuery);
+				url.addMultiParam("qf", filterQuery);
 			}
 		}
-		out.append("&start=").append(nextInt);
-		out.append("&startPage=").append(startPage);
-		out.append("&pageId=").append(pageId);
-		// if (!siwa.isEmpty()) {
-		// out.append("&siwa=").append(siwa);
-		// }
-		nextFullDocUrl = out.toString();
+		url.addParam("start", nextInt);
+		url.addParam("startPage", startPage);
+		url.addParam("pageId", pageId);
+		nextFullDocUrl = url.toString();
 	}
 
 	private void setPreviousFullDocUrl(Map<String, String[]> httpParameters) {
-		StringBuilder out = new StringBuilder();
-		out.append(MessageFormat.format("{0}.html?", previousUri.replace("http://www.europeana.eu/resolve", "")));
-		out.append("query=").append(encode(query));
+		UrlBuilder url = new UrlBuilder(previousUri.replace("http://www.europeana.eu/resolve", "") + ".html");
+		if (query != null) {
+			url.addParam("query", query, true);
+		}
 		final String[] filterQueries = httpParameters.get("qf");
 		if (filterQueries != null) {
 			for (String filterQuery : filterQueries) {
-				out.append("&qf=").append(filterQuery);
+				url.addMultiParam("qf", filterQuery);
 			}
 		}
-		out.append("&start=").append(previousInt);
-		out.append("&startPage=").append(startPage);
-		out.append("&pageId=").append(pageId);
-		previousFullDocUrl = out.toString();
+		url.addParam("start", previousInt);
+		url.addParam("startPage", startPage);
+		url.addParam("pageId", pageId);
+		previousFullDocUrl = url.toString();
 	}
 
 	// TODO: it filters out the normal refinements and rows as well!!!

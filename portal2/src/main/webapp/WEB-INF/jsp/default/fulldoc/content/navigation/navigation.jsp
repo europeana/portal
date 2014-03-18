@@ -4,7 +4,6 @@
 
 <c:choose>
 	<c:when test="${true || !empty model.fullBeanView.docIdWindowPager}">
-	
 		<c:set var="navClass" value=" hidden"/>
 		<c:if test="${!empty model.fullBeanView.docIdWindowPager.returnToResults 
 					&& model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl != null}">
@@ -12,8 +11,7 @@
 		</c:if>
 
 		<ul id="navigation" class="navigation notranslate hide-on-phones ${navClass}">
-	
-			<%-- return --%>
+			<%-- return to search results --%>
 			<c:if test="${!empty model.fullBeanView.docIdWindowPager.returnToResults 
 				&& model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl != null
 				&& !model.embedded}">

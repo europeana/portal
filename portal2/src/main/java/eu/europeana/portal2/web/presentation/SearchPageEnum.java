@@ -19,8 +19,8 @@ package eu.europeana.portal2.web.presentation;
 
 public enum SearchPageEnum {
 
-	SEARCH_HTML(PortalPageInfo.SEARCH_HTML), 
-	TIMELINE(PortalPageInfo.TIMELINE), 
+	SEARCH_HTML(PortalPageInfo.SEARCH_HTML),
+	TIMELINE(PortalPageInfo.TIMELINE),
 	MAP(PortalPageInfo.MAP);
 
 	private PortalPageInfo pageInfo;
