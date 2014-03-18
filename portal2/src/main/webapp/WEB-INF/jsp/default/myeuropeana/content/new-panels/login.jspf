@@ -1,9 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<h3><spring:message code="LogIn_t" /></h3>
+<p><spring:message code="LogIntoMyEuropeana_t" /></p>
 <form action="/${model.portalName}/${model.pageName}#login" method="post" class="login-box">
-	<h3><spring:message code="LogIn_t" /></h3>
-	<p><spring:message code="LogIntoMyEuropeana_t" /></p>
-
 	<fieldset>
 		<label for="j_username"><spring:message code="EmailAddress_t" /></label>
 		<input type='text' id="j_username" name="j_username" value="" maxlength="50"/>
