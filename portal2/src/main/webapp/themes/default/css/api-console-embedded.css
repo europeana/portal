@@ -1,0 +1,10 @@
+#api-form {
+	width: 260px;
+	float: left;
+}
+#api-result {
+	float: left;
+}
+.row .nine {
+	width: auto !important;
+}
