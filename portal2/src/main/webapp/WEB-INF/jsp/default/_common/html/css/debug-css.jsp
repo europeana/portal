@@ -115,8 +115,8 @@
 		</c:when>
 
 		<c:when test="${model.pageName == 'myeuropeana/index'}">
-			<link rel="stylesheet" href="/${branding}/css/myeuropeana-index.css" />
 			<link rel="stylesheet" href="/${branding}/css/login.css" />
+			<link rel="stylesheet" href="/${branding}/css/myeuropeana-index.css" />
 		</c:when>
 
 		<c:when test="${model.pageName == 'register.html'}">

@@ -1,11 +1,11 @@
-/*global jQuery */
+/*global jQuery, eu */
 /*jslint browser: true, white: true */
-(function( $ ) {
+(function( $, eu ) {
 	'use strict';
 
 	var panels = {
 		$panel_links: $('#panel-links li'),
-		default_panel: 'language-settings',
+		default_panel: 'login',
 		active_panel: null,
 		hash: null,
 
@@ -25,6 +25,10 @@
 		},
 
 		init: function() {
+			if ( eu.europeana.vars.user ) {
+				panels.default_panel = 'language-settings';
+			}
+
 			eu.europeana.timer.addCallback({
 				timer: 100,
 				fn: panels.checkHash,
@@ -37,9 +41,9 @@
 			$('#' + panels.hash).fadeIn();
 
 			switch ( panels.hash ) {
-				case'login': $('#j_username').focus();
-				case'register': $('#register_email').focus();
-				case'request-password': $('#forgot_email').focus();
+				case'login': $('#j_username').focus(); break;
+				case'register': $('#register_email').focus(); break;
+				case'request-password': $('#forgot_email').focus(); break;
 			}
 		},
 
@@ -98,6 +102,11 @@
 		translate_keywords_disabled: false,
 		cookie_field: 'searchLanguages',
 		cookie_value_delimeter: ',',
+		$clear_selection: $( '#clear-selection' ),
+
+		addClearSelectionListener: function() {
+			tkl.$clear_selection.on( 'click', tkl.handleClearSelectionClick );
+		},
 
 		addTranslateKeywordLanguagesListener: function() {
 			this.$translate_keyword_languages.each(function() {
@@ -197,6 +206,12 @@
 				: undefined;
 		},
 
+		handleClearSelectionClick: function() {
+			$.removeCookie( tkl.cookie_field );
+			tkl.translate_keyword_languages_count = 0;
+			tkl.checkCurrentCookie();
+		},
+
 		handleTranslateKeywordsClick: function() {
 			var $elm = $(this);
 
@@ -212,18 +227,20 @@
 		},
 
 		init: function() {
-			this.addTranslateKeywordLanguagesListener();
-			this.checkLimit();
-			this.checkCurrentCookie();
+			tkl.addTranslateKeywordLanguagesListener();
+			tkl.addClearSelectionListener();
+			tkl.checkLimit();
+			tkl.checkCurrentCookie();
 		},
 
 		randsort: function(c) {
-			var o = [];
+			var i, n, o = [];
 
-			for (var i = 0; i < c; i++) {
-				var n = Math.floor(Math.random()*c);
-				if ( jQuery.inArray(n, o) > 0 ) {
-					--i;
+			for ( i = 0; i < c; i += 1 ) {
+				n = Math.floor( Math.random() * c );
+
+				if ( $.inArray( n, o ) > 0 ) {
+					i -= 1;
 				} else {
 					o.push(n);
 				}
@@ -322,4 +339,4 @@
 	til.init();
 	panels.init();
 
-}( jQuery ));
+}( jQuery, eu ));

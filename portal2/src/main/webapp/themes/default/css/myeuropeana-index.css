@@ -28,6 +28,10 @@
 	overflow: auto;
 }
 
+#translate-keyword-languages label {
+	margin-bottom: .5em;
+}
+
 .disabled {
 	color: #ccc;
 }
@@ -38,4 +42,14 @@
 
 #login a {
 	display: block;
+}
+
+.login-box {
+	width: 282px;
+	overflow: auto;
+	float: none;
+}
+
+h3 {
+	margin-bottom: .5em;
 }

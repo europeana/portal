@@ -101,10 +101,6 @@
     	overflow: auto;
     }
 
-    .login-box {
-    	float: left;
-    }
-
     #login { margin-right: 20px; }
 
     #login-response {

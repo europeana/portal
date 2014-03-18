@@ -3,16 +3,7 @@
 <form action="${language_menu_action}" method="get">
 	<label>
 		<select id="portalLanguage" name="lang">
-			<c:forEach items="${model.portalLanguages}" var="language">
-				<c:choose>
-					<c:when test="${language.languageCode == model.locale}">
-						<option value="${language.languageCode}" selected> ${language.languageName}</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${language.languageCode}"> ${language.languageName}</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
+			<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 		</select>
 	</label>
 	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
@@ -41,13 +32,14 @@
 		</c:if>
 	</div>
 	<c:choose>
-			<c:when test="${!empty model.user}">
-				<p id="disabled-translate-keywords-msg" class="noscript"><spring:message code="Registered6Options_t" /></p>
-			</c:when>
-			<c:otherwise>
-				<p id="disabled-translate-keywords-msg" class="noscript"><spring:message code="Unregistered3Options_t" /></p>
-			</c:otherwise>
+		<c:when test="${!empty model.user}">
+			<p id="disabled-translate-keywords-msg" class="noscript"><spring:message code="Registered6Options_t" /></p>
+		</c:when>
+		<c:otherwise>
+			<p id="disabled-translate-keywords-msg" class="noscript"><spring:message code="Unregistered3Options_t" /></p>
+		</c:otherwise>
 	</c:choose>
+	<input type="reset" value="<spring:message code="ClearSelection_t" />" id="clear-selection" />
 	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>
 
@@ -55,19 +47,23 @@
 <h3><spring:message code="translate_items_t" /></h3>
 <form action="${language_menu_action}" method="get">
 	<label>
-		<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes"/> <spring:message code="translate_items_select_t" />&nbsp;
-		<select id="item-language" name="il">
-			<c:forEach items="${model.portalLanguages}" var="language">
-				<c:choose>
-					<c:when test="${language.languageCode == model.locale}">
-						<option value="${language.languageCode}" selected> ${language.languageName}</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${language.languageCode}"> ${language.languageName}</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</select>
+		<c:choose>
+			<c:when test="${!empty model.user}">
+				<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes"/> <spring:message code="translate_items_select_t" />&nbsp;
+				<select id="item-language" name="il" disabled>
+					<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
+				</select>
+				<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span>&nbsp;
+				<select id="item-language" name="il" disabled>
+					<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
+				</select>
+				<noscript><input type="submit" value="<spring:message code="Submit_t" />" disabled/></noscript>
+			</c:otherwise>
+		</c:choose>
+
+
 	</label>
-	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>

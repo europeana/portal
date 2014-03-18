@@ -1,8 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<h3><spring:message code="Register_t" /></h3>
 <form action="/${model.portalName}/${model.pageName}#register" method="post" class="login-box">
-	<h3><spring:message code="Register_t" /></h3>
-
 	<fieldset>
 		<input type="hidden" name="requested_action" value="Register"/>
 		<label for="register_email"><spring:message code="EmailAddress_t" /></label>

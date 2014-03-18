@@ -43,8 +43,8 @@
 	</c:when>
 
 	<c:when test="${model.pageName == 'myeuropeana/index'}">
-		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana-index.min.css" />
 		<link rel="stylesheet" href="/${branding}/css/min/login.min.css" />
+		<link rel="stylesheet" href="/${branding}/css/min/myeuropeana-index.min.css" />
 	</c:when>
 
 	<c:when test="${model.pageName == 'register.html'}">
