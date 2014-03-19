@@ -58,14 +58,14 @@ public class MyEuropeanaController {
 		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.MY_EUROPEANA);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU);
 	}
-	
-	@RequestMapping({"/myeuropeana/","/myeuropeana"})
+
+	@RequestMapping({"/myeuropeana"})
 	public ModelAndView myEuropeanaIndexHandler(HttpServletRequest request, Locale locale) throws Exception {
 		MyEuropeanaPage model = new MyEuropeanaPage();
-		
+
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
-		
+
 		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.MY_EUROPEANA);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 	}
