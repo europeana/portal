@@ -1,6 +1,6 @@
 <%-- portal-default-language --%>
 <h3><spring:message code="rswLabel_defaultLanguage_t" /></h3>
-<form action="${language_menu_action}" method="get">
+<form action="${language_menu_action}#language-settings" method="get">
 	<label>
 		<select id="portalLanguage" name="lang">
 			<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
