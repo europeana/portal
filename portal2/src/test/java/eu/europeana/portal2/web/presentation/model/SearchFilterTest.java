@@ -8,11 +8,16 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.portal2.web.presentation.model.submodel.SearchFilter;
 import eu.europeana.portal2.web.presentation.model.submodel.impl.BriefBeanViewImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"/portal2-test.xml"})
 public class SearchFilterTest {
 
 	BriefBeanViewImpl view;
@@ -33,7 +38,7 @@ public class SearchFilterTest {
 		assertEquals(1, filters.size());
 
 		SearchFilter paris = filters.get(0);
-		assertEquals("search.html", paris.getRemoveLinkUrl());
+		assertEquals("/portal/search.html", paris.getRemoveLinkUrl());
 		assertEquals(null, paris.getLabelObject().getField());
 		assertEquals(null, paris.getLabelObject().getFieldCode());
 		assertEquals("paris", paris.getLabelObject().getValue());
@@ -54,7 +59,7 @@ public class SearchFilterTest {
 
 		// check first item
 		SearchFilter paris = filters.get(0);
-		assertEquals("search.html?qf=szolnok", paris.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?qf=szolnok", paris.getRemoveLinkUrl());
 		assertEquals(null, paris.getLabelObject().getField());
 		assertEquals(null, paris.getLabelObject().getFieldCode());
 		assertEquals("paris", paris.getLabelObject().getValue());
@@ -66,7 +71,7 @@ public class SearchFilterTest {
 
 		// check second item
 		SearchFilter szolnok = filters.get(1);
-		assertEquals("search.html?query=paris", szolnok.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?query=paris", szolnok.getRemoveLinkUrl());
 		assertEquals(null, szolnok.getLabelObject().getField());
 		assertEquals(null, szolnok.getLabelObject().getFieldCode());
 		assertEquals("szolnok", szolnok.getLabelObject().getValue());
@@ -87,7 +92,7 @@ public class SearchFilterTest {
 		
 		// check first item
 		SearchFilter paris = filters.get(0);
-		assertEquals("search.html?qf=COUNTRY:hungary", paris.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?qf=COUNTRY%3Ahungary", paris.getRemoveLinkUrl());
 		assertEquals(null, paris.getLabelObject().getField());
 		assertEquals(null, paris.getLabelObject().getFieldCode());
 		assertEquals("paris", paris.getLabelObject().getValue());
@@ -99,7 +104,7 @@ public class SearchFilterTest {
 
 		// check second item
 		SearchFilter hungary = filters.get(1);
-		assertEquals("search.html?query=paris", hungary.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?query=paris", hungary.getRemoveLinkUrl());
 		assertEquals("COUNTRY", hungary.getLabelObject().getField());
 		assertEquals("ByCountry_t", hungary.getLabelObject().getFieldCode());
 		assertEquals("hungary", hungary.getLabelObject().getValue());
@@ -120,7 +125,7 @@ public class SearchFilterTest {
 		
 		// check first item
 		SearchFilter paris = filters.get(0);
-		assertEquals("search.html?qf=COUNTRY:hungary&qf=TYPE:document", paris.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?qf=COUNTRY%3Ahungary&qf=TYPE%3Adocument", paris.getRemoveLinkUrl());
 		assertEquals(null, paris.getLabelObject().getField());
 		assertEquals(null, paris.getLabelObject().getFieldCode());
 		assertEquals("paris", paris.getLabelObject().getValue());
@@ -132,7 +137,7 @@ public class SearchFilterTest {
 
 		// check second item
 		SearchFilter hungary = filters.get(1);
-		assertEquals("search.html?query=paris&qf=TYPE:document", hungary.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?query=paris&qf=TYPE%3Adocument", hungary.getRemoveLinkUrl());
 		assertEquals("COUNTRY", hungary.getLabelObject().getField());
 		assertEquals("ByCountry_t", hungary.getLabelObject().getFieldCode());
 		assertEquals("hungary", hungary.getLabelObject().getValue());
@@ -144,7 +149,7 @@ public class SearchFilterTest {
 
 		// check second item
 		SearchFilter document = filters.get(2);
-		assertEquals("search.html?query=paris&qf=COUNTRY:hungary", document.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?query=paris&qf=COUNTRY%3Ahungary", document.getRemoveLinkUrl());
 		assertEquals("TYPE", document.getLabelObject().getField());
 		assertEquals("ByMediatype_t", document.getLabelObject().getFieldCode());
 		assertEquals("document", document.getLabelObject().getValue());
@@ -165,7 +170,7 @@ public class SearchFilterTest {
 		assertEquals(1, filters.size());
 
 		SearchFilter paris = filters.get(0);
-		assertEquals("search.html?sort=title", paris.getRemoveLinkUrl());
+		assertEquals("/portal/search.html?sort=title", paris.getRemoveLinkUrl());
 		assertEquals(null, paris.getLabelObject().getField());
 		assertEquals(null, paris.getLabelObject().getFieldCode());
 		assertEquals("paris", paris.getLabelObject().getValue());
