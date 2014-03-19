@@ -1,10 +1,25 @@
-#api-form {
-	width: 260px;
-	float: left;
+#api-result{
+	float:left;	
+	width: 100%;	
 }
-#api-result {
-	float: left;
+
+.api-result-inner{
+	margin-left: 300px;
 }
-.row .nine {
-	width: auto !important;
+
+.left-col{
+	float:       left;
+	margin-left: -100%;
+	width:       300px;
 }
+
+.right-col{
+	
+}
+
+#api-result #response{
+	white-space: normal; 
+	word-wrap: break-word;
+}
+
+, #api-result #request-status, #api-result .request-http-headers

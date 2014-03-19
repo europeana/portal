@@ -2,10 +2,21 @@
 <%@ include file="/WEB-INF/jsp/default/_common/variables/variables.jsp" %>
 <%@ include file="/WEB-INF/jsp/default/_common/html-open.jsp" %>
 
+<c:set var="leftColClass"  value="left-col"></c:set>
+<c:set var="rightColClass" value="right-col"></c:set>
+<c:set var="rowClass"      value=""></c:set>
+
 <c:if test="${!model.embeddedConsole}">
-<div class="container">
-  <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
+
+	<c:set var="leftColClass"  value="three columns pull-nine"></c:set>
+	<c:set var="rightColClass" value="nine columns push-three"></c:set>
+	<c:set var="rowClass"      value="row"></c:set>
+
+	<div class="container">
+	  <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
 </c:if>
+
+
 
 <script type="text/javascript">
 <!--
@@ -17,8 +28,35 @@ var apiconsole = {
 //-->
 </script>
 
-  <div class="row" id="api-console">
-    <div id="api-form" class="three columns">
+  <div class="${rowClass}" id="api-console">
+  
+
+  	<%-- right --%>
+
+  	
+    <div id="api-result" class="${rightColClass}">
+      <div class="api-result-inner">
+        <div id="request-url-title"><h2><spring:message code="apiconsole_request_url_t" /></h2></div>
+        <div id="request-url">${model.apiUrl}</div>
+        <div id="request-status-title"><h2><spring:message code="apiconsole_http_status_code_t" /></h2></div>
+        <div id="request-status">${model.httpStatusCode}</div>
+        <div id="show-http-headers"><a href="#"><spring:message code="apiconsole_show_headers_t" /></a></div>
+        <div class="request-http-headers-title"><h2><spring:message code="apiconsole_request_headers_t" /></h2></div>
+        <div class="request-http-headers">
+          <c:forEach items="${model.requestHeaders}" var="entry">${entry.key}: ${entry.value}<br/></c:forEach>
+        </div>
+        <div class="request-http-headers-title"><h2><spring:message code="apiconsole_response_headers_t" /></h2></div>
+        <div class="request-http-headers">
+          <c:forEach items="${model.responseHeaders}" var="entry">${entry.key}: ${entry.value}<br/></c:forEach>
+        </div>
+        <div id="response-title"><h2><spring:message code="apiconsole_response_t" /></h2></div>
+        <div id="response">${model.jsonString}</div>
+      </div>
+    </div>
+  
+  	<%-- left --%>
+  
+    <div id="api-form" class="${leftColClass}">
       <div class="api-form-inner">
         <h2><spring:message code="apiconsole_function_t" />:</h2>
         <p class="section global-radios">
@@ -183,25 +221,8 @@ var apiconsole = {
       </div>
     </div>
 
-    <div id="api-result" class="nine columns">
-      <div class="api-result-inner">
-        <div id="request-url-title"><h2><spring:message code="apiconsole_request_url_t" /></h2></div>
-        <div id="request-url">${model.apiUrl}</div>
-        <div id="request-status-title"><h2><spring:message code="apiconsole_http_status_code_t" /></h2></div>
-        <div id="request-status">${model.httpStatusCode}</div>
-        <div id="show-http-headers"><a href="#"><spring:message code="apiconsole_show_headers_t" /></a></div>
-        <div class="request-http-headers-title"><h2><spring:message code="apiconsole_request_headers_t" /></h2></div>
-        <div class="request-http-headers">
-          <c:forEach items="${model.requestHeaders}" var="entry">${entry.key}: ${entry.value}<br/></c:forEach>
-        </div>
-        <div class="request-http-headers-title"><h2><spring:message code="apiconsole_response_headers_t" /></h2></div>
-        <div class="request-http-headers">
-          <c:forEach items="${model.responseHeaders}" var="entry">${entry.key}: ${entry.value}<br/></c:forEach>
-        </div>
-        <div id="response-title"><h2><spring:message code="apiconsole_response_t" /></h2></div>
-        <div id="response">${model.jsonString}</div>
-      </div>
-    </div>
+
+
   </div>
 <c:if test="${!model.embeddedConsole}">
   <%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
