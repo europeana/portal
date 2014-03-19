@@ -13,22 +13,12 @@
 	width:       300px;
 }
 
-.right-col{
-	
-}
-
-/*
-#api-result #response{
-	white-space: normal; 
-	word-wrap: break-word;
-}*/
 
 
 .api-submit{
 	background-color: #fff;
 	border:           3px solid #000;
 	border-radius:    0;
-	XXXbox-shadow: none !important;
 	color: #000;
 	width: 100%;
 }

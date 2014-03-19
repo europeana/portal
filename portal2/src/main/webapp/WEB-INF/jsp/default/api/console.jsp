@@ -59,13 +59,14 @@ var apiconsole = {
     <div id="api-form" class="${leftColClass}">
       <div class="api-form-inner">
         <h2><spring:message code="apiconsole_function_t" />:</h2>
-        <p class="section global-radios">
+        
+        <div class="section global-radios">
           <c:forEach items="${model.supportedFunctions}" var="function">
             <input type="radio" name="function" id="api-function-${function}" value="${function}" <c:if test="${model.function == function}">checked="checked"</c:if> />
             <label for="api-function-${function}">${function}</label>
             <br/>
           </c:forEach>
-        </p>
+        </div>
 
         <fieldset id="search-panel">
           <!--legend><spring:message code="apiconsole_search_parameters_t" /></legend-->
@@ -75,14 +76,16 @@ var apiconsole = {
             <input type="hidden" name="function" value="search" />
             <input type="hidden" name="embedded" value="${model.embeddedConsole}" />
 
-            <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
+            <span class="field-label"><spring:message code="apiconsole_query_t" />:</span>
             <c:set var="searchQuery" value="" />
             <c:if test="${model.function == 'search'}">
               <c:set var="searchQuery" value="${fn:escapeXml(model.query)}" />
             </c:if>
+            
             <input type="text" id="api-query" name="query" value="${searchQuery}" /><br/>
 
-            <label for="api-qf"><spring:message code="apiconsole_refinements_t" />:</label><br/>
+            <span class="field-label"><spring:message code="apiconsole_refinements_t" />:</span>
+            
             <c:forEach items="${model.refinements}" var="qf">
               <input type="text" id="api-qf" name="qf" value="${fn:escapeXml(qf)}" /><br/>
             </c:forEach>
@@ -143,39 +146,46 @@ var apiconsole = {
             <h4 ><spring:message code="apiconsole_additional_parameters_t" /></h4>
 
             <div>
-              <label for="api-reusability"><spring:message code="apiconsole_reusability_t" />:</label><br/>
-              <c:forEach items="${model.supportedReusabilityValues}" var="reusability">
+              <h5><spring:message code="apiconsole_reusability_t" /></h5>
+              
+              <c:forEach items="${model.supportedReusabilityValues}" var="reusability" varStatus="status">
                 <input type="checkbox" name="reusability" id="api-reusability-${reusability.key}" value="${reusability.key}" 
                   <c:if test="${!empty model.reusability[reusability.key] && model.reusability[reusability.key] == true}">checked="checked"</c:if> />
                 <label for="api-reusability-${reusability.key}"><spring:message code="${reusability.value}" /></label><br/>
+                <c:if test="${status.last}"><br/></c:if>
               </c:forEach>
             </div>
 
             <div>
-              <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
-              <c:forEach items="${model.defaultSearchProfiles}" var="profile">
+              <h5><spring:message code="apiconsole_profile_t" /></h5>
+              <c:forEach items="${model.defaultSearchProfiles}" var="profile" varStatus="status">
                 <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
                 <label for="api-profile-${profile.key}">${profile.key}</label><br/>
+              	<c:if test="${status.last}"><br/></c:if>
               </c:forEach>
             </div>
 
-            <p class="section">
-              <label for="api-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>
-              <c:forEach items="${model.defaultRows}" var="rows">
+            <div class="section">
+              <span class="field-label"><spring:message code="apiconsole_rows_t" />:</span>
+              <c:forEach items="${model.defaultRows}" var="rows" varStatus="status">
+                
                 <input type="radio" name="rows" id="api-rows-${rows}" value="${rows}" <c:if test="${model.rows == rows}">checked="checked"</c:if> />
                 <label for="api-rows-${rows}">${rows}</label>
+               	
+               	<c:if test="${status.last}"><br/></c:if>
+              
               </c:forEach>
-            </p>
+            </div>
 
-            <p class="section">
-              <label for="api-start"><spring:message code="apiconsole_start_t" />:</label><br/>
+            <div class="section">
+              <span class="field-label"><spring:message code="apiconsole_start_t" />:</span>
               <input type="text" name="start" value="${model.start}" />
-            </p>
+            </div>
 
-            <p class="section">
-              <label for="api-callback"><spring:message code="apiconsole_callback_t" />:</label><br/>
+            <div class="section">
+              <span class="field-label"><spring:message code="apiconsole_callback_t" />:</span>
               <input type="text" name="callback" value="${model.callback}" />
-            </p>
+            </div>
 
             <div id="submit-wrapper">
               <c:choose>
@@ -237,15 +247,15 @@ var apiconsole = {
             <c:if test="${model.function == 'suggestions'}">
               <c:set var="suggestionsQuery" value="${fn:escapeXml(model.query)}" />
             </c:if>
-            <input type="text" id="api-query" name="query" value="${suggestionsQuery}" /><br/>
+            <input type="text" id="api-query" name="query" value="${suggestionsQuery}" />
 
-            <p class="section">
-              <label for="api-suggestions-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>
+            <div class="section">
+              <span class="field-label"><spring:message code="apiconsole_rows_t" />:</span>
               <c:forEach items="${model.defaultRows}" var="rows">
                 <input type="radio" name="rows" id="api-suggestions-rows-${rows}" value="${rows}" <c:if test="${model.rows == rows}">checked="checked"</c:if> />
                 <label for="api-suggestions-rows-${rows}">${rows}</label>
               </c:forEach>
-            </p>
+            </div>
 
             <label for="api-phrases"><spring:message code="apiconsole_phrases_t" />:</label><br/>
             <input type="checkbox" id="api-phrases" name="phrases" <c:if test="${model.phrases}">checked="checked"</c:if> /><br/>

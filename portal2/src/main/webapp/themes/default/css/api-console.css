@@ -75,10 +75,8 @@ fieldset {
 	border:			1px solid #E4E4E4;
 	border-radius:	0.2em;
 	font-size:		1em;
-	XXXXmargin:			0.75em 0 0.75em 0;  
 	padding:		0.1em;
 	width:			100%;
-	
 	
 	box-sizing:			border-box;
 	-moz-box-sizing:	border-box;
@@ -92,12 +90,26 @@ fieldset {
 	border:			1px solid orange;
 }
 
+#api-query,
+#api-qf{
+	margin-bottom: 1em;
+}
 
 #search-panel h4,
 #search-panel h5{
 	font-weight:	bold;
+}
+
+#search-panel .field-label{
+	display:	block;
+}
+
+#search-panel h4,
+#search-panel h5,
+#search-panel .field-label{
 	margin-bottom:	1em;
 }
+
 
 p.global-radios {
   padding-bottom: 2em !important;
