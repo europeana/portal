@@ -26,7 +26,7 @@ public class RedirectController {
 
 	@Resource
 	private Configuration config;
-	
+
 	@Resource
 	private EuropeanaUrlService urlService;
 

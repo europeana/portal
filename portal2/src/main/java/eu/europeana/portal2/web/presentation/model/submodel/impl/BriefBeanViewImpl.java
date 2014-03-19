@@ -21,21 +21,28 @@
 
 package eu.europeana.portal2.web.presentation.model.submodel.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
+import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinksImpl;
 import eu.europeana.portal2.web.model.facets.Facet;
-import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
@@ -52,8 +59,6 @@ import eu.europeana.portal2.web.util.SearchFilterUtil;
  * @see eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator
  */
 public class BriefBeanViewImpl implements BriefBeanView {
-	
-	Logger log = Logger.getLogger(BriefBeanViewImpl.class.getCanonicalName());
 
 	private ResultPagination pagination;
 	private List<? extends BriefBean> briefBeans;
@@ -63,26 +68,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	private BriefBean matchDoc;
 	private SpellCheck spellcheck;
 
-	public BriefBeanViewImpl() {
-	};
-
-	/*
-	 * public BriefBeanViewImpl(BeanQueryModelFactory factory, SolrQuery solrQuery, QueryResponse solrResponse, String
-	 * requestQueryString) throws UnsupportedEncodingException, EuropeanaQueryException { pagination =
-	 * createPagination(solrResponse, solrQuery, requestQueryString); briefDocs =
-	 * factory.addIndexToBriefDocList(solrQuery, solrBinder.bindBriefDoc(solrResponse.getResults())); queryLinks =
-	 * FacetQueryLinksImpl.createDecoratedFacets(solrQuery, solrResponse.getFacetFields()); facetLogs =
-	 * createFacetLogs(solrResponse); matchDoc = createBriefDoc(factory, solrResponse); spellcheck =
-	 * solrResponse.getSpellCheckResponse(); }
-	 */
-
-	/*
-	 * private BriefBean createBriefDoc(BeanQueryModelFactory factory, QueryResponse solrResponse) { BriefBean briefDoc
-	 * = null; SolrDocumentList matchDoc = (SolrDocumentList) solrResponse .getResponse().get("match"); if (matchDoc !=
-	 * null) { List<? extends BriefBean> briefBeanList = solrBinder.bindBriefDoc(matchDoc); if (briefBeanList.size() >
-	 * 0) { briefDoc = briefBeanList.get(0); String europeanaId = factory.createFullDocUrl(briefDoc.getId());
-	 * briefDoc.setFullDocUrl(europeanaId); } } return briefDoc; }
-	 */
+	public BriefBeanViewImpl() {};
 
 	public void setFacetLogs(List<FacetField> facetFieldList) {
 		this.facetLogs = createFacetLogs(facetFieldList);
@@ -115,15 +101,6 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		}
 		return facetLogs;
 	}
-
-	/*
-	 * // createPagination(solrResponse, solrQuery, requestQueryString); public static ResultPagination
-	 * createPagination(QueryResponse response, SolrQuery query, String requestQueryString) throws
-	 * EuropeanaQueryException { int numFound = (int) response.getResults().getNumFound(); Boolean debug =
-	 * query.getBool("debugQuery"); String parsedQuery = "Information not available"; if (debug != null && debug) {
-	 * parsedQuery = String.valueOf(response.getDebugMap().get( "parsedquery_toString")); } return new
-	 * ResultPaginationImpl(query, numFound, requestQueryString, parsedQuery); }
-	 */
 
 	@Override
 	public List<? extends BriefBean> getBriefBeans() {
@@ -178,30 +155,34 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	public void makeFilters(Query query, Map<String, String[]> urlParams) {
 		searchFilters = new ArrayList<SearchFilter>();
 		List<SearchParam> existingValues = SearchFilterUtil.getExistingValues(query);
-		List<String> otherUrlParams = SearchFilterUtil.getOtherUrlParams(urlParams);
+		Map<String, String[]> otherUrlParams = SearchFilterUtil.getOtherUrlParams(urlParams);
 
 		for (SearchParam param : existingValues) {
-			List<String> removeLinkParams = new ArrayList<String>();
-			removeLinkParams.addAll(otherUrlParams);
+			UrlBuilder removeLink = null;
+			UrlBuilder breadcrumbLink = null;
+			try {
+				removeLink = EuropeanaUrlServiceImpl.getBeanInstance().getPortalSearch();
+				breadcrumbLink = EuropeanaUrlServiceImpl.getBeanInstance().getPortalSearch();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+			for (String key : otherUrlParams.keySet()) {
+				removeLink.addParam(key, otherUrlParams.get(key));
+				breadcrumbLink.addParam(key, otherUrlParams.get(key));
+			}
+
+			boolean addBreadcrumb = true;
 			for (SearchParam otherSearchParam : existingValues) {
+				if (addBreadcrumb) {
+					breadcrumbLink.addMultiParam(otherSearchParam.getKey(), otherSearchParam.getValue());
+				}
 				if (param.equals(otherSearchParam)) {
+					addBreadcrumb = false;
 					continue;
 				}
-				removeLinkParams.add(otherSearchParam.getKey() + "=" + otherSearchParam.getValue());
+				removeLink.addMultiParam(otherSearchParam.getKey(), otherSearchParam.getValue());
 			}
-			String removeLinkUrl = "search.html" + (removeLinkParams.size() > 0 ? "?" : "")
-					+ StringUtils.join(removeLinkParams, "&");
-
-			List<String> breadcrumbLinkParams = new ArrayList<String>();
-			breadcrumbLinkParams.addAll(otherUrlParams);
-			for (SearchParam otherSearchParam : existingValues) {
-				breadcrumbLinkParams.add(otherSearchParam.getKey() + "=" + otherSearchParam.getValue());
-				if (param.equals(otherSearchParam)) {
-					break;
-				}
-			}
-			String breadcrumbLinkUrl = "search.html" + (breadcrumbLinkParams.size() > 0 ? "?" : "")
-					+ StringUtils.join(breadcrumbLinkParams, "&");
 
 			SearchLabel label = null;
 			String paramValue = param.getValue();
@@ -213,7 +194,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 			} else {
 				label = new SearchLabel(null, paramValue);
 			}
-			searchFilters.add(new SearchFilter(label, removeLinkUrl, breadcrumbLinkUrl));
+			searchFilters.add(new SearchFilter(label, removeLink.toString(), breadcrumbLink.toString()));
 		}
 	}
 

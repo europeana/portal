@@ -219,12 +219,9 @@ public class WidgetController {
 		briefBeanView.setPagination(pagination);
 
 		// set search filters
-		briefBeanView.makeFilters(query, new HashMap<String, String[]>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("q", new String[] { "fake" });
-			}
-		});
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		urlParams.put("q", new String[] {"fake"});
+		briefBeanView.makeFilters(query, urlParams);
 
 		return briefBeanView;
 	}

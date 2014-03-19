@@ -1,6 +1,7 @@
 package eu.europeana.portal2.web.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,18 +40,14 @@ public class SearchFilterUtil {
 	 * @return
 	 *   The filtered out parameters
 	 */
-	public static List<String> getOtherUrlParams(Map<String, String[]> urlParams) {
-		List<String> otherUrlValues = new ArrayList<String>();
-		for (Entry<String, String[]> entry : urlParams.entrySet()) {
-			if (entry.getKey().equals("query") || entry.getKey().equals("qf")) {
-				continue;
-			}
-			String key = entry.getKey();
-			if (entry.getValue().length > 1) {
-				key = key + "[]";
-			}
-			for (String value : entry.getValue()) {
-				otherUrlValues.add(key + "=" + value);
+	public static Map<String, String[]> getOtherUrlParams(Map<String, String[]> urlParams) {
+		Map<String, String[]> otherUrlValues = new HashMap<String, String[]>();
+		if (urlParams != null && urlParams.entrySet().size() > 0) {
+			for (Entry<String, String[]> entry : urlParams.entrySet()) {
+				if (entry.getKey().equals("query") || entry.getKey().equals("qf")) {
+					continue;
+				}
+				otherUrlValues.put(entry.getKey(), entry.getValue());
 			}
 		}
 		return otherUrlValues;

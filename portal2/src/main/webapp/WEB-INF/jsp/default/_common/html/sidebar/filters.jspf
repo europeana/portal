@@ -39,7 +39,7 @@
 							<a href="${fn:escapeXml(fn:replace(filter.breadcrumbLinkUrl, '#', '%23'))}" class="europeana">${linkLabel}</a>
 							<a href="${fn:escapeXml(fn:replace(filter.removeLinkUrl, '#', '%23'))}">
 								<span class="icon-remove">&nbsp;</span>&nbsp;
-							</a>							
+							</a>
 						</c:when>
 						<c:otherwise>${linkLabel}</c:otherwise>
 					</c:choose>

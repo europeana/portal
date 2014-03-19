@@ -17,7 +17,7 @@ public class SearchFilterTest {
 
 	BriefBeanViewImpl view;
 	Map<String, String[]> urlParams;
-	
+
 	@Before
 	public void runBeforeEveryTests() {
 		view = new BriefBeanViewImpl();
@@ -51,7 +51,7 @@ public class SearchFilterTest {
 		List<SearchFilter> filters = view.getSearchFilters();
 
 		assertEquals(2, filters.size());
-		
+
 		// check first item
 		SearchFilter paris = filters.get(0);
 		assertEquals("search.html?qf=szolnok", paris.getRemoveLinkUrl());

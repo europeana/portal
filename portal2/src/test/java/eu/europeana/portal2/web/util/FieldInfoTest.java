@@ -16,10 +16,10 @@ import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/portal2-test.xml"})
 public class FieldInfoTest {
-	
+
 	@Resource
 	private SchemaOrgMapping mapping;
-	
+
 	@Test
 	public void test() {
 		FieldInfo field = new FieldInfo(mapping, "edm:ProvidedCHO", "providedCHOs", "ProvidedCHO");
