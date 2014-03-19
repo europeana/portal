@@ -63,13 +63,15 @@ var apiconsole = {
           <c:forEach items="${model.supportedFunctions}" var="function">
             <input type="radio" name="function" id="api-function-${function}" value="${function}" <c:if test="${model.function == function}">checked="checked"</c:if> />
             <label for="api-function-${function}">${function}</label>
+            <br/>
           </c:forEach>
         </p>
 
         <fieldset id="search-panel">
-          <legend><spring:message code="apiconsole_search_parameters_t" /></legend>
-
+          <!--legend><spring:message code="apiconsole_search_parameters_t" /></legend-->
           <form>
+          	<h4><spring:message code="apiconsole_search_parameters_t" /></h4>
+
             <input type="hidden" name="function" value="search" />
             <input type="hidden" name="embedded" value="${model.embeddedConsole}" />
 
@@ -88,41 +90,74 @@ var apiconsole = {
             <br/>
             <br/>
 
-            <p class="section">
-              <label for="api-latlong"><spring:message code="apiconsole_spatial_t" />:</label><br/>
-              <span class="api-latlong"><spring:message code="apiconsole_lat_t" /></span>
-              <input type="text" id="api-latMin" name="latMin" value="${model.latMin}" class="api-latlong"/> &mdash;
-              <input type="text" id="api-latMax" name="latMax" value="${model.latMax}" class="api-latlong" /><br/>
-              <span class="api-latlong"><spring:message code="apiconsole_long_t" /></span>
-              <input type="text" id="api-longMin" name="longMin" value="${model.longMin}" class="api-latlong" /> &mdash;
-              <input type="text" id="api-longMax" name="longMax" value="${model.longMax}" class="api-latlong" /><br/>
+            <h4 ><spring:message code="apiconsole_spatial_t" /></h4>
+            
+            <div class="section">
+              
+              <h5 class="api-latlong"><spring:message code="apiconsole_lat_t" /></h5>
+              
+              <div class="input-group">
+	              <input type="text" id="api-latMin" name="latMin" value="${model.latMin}" class="api-latlong"/>
+	              
+	               &mdash;
+	              
+	              <input type="text" id="api-latMax" name="latMax" value="${model.latMax}" class="api-latlong" />
+			  </div>
+              
+
+              <h5 class="api-latlong"><spring:message code="apiconsole_long_t" /></h5>
+
+              <div class="input-group">
+              
+	              <input type="text" id="api-longMin" name="longMin" value="${model.longMin}" class="api-latlong" />
+	              
+	               &mdash;
+	              
+	              <input type="text" id="api-longMax" name="longMax" value="${model.longMax}" class="api-latlong" />
+              </div>
+              
+              
               <span class="api-help"><spring:message code="apiconsole_spatial_help_t" /></span>
-            </p>
+            </div>
 
-            <p class="section">
-              <label for="api-latlong"><spring:message code="apiconsole_temporal_t" />:</label><br/>
-              <span class="api-latlong"><spring:message code="apiconsole_year_t" /></span>
-              <input type="text" id="api-yearMin" name="yearMin" value="${model.yearMin}" class="api-latlong"/> &mdash;
-              <input type="text" id="api-yearMax" name="yearMax" value="${model.yearMax}" class="api-latlong" /><br/>
+            <div class="section">
+            
+              <h4><spring:message code="apiconsole_temporal_t" /></h4>
+              
+              <h5><spring:message code="apiconsole_year_t" /></h5>
+
+              
+              <div class="input-group">
+              
+	              <input type="text" id="api-yearMin" name="yearMin" value="${model.yearMin}" class="api-latlong"/>
+	              &mdash;
+	              <input type="text" id="api-yearMax" name="yearMax" value="${model.yearMax}" class="api-latlong" />
+              
+              </div>
+              
               <span class="api-help"><spring:message code="apiconsole_temporal_help_t" /></span>
-            </p>
+              
+            </div>
 
-            <p>
+
+            <h4 ><spring:message code="apiconsole_additional_parameters_t" /></h4>
+
+            <div>
               <label for="api-reusability"><spring:message code="apiconsole_reusability_t" />:</label><br/>
               <c:forEach items="${model.supportedReusabilityValues}" var="reusability">
                 <input type="checkbox" name="reusability" id="api-reusability-${reusability.key}" value="${reusability.key}" 
                   <c:if test="${!empty model.reusability[reusability.key] && model.reusability[reusability.key] == true}">checked="checked"</c:if> />
                 <label for="api-reusability-${reusability.key}"><spring:message code="${reusability.value}" /></label><br/>
               </c:forEach>
-            </p>
+            </div>
 
-            <p>
+            <div>
               <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
               <c:forEach items="${model.defaultSearchProfiles}" var="profile">
                 <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
                 <label for="api-profile-${profile.key}">${profile.key}</label><br/>
               </c:forEach>
-            </p>
+            </div>
 
             <p class="section">
               <label for="api-rows"><spring:message code="apiconsole_rows_t" />:</label><br/>
@@ -143,7 +178,14 @@ var apiconsole = {
             </p>
 
             <div id="submit-wrapper">
-              <input type="submit" value="get result" class="deans-button-1 europeana-button-1 api-submit">
+              <c:choose>
+	              <c:when test="${model.embeddedConsole}">
+		              <input type="submit" value="get result" class="api-submit bold">
+	              </c:when>
+	              <c:otherwise>
+		              <input type="submit" value="get result" class="deans-button-1 europeana-button-1 api-submit">
+	              </c:otherwise>
+              </c:choose>
             </div>
           </form>
         </fieldset>

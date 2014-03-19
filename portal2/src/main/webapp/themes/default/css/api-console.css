@@ -10,9 +10,16 @@
   padding: 0.3em;
 }
 
+.api-submit.bold{
+	font-weight:    bold;
+	text-transform: uppercase;
+}
+
 #api-form fieldset {
+  /*
   border: 1px solid #ccc;
   margin-top: 1em;
+  */
 }
 
 #api-form fieldset legend {
@@ -23,9 +30,16 @@
   margin-bottom: 0.5em;
 }
 
-#api-result #request-url, #api-result #response, #api-result #request-status, #api-result .request-http-headers {
+#api-result #request-url,
+#api-result #response,
+#api-result #request-status,
+#api-result .request-http-headers {
   font-family: sans-serif;
   font-size: 0.8em;
+  
+	white-space: normal; 
+	word-wrap: break-word;
+  
 }
 
 #request-url, #response, #request-status, .request-http-headers {
@@ -49,16 +63,40 @@ h2 {
 }
 
 fieldset {
+	/*
   padding: 1em;
+  */
 }
 
 #search-panel input[type=text],
 #record-panel input[type=text],
 #suggestions-panel input[type=text]
 {
-  width: 100%;
-  border: 1px solid #333;
-  padding: 0.3em;
+	border:			1px solid #E4E4E4;
+	border-radius:	0.2em;
+	font-size:		1em;
+	XXXXmargin:			0.75em 0 0.75em 0;  
+	padding:		0.1em;
+	width:			100%;
+	
+	
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
+  
+}
+
+#search-panel input[type=text]:focus,
+#record-panel input[type=text]:focus,
+#suggestions-panel input[type=text]:focus{
+	border:			1px solid orange;
+}
+
+
+#search-panel h4,
+#search-panel h5{
+	font-weight:	bold;
+	margin-bottom:	1em;
 }
 
 p.global-radios {
@@ -81,15 +119,36 @@ p.global-radios {
   padding: 1em 0 1em 1em;
 }
 
-#search-panel input.api-latlong {
-  width: 40px;
-  padding: 0.3em;
+#search-panel .input-group {
+	text-align: center;
+	margin-bottom: 2em;
 }
+
+#search-panel .input-group input {
+  width:	45%;
+  padding:	0.1em;
+}
+
+#api-yearMin,
+#api-latMin,
+#api-longMin{
+	float: left;
+}
+
+#api-yearMax,
+#api-latMax,
+#api-longMax{
+	float: right;
+}
+
 #search-panel span.api-latlong {
   width: 90px;
   display: block;
   float: left;
 }
+
 .api-help {
   font-size: 0.8em;
+  position: relative;
+  top: -1.5em;
 }
