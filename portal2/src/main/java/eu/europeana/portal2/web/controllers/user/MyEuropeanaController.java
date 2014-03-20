@@ -66,19 +66,19 @@ public class MyEuropeanaController {
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
 
-		/*
-		List<SavedItem> savedItems = new ArrayList<SavedItem>(user.getSavedItems());
-		Collections.sort(savedItems);
-		model.setSavedItems(savedItems);
+		if ( user != null ) {
+			List<SavedItem> savedItems = new ArrayList<SavedItem>(user.getSavedItems());
+			Collections.sort(savedItems);
+			model.setSavedItems(savedItems);
 
-		List<SavedSearch> savedsearches = new ArrayList<SavedSearch>(user.getSavedSearches());
-		Collections.sort(savedsearches);
-		model.setSavedSearches(savedsearches);
+			List<SavedSearch> savedsearches = new ArrayList<SavedSearch>(user.getSavedSearches());
+			Collections.sort(savedsearches);
+			model.setSavedSearches(savedsearches);
 
-		List<SocialTag> socialTags = new ArrayList<SocialTag>(user.getSocialTags());
-		Collections.sort(socialTags);
-		model.setSocialTags(socialTags);
-		*/
+			List<SocialTag> socialTags = new ArrayList<SocialTag>(user.getSocialTags());
+			Collections.sort(socialTags);
+			model.setSocialTags(socialTags);
+		}
 
 		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.MY_EUROPEANA);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
