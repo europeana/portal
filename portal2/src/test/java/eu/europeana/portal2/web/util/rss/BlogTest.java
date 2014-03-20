@@ -101,9 +101,9 @@ public class BlogTest {
 			try {
 				orig = ImageIO.read(new URL(location));
 			} catch (MalformedURLException e) {
-				fail("MalformedURLException during reading in location: " + e.getLocalizedMessage());
+				fail(String.format("MalformedURLException during reading in %s: ", location, e.getLocalizedMessage()));
 			} catch (IOException e) {
-				fail("IOException during reading in location: " + e.getLocalizedMessage());
+				fail(String.format("IOException during reading in location %s: ", location, e.getLocalizedMessage()));
 			}
 
 			for (int i = 0, len = responsiveWidths.length; i < len; i++) {
@@ -117,7 +117,7 @@ public class BlogTest {
 							(height <= responsive.getHeight()+1 || height >= responsive.getHeight()+1));
 					assertTrue(responsive.getHeight() > 1);
 				} catch (IOException e) {
-					fail("IOException during scaling image: " + e.getLocalizedMessage());
+					fail(String.format("IOException during scaling image %s: ", location, e.getLocalizedMessage()));
 				}
 			}
 		}
