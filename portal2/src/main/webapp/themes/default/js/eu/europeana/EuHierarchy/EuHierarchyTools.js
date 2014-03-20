@@ -32,6 +32,7 @@ var EuHierarchyTools = function(hierarchy) {
 	});
 	
 	
+	
 	$('.spin').click(function() {
 
 		console.log('get limits...');
@@ -50,6 +51,7 @@ var EuHierarchyTools = function(hierarchy) {
 
 		return;
 	});
+	
 
 };
 

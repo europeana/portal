@@ -1,17 +1,21 @@
 .hierarchy-objects{
 	font-family: Arial,Verdana,Serif;
 	font-size:   1em;
-	line-height: 1em;
+	line-height: 1.4em;
 	position:    relative;
 }
 
-/* TODO: fill viewport on narrow breakpoints */
-
 .hierarchy-objects{
-	max-width:  50%;
-	width:      50%;
-	float:      left;
-	margin-top: 1em;
+	max-width:  100%;
+	width:      100%;
+}
+
+@media only screen and ( min-width:48em ){
+	.hierarchy-objects{
+		max-width:  50%;
+		width:      50%;
+		float:      left;
+	}
 }
 
 .hierarchy-top-panel,
@@ -24,7 +28,9 @@
 
 .hierarchy-container{
 	border:		1px solid #dadada;
-	font-size:	1.5em;
+
+	XXXfont-size:	1.4em;		/* tweak this to scale the whole component proportionally */
+	
 	overflow:	hidden;	
 	position: relative;
 }
@@ -62,18 +68,31 @@
 	box-sizing: border-box;
 }
 
+
+#hierarchy .icon-image,
+#hierarchy .icon-sound,
+#hierarchy .icon-text,
+#hierarchy .icon-video{
+	font-size:		0.9em;
+	float:			right;
+	margin-right:	1em;
+}
+
+
+
  /*
  	style
 */
 
 #hierarchy.jstree-default .jstree-node,
 #hierarchy.jstree-default .jstree-anchor{
-	line-height: 1em;
+	line-height: 1.4em;
 }
+
 
 #hierarchy.jstree-default-responsive .jstree-anchor,
 #hierarchy.jstree-default-responsive .jstree-anchor{
-	line-height: 1em;		
+	line-height: 1.4em;
 }
 
 #hierarchy.jstree-default .jstree-node {
@@ -183,7 +202,7 @@
 
 #hierarchy.jstree-default .jstree-icon:empty {
   height:      1em;
-  line-height: 1em;
+  line-height: 1.4em;
   width:       1em;
 }
 #hierarchy.jstree-default .jstree-icon:empty {

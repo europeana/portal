@@ -25,6 +25,10 @@ var dataGen = function(){
 						"data": {
 							"parentUrl":	"dataGen.parent1()",
 							"index":        9,
+							
+							/* TODO - will an index of 1 on the root break the load?  */
+							"xindex":	        0,
+							
 							"childrenUrl":	"dataGen.books('dataGen.base()')",
 							"total":		14
 						}
@@ -48,7 +52,7 @@ var dataGen = function(){
 					"childrenUrl" :		 "dataGen.parent1_kids()",
 					"total":     17,
 
-					"parentUrl": "dataGen.parent2()",
+					"parentUrl": "dataGen.parentTop()",
 					"index":     1
 				}
 			}
@@ -177,23 +181,154 @@ var dataGen = function(){
 
 		},
 
-		parent2 : function(){
+		parentTop : function(){
 			return {
-				"text": 'Parent 2',
-				
-				"ZZZurl" :"",
-
+				"text": 'The Abingdon Apocalypse',
 				"data": {
-					"childrenUrl":	"dataGen.parent2_kids()",
-					"total": 1,
+					"childrenUrl":	"dataGen.parentTop_kids(dataGen.parentTop())",
+					"total": 3,
 					"index": 1
 				}
 			}
 		},
 
-		parent2_kids : function(){
-			return [dataGen.parent1()];
+		parentTop_kids : function(parentUrlIn){
+			//return [dataGen.parent1()];
+			return [
+			        dataGen.parent1(),
+			        dataGen.apocalypse_vol_1('dataGen.parentTop_kids()'),
+			        dataGen.apocalypse_vol_2('dataGen.parentTop_kids()')
+			];
 		},
+		
+		apocalypse_vol_1 : function(parentUrlIn){
+			return {
+				"text": "Volume 1",
+				"data": {
+					"parentUrl":	parentUrlIn,
+					"childrenUrl":	"dataGen.apocalypse_vol_1_content('dataGen.apocalypse_vol_1()')",
+					"total": 3,
+					"index": 2,
+					"XXXeuropeana" : {
+						"icon" : "image"
+					}
+				}
+
+			}
+		},
+		
+		apocalypse_vol_2 : function(parentUrlIn){
+			return {
+				"text": "Volume 2",
+				"data": {
+					"parentUrl":	parentUrlIn,
+					"childrenUrl":	"dataGen.apocalypse_vol_2_content('dataGen.apocalypse_vol_2()')",
+					"total": 3,
+					"index": 3,
+					"XXXeuropeana" : {
+						"icon" : "image"
+					}
+				}
+
+			}
+		},
+		
+		apocalypse_vol_1_content : function(parentUrlIn){
+			return [
+			    {
+					"text": 'Unfinished Miniature Of Martyrdoms, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"index": 1,
+						"europeana" : {
+							"icon" : "image"
+						}
+					}
+				},
+			    {
+					"text": 'The Angel Appears To St. John On The Island Of Patmos, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"index": 2,
+						"europeana" : {
+							"icon" : "image"
+						}
+					}
+				},
+			    {
+					"text": 'Miniature Representing The Idea That Those Who Despise The Warnings Of The Prophets Go To Hell, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"index": 3,
+						"europeana" : {
+							"icon" : "image"
+						}
+					}
+				}
+				]
+		},
+		
+		apocalypse_vol_2_content : function(parentUrlIn){
+			return [
+			    {
+					"text": 'Drawing Of St. Christopher, Added To A Flyleaf Of \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"index": 1,
+						"europeana" : {
+							"icon" : "image"
+						}
+					}
+				},
+			    {
+					"text": 'Miniature Representing The Redemption Of The World, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"index": 2,
+						"europeana" : {
+							"icon" : "image"
+						}
+					}
+				},
+			    {
+					"text": 'Unfinished Drawing Of St. John The Evangelist, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"index": 3,
+						"europeana" : {
+							"icon" : "image"
+						}
+					}
+				}
+				]
+		},
+
+				/*
+
+
+Inscriptions Added To A Flyleaf Of 'The Abingdon Apocalypse'
+
+image
+
+Unfinished Miniature Illustrating Revelation 14:18, In 'The Abingdon Apocalypse'
+
+image
+
+Unfinished Miniature Representing Revelation 11:7-8, In 'The Abingdon Apocalypse'
+
+image
+
+Unfinished Miniature Representing The Commentary On Revelation 12:17-18, In 'The Abingdon Apocalypse'
+
+image
+
+The Massacre Of The Innocents And The Flight Into Egypt, In 'The Abingdon Apocalypse'
+
+image
+				  
+				 */
+				
+
 		
 		books : function(parentUrlIn){
 		
@@ -205,6 +340,9 @@ var dataGen = function(){
 							"childrenUrl":	"dataGen.volumes('dataGen.books()[0]')[0]",
 							"total": 8,
 							"index": 1,
+							"europeana" : {
+								"icon" : "TEXT"
+							}
 						}
 					 },
 					 {	 

@@ -4,16 +4,42 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Hierarchical Objects Test Page</title>
+	
+	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-icons.css"/>
+	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-face.css"/>
+	
 	<link rel="stylesheet" href="style.css" />
 	<link rel="stylesheet" href="style-overrides.css" />
-	<script src="../../../jquery/jquery-1.8.1.js"></script>	
-	<script src="jstree.js"></script>
-	<script src="../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
+	<script type="text/javascript" src="../../../jquery/jquery-1.8.1.js"></script>	
+	<script type="text/javascript" src="jstree.js"></script>
+	<script type="text/javascript" src="../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
 	
 	<style>
 		.loadPoint>a{
 			background-color: orange !important;
 		}
+		
+		.debug-area{
+			word-wrap:			break-word;
+			width:      		100%;
+			height:				10em;
+			overflow-y:			auto;
+			overflow-x:			hidden;
+			margin-bottom:		2em;
+			background-color:	#ededed;
+			margin-top:			1em;
+		}
+		
+		@media only screen and ( min-width:48em ){
+			.debug-area{
+				max-width:  		48%;
+				width:     		 	48%;
+				float:     			left;
+				margin-top:			0;
+				margin-left:		2%;
+			}
+		}
+
 	</style>
 
 </head>
@@ -44,7 +70,7 @@
 			</div>
 		</div>
 		
-		<div class="debug-area" style="float:left; word-wrap:break-word; width:48%; height:10em; overflow-y:auto; overflow-x:hidden; margin-bottom:2em;background-color:#ededed;'">
+		<div class="debug-area">
 		</div>
 		
 		<img src="https://bigfiles.assembla.com/spaces/europeana/documents/download/dRFgfOLv0r44oGacwqjQYw"/>

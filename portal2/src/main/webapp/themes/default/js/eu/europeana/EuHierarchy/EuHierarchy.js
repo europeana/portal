@@ -3,26 +3,55 @@ var EuHierarchy = function(cmp, rows) {
 	var self            = this;
 	var rows            = rows;
 	var defaultChunk    = rows;
+	var lineHeight      = 1.4;
 	
 	self.treeCmp        = cmp;
 	self.pageNodeId     = false;	// the id of the node corresponding to the full-doc page we're on
 	self.container      = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration = 0;
 	
-
-	var newestNode      = false;
-	var createdNodes    = [];
-	
 	
 	// debug vars
 	var locked = true;
 	var spin = false;
 
+	var log = function(msg){
+		console.log(msg);
+	};
+	
+	var formatNodeData = function(ob){
+		//ob.text = "formatted-" + ob.text;
+		//return ob;
+		if(ob.data && ob.data.europeana){
+			console.log('europeana data found....' + JSON.stringify(ob.data.europeana));
+			
+			if(ob.data.europeana.icon){
+				if(ob.data.europeana.icon.toUpperCase() == 'IMAGE'){
+					ob.text += '<span class="icon-image" aria-hidden="true"></span>';
+				}
+				else if(ob.data.europeana.icon.toUpperCase() == 'SOUND'){
+					ob.text += '<span class="icon-sound" aria-hidden="true"></span>';
+				}
+				else if(ob.data.europeana.icon.toUpperCase() == 'TEXT'){
+					ob.text += '<span class="icon-text" aria-hidden="true"></span>';
+				}
+				else if(ob.data.europeana.icon.toUpperCase() == 'VIDEO'){
+					ob.text += '<span class="icon-video" aria-hidden="true"></span>';
+				}
+			}
+			
+			
+		}
+		
+		ob.text = "<span>" + ob.text + "</span>";
+
+		return ob;
+	}
+	
 	// this simulates what will be an ajax call
 
 	var loadData = function(url, callback) {
 		if(!url){
-			alert('delete this check?')
 			callback([]);
 			return;
 		}
@@ -32,7 +61,7 @@ var EuHierarchy = function(cmp, rows) {
 		$.each(data, function(i, ob){
 			if(ob.data){
 				if(!ob.data.index){
-					console.log('missing index for ' + ob.text);
+					log('missing index for ' + ob.text);
 				}
 			}
 		});
@@ -139,16 +168,28 @@ var EuHierarchy = function(cmp, rows) {
 	// END DOM HELPER FUNCTIONS
 
 	
-	// returns a url for backwards node load
-	var getUrlSuffix = function(node, backwards, max){
-		if(!node.parent){
-			return;
+	// returns a url suffix simulating start / rows parameters
+	// returns an empty string if a loadable range is unavailable
+	var getRange = function(node, backwards, max){
+		
+		if(!node.parent || (typeof node.parent).toLowerCase() != 'string'){ /* prevent jQuery parent function interfering */
+			log('getRange returns empty no parent')
+			return '';
 		}
+		
 		var parent = self.treeCmp.jstree('get_node', node.parent);
-		if(!parent.data){
-			return;
+
+		if(!parent.data || (typeof parent.data).toLowerCase() == 'function' ){
+			log('getRange returns empty - no parent data')
+			return '';
 		}
+		
 		var total = parent.data.total;
+
+		//if(!total){
+		//	alert('missing total for parent:\n' + JSON.stringify(parent) + '\n node = ' +  + JSON.stringify(node) );
+		//}
+		
 		var range = {};
 		
 		for(var i = backwards ? node.data.index : total; i> (backwards ? 0 : node.data.index); i--){
@@ -189,6 +230,7 @@ var EuHierarchy = function(cmp, rows) {
 		var res = '';
 		switch (consecutiveKeys.length){
 		  case 0:
+			  log('getRange return no consecutive keys - keys were ' + keys + ', range was ' + JSON.stringify(range) + ', total is ' + total );
 			  break;
 		  case 1:
 			  res = '.slice(' + consecutiveKeys[0] + ', ' + (consecutiveKeys[0] + 1) + ')';
@@ -200,12 +242,14 @@ var EuHierarchy = function(cmp, rows) {
 	};
 	
 	var loadFirstChild = function(node, callback){
-		if(node.data && node.data.childrenUrl && !node.children.length){
+		if(node.data && node.data.childrenUrl && (!node.children || !node.children.length) ){
 			var firstChildUrl = node.data.childrenUrl + '[0]';
 			loadData(firstChildUrl, function(fcData){
-				self.treeCmp.jstree("create_node", node, fcData, "first", false, true);
+				if(self.treeCmp){
+					self.treeCmp.jstree("create_node", node, formatNodeData(fcData), "first", false, true);					
+				}
 				if(callback){
-					callback();					
+					callback(fcData);
 				}
 			});
 		}
@@ -214,27 +258,27 @@ var EuHierarchy = function(cmp, rows) {
 		}
 	};
 
-	// TODO - remove scroll parameter
 	
-	var viewPrevOrNext = function(node, backwards, leftToLoad, scroll, callback) {
+	var viewPrevOrNext = function(node, backwards, leftToLoad, deepen, callback) {
 			
-		console.log('viewPrevOrNext -> ' + node.text + ', backwards -> ' + backwards)
+		log('viewPrevOrNext -> ' + node.text + ', backwards -> ' + backwards + ', deepen -> ' + deepen);
 		
-		if(!backwards){
+		if( (!backwards) && deepen){	/* find deepest opened with children */
+			
 			var switchTrackNode = node;
 			
-			// find deepest opened with children
 			while(switchTrackNode.children.length && switchTrackNode.state.opened){
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.children[0]);
 			}
 
+			//log('switchtrack 1: ' + switchTrackNode.text);
+			
 			var parentLoaded = function(node){
 				var parent = self.treeCmp.jstree('get_node', node.parent);
 				if(!parent.data){					
-					console.log('no parent data for node ' + parent.text);
+					log('no parent data for node ' + node.text + '    (' + parent.text + ')');
 					return false;
 				}
-
 				var loaded = parent.children.length;
 				var total  = parent.data.total;
 				return loaded == total;
@@ -244,23 +288,29 @@ var EuHierarchy = function(cmp, rows) {
 			while(parentLoaded(switchTrackNode)){
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.parent);
 			}
-
+			
+			//log('switchtrack 2: ' + switchTrackNode.text);
+			
 			node = switchTrackNode;			 
 		}
-		
-		if(node.parent){
+	
+
+		if( (typeof node.parent).toLowerCase() == 'string'){ /* prevent jQuery parent function interfering */
+
 			var parent = self.treeCmp.jstree('get_node', node.parent);
 			
 			if(parent.data){
-				var urlSuffix = getUrlSuffix( node, backwards, leftToLoad );
+				var urlSuffix = getRange( node, backwards, leftToLoad ); // rows param
 				var url       = parent.data.childrenUrl + urlSuffix;
-			
+
+				//log('urlSuffix ' + urlSuffix + ', leftToLoad=' + leftToLoad);
+				
 				if(urlSuffix.length){
 					loadData(url, function(data){
 						
 						$.each(backwards ? data.reverse() : data, function(i, ob) {
 
-							var newId   = self.treeCmp.jstree("create_node", parent, ob, backwards ? "first" : "last", false, true);
+							var newId   = self.treeCmp.jstree("create_node", parent, formatNodeData(ob), backwards ? "first" : "last", false, true);
 							var newNode = self.treeCmp.jstree('get_node', newId);
 
 							loadFirstChild(newNode);
@@ -268,8 +318,8 @@ var EuHierarchy = function(cmp, rows) {
 							if(i+1==data.length){
 								leftToLoad -= data.length;
 								if(leftToLoad > 0){
-									console.log('recurse point one')
-									viewPrevOrNext(node, backwards, leftToLoad, scroll, callback)
+									log('recurse point one')
+									viewPrevOrNext(node, backwards, leftToLoad, true, callback)
 								}
 								else{
 									if(callback){
@@ -282,54 +332,68 @@ var EuHierarchy = function(cmp, rows) {
 				}
 				else{
 					if(backwards){
-						
 						if(self.treeCmp.jstree( 'is_disabled', parent )){
+							log('enable node ' + parent);
 							self.treeCmp.jstree("enable_node", parent );
 							leftToLoad --;
-						}
-						//if(scroll){
-							//doScrollTo($('#' + parent.id), function(){
-							//	togglePrevNextLinks();				
-							//	viewPrevOrNext(parent, backwards, leftToLoad, scroll)
-							//});														
-						//	togglePrevNextLinks();
-						///	console.log('recurse point two')
-						//	viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
-						//}
-						//else{
-							console.log('recurse point three')
-							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);
-						//}
-					}
-					else{
-						// forwards
-						
-						//console.log('recurse point four -fwd no suffix for parent ' + parent.text)
-						
-						// we may have no suffix because we're at the end.
-						// we may not really be at the end if there are previous nodes.
-						// since we go deep & back up....
-						// ... we should not recurse if the starting index of this node is > 1
-						if(node.data.index == 0){
-							viewPrevOrNext(parent, backwards, leftToLoad, scroll, callback);							
+						}						
+						if(leftToLoad > 0){
+							log('recurse point three');
+							viewPrevOrNext(parent, backwards, leftToLoad, true, callback);
 						}
 						else{
 							if(callback){
+								log('recurse point three EXIT - (no suffix, going backwards, nothing left to load)');
 								callback();
 							}
 						}
 					}
+					else{
+						// forwards (with no suffix) - we 're at the end of this sibling list.
+
+						// TODO - check this is needed - it may be an error!
+						if(self.treeCmp.jstree( 'is_disabled', parent )){
+							self.treeCmp.jstree("enable_node", parent );
+							leftToLoad --;
+						}
+						// end TODO
+
+						if(leftToLoad > 0){
+							var np = self.treeCmp.jstree('get_node', node.parent, false);
+							if(typeof np.data == 'object'){	/* prevent jQuery data function interfering */
+								viewPrevOrNext(
+										np,
+										backwards,
+										leftToLoad,
+										false,		/* @deepen to false to avoid infinite recurse and load parent's siblings */
+										callback);
+							}
+							else{
+								log('could not recurse fwd (parent data a jquery function, not an object)')
+								if(callback){
+									callback();
+								}
+							}
+						}
+						else{
+							if(callback){
+								log('EXIT LOAD (no suffix, going forwards - nothing left to load)');
+								callback();
+							}
+						}
+						
+					}
 				}
 			}// end if parent.data
 			else{
-				console.log('no parent data');
+				log('no parent data - text = ' + parent.text + ' parent = ' + node.parent + '\nobject = ' + JSON.stringify(parent) );
 				if(callback){
-					callback();
+					callback();						
 				}
 			}
 		}// end if parent
 		else{
-			console.log('no parent');
+			log('no parent');
 		}
 	};
 	
@@ -373,9 +437,9 @@ var EuHierarchy = function(cmp, rows) {
 		var ch = self.container.height();
 		var th = self.treeCmp.height();
 		
-		//console.log('cont height: ' + ch  + ', tre height: ' + th + ', offset: ' + offset );
+		//console.log('cont height: ' + ch  + ', (tree height: ' + th + ', offset: ' + offset + ') -->  (th-offset) = ' + (th-offset)  );
 		
-		if(true){
+		if(th-offset > ch){
 			$('.hierarchy-next').show();
 		}
 		else{
@@ -385,8 +449,10 @@ var EuHierarchy = function(cmp, rows) {
 
 	
 	var doScrollTo = function(el, callback) {
+		
+		console.log()
 		if (typeof el == 'undefined') {
-			//console.log('doScrollTo error - undefined @el');
+			log('doScrollTo error - undefined @el');
 			return;
 		}
 		self.container.css('overflow', 'auto');
@@ -414,32 +480,30 @@ var EuHierarchy = function(cmp, rows) {
 	});
 
 	/**
-	 * This is a scroll wrapper.
+	 * Load wrapper to handle scrolling.
 	 * 
 	 * @initiatingNode - node to load from
 	 * */
 	var loadAndScroll = function(initiatingNode, backwards, callback){
-		
-		console.log('doUp: INITITATING NODE: ' + initiatingNode.text);
-		
+
 		// Scroll tracking:
 		// Get the tree height and offset
 		
-		var heightMeasure   = $('.jstree-container-ul>.jstree-node>.jstree-children');
-		var disabledMeasure = $('.jstree-container-ul .jstree-disabled').first().height();
-		var disabledCount   = $('.jstree-container-ul .jstree-disabled').length;
-		var origHeight      = heightMeasure.height();
-		var origScrollTop   = parseInt(self.container.scrollTop());
+		var heightMeasureSel = '.jstree-container-ul>.jstree-node>.jstree-children';
+		var disabledMeasure  = $('.jstree-container-ul .jstree-disabled').first().height();
+		var disabledCount    = $('.jstree-container-ul .jstree-disabled').length;
+		var origHeight       = $(heightMeasureSel).height();
+		var origScrollTop    = parseInt(self.container.scrollTop());
 
 		// load nodes
 
 		showSpinner();
 
-		viewPrevOrNext(initiatingNode, backwards,  defaultChunk, false, function(){
+		viewPrevOrNext(initiatingNode, backwards,  defaultChunk, true, function(){
 
 			hideSpinner();
 			
-			var newHeight        = heightMeasure.height();
+			var newHeight        = $(heightMeasureSel).height();
 			var containerH       = self.container.height();
 			var diffHeight       = newHeight - origHeight;
 			var resetScrollTop   = origScrollTop + diffHeight;
@@ -447,47 +511,41 @@ var EuHierarchy = function(cmp, rows) {
 			var extraDiff        = (disabledCount - newDisabledCount) * disabledMeasure;
 			    diffHeight      += extraDiff;
 
+			/*
+			var stats = function(){
+				var x = '\nSTATS:' 
+				+ '\nnewHeight:\t\t' + newHeight 
+				+ '\ndiffHeight:\t\t' + diffHeight 
+				+ '\norigScrollTop:\t\t' + origScrollTop 
+				+ '\nresetScrollTop:\t\t' + resetScrollTop 
+				+ '\ndisabledCount:\t\t' + disabledCount 
+				+ '\nnewDisabledCount:\t\t' + newDisabledCount;
+				console.log(x);
+			}
+			*/
+			    
+			    
 			var finalScroll      = function(){
+				//stats();
 				
-				//var newScrollTop = resetScrollTop - ( (containerH > diffHeight && newHeight < (containerH + resetScrollTop)) ? diffHeight : containerH  );
 				var newScrollTop = resetScrollTop;
 				var visibleNodes = getVisibleNodes();
 				
-//				if(initiatingNode != visibleNodes[0]){
-//					alert("don't bother scrolling...");
-//				}
-//				else{					
-//					alert("do bother scrolling !!!!");
-				
 				if(initiatingNode == visibleNodes[0]){
 
-					var newScrollTop = resetScrollTop;
-					//if(false && containerH > diffHeight && newHeight < (containerH + newScrollTop) ){
-					//	newScrollTop -= diffHeight;
-					//	console.log('newScrollTop (A)');
-					//}	
-					//else{
-						var singleNodeMeasure = self.container.find('.jstree-anchor').first().height();
-
-						//alert('hello')
-
-						//newScrollTop -= containerH;
-						//newScrollTop += singleNodeMeasure;
-
-						if(backwards){
-							newScrollTop -= containerH;
-							newScrollTop += singleNodeMeasure;							
-						}
-						else{
-							newScrollTop += containerH;
-							newScrollTop -= singleNodeMeasure;							
-						}
-						
-						//console.log('newScrollTop (B) - should trim by ' + singleNodeMeasure + ' CONTAINERHEIGHT=' + containerH + ', resetScrollTop = ' + resetScrollTop + ', ' + newScrollTop );
-					//}
+					var newScrollTop      = resetScrollTop;
+					var singleNodeMeasure = self.container.find('.jstree-anchor').first().height();
+					
+					if(backwards){
+						newScrollTop -= containerH;
+						newScrollTop += singleNodeMeasure;		
+					}
+					else{
+						newScrollTop += containerH;
+						newScrollTop -= singleNodeMeasure;
+					}
 					newScrollTop = Math.max(0, newScrollTop);				
 				}
-			
 
 				if(newScrollTop == resetScrollTop){
 					self.scrollDuration = 0;
@@ -495,6 +553,7 @@ var EuHierarchy = function(cmp, rows) {
 				
 				doScrollTo(newScrollTop, function(){
 					self.scrollDuration = 1000;
+
 					togglePrevNextLinks();
 					if(callback){
 						callback();
@@ -502,46 +561,26 @@ var EuHierarchy = function(cmp, rows) {
 				});	
 			};
 	
-			if(diffHeight == 0){
+			if(diffHeight == 0 || (origScrollTop == 0 && newHeight > containerH) ){
 				diffHeight = containerH; // this is a max - trimmed within function if too big 
 				finalScroll();
 			}
 			else{
 				self.scrollDuration = 0;
-				doScrollTo(resetScrollTop, function(){
+				doScrollTo(Math.max(0, resetScrollTop), function(){
 					self.scrollDuration  = 1000;				
 					finalScroll();			// scroll from reset scroll view 
 				});
 			}
 		});
-	};
+	};	
 	
 	
 	$('.hierarchy-next').click(function(){
-		//showSpinner();
-
-		// TODO - firefox bug jumps down too far
-		
 		var visibleNodes = getVisibleNodes();
-		
 		loadAndScroll(visibleNodes[0], false, function(){
 			togglePrevNextLinks();
-//			alert('done next by link');
 		});
-		
-		
-		
-		return
-		
-		showSpinner();
-		
-		viewPrevOrNext(visibleNodes[0], false, defaultChunk, false, function(){
-			doScrollTo('#' + visibleNodes[1].id, function(){
-				togglePrevNextLinks();
-				hideSpinner();
-			});
-		});
-		
 	});
 
 	
@@ -617,47 +656,37 @@ var EuHierarchy = function(cmp, rows) {
 	// We load up the tree to get the absolute root.
 	var init = function(baseUrl){
 		
-		// UI viewport size
+		// Set UI viewport size
 		
-		self.container.css('height',         rows + 'em');
-		self.container.css('max-height',     rows + 'em');
-		self.treeCmp  .css('padding-bottom', rows-1 + 'em');
+		self.container.css('height',         (rows * lineHeight) + 'em');
+		self.container.css('max-height',     (rows * lineHeight) + 'em');
+		self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
 		
 		// TREE BINDING
 
-		// create
-
-		// TODO - delete this if not used
-		self.treeCmp.bind('create_node.jstree', function(e, data) {
-			if (!newestNode) {
-				newestNode = data.node.id;
-				//console.log(' - SET NEWEST NODE (id) = ' +  data.node.id);
-			}
-			if (createdNodes) {
-				createdNodes.push(data.node.id);
-			}
-		});
-
-		// select (invoke by loaded callback below)
-
-		self.treeCmp.bind("select_node.jstree", function(event, data) {
-			
+		// utility function for select and initial load
+		
+		var doOnSelect = function(node, callback){
 			showSpinner();
-			
-			viewPrevOrNext(data.node, false, defaultChunk, false, function(){
-				doScrollTo($('#' + data.node.id), function(){
+			viewPrevOrNext(node, false, defaultChunk, true, function(){
+				doScrollTo($('#' + node.id), function(){
 					togglePrevNextLinks();
-
 					$('.loadPoint').removeClass('loadPoint');
-					$('#' + data.node.id).addClass('loadPoint');
-					$('#' + data.node.id + '>a').focus();
-
+					$('#' + node.id).addClass('loadPoint');
+					$('#' + node.id + '>a').focus();
+					if(callback){
+						callback();
+					}
 					hideSpinner();
 				});
 			});
-			
-			$('.debug-area').html(JSON.stringify(data.node));
-			return data.node;
+			$('.debug-area').html(JSON.stringify(node));
+		};
+		
+		// select (invoke by loaded callback below)
+
+		self.treeCmp.bind("select_node.jstree", function(event, data) {
+			doOnSelect(data.node);
 		});
 
 		// loaded
@@ -668,18 +697,15 @@ var EuHierarchy = function(cmp, rows) {
 
 			getPageNodeEl().click(); // used to scroll beyond disabled parents
 			self.scrollDuration = 1000;
-			
+
 			setTimeout(function() {
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
-				loadFirstChild(pageNode, function(){
-					
-					getPageNodeEl().click(); // used again to load immediate siblings
-					
+				doOnSelect(pageNode, function(){
+					self.treeCmp.jstree("disable_node", pageNode.parent);
 				});
 			}, 1);
 		});
 
-		
 		
 		// arrow down
 
@@ -717,37 +743,21 @@ var EuHierarchy = function(cmp, rows) {
 						$('.loadPoint').removeClass('loadPoint');
 						$('#' + initiatingNode.id).addClass('loadPoint');
 
-						// refocussing can also break the offset
-						//var offset = self.container.scrollTop();
+						// refocussing can also break the offset...
 						
 						$('#' + initiatingNode.id + '>a').focus();
-						
-						//doScrollTo('#' + initiatingNode.id, function(){
-							
 						doScrollTo('#' + getVisibleNodes()[0].id, function(){
-							console.log('done scroll to');
+							log('done scroll to');
 						});
-						//self.container.scrollTop(offset);
 
-//						alert('made call via keys: backwards = ' + backwards);
-						
-						console.log('callback executed???? ');
-
-					});
-					
-console.log('may go wonky ');
-
+					});					
 				}
 				else{ // fix wonky offset on way up
-					//if(backwards){
-console.log('fix wonky ' + getVisibleNodes()[0].text );
-
-					
-						self.scrollDuration = 0;
-						doScrollTo('#' + getVisibleNodes()[0].id, function(){
-							self.scrollDuration = 1000;
-						});
-					//}
+					self.scrollDuration = 0;
+					doScrollTo('#' + getVisibleNodes()[0].id, function(){
+						self.scrollDuration = 1000;
+						togglePrevNextLinks();
+					});
 				}
 			}
 		});
@@ -756,19 +766,23 @@ console.log('fix wonky ' + getVisibleNodes()[0].text );
 
 		self.treeCmp.on("open_node.jstree", function(e, data) {
 			
-			console.log('open node: ' + data.node.text);
+			log('open node: ' + data.node.text);
 			showSpinner();
 			
 			var fChild = self.treeCmp.jstree('get_node', data.node.children[0]);
 			
 			loadFirstChild(fChild, function(){
-				viewPrevOrNext(fChild, false, defaultChunk, false, function(){
+				viewPrevOrNext(fChild, false, defaultChunk, true, function(){
 					$('.loadPoint').removeClass('loadPoint');
 					$('#' + data.node.id).addClass('loadPoint');
 					$('#' + data.node.id + '>a').focus();
 					hideSpinner();
 
-				})
+					setTimeout(function(){
+						togglePrevNextLinks();				
+					}, 500);
+
+				});
 			});
 
 		});
@@ -776,34 +790,48 @@ console.log('fix wonky ' + getVisibleNodes()[0].text );
 		// CLOSE
 
 		self.treeCmp.bind("close_node.jstree", function(event, data) {
-			console.log('closed ' + data.node)
+			log('closed ' + data.node);
+			setTimeout(function(){
+				togglePrevNextLinks();				
+			}, 500);
 		});
 
 		// END TREE BINDING
 		
 		var chainUp = function(url, data, callbackWhenDone) {
+			
 			if(!url){
 				callbackWhenDone(data);
 				return;
 			}
-			
-			// console.log('data.parentUrl ' + data.parentUrl + ', data.index ' + data.index );
-			
-			loadData(url, function(newData){
+
+			loadData(url, function(newDataIn){
+								
+				var newData;
+
+				if(typeof newDataIn == 'object'){
+					newData = formatNodeData(newDataIn);
+				}
+				else if(typeof newDataIn == 'array'){
+					newData = [];
+					$.each(newDataIn, function(i, ob){
+						newData.push(formatNodeData(ob));
+					});
+				}
+				
 				if(!data){
 					data            = newData;
 					self.pageNodeId = data.id;
 				}
 				else{
-					var count = data.length;
 					newData.state    = {"opened" : true, "disabled" : true};
 					newData.children = [data];
 					data             = newData;
 				}
-				if(data.data){
-					data.data.backwards = true;
+			
+				if(data.data){					
 					if(data.data.parentUrl && data.data.index){
-						chainUp(data.data.parentUrl, data, callbackWhenDone);
+						chainUp(data.data.parentUrl, data, callbackWhenDone);							
 					}
 					else{
 						callbackWhenDone(data);							
@@ -812,23 +840,62 @@ console.log('fix wonky ' + getVisibleNodes()[0].text );
 				else{
 					callbackWhenDone(data);						
 				}
+				
 			});	
 		};
+
+		// used to build tree lines 
+		// starting with a route from the landed node to the top parent
+		// we work from the root back to the leaf adding in the next sibling of each object (if there is one)
+		// the first child of each sibling is also in order to draw the tree correctly
+		var loadSiblings = function(node, callback){
+			
+			if(node.children){
+				var child = node.children[0];
+				var index = child.data.index;
+				var total = node.data.total;
+				
+				if(index < total){
+					var childUrl = node.data.childrenUrl + '[' + index + ']';
+					loadData(childUrl, function(data){
+						
+						node.children.push(data);
+						
+						if(data.data.childrenUrl && data.data.total > 0){	// load 1st child
+							loadFirstChild(data, function(fcData){
+								data.children = [fcData];
+								loadSiblings(child, callback);
+							});
+						}
+						else{
+							loadSiblings(child, callback);
+						}			
+					});
+				}
+				else{
+					callback();
+				}
+			}
+			else{
+				callback();
+			}
+		};
+		
+		
+		// build initial tree structure
 		
 		chainUp(baseUrl, false, function(data){
-			//console.log('Initialise tree with model:\n\n' + JSON.stringify(data));
-			var tree = self.treeCmp.jstree({
-				"core" : {
-					"data" : data,
-					"check_callback" : true
-				},
-				"plugins" : [ "themes", "json_data", "ui"]
+			loadSiblings(data, function(){
+				log('Initialise tree with model:\n\n' + JSON.stringify(data));
+				var tree = self.treeCmp.jstree({
+					"core" : {
+						"data" : data,
+						"check_callback" : true
+					},
+					"plugins" : [ "themes", "json_data", "ui"]
+				});
 			});
-			
-
-		});
-		
-		//return this;
+		});		
 	};
 	
 	return {
@@ -849,60 +916,4 @@ console.log('fix wonky ' + getVisibleNodes()[0].text );
 		}	
 	}
 };
-
-/*
- * TODO
-
- * BEHAVIOUR:
- * 
- * THEME:
- *   *  
- *  TODO - BUG! 
- *  
- *  - Open root node.  Go down (link).  Go up (link).  Focus off component.  Tab back in = 
- *    - you see the hidden parent nodes.
- *    - perahps adding (and removing) the disabled attribute would prevent this.
- *  
- *  TODO: 
- *   
- *  showing
- *   - labels
- *   - when to show
- *  
- *  sizing
- *   - configure viewport height
- *     - let js configue the css
- *   - remove size limit on load all?
- *   
- *   
- */
-
-
-
-
-
-// TODO: unnatural scroll
-// Look at previous fix for this applied to (view next? select?)
-// All calls ot vpon need wrapped in a scroll handler *
-//
-// This scroll DOES fix the line-height misalign (chrome & maybe ff)...
-// ...however 
-// ...maybe the scroll can be made to either:
-// 
-// - rest at the point where it started (but aligned to node)
-//    - good for keying
-//    - good for opening... though not needed as opening can only load down
-//    - override if start point was at viewport edge
-//  OR
-//    - move the smallest between (the height of the viewport / the height of the data added)
-//
-// * this scroll handler would benefit from knowing how many nodes had been added (and where)
-//   - (may have to know) in order to work around firefox bug...
-//   - scrolling without spinning if no load occured
-//
-//
-// 
-
-
-
 
