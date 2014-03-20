@@ -110,7 +110,7 @@ public class QueryUtil {
 		if (fieldName.equals(TYPE) || (StringUtils.containsNone(value, " ") &&  StringUtils.containsNone(value, "/"))) {
 			return value;
 		} else {
-			return encode('"' + value + '"');
+			return String.format("\"%s\"", value);
 		}
 	}
 
@@ -131,8 +131,7 @@ public class QueryUtil {
 	}
 
 	public static String escapeValue(String text) {
-		return escapeQuote(
-				escapeSquareBrackets(text));
+		return escapeQuote(escapeSquareBrackets(text));
 	}
 
 	public static String removeTruncation(String text) {

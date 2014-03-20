@@ -7,6 +7,10 @@
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     ">
 
+	<!-- 
+	it loads europeana-test.properties. If you want to change it, see
+	corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
+	 -->
 	<import resource="corelib-definitions-test.xml" />
 	<import resource="corelib-logging-context.xml" />
 	<import resource="corelib-web-context.xml" />
