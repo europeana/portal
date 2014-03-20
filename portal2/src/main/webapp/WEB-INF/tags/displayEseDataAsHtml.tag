@@ -55,11 +55,11 @@
 		</c:when>
 
 		<c:when test='${"dc:contributor"   == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a%22CANNED_VALUE%22"/>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a(CANNED_VALUE)"/>
 		</c:when>
 
 		<c:when test='${"dc:creator"       == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a%22CANNED_VALUE%22"/>
+			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a(CANNED_VALUE)"/>
 		</c:when>
 
 		<c:when test='${"dc:coverage"      == data.fieldName}'>
