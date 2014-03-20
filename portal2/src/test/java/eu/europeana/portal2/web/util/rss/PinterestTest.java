@@ -11,7 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import eu.europeana.portal2.services.ResponsiveImageService;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
@@ -21,6 +23,7 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.FeedEntry;
  * 
  * @author peter.kiraly@kb.nl
  */
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/portal2-test.xml"})
 public class PinterestTest {

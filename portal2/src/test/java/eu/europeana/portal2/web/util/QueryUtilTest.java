@@ -3,14 +3,16 @@ package eu.europeana.portal2.web.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 /**
  * Testing QueryUtil class
  * 
  * @author peter.kiraly@kb.nl
  */
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class QueryUtilTest {
 
 	/**
@@ -70,11 +72,11 @@ public class QueryUtilTest {
 		String input = "Bulgariana/Ontotext";
 		String output = QueryUtil.createPhraseValue("PROVIDER", input);
 		assertNotSame(output, input);
-		assertEquals("%22Bulgariana%2FOntotext%22", output);
+		assertEquals("\"Bulgariana/Ontotext\"", output);
 
 		input = "Bulgariana / Ontotext";
 		output = QueryUtil.createPhraseValue("PROVIDER", input);
 		assertNotSame(output, input);
-		assertEquals("%22Bulgariana+%2F+Ontotext%22", output);
+		assertEquals("\"Bulgariana / Ontotext\"", output);
 	}
 }
