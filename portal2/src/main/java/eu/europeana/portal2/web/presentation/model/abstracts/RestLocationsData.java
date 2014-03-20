@@ -53,11 +53,6 @@ public abstract class RestLocationsData<T> extends UrlAwareData<T> {
 		return EuropeanaUrlServiceImpl.getBeanInstance().getPortalResolve(collectionId, recordId);
 	}
 
-	@Override
-	public String getMetaCanonicalUrl() {
-		return EuropeanaUrlServiceImpl.getBeanInstance().getPortalRecord(false, collectionId, recordId).toString();
-	}
-
 	// /action/embed/record/[collectionId]/[recordId].html
 	public String getEmbedRecordUrl() {
 		UrlBuilder url = EuropeanaUrlServiceImpl.getBeanInstance().getPortalHome(false);

@@ -26,7 +26,7 @@
 
 		init: function() {
 			if ( eu.europeana.vars.user ) {
-				panels.default_panel = 'language-settings';
+				panels.default_panel = 'user-information';
 			}
 
 			eu.europeana.timer.addCallback({
