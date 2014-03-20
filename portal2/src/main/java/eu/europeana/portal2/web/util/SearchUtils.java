@@ -18,14 +18,10 @@
 package eu.europeana.portal2.web.util;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
 
@@ -33,7 +29,6 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.Facet;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.definitions.solr.model.TaggedQuery;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
@@ -49,8 +44,6 @@ import eu.europeana.portal2.web.presentation.model.submodel.impl.BriefBeanViewIm
 import eu.europeana.portal2.web.presentation.model.submodel.impl.ResultPaginationImpl;
 
 public class SearchUtils {
-
-	private static Logger log = Logger.getLogger(SearchUtils.class.getCanonicalName());
 
 	public static BriefBeanView createResults(
 			SearchService searchService,

@@ -1,20 +1,19 @@
 package eu.europeana.portal2.querymodel.query;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import eu.europeana.corelib.definitions.model.RightsOption;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.facets.LabelFrequency;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 public class FacetQueryLinksImpl implements FacetQueryLinks {
-
-	private static Logger log = Logger.getLogger(FacetQueryLinksImpl.class.getCanonicalName());
 
 	private static final String NON_WIKIPEDIA = "-TYPE:Wikipedia";
 	private static final String FACET_PROMPT = "&qf=";
@@ -60,7 +59,6 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 		}
 
 		String[] queryRefinements = query.getRefinements(false);
-		Map<String, RightsOption> qfRights = new HashMap<String, RightsOption>();
 
 		for (LabelFrequency item : facetField.getFields()) {
 			if (isTemporarilyPreventYear0000(this.type, item.getLabel())) {
@@ -68,7 +66,12 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			}
 
 			boolean remove = false;
-			StringBuilder url = new StringBuilder(baseUrl.toString());
+			UrlBuilder url = null;
+			try {
+				url = EuropeanaUrlServiceImpl.getBeanInstance().getPortalSearch(true, query.getQuery(), String.valueOf(query.getPageSize()));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			// iterating over actual qf values
 			if (queryRefinements != null) {
 				for (String qfTerm : refinements.get(QueryUtil.FACETS)) {
@@ -103,7 +106,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 							} else {
 								qfValue = QueryUtil.createPhraseValue(qfField, qfValue);
 							}
-							url.append(FACET_PROMPT).append(qfField).append(':').append(qfValue);
+							url.addMultiParam("qf", String.format("%s:%s", qfField, qfValue));
 						}
 					}
 				}
@@ -111,22 +114,15 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 			// adding the current facet to the query link
 			if (!remove) {
-				url.append(FACET_PROMPT);
-				url.append(facetField.getName());
-				url.append(":");
+				String value;
 				if (RIGHTS_FACET.equals(type)) {
 					EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel().trim());
-					String value = (license.isModified()) ? license.getModifiedURI() : license.getOriginalURI() + "*";
-					url.append(value);
+					value = (license.isModified()) ? license.getModifiedURI() : license.getOriginalURI() + "*";
 				} else {
 					// escape Solr special chars in item.label
-					url.append(
-						QueryUtil.createPhraseValue(
-							facetField.getName(), 
-							QueryUtil.escapeValue(item.getLabel())
-						)
-					);
+					value = QueryUtil.createPhraseValue(facetField.getName(), QueryUtil.escapeValue(item.getLabel()));
 				}
+				url.addMultiParam("qf", String.format("%s:%s", facetField.getName(), value));
 			}
 
 			if (RIGHTS_FACET.equals(type)) {
