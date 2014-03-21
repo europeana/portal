@@ -20,7 +20,9 @@ var europeana_bootstrap = function(){
 	function loadScripts(scripts){
 
 		var script = document.createElement('script');
+				
 		script.src = eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
+		//alert('loader src = ' + script.src  );
 
 		if ( 'onload' in document || 'addEventListener' in window ) {
 			script.onload = function(){
@@ -157,9 +159,6 @@ var europeana_bootstrap = function(){
 		}
 	];
 
-	if(eu.europeana.vars.page_name == 'api/console.html'){
-		loadScripts(scripts);
-	}
 
 	if(eu.europeana.vars.page_name == 'api/registration.html' || eu.europeana.vars.page_name ==  'api/registration-success.html'){
 		loadScripts(scripts);
