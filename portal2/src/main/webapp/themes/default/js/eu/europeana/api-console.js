@@ -38,5 +38,20 @@ eu.europeana.apiconsole = {
 				}
 			}
 		});
+		
 	},
 };
+
+var updateParent = function(){
+    var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
+    target.postMessage(
+	($('#api-result').outerHeight( true ) + 10) + 'px', '*');
+};
+
+$(document).ready(function(){
+	updateParent();
+});
+
+$(window).euRsz(function(){
+	updateParent();
+});
