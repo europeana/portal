@@ -27,18 +27,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
-import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinksImpl;
@@ -156,13 +151,14 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		searchFilters = new ArrayList<SearchFilter>();
 		List<SearchParam> existingValues = SearchFilterUtil.getExistingValues(query);
 		Map<String, String[]> otherUrlParams = SearchFilterUtil.getOtherUrlParams(urlParams);
+		EuropeanaUrlService service = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
 
 		for (SearchParam param : existingValues) {
 			UrlBuilder removeLink = null;
 			UrlBuilder breadcrumbLink = null;
 			try {
-				removeLink = EuropeanaUrlServiceImpl.getBeanInstance().getPortalSearch();
-				breadcrumbLink = EuropeanaUrlServiceImpl.getBeanInstance().getPortalSearch();
+				removeLink = service.getPortalSearch();
+				breadcrumbLink = service.getPortalSearch();
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

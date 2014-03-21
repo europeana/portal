@@ -61,14 +61,13 @@ public class SearchServiceMockSelenium implements SearchService {
 
 	public SearchServiceMockSelenium(){
 		super();
-		
+
 		this.briefBeans = new TreeMap<String, BriefBean>();
-		
+
 		for(int i=1; i<=200; i++){
 			String id = "/selenium1/" + StringUtils.leftPad( String.valueOf(i) , 3, "0");
 			this.briefBeans.put(id, new BriefBeanMock(id, DocType.IMAGE, "Test Title " + i));
 		}
-		
 	}
 
 	@Override

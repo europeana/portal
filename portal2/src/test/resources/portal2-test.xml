@@ -34,4 +34,6 @@
 
 	<bean name="corelib_solr_solrEmbedded" class="eu.europeana.corelib.EmptyBean"/>
 
+	<bean id="corelib_web_europeanaUrlService" class="eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImplMock"/>
+
 </beans>
