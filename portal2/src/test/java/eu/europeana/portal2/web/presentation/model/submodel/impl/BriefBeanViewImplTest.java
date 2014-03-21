@@ -9,18 +9,12 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.web.service.EuropeanaUrlService;
-import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
-import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.SearchFilter;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
