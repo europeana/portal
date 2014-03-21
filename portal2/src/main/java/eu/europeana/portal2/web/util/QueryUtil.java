@@ -123,9 +123,11 @@ public class QueryUtil {
 	}
 
 	public static String decode(String value) {
-		try {
-			value = URLDecoder.decode(value, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
+		if (StringUtils.isNotBlank(value)) {
+			try {
+				value = URLDecoder.decode(value, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
 		}
 		return value;
 	}
