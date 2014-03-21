@@ -93,7 +93,7 @@ public class MyEuropeanaController {
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 	}
 
-	private SavedSearch cleanSavedSearch(SavedSearch search) {
+	public SavedSearch cleanSavedSearch(SavedSearch search) {
 		if (StringUtils.contains(search.getQuery(), " ")
 			|| StringUtils.contains(search.getQuery(), "&")
 			|| StringUtils.contains(search.getQuery(), "\"")) {
@@ -105,7 +105,11 @@ public class MyEuropeanaController {
 					if (sb.length() > 0) {
 						sb.append("&");
 					}
-					sb.append(pair.getName()).append("=").append(QueryUtil.encode(pair.getValue()));
+					if (StringUtils.isBlank(pair.getValue())) {
+						sb.append(QueryUtil.encode(pair.getName()));
+					} else {
+						sb.append(pair.getName()).append("=").append(QueryUtil.encode(pair.getValue()));
+					}
 				}
 
 				search.setQuery(sb.toString());
