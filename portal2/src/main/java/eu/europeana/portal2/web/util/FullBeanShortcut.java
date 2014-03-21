@@ -260,18 +260,20 @@ public class FullBeanShortcut {
 		resourceValueMap = new HashMap<String, Map<String, Resource>>();
 		resourceUris = new HashMap<String, List<String>>();
 
-		for (String name : enrichedMap.keySet()) {
-			EnrichmentFieldMapper cardinalities = enrichedMap.get(name);
-			cardinalities.createResources();
-			List<Resource> resources = cardinalities.getResources();
-			if (resources != null) {
-				Map<String, Resource> resourceValueMapEntry = new HashMap<String, Resource>();
-				resourceValueMap.put(name, resourceValueMapEntry);
-				List<String> resourceUrisEntry = new ArrayList<String>();
-				resourceUris.put(name, resourceUrisEntry);
-				for (Resource resource : resources) {
-					resourceValueMapEntry.put(resource.getValue(), resource);
-					resourceUrisEntry.add(resource.getUri());
+		if (enrichedMap != null) {
+			for (String name : enrichedMap.keySet()) {
+				EnrichmentFieldMapper cardinalities = enrichedMap.get(name);
+				cardinalities.createResources();
+				List<Resource> resources = cardinalities.getResources();
+				if (resources != null) {
+					Map<String, Resource> resourceValueMapEntry = new HashMap<String, Resource>();
+					resourceValueMap.put(name, resourceValueMapEntry);
+					List<String> resourceUrisEntry = new ArrayList<String>();
+					resourceUris.put(name, resourceUrisEntry);
+					for (Resource resource : resources) {
+						resourceValueMapEntry.put(resource.getValue(), resource);
+						resourceUrisEntry.add(resource.getUri());
+					}
 				}
 			}
 		}
