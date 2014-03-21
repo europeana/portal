@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.definitions.model.RightsOption;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.facets.Facet;
@@ -59,6 +61,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 		}
 
 		String[] queryRefinements = query.getRefinements(false);
+		EuropeanaUrlService service = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
 
 		for (LabelFrequency item : facetField.getFields()) {
 			if (isTemporarilyPreventYear0000(this.type, item.getLabel())) {
@@ -68,7 +71,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			boolean remove = false;
 			UrlBuilder url = null;
 			try {
-				url = EuropeanaUrlServiceImpl.getBeanInstance().getPortalSearch(true, query.getQuery(), String.valueOf(query.getPageSize()));
+				url = service.getPortalSearch(true, query.getQuery(), String.valueOf(query.getPageSize()));
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
