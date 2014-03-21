@@ -115,9 +115,11 @@ public class QueryUtil {
 	}
 
 	public static String encode(String value) {
-		try {
-			value = URLEncoder.encode(value, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
+		if (StringUtils.isNotBlank(value)) {
+			try {
+				value = URLEncoder.encode(value, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
 		}
 		return value;
 	}
