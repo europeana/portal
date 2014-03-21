@@ -21,8 +21,6 @@ import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -32,9 +30,6 @@ import eu.europeana.portal2.web.util.QueryUtil;
 
 @Controller
 public class MyEuropeanaController {
-
-	@Log
-	private Logger log;
 
 	@Resource
 	private UserService userService;
@@ -110,7 +105,6 @@ public class MyEuropeanaController {
 					if (sb.length() > 0) {
 						sb.append("&");
 					}
-					log.info(pair.getName() + " --> " + pair.getValue());
 					sb.append(pair.getName()).append("=").append(QueryUtil.encode(pair.getValue()));
 				}
 
@@ -118,7 +112,6 @@ public class MyEuropeanaController {
 			} else {
 				search.setQuery(QueryUtil.encode(search.getQuery()));
 			}
-			log.info("modified: " + search.getQuery());
 		}
 		return search;
 	}
