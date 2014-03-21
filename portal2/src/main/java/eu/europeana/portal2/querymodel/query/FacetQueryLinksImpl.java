@@ -9,7 +9,6 @@ import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.definitions.model.RightsOption;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
-import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.facets.Facet;
 import eu.europeana.portal2.web.model.facets.LabelFrequency;
@@ -117,7 +116,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 			// adding the current facet to the query link
 			if (!remove) {
-				String value;
+				String value = null;
 				if (RIGHTS_FACET.equals(type)) {
 					EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel().trim());
 					value = (license.isModified()) ? license.getModifiedURI() : license.getOriginalURI() + "*";
