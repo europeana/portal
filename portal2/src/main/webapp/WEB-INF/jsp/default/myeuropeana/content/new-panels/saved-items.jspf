@@ -34,8 +34,10 @@
 						<c:set var="docType" value="3d" />
 					</c:when>
 				</c:choose>
+
 				<%-- Place Image --%>
-				<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
+				<div class="image-container">
+					<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
 						<c:set var="imageWritten" value="" />
 						<c:catch var="exception">
 							<c:if test="${item.europeanaObject && !empty item.europeanaObject}"></c:if>
@@ -47,7 +49,9 @@
 						<c:if test="${empty imageWritten}" >
 							<span class="${iconClass}" alt="${item.title}"></span>
 						</c:if>
-				</a>
+					</a>
+				</div>
+
 				<%-- Item Info --%>
 				<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold"><europeana:stringLimiter theStr="${item.title}" size="50"/></a><br/>
 				<spring:message code="Creator_t" />: <em>${item.author}</em><br/>

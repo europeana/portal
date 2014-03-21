@@ -2,9 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <h3><spring:message code="SavedTags_t" /></h3>
-
 <c:choose>
 	<c:when test="${fn:length(model.socialTags) < 1}">
 		<spring:message code="NoSavedTags_t" />
@@ -14,7 +12,6 @@
 			<div class="saved-tag ${tag.id}">
 				<%-- nr of items with this tag --%>
 				<c:set var="tagQuery" value='europeana_uri:("${tag.europeanaUri}")' />
-				<span class="bold">${tag.tag}</span><br/>
 
 				<%-- Item Image --%>
 				<%-- Determine fallback image for this tag --%>
@@ -41,13 +38,13 @@
 				</c:choose>
 
 				<%-- Place Image --%>
-				<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
+				<div class="image-container">
+					<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
 						<c:set var="objectPresent" value="" />
 						<c:catch var="exception">
 							<c:if test="${tag.europeanaObject && !empty tag.europeanaObject}"></c:if>
 							<c:set var="objectPresent" value="true" />
 						</c:catch>
-
 						<c:choose>
 							<c:when test="${!empty objectPresent}" >
 								<img src="${model.cacheUrl}uri=${tag.europeanaObject}&amp;size=BRIEF_DOC&amp;type=${docType}&amp;bt=savedTag" alt="${tag.title}" />
@@ -56,12 +53,15 @@
 								<span class="${iconClass}"></span>
 							</c:otherwise>
 						</c:choose>
-				</a>
+					</a>
+				</div>
 
 				<%-- item info --%>
 				<%-- !tag.europeanaId.orphan> --%>
+				<span class="bold">${tag.tag}</span><br/>
 				<a class="bold" href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>
 				<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${tag.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
+
 				<%-- delete tag button --%>
 				<button id="${tag.id}" class="remove-saved-tag submit-button deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>
 			</div>
