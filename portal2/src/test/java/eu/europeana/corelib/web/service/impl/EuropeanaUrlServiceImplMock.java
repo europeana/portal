@@ -82,13 +82,16 @@ public class EuropeanaUrlServiceImplMock implements EuropeanaUrlService {
 	@Override
 	public UrlBuilder getPortalSearch(boolean relative, String query,
 			String rows) throws UnsupportedEncodingException {
-		return null;
+		return getPortalSearch(relative, "/portal/search.html", query, rows);
 	}
 
 	@Override
 	public UrlBuilder getPortalSearch(boolean relative, String searchpage,
 			String query, String rows) throws UnsupportedEncodingException {
-		return null;
+		UrlBuilder url = new UrlBuilder("/portal/search.html");
+		url.addParam(PARAM_SEARCH_QUERY, query, true);
+		url.addParam(PARAM_SEARCH_ROWS, rows, true);
+		return url;
 	}
 
 	@Override
