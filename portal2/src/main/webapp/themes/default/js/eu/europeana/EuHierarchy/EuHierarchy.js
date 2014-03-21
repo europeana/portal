@@ -44,6 +44,7 @@ var EuHierarchy = function(cmp, rows) {
 		}
 		
 		ob.text = "<span>" + ob.text + "</span>";
+//		ob.text = '<span style="display:inline-block; width:100%;">' + ob.text + '</span>';
 
 		return ob;
 	}
@@ -665,14 +666,19 @@ var EuHierarchy = function(cmp, rows) {
 		// TREE BINDING
 
 		// utility function for select and initial load
+		var setLoadPoint = function(elId){
+			$('.loadPoint').removeClass('loadPoint');
+			$('#' + elId).addClass('loadPoint');			
+		};
 		
 		var doOnSelect = function(node, callback){
 			showSpinner();
 			viewPrevOrNext(node, false, defaultChunk, true, function(){
 				doScrollTo($('#' + node.id), function(){
 					togglePrevNextLinks();
-					$('.loadPoint').removeClass('loadPoint');
-					$('#' + node.id).addClass('loadPoint');
+					
+					setLoadPoint(node.id);
+					
 					$('#' + node.id + '>a').focus();
 					if(callback){
 						callback();
@@ -692,21 +698,24 @@ var EuHierarchy = function(cmp, rows) {
 		// loaded
 		
 		self.treeCmp.bind("loaded.jstree", function(event, data) {
-			
-			// set active and load
-
-			getPageNodeEl().click(); // used to scroll beyond disabled parents
-			self.scrollDuration = 1000;
-
 			setTimeout(function() {
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
 				doOnSelect(pageNode, function(){
-					self.treeCmp.jstree("disable_node", pageNode.parent);
+					setTimeout(function() {
+						var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
+						loadFirstChild(pageNode, function(){
+							self.treeCmp.jstree("disable_node", pageNode.parent);
+							
+							setLoadPoint(self.pageNodeId);
+							//$('.loadPoint').removeClass('loadPoint');
+							//$('#' + self.pageNodeId).addClass('loadPoint');
+							self.scrollDuration = 1000;
+						});
+					}, 1);
 				});
 			}, 1);
 		});
 
-		
 		// arrow down
 
 		self.treeCmp.bind('keydown.jstree', function(e) {
@@ -740,8 +749,9 @@ var EuHierarchy = function(cmp, rows) {
 				if(doLoad){
 					loadAndScroll(initiatingNode, backwards, function(){
 						
-						$('.loadPoint').removeClass('loadPoint');
-						$('#' + initiatingNode.id).addClass('loadPoint');
+						setLoadPoint(initiatingNode.id);
+						//$('.loadPoint').removeClass('loadPoint');
+						//$('#' + initiatingNode.id).addClass('loadPoint');
 
 						// refocussing can also break the offset...
 						
@@ -773,8 +783,10 @@ var EuHierarchy = function(cmp, rows) {
 			
 			loadFirstChild(fChild, function(){
 				viewPrevOrNext(fChild, false, defaultChunk, true, function(){
-					$('.loadPoint').removeClass('loadPoint');
-					$('#' + data.node.id).addClass('loadPoint');
+
+					setLoadPoint(data.node.id);
+					//$('.loadPoint').removeClass('loadPoint');
+					//$('#' + data.node.id).addClass('loadPoint');
 					$('#' + data.node.id + '>a').focus();
 					hideSpinner();
 
@@ -791,9 +803,11 @@ var EuHierarchy = function(cmp, rows) {
 
 		self.treeCmp.bind("close_node.jstree", function(event, data) {
 			log('closed ' + data.node);
-			setTimeout(function(){
-				togglePrevNextLinks();				
-			}, 500);
+			doOnSelect(data.node, function(){
+				setTimeout(function(){
+					togglePrevNextLinks();				
+				}, 500);
+			});
 		});
 
 		// END TREE BINDING

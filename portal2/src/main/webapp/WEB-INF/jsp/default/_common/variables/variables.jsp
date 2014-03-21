@@ -26,7 +26,7 @@
 
 <c:if test="${'index.html' == model.pageName}"><c:set var="menu1_active" value="active " /></c:if>
 <c:if test="${'timeline.html' == model.pageName || 'map.html' == model.pageName}"><c:set var="menu2_active" value="active " /></c:if>
-<c:if test="${'login.html' == model.pageName || 'myeuropeana.html' == model.pageName}"><c:set var="menu6_active" value="active " /></c:if>
+<c:if test="${'login.html' == model.pageName || 'myeuropeana/index' == model.pageName}"><c:set var="menu6_active" value="active " /></c:if>
 
 <%-- search navigation icons --%>
 <c:set var="gridview_active" value="" />
@@ -43,7 +43,7 @@
 <c:set var="query_action" value="/${model.portalName}/search.html" />
 <c:if test="${'timeline.html' == model.pageName}"><c:set var="query_action" value="/${model.portalName}/timeline.html" /></c:if>
 <c:if test="${'map.html' == model.pageName}"><c:set var="query_action" value="/${model.portalName}/map.html" /></c:if>
-   
+
 <c:set var="language_menu_action" value="${model.currentUrl}" />
 <c:if test="${empty model.currentUrl}"><c:set var="language_menu_action" value="${model.portalName}/search.html" /></c:if>
 
