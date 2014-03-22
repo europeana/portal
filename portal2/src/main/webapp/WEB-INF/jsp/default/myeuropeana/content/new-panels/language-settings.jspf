@@ -6,7 +6,8 @@
 			<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 		</select>
 	</label>
-	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
+	<input type="hidden" name="action" value="portal-default-language" />
+	<noscript><input type="submit" name="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>
 
 <%-- translate-keywords-into --%>
@@ -14,7 +15,7 @@
 <c:set var="portal_languages_column" value="${portal_languages_count/4}" />
 <c:set var="translate_keywords_into_count" value="0" />
 <h3><spring:message code="translate_keywords_t" /></h3>
-<form action="${language_menu_action}" method="get">
+<form action="${language_menu_action}#language-settings" method="get">
 	<div id="translate-keyword-languages">
 		<c:forEach items="${model.portalLanguages}" var="language">
 			<c:if test="${translate_keywords_into_count == 0}">
@@ -40,12 +41,13 @@
 		</c:otherwise>
 	</c:choose>
 	<input type="reset" value="<spring:message code="ClearSelection_t" />" id="clear-selection" />
-	<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
+	<input type="hidden" name="action" value="translate-keywords-into" />
+	<noscript><input type="submit" name="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>
 
 <%-- translate-item-language --%>
 <h3><spring:message code="translate_items_t" /></h3>
-<form action="${language_menu_action}" method="get">
+<form action="${language_menu_action}#language-settings" method="get">
 	<label>
 		<c:choose>
 			<c:when test="${!empty model.user}">
@@ -53,6 +55,7 @@
 				<select id="item-language" name="il">
 					<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 				</select>
+				<input type="hidden" name="action" value="translate-item-language" />
 				<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
 			</c:when>
 			<c:otherwise>
@@ -60,7 +63,8 @@
 				<select id="item-language" name="il" disabled>
 					<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 				</select>
-				<noscript><input type="submit" value="<spring:message code="Submit_t" />" disabled/></noscript>
+				<input type="hidden" name="action" value="translate-item-language" />
+				<noscript><input type="submit" name="submit" value="<spring:message code="Submit_t" />" disabled/></noscript>
 			</c:otherwise>
 		</c:choose>
 	</label>

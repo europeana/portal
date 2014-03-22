@@ -3,7 +3,7 @@
 (function( $, eu ) {
 	'use strict';
 
-	var panels = {
+	var panelMenu = {
 		$panel_links: $('#panel-links li'),
 		default_panel: 'login',
 		active_panel: null,
@@ -12,35 +12,44 @@
 		checkHash: function() {
 			var hash = window.location.hash.substring(1);
 
-			if ( hash !== panels.hash ) {
+			if ( hash !== panelMenu.hash ) {
 				if ( hash === '' ) {
-					panels.hash = panels.default_panel;
-					window.location.hash = panels.hash;
+					panelMenu.hash = panelMenu.default_panel;
+					window.location.hash = panelMenu.hash;
 				} else {
-					panels.hash = hash;
+					panelMenu.hash = hash;
 				}
 
-				panels.setActivePanel();
+				panelMenu.setActivePanel();
+			}
+		},
+
+		addHashListener: function() {
+			if ( window.onhashchange !== undefined ) {
+				$(window).on('hashchange', panelMenu.checkHash);
+			} else {
+				eu.europeana.timer.addCallback({
+					timer: 100,
+					fn: panelMenu.checkHash,
+					context: this
+				});
 			}
 		},
 
 		init: function() {
 			if ( eu.europeana.vars.user ) {
-				panels.default_panel = 'user-information';
+				panelMenu.default_panel = 'user-information';
 			}
 
-			eu.europeana.timer.addCallback({
-				timer: 100,
-				fn: panels.checkHash,
-				context: this
-			});
+			panelMenu.addHashListener();
+			panelMenu.checkHash();
 		},
 
 		setActivePanel: function() {
-			panels.setActivePanelLink();
-			$('#' + panels.hash).fadeIn();
+			panelMenu.setActivePanelLink();
+			$('#' + panelMenu.hash).fadeIn();
 
-			switch ( panels.hash ) {
+			switch ( panelMenu.hash ) {
 				case'login': $('#j_username').focus(); break;
 				case'register': $('#register_email').focus(); break;
 				case'request-password': $('#forgot_email').focus(); break;
@@ -48,14 +57,14 @@
 		},
 
 		setActivePanelLink: function() {
-			panels.$panel_links.each(function() {
+			panelMenu.$panel_links.each(function() {
 				var $elm = $(this),
 					$a = $('<a>'),
 					$panel_a = $elm.find('a'),
 					panel = $elm.attr('data-settings-panel'),
 					panel_text = $elm.attr('data-settings-panel-text');
 
-				if ( panel === panels.hash ) {
+				if ( panel === panelMenu.hash ) {
 					if ( $a.length > 0 ) {
 						$elm.text( panel_text );
 					}
@@ -74,7 +83,6 @@
 	 * portal language
 	 */
 	pl = {
-
 		addPortalLanguageListener: function() {
 			$('#portalLanguage').on( 'change', this.handlePortalLanguageChange );
 		},
@@ -332,11 +340,183 @@
 			this.checkCookie();
 		}
 
+	},
+
+	/**
+	 * user panels
+	 */
+	userPanels = {
+		addRemoveItemListener: function() {
+			$('#myeuropeana').one('click',
+				'.remove-saved-item',
+				{ type : 'SavedItem' },
+				this.handleRemoveUserPanelItem
+			);
+		},
+
+		addRemoveSearchListener: function() {
+			$('#myeuropeana').one('click',
+				'.remove-saved-search',
+				{ type : 'SavedSearch' },
+				this.handleRemoveUserPanelItem
+			);
+		},
+
+		addRemoveTagListener: function() {
+			$('#myeuropeana').one('click',
+				'.remove-saved-tag',
+				{ type : 'SocialTag' },
+				this.handleRemoveUserPanelItem
+			);
+		},
+
+		removeUserPanelItemFailure: function( error_feedback ) {
+			eu.europeana.ajax.methods.addFeedbackContent( error_feedback_html );
+			eu.europeana.ajax.methods.showFeedbackContainer();
+		},
+
+		removeUserPanelItemSuccess: function( item, ajax_feedback ) {
+			var $elm;
+
+			eu.europeana.ajax.methods.addFeedbackContent( item.feedback_html );
+			eu.europeana.ajax.methods.showFeedbackContainer();
+
+			ajax_feedback.count = parseInt( ajax_feedback.$count.html(), 10 );
+			ajax_feedback.$count.html( ajax_feedback.count - 1 );
+
+			if ( item.removeSelector ) {
+				$elm = $(item.removeSelector).eq(0);
+				$elm.slideToggle(function() {
+					$elm.remove()
+				});
+			}
+
+			if ( ( ajax_feedback.count - 1 ) === 0 ) {
+				item.$panel.append( item.no_saved_msg );
+			}
+		},
+
+		/**
+		 * @param {object} evt
+		 * jQuery Event object
+		 */
+		handleRemoveUserPanelItem : function( evt ) {
+			evt.preventDefault();
+
+			var type = evt.data.type,
+			self = this,
+			$elm = $(this),
+			ajax_feedback,
+			ajax_data,
+			item = {
+				count : 0,
+				$count : {},
+				$panel : {},
+				removed_msg : '',
+				no_saved_msg : ''
+			},
+			error_feedback_html =
+				'<span id="remove-search-feedback" class="error">' +
+					eu.europeana.vars.msg.error_occurred + ' ' +
+					eu.europeana.vars.msg.item_not_removed +
+				'</span>';
+
+			switch ( type ) {
+				case 'SavedSearch' :
+					item.$count = $('#saved-searches-count');
+					item.$panel = $('#saved-searches');
+					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_search_removed );
+					item.no_saved_msg = eu.europeana.vars.msg.no_saved_searches;
+					item.removeSelector = '.saved-search.' + $elm.attr('id');
+					break;
+
+				case 'SavedItem' :
+					item.$count = $('#saved-items-count');
+					item.$panel = $('.saved-items');
+					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_item_removed );
+					item.no_saved_msg = eu.europeana.vars.msg.no_saved_items;
+					item.removeSelector = '.saved-item.' + $elm.attr('id');
+					break;
+
+				case 'SocialTag' :
+					item.$count = jQuery('#saved-tags-count');
+					item.$panel = jQuery('#saved-tags');
+					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_tag_removed );
+					item.no_saved_msg = eu.europeana.vars.msg.no_saved_tags;
+					item.removeSelector = '.saved-tag.' + $elm.attr('id');
+					break;
+			}
+
+			ajax_feedback = {
+				count : item.count,
+				$count : item.$count,
+				success : function() {
+					userPanels.removeUserPanelItemSuccess.call( self, item, ajax_feedback );
+				},
+				failure : function() {
+					userPanels.removeUserPanelItemFailure.call( self, error_feedback );
+				}
+			};
+
+			ajax_data = {
+				className : type,
+				id : parseInt( $elm.attr('id'), 10 )
+			};
+
+			eu.europeana.ajax.methods.user_panel( 'remove', ajax_data, ajax_feedback );
+		},
+
+		//handleSaveApiKeySubmit : function( e ) {
+		//	e.preventDefault();
+		//
+		//	if ( $('#item-tag').val() < 1 ){
+		//		return;
+		//	}
+		//
+		//	var ajax_feedback = {
+		//		saved_tags_count : 0,
+		//		$saved_tags : $('#saved-tags-count'),
+		//		success : function() {
+		//			var html =
+		//				'<span id="save-tag-feedback">' +
+		//					eu.europeana.vars.msg.saved_apikey +
+		//				'</span>';
+		//			eu.europeana.ajax.methods.addFeedbackContent( html );
+		//			eu.europeana.ajax.methods.showFeedbackContainer();
+		//			ajax_feedback.saved_tags_count = parseInt( ajax_feedback.$saved_tags.html(), 10 );
+		//			ajax_feedback.$saved_tags.html( ajax_feedback.saved_tags_count + 1 );
+		//		},
+		//		failure : function() {
+		//			var html =
+		//				'<span id="save-tag-feedback" class="error">' +
+		//					eu.europeana.vars.msg.save_apikey_failed +
+		//				'</span>';
+		//			eu.europeana.ajax.methods.addFeedbackContent( html );
+		//			eu.europeana.ajax.methods.showFeedbackContainer();
+		//		}
+		//	},
+		//
+		//	ajax_data = {
+		//		className : "ApiKey",
+		//		apikey : $(e.target).closest('form').find('.apikey_id').val(),
+		//		appName : encodeURIComponent( $(e.target).closest('form').find('.apikey_appName').val() )
+		//	};
+		//
+		//	eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+		//},
+
+		init: function() {
+			this.addRemoveSearchListener();
+			this.addRemoveItemListener();
+			this.addRemoveTagListener();
+			//$('.item-apikey-save').bind('submit', this.handleSaveApiKeySubmit );
+		}
 	};
 
 	pl.init();
 	tkl.init();
 	til.init();
-	panels.init();
+	panelMenu.init();
+	userPanels.init();
 
 }( jQuery, eu ));

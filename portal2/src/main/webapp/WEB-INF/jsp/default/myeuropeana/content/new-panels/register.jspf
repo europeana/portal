@@ -2,10 +2,13 @@
 <h3><spring:message code="Register_t" /></h3>
 <form action="/${model.portalName}/${model.pageName}#register" method="post" class="login-box">
 	<fieldset>
-		<input type="hidden" name="requested_action" value="Register"/>
-		<label for="register_email"><spring:message code="EmailAddress_t" /></label>
-		<input id="register_email" type="text" name="email" value="" maxlength="50"/>
-		<input type="submit" name="submit_button" class="europeana-button-1 deans-button-1" value="<spring:message code="Register_t" />"/>
+		<label>
+			<spring:message code="EmailAddress_t" />
+			<input id="register_email" type="text" name="email" value="" maxlength="50" />
+		</label>
+		<input type="hidden" name="action" value="register-for-myeuropeana" />
+		<input type="hidden" name="requested_action" value="Register" />
+		<input type="submit" name="submit" class="europeana-button-1 deans-button-1" value="<spring:message code="Register_t" />"/>
 		<a href="#login" rel="nofollow"><spring:message code="LogIn_t" /></a><br/>
 		<a href="#request-password" rel="nofollow"><spring:message code="ForgotPassword_t" /></a>
 	</fieldset>
