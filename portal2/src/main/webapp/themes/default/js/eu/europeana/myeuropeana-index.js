@@ -10,17 +10,19 @@
 		hash: null,
 
 		checkHash: function() {
-			var hash = window.location.hash.substring(1);
+			var hash = window.location.hash.substring(1),
+			speed = 'slow';
 
 			if ( hash !== panelMenu.hash ) {
 				if ( hash === '' ) {
 					panelMenu.hash = panelMenu.default_panel;
 					window.location.hash = panelMenu.hash;
+					speed = 0;
 				} else {
 					panelMenu.hash = hash;
 				}
 
-				panelMenu.setActivePanel();
+				panelMenu.setActivePanel( speed );
 			}
 		},
 
@@ -36,6 +38,10 @@
 			}
 		},
 
+		addPanelMenuListener: function() {
+			$('#panel-links a').on('click', panelMenu.handlePanelMenuClick );
+		},
+
 		init: function() {
 			if ( eu.europeana.vars.user ) {
 				panelMenu.default_panel = 'user-information';
@@ -45,7 +51,11 @@
 			panelMenu.checkHash();
 		},
 
-		setActivePanel: function() {
+		/**
+		 * @param {string|int} speed
+		 * speed at which to animate scrollTop
+		 */
+		setActivePanel: function( speed ) {
 			panelMenu.setActivePanelLink();
 			$('#' + panelMenu.hash).fadeIn();
 
@@ -54,6 +64,8 @@
 				case'register': $('#register_email').focus(); break;
 				case'request-password': $('#forgot_email').focus(); break;
 			}
+
+			$('body').animate({scrollTop:0}, speed);
 		},
 
 		setActivePanelLink: function() {
