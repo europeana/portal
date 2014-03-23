@@ -23,9 +23,9 @@
 						<td><code>${apiKey.id}</code></td>
 						<td><code>${apiKey.privateKey}</code></td>
 						<td class="hide-cell-on-phones">
-							<form class="item-apikey-save" id="apikey-${apiKey.id}">
-								<input type="text" class="apikey_appName" maxlength="50" value="${apiKey.applicationName}"/>
-								<input type="hidden" class="apikey_id" value="${apiKey.id}"/>
+							<form action="${model.currentUrl}#api-keys" method="post" class="api-key-save-form">
+								<input type="text" name="apikey-application-name" maxlength="50" value="${apiKey.applicationName}" />
+								<input type="hidden" name="apikey-id" value="${apiKey.id}" />
 								<input type="submit" class="submit-button deans-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
 							</form>
 						</td>

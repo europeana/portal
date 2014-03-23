@@ -1,7 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <h3><spring:message code="LogIn_t" /></h3>
 <p><spring:message code="LogIntoMyEuropeana_t" /></p>
-<form action="/${model.portalName}/${model.pageName}#login" method="post" class="login-box">
+<form action="${model.currentUrl}#login" method="post" class="login-box">
 	<fieldset>
 		<label>
 			<spring:message code="EmailAddress_t" />

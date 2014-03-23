@@ -346,8 +346,17 @@
 	 * user panels
 	 */
 	userPanels = {
+		addApiSubmitListener: function() {
+			$('#myeuropeana').on(
+				'submit',
+				'.api-key-save-form',
+				{},
+				this.handleApiKeySubmit
+			);
+		},
+
 		addRemoveItemListener: function() {
-			$('#myeuropeana').one('click',
+			$('#myeuropeana').on('click',
 				'.remove-saved-item',
 				{ type : 'SavedItem' },
 				this.handleRemoveUserPanelItem
@@ -355,7 +364,7 @@
 		},
 
 		addRemoveSearchListener: function() {
-			$('#myeuropeana').one('click',
+			$('#myeuropeana').on('click',
 				'.remove-saved-search',
 				{ type : 'SavedSearch' },
 				this.handleRemoveUserPanelItem
@@ -363,15 +372,21 @@
 		},
 
 		addRemoveTagListener: function() {
-			$('#myeuropeana').one('click',
+			$('#myeuropeana').on('click',
 				'.remove-saved-tag',
 				{ type : 'SocialTag' },
 				this.handleRemoveUserPanelItem
 			);
 		},
 
-		removeUserPanelItemFailure: function( error_feedback ) {
-			eu.europeana.ajax.methods.addFeedbackContent( error_feedback_html );
+		removeUserPanelItemFailure: function() {
+			var error_feedback =
+				'<span id="remove-search-feedback" class="error">' +
+					eu.europeana.vars.msg.error_occurred + ' ' +
+					eu.europeana.vars.msg.item_not_removed +
+				'</span>';
+
+			eu.europeana.ajax.methods.addFeedbackContent( error_feedback );
 			eu.europeana.ajax.methods.showFeedbackContainer();
 		},
 
@@ -387,7 +402,7 @@
 			if ( item.removeSelector ) {
 				$elm = $(item.removeSelector).eq(0);
 				$elm.slideToggle(function() {
-					$elm.remove()
+					$elm.remove();
 				});
 			}
 
@@ -414,12 +429,7 @@
 				$panel : {},
 				removed_msg : '',
 				no_saved_msg : ''
-			},
-			error_feedback_html =
-				'<span id="remove-search-feedback" class="error">' +
-					eu.europeana.vars.msg.error_occurred + ' ' +
-					eu.europeana.vars.msg.item_not_removed +
-				'</span>';
+			};
 
 			switch ( type ) {
 				case 'SavedSearch' :
@@ -454,7 +464,7 @@
 					userPanels.removeUserPanelItemSuccess.call( self, item, ajax_feedback );
 				},
 				failure : function() {
-					userPanels.removeUserPanelItemFailure.call( self, error_feedback );
+					userPanels.removeUserPanelItemFailure.call( self );
 				}
 			};
 
@@ -466,50 +476,47 @@
 			eu.europeana.ajax.methods.user_panel( 'remove', ajax_data, ajax_feedback );
 		},
 
-		//handleSaveApiKeySubmit : function( e ) {
-		//	e.preventDefault();
-		//
-		//	if ( $('#item-tag').val() < 1 ){
-		//		return;
-		//	}
-		//
-		//	var ajax_feedback = {
-		//		saved_tags_count : 0,
-		//		$saved_tags : $('#saved-tags-count'),
-		//		success : function() {
-		//			var html =
-		//				'<span id="save-tag-feedback">' +
-		//					eu.europeana.vars.msg.saved_apikey +
-		//				'</span>';
-		//			eu.europeana.ajax.methods.addFeedbackContent( html );
-		//			eu.europeana.ajax.methods.showFeedbackContainer();
-		//			ajax_feedback.saved_tags_count = parseInt( ajax_feedback.$saved_tags.html(), 10 );
-		//			ajax_feedback.$saved_tags.html( ajax_feedback.saved_tags_count + 1 );
-		//		},
-		//		failure : function() {
-		//			var html =
-		//				'<span id="save-tag-feedback" class="error">' +
-		//					eu.europeana.vars.msg.save_apikey_failed +
-		//				'</span>';
-		//			eu.europeana.ajax.methods.addFeedbackContent( html );
-		//			eu.europeana.ajax.methods.showFeedbackContainer();
-		//		}
-		//	},
-		//
-		//	ajax_data = {
-		//		className : "ApiKey",
-		//		apikey : $(e.target).closest('form').find('.apikey_id').val(),
-		//		appName : encodeURIComponent( $(e.target).closest('form').find('.apikey_appName').val() )
-		//	};
-		//
-		//	eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-		//},
+		apiKeySubmitSuccess: function() {
+			var html =
+			'<span id="save-tag-feedback">' +
+				eu.europeana.vars.msg.saved_apikey +
+			'</span>';
+
+			eu.europeana.ajax.methods.addFeedbackContent( html );
+			eu.europeana.ajax.methods.showFeedbackContainer();
+		},
+
+		apiKeySubmitFailure: function() {
+			var html =
+			'<span id="save-tag-feedback" class="error">' +
+				eu.europeana.vars.msg.save_apikey_failed +
+			'</span>';
+
+			eu.europeana.ajax.methods.addFeedbackContent( html );
+			eu.europeana.ajax.methods.showFeedbackContainer();
+		},
+
+		handleApiKeySubmit : function( evt ) {
+			var $elm = $(this),
+			ajax_feedback = {
+				success : userPanels.apiKeySubmitSuccess,
+				failure : userPanels.apiKeySubmitFailure
+			},
+			ajax_data = {
+				className : "ApiKey",
+				apikey : $elm.find("input[name='apikey-id']").val(),
+				appName : $elm.find("input[name='apikey-application-name']").val()
+			};
+
+			evt.preventDefault();
+			eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+		},
 
 		init: function() {
 			this.addRemoveSearchListener();
 			this.addRemoveItemListener();
 			this.addRemoveTagListener();
-			//$('.item-apikey-save').bind('submit', this.handleSaveApiKeySubmit );
+			this.addApiSubmitListener();
 		}
 	};
 
