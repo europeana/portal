@@ -39,9 +39,10 @@ import eu.europeana.portal2.web.util.QueryUtil;
 @Controller
 public class MyEuropeanaController {
 
-	private static final String REGISTER = "Register";
+	private static final String REGISTER_FOR_MYEUROPEANA = "register-for-myeuropeana";
 	private static final String REGISTER_API = "RegisterAPI";
-	private static final String REQUEST = "Request";
+	private static final String REQUEST_NEW_PASSWORD = "request-new-myeuropeana-password";
+	private static final String INVALID_CREDENTIALS = "invalid_credentials_t";
 
 	@Log
 	private Logger log;
@@ -90,7 +91,10 @@ public class MyEuropeanaController {
 	}
 
 	@RequestMapping(value={"/myeuropeana"}, method=RequestMethod.GET)
-	public ModelAndView myEuropeanaIndexHandler(HttpServletRequest request, Locale locale) throws Exception {
+	public ModelAndView myEuropeanaIndexHandler(
+		HttpServletRequest request,
+		Locale locale
+	) throws Exception {
 
 		User user = ControllerUtil.getUser(userService);
 
@@ -112,18 +116,19 @@ public class MyEuropeanaController {
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 		} else {
 			LoginPage model = new LoginPage();
-			ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN, page);
-			return page;
+			model.setErrorMessage("1".equals(request.getParameter("error")) ? INVALID_CREDENTIALS : null);
+			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN);
+			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 		}
 
 	}
 
 	@RequestMapping(value={"/myeuropeana"}, method=RequestMethod.POST)
 	public ModelAndView handle(
-			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "requested_action", required = false) String requestedAction,
-			HttpServletRequest request, Locale locale) throws Exception {
+		@RequestParam(value = "email", required = false) String email,
+		@RequestParam(value = "requested-action", required = false) String requestedAction,
+		HttpServletRequest request, Locale locale
+	) throws Exception {
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
 
@@ -133,8 +138,8 @@ public class MyEuropeanaController {
 		if (email != null) {
 			String baseUrl = config.getPortalUrl();
 
-			// Register
-			if (REGISTER.equals(requestedAction)) {
+			// Register for My Europeana
+			if (REGISTER_FOR_MYEUROPEANA.equals(requestedAction)) {
 				if (!ControllerUtil.validEmailAddress(email)) {
 					model.setFailureFormat(true);
 				} else if (emailExists(email)) {
@@ -161,8 +166,8 @@ public class MyEuropeanaController {
 				// }
 			}
 
-			// Forgot Password
-			else if (REQUEST.equals(requestedAction)) {
+			// Request New Password
+			else if (REQUEST_NEW_PASSWORD.equals(requestedAction)) {
 				if (!ControllerUtil.validEmailAddress(email)) {
 					model.setFailureForgotFormat(true);
 				} else if (!emailExists(email)) {
@@ -182,18 +187,20 @@ public class MyEuropeanaController {
 
 			// Unknown button
 			else {
-				throw new IllegalArgumentException("Expected a button press to give submit_login=[Register|Request]");
+				throw new IllegalArgumentException("MyEuropeanaController: requested-action not handled");
 			}
 		}
 
 		// boolean register = true;
 		// page.addObject("register", register);
-		model.setErrorMessage("1".equals(request.getParameter("error")) ? "Invalid Credentials" : null);
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN, page);
-		return page;
+		//model.setErrorMessage("1".equals(request.getParameter("error")) ? "Invalid Credentials" : null);
+		//ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN, page);
+		//return page;
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN);
+		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 	}
-	
+
 	public SavedSearch cleanSavedSearch(SavedSearch search) {
 		if (StringUtils.contains(search.getQuery(), " ")
 			|| StringUtils.contains(search.getQuery(), "&")
@@ -220,10 +227,10 @@ public class MyEuropeanaController {
 		}
 		return search;
 	}
-	
+
 	private boolean emailExists(String email) {
 		User user = userService.findByEmail(email);
 		return (user != null && !StringUtils.isBlank(user.getPassword()));
 	}
-	
+
 }
