@@ -158,7 +158,7 @@
 				<c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
 
 				<c:choose>
-					<c:when test="${!empty value.decorator}">
+					<c:when test="${model.showContext && !empty value.decorator}">
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
