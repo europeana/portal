@@ -4,9 +4,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Hierarchical Objects Test Page</title>
-	
+
+<!-- 
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-face.css"/>
+ -->	
+	<link rel="stylesheet" href="../../../../css/europeana-font-icons.css"/>
+	<link rel="stylesheet" href="../../../../css/europeana-font-face.css"/>
+
 	
 	<link rel="stylesheet" href="style.css" />
 	<link rel="stylesheet" href="style-overrides.css" />
@@ -73,12 +78,29 @@
 		<div class="debug-area">
 		</div>
 		
+		<!-- 
+		 -->
 		<img src="https://bigfiles.assembla.com/spaces/europeana/documents/download/dRFgfOLv0r44oGacwqjQYw"/>
 
 		<script type="text/javascript">
 			$(document).ready(function(){
-				var hierarchy = new EuHierarchy($('#hierarchy'), 8);
-				hierarchy.init("dataGen.base()")
+				
+				var href = window.location.href;
+				
+				var param = href.indexOf('?base=') > -1 ? href.split('?base=')[1].replace('%28', '(').replace('%29', ')') : false;
+				
+				console.log('param = ' + param)
+				
+				//var 
+				window.hierarchy = new EuHierarchy($('#hierarchy'), 8);
+
+				// errors:
+				/*
+				hierarchy.init("dataGen.parentTop()")
+				hierarchy.init("dataGen.apocalypse_vol_1()")
+				*/
+
+				hierarchy.init(param ? param : "dataGen.base()");
 				new EuHierarchyTools(hierarchy);
 			});
 		</script>

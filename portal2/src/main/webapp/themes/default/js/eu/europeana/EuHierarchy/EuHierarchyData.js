@@ -124,7 +124,9 @@ var dataGen = function(){
 					"text": 'Parent 1 Child 10',
 					"data": {
 						"parentUrl":	"dataGen.parent1()",
-						"index":        10
+						"index":        10,
+						"XXXchildrenUrl":	"dataGen.p_1c_10children()",
+						"total":		1
 					}
 				},
 				{   
@@ -181,12 +183,23 @@ var dataGen = function(){
 
 		},
 
+		p_1c_10children : function(){
+			alert('caling in item 10 children....');
+			return {
+				"text": 'Load Test....',
+				"data": {
+					"parentUrl":	"dataGen.parent1_kids()[9]",
+					"index": 1
+				}
+			}			
+		},
+		
 		parentTop : function(){
 			return {
 				"text": 'The Abingdon Apocalypse',
 				"data": {
 					"childrenUrl":	"dataGen.parentTop_kids(dataGen.parentTop())",
-					"total": 3,
+					"total": 5,
 					"index": 1
 				}
 			}
@@ -196,283 +209,308 @@ var dataGen = function(){
 			//return [dataGen.parent1()];
 			return [
 			        dataGen.parent1(),
-			        dataGen.apocalypse_vol_1('dataGen.parentTop_kids()'),
-			        dataGen.apocalypse_vol_2('dataGen.parentTop_kids()')
+			        /*
+			        dataGen.apocalypse_vol_1('dataGen.parentTop_kids()[1]'),
+			        dataGen.apocalypse_vol_2('dataGen.parentTop_kids()[2]')
+			        */
+			        dataGen.apocalypse_vol_1(),
+			        dataGen.apocalypse_vol_2(),
+			        dataGen.apocalypse_vol_3(),
+			        dataGen.apocalypse_vol_4()
+
 			];
 		},
 		
-		apocalypse_vol_1 : function(parentUrlIn){
+
+		apocalypse_vol_1 : function(){
 			return {
+				"id": "apocalypse_vol_1", 
 				"text": "Volume 1",
 				"data": {
-					"parentUrl":	parentUrlIn,
-					"childrenUrl":	"dataGen.apocalypse_vol_1_content('dataGen.apocalypse_vol_1()')",
+					"parentUrl": 'dataGen.parentTop()',
+					"childrenUrl":	"dataGen.apocalypse_vol_1_content()",
 					"total": 3,
 					"index": 2,
-					"XXXeuropeana" : {
-						"icon" : "image"
+					"europeana" : {
+						"url"  : "base=dataGen.apocalypse_vol_1()"
 					}
 				}
 
 			}
 		},
 		
-		apocalypse_vol_2 : function(parentUrlIn){
+		apocalypse_vol_2 : function(){
+			var id = "apocalypse_vol_2";
 			return {
+				"id": id,
 				"text": "Volume 2",
 				"data": {
-					"parentUrl":	parentUrlIn,
+					"parentUrl": 'dataGen.parentTop()',
+					"index": 3,
+					
 					"childrenUrl":	"dataGen.apocalypse_vol_2_content('dataGen.apocalypse_vol_2()')",
 					"total": 3,
-					"index": 3,
-					"XXXeuropeana" : {
-						"icon" : "image"
+					"europeana" : {
+						"url"  : "base=dataGen." + id + "()"
 					}
 				}
 
 			}
 		},
-		
-		apocalypse_vol_1_content : function(parentUrlIn){
+
+		apocalypse_vol_3 : function(){
+			var id = "apocalypse_vol_3";
+			return {
+				"id": id,
+				"text": "Volume 3",
+				"data": {
+					"parentUrl": 'dataGen.parentTop()',
+					"index": 4,
+					"childrenUrl":	"dataGen.apocalypse_vol_3_content('dataGen.apocalypse_vol_3()')",
+					"total": 3,
+					"europeana" : {
+						"url"  : "base=dataGen." + id + "()"
+					}
+				}
+
+			}
+		},
+
+		apocalypse_vol_4 : function(){
+			var id = "apocalypse_vol_4";
+			return {
+				"id": id,
+				"text": "Volume 4",
+				"data": {
+					"parentUrl": 'dataGen.parentTop()',
+					"index": 5,
+					
+					"childrenUrl":	"dataGen.apocalypse_vol_4_content('dataGen.apocalypse_vol_4()')",
+					"total": 2,
+					"europeana" : {
+						"url"  : "base=dataGen." + id + "()"
+					}
+				}
+			}
+		},
+
+		apocalypse_vol_1_content : function(){
+			
+			var parentUrl = 'dataGen.apocalypse_vol_1()';
+			
 			return [
 			    {
+			    	"id" : "apocalypse_vol_1_content_1",
 					"text": 'Unfinished Miniature Of Martyrdoms, In \'The Abingdon Apocalypse\'',
 					"data": {
-						"parentUrl":	parentUrlIn,
+						"parentUrl":	parentUrl,
 						"index": 1,
 						"europeana" : {
-							"icon" : "image"
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_1_content()[0]"
+								
 						}
 					}
 				},
 			    {
+			    	"id" : "apocalypse_vol_1_content_2",
 					"text": 'The Angel Appears To St. John On The Island Of Patmos, In \'The Abingdon Apocalypse\'',
 					"data": {
-						"parentUrl":	parentUrlIn,
+						"parentUrl":	parentUrl,
 						"index": 2,
 						"europeana" : {
-							"icon" : "image"
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_1_content()[1]"
 						}
 					}
 				},
 			    {
+			    	"id" : "apocalypse_vol_1_content_3",
 					"text": 'Miniature Representing The Idea That Those Who Despise The Warnings Of The Prophets Go To Hell, In \'The Abingdon Apocalypse\'',
 					"data": {
-						"parentUrl":	parentUrlIn,
+						"parentUrl":	parentUrl,
 						"index": 3,
 						"europeana" : {
-							"icon" : "image"
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_1_content()[2]"
 						}
 					}
 				}
 				]
 		},
 		
-		apocalypse_vol_2_content : function(parentUrlIn){
+		apocalypse_vol_2_content : function(){
+			
+			var parentUrl = 'dataGen.apocalypse_vol_2()';
+			
 			return [
 			    {
+			    	"id" : "apocalypse_vol_2_content_1",
 					"text": 'Drawing Of St. Christopher, Added To A Flyleaf Of \'The Abingdon Apocalypse\'',
 					"data": {
-						"parentUrl":	parentUrlIn,
+						"parentUrl": parentUrl,
 						"index": 1,
 						"europeana" : {
-							"icon" : "image"
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_2_content()[0]"
 						}
 					}
 				},
 			    {
+			    	"id" : "apocalypse_vol_2_content_2",
 					"text": 'Miniature Representing The Redemption Of The World, In \'The Abingdon Apocalypse\'',
 					"data": {
-						"parentUrl":	parentUrlIn,
+						"parentUrl": parentUrl,
 						"index": 2,
 						"europeana" : {
-							"icon" : "image"
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_2_content()[1]"
 						}
 					}
 				},
 			    {
+			    	"id" : "apocalypse_vol_2_content_3",
 					"text": 'Unfinished Drawing Of St. John The Evangelist, In \'The Abingdon Apocalypse\'',
 					"data": {
-						"parentUrl":	parentUrlIn,
+						"parentUrl": parentUrl,
 						"index": 3,
 						"europeana" : {
-							"icon" : "image"
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_2_content()[2]"
 						}
 					}
 				}
 				]
 		},
 
-				/*
+		apocalypse_vol_3_content : function(parentUrlIn){
+			
+			var parentUrl = 'dataGen.apocalypse_vol_3()';
+			
+			return [
+			    {
+			    	"id" : "apocalypse_vol_3_content_1",
+					"text": 'Inscriptions Added To A Flyleaf Of \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrl,
+						"index": 1,
+						"europeana" : {
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_3_content()[0]"
+						}
+					}
+				},
+			    {
+			    	"id" : "apocalypse_vol_3_content_2",
+					"text": 'Unfinished Miniature Illustrating Revelation 14:18, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrl,
+						"index": 2,
+						"europeana" : {
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_3_content()[1]"
+						}
+					}
+				},
+			    {
+			    	"id" : "apocalypse_vol_3_content_3",
+					"text": 'Unfinished Miniature Representing Revelation 11:7-8, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrl,
+						"index": 3,
+						"europeana" : {
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_3_content()[2]"
+						}
+					}
+				}
+				]
+		},
+		
+		apocalypse_vol_4_content : function(){
+			var parentUrl = 'dataGen.apocalypse_vol_4()';
+			
+			return [
+			    {
+			    	"id" : "apocalypse_vol_4_content_1",
+					"text": 'Unfinished Miniature Representing The Commentary On Revelation 12:17-18, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrl,
+						"index": 1,
+						"europeana" : {
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_4_content()[0]"
+						}
+					}
+				},
+			    {
+			    	"id" : "apocalypse_vol_4_content_2",
+					"text": 'The Massacre Of The Innocents And The Flight Into Egypt, In \'The Abingdon Apocalypse\'',
+					"data": {
+						"parentUrl":	parentUrl,
+						"index": 2,
+						"europeana" : {
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_4_content()[1]"
+						}
+					}
+				}
+				]
+		},
 
-
-Inscriptions Added To A Flyleaf Of 'The Abingdon Apocalypse'
-
-image
-
-Unfinished Miniature Illustrating Revelation 14:18, In 'The Abingdon Apocalypse'
-
-image
-
-Unfinished Miniature Representing Revelation 11:7-8, In 'The Abingdon Apocalypse'
-
-image
-
-Unfinished Miniature Representing The Commentary On Revelation 12:17-18, In 'The Abingdon Apocalypse'
-
-image
-
-The Massacre Of The Innocents And The Flight Into Egypt, In 'The Abingdon Apocalypse'
-
-image
-				  
-				 */
-				
 
 		
 		books : function(parentUrlIn){
 		
-			return [
-					 {
-						"text": '<span>Book 1 (8 volumes) - a book with a title that is really long and wants to line wrap.</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[0]')[0]",
-							"total": 8,
-							"index": 1,
-							"europeana" : {
-								"icon" : "TEXT"
-							}
-						}
-					 },
-					 {	 
-						"text": 'Book 2 (2 volumes)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[1]')[1]",
-							"total": 2,
-							"index": 2
-						}
-					 },
-					 {	 
-						"text": 'Book 3 (3 volumes)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[2]')[2]",
-							"total": 3,
-							"index": 3
-						}
+			var t = new Date().getTime();
 
-					 },
-					 {
-						"text": '<span>Book 4 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[3]')[0]",
-							"total": 8,
-							"index": 4
-						}
-					 },
-					 {
-						"text": '<span>Book 5 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[4]')[0]",
-							"total": 8,
-							"index": 5
-						}
-					 },
-					 {
-						"text": '<span>Book 6 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[5]')[0]",
-							"total": 8,
-							"index": 6
-						}
-					 },
-					 {
-						"text": '<span>Book 7 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[6]')[0]",
-							"total": 8,
-							"index": 7
-						}
-					 },
-					 {
-						"text": '<span>Book 8 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[7]')[0]",
-							"total": 8,
-							"index": 8
-						}
-					 },
-					 {
-						"text": '<span>Book 9 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[8]')[0]",
-							"total": 8,
-							"index": 9
-						}
-					 },
-					 {
-						"text": '<span>Book 10 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[9]')[0]",
-							"total": 8,
-							"index": 10
-						}
-					 },
-					 {
-						"text": '<span>Book 11 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[10]')[0]",
-							"total": 8,
-							"index": 11
-						}
-					 },
-					 {
-						"text": '<span>Book 12 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[11]')[0]",
-							"total": 8,
-							"index": 12
-						}
-					 },
-					 {
-						"text": '<span>Book 13 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[12]')[0]",
-							"total": 8,
-							"index": 13
-						}
-					 },
-					 {
-						"text": '<span>Book 14 (Book 1 reprint - 8 volumes)</span>',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.volumes('dataGen.books()[13]')[0]",
-							"total": 8,
-							"index": 14
-						}
-					 }
+			var res = [];
 
-			]
+			for(var i=1; i<15; i++){
+				res.push({
+					"id" : "book_" + i + "_" + t,
+					"text": "Book " + i + " (8 volumes)",
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"childrenUrl":	"dataGen.volumes('dataGen.books()[" + (i-1) + "]')",
+						"total": 8,
+						"index": i,
+						"europeana" : {
+							"icon" : "TEXT"
+						}
+					}					
+				});
+			};
+			console.log('Books - ' + JSON.stringify(res) + ', parent url was ' + parentUrlIn);
+			return res;
 		},
 		
 		volumes : function(parentUrlIn){
 			
+			var t = new Date().getTime();
+
+			var res = [];
+
+			for(var i=1; i<9; i++){
+				res.push({
+					"id" : "v_" + i + "_" + t,
+					"text": "Volume " + i + " (2 chapters)",
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"childrenUrl":	"dataGen.chapters('dataGen.volumes()[" + (i-1) + "]')",
+						"total": 2,
+						"index": i
+					}					
+				});
+			};
+			console.log(JSON.stringify(res));
+			return res;
+			/*
 			return[
 			       [
 			
 						{
+							"id" : "v_1_" + t,
 							"text": 'Volume 1 (2 chapters) - a small volume with a large name.  Guaranteed to line wrap',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -483,6 +521,8 @@ image
 							}
 						},
 						{
+							"id" : "v_2_" + t,
+							"id" : "v_2",
 							"text": 'Volume 2 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -493,6 +533,7 @@ image
 							}
 						},
 						{
+							"id" : "v_3_" + t,
 							"text": 'Volume 3 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -503,6 +544,8 @@ image
 							}
 						},
 						{
+							"id" : "v_4_" + t,
+							"id" : "v_1_" + t,
 							"text": 'Volume 4 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -513,6 +556,7 @@ image
 							}
 						},
 						{
+							"id" : "v_5_" + t,
 							"text": 'Volume 5 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -523,6 +567,7 @@ image
 							}
 						},
 						{
+							"id" : "v_6_" + t,
 							"text": 'Volume 6 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -533,6 +578,7 @@ image
 							}
 						},
 						{
+							"id" : "v_7_" + t,
 							"text": 'Volume 7 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -543,6 +589,7 @@ image
 							}
 						},
 						{
+							"id" : "v_8_" + t,
 							"text": 'Volume 8 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -553,9 +600,10 @@ image
 							}
 						}
 			        ],
-			        /* vol 2 */
+			        // vol 2
 			        [
 						{
+							"id" : "v_2_1_" + t,
 							"text": 'V2 Volume 1 (8 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -566,6 +614,7 @@ image
 							}
 						},
 						{
+							"id" : "v_2_2_" + t,
 							"text": 'V2 Volume 2 (8 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
@@ -576,10 +625,11 @@ image
 							}
 						}
 			        ],
-			        /* vol 3 */
+			        // vol 3 
 			        [
 						{
-							"text": 'Volume 1 (2 chapters)',
+							"id" : "v_3_1_" + t,
+							"text": 'V3 Volume 1 (2 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
 								"childrenUrl":	"dataGen.chapters('dataGen.volumes()[1][2]')",
@@ -589,7 +639,8 @@ image
 							}
 						},
 						{
-							"text": '<a href="example2.html">Volume 2 (5 chapters)</a>',
+							"id" : "v_3_2_" + t,
+							"text": '<a href="example2.html">V3 Volume 2 (5 chapters)</a>',
 							"data": {
 								"parentUrl":	parentUrlIn,
 								"childrenUrl":	"dataGen.chapters('dataGen.volumes()[1][3]')",
@@ -599,7 +650,8 @@ image
 							}
 						},
 						{
-							"text": 'Volume 3 (7 chapters)',
+							"id" : "v_3_3_" + t,
+							"text": 'V3 Volume 3 (7 chapters)',
 							"data": {
 								"parentUrl":	parentUrlIn,
 								"childrenUrl":	"dataGen.chapters('dataGen.volumes()[1][4]')",
@@ -611,166 +663,45 @@ image
 			        ]
 
 				];
+				*/
 		},
 		
 		chapters : function(parentUrlIn){
 			
-			return [
-					 {
-						"text": 'Chapter 1 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[0]')",
-							"total": 10,
-							"index": 1
-						}
-					 },
-					 {	 
-						"text": 'Chapter 2 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[1]')",
-							"total": 10,
-							"index": 2
-						}
-					 },
-					 {	 
-						"text": 'Chapter 3 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[2]')",
-							"total": 10,
-							"index": 3
-						}
-					 },
-					 {	 
-						"text": 'Chapter 4 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[3]')",
-							"total": 10,
-							"index": 4
-						}
-					 },
-					 {	 
-						"text": 'Chapter 5 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[4]')",
-							"total": 10,
-							"index": 5
-						}
-					 },
-					 {	 
-						"text": 'Chapter 6 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[5]')",
-							"total": 10,
-							"index": 6
-						}
-					 },
-					 {	 
-						"text": 'Chapter 7 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[6]')",
-							"total": 10,
-							"index": 7
-						}
-					 },
-					 {	 
-						"text": 'Chapter 8 (10 verses)',
-						"data": {
-							"parentUrl":	parentUrlIn,
-							"childrenUrl":	"dataGen.verses('dataGen.chapters()[7]')",
-							"total": 10,
-							"index": 8
-						}
-					 }
-				];
+			var t = new Date().getTime();
+			var res = [];
+			for(var i=1; i<11; i++){
+				res.push({
+					"id" : "c_" + i + "_" + t,
+					"text": 'Chapter ' + i + ' (10 verses)',
+					"data": {
+						"parentUrl":	parentUrlIn,
+						"index": i,
+						"childrenUrl":	"dataGen.verses('dataGen.chapters()[" + (i-1) + "]')",
+						"total": 10,
+					}
+				 });
+			}
+			return res;
 		},
 		
 		verses: function(parentUrlIn){
-			
-			return [
-				 {
-					"text": 'Verse 1',
+			var t   = new Date().getTime();
+			var res = [];
+			for(var i=1; i<11; i++){
+				res.push({
+					"id" : "vrs_" + i + "_" + t,
+					"text": 'Verse ' + i,
 					"data": {
 						"parentUrl":	parentUrlIn,
-						"index": 1
+						"index": i
 					}
-				 },
-				 {
-					"text": 'Verse 2',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 2
-					}
-				 },
-				 {	 
-					"text": 'Verse 3',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 3
-					}
-				 },
-				 {	 
-					"text": 'Verse 4',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 4
-					}
-				 },
-				 {	 
-					"text": 'Verse 5',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 5
-					}
-				 },
-				 {	 
-					"text": 'Verse 6',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 6
-					}
-				 },
-				 {	 
-					"text": 'Verse 7',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 7
-					}
-				 },
-				 {	 
-					"text": 'Verse 8',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 8
-					}
-				 },
-				 {	 
-					"text": 'Verse 9',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 9
-					}
-				 },
-				 {	 
-					"text": 'Verse 10',
-					"data": {
-						"parentUrl":	parentUrlIn,
-						"index": 10
-					}
-				 }
-			] 
+				 });
+			}
+			return res;
 		}
 		
 	};
 }();
-
-
-
 
 
