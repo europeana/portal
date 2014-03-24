@@ -8,7 +8,20 @@
 
 	<div class="container">
 		<%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
-		<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/index.jspf" %>
+		<c:choose>
+			<c:when test="${!empty model.debug && model.debug}">
+				<%@ include file="/WEB-INF/jsp/default/myeuropeana/content/index.jspf" %>
+			</c:when>
+			<c:otherwise>
+				<div id="myeuropeana" class="row">
+					<h2><spring:message code="MyEuropeana_t" /></h2>
+					<ul id="panel-links" class="columns three" role="menu"></ul>
+					<div class="columns nine">
+						<p>New page in development.</p>
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
 		<%@ include file="/WEB-INF/jsp/default/_common/footer.jsp" %>
 	</div>
 
