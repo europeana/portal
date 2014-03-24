@@ -216,43 +216,47 @@ eu.europeana.fulldoc = {
 	},
 	
 	
+	
 	addAutoTagHandler : function() {
-		var self = this;
-		$('#fields-enrichment h3 a, #fields-enrichment h4 a, .concept .item-context-data a.more-info, .contextual-header a.more-info').each(function( key, value ) {
+		var self = this;		
+		$('#fields-enrichment h3 a, #fields-enrichment h4 a, '
+		  + '.concept .item-context-data a.more-info, '		
+		  + '.contextual-header a.more-info ')
+		 .each(function( key, value ) {
 			$(value).bind('click', self.handleAutoTagClick );
 			$(value).addClass(eu.europeana.fulldoc.more_icon_class);
 		});
 	},
 	
-	
 	handleAutoTagClick : function( e ) {
 		
 		e.preventDefault();
 		var $elm = $(this);
-		
-		var event = $elm.data('event');
+
+		var event = $elm.data('event'); // used to initialise map
 		if(event){
     	   	$(window).trigger(event, $elm.parent().next() );
 		}
-		
-		console.log('toggle ' + $elm.parent().next()[0].nodeName )
+
 		$elm.parent().next().slideToggle();
 		
-		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {			
+		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {
+			
 			$elm.removeClass(eu.europeana.fulldoc.more_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.less_icon_class);
-		}
-		else {			
+		} else {
+			
 			$elm.removeClass(eu.europeana.fulldoc.less_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.more_icon_class);
 		}
+		
 		if ( $elm.html() == eu.europeana.vars.show.more) {			
 			$elm.html(eu.europeana.vars.show.less);
 		}
-		else {
+		else if ( $elm.html() == eu.europeana.vars.show.less){
 			$elm.html(eu.europeana.vars.show.more);
 		}
-		
+		 
 	},
 	
 	
