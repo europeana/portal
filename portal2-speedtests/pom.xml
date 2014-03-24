@@ -21,7 +21,7 @@
 
 	<artifactId>portal2speedtests</artifactId>
 	<groupId>eu.europeana.portal</groupId>
-	<version>2.0.9</version>
+	<version>${version.europeanaApi2}</version>
 	<packaging>jar</packaging>
 	<description>Speedtests for the europeana portal</description>
 	<inceptionYear>2012</inceptionYear>
@@ -51,5 +51,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
 </project>
