@@ -564,7 +564,7 @@ public class ObjectController {
 							    StringUtils.equals(metaField, "DATA_PROVIDER")) {
 								clear = false;
 							}
-							MltSuggestion suggestion = new MltSuggestion(metaField, value, id, clear);
+							MltSuggestion suggestion = new MltSuggestion(metaField, StringUtils.trim(value), id, clear);
 							if (suggestion.getQuery().startsWith("http://")) {
 								suggestion.makeEscapedQuery(suggestion.getQuery());
 							} else {
