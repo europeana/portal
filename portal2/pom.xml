@@ -29,7 +29,7 @@
 	<parent>
 		<artifactId>portal</artifactId>
 		<groupId>eu.europeana</groupId>
-		<version>2.0.9</version>
+		<version>${version.europeanaApi2}</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
