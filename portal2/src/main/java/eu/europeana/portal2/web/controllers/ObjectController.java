@@ -149,9 +149,13 @@ public class ObjectController {
 		}
 
 		boolean showEuropeanaMlt = false;
-		if (StringUtils.isNotBlank(mlt) && Boolean.parseBoolean(mlt)) {
-			showEuropeanaMlt = true;
+		try {
+			String showEuropeanaMltString = messageSource.getMessage("notranslate_show_mlt", null, locale);
+			showEuropeanaMlt = Boolean.parseBoolean(showEuropeanaMltString.trim());
+		} catch (NoSuchMessageException e) {
+			log.error("notranslate_show_mlt message key is missing.");
 		}
+
 		boolean showContext = false;
 		if (StringUtils.isNotBlank(context) && Boolean.parseBoolean(context)) {
 			showContext = true;
