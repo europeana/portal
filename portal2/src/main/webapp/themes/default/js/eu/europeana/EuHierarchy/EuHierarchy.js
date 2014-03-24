@@ -317,10 +317,10 @@ var EuHierarchy = function(cmp, rows) {
 	
 	var viewPrevOrNext = function(node, backwards, leftToLoad, deepen, callback) {
 			
-		//log('viewPrevOrNext -> ' + node.text + ', backwards -> ' + backwards + ', deepen -> ' + deepen);
+		log('viewPrevOrNext -> ' + node.text + ', backwards -> ' + backwards + ', deepen -> ' + deepen);
 		
 		if( (!backwards) && deepen){	/* find deepest opened with children */
-			
+		//if(deepen){	
 			var switchTrackNode = node;
 			
 			while(switchTrackNode.children.length && switchTrackNode.state.opened){
@@ -356,6 +356,40 @@ var EuHierarchy = function(cmp, rows) {
 			var parent = self.treeCmp.jstree('get_node', node.parent);
 			
 			if(parent.data){
+				
+/////////////////////////////////
+//  Land here:
+//	file:///home/andy/git/portal/portal2/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/index.html?base=dataGen.apocalypse_vol_3_content%28%29[2]
+//  Key down to Volume 4
+//  Opening it
+//  Keying back to top was not possible without this fix  
+				
+				if(backwards){
+					var origIndex = 0;
+					$.each(parent.children, function(i, ob){	// get the loaded index - this is only the same as node.data.index if everything is loaded
+						if(ob == node.id){
+							origIndex = i;
+						}
+					});
+					
+					if(origIndex>0){
+						var prevNode = self.treeCmp.jstree('get_node', parent.children[origIndex-1]);
+						if(self.treeCmp.jstree( 'is_disabled', prevNode )){
+							
+							self.treeCmp.jstree("enable_node", prevNode );
+							leftToLoad --;
+
+							if(leftToLoad == 0){
+								if(callback){
+									callback();
+								}
+								return;
+							}
+						}						
+					}
+				}
+/////////////////////////////////				
+				
 				var urlSuffix = getRange( node, backwards, leftToLoad ); // rows param
 				var url       = parent.data.childrenUrl + urlSuffix;
 
@@ -377,7 +411,7 @@ var EuHierarchy = function(cmp, rows) {
 							if(i+1==data.length){
 								leftToLoad -= data.length;
 								if(leftToLoad > 0){
-									//log('recurse point one')
+									log('recurse point one')
 									viewPrevOrNext(node, backwards, leftToLoad, true, callback)
 								}
 								else{
@@ -397,12 +431,12 @@ var EuHierarchy = function(cmp, rows) {
 							leftToLoad --;
 						}						
 						if(leftToLoad > 0){
-							//log('recurse point three');
+							log('recurse point three');
 							viewPrevOrNext(parent, backwards, leftToLoad, true, callback);
 						}
 						else{
 							if(callback){
-								//log('recurse point three EXIT - (no suffix, going backwards, nothing left to load)');
+								log('recurse point three EXIT - (no suffix, going backwards, nothing left to load)');
 								callback();
 							}
 						}
@@ -445,7 +479,7 @@ var EuHierarchy = function(cmp, rows) {
 				}
 			}// end if parent.data
 			else{
-				//log('no parent data - text = ' + parent.text + ' parent = ' + node.parent + '\nobject = ' + JSON.stringify(parent) );
+				log('no parent data - text = ' + parent.text + ' parent = ' + node.parent + '\nobject = ' + JSON.stringify(parent) );
 				if(callback){
 					callback();						
 				}
@@ -514,7 +548,7 @@ var EuHierarchy = function(cmp, rows) {
 	
 	var doScrollTo = function(el, callback) {
 		
-		console.log()
+		//console.log()
 		if (typeof el == 'undefined') {
 			log('doScrollTo error - undefined @el');
 			return;
@@ -788,11 +822,8 @@ var EuHierarchy = function(cmp, rows) {
 					setTimeout(function() {
 						var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
 						loadFirstChild(pageNode, function(){
-							self.treeCmp.jstree("disable_node", pageNode.parent);
-							
+							self.treeCmp.jstree("disable_node", pageNode.parent);							
 							setLoadPoint(self.pageNodeId);
-							//$('.loadPoint').removeClass('loadPoint');
-							//$('#' + self.pageNodeId).addClass('loadPoint');
 							self.scrollDuration = 1000;
 						});
 					}, 1);
@@ -857,7 +888,7 @@ var EuHierarchy = function(cmp, rows) {
 
 		self.treeCmp.on("open_node.jstree", function(e, data) {
 			
-			log('open node: ' + data.node.text);
+			//log('open node: ' + data.node.text);
 			showSpinner();
 			
 			var fChild = self.treeCmp.jstree('get_node', data.node.children[0]);
