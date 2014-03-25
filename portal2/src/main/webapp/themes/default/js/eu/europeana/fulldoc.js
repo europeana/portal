@@ -28,6 +28,11 @@ eu.europeana.fulldoc = {
 			js.utils.fixSearchRowLinks($(ob));
 		});
 		
+		$('.canned').each(function(i, ob){			
+			js.utils.fixSearchRowLinks($(ob));
+		});
+		
+		
 		js.utils.fixSearchRowLinks($('#navigation a').first());
 		
 		
