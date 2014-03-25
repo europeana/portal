@@ -117,6 +117,7 @@ public class ObjectController {
 	private ReloadableResourceBundleMessageSource messageSource;
 
 	public static final Map<String, MltConfiguration> SEE_ALSO_FIELDS = new LinkedHashMap<String, MltConfiguration>();
+	public static final Map<String, MltConfiguration> MLT_FIELDS = new LinkedHashMap<String, MltConfiguration>();
 
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
@@ -139,6 +140,10 @@ public class ObjectController {
 		long t0 = new Date().getTime();
 
 		if (SEE_ALSO_FIELDS.isEmpty()) {
+			initializeSeeAlsoConfiguration();
+		}
+
+		if (MLT_FIELDS.isEmpty()) {
 			initializeMltConfiguration();
 		}
 
@@ -258,24 +263,16 @@ public class ObjectController {
 			if (log.isDebugEnabled()) {
 				tSeeAlso0 = new Date().getTime();
 			}
-			model.setSeeAlsoCollector(createSeeAlsoCollector(model.getShortcut()));
-			model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model.getSeeAlsoCollector()));
-			if (log.isDebugEnabled()) {
-				long tSeeAlso1 = new Date().getTime();
-				log.debug("see also takes: " + (tSeeAlso1 - tSeeAlso0));
-			}
-
-			long tMlt0 = 0;
-			if (log.isDebugEnabled()) {
-				tMlt0 = new Date().getTime();
-			}
 			if (showEuropeanaMlt) {
 				model.setMltCollector(createMltCollector(model.getShortcut()));
 				model.setEuropeanaMlt(createEuropeanaMlt(model, fullBean.getAbout()));
+			} else {
+				model.setSeeAlsoCollector(createSeeAlsoCollector(model.getShortcut()));
+				model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model.getSeeAlsoCollector()));
 			}
 			if (log.isDebugEnabled()) {
-				long tMlt1 = new Date().getTime();
-				log.debug("MLT takes: " + (tMlt1 - tMlt0));
+				long tSeeAlso1 = new Date().getTime();
+				log.debug("Similarity takes: " + (tSeeAlso1 - tSeeAlso0));
 			}
 
 			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView
@@ -290,20 +287,33 @@ public class ObjectController {
 		return page;
 	}
 
+	private void initializeSeeAlsoConfiguration() {
+		initializeSmilarityConfiguration(SEE_ALSO_FIELDS);
+		SEE_ALSO_FIELDS.put("what",
+				new MltConfiguration("what", "mlt_what_t", config.getWeightWhat(),
+					"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel"));
+	}
+
 	private void initializeMltConfiguration() {
+		initializeSmilarityConfiguration(MLT_FIELDS);
+		MLT_FIELDS.put("what",
+				new MltConfiguration("what", "mlt_what_t", config.getWeightWhat(),
+					"DcType", "DcSubject", "ConceptBroader"));
+		MLT_FIELDS.put("skos_concept",
+			new MltConfiguration("skos_concept", "mlt_what_t", config.getWeightWhat(), "ConceptAbout"));
+	}
+
+	private void initializeSmilarityConfiguration(Map<String, MltConfiguration> map) {
 		// proxy_dc_title, proxy_dcterms_alternative
-		SEE_ALSO_FIELDS.put("title",
+		map.put("title",
 			new MltConfiguration("title", "mlt_title_t", config.getWeightTitle(), "DcTitle", "DctermsAlternative"));
 		// proxy_dc_creator, ag_skos_prefLabel -- missing: ag_skos_altLabel, ag_foaf_name
-		SEE_ALSO_FIELDS.put("who",
+		map.put("who",
 			new MltConfiguration("who", "mlt_who_t", config.getWeightWho(), "DcCreator", "AgentPrefLabel"));
-		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel, cc_skos_broaderLabel, cc_skos_prefLabel
-		SEE_ALSO_FIELDS.put("what",
-			new MltConfiguration("what", "mlt_what_t", config.getWeightWhat(),
-				"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel"));
-		SEE_ALSO_FIELDS.put("DATA_PROVIDER",
+		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel, cc_skos_broaderLabel, cc_skos_altLabel
+		map.put("DATA_PROVIDER",
 			new MltConfiguration("DATA_PROVIDER", "mlt_provider_t", config.getWeightDataProvider(), "DataProvider"));
-		SEE_ALSO_FIELDS.put("PROVIDER",
+		map.put("PROVIDER",
 			new MltConfiguration("PROVIDER", "mlt_data_provider_t", config.getWeightProvider(), "EdmProvider"));
 	}
 
@@ -456,14 +466,14 @@ public class ObjectController {
 		EuropeanaMlt mlt = new EuropeanaMlt();
 		boolean hasDataProvider = (mltCollector.get("DATA_PROVIDER") != null);
 		List<String> queryList = new ArrayList<String>();
-		for (String field : SEE_ALSO_FIELDS.keySet()) {
+		for (String field : MLT_FIELDS.keySet()) {
 			if ((field.equals("PROVIDER") && hasDataProvider)
 				|| mltCollector.get(field) == null
 				|| mltCollector.get(field).size() == 0)
 			{
 				continue;
 			}
-			String query = mltCollector.getQuery(field, SEE_ALSO_FIELDS.get(field).getWeight());
+			String query = mltCollector.getQuery(field, MLT_FIELDS.get(field).getWeight());
 			queryList.add(query);
 		}
 
@@ -547,8 +557,8 @@ public class ObjectController {
 	private MltCollector createMltCollector(FullBeanShortcut shortcut) {
 		MltCollector mltCollector = new MltCollector();
 		int countPerField = 0, id = 0;
-		for (String metaField : SEE_ALSO_FIELDS.keySet()) {
-			for (String edmField : SEE_ALSO_FIELDS.get(metaField).getEdmFields()) {
+		for (String metaField : MLT_FIELDS.keySet()) {
+			for (String edmField : MLT_FIELDS.get(metaField).getEdmFields()) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
 					countPerField = 0;

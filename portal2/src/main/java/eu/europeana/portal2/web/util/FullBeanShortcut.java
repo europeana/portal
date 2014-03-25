@@ -236,6 +236,7 @@ public class FullBeanShortcut {
 		if (document.getConcepts() != null) {
 			parent = "Concept";
 			for (Concept concept : document.getConcepts()) {
+				add(parent, "ConceptAbout", concept.getAbout()); // String
 				add(parent, "ConceptPrefLabel", concept.getPrefLabel()); // Map
 				add(parent, "ConceptBroader", concept.getBroader()); // String[]
 				add(parent, "ConceptAltLabel", concept.getAltLabel()); // Map
