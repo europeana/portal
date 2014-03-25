@@ -42,9 +42,10 @@ eu.europeana.apiconsole = {
 	},
 };
 
-var updateParent = function(){
-    var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
-    target.postMessage(
+var updateParent = function() {
+	var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
+	alert('sending message: ' + ($('#api-result').outerHeight(true) + 10) + 'px');
+	target.postMessage(
 	($('#api-result').outerHeight( true ) + 10) + 'px', '*');
 };
 
