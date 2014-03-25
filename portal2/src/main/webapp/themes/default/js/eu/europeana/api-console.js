@@ -47,7 +47,6 @@ var updateParent = function() {
 	var resHeight = $('#api-result').outerHeight( true );
 	var formHeight = $('#api-form').outerHeight( true );
 	var height = Math.max(resHeight, formHeight);
-	alert('sending message: ' + (height + 10) + 'px');
 	target.postMessage((height + 10) + 'px', '*');
 };
 
