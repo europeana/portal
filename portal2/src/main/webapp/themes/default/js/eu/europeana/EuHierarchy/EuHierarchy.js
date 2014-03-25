@@ -43,6 +43,7 @@ var EuHierarchy = function(cmp, rows) {
 	
 	self.treeCmp        = cmp;
 	self.pageNodeId     = false;	// the id of the node corresponding to the full-doc page we're on
+	self.silentClick    = false;
 	self.container      = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration = 0;
 	
@@ -320,7 +321,7 @@ var EuHierarchy = function(cmp, rows) {
 		log('viewPrevOrNext -> ' + node.text + ', backwards -> ' + backwards + ', deepen -> ' + deepen);
 		
 		if( (!backwards) && deepen){	/* find deepest opened with children */
-		//if(deepen){	
+			
 			var switchTrackNode = node;
 			
 			while(switchTrackNode.children.length && switchTrackNode.state.opened){
@@ -479,7 +480,7 @@ var EuHierarchy = function(cmp, rows) {
 				}
 			}// end if parent.data
 			else{
-				log('no parent data - text = ' + parent.text + ' parent = ' + node.parent + '\nobject = ' + JSON.stringify(parent) );
+				//log('no parent data - text = ' + parent.text + ' parent = ' + node.parent + '\nobject = ' + JSON.stringify(parent) );
 				if(callback){
 					callback();						
 				}
@@ -502,6 +503,7 @@ var EuHierarchy = function(cmp, rows) {
 	};
 	
 	var hideSpinner = function(){
+//		alert('hide s')
 		self.container.prev('.ajax-overlay').hide();
 	};
 	
@@ -599,7 +601,7 @@ var EuHierarchy = function(cmp, rows) {
 
 		viewPrevOrNext(initiatingNode, backwards,  defaultChunk, true, function(){
 
-			hideSpinner();
+			//hideSpinner();
 			
 			var newHeight        = $(heightMeasureSel).height();
 			var containerH       = self.container.height();
@@ -625,6 +627,7 @@ var EuHierarchy = function(cmp, rows) {
 			    
 			var finalScroll      = function(){
 				//stats();
+				hideSpinner();
 				
 				var newScrollTop = resetScrollTop;
 				var visibleNodes = getVisibleNodes();
@@ -658,12 +661,57 @@ var EuHierarchy = function(cmp, rows) {
 					}
 				});	
 			};
+			
+			var skipScrollBump = function(){
+				
+				var enabledSomething = newDisabledCount != disabledCount;
+				
+				if(backwards && enabledSomething){
+
+					var previousVisible = $('#' + initiatingNode.id).closest('li');
+
+					if( previousVisible.prev('li').length ){
+						previousVisible = previousVisible.prev('li').find('>a');
+					}
+					else{
+						previousVisible = previousVisible.closest('li').closest('ul').closest('li').find('>a');
+					}
+					if(previousVisible.length){
+						log('bump up to previous visible node');
+						self.silentClick = true;
+					//	alert('bump')
+						previousVisible.click();
+					}
+					hideSpinner();
+				}
+				
+				var vnId = backwards ? enabledSomething ? getVisibleNodes()[0].id : initiatingNode.id : initiatingNode.id;
+				
+				
+				$('#' + vnId + '>a').focus();
+				if(backwards && enabledSomething){
+					// only scroll if vnId is not the top
+					doScrollTo('#' + vnId, function(){
+						log('done scroll to - ' + vnId);
+						alert('totally done - scrolled t0 ' + vnId)
+					});							
+				}
+				log('end skip scroll')
+			};
 	
 				
 			if(diffHeight == 0 || (origScrollTop == 0 && newHeight > containerH) ){
 				diffHeight = containerH; // this is a max - trimmed within function if too big 
 				if(skipScroll){
+
+////////////
+				//	var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
+					
+/////////////
+					skipScrollBump();
+					
 					if(callback){
+						hideSpinner();
 						callback();
 					}
 				}
@@ -677,6 +725,9 @@ var EuHierarchy = function(cmp, rows) {
 					self.scrollDuration  = 1000;
 					
 					if(skipScroll){
+						
+						skipScrollBump();
+						
 						//alert('skip ' + resetScrollTop + ' diffHeight ' + diffHeight)
 						if(callback){
 							callback();
@@ -808,7 +859,10 @@ var EuHierarchy = function(cmp, rows) {
 		// select (invoke by loaded callback below)
 
 		self.treeCmp.bind("select_node.jstree", function(event, data) {
-			doOnSelect(data.node);
+			if(!self.silentClick){
+				doOnSelect(data.node);				
+			}
+			self.silentClick = false;
 		});
 
 		// loaded
@@ -862,15 +916,60 @@ var EuHierarchy = function(cmp, rows) {
 				}
 				
 				if(doLoad){
+				
+					var disabledCount    = $('.jstree-container-ul .jstree-disabled').length;
+
 					loadAndScroll(initiatingNode, backwards, true, function(){
+					//viewPrevOrNext(initiatingNode, backwards, defaultChunk, true, function() {
+						
+						//showSpinner();
 						
 						setLoadPoint(initiatingNode.id);
 					
 						// refocussing can also break the offset...
-						$('#' + initiatingNode.id + '>a').focus();
-						doScrollTo('#' + getVisibleNodes()[0].id, function(){
-							log('done scroll to');
-						});
+						
+						
+						//$('#' + initiatingNode.id + '>a').focus();
+						//doScrollTo('#' + getVisibleNodes()[0].id, function(){
+						//	log('done scroll to');
+						//});
+
+						/*
+						var vnId = backwards ? getVisibleNodes()[0].id : initiatingNode.id;
+						
+						$('#' + vnId + '>a').focus();
+						if(backwards){
+							doScrollTo('#' + vnId, function(){
+								log('done scroll to');
+								//alert('totally done')
+							});							
+						}
+						*/
+				//////////////
+							/*
+							var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
+							
+							if(backwards && newDisabledCount != disabledCount){
+
+								var previousVisible = $('#' + initiatingNode.id).closest('li');
+
+								if( previousVisible.prev('li').length ){
+									previousVisible = previousVisible.prev('li').find('>a');
+								}
+								else{
+									previousVisible = previousVisible.closest('li').closest('ul').closest('li').find('>a');
+								}
+								if(previousVisible.length){
+									log('bump up to previous visible node');
+									self.silentClick = true;
+									//alert('bump')
+									previousVisible.click();
+								}
+							}
+							*/
+				//////////////
+							
+						//});
 
 					});					
 				}
@@ -879,6 +978,8 @@ var EuHierarchy = function(cmp, rows) {
 					doScrollTo('#' + getVisibleNodes()[0].id, function(){
 						self.scrollDuration = 1000;
 						togglePrevNextLinks();
+						
+						//alert('no load - fwo')
 					});
 				}
 			}
@@ -1077,9 +1178,16 @@ SCROLL BEHAVIOUR / ERRORS
 
 		
  		Key Down:
- 		Key Left:
 
-		
+ 		Key Left (close):
+
+		(should load down) and not scroll
+
+ 		Key Right (open):
+
+		(should load down) and not scroll
+
+
 		Click Up:
 		
  		Should scroll up by the viewport height minus height of 1 item
@@ -1087,7 +1195,7 @@ SCROLL BEHAVIOUR / ERRORS
  		Error:
  		 - file:///home/andy/git/portal/portal2/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/index.html?base=dataGen.apocalypse_vol_3_content%28%29[2]
  		 - the pre-animate scroll is wrong
-
+		 - before the scroll is hidden
 
 */
 

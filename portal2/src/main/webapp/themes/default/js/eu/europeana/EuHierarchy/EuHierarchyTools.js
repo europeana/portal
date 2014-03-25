@@ -35,6 +35,10 @@ var EuHierarchyTools = function(hierarchy) {
 	
 	$('.spin').click(function() {
 
+		$('#apocalypse_vol_3>a').click();
+		alert(  $('#apocalypse_vol_3>a').length  )
+		return;
+		
 		console.log('get limits...');
 		
 		var limits = self.hierarchy.getVisibleNodes();
