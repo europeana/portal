@@ -42,10 +42,13 @@ eu.europeana.apiconsole = {
 	},
 };
 
-var updateParent = function(){
-    var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
-    target.postMessage(
-	($('#api-result').outerHeight( true ) + 10) + 'px', '*');
+var updateParent = function() {
+	var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
+	var resHeight = $('#api-result').outerHeight( true );
+	var formHeight = $('#api-form').outerHeight( true );
+	var height = Math.max(resHeight, formHeight);
+	alert('sending message: ' + (height + 10) + 'px');
+	target.postMessage((height + 10) + 'px', '*');
 };
 
 $(document).ready(function(){

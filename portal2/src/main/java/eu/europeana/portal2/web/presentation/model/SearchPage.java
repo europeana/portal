@@ -153,7 +153,6 @@ public class SearchPage extends SearchPreparation {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getLastPageUrl() throws UnsupportedEncodingException {
-		// return createNavigationUrl(briefBeanView.getPagination().getLastPage() + 1);
 		return createNavigationUrl(briefBeanView.getPagination().getLastPage());
 	}
 
@@ -166,13 +165,9 @@ public class SearchPage extends SearchPreparation {
 	 * @throws UnsupportedEncodingException
 	 */
 	private String createNavigationUrl(int start) throws UnsupportedEncodingException {
-		if (briefBeanView == null) {
-			return null;
-		}
-		UrlBuilder builder = createSearchUrl(getQuery(), getRefinements(), Integer.toString(start));
-		builder.addParam("rows", getRows(), true);
-		builder.addParamsFromURL(briefBeanView.getPagination().getPresentationQuery().getQueryForPresentation(),
-				"query", "qf", "start", "rows");
+		UrlBuilder builder = europeanaUrlservice.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
+		builder.addParam("start", start);
+		builder.addParam("qf", getRefinements());
 		return getPortalFormattedUrl(builder).toString();
 	}
 
