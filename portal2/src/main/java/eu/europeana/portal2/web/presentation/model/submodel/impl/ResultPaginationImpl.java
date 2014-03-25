@@ -98,7 +98,7 @@ public class ResultPaginationImpl implements ResultPagination {
 
 	private static String createQueryForPresentation(Query query) {
 		StringBuilder queryString = new StringBuilder();
-		queryString.append("query").append("=").append(QueryUtil.encode(query.getQuery()));
+		queryString.append("query").append("=").append(query.getQuery());
 		String[] facetQueries = query.getRefinements();
 		if (facetQueries != null) {
 			for (String facetTerm : facetQueries) {

@@ -19,8 +19,10 @@ package eu.europeana.portal2.web.presentation.model.data;
 
 import java.util.List;
 
+import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
@@ -43,6 +45,8 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 	protected int maxMapResults;
 
 	protected boolean markupOnly;
+
+	public EuropeanaUrlService europeanaUrlservice = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
 
 	public int getMaxMapResults() {
 		return maxMapResults;
