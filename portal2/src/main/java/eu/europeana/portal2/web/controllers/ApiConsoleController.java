@@ -156,8 +156,8 @@ public class ApiConsoleController {
 				if (StringUtils.isBlank(latMax)) {
 					latMax = "*";
 				}
-				refinements = (String[]) ArrayUtils.add(refinements, "pl_wgs84_pos_lat:[" + checkSpatial(latMin)
-						+ " TO " + checkSpatial(latMax) + "]");
+				refinements = (String[]) ArrayUtils.add(refinements,
+					String.format("pl_wgs84_pos_lat:[%s TO %s]", checkSpatial(latMin), checkSpatial(latMax)));
 			}
 			if (!StringUtils.isBlank(longMin) || !StringUtils.isBlank(longMax)) {
 				if (StringUtils.isBlank(longMin)) {
@@ -166,8 +166,8 @@ public class ApiConsoleController {
 				if (StringUtils.isBlank(longMax)) {
 					longMax = "*";
 				}
-				refinements = (String[]) ArrayUtils.add(refinements, "pl_wgs84_pos_long:[" + checkSpatial(longMin)
-						+ " TO " + checkSpatial(longMax) + "]");
+				refinements = (String[]) ArrayUtils.add(refinements,
+					String.format("pl_wgs84_pos_long:[%s TO %s]", checkSpatial(longMin), checkSpatial(longMax)));
 			}
 			if (!StringUtils.isBlank(yearMin) || !StringUtils.isBlank(yearMax)) {
 				if (StringUtils.isBlank(yearMin)) {
@@ -176,8 +176,8 @@ public class ApiConsoleController {
 				if (StringUtils.isBlank(yearMax)) {
 					yearMax = "*";
 				}
-				refinements = (String[]) ArrayUtils.add(refinements, "YEAR:[" + checkSpatial(yearMin) + " TO "
-						+ checkSpatial(yearMax) + "]");
+				refinements = (String[]) ArrayUtils.add(refinements,
+					String.format("YEAR:[%s TO %s]", checkSpatial(yearMin), checkSpatial(yearMax)));
 			}
 			if (!ArrayUtils.isEmpty(refinements) && StringUtils.isBlank(query)) {
 				query = "*:*";
@@ -188,12 +188,12 @@ public class ApiConsoleController {
 				request.getSession());
 		ApiResult apiResult = null;
 		if (function.equals(SEARCH) && !StringUtils.isBlank(query)) {
-			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profile, "+"), 
+			apiResult = api.getSearchResult(query, refinements, StringUtils.join(profiles, "+"),
 					start, rows, callback, reusabilities);
 		} else if (function.equals("record") && !StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			apiResult = api.getObject(collectionId, recordId, StringUtils.join(profile, "+"), callback);
+			apiResult = api.getObject(collectionId, recordId, StringUtils.join(profiles, "+"), callback);
 		} else if (function.equals("record") && StringUtils.isBlank(collectionId) && !StringUtils.isBlank(recordId)) {
-			apiResult = api.getObject(recordId, StringUtils.join(profile, "%20"), callback);
+			apiResult = api.getObject(recordId, StringUtils.join(profiles, "%20"), callback);
 		} else if (function.equals("suggestions") && !StringUtils.isBlank(query)) {
 			apiResult = api.getSuggestions(query, rows, phrases, callback);
 		}
@@ -258,13 +258,12 @@ public class ApiConsoleController {
 		if (!hasValid) {
 			allowedValues.put(defaultProfile, true);
 		}
-		List<String> cleanedProfileList = new ArrayList<String>();
+		profiles.clear();
 		for (String profile : allowedValues.keySet()) {
 			if (allowedValues.get(profile) == true) {
-				cleanedProfileList.add(profile);
+				profiles.add(profile);
 			}
 		}
-		profiles = cleanedProfileList;
 	}
 
 	private String[] checkReusabilities(String[] usability, Set<String> supported) {
@@ -278,5 +277,4 @@ public class ApiConsoleController {
 		}
 		return allowed.toArray(new String[allowed.size()]);
 	}
-
 }
