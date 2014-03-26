@@ -261,7 +261,14 @@ public class ApiConsoleController {
 		}
 		if (!hasValid) {
 			allowedValues.put(defaultProfile, true);
-			profiles.add(defaultProfile);
+		}
+		if (profiles.size() > 0) {
+			profiles.clear();
+		}
+		for (String profile : allowedValues.keySet()) {
+			if (allowedValues.get(profile) == true) {
+				profiles.add(profile);
+			}
 		}
 	}
 
