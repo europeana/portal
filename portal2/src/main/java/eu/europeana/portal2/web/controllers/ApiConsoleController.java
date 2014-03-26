@@ -100,7 +100,11 @@ public class ApiConsoleController {
 
 		refinements = clearRefinements(refinements);
 
-		List<String> profiles = ArrayUtils.isEmpty(profile) ? new ArrayList<String>() : Arrays.asList(profile);
+		List<String> profiles = new ArrayList<String>();
+		if (!ArrayUtils.isEmpty(profile)) {
+			profiles.addAll(Arrays.asList(profile));
+		}
+
 		if (function.equals(SEARCH)) {
 			checkProfiles(profiles, "standard", model.getSearchProfiles());
 		}
@@ -257,12 +261,7 @@ public class ApiConsoleController {
 		}
 		if (!hasValid) {
 			allowedValues.put(defaultProfile, true);
-		}
-		profiles.clear();
-		for (String profile : allowedValues.keySet()) {
-			if (allowedValues.get(profile) == true) {
-				profiles.add(profile);
-			}
+			profiles.add(defaultProfile);
 		}
 	}
 
