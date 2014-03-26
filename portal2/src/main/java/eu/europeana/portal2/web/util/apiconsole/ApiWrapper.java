@@ -19,8 +19,8 @@ package eu.europeana.portal2.web.util.apiconsole;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -74,8 +74,8 @@ public class ApiWrapper {
 	protected String wskeyInstanceReplacement;
 	protected String utmCampaign;
 	protected String utmCampaignReplacement;
-	private Map<String, String> requestHeaders;
-	private Map<String, String> responseHeaders;
+	private List<String> requestHeaders;
+	private List<String> responseHeaders;
 
 	public ApiWrapper(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		this.apiUrl = apiUrl;
@@ -177,16 +177,18 @@ public class ApiWrapper {
 			*/
 
 			Header[] headers;
-			requestHeaders = new LinkedHashMap<String, String>();
+			requestHeaders = new ArrayList<String>();
+			requestHeaders.add(String.format("%s %s %s", method.getName(), method.getPath(), method.getEffectiveVersion()));
 			headers = method.getRequestHeaders();
 			for (Header header : headers) {
-				requestHeaders.put(header.getName(), header.getValue());
+				requestHeaders.add(String.format("%s: %s", header.getName(), header.getValue()));
 			}
 
-			responseHeaders = new LinkedHashMap<String, String>();
+			responseHeaders = new ArrayList<String>();
+			responseHeaders.add(method.getStatusLine().toString());
 			headers = method.getResponseHeaders();
 			for (Header header : headers) {
-				responseHeaders.put(header.getName(), header.getValue());
+				responseHeaders.add(String.format("%s: %s", header.getName(), header.getValue()));
 			}
 
 			// Read the response body.
@@ -254,11 +256,11 @@ public class ApiWrapper {
 		return lastUrl == null ? null : lastUrl.replace(api2key, wskeyReplacement);
 	}
 
-	public Map<String, String> getRequestHeaders() {
+	public List<String> getRequestHeaders() {
 		return requestHeaders;
 	}
 
-	public Map<String, String> getResponseHeaders() {
+	public List<String> getResponseHeaders() {
 		return responseHeaders;
 	}
 }

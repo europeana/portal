@@ -36,11 +36,11 @@ var apiconsole = {
         <div id="show-http-headers"><a href="#"><spring:message code="apiconsole_show_headers_t" /></a></div>
         <div class="request-http-headers-title"><h2><spring:message code="apiconsole_request_headers_t" /></h2></div>
         <div class="request-http-headers">
-          <c:forEach items="${model.requestHeaders}" var="entry">${entry.key}: ${entry.value}<br/></c:forEach>
+          <c:forEach items="${model.requestHeaders}" var="entry">${entry}<br/></c:forEach>
         </div>
         <div class="request-http-headers-title"><h2><spring:message code="apiconsole_response_headers_t" /></h2></div>
         <div class="request-http-headers">
-          <c:forEach items="${model.responseHeaders}" var="entry">${entry.key}: ${entry.value}<br/></c:forEach>
+          <c:forEach items="${model.responseHeaders}" var="entry">${entry}<br/></c:forEach>
         </div>
         <div id="response-title"><h2><spring:message code="apiconsole_response_t" /></h2></div>
         <div id="response">${model.jsonString}</div>

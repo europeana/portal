@@ -91,8 +91,8 @@ public class ApiConsolePage extends ApiData {
 	}
 
 	private List<String> profiles;
-	private Map<String, String> requestHeaders;
-	private Map<String, String> responseHeaders;
+	private List<String> requestHeaders;
+	private List<String> responseHeaders;
 
 	public ApiConsolePage() {
 		objectProfiles.putAll(defaultObjectProfiles);
@@ -319,19 +319,19 @@ public class ApiConsolePage extends ApiData {
 		this.isEmbeddedConsole = isEmbeddedConsole;
 	}
 
-	public void setResponseHeaders(Map<String, String> httpHeaders) {
-		this.responseHeaders = httpHeaders;
+	public void setResponseHeaders(List<String> list) {
+		this.responseHeaders = list;
 	}
 
-	public Map<String, String> getResponseHeaders() {
+	public List<String> getResponseHeaders() {
 		return responseHeaders;
 	}
 
-	public void setRequestHeaders(Map<String, String> httpHeaders) {
-		this.requestHeaders = httpHeaders;
+	public void setRequestHeaders(List<String> list) {
+		this.requestHeaders = list;
 	}
 
-	public Map<String, String> getRequestHeaders() {
+	public List<String> getRequestHeaders() {
 		return requestHeaders;
 	}
 }
