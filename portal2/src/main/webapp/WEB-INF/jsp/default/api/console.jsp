@@ -212,14 +212,21 @@ var apiconsole = {
             <input type="text" id="api-collectionId" name="collectionId" value="${model.collectionId}" /><br/>
            --%>
 
-            <label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
+            <br/><label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
+            
+            
             <c:forEach items="${model.defaultObjectProfiles}" var="profile">
+              
               <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
+              
               <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
               <label for="api-profile-${profile.key}">${profile.key}</label><br/>
+              
             </c:forEach>
 
-            <label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>
+
+
+           <br/> <label for="api-recordId"><spring:message code="apiconsole_record_id_t" />:</label><br/>
             <input type="text" id="api-recordId" name="recordId" value="${model.recordId}" /><br/>
 
             <p class="section">
@@ -228,7 +235,7 @@ var apiconsole = {
             </p>
 
             <div id="submit-wrapper">
-              <input type="submit" value="get result" class="deans-button-1 europeana-button-1 api-submit">
+              <input type="submit" value="get result" class="api-submit bold">
             </div>
 
           </form>
@@ -241,7 +248,7 @@ var apiconsole = {
             <input type="hidden" name="function" value="suggestions" />
             <input type="hidden" name="embedded" value="${model.embeddedConsole}" />
 
-            <label for="api-query"><spring:message code="apiconsole_query_t" />:</label><br/>
+            <br/><span class="field-label"><spring:message code="apiconsole_query_t" />:</span><br/>
 
             <c:set var="suggestionsQuery" value="" />
             <c:if test="${model.function == 'suggestions'}">
@@ -250,12 +257,14 @@ var apiconsole = {
             <input type="text" id="api-query" name="query" value="${suggestionsQuery}" />
 
             <div class="section">
-              <span class="field-label"><spring:message code="apiconsole_rows_t" />:</span>
+              <h4><spring:message code="apiconsole_rows_t" />:</h4>
               <c:forEach items="${model.defaultRows}" var="rows">
                 <input type="radio" name="rows" id="api-suggestions-rows-${rows}" value="${rows}" <c:if test="${model.rows == rows}">checked="checked"</c:if> />
                 <label for="api-suggestions-rows-${rows}">${rows}</label>
+                <br/>
               </c:forEach>
             </div>
+
 
             <label for="api-phrases"><spring:message code="apiconsole_phrases_t" />:</label><br/>
             <input type="checkbox" id="api-phrases" name="phrases" <c:if test="${model.phrases}">checked="checked"</c:if> /><br/>
@@ -266,7 +275,7 @@ var apiconsole = {
             </p>
 
             <div id="submit-wrapper">
-              <input type="submit" value="get result" class="deans-button-1 europeana-button-1 api-submit">
+              <input type="submit" value="get result" class="api-submit bold">
             </div>
           </form>
         </fieldset>
