@@ -1,10 +1,8 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,13 +66,15 @@ public class ApiConsolePage extends ApiData {
 		defaultSearchProfiles.put("minimal", false);
 		defaultSearchProfiles.put("params", false);
 	}
+	private Map<String, Boolean> searchProfiles = new LinkedHashMap<String, Boolean>();;
 
-	private static Map<String, Boolean> defaultObjectProfiles = new LinkedHashMap<String, Boolean>();
+	private static final Map<String, Boolean> defaultObjectProfiles = new LinkedHashMap<String, Boolean>();
 	static {
 		defaultObjectProfiles.put("full", false);
 		defaultObjectProfiles.put("similar", false);
 		defaultObjectProfiles.put("params", false);
 	}
+	private Map<String, Boolean> objectProfiles = new LinkedHashMap<String, Boolean>();
 
 	private static List<String> defaultRows = new ArrayList<String>();
 	static {
@@ -94,6 +94,11 @@ public class ApiConsolePage extends ApiData {
 	private Map<String, String> requestHeaders;
 	private Map<String, String> responseHeaders;
 
+	public ApiConsolePage() {
+		objectProfiles.putAll(defaultObjectProfiles);
+		searchProfiles.putAll(defaultSearchProfiles);
+	}
+
 	public String getFunction() {
 		return function;
 	}
@@ -110,12 +115,12 @@ public class ApiConsolePage extends ApiData {
 		this.jsonString = jsonString;
 	}
 
-	public Map<String, Boolean> getDefaultSearchProfiles() {
-		return defaultSearchProfiles;
+	public Map<String, Boolean> getSearchProfiles() {
+		return searchProfiles;
 	}
 
-	public Map<String, Boolean> getDefaultObjectProfiles() {
-		return defaultObjectProfiles;
+	public Map<String, Boolean> getObjectProfiles() {
+		return objectProfiles;
 	}
 
 	public List<String> getDefaultRows() {

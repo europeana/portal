@@ -79,6 +79,7 @@ public class ApiConsoleController {
 			refinements = _qf;
 		}
 
+
 		String[] _profile = (String[]) request.getParameterMap().get("profile");
 		if (_profile != null && _profile.length != profile.length) {
 			profile = _profile;
@@ -101,11 +102,11 @@ public class ApiConsoleController {
 
 		List<String> profiles = ArrayUtils.isEmpty(profile) ? new ArrayList<String>() : Arrays.asList(profile);
 		if (function.equals(SEARCH)) {
-			checkProfiles(profiles, "standard", model.getDefaultSearchProfiles());
+			checkProfiles(profiles, "standard", model.getSearchProfiles());
 		}
 
 		if (function.equals(RECORD)) {
-			checkProfiles(profiles, "full", model.getDefaultObjectProfiles());
+			checkProfiles(profiles, "full", model.getObjectProfiles());
 		}
 
 		if (!model.getDefaultRows().contains(Integer.toString(rows))) {
@@ -257,6 +258,13 @@ public class ApiConsoleController {
 		if (!hasValid) {
 			allowedValues.put(defaultProfile, true);
 		}
+		List<String> cleanedProfileList = new ArrayList<String>();
+		for (String profile : allowedValues.keySet()) {
+			if (allowedValues.get(profile) == true) {
+				cleanedProfileList.add(profile);
+			}
+		}
+		profiles = cleanedProfileList;
 	}
 
 	private String[] checkReusabilities(String[] usability, Set<String> supported) {
