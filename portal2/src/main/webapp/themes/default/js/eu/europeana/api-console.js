@@ -1,6 +1,7 @@
 js.utils.registerNamespace('eu.europeana.apiconsole');
 
 eu.europeana.apiconsole = {
+	resizeUnderway: false,
 	status: 'hidden',
 	panels: ['record', 'search', 'suggestions'],
 
@@ -43,11 +44,17 @@ eu.europeana.apiconsole = {
 };
 
 var updateParent = function() {
+	eu.europeana.apiconsole.resizeUnderway = true;
+	
 	var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
 	var resHeight = $('#api-result').outerHeight( true );
 	var formHeight = $('#api-form').outerHeight( true );
 	var height = Math.max(resHeight, formHeight);
 	target.postMessage((height + 10) + 'px', '*');
+	
+	setTimeout(function(){
+		eu.europeana.apiconsole.resizeUnderway = false;
+	}, 1000)
 };
 
 $(document).ready(function(){
@@ -55,5 +62,10 @@ $(document).ready(function(){
 });
 
 $(window).euRsz(function(){
-	updateParent();
+	console.log('call resize here ' + eu.europeana.apiconsole.resizeUnderway)
+	
+	if(!eu.europeana.apiconsole.resizeUnderway){
+		updateParent();		
+	}
+	
 });
