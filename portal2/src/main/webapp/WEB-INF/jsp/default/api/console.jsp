@@ -234,7 +234,14 @@ var apiconsole = {
             </p>
 
             <div id="submit-wrapper">
-              <input type="submit" value="get result" class="api-submit bold">
+             <c:choose>
+	              <c:when test="${model.embeddedConsole}">
+		              <input type="submit" value="get result" class="api-submit bold">
+	              </c:when>
+	              <c:otherwise>
+		              <input type="submit" value="get result" class="deans-button-1 europeana-button-1 api-submit">
+	              </c:otherwise>
+              </c:choose>
             </div>
 
           </form>
@@ -274,7 +281,14 @@ var apiconsole = {
             </p>
 
             <div id="submit-wrapper">
-              <input type="submit" value="get result" class="api-submit bold">
+              <c:choose>
+	              <c:when test="${model.embeddedConsole}">
+		              <input type="submit" value="get result" class="api-submit bold">
+	              </c:when>
+	              <c:otherwise>
+		              <input type="submit" value="get result" class="deans-button-1 europeana-button-1 api-submit">
+	              </c:otherwise>
+              </c:choose>
             </div>
           </form>
         </fieldset>
