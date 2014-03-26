@@ -219,14 +219,14 @@ var EuHierarchy = function(cmp, rows) {
 	var getRange = function(node, backwards, max){
 		
 		if(!node.parent || (typeof node.parent).toLowerCase() != 'string'){ /* prevent jQuery parent function interfering */
-			//log('getRange returns empty no parent')
+			log('getRange returns empty no parent')
 			return '';
 		}
 		
 		var parent = self.treeCmp.jstree('get_node', node.parent);
 
 		if(!parent.data || (typeof parent.data).toLowerCase() == 'function' ){
-			//log('getRange returns empty - no parent data')
+			log('getRange returns empty - no parent data')
 			return '';
 		}
 		
@@ -242,14 +242,14 @@ var EuHierarchy = function(cmp, rows) {
 			range[i] = false;
 		}
 		
-		//log('range A: ' + JSON.stringify(range))
+		log('range A: ' + JSON.stringify(range))
 		
 		$.each(parent.children, function(i, ob){
 			var child = self.treeCmp.jstree('get_node', ob);
 			range[child.data.index] = true;
 		});
 
-		//log('range B: ' + JSON.stringify(range))
+		log('range B: ' + JSON.stringify(range))
 
 		// convert to array
 		var keys = [];
@@ -261,13 +261,13 @@ var EuHierarchy = function(cmp, rows) {
 
 		keys = keys.sort(function(a, b){ return b - a });
 
-		//log('keys A: ' + JSON.stringify(keys))
+		log('keys A: ' + JSON.stringify(keys))
 
 		if(keys.length > max){
 			keys = backwards ? keys.slice(0, max) : keys.slice(keys.length - max);
 		} 
 
-		//log('keys B: ' + JSON.stringify(keys))
+		log('keys B: ' + JSON.stringify(keys))
 
 		var last            = false;
 		var consecutiveKeys = [];
@@ -281,12 +281,12 @@ var EuHierarchy = function(cmp, rows) {
 			}
 		});
 		
-		//log('consecutiveKeys C: ' + JSON.stringify(consecutiveKeys))
+		log('consecutiveKeys C: ' + JSON.stringify(consecutiveKeys))
 
 		var res = '';
 		switch (consecutiveKeys.length){
 		  case 0:
-			  //log('getRange return no consecutive keys - keys were ' + keys + ', range was ' + JSON.stringify(range) + ', total is ' + total );
+			  log('getRange return no consecutive keys - keys were ' + keys + ', range was ' + JSON.stringify(range) + ', total is ' + total );
 			  break;
 		  case 1:
 			  res = '.slice(' + consecutiveKeys[0] + ', ' + (consecutiveKeys[0] + 1) + ')';
@@ -348,7 +348,7 @@ var EuHierarchy = function(cmp, rows) {
 			
 			//log('switchtrack 2: ' + switchTrackNode.text);
 			
-			node = switchTrackNode;			 
+			node = switchTrackNode;			
 		}
 	
 
@@ -366,6 +366,7 @@ var EuHierarchy = function(cmp, rows) {
 //  Keying back to top was not possible without this fix  
 				
 				if(backwards){
+					
 					var origIndex = 0;
 					$.each(parent.children, function(i, ob){	// get the loaded index - this is only the same as node.data.index if everything is loaded
 						if(ob == node.id){
@@ -376,16 +377,12 @@ var EuHierarchy = function(cmp, rows) {
 					if(origIndex>0){
 						var prevNode = self.treeCmp.jstree('get_node', parent.children[origIndex-1]);
 						if(self.treeCmp.jstree( 'is_disabled', prevNode )){
+							var disabledNodesLastChild = prevNode.children[prevNode.children.length - 1];
 							
-							self.treeCmp.jstree("enable_node", prevNode );
-							leftToLoad --;
-
-							if(leftToLoad == 0){
-								if(callback){
-									callback();
-								}
-								return;
-							}
+							node = self.treeCmp.jstree('get_node', disabledNodesLastChild);
+							parent = prevNode;
+							
+							//$('#' + disabledNodesLastChild + '>a').css('background-color', 'green')							
 						}						
 					}
 				}
@@ -399,13 +396,19 @@ var EuHierarchy = function(cmp, rows) {
 				if(urlSuffix.length){
 					loadData(url, function(data){
 						log(' - loaded ' + data.length)
+						
+						//if(  !confirm('vpon loaded.... ' + JSON.stringify(data))  ){
+						//	return;
+						//}
+						
+						
 						$.each(backwards ? data.reverse() : data, function(i, ob) {
 
 							var newId   = self.treeCmp.jstree("create_node", parent, formatNodeData(ob), backwards ? "first" : "last", false, true);
 							var newNode = self.treeCmp.jstree('get_node', newId);
 
 							//new Icon( $('#' + newId).find('.icon') ) ;
-							//alert( JSON.stringify(newId) );// $('#' + newId).length );
+							//alert( 'append ' + (newId) );// $('#' + newId).length );
 							
 							loadFirstChild(newNode);
 							
@@ -428,6 +431,7 @@ var EuHierarchy = function(cmp, rows) {
 					if(backwards){
 						if(self.treeCmp.jstree( 'is_disabled', parent )){
 							log('enable node ' + parent);
+							
 							self.treeCmp.jstree("enable_node", parent );
 							leftToLoad --;
 						}						
@@ -446,10 +450,13 @@ var EuHierarchy = function(cmp, rows) {
 						// forwards (with no suffix) - we 're at the end of this sibling list.
 
 						// TODO - check this is needed - it may be an error!
+						/*
+						alert('enable_node - possibel error: ' + parent)
 						if(self.treeCmp.jstree( 'is_disabled', parent )){
 							self.treeCmp.jstree("enable_node", parent );
 							leftToLoad --;
 						}
+						*/
 						// end TODO
 
 						if(leftToLoad > 0){
@@ -626,6 +633,7 @@ var EuHierarchy = function(cmp, rows) {
 			    
 			    
 			var finalScroll      = function(){
+				alert('FS')
 				//stats();
 				hideSpinner();
 				
@@ -663,7 +671,9 @@ var EuHierarchy = function(cmp, rows) {
 			};
 			
 			var skipScrollBump = function(){
-				
+				alert('SSB')
+				//hideSpinner();
+				//return;
 				var enabledSomething = newDisabledCount != disabledCount;
 				
 				if(backwards && enabledSomething){
@@ -672,21 +682,26 @@ var EuHierarchy = function(cmp, rows) {
 
 					if( previousVisible.prev('li').length ){
 						previousVisible = previousVisible.prev('li').find('>a');
+						log('prevVis obtained from prev' )
 					}
 					else{
 						previousVisible = previousVisible.closest('li').closest('ul').closest('li').find('>a');
+						log('prevVis obtained from parent ' )
 					}
 					if(previousVisible.length){
-						log('bump up to previous visible node');
+						log('bump up to previous visible node ' + previousVisible.html()  );
+						
 						self.silentClick = true;
-					//	alert('bump')
+						alert('bump 1')
 						previousVisible.click();
+						alert('bump 2')
 					}
+					alert('SSB done')
+
 					hideSpinner();
 				}
 				
 				var vnId = backwards ? enabledSomething ? getVisibleNodes()[0].id : initiatingNode.id : initiatingNode.id;
-				
 				
 				$('#' + vnId + '>a').focus();
 				if(backwards && enabledSomething){
@@ -702,11 +717,10 @@ var EuHierarchy = function(cmp, rows) {
 				
 			if(diffHeight == 0 || (origScrollTop == 0 && newHeight > containerH) ){
 				diffHeight = containerH; // this is a max - trimmed within function if too big 
+				
 				if(skipScroll){
-
 ////////////
 				//	var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
-					
 /////////////
 					skipScrollBump();
 					
@@ -718,6 +732,11 @@ var EuHierarchy = function(cmp, rows) {
 				else{
 					finalScroll();					
 				}
+				
+				
+				
+				
+				
 			}
 			else{
 				self.scrollDuration = 0;
