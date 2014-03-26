@@ -43,14 +43,23 @@ eu.europeana.apiconsole = {
 	},
 };
 
-var updateParent = function() {
+var updateParent = function(reset) {
 	eu.europeana.apiconsole.resizeUnderway = true;
 	
-	var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
-	var resHeight = $('#api-result').outerHeight( true );
-	var formHeight = $('#api-form').outerHeight( true );
-	var height = Math.max(resHeight, formHeight);
-	target.postMessage((height + 10) + 'px', '*');
+	if(reset){
+		target.postMessage('auto', '*');		
+	}
+	else{
+		var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
+		var resHeight = $('#api-result').outerHeight( true );
+		var formHeight = $('#api-form').outerHeight( true );
+		
+		var height = Math.max(resHeight, formHeight);
+		
+		console.log('outer height = ' +  $('#api-form').outerHeight( true ) + '    ' + $('#api-form').scrollTop()  )
+		
+		target.postMessage((height + 10) + 'px', '*');		
+	}
 	
 	setTimeout(function(){
 		eu.europeana.apiconsole.resizeUnderway = false;
@@ -64,6 +73,9 @@ $(document).ready(function(){
 $(window).euRsz(function(){
 	console.log('call resize here ' + eu.europeana.apiconsole.resizeUnderway)
 	
+	if(!eu.europeana.apiconsole.resizeUnderway){
+		updateParent();		
+	}
 	if(!eu.europeana.apiconsole.resizeUnderway){
 		updateParent();		
 	}
