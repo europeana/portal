@@ -159,8 +159,8 @@ var apiconsole = {
             <div>
               <h5><spring:message code="apiconsole_profile_t" /></h5>
               <c:forEach items="${model.defaultSearchProfiles}" var="profile" varStatus="status">
-                <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
-                <label for="api-profile-${profile.key}">${profile.key}</label><br/>
+                <input type="checkbox" name="profile" id="api-search-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
+                <label for="api-search-profile-${profile.key}">${profile.key}</label><br/>
               	<c:if test="${status.last}"><br/></c:if>
               </c:forEach>
             </div>
@@ -213,14 +213,13 @@ var apiconsole = {
            --%>
 
             <br/><label for="api-profile"><spring:message code="apiconsole_profile_t" />:</label><br/>
-            
-            
-            <c:forEach items="${model.defaultObjectProfiles}" var="profile">
+
+            <c:forEach items="${model.objectProfiles}" var="profile">
               
               <%-- option value="${profile}" <c:if test="${model.profile == profile}">selected="selected"</c:if>>${profile}</option --%>
               
-              <input type="checkbox" name="profile" id="api-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
-              <label for="api-profile-${profile.key}">${profile.key}</label><br/>
+              <input type="checkbox" name="profile" id="api-object-profile-${profile.key}" value="${profile.key}" <c:if test="${profile.value == true}">checked="checked"</c:if> />
+              <label for="api-object-profile-${profile.key}">${profile.key}</label><br/>
               
             </c:forEach>
 
