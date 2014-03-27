@@ -3,9 +3,17 @@
 (function( $, eu ) {
 	'use strict';
 
-	var ajaxFeedback = function( html ) {
+	var displayAjaxFeedback = function( html ) {
 		eu.europeana.ajax.methods.addFeedbackContent( html );
 		eu.europeana.ajax.methods.showFeedbackContainer();
+	},
+
+	updateMyEuropeanaDb = function( ajax_data, ajax_feedback ) {
+		if ( !eu.europeana.vars.user ) {
+			return;
+		}
+
+		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	},
 
 
@@ -134,10 +142,10 @@
 		$clear_selection: $( '#clear-selection' ),
 		ajax_feedback: {
 			success: function() {
-				ajaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_search + '</span>' );
+				displayAjaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_search + '</span>' );
 			},
 			failure: function() {
-				ajaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_search_failed + '</span>' );
+				displayAjaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_search_failed + '</span>' );
 			}
 		},
 		ajax_data: {
@@ -174,11 +182,8 @@
 			}
 
 			$.cookie( this.cookie_field, cookie_value );
-
-			if ( eu.europeana.vars.user ) {
-				tkl.ajax_data.languageSearch = cookie_value;
-				eu.europeana.ajax.methods.user_panel( 'save', tkl.ajax_data, tkl.ajax_feedback );
-			}
+			tkl.ajax_data.languageSearch = cookie_value;
+			updateMyEuropeanaDb( tkl.ajax_data, tkl.ajax_feedback );
 		},
 
 		checkCurrentCookie: function() {
@@ -191,6 +196,14 @@
 					$elm.prop('checked', true);
 					tkl.translate_keyword_languages_count += 1;
 				}
+
+				if ( tkl.translate_keyword_languages_count
+					>= tkl.translate_keyword_language_limit
+				) {
+					return false;
+				}
+
+				return true;
 			});
 
 			this.checkDisabledState();
@@ -258,6 +271,9 @@
 			$.removeCookie( tkl.cookie_field );
 			tkl.translate_keyword_languages_count = 0;
 			tkl.checkCurrentCookie();
+
+			tkl.ajax_data.languageSearch = null;
+			updateMyEuropeanaDb( tkl.ajax_data, tkl.ajax_feedback );
 		},
 
 		handleTranslateKeywordsClick: function() {
@@ -312,10 +328,8 @@
 				cookie_value = new_cookie_value.join( this.cookie_value_delimeter );
 				$.cookie( this.cookie_field, cookie_value );
 
-				if ( eu.europeana.vars.user ) {
-					tkl.ajax_data.languageSearch = cookie_value;
-					eu.europeana.ajax.methods.user_panel( 'save', tkl.ajax_data, tkl.ajax_feedback );
-				}
+				tkl.ajax_data.languageSearch = cookie_value;
+				updateMyEuropeanaDb( tkl.ajax_data, tkl.ajax_feedback );
 			}
 		},
 
@@ -335,10 +349,10 @@
 		cookie_field: 'languageItem',
 		ajax_feedback: {
 			success: function() {
-				ajaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_item +	'</span>' );
+				displayAjaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_item +	'</span>' );
 			},
 			failure: function() {
-				ajaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_item_failed + '</span>' );
+				displayAjaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_item_failed + '</span>' );
 			}
 		},
 		ajax_data: {
@@ -357,7 +371,7 @@
 		checkCookie: function() {
 			var cookie_value = $.cookie( this.cookie_field );
 
-			if ( cookie_value !== undefined ) {
+			if ( eu.europeana.vars.user && cookie_value !== undefined ) {
 				this.$translate_language_item.prop('checked', true);
 
 				this.$language_items.each(function() {
@@ -379,10 +393,8 @@
 			til.$translate_language_item.prop('checked', true);
 			$.cookie( til.cookie_field, $elm.val() );
 
-			if ( eu.europeana.vars.user ) {
-				til.ajax_data.languageItem = $elm.val();
-				eu.europeana.ajax.methods.user_panel( 'save', til.ajax_data, til.ajax_feedback );
-			}
+			til.ajax_data.languageItem = $elm.val();
+			updateMyEuropeanaDb( til.ajax_data, til.ajax_feedback );
 		},
 
 		handleTranslateLanguageItemClick: function() {
@@ -396,10 +408,8 @@
 				$.removeCookie( til.cookie_field );
 			}
 
-			if ( eu.europeana.vars.user ) {
-				til.ajax_data.languageItem = cookie_value;
-				eu.europeana.ajax.methods.user_panel( 'save', til.ajax_data, til.ajax_feedback );
-			}
+			til.ajax_data.languageItem = cookie_value;
+			updateMyEuropeanaDb( til.ajax_data, til.ajax_feedback );
 		},
 
 		init: function() {
