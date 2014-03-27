@@ -36,7 +36,11 @@ var EuWidgetWizard = function(cmpIn, options){
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ {2}/g, '\+\+').replace(/ {1}/g, '\+').replace(/\%20/g, '\+');
 		
-		var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
+		var result = encodeURI(name);
+		if(name.indexOf("Dario") > -1) {
+			console.log(name + " --> " + result);
+		}
+		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
 		
 		return result;
 	};
@@ -123,14 +127,16 @@ var EuWidgetWizard = function(cmpIn, options){
 					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 						var dataProvider      = $(dp);
 						var dataProviderInput = dataProvider.children('a').children('input');
-						var name              = dataProviderInput.next('label').html();
+						// var name              = dataProviderInput.next('label').html();
+						var name = dataProvider.children('a').attr('title');
 
 						if(dataProviderInput.prop('checked')){
 							//result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
-							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+							//resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
 						}
 						else{
-							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
 						}
 					});
 					
@@ -708,14 +714,16 @@ var EuWidgetWizard = function(cmpIn, options){
 					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 						var dataProvider      = $(dp);
 						var dataProviderInput = dataProvider.children('a').children('input');
-						var name              = dataProviderInput.next('label').html();
+						// var name              = dataProviderInput.next('label').html();
+						var name              = dataProvider.children('a').attr('title');
+						// var dataProviderInput = dataProvider.children('a').children('input');
 
 						if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
 							//query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
-							resultFragment += '&qf=DATA_PROVIDER:"' + cleanName(name) + '"';
+							resultFragment += '&qf=DATA_PROVIDER:"' + name + '"';
 						}
 						else{
-							subtractUrl += '&qf=-DATA_PROVIDER:"' + cleanName(name) + '"';							
+							subtractUrl += '&qf=-DATA_PROVIDER:"' + name + '"';
 						}
 						
 					});

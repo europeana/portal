@@ -21,9 +21,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.solr.search.QueryUtils;
 import org.springframework.util.StringUtils;
 
 import eu.europeana.corelib.logging.Logger;
+import eu.europeana.portal2.web.util.QueryUtil;
 
 /**
  * Sitemap index entry, model for MVC.
@@ -101,6 +103,10 @@ public class ContributorItem {
 
 		public String getName() {
 			return name;
+		}
+
+		public String getEncodedName() {
+			return QueryUtil.encode(name);
 		}
 
 		public long getCount() {

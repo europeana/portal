@@ -634,7 +634,7 @@
 													<c:when test="${entry.dataProvidersListed}">
 														<c:set var="toggle_providers" value=' class="icon-arrow-2-after"'/>
 													</c:when>
-												    <c:otherwise>
+													<c:otherwise>
 														<c:set var="toggle_providers" value=' class="no-children"'/>
 													</c:otherwise>
 												</c:choose>
@@ -649,8 +649,8 @@
 														
 														<c:if test="${entry.dataProvidersListed}">
 															<c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
-																<c:set var="dpName">${fn:replace(dataProvider.name, ' ', '&nbsp;')}</c:set>
-																<li><a title="${dpName}" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><label>${dpName} (${dataProvider.count})</label></a></li>
+																<c:set var="dpName">${dataProvider.name}</c:set>
+																<li><a title="${dataProvider.encodedName}" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><label>${dpName} (${dataProvider.count})</label></a></li>
 															</c:forEach>
 														</c:if>
 												    </ul>
