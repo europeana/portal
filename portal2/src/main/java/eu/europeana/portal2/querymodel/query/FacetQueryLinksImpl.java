@@ -17,7 +17,6 @@ import eu.europeana.portal2.web.util.QueryUtil;
 public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 	private static final String NON_WIKIPEDIA = "-TYPE:Wikipedia";
-	private static final String FACET_PROMPT = "&qf=";
 	private static final String RIGHTS_FACET = "RIGHTS";
 	private String type;
 	private boolean facetSelected = false;
@@ -52,12 +51,14 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			return;
 		}
 		Map<String, List<String>> refinements = QueryUtil.getFilterQueriesWithoutPhrases(query);
+		/*
 		StringBuilder baseUrl = new StringBuilder();
 		if (refinements != null) {
 			for (String term : refinements.get(QueryUtil.REFINEMENTS)) {
 				baseUrl.append(FACET_PROMPT).append(term);
 			}
 		}
+		*/
 
 		String[] queryRefinements = query.getRefinements(false);
 		EuropeanaUrlService service = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
@@ -115,6 +116,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			}
 
 			// adding the current facet to the query link
+			UrlBuilder param = new UrlBuilder("");
 			if (!remove) {
 				String value = null;
 				if (RIGHTS_FACET.equals(type)) {
@@ -125,21 +127,28 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 					value = QueryUtil.createPhraseValue(facetField.getName(), QueryUtil.escapeValue(item.getLabel()));
 				}
 				url.addMultiParam("qf", String.format("%s:%s", facetField.getName(), value));
+				param.addMultiParam("qf", String.format("%s:%s", facetField.getName(), value));
 			}
+			System.out.println(param.toString());
 
+			FacetCountLinkImpl countLink = null;
 			if (RIGHTS_FACET.equals(type)) {
 				EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel());
 				item.setLabel(license.getOriginalURI());
-				links.add(
-					new FacetCountLinkImpl(
-						RightsOption.safeValueByUrl(license.getOriginalURI()),
-						item,
-						url.toString(),
-						remove
-					)
+				countLink = new FacetCountLinkImpl(
+					RightsOption.safeValueByUrl(license.getOriginalURI()),
+					item,
+					url.toString(),
+					remove
 				);
 			} else {
-				links.add(new FacetCountLinkImpl(item, url.toString(), remove));
+				countLink = new FacetCountLinkImpl(item, url.toString(), remove);
+			}
+			if (countLink != null) {
+				if (param != null) {
+					countLink.setParam(param.toString().replace('?', '&'));
+				}
+				links.add(countLink);
 			}
 		}
 	}

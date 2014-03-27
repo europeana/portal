@@ -140,4 +140,9 @@ public class FacetCountLinkDecorator implements FacetCountLink {
 	public long getCount() {
 		return facetCountLink.getCount();
 	}
+
+	@Override
+	public String getParam() {
+		return facetCountLink.getParam();
+	}
 }

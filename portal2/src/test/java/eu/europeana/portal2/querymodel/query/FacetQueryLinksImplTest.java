@@ -58,10 +58,12 @@ public class FacetQueryLinksImplTest {
 		FacetCountLink count = counts.get(0);
 		assertEquals(23, count.getCount());
 		assertEquals("/portal/search.html?query=*%3A*&rows=12&qf=COUNTRY%3A%22united+kingdom%22", count.getUrl());
+		assertEquals("&qf=COUNTRY%3A%22united+kingdom%22", count.getParam());
 
 		count = counts.get(1);
 		assertEquals(13, count.getCount());
 		assertEquals("/portal/search.html?query=*%3A*&rows=12&qf=COUNTRY%3A%22the+netherlands%22", count.getUrl());
+		assertEquals("&qf=COUNTRY%3A%22the+netherlands%22", count.getParam());
 
 		// the second facet
 		link = links.get(1);
@@ -74,12 +76,14 @@ public class FacetQueryLinksImplTest {
 		assertEquals(
 			"/portal/search.html?query=*%3A*&rows=12&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-f%2F*",
 			count.getUrl());
+		assertEquals("&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-f%2F*", count.getParam());
 
 		count = counts.get(1);
 		assertEquals(13, count.getCount());
 		assertEquals(
 			"/portal/search.html?query=*%3A*&rows=12&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-r%2F*",
 			count.getUrl());
+		assertEquals("&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-r%2F*", count.getParam());
 	}
 
 }
