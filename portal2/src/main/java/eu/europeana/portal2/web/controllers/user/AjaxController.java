@@ -6,20 +6,16 @@ import java.net.URLDecoder;
 import java.sql.BatchUpdateException;
 
 import javax.annotation.Resource;
-import javax.mail.search.SearchTerm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
-import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
-import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
-import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
-import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
@@ -78,14 +74,14 @@ public class AjaxController {
 
 	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
 		User user = ControllerUtil.getUser(userService);
-		String className = request.getParameter("className");
+		String modAction = request.getParameter("modificationAction");
 		// String idString = request.getParameter("id");
-		if (className == null) {
-			throw new IllegalArgumentException("Expected 'className' parameter!");
+		if (StringUtils.isBlank(modAction)) {
+			throw new IllegalArgumentException("Expected 'modificationAction' parameter!");
 		}
 
 		String uri = null;
-		switch (findModifiable(className)) {
+		switch (findModifiable(modAction)) {
 		case SAVED_ITEM:
 			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 			user = userService.createSavedItem(user.getId(), uri);
@@ -114,8 +110,14 @@ public class AjaxController {
 			String appName = URLDecoder.decode(getStringParameter("appName", FieldSize.TAG, request), "utf-8");
 			apiKeyService.updateApplicationName(user.getId(), key, appName);
 			break;
+		case USER_LANGAUGE_SEARCH:
+			// TODO
+			break;
+		case USER_LANGUAGE_ITEM:
+			// TODO
+			break;
 		default:
-			throw new IllegalArgumentException("Unhandled ajax action: " + className);
+			throw new IllegalArgumentException("Unhandled ajax action: " + modAction);
 		}
 
 		model.setUser(user);
@@ -124,14 +126,14 @@ public class AjaxController {
 
 	private void processAjaxRemoveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
 		User user = ControllerUtil.getUser(userService);
-		String className = request.getParameter("className");
+		String modAction = request.getParameter("modificationAction");
 		String idString = request.getParameter("id");
-		if (className == null || idString == null) {
+		if (StringUtils.isBlank(modAction) || StringUtils.isBlank(idString)) {
 			throw new IllegalArgumentException("Expected 'className' and 'id' parameters!");
 		}
 		Long id = Long.valueOf(idString);
 
-		switch (findModifiable(className)) {
+		switch (findModifiable(modAction)) {
 		case SAVED_ITEM:
 			userService.removeSavedItem(user.getId(), id);
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_ITEM);
@@ -155,28 +157,18 @@ public class AjaxController {
 		model.setSuccess(true);
 	}
 
-	private Modifiable findModifiable(String className) {
-		for (Modifiable modifiable : Modifiable.values()) {
-			if (modifiable.matches(className)) {
-				return modifiable;
-			}
+	private Modifiable findModifiable(String modificationName) {
+		Modifiable mod = Modifiable.valueOf(StringUtils.upperCase(modificationName));
+		if (mod == null) {
+			throw new IllegalArgumentException("Unable to find modify action with name " + modificationName);
 		}
-		throw new IllegalArgumentException("Unable to find removable class with name " + className);
+		return mod;
 	}
 
 	private enum Modifiable {
-		SAVED_ITEM(SavedItem.class), SAVED_SEARCH(SavedSearch.class), SEARCH_TERM(SearchTerm.class), SOCIAL_TAG(
-				SocialTag.class), API_KEY(ApiKey.class);
+		SAVED_ITEM, SAVED_SEARCH, SEARCH_TERM, SOCIAL_TAG, API_KEY, 
+		USER_LANGUAGE_PORTAL, USER_LANGUAGE_ITEM, USER_LANGAUGE_SEARCH;
 
-		private String className;
-
-		private Modifiable(Class<?> clazz) {
-			this.className = clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1);
-		}
-
-		public boolean matches(String className) {
-			return this.className.equals(className);
-		}
 	}
 
 	private boolean hasJavascriptInjection(HttpServletRequest request) {
