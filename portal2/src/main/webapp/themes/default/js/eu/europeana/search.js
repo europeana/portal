@@ -2,11 +2,11 @@ js.utils.registerNamespace( 'eu.europeana.search' );
 
 
 eu.europeana.search = {
-	
+
 	facet_sections : [],
 	init : function() {
-				
-		// fix firefox' habit of creating invalid form states by remembering old checked values on refresh & page back 
+
+		// fix firefox' habit of creating invalid form states by remembering old checked values on refresh & page back
 		$('#filter-search li ul li input:checkbox').each(function(i, ob){
 			if( ob.checked && !ob.getAttribute("checked")){
 				ob.checked = false;
@@ -19,7 +19,7 @@ eu.europeana.search = {
 			var headingSelector		= "h3 a";
 			var headingSelected		= $(ob).find(headingSelector);
 			var fnGetItems			= function(){
-				
+
 				// function to get the tabbable items
 				if( headingSelected.parent().next('form').length ){
 					// Add keywords
@@ -28,14 +28,14 @@ eu.europeana.search = {
 				else{
 					// Other facets
 					return headingSelected.parent().next('ul').first().find('a');
-				}							
+				}
 			};
-			
+
 			var accessibility =  new EuAccessibility(
 				headingSelected,
 				fnGetItems
 			);
-			
+
 			if($(ob).hasClass('ugc-li')){
 				$(ob).bind('keypress', accessibility.keyPress);
 			}
@@ -46,14 +46,14 @@ eu.europeana.search = {
 						"bodySelector"		: "ul",
 						"keyHandler"		: accessibility
 					}
-				);				
+				);
 			}
 		});
-		
+
 		$('#refine-search-form').submit(function(){
 			return eu.europeana.search.checkKeywordSupplied();
 		});
-		
+
 		// make facet checkboxes clickable
 		$("#filter-search li input[type='checkbox']").click(function(){
 			var label = $("#filter-search li label[for='" + $(this).attr('id') + "']");
@@ -62,42 +62,42 @@ eu.europeana.search = {
 
 		this.setupResultSizeMenu();
 		this.setupEllipsis();
-		
-		
+
+
 		$.each($('.result-pagination'), function(i, ob){
-			
+
 			new EuPagination( $(ob),
 				{
 					data:{
 					records: eu.europeana.vars.msg.result_count,
 					rows: parseInt(eu.europeana.vars.rows),
 					start: eu.europeana.vars.msg.start
-					} 
+					}
 				});
 		});
-		
+
 		if( $('#save-search').hasClass('icon-unsaveditem')){
-			$('#save-search').bind('click', this.handleSaveSearchClick );			
+			$('#save-search').bind('click', this.handleSaveSearchClick );
 		}
 		else{
 			$('#save-search').css('cursor', 'default');
-		}		
+		}
 
-		
+
 		// accessibility for grid
-		
-		$('#items .thumb-frame').bind('keypress', 
+
+		$('#items .thumb-frame').bind('keypress',
 			function(e){
 				if(e.keyCode == 13){
 					$(e.target).find('a')[0].click();
 				}
 			}
 		);
-		
+
 		// add this
 		this.addThis();
 	},
-	
+
 	setupEllipsis : function(){
 		// add ellipsis
 		var ellipsisObjects = [];
@@ -115,7 +115,7 @@ eu.europeana.search = {
 									imgThumb.css('border-width', '1px 1px medium');
 									$ob.css('visibility', 'visible');
 								}
-							);					
+							);
 				}
 		);
 		$(window).euRsz(function(){
@@ -125,8 +125,8 @@ eu.europeana.search = {
 		});
 
 	},
-	
-	
+
+
 	setupResultSizeMenu : function(){
 		var config = {
 			"fn_init": function(self){
@@ -139,18 +139,18 @@ eu.europeana.search = {
 		new EuMenu( $(".nav-top .eu-menu"), config).init();
 		new EuMenu( $(".nav-bottom .eu-menu"), config).init();
 	},
-	
+
 
 	addThis : function() {
 		$('.shares-link').click(function(){
-			
+
 			js.loader.loadScripts([{
 				file: 'addthis' + js.min_suffix + '.js' + '?' + 'domready=1', //&async=1',
 				path: eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 				callback : function() {
 
 					$('.shares-link').unbind('click');
-						
+
 					var url = $('head link[rel="canonical"]').attr('href'),
 					title = $('head title').html(),
 					description = $('head meta[name="description"]').attr('content');
@@ -163,14 +163,14 @@ eu.europeana.search = {
 						ui_use_css : true,
 						ui_click: true		// disable hover
 					});
-					
+
 					url = $('head meta[property="og:url"]').attr('content');
 					window.addthis_share = com.addthis.createShareObject({
 						// nb: twitter templates will soon be deprecated, no date is given
 						// @link http://www.addthis.com/help/client-api#configuration-sharing-templates
 						templates: { twitter: title + ': ' + url + ' #europeana' }
 					});
-					
+
 					var addThisHtml = com.addthis.getToolboxHtml({
 						html_class : '',
 						url : url,
@@ -185,7 +185,7 @@ eu.europeana.search = {
 					$('.shares-link').html(
 						addThisHtml
 					);
-					
+
 					function addthisReady(evt) {
 						try{
 					        var oEvent = document.createEvent('HTMLEvents');
@@ -201,18 +201,18 @@ eu.europeana.search = {
 					com.addthis.init( null, true, false,
 						function(){
 							addthis.addEventListener('addthis.ready', addthisReady);
-						}		
+						}
 					);
 				}
 			}]);
 		});
-		
+
 		//if(js.debug){
 			//alert("navigator.userAgent " + navigator.userAgent + "\n\ntest1 = " + (navigator.userAgent.match(/iPhone/i)) + "\ntest2" + navigator.userAgent.match(/CriOS/i)  );
 			//if (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i)){
 		//}
 		if(  (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i) || navigator.userAgent.match(/OS 6(_\d)+ like Mac OS X/i)  ) && ! navigator.userAgent.match(/CriOS/i) ){
-			$('.shares-link').click();			
+			$('.shares-link').click();
 		}
 
 		/*
@@ -222,8 +222,8 @@ eu.europeana.search = {
 		*/
 
 	},
-	
-	
+
+
 	checkKeywordSupplied : function(){
 		if($('#newKeyword').val().length>0){
 			return true;
@@ -231,24 +231,24 @@ eu.europeana.search = {
 		else{
 			$('#newKeyword').addClass('error-border');
 			return false;
-		}	
+		}
 	},
-	
+
 	handleSaveSearchClick : function( e ) {
-		
+
 		e.preventDefault();
-		
+
 		var ajax_feedback = {
-			
+
 			saved_searches_count : 0,
 			$saved_searches : $('#saved-searches-count'),
 			$saveSearch : $('#save-search'),
 			success : function() {
 				var html = '<span>' + eu.europeana.vars.msg.search_saved + '</span>';
-				
+
 				eu.europeana.ajax.methods.addFeedbackContent( html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
-				
+
 				ajax_feedback.saved_searches_count = parseInt( ajax_feedback.$saved_searches.html(), 10 );
 				ajax_feedback.$saved_searches.html( ajax_feedback.saved_searches_count + 1 );
 				ajax_feedback.$saveSearch.removeClass('icon-unsaveditem').addClass('icon-saveditem');
@@ -256,16 +256,16 @@ eu.europeana.search = {
 				ajax_feedback.$saveSearch.css('cursor', 'default');
 				ajax_feedback.$saveSearch.unbind('click');
 			},
-			
-			failure : function() {	
+
+			failure : function() {
 				var html = '<span id="save-search-feedback" class="error">' + eu.europeana.vars.msg.search_save_failed + '</span>';
-				
+
 				eu.europeana.ajax.methods.addFeedbackContent(html);
 				eu.europeana.ajax.methods.showFeedbackContainer();
 			}
 		},
 		ajax_data = {
-			className : "SavedSearch",
+			modificationAction : "saved_search",
 			query : $('#query-to-save').val(),
 			queryString : $('#query-string-to-save').val()
 		};
@@ -273,4 +273,3 @@ eu.europeana.search = {
 	}
 
 };
-
