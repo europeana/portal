@@ -106,7 +106,7 @@ public class AjaxController {
 			String appName = URLDecoder.decode(getStringParameter("appName", FieldSize.TAG, request), "utf-8");
 			apiKeyService.updateApplicationName(user.getId(), key, appName);
 			break;
-		case USER_LANGAUGE_SEARCH:
+		case USER_LANGUAGE_SEARCH:
 			String langCodes = getStringParameter("languageSearch", 17, request);
 			user = userService.updateUserLanguageSearch(user.getId(), langCodes);
 			break;
@@ -161,7 +161,7 @@ public class AjaxController {
 
 	private enum Modifiable {
 		SAVED_ITEM, SAVED_SEARCH, SOCIAL_TAG, API_KEY, 
-		USER_LANGUAGE_PORTAL, USER_LANGUAGE_ITEM, USER_LANGAUGE_SEARCH;
+		USER_LANGUAGE_PORTAL, USER_LANGUAGE_ITEM, USER_LANGUAGE_SEARCH;
 
 	}
 
