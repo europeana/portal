@@ -3,7 +3,16 @@
 (function( $, eu ) {
 	'use strict';
 
-	var panelMenu = {
+	var ajaxFeedback = function( html ) {
+		eu.europeana.ajax.methods.addFeedbackContent( html );
+		eu.europeana.ajax.methods.showFeedbackContainer();
+	},
+
+
+	/**
+	 * panel menus
+	 */
+	panelMenu = {
 		$panel_links: $('#panel-links li'),
 		default_panel: 'login',
 		active_panel: null,
@@ -91,6 +100,7 @@
 		}
 	},
 
+
 	/**
 	 * portal language
 	 */
@@ -106,14 +116,13 @@
 		init: function() {
 			this.addPortalLanguageListener();
 		}
-
 	},
+
 
 	/**
 	 * translate keyword languages
 	 */
 	tkl = {
-
 		animation_delay: 12,
 		$translate_keyword_languages: $( '#translate-keyword-languages input' ),
 		translate_keyword_languages_count: 0,
@@ -123,6 +132,18 @@
 		cookie_field: 'languagesSearch',
 		cookie_value_delimeter: ',',
 		$clear_selection: $( '#clear-selection' ),
+		ajax_feedback: {
+			success: function() {
+				ajaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_search + '</span>' );
+			},
+			failure: function() {
+				ajaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_search_failed + '</span>' );
+			}
+		},
+		ajax_data: {
+			modificationAction: "user_language_search",
+			languageSearch: null
+		},
 
 		addClearSelectionListener: function() {
 			tkl.$clear_selection.on( 'click', tkl.handleClearSelectionClick );
@@ -135,7 +156,9 @@
 		},
 
 		/**
-		 * add a value to the cookie if it does not already exist in the cookie
+		 * add a value to the cookie only when it does not already exist
+		 * in the cookie
+		 *
 		 * @param {string} value
 		 */
 		addValueToCookie: function( value ) {
@@ -144,10 +167,17 @@
 			$.cookie.raw = true;
 
 			if ( cookie_value === undefined ) {
-				$.cookie( this.cookie_field, value );
+				cookie_value = value;
 			} else if ( $.inArray( value, cookie_value ) === -1 ) {
 				cookie_value.push( value );
-				$.cookie( this.cookie_field, cookie_value.join( this.cookie_value_delimeter ) );
+				cookie_value = cookie_value.join( this.cookie_value_delimeter );
+			}
+
+			$.cookie( this.cookie_field, cookie_value );
+
+			if ( eu.europeana.vars.user ) {
+				tkl.ajax_data.languageSearch = cookie_value;
+				eu.europeana.ajax.methods.user_panel( 'save', tkl.ajax_data, tkl.ajax_feedback );
 			}
 		},
 
@@ -213,8 +243,6 @@
 					$elm.closest('label').removeClass('disabled');
 					$elm.prop('disabled', false);
 				}, r[i] * tkl.animation_delay);
-
-
 			});
 
 			tkl.translate_keywords_disabled = false;
@@ -271,8 +299,8 @@
 
 		removeValueFromCookie: function( value ) {
 			var i,
-				cookie_value = this.getCookie(),
-				new_cookie_value = [];
+			cookie_value = this.getCookie(),
+			new_cookie_value = [];
 
 			if ( cookie_value !== undefined && $.inArray( value, cookie_value ) > -1 ) {
 				for ( i = 0; i < cookie_value.length; i += 1 ) {
@@ -281,24 +309,42 @@
 					}
 				}
 
-				$.cookie( this.cookie_field, new_cookie_value.join( this.cookie_value_delimeter ) );
+				cookie_value = new_cookie_value.join( this.cookie_value_delimeter );
+				$.cookie( this.cookie_field, cookie_value );
+
+				if ( eu.europeana.vars.user ) {
+					tkl.ajax_data.languageSearch = cookie_value;
+					eu.europeana.ajax.methods.user_panel( 'save', tkl.ajax_data, tkl.ajax_feedback );
+				}
 			}
 		},
 
 		toggleDisabledKeywordsMessage: function() {
 			$('#disabled-translate-keywords-msg').slideToggle();
 		}
-
 	},
 
+
 	/**
-	 * translate item language
+	 * translate language item
 	 */
 	til = {
 		$translate_language_item: $('#translate-language-item'),
 		$language_item: $('#language-item'),
 		$language_items: $('#language-item option'),
 		cookie_field: 'languageItem',
+		ajax_feedback: {
+			success: function() {
+				ajaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_item +	'</span>' );
+			},
+			failure: function() {
+				ajaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_item_failed + '</span>' );
+			}
+		},
+		ajax_data: {
+			modificationAction: "user_language_item",
+			languageItem: null
+		},
 
 		addLanguageItemListener: function() {
 			til.$language_item.on( 'change',  til.handleLanguageItemChange );
@@ -323,7 +369,6 @@
 					}
 
 					return true;
-
 				});
 			}
 		},
@@ -331,18 +376,29 @@
 		handleLanguageItemChange: function() {
 			var $elm = $(this);
 
-			if ( til.$translate_language_item.prop('checked') ) {
-				$.cookie( til.cookie_field, $elm.val() );
+			til.$translate_language_item.prop('checked', true);
+			$.cookie( til.cookie_field, $elm.val() );
+
+			if ( eu.europeana.vars.user ) {
+				til.ajax_data.languageItem = $elm.val();
+				eu.europeana.ajax.methods.user_panel( 'save', til.ajax_data, til.ajax_feedback );
 			}
 		},
 
 		handleTranslateLanguageItemClick: function() {
-			var $elm = $(this);
+			var $elm = $(this),
+			cookie_value = null;
 
 			if ( $elm.prop('checked') ) {
-				$.cookie( til.cookie_field, til.$language_item.val() );
+				cookie_value = til.$language_item.val();
+				$.cookie( til.cookie_field, cookie_value );
 			} else {
 				$.removeCookie( til.cookie_field );
+			}
+
+			if ( eu.europeana.vars.user ) {
+				til.ajax_data.languageItem = cookie_value;
+				eu.europeana.ajax.methods.user_panel( 'save', til.ajax_data, til.ajax_feedback );
 			}
 		},
 
@@ -351,8 +407,8 @@
 			this.addTranslateLanguageItemListener();
 			this.checkCookie();
 		}
-
 	},
+
 
 	/**
 	 * user panels
@@ -422,6 +478,7 @@
 				item.$panel.append( item.no_saved_msg );
 			}
 		},
+
 
 		/**
 		 * @param {object} evt
@@ -531,6 +588,7 @@
 			this.addApiSubmitListener();
 		}
 	};
+
 
 	pl.init();
 	tkl.init();

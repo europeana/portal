@@ -48,7 +48,12 @@
 <c:set var="select_language"><spring:message code="SelectLanguage_t" /></c:set>
 <c:set var="save_apikey"><spring:message code="myeuropeana_appName_saved_t" /></c:set>
 <c:set var="save_apikey_failed"><spring:message code="myeuropeana_appName_save_failed_t" /></c:set>
+<c:set var="save_language_search"><spring:message code="save_language_search_t" /></c:set>
+<c:set var="save_language_search_failed"><spring:message code="save_language_search_failed_t" /></c:set>
+<c:set var="save_language_item"><spring:message code="save_language_item_t" /></c:set>
+<c:set var="save_language_item_failed"><spring:message code="save_language_item_failed_t" /></c:set>
 <c:set var="startFrom" value="" />
+
 <c:if test="${!empty RequestParameters.startFrom}">
 	<c:set var="startFrom" value="${RequestParameters.startFrom}" />
 </c:if>
@@ -241,6 +246,11 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.msg.no_saved_tags = '${no_saved_tags}';
 				eu.europeana.vars.msg.saved_apikey = '${save_apikey}';
 				eu.europeana.vars.msg.save_apikey_failed = '${save_apikey_failed}';
+
+				eu.europeana.vars.msg.save_language_search = '${save_language_search}';
+				eu.europeana.vars.msg.save_language_search_failed = '${save_language_search_failed}';
+				eu.europeana.vars.msg.save_language_item = '${save_language_item}';
+				eu.europeana.vars.msg.save_language_item_failed = '${save_language_item_failed}';
 			</c:when>
 			<c:otherwise>
 				eu.europeana.vars.user = false;

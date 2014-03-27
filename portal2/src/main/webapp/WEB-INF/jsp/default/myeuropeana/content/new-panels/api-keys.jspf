@@ -26,7 +26,7 @@
 							<form action="${model.currentUrl}#api-keys" method="post" class="api-key-save-form">
 								<input type="text" name="apikey-application-name" maxlength="50" value="${apiKey.applicationName}" />
 								<input type="hidden" name="apikey-id" value="${apiKey.id}" />
-								<input type="submit" class="submit-button deans-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
+								<input type="submit" class="submit-button deans-button-1 europeana-button-1" value="<spring:message code="myeuropeana_appName_OK_t" />" />
 							</form>
 						</td>
 						<td class="numeric"><code>${apiKey.usageLimit}</code></td>
