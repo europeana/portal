@@ -5,7 +5,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.joda.time.DateTime;
 
-import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.portal2.services.impl.ClickStreamLogServiceImpl;
 
 @JsonSerialize(include = Inclusion.NON_EMPTY)

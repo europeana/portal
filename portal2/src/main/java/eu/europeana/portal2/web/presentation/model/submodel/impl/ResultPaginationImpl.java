@@ -6,7 +6,6 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.portal2.web.presentation.model.submodel.PresentationQuery;
 import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
-import eu.europeana.portal2.web.util.QueryUtil;
 
 /**
  * This class is used to compute result navigation to be inserted in the

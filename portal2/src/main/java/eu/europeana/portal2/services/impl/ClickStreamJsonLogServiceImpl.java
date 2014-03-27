@@ -19,7 +19,6 @@ package eu.europeana.portal2.services.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -32,7 +31,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-import org.joda.time.DateTime;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.db.entity.relational.User;

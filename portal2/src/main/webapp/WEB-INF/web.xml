@@ -20,6 +20,12 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>eu.europeana.portal2.web.util.WebConfiguration</param-value>
 	</context-param>
+	
+	<env-entry>
+		<env-entry-name>logback/context-name</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>portal</env-entry-value>
+	</env-entry>
 
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -111,4 +117,8 @@
 		<extension>otf</extension>
 		<mime-type>font/opentype</mime-type>
 	</mime-mapping>
+	
+	<listener>
+		<listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
+	</listener>
 </web-app>

@@ -1,15 +1,12 @@
 package eu.europeana.portal2.web.controllers;
 
-import static org.junit.Assert.*;
-
-import java.util.Date;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import eu.europeana.corelib.db.entity.relational.SavedSearchImpl;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
-import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.portal2.web.controllers.user.MyEuropeanaController;
 
 public class MyEuropeanaControllerTest {

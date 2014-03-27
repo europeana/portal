@@ -27,10 +27,10 @@ import eu.europeana.corelib.solr.model.ResultSet;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SitemapPage;
-import eu.europeana.portal2.web.presentation.model.data.submodel.datahierarchy.DatasetContainer;
-import eu.europeana.portal2.web.presentation.model.data.submodel.datahierarchy.ProviderItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.datahierarchy.DataProviderItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.datahierarchy.Dataset;
+import eu.europeana.portal2.web.presentation.model.data.submodel.datahierarchy.DatasetContainer;
+import eu.europeana.portal2.web.presentation.model.data.submodel.datahierarchy.ProviderItem;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
