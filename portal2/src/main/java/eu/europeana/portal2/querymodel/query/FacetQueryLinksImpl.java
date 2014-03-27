@@ -129,7 +129,6 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 				url.addMultiParam("qf", String.format("%s:%s", facetField.getName(), value));
 				param.addMultiParam("qf", String.format("%s:%s", facetField.getName(), value));
 			}
-			System.out.println(param.toString());
 
 			FacetCountLinkImpl countLink = null;
 			if (RIGHTS_FACET.equals(type)) {
