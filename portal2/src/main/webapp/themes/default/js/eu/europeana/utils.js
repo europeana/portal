@@ -203,7 +203,8 @@ js.utils = {
 
 		//var newParam	= '';
 		//var rows		= $("#mobile-menu").is(":visible") ? 12 : 24;
-		var rows		= js.utils.phoneTest() ? 12 : 24;
+		
+		var rows		= js.utils.phoneTest() ? 12 : eu.europeana.vars.rows ? parseInt(eu.europeana.vars.rows) : 24;
 
 
 		href = href.replace(/([?&])rows=\d+/, '$1rows=' + rows);
