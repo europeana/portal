@@ -95,10 +95,6 @@ public class AjaxController {
 			user = userService.createSavedSearch(user.getId(), query, queryString);
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_SEARCH);
 			break;
-		/*
-		 * case SEARCH_TERM: SearchTerm searchTerm = staticInfoDao.addSearchTerm(Long.valueOf(idString)); if (searchTerm
-		 * == null) { model.setSuccess(false); } break;
-		 */
 		case SOCIAL_TAG:
 			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 			String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
@@ -111,10 +107,12 @@ public class AjaxController {
 			apiKeyService.updateApplicationName(user.getId(), key, appName);
 			break;
 		case USER_LANGAUGE_SEARCH:
-			// TODO
+			String langCodes = getStringParameter("languageSearch", 17, request);
+			user = userService.updateUserLanguageSearch(user.getId(), langCodes);
 			break;
 		case USER_LANGUAGE_ITEM:
-			// TODO
+			String langCode = getStringParameter("languageItem", 2, request);
+			user = userService.updateUserLanguageItem(user.getId(), langCode);
 			break;
 		default:
 			throw new IllegalArgumentException("Unhandled ajax action: " + modAction);
@@ -142,10 +140,6 @@ public class AjaxController {
 			userService.removeSavedSearch(user.getId(), id);
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_SEARCH);
 			break;
-		/*
-		 * case SEARCH_TERM: user = staticInfoDao.removeSearchTerm(id); clickStreamLogger.logUserAction(request,
-		 * ClickStreamLogger.UserAction.REMOVE_SEARCH_TERM); break;
-		 */
 		case SOCIAL_TAG:
 			userService.removeSocialTag(user.getId(), id);
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SOCIAL_TAG);
@@ -166,7 +160,7 @@ public class AjaxController {
 	}
 
 	private enum Modifiable {
-		SAVED_ITEM, SAVED_SEARCH, SEARCH_TERM, SOCIAL_TAG, API_KEY, 
+		SAVED_ITEM, SAVED_SEARCH, SOCIAL_TAG, API_KEY, 
 		USER_LANGUAGE_PORTAL, USER_LANGUAGE_ITEM, USER_LANGAUGE_SEARCH;
 
 	}
