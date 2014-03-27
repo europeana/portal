@@ -14,5 +14,7 @@ public interface FacetCountLink {
 
 	public long getCount();
 
+	public String getParam();
+
 	public RightsOption getRightsOption();
 }

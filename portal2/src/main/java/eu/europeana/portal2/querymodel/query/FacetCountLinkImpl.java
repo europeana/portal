@@ -8,6 +8,7 @@ public class FacetCountLinkImpl implements FacetCountLink {
 	private LabelFrequency facetCount;
 	private String url;
 	private boolean remove;
+	private String param;
 
 	private RightsOption rightsOption = null;
 
@@ -74,6 +75,14 @@ public class FacetCountLinkImpl implements FacetCountLink {
 	@Override
 	public void update(FacetCountLink facetCountLink) {
 		facetCount.setCount(facetCount.getCount() + facetCountLink.getCount());
+	}
+
+	public String getParam() {
+		return param;
+	}
+
+	public void setParam(String param) {
+		this.param = param;
 	}
 
 	/**

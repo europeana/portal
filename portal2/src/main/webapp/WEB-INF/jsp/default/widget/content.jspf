@@ -12,7 +12,6 @@
 		box-sizing:			border-box;
 	}
 
-
 	.widget-configuration h2{
 		padding:	0.5em 0;	
 	}
@@ -688,7 +687,7 @@
 													</c:set>
 													<li>
 														<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-															<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
+															<input title="${facet_item.param}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
 															<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 														</a>
 													</li>
@@ -727,7 +726,7 @@
 													</c:set>
 													<li>
 														<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-															<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
+															<input title="${facet_item.param}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
 															<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 														</a>
 													</li>
@@ -774,8 +773,8 @@
 														<!-- 
 														<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
 														 -->
-														<a title="${fn:replace(facet_item.url, '"', '&quot;')}" rel="nofollow">
-															<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox"/>
+														<a title="${facet_item.param}" rel="nofollow">
+															<input title="${facet_item.param}" type="checkbox"/>
 															<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 														</a>
 													</li>
@@ -819,7 +818,7 @@
 													</c:set>
 													<li>
 														<a title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
-															<input title="${fn:replace(facet_item.url, '"', '&quot;')}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
+															<input title="${facet_item.param}" type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
 															<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline"> &nbsp;${label} (${facet_item.count}) </label>
 														</a>
 													</li>
