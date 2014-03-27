@@ -45,25 +45,25 @@
 	<noscript><input type="submit" name="submit" value="<spring:message code="Submit_t" />" /></noscript>
 </form>
 
-<%-- translate-item-language --%>
+<%-- translate-language-item --%>
 <h3><spring:message code="translate_items_t" /></h3>
 <form action="${model.currentUrl}#language-settings" method="get">
 	<label>
 		<c:choose>
 			<c:when test="${!empty model.user}">
-				<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes"/> <spring:message code="translate_items_select_t" />&nbsp;
-				<select id="item-language" name="il">
+				<input type="checkbox" name="translate-language-item" id="translate-language-item" value="yes"/> <spring:message code="translate_items_select_t" />&nbsp;
+				<select id="language-item" name="il">
 					<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 				</select>
-				<input type="hidden" name="action" value="translate-item-language" />
+				<input type="hidden" name="action" value="translate-language-item" />
 				<noscript><input type="submit" value="<spring:message code="Submit_t" />" /></noscript>
 			</c:when>
 			<c:otherwise>
-				<input type="checkbox" name="translate-item-language" id="translate-item-language" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span>&nbsp;
-				<select id="item-language" name="il" disabled>
+				<input type="checkbox" name="translate-language-item" id="translate-language-item" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span>&nbsp;
+				<select id="language-item" name="il" disabled>
 					<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 				</select>
-				<input type="hidden" name="action" value="translate-item-language" />
+				<input type="hidden" name="action" value="translate-language-item" />
 				<noscript><input type="submit" name="submit" value="<spring:message code="Submit_t" />" disabled/></noscript>
 			</c:otherwise>
 		</c:choose>

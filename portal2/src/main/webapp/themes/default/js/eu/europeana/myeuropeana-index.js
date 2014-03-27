@@ -120,7 +120,7 @@
 		translate_keyword_language_limit: 3,
 		translate_keyword_language_user_limit: 6,
 		translate_keywords_disabled: false,
-		cookie_field: 'searchLanguages',
+		cookie_field: 'languagesSearch',
 		cookie_value_delimeter: ',',
 		$clear_selection: $( '#clear-selection' ),
 
@@ -295,26 +295,26 @@
 	 * translate item language
 	 */
 	til = {
-		$translate_item_language: $('#translate-item-language'),
-		$item_language: $('#item-language'),
-		$item_languages: $('#item-language option'),
-		cookie_field: 'itemLanguage',
+		$translate_language_item: $('#translate-language-item'),
+		$language_item: $('#language-item'),
+		$language_items: $('#language-item option'),
+		cookie_field: 'languageItem',
 
-		addItemLanguageListener: function() {
-			til.$item_language.on( 'change',  til.handleItemLanguageChange );
+		addLanguageItemListener: function() {
+			til.$language_item.on( 'change',  til.handleLanguageItemChange );
 		},
 
-		addTranslateItemLanguageListener: function() {
-			til.$translate_item_language.on( 'click',  til.handleTranslateItemLanguageClick );
+		addTranslateLanguageItemListener: function() {
+			til.$translate_language_item.on( 'click',  til.handleTranslateLanguageItemClick );
 		},
 
 		checkCookie: function() {
 			var cookie_value = $.cookie( this.cookie_field );
 
 			if ( cookie_value !== undefined ) {
-				this.$translate_item_language.prop('checked', true);
+				this.$translate_language_item.prop('checked', true);
 
-				this.$item_languages.each(function() {
+				this.$language_items.each(function() {
 					var $elm = $(this);
 
 					if ( $elm.val() === cookie_value ) {
@@ -328,27 +328,27 @@
 			}
 		},
 
-		handleItemLanguageChange: function() {
+		handleLanguageItemChange: function() {
 			var $elm = $(this);
 
-			if ( til.$translate_item_language.prop('checked') ) {
+			if ( til.$translate_language_item.prop('checked') ) {
 				$.cookie( til.cookie_field, $elm.val() );
 			}
 		},
 
-		handleTranslateItemLanguageClick: function() {
+		handleTranslateLanguageItemClick: function() {
 			var $elm = $(this);
 
 			if ( $elm.prop('checked') ) {
-				$.cookie( til.cookie_field, til.$item_language.val() );
+				$.cookie( til.cookie_field, til.$language_item.val() );
 			} else {
 				$.removeCookie( til.cookie_field );
 			}
 		},
 
 		init: function() {
-			this.addItemLanguageListener();
-			this.addTranslateItemLanguageListener();
+			this.addLanguageItemListener();
+			this.addTranslateLanguageItemListener();
 			this.checkCookie();
 		}
 
@@ -370,7 +370,7 @@
 		addRemoveItemListener: function() {
 			$('#myeuropeana').on('click',
 				'.remove-saved-item',
-				{ type : 'SavedItem' },
+				{ modification_action : 'saved_item' },
 				this.handleRemoveUserPanelItem
 			);
 		},
@@ -378,7 +378,7 @@
 		addRemoveSearchListener: function() {
 			$('#myeuropeana').on('click',
 				'.remove-saved-search',
-				{ type : 'SavedSearch' },
+				{ modification_action : 'saved_search' },
 				this.handleRemoveUserPanelItem
 			);
 		},
@@ -386,7 +386,7 @@
 		addRemoveTagListener: function() {
 			$('#myeuropeana').on('click',
 				'.remove-saved-tag',
-				{ type : 'SocialTag' },
+				{ modification_action : 'social_tag' },
 				this.handleRemoveUserPanelItem
 			);
 		},
@@ -430,7 +430,7 @@
 		handleRemoveUserPanelItem : function( evt ) {
 			evt.preventDefault();
 
-			var type = evt.data.type,
+			var modification_action = evt.data.modification_action,
 			self = this,
 			$elm = $(this),
 			ajax_feedback,
@@ -443,8 +443,8 @@
 				no_saved_msg : ''
 			};
 
-			switch ( type ) {
-				case 'SavedSearch' :
+			switch ( modification_action ) {
+				case 'saved_search' :
 					item.$count = $('#saved-searches-count');
 					item.$panel = $('#saved-searches');
 					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_search_removed );
@@ -452,7 +452,7 @@
 					item.removeSelector = '.saved-search.' + $elm.attr('id');
 					break;
 
-				case 'SavedItem' :
+				case 'saved_item' :
 					item.$count = $('#saved-items-count');
 					item.$panel = $('.saved-items');
 					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_item_removed );
@@ -460,7 +460,7 @@
 					item.removeSelector = '.saved-item.' + $elm.attr('id');
 					break;
 
-				case 'SocialTag' :
+				case 'social_tag' :
 					item.$count = jQuery('#saved-tags-count');
 					item.$panel = jQuery('#saved-tags');
 					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_tag_removed );
@@ -481,7 +481,7 @@
 			};
 
 			ajax_data = {
-				className : type,
+				modificationAction : modification_action,
 				id : parseInt( $elm.attr('id'), 10 )
 			};
 
@@ -515,7 +515,7 @@
 				failure : userPanels.apiKeySubmitFailure
 			},
 			ajax_data = {
-				className : "ApiKey",
+				modificationAction : "api_key",
 				apikey : $elm.find("input[name='apikey-id']").val(),
 				appName : $elm.find("input[name='apikey-application-name']").val()
 			};

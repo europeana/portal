@@ -11,17 +11,17 @@
 js.utils.registerNamespace( 'eu.europeana.myeuropeana' );
 
 eu.europeana.myeuropeana = {
-	
+
 	init : function() {
 		this.loadComponents();
-		this.addUserBarListeners();		
+		this.addUserBarListeners();
 		this.addUserPanelListeners();
 		this.addHashListener();
 		this.addItemHighlight();
 		this.fmtSavedSearches();
 		$('.item-apikey-save').bind('submit', this.handleSaveApiKeySubmit );
 	},
-	
+
 	fmtSavedSearches : function(){
 		if([].filter){
 			$('.saved-search .go').each(function(i, ob){
@@ -37,15 +37,15 @@ eu.europeana.myeuropeana = {
 				js.utils.fixSearchRowLinks($(ob));
 			});
 		}
-		
+
 		$(window).euRsz(function(){
 			$('.saved-search .go').each(function(i, ob){
 				js.utils.fixSearchRowLinks($(ob));
 			});
 		});
-		
+
 	},
-	
+
 	loadComponents : function() {
 		var self = eu.europeana.myeuropeana;
 //		js.loader.loadScripts([{
@@ -56,7 +56,7 @@ eu.europeana.myeuropeana = {
 			//}
 //		}]);
 	},
-	
+
 	addAccordionTabs:function(){
 		js.loader.loadScripts([{
 			//name : 'accordion-tabs',
@@ -77,7 +77,7 @@ eu.europeana.myeuropeana = {
 		var hash = window.location.hash ? window.location.hash : '#user-information';
 		eu.europeana.myeuropeana.accordionTabs.openTab(hash);
 	},
-	
+
 	addUserBarListeners : function() {
 		if ( 'myeuropeana.html' == eu.europeana.vars.page_name ) {
 			var self = this;
@@ -87,38 +87,38 @@ eu.europeana.myeuropeana = {
 				}, 100 ); });
 		}
 	},
-	
+
 	addUserPanelListeners : function() {
-		
+
 		$(document).on('click',
 			'.remove-saved-search',
-			{ type : 'SavedSearch' },
+			{ modification_action : 'saved_search' },
 			this.handleRemoveUserPanelItem
 		);
 		$(document).on('click',
 			'.remove-saved-item',
-			{ type : 'SavedItem' },
+			{ modification_action : 'saved_item' },
 			this.handleRemoveUserPanelItem
 		);
 		$(document).on('click',
 			'.remove-saved-tag',
-			{ type : 'SocialTag' },
+			{ modification_action : 'social_tag' },
 			this.handleRemoveUserPanelItem
 		);
-		
+
 	},
-	
+
 	addHashListener : function() {
 		$(window).bind('hashchange', function() {
 			eu.europeana.myeuropeana.openTab(window.location.hash);
 		});
-	},	
-	
+	},
+
 	handleRemoveUserPanelItem : function( e ) {
-		e.preventDefault();		
-		
-		
-		var type = e.data.type,
+		e.preventDefault();
+
+
+		var modification_action = e.data.modification_action,
 			$elm = $(this),
 			ajax_feedback,
 			ajax_data,
@@ -129,47 +129,47 @@ eu.europeana.myeuropeana = {
 				removed_msg : '',
 				no_saved_msg : ''
 			},
-			error_feedback_html = 
+			error_feedback_html =
 				'<span id="remove-search-feedback" class="error">' +
-					eu.europeana.vars.msg.error_occurred + ' ' + 
-					eu.europeana.vars.msg.item_not_removed + 
+					eu.europeana.vars.msg.error_occurred + ' ' +
+					eu.europeana.vars.msg.item_not_removed +
 				'</span>';
-		
-		switch(type){
-			
-			case 'SavedSearch' :
+
+		switch ( modification_action ){
+
+			case 'saved_search' :
 				item.$count = $('#saved-searches-count');
 				item.$panel = $('#saved-searches');
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_search_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_searches;
-				item.removeSelector = '.saved-searches .saved-search.' + $(this).attr('id'); 
+				item.removeSelector = '.saved-searches .saved-search.' + $(this).attr('id');
 				break;
-				
-			case 'SavedItem' :
+
+			case 'saved_item' :
 				item.$count = $('#saved-items-count');
 				item.$panel = $('.saved-items');
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_item_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_items;
-				item.removeSelector = '.saved-items .saved-item.' + $(this).attr('id'); 
+				item.removeSelector = '.saved-items .saved-item.' + $(this).attr('id');
 				break;
-				
-			case 'SocialTag' :
+
+			case 'social_tag' :
 				item.$count = jQuery('#saved-tags-count');
 				item.$panel = jQuery('#saved-tags');
 				item.feedback_html = '<span>' + eu.europeana.vars.msg.saved_tag_removed + '</span>';
 				item.no_saved_msg = eu.europeana.vars.msg.no_saved_tags;
-				item.removeSelector = '.saved-tags .saved-tag.' + $(this).attr('id'); 
+				item.removeSelector = '.saved-tags .saved-tag.' + $(this).attr('id');
 				break;
 		}
-		
+
 		ajax_feedback = {
 			count : item.count,
 			$count : item.$count,
 			success : function() {
-				
+
 				eu.europeana.ajax.methods.addFeedbackContent( item.feedback_html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
-				
+
 				ajax_feedback.count = parseInt( ajax_feedback.$count.html(), 10 );
 				ajax_feedback.$count.html( ajax_feedback.count - 1 );
 
@@ -197,27 +197,27 @@ eu.europeana.myeuropeana = {
 				*/
 				if ( ( ajax_feedback.count - 1 ) == 0 ) {
 					item.$panel.append( item.no_saved_msg );
-				}				
+				}
 			},
 			failure : function() {
 				eu.europeana.ajax.methods.addFeedbackContent( error_feedback_html );
 				eu.europeana.ajax.methods.showFeedbackContainer();
 			}
 		};
-			
+
 		ajax_data = {
-			className : type,
+			modificationAction : modification_action,
 			id : parseInt( $elm.attr('id'), 10 )
 		};
 		eu.europeana.ajax.methods.user_panel( 'remove', ajax_data, ajax_feedback );
-		
+
 	},
-	
+
 	addItemHighlight : function() {
-		
+
 		var shade = function(){ $(this).css('background-color', '#f5f5f5'); };
 		var unshade = function(){ $(this).css('background-color', '#fff'); };
-		
+
 		$(document).on('mouseenter',
 			'.saved-item',
 			shade
@@ -230,7 +230,7 @@ eu.europeana.myeuropeana = {
 			'.saved-tag',
 			shade
 		);
-		
+
 		$(document).on('mouseleave',
 			'.saved-item',
 			unshade
@@ -243,12 +243,12 @@ eu.europeana.myeuropeana = {
 			'.saved-tag',
 			unshade
 		);
-		
+
 	},
-	
+
 	handleSaveApiKeySubmit : function( e ) {
 		e.preventDefault();
-		
+
 		if ( $('#item-tag').val() < 1 ){
 			return;
 		}
@@ -275,15 +275,15 @@ eu.europeana.myeuropeana = {
 				eu.europeana.ajax.methods.showFeedbackContainer();
 			}
 		},
-		
+
 		ajax_data = {
-			className : "ApiKey",
+			modificationAction : "api_key",
 			apikey : $(e.target).closest('form').find('.apikey_id').val(),
 			appName : encodeURIComponent( $(e.target).closest('form').find('.apikey_appName').val() )
 		};
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	}
-	
+
 };
 
 eu.europeana.myeuropeana.init();
