@@ -796,9 +796,12 @@ var EuWidgetWizard = function(cmpIn, options){
     		 	if(facet.name == 'RIGHTS'){
     		 		
         			$.each(facet.fields, function(j, field){
-        				var item  = copyrightOps.find('a[title="&qf=RIGHTS:' + field.label + '*"]');
+        				
+        				var fLabel = encodeURIComponent(field.label);
+        				
+        				var item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel + '*"]');
         				if(!item.length){
-        					item  = copyrightOps.find('a[title="&qf=RIGHTS:' + field.label.replace(/\d\.\d\/$/, '*') + '"]');
+        					item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d\.\d\/$/, '*') + '"]');
         				}
         				if(item.length){        					
         					var label = $(item).find('label');
