@@ -43,10 +43,16 @@ public class FacetQueryLinksImplTest {
 		facet2.fields.add(new LabelFrequency("http://www.europeana.eu/rights/rr-r/", 13));
 		facetFields.add(facet2);
 
+		Facet facet3 = new Facet();
+		facet3.name = "DATA_PROVIDER";
+		facet3.fields = new ArrayList<LabelFrequency>();
+		facet3.fields.add(new LabelFrequency("Dario Fo & Franca Rame Archive, CTFR, Milano, Italia", 11));
+		facetFields.add(facet3);
+
 		Query query = new Query("*:*");
 		List<FacetQueryLinks> links = FacetQueryLinksImpl.createDecoratedFacets(facetFields, query);
 
-		assertEquals(2, links.size());
+		assertEquals(3, links.size());
 
 		// the first facet
 		FacetQueryLinks link = links.get(0);
@@ -84,6 +90,19 @@ public class FacetQueryLinksImplTest {
 			"/portal/search.html?query=*%3A*&rows=12&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-r%2F*",
 			count.getUrl());
 		assertEquals("&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-r%2F*", count.getParam());
+
+		// the third facet
+		link = links.get(2);
+		assertEquals("DATA_PROVIDER", link.getType());
+
+		counts = link.getLinks();
+
+		count = counts.get(0);
+		assertEquals(11, count.getCount());
+		assertEquals(
+			"/portal/search.html?query=*%3A*&rows=12&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22",
+			count.getUrl());
+		assertEquals("&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22", count.getParam());
 	}
 
 }

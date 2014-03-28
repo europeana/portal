@@ -52,6 +52,19 @@ public class FieldInfo {
 
 	private SchemaOrgMapping schemaOrgMapping;
 
+	/**
+	 * 
+	 * @param mapping
+	 *   Schema.org mapping
+	 * @param schemaName
+	 *   Schema EDM qualified name
+	 * @param propertyName
+	 *   Property name in object
+	 * @param type
+	 *   Type name (the name of object such as "FullBean")
+	 * @param parent
+	 *   Parent object
+	 */
 	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName, String type, String parent) {
 		this.schemaOrgMapping = mapping;
 		this.schemaName = schemaName;
