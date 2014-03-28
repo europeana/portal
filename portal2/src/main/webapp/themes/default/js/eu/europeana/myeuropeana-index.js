@@ -142,10 +142,10 @@
 		$clear_selection: $( '#clear-selection' ),
 		ajax_feedback: {
 			success: function() {
-				displayAjaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_search + '</span>' );
+				displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_language_search) );
 			},
 			failure: function() {
-				displayAjaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_search_failed + '</span>' );
+				displayAjaxFeedback( $('<span>', {'class':'error'}).text(eu.europeana.vars.msg.save_language_search_failed) );
 			}
 		},
 		ajax_data: {
@@ -349,10 +349,10 @@
 		cookie_field: 'languageItem',
 		ajax_feedback: {
 			success: function() {
-				displayAjaxFeedback( '<span>' + eu.europeana.vars.msg.save_language_item +	'</span>' );
+				displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_language_item) );
 			},
 			failure: function() {
-				displayAjaxFeedback( '<span class="error">' + eu.europeana.vars.msg.save_language_item_failed + '</span>' );
+				displayAjaxFeedback( $('<span>', {'class':'error'}).text(eu.europeana.vars.msg.save_language_item_failed) );
 			}
 		},
 		ajax_data: {
@@ -457,17 +457,6 @@
 			);
 		},
 
-		removeUserPanelItemFailure: function() {
-			var error_feedback =
-				'<span id="remove-search-feedback" class="error">' +
-					eu.europeana.vars.msg.error_occurred + ' ' +
-					eu.europeana.vars.msg.item_not_removed +
-				'</span>';
-
-			eu.europeana.ajax.methods.addFeedbackContent( error_feedback );
-			eu.europeana.ajax.methods.showFeedbackContainer();
-		},
-
 		removeUserPanelItemSuccess: function( item, ajax_feedback ) {
 			var $elm;
 
@@ -514,7 +503,7 @@
 				case 'saved_search' :
 					item.$count = $('#saved-searches-count');
 					item.$panel = $('#saved-searches');
-					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_search_removed );
+					item.feedback_html = $('<span>').text(eu.europeana.vars.msg.saved_search_removed);
 					item.no_saved_msg = eu.europeana.vars.msg.no_saved_searches;
 					item.removeSelector = '.saved-search.' + $elm.attr('id');
 					break;
@@ -522,7 +511,7 @@
 				case 'saved_item' :
 					item.$count = $('#saved-items-count');
 					item.$panel = $('.saved-items');
-					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_item_removed );
+					item.feedback_html = $('<span>').text(eu.europeana.vars.msg.saved_item_removed);
 					item.no_saved_msg = eu.europeana.vars.msg.no_saved_items;
 					item.removeSelector = '.saved-item.' + $elm.attr('id');
 					break;
@@ -530,7 +519,7 @@
 				case 'social_tag' :
 					item.$count = jQuery('#saved-tags-count');
 					item.$panel = jQuery('#saved-tags');
-					item.feedback_html = $('<span>').text( eu.europeana.vars.msg.saved_tag_removed );
+					item.feedback_html = $('<span>').text(eu.europeana.vars.msg.saved_tag_removed);
 					item.no_saved_msg = eu.europeana.vars.msg.no_saved_tags;
 					item.removeSelector = '.saved-tag.' + $elm.attr('id');
 					break;
@@ -540,10 +529,14 @@
 				count : item.count,
 				$count : item.$count,
 				success : function() {
+					displayAjaxFeedback( item.feedback_html );
 					userPanels.removeUserPanelItemSuccess.call( self, item, ajax_feedback );
 				},
 				failure : function() {
-					userPanels.removeUserPanelItemFailure.call( self );
+					var text = eu.europeana.vars.msg.error_occurred + ' ' +
+					eu.europeana.vars.msg.item_not_removed;
+
+					displayAjaxFeedback( $('<span>', {'class':'error'}).text(text) );
 				}
 			};
 
@@ -555,31 +548,15 @@
 			eu.europeana.ajax.methods.user_panel( 'remove', ajax_data, ajax_feedback );
 		},
 
-		apiKeySubmitSuccess: function() {
-			var html =
-			'<span id="save-tag-feedback">' +
-				eu.europeana.vars.msg.saved_apikey +
-			'</span>';
-
-			eu.europeana.ajax.methods.addFeedbackContent( html );
-			eu.europeana.ajax.methods.showFeedbackContainer();
-		},
-
-		apiKeySubmitFailure: function() {
-			var html =
-			'<span id="save-tag-feedback" class="error">' +
-				eu.europeana.vars.msg.save_apikey_failed +
-			'</span>';
-
-			eu.europeana.ajax.methods.addFeedbackContent( html );
-			eu.europeana.ajax.methods.showFeedbackContainer();
-		},
-
 		handleApiKeySubmit : function( evt ) {
 			var $elm = $(this),
 			ajax_feedback = {
-				success : userPanels.apiKeySubmitSuccess,
-				failure : userPanels.apiKeySubmitFailure
+				success: function() {
+					displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.saved_apikey) );
+				},
+				failure: function() {
+					displayAjaxFeedback( $('<span>', {'class':'error'}).text(eu.europeana.vars.msg.saved_apikey_failed) );
+				}
 			},
 			ajax_data = {
 				modificationAction : "api_key",
