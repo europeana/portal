@@ -231,14 +231,50 @@ public class EdmSchemaMappingTest {
 	@Test
 	public void testEdmElements() {
 		Map<String, Element> edmElements = EdmSchemaMapping.getEdmElements(mapping);
+		assertNotNull(edmElements);
+		assertEquals(100, edmElements.size());
 	}
-	
+
+	@Test
 	public void testGetMapNames() {
 		assertEquals(11, EdmSchemaMapping.getMapNames().size());
 	}
-	
+
+	@Test
 	public void testGetMap() {
 		assertNull(EdmSchemaMapping.getMap(mapping, "nonexisting"));
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "ProvidedCHO"));
 		assertEquals(3, EdmSchemaMapping.getMap(mapping, "ProvidedCHO").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "WebResource"));
+		assertEquals(14, EdmSchemaMapping.getMap(mapping, "WebResource").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "Agent"));
+		assertEquals(22, EdmSchemaMapping.getMap(mapping, "Agent").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "Place"));
+		assertEquals(12, EdmSchemaMapping.getMap(mapping, "Place").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "Timespan"));
+		assertEquals(11, EdmSchemaMapping.getMap(mapping, "Timespan").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "Concept"));
+		assertEquals(16, EdmSchemaMapping.getMap(mapping, "Concept").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "Aggregation"));
+		assertEquals(16, EdmSchemaMapping.getMap(mapping, "Aggregation").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "Proxy"));
+		assertEquals(59, EdmSchemaMapping.getMap(mapping, "Proxy").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "EuropeanaAggregation"));
+		assertEquals(13, EdmSchemaMapping.getMap(mapping, "EuropeanaAggregation").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "FullBean"));
+		assertEquals(16, EdmSchemaMapping.getMap(mapping, "FullBean").size());
+
+		assertNotNull(EdmSchemaMapping.getMap(mapping, "BriefBean"));
+		assertEquals(25, EdmSchemaMapping.getMap(mapping, "BriefBean").size());
 	}
 }
