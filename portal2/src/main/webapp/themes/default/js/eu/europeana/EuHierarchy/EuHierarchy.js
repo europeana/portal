@@ -79,7 +79,6 @@ var EuHierarchy = function(cmp, rows) {
 				var handler = ' onClick="javascript:window.hierarchy.nodeLinkClick(this)"';
 				ob.text = '<a href="' + ob.data.europeana.url + '" ' + handler + '>' + ob.text + '</a>';
 			}
-			
 		}
 		
 		ob.text = "<span>" + ob.text + "</span>";
@@ -172,42 +171,6 @@ var EuHierarchy = function(cmp, rows) {
 		
 		return [ loadPointPosition, nodePosition ];
 	};
-	
-
-	
-	/*
-	 * Simple next sibling finder - TODO - find native way
-	 */
-	/*
-	var getNext = function(node) {
-
-		if (!node) {
-			console.log('getNext requires @node');
-			return;
-		}
-
-		var nodeId = node.id;
-		var parent = node.parent;
-		var result = null;
-		var nodeIndex = -1;
-
-		parent = self.treeCmp.jstree('get_node', parent);
-
-		if(parent) {			
-			$.each(parent.children, function(i, ob) { // find this node's index
-				if (ob == nodeId) {
-					nodeIndex = i;
-					return false;
-				}
-			});
-
-			if (parent.children.length > (nodeIndex + 1)) {
-				result = self.treeCmp.jstree('get_node', parent.children[nodeIndex + 1]);
-			}
-		}
-		return result;
-	}
-	*/
 	
 	// END DOM HELPER FUNCTIONS
 
@@ -337,8 +300,8 @@ var EuHierarchy = function(cmp, rows) {
 			
 			var parentLoaded = function(node){
 				var parent = self.treeCmp.jstree('get_node', node.parent);
-				if(!parent.data){					
-					//log('no parent data for node ' + node.text + '    (' + parent.text + ')');
+				if(!parent.data){
+					alert('CAN THIS CHECK BE DELETED???')
 					return false;
 				}
 				var loaded = parent.children.length;
@@ -363,15 +326,8 @@ var EuHierarchy = function(cmp, rows) {
 			
 			if(parent.data){
 				
-/////////////////////////////////
-//  Land here:
-//	file:///home/andy/git/portal/portal2/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/index.html?base=dataGen.apocalypse_vol_3_content%28%29[2]
-//  Key down to Volume 4
-//  Opening it
-//  Keying back to top was not possible without this fix  
 				
 				if(backwards){
-					
 					var origIndex = 0;							// find the index of @node
 					$.each(parent.children, function(i, ob){	// this is only the same as node.data.index if everything is loaded
 						if(ob == node.id){
@@ -384,30 +340,22 @@ var EuHierarchy = function(cmp, rows) {
 						if(self.treeCmp.jstree( 'is_disabled', prevNode )){
 							var disabledNodesLastChild = prevNode.children[prevNode.children.length - 1];
 							
-							// dee
 							node = self.treeCmp.jstree('get_node', disabledNodesLastChild);
-							parent = prevNode;
-							
-							//$('#' + disabledNodesLastChild + '>a').css('background-color', 'green')							
+							parent = prevNode;							
 						}						
 					}
 				}
-/////////////////////////////////				
+				
 				
 				var urlSuffix = getRange( node, backwards, leftToLoad ); // rows param
 				var url       = parent.data.childrenUrl + urlSuffix;
 
-				//log('url ' + url + ', urlSuffix ' + urlSuffix + ', leftToLoad=' + leftToLoad + ', typeof parent.data = ' + (typeof parent.data) + ' parent.data.text ' + parent.data.title );
 				
 				if(urlSuffix.length){
 					loadData(url, function(data){
+						
 						log(' - loaded ' + data.length)
-						
-						//if(  !confirm('vpon loaded.... ' + JSON.stringify(data))  ){
-						//	return;
-						//}
-						
-						
+												
 						$.each(backwards ? data.reverse() : data, function(i, ob) {
 
 							var newId   = self.treeCmp.jstree("create_node", parent, formatNodeData(ob), backwards ? "first" : "last", false, true);
@@ -454,16 +402,6 @@ var EuHierarchy = function(cmp, rows) {
 					}
 					else{
 						// forwards (with no suffix) - we 're at the end of this sibling list.
-
-						// TODO - check this is needed - it may be an error!
-						/*
-						alert('enable_node - possibel error: ' + parent)
-						if(self.treeCmp.jstree( 'is_disabled', parent )){
-							self.treeCmp.jstree("enable_node", parent );
-							leftToLoad --;
-						}
-						*/
-						// end TODO
 
 						if(leftToLoad > 0){
 							var np = self.treeCmp.jstree('get_node', node.parent, false);
@@ -605,13 +543,13 @@ var EuHierarchy = function(cmp, rows) {
 		// Scroll tracking:
 		// Get the tree height and offset
 		
-		var heightMeasureSel  = '.jstree-container-ul>.jstree-node>.jstree-children';
-		var disabledMeasure   = $('.jstree-container-ul .jstree-disabled').first().height();
+		//var heightMeasureSel  = '.jstree-container-ul>.jstree-node>.jstree-children';
+		//var disabledMeasure   = $('.jstree-container-ul .jstree-disabled').first().height();
 		var disabledCount     = $('.jstree-container-ul .jstree-disabled').length;
-		var origHeight        = $(heightMeasureSel).height();
+		//var origHeight        = $(heightMeasureSel).height();
 		var origScrollTop     = parseInt(self.container.scrollTop());		
 		var visibleNodes      = getVisibleNodes();
-		var initFromTop       = visibleNodes[0] == keyedNode || keyedNode.state.disabled;
+		var initFromTop       = !keyedNode ? false : (visibleNodes[0] == keyedNode || keyedNode.state.disabled);
 		var origTopNodeId     = visibleNodes[0].id;
 				
 		// load nodes
@@ -620,13 +558,13 @@ var EuHierarchy = function(cmp, rows) {
 
 			//hideSpinner();
 			
-			var newHeight        = $(heightMeasureSel).height();
+			//var newHeight        = $(heightMeasureSel).height();
 			var containerH       = self.container.height();
-			var diffHeight       = newHeight - origHeight;
-			var resetScrollTop   = origScrollTop + diffHeight;
+			//var diffHeight       = newHeight - origHeight;
+			//var resetScrollTop   = origScrollTop + diffHeight;
 			var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
-			var extraDiff        = (disabledCount - newDisabledCount) * disabledMeasure;
-			    diffHeight      += extraDiff;
+			//var extraDiff        = (disabledCount - newDisabledCount) * disabledMeasure;
+			  //  diffHeight      += extraDiff;
 
 			/*
 			var stats = function(){
@@ -640,45 +578,6 @@ var EuHierarchy = function(cmp, rows) {
 				console.log(x);
 			}
 			*/
-			    
-			// After the invisible reset, the animated scroll
-			var finalScroll      = function(){
-				alert('FS')
-				//stats();
-				hideSpinner();
-				
-				var newScrollTop = resetScrollTop;
-				var visibleNodes = getVisibleNodes();
-				
-				if(initiatingNode == visibleNodes[0]){
-
-					var newScrollTop      = resetScrollTop;
-					var singleNodeMeasure = self.container.find('.jstree-anchor').first().height();
-					
-					if(backwards){
-						newScrollTop -= containerH;
-						newScrollTop += singleNodeMeasure;		
-					}
-					else{
-						newScrollTop += containerH;
-						newScrollTop -= singleNodeMeasure;
-					}
-					newScrollTop = Math.max(0, newScrollTop);				
-				}
-
-				if(newScrollTop == resetScrollTop){
-					self.scrollDuration = 0;
-				}
-				
-				doScrollTo(newScrollTop, function(){
-					self.scrollDuration = 1000;
-
-					togglePrevNextLinks();
-					if(callback){
-						callback();
-					}
-				});	
-			};
 
 			// If we're skipping the scroll it's because we're keying up or down
 			// Keying up can enable hitherto disabled parents
@@ -723,44 +622,62 @@ var EuHierarchy = function(cmp, rows) {
 				else{
 					$('#' + initiatingNode.id + '>a').focus();
 				}
-				/*
-				var vNode = skipScrollBump();
-				if(vNode){
-					
-					self.scrollDuration = 0;
-					doScrollTo(vNode, function(){
-						self.scrollDuration = 1000;
-						log('done scroll to click target');
-						hideSpinner();
-						vNode.focus();
-					});
-					
-				}
-				else{
-					alert('no vnode')
-					hideSpinner();
-					$('#' + initiatingNode.id + '>a').focus();
-				}
-				*/
+				
 				hideSpinner();
 
 				if(callback){
 					callback();
 				}
 			}
-			else{
+			else{ // clicked (not keyed)
 
-				if(diffHeight == 0 || (origScrollTop == 0 && newHeight > containerH) ){
-					diffHeight = containerH; // this is a max - trimmed within function if too big 
-					finalScroll();
-				}
-				else{
-					self.scrollDuration = 0;
-					doScrollTo(Math.max(0, resetScrollTop), function(){
-						self.scrollDuration  = 1000;						
-						finalScroll();			// scroll from reset scroll view
-					});
-				}
+				// After the invisible reset, the animated scroll
+				var finalScroll      = function(){
+
+					hideSpinner();
+					
+					//new
+					var scrollTop    = self.container.scrollTop();
+					var newScrollTop = scrollTop;
+					
+					//var newScrollTop = resetScrollTop;					
+					var visibleNodes = getVisibleNodes();
+					
+					if(initiatingNode == visibleNodes[0]){
+
+						//var newScrollTop      = resetScrollTop;
+						//var singleNodeMeasure = self.container.find('.jstree-anchor').first().height();
+						
+						if(backwards){
+							newScrollTop -= containerH;
+						}
+						else{
+							newScrollTop += containerH;
+						}
+						newScrollTop = Math.max(0, newScrollTop);				
+					}
+					else{
+						alert('how can this not be true????')
+					}
+
+					if(newScrollTop == scrollTop){
+						self.scrollDuration = 0;
+					}
+					
+					doScrollTo(newScrollTop, function(){
+						self.scrollDuration = 1000;
+						togglePrevNextLinks();
+						if(callback){
+							callback();
+						}
+					});	
+				};
+				// end fn:finalScroll()
+				
+				self.scrollDuration = 0;
+				doScrollTo('#' + origTopNodeId);
+				self.scrollDuration = 1000;
+				finalScroll();			// scroll from reset scroll view
 			}
 		});
 	};	
@@ -942,59 +859,9 @@ var EuHierarchy = function(cmp, rows) {
 				}
 				
 				if(doLoad){
-				
 					var disabledCount    = $('.jstree-container-ul .jstree-disabled').length;
-
 					loadAndScroll(initiatingNode, backwards, hoveredNode, function(){
-					//loadAndScroll(initiatingNode, backwards, true, function(){
-						
 						setLoadPoint(initiatingNode.id);
-					
-						// refocussing can also break the offset...
-						
-						
-						//$('#' + initiatingNode.id + '>a').focus();
-						//doScrollTo('#' + getVisibleNodes()[0].id, function(){
-						//	log('done scroll to');
-						//});
-
-						/*
-						var vnId = backwards ? getVisibleNodes()[0].id : initiatingNode.id;
-						
-						$('#' + vnId + '>a').focus();
-						if(backwards){
-							doScrollTo('#' + vnId, function(){
-								log('done scroll to');
-								//alert('totally done')
-							});							
-						}
-						*/
-				//////////////
-							/*
-							var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
-							
-							if(backwards && newDisabledCount != disabledCount){
-
-								var previousVisible = $('#' + initiatingNode.id).closest('li');
-
-								if( previousVisible.prev('li').length ){
-									previousVisible = previousVisible.prev('li').find('>a');
-								}
-								else{
-									previousVisible = previousVisible.closest('li').closest('ul').closest('li').find('>a');
-								}
-								if(previousVisible.length){
-									log('bump up to previous visible node');
-									self.silentClick = true;
-									//alert('bump')
-									previousVisible.click();
-								}
-							}
-							*/
-				//////////////
-							
-						//});
-
 					});					
 				}
 				else{ // fix wonky offset on way up
@@ -1002,8 +869,6 @@ var EuHierarchy = function(cmp, rows) {
 					doScrollTo('#' + getVisibleNodes()[0].id, function(){
 						self.scrollDuration = 1000;
 						togglePrevNextLinks();
-						
-						//alert('no load - fwo')
 					});
 				}
 			}
@@ -1011,23 +876,20 @@ var EuHierarchy = function(cmp, rows) {
 
 		// OPEN
 
-		self.treeCmp.on("open_node.jstree", function(e, data) {
-			
-			//log('open node: ' + data.node.text);
-			showSpinner();
+		self.treeCmp.on("open_node.jstree", function(e, data) {			
+			log('open node: ' + data.node.text);
 			
 			var fChild = self.treeCmp.jstree('get_node', data.node.children[0]);
 			
+			showSpinner();
 			loadFirstChild(fChild, function(){
 				viewPrevOrNext(fChild, false, defaultChunk, true, function(){
-
 					setLoadPoint(data.node.id);
+					hideSpinner();
 					
 					$('#' + data.node.id + '>a').focus();
-					hideSpinner();
-
 					setTimeout(function(){
-						togglePrevNextLinks();				
+						togglePrevNextLinks();
 					}, 500);
 
 				});
@@ -1038,20 +900,25 @@ var EuHierarchy = function(cmp, rows) {
 		// CLOSE
 
 		self.treeCmp.bind("close_node.jstree", function(event, data) {
-			log('closed ' + data.node);
-			doOnSelect(data.node, function(){
+			log('closed ' + data.node.text);
+
+			showSpinner();
+			viewPrevOrNext(data.node, false, defaultChunk, true, function(){
+				
+				setLoadPoint(data.node.id);
+				hideSpinner();
+				
+				$('#' + data.node.id + '>a').focus();
 				setTimeout(function(){
-					togglePrevNextLinks();				
+					togglePrevNextLinks();	//  delay needed for animations to finish
 				}, 500);
-			});
+				
+			});			
 		});
 
 		// END TREE BINDING
 		
 		var chainUp = function(url, data, callbackWhenDone){
-			
-			//console.log('chainUp @url=' + url + ', data = ' + JSON.stringify(data)  )
-			
 			if(!url){
 				callbackWhenDone(data);
 				return;
@@ -1081,19 +948,13 @@ var EuHierarchy = function(cmp, rows) {
 					recurseData = data.data;
 				}
 
-				
-				if(recurseData){					
-					if(recurseData.parentUrl && recurseData.index){
-						chainUp(recurseData.parentUrl, data, callbackWhenDone);							
-					}
-					else{
-						callbackWhenDone(data);							
-					}
+				if(recurseData && recurseData.parentUrl && recurseData.index){					
+					chainUp(recurseData.parentUrl, data, callbackWhenDone);							
 				}
 				else{
-					alert('cu exit - no data\n\n' + JSON.stringify(data) );
 					callbackWhenDone(data);
 				}
+				
 			});	
 		};
 
@@ -1142,7 +1003,9 @@ var EuHierarchy = function(cmp, rows) {
 		chainUp(baseUrl, false, function(data){
 			
 			loadSiblings(data, function(){
+				
 				//log('Initialise tree with model:\n\n' + JSON.stringify(data));
+				
 				var tree = self.treeCmp.jstree({
 					"core" : {
 						"data" : data,
@@ -1179,18 +1042,14 @@ var EuHierarchy = function(cmp, rows) {
 /*
 TODO:
 
- - close node should load forward
- - left arrow should load backwards
  - icon should be pinned right ONLY if it would be the only thing on a new line
 
-  - initial load error with 
-		hierarchy.init("dataGen.parentTop()")
-		hierarchy.init("dataGen.apocalypse_vol_1()")
-	(parent url missing for the 2nd of these)
- 	and:
- 		(pageNodeId never set)
- 
-SCROLL BEHAVIOUR / ERRORS
+ - bug (focussing wrong node)
+   - open this:
+     - file:///home/andy/git/portal/portal2/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/index.html?base=dataGen.apocalypse_vol_2%28%29
+     
+
+SCROLL BEHAVIOUR
 
  		Key Up:
  		
@@ -1222,9 +1081,5 @@ SCROLL BEHAVIOUR / ERRORS
 		 - before the scroll is hidden
 
 */
-
-
-
-
 
 
