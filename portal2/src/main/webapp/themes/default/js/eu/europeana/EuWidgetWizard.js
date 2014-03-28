@@ -150,6 +150,8 @@ var EuWidgetWizard = function(cmpIn, options){
 		result += param() + 'withResults=' + getWithResults();
 		result += param() + 'theme=' + getTheme();
 
+		result += param() + 'v=2';
+
 		return result;
 	};
 	

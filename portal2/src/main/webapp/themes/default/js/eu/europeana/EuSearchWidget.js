@@ -25,6 +25,9 @@ fnSearchWidget = function($, config){
 
     var resultServerUrl         = 'http://europeana.eu/portal';
 	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
+	//var searchUrl				= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
+	//var searchUrl				= searchUrl ? searchUrl : 'http://localhost:8080/portal/api/v2/search.json?wskey=api2demo';
+	
 	var searchUrlWithoutResults = 'http://www.europeana.eu/portal/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
@@ -769,7 +772,80 @@ var theParams = function(){
 	rootUrl		= rootJsUrl.split('/portal/')[0] + '/portal';
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
-	queryString = decodeURIComponent(queryString);
+
+	
+	var parseQuery = false;
+	
+	if( queryString.match(/&v=\d/) ){
+		
+		// new logic
+		parseQuery = function ( query ) {
+			
+			var Params = new Object ();
+			if(!query){
+				return Params; // return empty object
+			}
+			
+			var Pairs = query.split('&');
+			
+			for ( var i = 0; i < Pairs.length; i++ ) {
+				
+				var KeyVal = Pairs[i].split('=');
+				if(!KeyVal || KeyVal.length != 2 ){
+					continue;
+				}
+				var key =  KeyVal[0] ;
+				var val =  KeyVal[1] ;
+				
+				//val = val.replace(/\+/g, ' ');
+				if(!Params[key]){
+					Params[key] = new Array ();
+				}
+
+				//Params[key].push(encodeURIComponent(val));
+				Params[key].push(val);
+			}
+			//alert(JSON.stringify(Params));
+			return Params;
+		};
+
+	}
+	else{
+		// old logic
+		queryString = decodeURIComponent(queryString);
+
+		parseQuery = function ( query ) {
+			
+			var Params = new Object ();
+			if(!query){
+				return Params; // return empty object
+			}
+			
+			var Pairs = query.split('&');
+			for ( var i = 0; i < Pairs.length; i++ ) {
+				
+				var KeyVal = Pairs[i].split('=');
+				if(!KeyVal || KeyVal.length != 2 ){
+					//console.log("invalid parameter");
+					continue;
+				}
+				var key = unescape( KeyVal[0] );
+				var val = unescape( KeyVal[1] );
+				
+				if(!Params[key]){
+					Params[key] = new Array ();
+				}
+				Params[key].push(val);
+			}
+			
+			return Params;
+		};
+
+	}
+	
+	// funnel 
+	
+	//queryString = decodeURIComponent(queryString);
 	
 	
 	function parseQuery ( query ) {
@@ -780,17 +856,15 @@ var theParams = function(){
 		}
 		
 		var Pairs = query.split('&');
+		
 		for ( var i = 0; i < Pairs.length; i++ ) {
 			
 			var KeyVal = Pairs[i].split('=');
 			if(!KeyVal || KeyVal.length != 2 ){
-				//console.log("invalid parameter");
 				continue;
 			}
-			var key = unescape( KeyVal[0] );
-			var val = unescape( KeyVal[1] );
-			
-			//console.log(key + " = " + val);
+			var key =  KeyVal[0] ;
+			var val =  KeyVal[1] ;
 			
 			//val = val.replace(/\+/g, ' ');
 			if(!Params[key]){
@@ -800,7 +874,7 @@ var theParams = function(){
 			//Params[key].push(encodeURIComponent(val));
 			Params[key].push(val);
 		}
-		
+		//alert(JSON.stringify(Params));
 		return Params;
 	};
 	
