@@ -32,7 +32,7 @@
 
 	<!-- INTERCEPTORS -->
 	<mvc:interceptors>
-		<bean id="portal2_locale_interceptor" class="eu.europeana.corelib.web.interceptor.LocaleInterceptor">
+		<bean id="portal2_locale_interceptor" class="eu.europeana.portal2.web.interceptor.LocaleInterceptor">
 			<property name="paramName" value="lang"/>
 		</bean>
 		<bean id="corelib_web_configInterceptor" class="eu.europeana.corelib.web.interceptor.ConfigInterceptor" />
