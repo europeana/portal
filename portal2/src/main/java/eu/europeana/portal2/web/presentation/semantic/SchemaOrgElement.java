@@ -18,11 +18,11 @@ public class SchemaOrgElement {
 		this(element, new String[]{});
 	}
 
-	public SchemaOrgElement(String element, String[] parents) {
-		this.element = NamespaceResolver.createElement(element);
+	public SchemaOrgElement(String elementName, String[] parents) {
+		this.element = NamespaceResolver.createElement(elementName);
 		this.parents = new LinkedList<Element>();
 		for (String parent : parents) {
-			if (StringUtils.isBlank(parent)) {
+			if (StringUtils.isNotBlank(parent)) {
 				this.parents.add(NamespaceResolver.createElement(parent));
 			}
 		}
