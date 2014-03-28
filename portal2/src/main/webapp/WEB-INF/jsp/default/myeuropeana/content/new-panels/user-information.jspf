@@ -23,3 +23,19 @@ ${model.user.email}</p>
 	<p><c:url var="adminPage" value="/admin.html" />
 	<a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a></p>
 </c:if>
+
+<c:if test="${!empty model.debug && model.debug}">
+	<h3>My Europeana Db Values</h3>
+	<b>languagePortal:</b><br />
+	${model.user.languagePortal}</p>
+
+	<b>languageSearch:</b><br />
+	<ul>
+		<c:forEach items="${model.user.languageSearch}" var="item">
+		<li>${item}</li>
+		</c:forEach>
+	</ul>
+
+	<b>languageItem:</b><br />
+	${model.user.languageItem}
+</c:if>
