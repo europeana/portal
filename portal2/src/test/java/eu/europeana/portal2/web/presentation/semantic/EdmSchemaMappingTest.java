@@ -232,7 +232,7 @@ public class EdmSchemaMappingTest {
 	public void testEdmElements() {
 		Map<String, Element> edmElements = EdmSchemaMapping.getEdmElements(mapping);
 		assertNotNull(edmElements);
-		assertEquals(100, edmElements.size());
+		assertEquals(99, edmElements.size());
 	}
 
 	@Test
