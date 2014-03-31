@@ -188,7 +188,7 @@ public class ApiConsoleController {
 			}
 		}
 
-		ApiWrapper api = new ApiWrapper(config.getApi2url(), config.getApi2key(), config.getApi2secret(),
+		ApiWrapper api = new ApiWrapper(config.getApi2CanonicalUrl(), config.getApi2key(), config.getApi2secret(),
 				request.getSession());
 		ApiResult apiResult = null;
 		if (function.equals(SEARCH) && !StringUtils.isBlank(query)) {
