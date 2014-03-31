@@ -41,6 +41,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		result = encodeURIComponent(result)
 			.replace(/%2B/g, '+')
 			.replace(/!/g,   '%21')
+			.replace(/'/g, "%27")
 //			.replace(/%2B/g, '+');
 		
 		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
