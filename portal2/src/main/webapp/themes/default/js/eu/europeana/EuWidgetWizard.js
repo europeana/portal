@@ -804,10 +804,17 @@ var EuWidgetWizard = function(cmpIn, options){
         			$.each(facet.fields, function(j, field){
         				
         				var fLabel = encodeURIComponent(field.label);
-        				
         				var item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel + '*"]');
+        				        				
         				if(!item.length){
-        					item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d\.\d\/$/, '*') + '"]');
+        					
+        					//item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d\.\d\/$/, '*') + '"]');
+        					item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d.\d%2F$/, '*') + '"]');
+
+            				if(!item.length){
+            					//item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d\.\d\/$/, '*') + '"]');
+            					item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/%2F\d\.\d%2F$/, '*') + '"]');
+            				}        					
         				}
         				if(item.length){        					
         					var label = $(item).find('label');
