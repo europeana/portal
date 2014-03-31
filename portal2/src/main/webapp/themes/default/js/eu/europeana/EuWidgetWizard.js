@@ -38,7 +38,10 @@ var EuWidgetWizard = function(cmpIn, options){
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ {2}/g, '\+\+').replace(/ {1}/g, '\+').replace(/\%20/g, '\+');
 		
 		//result = encodeURI(result);
-		result = encodeURIComponent(result).replace(/%2B/g, '+');
+		result = encodeURIComponent(result)
+			.replace(/%2B/g, '+')
+			.replace(/!/g,   '%21')
+//			.replace(/%2B/g, '+');
 		
 		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
 		
@@ -813,7 +816,7 @@ var EuWidgetWizard = function(cmpIn, options){
         					}
         				}
         				else{
-        					console.log('NO MATCH ' + item)
+        					console.log('NO MATCH ' + item + '  ' + fLabel )
         				}
         			});
     		  	}
@@ -823,8 +826,6 @@ var EuWidgetWizard = function(cmpIn, options){
     		  			
     		  			//var item  = ops.find('a[title="' + field.label + '"]');
     		  			
-    		  			
-    		  			
     		  			var item  = ops.find('a[title="' + cleanName( field.label )  + '"]');
     		  			
     		  			
@@ -832,16 +833,14 @@ var EuWidgetWizard = function(cmpIn, options){
     		  			
     					item.show();
     					
-    					if( cleanName( field.label ) =='The+European+Library' ){    						
-    						if(facet.name == 'PROVIDER'){
-    							item.closest('.DATA_PROVIDER').prev('a').show();
-    						}
-    					}
+						if(item.length && facet.name == 'PROVIDER'){
+							item.closest('.DATA_PROVIDER').prev('a').show();
+							//console.log('PROVIDER (' + item.length + ')' + field.label + ' -> ' + cleanName( field.label ) );
+						}
     					
     					if(label.length ){
     						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
-    					}
-    					
+    					}    					
     					
     				});
     		  	
