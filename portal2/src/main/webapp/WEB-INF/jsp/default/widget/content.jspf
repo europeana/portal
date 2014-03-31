@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <style type="text/css">
 	.hidden{
 		display: none;
@@ -519,7 +521,7 @@
 	<div id="wizard-tabs">
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab1_heading_t"/></c:set>
-		<a href="#step-1" class="tab-header" title="${tabTitle}" /><span class="tab-number hidden">1</span>${tabTitle}</a>
+		<a href="#step-1" class="tab-header" title="${tabTitle}"><span class="tab-number hidden">1</span>${tabTitle}</a>
 	
 		<div class="section" id="tab-1">
 			<div class="content">
@@ -582,7 +584,7 @@
 
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab2_heading_t"/></c:set>
-		<a href="#step-2" class="tab-header" title="${tabTitle}" /><span class="tab-number hidden">2</span>${tabTitle}</a>
+		<a href="#step-2" class="tab-header" title="${tabTitle}"><span class="tab-number hidden">2</span>${tabTitle}</a>
 
 		<div class="section"  id="tab-2">
 			<div class="content">
@@ -639,7 +641,7 @@
 													</c:otherwise>
 												</c:choose>
 												<li>
-													<a ${toggle_providers} title="${entry.name}"><input type="checkbox" id="${status1.index}"/><label>${entry.name} (${entry.count})</label></a>
+													<a ${toggle_providers} title="${entry.encodedName}"><input type="checkbox" id="${status1.index}"/><label>${entry.name} (${entry.count})</label></a>
 													<ul class="DATA_PROVIDER">
 													<%--
 														<li>
@@ -866,7 +868,7 @@
 
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab3_heading_t"/></c:set>		
-		<a href="#step-3" class="tab-header" title="${tabTitle}" /><span class="tab-number hidden">3</span>${tabTitle}</a>
+		<a href="#step-3" class="tab-header" title="${tabTitle}"><span class="tab-number hidden">3</span>${tabTitle}</a>
 
 		<div class="section" id="tab-3">
 			<div class="content">
@@ -904,7 +906,7 @@
 		</div>
 
 		<c:set var="tabTitle"><spring:message code="wizard_tab4_heading_t"/></c:set>
-		<a href="#step-4" class="tab-header" title="${tabTitle}" /><span class="tab-number hidden">4</span>${tabTitle}</a>
+		<a href="#step-4" class="tab-header" title="${tabTitle}"><span class="tab-number hidden">4</span>${tabTitle}</a>
 
 		<div class="section" id="tab-4">
 			<div class="content">

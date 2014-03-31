@@ -89,6 +89,10 @@ public class ContributorItem {
 		return name;
 	}
 
+	public String getEncodedName() {
+		return QueryUtil.encode(name);
+	}
+
 	public class DataProviderItem {
 
 		private ContributorItem parent;
