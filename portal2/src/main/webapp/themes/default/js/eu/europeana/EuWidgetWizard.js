@@ -31,12 +31,14 @@ var EuWidgetWizard = function(cmpIn, options){
     
 	var cleanName = function(name){
 		
-		var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\)\s*/g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		//var result =  name.trim().replace(/"/g, '\\\"').replace(/\(\d*\)/g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ {2}/g, '\+\+').replace(/ {1}/g, '\+').replace(/\%20/g, '\+');
 		
-		result = encodeURI(result);
+		//result = encodeURI(result);
+		result = encodeURIComponent(result).replace(/%2B/g, '+');
 		
 		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
 		
@@ -71,6 +73,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	};
 	
 	var output = function(){
+		
 		var result = searchWidgetUrl;
 		var param = function(){
 			return (result.indexOf('?')>-1) ? '&' : '?';
@@ -690,7 +693,8 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		// construct query
 		
-		var query = "&rows=0";
+		var query = "&rows=0&query=*:*";
+		//var query = "&rows=0" + ( $('.default_query').val().length ? '&query=' + $('.default_query').val() : '&query=*:*');
 		try{			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider       = $(ob);
@@ -707,7 +711,6 @@ var EuWidgetWizard = function(cmpIn, options){
 					query += providerParam
 				}
 				else{
-					//alert('NOT CHECKED ' + providerParam)
 					var subtractUrl    = '';
 					var resultFragment = '';
 					
@@ -728,7 +731,6 @@ var EuWidgetWizard = function(cmpIn, options){
 						
 					});
 					
-					//alert(resultFragment + '\n\n - v- \n\n' + subtractUrl);
 					// which is shorter?  Use that!
 					query += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
 				}
@@ -749,7 +751,7 @@ var EuWidgetWizard = function(cmpIn, options){
 
 		}
 		catch(e){
-			alert("Error in updateAvailableFacets: " + e);
+			console.log("Error in updateAvailableFacets: " + e);
 		}
 		
 		var fnSuccess = function(data){
@@ -810,19 +812,36 @@ var EuWidgetWizard = function(cmpIn, options){
         						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
         					}
         				}
+        				else{
+        					console.log('NO MATCH ' + item)
+        				}
         			});
     		  	}
     		  	else{
     		  	
     		  		$.each(facet.fields, function(j, field){
-    		  			var item  = ops.find('a[title="' + field.label + '"]');
+    		  			
+    		  			//var item  = ops.find('a[title="' + field.label + '"]');
+    		  			
+    		  			
+    		  			
+    		  			var item  = ops.find('a[title="' + cleanName( field.label )  + '"]');
+    		  			
+    		  			
     		  			var label = $(item).find('>label');
-
+    		  			
     					item.show();
+    					
+    					if( cleanName( field.label ) =='The+European+Library' ){    						
+    						if(facet.name == 'PROVIDER'){
+    							item.closest('.DATA_PROVIDER').prev('a').show();
+    						}
+    					}
     					
     					if(label.length ){
     						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
     					}
+    					
     					
     				});
     		  	
@@ -832,9 +851,10 @@ var EuWidgetWizard = function(cmpIn, options){
         	hideSpinner();
 		};
 		
-		var postUrl = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params';
+		var postUrl = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo&profile=facets,params';
 		if(postUrl.indexOf('localhost')>-1){
-			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
+			//postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
+			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&profile=facets,params";
 		}
 		
 		try{
@@ -865,8 +885,8 @@ var EuWidgetWizard = function(cmpIn, options){
 			        "dataType":			"json", 
 			        "crossDomain":		true,
 			        "type":				"POST",
-			        "fail":function(){
-			        	alert('fail');
+			        "fail":function(e){
+			        	console.log('Ajax fail: ' + JSON.stringify(e));
 			    		hideSpinner();
 			        },
 			        "success":function(data){
@@ -876,7 +896,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		    }
 		}		
 		catch(e){
-			console.log("AJAX ERROR " + e);
+			console.log("AJAX ERROR " + JSON.stringify(e));
 		}
 	};
 	
