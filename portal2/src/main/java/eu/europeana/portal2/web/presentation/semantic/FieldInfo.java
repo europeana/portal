@@ -71,7 +71,7 @@ public class FieldInfo {
 		this.propertyName = propertyName;
 		this.type = type;
 		this.parent = parent;
-		element = NamespaceResolver.createElement(this.schemaName);
+		element = ElementFactory.createElement(this.schemaName);
 	}
 
 	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName, String type) {

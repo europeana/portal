@@ -28,7 +28,7 @@ public class ElementTest {
 	public void setUp() throws Exception {
 		nsDc = new Namespace("dc", "http://purl.org/dc/elements/1.1/");
 		nsDcTerms = new Namespace("dcterms", "http://purl.org/dc/terms/");
-		
+
 		attributes1 = new HashMap<String, String>();
 		attributes1.put("type", "normal");
 
@@ -69,6 +69,11 @@ public class ElementTest {
 		assertTrue(element1.equals(element2));
 		assertTrue(element2.equals(element1));
 
+		assertFalse(element1.equals(element3));
+		assertFalse(element3.equals(element1));
+		assertFalse(element2.equals(element3));
+		assertFalse(element3.equals(element2));
+
 		// attributes
 		element2.setAttributes(attributes1);
 		assertNotNull(element2.getAttributes());
@@ -93,15 +98,16 @@ public class ElementTest {
 		assertNull(element2.getElementName());
 		assertFalse(element1.equals(element2));
 		assertFalse(element2.equals(element1));
+
+		element1.setElementName(null);
+		assertTrue(element1.equals(element2));
+		assertTrue(element2.equals(element2));
+
+		element1.setElementName("title");
 		element2.setElementName("title");
 		assertNotNull(element1.getElementName());
 		assertNotNull(element2.getElementName());
 		assertTrue(element1.equals(element2));
-
-		assertFalse(element1.equals(element3));
-		assertFalse(element3.equals(element1));
-		assertFalse(element2.equals(element3));
-		assertFalse(element3.equals(element2));
 
 		// namespace
 		element2.setNamespace(null);
@@ -109,6 +115,12 @@ public class ElementTest {
 		assertNotNull(element1.getNamespace());
 		assertFalse(element1.equals(element2));
 		assertFalse(element2.equals(element1));
+
+		element1.setNamespace(null);
+		assertNull(element1.getNamespace());
+		assertNull(element2.getNamespace());
+		assertTrue(element1.equals(element2));
+		assertTrue(element2.equals(element1));
 
 		element1.setNamespace(nsDc);
 		element2.setNamespace(nsDcTerms);
@@ -137,7 +149,16 @@ public class ElementTest {
 	@Test
 	public void testHash() {
 		Element element = new Element(nsDc, "title");
-
+		assertEquals(calculateHash(element), element.hashCode());
+		element.setAttributes(attributes1);
+		assertEquals(calculateHash(element), element.hashCode());
+		element.setNamespace(null);
+		assertEquals(calculateHash(element), element.hashCode());
+		element.setElementName(null);
+		assertEquals(calculateHash(element), element.hashCode());
+	}
+	
+	private int calculateHash(Element element) {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
@@ -146,6 +167,6 @@ public class ElementTest {
 				+ ((element.getElementName() == null) ? 0 : element.getElementName().hashCode());
 		result = prime * result
 				+ ((element.getNamespace() == null) ? 0 : element.getNamespace().hashCode());
-		assertEquals(result, element.hashCode());
+		return result;
 	}
 }

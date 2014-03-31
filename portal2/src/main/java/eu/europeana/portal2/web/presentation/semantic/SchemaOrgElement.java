@@ -19,23 +19,18 @@ public class SchemaOrgElement {
 	}
 
 	public SchemaOrgElement(String elementName, String[] parents) {
-		this.element = NamespaceResolver.createElement(elementName);
-		this.parents = new LinkedList<Element>();
-		for (String parent : parents) {
-			if (StringUtils.isNotBlank(parent)) {
-				this.parents.add(NamespaceResolver.createElement(parent));
-			}
-		}
+		this.element = ElementFactory.createElement(elementName);
+		setParents(parents);
 	}
 
 	public SchemaOrgElement(String element, String[] parents, String edmElement) {
 		this(element, parents);
-		this.edmElement = NamespaceResolver.createElement(edmElement);
+		this.edmElement = ElementFactory.createElement(edmElement);
 	}
 
 	public SchemaOrgElement(String element, String[] parents, String edmElement, String edmParent) {
 		this(element, parents, edmElement);
-		this.edmParent = NamespaceResolver.createElement(edmParent);
+		this.edmParent = ElementFactory.createElement(edmParent);
 	}
 
 	public Element getElement() {
@@ -43,7 +38,7 @@ public class SchemaOrgElement {
 	}
 
 	public void setElement(String element) {
-		this.element = NamespaceResolver.createElement(element);
+		this.element = ElementFactory.createElement(element);
 	}
 
 	public void setElement(Element element) {
@@ -57,8 +52,11 @@ public class SchemaOrgElement {
 	public void setParents(String[] parents) {
 		this.parents = new LinkedList<Element>();
 		for (String parent : parents) {
-			if (StringUtils.isBlank(parent)) {
-				this.parents.add(NamespaceResolver.createElement(parent));
+			if (StringUtils.isNotBlank(parent)) {
+				Element parentElement = ElementFactory.createElement(parent);
+				if (parentElement != null) {
+					this.parents.add(parentElement);
+				}
 			}
 		}
 	}
@@ -70,9 +68,17 @@ public class SchemaOrgElement {
 	public Element getEdmElement() {
 		return edmElement;
 	}
-	
+
+	public Element getEdmParent() {
+		return edmParent;
+	}
+
+	public void setEdmParent(Element edmParent) {
+		this.edmParent = edmParent;
+	}
+
 	public boolean isSemanticUrl() {
-		return (element.getQualifiedName() == SCHEMA_URL);
+		return StringUtils.equals(element.getQualifiedName(), SCHEMA_URL);
 	}
 
 	public void setEdmElement(Element edmElement) {
@@ -84,7 +90,7 @@ public class SchemaOrgElement {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((element == null) ? 0 : element.hashCode());
-		result = prime * result + ((parents == null) ? 0 : parents.hashCode());
+		result = prime * result + parents.hashCode();
 		return result;
 	}
 
