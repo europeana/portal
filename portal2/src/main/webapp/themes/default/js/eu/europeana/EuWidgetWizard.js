@@ -868,7 +868,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			// IE8 & 9 only Cross domain JSON GET request
 		    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
 		        var xdr = new XDomainRequest(); // Use Microsoft XDR
-		        xdr.open('post', postUrl);
+		        xdr.open('post', postUrl + query);
 		        xdr.onprogress = function () {};
 		        xdr.onload = function () {
 		            var dom  = new ActiveXObject('Microsoft.XMLDOM'),
