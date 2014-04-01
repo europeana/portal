@@ -26,7 +26,7 @@ public class FieldInfo {
 	 */
 	private final static List<String> collections = new ArrayList<String>(Arrays.asList("String[]",
 			"Map<String,String>", "List<WebResourceImpl>", "List<BriefBeanImpl>", "List<Map<String,String>>",
-			"Map<String, List<String>>"));
+			"Map<String,List<String>>"));
 
 	/**
 	 * The qualified schema name
@@ -36,12 +36,12 @@ public class FieldInfo {
 	/**
 	 * The Java property
 	 */
-	private String propertyName;
+	private String javaPropertyName;
 
 	/**
 	 * The Java data type
 	 */
-	private String type;
+	private String javaType;
 
 	private String parent;
 
@@ -58,24 +58,24 @@ public class FieldInfo {
 	 *   Schema.org mapping
 	 * @param schemaName
 	 *   Schema EDM qualified name
-	 * @param propertyName
+	 * @param javaPropertyName
 	 *   Property name in object
-	 * @param type
+	 * @param javaType
 	 *   Type name (the name of object such as "FullBean")
 	 * @param parent
 	 *   Parent object
 	 */
-	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName, String type, String parent) {
+	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String javaPropertyName, String javaType, String parent) {
 		this.schemaOrgMapping = mapping;
 		this.schemaName = schemaName;
-		this.propertyName = propertyName;
-		this.type = type;
+		this.javaPropertyName = javaPropertyName;
+		this.javaType = javaType;
 		this.parent = parent;
 		element = ElementFactory.createElement(this.schemaName);
 	}
 
-	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName, String type) {
-		this(mapping, schemaName, propertyName, type, null);
+	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName, String javaType) {
+		this(mapping, schemaName, propertyName, javaType, null);
 	}
 
 	public FieldInfo(SchemaOrgMapping mapping, String schemaName, String propertyName) {
@@ -90,36 +90,36 @@ public class FieldInfo {
 		this.schemaName = schemaName;
 	}
 
-	public String getPropertyName() {
-		return propertyName;
+	public String getJavaPropertyName() {
+		return javaPropertyName;
 	}
 
-	public void setPropertyName(String propertyName) {
-		this.propertyName = propertyName;
+	public void setJavaPropertyName(String javaPropertyName) {
+		this.javaPropertyName = javaPropertyName;
 	}
 
-	public String getType() {
-		return type;
+	public String getJavaType() {
+		return javaType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setJavaType(String javaType) {
+		this.javaType = javaType;
 	}
 
 	public boolean isCollection() {
-		return (type != null && collections.contains(type));
+		return (javaType != null && collections.contains(javaType));
 	}
 
 	public boolean isMap() {
-		return (type != null && type.equals("Map<String,String>"));
+		return (javaType != null && javaType.equals("Map<String,String>"));
 	}
 
 	public boolean isCollectionOfMaps() {
-		return (type != null && type.equals("List<Map<String,String>>"));
+		return (javaType != null && javaType.equals("List<Map<String,String>>"));
 	}
 
 	public boolean isMapsOfLists() {
-		return (type != null && type.equals("Map<String,List<String>>"));
+		return (javaType != null && javaType.equals("Map<String,List<String>>"));
 	}
 
 	public Element getElement() {
@@ -150,14 +150,14 @@ public class FieldInfo {
 	public boolean getSchemaOrgElementIsURL() {
 		SchemaOrgElement schemaOrgElement = schemaOrgMapping.get(element);
 		if (schemaOrgElement != null) {
-			return schemaOrgElement.getElement().getQualifiedName().equals("schema:url");
+			return schemaOrgElement.isSemanticUrl();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "{schemaName: " + schemaName + ", propertyName: " + propertyName + ", type: " + type + ", parent: "
+		return "{schemaName: " + schemaName + ", propertyName: " + javaPropertyName + ", type: " + javaType + ", parent: "
 				+ parent + ", isCollection(): " + isCollection() + "}";
 	}
 }

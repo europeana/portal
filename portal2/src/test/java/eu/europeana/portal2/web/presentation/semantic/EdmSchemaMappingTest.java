@@ -40,22 +40,22 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(0);
 		assertEquals("fullBean", field.getSchemaName());
-		assertEquals("fullBean", field.getPropertyName());
-		assertEquals("FullBean", field.getType());
+		assertEquals("fullBean", field.getJavaPropertyName());
+		assertEquals("FullBean", field.getJavaType());
 		assertFalse(field.isCollection());
 		assertNull(field.getElement());
 
 		field = edmTopLevels.get(10); // briefBean", "briefBean", "BriefBean
 		assertEquals("briefBean", field.getSchemaName());
-		assertEquals("briefBean", field.getPropertyName());
-		assertEquals("BriefBean", field.getType());
+		assertEquals("briefBean", field.getJavaPropertyName());
+		assertEquals("BriefBean", field.getJavaType());
 		assertFalse(field.isCollection());
 		assertNull(field.getElement());
 
 		field = edmTopLevels.get(1); // edm:ProvidedCHO", "providedCHOs", "ProvidedCHO
 		assertEquals("edm:ProvidedCHO", field.getSchemaName());
-		assertEquals("providedCHOs", field.getPropertyName());
-		assertEquals("ProvidedCHO", field.getType());
+		assertEquals("providedCHOs", field.getJavaPropertyName());
+		assertEquals("ProvidedCHO", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -69,8 +69,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(2); // "edm:Agent", "agents", "Agent"
 		assertEquals("edm:Agent", field.getSchemaName());
-		assertEquals("agents", field.getPropertyName());
-		assertEquals("Agent", field.getType());
+		assertEquals("agents", field.getJavaPropertyName());
+		assertEquals("Agent", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -84,8 +84,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(3); // edm:Place", "places", "Place"
 		assertEquals("edm:Place", field.getSchemaName());
-		assertEquals("places", field.getPropertyName());
-		assertEquals("Place", field.getType());
+		assertEquals("places", field.getJavaPropertyName());
+		assertEquals("Place", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -99,8 +99,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(4); // edm:TimeSpan", "timespans", "Timespan
 		assertEquals("edm:TimeSpan", field.getSchemaName());
-		assertEquals("timespans", field.getPropertyName());
-		assertEquals("Timespan", field.getType());
+		assertEquals("timespans", field.getJavaPropertyName());
+		assertEquals("Timespan", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -114,8 +114,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(5); // skos:Concept", "concepts", "Concept
 		assertEquals("skos:Concept", field.getSchemaName());
-		assertEquals("concepts", field.getPropertyName());
-		assertEquals("Concept", field.getType());
+		assertEquals("concepts", field.getJavaPropertyName());
+		assertEquals("Concept", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -129,8 +129,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(6); // ore:Aggregation", "aggregations", "Aggregation
 		assertEquals("ore:Aggregation", field.getSchemaName());
-		assertEquals("aggregations", field.getPropertyName());
-		assertEquals("Aggregation", field.getType());
+		assertEquals("aggregations", field.getJavaPropertyName());
+		assertEquals("Aggregation", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -144,8 +144,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(7); // edm:Proxy", "proxies", "Proxy
 		assertEquals("edm:Proxy", field.getSchemaName());
-		assertEquals("proxies", field.getPropertyName());
-		assertEquals("Proxy", field.getType());
+		assertEquals("proxies", field.getJavaPropertyName());
+		assertEquals("Proxy", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -159,8 +159,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(8); // edm:EuropeanaAggregation", "europeanaAggregation", "EuropeanaAggregation
 		assertEquals("edm:EuropeanaAggregation", field.getSchemaName());
-		assertEquals("europeanaAggregation", field.getPropertyName());
-		assertEquals("EuropeanaAggregation", field.getType());
+		assertEquals("europeanaAggregation", field.getJavaPropertyName());
+		assertEquals("EuropeanaAggregation", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
@@ -174,8 +174,8 @@ public class EdmSchemaMappingTest {
 
 		field = edmTopLevels.get(9); // edm:WebResource", "webResources", "WebResource
 		assertEquals("edm:WebResource", field.getSchemaName());
-		assertEquals("webResources", field.getPropertyName());
-		assertEquals("WebResource", field.getType());
+		assertEquals("webResources", field.getJavaPropertyName());
+		assertEquals("WebResource", field.getJavaType());
 		assertFalse(field.isCollection());
 		element = field.getElement();
 		assertNotNull(element);
