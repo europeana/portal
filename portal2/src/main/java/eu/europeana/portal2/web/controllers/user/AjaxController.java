@@ -107,12 +107,17 @@ public class AjaxController {
 			apiKeyService.updateApplicationName(user.getId(), key, appName);
 			break;
 		case USER_LANGUAGE_SEARCH:
-			String langCodes = getStringParameter("languageSearch", 17, request);
+			String langCodes = getStringParameter("keywordLanguages", 17, request);
 			user = userService.updateUserLanguageSearch(user.getId(), langCodes);
 			break;
 		case USER_LANGUAGE_ITEM:
-			String langCode = getStringParameter("languageItem", 2, request);
+			String langCode = getStringParameter("itemLanguage", 2, request);
 			user = userService.updateUserLanguageItem(user.getId(), langCode);
+			break;
+		case USER_LANGUAGE_SETTINGS:
+			// should update itemLanguage
+			// should update keywordLanguages
+			// should update portalLanguage
 			break;
 		default:
 			throw new IllegalArgumentException("Unhandled ajax action: " + modAction);
@@ -160,8 +165,8 @@ public class AjaxController {
 	}
 
 	private enum Modifiable {
-		SAVED_ITEM, SAVED_SEARCH, SOCIAL_TAG, API_KEY, 
-		USER_LANGUAGE_PORTAL, USER_LANGUAGE_ITEM, USER_LANGUAGE_SEARCH;
+		SAVED_ITEM, SAVED_SEARCH, SOCIAL_TAG, API_KEY,
+		USER_LANGUAGE_PORTAL, USER_LANGUAGE_ITEM, USER_LANGUAGE_SEARCH, USER_LANGUAGE_SETTINGS;
 
 	}
 
@@ -181,7 +186,7 @@ public class AjaxController {
 
 	/**
 	 * Returns a HTTP parameter up to a given length
-	 * 
+	 *
 	 * @param parameterName
 	 * @param maximumLength
 	 * @param request

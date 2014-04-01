@@ -26,16 +26,19 @@ ${model.user.email}</p>
 
 <c:if test="${!empty model.debug && model.debug}">
 	<h3>My Europeana Db Values</h3>
-	<b>languagePortal:</b><br />
-	${model.user.languagePortal}</p>
 
-	<b>languageSearch:</b><br />
-	<ul>
-		<c:forEach items="${model.user.languageSearch}" var="item">
-		<li>${item}</li>
-		</c:forEach>
-	</ul>
+	<b>portalLanguage:</b><br />
+	${model.user.languagePortal}
 
-	<b>languageItem:</b><br />
+	<b>keywordLanguages:</b><br />
+	<c:if test="${fn:length(model.user.languageSearch) > 0 }">
+		<ul>
+			<c:forEach items="${model.user.languageSearch}" var="item">
+				<li>${item}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+
+	<b>itemLanguage:</b><br />
 	${model.user.languageItem}
 </c:if>

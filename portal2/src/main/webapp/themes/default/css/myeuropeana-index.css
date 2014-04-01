@@ -31,8 +31,8 @@ h3 {
 	margin: .5em 0;
 }
 
-#myeuropeana h3:not(:first-child) {
-	margin-top: 1em;
+#myeuropeana fieldset {
+	margin-bottom: 1.5em;
 }
 
 #myeuropeana ul li {
@@ -41,13 +41,13 @@ h3 {
 
 
 /**
- * translate-keyword-languages
+ * keyword-languages
  */
-#translate-keyword-languages {
+#keyword-languages {
 	overflow: auto;
 }
 
-#translate-keyword-languages label {
+#keyword-languages label {
 	margin-bottom: .5em;
 }
 

@@ -8,17 +8,247 @@
 		eu.europeana.ajax.methods.showFeedbackContainer();
 	},
 
-	updateMyEuropeanaDb = function( ajax_data, ajax_feedback ) {
-		if ( !eu.europeana.vars.user ) {
-			return;
-		}
 
-		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+	/**
+	 * item language
+	 */
+	itemLanguage = {
+		$translate_item: $('#translate-item'),
+		$item_language: $('#item-language'),
+
+		addLanguageItemListener: function() {
+			itemLanguage.$item_language.on( 'change', itemLanguage.handleItemLanguageChange );
+		},
+
+		getValue: function() {
+			var value = '';
+
+			if ( this.$translate_item.prop('checked') ) {
+				value = this.$item_language.val();
+			}
+
+			return value;
+		},
+
+		handleItemLanguageChange: function() {
+			itemLanguage.$translate_item.prop('checked', true);
+		},
+
+		init: function() {
+			if ( !eu.europeana.vars.user ) {
+				return;
+			}
+
+			this.addLanguageItemListener();
+		}
+	},
+
+
+	/**
+	 * translate keyword languages
+	 */
+	keywords = {
+		animation_delay: 12,
+		$keyword_languages: $('#keyword-languages input'),
+		languages_count: 0,
+		non_user_limit: 3,
+		user_limit: 6,
+		keywords_disabled: false,
+		cookie_field: 'keywordLanguages',
+		cookie_value_delimeter: ',',
+		$clear_selection: $( '#clear-selection' ),
+
+		addClearSelectionListener: function() {
+			keywords.$clear_selection.on( 'click', keywords.handleClearSelectionClick );
+		},
+
+		addKeywordLanguagesListener: function() {
+			this.$keyword_languages.each(function() {
+				$(this).on( 'click', keywords.handleKeywordLanguagesClick );
+			});
+		},
+
+		/**
+		 * if the cookie field for keyword languages
+		 * contains languages from a previous session, check their checkboxes
+		 */
+		checkCookie: function() {
+			var cookie_value = this.getCookie();
+
+			this.$keyword_languages.each(function() {
+				var $elm = $(this);
+
+				if ( $.inArray( $elm.val(), cookie_value ) > -1 ) {
+					$elm.prop('checked', true);
+					keywords.languages_count += 1;
+				}
+
+				if ( keywords.languages_count
+					>= keywords.non_user_limit
+				) {
+					return false;
+				}
+
+				return true;
+			});
+
+			this.checkDisabledState();
+		},
+
+		checkDisabledState: function() {
+			if ( keywords.languages_count
+				>= keywords.non_user_limit
+			) {
+				keywords.disableTranslateKeywords();
+				keywords.toggleDisabledKeywordsMessage();
+			} else if ( keywords.keywords_disabled ) {
+				keywords.enableTranslateKeywords();
+				keywords.toggleDisabledKeywordsMessage();
+			}
+		},
+
+		adjustKeywordLanguageLimit: function() {
+			if ( eu.europeana.vars.user ) {
+				this.non_user_limit = this.user_limit;
+			}
+		},
+
+		disableTranslateKeywords: function() {
+			var ii = keywords.$keyword_languages.size(),
+				r = keywords.randsort(ii);
+
+			keywords.$keyword_languages.each(function(i) {
+				var $elm = $(this);
+
+				if ( $elm.prop('checked') === false ) {
+					setTimeout(function(){
+						$elm.closest('label').addClass('disabled');
+						$elm.prop('disabled', true);
+					}, r[i] * keywords.animation_delay);
+				}
+			});
+
+			keywords.keywords_disabled = true;
+		},
+
+		enableTranslateKeywords: function() {
+			var ii = keywords.$keyword_languages.size(),
+				r = keywords.randsort(ii);
+
+			keywords.$keyword_languages.each(function(i) {
+				var $elm = $(this);
+
+				setTimeout(function(){
+					$elm.closest('label').removeClass('disabled');
+					$elm.prop('disabled', false);
+				}, r[i] * keywords.animation_delay);
+			});
+
+			keywords.keywords_disabled = false;
+		},
+
+		getCookie: function() {
+			return $.cookie( this.cookie_field )
+				? $.cookie( this.cookie_field ).split( this.cookie_value_delimeter )
+				: undefined;
+		},
+
+		/**
+		 * @returns {string}
+		 * a string of values joined by this.cookie_value_delimeter
+		 */
+		getValue: function() {
+			var value = '',
+			values = [];
+
+			this.$keyword_languages.each(function() {
+				var $elm = $(this);
+
+				if ( $elm.prop('checked') ) {
+					values.push( $elm.val() );
+				}
+			});
+
+			if ( values.length > 0 ) {
+				value = values.join( this.cookie_value_delimeter );
+			}
+
+			return value;
+		},
+
+		handleClearSelectionClick: function() {
+			$.removeCookie( keywords.cookie_field );
+			keywords.languages_count = 0;
+			keywords.checkCookie();
+		},
+
+		/**
+		 * handles clicks on the keyword language checkboxes
+		 *
+		 * - increments or decrements the languages checked count
+		 * - runs a method that checks whether or not to disable the ability
+		 *   to check additional languages
+		 */
+		handleKeywordLanguagesClick: function() {
+			var $elm = $(this);
+
+			if ( $elm.prop('checked') ) {
+				keywords.languages_count += 1;
+			} else {
+				keywords.languages_count -= 1;
+			}
+
+			keywords.checkDisabledState();
+		},
+
+		init: function() {
+			keywords.adjustKeywordLanguageLimit();
+			keywords.addKeywordLanguagesListener();
+			keywords.addClearSelectionListener();
+
+			if ( !eu.europeana.vars.user ) {
+				keywords.checkCookie();
+			}
+		},
+
+		randsort: function(c) {
+			var i, n, o = [];
+
+			for ( i = 0; i < c; i += 1 ) {
+				n = Math.floor( Math.random() * c );
+
+				if ( $.inArray( n, o ) > 0 ) {
+					i -= 1;
+				} else {
+					o.push(n);
+				}
+			}
+
+			return o;
+		},
+
+		saveToCookie: function() {
+			var cookie_value = this.getValue();
+
+			$.cookie.raw = true;
+
+			if ( cookie_value.length < 1 ) {
+				$.removeCookie( keywords.cookie_field );
+			} else {
+				$.cookie( this.cookie_field, cookie_value, { path: '/' } );
+			}
+		},
+
+		toggleDisabledKeywordsMessage: function() {
+			$('#disabled-translate-keywords-msg').slideToggle();
+		}
 	},
 
 
 	/**
 	 * panel menus
+	 *
+	 * takes care of displaying the corresponding panel
 	 */
 	panelMenu = {
 		$panel_links: $('#panel-links li'),
@@ -56,7 +286,7 @@
 		},
 
 		addPanelMenuListener: function() {
-			$('#panel-links a').on('click', panelMenu.handlePanelMenuClick );
+			$('#panel-links a').on( 'click', panelMenu.handlePanelMenuClick );
 		},
 
 		init: function() {
@@ -77,9 +307,17 @@
 			$('#' + panelMenu.hash).fadeIn();
 
 			switch ( panelMenu.hash ) {
-				case'login': $('#j_username').focus(); break;
-				case'register': $('#register_email').focus(); break;
-				case'request-password': $('#forgot_email').focus(); break;
+				case'login':
+					$('#j_username').focus();
+					break;
+
+				case'register':
+					$('#register_email').focus();
+					break;
+
+				case'request-password':
+					$('#forgot_email').focus();
+					break;
 			}
 
 			$('body').animate({scrollTop:0}, speed);
@@ -112,310 +350,34 @@
 	/**
 	 * portal language
 	 */
-	pl = {
-		addPortalLanguageListener: function() {
-			$('#portalLanguage').on( 'change', this.handlePortalLanguageChange );
-		},
-
-		handlePortalLanguageChange: function() {
-			$( this ).closest('form').submit();
-		},
-
-		init: function() {
-			this.addPortalLanguageListener();
-		}
-	},
-
-
-	/**
-	 * translate keyword languages
-	 */
-	tkl = {
-		animation_delay: 12,
-		$translate_keyword_languages: $( '#translate-keyword-languages input' ),
-		translate_keyword_languages_count: 0,
-		translate_keyword_language_limit: 3,
-		translate_keyword_language_user_limit: 6,
-		translate_keywords_disabled: false,
-		cookie_field: 'languagesSearch',
-		cookie_value_delimeter: ',',
-		$clear_selection: $( '#clear-selection' ),
-		ajax_feedback: {
-			success: function() {
-				displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_language_search) );
-			},
-			failure: function() {
-				displayAjaxFeedback( $('<span>', {'class':'error'}).text(eu.europeana.vars.msg.save_language_search_failed) );
-			}
-		},
-		ajax_data: {
-			modificationAction: "user_language_search",
-			languageSearch: null
-		},
-
-		addClearSelectionListener: function() {
-			tkl.$clear_selection.on( 'click', tkl.handleClearSelectionClick );
-		},
-
-		addTranslateKeywordLanguagesListener: function() {
-			this.$translate_keyword_languages.each(function() {
-				$(this).on( 'click', tkl.handleTranslateKeywordsClick );
-			});
-		},
+	portalLanguage = {
+		cookie_field: 'portalLanguage',
+		$portal_language: $('#portal-language'),
 
 		/**
-		 * add a value to the cookie only when it does not already exist
-		 * in the cookie
-		 *
-		 * @param {string} value
+		 * if the cookie field for portal language
+		 * contains a value from a previous session, set it as selected
 		 */
-		addValueToCookie: function( value ) {
-			var cookie_value = this.getCookie();
-
-			$.cookie.raw = true;
-
-			if ( cookie_value === undefined ) {
-				cookie_value = value;
-			} else if ( $.inArray( value, cookie_value ) === -1 ) {
-				cookie_value.push( value );
-				cookie_value = cookie_value.join( this.cookie_value_delimeter );
-			}
-
-			$.cookie( this.cookie_field, cookie_value );
-			tkl.ajax_data.languageSearch = cookie_value;
-			updateMyEuropeanaDb( tkl.ajax_data, tkl.ajax_feedback );
-		},
-
-		checkCurrentCookie: function() {
-			var cookie_value = this.getCookie();
-
-			this.$translate_keyword_languages.each(function() {
-				var $elm = $(this);
-
-				if ( $.inArray( $elm.val(), cookie_value ) > -1 ) {
-					$elm.prop('checked', true);
-					tkl.translate_keyword_languages_count += 1;
-				}
-
-				if ( tkl.translate_keyword_languages_count
-					>= tkl.translate_keyword_language_limit
-				) {
-					return false;
-				}
-
-				return true;
-			});
-
-			this.checkDisabledState();
-		},
-
-		checkDisabledState: function() {
-			if ( tkl.translate_keyword_languages_count
-				>= tkl.translate_keyword_language_limit
-			) {
-				tkl.disableTranslateKeywords();
-				tkl.toggleDisabledKeywordsMessage();
-			} else if ( tkl.translate_keywords_disabled ) {
-				tkl.enableTranslateKeywords();
-				tkl.toggleDisabledKeywordsMessage();
-			}
-		},
-
-		checkLimit: function() {
-			if ( eu.europeana.vars.user ) {
-				this.translate_keyword_language_limit = this.translate_keyword_language_user_limit;
-			}
-		},
-
-		disableTranslateKeywords: function() {
-			var ii = tkl.$translate_keyword_languages.size(),
-				r = tkl.randsort(ii);
-
-			tkl.$translate_keyword_languages.each(function(i) {
-				var $elm = $(this);
-
-				if ( $elm.prop('checked') === false ) {
-					setTimeout(function(){
-						$elm.closest('label').addClass('disabled');
-						$elm.prop('disabled', true);
-					}, r[i] * tkl.animation_delay);
-				}
-			});
-
-			tkl.translate_keywords_disabled = true;
-		},
-
-		enableTranslateKeywords: function() {
-			var ii = tkl.$translate_keyword_languages.size(),
-				r = tkl.randsort(ii);
-
-			tkl.$translate_keyword_languages.each(function(i) {
-				var $elm = $(this);
-
-				setTimeout(function(){
-					$elm.closest('label').removeClass('disabled');
-					$elm.prop('disabled', false);
-				}, r[i] * tkl.animation_delay);
-			});
-
-			tkl.translate_keywords_disabled = false;
-		},
-
-		getCookie: function() {
-			return $.cookie( this.cookie_field )
-				? $.cookie( this.cookie_field ).split( this.cookie_value_delimeter )
-				: undefined;
-		},
-
-		handleClearSelectionClick: function() {
-			$.removeCookie( tkl.cookie_field );
-			tkl.translate_keyword_languages_count = 0;
-			tkl.checkCurrentCookie();
-
-			tkl.ajax_data.languageSearch = null;
-			updateMyEuropeanaDb( tkl.ajax_data, tkl.ajax_feedback );
-		},
-
-		handleTranslateKeywordsClick: function() {
-			var $elm = $(this);
-
-			if ( $elm.prop('checked') ) {
-				tkl.translate_keyword_languages_count += 1;
-				tkl.addValueToCookie( $elm.val() );
-			} else {
-				tkl.translate_keyword_languages_count -= 1;
-				tkl.removeValueFromCookie( $elm.val() );
-			}
-
-			tkl.checkDisabledState();
-		},
-
-		init: function() {
-			tkl.addTranslateKeywordLanguagesListener();
-			tkl.addClearSelectionListener();
-			tkl.checkLimit();
-			tkl.checkCurrentCookie();
-		},
-
-		randsort: function(c) {
-			var i, n, o = [];
-
-			for ( i = 0; i < c; i += 1 ) {
-				n = Math.floor( Math.random() * c );
-
-				if ( $.inArray( n, o ) > 0 ) {
-					i -= 1;
-				} else {
-					o.push(n);
-				}
-			}
-
-			return o;
-		},
-
-		removeValueFromCookie: function( value ) {
-			var i,
-			cookie_value = this.getCookie(),
-			new_cookie_value = [];
-
-			if ( cookie_value !== undefined && $.inArray( value, cookie_value ) > -1 ) {
-				for ( i = 0; i < cookie_value.length; i += 1 ) {
-					if ( cookie_value[i] !== value ) {
-						new_cookie_value.push( cookie_value[i] );
-					}
-				}
-
-				cookie_value = new_cookie_value.join( this.cookie_value_delimeter );
-				$.cookie( this.cookie_field, cookie_value );
-
-				tkl.ajax_data.languageSearch = cookie_value;
-				updateMyEuropeanaDb( tkl.ajax_data, tkl.ajax_feedback );
-			}
-		},
-
-		toggleDisabledKeywordsMessage: function() {
-			$('#disabled-translate-keywords-msg').slideToggle();
-		}
-	},
-
-
-	/**
-	 * translate language item
-	 */
-	til = {
-		$translate_language_item: $('#translate-language-item'),
-		$language_item: $('#language-item'),
-		$language_items: $('#language-item option'),
-		cookie_field: 'languageItem',
-		ajax_feedback: {
-			success: function() {
-				displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_language_item) );
-			},
-			failure: function() {
-				displayAjaxFeedback( $('<span>', {'class':'error'}).text(eu.europeana.vars.msg.save_language_item_failed) );
-			}
-		},
-		ajax_data: {
-			modificationAction: "user_language_item",
-			languageItem: null
-		},
-
-		addLanguageItemListener: function() {
-			til.$language_item.on( 'change',  til.handleLanguageItemChange );
-		},
-
-		addTranslateLanguageItemListener: function() {
-			til.$translate_language_item.on( 'click',  til.handleTranslateLanguageItemClick );
-		},
-
 		checkCookie: function() {
-			var cookie_value = $.cookie( this.cookie_field );
+			var value = $.cookie( this.cookie_field );
 
-			if ( eu.europeana.vars.user && cookie_value !== undefined ) {
-				this.$translate_language_item.prop('checked', true);
-
-				this.$language_items.each(function() {
-					var $elm = $(this);
-
-					if ( $elm.val() === cookie_value ) {
-						$elm.prop('selected', true);
-						return false;
-					}
-
-					return true;
-				});
+			if ( value && value.length > 1 ) {
+				this.$portal_language.val( value );
 			}
 		},
 
-		handleLanguageItemChange: function() {
-			var $elm = $(this);
-
-			til.$translate_language_item.prop('checked', true);
-			$.cookie( til.cookie_field, $elm.val() );
-
-			til.ajax_data.languageItem = $elm.val();
-			updateMyEuropeanaDb( til.ajax_data, til.ajax_feedback );
-		},
-
-		handleTranslateLanguageItemClick: function() {
-			var $elm = $(this),
-			cookie_value = null;
-
-			if ( $elm.prop('checked') ) {
-				cookie_value = til.$language_item.val();
-				$.cookie( til.cookie_field, cookie_value );
-			} else {
-				$.removeCookie( til.cookie_field );
-			}
-
-			til.ajax_data.languageItem = cookie_value;
-			updateMyEuropeanaDb( til.ajax_data, til.ajax_feedback );
+		getValue: function() {
+			return this.$portal_language.val();
 		},
 
 		init: function() {
-			this.addLanguageItemListener();
-			this.addTranslateLanguageItemListener();
-			this.checkCookie();
+			if ( !eu.europeana.vars.user ) {
+				this.checkCookie();
+			}
+		},
+
+		saveToCookie: function() {
+			$.cookie( this.cookie_field, this.getValue(), { path: '/' } );
 		}
 	},
 
@@ -574,13 +536,59 @@
 			this.addRemoveTagListener();
 			this.addApiSubmitListener();
 		}
+	},
+
+
+	languageSettings = {
+		addSubmitListener: function() {
+			$('#language-settings').find('form').on( 'submit', this.handleSubmit );
+		},
+
+		handleSubmit: function( evt ) {
+			var ajax_feedback = {
+				success: function() {
+					displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_settings_success) );
+				},
+				failure: function() {
+					displayAjaxFeedback( $('<span>', {'class':'error'}).text(eu.europeana.vars.msg.save_settings_failure) );
+				}
+			},
+			ajax_data = {
+				modificationAction : "user_language_settings",
+				itemLanguage: itemLanguage.getValue(),
+				portalLanguage : portalLanguage.getValue(),
+				keywordLanguages : keywords.getValue()
+			};
+
+			evt.preventDefault();
+
+			if ( eu.europeana.vars.user ) {
+				eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+			} else {
+				keywords.saveToCookie();
+				portalLanguage.saveToCookie();
+				displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_settings_success) );
+			}
+		},
+
+		init: function() {
+			this.addSubmitListener();
+		},
+
+		updateMyEuropeanaDb: function( ajax_data, ajax_feedback ) {
+			if ( !eu.europeana.vars.user ) {
+				return;
+			}
+
+			eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+		}
 	};
 
-
-	pl.init();
-	tkl.init();
-	til.init();
+	keywords.init();
+	itemLanguage.init();
 	panelMenu.init();
+	portalLanguage.init();
 	userPanels.init();
+	languageSettings.init();
 
 }( jQuery, eu ));
