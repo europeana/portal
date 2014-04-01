@@ -27,7 +27,10 @@ var EuWidgetWizard = function(cmpIn, options){
 	self.tabs            = false;
 	self.disabledTabs    = [];
     self.initialisedTabs = {};
-	
+
+    // Kill firefox cache
+    self.cmp.find(":checkbox").attr("autocomplete", "off");
+
     
 	var cleanName = function(name){
 		
