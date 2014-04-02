@@ -66,7 +66,7 @@
 						</c:when>
 						<c:otherwise>
 							<input type="checkbox" name="translate-item" id="translate-item" value="yes" /> <spring:message code="translate_items_select_t" />&nbsp;
-							<select id="item-language" name="item-language" disabled>
+							<select id="item-language" name="item-language">
 								<c:set var="selected_language_code" value="${model.locale}" />
 								<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 							</select>

@@ -107,6 +107,18 @@
 			}
 		},
 
+		checkForm: function() {
+			this.$keyword_languages.each(function() {
+				var $elm = $(this);
+
+				if ( $elm.prop('checked') ) {
+					keywords.languages_count += 1;
+				}
+			});
+
+			this.checkDisabledState();
+		},
+
 		adjustKeywordLanguageLimit: function() {
 			if ( eu.europeana.vars.user ) {
 				this.non_user_limit = this.user_limit;
@@ -202,12 +214,14 @@
 		},
 
 		init: function() {
-			keywords.adjustKeywordLanguageLimit();
-			keywords.addKeywordLanguagesListener();
-			keywords.addClearSelectionListener();
+			this.adjustKeywordLanguageLimit();
+			this.addKeywordLanguagesListener();
+			this.addClearSelectionListener();
 
-			if ( !eu.europeana.vars.user ) {
-				keywords.checkCookie();
+			if ( eu.europeana.vars.user ) {
+				this.checkForm();
+			} else {
+				this.checkCookie();
 			}
 		},
 
