@@ -62,17 +62,11 @@
 			keywords.$clear_selection.on( 'click', keywords.handleClearSelectionClick );
 		},
 
-		addKeywordLanguagesListener: function() {
-			this.$keyword_languages.each(function() {
-				$(this).on( 'click', keywords.handleKeywordLanguagesClick );
-			});
-		},
-
 		/**
 		 * if the cookie field for keyword languages
 		 * contains languages from a previous session, check their checkboxes
 		 */
-		checkCookie: function() {
+		addCookieValues: function() {
 			var cookie_value = this.getCookie();
 
 			this.$keyword_languages.each(function() {
@@ -91,8 +85,12 @@
 
 				return true;
 			});
+		},
 
-			this.checkDisabledState();
+		addKeywordLanguagesListener: function() {
+			this.$keyword_languages.each(function() {
+				$(this).on( 'click', keywords.handleKeywordLanguagesClick );
+			});
 		},
 
 		checkDisabledState: function() {
@@ -107,22 +105,49 @@
 			}
 		},
 
-		checkForm: function() {
-			this.$keyword_languages.each(function() {
-				var $elm = $(this);
-
-				if ( $elm.prop('checked') ) {
-					keywords.languages_count += 1;
-				}
-			});
-
-			this.checkDisabledState();
-		},
-
 		adjustKeywordLanguageLimit: function() {
 			if ( eu.europeana.vars.user ) {
 				this.non_user_limit = this.user_limit;
 			}
+		},
+
+		/**
+		 * @param {undefined|object} $elm
+		 * jQuery object representing the checkbox whose state needs to be checked
+		 */
+		adjustLanguagesCount: function( $elm ) {
+			if ( $elm === undefined ) {
+				this.languages_count = 0;
+
+				this.$keyword_languages.each(function() {
+					$elm = $(this);
+
+					if ( $elm.prop('checked') ) {
+						keywords.languages_count += 1;
+					}
+				});
+			} else {
+				if ( $elm.prop('checked') ) {
+					keywords.languages_count += 1;
+				} else {
+					keywords.languages_count -= 1;
+				}
+			}
+		},
+
+		clearSelections: function() {
+			this.$keyword_languages.each(function() {
+				var $elm = $(this);
+
+				if ( $elm.prop('checked') ) {
+					// this should work, but it doesn’t
+					// $elm.prop('checked', false);
+					$elm.attr('checked', false);
+				}
+			});
+
+			keywords.languages_count = 0;
+			this.checkDisabledState();
 		},
 
 		disableTranslateKeywords: function() {
@@ -189,27 +214,11 @@
 		},
 
 		handleClearSelectionClick: function() {
-			$.removeCookie( keywords.cookie_field );
-			keywords.languages_count = 0;
-			keywords.checkCookie();
+			keywords.clearSelections();
 		},
 
-		/**
-		 * handles clicks on the keyword language checkboxes
-		 *
-		 * - increments or decrements the languages checked count
-		 * - runs a method that checks whether or not to disable the ability
-		 *   to check additional languages
-		 */
 		handleKeywordLanguagesClick: function() {
-			var $elm = $(this);
-
-			if ( $elm.prop('checked') ) {
-				keywords.languages_count += 1;
-			} else {
-				keywords.languages_count -= 1;
-			}
-
+			keywords.adjustLanguagesCount( $(this) );
 			keywords.checkDisabledState();
 		},
 
@@ -219,10 +228,12 @@
 			this.addClearSelectionListener();
 
 			if ( eu.europeana.vars.user ) {
-				this.checkForm();
+				this.adjustLanguagesCount();
 			} else {
-				this.checkCookie();
+				this.addCookieValues();
 			}
+
+			this.checkDisabledState();
 		},
 
 		randsort: function(c) {
@@ -247,7 +258,7 @@
 			$.cookie.raw = true;
 
 			if ( cookie_value.length < 1 ) {
-				$.removeCookie( keywords.cookie_field );
+				$.removeCookie( keywords.cookie_field, { path: '/' } );
 			} else {
 				$.cookie( this.cookie_field, cookie_value, { path: '/' } );
 			}
@@ -385,7 +396,7 @@
 		 * if the cookie field for portal language
 		 * contains a value from a previous session, set it as selected
 		 */
-		checkCookie: function() {
+		addCookieValue: function() {
 			var value = $.cookie( this.cookie_field );
 
 			if ( value && value.length > 1 ) {
@@ -399,7 +410,7 @@
 
 		init: function() {
 			if ( !eu.europeana.vars.user ) {
-				this.checkCookie();
+				this.addCookieValue();
 			}
 
 			this.initial_value = portalLanguage.$portal_language.val();
