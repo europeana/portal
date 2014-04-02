@@ -5,7 +5,6 @@ public class Namespace {
 	private String uri;
 
 	public Namespace(String prefix, String uri) {
-		super();
 		this.prefix = prefix;
 		this.uri = uri;
 	}

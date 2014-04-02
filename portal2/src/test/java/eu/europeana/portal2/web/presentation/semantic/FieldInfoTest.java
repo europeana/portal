@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.presentation.semantic;
 
 import static org.junit.Assert.*;
 
