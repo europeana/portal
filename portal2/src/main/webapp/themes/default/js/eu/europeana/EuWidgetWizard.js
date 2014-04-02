@@ -44,9 +44,11 @@ var EuWidgetWizard = function(cmpIn, options){
 		result = encodeURIComponent(result)
 			.replace(/%2B/g, '+')
 			.replace(/!/g,   '%21')
-			.replace(/'/g, "%27")
+			.replace(/'/g, "%27")		// escaped single quote
 
-			.replace(/\(/g, "%28")
+			.replace(/%5C%22/g, "%22")	// escaped \" to just " - fix for Museo di Chimica "Primo Levi"- Sapienza University Rome (3030)
+
+			.replace(/\(/g, "%28")		// escape brackets
 			.replace(/\)/g, "%29")
 		
 		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
@@ -856,7 +858,14 @@ var EuWidgetWizard = function(cmpIn, options){
     					}    					
 
         				if(!item.length  && (facet.name == 'PROVIDER' ||   facet.name == 'DATA_PROVIDER') ){
-        					console.log('NOR RIGHTS - NO MATCH: cleaned ' + cleanName( field.label ) + '  ' + field.label   )
+        					console.log('NO RIGHTS - NO MATCH: cleaned ' + cleanName( field.label ) + '  ' + field.label   )
+        					
+//        					NMD: Museo+di+Chimica+%5C%22Primo+Levi%5C%22-+Sapienza+University+Rome  
+  //      					RAW: Museo di Chimica "Primo Levi"- Sapienza University Rome
+    //    					TTL: Museo+di+Chimica+%22Primo+Levi%22-+Sapienza+University+Rome
+
+//        					NO RIGHTS - NO MATCH: cleaned Erfgoed+Brabant  Erfgoed Brabant
+        					
         				}
 
     				});
@@ -927,3 +936,6 @@ var EuWidgetWizard = function(cmpIn, options){
 		}
 	};
 };
+
+
+

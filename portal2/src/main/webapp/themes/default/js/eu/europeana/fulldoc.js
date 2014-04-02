@@ -6,7 +6,7 @@ eu.europeana.fulldoc = {
 	lightboxOb :  null,
 	vimeoDetect : 'vimeo.com/video',
 	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
-	
+	isAudioBoo : false,
 	
 /*	
 	// provides priority order for which tab to open when no hash is given
@@ -490,6 +490,12 @@ eu.europeana.fulldoc = {
 								&&
 								($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) 
 							)
+							|| 
+							(
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+								&&
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo
+							)
 						)
 						&&
 						!js.utils.phoneTest();
@@ -641,6 +647,12 @@ eu.europeana.fulldoc = {
 							&&
 							($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) 
 						)				
+						||
+						(
+							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+							&&
+							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo
+						)				
 					
 				){
 					
@@ -746,7 +758,7 @@ eu.europeana.fulldoc = {
 							if( $('.overlaid-content').css('visibility') == 'hidden' ){
 								return;
 							}
-							eu.europeana.fulldoc.lightboxOb.layout();							
+							eu.europeana.fulldoc.lightboxOb.layout();
 						}
 					});
 
@@ -860,6 +872,9 @@ eu.europeana.fulldoc = {
 				lightboxableCount++;				
 			}
 			else if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound' && ($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) ){
+				lightboxableCount++;								
+			}			
+			else if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound' && carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo){
 				lightboxableCount++;								
 			}			
 		}

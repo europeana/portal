@@ -57,8 +57,6 @@
 					];
 				</c:if>
 				
-				// var carouselDataIsBy	= 	${model.europeanaIsShownBy};
-				// var carouselDataIsAt	= 	${model.europeanaIsShownAt};
 				var isShownBy			= 	"${model.isShownBy}";
 				var isShownAt			= 	"${model.isShownAt}";
 				var edmRights = [<c:forEach items="${model.document.edmRights}" var="rights" varStatus="s">"${rights}"<c:if test="${!s.last}">,</c:if></c:forEach>];
@@ -80,6 +78,7 @@
 						<% pageContext.setAttribute("newLineChar", "\n"); %>						
 						<c:set var="rightsToParse" value="${image.rightsValue}" />			
 						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>						
+
 						
 						carouselData[carouselData.length-1].external = {
 							"unescaped_url" : "${image.full}",
@@ -87,20 +86,36 @@
 							"type"	: "${fn:toLowerCase(image.type)}",
 							"rights": '${fn:replace(rightsString, newLineChar, "")}'
 						}
+	
+						<c:if test="${fn:indexOf(model.isShownAt, '//audioboo.fm/boos/') > -1}">
+							carouselData[carouselData.length-1].external.audio_boo = true;
+						</c:if>
 					</c:if>
 
-					<c:if test="${collectionId == '2021613'}">
-						<% pageContext.setAttribute("newLineChar", "\n"); %>						
-						<c:set var="rightsToParse" value="${image.rightsValue}" />			
-						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
-
-						carouselData[carouselData.length-1].external = {
-							"unescaped_url" : "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
-							"url" 			: "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
-							"type"			: "sound",
-							"rights"        : '${fn:replace(rightsString, newLineChar, '')}'
-						}
+					<%-- SOUND CLOUD --%>
+					
+					<c:if test="${fn:length(model.soundCloudAwareCollections) > 0}">
+					
+						<c:forEach items="${model.soundCloudAwareCollections}" var="item" varStatus="status">
+						
+							<c:if test="${item == collectionId}">
+							
+								<% pageContext.setAttribute("newLineChar", "\n"); %>						
+								<c:set var="rightsToParse" value="${image.rightsValue}" />			
+								<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
+	
+								carouselData[carouselData.length-1].external = {
+									"unescaped_url" : "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
+									"url" 			: "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + "${model.objectDcIdentifier}" + "&color=4c7ecf&auto_play=false&show_artwork=true",
+									"type"			: "sound",
+									"rights"        : '${fn:replace(rightsString, newLineChar, '')}'
+								}
+								
+							</c:if>
+						</c:forEach>
+						
 					</c:if>
+					
 				</c:forEach>
 			</c:if>
 

@@ -44,6 +44,10 @@ eu.europeana.lightbox = function(){
 						imgIndex ++;
 						subModel[subModel.length] = i;												
 					} 
+					else if(carouselData[i].external.audio_boo){
+						imgIndex ++;
+						subModel[subModel.length] = i;												
+					} 
 					subModelMap[i] = (imgIndex-1); 
 				}
 
@@ -77,6 +81,9 @@ eu.europeana.lightbox = function(){
 					},
 					"next" : function(){
 						nav(1);
+					},
+					"current" : function(){
+						return self.index;
 					},
 					"goTo" : function(i){						
 						self.index = subModelMap[i];
@@ -117,24 +124,56 @@ eu.europeana.lightbox = function(){
 	};
 	
 	var switchTypeIfNeeded = function(){
-		
+				
 		var img = self.cmp.find('#lightbox_image');
 
 		if(
-			(img.attr('src').indexOf(eu.europeana.fulldoc.vimeoDetect) > -1)
+			(img.attr('src') && img.attr('src').indexOf(eu.europeana.fulldoc.vimeoDetect) > -1)
 			||
 			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
 		){
-			
-			if(img[0].nodeName.toUpperCase() == 'IMG'){
+			// switch divs and images to an iframe
+			if( img[0].nodeName.toUpperCase() != 'IFRAME'){					
 				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '">');
 				img.remove();
 				self.cmp.find('#lightbox_info').before(elIframe);
 				//elIframe.fitVids();
 			}
 		}
-		else{
-			if(img[0].nodeName.toUpperCase() == 'IFRAME'){
+		else if(img[0].nodeName.toUpperCase() == 'IMG' && img.attr('src').indexOf('//audioboo.fm/boos/') > -1 ){ 
+
+				// switch iframes and images to a div
+				var src = img.attr('src').replace('.mp3', '/embed/v2?eid=AQAAAO5kOlMCmAIA&player_theme=light&link_color=steelblue&image_option=none&show_title=true');
+
+				var elDiv = $(''
+					+ '<div id="lightbox_image" '
+					+   'class="ab-player" '
+					+   'data-boourl="' + src + '" '
+					+   'data-boowidth="100%" '
+			//		+   'data-maxheight="150" '
+					+   'data-maxheight="300" '
+					+   'data-iframestyle="background-color:transparent; display:block; box-shadow:0 0 1px 1px rgba(0, 0, 0, 0.15); min-width:349px; max-width:700px;" '
+					+   'style="background-color:transparent; height:300px">'
+					+   '<a href="' + img.attr('src').replace('.mp3', '') + '" target="_new">'
+					+   '	listen to ' + carouselData[ self.navOb ? self.navOb.current : 0 ].title + ' on Audioboo'
+					+   '</a>'
+					+ '</div>'
+				);
+				
+				img.remove();
+				self.cmp.find('#lightbox_info').before(elDiv);
+				
+				(function(){
+					var po = document.createElement("script");
+					po.type = "text/javascript";
+					po.async = true;
+					po.src = "https://d15mj6e6qmt1na.cloudfront.net/cdn/embed.js";
+					var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);
+				})();
+
+		}
+		else {
+			if(img.attr('src') && img[0].nodeName.toUpperCase() != 'IMG'){
 				var elImg = $('<img id="lightbox_image" src="' + img.attr('src') + '">');
 				img.remove();
 				self.cmp.find('#lightbox_info').before(elImg);				
@@ -154,6 +193,12 @@ eu.europeana.lightbox = function(){
 				src.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1 ? callback(2000, 2000) : callback(600, 280);				
 			}
 			return;
+		}
+		if( src.indexOf('//audioboo.fm/boos/') > -1 ){
+			if(typeof callback != "undefined"){
+				callback(600, 300);
+			}
+			return;			
 		}
 		
 		$('<div id="hidden_img" style="visibility:hidden;"><img src="' + src + '" /></div>').appendTo('body').imagesLoaded(
@@ -261,7 +306,6 @@ eu.europeana.lightbox = function(){
 		if(self.showingEl == 'IFRAME'){
 			img.css('height',		(dim[1]-70) + "px");
 		}
-
 		
 		$("#lightbox").css("visibility", "visible");
 		
