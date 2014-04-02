@@ -1,6 +1,6 @@
 <c:forEach items="${model.portalLanguages}" var="language">
 	<c:choose>
-		<c:when test="${language.languageCode == model.locale}">
+		<c:when test="${language.languageCode == selected_language_code}">
 			<option value="${language.languageCode}" selected> ${language.languageName}</option>
 		</c:when>
 		<c:otherwise>

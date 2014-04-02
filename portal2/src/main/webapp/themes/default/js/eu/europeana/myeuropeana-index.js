@@ -302,6 +302,18 @@
 		 * @param {string|int} speed
 		 * speed at which to animate scrollTop
 		 */
+		scrollToTop: function( speed ) {
+			if ( speed === undefined ) {
+				speed = 'slow';
+			}
+
+			$('body').animate({scrollTop:0}, speed);
+		},
+
+		/**
+		 * @param {string|int} speed
+		 * speed at which to animate scrollTop
+		 */
 		setActivePanel: function( speed ) {
 			panelMenu.setActivePanelLink();
 			$('#' + panelMenu.hash).fadeIn();
@@ -320,7 +332,7 @@
 					break;
 			}
 
-			$('body').animate({scrollTop:0}, speed);
+			this.scrollToTop( speed );
 		},
 
 		setActivePanelLink: function() {
@@ -353,6 +365,7 @@
 	portalLanguage = {
 		cookie_field: 'portalLanguage',
 		$portal_language: $('#portal-language'),
+		initial_value: '',
 
 		/**
 		 * if the cookie field for portal language
@@ -374,10 +387,29 @@
 			if ( !eu.europeana.vars.user ) {
 				this.checkCookie();
 			}
+
+			this.initial_value = portalLanguage.$portal_language.val();
 		},
 
 		saveToCookie: function() {
 			$.cookie( this.cookie_field, this.getValue(), { path: '/' } );
+		},
+
+		submitOnSave: function() {
+			if ( this.initial_value !== this.$portal_language.val() ) {
+				panelMenu.scrollToTop();
+
+				setTimeout(
+					function() {
+						window.location = window.location.href
+							.replace( window.location.hash, '' )
+							.replace( window.location.search, '' )
+							+ '?lang=' + portalLanguage.$portal_language.val()
+							+ '#language-settings';
+					},
+					1000
+				);
+			}
 		}
 	},
 
@@ -563,11 +595,27 @@
 			evt.preventDefault();
 
 			if ( eu.europeana.vars.user ) {
+				// intended single submission to save all 3 values
+				// eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+
+				// actual use until modificationAction user_language_settings is implemented
+				ajax_feedback.success = function() {
+					ajax_feedback.success = function() {
+						displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_settings_success) );
+						portalLanguage.submitOnSave();
+					};
+
+					ajax_data.modificationAction = 'user_language_item';
+					eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+				};
+
+				ajax_data.modificationAction = 'user_language_search';
 				eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 			} else {
 				keywords.saveToCookie();
 				portalLanguage.saveToCookie();
 				displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_settings_success) );
+				portalLanguage.submitOnSave();
 			}
 		},
 

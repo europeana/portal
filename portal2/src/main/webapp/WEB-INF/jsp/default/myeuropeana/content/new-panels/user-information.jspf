@@ -28,7 +28,7 @@ ${model.user.email}</p>
 	<h3>My Europeana Db Values</h3>
 
 	<b>portalLanguage:</b><br />
-	${model.user.languagePortal}
+	${model.user.languagePortal}<br />
 
 	<b>keywordLanguages:</b><br />
 	<c:if test="${fn:length(model.user.languageSearch) > 0 }">
