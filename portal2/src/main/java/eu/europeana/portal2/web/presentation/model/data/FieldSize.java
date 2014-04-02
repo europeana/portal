@@ -26,4 +26,6 @@ public class FieldSize {
 	public static final int IDENTIFIER = 30;
 	public static final int NOTIFICATION_SNAPSHOT = 256;
 	public static final int NOTIFICATION_TYPE = 16;
+	public static final int LANGUAGE_ITEM = 2;
+	public static final int LANGUAGE_SEARCH = 17;
 }

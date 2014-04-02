@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.controllers.user;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.BatchUpdateException;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.db.exception.DatabaseException;
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
@@ -75,48 +77,33 @@ public class AjaxController {
 	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
 		User user = ControllerUtil.getUser(userService);
 		String modAction = request.getParameter("modificationAction");
-		// String idString = request.getParameter("id");
 		if (StringUtils.isBlank(modAction)) {
 			throw new IllegalArgumentException("Expected 'modificationAction' parameter!");
 		}
 
-		String uri = null;
 		switch (findModifiable(modAction)) {
 		case SAVED_ITEM:
-			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
-			user = userService.createSavedItem(user.getId(), uri);
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_ITEM);
+			user = saveItem(request, user);
 			break;
 		// className=SavedSearch&query=query%3Dparish&queryString=parish
 		case SAVED_SEARCH:
-			String query = getStringParameter("query", FieldSize.QUERY, request);
-			String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request),
-					"utf-8");
-			user = userService.createSavedSearch(user.getId(), query, queryString);
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_SEARCH);
+			user = saveSearch(request, user);
 			break;
 		case SOCIAL_TAG:
-			uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
-			String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
-			user = userService.createSocialTag(user.getId(), uri, tag);
-			clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
+			user = saveSocialTag(request, user);
 			break;
 		case API_KEY:
-			String key = URLDecoder.decode(getStringParameter("apikey", FieldSize.TAG, request), "utf-8");
-			String appName = URLDecoder.decode(getStringParameter("appName", FieldSize.TAG, request), "utf-8");
-			apiKeyService.updateApplicationName(user.getId(), key, appName);
+			saveApiKey(request, user);
 			break;
 		case USER_LANGUAGE_SEARCH:
-			String langCodes = getStringParameter("keywordLanguages", 17, request);
-			user = userService.updateUserLanguageSearch(user.getId(), langCodes);
+			user = saveKeywordLanguages(request, user);
 			break;
 		case USER_LANGUAGE_ITEM:
-			String langCode = getStringParameter("itemLanguage", 2, request);
-			user = userService.updateUserLanguageItem(user.getId(), langCode);
+			user = saveItemLanguage(request, user);
 			break;
 		case USER_LANGUAGE_SETTINGS:
-			// should update itemLanguage
-			// should update keywordLanguages
+			user = saveItemLanguage(request, user);
+			user = saveKeywordLanguages(request, user);
 			// should update portalLanguage
 			break;
 		default:
@@ -125,6 +112,56 @@ public class AjaxController {
 
 		model.setUser(user);
 		model.setSuccess(true);
+	}
+
+	private User saveItem(HttpServletRequest request, User user)
+			throws DatabaseException {
+		String uri;
+		uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+		user = userService.createSavedItem(user.getId(), uri);
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_ITEM);
+		return user;
+	}
+
+	private User saveSearch(HttpServletRequest request, User user)
+			throws UnsupportedEncodingException, DatabaseException {
+		String query = getStringParameter("query", FieldSize.QUERY, request);
+		String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request),
+				"utf-8");
+		user = userService.createSavedSearch(user.getId(), query, queryString);
+		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_SEARCH);
+		return user;
+	}
+
+	private User saveSocialTag(HttpServletRequest request, User user)
+			throws UnsupportedEncodingException, DatabaseException {
+		String uri;
+		uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
+		String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
+		user = userService.createSocialTag(user.getId(), uri, tag);
+		clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
+		return user;
+	}
+
+	private void saveApiKey(HttpServletRequest request, User user)
+			throws UnsupportedEncodingException, DatabaseException {
+		String key = URLDecoder.decode(getStringParameter("apikey", FieldSize.TAG, request), "utf-8");
+		String appName = URLDecoder.decode(getStringParameter("appName", FieldSize.TAG, request), "utf-8");
+		apiKeyService.updateApplicationName(user.getId(), key, appName);
+	}
+
+	private User saveItemLanguage(HttpServletRequest request, User user)
+			throws DatabaseException {
+		String langCode = getStringParameter("itemLanguage", FieldSize.LANGUAGE_ITEM, request);
+		user = userService.updateUserLanguageItem(user.getId(), langCode);
+		return user;
+	}
+
+	private User saveKeywordLanguages(HttpServletRequest request, User user)
+			throws DatabaseException {
+		String langCodes = getStringParameter("keywordLanguages", FieldSize.LANGUAGE_SEARCH, request);
+		user = userService.updateUserLanguageSearch(user.getId(), langCodes);
+		return user;
 	}
 
 	private void processAjaxRemoveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
@@ -167,7 +204,6 @@ public class AjaxController {
 	private enum Modifiable {
 		SAVED_ITEM, SAVED_SEARCH, SOCIAL_TAG, API_KEY,
 		USER_LANGUAGE_PORTAL, USER_LANGUAGE_ITEM, USER_LANGUAGE_SEARCH, USER_LANGUAGE_SETTINGS;
-
 	}
 
 	private boolean hasJavascriptInjection(HttpServletRequest request) {
