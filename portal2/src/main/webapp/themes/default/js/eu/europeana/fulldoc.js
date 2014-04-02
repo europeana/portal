@@ -6,7 +6,6 @@ eu.europeana.fulldoc = {
 	lightboxOb :  null,
 	vimeoDetect : 'vimeo.com/video',
 	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
-	isAudioBoo : false,
 	
 /*	
 	// provides priority order for which tab to open when no hash is given

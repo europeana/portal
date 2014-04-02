@@ -57,6 +57,9 @@
 					];
 				</c:if>
 				
+				// var carouselDataIsBy	= 	${model.europeanaIsShownBy};
+				// var carouselDataIsAt	= 	${model.europeanaIsShownAt};
+				
 				var isShownBy			= 	"${model.isShownBy}";
 				var isShownAt			= 	"${model.isShownAt}";
 				var edmRights = [<c:forEach items="${model.document.edmRights}" var="rights" varStatus="s">"${rights}"<c:if test="${!s.last}">,</c:if></c:forEach>];
