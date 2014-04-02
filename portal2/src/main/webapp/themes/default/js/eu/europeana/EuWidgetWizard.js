@@ -45,7 +45,9 @@ var EuWidgetWizard = function(cmpIn, options){
 			.replace(/%2B/g, '+')
 			.replace(/!/g,   '%21')
 			.replace(/'/g, "%27")
-//			.replace(/%2B/g, '+');
+
+			.replace(/\(/g, "%28")
+			.replace(/\)/g, "%29")
 		
 		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
 		
@@ -827,7 +829,7 @@ var EuWidgetWizard = function(cmpIn, options){
         					}
         				}
         				else{
-        					console.log('NO MATCH ' + item + '  ' + fLabel )
+        				//	console.log('NO MATCH ' + item + '  ' + fLabel )
         				}
         			});
     		  	}
@@ -852,7 +854,11 @@ var EuWidgetWizard = function(cmpIn, options){
     					if(label.length ){
     						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
     					}    					
-    					
+
+        				if(!item.length  && (facet.name == 'PROVIDER' ||   facet.name == 'DATA_PROVIDER') ){
+        					console.log('NOR RIGHTS - NO MATCH: cleaned ' + cleanName( field.label ) + '  ' + field.label   )
+        				}
+
     				});
     		  	
     		  	}
