@@ -55,7 +55,7 @@ public class ContributorItemTest {
 		dataProviders.add(contributorItem.new DataProviderItem(
 				contributorItem, "askaboutireland.ie", 97875));
 		dataProviders.add(contributorItem.new DataProviderItem(
-				contributorItem, "Eesti Rahvusringhääling", 95232));
+				contributorItem, "Eesti Rahvusringhaaling", 95232));
 		dataProviders.add(contributorItem.new DataProviderItem(
 				contributorItem, "Bildarchiv Volkskundliche Kommision fur Westfalen", 91255));
 		dataProviders.add(contributorItem.new DataProviderItem(
