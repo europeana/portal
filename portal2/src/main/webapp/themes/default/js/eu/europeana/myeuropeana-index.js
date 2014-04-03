@@ -620,22 +620,7 @@
 			evt.preventDefault();
 
 			if ( eu.europeana.vars.user ) {
-				// intended single submission to save all 3 values
-				// eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-
-				// actual use until modificationAction user_language_settings is implemented
-				ajax_feedback.success = function() {
-					ajax_feedback.success = function() {
-						displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_settings_success) );
-						portalLanguage.submitOnSave();
-					};
-
-					ajax_data.modificationAction = 'user_language_item';
-					eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
-				};
-
-				ajax_data.modificationAction = 'user_language_search';
-				eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
+				this.updateMyEuropeanaDb( ajax_data, ajax_feedback );
 			} else {
 				keywords.saveToCookie();
 				portalLanguage.saveToCookie();
