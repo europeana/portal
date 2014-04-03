@@ -27,7 +27,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.portal2.web.model.json.Json2FullBean;
+import eu.europeana.portal2.web.model.json.Json2FullBeanConverter;
 
 public class ApiFulldocParser extends ApiWrapper {
 
@@ -53,7 +53,7 @@ public class ApiFulldocParser extends ApiWrapper {
 	private FullBean transformJsonToBean(String json) {
 		FullBean fullBean = null;
 		try {
-			Json2FullBean parser = new Json2FullBean(json);
+			Json2FullBeanConverter parser = new Json2FullBeanConverter(json);
 			fullBean = parser.extractFullBean();
 		} catch (JsonParseException e) {
 			log.error(e.getMessage());

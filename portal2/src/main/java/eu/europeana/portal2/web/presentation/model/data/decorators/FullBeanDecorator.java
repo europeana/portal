@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
+import eu.europeana.corelib.definitions.ApplicationContextContainer;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -46,7 +47,6 @@ import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
-import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
 import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.AgentDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ConceptDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
@@ -55,7 +55,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.Ti
 import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 import eu.europeana.portal2.web.util.FullBeanShortcut;
 
-public class FullBeanDecorator implements FullBean, FullBeanConnections {
+public class FullBeanDecorator implements FullBean, FullBeanConnectable {
 
 	Logger log = Logger.getLogger(FullBeanDecorator.class.getCanonicalName());
 
@@ -66,6 +66,7 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 	private FullBeanShortcut shortcut;
 
 	private EuropeanaUrlService europeanaUrlService;
+
 	private String userLanguage;
 	private String edmLanguage;
 	List<ConceptDecorator> concepts;
@@ -87,7 +88,8 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 	public FullBeanDecorator(FullBean fullBean) {
 		log.info("creating FullBeanDecorator");
 		this.fullBean = fullBean;
-		europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
+		europeanaUrlService = ApplicationContextContainer.getBean(EuropeanaUrlService.class);//EuropeanaUrlServiceImpl.getBeanInstance();
+		shortcut = new FullBeanShortcut(this);
 	}
 
 	public FullBeanDecorator(FullBean fullBean, String userLanguage) {
@@ -208,8 +210,8 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 		return shortcut.get("EdmLanguage");
 	}
 
-	public String[] getEdmLandingPage() {
-		return shortcut.get("EdmLandingPage");
+	public String getEdmLandingPage() {
+		return fullBean.getEuropeanaAggregation().getEdmLandingPage();
 	}
 
 	public String getCheckedEdmLandingPage() {
@@ -619,8 +621,8 @@ public class FullBeanDecorator implements FullBean, FullBeanConnections {
 		fullBean.setTimestampUpdated(timestampUpdated);
 	}
 
-	public void setShortcut(FullBeanShortcut shortcut) {
-		this.shortcut = shortcut;
+	public FullBeanShortcut getShortcut() {
+		return shortcut;
 	}
 
 	@SuppressWarnings("unchecked")

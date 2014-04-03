@@ -154,6 +154,7 @@ public class FullBeanShortcut {
 				add(parent, "EdmObject", aggregation.getEdmObject());
 				add(parent, "EdmUGC", aggregation.getEdmUgc());
 				add(parent, "DataProvider", aggregation.getEdmDataProvider()); // Map - Aggregation/edm:dataProvider
+				add(parent, "EdmDataProvider", aggregation.getEdmDataProvider()); // Map - Aggregation/edm:dataProvider
 				add(parent, "AggregationDcRights", aggregation.getDcRights()); // Map
 				add(parent, "EdmHasView", aggregation.getHasView()); // Map
 				for (WebResource webResource : aggregation.getWebResources()) {

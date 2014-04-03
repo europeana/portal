@@ -41,11 +41,10 @@ public class NamespaceTest {
 	}
 
 	@Test
-	public void testSerialization() {
+	public void testToString() {
 		Namespace ns;
 		ns = new Namespace("dc", "http://purl.org/dc/elements/1.1/");
-		assertEquals(String.format("Namespace [prefix=%, uri=%s]", "dc", "http://purl.org/dc/elements/1.1/"),
-				ns.toString());
+		String expected = String.format("Namespace [prefix=%s, uri=%s]", "dc", "http://purl.org/dc/elements/1.1/");
+		assertEquals(expected, ns.toString());
 	}
-
 }

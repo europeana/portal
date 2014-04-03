@@ -127,8 +127,7 @@ public abstract class FullDocData extends RestLocationsData<Void> {
 		this.fullBeanView = fullBeanView;
 		document = fullBeanView.getFullDoc();
 		decorator = new FullBeanDecorator(document, getLocale().getLanguage());
-		shortcut = new FullBeanShortcut(decorator);
-		decorator.setShortcut(shortcut);
+		shortcut = decorator.getShortcut();
 	}
 
 	public FullBeanViewDecorator getFullBeanView() {

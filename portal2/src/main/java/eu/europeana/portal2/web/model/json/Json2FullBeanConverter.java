@@ -9,13 +9,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -26,24 +26,29 @@ import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
+import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.entity.AgentImpl;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
 import eu.europeana.corelib.solr.entity.ConceptImpl;
+import eu.europeana.corelib.solr.entity.EuropeanaAggregationImpl;
 import eu.europeana.corelib.solr.entity.PlaceImpl;
 import eu.europeana.corelib.solr.entity.ProvidedCHOImpl;
 import eu.europeana.corelib.solr.entity.ProxyImpl;
 import eu.europeana.corelib.solr.entity.TimespanImpl;
+import eu.europeana.corelib.solr.entity.WebResourceImpl;
+import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.portal2.web.model.FullBean4Json;
 
-public class Json2FullBean {
-	
-	private final Logger log = Logger.getLogger(Json2FullBean.class);
+public class Json2FullBeanConverter {
+
+	private final Logger log = Logger.getLogger(Json2FullBeanConverter.class);
 
 	private static final String AGGREGATIONS = "aggregations";
 	private static final String PROXIES = "proxies";
@@ -53,27 +58,34 @@ public class Json2FullBean {
 	private static final String AGENTS = "agents";
 	private static final String TIMESPANS = "timespans";
 	private static final String CONCEPTS = "concepts";
+	private static final String EUROPEANA_AGGREGATION = "europeanaAggregation";
+	private static final String WEBRESOURCES = "webResources";
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	// setters.get(prefix).get(field) -> Method
 	private static Map<String, Map<String, Method>> setters = null;
 	private static Map<String, Map<String, Field>> fields = null;
+
 	private File file;
 	private boolean isFileSouce = true;
 	private String content = null;
 	// handled fields
 	private List<String> handledFields = new ArrayList<String>(Arrays.asList(new String[]{
-			AGGREGATIONS, PROXIES, RELATED_ITEMS, PROVIDED_CHOS, PLACES, AGENTS, TIMESPANS, CONCEPTS, // HashMap -> Object
+			AGGREGATIONS, PROXIES, RELATED_ITEMS, PROVIDED_CHOS, EUROPEANA_AGGREGATION,
+			PLACES, AGENTS, TIMESPANS, CONCEPTS, // HashMap -> Object
 			"what", "where", "when", "dctermsIsPartOf", // List -> String[]
-			"europeanaCompleteness" // Integer -> int
+			"year", "title", "europeanaCollectionName", "language", // List -> String[]
+			"europeanaCompleteness", // Integer -> int
+			"type", // String -> DocType
+			"timestamp_update", "timestamp_created" // String -> Date
 	}));
 
-	public Json2FullBean(File file) {
+	public Json2FullBeanConverter(File file) {
 		isFileSouce = true;
 		this.file = file;
 	}
 
-	public Json2FullBean(String content) {
+	public Json2FullBeanConverter(String content) {
 		setContent(content);
 	}
 
@@ -87,46 +99,15 @@ public class Json2FullBean {
 		this.content = content.replaceAll(",\"[^\"]+\":null", "");
 	}
 
-	private void initializeSetters() {
-		if (setters == null) {
-			setters = new HashMap<String, Map<String, Method>>();
-		}
-		if (fields == null) {
-			fields = new HashMap<String, Map<String, Field>>();
-		}
+	private void initialize() {
+		initializeSetters();
+		initializeFields();
+	}
 
-		Map<String, Class<?>> objects4setters = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {
-			private static final long serialVersionUID = -6837547862257755340L;
-		{
-			put("", FullBean4Json.class);
-			put(PROXIES, Proxy.class);
-			put(AGGREGATIONS, Aggregation.class);
-			put(PROVIDED_CHOS, ProvidedCHO.class);
-			put(RELATED_ITEMS, BriefBeanImpl.class);
-			put(PLACES, Place.class);
-			put(AGENTS, Agent.class);
-			put(TIMESPANS, Timespan.class);
-			put(CONCEPTS, Concept.class);
-		}});
-
-		Map<String, Class<?>> objects4fields = Collections.unmodifiableMap(new HashMap<String, Class<?>>() {
-			private static final long serialVersionUID = 8585436419159454924L;
-		{
-			put(RELATED_ITEMS, BriefBeanImpl.class);
-		}});
-
-		for (String prefix : objects4setters.keySet()) {
-			Map<String, Method> localSetters = new HashMap<String, Method>();
-			Method[] methods = objects4setters.get(prefix).getMethods();
-			for (Method method : methods) {
-				String name = method.getName();
-				if (name.startsWith("set")) {
-					String field = name.substring(3, 4).toLowerCase() + name.substring(4);
-					localSetters.put(field, method);
-				}
-			}
-			setters.put(prefix, localSetters);
-		}
+	private void initializeFields() {
+		fields = new HashMap<String, Map<String, Field>>();
+		Map<String, Class<?>> objects4fields = new HashMap<String, Class<?>>();
+		objects4fields.put(RELATED_ITEMS, BriefBeanImpl.class);
 
 		for (String prefix : objects4fields.keySet()) {
 			Map<String, Field> localFields = new HashMap<String, Field>();
@@ -139,15 +120,48 @@ public class Json2FullBean {
 		}
 	}
 
+	private void initializeSetters() {
+		setters = new HashMap<String, Map<String, Method>>();
+		Map<String, Class<?>> objects4setters = new HashMap<String, Class<?>>();
+		objects4setters.put("", FullBean4Json.class);
+		objects4setters.put(PROXIES, Proxy.class);
+		objects4setters.put(AGGREGATIONS, Aggregation.class);
+		objects4setters.put(PROVIDED_CHOS, ProvidedCHO.class);
+		objects4setters.put(RELATED_ITEMS, BriefBeanImpl.class);
+		objects4setters.put(PLACES, Place.class);
+		objects4setters.put(AGENTS, Agent.class);
+		objects4setters.put(TIMESPANS, Timespan.class);
+		objects4setters.put(CONCEPTS, Concept.class);
+		objects4setters.put(EUROPEANA_AGGREGATION, EuropeanaAggregation.class);
+		objects4setters.put(WEBRESOURCES, WebResource.class);
+
+		for (String prefix : objects4setters.keySet()) {
+			Map<String, Method> localSetters = new HashMap<String, Method>();
+			Method[] methods = objects4setters.get(prefix).getMethods();
+			for (Method method : methods) {
+				String name = method.getName();
+				if (name.startsWith("set")) {
+					String field = name.substring(3, 4).toLowerCase() + name.substring(4);
+					if (prefix.equals("")) {
+						if (StringUtils.equals(field, "timestampCreated")) {
+							field = "timestamp_created";
+						} else if (StringUtils.equals(field, "timestampUpdated")) {
+							field = "timestamp_update";
+						}
+					}
+					localSetters.put(field, method);
+				}
+			}
+			setters.put(prefix, localSetters);
+		}
+	}
+
 	public FullBean extractFullBean() throws JsonParseException, JsonMappingException, IOException {
 		if (setters == null) {
-			initializeSetters();
+			initialize();
 		}
-		@SuppressWarnings("unchecked")
-		Map<String,Map<String, Object>> result = (isFileSouce) 
-			? mapper.readValue(file, Map.class)
-			: mapper.readValue(content, Map.class);
-		Map<String,Object> object = result.get("object");
+
+		Map<String, Object> object = readObjectMap();
 
 		FullBeanImpl fullBean = new FullBean4Json();
 		for (String field : object.keySet()) {
@@ -169,9 +183,20 @@ public class Json2FullBean {
 				|| field.equals(AGENTS)
 				|| field.equals(TIMESPANS)
 				|| field.equals(CONCEPTS)) {
-				value = convertObject(value, field);
+				value = convertObjects(value, field);
+			} else if (field.equals(EUROPEANA_AGGREGATION)) {
+				value = convertObject(EUROPEANA_AGGREGATION, (LinkedHashMap<String,Object>)value);
+			} else if (field.equals("type")) {
+				value = DocType.safeValueOf((String)value);
 			} else if (field.equals("europeanaCompleteness")) {
 				value = (int) ((Integer)value).intValue();
+			} else if (field.equals("year") 
+					|| field.equals("title") 
+					|| field.equals("europeanaCollectionName")
+					|| field.equals("language")) {
+				value = ((List<String>)value).toArray(new String[((List<String>)value).size()]);
+			} else if (field.equals("timestamp_update") || field.equals("timestamp_created")) {
+				value = DateUtils.parse((String)value);
 			}
 
 			if (isListToArray(value, setter)) {
@@ -180,18 +205,31 @@ public class Json2FullBean {
 
 			if (!value.getClass().getName().equals(setter.getParameterTypes()[0].getCanonicalName())) {
 				if (!handledFields.contains(field)) {
-					log.warn(field + ": " + value.getClass().getName() + " is not fit for "+ setter.getParameterTypes()[0].getCanonicalName());
+					String message = String.format("'%s': %s  is not fit for %s", 
+						field, value.getClass().getName(), setter.getParameterTypes()[0].getCanonicalName());
+					System.out.println(message);
+					log.warn(message);
 				}
 			}
 
 			set(fullBean, setter, value);
 		}
 
-		result = null;
 		content = null;
 		file = null;
 
 		return fullBean;
+	}
+
+	private Map<String, Object> readObjectMap() throws IOException,
+			JsonParseException, JsonMappingException {
+		@SuppressWarnings("unchecked")
+		Map<String,Map<String, Object>> result = (isFileSouce) 
+				? mapper.readValue(file, Map.class) 
+				: mapper.readValue(content, Map.class);
+
+		Map<String,Object> object = result.get("object");
+		return object;
 	}
 
 	public static String fileToString(String file) {
@@ -240,7 +278,14 @@ public class Json2FullBean {
 		try {
 			setter.invoke(bean, value);
 		} catch (IllegalArgumentException e) {
-			log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
+			System.out.println("ERROR: " + e.getMessage());
+			log.error(e.getMessage());
+			// log.error("Object: " + bean);
+			// System.out.println("Setter: " + setter);
+			log.error("Setter: " + setter);
+			// System.out.println("Value: " + value);
+			log.error("Value: " + value);
+			//log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
 			log.error(e.getMessage() + ": " + setter.getParameterTypes()[0].getCanonicalName());
 			log.error(e.getMessage() + ": " + value.getClass().getName());
 		} catch (IllegalAccessException e) {
@@ -251,14 +296,18 @@ public class Json2FullBean {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private Object convertObject(Object valueObject, String prefix) {
+	private Object convertObjects(Object valueObject, String prefix) {
 		List items = getList(prefix);
 		for (LinkedHashMap<String, Object> rawItem : (ArrayList<LinkedHashMap<String, Object>>)valueObject) {
-			Object item = getInstance(prefix);
-			populateItem(item, rawItem, prefix);
-			items.add(item);
+			items.add(convertObject(prefix, rawItem));
 		}
 		return items;
+	}
+
+	private Object convertObject(String javaType, LinkedHashMap<String, Object> rawItem) {
+		Object item = getInstance(javaType);
+		populateItem(item, rawItem, javaType);
+		return item;
 	}
 
 	private List<?> getList(String type) {
@@ -278,6 +327,10 @@ public class Json2FullBean {
 			return new ArrayList<Timespan>();
 		} else if (type.equals(CONCEPTS)) {
 			return new ArrayList<Concept>();
+		} else if (type.equals(CONCEPTS)) {
+			return new ArrayList<Concept>();
+		} else if (type.equals(WEBRESOURCES)) {
+			return new ArrayList<WebResource>();
 		}
 		return null;
 	}
@@ -287,6 +340,8 @@ public class Json2FullBean {
 			return new ProxyImpl();
 		} else if (type.equals(AGGREGATIONS)) {
 			return new AggregationImpl();
+		} else if (type.equals(EUROPEANA_AGGREGATION)) {
+			return new EuropeanaAggregationImpl();
 		} else if (type.equals(RELATED_ITEMS)) {
 			return new BriefBeanImpl();
 		} else if (type.equals(PROVIDED_CHOS)) {
@@ -299,28 +354,33 @@ public class Json2FullBean {
 			return new TimespanImpl();
 		} else if (type.equals(CONCEPTS)) {
 			return new ConceptImpl();
+		} else if (type.equals(WEBRESOURCES)) {
+			return new WebResourceImpl();
 		}
 		return null;
 	}
 
-	private void populateItem(Object item, LinkedHashMap<String, Object> rawItem, String prefix) {
+	private void populateItem(Object item, LinkedHashMap<String, Object> rawItem, String javaType) {
 		for (String field : rawItem.keySet()) {
 			Object value = rawItem.get(field);
 			if (value == null) {
 				continue;
 			}
-			Method setter = setters.get(prefix).get(field);
+			Method setter = setters.get(javaType).get(field);
 			if (setter == null) {
 				continue;
 			}
 			if (isListToArray(value, setter)) {
 				value = listToArray(value);
 			}
-			if (prefix.equals(RELATED_ITEMS) && field.equals("timestamp")) {
+			if (javaType.equals(RELATED_ITEMS) && field.equals("timestamp")) {
 				value = new Date((Long)value);
 			}
-			if ((prefix.equals(PROXIES) && field.equals("edmType")) 
-				|| (prefix.equals(RELATED_ITEMS) && field.equals("type"))) {
+			if (javaType.equals(AGGREGATIONS) && field.equals(WEBRESOURCES)) {
+				value = convertObjects(value, field);
+			}
+			if ((javaType.equals(PROXIES) && field.equals("edmType")) 
+				|| (javaType.equals(RELATED_ITEMS) && field.equals("type"))) {
 				value = DocType.safeValueOf((String)value);
 			}
 			set(item, setter, value);
