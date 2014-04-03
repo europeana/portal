@@ -34,11 +34,23 @@ var EuWidgetWizard = function(cmpIn, options){
     
 	var cleanName = function(name){
 		
-		var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\)\s*/g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		//var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\)\s*/g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\)\s*/g, "").replace(/\+/g, '%2B').replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		
+		
 		//var result =  name.trim().replace(/"/g, '\\\"').replace(/\(\d*\)/g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ {2}/g, '\+\+').replace(/ {1}/g, '\+').replace(/\%20/g, '\+');
+
+
+		if(name.indexOf('Volkskundliche')>-1){
+			alert('result 1\n\n' + result + '\n\n' + encodeURIComponent(result) 
+			+ '\n\n'
+			+ 'Xs: ' + name.replace(/\s/g, 'X')
+			)
+		}
+		
 		
 		//result = encodeURI(result);
 		result = encodeURIComponent(result)
@@ -50,7 +62,9 @@ var EuWidgetWizard = function(cmpIn, options){
 
 			.replace(/\(/g, "%28")		// escape brackets
 			.replace(/\)/g, "%29")
-		
+
+			.replace(/%25/g, '%')		// %2B (a plus sign - when a legitimate part of a name) gets converted to %252B above - switch it back here
+
 		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
 		
 		return result;
