@@ -55,11 +55,11 @@ public class ContributorItemTest {
 		dataProviders.add(contributorItem.new DataProviderItem(
 				contributorItem, "askaboutireland.ie", 97875));
 		dataProviders.add(contributorItem.new DataProviderItem(
-				contributorItem, "Eesti Rahvusringhääling", 95232));
+				contributorItem, "Eesti Rahvusringhaaling", 95232));
 		dataProviders.add(contributorItem.new DataProviderItem(
-				contributorItem, "Bildarchiv Volkskundliche Kommision für Westfalen", 91255));
+				contributorItem, "Bildarchiv Volkskundliche Kommision fur Westfalen", 91255));
 		dataProviders.add(contributorItem.new DataProviderItem(
-				contributorItem, "National Széchényi Library - Digital Archive of Pictures", 80552));
+				contributorItem, "National Szechenyi Library - Digital Archive of Pictures", 80552));
 		contributorItem.setDataProviders(dataProviders);
 	}
 
@@ -72,14 +72,14 @@ public class ContributorItemTest {
 		assertEquals("Yigal Allon Center", contributorItem.getDataProviders().get(0).getName());
 		assertEquals("Yigal+Allon+Center", contributorItem.getDataProviders().get(0).getEncodedName());
 
-		assertEquals("Bildarchiv Volkskundliche Kommision für Westfalen",
+		assertEquals("Bildarchiv Volkskundliche Kommision fur Westfalen",
 				contributorItem.getDataProviders().get(6).getName());
-		assertEquals("Bildarchiv+Volkskundliche+Kommision+f%C3%BCr+Westfalen",
+		assertEquals("Bildarchiv+Volkskundliche+Kommision+fur+Westfalen",
 				contributorItem.getDataProviders().get(6).getEncodedName());
 
-		assertEquals("National Széchényi Library - Digital Archive of Pictures",
+		assertEquals("National Szechenyi Library - Digital Archive of Pictures",
 				contributorItem.getDataProviders().get(7).getName());
-		assertEquals("National+Sz%C3%A9ch%C3%A9nyi+Library+-+Digital+Archive+of+Pictures",
+		assertEquals("National+Szechenyi+Library+-+Digital+Archive+of+Pictures",
 				contributorItem.getDataProviders().get(7).getEncodedName());
 	}
 }
