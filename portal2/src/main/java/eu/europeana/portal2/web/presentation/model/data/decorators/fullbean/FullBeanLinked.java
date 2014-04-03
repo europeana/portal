@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators;
+package eu.europeana.portal2.web.presentation.model.data.decorators.fullbean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,10 +15,19 @@ import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
-import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.AgentDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ConceptDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ContextualItemDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.PlaceDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.TimespanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 
-public class FullBeanConnections extends FullBeanDecorator implements FullBeanConnectable {
+public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectable {
+
+	protected List<ConceptDecorator> concepts;
+	protected List<PlaceDecorator> places;
+	protected List<TimespanDecorator> timespans;
+	protected List<AgentDecorator> agents;
 
 	private Map<String, Agent> agentMap;
 	private Map<String, Concept> conceptMap;
@@ -30,12 +39,118 @@ public class FullBeanConnections extends FullBeanDecorator implements FullBeanCo
 	private List<Proxy> providedProxies;
 	private Boolean singletonProvidedProxy;
 
-	public FullBeanConnections(FullBean fullBean) {
+	public FullBeanLinked(FullBean fullBean) {
 		super(fullBean);
 	}
 
-	public FullBeanConnections(FullBean fullBean, String userLanguage) {
+	public FullBeanLinked(FullBean fullBean, String userLanguage) {
 		super(fullBean, userLanguage);
+	}
+
+	public List<? extends Place> getDecoratedPlaces() {
+		if (places == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			places = new ArrayList<PlaceDecorator>();
+			for (Place place : fullBean.getPlaces()) {
+				PlaceDecorator decorator = new PlaceDecorator(this, place, userLanguage, edmLanguage);
+				places.add(decorator);
+				ids.put(place.getAbout(), decorator.getLabel());
+			}
+			for (PlaceDecorator agent : places) {
+				agent.makeLinks(ids);
+			}
+		}
+		return places;
+	}
+
+	public int getNumberOfUnreferencedPlaces() {
+		int counter = 0;
+		for (Place p : getDecoratedPlaces()) {
+			if (!((PlaceDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public List<? extends Agent> getDecoratedAgents() {
+		if (agents == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			agents = new ArrayList<AgentDecorator>();
+			for (Agent agent : fullBean.getAgents()) {
+				AgentDecorator decorator = new AgentDecorator(this, agent, userLanguage, edmLanguage);
+				agents.add(decorator);
+				ids.put(agent.getAbout(), decorator.getLabel());
+			}
+			for (AgentDecorator agent : agents) {
+				agent.makeLinks(ids);
+			}
+		}
+		return agents;
+	}
+
+	public int getNumberOfUnreferencedAgents() {
+		int counter = 0;
+		for (Agent p : getDecoratedAgents()) {
+			if (!((AgentDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public List<? extends Timespan> getDecoratedTimespans() {
+		if (timespans == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			timespans = new ArrayList<TimespanDecorator>();
+			for (Timespan timespan : fullBean.getTimespans()) {
+				TimespanDecorator decorator = new TimespanDecorator(this, timespan, userLanguage, edmLanguage);
+				timespans.add(decorator);
+				ids.put(timespan.getAbout(), decorator.getLabel());
+			}
+			for (TimespanDecorator timespan : timespans) {
+				timespan.makeLinks(ids);
+			}
+		}
+		return timespans;
+	}
+
+	public int getNumberOfUnreferencedTimespans() {
+		int counter = 0;
+		for (Timespan p : getDecoratedTimespans()) {
+			if (!((TimespanDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public List<? extends Concept> getDecoratedConcepts() {
+		if (concepts == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			concepts = new ArrayList<ConceptDecorator>();
+			for (Concept concept : fullBean.getConcepts()) {
+				ConceptDecorator decorator = new ConceptDecorator(this, concept, userLanguage, edmLanguage);
+				concepts.add(decorator);
+				if (decorator.getLabel() != null) {
+					ids.put(concept.getAbout(), decorator.getLabel());
+				}
+			}
+			for (ConceptDecorator concept : concepts) {
+				concept.makeLinks(ids);
+			}
+		}
+		return concepts;
+	}
+
+	public int getNumberOfUnreferencedConcepts() {
+		int counter = 0;
+		for (Concept p : getDecoratedConcepts()) {
+			if (!((ConceptDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	@Override

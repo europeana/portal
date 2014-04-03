@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.util;
+package eu.europeana.portal2.web.presentation.model.data.decorators.fullbean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +18,7 @@ import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
-import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
-import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ContextualItemDecorator;
 import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 
 /**
@@ -31,9 +30,9 @@ public class FullBeanShortcut {
 
 	Logger log = Logger.getLogger(FullBeanShortcut.class.getCanonicalName());
 
-	private FullBeanDecorator document;
+	private FullBeanLinked document;
 
-	public FullBeanShortcut(FullBeanDecorator document) {
+	public FullBeanShortcut(FullBeanLinked document) {
 		this.document = document;
 	}
 
@@ -215,14 +214,14 @@ public class FullBeanShortcut {
 				add(parent, "EdmRealizes", proxy.getEdmRealizes());
 				add(parent, "EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
 
-				saveEnrichmentCandidate(Field.DC_CREATOR.name(), proxy.isEuropeanaProxy(), proxy.getDcCreator(), FullBeanDecorator.ContextualEntity.AGENT);
-				saveEnrichmentCandidate(Field.DC_CONTRIBUTOR.name(), proxy.isEuropeanaProxy(), proxy.getDcContributor(), FullBeanDecorator.ContextualEntity.AGENT);
-				saveEnrichmentCandidate(Field.DC_SUBJECT.name(), proxy.isEuropeanaProxy(), proxy.getDcSubject(), FullBeanDecorator.ContextualEntity.CONCEPT);
-				saveEnrichmentCandidate(Field.DC_TYPE.name(), proxy.isEuropeanaProxy(), proxy.getDcType(), FullBeanDecorator.ContextualEntity.CONCEPT);
-				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsSpatial(), FullBeanDecorator.ContextualEntity.PLACE);
-				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), proxy.isEuropeanaProxy(), proxy.getDcCoverage(), FullBeanDecorator.ContextualEntity.PLACE);
-				saveEnrichmentCandidate(Field.DC_DATE.name(), proxy.isEuropeanaProxy(), proxy.getDcDate(), FullBeanDecorator.ContextualEntity.TIMESPAN);
-				saveEnrichmentCandidate(Field.DCTERMS_TEMPORAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsTemporal(), FullBeanDecorator.ContextualEntity.TIMESPAN);
+				saveEnrichmentCandidate(Field.DC_CREATOR.name(), proxy.isEuropeanaProxy(), proxy.getDcCreator(), FullBeanWrapper.ContextualEntity.AGENT);
+				saveEnrichmentCandidate(Field.DC_CONTRIBUTOR.name(), proxy.isEuropeanaProxy(), proxy.getDcContributor(), FullBeanWrapper.ContextualEntity.AGENT);
+				saveEnrichmentCandidate(Field.DC_SUBJECT.name(), proxy.isEuropeanaProxy(), proxy.getDcSubject(), FullBeanWrapper.ContextualEntity.CONCEPT);
+				saveEnrichmentCandidate(Field.DC_TYPE.name(), proxy.isEuropeanaProxy(), proxy.getDcType(), FullBeanWrapper.ContextualEntity.CONCEPT);
+				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsSpatial(), FullBeanWrapper.ContextualEntity.PLACE);
+				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), proxy.isEuropeanaProxy(), proxy.getDcCoverage(), FullBeanWrapper.ContextualEntity.PLACE);
+				saveEnrichmentCandidate(Field.DC_DATE.name(), proxy.isEuropeanaProxy(), proxy.getDcDate(), FullBeanWrapper.ContextualEntity.TIMESPAN);
+				saveEnrichmentCandidate(Field.DCTERMS_TEMPORAL.name(), proxy.isEuropeanaProxy(), proxy.getDctermsTemporal(), FullBeanWrapper.ContextualEntity.TIMESPAN);
 			}
 			mapEnrichments();
 		}
@@ -332,7 +331,7 @@ public class FullBeanShortcut {
 	 *   Multilingual field values
 	 */
 	private void saveEnrichmentCandidate(String name, boolean europeanaProxy,
-			Map<String, List<String>> fieldValues, FullBeanDecorator.ContextualEntity entityType) {
+			Map<String, List<String>> fieldValues, FullBeanWrapper.ContextualEntity entityType) {
 		if (fieldValues == null) {
 			return;
 		}
@@ -439,9 +438,9 @@ public class FullBeanShortcut {
 		private MultilangFieldValue provided;
 		private MultilangFieldValue europeana;
 		private List<Resource> resources = null;
-		private FullBeanDecorator.ContextualEntity entityType;
+		private FullBeanWrapper.ContextualEntity entityType;
 
-		public EnrichmentFieldMapper(FullBeanDecorator.ContextualEntity entityType) {
+		public EnrichmentFieldMapper(FullBeanWrapper.ContextualEntity entityType) {
 			this.entityType = entityType;
 		}
 
@@ -482,13 +481,13 @@ public class FullBeanShortcut {
 								continue;
 							}
 							ContextualItemDecorator entity = null;
-							if (entityType.equals(FullBeanDecorator.ContextualEntity.AGENT)) {
+							if (entityType.equals(FullBeanWrapper.ContextualEntity.AGENT)) {
 								entity = (ContextualItemDecorator)document.getAgentByURI(uri);
-							} else if (entityType.equals(FullBeanDecorator.ContextualEntity.CONCEPT)) {
+							} else if (entityType.equals(FullBeanWrapper.ContextualEntity.CONCEPT)) {
 								entity = (ContextualItemDecorator)document.getConceptByURI(uri);
-							} else if (entityType.equals(FullBeanDecorator.ContextualEntity.PLACE)) {
+							} else if (entityType.equals(FullBeanWrapper.ContextualEntity.PLACE)) {
 								entity = (ContextualItemDecorator)document.getPlaceByURI(uri);
-							} else if (entityType.equals(FullBeanDecorator.ContextualEntity.TIMESPAN)) {
+							} else if (entityType.equals(FullBeanWrapper.ContextualEntity.TIMESPAN)) {
 								entity = (ContextualItemDecorator)document.getTimespanByURI(uri);
 							}
 							if (entity != null) {

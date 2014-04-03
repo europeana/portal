@@ -41,14 +41,14 @@ import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
 import eu.europeana.portal2.web.presentation.enums.Field;
-import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanShortcut;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CiteValue;
 import eu.europeana.portal2.web.presentation.model.data.submodel.MetaDataFieldPresentation;
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.model.preparation.FullDocPreparation;
 import eu.europeana.portal2.web.presentation.model.submodel.Image;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
-import eu.europeana.portal2.web.util.FullBeanShortcut;
 import eu.europeana.portal2.web.util.KmlPresentation;
 import eu.europeana.portal2.web.util.SearchUtils;
 

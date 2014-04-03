@@ -1,19 +1,19 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
+package eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Agent;
-import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinked;
 
 public class AgentDecorator extends ContextualItemDecorator implements Agent {
 
 	private Agent agent;
 
-	public AgentDecorator(FullBeanDecorator fullBeanDecorator, Agent agent,
+	public AgentDecorator(FullBeanLinked fullBeanLinked, Agent agent,
 			String userLanguage, String edmLanguage) {
-		super(fullBeanDecorator, agent, userLanguage, edmLanguage);
+		super(fullBeanLinked, agent, userLanguage, edmLanguage);
 		this.agent = agent;
 	}
 

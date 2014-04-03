@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.model.data.decorators;
+package eu.europeana.portal2.web.model.data.decorators.fullbean;
 
 import static org.junit.Assert.*;
 
@@ -19,7 +19,7 @@ import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.portal2.web.model.json.Json2FullBeanConverter;
-import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)

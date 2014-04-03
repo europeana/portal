@@ -25,8 +25,8 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
-import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
-import eu.europeana.portal2.web.presentation.model.data.decorators.contextual.ContextualItemDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ContextualItemDecorator;
 
 public class FieldValue {
 

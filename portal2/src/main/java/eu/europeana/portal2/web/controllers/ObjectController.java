@@ -75,11 +75,11 @@ import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.FullDocPage;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanShortcut;
 import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.impl.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>

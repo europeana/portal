@@ -1,4 +1,4 @@
-package eu.europeana.portal2.web.presentation.model.data.decorators.contextual;
+package eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Concept;
-import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinked;
 
 public class ConceptDecorator extends ContextualItemDecorator implements Concept {
 
@@ -21,9 +21,9 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	private Map<String, String> exactMatchLinks;
 	List<ContextualItemDecorator> relatedItems = new ArrayList<ContextualItemDecorator>();
 
-	public ConceptDecorator(FullBeanDecorator fullBeanDecorator, Concept concept,
+	public ConceptDecorator(FullBeanLinked fullBeanLinked, Concept concept,
 			String userLanguage, String edmLanguage) {
-		super(fullBeanDecorator, concept, userLanguage, edmLanguage);
+		super(fullBeanLinked, concept, userLanguage, edmLanguage);
 		this.concept = concept;
 	}
 
@@ -160,7 +160,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		if (getBroadMatch() != null) {
 			for (String term : getBroadMatch()) {
 				addRelation(term);
-				ConceptDecorator other = (ConceptDecorator)fullBeanDecorator.getConceptByURI(term);
+				ConceptDecorator other = (ConceptDecorator)fullBeanLinked.getConceptByURI(term);
 				broadMatchLinks.put(term, (other != null && other.getLabel() != null ? other.getLabel() : ""));
 			}
 		}
@@ -236,7 +236,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	}
 
 	private void addRelation(String uri) {
-		ConceptDecorator relation = (ConceptDecorator)fullBeanDecorator.getConceptByURI(uri);
+		ConceptDecorator relation = (ConceptDecorator)fullBeanLinked.getConceptByURI(uri);
 		if (relation != null && !relatedItems.contains(relation)) {
 			relatedItems.add(relation);
 		}

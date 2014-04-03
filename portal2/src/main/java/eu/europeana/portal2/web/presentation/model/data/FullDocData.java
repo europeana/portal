@@ -33,8 +33,9 @@ import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.abstracts.RestLocationsData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
-import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.FullBeanViewDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanShortcut;
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.Image;
@@ -42,7 +43,6 @@ import eu.europeana.portal2.web.presentation.semantic.EdmSchemaMapping;
 import eu.europeana.portal2.web.presentation.semantic.Element;
 import eu.europeana.portal2.web.presentation.semantic.FieldInfo;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
-import eu.europeana.portal2.web.util.FullBeanShortcut;
 
 public abstract class FullDocData extends RestLocationsData<Void> {
 

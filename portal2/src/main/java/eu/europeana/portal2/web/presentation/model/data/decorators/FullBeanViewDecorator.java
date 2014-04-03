@@ -24,6 +24,7 @@ import java.util.List;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
 import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 
