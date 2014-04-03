@@ -43,14 +43,14 @@ var EuWidgetWizard = function(cmpIn, options){
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ {2}/g, '\+\+').replace(/ {1}/g, '\+').replace(/\%20/g, '\+');
 
-
+		/*
 		if(name.indexOf('Volkskundliche')>-1){
 			alert('result 1\n\n' + result + '\n\n' + encodeURIComponent(result) 
 			+ '\n\n'
 			+ 'Xs: ' + name.replace(/\s/g, 'X')
 			)
 		}
-		
+		*/
 		
 		//result = encodeURI(result);
 		result = encodeURIComponent(result)
