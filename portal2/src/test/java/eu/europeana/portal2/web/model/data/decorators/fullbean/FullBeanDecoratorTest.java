@@ -99,7 +99,7 @@ public class FullBeanDecoratorTest {
 		assertNull(decorator.getDcDescriptionCombined());
 		// assertEquals("IMAGE", decorator.getDcDescriptionCombined());
 
-		assertArrayEquals(new String[]{"klisé"}, decorator.getDcFormat());
+		assertArrayEquals(new String[]{"klis\u00e9"}, decorator.getDcFormat());
 
 		assertNull(decorator.getDcLanguage());
 		// assertArrayEquals(new String[]{"hungary"}, decorator.getDcLanguage());
