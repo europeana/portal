@@ -42,11 +42,14 @@ padding-bottom: 10px;
 }
 
 /* Controls width of your form */
+/*
 .e2ma_signup_form {
 	width:325px;
 }
+*/
 
 /* Controls the style, width, and font style of the text input, select and textarea fields */
+/*
 .e2ma_signup_form input[type=text],
 .e2ma_signup_form textarea,
 .e2ma_signup_form select { 
@@ -58,38 +61,43 @@ padding-bottom: 10px;
 .e2ma_signup_form textarea { 
 	height: 100px;
 }
-
+*/
 /* Controls width, style, and padding of the table border outlines around individual member fields */
+/*
 .e2ma_signup_form_row {
 	border:1px solid #ddd;
 	padding:5px;
 	margin-bottom:5px;
 	width: 320px;
 }
-
+*/
 /* Controls alignment and display of image in welcome message */
+/*
 .e2ma_signup_image_container {
     text-align:center;
     display: inline;
 }
-
+*/
 /* Controls border around signup image (when image is linked) */
+/*
 .e2ma_signup_image {
     border:0;
 }
-
 #e2ma_signup_image {
 	display: none;
 }
+*/
 
 /* Controls style and formatting of welcome message */
+/*
 .e2ma_signup_message {
 	font-family:Verdana, sans-serif;
 	font-size:11px;
 	color:#333333;
 }
-
+*/
 /* Controls style and formatting of form field labels (first name, last name, etc.) */
+/*
 .e2ma_signup_form_label {
 	font-family:Verdana, sans-serif;
 	font-size:11px;
@@ -100,24 +108,27 @@ padding-bottom: 10px;
 	padding-top:5px;
 	white-space:nowrap;
 }
-
+*/
 /* Controls spacing and style for any text used to list options under multiple choice fields) */
+/*
 .e2ma_signup_form_element {
 	margin-left:140px;
 	font-family:verdana;
 	font-size:11px;
 	color:#333333;
 }
-
+*/
 /* For signup screens that are set to allow people to select which audience groups they'd like to join: Controls style for "Select your interests..." text */
+/*
 .e2ma_signup_form_group_label {
 	font-family:Verdana, sans-serif;
 	font-size:11px;
 	color:#333333;
 	font-weight:normal;
 }
-
+*/
 /* For signup screens that are set to allow people to select which audience groups they'd like to join: Controls style and spacing for groups displayed as options */
+/*
 .e2ma_signup_form_groups {
 	font-family:Verdana, sans-serif;
 	font-size:11px;
@@ -126,8 +137,9 @@ padding-bottom: 10px;
 	padding:5px;
 	margin-bottom:5px;
 }
-
+*/
 /* Controls the style and spacing of the word "required" and border surrounding that text */
+/*
 .e2ma_signup_form_required_footnote {
 	font-family:Verdana, sans-serif;
 	font-size:10px;
@@ -137,29 +149,33 @@ padding-bottom: 10px;
 	margin-bottom:5px;
 	width: 320px;
 }
-
+*/
 /* Controls the color of the asterisk that indicates a field is required */
+/*
 .e2ma_signup_form_required_asterix {
 	color:#FF0000;
 }
-
+*/
 /* Controls the alignment of "submit" and "clear" buttons */
+/*
 .e2ma_signup_form_button_row {
 	float:left;
 }
-
+*/
 /* Controls display of the "clear" button */
+/*
 .e2ma_signup_form_button_row #e2ma_signup_reset_button {
 	display: inline;
 }
-
+*/
 /*Overrides browser default settings for button styles (for additional control of "submit" and "clear" buttons) */
+/*
 .e2ma_signup_form_button { 
     width: 60px !important;
 }
 
 .e2ma_signup_form_element select { display: inline; width: 54px; margin-right: 3px; } 
-
+*/
 
 
 </style>
