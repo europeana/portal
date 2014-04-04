@@ -3,21 +3,33 @@ package eu.europeana.corelib.web.service.impl;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import javax.annotation.Resource;
+
 import eu.europeana.corelib.definitions.model.ThumbSize;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 
 public class EuropeanaUrlServiceImplMock implements EuropeanaUrlService {
 
+	@Resource
+	private Configuration configuration;
+
 	@Override
 	public UrlBuilder getApi1Home(String apikey) {
-		return null;
+		UrlBuilder url = new UrlBuilder(configuration.getApi2url());
+		url.addPath(PATH_API_V1);
+		url.addParam(PARAM_API_APIKEY, apikey, true);
+		return url;
 	}
 
 	@Override
 	public UrlBuilder getApi2Home(String apikey) {
-		return null;
+		UrlBuilder url = new UrlBuilder(configuration.getApi2url());
+		url.addPath(PATH_API_V2);
+		url.addParam(PARAM_API_APIKEY, apikey, true);
+		return url;
 	}
 
 	@Override
@@ -68,7 +80,9 @@ public class EuropeanaUrlServiceImplMock implements EuropeanaUrlService {
 
 	@Override
 	public String getPortalResolve(String europeanaId) {
-		return null;
+		UrlBuilder url = new UrlBuilder(URL_EUROPEANA);
+		url.addPath(PATH_PORTAL_RESOLVE, PATH_RECORD, europeanaId).disableTrailingSlash();
+		return url.toString();
 	}
 
 	@Override
@@ -128,5 +142,4 @@ public class EuropeanaUrlServiceImplMock implements EuropeanaUrlService {
 	public String extractEuropeanaId(String url) {
 		return null;
 	}
-
 }

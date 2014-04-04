@@ -47,40 +47,17 @@ public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectab
 		super(fullBean, userLanguage);
 	}
 
-	public List<? extends Place> getDecoratedPlaces() {
-		if (places == null) {
-			Map<String, String> ids = new HashMap<String, String>();
-			places = new ArrayList<PlaceDecorator>();
-			for (Place place : fullBean.getPlaces()) {
-				PlaceDecorator decorator = new PlaceDecorator(this, place, userLanguage, edmLanguage);
-				places.add(decorator);
-				ids.put(place.getAbout(), decorator.getLabel());
-			}
-			for (PlaceDecorator agent : places) {
-				agent.makeLinks(ids);
-			}
-		}
-		return places;
-	}
-
-	public int getNumberOfUnreferencedPlaces() {
-		int counter = 0;
-		for (Place p : getDecoratedPlaces()) {
-			if (!((PlaceDecorator)p).isShowInContext()) {
-				counter++;
-			}
-		}
-		return counter;
-	}
-
 	public List<? extends Agent> getDecoratedAgents() {
 		if (agents == null) {
 			Map<String, String> ids = new HashMap<String, String>();
 			agents = new ArrayList<AgentDecorator>();
-			for (Agent agent : fullBean.getAgents()) {
-				AgentDecorator decorator = new AgentDecorator(this, agent, userLanguage, edmLanguage);
-				agents.add(decorator);
-				ids.put(agent.getAbout(), decorator.getLabel());
+			if (fullBean.getAgents() != null) {
+				for (Agent agent : fullBean.getAgents()) {
+					AgentDecorator decorator = new AgentDecorator(this, agent,
+							userLanguage, edmLanguage);
+					agents.add(decorator);
+					ids.put(agent.getAbout(), decorator.getLabel());
+				}
 			}
 			for (AgentDecorator agent : agents) {
 				agent.makeLinks(ids);
@@ -99,41 +76,18 @@ public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectab
 		return counter;
 	}
 
-	public List<? extends Timespan> getDecoratedTimespans() {
-		if (timespans == null) {
-			Map<String, String> ids = new HashMap<String, String>();
-			timespans = new ArrayList<TimespanDecorator>();
-			for (Timespan timespan : fullBean.getTimespans()) {
-				TimespanDecorator decorator = new TimespanDecorator(this, timespan, userLanguage, edmLanguage);
-				timespans.add(decorator);
-				ids.put(timespan.getAbout(), decorator.getLabel());
-			}
-			for (TimespanDecorator timespan : timespans) {
-				timespan.makeLinks(ids);
-			}
-		}
-		return timespans;
-	}
-
-	public int getNumberOfUnreferencedTimespans() {
-		int counter = 0;
-		for (Timespan p : getDecoratedTimespans()) {
-			if (!((TimespanDecorator)p).isShowInContext()) {
-				counter++;
-			}
-		}
-		return counter;
-	}
-
 	public List<? extends Concept> getDecoratedConcepts() {
 		if (concepts == null) {
 			Map<String, String> ids = new HashMap<String, String>();
 			concepts = new ArrayList<ConceptDecorator>();
-			for (Concept concept : fullBean.getConcepts()) {
-				ConceptDecorator decorator = new ConceptDecorator(this, concept, userLanguage, edmLanguage);
-				concepts.add(decorator);
-				if (decorator.getLabel() != null) {
-					ids.put(concept.getAbout(), decorator.getLabel());
+			if (fullBean.getConcepts() != null) {
+				for (Concept concept : fullBean.getConcepts()) {
+					ConceptDecorator decorator = new ConceptDecorator(this,
+							concept, userLanguage, edmLanguage);
+					concepts.add(decorator);
+					if (decorator.getLabel() != null) {
+						ids.put(concept.getAbout(), decorator.getLabel());
+					}
 				}
 			}
 			for (ConceptDecorator concept : concepts) {
@@ -153,6 +107,79 @@ public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectab
 		return counter;
 	}
 
+	public List<? extends Place> getDecoratedPlaces() {
+		if (places == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			places = new ArrayList<PlaceDecorator>();
+			if (fullBean.getPlaces() != null) {
+				for (Place place : fullBean.getPlaces()) {
+					PlaceDecorator decorator = new PlaceDecorator(this, place,
+							userLanguage, edmLanguage);
+					places.add(decorator);
+					ids.put(place.getAbout(), decorator.getLabel());
+				}
+			}
+			for (PlaceDecorator agent : places) {
+				agent.makeLinks(ids);
+			}
+		}
+		return places;
+	}
+
+	public int getNumberOfUnreferencedPlaces() {
+		int counter = 0;
+		for (Place p : getDecoratedPlaces()) {
+			if (!((PlaceDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public List<? extends Timespan> getDecoratedTimespans() {
+		if (timespans == null) {
+			Map<String, String> ids = new HashMap<String, String>();
+			timespans = new ArrayList<TimespanDecorator>();
+			if (fullBean.getTimespans() != null) {
+				for (Timespan timespan : fullBean.getTimespans()) {
+					TimespanDecorator decorator = new TimespanDecorator(this,
+							timespan, userLanguage, edmLanguage);
+					timespans.add(decorator);
+					ids.put(timespan.getAbout(), decorator.getLabel());
+				}
+			}
+			for (TimespanDecorator timespan : timespans) {
+				timespan.makeLinks(ids);
+			}
+		}
+		return timespans;
+	}
+
+	public int getNumberOfUnreferencedTimespans() {
+		int counter = 0;
+		for (Timespan p : getDecoratedTimespans()) {
+			if (!((TimespanDecorator)p).isShowInContext()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	private synchronized void setUpProxies() {
+		if (providedProxies == null) {
+			providedProxies = new ArrayList<Proxy>();
+			for (Proxy proxy : getProxies()) {
+				if (proxy.isEuropeanaProxy()) {
+					europeanaProxy = proxy;
+				} else {
+					providedProxies.add(proxy);
+				}
+			}
+			singletonProvidedProxy = (providedProxies.size() == 1);
+		}
+	}
+
+
 	@Override
 	public Proxy getEuropeanaProxy() {
 		if (europeanaProxy == null) {
@@ -161,24 +188,12 @@ public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectab
 		return europeanaProxy;
 	}
 
-	private void setUpProxies() {
-		List<Proxy> providedProxies = new ArrayList<Proxy>();
-		for (Proxy proxy : getProvidedProxies()) {
-			if (proxy.isEuropeanaProxy()) {
-				europeanaProxy = proxy;
-			} else {
-				providedProxies.add(proxy);
-			}
-		}
-		singletonProvidedProxy = providedProxies.size() == 1;
-	}
-
 	@Override
 	public List<Proxy> getProvidedProxies() {
 		if (providedProxies == null) {
 			setUpProxies();
 		}
-		return null;
+		return providedProxies;
 	}
 
 	@Override
@@ -241,8 +256,10 @@ public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectab
 					webResourceMap.put(webResource.getAbout(), webResource);
 				}
 			}
-			for (WebResource webResource : getEuropeanaAggregation().getWebResources()) {
-				webResourceMap.put(webResource.getAbout(), webResource);
+			if (getEuropeanaAggregation().getWebResources() != null) {
+				for (WebResource webResource : getEuropeanaAggregation().getWebResources()) {
+					webResourceMap.put(webResource.getAbout(), webResource);
+				}
 			}
 		}
 		if (webResourceMap.containsKey(url)) {
@@ -272,7 +289,6 @@ public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectab
 		}
 		return rightString;
 	}
-
 
 	private void initializeAgentMap() {
 		agentMap = new HashMap<String, Agent>();

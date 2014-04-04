@@ -281,9 +281,9 @@ public class Json2FullBeanConverter {
 			System.out.println("ERROR: " + e.getMessage());
 			log.error(e.getMessage());
 			// log.error("Object: " + bean);
-			// System.out.println("Setter: " + setter);
+			System.out.println("Setter: " + setter);
 			log.error("Setter: " + setter);
-			// System.out.println("Value: " + value);
+			System.out.println("Value: " + value + " " + value.getClass().getName());
 			log.error("Value: " + value);
 			//log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
 			log.error(e.getMessage() + ": " + setter.getParameterTypes()[0].getCanonicalName());
@@ -375,11 +375,11 @@ public class Json2FullBeanConverter {
 			}
 			if (javaType.equals(RELATED_ITEMS) && field.equals("timestamp")) {
 				value = new Date((Long)value);
-			}
-			if (javaType.equals(AGGREGATIONS) && field.equals(WEBRESOURCES)) {
+			} else if (javaType.equals(PLACES) && (field.equals("latitude") || field.equals("longitude"))) {
+				value = Float.parseFloat(Double.toString((Double)value));
+			} else if (javaType.equals(AGGREGATIONS) && field.equals(WEBRESOURCES)) {
 				value = convertObjects(value, field);
-			}
-			if ((javaType.equals(PROXIES) && field.equals("edmType")) 
+			} else if ((javaType.equals(PROXIES) && field.equals("edmType")) 
 				|| (javaType.equals(RELATED_ITEMS) && field.equals("type"))) {
 				value = DocType.safeValueOf((String)value);
 			}

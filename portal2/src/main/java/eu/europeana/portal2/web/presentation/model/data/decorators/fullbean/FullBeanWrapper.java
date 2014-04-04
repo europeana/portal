@@ -17,7 +17,6 @@
 
 package eu.europeana.portal2.web.presentation.model.data.decorators.fullbean;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -39,16 +38,14 @@ import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.AgentDecorator;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ConceptDecorator;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.PlaceDecorator;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.TimespanDecorator;
 
 public class FullBeanWrapper implements FullBean {
 
 	Logger log = Logger.getLogger(FullBeanWrapper.class.getCanonicalName());
 
 	public enum ContextualEntity {AGENT, CONCEPT, PLACE, TIMESPAN};
+
+	private static final int POST_TITLE_MAX_LENGTH = 110;
 
 	protected FullBean fullBean;
 
@@ -59,7 +56,7 @@ public class FullBeanWrapper implements FullBean {
 
 	public FullBeanWrapper(FullBean fullBean) {
 		this.fullBean = fullBean;
-		europeanaUrlService = ApplicationContextContainer.getBean(EuropeanaUrlService.class);//EuropeanaUrlServiceImpl.getBeanInstance();
+		europeanaUrlService = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
 	}
 
 	public FullBeanWrapper(FullBean fullBean, String userLanguage) {
@@ -72,10 +69,8 @@ public class FullBeanWrapper implements FullBean {
 	 * Returns the title of the post
 	 * 
 	 * @return post title
-	 * @throws UnsupportedEncodingException
 	 */
-	public String getPostTitle() throws UnsupportedEncodingException {
-		final int POST_TITLE_MAX_LENGTH = 110;
+	public String getPostTitle() {
 		StringBuilder postTitle = new StringBuilder();
 		if (getTitle().length > POST_TITLE_MAX_LENGTH) {
 			postTitle.append(getTitle()[0].substring(0, POST_TITLE_MAX_LENGTH));
@@ -331,10 +326,7 @@ public class FullBeanWrapper implements FullBean {
 	}
 
 	public String getTimestampCreatedString() {
-		if (fullBean.getTimestampCreated() != null) {
-			return DateUtils.format(fullBean.getTimestampCreated());
-		}
-		return null;
+		return DateUtils.format(fullBean.getTimestampCreated());
 	}
 
 	@Override
@@ -343,10 +335,7 @@ public class FullBeanWrapper implements FullBean {
 	}
 
 	public String getTimestampUpdatedString() {
-		if (fullBean.getTimestampUpdated() != null) {
-			return DateUtils.format(fullBean.getTimestampUpdated());
-		}
-		return null;
+		return DateUtils.format(fullBean.getTimestampUpdated());
 	}
 
 	@Override
