@@ -576,6 +576,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			            	}
 							self.text		= el.html().toUpperCase();
 							
+							/*
 							return {
 								"test" : function(s){
 									var re			= new RegExp(s.toUpperCase() + '[A-Za-z\\d\\s]*');
@@ -601,6 +602,7 @@ var EuWidgetWizard = function(cmpIn, options){
 									}
 								}
 							};
+							*/
 							
 						};
 						
@@ -776,40 +778,61 @@ var EuWidgetWizard = function(cmpIn, options){
 		}
 		
 		var fnSuccess = function(data){
+			
+			doHide = function(linksIn){
+				$.each(linksIn, function(i, ob){
+					ob = $(ob);
+//					if( ob.attr('title').indexOf('Bodleian') > -1 ){
+	//					alert('GOT IT\n\n\nchecked = ' +    (  ob.find('input').is(':checked') )    );
+		//			}
+					if(! ob.find('input').is(':checked') ){
+						ob.hide();
+
+			//			console.log( 'HIDE: ' + ob.find('label').html() )
+					}
+				});
+			}
+			
         	// countries
 
         	var countryOps = $('ul.COUNTRY li');
-        	countryOps.find('a').hide();
+        	//countryOps.find('a').hide();
+        	doHide(countryOps.find('a'));
 
         	// copyrights
         	
         	var copyrightOps = $('ul.RIGHTS li');
-        	copyrightOps.find('a').hide();
+        	//copyrightOps.find('a:not(:checked)').hide();
+        	doHide(copyrightOps.find('a'));
         	
         	// providers
         	
         	var providerOps = $('ul.PROVIDER li');
         	
         	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
-        		providerOps.find('a').hide();
+        		//providerOps.find('a').hide();
+        		doHide(providerOps.find('a'));
         	}
         	
         	
         	// data providers
         	var dataProviderOps = $('ul.DATA_PROVIDER li');
         	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
-        		dataProviderOps.find('a').hide();
+        		//dataProviderOps.find('a:not(:checked)').hide();
+        		doHide(dataProviderOps.find('a'));
         	}
         	
         	// types
         	
         	var typeOps = $('ul.TYPE li');
-        	typeOps.find('a').hide();
+        	//typeOps.find('a').hide();
+    		doHide(typeOps.find('a'));
         	
         	// languages
         	
         	var langOps = $('ul.LANGUAGE li');	        	
-        	langOps.find('a').hide();
+        	//langOps.find('a:not(:checked)').hide();
+    		doHide(langOps.find('a'));
         	
         	$.each(data.facets, function(i, facet){
         		
