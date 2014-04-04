@@ -22,7 +22,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.cont
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.TimespanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 
-public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectable {
+public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable {
 
 	protected List<ConceptDecorator> concepts;
 	protected List<PlaceDecorator> places;
@@ -39,11 +39,11 @@ public class FullBeanLinked extends FullBeanWrapper implements FullBeanConnectab
 	private List<Proxy> providedProxies;
 	private Boolean singletonProvidedProxy;
 
-	public FullBeanLinked(FullBean fullBean) {
+	public FullBeanLinker(FullBean fullBean) {
 		super(fullBean);
 	}
 
-	public FullBeanLinked(FullBean fullBean, String userLanguage) {
+	public FullBeanLinker(FullBean fullBean, String userLanguage) {
 		super(fullBean, userLanguage);
 	}
 

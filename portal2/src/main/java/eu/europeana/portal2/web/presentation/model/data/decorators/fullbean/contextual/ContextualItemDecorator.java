@@ -9,13 +9,13 @@ import org.bson.types.ObjectId;
 
 import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinked;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
 
 public class ContextualItemDecorator implements ContextualClass {
 
 	Logger log = Logger.getLogger(ContextualItemDecorator.class.getCanonicalName());
 
-	protected FullBeanLinked fullBeanLinked;
+	protected FullBeanLinker fullBeanLinked;
 	private ContextualClass item;
 	protected String userLanguage;
 	protected String edmLanguage;
@@ -26,7 +26,7 @@ public class ContextualItemDecorator implements ContextualClass {
 	private boolean labelsInitialized = false;
 	List<ContextualItemDecorator> allRelatedItems;
 
-	ContextualItemDecorator(FullBeanLinked fullBeanLinked, ContextualClass item,
+	ContextualItemDecorator(FullBeanLinker fullBeanLinked, ContextualClass item,
 			String userLanguage, String edmLanguage) {
 		this.fullBeanLinked = fullBeanLinked;
 		this.item = item;

@@ -16,7 +16,7 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  * 
  * @author Peter.Kiraly@europeana.eu
  */
-public class ShortcutWrapper extends FullBeanLinked {
+public class ShortcutWrapper extends FullBeanLinker {
 
 	protected FullBeanShortcut shortcut;
 

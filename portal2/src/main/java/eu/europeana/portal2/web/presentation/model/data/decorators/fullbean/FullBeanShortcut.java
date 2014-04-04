@@ -30,9 +30,9 @@ public class FullBeanShortcut {
 
 	Logger log = Logger.getLogger(FullBeanShortcut.class.getCanonicalName());
 
-	private FullBeanLinked document;
+	private FullBeanLinker document;
 
-	public FullBeanShortcut(FullBeanLinked document) {
+	public FullBeanShortcut(FullBeanLinker document) {
 		this.document = document;
 	}
 

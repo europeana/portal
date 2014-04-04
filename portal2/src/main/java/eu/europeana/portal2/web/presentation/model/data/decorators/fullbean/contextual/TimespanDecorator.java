@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinked;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
 
 public class TimespanDecorator extends ContextualItemDecorator implements Timespan {
 
 	private Timespan timespan;
 	Map<String, String> isPartOfLinks;
 
-	public TimespanDecorator(FullBeanLinked fullBeanLinked, Timespan timespan,
+	public TimespanDecorator(FullBeanLinker fullBeanLinked, Timespan timespan,
 			String userLanguage, String edmLanguage) {
 		super(fullBeanLinked, timespan, userLanguage, edmLanguage);
 		this.timespan = timespan;

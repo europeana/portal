@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Concept;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinked;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
 
 public class ConceptDecorator extends ContextualItemDecorator implements Concept {
 
@@ -21,7 +21,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	private Map<String, String> exactMatchLinks;
 	List<ContextualItemDecorator> relatedItems = new ArrayList<ContextualItemDecorator>();
 
-	public ConceptDecorator(FullBeanLinked fullBeanLinked, Concept concept,
+	public ConceptDecorator(FullBeanLinker fullBeanLinked, Concept concept,
 			String userLanguage, String edmLanguage) {
 		super(fullBeanLinked, concept, userLanguage, edmLanguage);
 		this.concept = concept;

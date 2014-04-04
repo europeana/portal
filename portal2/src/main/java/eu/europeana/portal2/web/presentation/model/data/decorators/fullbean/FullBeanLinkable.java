@@ -13,7 +13,7 @@ import eu.europeana.corelib.definitions.solr.entity.Timespan;
  *
  * @author Peter.Kiraly@europeana.eu
  */
-public interface FullBeanConnectable {
+public interface FullBeanLinkable {
 
 	public Proxy getEuropeanaProxy();
 
