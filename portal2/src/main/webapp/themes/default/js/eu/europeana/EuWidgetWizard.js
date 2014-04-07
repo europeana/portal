@@ -809,18 +809,18 @@ var EuWidgetWizard = function(cmpIn, options){
         	
         	var providerOps = $('ul.PROVIDER li');
         	
-        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
+        	//if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
         		//providerOps.find('a').hide();
         		doHide(providerOps.find('a'));
-        	}
+        	//}
         	
         	
         	// data providers
         	var dataProviderOps = $('ul.DATA_PROVIDER li');
-        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
+        	//if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
         		//dataProviderOps.find('a:not(:checked)').hide();
         		doHide(dataProviderOps.find('a'));
-        	}
+        	//}
         	
         	// types
         	
