@@ -218,14 +218,22 @@ public class FullBeanShortcut {
 				add(parent, "EdmIsNextInSequence", proxy.getEdmIsNextInSequence());
 
 				boolean europeanaProxy = proxy.isEuropeanaProxy();
-				saveEnrichmentCandidate(Field.DC_CREATOR.name(), europeanaProxy, proxy.getDcCreator(), FullBeanWrapper.ContextualEntity.AGENT);
-				saveEnrichmentCandidate(Field.DC_CONTRIBUTOR.name(), europeanaProxy, proxy.getDcContributor(), FullBeanWrapper.ContextualEntity.AGENT);
-				saveEnrichmentCandidate(Field.DC_SUBJECT.name(), europeanaProxy, proxy.getDcSubject(), FullBeanWrapper.ContextualEntity.CONCEPT);
-				saveEnrichmentCandidate(Field.DC_TYPE.name(), europeanaProxy, proxy.getDcType(), FullBeanWrapper.ContextualEntity.CONCEPT);
-				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), europeanaProxy, proxy.getDctermsSpatial(), FullBeanWrapper.ContextualEntity.PLACE);
-				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), europeanaProxy, proxy.getDcCoverage(), FullBeanWrapper.ContextualEntity.PLACE);
-				saveEnrichmentCandidate(Field.DC_DATE.name(), europeanaProxy, proxy.getDcDate(), FullBeanWrapper.ContextualEntity.TIMESPAN);
-				saveEnrichmentCandidate(Field.DCTERMS_TEMPORAL.name(), europeanaProxy, proxy.getDctermsTemporal(), FullBeanWrapper.ContextualEntity.TIMESPAN);
+				saveEnrichmentCandidate(Field.DC_CREATOR.name(), europeanaProxy, proxy.getDcCreator(),
+						FullBeanWrapper.ContextualEntity.AGENT);
+				saveEnrichmentCandidate(Field.DC_CONTRIBUTOR.name(), europeanaProxy, proxy.getDcContributor(),
+						FullBeanWrapper.ContextualEntity.AGENT);
+				saveEnrichmentCandidate(Field.DC_SUBJECT.name(), europeanaProxy, proxy.getDcSubject(),
+						FullBeanWrapper.ContextualEntity.CONCEPT);
+				saveEnrichmentCandidate(Field.DC_TYPE.name(), europeanaProxy, proxy.getDcType(),
+						FullBeanWrapper.ContextualEntity.CONCEPT);
+				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), europeanaProxy, proxy.getDctermsSpatial(),
+						FullBeanWrapper.ContextualEntity.PLACE);
+				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), europeanaProxy, proxy.getDcCoverage(),
+						FullBeanWrapper.ContextualEntity.PLACE);
+				saveEnrichmentCandidate(Field.DC_DATE.name(), europeanaProxy, proxy.getDcDate(),
+						FullBeanWrapper.ContextualEntity.TIMESPAN);
+				saveEnrichmentCandidate(Field.DCTERMS_TEMPORAL.name(), europeanaProxy, proxy.getDctermsTemporal(),
+						FullBeanWrapper.ContextualEntity.TIMESPAN);
 			}
 			mapEnrichments();
 		}

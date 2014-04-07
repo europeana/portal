@@ -273,7 +273,7 @@ public abstract class FullDocPreparation extends FullDocData {
 			addFieldMap(fieldMap, Field.DCTERMS_ISSUED, shortcut.getList("DctermsIssued"));
 			addFieldMap(fieldMap, Field.DCTERMS_CREATED, shortcut.getList("DctermsCreated"));
 			addFieldMap(fieldMap, Field.DC_TYPE, shortcut.getList("DcType"));
-			addFieldMap(fieldMap, Field.DC_FORMAT, shortcut.getList("DcFormat"), 
+			addFieldMap(fieldMap, Field.DC_FORMAT, shortcut.getList("DcFormat"),
 					map(Field.DCTERMS_EXTENT, shortcut.getList("DctermsExtent")),
 					map(Field.DCTERMS_MEDIUM, shortcut.getList("DctermsMedium"))
 			);

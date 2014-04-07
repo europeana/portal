@@ -63,16 +63,17 @@
         <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/schema.jspf" %>
       </c:when>
       <c:otherwise>
+        <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
+        <%--
         <c:choose>
           <c:when test="${model.showContext}">
-            <%-- The new context display --%>
             <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context.jspf" %>
           </c:when>
           <c:otherwise>
-            <%-- The new old context display --%>
             <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
           </c:otherwise>
         </c:choose>
+         --%>
       </c:otherwise>
     </c:choose>
   </div>

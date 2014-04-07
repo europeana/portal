@@ -321,28 +321,70 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 	@SuppressWarnings("unchecked")
 	public ContextualItemDecorator getContextualConnections(ContextualEntity type, String value, Resource resource) {
 
+		ContextualItemDecorator foundEntity = null;
+		boolean matchedUrl = false;
 		if (resource != null) {
-			ContextualItemDecorator entity = null;
-			switch (type) {
-				case AGENT:
-					entity = (ContextualItemDecorator)getAgentByURI(resource.getUri()); break;
-				case CONCEPT:
-					entity = (ContextualItemDecorator)getConceptByURI(resource.getUri()); break;
-				case PLACE:
-					entity = (ContextualItemDecorator)getPlaceByURI(resource.getUri()); break;
-				case TIMESPAN:
-					entity = (ContextualItemDecorator)getTimespanByURI(resource.getUri()); break;
-				default:
-					break;
-			}
+			foundEntity = getDecoratedEntityByResource(type, resource);
+			matchedUrl = (foundEntity != null);
+		}
 
-			if (entity != null) {
-				entity.setShowInContext(true);
-				entity.setMatchUrl(true);
-				return entity;
+		if (foundEntity == null) {
+			List<? extends ContextualItemDecorator> entities = getDecoratedEntities(type);
+			if (entities != null) {
+				for (ContextualItemDecorator entity : entities) {
+					matchedUrl = hasMatchedUrl(entity, value, resource);
+					boolean matchedLabel = hasMatchedLabel(entity, value);
+					if (matchedUrl || matchedLabel) {
+						foundEntity = entity;
+						break;
+					}
+				}
 			}
 		}
 
+		if (foundEntity != null) {
+			foundEntity.setMatchUrl(matchedUrl);
+			foundEntity.setShowInContext(true);
+		}
+
+		return foundEntity;
+	}
+
+	private boolean hasMatchedUrl(ContextualItemDecorator entity, String value, Resource resource) {
+		return hasMatchedResource(entity, resource) || hasMatchedAbout(entity, value);
+	}
+
+	private boolean hasMatchedResource(ContextualItemDecorator entity, Resource resource) {
+		return resource != null && entity.getAbout().equals(resource.getUri());
+	}
+
+	private boolean hasMatchedAbout(ContextualItemDecorator entity, String value) {
+		return value.startsWith("http://") && entity.getAbout().equals(value);
+	}
+
+	private boolean hasMatchedLabel(ContextualItemDecorator entity, String value) {
+		return entity.hasPrefLabel(value) || entity.hasAltLabel(value);
+	}
+
+	private ContextualItemDecorator getDecoratedEntityByResource(ContextualEntity type, Resource resource) {
+		ContextualItemDecorator entity = null;
+		switch (type) {
+			case AGENT:
+				entity = (ContextualItemDecorator)getAgentByURI(resource.getUri()); break;
+			case CONCEPT:
+				entity = (ContextualItemDecorator)getConceptByURI(resource.getUri()); break;
+			case PLACE:
+				entity = (ContextualItemDecorator)getPlaceByURI(resource.getUri()); break;
+			case TIMESPAN:
+				entity = (ContextualItemDecorator)getTimespanByURI(resource.getUri()); break;
+			default:
+				break;
+		}
+		return entity;
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<? extends ContextualItemDecorator> getDecoratedEntities(ContextualEntity type) {
 		List<? extends ContextualItemDecorator> entities = null;
 		switch (type) {
 			case AGENT:
@@ -356,33 +398,6 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 			default:
 				break;
 		}
-
-		if (entities == null) {
-			return null;
-		}
-
-		for (ContextualItemDecorator entity : entities) {
-			if (resource != null && entity.getAbout().equals(resource.getUri())) {
-				entity.setShowInContext(true);
-				entity.setMatchUrl(true);
-				return entity;
-			} else if (value.startsWith("http://")) {
-				if (entity.getAbout().equals(value)) {
-					entity.setShowInContext(true);
-					entity.setMatchUrl(true);
-					return entity;
-				}
-			} else {
-				if (entity.hasPrefLabel(value)) {
-					entity.setShowInContext(true);
-					return entity;
-				} else if (entity.hasAltLabel(value)) {
-					entity.setShowInContext(true);
-					return entity;
-				}
-			}
-		}
-
-		return null;
+		return entities;
 	}
 }

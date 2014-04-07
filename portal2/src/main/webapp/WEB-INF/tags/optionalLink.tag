@@ -14,10 +14,10 @@
   <c:when test="${fn:startsWith(item, 'http://')}">
     <c:choose>
       <c:when test="${!empty label}">
-        <a href="#${fn:replace(item, '/', '.')}">${label}</a>
+        <a href="#${fn:replace(fn:replace(item, 'http://', ''), '/', '-')}">${label}</a>
       </c:when>
       <c:otherwise>
-        <a href="${item}">${item}</a>
+        <a href="${item}" class="icon-external-right">${item}</a>
       </c:otherwise>
     </c:choose>
   </c:when>

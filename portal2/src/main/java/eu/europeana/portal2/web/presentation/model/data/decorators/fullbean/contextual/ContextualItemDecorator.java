@@ -44,6 +44,13 @@ public class ContextualItemDecorator implements ContextualClass {
 		return item.getAbout();
 	}
 
+	public String getHtmlId() {
+		return item.getAbout()
+				.replace("http://", "")
+				.replace("/", "-")
+				.replace(".", "-");
+	}
+
 	@Override
 	public Map<String, List<String>> getPrefLabel() {
 		return item.getPrefLabel();

@@ -43,10 +43,10 @@ public class FieldValue {
 		this.model = model;
 		this.field = field;
 		this.value = value;
-		bindDecorator();
+		setContextualDecorator();
 	}
 
-	private void bindDecorator() {
+	private void setContextualDecorator() {
 		if (field.equals(Field.DC_CREATOR)
 				|| field.equals(Field.DC_CONTRIBUTOR)) {
 			entityType = FullBeanDecorator.ContextualEntity.AGENT;
