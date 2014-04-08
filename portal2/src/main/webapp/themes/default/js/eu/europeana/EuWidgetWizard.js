@@ -128,7 +128,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			
 			var debug = '';
 
-			
+			//var providerQuery = '';
 			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider      = $(ob);
@@ -141,6 +141,10 @@ var EuWidgetWizard = function(cmpIn, options){
 
 				if(providerInput.prop('checked')){
 					result += param() + providerParam;
+					
+					//providerQuery += param() + providerParam;
+					
+					
 				}
 				else{
 					var subtractUrl = '';
@@ -149,23 +153,49 @@ var EuWidgetWizard = function(cmpIn, options){
 					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 						var dataProvider      = $(dp);
 						var dataProviderInput = dataProvider.children('a').children('input');
-						// var name              = dataProviderInput.next('label').html();
 						var name = dataProvider.children('a').attr('title');
 
 						if(dataProviderInput.prop('checked')){
-							//result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
-							//resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+							
 							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
+							
+							//providersQuery += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
+							
 						}
 						else{
 							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
+							
+							//providersQuery += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
+
 						}
 					});
 					
 					// which is shorter?  Use that!
 					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
+					//providerQuery += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
 				}
-			});
+				
+				
+			}); // end providers loop
+			
+			///////////////////////////////////////////////
+			/*
+			if(providerQuery.length){
+				
+				console.log('providerQuery: ' + providerQuery)
+				
+				providerQuery = providerQuery
+				.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
+				.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
+				.replace(/^ OR /, '&qf=');
+
+				alert(providerQuery);
+				
+				result += providerQuery;
+				
+			}
+			*/
+			///////////////////////////////////////////////
 				
 		}
 		
@@ -574,9 +604,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			            			self.subItems[self.subItems.length] = {"t" : subText, "e" : subItem };
 			            		});
 			            	}
-							self.text		= el.html().toUpperCase();
-							
-							/*
+							self.text		= el.html().toUpperCase();							
 							return {
 								"test" : function(s){
 									var re			= new RegExp(s.toUpperCase() + '[A-Za-z\\d\\s]*');
@@ -602,7 +630,6 @@ var EuWidgetWizard = function(cmpIn, options){
 									}
 								}
 							};
-							*/
 							
 						};
 						
@@ -718,7 +745,10 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		var query = "&rows=0&query=*:*";
 		//var query = "&rows=0" + ( $('.default_query').val().length ? '&query=' + $('.default_query').val() : '&query=*:*');
-		try{			
+		try{
+			
+			var providerQuery = '';
+			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider       = $(ob);
 				var providerInput  = provider.children('a').children('input');
@@ -728,10 +758,18 @@ var EuWidgetWizard = function(cmpIn, options){
 
 
 				
-				if(providerInput.prop('checked') && providerInput.is(':visible') ){
+				//if(providerInput.prop('checked') && ! providerInput.is(':visible') ){
+				//	alert('HIDDEN !!!');
+				//}
+				
+				//if(providerInput.prop('checked') && providerInput.is(':visible') ){				
+				if( providerInput.prop('checked') ){
 					//var name = providerInput.next('label').html();
 					//query += '&qf=PROVIDER:"' + cleanName(name) + '"';
-					query += providerParam
+					
+					//query += providerParam;
+					providerQuery += providerParam;
+
 				}
 				else{
 					var subtractUrl    = '';
@@ -744,9 +782,10 @@ var EuWidgetWizard = function(cmpIn, options){
 						var name              = dataProvider.children('a').attr('title');
 						// var dataProviderInput = dataProvider.children('a').children('input');
 
-						if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
+						///if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
+						if(dataProviderInput.prop('checked') ){
 							//query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
-							resultFragment += '&qf=DATA_PROVIDER:"' + name + '"';
+							resultFragment += '&qf=DATA_PROVIDER:"' + name + '"';							
 						}
 						else{
 							subtractUrl += '&qf=-DATA_PROVIDER:"' + name + '"';
@@ -755,11 +794,34 @@ var EuWidgetWizard = function(cmpIn, options){
 					});
 					
 					// which is shorter?  Use that!
-					query += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
+					//query += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
+					
+					providerQuery += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
 				}
 				
+			}); // end providers loops
+			
+			
+//			  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+			
+			if(providerQuery.length){
+				
+				providerQuery = providerQuery
+					.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
+					.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
+					.replace(/^ OR /, '&qf=');
+				
+				//alert(providerQuery);
+				query += providerQuery;
+			}
+			
+//			alert('providerQuery = \n\n' + providerQuery
+	//				 + '\n\n' + 	providerQuery.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
+		//			 + '\n\n' + 	providerQuery.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
+			//);
 
-			});
+			
+			
 			
 			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
 				if($(ob).prop('checked') && $(ob).is(':visible')){
@@ -811,7 +873,7 @@ var EuWidgetWizard = function(cmpIn, options){
         	
         	//if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
         		//providerOps.find('a').hide();
-        		doHide(providerOps.find('a'));
+        		//doHide(providerOps.find('a'));
         	//}
         	
         	
@@ -819,7 +881,7 @@ var EuWidgetWizard = function(cmpIn, options){
         	var dataProviderOps = $('ul.DATA_PROVIDER li');
         	//if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
         		//dataProviderOps.find('a:not(:checked)').hide();
-        		doHide(dataProviderOps.find('a'));
+        		//doHide(dataProviderOps.find('a'));
         	//}
         	
         	// types

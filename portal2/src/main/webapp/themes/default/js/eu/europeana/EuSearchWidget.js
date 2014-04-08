@@ -265,14 +265,47 @@ fnSearchWidget = function($, config){
         
         
         // config supplied: {"qf":["PROVIDER:Athena","PROVIDER:Bildarchiv Foto Marburg","PROVIDER:Progetto ArtPast- CulturaItalia"]}
-        
         if(self.config){
         	if(self.config.qf){
+        		
+//        		console.log('config.query = ' + self.config.query + '\n\n' + JSON.stringify(self.config.qf) )
+//        		alert('config.query = ' + self.config.qf)
+
+        		var dataProviders = [];
+        		var providers = [];
+        		
         		$.each(self.config.qf, function(i, ob){
+        			
         			ob = ob.replace(/[\{\}]/g, '"');
-        			url += param() + 'qf=';
-        			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
+        			
+        			if( ob.indexOf('DATA_PROVIDER') > -1 ){
+        				dataProviders.push(ob);
+        			}
+        			else if( ob.indexOf('PROVIDER') > -1 ){
+        				providers.push(ob);
+        			}
+        			else{
+        				url += param() + 'qf=';        			
+        				url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;        				
+        			}
         		});
+        		
+        		if(dataProviders.length){
+        			var x = dataProviders.join('').replace(/DATA_PROVIDER:/g, ' OR DATA_PROVIDER:').replace(/^ OR DATA_PROVIDER:/, 'DATA_PROVIDER:');
+    				url += param() + 'qf=' + x;
+        		}
+        		if(providers.length){
+        			var x = providers.join('').replace(/PROVIDER:/g, ' OR PROVIDER:').replace(/^ OR PROVIDER:/, 'PROVIDER:');
+        			
+        			if(dataProviders.length){
+        				url +=  ' OR ' + x;        				
+        			}
+        			else{
+        				url += param() + 'qf=' + x;        				
+        			}
+
+        		}
+        		
         	}
         }
         return url;
@@ -803,6 +836,8 @@ var theParams = function(){
 				}
 
 				//Params[key].push(encodeURIComponent(val));
+				//alert('push [' + key + '] = ' + val);
+				console.log('push [' + key + '] = ' + val);
 				Params[key].push(val);
 			}
 			//alert(JSON.stringify(Params));
