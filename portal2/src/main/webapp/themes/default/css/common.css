@@ -323,9 +323,12 @@
 	position:		absolute;
 }
 
+/*space for 'e' logo (temporarily removed) */
+/*
 .footer-links.with-icons a{
-	margin-left:1.4em;/*space for logo*/
+	margin-left:1.4em;
 }
+*/
 
 .footer-bottom-links{
 	margin-top:		0;
