@@ -342,7 +342,7 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 			}
 		}
 
-		if (foundEntity != null) {
+		if (foundEntity != null && !foundEntity.isShowInContext()) {
 			foundEntity.setMatchUrl(matchedUrl);
 			foundEntity.setShowInContext(true);
 		}

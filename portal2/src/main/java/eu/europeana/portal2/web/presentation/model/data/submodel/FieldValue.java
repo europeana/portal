@@ -168,7 +168,7 @@ public class FieldValue {
 		return field.isOptOutAware() && model.isOptedOut();
 	}
 
-	public Object getDecorator() {
+	public ContextualItemDecorator getDecorator() {
 		return decorator;
 	}
 

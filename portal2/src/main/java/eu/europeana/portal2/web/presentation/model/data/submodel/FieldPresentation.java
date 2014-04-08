@@ -40,7 +40,8 @@ public class FieldPresentation {
 
 	protected FullDocData model;
 	protected Field field;
-	protected List<FieldValue> fieldValues;
+	protected List<FieldValue> fieldValues = new ArrayList<FieldValue>();
+	protected List<String> contextualEntityUris = new ArrayList<String>();
 	protected boolean isCombined = false;
 
 	/**
@@ -94,15 +95,12 @@ public class FieldPresentation {
 		}
 	}
 
-	public void add(FullDocData model, String fieldValue) {
-		if (!StringUtils.isBlank(fieldValue)) {
+	public void add(FullDocData model, String value) {
+		if (!StringUtils.isBlank(value)) {
 			if (this.fieldValues == null) {
 				this.fieldValues = new ArrayList<FieldValue>();
 			}
-			FieldValue fieldValueObj = new FieldValue(model, field, fieldValue);
-			if (!fieldValueObj.isResourceUri()) {
-				this.fieldValues.add(fieldValueObj);
-			}
+			addFieldValue(model, field, value);
 		}
 	}
 
@@ -117,12 +115,21 @@ public class FieldPresentation {
 				}
 				for (String value : fieldValue.getValue()) {
 					if (!StringUtils.isBlank(value)) {
-						FieldValue fieldValueObj = new FieldValue(model, fieldValue.getKey(), value);
-						if (!fieldValueObj.isResourceUri()) {
-							this.fieldValues.add(fieldValueObj);
-						}
+						addFieldValue(model, fieldValue.getKey(), value);
 					}
 				}
+			}
+		}
+	}
+
+	private void addFieldValue(FullDocData model, Field field, String value) {
+		FieldValue fieldValue = new FieldValue(model, field, value);
+		if (!fieldValue.isResourceUri()) {
+			if (fieldValue.getDecorator() == null) {
+				this.fieldValues.add(fieldValue);
+			} else if (!contextualEntityUris.contains(fieldValue.getDecorator().getAbout())) {
+				this.fieldValues.add(fieldValue);
+				contextualEntityUris.add(fieldValue.getDecorator().getAbout());
 			}
 		}
 	}
