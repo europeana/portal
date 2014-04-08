@@ -61,10 +61,6 @@ input[type=checkbox] {
 	vertical-align: text-bottom;
 }
 
-input[type=text],
-input[type=password] {
-	padding: 1% 2%;
-}
 
 /* links */
 a { text-decoration: none; color: #2A85E8; outline: 0; }
