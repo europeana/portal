@@ -6,14 +6,16 @@ import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanWrapper.ContextualEntity;
 
 public class AgentDecorator extends ContextualItemDecorator implements Agent {
 
 	private Agent agent;
+	protected ContextualEntity entityType = ContextualEntity.AGENT;
 
-	public AgentDecorator(FullBeanLinker fullBeanLinked, Agent agent,
+	public AgentDecorator(FullBeanLinker fullBeanLinker, Agent agent,
 			String userLanguage, String edmLanguage) {
-		super(fullBeanLinked, agent, userLanguage, edmLanguage);
+		super(fullBeanLinker, agent, userLanguage, edmLanguage);
 		this.agent = agent;
 	}
 
@@ -177,5 +179,10 @@ public class AgentDecorator extends ContextualItemDecorator implements Agent {
 	public List<ContextualItemDecorator> getRelatedContextualItem() {
 		List<ContextualItemDecorator> items = new ArrayList<ContextualItemDecorator>();
 		return items;
+	}
+
+	@Override
+	public ContextualEntity getEntityType() {
+		return entityType;
 	}
 }

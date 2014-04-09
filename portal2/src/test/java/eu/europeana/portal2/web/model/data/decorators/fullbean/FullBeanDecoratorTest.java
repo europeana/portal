@@ -32,6 +32,7 @@ import eu.europeana.corelib.solr.entity.WebResourceImpl;
 import eu.europeana.corelib.utils.DateUtils;
 import eu.europeana.portal2.web.model.json.Json2FullBeanConverter;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ContextualItemDecorator;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -420,5 +421,30 @@ public class FullBeanDecoratorTest {
 		decorator = new FullBeanDecorator(bean, "en");
 		item = decorator.getWebResourceEdmRightsByUrl("http://example.com/fake");
 		assertNull(item);
+	}
+
+	@Test
+	public void testGetContextualConnections() {
+		ContextualItemDecorator entity;
+
+		entity = decorator.getContextualConnections(FullBeanDecorator.ContextualEntity.ALL,
+				"http://dbpedia.org/resource/Wols", null);
+		assertEquals(FullBeanDecorator.ContextualEntity.AGENT, entity.getEntityType());
+
+		entity = decorator.getContextualConnections(FullBeanDecorator.ContextualEntity.ALL,
+				"http://partage.vocnet.org/part00042", null);
+		assertEquals(FullBeanDecorator.ContextualEntity.CONCEPT, entity.getEntityType());
+
+		entity = decorator.getContextualConnections(FullBeanDecorator.ContextualEntity.ALL,
+				"http://sws.geonames.org/2921044/", null);
+		assertEquals(FullBeanDecorator.ContextualEntity.PLACE, entity.getEntityType());
+
+		entity = decorator.getContextualConnections(FullBeanDecorator.ContextualEntity.ALL,
+				"http://semium.org/time/20xx_1_third", null);
+		assertEquals(FullBeanDecorator.ContextualEntity.TIMESPAN, entity.getEntityType());
+
+		entity = decorator.getContextualConnections(FullBeanDecorator.ContextualEntity.ALL,
+				"http://example.com/fake", null);
+		assertNull(entity);
 	}
 }

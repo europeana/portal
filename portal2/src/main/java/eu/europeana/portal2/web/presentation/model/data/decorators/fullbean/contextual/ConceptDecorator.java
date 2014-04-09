@@ -7,10 +7,13 @@ import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanWrapper.ContextualEntity;
 
 public class ConceptDecorator extends ContextualItemDecorator implements Concept {
 
 	private Concept concept;
+	protected ContextualEntity entityType = ContextualEntity.CONCEPT;
+
 	private Map<String, String> broaderLinks;
 	private Map<String, String> narrowerLinks;
 	private Map<String, String> relatedLinks;
@@ -21,9 +24,9 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	private Map<String, String> exactMatchLinks;
 	List<ContextualItemDecorator> relatedItems = new ArrayList<ContextualItemDecorator>();
 
-	public ConceptDecorator(FullBeanLinker fullBeanLinked, Concept concept,
+	public ConceptDecorator(FullBeanLinker fullBeanLinker, Concept concept,
 			String userLanguage, String edmLanguage) {
-		super(fullBeanLinked, concept, userLanguage, edmLanguage);
+		super(fullBeanLinker, concept, userLanguage, edmLanguage);
 		this.concept = concept;
 	}
 
@@ -160,7 +163,7 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 		if (getBroadMatch() != null) {
 			for (String term : getBroadMatch()) {
 				addRelation(term);
-				ConceptDecorator other = (ConceptDecorator)fullBeanLinked.getConceptByURI(term);
+				ConceptDecorator other = (ConceptDecorator)fullBeanLinker.getConceptByURI(term);
 				broadMatchLinks.put(term, (other != null && other.getLabel() != null ? other.getLabel() : ""));
 			}
 		}
@@ -236,9 +239,14 @@ public class ConceptDecorator extends ContextualItemDecorator implements Concept
 	}
 
 	private void addRelation(String uri) {
-		ConceptDecorator relation = (ConceptDecorator)fullBeanLinked.getConceptByURI(uri);
+		ConceptDecorator relation = (ConceptDecorator)fullBeanLinker.getConceptByURI(uri);
 		if (relation != null && !relatedItems.contains(relation)) {
 			relatedItems.add(relation);
 		}
+	}
+
+	@Override
+	public ContextualEntity getEntityType() {
+		return entityType;
 	}
 }

@@ -10,25 +10,27 @@ import org.bson.types.ObjectId;
 import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanWrapper.ContextualEntity;
 
 public class ContextualItemDecorator implements ContextualClass {
 
 	Logger log = Logger.getLogger(ContextualItemDecorator.class.getCanonicalName());
 
-	protected FullBeanLinker fullBeanLinked;
+	protected FullBeanLinker fullBeanLinker;
 	private ContextualClass item;
 	protected String userLanguage;
 	protected String edmLanguage;
-	protected boolean showInContext = false;
+	private boolean showInContext = false;
 	protected boolean matchPrefLabel = false;
 	protected boolean matchUrl = false;
 	private List<String> labels;
 	private boolean labelsInitialized = false;
 	List<ContextualItemDecorator> allRelatedItems;
+	protected ContextualEntity entityType;
 
-	ContextualItemDecorator(FullBeanLinker fullBeanLinked, ContextualClass item,
+	ContextualItemDecorator(FullBeanLinker fullBeanLinker, ContextualClass item,
 			String userLanguage, String edmLanguage) {
-		this.fullBeanLinked = fullBeanLinked;
+		this.fullBeanLinker = fullBeanLinker;
 		this.item = item;
 		this.userLanguage = userLanguage;
 		this.edmLanguage = edmLanguage;
@@ -200,6 +202,11 @@ public class ContextualItemDecorator implements ContextualClass {
 		log.info("getRelatedContextualItem");
 		List<ContextualItemDecorator> items = new ArrayList<ContextualItemDecorator>();
 		return items;
+	}
+
+	public ContextualEntity getEntityType() {
+		log.info("ContextualItemDecorator.getEntityType()");
+		return entityType;
 	}
 
 	public List<ContextualItemDecorator> getAllRelatedItems() {

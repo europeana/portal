@@ -7,10 +7,13 @@ import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanWrapper.ContextualEntity;
 
 public class TimespanDecorator extends ContextualItemDecorator implements Timespan {
 
 	private Timespan timespan;
+	protected ContextualEntity entityType = ContextualEntity.TIMESPAN;
+
 	Map<String, String> isPartOfLinks;
 
 	public TimespanDecorator(FullBeanLinker fullBeanLinked, Timespan timespan,
@@ -84,5 +87,10 @@ public class TimespanDecorator extends ContextualItemDecorator implements Timesp
 	public List<ContextualItemDecorator> getRelatedContextualItem() {
 		List<ContextualItemDecorator> items = new ArrayList<ContextualItemDecorator>();
 		return items;
+	}
+
+	@Override
+	public ContextualEntity getEntityType() {
+		return entityType;
 	}
 }

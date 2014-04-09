@@ -23,6 +23,7 @@ import java.net.URLEncoder;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
@@ -72,7 +73,10 @@ public class FieldValue {
 			}
 			Resource resource = model.getShortcut().getResource(field.name(), value);
 
-			this.decorator = model.getDocument().getContextualConnections(entityType, value, resource);
+			decorator = model.getDocument().getContextualConnections(entityType, value, resource);
+		} else if (value.startsWith("http://")) {
+			decorator = model.getDocument().getContextualConnections(FullBeanDecorator.ContextualEntity.ALL, value, null);
+			entityType = decorator.getEntityType();
 		}
 	}
 

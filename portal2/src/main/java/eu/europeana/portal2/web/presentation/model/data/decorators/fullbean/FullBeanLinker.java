@@ -28,6 +28,7 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 	protected List<PlaceDecorator> places;
 	protected List<TimespanDecorator> timespans;
 	protected List<AgentDecorator> agents;
+	protected List<ContextualItemDecorator> entities;
 
 	private Map<String, Agent> agentMap;
 	private Map<String, Concept> conceptMap;
@@ -318,9 +319,7 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public ContextualItemDecorator getContextualConnections(ContextualEntity type, String value, Resource resource) {
-
 		ContextualItemDecorator foundEntity = null;
 		boolean matchedUrl = false;
 		if (resource != null) {
@@ -395,8 +394,21 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 				entities = (List<? extends ContextualItemDecorator>)getDecoratedPlaces(); break;
 			case TIMESPAN:
 				entities = (List<? extends ContextualItemDecorator>)getDecoratedTimespans(); break;
+			case ALL:
+				entities = (List<? extends ContextualItemDecorator>)getDecoratedEntities(); break;
 			default:
 				break;
+		}
+		return entities;
+	}
+
+	private List<ContextualItemDecorator> getDecoratedEntities() {
+		if (entities == null) {
+			entities = new ArrayList<ContextualItemDecorator>();
+			entities.addAll(getDecoratedEntities(ContextualEntity.AGENT));
+			entities.addAll(getDecoratedEntities(ContextualEntity.CONCEPT));
+			entities.addAll(getDecoratedEntities(ContextualEntity.PLACE));
+			entities.addAll(getDecoratedEntities(ContextualEntity.TIMESPAN));
 		}
 		return entities;
 	}

@@ -7,15 +7,18 @@ import java.util.Map;
 
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
+import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanWrapper.ContextualEntity;
 
 public class PlaceDecorator extends ContextualItemDecorator implements Place {
 
 	private Place place;
+	protected ContextualEntity entityType = ContextualEntity.PLACE;
+
 	private Map<String, String> isPartOfLinks;
 
-	public PlaceDecorator(FullBeanLinker fullBeanLinked, Place place,
+	public PlaceDecorator(FullBeanLinker fullBeanLinker, Place place,
 			String userLanguage, String edmLanguage) {
-		super(fullBeanLinked, place, userLanguage, edmLanguage);
+		super(fullBeanLinker, place, userLanguage, edmLanguage);
 		this.place = place;
 	}
 
@@ -102,4 +105,9 @@ public class PlaceDecorator extends ContextualItemDecorator implements Place {
 
 	@Override
 	public void setOwlSameAs(String[] owlSameAs) {}
+
+	@Override
+	public ContextualEntity getEntityType() {
+		return entityType;
+	}
 }

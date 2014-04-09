@@ -43,7 +43,7 @@ public class FullBeanWrapper implements FullBean {
 
 	Logger log = Logger.getLogger(FullBeanWrapper.class.getCanonicalName());
 
-	public enum ContextualEntity {AGENT, CONCEPT, PLACE, TIMESPAN};
+	public enum ContextualEntity {AGENT, CONCEPT, PLACE, TIMESPAN, ALL};
 
 	private static final int POST_TITLE_MAX_LENGTH = 110;
 
