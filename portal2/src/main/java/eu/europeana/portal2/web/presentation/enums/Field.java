@@ -154,25 +154,25 @@ public enum Field {
 	RDA_PROFESSIONOROCCUPATION("rdaGr2:professionOrOccupation", null),
 
 	// ENRICHMENT
-	ENRICHMENT_PLACE_TERM("enrichment:place_term", "place_term_t"),
+	ENRICHMENT_AGENT_ABOUT("enrichment:agent_term", "agent_term_t"),
+	ENRICHMENT_AGENT_LABEL("enrichment:agent_label", "agent_label_t"),
+	ENRICHMENT_CONCEPT_ABOUT("enrichment:concept_term", "concept_term_t"),
+	ENRICHMENT_CONCEPT_LABEL("enrichment:concept_label", "concept_label_t"),
+	ENRICHMENT_CONCEPT_BROADER_TERM("enrichment:concept_broader_term", "concept_broader_term_t"),
+	ENRICHMENT_CONCEPT_BROADER_LABEL("enrichment:concept_broader_label", "concept_broader_label_t"),
+	ENRICHMENT_PLACE_ABOUT("enrichment:place_term", "place_term_t"),
 	ENRICHMENT_PLACE_LABEL("enrichment:place_label", "place_label_t"),
 	ENRICHMENT_PLACE_LAT_LONG("enrichment:place_lat_long", "place_lat_long_t"),
 	ENRICHMENT_PLACE_LATITUDE("enrichment:place_latitude", null),
 	ENRICHMENT_PLACE_LONGITUDE("enrichment:place_longitude", null),
 	ENRICHMENT_PLACE_BROADER_TERM("enrichment:place_broader_term", "place_broader_term_t"),
 	ENRICHMENT_PLACE_BROADER_LABEL("enrichment:place_broader_label", "place_broader_label_t"),
-	ENRICHMENT_PERIOD_TERM("enrichment:period_term", "period_term_t"),
-	ENRICHMENT_PERIOD_LABEL("enrichment:period_label", "period_label_t"),
-	ENRICHMENT_PERIOD_BEGIN("enrichment:period_begin", "period_begin_t"),
-	ENRICHMENT_PERIOD_END("enrichment:period_end", "period_end_t"),
-	ENRICHMENT_PERIOD_BROADER_TERM("enrichment:period_broader_term", "period_broader_term_t"),
-	ENRICHMENT_PERIOD_BROADER_LABEL("enrichment:period_broader_label", "period_broader_label"),
-	ENRICHMENT_CONCEPT_TERM("enrichment:concept_term", "concept_term_t"),
-	ENRICHMENT_CONCEPT_LABEL("enrichment:concept_label", "concept_label_t"),
-	ENRICHMENT_CONCEPT_BROADER_TERM("enrichment:concept_broader_term", "concept_broader_term_t"),
-	ENRICHMENT_CONCEPT_BROADER_LABEL("enrichment:concept_broader_label", "concept_broader_label_t"),
-	ENRICHMENT_AGENT_TERM("enrichment:agent_term", "agent_term_t"),
-	ENRICHMENT_AGENT_LABEL("enrichment:agent_label", "agent_label_t"),
+	ENRICHMENT_TIMESPAN_ABOUT("enrichment:period_term", "period_term_t"),
+	ENRICHMENT_TIMESPAN_LABEL("enrichment:period_label", "period_label_t"),
+	ENRICHMENT_TIMESPAN_BEGIN("enrichment:period_begin", "period_begin_t"),
+	ENRICHMENT_TIMESPAN_END("enrichment:period_end", "period_end_t"),
+	ENRICHMENT_TIMESPAN_BROADER_TERM("enrichment:period_broader_term", "period_broader_term_t"),
+	ENRICHMENT_TIMESPAN_BROADER_LABEL("enrichment:period_broader_label", "period_broader_label"),
 
 	;
 
@@ -312,4 +312,15 @@ public enum Field {
 		}
 		return schemaOrgMapping;
 	}
+
+	public boolean isEntityIdentifier() {
+		if (this.equals(Field.ENRICHMENT_AGENT_ABOUT)
+			|| this.equals(Field.ENRICHMENT_CONCEPT_ABOUT)
+			|| this.equals(Field.ENRICHMENT_PLACE_ABOUT)
+			|| this.equals(Field.ENRICHMENT_TIMESPAN_ABOUT)) {
+			return true;
+		}
+		return false;
+	}
+
 }

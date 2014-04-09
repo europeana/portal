@@ -74,7 +74,7 @@ public class FieldValue {
 			Resource resource = model.getShortcut().getResource(field.name(), value);
 
 			decorator = model.getDocument().getContextualConnections(entityType, value, resource);
-		} else if (value.startsWith("http://")) {
+		} else if (value.startsWith("http://") && !field.isEntityIdentifier()) {
 			decorator = model.getDocument().getContextualConnections(FullBeanDecorator.ContextualEntity.ALL, value, null);
 			if (decorator != null) {
 				entityType = decorator.getEntityType();

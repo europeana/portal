@@ -116,28 +116,83 @@ public abstract class FullDocPreparation extends FullDocData {
 	 */
 	private void prepareFieldsEnrichment() throws Exception {
 		fieldsEnrichment = new HashMap<String, List<FieldPresentation>>();
+		fieldsEnrichment.put("enrichment_category_where_t", extractWhereFields());
+		fieldsEnrichment.put("enrichment_category_who_t", extractWhoFields());
+		fieldsEnrichment.put("enrichment_category_what_t", extractWhatFields());
+		fieldsEnrichment.put("enrichment_category_when_t", extractWhenFields());
+	}
 
-		// WHERE
+	private List<FieldPresentation> extractWhenFields() {
+		List<FieldPresentation> when = new ArrayList<FieldPresentation>();
+		if (document.getTimespans() != null) {
+			for (Timespan timespan : document.getTimespans()) {
+				addField(when, Field.ENRICHMENT_TIMESPAN_ABOUT, new String[]{timespan.getAbout()});
+				ArrayList<String> labels = new ArrayList<String>();
+				if (timespan.getPrefLabel() != null) {
+					for (String language : timespan.getPrefLabel().keySet()) {
+						labels.add(timespan.getPrefLabel().get(language) + " (" + language + ")");
+					}
+				}
+				addField(when, Field.ENRICHMENT_TIMESPAN_LABEL, StringArrayUtils.toArray(labels));
+				if (timespan.getBegin() != null) {
+					for (Entry<String, List<String>> item : timespan.getBegin().entrySet()) {
+						for (String value : item.getValue()) {
+							addField(when, Field.ENRICHMENT_TIMESPAN_BEGIN, value);
+						}
+					}
+				}
+				if (timespan.getEnd() != null) {
+					for (Entry<String, List<String>> item : timespan.getEnd().entrySet()) {
+						for (String value : item.getValue()) {
+							addField(when, Field.ENRICHMENT_TIMESPAN_END, value);
+						}
+					}
+				}
+			}
+		}
+		return when;
+	}
+
+	private List<FieldPresentation> extractWhatFields() {
+		List<FieldPresentation> what = new ArrayList<FieldPresentation>();
+		if (document.getConcepts() != null) {
+			for (Concept concept : document.getConcepts()) {
+				addField(what, Field.ENRICHMENT_CONCEPT_ABOUT, new String[]{concept.getAbout()});
+				ArrayList<String> labels = new ArrayList<String>();
+				if (concept.getPrefLabel() != null) {
+					for (String language : concept.getPrefLabel().keySet()) {
+						labels.add(concept.getPrefLabel().get(language) + " (" + language + ")");
+					}
+				}
+				addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
+				addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, concept.getBroader());
+			}
+		}
+		return what;
+	}
+
+	private List<FieldPresentation> extractWhoFields() {
+		List<FieldPresentation> who = new ArrayList<FieldPresentation>();
+		if (document.getAgents() != null) {
+			for (Agent agent : document.getAgents()) {
+				addField(who, Field.ENRICHMENT_AGENT_ABOUT, new String[]{agent.getAbout()});
+				ArrayList<String> labels = new ArrayList<String>();
+				if (agent.getPrefLabel() != null) {
+					for (String language : agent.getPrefLabel().keySet()) {
+						labels.add(agent.getPrefLabel().get(language) + " (" + language + ")");
+					}
+				}
+				addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
+			}
+		}
+		return who;
+	}
+
+	private List<FieldPresentation> extractWhereFields() {
 		List<FieldPresentation> where = new ArrayList<FieldPresentation>();
-		/*
-		addField(where, Field.ENRICHMENT_PLACE_LABEL, document.getEnrichmentPlaceLabel());
-		addField(where, Field.ENRICHMENT_PLACE_TERM, document.getEnrichmentPlaceTerm());
-		if (getDocument().isPositionAvailable()) {
-			addField(where, Field.ENRICHMENT_PLACE_LAT_LONG,
-				new String[]{String.valueOf(document.getEnrichmentPlaceLatitude())},
-				new String[]{String.valueOf(document.getEnrichmentPlaceLongitude())},
-				new String[]{getDocument().getUrlKml()});
-		}
-		addField(where, Field.ENRICHMENT_PLACE_BROADER_LABEL, document.getEnrichmentPlaceBroaderLabel());
-		addField(where, Field.ENRICHMENT_PLACE_BROADER_TERM, document.getEnrichmentPlaceBroaderTerm());
-		if (where.size() > 0) {
-			fieldsEnrichment.put("enrichment_category_where_t", where);
-		}
-		*/
-
 		if (document.getPlaces() != null) {
 			for (Place place : document.getPlaces()) {
-				addField(where, Field.ENRICHMENT_PLACE_TERM, new String[]{place.getAbout()});
+				addField(where, Field.ENRICHMENT_PLACE_ABOUT, new String[]{place.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
 				if (place.getPrefLabel() != null) {
 					for (String language : place.getPrefLabel().keySet()) {
@@ -154,98 +209,7 @@ public abstract class FullDocPreparation extends FullDocData {
 				}
 			}
 		}
-		if (where.size() > 0) {
-			fieldsEnrichment.put("enrichment_category_where_t", where);
-		}
-
-		// WHO
-		List<FieldPresentation> who = new ArrayList<FieldPresentation>();
-		// addField(who, Field.ENRICHMENT_AGENT_LABEL, document.getEnrichmentAgentLabel());
-		// addField(who, Field.ENRICHMENT_AGENT_TERM, document.getEnrichmentAgentTerm());
-		if (document.getAgents() != null) {
-			for (Agent agent : document.getAgents()) {
-				addField(who, Field.ENRICHMENT_AGENT_TERM, new String[]{agent.getAbout()});
-				ArrayList<String> labels = new ArrayList<String>();
-				if (agent.getPrefLabel() != null) {
-					for (String language : agent.getPrefLabel().keySet()) {
-						labels.add(agent.getPrefLabel().get(language) + " (" + language + ")");
-					}
-				}
-				addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
-			}
-		}
-		if (who.size() > 0) {
-			fieldsEnrichment.put("enrichment_category_who_t", who);
-		}
-
-		// WHAT
-		List<FieldPresentation> what = new ArrayList<FieldPresentation>();
-		// addField(what, Field.ENRICHMENT_CONCEPT_LABEL, document.getEnrichmentConceptLabel());
-		// addField(what, Field.ENRICHMENT_CONCEPT_TERM, document.getEnrichmentConceptTerm());
-		// addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, document.getEnrichmentConceptBroaderLabel());
-		// addField(what, Field.ENRICHMENT_CONCEPT_BROADER_TERM, document.getEnrichmentConceptBroaderTerm());
-		if (document.getConcepts() != null) {
-			for (Concept concept : document.getConcepts()) {
-				addField(what, Field.ENRICHMENT_CONCEPT_TERM, new String[]{concept.getAbout()});
-				ArrayList<String> labels = new ArrayList<String>();
-				if (concept.getPrefLabel() != null) {
-					for (String language : concept.getPrefLabel().keySet()) {
-						labels.add(concept.getPrefLabel().get(language) + " (" + language + ")");
-					}
-				}
-				addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
-				addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, concept.getBroader());
-			}
-		}
-		if (what.size() > 0) {
-			fieldsEnrichment.put("enrichment_category_what_t", what);
-		}
-
-		// WHEN
-		List<FieldPresentation> when = new ArrayList<FieldPresentation>();
-		/*
-		addField(when, Field.ENRICHMENT_PERIOD_LABEL, document.getEnrichmentPeriodLabel());
-		addField(when, Field.ENRICHMENT_PERIOD_TERM, document.getEnrichmentPeriodTerm());
-		if (document.getEnrichmentPeriodBegin() != null) {
-			addField(when, Field.ENRICHMENT_PERIOD_BEGIN, new String[]{document.getEnrichmentPeriodBegin().toString()});
-		}
-		if (document.getEnrichmentPeriodEnd() != null) {
-			addField(when, Field.ENRICHMENT_PERIOD_END, new String[]{document.getEnrichmentPeriodEnd().toString()});
-		}
-		addField(when, Field.ENRICHMENT_PERIOD_BROADER_LABEL, document.getEnrichmentPeriodBroaderLabel());
-		addField(when, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());
-		*/
-		if (document.getTimespans() != null) {
-			for (Timespan timespan : document.getTimespans()) {
-				addField(when, Field.ENRICHMENT_PERIOD_TERM, new String[]{timespan.getAbout()});
-				ArrayList<String> labels = new ArrayList<String>();
-				if (timespan.getPrefLabel() != null) {
-					for (String language : timespan.getPrefLabel().keySet()) {
-						labels.add(timespan.getPrefLabel().get(language) + " (" + language + ")");
-					}
-				}
-				addField(when, Field.ENRICHMENT_PERIOD_LABEL, StringArrayUtils.toArray(labels));
-				if (timespan.getBegin() != null) {
-					// TODO: handle language (item.getKey())
-					for (Entry<String, List<String>> item : timespan.getBegin().entrySet()) {
-						for (String value : item.getValue()) {
-							addField(when, Field.ENRICHMENT_PERIOD_BEGIN, value);
-						}
-					}
-				}
-				if (timespan.getEnd() != null) {
-					// TODO: handle language (item.getKey())
-					for (Entry<String, List<String>> item : timespan.getEnd().entrySet()) {
-						for (String value : item.getValue()) {
-							addField(when, Field.ENRICHMENT_PERIOD_END, value);
-						}
-					}
-				}
-			}
-		}
-		if (when.size() > 0) {
-			fieldsEnrichment.put("enrichment_category_when_t", when);
-		}
+		return where;
 	}
 
 	/**

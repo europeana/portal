@@ -217,7 +217,7 @@ public class FullDocPage extends FullDocPreparation {
 		*/
 		if (document.getPlaces() != null) {
 			for (Place place : document.getPlaces()) {
-				addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, place.getAbout());
+				addMetaField(fields, Field.ENRICHMENT_PLACE_ABOUT, place.getAbout());
 				if (place.getPrefLabel() != null) {
 					for (String key : place.getPrefLabel().keySet()) {
 						addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, place.getPrefLabel().get(key) + " (" + key + ")");
@@ -234,15 +234,15 @@ public class FullDocPage extends FullDocPreparation {
 
 		if (document.getTimespans() != null) {
 			for (Timespan timespan : document.getTimespans()) {
-				addMetaField(fields, Field.ENRICHMENT_PERIOD_TERM, timespan.getAbout());
+				addMetaField(fields, Field.ENRICHMENT_TIMESPAN_ABOUT, timespan.getAbout());
 				for (String key : timespan.getPrefLabel().keySet()) {
-					addMetaField(fields, Field.ENRICHMENT_PERIOD_LABEL, timespan.getPrefLabel().get(key) + " (" + key + ")");
+					addMetaField(fields, Field.ENRICHMENT_TIMESPAN_LABEL, timespan.getPrefLabel().get(key) + " (" + key + ")");
 				}
 				if (timespan.getBegin() != null) {
 					// TODO: handle language (item.getKey())
 					for (Entry<String, List<String>> item : timespan.getBegin().entrySet()) {
 						for (String value : item.getValue()) {
-							addMetaField(fields, Field.ENRICHMENT_PERIOD_BEGIN, value);
+							addMetaField(fields, Field.ENRICHMENT_TIMESPAN_BEGIN, value);
 						}
 					}
 				}
@@ -250,7 +250,7 @@ public class FullDocPage extends FullDocPreparation {
 					// TODO: handle language (item.getKey())
 					for (Entry<String, List<String>> item : timespan.getEnd().entrySet()) {
 						for (String value : item.getValue()) {
-							addMetaField(fields, Field.ENRICHMENT_PERIOD_END, value);
+							addMetaField(fields, Field.ENRICHMENT_TIMESPAN_END, value);
 						}
 					}
 				}
@@ -261,7 +261,7 @@ public class FullDocPage extends FullDocPreparation {
 
 		if (document.getConcepts() != null) {
 			for (Concept concept : document.getConcepts()) {
-				addMetaField(fields, Field.ENRICHMENT_CONCEPT_TERM, concept.getAbout());
+				addMetaField(fields, Field.ENRICHMENT_CONCEPT_ABOUT, concept.getAbout());
 				for (String key : concept.getPrefLabel().keySet()) {
 					addMetaField(fields, Field.ENRICHMENT_CONCEPT_LABEL, concept.getPrefLabel().get(key) + " (" + key + ")");
 				}
@@ -272,7 +272,7 @@ public class FullDocPage extends FullDocPreparation {
 
 		if (document.getAgents() != null) {
 			for (Agent agent : document.getAgents()) {
-				addMetaField(fields, Field.ENRICHMENT_AGENT_TERM, agent.getAbout());
+				addMetaField(fields, Field.ENRICHMENT_AGENT_ABOUT, agent.getAbout());
 				for (String key : agent.getPrefLabel().keySet()) {
 					addMetaField(fields, Field.ENRICHMENT_AGENT_LABEL, agent.getPrefLabel().get(key) + " (" + key + ")");
 				}
