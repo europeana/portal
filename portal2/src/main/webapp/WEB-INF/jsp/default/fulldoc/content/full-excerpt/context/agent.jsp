@@ -12,7 +12,7 @@
         <c:otherwise>${value.value}</c:otherwise>
       </c:choose>
     </c:set>
-    <span class="contextual-header" id="${agent.htmlId}">$title&nbsp;<span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span></span>
+    <div class="contextual-header" id="${agent.htmlId}">${title}</div>
   </c:if>
 
   <div<c:if test="${inContext == 1}"> class="contextual-body"</c:if>>

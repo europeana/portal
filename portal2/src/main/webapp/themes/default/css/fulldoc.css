@@ -710,23 +710,29 @@ h1 {
 	display: none;
 }
 
-.concept .smaller{
+.concept .smaller, h1 .smaller {
 	font-size: 0.8em;
 	position: relative;
 	top: -0.2em;
 }
 .concept .smaller.icon-arrow-6-right:after,
-.concept .smaller.icon-arrow-7-right:after {
+.concept .smaller.icon-arrow-7-right:after,
+h1 .smaller.icon-arrow-6-right:after,
+h1 .smaller.icon-arrow-7-right:after {
 	font-size: 1.2em;
 	position: relative;
 	top: 0.2em;
 }
 
-.concept a.more-info{
+.concept a.more-info {
 	color: #333;
 }
 
-div.lb-trigger{
+h1 a.more-info {
+	color: #333;
+}
+
+div.lb-trigger {
 	position:	absolute;
 	bottom:		0;
 	left:		0.25em;

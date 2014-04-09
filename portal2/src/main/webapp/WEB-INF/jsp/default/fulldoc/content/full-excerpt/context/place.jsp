@@ -4,7 +4,6 @@
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
 <c:set var="place" value="${contextualItem}" />
-
 <c:if test="${!empty place.labels && (inContext == 1 || !place.showInContext)}">
   <c:if test="${inContext == 1}">
     <c:set var="title">
@@ -13,7 +12,7 @@
         <c:otherwise>${value.value}</c:otherwise>
       </c:choose>
     </c:set>
-    <div class="contextual-header" id="${place.htmlId}">${title}&nbsp;<span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span></div>
+    <div class="contextual-header" id="${place.htmlId}">${title}</div>
   </c:if>
 
   <div<c:if test="${inContext == 1}"> class="contextual-body"</c:if>>

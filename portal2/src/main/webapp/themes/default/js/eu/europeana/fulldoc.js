@@ -23,6 +23,7 @@ eu.europeana.fulldoc = {
 
 		this.loadComponents();
 		this.addAutoTagHandler();
+		this.addContextualEntitiesDisplayHandler();
 
 		$('.sidebar-right a').each(function(i, ob){
 			js.utils.fixSearchRowLinks($(ob));
@@ -220,7 +221,42 @@ eu.europeana.fulldoc = {
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	},
 
+	addContextualEntitiesDisplayHandler : function() {
+		var self = this;
+		$('h1 a.more-info')
+		 .each(function( key, value ) {
+			$(value).bind('click', self.handleContextualEntitiesDisplayClick);
+			$(value).addClass(eu.europeana.fulldoc.more_icon_class);
+		});
+	},
 
+	handleContextualEntitiesDisplayClick : function(e) {
+
+		e.preventDefault();
+		var $elm = $(this);
+
+		var event = $elm.data('event'); // used to initialise map
+		if (event) {
+			// $(window).trigger(event, $elm.parent().next());
+		}
+
+		$('div.contextual-body').slideToggle();
+
+		if ($elm.hasClass(eu.europeana.fulldoc.more_icon_class)) {
+			$elm.removeClass(eu.europeana.fulldoc.more_icon_class);
+			$elm.addClass(eu.europeana.fulldoc.less_icon_class);
+		} else {
+			$elm.removeClass(eu.europeana.fulldoc.less_icon_class);
+			$elm.addClass(eu.europeana.fulldoc.more_icon_class);
+		}
+
+		if ($elm.html() == eu.europeana.vars.show.more) {
+			$elm.html(eu.europeana.vars.show.less);
+		}
+		else if ($elm.html() == eu.europeana.vars.show.less){
+			$elm.html(eu.europeana.vars.show.more);
+		}
+	},
 
 	addAutoTagHandler : function() {
 		var self = this;
@@ -239,18 +275,16 @@ eu.europeana.fulldoc = {
 		var $elm = $(this);
 
 		var event = $elm.data('event'); // used to initialise map
-		if(event){
-    	   	$(window).trigger(event, $elm.parent().next() );
+		if (event) {
+			$(window).trigger(event, $elm.parent().next());
 		}
 
 		$elm.parent().next().slideToggle();
 
 		if ( $elm.hasClass(eu.europeana.fulldoc.more_icon_class) ) {
-
 			$elm.removeClass(eu.europeana.fulldoc.more_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.less_icon_class);
 		} else {
-
 			$elm.removeClass(eu.europeana.fulldoc.less_icon_class);
 			$elm.addClass(eu.europeana.fulldoc.more_icon_class);
 		}
@@ -261,9 +295,7 @@ eu.europeana.fulldoc = {
 		else if ( $elm.html() == eu.europeana.vars.show.less){
 			$elm.html(eu.europeana.vars.show.more);
 		}
-
 	},
-
 
 	addThis : function() {
 

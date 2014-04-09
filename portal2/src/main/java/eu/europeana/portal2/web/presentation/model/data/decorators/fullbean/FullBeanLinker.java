@@ -39,6 +39,7 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 	private Proxy europeanaProxy;
 	private List<Proxy> providedProxies;
 	private Boolean singletonProvidedProxy;
+	private boolean havingEntityInContext = false;
 
 	public FullBeanLinker(FullBean fullBean) {
 		super(fullBean);
@@ -342,6 +343,7 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 		}
 
 		if (foundEntity != null && !foundEntity.isShowInContext()) {
+			havingEntityInContext = true;
 			foundEntity.setMatchUrl(matchedUrl);
 			foundEntity.setShowInContext(true);
 		}
@@ -411,5 +413,9 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 			entities.addAll(getDecoratedEntities(ContextualEntity.TIMESPAN));
 		}
 		return entities;
+	}
+
+	public boolean isHavingEntityInContext() {
+		return havingEntityInContext;
 	}
 }
