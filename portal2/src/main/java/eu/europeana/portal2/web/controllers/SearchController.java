@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
@@ -50,6 +53,11 @@ public class SearchController {
 
 	@Resource
 	private ClickStreamLogService clickStreamLogger;
+
+	@Resource
+	private UserService userService;
+
+	private static final String SEARCH_LANGUAGES_COOKIE = "searchLanguages";
 
 	/**
 	 * Possible sort options
@@ -88,7 +96,11 @@ public class SearchController {
 		model.setStart(start);
 		model.setRows(rows);
 
-		q = SolrUtils.translateQuery(q);
+		q = SolrUtils.rewriteQueryFields(q);
+		List<String> translatableLanguages = getTranslatableLanguages(request);
+		if (translatableLanguages != null) {
+			q = SolrUtils.translateQuery(q, translatableLanguages);
+		}
 		model.setQuery(q);
 
 		if (!sortValues.contains(sort)) {
@@ -145,6 +157,22 @@ public class SearchController {
 
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
+	}
+
+	private List<String> getTranslatableLanguages(HttpServletRequest request) {
+		User user = ControllerUtil.getUser(userService);
+		if (user != null) {
+			return Arrays.asList(user.getLanguageSearch());
+		} else {
+			for (Cookie cookie : request.getCookies()) {
+				if (StringUtils.equals(cookie.getName(), SEARCH_LANGUAGES_COOKIE)) {
+					if (StringUtils.isNotBlank(cookie.getValue())) {
+						return Arrays.asList(cookie.getValue().split(","));
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private boolean hasReusabilityFilter(String[] qf) {

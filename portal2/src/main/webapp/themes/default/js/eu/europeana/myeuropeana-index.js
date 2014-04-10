@@ -620,7 +620,7 @@
 			evt.preventDefault();
 
 			if ( eu.europeana.vars.user ) {
-				this.updateMyEuropeanaDb( ajax_data, ajax_feedback );
+				languageSettings.updateMyEuropeanaDb( ajax_data, ajax_feedback );
 			} else {
 				keywords.saveToCookie();
 				portalLanguage.saveToCookie();

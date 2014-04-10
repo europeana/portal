@@ -176,7 +176,7 @@ public class ObjectController {
 		model.setFormat(format);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
 		if (!StringUtils.isBlank(queryString)) {
-			queryString = SolrUtils.translateQuery(queryString);
+			queryString = SolrUtils.rewriteQueryFields(queryString);
 		}
 		model.setQuery(queryString);
 		model.setRefinements(qf);
