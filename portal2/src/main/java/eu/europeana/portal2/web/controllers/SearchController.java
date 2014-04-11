@@ -1,5 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,8 @@ import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
@@ -73,6 +76,7 @@ public class SearchController {
 	public ModelAndView searchHtml(
 			@RequestParam(value = "query", required = false, defaultValue = "*:*") String q,
 			@RequestParam(value = "qf", required = false) String[] qf,
+			@RequestParam(value = "qt", required = false) String[] qt,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "sort", required = false, defaultValue = "") String sort,
@@ -86,6 +90,9 @@ public class SearchController {
 		if (params.get("qf") != null && params.get("qf").length != qf.length) {
 			qf = params.get("qf");
 		}
+		if (params.get("qt") != null && params.get("qt").length != qt.length) {
+			qt = params.get("qt");
+		}
 		SearchPage model = new SearchPage();
 		model.setRequest(request);
 		model.setRefinements(qf);
@@ -97,11 +104,18 @@ public class SearchController {
 		model.setRows(rows);
 
 		q = SolrUtils.rewriteQueryFields(q);
-		List<String> translatableLanguages = getTranslatableLanguages(request);
-		if (translatableLanguages != null) {
-			q = SolrUtils.translateQuery(q, translatableLanguages);
-		}
 		model.setQuery(q);
+
+		List<LanguageVersion> queryTranslations = null;
+		if (StringArrayUtils.isNotBlank(qt)) {
+			queryTranslations = parseQueryTranslations(qt);
+		} else {
+			List<String> translatableLanguages = getTranslatableLanguages(request);
+			if (translatableLanguages != null) {
+				queryTranslations = SolrUtils.translateQuery(q, translatableLanguages);
+			}
+		}
+		model.setQueryTranslations(queryTranslations);
 
 		if (!sortValues.contains(sort)) {
 			sort = DEFAULT_SORT;
@@ -122,7 +136,9 @@ public class SearchController {
 				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
 				.setParameter("sort", sort)
 				.setProduceFacetUnion(true)
-				.setAllowSpellcheck(false);
+				.setAllowSpellcheck(false)
+				.setQueryTranslations(queryTranslations)
+				;
 
 		if (model.isEmbedded()) {
 			query.setAllowFacets(false);
@@ -157,6 +173,15 @@ public class SearchController {
 
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
+	}
+
+	private List<LanguageVersion> parseQueryTranslations(String[] qt) {
+		List<LanguageVersion> queryTranslations = new ArrayList<LanguageVersion>();
+		for (String term : qt) {
+			String[] parts = term.split(":", 2);
+			queryTranslations.add(new LanguageVersion(parts[1], parts[0]));
+		}
+		return queryTranslations;
 	}
 
 	private List<String> getTranslatableLanguages(HttpServletRequest request) {

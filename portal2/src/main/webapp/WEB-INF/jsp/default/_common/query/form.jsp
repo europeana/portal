@@ -69,15 +69,25 @@
 			</tr>
 		</table>
 
+		<c:if test="${!empty model.queryTranslationLinks}">
+		<div id="query-translations">
+			<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
+				<a href="${qt.url}">${qt.text}</a> (${qt.languageCode})
+				<a href="${qt.url}">&times;</a>
+				<c:if test="${!status.last}"> &nbsp; </c:if>
+			</c:forEach>
+		</div>
+		</c:if>
+
 		<%-- embedded search --%>
 		<c:if test="${model.embedded}">
 			<input type="hidden" name="embedded" value="${model.embeddedString}"/>
 			<input type="hidden" name="embeddedBgColor" value="${model.embeddedBgColor}"/>
 			<input type="hidden" name="embeddedForeColor" value="${model.embeddedForeColor}"/>
 			<input type="hidden" name="embeddedLogo" value="${model.embeddedLogo}"/>
-      <c:forEach items="${model.refinements}" var="qf">
-        <input type="hidden" name="qf" value="${qf}"/>
-      </c:forEach>
+			<c:forEach items="${model.refinements}" var="qf">
+				<input type="hidden" name="qf" value="${qf}"/>
+			</c:forEach>
 			<input type="hidden" name="lang" value="${model.locale}"/>
 		</c:if>
 

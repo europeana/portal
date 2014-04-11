@@ -17,13 +17,20 @@
 
 package eu.europeana.portal2.web.presentation.model.abstracts;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.utils.model.LanguageVersion;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
+import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
+import eu.europeana.portal2.web.presentation.model.data.decorators.LanguageVersionLink;
 
 /**
  * Abstract model for all pages containing a searchform...
@@ -53,6 +60,11 @@ public abstract class SearchPageData extends PortalPageData {
 	 * The Solr sort parameter
 	 */
 	private String sort;
+
+	/**
+	 * The translated version of the query
+	 */
+	private List<LanguageVersion> queryTranslations;
 
 	public void setQuery(String query) {
 		this.query = query;
@@ -119,5 +131,37 @@ public abstract class SearchPageData extends PortalPageData {
 
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+
+	public List<LanguageVersion> getQueryTranslations() {
+		return queryTranslations;
+	}
+
+	public void setQueryTranslations(List<LanguageVersion> queryTranslations) {
+		this.queryTranslations = queryTranslations;
+	}
+
+	public List<LanguageVersionLink> getQueryTranslationLinks() {
+		List<LanguageVersionLink> links = new ArrayList<LanguageVersionLink>();
+		List<LanguageVersion> queryTranslationsList = getQueryTranslations();
+		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
+			EuropeanaUrlService urlService = EuropeanaUrlServiceImpl.getBeanInstance();
+			try {
+				for (LanguageVersion query : queryTranslationsList) {
+					UrlBuilder baseUrl = urlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
+					baseUrl.addParam("qf", getRefinements());
+					UrlBuilder url = baseUrl;
+					for (LanguageVersion other : queryTranslationsList) {
+						if (!other.equals(query)) {
+							url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());
+						}
+					}
+					links.add(new LanguageVersionLink(query, url.toString()));
+				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		return links;
 	}
 }

@@ -91,5 +91,4 @@ public abstract class SearchPreparation extends SearchData {
 			breadcrumbs.add(0, defaultCrumb);
 		}
 	}
-
 }
