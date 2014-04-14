@@ -232,5 +232,4 @@ public class MyEuropeanaController {
 		User user = userService.findByEmail(email);
 		return (user != null && !StringUtils.isBlank(user.getPassword()));
 	}
-
 }

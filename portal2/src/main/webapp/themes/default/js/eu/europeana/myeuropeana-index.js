@@ -55,7 +55,7 @@
 		user_limit: 6,
 		keywords_disabled: false,
 		cookie_field: 'keywordLanguages',
-		cookie_value_delimeter: ',',
+		cookie_value_delimeter: '|',
 		$clear_selection: $( '#clear-selection' ),
 
 		addClearSelectionListener: function() {

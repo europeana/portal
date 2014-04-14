@@ -2,11 +2,14 @@ package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.util.WebUtils;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
@@ -60,7 +64,7 @@ public class SearchController {
 	@Resource
 	private UserService userService;
 
-	private static final String SEARCH_LANGUAGES_COOKIE = "searchLanguages";
+	private static final String SEARCH_LANGUAGES_COOKIE = "keywordLanguages";
 
 	/**
 	 * Possible sort options
@@ -191,19 +195,23 @@ public class SearchController {
 	}
 
 	private List<String> getTranslatableLanguages(HttpServletRequest request) {
+
+		// request.getHeader("cookie");
 		User user = ControllerUtil.getUser(userService);
+		List<String> languageCodes = new ArrayList<String>();
+		String rawLanguageCodes = null;
 		if (user != null) {
-			return Arrays.asList(user.getLanguageSearch());
+			rawLanguageCodes = StringUtils.join(user.getLanguageSearch(), "|");
 		} else {
-			for (Cookie cookie : request.getCookies()) {
-				if (StringUtils.equals(cookie.getName(), SEARCH_LANGUAGES_COOKIE)) {
-					if (StringUtils.isNotBlank(cookie.getValue())) {
-						return Arrays.asList(cookie.getValue().split(","));
-					}
-				}
+			Cookie cookie = WebUtils.getCookie(request, SEARCH_LANGUAGES_COOKIE);
+			if (cookie != null) {
+				rawLanguageCodes = cookie.getValue();
 			}
 		}
-		return null;
+		if (rawLanguageCodes != null) {
+			languageCodes = Arrays.asList(rawLanguageCodes.trim().split("\\|"));
+		}
+		return languageCodes;
 	}
 
 	private boolean hasReusabilityFilter(String[] qf) {
