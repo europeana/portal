@@ -2,14 +2,11 @@ package eu.europeana.portal2.web.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,6 +61,7 @@ public class SearchController {
 	@Resource
 	private UserService userService;
 
+	private static final String PORTAL_LANGUAGE_COOKIE = "portalLanguage";
 	private static final String SEARCH_LANGUAGES_COOKIE = "keywordLanguages";
 
 	/**
@@ -195,9 +193,17 @@ public class SearchController {
 	}
 
 	private List<String> getTranslatableLanguages(HttpServletRequest request) {
-
-		// request.getHeader("cookie");
 		User user = ControllerUtil.getUser(userService);
+		List<String> languageCodes = getKeywordLanguages(request, user);
+		String portalLanguage = getPortalLanguage(request, user);
+		if (!languageCodes.contains(portalLanguage)) {
+			languageCodes.add(portalLanguage);
+		}
+		return languageCodes;
+	}
+
+	private List<String> getKeywordLanguages(HttpServletRequest request,
+			User user) {
 		List<String> languageCodes = new ArrayList<String>();
 		String rawLanguageCodes = null;
 		if (user != null) {
@@ -209,9 +215,22 @@ public class SearchController {
 			}
 		}
 		if (rawLanguageCodes != null) {
-			languageCodes = Arrays.asList(rawLanguageCodes.trim().split("\\|"));
+			languageCodes.addAll(Arrays.asList(rawLanguageCodes.trim().split("\\|")));
 		}
 		return languageCodes;
+	}
+
+	private String getPortalLanguage(HttpServletRequest request, User user) {
+		String languageCode = null;
+		if (user != null) {
+			languageCode = user.getLanguagePortal();
+		} else {
+			Cookie cookie = WebUtils.getCookie(request, PORTAL_LANGUAGE_COOKIE);
+			if (cookie != null) {
+				languageCode = cookie.getValue();
+			}
+		}
+		return languageCode;
 	}
 
 	private boolean hasReusabilityFilter(String[] qf) {
