@@ -108,7 +108,9 @@ public class SearchController {
 
 		List<LanguageVersion> queryTranslations = null;
 		if (StringArrayUtils.isNotBlank(qt)) {
-			queryTranslations = parseQueryTranslations(qt);
+			if (!preventQueryTranslation(qt)) {
+				queryTranslations = parseQueryTranslations(qt);
+			}
 		} else {
 			List<String> translatableLanguages = getTranslatableLanguages(request);
 			if (translatableLanguages != null) {
@@ -173,6 +175,10 @@ public class SearchController {
 
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
+	}
+
+	private boolean preventQueryTranslation(String[] qt) {
+		return qt.length == 1 && StringUtils.equals(qt[0], "false");
 	}
 
 	private List<LanguageVersion> parseQueryTranslations(String[] qt) {

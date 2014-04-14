@@ -148,12 +148,14 @@ public abstract class SearchPageData extends PortalPageData {
 			EuropeanaUrlService urlService = EuropeanaUrlServiceImpl.getBeanInstance();
 			try {
 				for (LanguageVersion query : queryTranslationsList) {
-					UrlBuilder baseUrl = urlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
-					baseUrl.addParam("qf", getRefinements());
-					UrlBuilder url = baseUrl;
-					for (LanguageVersion other : queryTranslationsList) {
-						if (!other.equals(query)) {
-							url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());
+					UrlBuilder url = getBaseSearchUrl(urlService);
+					if (queryTranslationsList.size() == 1) {
+						url.addMultiParam("qt", "false");
+					} else {
+						for (LanguageVersion other : queryTranslationsList) {
+							if (!other.equals(query)) {
+								url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());
+							}
 						}
 					}
 					links.add(new LanguageVersionLink(query, url.toString()));
@@ -163,5 +165,12 @@ public abstract class SearchPageData extends PortalPageData {
 			}
 		}
 		return links;
+	}
+
+	private UrlBuilder getBaseSearchUrl(EuropeanaUrlService urlService)
+			throws UnsupportedEncodingException {
+		UrlBuilder url = urlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
+		url.addParam("qf", getRefinements());
+		return url;
 	}
 }
