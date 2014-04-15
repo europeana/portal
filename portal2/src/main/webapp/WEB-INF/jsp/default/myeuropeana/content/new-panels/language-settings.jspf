@@ -18,7 +18,6 @@
 		<c:set var="portal_languages_column" value="${portal_languages_count/4}" />
 		<c:set var="translate_keywords_count" value="0" />
 		<h3><spring:message code="translate_keywords_t" /></h3>
-		<form action="${model.currentUrl}#language-settings" method="get">
 			<div id="keyword-languages">
 				<c:forEach items="${model.portalLanguages}" var="language">
 					<c:if test="${translate_keywords_count == 0}">
