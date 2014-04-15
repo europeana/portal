@@ -1,11 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<script type="text/javascript">
-<!--
-var keywordLanguagesLimit = ${model.keywordLanguagesLimit};
-//-->
-</script>
 <form action="${model.currentUrl}#language-settings" method="get">
 	<%-- portal-default-language --%>
 	<fieldset>
