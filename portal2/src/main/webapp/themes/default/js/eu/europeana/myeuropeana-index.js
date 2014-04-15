@@ -611,14 +611,16 @@
 
 			evt.preventDefault();
 
+			keywords.saveToCookie();
+			portalLanguage.saveToCookie();
+
 			if ( eu.europeana.vars.user ) {
 				languageSettings.updateMyEuropeanaDb( ajax_data, ajax_feedback );
 			} else {
-				keywords.saveToCookie();
-				portalLanguage.saveToCookie();
 				displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.save_settings_success) );
-				portalLanguage.submitOnSave();
 			}
+
+			portalLanguage.submitOnSave();
 		},
 
 		init: function() {
