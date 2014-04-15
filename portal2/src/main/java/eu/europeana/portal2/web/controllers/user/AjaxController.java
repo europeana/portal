@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.BatchUpdateException;
+import java.util.Arrays;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -159,9 +160,19 @@ public class AjaxController {
 
 	private User saveKeywordLanguages(HttpServletRequest request, User user)
 			throws DatabaseException {
-		String langCodes = getStringParameter("keywordLanguages", FieldSize.LANGUAGE_SEARCH, request);
-		user = userService.updateUserLanguageSearch(user.getId(), langCodes);
+		String languageCode = getStringParameter("keywordLanguages", FieldSize.LANGUAGE_SEARCH, request);
+		languageCode = normalizeLanguageCodes(languageCode);
+		user = userService.updateUserLanguageSearch(user.getId(), languageCode);
 		return user;
+	}
+
+	private String normalizeLanguageCodes(String langCodeString) {
+		String[] langCodes = langCodeString.split("\\|");
+		if (langCodes.length > config.getKeywordLanguagesLimit()) {
+			langCodes = Arrays.copyOfRange(langCodes, 0, config.getKeywordLanguagesLimit());
+			langCodeString = StringUtils.join(langCodes, "|");
+		}
+		return langCodeString;
 	}
 
 	private void processAjaxRemoveRequest(AjaxPage model, HttpServletRequest request) throws Exception {

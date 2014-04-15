@@ -112,6 +112,9 @@ public class MyEuropeanaController {
 			List<SocialTag> socialTags = new ArrayList<SocialTag>(user.getSocialTags());
 			Collections.sort(socialTags);
 			model.setSocialTags(socialTags);
+
+			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
+
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.MY_EUROPEANA);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 		} else {
