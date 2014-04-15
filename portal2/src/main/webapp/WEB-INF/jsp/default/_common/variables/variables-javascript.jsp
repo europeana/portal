@@ -234,6 +234,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.save_settings_success = '${save_settings_success}';
 		eu.europeana.vars.msg.save_settings_failure = '${save_settings_failure}';
 		eu.europeana.vars.keyword_languages_limit = ${model.keywordLanguagesLimit};
+		eu.europeana.vars.keyword_languages_separator = '${model.keywordLanguagesSeparator}';
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				eu.europeana.vars.user = true;

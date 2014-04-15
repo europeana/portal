@@ -54,7 +54,7 @@
 		user_limit: parseInt( eu.europeana.vars.keyword_languages_limit, 10 ),
 		keywords_disabled: false,
 		cookie_field: 'keywordLanguages',
-		cookie_value_delimeter: '|',
+		cookie_value_delimeter: eu.europeana.vars.keyword_languages_separator,
 		$clear_selection: $( '#clear-selection' ),
 
 		addClearSelectionListener: function() {
