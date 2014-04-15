@@ -80,7 +80,9 @@ public class AjaxController {
 		User user = ControllerUtil.getUser(userService);
 		String modAction = request.getParameter("modificationAction");
 		if (StringUtils.isBlank(modAction)) {
-			throw new IllegalArgumentException("Expected 'modificationAction' parameter!");
+			String message = "Expected 'modificationAction' parameter!";
+			log.error(message);
+			throw new IllegalArgumentException(message);
 		}
 
 		switch (findModifiable(modAction)) {
@@ -104,12 +106,13 @@ public class AjaxController {
 			user = saveItemLanguage(request, user);
 			break;
 		case USER_LANGUAGE_SETTINGS:
-			user = saveItemLanguage(request, user);
 			user = saveKeywordLanguages(request, user);
-			// should update portalLanguage
+			user = saveItemLanguage(request, user);
 			break;
 		default:
-			throw new IllegalArgumentException("Unhandled ajax action: " + modAction);
+			String message = "Unhandled ajax action: " + modAction;
+			log.error(message);
+			throw new IllegalArgumentException(message);
 		}
 
 		model.setUser(user);
@@ -221,7 +224,7 @@ public class AjaxController {
 	private boolean hasJavascriptInjection(HttpServletRequest request) {
 		boolean hasJavascript = false;
 		for (Object o : request.getParameterMap().keySet()) {
-			log.info(String.valueOf(o));
+			// log.info(String.valueOf(o));
 			// TODO: rething this. Using "<" is a little bit cryptic
 			if (request.getParameter(String.valueOf(o)).contains("<")) {
 				hasJavascript = true;

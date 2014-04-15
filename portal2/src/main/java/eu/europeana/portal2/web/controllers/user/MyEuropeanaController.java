@@ -94,11 +94,11 @@ public class MyEuropeanaController {
 	public ModelAndView myEuropeanaIndexHandler(
 		HttpServletRequest request,
 		Locale locale
-	) throws Exception {
+			) throws Exception {
 
 		User user = ControllerUtil.getUser(userService);
 
-		if ( user != null ) {
+		if (user != null) {
 			MyEuropeanaPage model = new MyEuropeanaPage();
 			model.setUser(user);
 			List<SavedItem> savedItems = new ArrayList<SavedItem>(user.getSavedItems());
@@ -125,7 +125,6 @@ public class MyEuropeanaController {
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 		}
-
 	}
 
 	@RequestMapping(value={"/myeuropeana"}, method=RequestMethod.POST)
