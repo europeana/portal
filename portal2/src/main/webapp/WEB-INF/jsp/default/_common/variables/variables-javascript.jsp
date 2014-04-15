@@ -233,6 +233,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 	<c:when test="${model.pageName == 'myeuropeana/index'}">
 		eu.europeana.vars.msg.save_settings_success = '${save_settings_success}';
 		eu.europeana.vars.msg.save_settings_failure = '${save_settings_failure}';
+		eu.europeana.vars.keyword_languages_limit = ${model.keywordLanguagesLimit};
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				eu.europeana.vars.user = true;

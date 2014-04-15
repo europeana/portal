@@ -51,8 +51,7 @@
 		animation_delay: 12,
 		$keyword_languages: $('#keyword-languages input'),
 		languages_count: 0,
-		non_user_limit: 3,
-		user_limit: 6,
+		user_limit: parseInt( eu.europeana.vars.keyword_languages_limit, 10 ),
 		keywords_disabled: false,
 		cookie_field: 'keywordLanguages',
 		cookie_value_delimeter: '|',
@@ -78,7 +77,7 @@
 				}
 
 				if ( keywords.languages_count
-					>= keywords.non_user_limit
+					>= keywords.user_limit
 				) {
 					return false;
 				}
@@ -95,19 +94,13 @@
 
 		checkDisabledState: function() {
 			if ( keywords.languages_count
-				>= keywords.non_user_limit
+				>= keywords.user_limit
 			) {
 				keywords.disableTranslateKeywords();
 				keywords.toggleDisabledKeywordsMessage();
 			} else if ( keywords.keywords_disabled ) {
 				keywords.enableTranslateKeywords();
 				keywords.toggleDisabledKeywordsMessage();
-			}
-		},
-
-		adjustKeywordLanguageLimit: function() {
-			if ( eu.europeana.vars.user ) {
-				this.non_user_limit = this.user_limit;
 			}
 		},
 
@@ -223,7 +216,6 @@
 		},
 
 		init: function() {
-			this.adjustKeywordLanguageLimit();
 			this.addKeywordLanguagesListener();
 			this.addClearSelectionListener();
 
