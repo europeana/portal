@@ -66,6 +66,8 @@ public abstract class SearchPageData extends PortalPageData {
 	 */
 	private List<LanguageVersion> queryTranslations;
 
+	private int keywordLanguagesLimit;
+
 	public void setQuery(String query) {
 		this.query = query;
 	}
@@ -172,5 +174,13 @@ public abstract class SearchPageData extends PortalPageData {
 		UrlBuilder url = urlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
 		url.addParam("qf", getRefinements());
 		return url;
+	}
+
+	public int getKeywordLanguagesLimit() {
+		return keywordLanguagesLimit;
+	}
+
+	public void setKeywordLanguagesLimit(int keywordLanguagesLimit) {
+		this.keywordLanguagesLimit = keywordLanguagesLimit;
 	}
 }

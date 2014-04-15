@@ -29,7 +29,6 @@ public class MyEuropeanaPage extends SearchPageData {
 	List<SavedItem> savedItems;
 	List<SavedSearch> savedSearches;
 	List<SocialTag> socialTags;
-	private int keywordLanguagesLimit;
 
 	public List<SavedItem> getSavedItems() {
 		return savedItems;
@@ -53,13 +52,5 @@ public class MyEuropeanaPage extends SearchPageData {
 
 	public void setSocialTags(List<SocialTag> socialTags) {
 		this.socialTags = socialTags;
-	}
-
-	public int getKeywordLanguagesLimit() {
-		return keywordLanguagesLimit;
-	}
-
-	public void setKeywordLanguagesLimit(int keywordLanguagesLimit) {
-		this.keywordLanguagesLimit = keywordLanguagesLimit;
 	}
 }
