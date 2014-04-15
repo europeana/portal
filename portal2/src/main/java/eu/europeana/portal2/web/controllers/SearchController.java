@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.util.WebUtils;
 
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.RelationalDatabase;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
@@ -207,7 +208,8 @@ public class SearchController {
 		List<String> languageCodes = new ArrayList<String>();
 		String rawLanguageCodes = null;
 		if (user != null) {
-			rawLanguageCodes = StringUtils.join(user.getLanguageSearch(), "|");
+			rawLanguageCodes = StringUtils.join(
+					user.getLanguageSearch(), RelationalDatabase.SEARCH_LANGUAGES_SEPARATOR);
 		} else {
 			Cookie cookie = WebUtils.getCookie(request, SEARCH_LANGUAGES_COOKIE);
 			if (cookie != null) {
@@ -215,7 +217,8 @@ public class SearchController {
 			}
 		}
 		if (rawLanguageCodes != null) {
-			languageCodes.addAll(Arrays.asList(rawLanguageCodes.trim().split("\\|")));
+			languageCodes.addAll(Arrays.asList(
+					StringUtils.split(rawLanguageCodes.trim(), RelationalDatabase.SEARCH_LANGUAGES_SEPARATOR)));
 		}
 		return languageCodes;
 	}

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.db.exception.DatabaseException;
 import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.RelationalDatabase;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
@@ -167,10 +168,10 @@ public class AjaxController {
 	}
 
 	private String normalizeLanguageCodes(String langCodeString) {
-		String[] langCodes = langCodeString.split("\\|");
+		String[] langCodes = StringUtils.split(langCodeString, RelationalDatabase.SEARCH_LANGUAGES_SEPARATOR);
 		if (langCodes.length > config.getKeywordLanguagesLimit()) {
 			langCodes = Arrays.copyOfRange(langCodes, 0, config.getKeywordLanguagesLimit());
-			langCodeString = StringUtils.join(langCodes, "|");
+			langCodeString = StringUtils.join(langCodes, RelationalDatabase.SEARCH_LANGUAGES_SEPARATOR);
 		}
 		return langCodeString;
 	}
