@@ -4,22 +4,28 @@ import eu.europeana.corelib.utils.model.LanguageVersion;
 
 public class LanguageVersionLink extends LanguageVersion {
 
-	private String url;
+	private String queryLink;
+	private String removeLink;
 
-	public LanguageVersionLink(String text, String languageCode, String url) {
-		super(text, languageCode);
-		this.url = url;
+	public LanguageVersionLink(LanguageVersion languageVersion, String queryLink, String removeLink) {
+		super(languageVersion.getText(), languageVersion.getLanguageCode());
+		this.queryLink = queryLink;
+		this.removeLink = removeLink;
 	}
 
-	public LanguageVersionLink(LanguageVersion languageVersion, String url) {
-		this(languageVersion.getText(), languageVersion.getLanguageCode(), url);
+	public String getQueryLink() {
+		return queryLink;
 	}
 
-	public String getUrl() {
-		return url;
+	public void setQueryLink(String queryLink) {
+		this.queryLink = queryLink;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public String getRemoveLink() {
+		return removeLink;
+	}
+
+	public void setRemoveLink(String removeLink) {
+		this.removeLink = removeLink;
 	}
 }

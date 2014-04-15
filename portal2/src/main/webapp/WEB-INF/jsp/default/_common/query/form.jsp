@@ -70,13 +70,15 @@
 		</table>
 
 		<c:if test="${!empty model.queryTranslationLinks}">
-		<div id="query-translations">
-			<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
-				<a href="${qt.url}">${qt.text}</a> (${qt.languageCode})
-				<a href="${qt.url}">&times;</a>
-				<c:if test="${!status.last}"> &nbsp; </c:if>
-			</c:forEach>
-		</div>
+			<div id="query-translations">
+				<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
+					<a href="${qt.queryLink}">${qt.text}</a> (${qt.languageCode})
+					<a href="${qt.removeLink}">&times;</a> &nbsp; 
+				</c:forEach>
+				<c:if test="${!empty model.noTranslationUrl}">
+					<br /><a href="${model.noTranslationUrl}"><spring:message code="qt_removeAll_t" /> &times;</a>
+				</c:if>
+			</div>
 		</c:if>
 
 		<%-- embedded search --%>

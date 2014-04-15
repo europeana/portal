@@ -40,6 +40,8 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.LanguageVersi
  */
 public abstract class SearchPageData extends PortalPageData {
 
+	private EuropeanaUrlService urlService = EuropeanaUrlServiceImpl.getBeanInstance();
+
 	private String query;
 
 	private boolean enableRefinedSearch = false;
@@ -141,14 +143,25 @@ public abstract class SearchPageData extends PortalPageData {
 		this.queryTranslations = queryTranslations;
 	}
 
+	public String getNoTranslationUrl() {
+		try {
+			UrlBuilder url = getBaseSearchUrl();
+			url.addMultiParam("qt", "false");
+			return url.toString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public List<LanguageVersionLink> getQueryTranslationLinks() {
 		List<LanguageVersionLink> links = new ArrayList<LanguageVersionLink>();
 		List<LanguageVersion> queryTranslationsList = getQueryTranslations();
 		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
-			EuropeanaUrlService urlService = EuropeanaUrlServiceImpl.getBeanInstance();
 			try {
 				for (LanguageVersion query : queryTranslationsList) {
-					UrlBuilder url = getBaseSearchUrl(urlService);
+					String queryLink = createLanguageQueryLink(query.getText());
+					UrlBuilder url = getBaseSearchUrl();
 					if (queryTranslationsList.size() == 1) {
 						url.addMultiParam("qt", "false");
 					} else {
@@ -158,7 +171,7 @@ public abstract class SearchPageData extends PortalPageData {
 							}
 						}
 					}
-					links.add(new LanguageVersionLink(query, url.toString()));
+					links.add(new LanguageVersionLink(query, queryLink, url.toString()));
 				}
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -167,10 +180,18 @@ public abstract class SearchPageData extends PortalPageData {
 		return links;
 	}
 
-	private UrlBuilder getBaseSearchUrl(EuropeanaUrlService urlService)
+	private UrlBuilder getBaseSearchUrl()
 			throws UnsupportedEncodingException {
 		UrlBuilder url = urlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
 		url.addParam("qf", getRefinements());
 		return url;
+	}
+
+	private String createLanguageQueryLink(String query)
+			throws UnsupportedEncodingException {
+		UrlBuilder url = urlService.getPortalSearch(true, query, String.valueOf(getRows()));
+		url.addParam("qf", getRefinements());
+		url.addMultiParam("qt", "false");
+		return url.toString();
 	}
 }
