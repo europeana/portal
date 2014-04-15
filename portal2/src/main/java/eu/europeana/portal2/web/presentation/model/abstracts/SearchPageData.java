@@ -31,6 +31,7 @@ import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.LanguageVersionLink;
+import eu.europeana.portal2.web.util.QueryUtil;
 
 /**
  * Abstract model for all pages containing a searchform...
@@ -40,7 +41,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.LanguageVersi
  */
 public abstract class SearchPageData extends PortalPageData {
 
-	private EuropeanaUrlService urlService = EuropeanaUrlServiceImpl.getBeanInstance();
+	public EuropeanaUrlService europeanaUrlservice = EuropeanaUrlServiceImpl.getBeanInstance();
 
 	private String query;
 
@@ -154,6 +155,10 @@ public abstract class SearchPageData extends PortalPageData {
 		return null;
 	}
 
+	public List<String> getQueryTranslationParams() {
+		return QueryUtil.getQueryTranslationParams(getQueryTranslations());
+	}
+
 	public List<LanguageVersionLink> getQueryTranslationLinks() {
 		List<LanguageVersionLink> links = new ArrayList<LanguageVersionLink>();
 		List<LanguageVersion> queryTranslationsList = getQueryTranslations();
@@ -182,14 +187,14 @@ public abstract class SearchPageData extends PortalPageData {
 
 	private UrlBuilder getBaseSearchUrl()
 			throws UnsupportedEncodingException {
-		UrlBuilder url = urlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
+		UrlBuilder url = europeanaUrlservice.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
 		url.addParam("qf", getRefinements());
 		return url;
 	}
 
 	private String createLanguageQueryLink(String query)
 			throws UnsupportedEncodingException {
-		UrlBuilder url = urlService.getPortalSearch(true, query, String.valueOf(getRows()));
+		UrlBuilder url = europeanaUrlservice.getPortalSearch(true, query, String.valueOf(getRows()));
 		url.addParam("qf", getRefinements());
 		url.addMultiParam("qt", "false");
 		return url.toString();

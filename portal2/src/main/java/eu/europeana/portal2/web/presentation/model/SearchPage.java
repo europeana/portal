@@ -168,6 +168,9 @@ public class SearchPage extends SearchPreparation {
 		UrlBuilder builder = europeanaUrlservice.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
 		builder.addParam("start", start);
 		builder.addParam("qf", getRefinements());
+		for (String param : getQueryTranslationParams()) {
+			builder.addMultiParam("qt", param);
+		}
 		return getPortalFormattedUrl(builder).toString();
 	}
 

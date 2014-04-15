@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.utils.model.LanguageVersion;
 
 public class QueryUtil {
 
@@ -94,6 +95,16 @@ public class QueryUtil {
 			}
 		}
 		return display;
+	}
+
+	public static List<String> getQueryTranslationParams(List<LanguageVersion> queryTranslationsList) {
+		List<String> queryTranslationParams = new ArrayList<String>();
+		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
+			for (LanguageVersion query : queryTranslationsList) {
+				queryTranslationParams.add(String.format("%s:%s", query.getLanguageCode(), query.getText()));
+			}
+		}
+		return queryTranslationParams;
 	}
 
 	/**

@@ -46,8 +46,6 @@ public abstract class SearchData extends UrlAwareData<BriefBean> {
 
 	protected boolean markupOnly;
 
-	public EuropeanaUrlService europeanaUrlservice = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
-
 	public int getMaxMapResults() {
 		return maxMapResults;
 	}
