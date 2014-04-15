@@ -113,12 +113,14 @@ public class MyEuropeanaController {
 			Collections.sort(socialTags);
 			model.setSocialTags(socialTags);
 
+			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
 
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.MY_EUROPEANA);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 		} else {
 			LoginPage model = new LoginPage();
 			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
+
 			model.setErrorMessage("1".equals(request.getParameter("error")) ? INVALID_CREDENTIALS : null);
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
