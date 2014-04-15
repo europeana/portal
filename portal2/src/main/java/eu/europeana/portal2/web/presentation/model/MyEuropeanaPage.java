@@ -22,9 +22,8 @@ import java.util.List;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
-import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 
-public class MyEuropeanaPage extends SearchPageData {
+public class MyEuropeanaPage extends KeywordLanguagesLimitAwareData {
 
 	List<SavedItem> savedItems;
 	List<SavedSearch> savedSearches;

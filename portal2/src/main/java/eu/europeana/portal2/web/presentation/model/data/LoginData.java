@@ -1,8 +1,8 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
-import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
+import eu.europeana.portal2.web.presentation.model.KeywordLanguagesLimitAwareData;
 
-public abstract class LoginData extends SearchPageData {
+public abstract class LoginData extends KeywordLanguagesLimitAwareData {
 
 	protected boolean failureFormat = false;
 	protected boolean failureExists = false;
