@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
@@ -54,6 +55,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.utils.service.MltStopwordsService;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
@@ -108,6 +110,9 @@ public class ObjectController {
 	@Resource
 	private MltStopwordsService mltStopwordsService;
 
+	@Resource
+	private UserService userService;
+
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
@@ -127,6 +132,7 @@ public class ObjectController {
 			@RequestParam(value = "embedded", required = false) String embedded,
 			@RequestParam(value = "query", required = false) String queryString,
 			@RequestParam(value = "qf", required = false) String[] qf,
+			@RequestParam(value = "qt", required = false) String[] qt,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
@@ -148,9 +154,12 @@ public class ObjectController {
 		}
 
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
-		String[] _qf = (String[]) request.getParameterMap().get("qf");
-		if (_qf != null && _qf.length != qf.length) {
-			qf = _qf;
+		Map<String, String[]> params = RequestUtils.getParameterMap(request);
+		if (params.get("qf") != null && params.get("qf").length != qf.length) {
+			qf = params.get("qf");
+		}
+		if (params.get("qt") != null && params.get("qt").length != qt.length) {
+			qt = params.get("qt");
 		}
 
 		boolean showEuropeanaMlt = false;
@@ -180,6 +189,7 @@ public class ObjectController {
 		}
 		model.setQuery(queryString);
 		model.setRefinements(qf);
+		// model.setRefinements(qf);
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
@@ -188,6 +198,8 @@ public class ObjectController {
 		model.setShowHierarchical(showHierarchical);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 		model.setStartTime(t0);
+		List<LanguageVersion> queryTranslations = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
+		model.setQueryTranslations(queryTranslations);
 
 		// TODO: refactor this!!!
 		boolean showSimilarItems = false;

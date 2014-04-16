@@ -65,6 +65,11 @@ public class SearchPage extends SearchPreparation {
 					.getQueryForPresentation());
 			builder.addParam("startPage", getBriefBeanView().getPagination().getStart(), true);
 		}
+		if (!builder.hasParam("qt")) {
+			for (String param : getQueryTranslationParams()) {
+				builder.addMultiParam("qt", param);
+			}
+		}
 		builder = getPortalFormattedUrl(builder);
 		return builder;
 	}

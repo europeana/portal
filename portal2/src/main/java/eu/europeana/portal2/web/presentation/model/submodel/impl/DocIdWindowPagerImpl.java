@@ -226,36 +226,37 @@ public class DocIdWindowPagerImpl implements DocIdWindowPager, Serializable {
 
 	private void setNextFullDocUrl(Map<String, String[]> httpParameters) {
 		UrlBuilder url = new UrlBuilder(nextUri.replace("http://www.europeana.eu/resolve", "") + ".html");
-		if (query != null) {
-			url.addParam("query", query, true);
-		}
-		final String[] filterQueries = httpParameters.get("qf");
-		if (filterQueries != null) {
-			for (String filterQuery : filterQueries) {
-				url.addMultiParam("qf", filterQuery);
-			}
-		}
+		addCommonParams(httpParameters, url);
 		url.addParam("start", nextInt);
-		url.addParam("startPage", startPage);
-		url.addParam("pageId", pageId);
 		nextFullDocUrl = url.toString();
 	}
 
 	private void setPreviousFullDocUrl(Map<String, String[]> httpParameters) {
 		UrlBuilder url = new UrlBuilder(previousUri.replace("http://www.europeana.eu/resolve", "") + ".html");
+		addCommonParams(httpParameters, url);
+		url.addParam("start", previousInt);
+		previousFullDocUrl = url.toString();
+	}
+
+	private void addCommonParams(Map<String, String[]> httpParameters,
+			UrlBuilder url) {
 		if (query != null) {
 			url.addParam("query", query, true);
 		}
-		final String[] filterQueries = httpParameters.get("qf");
-		if (filterQueries != null) {
-			for (String filterQuery : filterQueries) {
-				url.addMultiParam("qf", filterQuery);
+		final String[] qf = httpParameters.get("qf");
+		if (qf != null) {
+			for (String param : qf) {
+				url.addMultiParam("qf", param);
 			}
 		}
-		url.addParam("start", previousInt);
+		final String[] qt = httpParameters.get("qt");
+		if (qt != null) {
+			for (String param : qt) {
+				url.addMultiParam("qt", param);
+			}
+		}
 		url.addParam("startPage", startPage);
 		url.addParam("pageId", pageId);
-		previousFullDocUrl = url.toString();
 	}
 
 	// TODO: it filters out the normal refinements and rows as well!!!

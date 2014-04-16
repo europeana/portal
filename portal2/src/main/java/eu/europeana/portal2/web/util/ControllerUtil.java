@@ -22,6 +22,7 @@ import java.io.StringWriter;
 import java.sql.BatchUpdateException;
 import java.text.MessageFormat;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -39,6 +40,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.web.model.FragmentInfo;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
@@ -64,8 +66,8 @@ public class ControllerUtil {
 		Pattern.compile("\\s*<[^<>]*?>\\.?\\s*$"),
 		Pattern.compile("\\s*\\d+-\\d+\\s*$")
 	};
-	private static final String EMPTY_STRING = "";
 
+	private static final String EMPTY_STRING = "";
 
 	public static boolean validEmailAddress(String emailAddress) {
 		return emailAddress.endsWith("@localhost") || emailAddress.matches(EMAIL_REGEXP);
@@ -235,5 +237,17 @@ public class ControllerUtil {
 		if (log.isDebugEnabled()) {
 			log.debug(String.format("elapsed time (%s): %d", type, time));
 		}
+	}
+
+	public static List<LanguageVersion> createQueryTranslations(UserService userService, String query,
+			String[] qt, HttpServletRequest request) {
+		QueryTranslationsUtil queryTranslator = new QueryTranslationsUtil(userService, request, query, qt);
+		return queryTranslator.createQueryTranslations();
+	}
+
+	public static List<LanguageVersion> createQueryTranslationsFromParams(UserService userService, String query,
+			String[] qt, HttpServletRequest request) {
+		QueryTranslationsUtil queryTranslator = new QueryTranslationsUtil(userService, request, query, qt);
+		return queryTranslator.createQueryTranslationsFromParams();
 	}
 }
