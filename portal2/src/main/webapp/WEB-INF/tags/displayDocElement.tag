@@ -16,8 +16,8 @@
   <tr><td colspan="2"><h5>${elementStatus.index + 1}.</h5></td></tr>
 </c:if>
 
-<c:forEach items="${model.schemaMap[topField.type]}" var="field" varStatus="fieldStatus">
-  <c:if test="${!empty docElement[field.propertyName]}">
+<c:forEach items="${model.schemaMap[topField.javaType]}" var="field" varStatus="fieldStatus">
+  <c:if test="${!empty docElement[field.javaPropertyName]}">
     <tr valign="top">
       <td>
         <c:choose>
@@ -35,32 +35,32 @@
             <c:when test="${field.schemaOrgElement != null}">${field.schemaOrgElement}</c:when>
             <c:otherwise>${field.element.elementName}</c:otherwise>
           </c:choose>${" "}${field.element.fullQualifiedURI}"
-          <c:if test="${field.schemaOrgElementIsURL}">${" "}href="${docElement[field.propertyName]}"</c:if>
+          <c:if test="${field.schemaOrgElementIsURL}">${" "}href="${docElement[field.javaPropertyName]}"</c:if>
         </c:if>
       </c:set>
 
-      <td<c:if test="${!empty semanticAttributes && (!field.multiValue || fn:length(docElement[field.propertyName]) == 1) && !field.mapsOfLists}">${" "}${semanticAttributes}</c:if>><c:choose>
+      <td<c:if test="${!empty semanticAttributes && (!field.multiValue || fn:length(docElement[field.javaPropertyName]) == 1) && !field.mapsOfLists}">${" "}${semanticAttributes}</c:if>><c:choose>
 
           <c:when test="${field.schemaName == 'edm:WebResource'}">
             <table>
-              <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="resouceStatus">
+              <c:forEach items="${docElement[field.javaPropertyName]}" var="fieldInstance" varStatus="resouceStatus">
                 <europeana:displayDocElement topField="${model.webResourceField}" docElement="${fieldInstance}" 
-                  elementStatus="${resouceStatus}" total="${fn:length(docElement[field.propertyName])}" />
+                  elementStatus="${resouceStatus}" total="${fn:length(docElement[field.javaPropertyName])}" />
               </c:forEach>
             </table>
           </c:when>
 
           <c:when test="${field.schemaName == 'relatedItems'}">
             <table>
-              <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="resouceStatus">
+              <c:forEach items="${docElement[field.javaPropertyName]}" var="fieldInstance" varStatus="resouceStatus">
                 <europeana:displayDocElement topField="${model.briefBeanField}" docElement="${fieldInstance}" 
-                  elementStatus="${resouceStatus}" total="${fn:length(docElement[field.propertyName])}" />
+                  elementStatus="${resouceStatus}" total="${fn:length(docElement[field.javaPropertyName])}" />
               </c:forEach>
             </table>
           </c:when>
 
           <c:when test="${field.collectionOfMaps}">
-            <c:forEach items="${docElement[field.propertyName]}" var="mapInstance" varStatus="fieldInstanceStatus">
+            <c:forEach items="${docElement[field.javaPropertyName]}" var="mapInstance" varStatus="fieldInstanceStatus">
               <c:forEach items="${mapInstance}" var="fieldInstance">
                 <span ${semanticAttributes}>${fieldInstance.key} / ${fieldInstance.value}</span><c:if test="${!fieldInstanceStatus.last}"><br /></c:if>
               </c:forEach>
@@ -68,7 +68,7 @@
           </c:when>
 
           <c:when test="${field.mapsOfLists}">
-            <c:forEach items="${docElement[field.propertyName]}" var="languageVersion" varStatus="langStatus">
+            <c:forEach items="${docElement[field.javaPropertyName]}" var="languageVersion" varStatus="langStatus">
               <em>${languageVersion.key}:</em><br />
               <c:forEach items="${languageVersion.value}" var="fieldInstance" varStatus="instanceStatus">
                 <span ${semanticAttributes} xml:lang="${languageVersion.key}">${fieldInstance}</span><c:if test="${!instanceStatus.last}"><br /></c:if>
@@ -78,23 +78,23 @@
           </c:when>
 
           <c:when test="${field.map}">
-            <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="fieldInstanceStatus">
+            <c:forEach items="${docElement[field.javaPropertyName]}" var="fieldInstance" varStatus="fieldInstanceStatus">
               <span ${semanticAttributes}>${fieldInstance.key} / ${fieldInstance.value}</span><c:if test="${!fieldInstanceStatus.last}"><br /></c:if>
             </c:forEach>
           </c:when>
 
           <c:when test="${field.collection}">
             <c:choose>
-              <c:when test="${fn:length(docElement[field.propertyName]) > 1}">
-                <c:forEach items="${docElement[field.propertyName]}" var="fieldInstance" varStatus="fieldInstanceStatus">
+              <c:when test="${fn:length(docElement[field.javaPropertyName]) > 1}">
+                <c:forEach items="${docElement[field.javaPropertyName]}" var="fieldInstance" varStatus="fieldInstanceStatus">
                   <span ${semanticAttributes}>${fieldInstance}</span><c:if test="${!fieldInstanceStatus.last}"><br /></c:if>
                 </c:forEach>
               </c:when>
-              <c:otherwise>${docElement[field.propertyName][0]}</c:otherwise>
+              <c:otherwise>${docElement[field.javaPropertyName][0]}</c:otherwise>
             </c:choose>
           </c:when>
 
-          <c:otherwise>${docElement[field.propertyName]}</c:otherwise>
+          <c:otherwise>${docElement[field.javaPropertyName]}</c:otherwise>
         </c:choose>
       </td>
     </tr>
