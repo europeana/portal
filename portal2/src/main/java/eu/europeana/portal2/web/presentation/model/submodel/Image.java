@@ -4,13 +4,15 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 
-public class Image {
+public class Image implements SortableImage {
 
 	String thumbnail;
 	String full;
 	String escapedFull;
 	String rights;
 	RightsValue rightsValue;
+	String about;
+	String isNextInSequence;
 
 	/**
 	 * The type of image (text, video, image, 3d)
@@ -93,6 +95,22 @@ public class Image {
 	public void setRights(String rights) {
 		this.rights = rights;
 		this.rightsValue = RightsValue.safeValueByUrl(rights, "");
+	}
+
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
+	public String getIsNextInSequence() {
+		return isNextInSequence;
+	}
+
+	public void setIsNextInSequence(String isNextInSequence) {
+		this.isNextInSequence = isNextInSequence;
 	}
 
 	@Override

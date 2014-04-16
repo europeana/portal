@@ -34,6 +34,7 @@ import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
@@ -365,7 +366,6 @@ public class FullDocPage extends FullDocPreparation {
 	 * */
 	public List<Image> getAllImages() throws UnsupportedEncodingException {
 		if (imagesToShow == null) {
-			imagesToShow = new LinkedList<Image>();
 
 			String docType = getDocument().getEdmType();
 			// it gets from EdmObject
@@ -376,25 +376,52 @@ public class FullDocPage extends FullDocPreparation {
 
 			Image firstImage = new Image(firstImageThumbnailUrl, firstImageFull, firstImageType, getLightboxRefField());
 			firstImage.setRights(getDocument().getWebResourceEdmRightsByUrl(firstImageFull));
-			imagesToShow.add(firstImage);
+			copyWebResouceFields(firstImageThumbnailUrl, firstImage);
+			// imagesToShow.add(firstImage);
 
+			imagesToShow = new LinkedList<Image>();
 			Map<String, String> images = getImages();
 			for (String imageUrl : images.keySet()) {
 				String imageType = getImageType(imageUrl, docType);
-				Image img;
-				if (imageType.equals("IMAGE")) {
-					img = new Image(createImageUrl(imageUrl, imageType, "BRIEF_DOC"), imageUrl, imageType);
-				} else {
-					img = new Image(createImageUrl("", imageType, "BRIEF_DOC"), imageUrl, imageType);
-				}
+				Image img = createImage(imageUrl, imageType);
 				if (img != null) {
 					img.setRights(getDocument().getWebResourceEdmRightsByUrl(imageUrl));
+					copyWebResouceFields(imageUrl, img);
 				}
 				imagesToShow.add(img);
 			}
+			sortImages(firstImage);
 		}
 
 		return imagesToShow;
+	}
+
+	private Image createImage(String imageUrl, String imageType) {
+		Image img;
+		if (imageType.equals("IMAGE")) {
+			img = new Image(createImageUrl(imageUrl, imageType, "BRIEF_DOC"), imageUrl, imageType);
+		} else {
+			img = new Image(createImageUrl("", imageType, "BRIEF_DOC"), imageUrl, imageType);
+		}
+		return img;
+	}
+
+	private void sortImages(Image firstImage) {
+		ImageSorter<Image> sorter = new ImageSorter<Image>(imagesToShow);
+		imagesToShow = sorter.sort();
+		imagesToShow.add(0, firstImage);
+	}
+
+	private void copyWebResouceFields(String imageUrl, Image img) {
+		WebResource webResource = getDocument().getWebResourceByUrl(imageUrl);
+		if (webResource != null) {
+			if (webResource.getAbout() != null) {
+				img.setAbout(webResource.getAbout());
+			}
+			if (webResource.getIsNextInSequence() != null) {
+				img.setIsNextInSequence(webResource.getIsNextInSequence());
+			}
+		}
 	}
 
 	private List<String> getImageToShow(String size) {
@@ -437,12 +464,6 @@ public class FullDocPage extends FullDocPreparation {
 	 */
 	private Map<String, String> getImages() {
 		if (allImages == null) {
-			/*
-			Set<String> isShownAt = new HashSet<String>();
-			if (shortcut.get("EdmIsShownAt") != null) {
-				isShownAt.addAll(Arrays.asList(shortcut.get("EdmIsShownAt")));
-			}
-			*/
 			allImages = new HashMap<String, String>();
 
 			for (String imageField : IMAGE_FIELDS.keySet()) {
@@ -458,7 +479,6 @@ public class FullDocPage extends FullDocPreparation {
 					}
 				}
 			}
-			// allImages = images.toArray(new String[images.size()]);
 		}
 
 		return allImages;
