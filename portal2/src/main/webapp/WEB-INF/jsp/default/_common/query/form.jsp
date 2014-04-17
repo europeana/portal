@@ -71,11 +71,16 @@
 
 		<c:if test="${!empty model.queryTranslationLinks}">
 			<div id="query-translations">
+				<c:set var="hasTranslation" value="false"/>
+		
 				<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
-					<a href="${qt.queryLink}">${qt.text}</a> (${qt.languageCode})
-					<a href="${qt.removeLink}">&times;</a> &nbsp; 
+					<c:if test="${fn:length(qt.languageCode)>0}">
+						<c:set var="hasTranslation" value="true"/>
+						<a href="${qt.queryLink}">${qt.text}</a> (${qt.languageCode})
+						<a href="${qt.removeLink}">&times;</a> &nbsp; 
+					</c:if>
 				</c:forEach>
-				<c:if test="${!empty model.noTranslationUrl}">
+				<c:if test="${!empty model.noTranslationUrl && hasTranslation}">
 					<br /><a href="${model.noTranslationUrl}"><spring:message code="qt_removeAll_t" /> &times;</a>
 				</c:if>
 			</div>
