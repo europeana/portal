@@ -694,6 +694,9 @@ public class FullDocPage extends FullDocPreparation {
 			url.addParam("query", getQuery(), true);
 		}
 		url.addParam("qf", getRefinements(), true);
+		for (String param : getQueryTranslationParams()) {
+			url.addMultiParam("qt", param);
+		}
 		url.removeParam("pageId");
 
 		// remove default values to clean up url...
