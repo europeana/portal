@@ -56,7 +56,7 @@
            --%>target=  '<spring:message code="${model.featuredPartner.anchorTarget}" />'<%--
            --%>class=  'image withRowParam'><%--
 			--%><c:set var="altText"><spring:message code="${model.featuredPartner.imgAlt}" /></c:set><%--
-           --%><img class='responsive_half' src='/${model.portalName}${model.featuredPartner.responsiveImages['_1']}'<%--
+           --%><img class='responsive_half' src='/${model.portalName}${model.featuredPartner.responsiveImages["_1"]}'<%--
            --%>alt='${fn:escapeXml(altText)}'<%--
            --%>/><%--
          --%></a><%--

@@ -21,7 +21,7 @@
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<property name="defaultLocale" value="en" />
 		<property name="cookieName" value="portalLanguage"/>
-    	<property name="cookieMaxAge" value="100000"/>
+		<property name="cookieMaxAge" value="100000"/>
 	</bean>
 
 	<mvc:default-servlet-handler />
@@ -52,11 +52,11 @@
 		<property name="cacheSeconds" value="#{europeanaProperties['message.cache.seconds']}" />
 		<property name="fileEncodings" value="UTF-8"/>
 		<property name="defaultEncoding" value="UTF-8"/>
-		<property name="UseCodeAsDefaultMessage" value="true"/>
+		<property name="useCodeAsDefaultMessage" value="true"/>
 	</bean>
 
 	<bean id="exceptionResolver" class="eu.europeana.portal2.web.interceptor.ExceptionResolver" />
 
 	<import resource="../portal2-context.xml"/>
-	
+
 </beans>
