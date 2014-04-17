@@ -15,7 +15,7 @@
       </c:if>
     </c:if>
 
-    <h1 class="hide-on-phones" ${model.semanticTitle}>${fn:escapeXml(model.objectTitle)} &nbsp;<span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span></h1>
+    <h1 class="hide-on-phones" ${model.semanticTitle}>${fn:escapeXml(model.objectTitle)} &nbsp;<c:if test="${model.showContext}"><span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span></c:if></h1>
 
     <c:forEach items="${model.document.dcTitle}" var="title">
       <c:if test="${title != model.objectTitle && !empty(title)}">
