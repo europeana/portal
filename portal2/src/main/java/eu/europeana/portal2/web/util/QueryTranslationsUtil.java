@@ -56,8 +56,10 @@ public class QueryTranslationsUtil {
 	}
 
 	public List<LanguageVersion> createQueryTranslationsFromParams() {
-		if (!preventQueryTranslation()) {
-			return parseQueryTranslations();
+		if (StringArrayUtils.isNotBlank(qt)) {
+			if (!preventQueryTranslation()) {
+				return parseQueryTranslations();
+			}
 		}
 		return null;
 	}
