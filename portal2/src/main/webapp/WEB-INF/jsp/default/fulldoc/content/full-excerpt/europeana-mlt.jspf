@@ -70,7 +70,7 @@
 				<c:choose>
 					<c:when test="${status.first}">
 						<div class="mlt-single-wrapper">
-							<a href="${doc.fullDocUrl}" class="mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>				
+							<a href="${doc.fullDocUrl}" class="mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
 							<div class="mlt-title">
 								${doc.title}
 							</div>
