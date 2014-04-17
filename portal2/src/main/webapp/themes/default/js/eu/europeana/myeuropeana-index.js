@@ -97,10 +97,8 @@
 				>= keywords.user_limit
 			) {
 				keywords.disableTranslateKeywords();
-				keywords.toggleDisabledKeywordsMessage();
 			} else if ( keywords.keywords_disabled ) {
 				keywords.enableTranslateKeywords();
-				keywords.toggleDisabledKeywordsMessage();
 			}
 		},
 
@@ -254,10 +252,6 @@
 			} else {
 				$.cookie( this.cookie_field, cookie_value, { path: '/' } );
 			}
-		},
-
-		toggleDisabledKeywordsMessage: function() {
-			$('#disabled-translate-keywords-msg').slideToggle();
 		}
 	},
 

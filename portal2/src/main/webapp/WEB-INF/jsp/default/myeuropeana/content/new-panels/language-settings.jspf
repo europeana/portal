@@ -40,15 +40,8 @@
 					</div>
 				</c:if>
 			</div>
-			<c:choose>
-				<c:when test="${!empty model.user}">
-					<p id="disabled-translate-keywords-msg" class="noscript"><spring:message code="Registered6Options_t" /></p>
-				</c:when>
-				<c:otherwise>
-					<p id="disabled-translate-keywords-msg" class="noscript"><spring:message code="Unregistered3Options_t" /></p>
-				</c:otherwise>
-			</c:choose>
-			<input type="reset" value="<spring:message code="ClearSelection_t" />" id="clear-selection" />
+			<p><spring:message code="maximum_6_languages_t" /></p>
+			<p><input type="reset" value="<spring:message code="ClearSelection_t" />" id="clear-selection" /></p>
 			<input type="hidden" name="action" value="translate-keywords" />
 	</fieldset>
 
@@ -83,6 +76,7 @@
 						<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 					</select>
 					<input type="hidden" name="action" value="translate-item" />
+					<p><spring:message code="registered_users_only_t" /> - <a href="#login"><spring:message code="register_here_t" /></a></p>
 				</c:otherwise>
 			</c:choose>
 		</label>
