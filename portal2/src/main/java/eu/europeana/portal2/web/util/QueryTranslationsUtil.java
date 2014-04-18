@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -50,7 +51,9 @@ public class QueryTranslationsUtil {
 	private List<LanguageVersion> translateQuery() {
 		List<String> translatableLanguages = getTranslatableLanguages();
 		if (translatableLanguages != null) {
-			return SolrUtils.translateQuery(query, translatableLanguages);
+			List<LanguageVersion> translatedQueries = SolrUtils.translateQuery(query, translatableLanguages);
+			Collections.sort(translatedQueries);
+			return translatedQueries;
 		}
 		return null;
 	}
