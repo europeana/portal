@@ -156,8 +156,16 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.cite.close			= '${fn:escapeXml(close)}';
 		eu.europeana.vars.galleria = {};
 		eu.europeana.vars.collectionId = '${collectionId}';
-		eu.europeana.vars.dcIdentifier = '${fn:escapeXml(model.objectDcIdentifier)}';
+		
+		
+		<% pageContext.setAttribute("newLineChar1", "\r"); %>
+		<% pageContext.setAttribute("newLineChar2", "\n"); %>
 
+		<c:set var="dcIdentifier">${fn:replace(model.objectDcIdentifier, newLineChar1, ' ')}</c:set>
+		<c:set var="dcIdentifier">${fn:replace(dcIdentifier, newLineChar2, ' ')}</c:set>
+		
+		eu.europeana.vars.dcIdentifier = '${fn:escapeXml(dcIdentifier)}';
+		
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
