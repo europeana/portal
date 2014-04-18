@@ -688,9 +688,7 @@ public class FullDocPage extends FullDocPreparation {
 	public UrlBuilder getPortalFormattedUrl(UrlBuilder url)
 			throws UnsupportedEncodingException {
 
-		// override or remove these params, because they are based on internal
-		// search actions...
-		if (getQuery() != null) { // prevent nullpointer on empty Query...
+		if (StringUtils.isNotBlank(getQuery())) {
 			url.addParam("query", getQuery(), true);
 		}
 		url.addParam("qf", getRefinements(), true);
