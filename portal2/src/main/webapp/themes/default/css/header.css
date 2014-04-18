@@ -84,13 +84,10 @@
 }
 
 
-/*
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
-	.logo{
-		background-image:	url('/portal/themes/default/images/europeana-logo-retina-1.png');
-	}
+#query-translations{
+	margin-top: 1em;
+	margin-bottom: -1em;
 }
-*/
 
 .phone-test{
 	width:    1px;
