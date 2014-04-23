@@ -52,7 +52,9 @@ public class QueryTranslationsUtil {
 		List<String> translatableLanguages = getTranslatableLanguages();
 		if (translatableLanguages != null) {
 			List<LanguageVersion> translatedQueries = SolrUtils.translateQuery(query, translatableLanguages);
-			Collections.sort(translatedQueries);
+			if (translatedQueries != null) {
+				Collections.sort(translatedQueries);
+			}
 			return translatedQueries;
 		}
 		return null;
