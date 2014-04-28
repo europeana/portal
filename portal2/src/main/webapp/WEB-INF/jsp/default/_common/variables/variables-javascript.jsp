@@ -141,7 +141,6 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.more = '${see_more}';
 		eu.europeana.vars.msg.less = '${see_less}';
 
-
 		eu.europeana.vars.show = {};
 		eu.europeana.vars.show.more = '${showMore}';
 		eu.europeana.vars.show.less = '${showLess}';
@@ -156,16 +155,16 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.cite.close			= '${fn:escapeXml(close)}';
 		eu.europeana.vars.galleria = {};
 		eu.europeana.vars.collectionId = '${collectionId}';
-		
-		
+
+
 		<% pageContext.setAttribute("newLineChar1", "\r"); %>
 		<% pageContext.setAttribute("newLineChar2", "\n"); %>
 
 		<c:set var="dcIdentifier">${fn:replace(model.objectDcIdentifier, newLineChar1, ' ')}</c:set>
 		<c:set var="dcIdentifier">${fn:replace(dcIdentifier, newLineChar2, ' ')}</c:set>
-		
+
 		eu.europeana.vars.dcIdentifier = '${fn:escapeXml(dcIdentifier)}';
-		
+
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
@@ -184,7 +183,6 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			</c:otherwise>
 		</c:choose>
 
-
 		eu.europeana.vars.map = {
 				"coordinates": "${mapCoordinates}",
 				"north":       "${mapCompassN}",
@@ -192,7 +190,6 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				"east":        "${mapCompassE}",
 				"west":        "${mapCompassW}"
 		};
-
 
 		// Translation data for lightbox triggers: map lightboxble type to message
 		eu.europeana.vars.external = {
@@ -216,6 +213,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.msg.saved_tag = '${saved_tag}';
 			eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
 			eu.europeana.vars.item.uri = '${model.document.about}';
+			eu.europeana.vars.languageItem = '${model.user.languageItem}';
 		</c:if>
 
 		<c:set var="soundCloudAwareCollections">

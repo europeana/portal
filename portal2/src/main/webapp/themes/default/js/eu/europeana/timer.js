@@ -56,12 +56,16 @@
 				throw new Error( 'params.fn is not a function or a reference to a function' );
 			}
 
-			if ( typeof params.context !== 'object' ) {
-				throw new Error( 'context is not an object' );
+			if ( !$.isPlainObject( params.context ) ) {
+				throw new Error( 'timer: params.context is not an object' );
 			}
 
 			if ( this.timers[params.timer] === undefined ) {
-				throw new Error( 'timer does not exist' );
+				throw new Error( 'timer: params.timer was not given' );
+			}
+
+			if ( params.args !== undefined && !$.isArray( params.args ) ) {
+				throw new Error( 'timer: args are not an array' );
 			}
 
 			var uuid = js.utils.guid();
