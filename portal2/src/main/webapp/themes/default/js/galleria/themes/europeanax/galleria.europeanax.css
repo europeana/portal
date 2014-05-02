@@ -207,7 +207,13 @@
 
 .galleria-thumbnails{	/* centre the film strip in the default gallery */
 	margin:	auto;
+	z-index: 0;
 }
+
+.galleria-thumbnails-list{	
+	overflow: hidden;
+}
+
 
 .europeana-carousel .galleria-thumbnails .galleria-image img{	/* centre the images within their containers */
 	position:	relative !important;
