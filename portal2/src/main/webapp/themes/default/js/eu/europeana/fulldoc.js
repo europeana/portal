@@ -3,21 +3,42 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
 
+	/**
+	 * @param {object}
+	 */
 	lightboxOb :  null,
+
+	/**
+	 * @param {string}
+	 */
 	vimeoDetect : 'vimeo.com/video',
+
+	/**
+	 * @param {array}
+	 */
 	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
 
-
-/*
-	// provides priority order for which tab to open when no hash is given
-	// provides a list of accepted hash values for validation
+	/**
+	 * provides priority order for which tab to open when no hash is given
+	 * provides a list of accepted hash values for validation
+	 */
 	//tab_priority : [ '#related-items','#similar-content','#map-view' ],
-*/
+
+	/**
+	 * @param {string}
+	 */
 	more_icon_class : "icon-arrow-6-right",
 
+	/**
+	 * @param {string}
+	 */
 	less_icon_class : "icon-arrow-7-right",
 
+	/**
+	 * @param {bool}
+	 */
 	setupAnalytics : false,
+
 
 	init : function() {
 
@@ -61,6 +82,8 @@ eu.europeana.fulldoc = {
 		});
 
 		//js.console.log(JSON.stringify(carouselData));
+
+		this.autoTranslateItem.init();
 	},
 
 	loadComponents : function() {
@@ -100,24 +123,25 @@ eu.europeana.fulldoc = {
 			name : 'translation-services',
 			file: 'translation-services' + js.min_suffix + '.js' + js.cache_helper,
 			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
-			callback : function() {eu.europeana.translation_services.init(
-
+			callback : function() {
 				// Andy: this callback within a callback expands the link to the service and triggers the loading of the microsoft translate scripts
 				// comment out this line to save 300 - 385 milliseconds of initial load time
 				// leave this line in place to have the translator automatically opened
-				function(){
-					if(! js.utils.phoneTest() ){
+				eu.europeana.translation_services.init( function() {
+					if ( !js.utils.phoneTest() ) {
 						$("#translate-item").trigger('click');
 						$("#translate-item").unbind('click');
-						$("#translate-item").bind('click', function(e){e.preventDefault();});
+						$("#translate-item").bind('click', function(e){ e.preventDefault(); } );
 						$("#translate-item").addClass('disabled');
 						$("#translate-item span")
-						.removeClass(eu.europeana.translation_services.more_icon_class)
-						.removeClass(eu.europeana.translation_services.less_icon_class)
-						.removeClass(eu.europeana.translation_services.more_icon_class_phone);
+							.removeClass(eu.europeana.translation_services.more_icon_class)
+							.removeClass(eu.europeana.translation_services.less_icon_class)
+							.removeClass(eu.europeana.translation_services.more_icon_class_phone);
 					}
-				}
-			);}
+				});
+
+
+			}
 		}]);
 
 		js.loader.loadScripts([{
@@ -1230,6 +1254,76 @@ eu.europeana.fulldoc = {
 			}
 		});
 
+	},
+
+	autoTranslateItem: {
+		/**
+		 * @param {object}
+		 * holds the params of the timer if one was created
+		 */
+		translation_timer: null,
+
+		/**
+		 * @param {int}
+		 * the number of times the translation timer’s callback was called
+		 */
+		translation_timer_iteration: 0,
+
+		/**
+		 * @param {int}
+		 * number of attempts to try and auto-translate if timer was created
+		 * 50 x 100 milliseconds = approx 5 seconds
+		 */
+		translation_timer_limit: 50,
+
+		/**
+		 * @param {object}
+		 * jQuery object representing the translation drop-down
+		 */
+		$translate_select: null,
+
+		/**
+		 * @param {object}
+		 * jQuery object representing the options within the translation drop-down
+		 */
+		$translate_options: $('#microsoft-translate-element').find('option'),
+
+		init: function () {
+			if (
+				eu.europeana.vars.languageItem
+				&& eu.europeana.vars.languageItem.length === 2
+			) {
+				this.translation_timer = eu.europeana.timer.addCallback({
+					timer: 100,
+					fn: eu.europeana.fulldoc.autoTranslateItem.toggleTranslation,
+					context: eu.europeana.fulldoc.autoTranslateItem
+				});
+			}
+		},
+
+		toggleTranslation: function() {
+			this.translation_timer_iteration += 1;
+
+			if ( this.translation_timer_iteration > this.translation_timer_limit ) {
+				eu.europeana.timer.removeCallback( this.translation_timer );
+				console.log('autoTranslateItem: could not auto translate; no translation services available');
+			}
+
+			if ( !this.$translate_select || this.$translate_select.length < 1 ) {
+				this.$translate_select = $('#microsoft-translate-element').find('select');
+			}
+
+			if ( !this.$translate_options || this.$translate_options.length < 2 ) {
+				this.$translate_options = $('#microsoft-translate-element').find('option');
+			}
+
+			if ( this.$translate_options.length > 2 ) {
+				this.$translate_select.val( eu.europeana.vars.languageItem );
+				this.$translate_select.trigger( 'change' );
+				eu.europeana.timer.removeCallback( this.translation_timer );
+				this.translation_timer_iteration = 0;
+			}
+		}
 	}
 
 };

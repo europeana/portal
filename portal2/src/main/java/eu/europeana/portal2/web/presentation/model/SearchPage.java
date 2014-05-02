@@ -64,11 +64,8 @@ public class SearchPage extends SearchPreparation {
 			builder.addParam("query", getQuery());
 			builder.addParam("startPage", getBriefBeanView().getPagination().getStart(), true);
 		}
-		if (!builder.hasParam("qt")) {
-			for (String param : getQueryTranslationParams()) {
-				builder.addMultiParam("qt", param);
-			}
-		}
+		builder.addParam("qf", getRefinements(), true);
+		builder.addParam("qt", getQueryTranslationParams(), true);
 		builder = getPortalFormattedUrl(builder);
 		return builder;
 	}
@@ -171,10 +168,8 @@ public class SearchPage extends SearchPreparation {
 	private String createNavigationUrl(int start) throws UnsupportedEncodingException {
 		UrlBuilder builder = europeanaUrlservice.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
 		builder.addParam("start", start);
-		builder.addParam("qf", getRefinements());
-		for (String param : getQueryTranslationParams()) {
-			builder.addMultiParam("qt", param);
-		}
+		builder.addParam("qf", getRefinements(), true);
+		builder.addParam("qt", getQueryTranslationParams(), true);
 		return getPortalFormattedUrl(builder).toString();
 	}
 

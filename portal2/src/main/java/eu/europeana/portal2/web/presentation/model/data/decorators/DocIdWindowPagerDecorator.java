@@ -59,6 +59,7 @@ public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 		UrlBuilder builder = model.createSearchUrl(model.getQuery(), model.getRefinements(),
 				Integer.toString(calcStart));
 		builder.addParam("rows", model.getRows(), true);
+		builder.addParam("qt", model.getQueryTranslationParams(), true);
 		return model.prepareFullDocUrl(builder).toString();
 	}
 

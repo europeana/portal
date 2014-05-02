@@ -155,8 +155,9 @@ public abstract class SearchPageData extends PortalPageData {
 		return null;
 	}
 
-	public List<String> getQueryTranslationParams() {
-		return QueryUtil.getQueryTranslationParams(getQueryTranslations());
+	public String[] getQueryTranslationParams() {
+		List<String> params = QueryUtil.getQueryTranslationParams(getQueryTranslations());
+		return params.toArray(new String[params.size()]);
 	}
 
 	public List<LanguageVersionLink> getQueryTranslationLinks() {
