@@ -21,7 +21,7 @@
 			</li>
 
 			<li class="item icon-logo show-on-phones">
-				<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t" />" href="/${model.portalName}/<spring:message code="notranslate_main_menu_myeuropeana_a_url_t" />"><spring:message code="main_menu_myeuropeana_a_text_t" /></a>
+				<a class="treat-as-link" target="<spring:message code="notranslate_main_menu_myeuropeana_a_target_t" />" href="/${model.portalName}/${model.myEuropeanaUrl}"><spring:message code="main_menu_myeuropeana_a_text_t" /></a>
 			</li>
 
 			<li class="item icon-info show-on-phones">

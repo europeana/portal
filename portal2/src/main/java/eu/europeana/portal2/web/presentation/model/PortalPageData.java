@@ -25,14 +25,16 @@ public abstract class PortalPageData extends PageData {
 	private boolean minify = false;
 
 	private Locale locale;
-	
+
 	private String browserLanguage;
-	
+
 	private String[] localeMessages;
 
 	private String portalUrl;
-	
+
 	private String blogFeedUrl;
+
+	private String myEuropeanaUrl;
 
 	public String getTheme() {
 		return theme;
@@ -137,5 +139,13 @@ public abstract class PortalPageData extends PageData {
 	
 	public void setBrowserLanguage(String browserLanguage) {
 		this.browserLanguage = browserLanguage;
+	}
+
+	public String getMyEuropeanaUrl() {
+		return myEuropeanaUrl;
+	}
+
+	public void setMyEuropeanaUrl(String myEuropeanaUrl) {
+		this.myEuropeanaUrl = myEuropeanaUrl;
 	}
 }

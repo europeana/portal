@@ -28,7 +28,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 
 	@Resource
 	private AbstractMessageSource messageSource;
-	
+
 	@Resource
 	private Configuration configuration;
 
@@ -47,8 +47,11 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			// model.setMinify(false);
 			User user = ControllerUtil.getUser(userService);
 			model.setUser(user);
+
 			model.setPortalUrl(configuration.getPortalUrl());
 			model.setBlogFeedUrl(configuration.getBlogUrl());
+			model.setMyEuropeanaUrl(configuration.getMyEuropeanaUrl());
+
 			// set locale message when required
 			Locale browser = request.getLocale();
 			String language = ((browser != null) && !StringUtils.equalsIgnoreCase(browser.getLanguage(), "undefined") ? StringUtils
@@ -72,7 +75,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 	}
-	
+
 	private boolean hasMessage(String label) {
 		try {
 			String m = messageSource.getMessage(label, null, Locale.ENGLISH);
@@ -81,7 +84,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 		}
 		return false;
 	}
-	
+
 	private boolean hasCookie(HttpServletRequest request, String cookiename) {
 		if ( (request != null) && (request.getCookies() != null)) {
 			for (Cookie cookie: request.getCookies()) {
