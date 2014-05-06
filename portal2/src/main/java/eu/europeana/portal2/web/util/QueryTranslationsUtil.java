@@ -50,7 +50,7 @@ public class QueryTranslationsUtil {
 
 	private List<LanguageVersion> translateQuery() {
 		List<String> translatableLanguages = getTranslatableLanguages();
-		if (translatableLanguages != null) {
+		if (StringArrayUtils.isNotBlankList(translatableLanguages)) {
 			List<LanguageVersion> translatedQueries = SolrUtils.translateQuery(query, translatableLanguages);
 			if (translatedQueries != null) {
 				Collections.sort(translatedQueries);
