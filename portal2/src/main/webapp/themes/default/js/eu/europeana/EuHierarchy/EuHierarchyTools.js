@@ -37,7 +37,13 @@ var EuHierarchyTools = function(hierarchy) {
 
 		$('#apocalypse_vol_3>a').click();
 		alert(  $('#apocalypse_vol_3>a').length  )
-		return;
+	});
+	
+	$('.tba').click(function() {
+		self.hierarchy.brokenArrows();
+	});
+
+	$('.visible-nodes').click(function(){
 		
 		console.log('get limits...');
 		
@@ -51,11 +57,8 @@ var EuHierarchyTools = function(hierarchy) {
 		setTimeout(function(){
 			$('#' +  limits[0].id).css('background-color', 'white');
 			$('#' +  limits[1].id).css('background-color', 'white');
-		}, 1000);
-
-		return;
+		}, 3000);
 	});
-	
 
 };
 

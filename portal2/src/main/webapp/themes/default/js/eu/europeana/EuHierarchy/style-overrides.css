@@ -23,6 +23,41 @@
 	height: 2em;
 	width: 100%;
 	background-color:#ffee44;
+	position: relative;
+}
+
+.hierarchy-top-panel .top-arrows{
+	position: absolute;
+	left:     1em;
+	bottom:   0px;	
+}
+.hierarchy-top-panel .bottom-arrows{
+	position: absolute;
+	bottom:   auto;
+	top:      0px;
+}
+
+
+.hierarchy-objects  .arrow-spacer,
+.hierarchy-objects  .arrow{	
+	background-color:orange;
+	width: 1em;
+	height: 1em;	
+	float: right;
+	
+	border:1px solid red;
+	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing:	border-box;
+	box-sizing: border-box;	
+}
+
+.hierarchy-objects  .arrow.top{	
+	background-color: pink;
+}
+
+.hierarchy-objects    .arrow-spacer{
+	background-color:transparent;
 }
 
 

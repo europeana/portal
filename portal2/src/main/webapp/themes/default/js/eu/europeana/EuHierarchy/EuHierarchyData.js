@@ -286,7 +286,7 @@ var dataGen = function(){
 					"index": 5,
 					
 					"childrenUrl":	"dataGen.apocalypse_vol_4_content('dataGen.apocalypse_vol_4()')",
-					"total": 2,
+					"total": 4,
 					"europeana" : {
 						"url"  : "base=dataGen." + id + "()"
 					}
@@ -452,6 +452,30 @@ var dataGen = function(){
 						"europeana" : {
 							"icon" : "image",
 							"url"  : "base=dataGen.apocalypse_vol_4_content()[1]"
+						}
+					}
+				},
+			    {
+			    	"id" : "apocalypse_vol_4_content_3",
+					"text": 'Extra Node 1',
+					"data": {
+						"parentUrl":	parentUrl,
+						"index": 3,
+						"europeana" : {
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_4_content()[2]"
+						}
+					}
+				},
+			    {
+			    	"id" : "apocalypse_vol_4_content_4",
+					"text": 'Extra Node 2',
+					"data": {
+						"parentUrl":	parentUrl,
+						"index": 4,
+						"europeana" : {
+							"icon" : "image",
+							"url"  : "base=dataGen.apocalypse_vol_4_content()[3]"
 						}
 					}
 				}

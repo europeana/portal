@@ -50,10 +50,12 @@
 </head>
 <body>
 	<div>
-		<a class="lock"    style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[unlock]</a>
-		<a class="spin"    style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[spin]</a>
-		<a class="enable"  style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[enable]</a>
-		<a class="load-more">load more...</a>
+		<a class="lock"          style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[unlock]</a>
+		<a class="spin"          style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[spin]</a>
+		<a class="enable"        style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[enable]</a>
+		<!-- a class="load-more">load more...</a-->
+		<a class="visible-nodes" style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[visible]</a>
+		<a class="tba"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[arrows]</a>
 		<br/>
 		<br/>
 		<a class="view-next" style="font-weight:bold; cursor:pointer;">view next...</a>
@@ -91,8 +93,7 @@
 				
 				console.log('param = ' + param)
 				
-				//var 
-				window.hierarchy = new EuHierarchy($('#hierarchy'), 8);
+				window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
 
 				// errors:
 				/*

@@ -1,4 +1,4 @@
-var EuHierarchy = function(cmp, rows) {
+var EuHierarchy = function(cmp, rows, wrapper) {
 
 	/*
 	var Icon = function(el){
@@ -47,6 +47,9 @@ var EuHierarchy = function(cmp, rows) {
 	self.container      = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration = 0;
 	
+	self.topPanel       = wrapper.find('.hierarchy-top-panel');
+	self.bottomPanel    = wrapper.find('.hierarchy-bottom-panel');
+	
 	
 	// debug vars
 	var locked = true;
@@ -57,6 +60,12 @@ var EuHierarchy = function(cmp, rows) {
 	};
 	
 	var formatNodeData = function(ob){
+		
+		ob.text = "<span>" + ob.text + "</span>";
+		return ob;//////////////////////////////////////
+		
+		
+		
 		if(ob.data && ob.data.europeana){
 			//console.log('europeana data found....' + JSON.stringify(ob.data.europeana));
 			
@@ -76,7 +85,7 @@ var EuHierarchy = function(cmp, rows) {
 			}
 			
 			if(ob.data.europeana.url){
-				var handler = ' onClick="javascript:window.hierarchy.nodeLinkClick(this)"';
+				var handler = '';// ' onClick="javascript:window.hierarchy.nodeLinkClick(this)"';
 				ob.text = '<a href="' + ob.data.europeana.url + '" ' + handler + '>' + ob.text + '</a>';
 			}
 		}
@@ -462,6 +471,179 @@ var EuHierarchy = function(cmp, rows) {
 		window.location.href = url + '?' + $(e).attr('href');
 	}
 	
+	
+	
+	
+	var brokenArrows = function(){
+		
+		self.topPanel.find('.top-arrows').remove();
+		
+		var topArrows = $('<div class="top-arrows"></div>').appendTo(self.topPanel);
+		var vNodes    = getVisibleNodes();
+		var xNode     = vNodes[0];
+		var count     = 1;
+
+		
+		getName = function(){
+			return  $('#' + xNode.id).find('>a>span').html();
+		} 
+
+		var origIndex = xNode.data.index;
+
+		//console.log('START WHILE ON NODENAME ' + getName());
+
+
+		/**
+		 * When the calling node is the start of an open tree then it doesn't write the first arrow (that's the one on the far right).
+		 * 
+		 * This happens because @node is set to @node.parent before the recursion begins.
+		 * 
+		 * Simplest implementation is to treat this case as the exception and force it to display an arrow.
+		 * 
+		 * This is correct within the tree (works with or without the fix):
+		 * 
+		 *  ^^^ ^
+		 *  _________
+		 *  ||| |
+		 *  ||| |
+		 * 
+		 * 
+		 * If we're at the start of branch 'b' then it does this:
+		 * 
+		 *  ^^^
+		 *  ____b_____
+		 *  ||| |
+		 *  ||| |
+		 * 
+		 * 
+		 * without the override fix.  With the fix the arrowhead above the branch is no longer omitted:
+		 * 
+		 *  ^^^ ^
+		 *  ____b_____
+		 *  ||| |
+		 *  ||| |
+		 * 
+		 * 
+		 **/
+		var overrideSpacer = false;
+		if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){
+			overrideSpacer = true;
+		}
+		
+		while(xNode.parent){
+			
+			origIndex = xNode.data.index;				
+			xNode     = self.treeCmp.jstree('get_node', xNode.parent );
+			
+			if( xNode.id != '#'){
+				var totalChildren = xNode.data.total;				
+				if($('#' + xNode.id + ' > .jstree-children').length){
+					
+					count ++;
+					
+					// debug string
+					var title        = getName() + '\n\ncount = ' + count + ',\norigIndex = ' + origIndex + ',\nthisIndex = ' + xNode.data.index +  ',\ntotalChildren=' + totalChildren
+					var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : 'arrow top');
+
+					if(overrideSpacer){
+						createClass    = 'arrow top';
+						overrideSpacer = false;
+					}
+					
+					var createString = '<div class="' + createClass + '" title="' + title + '"     style="right:' + count + 'em">';
+					topArrows.append(createString);
+					topArrows.css('width', count + 'em');
+				}
+			}			
+		}// end while	
+
+		brokenArrowsBottom(vNodes);
+	}
+
+	var brokenArrowsBottom = function(vNodes){
+
+		self.bottomPanel.find('.bottom-arrows').remove();
+		
+		var bottomArrows = $('<div class="bottom-arrows"></div>').appendTo(self.bottomPanel);
+		var xNode        = vNodes[1];
+		var count        = 2; // CHANGE
+
+		getName = function(){
+			return  $('#' + xNode.id).find('>a>span').html();
+		} 
+
+		var origIndex = xNode.data.index;
+
+		console.log('START ON NODENAME ' + getName());
+
+
+		/**
+		 * Mid branch is OK
+		 * 
+		 *  |||||
+		 *  |||||
+		 *  _________
+		 *  ^^^^^
+		 *  
+		 *  But with the top override we get this (wrong - last arrow missing)
+		 * 
+		 *  |||||
+		 *  ||||b
+		 *  _________
+		 *  ^^^^
+		 *  
+		 *  	THIS APPLIES ONLY where branch 'b' has open children
+		 *  
+		 *  And with no override we get this:
+		 *  
+		 * 
+		 */
+		var overrideSpacer = false;
+		//
+		if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){
+			alert('bottom node error here')
+			
+			// CHANGE
+			//overrideSpacer = true;
+			var createClass  = 'arrow bottom';
+			var createString = '<div class="' + createClass + '" title="' + title + '" style="right:' + count + 'em">';
+			count++;
+			bottomArrows.append(createString);
+			bottomArrows.css('width', count + 'em');
+		}
+		
+		while(xNode.parent){
+			origIndex = xNode.data.index;				
+			xNode     = self.treeCmp.jstree('get_node', xNode.parent );
+
+			if( xNode.id != '#'){
+				var totalChildren = xNode.data.total;
+
+				if($('#' + xNode.id + ' > .jstree-children').length){
+					count ++;
+					
+					// debug string
+					var title        = getName() + '\n\ncount = ' + count + ',\norigIndex = ' + origIndex + ',\nthisIndex = ' + xNode.data.index +  ',\ntotalChildren=' + totalChildren
+					var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : 'arrow bottom');
+
+					if(overrideSpacer){
+						createClass    = 'arrow bottom';
+					}
+					
+					var createString = '<div class="' + createClass + '" title="' + title + '" style="right:' + count + 'em">';
+					
+					// CHANGE
+					bottomArrows.append(createString);
+					bottomArrows.css('width', count + 'em');
+				}
+			}			
+
+			overrideSpacer = false;
+		}// end while	
+	}
+
+	
+	
 	/**
 	 * Called on:
 	 * - select_node
@@ -475,6 +657,9 @@ var EuHierarchy = function(cmp, rows) {
 	 * 
 	 * */
 	var togglePrevNextLinks = function(){
+		
+		brokenArrows();
+		
 		var offset = self.container.scrollTop();
 
 		if(self.container.scrollTop() > 1){
@@ -612,7 +797,6 @@ var EuHierarchy = function(cmp, rows) {
 			};
 
 			if(keyedNode){
-	
 				self.scrollDuration = 0;
 				doScrollTo('#' + origTopNodeId);
 				self.scrollDuration = 1000;
@@ -625,7 +809,7 @@ var EuHierarchy = function(cmp, rows) {
 				}
 				
 				hideSpinner();
-
+				
 				if(callback){
 					callback();
 				}
@@ -796,7 +980,7 @@ var EuHierarchy = function(cmp, rows) {
 		self.container.css('max-height',     (rows * lineHeight) + 'em');
 		self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
 		
-//		alert('set height to ' + (rows * lineHeight) + 'em' + ', px value = ' +  self.container.css('height') );
+	
 		
 		// TREE BINDING
 
@@ -1060,6 +1244,9 @@ var EuHierarchy = function(cmp, rows) {
 		},
 		setLocked : function(val){
 			self.locked = val;
+		},
+		brokenArrows : function(){
+			brokenArrows();
 		}
 	}
 };
