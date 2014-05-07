@@ -301,7 +301,6 @@ var EuHierarchy = function(cmp, rows) {
 			var parentLoaded = function(node){
 				var parent = self.treeCmp.jstree('get_node', node.parent);
 				if(!parent.data){
-					alert('CAN THIS CHECK BE DELETED???')
 					return false;
 				}
 				var loaded = parent.children.length;
@@ -592,9 +591,9 @@ var EuHierarchy = function(cmp, rows) {
 
 				var enabledSomething = newDisabledCount != disabledCount;
 				
+				var clickTgtId = getVisibleNodes()[2].id
+				var clickTgt   = $('#' + clickTgtId + '>a');
 				if(backwards && enabledSomething){
-					var clickTgtId = getVisibleNodes()[2].id
-					var clickTgt   = $('#' + clickTgtId + '>a');
 					self.silentClick = true;
 					clickTgt.click();
 					
@@ -606,8 +605,10 @@ var EuHierarchy = function(cmp, rows) {
 						clickTgt.focus();
 					});
 					return true;
-				}				
-				return clickTgt;
+				}
+				if(backwards){
+					clickTgt.focus();
+				}
 			};
 
 			if(keyedNode){
@@ -617,7 +618,7 @@ var EuHierarchy = function(cmp, rows) {
 				self.scrollDuration = 1000;
 
 				if(initFromTop){
-					var vNode = skipScrollBump();					
+					skipScrollBump();
 				}
 				else{
 					$('#' + initiatingNode.id + '>a').focus();
@@ -662,8 +663,12 @@ var EuHierarchy = function(cmp, rows) {
 
 					if(newScrollTop == scrollTop){
 						self.scrollDuration = 0;
+						//alert('CATCH ALL CLICK SCROLLS HERE?  1');
+
 					}
-					
+					else{
+						//alert('CATCH ALL CLICK SCROLLS HERE?');
+					}
 					doScrollTo(newScrollTop, function(){
 						self.scrollDuration = 1000;
 						togglePrevNextLinks();
@@ -693,24 +698,40 @@ var EuHierarchy = function(cmp, rows) {
 	
 	var getVisibleNodes = function(){
 		
-		var topEntry    = false;
-		var bottomEntry = false;
-		var beforeTop   = false;
-		var lastEntry   = false;	// if the bottom node is above the bottom of the viewport we return this as the bottom
-		var totalH      = -2;		// start negative to keep a couple of pixels inside - focussed borders and outlines can knock this off otherwise
-		var offset      = self.container.scrollTop();
-		var offsetB     = -4 + offset + self.container.height();
+		var topEntry        = false;
+		var bottomEntry     = false;
+		var bottomCandidate = false;
+		var beforeTop       = false;
+		var lastEntry       = false;	// if the bottom node is above the bottom of the viewport we return this as the bottom
+		var totalH          = -2;		// start negative to keep a couple of pixels inside - focussed borders and outlines can knock this off otherwise
+		//var heightBlock = $('.jstree-anchor:visible').first().find('>span').outerHeight(true);
+		var offset          = self.container.scrollTop();
+		//var offsetB     = (-heightBlock) + offset + self.container.height();
+		var offsetB         =  offset + self.container.height();
 
 		var set = function(node){
 			if(totalH >= offset){
 				if(!topEntry){
 					topEntry = node;
 				}
+				
+				if(totalH < offsetB){
+					//if(!bottomEntry){
+					bottomCandidate = node;
+					//}
+				}
+				else{
+					console.log("set bottom entry to " + bottomCandidate.id )
+					bottomEntry = bottomCandidate;
+				}
+				
+				/*
 				if(totalH >= offsetB){
 					if(!bottomEntry){
 						bottomEntry = node;
 					}
 				}
+				*/
 			}
 			else{
 				beforeTop = node;
@@ -723,6 +744,7 @@ var EuHierarchy = function(cmp, rows) {
 			var anchor = $('#' + startNode.id + '>.jstree-anchor');
 			if(anchor.hasClass('jstree-disabled')){
 				totalH += $('#' + startNode.id + '>.jstree-icon').height();
+				//totalH += $('#' + startNode.id + '>.jstree-icon').outerHeight(true);
 			}
 			else{
 				totalH += anchor.height();
@@ -741,6 +763,7 @@ var EuHierarchy = function(cmp, rows) {
 					if (! cNode.state.opened){
 						var anchor = $('#' + cNode.id + '>.jstree-anchor');
 						totalH += anchor.height();
+						//totalH += anchor.outerHeight(true);
 						set(cNode);
 					}
 					else{
@@ -772,6 +795,8 @@ var EuHierarchy = function(cmp, rows) {
 		self.container.css('height',         (rows * lineHeight) + 'em');
 		self.container.css('max-height',     (rows * lineHeight) + 'em');
 		self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
+		
+//		alert('set height to ' + (rows * lineHeight) + 'em' + ', px value = ' +  self.container.css('height') );
 		
 		// TREE BINDING
 
