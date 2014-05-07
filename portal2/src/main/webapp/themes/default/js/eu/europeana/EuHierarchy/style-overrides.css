@@ -29,10 +29,16 @@
 .hierarchy-container{
 	border:		1px solid #dadada;
 
-	XXXfont-size:	1.4em;		/* tweak this to scale the whole component proportionally */
+	XXfont-size:	1.5em;		/* tweak this to scale the whole component proportionally */
 	
 	overflow:	hidden;	
 	position: relative;
+	
+	/*
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing:	border-box;
+	box-sizing: border-box;
+	*/
 }
 
  /* force scrollability: this em value should correspond to the js variable defaultChunk */
@@ -76,6 +82,7 @@
 	font-size:		0.9em;
 	float:			right;
 	margin-right:	1em;
+	max-height:		1.4em;	/* should track line-height & js variable */
 }
 
 
@@ -107,6 +114,7 @@
 	background-image:    url(connector-leaf.png);
 	background-position: 0 0;
 	background-size: 1em 1em;
+	
 }
 
 #hierarchy.jstree-default .jstree-leaf.jstree-last > .jstree-ocl{
