@@ -24,7 +24,7 @@ import java.util.List;
 import org.springframework.util.StringUtils;
 
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.portal2.web.util.QueryUtil;
+import eu.europeana.corelib.utils.EuropeanaUriUtils;
 
 /**
  * Sitemap index entry, model for MVC.
@@ -89,7 +89,7 @@ public class ContributorItem {
 	}
 
 	public String getEncodedName() {
-		return QueryUtil.encode(name);
+		return EuropeanaUriUtils.encode(name);
 	}
 
 	public class DataProviderItem {
@@ -109,7 +109,7 @@ public class ContributorItem {
 		}
 
 		public String getEncodedName() {
-			return QueryUtil.encode(name);
+			return EuropeanaUriUtils.encode(name);
 		}
 
 		public long getCount() {

@@ -1,8 +1,5 @@
 package eu.europeana.portal2.web.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.utils.model.LanguageVersion;
+import eu.europeana.corelib.utils.EuropeanaUriUtils;
 
 public class QueryUtil {
 
@@ -74,7 +72,7 @@ public class QueryUtil {
 			if (refinement.contains(":")) {
 				String[] parts = StringUtils.split(refinement, ":", 2);
 				if (!parts[0].equals("TYPE") && parts[1].contains(" ")) {
-					refinement = parts[0] + ":" + encode(parts[1]);
+					refinement = parts[0] + ":" + EuropeanaUriUtils.encode(parts[1]);
 				}
 			}
 			refinements[i++] = refinement;
@@ -87,7 +85,7 @@ public class QueryUtil {
 		if (display.contains(":")) {
 			String[] parts = StringUtils.split(display, ":", 2);
 			if (!parts[0].equals("TYPE") && parts[1].contains("%")) {
-				String value = decode(parts[1]);
+				String value = EuropeanaUriUtils.decode(parts[1]);
 				if (value.startsWith("\"") && value.endsWith("\"")) {
 					value = value.substring(1, value.length()-1);
 				}
@@ -123,26 +121,6 @@ public class QueryUtil {
 		} else {
 			return String.format("\"%s\"", value);
 		}
-	}
-
-	public static String encode(String value) {
-		if (StringUtils.isNotBlank(value)) {
-			try {
-				value = URLEncoder.encode(value, "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-			}
-		}
-		return value;
-	}
-
-	public static String decode(String value) {
-		if (StringUtils.isNotBlank(value)) {
-			try {
-				value = URLDecoder.decode(value, "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-			}
-		}
-		return value;
 	}
 
 	public static String escapeValue(String text) {

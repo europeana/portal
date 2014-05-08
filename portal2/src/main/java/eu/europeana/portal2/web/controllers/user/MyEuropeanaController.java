@@ -27,6 +27,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -34,7 +35,6 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.presentation.model.MyEuropeanaPage;
 import eu.europeana.portal2.web.util.ControllerUtil;
-import eu.europeana.portal2.web.util.QueryUtil;
 
 @Controller
 public class MyEuropeanaController {
@@ -219,15 +219,15 @@ public class MyEuropeanaController {
 						sb.append("&");
 					}
 					if (StringUtils.isBlank(pair.getValue())) {
-						sb.append(QueryUtil.encode(pair.getName()));
+						sb.append(EuropeanaUriUtils.encode(pair.getName()));
 					} else {
-						sb.append(pair.getName()).append("=").append(QueryUtil.encode(pair.getValue()));
+						sb.append(pair.getName()).append("=").append(EuropeanaUriUtils.encode(pair.getValue()));
 					}
 				}
 
 				search.setQuery(sb.toString());
 			} else {
-				search.setQuery(QueryUtil.encode(search.getQuery()));
+				search.setQuery(EuropeanaUriUtils.encode(search.getQuery()));
 			}
 		}
 		return search;

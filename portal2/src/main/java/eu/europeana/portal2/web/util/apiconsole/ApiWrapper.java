@@ -34,7 +34,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.portal2.web.util.QueryUtil;
+import eu.europeana.corelib.utils.EuropeanaUriUtils;
 
 public class ApiWrapper {
 	
@@ -99,12 +99,12 @@ public class ApiWrapper {
 		url.append(SEARCH_PATH);
 		url.append(WSKEY_PARAM).append(api2key);
 		if (!StringUtils.isBlank(query)) {
-			url.append(QUERY_PARAM).append(QueryUtil.encode(query));
+			url.append(QUERY_PARAM).append(EuropeanaUriUtils.encode(query));
 		}
 		if (!ArrayUtils.isEmpty(refinements)) {
 			for (String qf : refinements) {
 				if (!StringUtils.isBlank(qf)) {
-					url.append(QF_PARAM).append(QueryUtil.encode(qf));
+					url.append(QF_PARAM).append(EuropeanaUriUtils.encode(qf));
 				}
 			}
 		}
@@ -151,7 +151,7 @@ public class ApiWrapper {
 		url.append(SUGGESTIONS_PATH);
 		url.append(SUGGESTION_ROWS_PARAM).append(rows);
 		if (!StringUtils.isBlank(query)) {
-			url.append(QUERY_PARAM).append(QueryUtil.encode(query));
+			url.append(QUERY_PARAM).append(EuropeanaUriUtils.encode(query));
 		}
 		url.append(PHRASES_PARAM).append(phrases);
 		if (!StringUtils.isBlank(callback)) {
