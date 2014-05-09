@@ -39,13 +39,13 @@
 			
 			<div class="hierarchy-objects">
 				<div class="hierarchy-top-panel">
-					<div class="hierarchy-prev">view all items above</div>
+					<div class="hierarchy-prev">view items above<span class="count"></span></div>
 				</div>
 				<div class="hierarchy-container">
 					<div id="hierarchy"></div>
 				</div>		
 				<div class="hierarchy-bottom-panel">
-					<div class="hierarchy-next">view all items below</div>
+					<div class="hierarchy-next">view items below<span class="count"></span></div>
 				</div>
 			</div>
 			

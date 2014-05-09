@@ -52,13 +52,12 @@
 	<div>
 		<a class="lock"          style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[unlock]</a>
 		<a class="spin"          style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[spin]</a>
-		<a class="enable"        style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[enable]</a>
+		<a class="scroll-top"    style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[scroll-top]</a>
 		<!-- a class="load-more">load more...</a-->
 		<a class="visible-nodes" style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[visible]</a>
 		<a class="tba"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[arrows]</a>
+		<a class="points"        style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[points]</a>
 		<br/>
-		<br/>
-		<a class="view-next" style="font-weight:bold; cursor:pointer;">view next...</a>
 		<br/>
 		<br/>
 		<input id="chunk" type="number" tab-index="1">
@@ -67,13 +66,13 @@
 		
 		<div class="hierarchy-objects">
 			<div class="hierarchy-top-panel">
-				<div class="hierarchy-prev">view all items above</div>
+				<div class="hierarchy-prev">view items above<span class="count"></span></div>
 			</div>
 			<div class="hierarchy-container">
 				<div id="hierarchy"></div>
 			</div>		
 			<div class="hierarchy-bottom-panel">
-				<div class="hierarchy-next">view all items below</div>
+				<div class="hierarchy-next">view items below<span class="count"></span></div>
 			</div>
 		</div>
 		

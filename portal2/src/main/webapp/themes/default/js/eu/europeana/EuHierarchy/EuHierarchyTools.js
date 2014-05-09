@@ -23,12 +23,20 @@ var EuHierarchyTools = function(hierarchy) {
 		}
 	});
 	
-	$('.enable').click(function() {
-		alert('not done - not needed');
+	$('.scroll-top').click(function() {
+		var val = $('#chunk').val();
+		console.log('call scroll top with ' + val);
+		self.hierarchy.scrollTop( val )
 		//$('.jstree-disabled').each(function(){
 		//	var node = self.treeCmp.jstree( 'get_node', $(this).closest('.jstree-node') );			
 		//	self.treeCmp.jstree("enable_node", node );
 		//});		
+	});
+	
+	$('#chunk').keypress(function(e){
+		if(e.which==13){
+			$('.scroll-top').click();		
+		}
 	});
 	
 	
@@ -60,6 +68,70 @@ var EuHierarchyTools = function(hierarchy) {
 		}, 3000);
 	});
 
+
+	$('.points').click(function(){
+
+		// Replacement for function getVisibleNodes().
+		// element-to-node and node-to-element conversions happening too often
+		// TODO: add parameter @fmt [TYPE_EL, TYPE_NODE, TYPE_BOTH] and return accordingly
+		
+		var upToNode = function(el){
+			console.log('getVis()-upToNode: land on ' + el[0].nodeName + ' ' + el.attr('class') )
+			if(el.hasClass('hierarchy-container')){				
+				console.log('getVis()-upToNode: hit container');
+				return false;
+			}
+			else if(el.hasClass('jstree-node')){
+				console.log('getVis()-upToNode: found node ');
+				return el;
+			}
+			else if(el.parent()){
+				console.log('getVis()-upToNode: not found node -recurse');
+				return upToNode(el.parent());
+			}
+			else{
+				console.log('getVis()-upToNode: no parent, returning false');
+				return false;
+			}
+		};
+
+		var backToNode = function(nodeIn){
+			var x = nodeIn.prevAll("li.jstree-node:first");
+			if(x.length){
+				console.log('getVis()-backToNode: x is good');
+				return x;
+			}
+			console.log('getVis()-backToNode: having to go up...');
+			return nodeIn.closest("li.jstree-node");;			
+		};
+
+		
+		var stepDown     = 10; /* pixels below the centre of the top panel */
+		var pnlTop       = $('.hierarchy-top-panel');
+		var container    = $('.hierarchy-container');
+		var rect         = pnlTop[0].getBoundingClientRect();
+		var pointX       = rect.left + (pnlTop.width() / 2);
+		var pointY       = rect.top +  (pnlTop.height());
+		var topNode      = upToNode($(document.elementFromPoint(pointX, pointY + stepDown)));
+		
+		var previousNode = backToNode(topNode);
+		
+		var bottomNode;
+		var stepUp       = 2 * stepDown;
+		var count        = 1;
+		
+		while(!bottomNode){
+			bottomNode = upToNode($(document.elementFromPoint(pointX, (pointY + container.height()) - (count * stepUp)  )));
+			count ++;
+		}
+
+		topNode.css('background-color', 'purple');
+		bottomNode.css('background-color', 'cyan');
+		previousNode.css('background-color', 'brown');
+		
+	});
+	
+	
 };
 
 
