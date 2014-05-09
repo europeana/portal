@@ -3,6 +3,9 @@
 	font-size:   1em;
 	line-height: 1.4em;
 	position:    relative;
+	
+	margin-top:    1.5em;
+	margin-bottom: 1.5em;
 }
 
 .hierarchy-objects{
@@ -18,20 +21,74 @@
 	}
 }
 
+.hierarchy-container,
+.hierarchy-top-panel,
+.hierarchy-bottom-panel{
+	border:		1px solid #dadada;
+	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing:	border-box;
+	box-sizing: border-box;
+}
+
+.hierarchy-container{
+	border-bottom: none;
+	border-top: none;	
+}
+
+.hierarchy-top-panel{
+	border-bottom: none;
+}
+
+.hierarchy-bottom-panel{
+	border-top: none;
+}
+	
+
 .hierarchy-top-panel,
 .hierarchy-bottom-panel{
 	height: 2em;
 	width: 100%;
-	background-color:#ffee44;
 	position: relative;
 }
 
-.hierarchy-top-panel .top-arrows{
+.hierarchy-next,
+.hierarchy-prev{
+	line-height: 2em;
+}
+
+.hierarchy-next .count,
+.hierarchy-prev .count{
+	margin-left: 0.4em;
+}
+
+/*
+.hierarchy-next,
+.hierarchy-prev{
+	float: left;
+}
+*/
+/*
+.hierarchy-top-panel .top-arrows:after,
+.hierarchy-next :after,
+.hierarchy-prev :after{
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+*/
+.hierarchy-objects .top-arrows{
+	
 	position: absolute;
 	left:     1em;
 	bottom:   0px;	
+	
 }
-.hierarchy-top-panel .bottom-arrows{
+.hierarchy-objects .bottom-arrows{
+	
 	position: absolute;
 	bottom:   auto;
 	top:      0px;
@@ -40,20 +97,19 @@
 
 .hierarchy-objects  .arrow-spacer,
 .hierarchy-objects  .arrow{	
-	background-color:orange;
-	width: 1em;
-	height: 1em;	
-	float: right;
-	
-	border:1px solid red;
-	
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing:	border-box;
-	box-sizing: border-box;	
+	width:               1em;
+	height:              1em;	
+	float:               right;
+	background-color:    transparent;
+	background-position: 0 0;
+	background-size:     1em 1em;
 }
 
-.hierarchy-objects  .arrow.top{	
-	background-color: pink;
+.hierarchy-objects  .arrow.top{		
+	background-image:    url(broken-arrow-top-1.png);
+}
+.hierarchy-objects  .arrow.bottom{	
+	background-image:    url(broken-arrow-bottom-1.png);
 }
 
 .hierarchy-objects    .arrow-spacer{
@@ -62,7 +118,6 @@
 
 
 .hierarchy-container{
-	border:		1px solid #dadada;
 
 	XXfont-size:	1.5em;		/* tweak this to scale the whole component proportionally */
 	

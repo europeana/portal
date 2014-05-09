@@ -616,7 +616,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		var overrideSpacer = false;
 		//
 		if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){
-			alert('bottom node error here')
 			
 			// CHANGE
 			//overrideSpacer = true;
@@ -872,17 +871,17 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						newScrollTop = Math.max(0, newScrollTop);				
 					}
 					else{
-						alert('initiatingNode != visibleNodes[0]\n\ninitiator was ' + initiatingNode.id )
+						alert(
+							  'ERROR CODE 1\n\n'
+							+ 'If you see this please record the what steps were needed to produce this error and what browser was used, and let Andy know about it\n\n'
+							+ 'initiatingNode != visibleNodes[0]\n\ninitiator was ' + initiatingNode.id 
+						)
 					}
 
 					if(newScrollTop == scrollTop){
 						self.scrollDuration = 0;
-						//alert('CATCH ALL CLICK SCROLLS HERE?  1');
+					}
 
-					}
-					else{
-						//alert('CATCH ALL CLICK SCROLLS HERE?');
-					}
 					doScrollTo(newScrollTop, function(){
 						self.scrollDuration = 1000;
 						togglePrevNextLinks();
@@ -1311,7 +1310,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				
 				var recurseData = false;
 				if($.isArray(newData) && newData.length){
-					alert('this should never happen');
+					
+					alert('ERROR CODE 2\n\n'
+						+ 'If you see this please record the what steps were needed to produce this error and what browser was used, and let Andy know about it\n\n'
+						+ 'Load error.' 
+					)
+
 					recurseData = data[0].data;
 				}
 				else{
