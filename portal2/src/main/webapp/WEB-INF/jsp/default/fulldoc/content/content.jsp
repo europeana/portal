@@ -46,6 +46,8 @@
 				</div>		
 				<div class="hierarchy-bottom-panel">
 					<div class="hierarchy-next">view items below<span class="count"></span></div>
+					<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>
+					
 				</div>
 			</div>
 			

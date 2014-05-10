@@ -56,12 +56,10 @@
 		<!-- a class="load-more">load more...</a-->
 		<a class="visible-nodes" style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[visible]</a>
 		<a class="tba"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[arrows]</a>
-		<a class="points"        style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[points]</a>
+		<a class="expand"        style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[expand]</a>
+		<a class="collapse"      style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[collapse]</a>
 		<br/>
-		<br/>
-		<br/>
-		<input id="chunk" type="number" tab-index="1">
-		<br/>
+		<input id="chunk" type="number" tab-index="1" style="float:right; margin-bottom: 0.75em; margin-top: 0.75em;">
 		<br/>
 		
 		<div class="hierarchy-objects">
@@ -70,9 +68,10 @@
 			</div>
 			<div class="hierarchy-container">
 				<div id="hierarchy"></div>
-			</div>		
+			</div>
 			<div class="hierarchy-bottom-panel">
 				<div class="hierarchy-next">view items below<span class="count"></span></div>
+				<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>
 			</div>
 		</div>
 		
