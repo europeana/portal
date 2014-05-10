@@ -475,7 +475,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		self.topPanel.find('.top-arrows').remove();
 		
-		var topArrows = $('<div class="top-arrows"></div>').prependTo(self.topPanel);
+//		var topArrows = $('<div class="top-arrows"></div>').prependTo(self.topPanel);
+		var topArrows = $('<div class="top-arrows"></div>').appendTo(self.topPanel);
 		var vNodes    = getVisibleNodes();
 		var xNode     = vNodes[0];
 		var count     = 1;
@@ -607,11 +608,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		 * 
 		 */
 		var overrideSpacer = false;
-		//
-		if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){
-			
-			// CHANGE
-			//overrideSpacer = true;
+
+		if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){			
 			var createClass  = 'arrow bottom';
 			var createString = '<div class="' + createClass + '" style="right:' + count + 'em">';
 			count++;
@@ -649,16 +647,16 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		}// end while	
 	}
 
+	var getRandom = function(avoid){
+		avoid = avoid ? parseInt(avoid.replace('(', '').replace(')', '')) : 1;
+		var r = avoid;
+		while(r == avoid){
+			r = parseInt(Math.random() * 100);
+		}
+		return r;
+	};
 	
 	var setPrevNextCount = function(){
-		var getRandom = function(avoid){
-			avoid = avoid ? parseInt(avoid.replace('(', '').replace(')', '')) : 1;
-			var r = avoid;
-			while(r == avoid){
-				r = parseInt(Math.random() * 100);
-			}
-			return r;
-		};
 		$('.hierarchy-next .count').html( '(' + getRandom( $('.hierarchy-next .count').html()) + ')' );
 		$('.hierarchy-prev .count').html( '(' + getRandom( $('.hierarchy-prev .count').html()) + ')' );
 	};
@@ -731,7 +729,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	$('.load-more').click(function(){ alert('no handler'); });
 	$('.view-next').click(function(){ alert('no handler'); });
 	
-	$('.hierarchy-prev').click(function(){
+	$('.hierarchy-prev>a').click(function(){
 		loadAndScroll(getVisibleNodes()[0], true, false, function(){
 		});
 	});
@@ -878,7 +876,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	};	
 	
 	
-	$('.hierarchy-next').click(function(){
+	$('.hierarchy-next>a').click(function(){
 		var visibleNodes = getVisibleNodes();
 		loadAndScroll(visibleNodes[0], false, false, function(){
 			togglePrevNextLinks();
@@ -1017,8 +1015,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		self.treeCmp.bind("loaded.jstree", function(event, data) {
 			setTimeout(function() {
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
-				
-				
+								
 				doOnSelect(pageNode, function(){
 					setTimeout(function() {
 						var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
@@ -1142,12 +1139,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 			loadData(url, function(newDataIn){
 								
-				var newData;
-					newData = formatNodeData(newDataIn);
+				var newData = formatNodeData(newDataIn);
 
 				if(!data){
-					//data            = newData;//formatNodeData( newData );
-					data            = formatNodeData( newData );
+					data            = newData;
 					self.pageNodeId = data.id;
 				}
 				else{
@@ -1174,9 +1169,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					chainUp(recurseData.parentUrl, data, callbackWhenDone);							
 				}
 				else{
+					wrapper.find('.hierarchy-title>a').html(data.text);
+					wrapper.find('.hierarchy-title>.count').html('(contains ' + getRandom(0) + ' items)');
 					callbackWhenDone(data);
-				}
-				
+				}		
 			});	
 		};
 
@@ -1278,13 +1274,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			};
 
 			var callLoadChildren = function(node, completeCallback, countRemaining){
-				
-				console.log('clc ' + countRemaining);
-				
+								
 				if(countRemaining<=0){  /*  countRemaining==0 works for FF, but <=0 needed for chrome.  Suffix wrong? TODO   */
-					
 					completeCallback(node);
-					
 				}
 				else{
 					loadChildren(node, completeCallback);

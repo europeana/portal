@@ -37,25 +37,35 @@
 
 .hierarchy-top-panel,
 .hierarchy-bottom-panel{
-	height: 2em;
+	XXXheight: 2em;
 	width: 100%;
 	position: relative;
 }
 
 .hierarchy-top-panel{
 	border-bottom: none;
+	height: 4.25em;
 }
 
 .hierarchy-bottom-panel{
 	border-top: none;
-	height: 3.5em;
+	height: 4em;
 }
+
+.hierarchy-top-panel .hierarchy-title{
+	position: absolute;
+	top: 0.5em;
+
+	left: 2em;
+
+	font-size: 1.2em;
+}
+
 
 .hierarchy-bottom-panel	.expand-collapse{
 	position: absolute;
-	bottom: 0;
+	bottom: 0.5em;
 	left: 2em;
-	font-size: 1em;
 }
 
 .hierarchy-bottom-panel	.expand-collapse .expand-all,
@@ -73,9 +83,15 @@
 	line-height: 2em;
 }
 
+.hierarchy-title .count,
 .hierarchy-next .count,
 .hierarchy-prev .count{
 	margin-left: 0.4em;
+}
+
+.hierarchy-prev{
+	position: absolute;
+	bottom: 0;
 }
 
 /*
@@ -96,6 +112,7 @@
 	height: 0;
 }
 */
+
 .hierarchy-objects .top-arrows{
 	
 	position: absolute;
@@ -140,11 +157,6 @@
 	overflow:	hidden;	
 	position: relative;
 	
-	/*
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing:	border-box;
-	box-sizing: border-box;
-	*/
 }
 
  /* force scrollability: this em value should correspond to the js variable defaultChunk */
@@ -333,13 +345,14 @@
 
 /* overlay */
 .ajax-overlay{
-    position:	absolute;
-    width:		100%;
-    height:		100%;
-    background:	black url(../../../../images/spinner.gif) center center no-repeat;
-    opacity:	.5;
-    z-index:	12;
-    left:		0;
-    top:		0;
+    position:		absolute;
+    width:			100%;
+    height:			100%;
+    background:		black url(../../../../images/spinner.gif) center center no-repeat;
+    opacity:		.5;
+    z-index:		12;
+    left:			0;
+    top:			0;
+    border-radius:	8px 8px 8px 8px;
 }		
 

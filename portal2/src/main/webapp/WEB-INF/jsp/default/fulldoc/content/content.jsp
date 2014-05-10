@@ -39,8 +39,10 @@
 			
 			<div class="hierarchy-objects">
 				<div class="hierarchy-top-panel">
-					<div class="hierarchy-prev">view items above<span class="count"></span></div>
+					<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>
+					<div class="hierarchy-title"><a></a><span class="count"></span></div>
 				</div>
+
 				<div class="hierarchy-container">
 					<div id="hierarchy"></div>
 				</div>		
