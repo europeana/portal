@@ -897,7 +897,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	var getVisibleNodes = function(){
 
-		$.scrollTo(self.topPanel);
+		$.scrollTo(self.topPanel, {offset:-16});
 
 		var overlayShowing = $('.ajax-overlay').is(':visible');
 		
@@ -1353,7 +1353,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				self.treeCmp.jstree('close_node', $(ob).attr('id'));
 			});
 
-			$.scrollTo(self.topPanel);
+			$.scrollTo(self.topPanel, {offset:-16});
+
 			doScrollTo(getRootEl(), function(){
 				
 				//self.treeCmp.jstree('open_node', node);
