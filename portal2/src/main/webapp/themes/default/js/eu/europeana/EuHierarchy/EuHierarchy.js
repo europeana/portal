@@ -1278,8 +1278,13 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			};
 
 			var callLoadChildren = function(node, completeCallback, countRemaining){
-				if(countRemaining==0){
+				
+				console.log('clc ' + countRemaining);
+				
+				if(countRemaining<=0){  /*  countRemaining==0 works for FF, but <=0 needed for chrome.  Suffix wrong? TODO   */
+					
 					completeCallback(node);
+					
 				}
 				else{
 					loadChildren(node, completeCallback);
@@ -1340,14 +1345,14 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		setTimeout(function(){
 			
-			//$('.hierarchy-next').show();
-			//$('.hierarchy-prev').show();
 			$('.bottom-arrows').show();
 			$('.top-arrows').show();
+
+			var height = rows * lineHeight;
 			
-			self.container.css('height',         (rows * lineHeight) + 'em');
-			self.container.css('max-height',     (rows * lineHeight) + 'em');
-			self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
+			self.container.css('height',         height + 'em');
+			self.container.css('max-height',     height + 'em');
+			self.treeCmp  .css('padding-bottom', height + 'em');
 
 			$('.jstree-open').each(function(i, ob){				
 				self.treeCmp.jstree('close_node', $(ob).attr('id'));
@@ -1356,8 +1361,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			$.scrollTo(self.topPanel, {offset:-16});
 
 			doScrollTo(getRootEl(), function(){
-				
-				//self.treeCmp.jstree('open_node', node);
 				setTimeout(function(){
 					hideSpinner();
 					self.expandingAll = false;
