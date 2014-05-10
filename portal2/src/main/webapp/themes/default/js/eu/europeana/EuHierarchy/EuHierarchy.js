@@ -897,6 +897,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	var getVisibleNodes = function(){
 
+		$.scrollTo(self.topPanel);
+
 		var overlayShowing = $('.ajax-overlay').is(':visible');
 		
 		if(overlayShowing){
@@ -928,11 +930,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 		
 		var stepDown     = 10; /* pixels below the centre of the top panel */
-		var pnlTop       = $('.hierarchy-top-panel');
-		var container    = $('.hierarchy-container');
-		var rect         = pnlTop[0].getBoundingClientRect();
-		var pointX       = rect.left + (pnlTop.width() / 2);
-		var pointY       = rect.top +  (pnlTop.height());
+		//var container    = $('.hierarchy-container');
+		var rect         = self.topPanel[0].getBoundingClientRect();
+		var pointX       = rect.left + (self.topPanel.width() / 2);
+		var pointY       = rect.top +  (self.topPanel.height());
 		var pointElement = document.elementFromPoint(pointX, pointY + stepDown);		
 		var topNode      = upToNode( $(pointElement) );
 		
@@ -947,7 +948,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		var count        = 1;
 		
 		while(!bottomNode){
-			bottomNode = upToNode($(document.elementFromPoint(pointX, (pointY + container.height()) - (count * stepUp)  )));
+			bottomNode = upToNode($(document.elementFromPoint(pointX, (pointY + self.container.height()) - (count * stepUp)  )));
 			count ++;
 		}
 
@@ -1319,29 +1320,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				loadUp();
 			}
 			else{
-				/*
-				if(collapse){
-					var initialNode  = self.treeCmp.jstree('get_node', getRootEl().attr('id'));
-					var collapseNode = function(node){
-						$.each(node.children, function(i, ob){
-							var cNode = self.treeCmp.jstree('get_node', ob);
-							if(cNode.children && cNode.children.length){
-								collapseNode(cNode);
-							}
-						});						
-						self.treeCmp.jstree('close_node', node);
-						if(node==initialNode){
-							brokenArrows();
-							alert('end');
-							hideSpinner();
-							self.expandingAll = false;
-						}
-					};
-					collapseNode(initialNode);
-				}
-				else{
-				}
-				*/
 				expand(getVisibleNodes()[0]);
 			}				
 		};
@@ -1376,15 +1354,17 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			});
 
 			$.scrollTo(self.topPanel);
-			
-			setTimeout(function(){
-				hideSpinner();
-				self.expandingAll = false;
+			doScrollTo(getRootEl(), function(){
 				
-				togglePrevNextLinks();
-				//brokenArrows();
-			})
-
+				//self.treeCmp.jstree('open_node', node);
+				setTimeout(function(){
+					hideSpinner();
+					self.expandingAll = false;
+					togglePrevNextLinks();
+					
+				},10);
+				
+			});
 			
 		}, 100);
 	};
@@ -1399,11 +1379,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		getContainer : function(){
 			return self.container;
 		},
-		/*
+		
 		getVisibleNodes : function(){
 			return getVisibleNodes();
 		},
-		*/
+		
 		expandAll : function(){
 			expandAll();
 		},
