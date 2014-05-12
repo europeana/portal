@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%-- query action --%>
@@ -74,7 +75,7 @@
 				<c:set var="hasTranslation" value="false"/>
 		
 				<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
-					<c:if test="${fn:length(qt.languageCode)>0}">
+					<c:if test="${fn:length(qt.languageCode) > 0}">
 						<c:set var="hasTranslation" value="true"/>
 						<a href="${qt.queryLink}">${qt.text}</a> (${qt.languageCode})
 						<a href="${qt.removeLink}">&times;</a> &nbsp; 
