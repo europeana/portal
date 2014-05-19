@@ -19,6 +19,7 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -86,8 +87,19 @@ public class FieldValue {
 		return value;
 	}
 
+	public String getTranslatedValue() {
+		if (field.isTranslatable() && StringUtils.isNotBlank(model.getItemLanguage())) {
+			return model.translationUrlservice.translate(value, model.getItemLanguage());
+		}
+		return null;
+	}
+
 	public String getValueClean() {
 		return StringUtils.remove(value, "\"'");
+	}
+	
+	public String getValueCleaner() {
+		return FieldCleaner.clean(value);
 	}
 
 	/**

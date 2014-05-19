@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="eufn" uri="http://europeana.eu/jsp/tlds/europeanatags"%>
 <%@ taglib prefix="eu" tagdir="/WEB-INF/tags"%>
 <%--
  * display-ese-data-as-fields
@@ -158,6 +159,7 @@
 
 				<c:choose>
 					<c:when test="${model.showContext && !empty value.decorator}">
+						<!-- mode: showContext -->
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
@@ -170,16 +172,19 @@
 						</c:if>
 					</c:when>
 					<c:when test="${value.searchOn}">
+						<!-- mode: searchOn -->
 						<a href="${value.searchOn}" target="_top" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							rel="nofollow">${value.value}</a>${separator}
 					</c:when>
 					<c:when test="${value.url}">
+						<!-- mode: url -->
 						<a href="${value.value}" target="_blank" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							rel="nofollow">${value.value}</a>${separator}
 					</c:when>
 					<c:otherwise>
+						<!-- mode: otherwise -->
 						<span class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							<c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:choose>
@@ -192,39 +197,22 @@
 								--%>
 
 								<c:when test="${localSemanticUrl}">
+									<!-- mode: otherwise/localSemanticUrl -->
 									<c:out value="${(value.value)}" />
 								</c:when>
 								<c:otherwise>
-									<c:set var="theVal" value="${value.value}" />
-
-									<%-- respect <br>, <p> and <i> --%>
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;BR&gt;',	'<br/>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;br&gt;',	'<br/>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;I&gt;',	'<i>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;i&gt;',	'<i>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/I&gt;',	'</i>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/i&gt;',	'</i>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;P&gt;',	'<p>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;p&gt;',	'<p>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/P&gt;',	'</p>')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/p&gt;',	'</p>')}" />
-
-									<%-- lose <b> and <li> --%>
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;LI&gt;',	'')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;li&gt;',	'')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/LI&gt;',	'')}" />
-									<c:set var="theVal" value="${fn:replace(theVal, '&lt;/li&gt;',	'')}" />
-
-									<%-- escape >> used as arrows --%>
-									<c:set var="theVal" value="${fn:replace(theVal, '>>',	'&rarr;')}" />
-
-									<%-- remove double escaped quotes --%>
-									<c:set var="theVal" value="${fn:replace(theVal, '&amp;quot;',	'\"')}" />
+									<!-- mode: otherwise/NOT localSemanticUrl -->
+									<c:set var="theVal" value="${eufn:cleanField(value.value)}" />
+									<c:if test="${!empty data.showTranslationServices 
+												&& data.showTranslationServices
+												&& !empty value.translatedValue}">
+										<c:set var="theVal" value="${eufn:cleanField(value.translatedValue)}" />
+									</c:if>
 
 									<%-- wrap in canned link if available --%>
 									<c:choose>
-										<c:when test="${fn:length(cannedUrl)>0}">
-									      <a class="europeana canned" href="${fn:replace( cannedUrl, 'CANNED_VALUE', fn:replace(theVal, '&', '%26')  ) }"><c:out value="${theVal}" escapeXml="false" /></a> 
+										<c:when test="${fn:length(cannedUrl) > 0}">
+											<a class="europeana canned" href="${fn:replace(cannedUrl, 'CANNED_VALUE', fn:replace(theVal, '&', '%26'))}"><c:out value="${theVal}" escapeXml="false" /></a>
 										</c:when>
 										<c:otherwise>
 											<c:out value="${theVal}" escapeXml="false" />
@@ -269,3 +257,5 @@
 		</${wrapper}>
 	</c:if>
 </c:forEach>
+
+<ex:Hello/>

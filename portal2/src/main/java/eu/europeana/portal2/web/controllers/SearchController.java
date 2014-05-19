@@ -1,6 +1,7 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -23,7 +24,6 @@ import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
-import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
@@ -32,6 +32,7 @@ import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 
@@ -100,8 +101,12 @@ public class SearchController {
 		q = SolrUtils.rewriteQueryFields(q);
 		model.setQuery(q);
 
-		List<LanguageVersion> queryTranslations = ControllerUtil.createQueryTranslations(userService, q, qt, request);
-		model.setQueryTranslations(queryTranslations);
+		long t0 = new Date().getTime();
+		LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, q, qt, request);
+		long t1 = new Date().getTime();
+		log.info("Query translation: " + (t1 - t0));
+		model.setLanguages(languageContainer);
+		log.info("ItemLanguage: " + model.getItemLanguage());
 
 		if (!sortValues.contains(sort)) {
 			sort = DEFAULT_SORT;
@@ -123,7 +128,7 @@ public class SearchController {
 				.setParameter("sort", sort)
 				.setProduceFacetUnion(true)
 				.setAllowSpellcheck(false)
-				.setQueryTranslations(queryTranslations)
+				.setQueryTranslations(languageContainer.getQueryTranslations())
 				;
 
 		if (model.isEmbedded()) {

@@ -79,6 +79,7 @@ import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanShortcut;
 import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
+import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 import eu.europeana.portal2.web.presentation.model.submodel.impl.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.ControllerUtil;
@@ -198,8 +199,9 @@ public class ObjectController {
 		model.setShowHierarchical(showHierarchical);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 		model.setStartTime(t0);
-		List<LanguageVersion> queryTranslations = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
-		model.setQueryTranslations(queryTranslations);
+		LanguageContainer languageContainer = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
+		model.setLanguages(languageContainer);
+		log.info("ItemLanguage: " + model.getItemLanguage());
 
 		// TODO: refactor this!!!
 		boolean showSimilarItems = false;
@@ -214,6 +216,7 @@ public class ObjectController {
 
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setEdmSchemaMappings(schemaOrgMapping);
+		model.setBingTranslateId(config.getBingTranslateId());
 
 		long tgetFullBean0 = new Date().getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, showSimilarItems);

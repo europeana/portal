@@ -26,22 +26,25 @@ import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
+import eu.europeana.corelib.web.service.MicrosoftTranslatorService;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.corelib.web.service.impl.MicrosoftTranslatorServiceImpl;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.LanguageVersionLink;
+import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 import eu.europeana.portal2.web.util.QueryUtil;
 
 /**
  * Abstract model for all pages containing a searchform...
  * 
  * @author GJW Boogerd
- * 
  */
 public abstract class SearchPageData extends PortalPageData {
 
 	public EuropeanaUrlService europeanaUrlservice = EuropeanaUrlServiceImpl.getBeanInstance();
+	public MicrosoftTranslatorService translationUrlservice = MicrosoftTranslatorServiceImpl.getBeanInstance();
 
 	private String query;
 
@@ -68,6 +71,14 @@ public abstract class SearchPageData extends PortalPageData {
 	 * The translated version of the query
 	 */
 	private List<LanguageVersion> queryTranslations;
+
+	private List<String> keywordLanguages;
+
+	private String portalLanguage;
+
+	private String itemLanguage;
+
+	private boolean useJsTranslations = false;
 
 	public void setQuery(String query) {
 		this.query = query;
@@ -199,5 +210,44 @@ public abstract class SearchPageData extends PortalPageData {
 		url.addParam("qf", getRefinements());
 		url.addMultiParam("qt", "false");
 		return url.toString();
+	}
+
+	public void setLanguages(LanguageContainer languageContainer) {
+		queryTranslations = languageContainer.getQueryTranslations();
+		keywordLanguages = languageContainer.getKeywordLanguages();
+		portalLanguage = languageContainer.getPortalLanguage();
+		itemLanguage = languageContainer.getItemLanguage();
+	}
+
+	public List<String> getKeywordLanguages() {
+		return keywordLanguages;
+	}
+
+	public void setKeywordLanguages(List<String> keywordLanguages) {
+		this.keywordLanguages = keywordLanguages;
+	}
+
+	public String getPortalLanguage() {
+		return portalLanguage;
+	}
+
+	public void setPortalLanguage(String portalLanguage) {
+		this.portalLanguage = portalLanguage;
+	}
+
+	public String getItemLanguage() {
+		return itemLanguage;
+	}
+
+	public void setItemLanguage(String itemLanguage) {
+		this.itemLanguage = itemLanguage;
+	}
+
+	public boolean isUseJsTranslations() {
+		return useJsTranslations;
+	}
+
+	public void setUseJsTranslations(boolean useJsTranslations) {
+		this.useJsTranslations = useJsTranslations;
 	}
 }

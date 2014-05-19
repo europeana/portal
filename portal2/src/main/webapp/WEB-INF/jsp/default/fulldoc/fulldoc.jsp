@@ -1,5 +1,5 @@
 <%@ taglib uri="http://htmlcompressor.googlecode.com/taglib/compressor" prefix="compress" %>
-<compress:html enabled="true" compressJavaScript="false" yuiJsDisableOptimizations="true">
+<compress:html enabled="false" compressJavaScript="false" yuiJsDisableOptimizations="true">
 
 <%@ include file="/WEB-INF/jsp/default/_common/include.jsp" %>
 <%--

@@ -22,7 +22,6 @@ import java.io.StringWriter;
 import java.sql.BatchUpdateException;
 import java.text.MessageFormat;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -40,12 +39,12 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.web.model.FragmentInfo;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.portal2.web.presentation.ThemeChecker;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
+import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 import eu.europeana.portal2.web.security.Portal2UserDetails;
 
 /**
@@ -239,15 +238,17 @@ public class ControllerUtil {
 		}
 	}
 
-	public static List<LanguageVersion> createQueryTranslations(UserService userService, String query,
+	public static LanguageContainer createQueryTranslations(UserService userService, String query,
 			String[] qt, HttpServletRequest request) {
 		QueryTranslationsUtil queryTranslator = new QueryTranslationsUtil(userService, request, query, qt);
-		return queryTranslator.createQueryTranslations();
+		queryTranslator.createQueryTranslations();
+		return queryTranslator.getLanguageContainer();
 	}
 
-	public static List<LanguageVersion> createQueryTranslationsFromParams(UserService userService, String query,
+	public static LanguageContainer createQueryTranslationsFromParams(UserService userService, String query,
 			String[] qt, HttpServletRequest request) {
 		QueryTranslationsUtil queryTranslator = new QueryTranslationsUtil(userService, request, query, qt);
-		return queryTranslator.createQueryTranslationsFromParams();
+		queryTranslator.createQueryTranslationsFromParams();
+		return queryTranslator.getLanguageContainer();
 	}
 }

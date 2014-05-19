@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.web.util.WebUtils;
 
 import eu.europeana.corelib.db.service.UserService;
@@ -17,8 +18,11 @@ import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.model.LanguageVersion;
+import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 
 public class QueryTranslationsUtil {
+
+	Logger log = Logger.getLogger(QueryTranslationsUtil.class.getCanonicalName());
 
 	private UserService userService;
 
@@ -28,6 +32,7 @@ public class QueryTranslationsUtil {
 	private HttpServletRequest request;
 	private String query;
 	private String[] qt;
+	private LanguageContainer languageContainer;
 
 	public QueryTranslationsUtil() {}
 
@@ -36,16 +41,27 @@ public class QueryTranslationsUtil {
 		this.request = request;
 		this.query = query;
 		this.qt = qt;
+		setLanguages();
 	}
 
-	public List<LanguageVersion> createQueryTranslations() {
-		List<LanguageVersion> queryTranslations = null;
+	public LanguageContainer getLanguageContainer() {
+		return languageContainer;
+	}
+
+	public void createQueryTranslations() {
 		if (StringArrayUtils.isNotBlank(qt)) {
-			queryTranslations = createQueryTranslationsFromParams();
+			createQueryTranslationsFromParams();
 		} else {
-			queryTranslations = translateQuery();
+			languageContainer.setQueryTranslations(translateQuery());
 		}
-		return queryTranslations;
+	}
+
+	public void createQueryTranslationsFromParams() {
+		if (StringArrayUtils.isNotBlank(qt)) {
+			if (!preventQueryTranslation()) {
+				languageContainer.setQueryTranslations(parseQueryTranslations());
+			}
+		}
 	}
 
 	private List<LanguageVersion> translateQuery() {
@@ -56,15 +72,6 @@ public class QueryTranslationsUtil {
 				Collections.sort(translatedQueries);
 			}
 			return translatedQueries;
-		}
-		return null;
-	}
-
-	public List<LanguageVersion> createQueryTranslationsFromParams() {
-		if (StringArrayUtils.isNotBlank(qt)) {
-			if (!preventQueryTranslation()) {
-				return parseQueryTranslations();
-			}
 		}
 		return null;
 	}
@@ -83,13 +90,30 @@ public class QueryTranslationsUtil {
 	}
 
 	private List<String> getTranslatableLanguages() {
-		User user = ControllerUtil.getUser(userService);
-		List<String> languageCodes = getKeywordLanguages(user);
-		String portalLanguage = getPortalLanguage(user);
+		log.info("getTranslatableLanguages");
+
+		List<String> languageCodes = new ArrayList<String>();
+		languageCodes.addAll(languageContainer.getKeywordLanguages());
+
+		String portalLanguage = languageContainer.getPortalLanguage();
 		if (!languageCodes.contains(portalLanguage)) {
 			languageCodes.add(portalLanguage);
 		}
+
 		return languageCodes;
+	}
+
+	private void setLanguages() {
+		if (languageContainer == null) {
+			User user = ControllerUtil.getUser(userService);
+
+			languageContainer = new LanguageContainer();
+			languageContainer.setKeywordLanguages(getKeywordLanguages(user));
+			languageContainer.setPortalLanguage(getPortalLanguage(user));
+			if (user != null) {
+				languageContainer.setItemLanguage(user.getLanguageItem());
+			}
+		}
 	}
 
 	private List<String> getKeywordLanguages(User user) {
@@ -105,8 +129,10 @@ public class QueryTranslationsUtil {
 			}
 		}
 		if (rawLanguageCodes != null) {
-			languageCodes.addAll(Arrays.asList(
-					StringUtils.split(rawLanguageCodes.trim(), RelationalDatabase.SEARCH_LANGUAGES_SEPARATOR)));
+			languageCodes.addAll(
+				Arrays.asList(
+					StringUtils.split(
+						rawLanguageCodes.trim(), RelationalDatabase.SEARCH_LANGUAGES_SEPARATOR)));
 		}
 		return languageCodes;
 	}

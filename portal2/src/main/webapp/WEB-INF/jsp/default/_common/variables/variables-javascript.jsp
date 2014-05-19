@@ -213,7 +213,9 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.msg.saved_tag = '${saved_tag}';
 			eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
 			eu.europeana.vars.item.uri = '${model.document.about}';
-			eu.europeana.vars.languageItem = '${model.user.languageItem}';
+			<c:if test="${model.useJsTranslations}">
+				eu.europeana.vars.languageItem = '${model.user.languageItem}';
+			</c:if>
 		</c:if>
 
 		<c:set var="soundCloudAwareCollections">

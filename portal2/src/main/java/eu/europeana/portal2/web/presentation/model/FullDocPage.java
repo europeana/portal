@@ -193,29 +193,6 @@ public class FullDocPage extends FullDocPreparation {
 
 		addMetaField(fields, Field.EUROPEANA_COMPLETENESS, Integer.toString(document.getEuropeanaCompleteness()));
 
-		/*
-		Float[] longitudes = shortcut.getEdmPlaceLongitude();
-		for (Float longitude : longitudes) {
-			addMetaField(fields, Field.EDM_PLACE_LONGITUDE, Float.toString(longitude));
-		}
-
-		Float[] latitudes = shortcut.getEdmPlaceLatitude();
-		for (Float latitude : latitudes) {
-			addMetaField(fields, Field.EDM_PLACE_LATITUDE, Float.toString(latitude));
-		}
-		*/
-
-		/*
-		addMetaField(fields, Field.ENRICHMENT_PLACE_TERM, getDocument().getEnrichmentPlaceTerm());
-		addMetaField(fields, Field.ENRICHMENT_PLACE_LABEL, document.getEnrichmentPlaceLabel());
-		if ((document.getEnrichmentPlaceLatitude() != 0)
-				|| (document.getEnrichmentPlaceLongitude() != 0)) {
-			addMetaField(fields, Field.ENRICHMENT_PLACE_LATITUDE, Float.toString(document.getEnrichmentPlaceLatitude()));
-			addMetaField(fields, Field.ENRICHMENT_PLACE_LONGITUDE, Float.toString(document.getEnrichmentPlaceLongitude()));
-		}
-		addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_TERM, document.getEnrichmentPlaceBroaderTerm());
-		addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_LABEL, document.getEnrichmentPlaceBroaderLabel());
-		*/
 		if (document.getPlaces() != null) {
 			for (Place place : document.getPlaces()) {
 				addMetaField(fields, Field.ENRICHMENT_PLACE_ABOUT, place.getAbout());
@@ -228,8 +205,6 @@ public class FullDocPage extends FullDocPreparation {
 					addMetaField(fields, Field.ENRICHMENT_PLACE_LATITUDE, Float.toString(place.getLatitude()));
 					addMetaField(fields, Field.ENRICHMENT_PLACE_LONGITUDE, Float.toString(place.getLongitude()));
 				}
-				// addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_TERM, document.getEnrichmentPlaceBroaderTerm());
-				// addMetaField(fields, Field.ENRICHMENT_PLACE_BROADER_LABEL, document.getEnrichmentPlaceBroaderLabel());
 			}
 		}
 
@@ -240,7 +215,6 @@ public class FullDocPage extends FullDocPreparation {
 					addMetaField(fields, Field.ENRICHMENT_TIMESPAN_LABEL, timespan.getPrefLabel().get(key) + " (" + key + ")");
 				}
 				if (timespan.getBegin() != null) {
-					// TODO: handle language (item.getKey())
 					for (Entry<String, List<String>> item : timespan.getBegin().entrySet()) {
 						for (String value : item.getValue()) {
 							addMetaField(fields, Field.ENRICHMENT_TIMESPAN_BEGIN, value);
@@ -248,15 +222,12 @@ public class FullDocPage extends FullDocPreparation {
 					}
 				}
 				if (timespan.getEnd() != null) {
-					// TODO: handle language (item.getKey())
 					for (Entry<String, List<String>> item : timespan.getEnd().entrySet()) {
 						for (String value : item.getValue()) {
 							addMetaField(fields, Field.ENRICHMENT_TIMESPAN_END, value);
 						}
 					}
 				}
-				// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_TERM, document.getEnrichmentPeriodBroaderTerm());
-				// addMetaField(fields, Field.ENRICHMENT_PERIOD_BROADER_LABEL, document.getEnrichmentPeriodBroaderLabel());
 			}
 		}
 
@@ -267,7 +238,6 @@ public class FullDocPage extends FullDocPreparation {
 					addMetaField(fields, Field.ENRICHMENT_CONCEPT_LABEL, concept.getPrefLabel().get(key) + " (" + key + ")");
 				}
 				addMetaField(fields, Field.ENRICHMENT_CONCEPT_BROADER_TERM, concept.getBroader());
-				// addMetaField(fields, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, document.getEnrichmentConceptBroaderLabel());
 			}
 		}
 
