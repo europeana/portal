@@ -19,20 +19,16 @@ package eu.europeana.portal2.web.presentation.model.data.submodel;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ContextualItemDecorator;
 
 public class FieldValue {
-
-	// Logger log = Logger.getLogger(FieldValue.class.getCanonicalName());
 
 	private FullDocData model;
 	private Field field;

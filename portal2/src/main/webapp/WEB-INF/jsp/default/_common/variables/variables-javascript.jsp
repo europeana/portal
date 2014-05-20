@@ -213,7 +213,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.msg.saved_tag = '${saved_tag}';
 			eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
 			eu.europeana.vars.item.uri = '${model.document.about}';
-			<c:if test="${model.useJsTranslations}">
+			<c:if test="${empty model.useBackendItemTranslation || model.useBackendItemTranslation == false}">
 				eu.europeana.vars.languageItem = '${model.user.languageItem}';
 			</c:if>
 		</c:if>

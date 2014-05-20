@@ -55,7 +55,6 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
-import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.utils.service.MltStopwordsService;
 import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
@@ -198,10 +197,10 @@ public class ObjectController {
 		model.setShowContext(showContext);
 		model.setShowHierarchical(showHierarchical);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
+		model.setUseBackendItemTranslation(config.useBackendTranslation());
 		model.setStartTime(t0);
 		LanguageContainer languageContainer = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
 		model.setLanguages(languageContainer);
-		log.info("ItemLanguage: " + model.getItemLanguage());
 
 		// TODO: refactor this!!!
 		boolean showSimilarItems = false;

@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="europeana" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="eufn" uri="http://europeana.eu/jsp/tlds/europeanatags" %>
 <h3><spring:message code="SavedItems_t" /></h3>
 <c:choose>
 	<c:when test="${fn:length(model.savedItems) < 1 }">
@@ -53,7 +53,7 @@
 				</div>
 
 				<%-- Item Info --%>
-				<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold"><europeana:stringLimiter theStr="${item.title}" size="50"/></a><br/>
+				<a href='/${model.portalName}/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold">${eufn:abbreviate(item.title, 50)}</a><br/>
 				<spring:message code="Creator_t" />: <em>${item.author}</em><br/>
 				<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
 				<%-- Delete Saved Item button --%>

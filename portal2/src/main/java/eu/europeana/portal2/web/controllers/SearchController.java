@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -164,19 +163,6 @@ public class SearchController {
 
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
-	}
-
-	private boolean hasReusabilityFilter(String[] qf) {
-		boolean hasReusability = false;
-		if (qf != null) {
-			for (String filter : qf) {
-				if (StringUtils.contains(filter, "REUSABILITY:")) {
-					hasReusability = true;
-					break;
-				}
-			}
-		}
-		return hasReusability;
 	}
 
 	public InternalResourceViewResolver getViewResolver() {

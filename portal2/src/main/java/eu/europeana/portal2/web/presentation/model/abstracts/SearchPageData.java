@@ -78,7 +78,7 @@ public abstract class SearchPageData extends PortalPageData {
 
 	private String itemLanguage;
 
-	private boolean useJsTranslations = false;
+	private boolean useBackendItemTranslation = false;
 
 	public void setQuery(String query) {
 		this.query = query;
@@ -243,11 +243,11 @@ public abstract class SearchPageData extends PortalPageData {
 		this.itemLanguage = itemLanguage;
 	}
 
-	public boolean isUseJsTranslations() {
-		return useJsTranslations;
+	public boolean isUseBackendItemTranslation() {
+		return useBackendItemTranslation;
 	}
 
-	public void setUseJsTranslations(boolean useJsTranslations) {
-		this.useJsTranslations = useJsTranslations;
+	public void setUseBackendItemTranslation(boolean useBackendItemTranslation) {
+		this.useBackendItemTranslation = useBackendItemTranslation;
 	}
 }

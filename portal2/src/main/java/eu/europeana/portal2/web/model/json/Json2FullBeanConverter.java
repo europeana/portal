@@ -156,6 +156,7 @@ public class Json2FullBeanConverter {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public FullBean extractFullBean() throws JsonParseException, JsonMappingException, IOException {
 		if (setters == null) {
 			initialize();
