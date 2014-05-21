@@ -68,7 +68,7 @@ public class QueryTranslationsUtil {
 		List<String> translatableLanguages = getTranslatableLanguages();
 		if (StringArrayUtils.isNotBlankList(translatableLanguages)) {
 			List<LanguageVersion> translatedQueries = SolrUtils.translateQuery(query, translatableLanguages);
-			if (translatedQueries != null) {
+			if (translatedQueries != null && translatedQueries.size() > 1) {
 				Collections.sort(translatedQueries);
 			}
 			return translatedQueries;
@@ -90,13 +90,12 @@ public class QueryTranslationsUtil {
 	}
 
 	private List<String> getTranslatableLanguages() {
-		log.info("getTranslatableLanguages");
-
 		List<String> languageCodes = new ArrayList<String>();
 		languageCodes.addAll(languageContainer.getKeywordLanguages());
 
 		String portalLanguage = languageContainer.getPortalLanguage();
-		if (!languageCodes.contains(portalLanguage)) {
+		if (StringUtils.isNotBlank(portalLanguage)
+			&& !languageCodes.contains(portalLanguage)) {
 			languageCodes.add(portalLanguage);
 		}
 
