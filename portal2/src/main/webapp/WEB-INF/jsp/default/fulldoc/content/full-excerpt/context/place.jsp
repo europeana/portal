@@ -25,9 +25,9 @@
         <c:forEach items="${place.labels}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
         <c:forEach items="${place.labels}" var="label"><input type="hidden" name="placename" value="${label}"></c:forEach>
       </a>
-
+<%--
       <a href="${place.about}" target="_blank" class="icon-external-right"></a>
-
+ --%>
       <c:if test="${!empty place.prefLabelLang && !empty place.altLabelLang}">
         (<c:forEach items="${place.altLabelLang}" var="item" varStatus="t">
           ${item}<c:if test="${!t.last}">, </c:if>

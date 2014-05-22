@@ -24,9 +24,9 @@
       <a href="${searchUrl}" id="${fn:replace(agent.about, '/', '.')}">
         <c:forEach items="${agent.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>
       </a>
-
+<%--
       <a href="${agent.about}" target="_blank" class="icon-external-right"></a>
-
+ --%>
       <c:if test="${!empty agent.prefLabelLang && !empty agent.altLabelLang}">
         (<c:forEach items="${agent.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">; </c:if></c:forEach>)
       </c:if>
