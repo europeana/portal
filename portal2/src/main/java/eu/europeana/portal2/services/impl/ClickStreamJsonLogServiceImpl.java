@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,11 +34,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -62,10 +63,13 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 
 	public static String VERSION = "2.0";
 
+	@Resource
+	private UserService userService;
+
 	@Override
 	public void logUserAction(HttpServletRequest request, UserAction action, ModelAndView page) {
 		UserActionDAO dao = new UserActionDAO();
-		setLogAffix(request, page, dao);
+		setLogAffix(request, dao);
 		dao.setAction(action.toString());
 		dao.setView(page.getViewName());
 		log.info(toJson(dao));
@@ -84,7 +88,7 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 	@Override
 	public void logUserAction(HttpServletRequest request, UserAction action) {
 		UserActionDAO dao = new UserActionDAO();
-		setLogAffix(request, null, dao);
+		setLogAffix(request, dao);
 		dao.setAction(action.toString());
 		log.info(toJson(dao));
 	}
@@ -92,7 +96,7 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 	@Override
 	public void logCustomUserAction(HttpServletRequest request, UserAction action, String logString) {
 		CustomLogDAO dao = new CustomLogDAO();
-		setLogAffix(request, null, dao);
+		setLogAffix(request, dao);
 		dao.setAction(action.toString());
 		dao.setMessage(logString);
 		log.info(toJson(dao));
@@ -101,7 +105,7 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 	@Override
 	public void logStaticPageView(HttpServletRequest request, PageInfo pageType) {
 		UserActionDAO dao = new UserActionDAO();
-		setLogAffix(request, null, dao);
+		setLogAffix(request, dao);
 		dao.setAction(UserAction.STATICPAGE.toString());
 		dao.setView(pageType.getTemplate());
 		log.info(toJson(dao));
@@ -110,7 +114,7 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 	@Override
 	public void logLanguageChange(HttpServletRequest request, Locale oldLocale, UserAction languageChange) {
 		LanguageChangeDAO dao = new LanguageChangeDAO();
-		setLogAffix(request, null, dao);
+		setLogAffix(request, dao);
 		dao.setAction(languageChange.toString());
 		dao.setOldLanguage(oldLocale.getLanguage());
 		log.info(toJson(dao));
@@ -119,7 +123,7 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 	@Override
 	public void logBriefResultView(HttpServletRequest request, BriefBeanView briefBeanView, Query solrQuery, ModelAndView page) {
 		BriefViewDAO dao = new BriefViewDAO();
-		setLogAffix(request, page, dao);
+		setLogAffix(request, dao);
 		dao.setQueryType(solrQuery.getQueryType());
 
 		if (briefBeanView != null) {
@@ -156,7 +160,7 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 	@Override
 	public void logFullResultView(HttpServletRequest request, UserAction userAction, FullBeanView fullResultView, ModelAndView page, String europeanaUri) {
 		FullViewDAO dao = new FullViewDAO();
-		setLogAffix(request, page, dao);
+		setLogAffix(request, dao);
 		dao.setEuropeanaUri(europeanaUri);
 
 		try {
@@ -186,20 +190,12 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 		log.info(toJson(dao));
 	}
 
-	private static void setLogAffix(HttpServletRequest request, ModelAndView page, AffixDAO dao) {
+	private void setLogAffix(HttpServletRequest request, AffixDAO dao) {
 		dao.setIp(request.getRemoteAddr());
 		dao.setReqUrl(getRequestUrl(request));
-		User user = null;
-		if (page != null) {
-			PageData model = (PageData)page.getModel().get(PageData.PARAM_MODEL);
-			user = (User)model.getUser();
-		}
-		String userId;
-		if (user != null) {
-			userId = user.getId().toString();
-		} else {
-			userId = "";
-		}
+		dao.setSessionId(request.getSession().getId());
+		User user = ControllerUtil.getUser(userService);
+		String userId = StringUtils.defaultIfEmpty(user.getId().toString(), "");
 		dao.setUserId(userId);
 		dao.setLanguage(ControllerUtil.getLocale(request).toString());
 		dao.setUserAgent(request.getHeader("User-Agent"));

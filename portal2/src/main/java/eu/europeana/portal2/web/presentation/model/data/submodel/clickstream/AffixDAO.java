@@ -11,6 +11,7 @@ import eu.europeana.portal2.services.impl.ClickStreamLogServiceImpl;
 public class AffixDAO {
 
 	private String userId;
+	private String sessionId;
 	private String language;
 	private DateTime date = new DateTime();
 	private String ip;
@@ -29,6 +30,14 @@ public class AffixDAO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 
 	@JsonProperty("lang")
