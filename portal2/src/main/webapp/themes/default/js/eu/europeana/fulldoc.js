@@ -44,31 +44,28 @@ eu.europeana.fulldoc = {
 
 		this.loadComponents();
 		this.addAutoTagHandler();
-		this.addContextualEntitiesDisplayHandler();
 
-		$('.sidebar-right a').each(function(i, ob){
+		$('.sidebar-right a').each(function(i, ob) {
 			js.utils.fixSearchRowLinks($(ob));
 		});
 
-		$('.canned').each(function(i, ob){
+		$('.canned').each(function(i, ob) {
 			js.utils.fixSearchRowLinks($(ob));
 		});
-
 
 		js.utils.fixSearchRowLinks($('#navigation a').first());
-
 
 		$('#item-save-tag')	.bind('submit', this.handleSaveTagSubmit );
 		$('#item-embed')	.bind('click', this.handleEmbedClick );
 
 		// "View item at" link
 		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
-			function(e){
+			function(e) {
 				com.google.analytics.europeanaEventTrack("Europeana Portal", "Europeana Redirect", "External (link)");
 			}
 		);
 
-		if( $('#item-save').hasClass('icon-unsaveditem') ){
+		if( $('#item-save').hasClass('icon-unsaveditem')) {
 			$('#item-save').bind('click', this.handleSaveItemClick );
 		}
 		else{
@@ -77,7 +74,7 @@ eu.europeana.fulldoc = {
 
 		// analytics
 
-		$('.sidebar-right a').click(function(e){
+		$('.sidebar-right a').click(function(e) {
 			com.google.analytics.europeanaEventTrack("Click-link " + $(e.target).attr('href'), "Search-Also-For");
 		});
 
@@ -103,14 +100,13 @@ eu.europeana.fulldoc = {
 			name : 'accordion-tabs',
 			file : 'EuAccordionTabs' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
-
 		}]);
 
 		js.loader.loadScripts([{
 			file : 'citation' + js.min_suffix + '.js' + js.cache_helper,
 			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'accordion-tabs' ],
-			callback: function(){
+			callback: function() {
 				eu.europeana.citation.init();
 			}
 		}]);
@@ -131,7 +127,7 @@ eu.europeana.fulldoc = {
 					if ( !js.utils.phoneTest() ) {
 						$("#translate-item").trigger('click');
 						$("#translate-item").unbind('click');
-						$("#translate-item").bind('click', function(e){ e.preventDefault(); } );
+						$("#translate-item").bind('click', function(e) {e.preventDefault();});
 						$("#translate-item").addClass('disabled');
 						$("#translate-item span")
 							.removeClass(eu.europeana.translation_services.more_icon_class)
@@ -139,8 +135,6 @@ eu.europeana.fulldoc = {
 							.removeClass(eu.europeana.translation_services.more_icon_class_phone);
 					}
 				});
-
-
 			}
 		}]);
 
@@ -167,12 +161,11 @@ eu.europeana.fulldoc = {
 				scrollbars:"yes"
 			}
 		});
-
 	},
 
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
-		if ( $('#item-tag').val() < 1 ){
+		if ($('#item-tag').val() < 1) {
 			return;
 		}
 
@@ -245,43 +238,6 @@ eu.europeana.fulldoc = {
 		eu.europeana.ajax.methods.user_panel( 'save', ajax_data, ajax_feedback );
 	},
 
-	addContextualEntitiesDisplayHandler : function() {
-		var self = this;
-		$('h1 a.more-info')
-		 .each(function( key, value ) {
-			$(value).bind('click', self.handleContextualEntitiesDisplayClick);
-			$(value).addClass(eu.europeana.fulldoc.more_icon_class);
-		});
-	},
-
-	handleContextualEntitiesDisplayClick : function(e) {
-
-		e.preventDefault();
-		var $elm = $(this);
-
-		var event = $elm.data('event'); // used to initialise map
-		if (event) {
-			// $(window).trigger(event, $elm.parent().next());
-		}
-
-		$('div.contextual-body').slideToggle();
-
-		if ($elm.hasClass(eu.europeana.fulldoc.more_icon_class)) {
-			$elm.removeClass(eu.europeana.fulldoc.more_icon_class);
-			$elm.addClass(eu.europeana.fulldoc.less_icon_class);
-		} else {
-			$elm.removeClass(eu.europeana.fulldoc.less_icon_class);
-			$elm.addClass(eu.europeana.fulldoc.more_icon_class);
-		}
-
-		if ($elm.html() == eu.europeana.vars.show.more) {
-			$elm.html(eu.europeana.vars.show.less);
-		}
-		else if ($elm.html() == eu.europeana.vars.show.less){
-			$elm.html(eu.europeana.vars.show.more);
-		}
-	},
-
 	addAutoTagHandler : function() {
 		var self = this;
 		$('#fields-enrichment h3 a, #fields-enrichment h4 a, '
@@ -316,18 +272,16 @@ eu.europeana.fulldoc = {
 		if ( $elm.html() == eu.europeana.vars.show.more) {
 			$elm.html(eu.europeana.vars.show.less);
 		}
-		else if ( $elm.html() == eu.europeana.vars.show.less){
+		else if ($elm.html() == eu.europeana.vars.show.less) {
 			$elm.html(eu.europeana.vars.show.more);
 		}
 	},
 
 	addThis : function() {
 
-		$(document).on('click', '#lightbox_info .shares-link, #additional-info .shares-link', function(e){
+		$(document).on('click', '#lightbox_info .shares-link, #additional-info .shares-link', function(e) {
 
 			// e.preventDefault();
-
-
 			js.loader.loadScripts([{
 
 				file: 'addthis' + js.min_suffix + '.js' + '?' + 'domready=1', //&async=1',
@@ -369,24 +323,24 @@ eu.europeana.fulldoc = {
 						link_html : $('#additional-info .shares-link').html()
 					});
 
-					$('.shares-link').each(function(){
+					$('.shares-link').each(function() {
 						$(this).html(window.addthis_html);
 					});
 
 					function addthisReady(evt) {
-				        var oEvent = document.createEvent('HTMLEvents');
-				        oEvent.initEvent('click', true, true);
+						var oEvent = document.createEvent('HTMLEvents');
+						oEvent.initEvent('click', true, true);
 
-				        if($('#lightbox').is(':visible')){
-				        	$('#lightbox .addthis_button')[0].dispatchEvent(oEvent);
-				        }
-				        else{
-				        	$('#additional-info .addthis_button')[0].dispatchEvent(oEvent);
-				        }
+						if ($('#lightbox').is(':visible')) {
+							$('#lightbox .addthis_button')[0].dispatchEvent(oEvent);
+						}
+						else {
+							$('#additional-info .addthis_button')[0].dispatchEvent(oEvent);
+						}
 					}
 
 					com.addthis.init( null, true, false,
-						function(){
+						function() {
 							addthis.addEventListener('addthis.ready', addthisReady);
 						}
 					);
@@ -394,27 +348,27 @@ eu.europeana.fulldoc = {
 			}]);
 		});
 
-
-		if(  (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i) || navigator.userAgent.match(/OS 6(_\d)+ like Mac OS X/i)  ) && ! navigator.userAgent.match(/CriOS/i) ){
+		if((   navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i) 
+			|| navigator.userAgent.match(/OS 6(_\d)+ like Mac OS X/i))
+			&& !navigator.userAgent.match(/CriOS/i)) {
 			$('.shares-link').click();
 		}
 
-		//if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
+		//if (navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ) {
 		//	$('.shares-link').click();
 		//}
 	},
 
-
 	/**
 	 * Makes the one and only call to eu.europeana.lightbox.init
 	 * */
-	initLightbox : function(url){
+	initLightbox : function(url) {
 
-		if(js.debug){
+		if (js.debug) {
 			js.console.log("initLightbox");
 		}
 
-		if(!eu.europeana.fulldoc.lightboxOb){
+		if (!eu.europeana.fulldoc.lightboxOb) {
 
 			var cmp = $('<div id="lightbox">'	+ $('#lightbox-proxy').html() + '</div>');
 			$(".iframe-wrap").empty().append(cmp);
@@ -427,14 +381,14 @@ eu.europeana.fulldoc = {
 			);
 
 			// meta
-			$('#item-details .lbN').each(function(i, ob){
+			$('#item-details .lbN').each(function(i, ob) {
 				var next	 	= $(ob).next('.lbV');
-				if(!next.length){
+				if(!next.length) {
 					next = $(ob).next('h2').find('.lbV').length ? $(ob).next('h2') : '';
 				}
 				var metaValue	= next.length ? next.html() : null;
 
-				if(metaValue){
+				if (metaValue) {
 					var metaLabel = $(ob).html();
 					cmp.find('#lightbox_info ul li.bottom').before(
 						'<li><strong>' + metaLabel + '</strong>&nbsp;' + metaValue + '</li>'
@@ -463,7 +417,7 @@ eu.europeana.fulldoc = {
 
 			// Set rights from web-resource data
 
-			if(carouselData[0].external.rights){
+			if (carouselData[0].external.rights) {
 				rightsVal = carouselData[0].external.rights;
 			}
 
@@ -476,7 +430,7 @@ eu.europeana.fulldoc = {
 				{	"cmp"	:	cmp,
 					"src"	:	url,
 					"data"	:	eu.europeana.fulldoc.getLightboxableCount() > 1 ?  carouselData : null,
-					"onNav"	: function(url){
+					"onNav"	: function(url) {
 						eu.europeana.fulldoc.setCarouselIndexByUrl(url);
 					}
 				}
@@ -503,7 +457,7 @@ eu.europeana.fulldoc = {
 	 *
 	 * */
 
-	triggerBind : function(){
+	triggerBind : function() {
 
 		$(document).off('click',
 			'#carousel-1-img-measure img, '
@@ -517,11 +471,10 @@ eu.europeana.fulldoc = {
 
 		eu.europeana.fulldoc.triggerClick);
 
-
 		js.console.log("bound all triggers");
 	},
 
-	triggerClick : function(e){
+	triggerClick : function(e) {
 
 		e = $(e.target);
 
@@ -551,10 +504,10 @@ eu.europeana.fulldoc = {
 						!js.utils.phoneTest();
 
 
-		if(e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel){
+		if (e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel) {
 			target = "magnify";
 		}
-		else if(e[0].nodeName.toUpperCase()=='IMG'){
+		else if (e[0].nodeName.toUpperCase()=='IMG') {
 			target = carouselData[eu.europeana.fulldoc.getCarouselIndex()].external ? (eu.europeana.fulldoc.lightboxTestFailed ? 'broken-img' : 'image') : 'link';
 		}
 
@@ -569,7 +522,7 @@ eu.europeana.fulldoc = {
 		var carouselInfo	= "carousel = " + ( typeof eu.europeana.fulldoc.carousel1 != 'undefined' );
 		var gaData			= "[" + gaCategory + ", " + gaAction + ", " + gaLabel + "]"
 
-		if(openLB){
+		if (openLB) {
 			eu.europeana.fulldoc.showLightbox();
 		}
 		else{
@@ -578,28 +531,24 @@ eu.europeana.fulldoc = {
 
 	},
 
-	winOpen : function(){
-
-		if(eu.europeana.fulldoc.carousel1){
+	winOpen : function() {
+		if (eu.europeana.fulldoc.carousel1) {
 			var index = eu.europeana.fulldoc.getCarouselIndex();
 			window.open(carouselData[index ? index : 0].external.url, '_new');
-
 		}
-		else{
+		else {
 			window.open(isShownBy.length ? isShownBy : isShownAt, '_new');
 		}
-
 	},
 
+	showLightbox : function() {
 
-	showLightbox : function(){
+		$(".iframe-wrap").empty().append(eu.europeana.fulldoc.lightboxOb.getCmp());
 
-		$(".iframe-wrap").empty().append(eu.europeana.fulldoc.lightboxOb.getCmp() );
-
-		$(".iframe-wrap, .close").unbind("click").each(function(i, ob){
-			$(ob).click(function(e){
-				if(e.target == ob){
-					if(typeof addthis_close != 'undefined'){
+		$(".iframe-wrap, .close").unbind("click").each(function(i, ob) {
+			$(ob).click(function(e) {
+				if (e.target == ob) {
+					if(typeof addthis_close != 'undefined') {
 						addthis_close();
 					}
 					$("#lightbox").remove();	// this is needed to stop ie8 making a black screen following closing of the lightbox.
@@ -608,14 +557,14 @@ eu.europeana.fulldoc = {
 			});
 		});
 
-		eu.europeana.fulldoc.lightboxOb.showLightbox(function(){
+		eu.europeana.fulldoc.lightboxOb.showLightbox(function() {
 			$(".overlaid-content").css('visibility', 'visible');
 		});
 	},
 
-	initTriggerPanel: function(type, index, gallery){
+	initTriggerPanel: function(type, index, gallery) {
 
-		if(typeof(eu.europeana.fulldoc.triggerPanel)=="undefined"){
+		if (typeof(eu.europeana.fulldoc.triggerPanel)=="undefined") {
 			// instantiate and hide
 			eu.europeana.fulldoc.triggerPanel = $('<div class="lb-trigger" >'
 					+ '<span rel="#lightbox" title="'
@@ -633,7 +582,7 @@ eu.europeana.fulldoc = {
 
 		var imgIndex = index ? index : 0;
 
-		if(!carouselData[imgIndex].external){
+		if (!carouselData[imgIndex].external) {
 			/* #1039 - "Clicking the thumbnail of an object interaction"
 			 * uncomment this line if we want to show the trigger:
 			 *
@@ -641,19 +590,19 @@ eu.europeana.fulldoc = {
 			 */
 			$('#carousel-1-img-measure img').css('cursor', 'pointer');
 		}
-		else{
-			if(!eu.europeana.fulldoc.lightboxOb && carouselData[imgIndex].external.type == 'image'){
+		else {
+			if (!eu.europeana.fulldoc.lightboxOb && carouselData[imgIndex].external.type == 'image') {
 
 				/*	if the image is wider than 200 px initialise the lightbox and show the trigger panel,
 				 	if not set the cursoe icon for the image and the eu.europeana.fulldoc.lightboxTestFailed variable to false	*/
 
-				var loadLightbox = function(){
+				var loadLightbox = function() {
 					$('<img src="'+ carouselData[imgIndex].external.url + '" style="visibility:hidden"/>')
 						.appendTo('body').imagesLoaded(
 
-						function($images, $proper, $broken){
+						function($images, $proper, $broken) {
 
-							if($proper.length==1 && $proper.width() > 200){
+							if ($proper.length==1 && $proper.width() > 200) {
 
 								// need to store the real widths here, because by the time fulldoc.js loads the tmp img element may have been removed.
 
@@ -663,7 +612,7 @@ eu.europeana.fulldoc = {
 								// Add the markup
 
 								eu.europeana.fulldoc.loadLightboxJS(
-									function(){
+									function() {
 										//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, properW, properH);
 										eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url);
 										eu.europeana.fulldoc.showExternalTrigger(true, carouselData[imgIndex].external.type, gallery);
@@ -698,10 +647,10 @@ eu.europeana.fulldoc = {
 							($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
 						)
 
-				){
+				) {
 
 					eu.europeana.fulldoc.loadLightboxJS(
-						function(){
+						function() {
 							//var videoW = 582;
 							//var videoH = 315;
 							//eu.europeana.fulldoc.initLightbox(carouselData[imgIndex].external.url, videoW, videoH);
@@ -727,21 +676,21 @@ eu.europeana.fulldoc = {
 	 * @gallery true / false - false if we're changing the trigger from within a carousel
 	 *
 	 * */
-	showExternalTrigger : function(show, type, gallery){
+	showExternalTrigger : function(show, type, gallery) {
 
-		if(js.utils.phoneTest()){
+		if (js.utils.phoneTest()) {
 			return;
 		}
 
-		if(show){
+		if (show) {
 			var marginTrigger = 0;
 
-			if(gallery){
+			if (gallery) {
 				marginTrigger = ( $("#carousel-1").width() - $(gallery.getActiveImage()).width() ) / 2;
 				var top = $('#carousel-1').height() - (2 * $('#carousel-1 .galleria-thumbnails-container').height());
 				eu.europeana.fulldoc.triggerPanel.css("top", top + "px");
 			}
-			else{
+			else {
 				marginTrigger = ( $("#carousel-1-img-measure").width() - $("#carousel-1-img-measure img").width() ) / 2;
 			}
 
@@ -760,7 +709,7 @@ eu.europeana.fulldoc = {
 	/**
 	 * @callbackLoad = fn handling overlay click binding / lighbtox init call / trigger update
 	 * */
-	loadLightboxJS : function(callbackLoad){
+	loadLightboxJS : function(callbackLoad) {
 
 		js.loader.loadScripts([{
 				name : 'touchswipe',
@@ -776,11 +725,11 @@ eu.europeana.fulldoc = {
 		}]);
 		*/
 
-		if(!js.utils.phoneTest()){
+		if (!js.utils.phoneTest()) {
 			var lightboxJsFile = 'lightbox' + js.min_suffix + '.js' + js.cache_helper;
 
-			if( js.loader.loader_status[lightboxJsFile]){
-				if(callbackLoad){
+			if (js.loader.loader_status[lightboxJsFile]) {
+				if (callbackLoad) {
 					callbackLoad();
 				}
 				return;
@@ -796,17 +745,17 @@ eu.europeana.fulldoc = {
 
 				dependencies :  $("html").hasClass('ie8') ? [] : ['touchswipe'],
 
-				callback: function(){
-					$(window).euRsz(function(){
-						if(eu.europeana.fulldoc.lightboxOb){
-							if( $('.overlaid-content').css('visibility') == 'hidden' ){
+				callback: function() {
+					$(window).euRsz(function() {
+						if (eu.europeana.fulldoc.lightboxOb) {
+							if ($('.overlaid-content').css('visibility') == 'hidden') {
 								return;
 							}
 							eu.europeana.fulldoc.lightboxOb.layout();
 						}
 					});
 
-					if(callbackLoad){
+					if (callbackLoad) {
 						callbackLoad();
 					}
 				}
@@ -815,7 +764,7 @@ eu.europeana.fulldoc = {
 	},
 
 
-	initTopCarousel : function(){
+	initTopCarousel : function() {
 
 		$('#carousel-1').css("height", eu.europeana.fulldoc.getCarousel1Height() + "px");	// set height to max height that will be needed
 
@@ -835,30 +784,30 @@ eu.europeana.fulldoc = {
 			fullscreenDoubleTap:	false,
 			thumbnails: 		carouselData.length>1,
 			max_scale_ratio:	1,					// prevent stretching (does this work?  no reference to this variable in galleria that I can find)
-			extend: function(e){
+			extend: function(e) {
 
-				$(window).add('.iframe-wrap').bind('keydown', function(e){
+				$(window).add('.iframe-wrap').bind('keydown', function(e) {
 					var key	= window.event ? e.keyCode : e.which;
-					if(key==39){
-						if( ($('.overlaid-content').css('visibility') == 'hidden') ){
-							if(eu.europeana.fulldoc.carousel1){
+					if (key==39) {
+						if (($('.overlaid-content').css('visibility') == 'hidden')) {
+							if (eu.europeana.fulldoc.carousel1) {
 								$('#carousel-1 .galleria-image-nav-right').click();
 							}
 						}
-						else{
-							if(eu.europeana.fulldoc.lightboxOb){
+						else {
+							if (eu.europeana.fulldoc.lightboxOb) {
 								eu.europeana.fulldoc.lightboxOb.next();
 							}
 						}
 					}
-					else if(key==37){
-						if( ($('.overlaid-content').css('visibility') == 'hidden') ){
-							if(eu.europeana.fulldoc.carousel1){
+					else if (key==37) {
+						if (($('.overlaid-content').css('visibility') == 'hidden')) {
+							if (eu.europeana.fulldoc.carousel1) {
 								$('#carousel-1 .galleria-image-nav-left').click();
 							}
 						}
-						else{
-							if(eu.europeana.fulldoc.lightboxOb){
+						else {
+							if (eu.europeana.fulldoc.lightboxOb) {
 								eu.europeana.fulldoc.lightboxOb.prev();
 							}
 						}
@@ -868,9 +817,9 @@ eu.europeana.fulldoc = {
 
 				this.bind("image", function(e) {	// lightbox trigger
 
-					if($('html').hasClass('ie8')){
+					if ($('html').hasClass('ie8')) {
 						this.pause();
-						if(e.index == currIndex){
+						if (e.index == currIndex) {
 							return;
 						}
 					}
@@ -879,7 +828,7 @@ eu.europeana.fulldoc = {
 					var external = gallery._options.dataSource[e.index].external;
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
 
-					if(eu.europeana.fulldoc.lightboxOb){
+					if (eu.europeana.fulldoc.lightboxOb) {
 						eu.europeana.fulldoc.lightboxOb.goTo(e.index);
 					}
 
@@ -887,14 +836,14 @@ eu.europeana.fulldoc = {
 
 				}); // end bind image
 
-				eu.europeana.fulldoc.getCarouselIndex = function(){
+				eu.europeana.fulldoc.getCarouselIndex = function() {
 					return $('#carousel-1').data('galleria').getIndex();
 				};
 
-				eu.europeana.fulldoc.setCarouselIndexByUrl = function(url){
+				eu.europeana.fulldoc.setCarouselIndexByUrl = function(url) {
 					eu.europeana.fulldoc.suppressLightboxUpdate = true;
-					for(var i=0; i<carouselData.length; i++){
-						if(carouselData[i].external && carouselData[i].external.url == url){
+					for (var i=0; i<carouselData.length; i++) {
+						if (carouselData[i].external && carouselData[i].external.url == url) {
 							$('#carousel-1').data('galleria').show(i);
 							break;
 						}
@@ -905,17 +854,18 @@ eu.europeana.fulldoc = {
 		}); // end Galleria.run
 	},
 
-
-	getLightboxableCount:function(){
+	getLightboxableCount : function() {
 		var lightboxableCount = 0;
-		for(var i=0; i<carouselData.length; i++){
-			if(carouselData[i].external && carouselData[i].external.type == 'image'){
+		for (var i=0; i<carouselData.length; i++) {
+			if (carouselData[i].external && carouselData[i].external.type == 'image') {
 				lightboxableCount++;
 			}
-			else if(carouselData[i].external && carouselData[i].external.type == 'video' && carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1 ){
+			else if (carouselData[i].external && carouselData[i].external.type == 'video'
+				&& carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1) {
 				lightboxableCount++;
 			}
-			else if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound' && ($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1) ){
+			else if (carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+				&& ($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)) {
 				lightboxableCount++;
 			}
 		}
@@ -923,17 +873,17 @@ eu.europeana.fulldoc = {
 	},
 
 
-	initCarousels: function(){
+	initCarousels: function() {
 
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 
-		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken){
+		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken) {
 
 			// this is where we go when there is no carosuel data or when the carousel images didn't load
 
-			var initNoCarousel = function(){
+			var initNoCarousel = function() {
 
-				eu.europeana.fulldoc.getCarouselIndex = function(){
+				eu.europeana.fulldoc.getCarouselIndex = function() {
 					return 0;
 				};
 
@@ -946,22 +896,22 @@ eu.europeana.fulldoc = {
 
 				// if the thumbnail loaded then show it, otherwise restore the alt text (but prevent it from breaking the layout)
 
-				if($("#carousel-1-img-measure").width()>0){
+				if ($("#carousel-1-img-measure").width() > 0) {
 
-					if(carouselData[0].external){
-						if(carouselData[0].external.type == '3d'){
+					if (carouselData[0].external) {
+						if (carouselData[0].external.type == '3d') {
 							$('#carousel-1-img-measure img').css('cursor', 'pointer');
 						}
-						else{
+						else {
 							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 						}
 					}
-					else{
+					else {
 						// init trigger panel here for non-lightboxable stuff
 						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].dataType);
 					}
 				}
-				else{
+				else {
 
 					// if thumbnail img doesn't load and alt text show, it can break layout
 					$('#carousel-1-img-measure').css('white-space',		'normal');
@@ -972,24 +922,24 @@ eu.europeana.fulldoc = {
 
 
 			// Run carousel test and init if successful
-			if(typeof carouselTest == 'object'){
+			if (typeof carouselTest == 'object') {
 
 				var testHtml = '';
 
-				$(carouselTest).each(function(i, ob){
+				$(carouselTest).each(function(i, ob) {
 					testHtml += '<img src="' + carouselTest[i].src + '" style="display:none"/>';
 				});
 
 				$(testHtml).appendTo('body').imagesLoaded(
-					function($images, $proper, $broken){
+					function($images, $proper, $broken) {
 
-						if($proper.length==carouselTest.length){
+						if ($proper.length == carouselTest.length) {
 							js.console.log("carousel test passed: src was " +  $($proper[0]).attr("src") );
 
-							eu.europeana.fulldoc.getCarousel1Height = function(){
+							eu.europeana.fulldoc.getCarousel1Height = function() {
 								var tallestImageH = $("#carousel-1-img-measure").height();
 								var galleriaOffsetY	= 70;	// thumbnail + thumbnail margin bottom (NOTE: linked to .galleria-stage in galleria theme)
-								if( js.utils.phoneTest() ){
+								if (js.utils.phoneTest()) {
 									galleriaOffsetY	= 120;
 								}
 
@@ -1001,10 +951,10 @@ eu.europeana.fulldoc = {
 						}
 						else{
 							var msgFailed = "(" + $broken.length + " broke, " + $proper.length + " succeeded)";
-							for(var i=0; i<$broken.length; i++){
+							for (var i=0; i<$broken.length; i++) {
 								msgFailed += "\n  broke: " + $($broken[0]).attr("src")
 							}
-							for(var i=0; i<$proper.length; i++){
+							for (var i=0; i<$proper.length; i++) {
 								msgFailed += "\n  proper: " + $($proper[0]).attr("src")
 							}
 
@@ -1016,7 +966,7 @@ eu.europeana.fulldoc = {
 			}
 			else{
 				// not carouselTest object
-				if(js.debug){
+				if (js.debug) {
 					js.console.log("no carousel test to run");
 				}
 				initNoCarousel();
@@ -1031,7 +981,7 @@ eu.europeana.fulldoc = {
 		 *
 		 * */
 
-		if(typeof(hierarchical) != 'undefined'){
+		if (typeof(hierarchical) != 'undefined') {
 			var scripts = [];
 
 			scripts.push({
@@ -1056,12 +1006,12 @@ eu.europeana.fulldoc = {
 				"file" : "EuHierarchy.js",
 				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
 				"dependencies" : ["hoData", "scrollTo", "jstree"],
-				callback : function(){
+				callback : function() {
 
 					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
 					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');
 
-					$(document).ready(function(){
+					$(document).ready(function() {
 						new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects')).init("dataGen.base()");
 					});
 
@@ -1077,22 +1027,22 @@ eu.europeana.fulldoc = {
 		 *
 		 * */
 
-		if(typeof(mlt) != 'undefined'){
+		if (typeof(mlt) != 'undefined') {
 
-			var getLoadAllLink = function(){
+			var getLoadAllLink = function() {
 				return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
 			};
 
-			var initMlt = function(){
+			var initMlt = function() {
 
-				if( $('#more-like-this .carousel-wrapper').length ){
+				if ($('#more-like-this .carousel-wrapper').length) {
 					return;
 				}
 
 				var mltData = [];
 
 
-				$('.mlt-link').each(function(i, ob){
+				$('.mlt-link').each(function(i, ob) {
 					ob = $(ob);
 					mltData[mltData.length] = {
 							"thumb" : ob.find('img').attr('src'),
@@ -1109,58 +1059,55 @@ eu.europeana.fulldoc = {
 
 			}; // end initMlt
 
-			var initMltIfBigEnough = function(){
+			var initMltIfBigEnough = function() {
 				var mobile = js.utils.phoneTest();
 
-				if(mobile){
-					if( ! $('.mlt-title').find('.ellipsis-inner').length ){
+				if (mobile) {
+					if (! $('.mlt-title').find('.ellipsis-inner').length) {
 						mltEllipsis = new Ellipsis($('.mlt-title')).respond();
 						console.log('added ellipsis to phone mode');
 					}
 				}
-				else{
+				else {
 					console.log('init mlt');
 					initMlt();
 				}
-				if(mltTotal > 1){
-
+				if (mltTotal > 1) {
 					//alert('mltTotal ' + mltTotal)
-
-					if( $('.load-all').length ==0 ){
+					if ($('.load-all').length ==0 ) {
 						$('#more-like-this-wrapper').append(getLoadAllLink());
 					}
 				}
 
 			};
 
-			$(window).euRsz(function(){
+			$(window).euRsz(function() {
 				initMltIfBigEnough();
 			});
 			initMltIfBigEnough();
 		}
-
 
 		/**
 		 *
 		 * geo-location
 		 *
 		 * */
-	   	$(window).bind('init-map', function(e, tgtDiv){
-	   		var mapId     = 'geo-map';
-	   		var mapInfoId = 'geo-map-info';
+		$(window).bind('init-map', function(e, tgtDiv) {
+			var mapId     = 'geo-map';
+			var mapInfoId = 'geo-map-info';
 
-	   		if($('#' + mapId).length){
-	   			return;
-	   		}
+			if ($('#' + mapId).length) {
+				return;
+			}
 			var longitude = $('#longitude');
 			var latitude  = $('#latitude');
 
-			if(longitude.length && latitude.length){
+			if (longitude.length && latitude.length) {
 
 				longitude = longitude.val();
 				latitude =  latitude.val();
 
-				if( ! [latitude, longitude].join(',').match(/^\s*-?\d+\.\d+\,\s?-?\d+\.\d+\s*$/) ){
+				if (![latitude, longitude].join(',').match(/^\s*-?\d+\.\d+\,\s?-?\d+\.\d+\s*$/)) {
 					console.log('invalid coordinates (' + latitude + ', ' + longitude + ') - exit map');
 					return;
 				}
@@ -1172,70 +1119,72 @@ eu.europeana.fulldoc = {
 
 				$.each(
 					['leaflet.min.css',
-				     'leaflet.ie.css',
-				     'Leaflet-MiniMap-master/src/Control.MiniMap.css'],
-				    function(i, stylesheet){
+					 'leaflet.ie.css',
+					 'Leaflet-MiniMap-master/src/Control.MiniMap.css'],
+					function(i, stylesheet) {
 						$('head').append('<link rel="stylesheet" href="' + path + stylesheet + '" type="text/css"/>');
 					}
 				);
 
-				var initMap = function(){
+				var initMap = function() {
 					$(tgtDiv).append('<li><div id="' + mapId + '"></div><div id="' + mapInfoId + '"></div></li>');
-	    			var mqTilesAttr = 'Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />';
+					var mqTilesAttr = 'Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />';
 
-	    			// map quest
-	    			var mq = new L.TileLayer(
-	    				'http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png',
-	    				{
-        					minZoom: 4,
-        					maxZoom: 18,
-        					attribution: mqTilesAttr,
-        					subdomains: '1234',
-        					type: 'osm'
-	    				}
-	    			);
-	    			var map = L.map(mapId, {
-	    			    center: new L.LatLng(latitude, longitude),
-	    			    zoomControl: true,
-	    			    zoom: 8
-	    			});
-	    			map.addLayer(mq);
-	    			map.invalidateSize();
+					// map quest
+					var mq = new L.TileLayer(
+						'http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png',
+						{
+							minZoom: 4,
+							maxZoom: 18,
+							attribution: mqTilesAttr,
+							subdomains: '1234',
+							type: 'osm'
+						}
+					);
+					var map = L.map(mapId, {
+						center: new L.LatLng(latitude, longitude),
+						zoomControl: true,
+						zoom: 8
+					});
+					map.addLayer(mq);
+					map.invalidateSize();
 
-	    			L.marker([latitude, longitude]).addTo(map);
+					L.marker([latitude, longitude]).addTo(map);
 
-	    			var placeName = '';
-	    			switch($('input[name="placename"]').length)
-	    			{
-		    			case 1:
-		    				placeName = $('input[name="placename"]').val();
-		    				break;
-		    			case 2: {
-		    				var names = $('input[name="placename"]').map(function() { return this.value; }).get();
-		    				var uniqueNames = [];
-			    			$.each(names, function(i, el){
-			    			    if($.inArray(el, uniqueNames) === -1){
-			    			    	uniqueNames.push(el);
-			    			    }
-			    			});
-		    				placeName = uniqueNames.join(', ');
-		    				break;
-		    			}
-	    			}
+					var placeName = '';
+					switch($('input[name="placename"]').length)
+					{
+						case 1:
+							placeName = $('input[name="placename"]').val();
+							break;
+						case 2: {
+							var names = $('input[name="placename"]').map(function() { return this.value; }).get();
+							var uniqueNames = [];
+							$.each(names, function(i, el) {
+								if ($.inArray(el, uniqueNames) === -1) {
+									uniqueNames.push(el);
+								}
+							});
+							placeName = uniqueNames.join(', ');
+							break;
+						}
+				}
 
-	    			if(!$('input[name="placename"]').length || !$('input[name="placename"]').val().length){
-	    				$('#' + mapInfoId).addClass('uppercase');
-	    			}
-	    			$('#' + mapInfoId).html(placeName + ' ' + eu.europeana.vars.map.coordinates + ': ' +  latitude + '&deg; ' +  (latitude > 0 ? eu.europeana.vars.map.north : eu.europeana.vars.map.south)  + ', ' +  longitude + '&deg; ' + (longitude > 0 ? eu.europeana.vars.map.east : eu.europeana.vars.map.west ) 	);
+					if (!$('input[name="placename"]').length || !$('input[name="placename"]').val().length) {
+						$('#' + mapInfoId).addClass('uppercase');
+					}
+					$('#' + mapInfoId).html(placeName + ' ' + eu.europeana.vars.map.coordinates
+						+ ': ' + latitude  + '&deg; ' + (latitude > 0 ? eu.europeana.vars.map.north : eu.europeana.vars.map.south)
+						+ ', ' + longitude + '&deg; ' + (longitude > 0 ? eu.europeana.vars.map.east : eu.europeana.vars.map.west));
 				};
 
 				js.loader.loadScripts([
-	   			    {
+					{
 						"file" : 'leaflet.js',
 						"path" : path,
 						"name" : "leaflet"
 					},
-				    {
+					{
 						"file" : 'Leaflet-Pan/L.Control.Pan.js',
 						"path" : path,
 						"name" : "pan",
@@ -1325,7 +1274,6 @@ eu.europeana.fulldoc = {
 			}
 		}
 	}
-
 };
 
 eu.europeana.fulldoc.init();

@@ -703,8 +703,7 @@ h1 {
 }
 
 .concept ul,
-#fields-enrichment ul,
-.contextual-body {
+#fields-enrichment ul {
 	margin: 0;
 	padding: 0.5em 0;
 	display: none;
@@ -728,9 +727,11 @@ h1 .smaller.icon-arrow-7-right:after {
 	color: #333;
 }
 
+/*
 h1 a.more-info {
 	color: #333;
 }
+*/
 
 div.lb-trigger {
 	position:	absolute;

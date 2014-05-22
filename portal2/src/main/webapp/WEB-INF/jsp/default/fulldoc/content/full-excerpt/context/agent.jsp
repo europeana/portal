@@ -5,6 +5,7 @@
 
 <c:set var="agent" value="${contextualItem}" />
 <c:if test="${!empty agent.labels && (inContext == 1 || !agent.showInContext)}">
+<%--
   <c:if test="${inContext == 1}">
     <c:set var="title">
       <c:choose>
@@ -14,6 +15,7 @@
     </c:set>
     <div class="contextual-header" id="${agent.htmlId}">${title}</div>
   </c:if>
+ --%>
 
   <div<c:if test="${inContext == 1}"> class="contextual-body"</c:if>>
     <p>

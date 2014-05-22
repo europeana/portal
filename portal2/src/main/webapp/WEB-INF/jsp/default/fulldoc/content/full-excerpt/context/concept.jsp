@@ -5,6 +5,7 @@
 
 <c:set var="concept" value="${contextualItem}" />
 <c:if test="${!empty concept.labels && (inContext == 1 || !concept.showInContext)}">
+<%--
   <c:if test="${inContext == 1}">
     <c:set var="title">
       <c:choose>
@@ -14,7 +15,7 @@
     </c:set>
     <div class="contextual-header" id="${concept.htmlId}">${title}</div>
   </c:if>
-
+ --%>
   <div<c:if test="${inContext == 1}"> class="contextual-body"</c:if>>
     <p>
       <c:url var="searchUrl" value="/search.html">
