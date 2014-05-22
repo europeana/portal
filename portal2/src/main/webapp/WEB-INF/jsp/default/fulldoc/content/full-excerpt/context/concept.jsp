@@ -56,7 +56,7 @@
         </c:forEach>
       </p>
     </c:if>
-
+<%--
     <c:if test="${!empty concept.broaderLinks}">
       <p>
         <c:set var="msg_key" value="context_concept_Broader_t" />
@@ -67,7 +67,7 @@
         <europeana:optionalMapList map="${concept.broaderLinks}" />
       </p>
     </c:if>
-
+ --%>
     <c:if test="${!empty concept.narrowerLinks}">
       <p>
         <c:set var="msg_key" value="context_concept_Narrower_t" />
