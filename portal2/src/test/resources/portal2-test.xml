@@ -12,7 +12,7 @@
 	corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
 	 -->
 	<import resource="corelib-definitions-test.xml" />
-	<import resource="corelib-logging-context.xml" />
+<!-- 	<import resource="corelib-logging-context.xml" /> -->
 	<!-- 
 	<import resource="corelib-web-context.xml" />
 	 -->
@@ -24,9 +24,9 @@
 
 	<!-- Mocking services from other modules and overruling their configuration -->
 
-	<bean name="corelib_db_userService" class="eu.europeana.corelib.EmptyBean"/>
-
 	<bean name="corelib_solr_searchService" class="eu.europeana.corelib.EmptyBean"/>
+
+	<bean name="corelib_db_userService" class="eu.europeana.corelib.web.service.impl.UserServiceImplMock"/>
 
 	<bean name="corelib_solr_mongoServer" class="eu.europeana.corelib.EmptyBean"/>
 

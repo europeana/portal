@@ -19,7 +19,7 @@ import eu.europeana.portal2.web.model.facets.LabelFrequency;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/portal2-test.xml"})
+@ContextConfiguration({ "/portal2-test.xml"})
 public class FacetQueryLinksImplTest {
 
 	@Before
