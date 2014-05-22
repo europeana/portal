@@ -16,8 +16,7 @@
     <div class="contextual-header" id="${agent.htmlId}">${title}</div>
   </c:if>
  --%>
-
-  <div<c:if test="${inContext == 1}"> class="contextual-body"</c:if>>
+  <div<c:if test="${inContext == 1}"> class="contextual-body" id="${agent.htmlId}"</c:if>>
     <p>
       <c:url var="searchUrl" value="/search.html">
         <c:param name="query">edm_agent:"${agent.about}"</c:param>

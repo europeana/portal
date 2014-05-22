@@ -16,7 +16,7 @@
     <div class="contextual-header" id="${place.htmlId}">${title}</div>
   </c:if>
  --%>
-  <div<c:if test="${inContext == 1}"> class="contextual-body"</c:if>>
+  <div<c:if test="${inContext == 1}"> class="contextual-body" id="${place.htmlId}"</c:if>>
     <p>
       <c:url var="searchUrl" value="/search.html">
         <c:param name="query">edm_place:"${place.about}"</c:param>
