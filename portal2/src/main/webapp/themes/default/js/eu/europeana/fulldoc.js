@@ -3,20 +3,10 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
 
-	/**
-	 * @param {object}
-	 */
 	lightboxOb :  null,
-
-	/**
-	 * @param {string}
-	 */
 	vimeoDetect : 'vimeo.com/video',
-
-	/**
-	 * @param {array}
-	 */
 	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
+	isAudioBoo : false,
 
 	/**
 	 * provides priority order for which tab to open when no hash is given
@@ -24,21 +14,9 @@ eu.europeana.fulldoc = {
 	 */
 	//tab_priority : [ '#related-items','#similar-content','#map-view' ],
 
-	/**
-	 * @param {string}
-	 */
 	more_icon_class : "icon-arrow-6-right",
-
-	/**
-	 * @param {string}
-	 */
 	less_icon_class : "icon-arrow-7-right",
-
-	/**
-	 * @param {bool}
-	 */
 	setupAnalytics : false,
-
 
 	init : function() {
 
@@ -497,7 +475,11 @@ eu.europeana.fulldoc = {
 							(
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
 								&&
-								($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
+								(
+									$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+									||
+									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo									
+								) 
 							)
 						)
 						&&
@@ -644,7 +626,11 @@ eu.europeana.fulldoc = {
 						(
 							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
 							&&
-							($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
+							(
+								$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+								||
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo									
+							) 
 						)
 
 				) {
@@ -865,7 +851,14 @@ eu.europeana.fulldoc = {
 				lightboxableCount++;
 			}
 			else if (carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
-				&& ($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)) {
+				&& 
+				(
+					$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+					||
+					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo									
+				)
+			)
+				{
 				lightboxableCount++;
 			}
 		}

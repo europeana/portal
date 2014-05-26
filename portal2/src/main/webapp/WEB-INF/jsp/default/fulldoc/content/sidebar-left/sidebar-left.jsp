@@ -101,6 +101,11 @@
 							"rights"        : '${fn:replace(rightsString, newLineChar, '')}'
 						}
 					</c:if>
+						
+					<c:if test="${fn:indexOf(model.isShownAt, '//audioboo.fm/boos/') > -1}">
+						carouselData[carouselData.length-1].external.audio_boo = true;
+					</c:if>
+						
 				</c:forEach>
 			</c:if>
 
