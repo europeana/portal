@@ -89,7 +89,14 @@
 						}
 					</c:if>
 
-					<c:if test="${collectionId == '2021613'}">
+				    <c:set var="isSoundCloudAwareCollection" value="false"/>
+					<c:forEach var="item" items="${model.soundCloudAwareCollections}">
+						<c:if test="${item eq collectionId}">
+						    <c:set var="isSoundCloudAwareCollection" value="true" />
+						</c:if>
+					</c:forEach>
+
+					<c:if test="${isSoundCloudAwareCollection}">
 						<% pageContext.setAttribute("newLineChar", "\n"); %>						
 						<c:set var="rightsToParse" value="${image.rightsValue}" />			
 						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
