@@ -195,7 +195,7 @@ public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 		dao.setReqUrl(getRequestUrl(request));
 		dao.setSessionId(request.getSession().getId());
 		User user = ControllerUtil.getUser(userService);
-		String userId = StringUtils.defaultIfEmpty(user.getId().toString(), "");
+		String userId = (user != null) ? StringUtils.defaultIfEmpty(user.getId().toString(), "") : "";
 		dao.setUserId(userId);
 		dao.setLanguage(ControllerUtil.getLocale(request).toString());
 		dao.setUserAgent(request.getHeader("User-Agent"));
