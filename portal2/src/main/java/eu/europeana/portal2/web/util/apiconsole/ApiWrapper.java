@@ -18,25 +18,23 @@
 package eu.europeana.portal2.web.util.apiconsole;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
+import eu.europeana.corelib.web.model.ApiResult;
+import eu.europeana.corelib.web.model.ApiResultImpl;
+import eu.europeana.corelib.web.service.impl.JsonApiServiceImpl;
 
-public class ApiWrapper {
+public class ApiWrapper extends JsonApiServiceImpl {
 	
 	private final Logger log = Logger.getLogger(ApiWrapper.class);
 
@@ -121,7 +119,7 @@ public class ApiWrapper {
 			url.append(CALLBACK_PARAM).append(callback);
 		}
 
-		return getJsonResponse(url.toString());
+		return getAndModifyJsonResponse(url.toString());
 	}
 
 	public ApiResult getObject(String collectionId, String recordId, String profile, String callback) {
@@ -143,7 +141,7 @@ public class ApiWrapper {
 			url.append(CALLBACK_PARAM).append(callback);
 		}
 
-		return getJsonResponse(url.toString());
+		return getAndModifyJsonResponse(url.toString());
 	}
 
 	public ApiResult getSuggestions(String query, int rows, boolean phrases, String callback) {
@@ -158,55 +156,18 @@ public class ApiWrapper {
 			url.append(CALLBACK_PARAM).append(callback);
 		}
 
-		return getJsonResponse(url.toString());
+		return getAndModifyJsonResponse(url.toString());
 	}
 
-	public ApiResult getJsonResponse(String url) {
-		lastUrl = url;
-		String jsonResponse = null;
-		int statusCode = -1;
-		try {
-			HttpClient client = new HttpClient();
-			GetMethod method = new GetMethod(url);
-			log.info("get URL: " + method.getURI().toString());
-			statusCode = client.executeMethod(method);
-			/*
-			if (statusCode != HttpStatus.SC_OK) {
-				log.severe("Method failed: " + method.getStatusLine());
-			}
-			*/
-
-			Header[] headers;
-			requestHeaders = new ArrayList<String>();
-			requestHeaders.add(String.format("%s %s %s", method.getName(), method.getPath(), method.getEffectiveVersion()));
-			headers = method.getRequestHeaders();
-			for (Header header : headers) {
-				requestHeaders.add(String.format("%s: %s", header.getName(), header.getValue()));
-			}
-
-			responseHeaders = new ArrayList<String>();
-			responseHeaders.add(method.getStatusLine().toString());
-			headers = method.getResponseHeaders();
-			for (Header header : headers) {
-				responseHeaders.add(String.format("%s: %s", header.getName(), header.getValue()));
-			}
-
-			// Read the response body.
-			StringWriter writer = new StringWriter();
-			IOUtils.copy(method.getResponseBodyAsStream(), writer, "UTF-8");
-			jsonResponse = writer.toString();
-
-		} catch (IOException e) {
-			log.error(e.getMessage(),e);
-		}
-
-		return new ApiResult(
-			statusCode,
-			jsonResponse
+	public ApiResult getAndModifyJsonResponse(String url) {
+		ApiResultImpl result = (ApiResultImpl) getJsonResponse(url.toString());
+		result.setContent(
+			result.getContent()
 				.replace(headerApiKey, headerApiKeyReplacement)
 				.replace(wskeyInstance, wskeyInstanceReplacement)
-				.replace(utmCampaign, utmCampaignReplacement)
-		);
+				.replace(utmCampaign, utmCampaignReplacement));
+
+		return result;
 	}
 
 	protected String getSessionID() {

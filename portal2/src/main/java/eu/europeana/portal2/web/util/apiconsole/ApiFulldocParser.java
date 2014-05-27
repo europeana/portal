@@ -27,6 +27,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.web.model.ApiResult;
 import eu.europeana.portal2.web.model.json.Json2FullBeanConverter;
 
 public class ApiFulldocParser extends ApiWrapper {

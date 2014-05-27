@@ -22,12 +22,12 @@ import com.google.gson.JsonSyntaxException;
 
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.web.model.ApiResult;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.ApiConsolePage;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.JsonFormatter;
-import eu.europeana.portal2.web.util.apiconsole.ApiResult;
 import eu.europeana.portal2.web.util.apiconsole.ApiWrapper;
 
 /**
