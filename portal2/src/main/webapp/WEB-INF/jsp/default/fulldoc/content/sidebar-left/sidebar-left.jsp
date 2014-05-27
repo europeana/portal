@@ -72,14 +72,15 @@
 						"image":	decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
 						"title":	('${fn:escapeXml(title)}'),
 						"dataType":	"${fn:toLowerCase(dataType)}",
-						"edmField": "${image.edmField}",
+						"edmField": "${image.edmField}"
+						<c:if test="${!empty image.mediaService}">,
 						"mediaService": {
-						<c:if test="${!empty image.mediaService}">
 							"url": "${image.mediaService.url}",
 							"embeddedUrl": "${image.mediaService.embeddedUrl}",
-							"embeddedHtml": "${fn:escapeXml(image.mediaService.embeddedHtml)}"
-						</c:if>
+							"embeddedHtml": "${fn:escapeXml(image.mediaService.embeddedHtml)}",
+							"dataType": "${fn:toLowerCase(image.mediaService.dataType)}"
 						}
+						</c:if>
 					};
 
 					<c:if test="${fn:length(image.full) > 0}">
