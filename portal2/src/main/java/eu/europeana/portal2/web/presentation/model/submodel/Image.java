@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.presentation.model.submodel;
 
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.web.model.mediaservice.MediaService;
 import eu.europeana.portal2.web.presentation.model.data.submodel.RightsValue;
 
 public class Image implements SortableImage {
@@ -13,6 +14,7 @@ public class Image implements SortableImage {
 	RightsValue rightsValue;
 	String about;
 	String isNextInSequence;
+	MediaService mediaService;
 
 	/**
 	 * The type of image (text, video, image, 3d)
@@ -111,6 +113,14 @@ public class Image implements SortableImage {
 
 	public void setIsNextInSequence(String isNextInSequence) {
 		this.isNextInSequence = isNextInSequence;
+	}
+
+	public MediaService getMediaService() {
+		return mediaService;
+	}
+
+	public void setMediaService(MediaService mediaService) {
+		this.mediaService = mediaService;
 	}
 
 	@Override

@@ -46,6 +46,9 @@ import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 
 public abstract class FullDocData extends RestLocationsData<Void> {
 
+	/**
+	 * The list of fields usable in lightbox. The key is a Java property, the value is an EDM field name
+	 */
 	protected static final Map<String, String> IMAGE_FIELDS = new HashMap<String, String>();
 	static {
 		{

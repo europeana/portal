@@ -38,6 +38,7 @@ import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
+import eu.europeana.corelib.web.model.mediaservice.MediaServiceType;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.enums.CiteStyle;
 import eu.europeana.portal2.web.presentation.enums.ExternalService;
@@ -61,7 +62,7 @@ public class FullDocPage extends FullDocPreparation {
 			builder.addParam("embedded", "true", true);
 		}
 
-		// remove default values to clean up url...
+		// remove default values to clean up URL
 		builder.removeDefault("view", "table");
 		builder.removeDefault("start", "1");
 		builder.removeDefault("startPage", "1");
@@ -336,7 +337,6 @@ public class FullDocPage extends FullDocPreparation {
 	 * */
 	public List<Image> getAllImages() throws UnsupportedEncodingException {
 		if (imagesToShow == null) {
-
 			String docType = getDocument().getEdmType();
 			// it gets from EdmObject
 			String firstImageThumbnailUrl = this.getThumbnailUrl();
@@ -347,7 +347,7 @@ public class FullDocPage extends FullDocPreparation {
 			Image firstImage = new Image(firstImageThumbnailUrl, firstImageFull, firstImageType, getLightboxRefField());
 			firstImage.setRights(getDocument().getWebResourceEdmRightsByUrl(firstImageFull));
 			copyWebResouceFields(firstImageThumbnailUrl, firstImage);
-			// imagesToShow.add(firstImage);
+			firstImage.setMediaService(MediaServiceType.findInstance(firstImageFull));
 
 			imagesToShow = new LinkedList<Image>();
 			Map<String, String> images = getImages();
@@ -355,7 +355,9 @@ public class FullDocPage extends FullDocPreparation {
 				String imageType = getImageType(imageUrl, docType);
 				Image img = createImage(imageUrl, imageType);
 				if (img != null) {
+					img.setEdmField(images.get(imageUrl));
 					img.setRights(getDocument().getWebResourceEdmRightsByUrl(imageUrl));
+					img.setMediaService(MediaServiceType.findInstance("urn:soundcloud:150424305")); //imageUrl));
 					copyWebResouceFields(imageUrl, img);
 				}
 				imagesToShow.add(img);
@@ -441,6 +443,7 @@ public class FullDocPage extends FullDocPreparation {
 					for (String imageUrl : shortcut.get(imageField)) {
 						if (StringUtils.isNotBlank(imageUrl)) {// && !isShownAt.contains(image)) {
 							if (!imageUrl.equals(getIsShownBy())) {
+								// ImagePrimitive imagePrimitive = new ImagePrimitive()
 								if (!allImages.containsKey(imageUrl)) {
 									allImages.put(imageUrl, IMAGE_FIELDS.get(imageField));
 								}

@@ -72,15 +72,22 @@
 						"image":	decodeURI("${image.thumbnail}").replace(/&amp;/g, '&'),
 						"title":	('${fn:escapeXml(title)}'),
 						"dataType":	"${fn:toLowerCase(dataType)}",
-						"edmField": "${image.edmField}"
+						"edmField": "${image.edmField}",
+						"mediaService": {
+						<c:if test="${!empty image.mediaService}">
+							"url": "${image.mediaService.url}",
+							"embeddedUrl": "${image.mediaService.embeddedUrl}",
+							"embeddedHtml": "${fn:escapeXml(image.mediaService.embeddedHtml)}"
+						</c:if>
+						}
 					};
 
 					<c:if test="${fn:length(image.full) > 0}">
 
-						<% pageContext.setAttribute("newLineChar", "\n"); %>						
-						<c:set var="rightsToParse" value="${image.rightsValue}" />			
-						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>						
-						
+						<% pageContext.setAttribute("newLineChar", "\n"); %>
+						<c:set var="rightsToParse" value="${image.rightsValue}" />
+						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
+
 						carouselData[carouselData.length-1].external = {
 							"unescaped_url" : "${image.full}",
 							"url" 	: "${image.escapedFull}",
@@ -89,16 +96,16 @@
 						}
 					</c:if>
 
-				    <c:set var="isSoundCloudAwareCollection" value="false"/>
+					<c:set var="isSoundCloudAwareCollection" value="false"/>
 					<c:forEach var="item" items="${model.soundCloudAwareCollections}">
 						<c:if test="${item eq collectionId}">
-						    <c:set var="isSoundCloudAwareCollection" value="true" />
+							<c:set var="isSoundCloudAwareCollection" value="true" />
 						</c:if>
 					</c:forEach>
 
 					<c:if test="${isSoundCloudAwareCollection}">
-						<% pageContext.setAttribute("newLineChar", "\n"); %>						
-						<c:set var="rightsToParse" value="${image.rightsValue}" />			
+						<% pageContext.setAttribute("newLineChar", "\n"); %>
+						<c:set var="rightsToParse" value="${image.rightsValue}" />
 						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
 
 						carouselData[carouselData.length-1].external = {
@@ -126,13 +133,11 @@
 	</div>
 
 	<div class="original-context">
-
 		<%-- Rights --%>
-		
 		<c:set var="rightsToParse" value="${model.rightsOption}" />		
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
 
-  		<c:if test="${model.document.userGeneratedContent}">
+		<c:if test="${model.document.userGeneratedContent}">
 			<span class="icon-ugc"></span><spring:message code="UserGeneratedContent_t" />
 		</c:if>
 		
@@ -141,7 +146,6 @@
 		
 		
 		<div class="clear"></div>
-		
 	</div>
 
 	<div id="citation">
