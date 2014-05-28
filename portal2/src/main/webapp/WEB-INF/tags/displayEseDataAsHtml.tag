@@ -121,7 +121,7 @@
 					- value.contextualEntity (String)
 					- value.searchOn (String)
 			--%>
-			
+
 			<c:forEach items="${data.fieldValues}" var="_value" varStatus="valueStatus">
 				<c:set var="value" value="${_value}" scope="request" />
 				<c:set var="localSemanticAttributes" value="${semanticAttributes}" />
@@ -184,7 +184,6 @@
 							rel="nofollow">${value.value}</a>${separator}
 					</c:when>
 					<c:otherwise>
-						<!-- mode: otherwise -->
 						<span class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							<c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:choose>
@@ -197,13 +196,11 @@
 								--%>
 
 								<c:when test="${localSemanticUrl}">
-									<!-- mode: otherwise/localSemanticUrl -->
 									<c:out value="${(value.value)}" />
 								</c:when>
 								<c:otherwise>
-									<!-- mode: otherwise/NOT localSemanticUrl -->
 									<c:set var="theVal" value="${eufn:cleanField(value.value)}" />
-									<c:if test="${!empty data.showTranslationServices 
+									<c:if test="${!empty data.showTranslationServices
 												&& data.showTranslationServices
 												&& !empty value.translatedValue}">
 										<c:set var="theVal" value="${eufn:cleanField(value.translatedValue)}" />
