@@ -27,6 +27,10 @@ h3 {
 	transition: color .2s ease-out;
 }
 
+#myeuropeana .display-inline {
+	display: inline;
+}
+
 #myeuropeana h2 {
 	margin: .5em 0;
 }

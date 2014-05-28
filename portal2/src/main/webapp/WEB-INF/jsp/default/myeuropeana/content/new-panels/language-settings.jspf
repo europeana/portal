@@ -48,19 +48,18 @@
 	<%-- translate-item --%>
 	<fieldset>
 		<h3><spring:message code="translate_items_t" /></h3>
-		<label>
 			<c:choose>
 				<c:when test="${!empty model.user}">
 					<c:choose>
 						<c:when test="${!empty model.user.languageItem}">
-							<input type="checkbox" name="translate-item" id="translate-item" value="yes" checked /> <spring:message code="translate_items_select_t" />&nbsp;
+							<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" checked /> <spring:message code="translate_items_select_t" /></label>&nbsp;
 							<select id="item-language" name="item-language">
 								<c:set var="selected_language_code" value="${model.user.languageItem}" />
 								<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
 							</select>
 						</c:when>
 						<c:otherwise>
-							<input type="checkbox" name="translate-item" id="translate-item" value="yes" /> <spring:message code="translate_items_select_t" />&nbsp;
+							<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" /> <spring:message code="translate_items_select_t" /></label>&nbsp;
 							<select id="item-language" name="item-language">
 								<c:set var="selected_language_code" value="${model.locale}" />
 								<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
@@ -70,7 +69,7 @@
 					<input type="hidden" name="action" value="translate-item" />
 				</c:when>
 				<c:otherwise>
-					<input type="checkbox" name="translate-item" id="translate-item" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span>&nbsp;
+					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span></label>&nbsp;
 					<select id="item-language" name="item-language" disabled>
 						<c:set var="selected_language_code" value="${model.locale}" />
 						<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
@@ -79,7 +78,6 @@
 					<p><spring:message code="registered_users_only_t" /> - <a href="#login"><spring:message code="register_here_t" /></a></p>
 				</c:otherwise>
 			</c:choose>
-		</label>
 	</fieldset>
 	<input type="submit" name="submit" value="<spring:message code="save_settings_button_t" />" class="deans-button-1 europeana-button-1" />
 </form>
