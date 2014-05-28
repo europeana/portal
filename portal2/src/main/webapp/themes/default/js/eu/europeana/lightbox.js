@@ -154,7 +154,7 @@ eu.europeana.lightbox = function(){
 				//elIframe.fitVids();
 			}
 		}
-		else if(img[0].nodeName.toUpperCase() == 'IMG' && img.attr('src').indexOf('//audioboo.fm/boos/') > -1 ){ 
+		else if(img[0].nodeName.toUpperCase() == 'IMG' && img.attr('src').indexOf(eu.europeana.fulldoc.audioBooDetect) > -1 ){ 
 			// switch iframes and images to a div
 			var src = img.attr('src').replace('.mp3', '/embed/v2?eid=AQAAAO5kOlMCmAIA&player_theme=light&link_color=steelblue&image_option=none&show_title=true');
 
@@ -210,7 +210,7 @@ eu.europeana.lightbox = function(){
 		}
 
 		// sizing for iframe
-		if( src.indexOf('//audioboo.fm/boos/') > -1 ){
+		if( src.indexOf(eu.europeana.fulldoc.audioBooDetect) > -1 ){
 			if(typeof callback != "undefined"){
 				callback(600, 300);
 			}
