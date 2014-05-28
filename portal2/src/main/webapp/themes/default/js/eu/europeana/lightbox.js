@@ -36,7 +36,14 @@ eu.europeana.lightbox = function(){
 						imgIndex ++;
 						subModel[subModel.length] = i;
 					}
-					else if(carouselData[i].external && carouselData[i].external.type == "video" && carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1 ){
+					else if(carouselData[i].external && carouselData[i].external.type == "video" 
+						&&
+						(
+							carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1 
+							||
+							carouselData[i].external.url.indexOf(eu.europeana.fulldoc.dailyMotionDetect)>-1 
+						)
+					){
 						imgIndex ++;
 						subModel[subModel.length] = i;						
 					}
@@ -45,9 +52,9 @@ eu.europeana.lightbox = function(){
 						&&
 						(	$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
 							||
-							carouselData[i].external.audio_boo	)
+							carouselData[i].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
+						)
 					){
-						
 						imgIndex ++;
 						subModel[subModel.length] = i;												
 					} 
@@ -128,7 +135,14 @@ eu.europeana.lightbox = function(){
 		var img = self.cmp.find('#lightbox_image');
 				
 		if(
-			(img.attr('src') && img.attr('src').indexOf(eu.europeana.fulldoc.vimeoDetect) > -1)
+			(img.attr('src') 
+				&&
+				(
+					img.attr('src').indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+					||
+					img.attr('src').indexOf(eu.europeana.fulldoc.dailyMotionDetect) > -1
+				)
+			)
 			||
 			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
 		){
@@ -172,14 +186,6 @@ eu.europeana.lightbox = function(){
 			
 		}
 		else{
-			/*
-			if(img[0].nodeName.toUpperCase() == 'IFRAME'){
-				var elImg = $('<img id="lightbox_image" src="' + img.attr('src') + '">');
-				img.remove();
-				self.cmp.find('#lightbox_info').before(elImg);				
-			}
-			*/
-			
 			if(img.attr('src') && img[0].nodeName.toUpperCase() != 'IMG'){
  				var elImg = $('<img id="lightbox_image" src="' + img.attr('src') + '">');
  				img.remove();
@@ -209,6 +215,12 @@ eu.europeana.lightbox = function(){
 				callback(600, 300);
 			}
 			return;			
+		}
+		else if( src.indexOf(eu.europeana.fulldoc.dailyMotionDetect) > -1 ){
+			if(typeof callback != "undefined"){
+				callback(600, 300);
+			}
+			return;
 		}
 
 		

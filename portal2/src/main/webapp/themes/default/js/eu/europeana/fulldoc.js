@@ -4,7 +4,11 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 eu.europeana.fulldoc = {
 
 	lightboxOb :  null,
+	
 	vimeoDetect : 'vimeo.com/video',
+	dailyMotionDetect : 'dailymotion.com/embed',
+	audioBooDetect : 'audioboo.fm/boos',
+	
 	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
 	isAudioBoo : false,
 
@@ -469,7 +473,11 @@ eu.europeana.fulldoc = {
 							(
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video'
 								&&
-								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+								(
+									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+									||
+									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.dailyMotionDetect) > -1
+								)
 							)
 							||
 							(
@@ -478,14 +486,14 @@ eu.europeana.fulldoc = {
 								(
 									$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
 									||
-									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo									
+									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
 								) 
 							)
 						)
 						&&
 						!js.utils.phoneTest();
 
-
+		
 		if (e.hasClass('label') || e.hasClass('lb-trigger') || e == eu.europeana.fulldoc.triggerPanel) {
 			target = "magnify";
 		}
@@ -620,7 +628,11 @@ eu.europeana.fulldoc = {
 						(
 							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video'
 							&&
-							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+							(
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+								||
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.dailyMotionDetect) > -1
+							)
 						)
 						||
 						(
@@ -629,7 +641,7 @@ eu.europeana.fulldoc = {
 							(
 								$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
 								||
-								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo									
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
 							) 
 						)
 
@@ -847,17 +859,24 @@ eu.europeana.fulldoc = {
 				lightboxableCount++;
 			}
 			else if (carouselData[i].external && carouselData[i].external.type == 'video'
-				&& carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1) {
+					&&
+					(
+						carouselData[i].external.url.indexOf(eu.europeana.fulldoc.vimeoDetect) > -1
+						||
+						carouselData[i].external.url.indexOf(eu.europeana.fulldoc.dailyMotionDetect) > -1
+					)
+				)
+				{
 				lightboxableCount++;
 			}
 			else if (carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
-				&& 
-				(
-					$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
-					||
-					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo									
+					&& 
+					(
+						$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+						||
+						carouselData[i].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect) >- 1
+					)
 				)
-			)
 				{
 				lightboxableCount++;
 			}
@@ -1044,8 +1063,7 @@ eu.europeana.fulldoc = {
 							"linkTarget" : "_self"
 					}
 				});
-
-				console.log('mltData = ' + JSON.stringify(mltData) );
+				//console.log('mltData = ' + JSON.stringify(mltData) );
 
 				$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
 				var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
