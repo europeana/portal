@@ -27,6 +27,7 @@ ${model.user.email}</p>
 
 <c:if test="${!empty model.debug && model.debug}">
 	<h3>My Europeana Db Values</h3>
+	<p><b>note</b>: these values do not appear to regular users. they are here for developers. as such, you need to refresh this page if you have made any settings changes as they are not dynamically updated.</p>
 
 	<b>portalLanguage:</b><br />
 	${model.user.languagePortal}<br />

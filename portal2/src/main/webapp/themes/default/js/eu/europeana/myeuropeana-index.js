@@ -16,10 +16,16 @@
 		$translate_item: $('#translate-item'),
 		$item_language: $('#item-language'),
 
-		addLanguageItemListener: function() {
-			itemLanguage.$item_language.on( 'change', itemLanguage.handleItemLanguageChange );
+		/**
+		 * @returns {bool}
+		 */
+		isActive: function() {
+			return this.$translate_item.prop('checked');
 		},
 
+		/**
+		 * @returns {string}
+		 */
 		getValue: function() {
 			var value = '';
 
@@ -30,16 +36,10 @@
 			return value;
 		},
 
-		handleItemLanguageChange: function() {
-			itemLanguage.$translate_item.prop('checked', true);
-		},
-
 		init: function() {
 			if ( !eu.europeana.vars.user ) {
 				return;
 			}
-
-			this.addLanguageItemListener();
 		}
 	},
 
@@ -598,6 +598,7 @@
 			},
 			ajax_data = {
 				modificationAction : "user_language_settings",
+				autoItemTranslation: itemLanguage.isActive(),
 				itemLanguage: itemLanguage.getValue(),
 				portalLanguage : portalLanguage.getValue(),
 				keywordLanguages : keywords.getValue()
