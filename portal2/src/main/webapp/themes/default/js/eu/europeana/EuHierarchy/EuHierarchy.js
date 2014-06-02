@@ -895,65 +895,53 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	var getVisibleNodes = function(){
 
-		$.scrollTo(self.topPanel, {offset:-16});
+		//$.scrollTo(self.topPanel, {offset:-16});
 
 		var overlayShowing = $('.ajax-overlay').is(':visible');
 		
 		if(overlayShowing){
 			hideSpinner();
 		}
+
+		var topNode      = null;
+		var bottomNode   = null;
+		var previousNode = null;
 		
-		var upToNode = function(el){
-			if(el.hasClass('hierarchy-container')){				
-				return false;
-			}
-			else if(el.hasClass('jstree-node')){
-				return el;
-			}
-			else if(el.parent()){
-				return upToNode(el.parent());
-			}
-			else{
-				return false;
-			}
-		};
-
-		var backToNode = function(nodeIn){
-			var x = nodeIn.prevAll("li.jstree-node:first");
-			if(x.length){
-				return x;
-			}
-			return nodeIn.closest("li.jstree-node");;			
-		};
-
+		var bottomTop    = self.bottomPanel[0].getBoundingClientRect().top;
+		var topBottom    = self.topPanel[0].getBoundingClientRect().bottom;
 		
-		var stepDown     = 10; /* pixels below the centre of the top panel */
-		//var container    = $('.hierarchy-container');
-		var rect         = self.topPanel[0].getBoundingClientRect();
-		var pointX       = rect.left + (self.topPanel.width() / 2);
-		var pointY       = rect.top +  (self.topPanel.height());
-		var pointElement = document.elementFromPoint(pointX, pointY + stepDown);		
-		var topNode      = upToNode( $(pointElement) );
 		
-		console.log('getVisibleNodes found top node ' + topNode.attr('id'));
-
-		var previousNode = backToNode(topNode);
-
-		console.log('getVisibleNodes found previous node ' + previousNode.attr('id'));
-
-		var bottomNode;
-		var stepUp       = 2 * stepDown;
-		var count        = 1;
+		$('.jstree-anchor').not('.jstree-disabled').each(function(i, ob){
+						
+			var newTop = ob.getBoundingClientRect().top + ($(ob).height()/2);
+			
+			console.log('newTop ' + newTop + ' ' + $(ob).html());
+			
+			if( !topNode && (newTop > topBottom) ){
+				topNode = ob;
+			}			
+			if( newTop > bottomTop ){
+				return false;	// exit loop
+			}
+			bottomNode = ob;
+		});
 		
-		while(!bottomNode){
-			bottomNode = upToNode($(document.elementFromPoint(pointX, (pointY + self.container.height()) - (count * stepUp)  )));
-			count ++;
+		
+		bottomNode   = $(bottomNode).closest("li.jstree-node");
+		topNode      = $(topNode)   .closest("li.jstree-node");
+		previousNode = topNode      .prevAll("li.jstree-node:first");
+		
+		if( !previousNode.length  ){
+			previousNode = topNode.closest("li.jstree-node");
 		}
-
+		if( !previousNode.length  ){
+			previousNode = topNode;
+		}
+		
 		if(overlayShowing){
 			showSpinner();
 		}
-		
+				
 		return [
 			self.treeCmp.jstree('get_node', topNode.attr('id') ),
 			self.treeCmp.jstree('get_node', bottomNode.attr('id') ),
@@ -1276,6 +1264,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			var callLoadChildren = function(node, completeCallback, countRemaining){
 								
 				if(countRemaining<=0){  /*  countRemaining==0 works for FF, but <=0 needed for chrome.  Suffix wrong? TODO   */
+					if(countRemaining<0){
+						alert('LESS');
+					}
 					completeCallback(node);
 				}
 				else{

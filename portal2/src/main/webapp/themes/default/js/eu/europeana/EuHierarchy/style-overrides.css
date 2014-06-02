@@ -83,6 +83,11 @@
 	line-height: 2em;
 }
 
+.hierarchy-next a,
+.hierarchy-prev a{
+	cursor: pointer;
+}
+
 .hierarchy-title .count,
 .hierarchy-next .count,
 .hierarchy-prev .count{
