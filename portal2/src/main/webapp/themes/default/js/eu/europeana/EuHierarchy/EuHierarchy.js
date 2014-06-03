@@ -583,7 +583,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 		var origIndex = xNode.data.index;
 
-		console.log('START ON NODENAME ' + getName());
+		console.log('BROKEN ARROWS START ON NODENAME ' + getName());
 
 
 		/**
@@ -756,7 +756,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		// load nodes
 		showSpinner();
 		viewPrevOrNext(initiatingNode, backwards,  defaultChunk, true, function(){
-
 			var containerH       = self.container.height();
 			var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
 
@@ -783,7 +782,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			//
 			// returns true if we bumped
 			var skipScrollBump = function(){
-
 				var enabledSomething = newDisabledCount != disabledCount;
 				
 				var clickTgtId = getVisibleNodes()[2].id
@@ -828,7 +826,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 				// After the invisible reset, the animated scroll
 				var finalScroll      = function(){
-
 					hideSpinner();
 					
 					var scrollTop    = self.container.scrollTop();
@@ -895,8 +892,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	var getVisibleNodes = function(){
 
-		//$.scrollTo(self.topPanel, {offset:-16});
-
 		var overlayShowing = $('.ajax-overlay').is(':visible');
 		
 		if(overlayShowing){
@@ -959,10 +954,39 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		// Set UI viewport size
 		
-		self.container.css('height',         (rows * lineHeight) + 'em');
-		self.container.css('max-height',     (rows * lineHeight) + 'em');
-		self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
+		var setContainerHeight = function(){
+			
+			self.container.css({
+				'height':         (rows * lineHeight) + 'em',
+				'max-height':     (rows * lineHeight) + 'em'
+			});
+			self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
+						
+			var remainderRemoved = self.container.outerHeight(true);
+			remainderRemoved = remainderRemoved - (remainderRemoved % rows);
+			
+			console.log('init container height at ' + remainderRemoved)
+			self.container.css({
+				'height':     remainderRemoved + 'px',
+				'max-height': remainderRemoved + 'px'				
+			});
+		}
 		
+		var zoom = document.documentElement.clientWidth / window.innerWidth;
+		$(window).resize(function() {
+		    var zoomNew = document.documentElement.clientWidth / window.innerWidth;
+		    if (zoom != zoomNew) {	// zoom has changed
+		        zoom = zoomNew;
+				setContainerHeight();
+				doScrollTo('#' + getVisibleNodes()[0].id, function(){
+					togglePrevNextLinks();
+				});
+
+		    }
+		});
+		setContainerHeight();	
+	
+	
 		// TREE BINDING
 
 		// utility function for select and initial load
@@ -1265,7 +1289,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 								
 				if(countRemaining<=0){  /*  countRemaining==0 works for FF, but <=0 needed for chrome.  Suffix wrong? TODO   */
 					if(countRemaining<0){
-						alert('LESS');
+						alert('CHROME BUG HERE:  LESS\n\n' +  $( '#' + node.id ).find('>a').html() );
 					}
 					completeCallback(node);
 				}
@@ -1386,7 +1410,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		brokenArrows : function(){
 			brokenArrows();
 		},
-		scrollTop : function(val){
+		scrollTop : function(val){	// debug function
 
 			if(val){
 				self.container.scrollTop(val);

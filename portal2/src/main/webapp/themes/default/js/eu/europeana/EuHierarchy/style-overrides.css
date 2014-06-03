@@ -4,8 +4,9 @@
 	line-height: 1.4em;
 	position:    relative;
 	
-	margin-top:    1.5em;
-	margin-bottom: 1.5em;
+	
+	margin-top:    1.4em;
+	margin-bottom: 1.4em;
 }
 
 .hierarchy-objects{
@@ -83,6 +84,7 @@
 	line-height: 2em;
 }
 
+.expand-collapse a,
 .hierarchy-next a,
 .hierarchy-prev a{
 	cursor: pointer;
