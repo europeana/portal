@@ -850,16 +850,25 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						)
 					}
 
-					if(newScrollTop == scrollTop){
-						self.scrollDuration = 0;
-					}
 
 					doScrollTo(newScrollTop, function(){
-						self.scrollDuration = 1000;
-						togglePrevNextLinks();
-						if(callback){
-							callback();
-						}
+						
+						self.scrollDuration = 0;
+						setTimeout(function(){
+
+							doScrollTo('#' + getVisibleNodes()[0].id, function(){
+
+								self.scrollDuration = 1000;
+								togglePrevNextLinks();
+								if (callback) {
+									callback();
+								}
+								
+							});	// tidy scroll
+
+							
+						}, 1);
+						
 					});	
 				};
 				// end fn:finalScroll()
@@ -908,7 +917,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		$('.jstree-anchor').not('.jstree-disabled').each(function(i, ob){
 						
-			var newTop = ob.getBoundingClientRect().top + ($(ob).height()/2);
+			var newTop = ob.getBoundingClientRect().top + 2;
 			
 			console.log('newTop ' + newTop + ' ' + $(ob).html());
 			
@@ -964,6 +973,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						
 			var remainderRemoved = self.container.outerHeight(true);
 			remainderRemoved = remainderRemoved - (remainderRemoved % rows);
+			remainderRemoved+=1;
 			
 			console.log('init container height at ' + remainderRemoved)
 			self.container.css({

@@ -45,7 +45,7 @@
 
 .hierarchy-top-panel{
 	border-bottom: none;
-	height: 4.25em;
+	XXXXheight: 4.25em;
 }
 
 .hierarchy-bottom-panel{
@@ -54,12 +54,12 @@
 }
 
 .hierarchy-top-panel .hierarchy-title{
-	position: absolute;
-	top: 0.5em;
+	position: relative;
+	margin-top: 0.25em;
 
-	left: 2em;
-
-	font-size: 1.2em;
+	margin-left: 1.75em;
+	padding-bottom: 2em;
+	font-size:      1.2em;
 }
 
 
@@ -88,6 +88,10 @@
 .hierarchy-next a,
 .hierarchy-prev a{
 	cursor: pointer;
+}
+
+.hierarchy-prev{
+	z-index: 2;
 }
 
 .hierarchy-title .count,
@@ -255,6 +259,16 @@
 #hierarchy.jstree-default .jstree-open.jstree-last > .jstree-ocl{
 	background-image:    url(connector-opened-last.png);			
 }
+
+
+#hierarchy > .jstree-container-ul > .jstree-closed.jstree-last > .jstree-icon{
+	background-image:    url(connector-closed-last-root.png);				
+}
+
+#hierarchy > .jstree-container-ul > .jstree-open.jstree-last > .jstree-icon{
+	background-image:    url(connector-opened-last-root.png);				
+}
+
 
 #hierarchy.jstree-default .jstree-closed > .jstree-ocl{
 	background-image:    url(connector-closed.png);
