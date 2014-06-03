@@ -19,6 +19,33 @@
 
 			<div class="nine-cols-fulldoc" id="main-fulldoc-area">
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
+				
+				
+				<c:if test="${model.showHierarchical}">
+					<script type="text/javascript">
+						var hierarchical = true;
+					</script>
+
+					<div class="row">					
+						<div class="hierarchy-objects nine-columns">
+							<div class="hierarchy-top-panel">
+								<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>
+								
+															<!-- TODO: fix this -->
+								<div class="hierarchy-title"><a><span class="count"></a></span></div>
+							</div>
+			
+							<div class="hierarchy-container">
+								<div id="hierarchy"></div>
+							</div>		
+							<div class="hierarchy-bottom-panel">
+								<div class="hierarchy-next"><a>view items below</a><span class="count"></span></div>
+								<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>
+							</div>
+						</div>
+					</div>		
+				</c:if>
+				
 			</div>
 		</div>
 
@@ -32,6 +59,7 @@
 			</c:if>
 		</c:if>
 
+<%--
 		<c:if test="${model.showHierarchical}">
 			<script type="text/javascript">
 				var hierarchical = true;
@@ -54,6 +82,7 @@
 			</div>
 			
 		</c:if>
+ --%>
 
 		<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">
 			<div class="row">

@@ -273,6 +273,10 @@ a.action-link span,
 	padding-top:	1.5em;
 }
 
+#main-fulldoc-area .hierarchy-objects{
+	display:		none;	
+}
+
 #navigation {
 	overflow:		auto;
 	padding:		0;
@@ -288,9 +292,7 @@ a.action-link span,
 	padding-right:		0;
 	*/
 	padding-bottom:		0.75em ;
-	
-/*
-*/
+
 }
 
 #navigation.hidden{
@@ -417,6 +419,15 @@ from search.css:
 .show-on-x	{display:block !important;}
 
 @media only screen and ( min-width:	62em ){
+	
+	#main-fulldoc-area .hierarchy-objects{
+		float: 			none;
+		width: 			auto;
+		max-width:		none;
+		margin-left:	2em;
+		margin-top:		2em;
+		display:		block;	
+	}
 	
 	.hide-on-x	{
 		display:		block	!important;
