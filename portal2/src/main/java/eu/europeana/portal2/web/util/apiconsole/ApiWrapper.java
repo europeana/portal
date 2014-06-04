@@ -160,6 +160,7 @@ public class ApiWrapper extends JsonApiServiceImpl {
 	}
 
 	public ApiResult getAndModifyJsonResponse(String url) {
+		lastUrl = url;
 		ApiResultImpl result = (ApiResultImpl) getJsonResponse(url.toString());
 		result.setContent(
 			result.getContent()
