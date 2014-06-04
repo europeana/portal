@@ -45,6 +45,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	self.pageNodeId     = false;	// the id of the node corresponding to the full-doc page we're on
 	self.silentClick    = false;
 	self.expandingAll   = false;
+	self.isLoading      = false;
 	self.container      = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration = 0;
 	
@@ -54,7 +55,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	// debug vars
 	var locked = true;
-	var spin   = false;
 
 	var log = function(msg){
 		console.log(msg);
@@ -744,6 +744,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	 * */
 	var loadAndScroll = function(initiatingNode, backwards, keyedNode, callback){
 
+		if(self.isLoading){
+			return;
+		}
+		self.isLoading = true;
+		
 		// Scroll tracking:
 		// Get the tree height and offset
 		
@@ -819,6 +824,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				hideSpinner();
 				
 				if(callback){
+					self.isLoading = false;
 					callback();
 				}
 			}
@@ -860,6 +866,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 								self.scrollDuration = 1000;
 								togglePrevNextLinks();
+								
+								self.isLoading = false;
+								
 								if (callback) {
 									callback();
 								}
@@ -1056,6 +1065,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		self.treeCmp.bind('keydown.jstree', function(e) {
 
 			if(self.expandingAll){
+				return;
+			}
+			if(self.isLoading){
 				return;
 			}
 
