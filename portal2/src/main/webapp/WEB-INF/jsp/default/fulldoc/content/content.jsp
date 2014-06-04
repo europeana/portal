@@ -26,13 +26,12 @@
 						var hierarchical = true;
 					</script>
 
-					<div class="row">					
-						<div class="hierarchy-objects nine-columns">
+					<div class="fulldoc-cell">					
+						<div class="hierarchy-objects">
 							<div class="hierarchy-top-panel">
 								<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>
 								
-															<!-- TODO: fix this -->
-								<div class="hierarchy-title"><a><span class="count"></a></span></div>
+								<div class="hierarchy-title"><a></a><span class="count"></span></div>
 							</div>
 			
 							<div class="hierarchy-container">
@@ -43,7 +42,13 @@
 								<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>
 							</div>
 						</div>
-					</div>		
+					</div>					
+				</c:if>
+
+				<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">
+					<div class="fulldoc-cell">
+						<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/europeana-mlt.jspf" %>
+					</div>
 				</c:if>
 				
 			</div>
@@ -59,86 +64,5 @@
 			</c:if>
 		</c:if>
 
-<%--
-		<c:if test="${model.showHierarchical}">
-			<script type="text/javascript">
-				var hierarchical = true;
-			</script>
-			
-			<div class="hierarchy-objects">
-				<div class="hierarchy-top-panel">
-					<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>
-					<div class="hierarchy-title"><a><span class="count"></a></span></div>
-				</div>
-
-				<div class="hierarchy-container">
-					<div id="hierarchy"></div>
-				</div>		
-				<div class="hierarchy-bottom-panel">
-					<div class="hierarchy-next"><a>view items below</a><span class="count"></span></div>
-					<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>
-					
-				</div>
-			</div>
-			
-		</c:if>
- --%>
-
-		<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">
-			<div class="row">
-				<div class="twelve columns">
-					<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/europeana-mlt.jspf" %>
-				</div>
-			</div>
-		</c:if>
-		
-		<%-- 
-		<c:if test="${model.moreLikeThis != null && !empty model.moreLikeThis}">
-
-			<div class="row">
-				<div class="twelve columns">
-					<script type="text/javascript">
-
-						var carousel2Data = [];
-						<c:forEach items="${model.moreLikeThis}" var="doc">
-						
-							<c:set var="objectTitle">${fn:replace(doc.titleJoined, newLineChar1, ' ')}</c:set>
-							
-							carousel2Data[carousel2Data.length] = {
-								image:			decodeURI( "${fn:escapeXml(doc.thumbnail)}" ).replace(/&amp;/g, '&').replace(/&amp;/g, '&'),
-								title:			'${  fn:replace(objectTitle, newLineChar2, ' ')  }',
-						        <c:url var="url" value="${model.portalName}/${doc.fullDocUrl}">
-						          <c:param name="rows" value="${model.rows}"/>
-						        </c:url>
-								europeanaLink:	'/${url}'
-							};
-						</c:forEach>
-					</script>
-					
-					<!--
-						markup for carousel:
-						SEO friendly html rendering of images used as an image dimension measuring utility: has to live outside of the initially hidden #similar-content div
-					-->
-					<div id="carousel-2-img-measure">
-						<c:forEach var="similar" items="${model.moreLikeThis}">
-							<c:set var="title" value="${fn:escapeXml(fn:join(similar.title, ' '))}" />
-							<img src="${fn:replace(fn:escapeXml(similar.thumbnail), '&amp;', '&')}" alt="${title}" title="${title}" data-type="${fn:toLowerCase(similar.type)}" class="no-show" />
-						</c:forEach>
-					</div>
-					<div id="explore-further">
-						<a class="tab-header" href="#"><spring:message code="SimilarContent_t" /></a>
-						<div class="section">
-							<div class="content">
-								<div class="content-inner">							
-									<div id="carousel-2" about="${model.document.id}" class="europeana-carousel"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</c:if>
-		--%>
-		
 	</div>
 </div>

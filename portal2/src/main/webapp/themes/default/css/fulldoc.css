@@ -49,6 +49,13 @@
 }
 */
 
+.fulldoc-cell{
+	display:		table;
+	table-layout:	fixed;
+	max-width:		100%;
+	width:			100%;
+}
+
 .see-also-header{
 	margin-top:    1.5em;
 	margin-bottom: 0.5em;
@@ -382,6 +389,11 @@ a.action-link span,
 
 @media only screen and ( min-width:48em ){
 	
+	.see-also-header,
+	#more-like-this-wrapper{
+		padding-left:2em;		
+	}
+		
 	/* links */
 
 	div.actions{
