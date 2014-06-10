@@ -39,14 +39,7 @@ var EuHierarchyTools = function(hierarchy) {
 		}
 	});
 	
-	
-	
-	$('.spin').click(function() {
-
-		$('#apocalypse_vol_3>a').click();
-		alert(  $('#apocalypse_vol_3>a').length  )
-	});
-	
+		
 	$('.tba').click(function() {
 		self.hierarchy.brokenArrows();
 	});
@@ -59,12 +52,12 @@ var EuHierarchyTools = function(hierarchy) {
 		
 		console.log(limits[0].id + ' <--> ' + limits[1].id);
 		
-		$('#' +  limits[0].id).css('background-color', 'red');
-		$('#' +  limits[1].id).css('background-color', 'blue');			
+		$('#' +  limits[0].id).find('>a').css('background-color', 'red');
+		$('#' +  limits[1].id).find('>a').css('background-color', 'blue');			
 		
 		setTimeout(function(){
-			$('#' +  limits[0].id).css('background-color', 'white');
-			$('#' +  limits[1].id).css('background-color', 'white');
+			$('#' +  limits[0].id).find('>a').css('background-color', 'white');
+			$('#' +  limits[1].id).find('>a').css('background-color', 'white');
 		}, 3000);
 	});
 
@@ -76,7 +69,19 @@ var EuHierarchyTools = function(hierarchy) {
 	$('.collapse').click(function(){
 		self.hierarchy.collapseAll();
 	});
+	
+	$('.delay').click(function(){
+		self.hierarchy.setDefaultDelay(10000);
+	});
+	
+	$('.t-start').click(function(){
+		self.hierarchy.startTimer();
+	});
 
+	$('.t-stop').click(function(){
+		self.hierarchy.stopTimer();
+	});
+	
 	
 };
 

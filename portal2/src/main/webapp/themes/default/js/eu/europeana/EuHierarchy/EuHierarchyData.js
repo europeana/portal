@@ -537,7 +537,7 @@ var dataGen = function(){
 			var res = [];
 			for(var i=1; i<11; i++){
 				res.push({
-					"id" : "c_" + i + "_" + t,
+					"id" : "c_" + i + "-purl-" + parentUrlIn.replace("(", "_").replace(")", "_").replace("dataGen.", "").replace("[", "_").replace("]", "_").replace(".", "_") + "___" + t,
 					"text": 'Chapter ' + i + ' (10 verses)',
 					"data": {
 						"parentUrl":	parentUrlIn,
@@ -569,4 +569,8 @@ var dataGen = function(){
 	};
 }();
 
+
+if(typeof (module) != 'undefined' && module.exports){
+	module.exports = exports = dataGen;	
+}
 

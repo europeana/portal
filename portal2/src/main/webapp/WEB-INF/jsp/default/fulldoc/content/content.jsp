@@ -24,6 +24,20 @@
 				<c:if test="${model.showHierarchical}">
 					<script type="text/javascript">
 						var hierarchical = true;
+						var waitMessages = [
+		           		    {
+		           		    	"time" : 3,
+		           		    	"msg"  : '<spring:message code="load_wait_message_1" />'
+		           		    },
+		           		    {
+		           		    	"time" : 8,
+		           		    	"msg"  : '<spring:message code="load_wait_message_2" />'
+		           		    },
+		           		    {
+		           		    	"time" : 60,
+		           		    	"msg"  : '<spring:message code="load_wait_message_3" />'
+		           		    }
+		           		];
 					</script>
 
 					<div class="fulldoc-cell">					

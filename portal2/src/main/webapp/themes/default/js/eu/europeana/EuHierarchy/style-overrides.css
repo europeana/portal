@@ -54,12 +54,13 @@
 }
 
 .hierarchy-top-panel .hierarchy-title{
-	position: relative;
-	margin-top: 0.25em;
+	position:       relative;
+	margin-top:     0.25em;
 
-	margin-left: 1.75em;
+	margin-left:    1.75em;
 	padding-bottom: 2em;
 	font-size:      1.2em;
+	cursor:         pointer;	
 }
 
 
@@ -104,6 +105,30 @@
 	position: absolute;
 	bottom: 0;
 }
+
+.wait-msg{
+	color:       rgba(255, 255, 255, 1);
+	position:    absolute;
+	top:     	 50%;
+	margin-top:  2.5em;
+	text-align:  center;
+	width:       100%;
+	font-weight: bold;
+	font-style:  italic;
+}
+
+.transparent {
+	opacity:     		0;
+    -webkit-transition: opacity 1s;
+    transition:         opacity 1s;
+} 
+
+.opaque {
+	opacity:     		1;
+    -webkit-transition: opacity 1s;
+    transition:         opacity 1s;
+} 
+
 
 /*
 .hierarchy-next,
@@ -366,14 +391,20 @@
 
 /* overlay */
 .ajax-overlay{
+	opacity: 1;
     position:		absolute;
     width:			100%;
     height:			100%;
-    background:		black url(../../../../images/spinner.gif) center center no-repeat;
-    opacity:		.5;
+    
+    background-image:	 url(../../../../images/spinner.gif);
+    background-position: center center;
+    background-repeat:   no-repeat;
+    background-color:    rgba(0, 0, 0, 0.5);	
+    
+    
     z-index:		12;
     left:			0;
     top:			0;
     border-radius:	8px 8px 8px 8px;
-}		
+}
 
