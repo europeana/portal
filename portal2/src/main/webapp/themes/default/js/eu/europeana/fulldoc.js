@@ -3,14 +3,12 @@ js.utils.registerNamespace( 'eu.europeana.fulldoc' );
 
 eu.europeana.fulldoc = {
 
-	lightboxOb :  null,
-	
+	lightboxOb : null,
 	vimeoDetect : 'vimeo.com/video',
 	dailyMotionDetect : 'dailymotion.com/embed',
 	audioBooDetect : 'audioboo.fm/boos',
-	
+	telDetect : 'http://www.theeuropeanlibrary.org/tel4/newspapers/issue/fullscreen',
 	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
-	isAudioBoo : false,
 
 	/**
 	 * provides priority order for which tab to open when no hash is given
@@ -489,6 +487,12 @@ eu.europeana.fulldoc = {
 									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
 								) 
 							)
+							||
+							(
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'text'
+								&&
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.telDetect) > -1
+							)
 						)
 						&&
 						!js.utils.phoneTest();
@@ -553,7 +557,7 @@ eu.europeana.fulldoc = {
 	},
 
 	initTriggerPanel: function(type, index, gallery) {
-
+		
 		if (typeof(eu.europeana.fulldoc.triggerPanel)=="undefined") {
 			// instantiate and hide
 			eu.europeana.fulldoc.triggerPanel = $('<div class="lb-trigger" >'
@@ -585,7 +589,7 @@ eu.europeana.fulldoc = {
 
 				/*	if the image is wider than 200 px initialise the lightbox and show the trigger panel,
 				 	if not set the cursoe icon for the image and the eu.europeana.fulldoc.lightboxTestFailed variable to false	*/
-
+				
 				var loadLightbox = function() {
 					$('<img src="'+ carouselData[imgIndex].external.url + '" style="visibility:hidden"/>')
 						.appendTo('body').imagesLoaded(
@@ -624,6 +628,7 @@ eu.europeana.fulldoc = {
 				loadLightbox();
 			}
 			else{ // NON IMAGE
+								
 				if(
 						(
 							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'video'
@@ -644,7 +649,12 @@ eu.europeana.fulldoc = {
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
 							) 
 						)
-
+						||
+						(
+							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'text'
+							&&
+							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.telDetect) >-1
+						)
 				) {
 
 					eu.europeana.fulldoc.loadLightboxJS(
@@ -824,6 +834,7 @@ eu.europeana.fulldoc = {
 					var currIndex = e.index;
 					var gallery = this;
 					var external = gallery._options.dataSource[e.index].external;
+					
 					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
 
 					if (eu.europeana.fulldoc.lightboxOb) {
@@ -880,6 +891,13 @@ eu.europeana.fulldoc = {
 				{
 				lightboxableCount++;
 			}
+			else if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'text'
+					&&
+					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.telDetect) > -1){
+				lightboxableCount++;				
+			}
+			
+			
 		}
 		return lightboxableCount;
 	},
