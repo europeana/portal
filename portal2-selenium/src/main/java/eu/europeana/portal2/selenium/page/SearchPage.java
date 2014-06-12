@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import eu.europeana.portal2.selenium.Pages;
 import eu.europeana.portal2.selenium.model.search.Facet;
 import eu.europeana.portal2.selenium.page.abstracts.Portal2Page;
 import eu.europeana.portal2.selenium.utils.PatternUtils;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class SearchPage extends Portal2Page {
 

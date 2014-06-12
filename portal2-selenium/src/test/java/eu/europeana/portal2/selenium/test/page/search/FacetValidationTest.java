@@ -94,6 +94,7 @@ public class FacetValidationTest extends TestSetup {
 		checkFacet(FACET_PROVIDER);
 	}
 	
+	/*
 	@Test
 	public void dataProviderFacetTest() {
 		Facet provider = page.getFacetLists().get(FACET_PROVIDER);
@@ -103,6 +104,7 @@ public class FacetValidationTest extends TestSetup {
 		assertTrue("Facet DATA PROVIDER should be visible after clicking PROVIDER", facet.isVisible());
 		checkFacet(FACET_DATA_PROVIDER);
 	}
+	*/
 	
 	private void checkFacet(int facetIndex) {
 		Facet facet = page.getFacetLists().get(facetIndex);
@@ -197,11 +199,19 @@ public class FacetValidationTest extends TestSetup {
 					linkTitle = '"' + linkTitle + '"';
 				}
 
+				
+				
 				try {
 					assertTrue(
-							String.format("Link contains FACET:VALUE as %s:%s but get %s", type, PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8")), item.getLink()),
-							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.getLink()), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8"))) ||
-							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.getLink()), "&qf=" + type + ":" + PatternUtils.encodeFix(URLEncoder.encode('"' + linkTitle, "UTF-8")))
+							String.format(
+									"Link contains FACET:VALUE as %s:%s but get %s",
+									type,
+									PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8")), item.getLink()
+							),
+							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.getLink()), "&qf=" + type + "%3A" + PatternUtils.encodeFix(URLEncoder.encode(linkTitle, "UTF-8")))
+							||
+							StringUtils.containsIgnoreCase(PatternUtils.encodeFix(item.getLink()), "&qf=" + type + "%3A" + PatternUtils.encodeFix(URLEncoder.encode('"' + linkTitle, "UTF-8")))
+							
 					);
 				} catch (UnsupportedEncodingException e) {
 					fail(e.getMessage());
