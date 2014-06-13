@@ -197,7 +197,7 @@ public class FieldPresentation {
 		return false;
 	}
 
-	public boolean isShowTranslationServices() {
+	public boolean isTranslatable() {
 		return field.isTranslatable();
 	}
 
