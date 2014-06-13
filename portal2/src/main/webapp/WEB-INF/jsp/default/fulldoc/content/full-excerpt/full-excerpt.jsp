@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="eufn" uri="http://europeana.eu/jsp/tlds/europeanatags"%>
 
 <div id="excerpt">
   <div id="item-details">
@@ -19,9 +20,14 @@
 
     <c:forEach items="${model.document.dcTitle}" var="title">
       <c:if test="${title != model.objectTitle && !empty(title)}">
+        <c:set var="titleValue" value="${title}" />
+        <c:if test="${!empty model.itemLanguage}">
+          <c:set var="titleValue" value="${eufn:cleanField(eufn:translate(title, model.itemLanguage))}" />
+        </c:if>
+        <c:set var="theVal" value="${eufn:cleanField(value.translatedValue)}" />
         <div class="item-metadata">
           <span class="bold notranslate"><spring:message code="dc_title_t" />:</span>
-          <span class="translate" ${semanticAttributes}>${fn:escapeXml(title)}</span>
+          <span class="translate" ${semanticAttributes}>${fn:escapeXml(titleValue)}</span>
         </div>
       </c:if>
     </c:forEach>

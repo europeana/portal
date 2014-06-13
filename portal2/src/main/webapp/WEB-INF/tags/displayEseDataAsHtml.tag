@@ -29,7 +29,7 @@
  * @var data.fieldUniqueId string - unique id for the field
  * @var data.fieldValues array - collection of values associated with field
  * @var data.seperateLines bool - whether or not to put each value on a new line
- * @var data.showTranslationServices bool - whether or not translation of the field is appropriate
+ * @var data.translatable bool - whether or not translation of the field is appropriate
  * @var data.externalServices array - a collection of External Services associated with the field
  * @var data.ESSEnabled bool - whether or not the field has external services associated with it,
  *    e.g., the object can be searched for on wikipedia or imdb
@@ -133,7 +133,7 @@
 
 				<%-- determine if value is translatable or not --%>
 				<c:set var="classAttr" value='notranslate' />
-				<c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
+				<c:if test="${!empty data.translatable && data.translatable}">
 					<c:set var="classAttr" value='translate' />
 				</c:if>
 				<c:set var="classAttr" value='${classAttr}${" "}${lightboxableValueClass}' />
@@ -196,12 +196,14 @@
 								--%>
 
 								<c:when test="${localSemanticUrl}">
+									<!-- localSemanticUrl -->
 									<c:out value="${(value.value)}" />
 								</c:when>
 								<c:otherwise>
+									<!-- otherwise -->
 									<c:set var="theVal" value="${eufn:cleanField(value.value)}" />
-									<c:if test="${!empty data.showTranslationServices
-												&& data.showTranslationServices
+									<c:if test="${!empty data.translatable
+												&& data.translatable
 												&& !empty value.translatedValue}">
 										<c:set var="theVal" value="${eufn:cleanField(value.translatedValue)}" />
 									</c:if>
@@ -254,5 +256,3 @@
 		</${wrapper}>
 	</c:if>
 </c:forEach>
-
-<ex:Hello/>
