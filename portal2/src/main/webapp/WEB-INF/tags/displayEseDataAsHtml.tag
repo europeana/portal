@@ -161,7 +161,6 @@
 
 				<c:choose>
 					<c:when test="${model.showContext && !empty value.decorator}">
-						<!-- mode: showContext -->
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
@@ -174,13 +173,11 @@
 						</c:if>
 					</c:when>
 					<c:when test="${value.searchOn}">
-						<!-- mode: searchOn -->
 						<a href="${value.searchOn}" target="_top" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							rel="nofollow">${value.value}</a>${separator}
 					</c:when>
 					<c:when test="${value.url}">
-						<!-- mode: url -->
 						<a href="${value.value}" target="_blank" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							rel="nofollow">${value.value}</a>${separator}
@@ -198,11 +195,9 @@
 								--%>
 
 								<c:when test="${localSemanticUrl}">
-									<!-- localSemanticUrl -->
 									<c:out value="${(value.value)}" />
 								</c:when>
 								<c:otherwise>
-									<!-- otherwise -->
 									<c:set var="theVal" value="${eufn:cleanField(value.value)}" />
 									<c:if test="${!empty data.translatable
 												&& data.translatable
