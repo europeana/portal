@@ -207,12 +207,12 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		};
 
 		<c:if test="${!empty model.user}">
-			eu.europeana.vars.msg.error_occurred = '${error_occurred}';
-			eu.europeana.vars.msg.saved_item = '${saved_item}';
-			eu.europeana.vars.msg.save_item_failed = '${save_item_failed}';
-			eu.europeana.vars.msg.saved_tag = '${saved_tag}';
-			eu.europeana.vars.msg.save_tag_failed = '${save_tag_failed}';
-			eu.europeana.vars.item.uri = '${model.document.about}';
+			eu.europeana.vars.msg.error_occurred   = '${fn:escapeXml(error_occurred)}';
+			eu.europeana.vars.msg.saved_item       = '${fn:escapeXml(saved_item)}';
+			eu.europeana.vars.msg.save_item_failed = '${fn:escapeXml(save_item_failed)}';
+			eu.europeana.vars.msg.saved_tag        = '${fn:escapeXml(saved_tag)}';
+			eu.europeana.vars.msg.save_tag_failed  = '${fn:escapeXml(save_tag_failed)}';
+			eu.europeana.vars.item.uri             = '${model.document.about}';
 			<c:if test="${empty model.useBackendItemTranslation || model.useBackendItemTranslation == false}">
 				eu.europeana.vars.languageItem = '${model.user.languageItem}';
 			</c:if>
@@ -246,16 +246,16 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				eu.europeana.vars.user = true;
-				eu.europeana.vars.msg.error_occurred = '${error_occurred}';
-				eu.europeana.vars.msg.item_not_removed = '${item_not_removed}';
-				eu.europeana.vars.msg.saved_search_removed = '${saved_search_removed}';
-				eu.europeana.vars.msg.no_saved_searches = '${no_saved_searches}';
-				eu.europeana.vars.msg.saved_item_removed = '${saved_item_removed}';
-				eu.europeana.vars.msg.no_saved_items = '${no_saved_items}';
-				eu.europeana.vars.msg.saved_tag_removed = '${saved_tag_removed}';
-				eu.europeana.vars.msg.no_saved_tags = '${no_saved_tags}';
-				eu.europeana.vars.msg.saved_apikey = '${save_apikey}';
-				eu.europeana.vars.msg.save_apikey_failed = '${save_apikey_failed}';
+				eu.europeana.vars.msg.error_occurred       = '${fn:escapeXml(error_occurred)}';
+				eu.europeana.vars.msg.item_not_removed     = '${fn:escapeXml(item_not_removed)}';
+				eu.europeana.vars.msg.saved_search_removed = '${fn:escapeXml(saved_search_removed)}';
+				eu.europeana.vars.msg.no_saved_searches    = '${fn:escapeXml(no_saved_searches)}';
+				eu.europeana.vars.msg.saved_item_removed   = '${fn:escapeXml(saved_item_removed)}';
+				eu.europeana.vars.msg.no_saved_items       = '${fn:escapeXml(no_saved_items)}';
+				eu.europeana.vars.msg.saved_tag_removed    = '${fn:escapeXml(saved_tag_removed)}';
+				eu.europeana.vars.msg.no_saved_tags        = '${fn:escapeXml(no_saved_tags)}';
+				eu.europeana.vars.msg.saved_apikey         = '${fn:escapeXml(save_apikey)}';
+				eu.europeana.vars.msg.save_apikey_failed   = '${fn:escapeXml(save_apikey_failed)}';
 			</c:when>
 			<c:otherwise>
 				eu.europeana.vars.user = false;
