@@ -134,7 +134,11 @@
 				<%-- determine if value is translatable or not --%>
 				<c:set var="classAttr" value='notranslate' />
 				<c:if test="${!empty data.showTranslationServices && data.showTranslationServices}">
-					<c:set var="classAttr" value='translate' />
+				
+					<c:if test="${fn:length(cannedUrl) == 0}">
+						<c:set var="classAttr" value='translate' />
+					</c:if>
+				
 				</c:if>
 				<c:set var="classAttr" value='${classAttr}${" "}${lightboxableValueClass}' />
 
