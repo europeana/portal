@@ -210,11 +210,9 @@ eu.europeana.header = {
 						window.location.href = self.getActiveHref();
 					}
 					else{
-						
 						if(window.location.href.indexOf('#')){
-							window.location.href = window.location.href.split('#')[0]; 							
+							$("#language-selector").attr('method', 'GET');
 						}
-						
 						$("input[name=lang]").val(self.getActive());
 						$("#language-selector").submit();
 					}
@@ -223,7 +221,6 @@ eu.europeana.header = {
 		);
 		menu.setActive("choose");
 		menu.init();
-
 	},
 	
 	setupSearchMenu:function(){
