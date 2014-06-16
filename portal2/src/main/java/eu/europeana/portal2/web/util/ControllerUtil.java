@@ -30,6 +30,8 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -39,6 +41,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.FragmentInfo;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
@@ -251,4 +254,40 @@ public class ControllerUtil {
 		queryTranslator.createQueryTranslationsFromParams();
 		return queryTranslator.getLanguageContainer();
 	}
+
+	// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
+	public static String[] fixParameter(String[] springArray, String paramName, Map<String, String[]> params) {
+		if (params.get(paramName) != null && params.get(paramName).length != springArray.length) {
+			springArray = params.get(paramName);
+		}
+		return springArray;
+	}
+
+	public static boolean getBooleanBundleValue(String key, ReloadableResourceBundleMessageSource messageSource, Locale locale) {
+		boolean booleanValue = false;
+		try {
+			String stringValue = messageSource.getMessage(key, null, locale);
+			booleanValue = Boolean.parseBoolean(stringValue.trim());
+		} catch (NoSuchMessageException e) {
+			log.error(String.format("%s message key is missing.", key));
+		}
+		log.info(String.format("%s key -> %s value", key, booleanValue));
+		return booleanValue;
+	}
+
+	public static boolean getBooleanValue(String value) {
+		boolean booleanValue = false;
+		if (StringUtils.isNotBlank(value) && Boolean.parseBoolean(value)) {
+			booleanValue = true;
+		}
+		return booleanValue;
+	}
+
+	public static String rewriteQueryFields(String queryString) {
+		if (!StringUtils.isBlank(queryString)) {
+			queryString = SolrUtils.rewriteQueryFields(queryString);
+		}
+		return queryString;
+	}
+
 }

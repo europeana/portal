@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -113,13 +112,13 @@ public class ObjectController {
 	@Resource
 	private UserService userService;
 
+	@Resource
+	private ReloadableResourceBundleMessageSource messageSource;
+
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
 	public static final int MAX_COUNT_PER_FIELD = 20;
-
-	@Resource
-	private ReloadableResourceBundleMessageSource messageSource;
 
 	public static final Map<String, MltConfiguration> SEE_ALSO_FIELDS = new LinkedHashMap<String, MltConfiguration>();
 	public static final Map<String, MltConfiguration> MLT_FIELDS = new LinkedHashMap<String, MltConfiguration>();
@@ -155,41 +154,21 @@ public class ObjectController {
 
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		Map<String, String[]> params = RequestUtils.getParameterMap(request);
-		if (params.get("qf") != null && params.get("qf").length != qf.length) {
-			qf = params.get("qf");
-		}
-		if (params.get("qt") != null && params.get("qt").length != qt.length) {
-			qt = params.get("qt");
-		}
-
-		boolean showEuropeanaMlt = false;
-		try {
-			String showEuropeanaMltString = messageSource.getMessage("notranslate_show_mlt", null, locale);
-			showEuropeanaMlt = Boolean.parseBoolean(showEuropeanaMltString.trim());
-		} catch (NoSuchMessageException e) {
-			log.error("notranslate_show_mlt message key is missing.");
-		}
-
-		boolean showContext = false;
-		if (StringUtils.isNotBlank(context) && Boolean.parseBoolean(context)) {
-			showContext = true;
-		}
-		boolean showHierarchical = false;
-		if (StringUtils.isNotBlank(ho) && Boolean.parseBoolean(ho)) {
-			showHierarchical = true;
-		}
+		qf = ControllerUtil.fixParameter(qf, "qf", params);
+		qt = ControllerUtil.fixParameter(qt, "qt", params);
+		boolean showContext = ControllerUtil.getBooleanValue(context);
+		boolean showHierarchical = ControllerUtil.getBooleanValue(ho);
+		queryString = ControllerUtil.rewriteQueryFields(queryString);
+		boolean showEuropeanaMlt = ControllerUtil.getBooleanBundleValue("notranslate_show_mlt", messageSource, locale);
+		boolean showSimilarItems = ControllerUtil.getBooleanBundleValue("notranslate_show_similar_items_t", messageSource, locale);
 
 		FullDocPage model = new FullDocPage();
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 		model.setFormat(format);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
-		if (!StringUtils.isBlank(queryString)) {
-			queryString = SolrUtils.rewriteQueryFields(queryString);
-		}
 		model.setQuery(queryString);
 		model.setRefinements(qf);
-		// model.setRefinements(qf);
 		model.setStart(start);
 		model.setReturnTo(returnTo);
 		model.setRows(rows);
@@ -197,22 +176,15 @@ public class ObjectController {
 		model.setShowContext(showContext);
 		model.setShowHierarchical(showHierarchical);
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
+		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 		model.setUseBackendItemTranslation(config.useBackendTranslation());
 		model.setStartTime(t0);
-		LanguageContainer languageContainer = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
-		model.setLanguages(languageContainer);
-
-		// TODO: refactor this!!!
-		boolean showSimilarItems = false;
-		try {
-			String sShowSimilarItems = StringUtils.replace(
-					messageSource.getMessage("notranslate_show_similar_items_t", null, locale), ";", "");
-			showSimilarItems = Boolean.parseBoolean(sShowSimilarItems.trim());
-		} catch (NoSuchMessageException e) {
-			e.printStackTrace();
+		if (model.isDoTranslation()) {
+			LanguageContainer languageContainer = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
+			model.setLanguages(languageContainer);
 		}
-		model.setShowSimilarItems(showSimilarItems);
 
+		model.setShowSimilarItems(showSimilarItems);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setEdmSchemaMappings(schemaOrgMapping);
 		model.setBingTranslateId(config.getBingTranslateId());

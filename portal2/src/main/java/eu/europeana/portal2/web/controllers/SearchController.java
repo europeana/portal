@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +57,9 @@ public class SearchController {
 	@Resource
 	private UserService userService;
 
+	@Resource
+	private ReloadableResourceBundleMessageSource messageSource;
+
 	/**
 	 * Possible sort options
 	 */
@@ -66,7 +70,7 @@ public class SearchController {
 	 */
 	public static final String DEFAULT_SORT = "score desc";
 
-	@RequestMapping({ "/search.html", "/brief-doc.html" })
+	@RequestMapping({"/search.html", "/brief-doc.html"})
 	public ModelAndView searchHtml(
 			@RequestParam(value = "query", required = false, defaultValue = "*:*") String q,
 			@RequestParam(value = "qf", required = false) String[] qf,
@@ -77,35 +81,27 @@ public class SearchController {
 			@RequestParam(value = "profile", required = false, defaultValue = "portal") String profile,
 			HttpServletRequest request, Locale locale) {
 
-		rows = Math.min(rows, config.getRowLimit());
-
 		Map<String, String[]> params = RequestUtils.getParameterMap(request);
-		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
-		if (params.get("qf") != null && params.get("qf").length != qf.length) {
-			qf = params.get("qf");
-		}
-		if (params.get("qt") != null && params.get("qt").length != qt.length) {
-			qt = params.get("qt");
-		}
+		qt = ControllerUtil.fixParameter(qt, "qt", params);
+
 		SearchPage model = new SearchPage();
 		model.setRequest(request);
-		model.setRefinements(qf);
-
-		if (start < 1) {
-			start = 1;
-		}
-		model.setStart(start);
-		model.setRows(rows);
+		model.setRefinements(ControllerUtil.fixParameter(qf, "qf", params));
+		model.setStart(fixStartParameter(start));
+		model.setRows(fixRowsParameter(rows));
+		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 
 		q = SolrUtils.rewriteQueryFields(q);
 		model.setQuery(q);
 
-		long t0 = new Date().getTime();
-		LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, q, qt, request);
-		long t1 = new Date().getTime();
-		log.info("Query translation: " + (t1 - t0));
-		model.setLanguages(languageContainer);
-		log.info("ItemLanguage: " + model.getItemLanguage());
+		if (model.isDoTranslation()) {
+			long t0 = new Date().getTime();
+			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, q, qt, request);
+			long t1 = new Date().getTime();
+			log.info("Query translation: " + (t1 - t0));
+			model.setLanguages(languageContainer);
+			log.info("ItemLanguage: " + model.getItemLanguage());
+		}
 
 		if (!sortValues.contains(sort)) {
 			sort = DEFAULT_SORT;
@@ -120,14 +116,14 @@ public class SearchController {
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 
 		Query query = new Query(q)
-				.setRefinements(qf)
-				.setPageSize(rows)
-				.setStart(start - 1) // Solr starts from 0
+				.setRefinements(model.getRefinements())
+				.setPageSize(model.getRows())
+				.setStart(model.getStart() - 1) // Solr starts from 0
 				.setParameter("facet.mincount", "1") // .setParameter("f.YEAR.facet.mincount", "1")
 				.setParameter("sort", sort)
 				.setProduceFacetUnion(true)
 				.setAllowSpellcheck(false)
-				.setQueryTranslations(languageContainer.getQueryTranslations())
+				.setQueryTranslations(model.getQueryTranslations())
 				;
 
 		if (model.isEmbedded()) {
@@ -136,7 +132,7 @@ public class SearchController {
 		}
 
 		RightReusabilityCategorizer.setPermissionStrategy(RightReusabilityCategorizer.PERMISSION_STRATEGY_NEGATIVE_ALL);
-		query.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(qf));
+		query.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(model.getRefinements()));
 		query.setFacetQueries(RightReusabilityCategorizer.getQueryFacets());
 
 		Class<? extends BriefBean> clazz = BriefBean.class;
@@ -146,7 +142,7 @@ public class SearchController {
 		}
 		BriefBeanView briefBeanView = null;
 		try {
-			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, start, rows, params);
+			briefBeanView = SearchUtils.createResults(searchService, clazz, profile, query, model.getStart(), model.getRows(), params);
 			model.setBriefBeanView(briefBeanView);
 			if (log.isDebugEnabled()) {
 				log.debug("NumFound: " + briefBeanView.getPagination().getNumFound());
@@ -163,6 +159,18 @@ public class SearchController {
 
 		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
+	}
+
+	private int fixRowsParameter(int rows) {
+		rows = Math.min(rows, config.getRowLimit());
+		return rows;
+	}
+
+	private int fixStartParameter(int start) {
+		if (start < 1) {
+			start = 1;
+		}
+		return start;
 	}
 
 	public InternalResourceViewResolver getViewResolver() {
