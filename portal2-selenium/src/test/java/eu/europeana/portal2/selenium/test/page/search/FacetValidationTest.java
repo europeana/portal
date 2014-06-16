@@ -162,7 +162,7 @@ public class FacetValidationTest extends TestSetup {
 			 * ww.close();
 			 */
 
-			assertTrue("Link contains search URL: " + Pages.SEARCH, item.getLink().contains(Pages.SEARCH));
+			assertTrue("Link should contain search URL: " + item.getLink() + "\n\n" + Pages.SEARCH, item.getLink().contains(Pages.SEARCH));
 
 			for (Pattern pattern : patterns) {
 				try {

@@ -1037,9 +1037,14 @@ eu.europeana.fulldoc = {
 				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
 				"dependencies" : ["hoData", "scrollTo", "jstree"],
 				callback : function() {
-
-					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
-					$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');
+					
+					if(js.debug){
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');						
+					}
+					else{
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
+					}
 
 					$(document).ready(function() {
 						new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects')).init("dataGen.base()");
