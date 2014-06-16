@@ -10,9 +10,7 @@
 			<c:when test="${!empty model.user}">
 				<li><a href="/${model.portalName}/logout.html"><spring:message code="LogOut_t" /></a></li>
 				<li data-settings-panel="user-information" data-settings-panel-text="<spring:message code="UserInformation_t" />"><a href="#user-information"><spring:message code="UserInformation_t" /></a></li>
-				<c:if test="${!empty model.debug && model.debug}">
-					<li data-settings-panel="language-settings" data-settings-panel-text="<spring:message code="LanguageSettings_t" />"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
-				</c:if>
+				<li data-settings-panel="language-settings" data-settings-panel-text="<spring:message code="LanguageSettings_t" />"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
 				<li data-settings-panel="saved-items" data-settings-panel-text="<spring:message code="SavedItems_t" />"><a href="#saved-items"><spring:message code="SavedItems_t" /></a></li>
 				<li data-settings-panel="saved-searches" data-settings-panel-text="<spring:message code="SavedSearches_t" />"><a href="#saved-searches"><spring:message code="SavedSearches_t" /></a></li>
 				<li data-settings-panel="saved-tags" data-settings-panel-text="<spring:message code="SavedTags_t" />"><a href="#saved-tags"><spring:message code="SavedTags_t" /></a></li>
@@ -22,9 +20,7 @@
 				<li data-settings-panel="login" data-settings-panel-text="<spring:message code="LogIn_t" />"><a href="#login"><spring:message code="LogIn_t" /></a></li>
 				<li data-settings-panel="register" data-settings-panel-text="<spring:message code="Register_t" />" class="noscript"><a href="#register"><spring:message code="Register_t" /></a></li>
 				<li data-settings-panel="request-password" data-settings-panel-text="<spring:message code="Request_t" />" class="noscript"><a href="#request-password"><spring:message code="Request_t" /></a></li>
-				<c:if test="${!empty model.debug && model.debug}">
-					<li data-settings-panel="language-settings" data-settings-panel-text="<spring:message code="LanguageSettings_t" />"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
-				</c:if>
+				<li data-settings-panel="language-settings" data-settings-panel-text="<spring:message code="LanguageSettings_t" />"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>
@@ -33,9 +29,7 @@
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				<div id="user-information" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/user-information.jspf" %></div>
-				<c:if test="${!empty model.debug && model.debug}">
-					<div id="language-settings" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
-				</c:if>
+				<div id="language-settings" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
 				<div id="saved-items" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-items.jspf" %></div>
 				<div id="saved-searches" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-searches.jspf" %></div>
 				<div id="saved-tags" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/saved-tags.jspf" %></div>
@@ -45,9 +39,7 @@
 				<div id="login" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/login.jspf" %></div>
 				<div id="register" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/register.jspf" %></div>
 				<div id="request-password" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/request-password.jspf" %></div>
-				<c:if test="${!empty model.debug && model.debug}">
-					<div id="language-settings" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
-				</c:if>
+				<div id="language-settings" class="noscript settings-panel"><%@ include file="/WEB-INF/jsp/default/myeuropeana/content/new-panels/language-settings.jspf" %></div>
 			</c:otherwise>
 		</c:choose>
 	</div>
