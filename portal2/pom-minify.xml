@@ -55,7 +55,26 @@
 						</goals>
 					</execution>
 
+					<!-- hierarchy.css -->
 
+					<execution>
+						<id>minify-hierarchy.css</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<cssSourceDir>/themes/default/js/eu/europeana/EuHierarchy</cssSourceDir>
+							<cssFinalFile>hierarchy.css</cssFinalFile>
+							<cssTargetDir>min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>style.css</cssSourceInclude>
+								<cssSourceInclude>style-overrides.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
 					<!-- widget.css (as common.css but with absolute font-icon paths + search.css) -->
 
 					<execution>
@@ -807,6 +826,23 @@
 					</execution>
 
 					<execution>
+						<id>minify-EuHierarchy.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana/EuHierarchy</jsSourceDir>
+							<jsFinalFile>EuHierarchy.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuHierarchy.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-EuMenu.js</id>
 						<phase>process-resources</phase>
 						<configuration>
@@ -1037,6 +1073,23 @@
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
 								<jsSourceInclude>js.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-jstree.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/jquery/jsTree</webappTargetDir>
+							<jsSourceDir>/themes/default/js/jquery/jsTree</jsSourceDir>
+							<jsFinalFile>jstree.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>jstree.js</jsSourceInclude>
 							</jsSourceIncludes>
 						</configuration>
 						<goals>
@@ -1353,6 +1406,42 @@
 				</executions>
 			</plugin>
 			<!-- END MINIFY-MAVEN-PLUGIN -->
+
+			<plugin>
+              <artifactId>maven-resources-plugin</artifactId>
+              <version>2.3</version>
+              <executions>
+
+					<execution>
+						<id>minify-hierarchy-images</id>
+						<phase>process-resources</phase>
+						<configuration>
+						
+							<outputDirectory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/min</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.png</include>
+									</includes>
+									<excludes>
+										<exclude>**/*.css</exclude>
+										<exclude>**/*.js</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+						
+						<goals>
+			                <goal>copy-resources</goal>
+						</goals>
+					</execution>
+
+
+              </executions>
+          </plugin>
+
 
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
