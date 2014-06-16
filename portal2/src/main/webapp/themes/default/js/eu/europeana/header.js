@@ -210,7 +210,7 @@ eu.europeana.header = {
 						window.location.href = self.getActiveHref();
 					}
 					else{
-						if(window.location.href.indexOf('#')){
+						if(window.location.href.indexOf('#') > -1){
 							$("#language-selector").attr('method', 'GET');
 						}
 						$("input[name=lang]").val(self.getActive());
