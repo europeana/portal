@@ -271,7 +271,6 @@ public class ControllerUtil {
 		} catch (NoSuchMessageException e) {
 			log.error(String.format("%s message key is missing.", key));
 		}
-		log.info(String.format("%s key -> %s value", key, booleanValue));
 		return booleanValue;
 	}
 
