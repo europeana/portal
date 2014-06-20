@@ -1023,7 +1023,7 @@ eu.europeana.fulldoc = {
 			scripts.push({
 				"name" : "jstree",
 				"file" : "jstree.js",
-				"path" : eu.europeana.vars.branding + '/js/jquery/jsTree/' + js.min_directory,
+				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
 			});
 
 			scripts.push({
@@ -1047,7 +1047,8 @@ eu.europeana.fulldoc = {
 					}
 
 					$(document).ready(function() {
-						new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects')).init("dataGen.base()");
+						window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
+						window.hierarchy.init("dataGen.base()");
 					});
 
 				}

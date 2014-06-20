@@ -53,12 +53,14 @@ var EuHierarchyTools = function(hierarchy) {
 		console.log(limits[0].id + ' <--> ' + limits[1].id);
 		
 		$('#' +  limits[0].id).find('>a').css('background-color', 'red');
+		$('#' +  limits[0].id).find('>a').css('color',            'pink');
 		$('#' +  limits[1].id).find('>a').css('background-color', 'blue');			
 		
 		setTimeout(function(){
 			$('#' +  limits[0].id).find('>a').css('background-color', 'white');
+			$('#' +  limits[0].id).find('>a').css('color',            'black');
 			$('#' +  limits[1].id).find('>a').css('background-color', 'white');
-		}, 3000);
+		}, 5000);
 	});
 
 
@@ -81,8 +83,21 @@ var EuHierarchyTools = function(hierarchy) {
 	$('.t-stop').click(function(){
 		self.hierarchy.stopTimer();
 	});
-	
-	
+
+	$('.gcp').click(function(){ 
+		
+		var visible = self.hierarchy.getVisibleNodes();
+		
+		var cp = self.hierarchy.getCommonParent(visible[0], visible[1]);
+
+		if(cp){
+			$('#' + cp.id).css('background-color', 'purple');		
+			$('.debug-area').html( 'common parent is ' + cp.text );
+		}
+		else{
+			console.log('Error: no common parent found for ' + visible[0].id + ' and ' +  visible[1].id);
+		}		
+	});
 };
 
 

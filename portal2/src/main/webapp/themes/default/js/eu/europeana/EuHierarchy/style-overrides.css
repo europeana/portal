@@ -50,7 +50,7 @@
 
 .hierarchy-bottom-panel{
 	border-top: none;
-	height: 4em;
+	height:     5em;
 }
 
 .hierarchy-top-panel .hierarchy-title{
@@ -66,7 +66,7 @@
 
 .hierarchy-bottom-panel	.expand-collapse{
 	position: absolute;
-	bottom: 0.5em;
+	XXXbottom: -0.6em;
 	left: 2em;
 }
 
@@ -90,6 +90,14 @@
 .hierarchy-prev a{
 	cursor: pointer;
 }
+
+.expand-collapse a.disabled,
+.hierarchy-next a.disabled,
+.hierarchy-prev a.disabled{
+	color:	#e4e4e4;
+	cursor:	default;
+}
+
 
 .hierarchy-prev{
 	z-index: 2;
@@ -396,7 +404,8 @@
     width:			100%;
     height:			100%;
     
-    background-image:	 url(../../../../images/spinner.gif);
+    XXXbackground-image:	 url(../../../../images/spinner.gif);
+    background-image:	 url(spinner.gif);
     background-position: center center;
     background-repeat:   no-repeat;
     background-color:    rgba(0, 0, 0, 0.5);	

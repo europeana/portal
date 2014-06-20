@@ -1084,8 +1084,8 @@
 						<id>minify-jstree.js</id>
 						<phase>process-resources</phase>
 						<configuration>
-							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/jquery/jsTree</webappTargetDir>
-							<jsSourceDir>/themes/default/js/jquery/jsTree</jsSourceDir>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana/EuHierarchy</jsSourceDir>
 							<jsFinalFile>jstree.js</jsFinalFile>
 							<jsTargetDir>min</jsTargetDir>
 							<jsSourceIncludes>
@@ -1424,6 +1424,7 @@
 									<filtering>true</filtering>
 									<includes>
 										<include>**/*.png</include>
+										<include>**/*.gif</include>
 									</includes>
 									<excludes>
 										<exclude>**/*.css</exclude>

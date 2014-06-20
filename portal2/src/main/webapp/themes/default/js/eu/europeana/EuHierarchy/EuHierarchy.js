@@ -8,11 +8,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	var defaultChunk     = rows * 2;
 	var lineHeight       = 1.4;
 	
+	
 	self.treeCmp         = cmp;
 	self.timer           = null;
 	self.pageNodeId      = false;		// the id of the node corresponding to the full-doc page we're on
 	self.silentClick     = false;
-	self.expandingAll    = false;
+	self.loadingAll      = false;
 	self.loadedAll       = false;	
 	self.isLoading       = false;
 	self.container       = self.treeCmp.closest('.hierarchy-container');
@@ -79,7 +80,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		};
 		
 		self.stop = function(){
-			log('STOP')
+			log('STOP TIMER')
 			window.clearInterval(self.timerId);
 		};
 		
@@ -344,7 +345,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	// @callback: (fn) - function to execute on completion
 	var viewPrevOrNext = function(node, backwards, leftToLoad, deepen, callback) {
 			
-		//log('viewPrevOrNext -> ' + node.text + ', backwards -> ' + backwards + ', deepen -> ' + deepen);
+		log('viewPrevOrNext -> ' + node.text + ', backwards -> ' + backwards + ', deepen -> ' + deepen);
 		
 		if( (!backwards) && deepen){	/* find deepest opened with children */
 			
@@ -354,7 +355,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.children[0]);
 			}
 
-			//log('switchtrack 1: ' + switchTrackNode.text);
+			log('switchtrack 1: ' + switchTrackNode.text);
 			
 			var parentLoaded = function(node){
 				var parent = self.treeCmp.jstree('get_node', node.parent);
@@ -371,7 +372,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.parent);
 			}
 			
-			//log('switchtrack 2: ' + switchTrackNode.text);
+			log('switchtrack 2: ' + switchTrackNode.text);
 			
 			node = switchTrackNode;			
 		}
@@ -507,18 +508,20 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		if(!self.container.prev('.ajax-overlay').length){
 			self.container.before('<div class="ajax-overlay"><span class="wait-msg"></span></div>');
 		}
-		self.container.prev('.ajax-overlay').show();
+		
+		self.container.prev('.ajax-overlay').show();	
+		$('<style></style>').appendTo($(document.body)).remove();	// force repaint
 	};
 	
 	var hideSpinner = function(){
 		self.container.prev('.ajax-overlay').hide();
+		$('<style></style>').appendTo($(document.body)).remove();	// force repaint
 	};
 	
 	var nodeLinkClick = function(e){
 		var url = window.location.href.indexOf('?') ? window.location.href.split('?')[0] : window.location.href;
 		window.location.href = url + '?' + $(e).attr('href');
-	}
-	
+	}	
 	
 	var brokenArrows = function(){
 		
@@ -535,8 +538,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		} 
 
 		var origIndex = xNode.data.index;
-
-		//console.log('START WHILE ON NODENAME ' + getName());
 
 
 		/**
@@ -630,8 +631,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		} 
 
 		var origIndex = xNode.data.index;
-
-		//console.log('BROKEN ARROWS START ON NODENAME ' + getName());
 
 
 		/**
@@ -791,16 +790,18 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	 * */
 	var loadAndScroll = function(initiatingNode, backwards, keyedNode, callback){
 
+		
 		if(self.isLoading){
 			return;
 		}
+		
 		self.isLoading = true;
-		if(!self.expandingAll){
-	
+		if(!self.loadingAll){
 			self.timer.start();			
 		}
+		
 		$('.top-arrows').add($('.bottom-arrows')).addClass('transparent');
-
+		
 		// Scroll tracking:
 		// Get the tree height and offset
 		
@@ -812,6 +813,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				
 		// load nodes
 		showSpinner();
+		
 		viewPrevOrNext(initiatingNode, backwards,  defaultChunk, true, function(){
 			var containerH       = self.container.height();
 			var newDisabledCount = $('.jstree-container-ul .jstree-disabled').length;
@@ -877,7 +879,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				
 				if(callback){
 					self.isLoading = false;
-					if(!self.expandingAll){
+					if(!self.loadingAll){
 						self.timer.stop();
 					}
 					callback();
@@ -885,9 +887,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 			else{ // clicked (not keyed)
 
+				
 				// After the invisible reset, the animated scroll
 				var finalScroll      = function(){
-					hideSpinner();
 					
 					var scrollTop    = self.container.scrollTop();
 					var newScrollTop = scrollTop;
@@ -911,6 +913,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						)
 					}
 
+					hideSpinner();
 
 					doScrollTo(newScrollTop, function(){
 						
@@ -922,7 +925,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 								self.scrollDuration = 1000;
 								togglePrevNextLinks();
 								
-								if(!self.expandingAll){
+								if(!self.loadingAll){
 									self.timer.stop();
 								}
 								
@@ -941,6 +944,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				
 				self.scrollDuration = 0;
 				doScrollTo('#' + origTopNodeId);
+				
 				self.scrollDuration = 1000;
 				finalScroll();			// scroll from reset scroll view
 			}
@@ -954,11 +958,18 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		});
 	});
 
+	$('.load-all').click(function(){
+		loadAll();
+	});
+
 	$('.expand-all').click(function(){
 		expandAll();
 	});
 
 	$('.collapse-all').click(function(){
+		
+		showSpinner();
+		self.timer.start();
 		collapseAll();
 	});
 	
@@ -1088,7 +1099,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			showSpinner();
 			self.isLoading = true;
 			
-			if(!self.expandingAll){
+			if(!self.loadingAll){
 				self.timer.start();			
 			}
 			
@@ -1104,14 +1115,13 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					}
 					self.isLoading = false;
 					
-					if(!self.expandingAll){
+					if(!self.loadingAll){
 						self.timer.stop();
 					}
 
 					hideSpinner();
 				});
 			});
-			$('.debug-area').html(JSON.stringify(node));
 		};
 		
 		// select (invoke by loaded callback below)
@@ -1123,11 +1133,17 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				}
 			}
 			self.silentClick = false;
+			$('.debug-area').html(JSON.stringify(data.node));
+
 		});
 
 		// loaded
 		
 		self.treeCmp.bind("loaded.jstree", function(event, data) {
+			
+			// cancel default right-key handling
+			//self.treeCmp.off('keydown.jstree', '.jstree-anchor');
+			
 			setTimeout(function() {
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
 								
@@ -1144,11 +1160,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}, 1);
 		});
 
-		// arrow down
-
+		
+		// arrow down		
 		self.treeCmp.bind('keydown.jstree', function(e) {
 			
-			if(self.expandingAll){
+			if(self.loadingAll){
 				return;
 			}
 			if(self.isLoading){
@@ -1224,7 +1240,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		// OPEN
 
 		self.treeCmp.on("open_node.jstree", function(e, data) {
-			if(self.expandingAll){
+			if(self.loadingAll){
 				return;
 			}
 			if(self.isLoading){
@@ -1258,7 +1274,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		// CLOSE
 
 		self.treeCmp.bind("close_node.jstree", function(event, data) {
-			if(self.expandingAll){
+			if(self.loadingAll){
 				return;
 			}
 			log('closed ' + data.node.text);
@@ -1389,161 +1405,256 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	};
 
 	
-	var expandAll = function(){
-		
-		showSpinner();
-		self.timer.start();
-		
-		if(self.loadedAll){
+	/* function getQty
+	 * 
+	 * Recursive load helper - gets the number of children still to load for a given node
+	 * 
+	 * @node the node to analyse
+	 * 
+	 * returns the number of children that have still to be loaded for  @node
+	 *  
+	 *  */
+	var getQty = function(node){
+		//log(node.id + ' node.data.total ' + node.data.total + ', node.children.length ' + node.children.length + ' (url=' + node.data.childrenUrl + ')');
+		return node.data.childrenUrl ? node.data.total - node.children.length : 0;
+	}
 
-			console.log('BEGIN with ' + $('.jstree-closed').length + ' to open');
-
-			$('.jstree-closed').not('#' + getRootEl().attr('id')).each(function(i, ob){				
-				self.treeCmp.jstree('open_node', $(ob).attr('id'));
-			});
-			var iId = setInterval(function(){
+	/* function recursiveLoad
+	 * 
+	 * @node the node to load
+	 * @callback the callback to execute when done
+	 *  
+	 */
+	/*
+	var recursiveLoad = function(node, callback){
+		
+		var remaining = getQty(node);
+	    
+	    // append new nodes
+		if(remaining){
+			
+			if(node.data && node.data.childrenUrl){
+				var start        = node.children ? node.children.length : 0;
+				var urlSuffix    = '.slice(' + start + ',' + (start + (remaining > defaultChunk ? defaultChunk : remaining)) + ')';
+				var childUrl     = node.data.childrenUrl + urlSuffix;
 				
-				$('.jstree-closed').not('#' + getRootEl().attr('id')).each(function(i, ob){				
-					self.treeCmp.jstree('open_node', $(ob).attr('id'));
-				});
-
-				if($('.jstree-closed').length == 0){
-					window.clearInterval(iId);
-					hideSpinner();
-					self.timer.stop();
-				}
-				else{
-					console.log('still waiting for ' + $('.jstree-closed').length + ' to open');
-				}
-			}, 500);
-			return;
-		} 
-		
-		/*
-		
-			setTimeout(function(){
-			
-			$('.jstree-open').not('#' + getRootEl().attr('id')).each(function(i, ob){				
-				self.treeCmp.jstree('close_node', $(ob).attr('id'));
-			});
-			
-			var iId = setInterval(function(){
-				if($('.jstree-open').length == 1){
-					window.clearInterval(iId);
-					hideSpinner();
-					self.timer.stop();
-				}				
-			}, 500);
-		}, 100);
-		
-		
-		*/
-		
-		self.expandingAll = true;
-
-		
-		self.scrollDuration = 0;
-		
-			
-		// get the quantity to load
-		var getQty = function(node){
-			//log(node.id + ' node.data.total ' + node.data.total + ', node.children.length ' + node.children.length + ' (url=' + node.data.childrenUrl + ')');
-			return node.data.childrenUrl ? node.data.total - node.children.length : 0;
-		}
-			
-		
-		var recursiveLoad = function(node, callback){
-			
-			var remaining = getQty(node);
-		    
-		    // append new nodes
-			if(remaining){
+				loadData(childUrl, function(data){
 				
-				if(node.data && node.data.childrenUrl){
-					var start        = node.children ? node.children.length : 0;
-					var urlSuffix    = '.slice(' + start + ',' + (start + (remaining > defaultChunk ? defaultChunk : remaining)) + ')';
-					var childUrl     = node.data.childrenUrl + urlSuffix;
+					var children = [];
 					
-					loadData(childUrl, function(data){
-					
-						var children = [];
+					$.each(data, function(i, ob) {
 						
-						$.each(data, function(i, ob) {
-							
-							var newId   = self.treeCmp.jstree("create_node", node, formatNodeData(ob), "last", false, true);
-							var newNode = self.treeCmp.jstree('get_node', newId);
-							var newQty  = getQty(newNode);
-							var loads   =  Math.ceil(newQty/defaultChunk);
-							
-							for(var j=0; j<loads; j++){
-								children.push(newNode);
-							}
-							
-							//log('pushed ' + newNode.id + ' ' + loads + ' times');
-						}); 
+						var newId   = self.treeCmp.jstree("create_node", node, formatNodeData(ob), "last", false, true);
+						var newNode = self.treeCmp.jstree('get_node', newId);
+						var newQty  = getQty(newNode);
+						var loads   =  Math.ceil(newQty/defaultChunk);
 						
-						
-						// open node
-						
-						if(!node.state.opened){
-							self.silentClick = true;
-							self.treeCmp.jstree('open_node', node);
+						for(var j=0; j<loads; j++){
+							children.push(newNode);
 						}
 						
-						
-						// manage sub process
-						
-						var index = 0;
-						var nodeDone = function(){
-							index ++
-							if(index < children.length){
-								
-								// recurse 
-								recursiveLoad(children[index], 
-									function(){
-										if(index+1 == children.length){																							
-											callback();
-										}
-										else{
-											nodeDone();
-										}
-									}
-								);
-							}
-							else{
-								callback();
-							}
-						}; // end nodeDone
-						
-						if(children.length > 0){
+						//log('pushed ' + newNode.id + ' ' + loads + ' times');
+					}); 
+					
+					
+					// open node
+					
+					if(!node.state.opened){
+						self.silentClick = true;
+						self.treeCmp.jstree('open_node', node);
+					}
+					
+					
+					// manage sub process
+					
+					var index = 0;
+					var nodeDone = function(){
+						index ++
+						if(index < children.length){
 							
-							// recurse
-							recursiveLoad(children[0], nodeDone);
+							// recurse 
+							recursiveLoad(children[index], 
+								function(){
+									if(index+1 == children.length){																							
+										callback();
+									}
+									else{
+										nodeDone();
+									}
+								}
+							);
 						}
 						else{
 							callback();
 						}
-						
-					}); // end loadData()
+					}; // end nodeDone
 					
-				}
-				else{
-					alert('is this ever used?');
-					callback();						
-				}
+					if(children.length > 0){
+						
+						// recurse
+						recursiveLoad(children[0], nodeDone);
+					}
+					else{
+						callback();
+					}
+					
+				}); // end loadData()
+				
 			}
-			else{ // no remaining
-				callback();
+			else{
+				alert('is this ever used?');
+				callback();						
 			}
-		};
+		}
+		else{ // no remaining
+			callback();
+		}
+	};
+	*/
+
+	var recursiveLoad = function(node, callback){
+						
+		var remaining = getQty(node);
+	    
+		var callCallback = function(){
+			
+			var uncheckedChildren = [];
+			
+			$.each(node.children, function(i, ob) {
+				
+				var cNode = self.treeCmp.jstree('get_node', ob);
+				
+				if(!cNode.data.rcl){
+					uncheckedChildren.push(cNode);
+				}	
+			}); 
+
+			if(uncheckedChildren.length>0){
+				
+				// manage sub process
+				var index = 0;
+				var nodeDone = function(){				
+					index ++
+					if(index < uncheckedChildren.length){
+						
+						// recurse 
+						recursiveLoad(uncheckedChildren[index], 
+							function(){
+								if(index+1 == uncheckedChildren.length){																							
+									callback();
+								}
+								else{
+									nodeDone();
+								}
+							}
+						);
+					}
+					else{
+						callback();
+					}
+				}; // end nodeDone
+				recursiveLoad(uncheckedChildren[0], nodeDone);
+			}
+			else{
+				callback();				
+			}			
+		}
+		
+	    // append new nodes
+		if(remaining){
+			
+			var start        = node.children ? node.children.length : 0;
+			var urlSuffix    = '.slice(' + start + ',' + (start + (remaining > defaultChunk ? defaultChunk : remaining)) + ')';
+			var childUrl     = node.data.childrenUrl + urlSuffix;
+			
+			loadData(childUrl, function(data){
+			
+				var children = [];
+				
+				$.each(data, function(i, ob) {
+
+					var newId   = self.treeCmp.jstree("create_node", node, formatNodeData(ob), "last", false, true);
+					var newNode = self.treeCmp.jstree('get_node', newId);
+					
+					var newQty  = getQty(newNode);
+					var loads   =  Math.ceil(newQty/defaultChunk);
+
+					for(var j=0; j<loads; j++){
+						children.push(newNode);
+					}
+				}); 
+				
+				
+				// open node
+				
+				if(!node.state.opened){
+					self.silentClick = true;
+					self.treeCmp.jstree('open_node', node);
+				}
+				
+				// manage sub process
+				
+				var index = 0;
+				
+				var nodeDone = function(){
+					index ++
+					if(index < children.length){
+						
+						// recurse 
+						recursiveLoad(children[index], 
+							function(){
+								if(index+1 == children.length){																							
+									callCallback();
+								}
+								else{
+									nodeDone();
+								}
+							}
+						);
+					}
+					else{
+						node.data.rcl = true;
+						callCallback();
+					}
+				}; // end nodeDone
 		
 
+				if(children.length > 0){
+					
+					// recurse
+					recursiveLoad(children[0], nodeDone);
+				}
+				else{
+					node.data.rcl = true;
+					callCallback();
+				}
+				
+			}); // end loadData()
+				
+		}
+		else{ // no remaining
+			
+			node.data.rcl = true;
+			callCallback();
+		}
+	};
+
+
+	
+	/* function loadAll
+	 * 
+	 * @node the node to load
+	 * @callback the callback to execute when done
+	 *  
+	 */
+	var loadAll = function(){
+		showSpinner();
+		self.timer.start();
 		
+		self.loadingAll = true;
 		
 		var rNode = self.treeCmp.jstree('get_node', getRootEl().attr('id') );
 
-		self.treeCmp.jstree("delete_node", rNode.children );
-		
 		// fade the arrows
 		
 		$('.top-arrows').add($('.bottom-arrows')).removeClass('opaque').addClass('transparent');
@@ -1552,7 +1663,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		$('.jstree-disabled').each(function(i, ob){
 			var ob = $(ob)
-			self.treeCmp.jstree("enable_node", ob.closest('.jstree-node').attr('id'));			
+			self.treeCmp.jstree("enable_node", ob.closest('.jstree-node').attr('id'));
 		});
 		
 		// load the lot
@@ -1565,10 +1676,121 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			self.container.css('max-height',     'none');
 			self.treeCmp  .css('padding-bottom', '0');
 			
+			$('.load-all').unbind('click');
+			$('.load-all').addClass('disabled');
+			
 			self.loadedAll = true;
 			self.timer.stop();
 			hideSpinner();
-		});
+		});		
+	};
+	
+	
+	/* function getCommonParent
+	 * 
+	 * returns the common ancestor of @node1 and @node2
+	 *  
+	 */
+	self.getCommonParent = function(node1, node2){
+		
+		var parents1 = [];
+		var result   = null;
+		
+		if(!node1 || !node2){
+			return null;
+		}
+		
+		parents1.push(node1.id);
+
+		while(node1.parent){
+			node1 = self.treeCmp.jstree('get_node', node1.parent);
+			parents1.push(node1.id);
+		}
+		
+		while(node2.parent){
+			
+			node2 = self.treeCmp.jstree('get_node', node2.parent);
+
+			if( $.inArray(node2.id, parents1) > -1 ){
+				result = node2;
+				break;
+			}
+		}
+		
+		//console.log('getcp returns ' + (result ? result.text : 'null'));
+		
+		return result;
+	};
+	
+	
+	/* function expandAll
+	 * 
+	 * Finds the common ancestor or the visible nodes and recursively loads that node's unloaded children.
+	 * 
+	 * The nodes are then expanded
+	 * 
+	 * Nodes outwith the viewport will not be loaded unless their closest common ancestor is under that of the visible nodes
+	 * 
+	 * returns the common ancestor of @node1 and @node2
+	 *  
+	 */
+	var expandAll = function(){
+		
+		var visible = getVisibleNodes();
+		var cp      = self.getCommonParent(visible[0], visible[1]);
+		var openId  = null;
+			
+		if(!cp){
+			console.log('Error: no common parent found for ' + visible[0].id + ' and ' +  visible[1].id);
+			return;
+		}
+		
+		var afterLoad = function(){
+
+			// timer to check when done.
+			openId = setInterval(function(){
+				
+				if($('#' + cp.id + ' .jstree-closed').length < 2){	// ommit root (#) that can't be found by id
+					
+					self.loadingAll = false;
+					window.clearInterval(openId);
+					hideSpinner();
+					togglePrevNextLinks();
+					brokenArrows();
+					self.timer.stop();
+
+					self.scrollDuration = 1000;
+				}
+				//else{
+					//console.log('still waiting for ' + $('#' + cp.id + ' .jstree-closed').length + ' to open under #' + cp.id );
+					//if($('#' + cp.id + ' .jstree-closed').length == 1){
+					//	console.log('  - waiting for ' + $('#' + cp.id + ' .jstree-closed')[0].text + '   = '+ $('#' + cp.id + ' .jstree-closed')[0].id );
+					//}
+				//}
+			}, 500);
+
+			$('#' + cp.id + ' .jstree-closed').each(function(i, ob){				
+				self.treeCmp.jstree('open_node', $(ob).attr('id'));
+			});
+			
+		}
+		
+		if(!cp.data.rcl){
+			showSpinner();
+			self.timer.start();
+			self.loadingAll = true;
+
+			if(self.treeCmp.jstree( 'is_disabled', cp )){
+				self.treeCmp.jstree("enable_node", cp );
+			}
+			
+			recursiveLoad(cp, function(){
+				afterLoad();
+			});			
+		}
+		else{
+			afterLoad();
+		}
 
 		
 		/*
@@ -1606,28 +1828,97 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		};
 		loadUp();		
 		*/
+		
 	};
-
+	
+	
+	/* function collapseAll
+	 * 
+	 * Strategy: collapse the open child nodes of the common ancestor of the top and bottom visble nodes and repeat until all visible nodes are closed
+	 * 
+	 */
 	var collapseAll = function(){
 		
-		showSpinner();
-		self.timer.start();
+		self.loadingAll = true;  // TODO rename this variable
 		
-		setTimeout(function(){
-			
-			$('.jstree-open').not('#' + getRootEl().attr('id')).each(function(i, ob){				
-				self.treeCmp.jstree('close_node', $(ob).attr('id'));
-			});
-			
-			var iId = setInterval(function(){
-				if($('.jstree-open').length == 1){
-					window.clearInterval(iId);
-					hideSpinner();
-					self.timer.stop();
-				}				
-			}, 500);
-		}, 100);
+		var visible = getVisibleNodes();
+		var cp      = self.getCommonParent(visible[0], visible[1]);
+		var closeId = null;
+		
+		if(!cp){
+			console.log('Error: no common parent found for ' + visible[0].id + ' and ' +  visible[1].id);
+			return;
+		}
+
+		/**
+		 * Test to see if we need to call collapseAll again.
+		 * 
+		 * */
+		var recurseTest = function(){
+			var visible  = getVisibleNodes();
+			var bVisible = visible[1]; 
+
+			if( $('#' + bVisible.id).hasClass('jstree-leaf') ){
+				bVisible = self.treeCmp.jstree('get_node', bVisible.parent);
+			}
+
+			if( bVisible.state.opened ){
+				if(self.treeCmp.jstree( 'is_disabled', bVisible )){
+					self.treeCmp.jstree("enable_node", bVisible );
+				}
+				return true;
+			}
+			return false;
+		};
+
+		
+		/**
+		 * Execute when all collapsing is done.
+		 * 
+		 * */
+		var afterLoad = function(){			
+			window.clearInterval(closeId);
+			self.loadingAll = false;
+			brokenArrows();
+			togglePrevNextLinks();
+			hideSpinner();
+			self.timer.stop();
+		};		
+		
+		$('#' + cp.id + ' .jstree-open').each(function(i, ob){				
+			self.treeCmp.jstree('close_node', $(ob).attr('id'));
+		});
+		
+		closeId = setInterval(function(){
+			if($('#' + cp.id + ' .jstree-open').length == 0){
+				if(recurseTest()){
+					if( visible[0].id == cp.id ){
+						
+						self.treeCmp.jstree('close_node', cp.id);
+						
+						setTimeout(function(){
+							window.clearInterval(closeId);
+							collapseAll();
+						}, 500);
+					}
+					else{
+						doScrollTo('#' + cp.id, function(){
+							window.clearInterval(closeId);
+							collapseAll();							
+						});
+					}
+				}
+				else{
+					setTimeout(function(){
+						afterLoad();			
+					}, 500);
+				}
+			}
+		}, 1000);
 	};
+	
+	
+	// publicly exposed functions
 	
 	return {
 		init : function(baseUrl){
@@ -1646,13 +1937,21 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			expandAll();
 		},
 		collapseAll : function(){
+			showSpinner();
+			self.timer.start();
 			collapseAll();
 		},
 		getLocked : function(){
 			return self.locked;
 		},
+		getIsLoading : function(){
+			return self.isLoading;
+		},
 		setLocked : function(val){
 			self.locked = val;
+		},
+		getCommonParent : function(node1, node2){
+			return self.getCommonParent(node1, node2);
 		},
 		brokenArrows : function(){
 			brokenArrows();

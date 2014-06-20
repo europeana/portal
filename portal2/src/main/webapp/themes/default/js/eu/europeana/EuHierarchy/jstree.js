@@ -563,6 +563,11 @@
 								break;
 							case 39:
 								e.preventDefault();
+								// europeana change
+								if(window.hierarchy.getIsLoading()){
+									return;
+								}								
+								// end europeana change
 								if(this.is_closed(e.currentTarget)) {
 									this.open_node(e.currentTarget, function (o) { this.get_node(o, true).children('.jstree-anchor').focus(); });
 								}
