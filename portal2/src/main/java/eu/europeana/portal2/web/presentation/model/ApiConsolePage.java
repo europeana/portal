@@ -61,6 +61,7 @@ public class ApiConsolePage extends ApiData {
 	static {
 		defaultSearchProfiles.put("standard", false);
 		defaultSearchProfiles.put("portal", false);
+		defaultSearchProfiles.put("rich", false);
 		defaultSearchProfiles.put("facets", false);
 		defaultSearchProfiles.put("breadcrumb", false);
 		defaultSearchProfiles.put("minimal", false);
