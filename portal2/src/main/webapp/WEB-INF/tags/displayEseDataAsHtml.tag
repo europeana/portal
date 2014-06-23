@@ -208,7 +208,16 @@
 									<%-- wrap in canned link if available --%>
 									<c:choose>
 										<c:when test="${fn:length(cannedUrl) > 0}">
-											<a class="europeana canned" href="${fn:replace(cannedUrl, 'CANNED_VALUE', fn:replace(theVal, '&', '%26'))}"><c:out value="${theVal}" escapeXml="false" /></a>
+											
+											<c:set var="CLEAN_URL" value="${fn:replace(cannedUrl, 'CANNED_VALUE', fn:replace(theVal, '&', '%26'))}" />
+											
+
+											<c:set var="CLEAN_URL" value="${eufn:cleanSquareBrackets(CLEAN_URL)}" />
+											
+
+
+
+											<a class="europeana canned" href="${CLEAN_URL}"><c:out value="${theVal}" escapeXml="false" /></a>
 										</c:when>
 										<c:otherwise>
 											<c:out value="${theVal}" escapeXml="false" />
