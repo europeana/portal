@@ -27,7 +27,7 @@
         <c:set var="theVal" value="${eufn:cleanField(value.translatedValue)}" />
         <div class="item-metadata">
           <span class="bold notranslate br"><spring:message code="dc_title_t" />:</span>
-          <span class="translate" ${semanticAttributes}>${fn:escapeXml(titleValue)}</span>
+          <p class="translate" ${semanticAttributes}>${fn:escapeXml(titleValue)}</p>
         </div>
       </c:if>
     </c:forEach>

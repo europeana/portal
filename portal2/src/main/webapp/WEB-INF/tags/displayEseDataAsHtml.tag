@@ -122,6 +122,7 @@
 					- value.searchOn (String)
 			--%>
 
+			<p>
 			<c:forEach items="${data.fieldValues}" var="_value" varStatus="valueStatus">
 				<c:set var="value" value="${_value}" scope="request" />
 				<c:set var="localSemanticAttributes" value="${semanticAttributes}" />
@@ -259,6 +260,7 @@
 					</c:choose>
 				</c:if>
 			</c:forEach>
+			</p>
 		</${wrapper}>
 	</c:if>
 </c:forEach>
