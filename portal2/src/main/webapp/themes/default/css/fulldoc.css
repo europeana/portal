@@ -522,6 +522,11 @@ img.trigger{
 	margin-bottom:	0.5em;
 }
 
+.item-metadata > p{
+	margin-top:	0;
+}
+
+
 .item-metadata a{
 	word-break:		break-all;
 	display:		inline-block;
