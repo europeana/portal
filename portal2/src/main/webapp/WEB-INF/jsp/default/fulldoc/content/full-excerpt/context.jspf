@@ -12,7 +12,7 @@
 <c:if test="${model.document.numberOfUnreferencedConcepts > 0}">
 <div class="concept">
   <span class="item-context-data">
-    <span class="bold notranslate"><spring:message code="enrichment_category_what_t" />: </span>
+    <span class="bold notranslate br"><spring:message code="enrichment_category_what_t" />: </span>
     <span class="smaller">(</span><a class="more-info smaller"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
   </span>
 
@@ -32,7 +32,7 @@
 <c:if test="${model.document.numberOfUnreferencedPlaces > 0}">
 <div class="concept">
   <span class="item-context-data">
-    <span class="bold notranslate"><spring:message code="enrichment_category_where_t" />: </span>
+    <span class="bold notranslate br"><spring:message code="enrichment_category_where_t" />: </span>
     <span class="smaller">(</span><a class="more-info smaller" data-event="init-map"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
   </span>
 
@@ -53,7 +53,7 @@
 <div class="concept">
 
   <span class="item-context-data">
-    <span class="bold notranslate"><spring:message code="enrichment_category_when_t" />: </span>
+    <span class="bold notranslate br"><spring:message code="enrichment_category_when_t" />: </span>
     <span class="smaller">(</span><a class="more-info smaller" data-event="init-map"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
   </span>
 
@@ -75,7 +75,7 @@
 <%-- AGENTS (WHO) --%>
 <div class="concept">
   <span class="item-context-data">
-    <span class="bold notranslate"><spring:message code="enrichment_category_who_t" />: </span>
+    <span class="bold notranslate br"><spring:message code="enrichment_category_who_t" />: </span>
     <span class="smaller">(</span><a class="more-info smaller" data-event="init-map"><spring:message code="enrichment_category_more_info_t" /></a><span class="smaller">)</span>
   </span>
 

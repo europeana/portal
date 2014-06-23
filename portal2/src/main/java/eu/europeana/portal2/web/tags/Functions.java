@@ -14,6 +14,10 @@ public class Functions {
 		return FieldCleaner.clean(text);
 	}
 
+	public static String cleanSquareBrackets(String text) {
+		return text.replaceAll("\\[.*?\\]", "");
+	}
+
 	public static String encode(String text) {
 		return eu.europeana.corelib.utils.EuropeanaUriUtils.encode(text);
 	}

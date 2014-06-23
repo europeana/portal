@@ -23,6 +23,11 @@
 		<function-signature>java.lang.String cleanField(java.lang.String)</function-signature>
 	</function>
 	<function>
+		<name>cleanSquareBrackets</name>
+		<function-class>eu.europeana.portal2.web.tags.Functions</function-class>
+		<function-signature>java.lang.String cleanSquareBrackets(java.lang.String)</function-signature>
+	</function>
+	<function>
 		<name>encode</name>
 		<function-class>eu.europeana.portal2.web.tags.Functions</function-class>
 		<function-signature>java.lang.String encode(java.lang.String)</function-signature>
