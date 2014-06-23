@@ -561,7 +561,7 @@
 
 .black { color: #000; }
 .bold { font-weight: bold; }
-
+.br { display:block; }
 
 /* search-results */
 
