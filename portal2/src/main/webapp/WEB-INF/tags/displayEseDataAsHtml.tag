@@ -122,7 +122,6 @@
 					- value.searchOn (String)
 			--%>
 
-			<p>
 			<c:forEach items="${data.fieldValues}" var="_value" varStatus="valueStatus">
 				<c:set var="value" value="${_value}" scope="request" />
 				<c:set var="localSemanticAttributes" value="${semanticAttributes}" />
@@ -151,14 +150,19 @@
 					value.url = the value is actually a url that links to further information --%>
 				<c:set var="seo_wrapper" value="" />
 
-				<c:if test="${'dcterms:alternative' == data.fieldName}">
-					<c:set var="seo_wrapper" value="h2" />
-				</c:if>
-				<c:if test="${'dc:creator' == data.fieldName}">
-					<c:set var="seo_wrapper" value="h2" />
-				</c:if>
+				<c:choose>
+					<c:when test="${'dcterms:alternative' == data.fieldName}">
+						<c:set var="seo_wrapper" value="h2" />
+					</c:when>
+					<c:when test="${'dc:creator' == data.fieldName}">
+						<c:set var="seo_wrapper" value="h2" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="seo_wrapper" value="p" />
+					</c:otherwise>
+				</c:choose>				
 
-				<c:if test="${seo_wrapper != ''}"><${seo_wrapper}></c:if>
+				<${seo_wrapper}>
 
 				<c:choose>
 					<c:when test="${model.showContext && !empty value.decorator}">
@@ -233,7 +237,7 @@
 						<c:out value="${separator}" />
 					</c:otherwise>
 				</c:choose>
-				<c:if test="${seo_wrapper != ''}"></${seo_wrapper}></c:if>
+				</${seo_wrapper}>
 
 				<%-- link to external services if field has them --%>
 				<%--
@@ -260,7 +264,6 @@
 					</c:choose>
 				</c:if>
 			</c:forEach>
-			</p>
 		</${wrapper}>
 	</c:if>
 </c:forEach>
