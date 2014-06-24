@@ -219,12 +219,6 @@ eu.europeana.fulldoc = {
 	},
 
 	addAutoTagHandler : function() {
-		
-		if($('#fields-enrichment ul li').length==0){
-			$('#fields-enrichment').remove();
-			return;
-		}
-		
 		var self = this;
 		$('#fields-enrichment h3 a, #fields-enrichment h4 a, '
 		  + '.concept .item-context-data a.more-info, '
