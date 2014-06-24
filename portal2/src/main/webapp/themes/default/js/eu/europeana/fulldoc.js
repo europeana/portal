@@ -406,6 +406,7 @@ eu.europeana.fulldoc = {
 			);
 
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
+			
 			eu.europeana.fulldoc.lightboxOb.init(
 				{	"cmp"	:	cmp,
 					"src"	:	url,
@@ -614,11 +615,21 @@ eu.europeana.fulldoc = {
 								);
 							}
 							else{
-								js.console.log("lightbox test failed: " + ($proper.length==1 ? "image was too small (" + $proper.width() + ")" : "image didn't load (url: " + carouselData[imgIndex].external.url + ")"));
+								eu.europeana.fulldoc.carousel1 = null;
+								
+								// cancel the carousel
+								$('#carousel-1').hide();
+								$("#carousel-1-img-measure img").removeClass("no-show");
+								$("#carousel-1-img-measure").css("position",	"relative");
+								$("#carousel-1-img-measure").css("text-align",	"center");
+								$("#additional-info").css("padding-top", "1em");
+								
 								eu.europeana.fulldoc.lightboxTestFailed = true;
 
 								// if the lightbox test fails then triggerBind (below) will attach a click handler - make sure it has a pointer cursor here
 								$('#carousel-1-img-measure img').css('cursor', 'pointer');
+								
+								eu.europeana.fulldoc.triggerPanel.show();
 							}
 							$(this).remove();
 						}
@@ -1108,7 +1119,6 @@ eu.europeana.fulldoc = {
 					initMlt();
 				}
 				if (mltTotal > 1) {
-					//alert('mltTotal ' + mltTotal)
 					if ($('.load-all').length ==0 ) {
 						$('#more-like-this-wrapper').append(getLoadAllLink());
 					}
