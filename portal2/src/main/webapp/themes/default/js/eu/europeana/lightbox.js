@@ -122,6 +122,11 @@ eu.europeana.lightbox = function(){
 
 		self.cmp.find('.rights-item').html(rights.length > 0 ? rights : carouselData.defaultRightsVal);
 		
+		if(url.indexOf(eu.europeana.fulldoc.telDetect) > -1 ){
+			url = url + (url.indexOf('?') > -1 ? '&' : '?') + 'hidebackbtn=true';
+		}		
+
+		
 		imgMeasure(url, function(w, h){
 			self.origImgW = w;
 			self.origImgH = h;
@@ -149,12 +154,16 @@ eu.europeana.lightbox = function(){
 			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
 		){
 			
-			if(img[0].nodeName.toUpperCase() == 'IMG'){				
+			if(img[0].nodeName.toUpperCase() == 'IMG'){
+				
 				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '">');
 				img.remove();
 				//elIframe.fitVids();
 				
 				if(img.attr('src').indexOf(eu.europeana.fulldoc.telDetect) > -1 ){
+					var src = elIframe.attr('src');
+					elIframe.attr('src', src + (src.indexOf('?') > -1 ? '&' : '?' ) + 'hidebackbtn=true');
+					
 					elIframe.load(function(){
 						elIframe[0].contentWindow.postMessage('hide-back', '*');	// cross-domain fix
 				    });
