@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.presentation.model.submodel.impl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,40 +31,54 @@ public class BriefBeanViewImplTest {
 
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		urlParams.put("query", new String[]{"*:*"});
-		urlParams.put("qf", new String[]{"DATA_PROVIDER:\"Tyne & Wear Archives & Museums\"", "TYPE:IMAGE"});
+		urlParams.put("qf", new String[]{"DATA_PROVIDER:\"Tyne & Wear Archives & Museums\"", "TYPE:IMAGE", "YEAR:\"-1543\""});
 		urlParams.put("rows", new String[]{"24"});
 
 		Query query = new Query("*:*")
 			.setRefinements(
-				"DATA_PROVIDER:\"Tyne & Wear Archives & Museums\"", 
-				"TYPE:IMAGE"
+				"DATA_PROVIDER:\"Tyne & Wear Archives & Museums\"",
+				"TYPE:IMAGE",
+				"YEAR:\"-1543\""
 			);
 		BriefBeanViewImpl view = new BriefBeanViewImpl();
 
 		view.makeFilters(query, urlParams);
 		List<SearchFilter> filters = view.getSearchFilters();
-		assertTrue(filters.size() == 3);
+		assertEquals(4, filters.size());
 
 		assertEquals(
 			"/portal/search.html?rows=24&query=*%3A*",
 			filters.get(0).getBreadcrumbLinkUrl());
 		assertEquals(
-			"/portal/search.html?rows=24&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22&qf=TYPE%3AIMAGE",
+			"/portal/search.html?rows=24&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22"
+			+ "&qf=TYPE%3AIMAGE&qf=YEAR%3A%22-1543%22",
 			filters.get(0).getRemoveLinkUrl());
 
 		assertEquals(
 			"/portal/search.html?rows=24&query=*%3A*&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22",
 			filters.get(1).getBreadcrumbLinkUrl());
 		assertEquals(
-			"/portal/search.html?rows=24&query=*%3A*&qf=TYPE%3AIMAGE",
+			"/portal/search.html?rows=24&query=*%3A*&qf=TYPE%3AIMAGE&qf=YEAR%3A%22-1543%22",
 			filters.get(1).getRemoveLinkUrl());
 
 		assertEquals(
-			"/portal/search.html?rows=24&query=*%3A*&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22&qf=TYPE%3AIMAGE",
+			"/portal/search.html?rows=24&query=*%3A*"
+			+ "&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22&qf=TYPE%3AIMAGE",
 			filters.get(2).getBreadcrumbLinkUrl());
 		assertEquals(
-			"/portal/search.html?rows=24&query=*%3A*&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22",
+			"/portal/search.html?rows=24&query=*%3A*"
+			+ "&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22&qf=YEAR%3A%22-1543%22",
 			filters.get(2).getRemoveLinkUrl());
+
+		assertEquals(
+			"/portal/search.html?rows=24&query=*%3A*"
+			+ "&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22&qf=TYPE%3AIMAGE&qf=YEAR%3A%22-1543%22",
+			filters.get(3).getBreadcrumbLinkUrl());
+		assertEquals(
+			"/portal/search.html?rows=24&query=*%3A*"
+			+ "&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22&qf=TYPE%3AIMAGE",
+			filters.get(3).getRemoveLinkUrl());
+
 	}
 
 }
