@@ -18,6 +18,8 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 	private static final String NON_WIKIPEDIA = "-TYPE:Wikipedia";
 	private static final String RIGHTS_FACET = "RIGHTS";
+	private static final String YEAR_FACET = "YEAR";
+
 	private String type;
 	private boolean facetSelected = false;
 	private List<FacetCountLink> links = new ArrayList<FacetCountLink>() {
@@ -51,14 +53,6 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			return;
 		}
 		Map<String, List<String>> refinements = QueryUtil.getFilterQueriesWithoutPhrases(query);
-		/*
-		StringBuilder baseUrl = new StringBuilder();
-		if (refinements != null) {
-			for (String term : refinements.get(QueryUtil.REFINEMENTS)) {
-				baseUrl.append(FACET_PROMPT).append(term);
-			}
-		}
-		*/
 
 		String[] queryRefinements = query.getRefinements(false);
 		EuropeanaUrlService service = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
@@ -109,6 +103,8 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 								if (!qfValue.endsWith("*") && !qfValue.endsWith("\"")) {
 									qfValue = '"' + qfValue + '"';
 								}
+							} else if (YEAR_FACET.equals(type) && item.getLabel().startsWith("-")) {
+								qfValue = '"' + qfValue + '"';
 							} else {
 								qfValue = QueryUtil.createPhraseValue(qfField, qfValue);
 							}
@@ -125,6 +121,8 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 				if (RIGHTS_FACET.equals(type)) {
 					EuropeanaRightsConverter.License license = EuropeanaRightsConverter.convert(item.getLabel().trim());
 					value = (license.isModified()) ? license.getModifiedURI() : license.getOriginalURI() + "*";
+				} else if (YEAR_FACET.equals(type) && item.getLabel().startsWith("-")) {
+					value = '"' + item.getLabel() + '"';
 				} else {
 					// escape Solr special chars in item.label
 					value = QueryUtil.createPhraseValue(facetField.getName(), QueryUtil.escapeValue(item.getLabel()));
@@ -146,6 +144,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			} else {
 				countLink = new FacetCountLinkImpl(item, url.toString(), remove);
 			}
+
 			if (countLink != null) {
 				if (param != null) {
 					countLink.setParam(param.toString().replace('?', '&'));

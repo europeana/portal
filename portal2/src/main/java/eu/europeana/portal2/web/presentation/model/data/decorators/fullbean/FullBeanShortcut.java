@@ -143,7 +143,6 @@ public class FullBeanShortcut {
 	private void initialize() {
 		valuesListMap = new HashMap<String, List<String>>();
 		mapValues = new HashMap<String, List<Map<String, List<String>>>>();
-		log.info("Initialize shortcut");
 
 		String parent = null;
 		if (document.getAggregations() != null) {
@@ -470,7 +469,7 @@ public class FullBeanShortcut {
 
 		private void createResources() {
 			resources = new ArrayList<Resource>();
-			if (europeana == null) {
+			if (europeana == null || provided == null) {
 				return;
 			}
 

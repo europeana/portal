@@ -49,10 +49,17 @@ public class FacetQueryLinksImplTest {
 		facet3.fields.add(new LabelFrequency("Dario Fo & Franca Rame Archive, CTFR, Milano, Italia", 11));
 		facetFields.add(facet3);
 
+		Facet facet4 = new Facet();
+		facet4.name = "YEAR";
+		facet4.fields = new ArrayList<LabelFrequency>();
+		facet4.fields.add(new LabelFrequency("-1453", 11));
+		facet4.fields.add(new LabelFrequency("1453", 11));
+		facetFields.add(facet4);
+
 		Query query = new Query("*:*");
 		List<FacetQueryLinks> links = FacetQueryLinksImpl.createDecoratedFacets(facetFields, query);
 
-		assertEquals(3, links.size());
+		assertEquals(4, links.size());
 
 		// the first facet
 		FacetQueryLinks link = links.get(0);
@@ -103,6 +110,26 @@ public class FacetQueryLinksImplTest {
 			"/portal/search.html?query=*%3A*&rows=12&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22",
 			count.getUrl());
 		assertEquals("&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22", count.getParam());
+
+		// the third facet
+		link = links.get(3);
+		assertEquals("YEAR", link.getType());
+
+		counts = link.getLinks();
+
+		count = counts.get(0);
+		assertEquals(11, count.getCount());
+		assertEquals(
+			"/portal/search.html?query=*%3A*&rows=12&qf=YEAR%3A%22-1453%22",
+			count.getUrl());
+		assertEquals("&qf=YEAR%3A%22-1453%22", count.getParam());
+
+		count = counts.get(1);
+		assertEquals(11, count.getCount());
+		assertEquals(
+			"/portal/search.html?query=*%3A*&rows=12&qf=YEAR%3A1453",
+			count.getUrl());
+		assertEquals("&qf=YEAR%3A1453", count.getParam());
 	}
 
 }
