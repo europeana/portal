@@ -15,7 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import eu.europeana.portal2.selenium.model.object.Node;
+//import eu.europeana.portal2.selenium.model.object.Node;
 
 public class ObjectPage extends Portal2Page {
 
@@ -87,7 +87,6 @@ public class ObjectPage extends Portal2Page {
 	}
 	*/
 	/*
-	 */
 	public List<Node> getNodes() {
 		List<WebElement> elements = driver.findElements(By.cssSelector(".jstree-node"));
 		List<Node> results = new ArrayList<Node>();
@@ -98,4 +97,5 @@ public class ObjectPage extends Portal2Page {
 
 		return results;
 	}
+	 */
 }
