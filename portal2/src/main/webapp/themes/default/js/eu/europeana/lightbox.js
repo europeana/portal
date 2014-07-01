@@ -156,7 +156,11 @@ eu.europeana.lightbox = function(){
 			
 			if(img[0].nodeName.toUpperCase() == 'IMG'){
 				
-				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '">');
+//				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '" style="width:100%; max-width:100%; display:table; table-layout: fixed;">');
+				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '" scrolling="No">');
+	
+//				alert(img.attr('src') );
+				
 				img.remove();
 				//elIframe.fitVids();
 				
