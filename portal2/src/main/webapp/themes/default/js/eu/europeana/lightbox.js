@@ -461,6 +461,15 @@ eu.europeana.lightbox = function(){
 						info.css('height', self.infoH + 'px');
 						showShow();
 					});
+					
+					hide.unbind('touchstart').bind('touchstart', function(e){
+						$(e.target).click();
+					    e.stopPropagation();
+					    e.preventDefault();
+					});
+
+					
+					
 
 					// calculate the height of 1em
 					var em = $('<div class="test" style="height:1em;">&nbsp;</div>').appendTo(info);
@@ -496,6 +505,11 @@ eu.europeana.lightbox = function(){
 						showHide();
 					});
 
+					show.unbind('touchstart').bind('touchstart', function(e){
+						$(e.target).click();
+					    e.stopPropagation();
+					    e.preventDefault();
+					});
 					
 					if(self.showingEl == 'IFRAME'){
 						showBoth();
@@ -536,6 +550,13 @@ eu.europeana.lightbox = function(){
 				var navNext		= self.cmp.find('#nav-next');
 				var navPrev		= self.cmp.find('#nav-prev');
 				
+				navPrev.add(navNext).bind('touchstart', function(e){
+					$(e.target).click();
+				    e.stopPropagation();
+				    e.preventDefault();
+				});
+				
+				
 				navNext.add(navPrev).css('display', 'inline-block');
 				self.cmp.unbind('swipe');
 				
@@ -556,6 +577,7 @@ eu.europeana.lightbox = function(){
 						}
 					);
 				}
+				
 			}
 			
 			if(window.addthis_config && !$('#lightbox-info .icon-share').parent().hasClass('addthis_button') ){

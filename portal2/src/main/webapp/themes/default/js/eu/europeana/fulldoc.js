@@ -551,6 +551,14 @@ eu.europeana.fulldoc = {
 				}
 			});
 		});
+		
+		$(".iframe-wrap, .close").unbind('touchstart').bind('touchstart', function(e){
+			$(e.target).click();
+		    e.stopPropagation();
+		    e.preventDefault();
+		});
+
+		
 
 		eu.europeana.fulldoc.lightboxOb.showLightbox(function() {
 			$(".overlaid-content").css('visibility', 'visible');
