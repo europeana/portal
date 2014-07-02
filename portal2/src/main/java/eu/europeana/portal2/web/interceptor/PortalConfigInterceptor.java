@@ -51,6 +51,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			model.setPortalUrl(configuration.getPortalUrl());
 			model.setBlogFeedUrl(configuration.getBlogUrl());
 			model.setMyEuropeanaUrl(configuration.getMyEuropeanaUrl());
+			model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 
 			// set locale message when required
 			Locale browser = request.getLocale();

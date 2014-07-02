@@ -80,8 +80,6 @@ public abstract class SearchPageData extends PortalPageData {
 
 	private boolean useBackendItemTranslation = false;
 
-	private boolean doTranslation = false;
-
 	public void setQuery(String query) {
 		this.query = query;
 	}
@@ -251,13 +249,5 @@ public abstract class SearchPageData extends PortalPageData {
 
 	public void setUseBackendItemTranslation(boolean useBackendItemTranslation) {
 		this.useBackendItemTranslation = useBackendItemTranslation;
-	}
-
-	public boolean isDoTranslation() {
-		return doTranslation;
-	}
-
-	public void setDoTranslation(boolean doTranslation) {
-		this.doTranslation = doTranslation;
 	}
 }

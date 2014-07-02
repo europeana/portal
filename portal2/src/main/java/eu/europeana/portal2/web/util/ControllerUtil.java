@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -263,7 +263,7 @@ public class ControllerUtil {
 		return springArray;
 	}
 
-	public static boolean getBooleanBundleValue(String key, ReloadableResourceBundleMessageSource messageSource, Locale locale) {
+	public static boolean getBooleanBundleValue(String key, AbstractMessageSource messageSource, Locale locale) {
 		boolean booleanValue = false;
 		try {
 			String stringValue = messageSource.getMessage(key, null, locale);

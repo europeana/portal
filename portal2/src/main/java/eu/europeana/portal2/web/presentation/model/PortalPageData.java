@@ -36,6 +36,8 @@ public abstract class PortalPageData extends PageData {
 
 	private String myEuropeanaUrl;
 
+	private boolean doTranslation = false;
+
 	public String getTheme() {
 		return theme;
 	}
@@ -147,5 +149,13 @@ public abstract class PortalPageData extends PageData {
 
 	public void setMyEuropeanaUrl(String myEuropeanaUrl) {
 		this.myEuropeanaUrl = myEuropeanaUrl;
+	}
+
+	public boolean isDoTranslation() {
+		return doTranslation;
+	}
+
+	public void setDoTranslation(boolean doTranslation) {
+		this.doTranslation = doTranslation;
 	}
 }
