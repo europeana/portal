@@ -17,9 +17,12 @@
 
 package eu.europeana.portal2.web.presentation.model.abstracts;
 
+import java.util.Map;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -174,26 +177,77 @@ public abstract class SearchPageData extends PortalPageData {
 	public List<LanguageVersionLink> getQueryTranslationLinks() {
 		List<LanguageVersionLink> links = new ArrayList<LanguageVersionLink>();
 		List<LanguageVersion> queryTranslationsList = getQueryTranslations();
+		
+		
+		
 		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
+			
+			// get the English / group multiple entries			
+			
+			LanguageVersion english = null;
+			Map<String, List<LanguageVersion>> textsByCode = new HashMap<String, List<LanguageVersion>>();
+
+			for (LanguageVersion query : queryTranslationsList) {
+				String code = query.getLanguageCode();				
+				if( code.equalsIgnoreCase("EN") ){
+					english = query;
+				}
+				if(textsByCode.get(code) == null){
+					textsByCode.put(code, new Vector<LanguageVersion>());
+				}
+				textsByCode.get(code).add(query);
+			}			
+			
 			try {
 				for (LanguageVersion query : queryTranslationsList) {
-					String queryLink = createLanguageQueryLink(query.getText());
-					UrlBuilder url = getBaseSearchUrl();
-					if (queryTranslationsList.size() == 1) {
-						url.addMultiParam("qt", "false");
-					} else {
-						for (LanguageVersion other : queryTranslationsList) {
-							if (!other.equals(query)) {
-								url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());
+					
+					String code = query.getLanguageCode();				
+					
+					boolean skipThisEntry = false;
+					
+					// Add only if the has multiple
+					List <LanguageVersion> textsInThisLang = textsByCode.get(code);
+					
+					if(code.toUpperCase() != "EN" && textsInThisLang.size() >1 && english != null && query.getText().equals(english.getText()) ){
+						skipThisEntry = true;							
+					}
+
+					if(!skipThisEntry){
+						
+						String		queryLink	= createLanguageQueryLink(query.getText());
+						UrlBuilder	url			= getBaseSearchUrl();
+						boolean     doAdd       = false;
+						
+						if (queryTranslationsList.size() == 1) {
+							url.addMultiParam("qt", "false");
+							 doAdd = true;
+						}
+						else {
+							for (LanguageVersion other : queryTranslationsList) {
+								if (!other.equals(query)) {
+									String codeOther                            = other.getLanguageCode();
+									List <LanguageVersion> textsInThisLangOther = textsByCode.get(code);
+									boolean skipOther                           = false;
+									if(codeOther.toUpperCase() != "EN" && textsInThisLangOther.size() >1 && english != null && other.getText().equals(english.getText())  ){
+										skipOther = true;
+									}
+									if(!skipOther){
+										url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());										
+										doAdd = true;
+									}
+								}
 							}
 						}
+						if(doAdd){
+							links.add(new LanguageVersionLink(query, queryLink, url.toString()));							
+						}						
 					}
-					links.add(new LanguageVersionLink(query, queryLink, url.toString()));
 				}
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 		}
+		
 		return links;
 	}
 
