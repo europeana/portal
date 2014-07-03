@@ -77,12 +77,23 @@
 				<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
 					<c:if test="${fn:length(qt.languageCode) > 0}">
 						<c:set var="hasTranslation" value="true"/>
-						<a href="${qt.queryLink}">${qt.text}</a> (${qt.languageCode})
-						<a href="${qt.removeLink}">&times;</a> &nbsp; 
+						
+						<c:set var="langName" value=""/>
+						
+						<c:forEach items="${model.portalLanguages}" var="language">
+							<c:if test="${language.languageCode ==  qt.languageCode }">
+								<c:set var="langName" value="${language.languageName}"/>
+							</c:if>
+						</c:forEach>
+						
+						
+						<a href="${qt.queryLink}">${qt.text}</a> (${langName})
+						<a href="${qt.removeLink}" class="icon-remove-after"></a> &nbsp; 
 					</c:if>
 				</c:forEach>
 				<c:if test="${!empty model.noTranslationUrl && hasTranslation}">
-					<br /><a href="${model.noTranslationUrl}"><spring:message code="qt_removeAll_t" /> &times;</a>
+					<br /><a href="${model.noTranslationUrl}"><spring:message code="qt_removeAll_t" /> </a>
+					<a href="${model.noTranslationUrl}" class="icon-remove-after"></a>
 				</c:if>
 			</div>
 		</c:if>
