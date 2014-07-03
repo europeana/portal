@@ -242,6 +242,10 @@
 .icon-remove:before {
 	content: "\54";
 }
+.icon-remove-after:after {
+	content: "\54";
+}
+
 .icon-alert:before {
 	content: "\55";
 }

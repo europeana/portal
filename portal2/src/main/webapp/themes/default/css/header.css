@@ -96,6 +96,12 @@
 	height:   0px;
 }
 
+a.icon-remove-after{
+	color:    red;
+	position: relative;
+	top:      0.15em;
+}
+
 @media only screen and ( min-width:48em ){
 
 	.phone-test{

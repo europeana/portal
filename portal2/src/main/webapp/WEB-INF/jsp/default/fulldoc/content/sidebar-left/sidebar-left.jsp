@@ -82,6 +82,20 @@
 					<%--NORMALISE MEDIA HERE--%>
 					
 					<c:choose>
+						<c:when test="${!empty image.mediaService}">
+						
+						<% pageContext.setAttribute("newLineChar", "\n"); %>
+						<c:set var="rightsToParse" value="${image.rightsValue}" />
+						<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
+						
+						carouselData[carouselData.length-1].external = {
+							"unescaped_url" : "${image.mediaService.embeddedUrl}",
+							"url" 	:         "${image.mediaService.embeddedUrl}",
+							"type"  :         "${fn:toLowerCase(image.mediaService.dataType)}",
+							"rights":         '${fn:replace(rightsString, newLineChar, "")}'
+						}
+						</c:when>
+					
 						<c:when test="${fn:length(image.full) > 0}">
 							<% pageContext.setAttribute("newLineChar", "\n"); %>
 							<c:set var="rightsToParse" value="${image.rightsValue}" />
@@ -96,20 +110,6 @@
 						</c:when>
 						<c:otherwise>
 						
-							<c:if test="${!empty image.mediaService}">
-							
-								<% pageContext.setAttribute("newLineChar", "\n"); %>
-								<c:set var="rightsToParse" value="${image.rightsValue}" />
-								<c:set var="rightsString"><%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %></c:set>
-								
-								carouselData[carouselData.length-1].external = {
-									"unescaped_url" : "${image.mediaService.embeddedUrl}",
-									"url" 	:         "${image.mediaService.embeddedUrl}",
-									"type"  :         "${fn:toLowerCase(image.mediaService.dataType)}"
-									"rights":         '${fn:replace(rightsString, newLineChar, "")}'
-								}
-							
-							</c:if>
 						</c:otherwise>
 					</c:choose>
 					

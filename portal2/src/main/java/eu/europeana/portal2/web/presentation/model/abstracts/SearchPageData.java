@@ -174,9 +174,17 @@ public abstract class SearchPageData extends PortalPageData {
 		return params.toArray(new String[params.size()]);
 	}
 
+	private boolean shouldSkip(String code, List<LanguageVersion> texts, LanguageVersion englishEntry, LanguageVersion query){
+		boolean result = false;
+		if(!code.equalsIgnoreCase("EN") && texts.size() >1 && englishEntry != null && query.getText().equalsIgnoreCase(englishEntry.getText()) ){	
+			result = true;
+		}
+		return result;
+	}
+	
 	public List<LanguageVersionLink> getQueryTranslationLinks() {
-		List<LanguageVersionLink> links = new ArrayList<LanguageVersionLink>();
-		List<LanguageVersion> queryTranslationsList = getQueryTranslations();
+		List<LanguageVersionLink> links                 = new ArrayList<LanguageVersionLink>();
+		List<LanguageVersion>     queryTranslationsList = getQueryTranslations();
 		
 		
 		
@@ -198,21 +206,16 @@ public abstract class SearchPageData extends PortalPageData {
 				textsByCode.get(code).add(query);
 			}			
 			
+			
 			try {
 				for (LanguageVersion query : queryTranslationsList) {
 					
 					String code = query.getLanguageCode();				
 					
-					boolean skipThisEntry = false;
-					
 					// Add only if the has multiple
 					List <LanguageVersion> textsInThisLang = textsByCode.get(code);
 					
-					if(code.toUpperCase() != "EN" && textsInThisLang.size() >1 && english != null && query.getText().equals(english.getText()) ){
-						skipThisEntry = true;							
-					}
-
-					if(!skipThisEntry){
+					if(!shouldSkip(code, textsInThisLang, english, query)){
 						
 						String		queryLink	= createLanguageQueryLink(query.getText());
 						UrlBuilder	url			= getBaseSearchUrl();
@@ -224,14 +227,8 @@ public abstract class SearchPageData extends PortalPageData {
 						}
 						else {
 							for (LanguageVersion other : queryTranslationsList) {
-								if (!other.equals(query)) {
-									String codeOther                            = other.getLanguageCode();
-									List <LanguageVersion> textsInThisLangOther = textsByCode.get(code);
-									boolean skipOther                           = false;
-									if(codeOther.toUpperCase() != "EN" && textsInThisLangOther.size() >1 && english != null && other.getText().equals(english.getText())  ){
-										skipOther = true;
-									}
-									if(!skipOther){
+								if (!other.equals(query)) {									
+									if(!shouldSkip(other.getLanguageCode(), textsByCode.get(other.getLanguageCode()), english, other)){
 										url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());										
 										doAdd = true;
 									}
@@ -243,7 +240,8 @@ public abstract class SearchPageData extends PortalPageData {
 						}						
 					}
 				}
-			} catch (UnsupportedEncodingException e) {
+			}
+			catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 		}
