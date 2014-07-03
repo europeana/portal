@@ -11,5 +11,4 @@ public class FullBeanDecorator extends ShortcutWrapper {
 	public FullBeanDecorator(FullBean fullBean, String userLanguage) {
 		super(fullBean, userLanguage);
 	}
-
 }

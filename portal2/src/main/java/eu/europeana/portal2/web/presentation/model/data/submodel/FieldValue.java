@@ -49,6 +49,7 @@ public class FieldValue {
 				|| field.equals(Field.DC_CONTRIBUTOR)) {
 			entityType = FullBeanDecorator.ContextualEntity.AGENT;
 		} else if (field.equals(Field.DC_SUBJECT)
+				|| field.equals(Field.DC_FORMAT)
 				|| field.equals(Field.DC_TYPE)) {
 			entityType = FullBeanDecorator.ContextualEntity.CONCEPT;
 		} else if (field.equals(Field.DCTERMS_SPATIAL)
