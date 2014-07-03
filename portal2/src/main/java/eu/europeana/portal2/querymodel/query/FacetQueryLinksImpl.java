@@ -72,6 +72,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+
 			// iterating over actual qf values
 			if (queryRefinements != null) {
 				for (String qfTerm : refinements.get(QueryUtil.FACETS)) {
@@ -103,7 +104,7 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 								if (!qfValue.endsWith("*") && !qfValue.endsWith("\"")) {
 									qfValue = '"' + qfValue + '"';
 								}
-							} else if (YEAR_FACET.equals(type) && item.getLabel().startsWith("-")) {
+							} else if (YEAR_FACET.equals(type) && qfValue.startsWith("-")) {
 								qfValue = '"' + qfValue + '"';
 							} else {
 								qfValue = QueryUtil.createPhraseValue(qfField, qfValue);

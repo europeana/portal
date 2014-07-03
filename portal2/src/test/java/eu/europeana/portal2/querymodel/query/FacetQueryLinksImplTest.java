@@ -26,8 +26,8 @@ public class FacetQueryLinksImplTest {
 	public void setUp() throws Exception {
 	}
 
-	@Test
-	public void test() {
+	// @Test
+	public void testGeneralFacets() {
 		List<Facet> facetFields = new ArrayList<Facet>();
 		Facet facet1 = new Facet();
 		facet1.name = "COUNTRY";
@@ -132,4 +132,33 @@ public class FacetQueryLinksImplTest {
 		assertEquals("&qf=YEAR%3A1453", count.getParam());
 	}
 
+	@Test
+	public void testNegativeYearFacets() {
+		List<Facet> facetFields = new ArrayList<Facet>();
+		Facet facet = new Facet();
+		facet.name = "YEAR";
+		facet.fields = new ArrayList<LabelFrequency>();
+		facet.fields.add(new LabelFrequency("-1453", 11));
+		facet.fields.add(new LabelFrequency("-1454", 11));
+		facet.fields.add(new LabelFrequency("1453", 11));
+		facetFields.add(facet);
+
+		Query query = new Query("*:*").addRefinement("YEAR:\"-1453\"").addRefinement("YEAR:-1453");
+		List<FacetQueryLinks> facetGroups = FacetQueryLinksImpl.createDecoratedFacets(facetFields, query);
+
+		assertEquals(1, facetGroups.size());
+
+		List<FacetCountLink> facets = facetGroups.get(0).getLinks();
+		assertEquals(3, facets.size());
+		assertEquals("/portal/search.html?query=*%3A*&rows=12", facets.get(0).getUrl());
+		System.out.println(facets.get(0).getValue());
+		assertEquals(
+			"/portal/search.html?query=*%3A*&rows=12&qf=YEAR%3A%22-1453%22&qf=YEAR%3A%22-1454%22",
+			facets.get(1).getUrl());
+		System.out.println(facets.get(1).getValue());
+		assertEquals(
+			"/portal/search.html?query=*%3A*&rows=12&qf=YEAR%3A%22-1453%22&qf=YEAR%3A1453",
+			facets.get(2).getUrl());
+		System.out.println(facets.get(2).getValue());
+	}
 }

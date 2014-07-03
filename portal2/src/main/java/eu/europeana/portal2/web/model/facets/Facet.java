@@ -20,7 +20,6 @@ package eu.europeana.portal2.web.model.facets;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  */

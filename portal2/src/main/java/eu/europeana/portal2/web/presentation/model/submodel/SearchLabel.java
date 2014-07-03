@@ -63,8 +63,12 @@ public class SearchLabel {
 	}
 
 	public void createValueCode(String field, String value) {
-		if (StringUtils.isNotBlank(field) && field.equals("REUSABILITY")) {
-			this.valueCode = RightReusabilityCategorizer.getTranslationKey(value);
+		if (StringUtils.isNotBlank(field)) {
+			if (field.equals("REUSABILITY")) {
+				this.valueCode = RightReusabilityCategorizer.getTranslationKey(value);
+			} else if (field.equals("YEAR") && value.startsWith("\"-") && value.endsWith("\"")) {
+				this.valueCode = value.substring(1, value.length()-1);
+			}
 		}
 	}
 
