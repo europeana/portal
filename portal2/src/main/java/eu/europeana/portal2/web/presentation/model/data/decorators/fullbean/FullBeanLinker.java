@@ -360,7 +360,7 @@ public class FullBeanLinker extends FullBeanWrapper implements FullBeanLinkable 
 	}
 
 	private boolean hasMatchedAbout(ContextualItemDecorator entity, String value) {
-		return value.startsWith("http://") && entity.getAbout().equals(value);
+		return entity.getAbout().equals(value);
 	}
 
 	private boolean hasMatchedLabel(ContextualItemDecorator entity, String value) {

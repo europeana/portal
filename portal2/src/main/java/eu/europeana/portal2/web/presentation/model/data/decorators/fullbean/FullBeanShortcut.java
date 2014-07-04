@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.StringUtils;
-
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
@@ -15,10 +13,8 @@ import eu.europeana.corelib.definitions.solr.entity.EuropeanaAggregation;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.portal2.web.presentation.enums.Field;
-import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.contextual.ContextualItemDecorator;
 import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
 
 /**
@@ -27,8 +23,6 @@ import eu.europeana.portal2.web.presentation.model.data.submodel.Resource;
  * @author peter.kiraly@kb.nl
  */
 public class FullBeanShortcut {
-
-	Logger log = Logger.getLogger(FullBeanShortcut.class.getCanonicalName());
 
 	private FullBeanLinker document;
 
@@ -225,6 +219,8 @@ public class FullBeanShortcut {
 						FullBeanWrapper.ContextualEntity.CONCEPT);
 				saveEnrichmentCandidate(Field.DC_TYPE.name(), europeanaProxy, proxy.getDcType(),
 						FullBeanWrapper.ContextualEntity.CONCEPT);
+				saveEnrichmentCandidate(Field.DC_FORMAT.name(), europeanaProxy, proxy.getDcFormat(),
+						FullBeanWrapper.ContextualEntity.CONCEPT);
 				saveEnrichmentCandidate(Field.DCTERMS_SPATIAL.name(), europeanaProxy, proxy.getDctermsSpatial(),
 						FullBeanWrapper.ContextualEntity.PLACE);
 				saveEnrichmentCandidate(Field.DC_COVERAGE.name(), europeanaProxy, proxy.getDcCoverage(),
@@ -353,7 +349,7 @@ public class FullBeanShortcut {
 
 		EnrichmentFieldMapper enrichmentFieldMapper;
 		if (!enrichedMap.containsKey(name)) {
-			enrichmentFieldMapper = new EnrichmentFieldMapper(entityType);
+			enrichmentFieldMapper = new EnrichmentFieldMapper(entityType, document);
 			enrichedMap.put(name, enrichmentFieldMapper);
 		} else {
 			enrichmentFieldMapper = enrichedMap.get(name);
@@ -442,102 +438,5 @@ public class FullBeanShortcut {
 
 	public Float[] getEdmPlaceLongitude() {
 		return getFloat("EdmPlaceLongitude");
-	}
-
-	private class EnrichmentFieldMapper {
-
-		private MultilangFieldValue provided;
-		private MultilangFieldValue europeana;
-		private List<Resource> resources = null;
-		private FullBeanWrapper.ContextualEntity entityType;
-
-		public EnrichmentFieldMapper(FullBeanWrapper.ContextualEntity entityType) {
-			this.entityType = entityType;
-		}
-
-		public void setProvided(MultilangFieldValue provided) {
-			this.provided = provided;
-		}
-
-		public void setEuropeana(MultilangFieldValue europeana) {
-			this.europeana = europeana;
-		}
-
-		private List<Resource> getResources() {
-			return resources;
-		}
-
-		private void createResources() {
-			resources = new ArrayList<Resource>();
-			if (europeana == null || provided == null) {
-				return;
-			}
-
-			for (String lang : provided.getLangs()) {
-				if (!europeana.has(lang)) {
-					break;
-				}
-				if (provided.getSize(lang) == 1 || europeana.getSize(lang) == 1) {
-					if (StringUtils.isNotBlank(provided.get(lang).get(0))
-						&& StringUtils.isNotBlank(europeana.get(lang).get(0))) {
-						resources.add(new Resource(provided.get(lang).get(0), europeana.get(lang).get(0)));
-					}
-				} else {
-					for (String value : provided.get(lang)) {
-						if (StringUtils.isBlank(value)) {
-							continue;
-						}
-						for (String uri: europeana.get(lang)) {
-							if (StringUtils.isBlank(uri)) {
-								continue;
-							}
-							ContextualItemDecorator entity = null;
-							if (entityType.equals(FullBeanWrapper.ContextualEntity.AGENT)) {
-								entity = (ContextualItemDecorator)document.getAgentByURI(uri);
-							} else if (entityType.equals(FullBeanWrapper.ContextualEntity.CONCEPT)) {
-								entity = (ContextualItemDecorator)document.getConceptByURI(uri);
-							} else if (entityType.equals(FullBeanWrapper.ContextualEntity.PLACE)) {
-								entity = (ContextualItemDecorator)document.getPlaceByURI(uri);
-							} else if (entityType.equals(FullBeanWrapper.ContextualEntity.TIMESPAN)) {
-								entity = (ContextualItemDecorator)document.getTimespanByURI(uri);
-							}
-							if (entity != null) {
-								if (entity.hasAnyLabel(value)) {
-									resources.add(new Resource(value, uri));
-								}
-							} else {
-								log.error("without contextual entity!");
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private class MultilangFieldValue {
-		private Map<String, List<String>> langValueMap;
-
-		public MultilangFieldValue(Map<String, List<String>> langValueMap) {
-			this.langValueMap = langValueMap;
-		}
-
-		public boolean has(String lang) {
-			return langValueMap.containsKey(lang);
-		}
-
-		public List<String> get(String lang) {
-			return langValueMap.get(lang);
-		}
-
-		public Integer getSize(String lang) {
-			return langValueMap.get(lang).size();
-		}
-
-		public List<String> getLangs() {
-			List<String> langs = new ArrayList<String>();
-			langs.addAll(langValueMap.keySet());
-			return langs;
-		}
 	}
 }

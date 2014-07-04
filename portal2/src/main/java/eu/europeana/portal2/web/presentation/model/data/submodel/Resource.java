@@ -1,5 +1,10 @@
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
+/**
+ * Class to get field value and URI together
+ *
+ * @author peter.kiraly@europeana.nl
+ */
 public class Resource {
 
 	private String value;
