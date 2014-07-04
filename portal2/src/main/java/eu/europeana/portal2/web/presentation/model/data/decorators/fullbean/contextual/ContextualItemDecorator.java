@@ -138,7 +138,7 @@ public class ContextualItemDecorator implements ContextualClass {
 	public List<String> clearList(List<String> original) {
 		List<String> cleared = new ArrayList<String>();
 		for (String item : original) {
-			if (StringUtils.isNotBlank(item)) {
+			if (StringUtils.isNotBlank(item) && !cleared.contains(item)) {
 				cleared.add(item);
 			}
 		}

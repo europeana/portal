@@ -22,17 +22,13 @@
         <c:param name="query">edm_timespan:"${timespan.about}"</c:param>
       </c:url>
       <a href="${searchUrl}" id="${fn:replace(timespan.about, '/', '.')}">
-        <c:forEach items="${timespan.labels}" var="item" varStatus="t">
-          ${item}<c:if test="${!t.last}">, </c:if>
-        </c:forEach>
+        <c:forEach items="${timespan.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>
       </a>
 <%--
       <a href="${timespan.about}" target="_blank" class="icon-external-right"></a>
  --%>
       <c:if test="${!empty timespan.prefLabelLang && !empty timespan.altLabelLang}">
-        (<c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">
-          ${item}<c:if test="${!t.last}">, </c:if>
-        </c:forEach>)
+        (<c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>)
       </c:if>
     </p>
 

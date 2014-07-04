@@ -23,16 +23,14 @@
       </c:url>
       <a href="${searchUrl}">
         <c:forEach items="${concept.labels}" var="item" varStatus="t"
-          >${item}<c:if test="${!t.last}">, </c:if>
-        </c:forEach>
+          >${item}<c:if test="${!t.last}">, </c:if
+        ></c:forEach>
       </a>
 <%--
       <a href="${concept.about}" target="_blank" class="icon-external-right"></a>
  --%>
       <c:if test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
-        <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">
-          ${item}<c:if test="${!t.last}">, </c:if>
-        </c:forEach>
+        <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>
       </c:if>
     </p>
 
