@@ -89,6 +89,11 @@
 	margin-bottom: -1em;
 }
 
+#query-translations .removeAll{
+	margin-top: 1em;
+	display: block;
+}
+
 .phone-test{
 	width:    1px;
 	position: absolute;
@@ -96,7 +101,7 @@
 	height:   0px;
 }
 
-a.icon-remove-after{
+#query-translations .icon-remove-after{
 	color:    red;
 	position: relative;
 	top:      0.15em;

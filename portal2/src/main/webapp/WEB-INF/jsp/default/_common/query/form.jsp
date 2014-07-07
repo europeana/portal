@@ -92,8 +92,7 @@
 					</c:if>
 				</c:forEach>
 				<c:if test="${!empty model.noTranslationUrl && hasTranslation}">
-					<br /><a href="${model.noTranslationUrl}"><spring:message code="qt_removeAll_t" /> </a>
-					<a href="${model.noTranslationUrl}" class="icon-remove-after"></a>
+					<a href="${model.noTranslationUrl}" class="removeAll"><spring:message code="qt_removeAll_t" />&nbsp;<span class="icon-remove-after"></span></a>
 				</c:if>
 			</div>
 		</c:if>
