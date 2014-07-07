@@ -18,7 +18,6 @@
 package eu.europeana.portal2.web.presentation.model;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -294,12 +293,8 @@ public class FullDocPage extends FullDocPreparation {
 	public String getThumbnailUrl() throws UnsupportedEncodingException {
 		String thumbnail = "";
 		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
-			thumbnail = URLEncoder.encode(
-				StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], ""),
-				"utf-8"
-			);
+			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], "");
 		}
-
 		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
 	}
 
@@ -310,7 +305,7 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
 	}
-	
+
 	public List<String> getThumbnails() {
 		// TODO: use ThumbSize.TINY
 		return getImageToShow("BRIEF_DOC");

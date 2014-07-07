@@ -29,9 +29,7 @@
       <a href="${place.about}" target="_blank" class="icon-external-right"></a>
  --%>
       <c:if test="${!empty place.prefLabelLang && !empty place.altLabelLang}">
-        (<c:forEach items="${place.altLabelLang}" var="item" varStatus="t">
-          ${item}<c:if test="${!t.last}">, </c:if>
-        </c:forEach>)
+        (<c:forEach items="${place.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>)
       </c:if>
     </p>
 

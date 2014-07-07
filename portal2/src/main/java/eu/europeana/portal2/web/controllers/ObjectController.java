@@ -136,7 +136,7 @@ public class ObjectController {
 			@RequestParam(value = "returnTo", required = false, defaultValue = "SEARCH_HTML") SearchPageEnum returnTo,
 			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "mlt", required = false, defaultValue = "false") String mlt,
-			@RequestParam(value = "context", required = false, defaultValue = "false") String context,
+			@RequestParam(value = "context", required = false, defaultValue = "true") String context,
 			@RequestParam(value = "ho", required = false, defaultValue = "false") String ho,
 			HttpServletRequest request, 
 			HttpServletResponse response, 
