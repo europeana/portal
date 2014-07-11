@@ -352,7 +352,7 @@ public class FullDocPage extends FullDocPreparation {
 				if (img != null) {
 					img.setEdmField(images.get(imageUrl));
 					img.setRights(getDocument().getWebResourceEdmRightsByUrl(imageUrl));
-					img.setMediaService(MediaServiceType.findInstance("urn:soundcloud:150424305")); //imageUrl));
+					img.setMediaService(MediaServiceType.findInstance(imageUrl));
 					copyWebResouceFields(imageUrl, img);
 				}
 				imagesToShow.add(img);
