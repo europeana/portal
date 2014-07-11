@@ -19,7 +19,7 @@ eu.europeana.lightbox = function(){
 		var src				= initOb.src;
 		var carouselData	= initOb.data;
 		var onNav			= initOb.onNav;
-		
+				
 		if(carouselData){
 			
 			// create inner navigation object
@@ -50,7 +50,8 @@ eu.europeana.lightbox = function(){
 					else if(
 						carouselData[i].external.type == 'sound'
 						&&
-						(	$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+						(
+							carouselData[i].external.url.indexOf(eu.europeana.fulldoc.soundcloudDetect) > -1
 							||
 							carouselData[i].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
 						)
@@ -103,6 +104,7 @@ eu.europeana.lightbox = function(){
 				};
 			};
 			self.navOb = new NavOb();
+			
 		}
 		
 		imgMeasure(src, function(w, h){
@@ -151,16 +153,14 @@ eu.europeana.lightbox = function(){
 				)
 			)
 			||
-			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
+			(img.attr('src').indexOf(eu.europeana.fulldoc.soundcloudDetect) > -1)
+			//(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.soundcloudDetect) > -1)
 		){
 			
 			if(img[0].nodeName.toUpperCase() == 'IMG'){
 				
-//				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '" style="width:100%; max-width:100%; display:table; table-layout: fixed;">');
 				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '" scrolling="No">');
 	
-//				alert(img.attr('src') );
-				
 				img.remove();
 				//elIframe.fitVids();
 				
@@ -223,7 +223,7 @@ eu.europeana.lightbox = function(){
 		
 		if(	(src.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1)
 			||
-			($.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1)
+			src.indexOf(eu.europeana.fulldoc.soundcloudDetect) > -1
 		){
 			if(typeof callback != "undefined"){
 				src.indexOf(eu.europeana.fulldoc.vimeoDetect)>-1 ? callback(2000, 2000) : callback(600, 280);				
