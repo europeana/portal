@@ -8,8 +8,8 @@ eu.europeana.fulldoc = {
 	dailyMotionDetect : 'dailymotion.com/embed',
 	audioBooDetect : 'audioboo.fm/boos',
 	telDetect : 'http://www.theeuropeanlibrary.org/tel4/newspapers/issue/fullscreen',
-	permittedLbSoundCollections : eu.europeana.vars.soundCloudAwareCollections,
-
+	soundcloudDetect : 'w.soundcloud.com/player/',
+	
 	/**
 	 * provides priority order for which tab to open when no hash is given
 	 * provides a list of accepted hash values for validation
@@ -405,6 +405,7 @@ eu.europeana.fulldoc = {
 				'<li class="rights-item">' + rightsVal + '</li>'
 			);
 
+
 			eu.europeana.fulldoc.lightboxOb = new eu.europeana.lightbox();
 			
 			eu.europeana.fulldoc.lightboxOb.init(
@@ -483,7 +484,7 @@ eu.europeana.fulldoc = {
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
 								&&
 								(
-									$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.soundcloudDetect) > -1
 									||
 									carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
 								) 
@@ -663,7 +664,7 @@ eu.europeana.fulldoc = {
 							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
 							&&
 							(
-								$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.soundcloudDetect) > -1
 								||
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect)>-1
 							) 
@@ -899,10 +900,10 @@ eu.europeana.fulldoc = {
 				{
 				lightboxableCount++;
 			}
-			else if (carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+			else if (carouselData[i].external.type == 'sound'
 					&& 
 					(
-						$.inArray(eu.europeana.vars.collectionId, eu.europeana.fulldoc.permittedLbSoundCollections) > -1
+						carouselData[i].external.url.indexOf(eu.europeana.fulldoc.soundcloudDetect) > -1
 						||
 						carouselData[i].external.url.indexOf(eu.europeana.fulldoc.audioBooDetect) >- 1
 					)
@@ -910,13 +911,11 @@ eu.europeana.fulldoc = {
 				{
 				lightboxableCount++;
 			}
-			else if(carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'text'
+			else if(carouselData[i].external.type == 'text'
 					&&
-					carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.telDetect) > -1){
+					carouselData[i].external.url.indexOf(eu.europeana.fulldoc.telDetect) > -1){
 				lightboxableCount++;				
 			}
-			
-			
 		}
 		return lightboxableCount;
 	},
