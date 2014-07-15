@@ -156,7 +156,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		else{
 			var data = eval(url);
 			
-			
 			// sanity
 			$.each(data, function(i, ob){
 				if(ob.data){
@@ -318,6 +317,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	// @node: jstree object
 	// @ callback: fn
 	var loadFirstChild = function(node, callback){
+
 		if(node.data && node.data.childrenUrl && (!node.children || !node.children.length) ){
 			var firstChildUrl = node.data.childrenUrl + '[0]';
 			loadData(firstChildUrl, function(fcData){
@@ -333,6 +333,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		else if(callback){
 			callback();					
 		}
+
 	};
 
 
@@ -625,7 +626,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		var bottomArrows = $('<div class="bottom-arrows"></div>').prependTo(self.bottomPanel);
 		var xNode        = vNodes[1];
 		var rightIndent  = 2; // CHANGE
-
+		
 		getName = function(){
 			return  $('#' + xNode.id).find('>a>span').html();
 		} 
@@ -761,7 +762,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			"axis" : "y",
 			"onAfter" : function(){
 				if(callback){
+					
+					if (locked) {
+						self.container.css('overflow', 'hidden');
+					}
 					callback();
+					return;
 				}
 			}
 		});
