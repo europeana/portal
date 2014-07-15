@@ -1293,11 +1293,10 @@ eu.europeana.fulldoc = {
 		};
 
 		if (typeof(hierarchical) != 'undefined') {
-			loadHierarchy("dataGen.base()");			
+			loadHierarchy("dataGen.base()", true);			
 		}
 		else if (typeof(hierarchyTestUrl) != 'undefined') {
-			$.getJSON(hierarchyTestUrl + '&callback=?', null, function( data ) {
-				
+			$.getJSON(hierarchyTestUrl + '&callback=?', null, function( data ) {				
 				if("object" == typeof data && data.success == true){
 					loadHierarchy(hierarchyTestUrl);
 				}

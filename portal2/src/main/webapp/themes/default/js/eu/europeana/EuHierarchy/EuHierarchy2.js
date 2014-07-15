@@ -152,7 +152,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		.fail(function(){ alert('fail') })
 		
 		return;
-		
+		/*
 		$.ajax({
 			url: url,
 	//		"context": document.body,
@@ -186,7 +186,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		}).error(function( jqXHR, textStatus, errorThrown ){
 			alert('error loading data:\n\n' + jqXHR + '\n' + textStatus + '\n' + errorThrown);
 		});
-
+		*/
 		/*
 		else{
 			var data = eval(url);
@@ -1347,8 +1347,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 			loadData(url, function(newDataIn){
 				
-				alert('returned from load data');
-				// MACLEAN
 				newDataIn = newDataIn.object;
 				var newData = formatNodeData(newDataIn);
 
@@ -1377,11 +1375,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				}
 
 				if(recurseData && recurseData.parentUrl && recurseData.index){
-					alert('check up');
+//					alert('check up');
 					chainUp(recurseData.parentUrl, data, callbackWhenDone);							
 				}
 				else{
-					alert('go up????');
+//					alert('end recurse');
 					
 					wrapper.find('.hierarchy-title>.count').html('(contains ' + getRandom(0) + ' items)');
 					wrapper.find('.hierarchy-title>a').html(data.text);
