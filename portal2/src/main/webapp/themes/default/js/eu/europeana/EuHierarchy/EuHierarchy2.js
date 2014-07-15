@@ -104,7 +104,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	};
 	
 	var formatNodeData = function(ob){
-		
 		if(ob.data && ob.data.europeana){
 			
 			if(ob.data.europeana.icon){
@@ -129,7 +128,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				ob.text = '<a href="' + ob.data.europeana.url + '" ' + handler + '>' + ob.text + '</a>';
 			}
 		}
-		
+		ob.text = ob.title.def[0];
 		ob.text = "<span>" + ob.text + "</span>";
 
 		return ob;
@@ -144,15 +143,51 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			return;
 		}
 		
-		if(dataServerPrefix.length){
-			url = dataServerPrefix + url;
-			$.ajax({
-				url: url,
-				context: document.body
-			}).done(function(data) {
-				callback(data);
-			});
-		}
+		
+		$.getJSON( url + '&callback=?', null, function( data ) {
+		     //  console.log(result);
+			callback(data);
+
+		})
+		.fail(function(){ alert('fail') })
+		
+		return;
+		
+		$.ajax({
+			url: url,
+	//		"context": document.body,
+            crossDomain : true,
+            "type" :        "GET",
+           	dataType:   "text",
+ //           "contentType" :	"application/x-www-form-urlencoded;charset=UTF-8",
+
+           	"success" : function(data){
+
+    			alert('calling back 1');
+    			callback(data);
+
+           	},
+           	"fail" : function(msg){
+
+    			alert('fail');
+
+           	},
+           	"error" : function(msg){
+
+    			alert('error ' + JSON.stringify(msg));
+
+           	}
+
+
+
+		}).done(function(data) {
+			alert('calling back 2');
+			callback(data);
+		}).error(function( jqXHR, textStatus, errorThrown ){
+			alert('error loading data:\n\n' + jqXHR + '\n' + textStatus + '\n' + errorThrown);
+		});
+
+		/*
 		else{
 			var data = eval(url);
 			
@@ -172,6 +207,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				callback(data);
 			}, defaultDelay);			
 		}
+		*/
 	};
 
 
@@ -1310,7 +1346,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 
 			loadData(url, function(newDataIn){
-								
+				
+				alert('returned from load data');
+				// MACLEAN
+				newDataIn = newDataIn.object;
 				var newData = formatNodeData(newDataIn);
 
 				if(!data){
@@ -1337,10 +1376,13 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					recurseData = data.data;
 				}
 
-				if(recurseData && recurseData.parentUrl && recurseData.index){					
+				if(recurseData && recurseData.parentUrl && recurseData.index){
+					alert('check up');
 					chainUp(recurseData.parentUrl, data, callbackWhenDone);							
 				}
 				else{
+					alert('go up????');
+					
 					wrapper.find('.hierarchy-title>.count').html('(contains ' + getRandom(0) + ' items)');
 					wrapper.find('.hierarchy-title>a').html(data.text);
 					wrapper.find('.hierarchy-title>a').click(function(){
@@ -1394,9 +1436,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		
 		// build initial tree structure
-		
 		chainUp(baseUrl, false, function(data){
-			
 			loadSiblings(data, function(){
 				
 				//log('Initialise tree with model:\n\n' + JSON.stringify(data));
@@ -1409,7 +1449,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					"plugins" : [ "themes", "json_data", "ui"]
 				});
 			});
-		});		
+		});
 	};
 
 	
@@ -1433,92 +1473,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	 * @callback the callback to execute when done
 	 *  
 	 */
-	/*
-	var recursiveLoad = function(node, callback){
-		
-		var remaining = getQty(node);
-	    
-	    // append new nodes
-		if(remaining){
-			
-			if(node.data && node.data.childrenUrl){
-				var start        = node.children ? node.children.length : 0;
-				var urlSuffix    = '.slice(' + start + ',' + (start + (remaining > defaultChunk ? defaultChunk : remaining)) + ')';
-				var childUrl     = node.data.childrenUrl + urlSuffix;
-				
-				loadData(childUrl, function(data){
-				
-					var children = [];
-					
-					$.each(data, function(i, ob) {
-						
-						var newId   = self.treeCmp.jstree("create_node", node, formatNodeData(ob), "last", false, true);
-						var newNode = self.treeCmp.jstree('get_node', newId);
-						var newQty  = getQty(newNode);
-						var loads   =  Math.ceil(newQty/defaultChunk);
-						
-						for(var j=0; j<loads; j++){
-							children.push(newNode);
-						}
-						
-						//log('pushed ' + newNode.id + ' ' + loads + ' times');
-					}); 
-					
-					
-					// open node
-					
-					if(!node.state.opened){
-						self.silentClick = true;
-						self.treeCmp.jstree('open_node', node);
-					}
-					
-					
-					// manage sub process
-					
-					var index = 0;
-					var nodeDone = function(){
-						index ++
-						if(index < children.length){
-							
-							// recurse 
-							recursiveLoad(children[index], 
-								function(){
-									if(index+1 == children.length){																							
-										callback();
-									}
-									else{
-										nodeDone();
-									}
-								}
-							);
-						}
-						else{
-							callback();
-						}
-					}; // end nodeDone
-					
-					if(children.length > 0){
-						
-						// recurse
-						recursiveLoad(children[0], nodeDone);
-					}
-					else{
-						callback();
-					}
-					
-				}); // end loadData()
-				
-			}
-			else{
-				alert('is this ever used?');
-				callback();						
-			}
-		}
-		else{ // no remaining
-			callback();
-		}
-	};
-	*/
 
 	var recursiveLoad = function(node, callback){
 						

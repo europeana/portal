@@ -126,6 +126,7 @@ eu.europeana.fulldoc = {
 				self.initCarousels();
 			}
 		}]);
+		self.initHierarchyIfAvailable();
 	},
 
 	handleEmbedClick : function ( e ) {
@@ -1023,59 +1024,6 @@ eu.europeana.fulldoc = {
 		});
 
 
-
-		/**
-		 *
-		 * HIERARCHICAL OBJECTS
-		 *
-		 * */
-
-		if (typeof(hierarchical) != 'undefined') {
-			var scripts = [];
-
-			scripts.push({
-				"name" : "scrollTo",
-				"file" : "jquery.scrollTo-1.4.3.1.js",
-				"path" : eu.europeana.vars.branding + '/js/jquery/'
-			});
-
-			scripts.push({
-				"name" : "jstree",
-				"file" : "jstree.js",
-				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
-			});
-
-			scripts.push({
-				"name" : "hoData",
-				"file" : "EuHierarchyData.js",
-				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/',
-			});
-
-			scripts.push({
-				"file" : "EuHierarchy.js",
-				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
-				"dependencies" : ["hoData", "scrollTo", "jstree"],
-				callback : function() {
-					
-					if(js.debug){
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');						
-					}
-					else{
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
-					}
-
-					$(document).ready(function() {
-						window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
-						window.hierarchy.init("dataGen.base()");
-					});
-
-				}
-			});
-
-			js.loader.loadScripts(scripts);
-		}
-
 		/**
 		 *
 		 * MLT
@@ -1255,9 +1203,113 @@ eu.europeana.fulldoc = {
 
 			}
 		});
-
 	},
 
+	initHierarchyIfAvailable : function(){
+		
+		var addMarkup = function(){
+			$('#main-fulldoc-area').append(
+					'<div class="fulldoc-cell">'
+				+		'<div class="hierarchy-objects">'
+				+			'<div class="hierarchy-top-panel">'
+				+				'<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>'
+				+				'<div class="hierarchy-title"><a></a><span class="count"></span></div>'
+				+			'</div>'
+				+			'<div class="hierarchy-container">'
+				+				'<div id="hierarchy"></div>'
+				+			'</div>'
+				+			'<div class="hierarchy-bottom-panel">'
+				+				'<div class="hierarchy-next"><a>view items below</a><span class="count"></span></div>'
+				+				'<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>'
+				+			'</div>'
+				+		'</div>'
+				+	'</div>'
+			);
+		}
+		
+		var addMessages = function(){
+			window.waitMessages = [
+	   		    {
+	   		    	"time" : 3,
+	   		    	"msg"  : '<spring:message code="load_wait_message_1" />'
+	   		    },
+	   		    {
+	   		    	"time" : 8,
+	   		    	"msg"  : '<spring:message code="load_wait_message_2" />'
+	   		    },
+	   		    {
+	   		    	"time" : 60,
+	   		    	"msg"  : '<spring:message code="load_wait_message_3" />'
+	   		    }
+	   		];
+		}
+
+		var loadHierarchy = function(initialiseUrl, demo){
+			var scripts = [];
+
+			scripts.push({
+				"name" : "scrollTo",
+				"file" : "jquery.scrollTo-1.4.3.1.js",
+				"path" : eu.europeana.vars.branding + '/js/jquery/'
+			});
+
+			scripts.push({
+				"name" : "jstree",
+				"file" : "jstree.js",
+				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
+			});
+
+			if(demo == true){
+				scripts.push({
+					"name" : "hoData",
+					"file" : "EuHierarchyData.js",
+					"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/',
+				});				
+			}
+
+			scripts.push({
+				"file" : (demo == true ? "EuHierarchy.js" : "EuHierarchy2.js"),
+				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
+				"dependencies" : demo ? ["hoData", "scrollTo", "jstree"] : ["scrollTo", "jstree"],
+				callback : function() {
+					if(js.debug){
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');						
+					}
+					else{
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
+					}
+
+					$(document).ready(function() {
+						addMarkup();
+						addMessages();
+						window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
+						window.hierarchy.init(initialiseUrl);
+					});
+
+				}
+			});
+			js.loader.loadScripts(scripts);
+		};
+
+		if (typeof(hierarchical) != 'undefined') {
+			loadHierarchy("dataGen.base()");			
+		}
+		else if (typeof(hierarchyTestUrl) != 'undefined') {
+			$.getJSON(hierarchyTestUrl + '&callback=?', null, function( data ) {
+				
+				if("object" == typeof data && data.success == true){
+					loadHierarchy(hierarchyTestUrl);
+				}
+				else{
+					console.log('failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);					
+				}
+			}).fail(function(){
+				console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
+			});
+		}
+	},
+	
 	autoTranslateItem: {
 		/**
 		 * @param {object}
