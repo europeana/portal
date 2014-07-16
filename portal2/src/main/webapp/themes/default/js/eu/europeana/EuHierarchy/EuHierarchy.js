@@ -107,30 +107,31 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		if(ob.data && ob.data.europeana){
 			
+			var iconText = '';
 			if(ob.data.europeana.icon){
 				if(ob.data.europeana.icon.toUpperCase() == 'IMAGE'){
-					ob.text += '<span class="icon icon-image" aria-hidden="true"></span>';
+					iconText = 'icon-image';
 				}
 				else if(ob.data.europeana.icon.toUpperCase() == 'SOUND'){
-					ob.text += '<span class="icon icon-sound" aria-hidden="true"></span>';
+					iconText = 'icon-sound';
 				}
 				else if(ob.data.europeana.icon.toUpperCase() == 'TEXT'){
-					ob.text += '<span class="icon icon-text" aria-hidden="true"></span>';
+					iconText = 'icon-text';
 				}
 				else if(ob.data.europeana.icon.toUpperCase() == 'VIDEO'){
-					ob.text += '<span class="icon icon-video" aria-hidden="true"></span>';
+					iconText = 'icon-video';
 				}
 			}
 			
 			if(ob.data.europeana.url){
 				
 				//var handler = 'onClick="javascript:window.hierarchy.nodeLinkClick(this)"';
-				var handler = 'onClick="javascript:alert(\'Eventually this will link to the object page of this item.\')"';
-				ob.text = '<a href="' + ob.data.europeana.url + '" ' + handler + '>' + ob.text + '</a>';
+				//var handler = 'onClick="javascript:alert(\'Eventually this will link to the object page of this item.\')"';
+				//ob.text = '<a href="' + ob.data.europeana.url + '" ' + handler + '>' + ob.text + '</a>';
 			}
 		}
 		
-		ob.text = "<span>" + ob.text + "</span>";
+		ob.text = '<span class="icon ' + iconText + '">' + ob.text + '&nbsp;&nbsp;</span>';
 
 		return ob;
 	}
