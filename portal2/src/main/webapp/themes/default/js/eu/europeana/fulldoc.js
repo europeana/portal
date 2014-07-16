@@ -1207,7 +1207,7 @@ eu.europeana.fulldoc = {
 
 	initHierarchyIfAvailable : function(){
 		
-		var addMarkup = function(){
+		var addMarkup = function(demo){
 			$('#main-fulldoc-area').append(
 					'<div class="fulldoc-cell">'
 				+		'<div class="hierarchy-objects">'
@@ -1220,29 +1220,17 @@ eu.europeana.fulldoc = {
 				+			'</div>'
 				+			'<div class="hierarchy-bottom-panel">'
 				+				'<div class="hierarchy-next"><a>view items below</a><span class="count"></span></div>'
-				+				'<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>'
+				+				'<div class="expand-collapse">'
+				+					'<a class="expand-all">expand all items</a>'
+				+					'<a class="collapse-all">collapse all items</a>'
+				+					(demo ? '<br><a class="load-all">load all items</a>' : '')
+				+				'</div>'
 				+			'</div>'
 				+		'</div>'
 				+	'</div>'
 			);
 		}
-		
-		var addMessages = function(){
-			window.waitMessages = [
-	   		    {
-	   		    	"time" : 3,
-	   		    	"msg"  : '<spring:message code="load_wait_message_1" />'
-	   		    },
-	   		    {
-	   		    	"time" : 8,
-	   		    	"msg"  : '<spring:message code="load_wait_message_2" />'
-	   		    },
-	   		    {
-	   		    	"time" : 60,
-	   		    	"msg"  : '<spring:message code="load_wait_message_3" />'
-	   		    }
-	   		];
-		}
+
 
 		var loadHierarchy = function(initialiseUrl, demo){
 			var scripts = [];
@@ -1281,8 +1269,7 @@ eu.europeana.fulldoc = {
 					}
 
 					$(document).ready(function() {
-						addMarkup();
-						addMessages();
+						addMarkup(demo);
 						window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
 						window.hierarchy.init(initialiseUrl);
 					});

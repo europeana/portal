@@ -23,16 +23,40 @@
 				
 				<!-- HIERARCHICAL OBJECTS -->
 				
-			    <c:set var="api_root_url" value="${model.apiUrl}/v2/record${model.document.about}"></c:set>  
-			    
 			    <script type="text/javascript">
-					var hierarchyTestUrl =  '${api_root_url}/self.json?wskey=api2demo';
-					
-					<!-- DEMO -->				
-					<c:if test="${model.debug && model.showHierarchical}">
-						var hierarchical = true;
-					</c:if>
+			    	window.waitMessages = [
+           	   		    {
+           	   		    	"time" : 3,
+           	   		    	"msg"  : '<spring:message code="load_wait_message_1" />'
+           	   		    },
+           	   		    {
+           	   		    	"time" : 8,
+           	   		    	"msg"  : '<spring:message code="load_wait_message_2" />'
+           	   		    },
+           	   		    {
+           	   		    	"time" : 60,
+           	   		    	"msg"  : '<spring:message code="load_wait_message_3" />'
+           	   		    }
+           	   		];
 			    </script>
+
+				<c:choose>
+					<c:when test="${model.showHierarchical}">
+						<!-- DEMO -->
+					    <script type="text/javascript">
+							var hierarchical = true;
+					    </script>
+					</c:when>
+					<c:otherwise>
+						<!-- REAL THING -->
+					    <script type="text/javascript">
+							window.apiServerRoot =  '${model.apiUrl}/v2/record';
+							window.apiKey           =   'api2demo';
+							var hierarchyTestUrl =  window.apiServerRoot + '${model.document.about}/self.json?wskey=' + window.apiKey;
+		    			</script>
+					</c:otherwise>
+				</c:choose>
+							    
 				
 				<!-- END HIERARCHICAL OBJECTS -->
 				

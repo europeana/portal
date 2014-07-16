@@ -843,6 +843,23 @@
 					</execution>
 
 					<execution>
+						<id>minify-EuHierarchy2.js</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana/EuHierarchy</jsSourceDir>
+							<jsFinalFile>EuHierarchy2.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuHierarchy2.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>minify-EuMenu.js</id>
 						<phase>process-resources</phase>
 						<configuration>

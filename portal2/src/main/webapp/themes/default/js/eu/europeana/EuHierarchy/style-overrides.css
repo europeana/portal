@@ -237,14 +237,52 @@
 }
 
 
-#hierarchy .icon-image,
-#hierarchy .icon-sound,
-#hierarchy .icon-text,
-#hierarchy .icon-video{
-	font-size:		0.9em;
-	float:			right;
-	margin-right:	1em;
-	max-height:		1.4em;	/* should track line-height & js variable */
+#hierarchy .icon {
+	line-height: 1em;
+	position: relative;
+}
+#hierarchy .icon a{
+	position:absolute;
+	right:-2em;
+	font-size:0.8em;
+}
+
+
+#hierarchy .icon-video:before {
+	content: "";
+}
+#hierarchy .icon-text:before {
+	content: "";
+}
+#hierarchy .icon-image:before {
+	content: "";
+}
+#hierarchy .icon-audio:before {
+	content: "";
+}
+#hierarchy .icon-sound:before {
+	content: "";
+}
+#hierarchy .icon-3d:before {
+	content: "";
+}
+#hierarchy .icon-video:after {
+	content: "\28";
+}
+#hierarchy .icon-text:after {
+	content: "\29";
+}
+#hierarchy .icon-image:after {
+	content: "\5b";
+}
+#hierarchy .icon-audio:after {
+	content: "\5d";
+}
+#hierarchy .icon-sound:after {
+	content: "\5d";
+}
+#hierarchy .icon-3d:after {
+	content: "\7b";
 }
 
 
