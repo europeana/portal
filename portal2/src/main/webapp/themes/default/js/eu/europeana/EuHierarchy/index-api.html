@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Hierarchy</title>
+
+	<script src="jquery-2.0.3.min.js"></script>
+	
+</head>
+<body>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			var data = {"data":[]};
+			var wrapTitle = function(title){
+				return  {
+			            "def": [ title ]
+				}
+			}
+			
+			/*
+			BOOKS
+				VOLUMES
+					CHAPTERS
+						VERSES
+			*/			
+
+			for(var i=0; i<4; i++){
+				
+				data.data[data.data.length] = { "id" : i, "index":i, "title" : wrapTitle("Book " + i), "type" : "text", "data" : [] };
+					
+				for(var j=0; j<4; j++){
+
+					var book = data.data[data.data.length-1];
+					book.data[book.data.length] = { "id" : i+"-"+j, "index":j, "title" : wrapTitle("Volume " + j + ' (b' + i + ')'), "type" : "text", "data" : [] };
+					
+					for(var k=0; k<4; k++){
+						
+						var volume = book.data[book.data.length-1];
+						volume.data[volume.data.length] = { "id" : i+"-"+j+"-"+k, "index":k, "title" : wrapTitle("Chapter " + k + ' (b' + i + ', v' + j + ')'), "type" : "text", "data" : [] };
+
+						for(var l=0; l<4; l++){
+							
+							var chapter = volume.data[volume.data.length-1];
+							chapter.data[chapter.data.length] = { "id" : i+"-"+j+"-"+k+"-"+l, "index": l,  "title" : wrapTitle("Verse " + l + ' (b' + i + ', v' + j + ', c' + k + ')'), "type" : "text" };
+
+						}
+					}
+				}
+			}
+			
+			var parentData = function(path){
+				return {
+			        "id": path.slice(0, path.length-1).join('-'),
+			        "title": search(path.slice(0, path.length-1).join('-'), 'self.json').object.title,
+			        "type": "TEXT",
+			        "index": path[path.length-2],
+			        "hasChildren": true
+				}
+			}
+			
+			var coreData = function(data){
+				return {
+					"id" :			data.id,
+					"title" :		data.title,
+		            "type":			data.type,
+		            "index":		data.index,
+		            "hasChildren":	typeof data.data==='object'					
+				}
+			}
+			
+			var search = function(id, toGet){
+				
+				console.log('search on id: ' + id);
+				
+				var res   = { "action" : toGet };
+				var path  = id.split('-');
+				var sData = JSON.parse(JSON.stringify(data));
+			
+				for(var i=0; i<path.length; i++){
+					sData = sData.data[parseInt(path[i])];
+				}
+
+				/*
+					SELF
+				*/
+				if(toGet==="self.json"){
+					res.object    =  coreData(sData);
+					res.hasParent = path.length>1;
+
+					if(res.hasParent){
+						res.parent = parentData(path);
+					}
+					if(res.object.hasChildren){
+						res.childrenCount = sData.data.length;
+					}
+				}
+				
+				/*
+					CHILDREN
+				*/
+
+				else if(toGet==="children.json"){
+					res.children = [];
+					for(var i=0; i<sData.data.length; i++){
+						res.children.push(coreData(sData.data[i]))
+					}
+					res.hasParent = path.length>1;
+					res.childrenCount = sData.data.length;
+				}
+				
+				/*
+					FOLLOWING
+				*/
+
+				else if(toGet==="following-siblings.json"){
+					
+					res.parent = parentData(path);
+					res['following-siblings'] = [];
+					
+					var parentChildren = search(path.slice(0, path.length-1).join('-'), 'children.json');
+					var start = false;
+					
+					for(var i=0; i<parentChildren.children.length; i++){
+						if(start){
+							res['following-siblings'].push(coreData(parentChildren.children[i]));
+						}						
+						if(parentChildren.children[i].id == id){
+							start = true;
+						}
+
+					}
+					res.hasParent = path.length>1;
+					if(sData.data){
+						res.childrenCount = sData.data.length;					
+					}
+				}
+				
+				/*
+					PRECEDING
+				*/
+
+				else if(toGet==="preceeding-siblings.json"){
+					
+					res.parent = parentData(path);
+					res['preceeding-siblings'] = [];
+					
+					var parentChildren = search(path.slice(0, path.length-1).join('-'), 'children.json');
+					var start = true;
+					
+					for(var i=0; i<parentChildren.children.length; i++){
+						
+						if(parentChildren.children[i].id == id){
+							start = false;
+						}
+						if(start){
+							res['preceeding-siblings'].push(coreData(parentChildren.children[i]));
+						}
+					}
+					res.hasParent = path.length>1;
+					if(sData.data){
+						res.childrenCount = sData.data.length;					
+					}
+				}
+				return res;
+			}
+			
+			// UI BINDING
+			
+			$('#submit').click(function(){
+
+				var id  = $('#id').val();
+				
+				if(!id.length){
+					$('#id').css('border', '1px solid red');
+					return;
+				}
+				$('#id').css('border', '1px solid #999');
+				
+				var act = $("input[type='radio'][name='action']:checked").val();
+				var res = search(id, act);
+
+				$('#result').html('<pre>' + JSON.stringify(res, undefined, 2) + '</pre>');
+				
+			});
+
+			$('#id').on('keypress', function(e) {
+				
+			    if (e.which == 13) {
+			        e.preventDefault();
+			        $('#submit').click();
+			    }
+			});
+
+			$('#id').focus();
+		});
+	</script>
+	
+	<input type="text"   id="id"/>
+	<input type="button" id="submit"/>
+	
+	<br/>
+	<input type="radio" id="r1" name="action" value="self.json" checked="checked"><label for="r1">self</label>
+	<br>
+	<input type="radio" id="r2" name="action" value="children.json"><label for="r2">children</label>
+	<br>
+	<input type="radio" id="r3" name="action" value="following-siblings.json"><label for="r3">following</label>
+	<br>
+	<input type="radio" id="r4" name="action" value="preceeding-siblings.json"><label for="r4">preceding</label>
+
+	<div id="result" style="display:block; width:100%; border:1px solid #000; margin-top:1em;"></div>	
+
+</body>
+
+</html>
+
