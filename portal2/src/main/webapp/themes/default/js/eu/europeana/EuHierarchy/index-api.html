@@ -176,33 +176,6 @@
 					if(sData.data){
 						res.childrenCount = sData.data.length;					
 					}
-					
-					/*
-					res.parent = parentData(path, limit);
-					res['preceeding-siblings'] = [];
-					
-					var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json', max);
-					var start 			= true;
-					var added			= 0;
-					
-					for(var i=0; i<parentChildren.children.length; i++){
-						
-						if(start && parentChildren.children[i].id == id){
-							start = false;
-						}
-						if(start){
-							res['preceeding-siblings'].push(coreData(parentChildren.children[i]));
-							added ++;
-							if(added==limit){
-								break;
-							}
-						}
-					}
-					res.hasParent = path.length>1;
-					if(sData.data){
-						res.childrenCount = sData.data.length;					
-					}
-					*/
 				}
 				return res;
 			}
