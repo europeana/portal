@@ -62,7 +62,7 @@
 				<div class="four columns">
 					<%-- Explore --%>
 					<h3>
-						<a class="europeana" href="<spring:message code="notranslate_main_menu_explore_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_a_target_t"/>" title="<spring:message code="main_menu_explore_a_title_t"/>"><spring:message code="main_menu_explore_a_text_t"/></a>
+						<spring:message code="main_menu_explore_a_text_t"/>
 					</h3>
 
 					<ul class="footer-links with-icons">
