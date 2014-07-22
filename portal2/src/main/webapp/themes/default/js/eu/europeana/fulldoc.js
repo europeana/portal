@@ -1277,21 +1277,28 @@ eu.europeana.fulldoc = {
 				}
 			});
 			js.loader.loadScripts(scripts);
-		};
+		};hierarchyTestUrl
 
 		if (typeof(hierarchical) != 'undefined') {
 			loadHierarchy("dataGen.base()", true);			
 		}
 		else if (typeof(hierarchyTestUrl) != 'undefined') {
-			$.getJSON(hierarchyTestUrl + '&callback=?', null, function( data ) {				
+			
+			hierarchyTestUrl = hierarchyTestUrl;// + (hierarchyTestUrl.indexOf('?') ? '&' : '?') + 'callback=?';
+			
+			//alert('test: ' + hierarchyTestUrl);
+			
+			$.getJSON(hierarchyTestUrl, null, function( data ) {	
 				if("object" == typeof data && data.success == true){
 					loadHierarchy(hierarchyTestUrl);
 				}
 				else{
-					console.log('failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);					
+					console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);
 				}
 			}).fail(function(){
 				console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
+			}).success(function(){
+				console.log('SUCCESS');
 			});
 		}
 	},

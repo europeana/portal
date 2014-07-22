@@ -54,6 +54,13 @@
 							window.apiKey           =   'api2demo';
 							var hierarchyTestUrl =  window.apiServerRoot + '${model.document.about}/self.json?wskey=' + window.apiKey;
 		    			</script>
+					    <!--
+					    <script type="text/javascript">
+							window.apiServerRoot =  'http://localhost:3000/';
+							window.apiKey        =   'api2demo';
+							var hierarchyTestUrl =  window.apiServerRoot + '1/self.json?wskey=' + window.apiKey;
+		    			</script>
+		    			-->
 					</c:otherwise>
 				</c:choose>
 							    

@@ -5,18 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Hierarchical Objects Test Page</title>
 
+<!-- 
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-face.css"/>
-<!-- 
-	<link rel="stylesheet" href="../../../../css/europeana-font-icons.css"/>
-	<link rel="stylesheet" href="../../../../css/europeana-font-face.css"/>
  -->	
+	<link rel="stylesheet" href="../../../../../css/europeana-font-icons.css"/>
+	<link rel="stylesheet" href="../../../../../css/europeana-font-face.css"/>
 	
-	<link rel="stylesheet" href="style.css" />
-	<link rel="stylesheet" href="style-overrides.css" />
-	<script type="text/javascript" src="../../../jquery/jquery-1.8.1.js"></script>	
-	<script type="text/javascript" src="jstree.js"></script>
-	<script type="text/javascript" src="../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
+	<link rel="stylesheet" href="../style.css" />
+	<link rel="stylesheet" href="../style-overrides.css" />
+	<script type="text/javascript" src="../../../../jquery/jquery-1.8.1.js"></script>	
+	<script type="text/javascript" src="../jstree.js"></script>
+	<script type="text/javascript" src="../../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
 	
 	<style>
 		.loadPoint>a{
@@ -61,6 +61,7 @@
 		<a class="t-stop"        style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[t-stop]</a>
 		
 		<a class="gcp"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[gcp]</a>
+		<a class="gtd"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[gtd]</a>
 		
 		<br/>
 		<input id="chunk" type="number" tab-index="1" style="float:right; margin-bottom: 0.75em; margin-top: 0.75em;">
@@ -76,11 +77,13 @@
 			</div>
 			<div class="hierarchy-bottom-panel">
 				<div class="hierarchy-next"><a>view items below</a><span class="count"></span></div>
+				<!-- 
 				<div class="expand-collapse">
 					<a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a>
 					<br>
 					<a class="load-all">load all items</a>
 				</div>
+				 -->
 			</div>
 		</div>
 		
@@ -116,9 +119,10 @@
 
 				console.log('param = ' + param)
 
-				if(window.location.href.indexOf('localhost:3000') > -1){
-					window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
-				}
+				//if(window.location.href.indexOf('localhost:3000') > -1){
+					//window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
+					//window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
+				//}
 				
 				window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
 
@@ -128,18 +132,21 @@
 				hierarchy.init("dataGen.parentTop()")
 				hierarchy.init("dataGen.apocalypse_vol_1()")
 				*/
-	
-				hierarchy.init("dataGen.base()");
-				//hierarchy.init(param ? param : "dataGen.flatChildren()[0]");
+
+				//hierarchy.init(param ? param : "dataGen.base()");
 				//hierarchy.init(param ? param : "dataGen.j1_13");
 				//hierarchy.init(param ? param : "dataGen.apocalypse_vol_1()");
-				
+                                               //'http://localhost:8080/api/v2/record/9200300/BibliographicResource_3000052917524/self.json?wskey=api2demo&callback=?'
+				//hierarchy.init(param ? param : 'http://localhost:8080/api/v2/record/9200300/BibliographicResource_3000052917524/self.json?wskey=api2demo');
+                                               
+				hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'), true);
+
 				new EuHierarchyTools(hierarchy);
 			});
 		</script>
 	</div>
-	<script src="EuHierarchyData.js"></script>
-	<script src="EuHierarchy.js"></script>
+	<script src="EuHierarchyData2.js"></script>
+	<script src="../EuHierarchy2.js"></script>
 	<script src="EuHierarchyTools.js"></script>
 	
 </body>

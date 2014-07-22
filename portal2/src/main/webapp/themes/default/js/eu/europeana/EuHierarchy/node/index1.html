@@ -12,11 +12,11 @@
 	<link rel="stylesheet" href="../../../../css/europeana-font-face.css"/>
  -->	
 	
-	<link rel="stylesheet" href="style.css" />
-	<link rel="stylesheet" href="style-overrides.css" />
-	<script type="text/javascript" src="../../../jquery/jquery-1.8.1.js"></script>	
-	<script type="text/javascript" src="jstree.js"></script>
-	<script type="text/javascript" src="../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
+	<link rel="stylesheet" href="../style.css" />
+	<link rel="stylesheet" href="../style-overrides.css" />
+	<script type="text/javascript" src="../../../../jquery/jquery-1.8.1.js"></script>	
+	<script type="text/javascript" src="../jstree.js"></script>
+	<script type="text/javascript" src="../../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
 	
 	<style>
 		.loadPoint>a{
@@ -116,10 +116,9 @@
 
 				console.log('param = ' + param)
 
-				//if(window.location.href.indexOf('localhost:3000') > -1){
-					//window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
-					//window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
-				//}
+				if(window.location.href.indexOf('localhost:3000') > -1){
+					window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
+				}
 				
 				window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
 
@@ -129,20 +128,18 @@
 				hierarchy.init("dataGen.parentTop()")
 				hierarchy.init("dataGen.apocalypse_vol_1()")
 				*/
-
-				//hierarchy.init(param ? param : "dataGen.base()");
+	
+				hierarchy.init("dataGen.base()");
+				//hierarchy.init(param ? param : "dataGen.flatChildren()[0]");
 				//hierarchy.init(param ? param : "dataGen.j1_13");
 				//hierarchy.init(param ? param : "dataGen.apocalypse_vol_1()");
-                                               //'http://localhost:8080/api/v2/record/9200300/BibliographicResource_3000052917524/self.json?wskey=api2demo&callback=?'
-				hierarchy.init(param ? param : 'http://localhost:8080/api/v2/record/9200300/BibliographicResource_3000052917524/self.json?wskey=api2demo');
 				
-
 				new EuHierarchyTools(hierarchy);
 			});
 		</script>
 	</div>
 	<script src="EuHierarchyData.js"></script>
-	<script src="EuHierarchy2.js"></script>
+	<script src="../EuHierarchy.js"></script>
 	<script src="EuHierarchyTools.js"></script>
 	
 </body>
