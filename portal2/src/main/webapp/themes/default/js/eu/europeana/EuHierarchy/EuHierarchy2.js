@@ -66,11 +66,13 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			
 			$('.wait-msg').html(msg.length ? msg : '');
 			
+			/*
 			if(self.secondsElapsed>12){
 				console.log('stopping timer - too long');
 				self.stop();
 				hideSpinner();
 			}
+			*/
 		}
 		
 		self.start = function(){
@@ -130,7 +132,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			
 			var text     = title.def[0];
 			
-			
 			text = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
 			 + 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
 			 + 	text
@@ -141,7 +142,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				e.stopPropagation();
 			}
 			
-			//return '<span class="icon' + (type ? '  icon-' + type.toLowerCase() : '') + '">' + text + ' ' + linkText  +  '</span>';
 			return '<span class="icon' + (type ? '  icon-' + type.toLowerCase() : '') + '">' + text + ' '  +  '</span>';
 		}
 		
@@ -189,6 +189,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	var loadData = function(url, callback) {
 		
+		log(url)
 		if(useXHR){
 			$.getJSON( url, null, function( data ) {
 				callback(data);
@@ -363,7 +364,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.children[0]);
 			}
 
-			log('switchtrack 1: ' + switchTrackNode.text);
+			//log('switchtrack 1: ' + switchTrackNode.text);
 			
 			var parentLoaded = function(node){
 				var parent = self.treeCmp.jstree('get_node', node.parent);
@@ -380,7 +381,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.parent);
 			}
 			
-			log('switchtrack 2: ' + switchTrackNode.text);
+			//log('switchtrack 2: ' + switchTrackNode.text);
 			
 			node = switchTrackNode;			
 		}
@@ -444,7 +445,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 								leftToLoad -= data.length;
 								if(leftToLoad > 0){
 									
-//									alert('recurse 3')
+									//alert('recurse 3\n\n' + url);
 		
 									//log('recurse point one')
 									viewPrevOrNext(node, backwards, leftToLoad, true, callback)
@@ -452,7 +453,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 								else{
 									if(callback){
 										
-//										log('exit 5')
+										//alert('exit 5\n\n' + url)
 		
 										callback();
 									}
@@ -471,13 +472,13 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						}						
 						if(leftToLoad > 0){
 							
-//							alert('recurse 2')
+							//alert('recurse 2\n\n' + url)
 
 							//log('recurse point three');
 							viewPrevOrNext(parent, backwards, leftToLoad, true, callback);
 						}
 						else{
-//							alert('exit 4')
+							//alert('exit 4')
 
 							if(callback){
 								log('recurse point three EXIT - (going backwards, nothing left to load)');
@@ -492,8 +493,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 							var np = self.treeCmp.jstree('get_node', node.parent, false);
 							if(typeof np.data == 'object'){	/* prevent jQuery data function interfering */
 								
-//								alert('recurse 1')
-
+								//alert('recurse 1\n\n\(fwd with not data ' + data + ')n\n' + url);
+								
 								viewPrevOrNext(
 										np,
 										backwards,
@@ -503,7 +504,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 							}
 							else{
 								log('no more data')
-//								alert('exit 3: callback = ' + callback);
+								
+								//alert('exit 3\n\n' + url);
 
 								if(callback){
 									callback();
@@ -512,7 +514,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						}
 						else{
 							log('EXIT LOAD (leftToLoad hit zero)');
-		//					alert('exit 2')
+							//alert('exit 2 (ltl hit zero)')
 							if(callback){
 								callback();
 							}
@@ -698,9 +700,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 		if(self.container.scrollTop() > 1){
 			$('.hierarchy-prev').show();
+			$('.hierarchy-top-panel').removeClass('top');
 		}
 		else{
 			$('.hierarchy-prev').hide();
+			$('.hierarchy-top-panel').addClass('top');
 		}
 		
 		var ch = self.container.height();
@@ -1012,8 +1016,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
 						
 			var remainderRemoved = self.container.outerHeight(true);
-			remainderRemoved     = remainderRemoved - (remainderRemoved % rows);
-			remainderRemoved    += 3;
+//			remainderRemoved     = remainderRemoved - (remainderRemoved % rows);
+//			remainderRemoved     = remainderRemoved - (remainderRemoved % rows);
+//			remainderRemoved    += 3;
+//			remainderRemoved    += 5;	// stops trimming bottom pixels	
 			
 			//console.log('init container height at ' + remainderRemoved)
 			self.container.css({
@@ -1107,6 +1113,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 							setLoadPoint(self.pageNodeId);
 							self.scrollDuration = 1000;
 							self.initialised = true;
+							
+							if(self.pageNodeId == getRootEl().attr('id')){				
+								
+								// we're on the root - remove the link
+								wrapper.find('.hierarchy-title a').removeAttr('href');
+								wrapper.find('.hierarchy-title a').wrapInner('<span/>');
+								wrapper.find('.hierarchy-title a span').unwrap().unwrap();
+								self.treeCmp.jstree("open_node", pageNode);					
+							}
 						});
 					}, 1);
 				});
@@ -1194,15 +1209,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		 * 
 		 *  - get 1st child
 		 *  - load 1st child of 1st child
-		 *  - 
-		 *  - 
 		 *  
-		 * 
 		 * */
 		self.treeCmp.on("open_node.jstree", function(e, jstreeData) {
 			
 			if(self.loadingAll || self.isLoading){
-				alert('return because loading - open_node');
+				log('return because loading - open_node');
 				return;
 			}			
 			self.isLoading = true;
@@ -1298,13 +1310,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					chainUp(parentUrl, data, callbackWhenDone);							
 				}
 				else{
-					wrapper.find('.hierarchy-title>a').html(data.text);
+					wrapper.find('.hierarchy-title').html(data.text);
 					wrapper.find('.hierarchy-title span').removeAttr('class');
-					
-					wrapper.find('.hierarchy-title>a').click(function(){
-						alert('TODO: link this to the object page for the root item (unless we\'re already on that page, then this title will be plain text and not a link)');
-					});
-					
+					wrapper.find('.hierarchy-title a').removeAttr('onclick');
 					callbackWhenDone(data);
 				}		
 			});	
@@ -1344,23 +1352,18 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		// build initial tree structure
 		chainUp(baseUrl, false, function(ob){
-
-			log('Done chain up:\n\n' + JSON.stringify(ob, null, 2));
-
 			data = ob;
-			//preTreeInit(ob, function(data){
-				
-				log('Initialise tree with model:\n\n' + JSON.stringify(data, null, 2));
+			//log('Initialise tree with model:\n\n' + JSON.stringify(data, null, 2));
 
-				var tree = self.treeCmp.jstree({
-					"core" : {
-						"data" : data,
-						"check_callback" : true
-					},
-					"plugins" : [ "themes", "json_data", "ui"]
-				});
+
+			var tree = self.treeCmp.jstree({
+				"core" : {
+					"data" : data,
+					"check_callback" : true
+				},
+				"plugins" : [ "themes", "json_data", "ui"]
+			});
 				
-			//});
 		});
 	}; // end init
 

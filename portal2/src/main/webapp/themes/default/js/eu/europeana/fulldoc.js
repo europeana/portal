@@ -58,8 +58,6 @@ eu.europeana.fulldoc = {
 			com.google.analytics.europeanaEventTrack("Click-link " + $(e.target).attr('href'), "Search-Also-For");
 		});
 
-		//js.console.log(JSON.stringify(carouselData));
-
 		this.autoTranslateItem.init();
 	},
 
@@ -1282,7 +1280,7 @@ eu.europeana.fulldoc = {
 				+		'<div class="hierarchy-objects">'
 				+			'<div class="hierarchy-top-panel">'
 				+				'<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>'
-				+				'<div class="hierarchy-title"><a></a><span class="count"></span></div>'
+				+				'<div class="hierarchy-title"></div>'
 				+			'</div>'
 				+			'<div class="hierarchy-container">'
 				+				'<div id="hierarchy"></div>'
@@ -1293,9 +1291,9 @@ eu.europeana.fulldoc = {
 				+		'</div>'
 				+	'</div>'
 			);
-		}
+		};
 
-
+		
 		var loadHierarchy = function(initialiseUrl, demo){
 			
 			$('#more-like-this-wrapper').remove();
@@ -1366,7 +1364,7 @@ eu.europeana.fulldoc = {
 				console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
 				mltInit();
 			}).success(function(){
-				console.log('SUCCESS');
+				//console.log('SUCCESS');
 			});
 		}
 		else{			

@@ -2,6 +2,11 @@ var dataGen = function(){
 
 	var data = {"data":[]};
 	var max  = 10;
+	
+	var log = function(msg){
+		console.log(msg);
+	}
+	
 	var wrapTitle = function(title){
 		return  {
 	            "def": [ title ]
@@ -25,12 +30,12 @@ var dataGen = function(){
 			var book = data.data[data.data.length-1];
 			book.data[book.data.length] = { "id" : i+"-"+j, "index":j, "title" : wrapTitle("Volume " + j + ' (b' + i + ')'), "type" : "text", "data" : [] };
 			
-			for(var k=1; k<=4; k++){
+			for(var k=1; k<=14; k++){
 				
 				var volume = book.data[book.data.length-1];
 				volume.data[volume.data.length] = { "id" : i+"-"+j+"-"+k, "index":k, "title" : wrapTitle("Chapter " + k + ' (b' + i + ', v' + j + ')'), "type" : "text", "data" : [] };
 
-				for(var l=1; l<=4; l++){
+				for(var l=1; l<=14; l++){
 					
 					var chapter = volume.data[volume.data.length-1];
 					chapter.data[chapter.data.length] = { "id" : i+"-"+j+"-"+k+"-"+l, "index": l,  "title" : wrapTitle("Verse " + l + ' (b' + i + ', v' + j + ', c' + k + ')'), "type" : "text" };
@@ -70,7 +75,7 @@ var dataGen = function(){
 	// search
 	var search = function(id, action, limit){
 		
-		console.log('search on id: ' + id + ' with action: ' + action + ' and limit: ' + limit + ' typeof ' + typeof limit);
+		log('search on id: ' + id + ' with action: ' + action + ' and limit: ' + limit + ' typeof ' + typeof limit);
 		
 		var res   = { "action" : action };
 		var path  = id.split('-');
@@ -81,8 +86,7 @@ var dataGen = function(){
 		}
 		
 		for(var i=0; i<path.length; i++){
-			console.log('parseInt(path[i]) = ' + parseInt(path[i]) + '    --> ' + sData.data.length );
-			
+			log('parseInt(path[i]) = ' + parseInt(path[i]) + '    --> ' + sData.data.length );
 			sData = sData.data[parseInt(path[i])-1];	// change for indexing from 1
 		}
 
@@ -118,7 +122,12 @@ var dataGen = function(){
 			
 			if(sData.data){
 				res.children = [];			
-				for(var i=0; i< Math.min(limit, sData.data.length); i++){
+				
+				var loop = typeof limit == 'undefined' ? sData.data.length : Math.min(limit, sData.data.length);
+				
+				for(var i=0; i<loop; i++){
+					
+					//for(var i=0; i< Math.min(limit, sData.data.length); i++){
 					res.children.push(coreData(sData.data[i]))
 				}
 				res.childrenCount = sData.data.length;			
@@ -141,7 +150,8 @@ var dataGen = function(){
 				res.parent  = parentData(path, limit);
 				
 				var parentPath		= path.slice(0, path.length-1).join('-');
-				var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json', max);					
+				//var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json', max);					
+				var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json');					
 				var start			= false;
 				var added			= 0;
 				
@@ -192,7 +202,7 @@ var dataGen = function(){
 				
 				res.parent = parentData(path, limit);
 				
-				var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json', max);
+				var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json');
 				var start 			= false;
 				var added			= 0;
 				
