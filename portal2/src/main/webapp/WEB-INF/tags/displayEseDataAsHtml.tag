@@ -105,7 +105,7 @@
 				</c:if>
 			</c:forEach>
 
-			<span class="bold notranslate  br ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
+			<span class="bold notranslate ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
 
 			<%-- iterate over possible values for the given label
 				data (FieldValue):
@@ -158,7 +158,7 @@
 						<c:set var="seo_wrapper" value="h2" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="seo_wrapper" value="p" />
+						<c:set var="seo_wrapper" value="span" />
 					</c:otherwise>
 				</c:choose>				
 

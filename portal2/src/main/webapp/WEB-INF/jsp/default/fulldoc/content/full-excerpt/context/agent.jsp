@@ -16,8 +16,8 @@
     <div class="contextual-header" id="${agent.htmlId}">${title}</div>
   </c:if>
  --%>
-  <div<c:if test="${inContext == 1}"> class="contextual-body" id="${agent.htmlId}"</c:if>>
-    <p>
+  <span<c:if test="${inContext == 1}"> class="contextual-body" id="${agent.htmlId}"</c:if>>
+    <span>
       <c:url var="searchUrl" value="/search.html">
         <c:param name="query">edm_agent:"${agent.about}"</c:param>
       </c:url>
@@ -30,10 +30,10 @@
       <c:if test="${!empty agent.prefLabelLang && !empty agent.altLabelLang}">
         (<c:forEach items="${agent.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">; </c:if></c:forEach>)
       </c:if>
-    </p>
+    </span>
 
     <c:if test="${!empty agent.beginLang || !empty agent.endLang}">
-      <p>
+      <span>
         <c:if test="${!empty agent.beginLang}">
           <spring:message code="context_agent_begin_t" />: 
           <c:forEach items="${agent.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
@@ -45,17 +45,17 @@
           <spring:message code="context_agent_end_t" />: 
           <c:forEach items="${agent.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
         </c:if>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty agent.noteLang}">
-      <p>
+      <span>
         <c:forEach items="${agent.noteLang}" var="item" varStatus="t"><c:if test="${!t.first}"><br/></c:if>${item}</c:forEach>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty agent.edmIsRelatedToLang}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_Related_t" />
         <c:if test="${fn:length(concept.edmIsRelatedToLang) > 1}">
           <c:set var="msg_key" value="context_concept_Relateds_t" />
@@ -66,22 +66,22 @@
             <c:if test="${!t.first}">, </c:if>${label}
           </c:if>
         </c:forEach>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty agent.rdaGr2DateOfBirthLang}">
-      <p>
+      <span>
         <spring:message code="context_agent_dateOfBirth_t" />: 
         <c:if test="${!empty agent.rdaGr2DateOfBirthLang}">
           <c:forEach items="${agent.rdaGr2DateOfBirthLang}" var="label" varStatus="t">
             <c:if test="${!empty label}"><c:if test="${!t.first}">, </c:if>${label}</c:if>
           </c:forEach>
         </c:if>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty agent.rdaGr2DateOfDeathLang}">
-      <p>
+      <span>
         <spring:message code="context_agent_dateOfDeath_t" />: 
         <c:if test="${!empty agent.rdaGr2DateOfDeathLang}">
           <c:forEach items="${agent.rdaGr2DateOfDeathLang}" var="label" varStatus="t">
@@ -90,7 +90,7 @@
             </c:if>
           </c:forEach>
         </c:if>
-      </p>
+      </span>
     </c:if>
 
 <%-- 
@@ -103,5 +103,5 @@
           </c:if>
 
 --%>
-  </div>
+  </span>
 </c:if>

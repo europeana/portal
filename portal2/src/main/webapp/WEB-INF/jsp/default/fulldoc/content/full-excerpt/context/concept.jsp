@@ -16,8 +16,8 @@
     <div class="contextual-header" id="${concept.htmlId}">${title}</div>
   </c:if>
  --%>
-  <div<c:if test="${inContext == 1}"> class="contextual-body" id="${concept.htmlId}"</c:if>>
-    <p>
+  <span<c:if test="${inContext == 1}"> class="contextual-body" id="${concept.htmlId}"</c:if>>
+    <span>
       <c:url var="searchUrl" value="/search.html">
         <c:param name="query">skos_concept:"${concept.about}"</c:param>
       </c:url>
@@ -32,18 +32,18 @@
       <c:if test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
         <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>
       </c:if>
-    </p>
+    </span>
 
     <c:if test="${!empty concept.noteLang}">
-      <p>
+      <span>
         <c:forEach items="${concept.noteLang}" var="item" varStatus="t">
           ${item}<c:if test="${!t.last}"><br/></c:if>
         </c:forEach>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty concept.notationLang}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_Notation_t" />
         <c:if test="${fn:length(concept.broaderLinks) > 1}">
           <c:set var="msg_key" value="context_concept_Notations_t" />
@@ -52,7 +52,7 @@
         <c:forEach items="${concept.notationLang}" var="item" varStatus="t">
           ${item}<c:if test="${!t.last}"><br/></c:if>
         </c:forEach>
-      </p>
+      </span>
     </c:if>
 <%--
     <c:if test="${!empty concept.broaderLinks}">
@@ -67,80 +67,80 @@
     </c:if>
  --%>
     <c:if test="${!empty concept.narrowerLinks}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_Narrower_t" />
         <c:if test="${fn:length(concept.narrowerLinks) > 1}">
           <c:set var="msg_key" value="context_concept_Narrowers_t" />
         </c:if>
         <spring:message code="${msg_key}" />: 
         <europeana:optionalMapList map="${concept.narrowerLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty concept.relatedLinks}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_Related_t" />
         <c:if test="${fn:length(concept.relatedLinks) > 1}">
           <c:set var="msg_key" value="context_concept_Relateds_t" />
         </c:if>
         <spring:message code="${msg_key}" />: 
         <europeana:optionalMapList map="${concept.relatedLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty concept.broadMatchLinks}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_broadMatch_t" />
         <c:if test="${fn:length(concept.broadMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_broadMatches_t" />
         </c:if>
         <spring:message code="${msg_key}" />: 
         <europeana:optionalMapList map="${concept.broadMatchLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty concept.narrowMatchLinks}">
-            <p>
+      <span>
         <c:set var="msg_key" value="context_concept_narrowMatch_t" />
         <c:if test="${fn:length(concept.narrowMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_narrowMatches_t" />
         </c:if>
         <spring:message code="${msg_key}" />: 
         <europeana:optionalMapList map="${concept.narrowMatchLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty concept.relatedMatchLinks}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_relatedMatch_t" />
         <c:if test="${fn:length(concept.relatedMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_relatedMatches_t" />
         </c:if>
         <spring:message code="${msg_key}" />: 
         <europeana:optionalMapList map="${concept.relatedMatchLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty concept.exactMatchLinks}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_exactMatch_t" />
         <c:if test="${fn:length(concept.exactMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_exactMatches_t" />
         </c:if>
         <spring:message code="${msg_key}" />: 
         <europeana:optionalMapList map="${concept.exactMatchLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty concept.closeMatchLinks}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_concept_closeMatch_t" />
         <c:if test="${fn:length(concept.closeMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_closeMatches_t" />
         </c:if>
         <spring:message code="${msg_key}" />: 
         <europeana:optionalMapList map="${concept.closeMatchLinks}" />
-      </p>
+      </span>
     </c:if>
-  </div>
+  </span>
 </c:if>

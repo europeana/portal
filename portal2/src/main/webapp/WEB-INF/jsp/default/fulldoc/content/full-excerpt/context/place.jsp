@@ -16,8 +16,8 @@
     <div class="contextual-header" id="${place.htmlId}">${title}</div>
   </c:if>
  --%>
-  <div<c:if test="${inContext == 1}"> class="contextual-body" id="${place.htmlId}"</c:if>>
-    <p>
+  <span <c:if test="${inContext == 1}"> class="contextual-body" id="${place.htmlId}"</c:if>>
+    <span>
       <c:url var="searchUrl" value="/search.html">
         <c:param name="query">edm_place:"${place.about}"</c:param>
       </c:url>
@@ -31,15 +31,15 @@
       <c:if test="${!empty place.prefLabelLang && !empty place.altLabelLang}">
         (<c:forEach items="${place.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>)
       </c:if>
-    </p>
+    </span>
 
     <c:if test="${!empty place.noteLang}">
-      <p>
+      <span>
         <c:forEach items="${place.noteLang}" var="item" varStatus="t">
           <c:if test="${!t.first}"><br/></c:if>
           ${item}
         </c:forEach>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty place.latitude or !empty place.longitude or !empty place.altitude}">
@@ -61,7 +61,7 @@
     </c:if>
 
     <c:if test="${!empty place.dcTermsHasPartLang}">
-      <p>
+      <span>
         <c:set var="msg_key" value="context_place_dcTermsHasPart_t" />
         <c:if test="${fn:length(place.dcTermsHasPartLang) > 1}">
           <c:set var="msg_key" value="context_place_dcTermsHasParts_t" />
@@ -69,21 +69,21 @@
         <spring:message code="${msg_key}" />: 
 
         <c:forEach items="${place.dcTermsHasPartLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty place.isPartOfLinks}">
-      <p>
+      <span>
         <spring:message code="context_place_isPartOf_t" />: 
         <europeana:optionalMapList map="${place.isPartOfLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty place.owlSameAs}">
-      <p>
+      <span>
         <spring:message code="context_place_owlSameAs_t" />: 
         <europeana:optionalList list="${place.owlSameAs}" />
-      </p>
+      </span>
     </c:if>
-  </div>
+  </span>
 </c:if>

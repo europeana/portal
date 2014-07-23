@@ -16,8 +16,8 @@
     <div class="contextual-header" id="${concept.htmlId}">${title}</div>
   </c:if>
  --%>
-  <div<c:if test="${inContext == 1}"> class="contextual-body" id="${concept.htmlId}"</c:if>>
-    <p>
+  <span<c:if test="${inContext == 1}"> class="contextual-body" id="${concept.htmlId}"</c:if>>
+    <span>
       <c:url var="searchUrl" value="/search.html">
         <c:param name="query">edm_timespan:"${timespan.about}"</c:param>
       </c:url>
@@ -30,25 +30,25 @@
       <c:if test="${!empty timespan.prefLabelLang && !empty timespan.altLabelLang}">
         (<c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>)
       </c:if>
-    </p>
+    </span>
 
     <c:if test="${!empty timespan.noteLang}">
-      <p>
+      <span>
         <c:forEach items="${timespan.noteLang}" var="item" varStatus="t">
           ${item}<c:if test="${!t.last}"><br/></c:if>
         </c:forEach>
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty timespan.isPartOfLinks}">
-      <p>
+      <span>
         <spring:message code="context_isPartOf_t" />: 
         <europeana:optionalMapList map="${timespan.isPartOfLinks}" />
-      </p>
+      </span>
     </c:if>
 
     <c:if test="${!empty timespan.beginLang || !empty timespan.endLang}">
-      <p>
+      <span>
         <c:if test="${!empty timespan.beginLang}">
           <spring:message code="context_timespan_begin_t" />: 
           <c:forEach items="${timespan.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
@@ -62,7 +62,7 @@
           <spring:message code="context_timespan_end_t" />: 
           <c:forEach items="${timespan.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
         </c:if>
-      </p>
+      </span>
     </c:if>
-  </div>
+  </span>
 </c:if>
