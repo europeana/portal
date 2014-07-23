@@ -126,7 +126,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			return idIn.replace(/\//g, '_').replace(/-/g, '_');
 		}
 		
-		var normaliseText = function(id, title, type){
+		var normaliseText = function(id, title, type, childCount){
 			
 			var text     = title.def[0];
 			
@@ -134,6 +134,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			text = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
 			 + 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
 			 + 	text
+			 +  (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ' items)')
 			 + '</a>';
 			
 			window.followLink = function(e){
@@ -147,7 +148,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		if(ob.action === "self.json"){
 			newOb = {
 					"id" : escapeId(ob.object.id),
-					"text" : normaliseText(ob.object.id, ob.object.title, ob.object.type),
+					"text" : normaliseText(ob.object.id, ob.object.title, ob.object.type, ob.childrenCount),
 					"data" : {
 						"id" :			ob.object.id,	/* reference to unescaped id */
 						"index":		ob.object.index,
@@ -165,7 +166,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		else{
 			newOb = {
 					"id" : escapeId(ob.id),
-					"text" : normaliseText(ob.id, ob.title, ob.type),
+					"text" : normaliseText(ob.id, ob.title, ob.type, ob.childrenCount),
 					"data" : {
 						"id" :			ob.id, /* reference to unescaped id */
 						"index":		ob.index,

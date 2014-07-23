@@ -64,7 +64,7 @@
 		}
 	</style>
 
-	<div id="more-like-this-wrapper">
+	<div id="more-like-this-wrapper" style="display:none;">
 		<div id="more-like-this" class="europeana-carousel">
 			<c:forEach items="${model.europeanaMlt.categories[0].urls}" var="doc" varStatus="status">
 				<c:choose>
