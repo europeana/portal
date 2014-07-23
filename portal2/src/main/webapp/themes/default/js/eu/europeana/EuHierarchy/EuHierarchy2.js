@@ -851,7 +851,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						newScrollTop = Math.max(0, newScrollTop);				
 					}
 					else{
-						alert(
+						log(
 							  'ERROR CODE 1\n\n'
 							+ 'If you see this please record the what steps were needed to produce this error and what browser was used, and let Andy know about it\n\n'
 							+ 'initiatingNode != visibleNodes[0]\n\ninitiator was ' + initiatingNode.id 
@@ -1272,7 +1272,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				if(!data){
 					data                 = newData;
 					self.pageNodeId      = data.id
-					log('self.pageNodeId = ' + self.pageNodeId)
 				}
 				else{
 					newData.state    = {"opened" : true, "disabled" : true};
@@ -1317,7 +1316,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		// the first child of each sibling is also in order to draw the tree correctly
 		// 
 		// the tree doesn't exist yet - @node refers to a block of data
-		
+		/*
 		preTreeInit = function(node, callback){
 
 			if(node.data.hasChildren){
@@ -1339,13 +1338,17 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				});				
 			}
 		}
+		*/
 		
 		// build initial tree structure
 		chainUp(baseUrl, false, function(ob){
+
+			log('Done chain up:\n\n' + JSON.stringify(ob, null, 2));
+
+			data = ob;
+			//preTreeInit(ob, function(data){
 				
-			preTreeInit(ob, function(data){
-				
-				log('Initialise tree with model:\n\n' + JSON.stringify(data));
+				log('Initialise tree with model:\n\n' + JSON.stringify(data, null, 2));
 
 				var tree = self.treeCmp.jstree({
 					"core" : {
@@ -1355,7 +1358,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					"plugins" : [ "themes", "json_data", "ui"]
 				});
 				
-			});
+			//});
 		});
 	}; // end init
 

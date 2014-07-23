@@ -1250,13 +1250,14 @@ eu.europeana.fulldoc = {
 			if(demo == true){
 				scripts.push({
 					"name" : "hoData",
-					"file" : "EuHierarchyData.js",
-					"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/',
+					"file" : "EuHierarchyData2.js",
+					"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/node/',
 				});				
 			}
 
 			scripts.push({
-				"file" : (demo == true ? "EuHierarchy.js" : "EuHierarchy2.js"),
+				//"file" : (demo == true ? "EuHierarchy.js" : "EuHierarchy2.js"),
+				"file" : "EuHierarchy2.js",
 				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
 				"dependencies" : demo ? ["hoData", "scrollTo", "jstree"] : ["scrollTo", "jstree"],
 				callback : function() {
@@ -1268,17 +1269,20 @@ eu.europeana.fulldoc = {
 						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
 					}
 
+					addMarkup(demo);
 					$(document).ready(function() {
-						addMarkup(demo);
-						window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
-						window.hierarchy.init(initialiseUrl);
+						setTimeout(function(){
+							window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
+							window.hierarchy.init(demo ? '1-1-1/self.json' : initialiseUrl, demo);
+							
+						}, 500);
 					});
 
 				}
 			});
 			js.loader.loadScripts(scripts);
-		};hierarchyTestUrl
-
+		};
+		
 		if (typeof(hierarchical) != 'undefined') {
 			loadHierarchy("dataGen.base()", true);			
 		}
