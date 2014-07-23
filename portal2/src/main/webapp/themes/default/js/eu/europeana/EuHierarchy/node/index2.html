@@ -5,12 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Hierarchical Objects Test Page</title>
 
-<!-- 
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-face.css"/>
- -->	
+<!-- 
 	<link rel="stylesheet" href="../../../../../css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="../../../../../css/europeana-font-face.css"/>
+ -->	
 	
 	<link rel="stylesheet" href="../style.css" />
 	<link rel="stylesheet" href="../style-overrides.css" />
@@ -119,26 +119,9 @@
 
 				console.log('param = ' + param)
 
-				//if(window.location.href.indexOf('localhost:3000') > -1){
-					//window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
-					//window.hierarchicalObjectServer = 'http://localhost:3000/?requestData=';					
-				//}
 				
-				window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
+				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
 
-
-				// regression test old errors:
-				/*
-				hierarchy.init("dataGen.parentTop()")
-				hierarchy.init("dataGen.apocalypse_vol_1()")
-				*/
-
-				//hierarchy.init(param ? param : "dataGen.base()");
-				//hierarchy.init(param ? param : "dataGen.j1_13");
-				//hierarchy.init(param ? param : "dataGen.apocalypse_vol_1()");
-                                               //'http://localhost:8080/api/v2/record/9200300/BibliographicResource_3000052917524/self.json?wskey=api2demo&callback=?'
-				//hierarchy.init(param ? param : 'http://localhost:8080/api/v2/record/9200300/BibliographicResource_3000052917524/self.json?wskey=api2demo');
-                                               
 				hierarchy.init((param ? param : 'http://localhost:3000/1-1-2-1/self.json?wskey=api2demo'), true);
 
 				new EuHierarchyTools(hierarchy);

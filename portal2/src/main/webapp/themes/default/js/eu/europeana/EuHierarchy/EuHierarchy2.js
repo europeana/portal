@@ -129,17 +129,19 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		var normaliseText = function(id, title, type){
 			
 			var text     = title.def[0];
-			var iconText = ''; 
-			var linkText = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
-						 + 		' onclick="var e = arguments[0] || window.event; followLink(e);">'
-						 +  	'&#9654;'
-						 + '</a>';
-
+			
+			
+			text = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
+			 + 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
+			 + 	text
+			 + '</a>';
+			
 			window.followLink = function(e){
 				e.stopPropagation();
 			}
 			
-			return '<span class="icon' + (type ? '  icon-' + type.toLowerCase() : '') + '">' + text + ' ' + linkText  +  '</span>';
+			//return '<span class="icon' + (type ? '  icon-' + type.toLowerCase() : '') + '">' + text + ' ' + linkText  +  '</span>';
+			return '<span class="icon' + (type ? '  icon-' + type.toLowerCase() : '') + '">' + text + ' '  +  '</span>';
 		}
 		
 		if(ob.action === "self.json"){
@@ -1296,7 +1298,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				}
 				else{
 					wrapper.find('.hierarchy-title>a').html(data.text);
-					wrapper.find('.hierarchy-title span a').remove();
 					wrapper.find('.hierarchy-title span').removeAttr('class');
 					
 					wrapper.find('.hierarchy-title>a').click(function(){
