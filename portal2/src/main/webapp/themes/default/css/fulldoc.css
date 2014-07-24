@@ -56,12 +56,12 @@
 	width:			100%;
 }
 
-.see-also-header{
+.see-also-header,
+.hierarchy-header{
 	margin-top:    1.5em;
 	margin-bottom: 0.5em;
 	display: inline-block;
 }
-
 /*
 #mlt .section{
 	padding-top:   1.5em;
@@ -280,6 +280,7 @@ a.action-link span,
 	padding-top:	1.5em;
 }
 
+#main-fulldoc-area .hierarchy-header,
 #main-fulldoc-area .hierarchy-objects{
 	display:		none;	
 }
@@ -390,7 +391,8 @@ a.action-link span,
 @media only screen and ( min-width:48em ){
 	
 	.see-also-header,
-	#more-like-this-wrapper{
+	#more-like-this-wrapper,
+	.hierarchy-header{
 		padding-left:2em;		
 	}
 		
@@ -437,7 +439,10 @@ from search.css:
 		width: 			auto;
 		max-width:		none;
 		margin-left:	1em;
-		margin-top:		1em;
+		margin-top:		0em;
+		display:		block;	
+	}
+	#main-fulldoc-area .hierarchy-header{
 		display:		block;	
 	}
 	

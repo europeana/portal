@@ -1228,6 +1228,8 @@ eu.europeana.fulldoc = {
 		var loadHierarchy = function(initialiseUrl, demo){
 			
 			$('#more-like-this-wrapper').remove();
+			$('.see-also-header').after('<strong class="hierarchy-header">' + hierarchyHeader + '</strong>');
+			$('.see-also-header').remove();
 
 			var scripts = [];
 
