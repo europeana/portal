@@ -220,16 +220,14 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.languageLabel = '${model.user.languageItem}';
 				
 				<c:forEach items="${model.portalLanguages}" var="language">
-					<c:if test="${language == model.user.languageItem}">
-						eu.europeana.vars.languageLabel = '${language.name}';
+					<c:if test="${language.languageCode == model.user.languageItem}">
+						eu.europeana.vars.languageLabel = '${language.languageName}';
 					</c:if>
 				</c:forEach>
 
 			</c:if>
-
-			
-			
 		</c:if>
+
 
 		<c:set var="soundCloudAwareCollections">
 			<c:choose>
