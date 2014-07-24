@@ -249,7 +249,7 @@ eu.europeana.translation_services = {
 
 	},
 
-
+/*
 	addReturnToOriginal : function() {
 
 		if ( this.links.$return_to_original.is(':hidden') ) {
@@ -260,6 +260,32 @@ eu.europeana.translation_services = {
 					.fadeIn()
 				);
 
+		}
+
+	},
+
+*/
+	addReturnToOriginal : function() {
+
+		if ( this.links.$return_to_original.is(':hidden') ) {
+/*
+			this.containers.$translation_services
+				.append(
+					this.links.$return_to_original.bind('click', { self : this }, this.handleReturnToOriginal )
+					.fadeIn()
+				);
+*/
+			$('#main-fulldoc-area').prepend(
+				this.links.$return_to_original.css('display',       'block');
+				this.links.$return_to_original.css('margin-left',   '2em');
+				this.links.$return_to_original.css('margin-bottom', '1em');
+				
+				this.links.$return_to_original.bind('click', { self : this }, this.handleReturnToOriginal )
+				.fadeIn()
+			);
+			console.log('prepended revert link to main: language label is ' + eu.europeana.vars.languageLabel );
+
+			
 		}
 
 	},

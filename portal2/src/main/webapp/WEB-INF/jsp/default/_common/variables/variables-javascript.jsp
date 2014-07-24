@@ -213,9 +213,22 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.msg.saved_tag        = '${fn:escapeXml(saved_tag)}';
 			eu.europeana.vars.msg.save_tag_failed  = '${fn:escapeXml(save_tag_failed)}';
 			eu.europeana.vars.item.uri             = '${model.document.about}';
+			
+
 			<c:if test="${empty model.useBackendItemTranslation || model.useBackendItemTranslation == false}">
 				eu.europeana.vars.languageItem = '${model.user.languageItem}';
+				eu.europeana.vars.languageLabel = '${model.user.languageItem}';
+				
+				<c:forEach items="${model.portalLanguages}" var="language">
+					<c:if test="${language == model.user.languageItem}">
+						eu.europeana.vars.languageLabel = '${language.name}';
+					</c:if>
+				</c:forEach>
+
 			</c:if>
+
+			
+			
 		</c:if>
 
 		<c:set var="soundCloudAwareCollections">
