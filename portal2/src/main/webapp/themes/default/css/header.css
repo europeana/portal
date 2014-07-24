@@ -144,7 +144,7 @@
 		display:		table-cell;
 		vertical-align:	middle;
 	}
-
+	
 	#query-full{
 		width:			65%;
 		margin-top:		0;
@@ -153,6 +153,8 @@
 
 	#query-info{
 		text-align:		center;
+		vertical-align:	top;
+		padding-top:	0.65em;
 		width:			10%;
 	}
 
