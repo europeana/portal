@@ -1,4 +1,7 @@
-<div id="query-full">
+
+
+
+<div id="query-full" <c:if test="${!empty model.queryTranslationLinks}">class="with-translations"</c:if> >
 
 	<c:choose>
 		<c:when test="${empty isSearchWidget}">
@@ -19,7 +22,7 @@
 </div>
 
 <c:if test="${empty isSearchWidget}">
-	<div id="query-info" class="hide-cell-on-phones">
+	<div id="query-info" class="hide-cell-on-phones <c:if test="${!empty model.queryTranslationLinks}">with-translations</c:if>">
 
 		<c:set var="helpHref" value="/${model.portalName}/usingeuropeana.html"/>
 		<c:choose>

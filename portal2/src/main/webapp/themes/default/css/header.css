@@ -140,9 +140,15 @@
 		min-width:		auto;
 	}
 
-	#query-full, #query-info{
+	#query-full,
+	#query-info{
 		display:		table-cell;
 		vertical-align:	middle;
+	}
+
+	#query-full.with-translations,
+	#query-info.with-translations{
+		vertical-align: top;
 	}
 	
 	#query-full{
