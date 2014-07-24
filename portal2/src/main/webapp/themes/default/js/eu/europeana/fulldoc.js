@@ -1025,75 +1025,7 @@ eu.europeana.fulldoc = {
 	
 	/**
 	 *
-	 * MLT
-	 *
-	 * */
-	/*
-	mltInit : function(){
-		
-		if (typeof(mlt) != 'undefined') {
-			
-			var getLoadAllLink = function() {
-				return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
-			};
-			
-			var initMlt = function() {
-				
-				if ($('#more-like-this .carousel-wrapper').length) {
-					return;
-				}
-				
-				var mltData = [];
-				
-				
-				$('.mlt-link').each(function(i, ob) {
-					ob = $(ob);
-					mltData[mltData.length] = {
-							"thumb" : ob.find('img').attr('src'),
-							"title" : ob.attr('title'),
-							"link" : ob.attr('href'),
-							"linkTarget" : "_self"
-					}
-				});
-				//console.log('mltData = ' + JSON.stringify(mltData) );
-				
-				$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
-				var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
-				
-			}; // end initMlt
-			
-			var initMltIfBigEnough = function() {
-				var mobile = js.utils.phoneTest();
-				
-				if (mobile) {
-					if (! $('.mlt-title').find('.ellipsis-inner').length) {
-						mltEllipsis = new Ellipsis($('.mlt-title')).respond();
-						console.log('added ellipsis to phone mode');
-					}
-				}
-				else {
-					console.log('init mlt');
-					initMlt();
-				}
-				if (mltTotal > 1) {
-					if ($('.load-all').length ==0 ) {
-						$('#more-like-this-wrapper').append(getLoadAllLink());
-					}
-				}
-				
-			};
-			
-			$(window).euRsz(function() {
-				initMltIfBigEnough();
-			});
-			initMltIfBigEnough();
-		}
-	},
-	 */
-	
-	/**
-	 *
-	 * geo-location
+	 * geo-location trigger
 	 *
 	 * */
 	
@@ -1240,7 +1172,6 @@ eu.europeana.fulldoc = {
 								"linkTarget" : "_self"
 						}
 					});
-					//console.log('mltData = ' + JSON.stringify(mltData) );
 					
 					$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
 					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
@@ -1363,11 +1294,9 @@ eu.europeana.fulldoc = {
 			}).fail(function(){
 				console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
 				mltInit();
-			}).success(function(){
-				//console.log('SUCCESS');
 			});
 		}
-		else{			
+		else{
 			mltInit();
 		}
 	},

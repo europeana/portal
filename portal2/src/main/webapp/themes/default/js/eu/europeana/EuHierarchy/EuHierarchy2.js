@@ -694,29 +694,26 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	var togglePrevNextLinks = function(){
 				
 		brokenArrows();
-	
 		
 		var offset = self.container.scrollTop();
 
 		if(self.container.scrollTop() > 1){
-			$('.hierarchy-prev').show();
+			$('.hierarchy-prev').addClass('show');
 			$('.hierarchy-top-panel').removeClass('top');
 		}
 		else{
-			$('.hierarchy-prev').hide();
+			$('.hierarchy-prev').removeClass('show');
 			$('.hierarchy-top-panel').addClass('top');
 		}
 		
 		var ch = self.container.height();
 		var th = self.treeCmp.height();
 		
-		//console.log('cont height: ' + ch  + ', (tree height: ' + th + ', offset: ' + offset + ') -->  (th-offset) = ' + (th-offset)  );
-		
 		if(th-offset > ch){
-			$('.hierarchy-next').show();
+			$('.hierarchy-next').addClass('show');
 		}
 		else{
-			$('.hierarchy-next').hide();
+			$('.hierarchy-next').removeClass('show');
 		}
 	};
 

@@ -43,23 +43,29 @@
 
 .hierarchy-top-panel{
 	border-bottom: none;
+	padding-top: 1em;
 }
 
 .hierarchy-bottom-panel{
 	border-top: none;
-	height:     5em;
+	height:     3em;
 }
 
 .hierarchy-top-panel .hierarchy-title{
+	font-size:      1.2em;
 	position:       relative;
-	margin-top:     0.25em;
 	margin-left:    1em;
 	padding-bottom: 2em;
-	font-size:      1.2em;
+	
+	-webkit-transition: padding-bottom 1s;
+    transition:         padding-bottom 1s;
 }
 
 .hierarchy-top-panel.top .hierarchy-title{
-	padding-bottom: 1em;
+	padding-bottom:		1em;
+	
+	-webkit-transition: padding-bottom 1s;
+    transition:         padding-bottom 1s;	
 }
 
 .hierarchy-top-panel .hierarchy-title a{
@@ -85,6 +91,23 @@
 .hierarchy-next,
 .hierarchy-prev{
 	line-height: 2em;
+}
+
+.hierarchy-next,
+.hierarchy-prev{
+	line-height:	2em;
+	visibility:		hidden;
+	opacity:		0;
+	transition:		visibility 0s linear 0.25s, opacity 0.25s linear;
+}
+
+
+.hierarchy-next.show,
+.hierarchy-prev.show{
+  visibility:		visible;
+  opacity:			1;
+  transition-delay:	2s;
+  transition:		opacity 1s linear;
 }
 
 .expand-collapse a,
@@ -129,12 +152,14 @@
 
 .transparent {
 	opacity:     		0;
+	
     -webkit-transition: opacity 1s;
     transition:         opacity 1s;
 } 
 
 .opaque {
 	opacity:     		1;
+	
     -webkit-transition: opacity 1s;
     transition:         opacity 1s;
 } 
