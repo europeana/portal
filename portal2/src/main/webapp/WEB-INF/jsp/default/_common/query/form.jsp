@@ -86,9 +86,10 @@
 							</c:if>
 						</c:forEach>
 						
-						
-						<a href="${qt.queryLink}">${qt.text}</a> (${langName})
-						<a href="${qt.removeLink}" class="icon-remove-after"></a> &nbsp; 
+						<div class="query-translation">
+							<a href="${qt.queryLink}">${qt.text}</a> (${langName})
+							<a href="${qt.removeLink}" class="icon-remove-after"></a> &nbsp; 
+						</div>
 					</c:if>
 				</c:forEach>
 				<c:if test="${!empty model.noTranslationUrl && hasTranslation}">

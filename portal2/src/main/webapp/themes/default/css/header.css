@@ -108,6 +108,10 @@
 	top:      0.15em;
 }
 
+#query-translations .query-translation{
+	display: inline-block;
+}
+
 @media only screen and ( min-width:48em ){
 
 	.phone-test{
