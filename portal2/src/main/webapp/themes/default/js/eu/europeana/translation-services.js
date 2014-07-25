@@ -254,7 +254,9 @@ eu.europeana.translation_services = {
 		if ( this.links.$return_to_original.is(':hidden') ) {
 		
 			var originalAvailable = (typeof com.microsoft.translator.originalLanguage != 'undefined') && com.microsoft.translator.originalLanguage;
+			
 			alert(com.microsoft.translator.originalLanguage)
+			
 			if(originalAvailable){
 				
 				this.links.$translated_from_language = jQuery( '<span class="translatedFromLabel">' + eu.europeana.vars.msg.translated_from_language + ' ' + com.microsoft.translator.originalLanguage + ' -&nbsp;</span>');

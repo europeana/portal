@@ -67,6 +67,8 @@ com.microsoft.translator = function( options ) {
 	
 	this.options = jQuery.extend( true, {}, default_options, options );
 	
+	com.microsoft.translator.options = this.options;	// I can't use 'this' in a function called from JSONP
+	
 	this.init = function( callback ) {
 		this.addTranslatorToContainer();
 		if ( callback ) { callback.call(); }
@@ -213,70 +215,83 @@ com.microsoft.translator = function( options ) {
      *
      *	@link http://sdk.microsofttranslator.com/AJAX/GetLanguageNames.aspx
      */
+    com.microsoft.translator.prototype.languageNamesCallback = function(response) {
+		var i = 0,
+		html = '',
+		ii = response.length;
+
+		var options = com.microsoft.translator.options;
+		
+		for ( i = 0; i < ii; i += 1 ) {
+			
+			html += '<option value="' + options.language_codes.available[i] + '">' + response[i] + '</option>';
+				
+		}
+		
+		options.$translator_selector.find('select').append( html );
+		
+		
+		// get orig language here
+		
+		var arraysText = '';
+		for(var i=0; i<options.detect_nodes.length; i++){
+			
+			var html = options.detect_nodes[i].html();
+			
+			if(isNaN(parseInt(html))){		// ignore numeric data
+				
+				html = html.replace(/\'/g, '');
+				html = html.replace(/\"/g, '');
+	
+				if(arraysText.length + 3 + html.length < 99998){
+					if(arraysText.length > 0){
+						arraysText += ',';
+					} 
+					arraysText += '"' + html + '"' 
+				}					
+			}
+		}
+
+
+		if(arraysText.length>0){
+			arraysText = '[' + arraysText + ']'
+			js_src_detect  =	'http://api.microsofttranslator.com/V2/Ajax.svc/DetectArray' +
+			'?oncomplete=' + 'com.microsoft.translator.prototype.doneDetect' +
+			'&appId=' + options.BING_API_KEY +
+			'&texts=' + arraysText;
+			
+	    	try {	    		
+	    		js.loader.loadScripts([{
+	    			file : js_src_detect,
+	    			path : ''
+	    		}]);
+	    	}
+	    	catch(e) {
+	    		js.console.log(e);
+	    		$(window).trigger('translator-ready');
+	    	}				
+		} 
+		else{
+			$(window).trigger('translator-ready');
+		}
+    }
+
     com.microsoft.translator.prototype.getLanguageNames = function() {
     	
-    	var	options =	this.options,
-    		js_src  = 	'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguageNames' +
-						'?oncomplete=' + options.callback +
-						'&appId=' + options.BING_API_KEY +
-						'&locale=' + options.language_codes.browser_locale +
-						'&languageCodes=' + options.language_codes.formated;
 				
-    	this.setCallback( function( response ) {
+//    	this.setCallback( function( response ) {
 			
-			var i = 0,
-				html = '',
-				ii = response.length;
-			
-			for ( i = 0; i < ii; i += 1 ) {
-				
-				html += '<option value="' + options.language_codes.available[i] + '">' + response[i] + '</option>';
-					
-			}
-			
-			options.$translator_selector.find('select').append( html );
-			
-			
-			// get orig language here
-			
-			var arraysText = '';
-			for(var i=0; i<options.detect_nodes.length; i++){
-				
-				var html = options.detect_nodes[i].html();
-				
-				if(isNaN(parseInt(html))){		// ignore numeric data
-					
-					html = html.replace(/\'/g, '');
-					html = html.replace(/\"/g, '');
 
-					if(arraysText.length + 3 + html.length < 99998){
-						if(arraysText.length > 0){
-							arraysText += ',';
-						} 
-						arraysText += '"' + html + '"' 
-					}					
-				}
-			}
-			
-			if(arraysText.length>0){
-				arraysText = '[' + arraysText + ']'
-				js_src_detect  =	'http://api.microsofttranslator.com/V2/Ajax.svc/DetectArray' +
-				'?oncomplete=' + 'com.microsoft.translator.prototype.doneDetect' +
-				'&appId=' + options.BING_API_KEY +
-				'&texts=' + arraysText;
-				
-		    	try {	    		
-		    		js.loader.loadScripts([{
-		    			file : js_src_detect,
-		    			path : ''
-		    		}]);
-		    	}
-		    	catch(e) {	    		
-		    		js.console.log(e);
-		    	}				
-			}
-		});
-		
+//		});
+
+    	var	options =	this.options,
+		js_src  = 	'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguageNames' +
+					'?oncomplete=com.microsoft.translator.prototype.languageNamesCallback'  +
+				//	'?oncomplete=' + options.callback +
+					'&appId=' + options.BING_API_KEY +
+					'&locale=' + options.language_codes.browser_locale +
+					'&languageCodes=' + options.language_codes.formated;
+    	
 		js.loader.loadScripts([{
 			file : js_src,
 			path : ''
@@ -397,6 +412,7 @@ com.microsoft.translator = function( options ) {
      */
     com.microsoft.translator.prototype.doneDetect = function(data) {
     	
+    	
     	var langs = {};
     	if(typeof data.length != 'undefined' && data.length){
     		for(var i=0; i<data.length; i++){
@@ -418,6 +434,9 @@ com.microsoft.translator = function( options ) {
 		}
     	
     	com.microsoft.translator.originalLanguage = $('#microsoft-translate-element select option[value=' + top + ']').html();
+    	
+		$(window).trigger('translator-ready');
+
     }
     
     com.microsoft.translator.prototype.translate = function() {

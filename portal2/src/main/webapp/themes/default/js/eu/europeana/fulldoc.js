@@ -60,7 +60,12 @@ eu.europeana.fulldoc = {
 
 		//js.console.log(JSON.stringify(carouselData));
 
-		this.autoTranslateItem.init();
+	   	$(window).bind('translator-ready', function(data){
+	   		console.log('translator-ready' )
+	   		
+	   		eu.europeana.fulldoc.autoTranslateItem.init();
+	   	});
+
 	},
 
 	loadComponents : function() {
@@ -924,7 +929,7 @@ eu.europeana.fulldoc = {
 	initCarousels: function() {
 
 		Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
-
+		
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken) {
 
 			// this is where we go when there is no carosuel data or when the carousel images didn't load
@@ -1290,6 +1295,7 @@ eu.europeana.fulldoc = {
 		$translate_options: $('#microsoft-translate-element').find('option'),
 
 		init: function () {
+			
 			if (
 				eu.europeana.vars.languageItem
 				&& eu.europeana.vars.languageItem.length === 2
