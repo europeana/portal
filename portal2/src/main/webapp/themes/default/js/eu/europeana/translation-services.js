@@ -8,8 +8,9 @@ eu.europeana.translation_services = {
 	links : {
 
 		$show_services : jQuery('#translate-item'),
-		$return_to_original : jQuery( '<a href="" style="display:none;">' + eu.europeana.vars.msg.return_to_language + '</a>' )
-		, $iconP: jQuery('#translate-item').find('.iconP')
+		$return_to_original : jQuery( '<a href="" style="display:none;">' + eu.europeana.vars.msg.return_to_language.toLowerCase() + '</a>' ),
+		$return_to_original_inline : jQuery( '<a href="" style="display:none;">' + eu.europeana.vars.msg.return_to_language + '</a>' ),
+		$iconP: jQuery('#translate-item').find('.iconP')
 
 	},
 
@@ -82,9 +83,7 @@ eu.europeana.translation_services = {
 		var self = this;
 
 		jQuery('#item-details .translate, #additional-info .translate').each( function( index, value ) {
-
 			self.text_nodes.push( jQuery( value ) );
-
 		});
 
 	},
@@ -114,10 +113,8 @@ eu.europeana.translation_services = {
 				self.translators[translator].callbacks[x] =
 
 					function( response ) {
-
 						self.translators[translator].translations[self.to_locale][x] = response;
 						self.applyTranslation( self.text_nodes[x], response );
-
 					};
 
 			})();
@@ -158,7 +155,9 @@ eu.europeana.translation_services = {
 			browser_locale : eu.europeana.vars.locale,
 
 			$container_for_selector : this.containers.$translation_services,
-			"translator_selector_html" : this.translator_selector_html
+			"translator_selector_html" : this.translator_selector_html,
+			
+			"detect_nodes" : self.text_nodes
 
 		});
 
@@ -199,15 +198,16 @@ eu.europeana.translation_services = {
 			self.setTranslatorTranslationDefault( translator, i );
 
 			if ( self.translators[translator].translations[self.to_locale] && self.translators[translator].translations[self.to_locale][i] ) {
-
 				self.applyTranslation( self.text_nodes[i], self.translators[translator].translations[self.to_locale][i] );
-
-			} else {
+			}
+			else {
 
 				eu.europeana.translation_services[translator].options.text_to_translate = encodeURIComponent( self.source_text[i] );
 				eu.europeana.translation_services[translator].options.callback = 'eu.europeana.translation_services.translators.' + translator + '.callbacks[' + i + ']';
+				
+				
 				eu.europeana.translation_services.microsoft.translate();
-
+				
 			}
 
 		}
@@ -252,18 +252,40 @@ eu.europeana.translation_services = {
 	addReturnToOriginal : function() {
 
 		if ( this.links.$return_to_original.is(':hidden') ) {
+		
+			var originalAvailable = (typeof com.microsoft.translator.originalLanguage != 'undefined') && com.microsoft.translator.originalLanguage;
+			
+			if(originalAvailable){
+				this.links.$translated_from_language = jQuery( '<span class="translatedFromLabel">' + eu.europeana.vars.msg.translated_from_language + ' ' + com.microsoft.translator.originalLanguage + ' -&nbsp;</span>');
+			}
+			else{
+				var html = this.links.$return_to_original.html()
+				html = html.charAt(0).toUpperCase() + html.slice(1);
+				this.links.$return_to_original.html(html);
+				this.links.$return_to_original.addClass('translatedFromLabel');
+			}
+			
+			
+			this.links.$return_to_original.css('display', 'inline-block');
+			this.links.$return_to_original_inline.css('display', 'inline-block');
+			
+			this.links.$return_to_original.bind('click', { self : this }, this.handleReturnToOriginal )
+			this.links.$return_to_original_inline.bind('click', { self : this }, this.handleReturnToOriginal )
 			
 			$('#main-fulldoc-area').prepend(
-				this.links.$return_to_original
-				.fadeIn()
+				this.links.$return_to_original.fadeIn()
 			);
 			
-			this.links.$return_to_original.css('display',       'block');
-			this.links.$return_to_original.css('margin-left',   '2em');
-			this.links.$return_to_original.css('margin-bottom', '1em');				
-			this.links.$return_to_original.bind('click', { self : this }, this.handleReturnToOriginal )
+			if(originalAvailable){
+				$('#main-fulldoc-area').prepend(
+						this.links.$translated_from_language
+				);
+			}
+			
+			this.containers.$translation_services.append(
+					this.links.$return_to_original_inline.fadeIn()
+			);
 
-			// console.log('prepended revert link to main: language label is ' + eu.europeana.vars.languageLabel );
 		}
 	},
 
@@ -283,8 +305,12 @@ eu.europeana.translation_services = {
 		};
 
 		jQuery('#microsoft-translate-element select').val('');
+		self.links.$return_to_original_inline.fadeOut();
 		self.links.$return_to_original.fadeOut();
-
+		
+		if(typeof self.links.$translated_from_language != 'undefined'){
+			self.links.$translated_from_language.fadeOut();			
+		}
 	}
 
 };

@@ -24,6 +24,7 @@
 <c:set var="no_saved_tags"><spring:message code="NoSavedTags_t" /></c:set>
 <c:set var="required_field"><spring:message code="RequiredField_t" /></c:set>
 <c:set var="results"><spring:message code="Results_t" /></c:set>
+<c:set var="translated_from_language"><spring:message code="TranslatedFromLanguage_t" /></c:set>
 <c:set var="return_to_language"><spring:message code="ReturnToOriginalLanguage_t" /></c:set>
 <c:set var="rows" value='' />
 
@@ -138,6 +139,8 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 	<c:when test="${model.pageName == 'full-doc.html'}">
 		eu.europeana.vars.msg.translate_with = '${fn:escapeXml(translate_with)}';
 		eu.europeana.vars.msg.return_to_language = '${fn:escapeXml(return_to_language)}';
+		eu.europeana.vars.msg.translated_from_language = '${fn:escapeXml(translated_from_language)}';
+		
 		eu.europeana.vars.msg.more = '${see_more}';
 		eu.europeana.vars.msg.less = '${see_less}';
 

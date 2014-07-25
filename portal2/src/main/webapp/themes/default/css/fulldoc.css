@@ -641,6 +641,11 @@ h1 {
 	margin: 5px 0 0 0;
 }
 
+.translatedFromLabel{
+	display: inline-block;
+	margin-left: 2em;
+	margin-bottom: 1em;
+}
 
 #translate-with-google,
 #translate-with-microsoft {

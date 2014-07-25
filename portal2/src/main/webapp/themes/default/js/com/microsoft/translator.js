@@ -67,12 +67,9 @@ com.microsoft.translator = function( options ) {
 	
 	this.options = jQuery.extend( true, {}, default_options, options );
 	
-	
 	this.init = function( callback ) {
-		
 		this.addTranslatorToContainer();
 		if ( callback ) { callback.call(); }
-		
 	};
 	
 	
@@ -102,11 +99,9 @@ com.microsoft.translator = function( options ) {
 	 *	add language possibilities to the selector
 	 */
 	com.microsoft.translator.prototype.addTranslatorToContainer = function() {
-		
 		this.options.$translator_selector = jQuery( this.options.translator_selector_html );
 		this.options.$container_for_selector.append( this.options.$translator_selector );
 		this.getLanguagesForTranslate();
-		
 	};
 	
 	
@@ -199,7 +194,6 @@ com.microsoft.translator = function( options ) {
 			
 			options.language_codes.formated = language_codes;
 			self.getLanguageNames( options );
-			
 		});
 		
 		
@@ -227,8 +221,7 @@ com.microsoft.translator = function( options ) {
 						'&appId=' + options.BING_API_KEY +
 						'&locale=' + options.language_codes.browser_locale +
 						'&languageCodes=' + options.language_codes.formated;
-		
-		
+				
     	this.setCallback( function( response ) {
 			
 			var i = 0,
@@ -243,14 +236,51 @@ com.microsoft.translator = function( options ) {
 			
 			options.$translator_selector.find('select').append( html );
 			
+			
+			// get orig language here
+			
+			var arraysText = '';
+			for(var i=0; i<options.detect_nodes.length; i++){
+				
+				var html = options.detect_nodes[i].html();
+				
+				if(isNaN(parseInt(html))){		// ignore numeric data
+					
+					html = html.replace(/\'/g, '');
+					html = html.replace(/\"/g, '');
+
+					if(arraysText.length + 3 + html.length < 99998){
+						if(arraysText.length > 0){
+							arraysText += ',';
+						} 
+						arraysText += '"' + html + '"' 
+					}					
+				}
+			}
+			
+			if(arraysText.length>0){
+				arraysText = '[' + arraysText + ']'
+				js_src_detect  =	'http://api.microsofttranslator.com/V2/Ajax.svc/DetectArray' +
+				'?oncomplete=' + 'com.microsoft.translator.prototype.doneDetect' +
+				'&appId=' + options.BING_API_KEY +
+				'&texts=' + arraysText;
+				
+		    	try {	    		
+		    		js.loader.loadScripts([{
+		    			file : js_src_detect,
+		    			path : ''
+		    		}]);
+		    	}
+		    	catch(e) {	    		
+		    		js.console.log(e);
+		    	}				
+			}
 		});
-		
 		
 		js.loader.loadScripts([{
 			file : js_src,
 			path : ''
 		}]);
-		
 		
     };
     
@@ -365,6 +395,31 @@ com.microsoft.translator = function( options ) {
      *	@return string
      *	A string representing the translated text.
      */
+    com.microsoft.translator.prototype.doneDetect = function(data) {
+    	
+    	var langs = {};
+    	if(typeof data.length != 'undefined' && data.length){
+    		for(var i=0; i<data.length; i++){
+    			if(langs[data[i]]){
+    				langs[data[i]] = langs[data[i]]++;
+    			}
+    			else{
+    				langs[data[i]] = 1;
+    			}
+    		}
+    	}
+    	var max = 0;
+    	var top = '';
+    	for (var key in langs) {
+		  if (langs[key]>max){
+			  max = langs[key];
+			  top = key;
+		  }
+		}
+    	
+    	com.microsoft.translator.originalLanguage = $('#microsoft-translate-element select option[value=' + top + ']').html();
+    }
+    
     com.microsoft.translator.prototype.translate = function() {
     	
     	var	options = this.options,
@@ -384,11 +439,8 @@ com.microsoft.translator = function( options ) {
     		}]);
     		
     	} catch(e) {
-    		
     		js.console.log(e);
-    		
     	}
-		
 		
     	/*
         window.mycallback = function(response) { document.getElementById("resultMessage").innerHTML = response; }
