@@ -37,6 +37,7 @@ import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
+import eu.europeana.portal2.web.presentation.PortalLanguage;
 import eu.europeana.portal2.web.presentation.enums.Field;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.submodel.FieldPresentation;
@@ -122,17 +123,65 @@ public abstract class FullDocPreparation extends FullDocData {
 		fieldsEnrichment.put("enrichment_category_when_t", extractWhenFields());
 	}
 
+	private String removeSquareBrackets(String val){
+		if(val.charAt(0) == '[' && val.charAt(val.length()-1) == ']'){
+			return val.substring(1, val.length()-1);
+		}
+		return val;
+	}
+	
+	private String getLanguageLabel(String code){
+		String res = "";
+		List<PortalLanguage> languages = getPortalLanguages();
+		
+		for(PortalLanguage language: languages){
+			if(language.getLanguageCode().equals(code)){
+				res = language.getLanguageName();
+			}
+		}
+		if(res.length()>0){
+			return res;
+		}
+		return code;
+	}
+
+	
 	private List<FieldPresentation> extractWhenFields() {
 		List<FieldPresentation> when = new ArrayList<FieldPresentation>();
+		
 		if (document.getTimespans() != null) {
 			for (Timespan timespan : document.getTimespans()) {
-				addField(when, Field.ENRICHMENT_TIMESPAN_ABOUT, new String[]{timespan.getAbout()});
+				addField(when, Field.ENRICHMENT_TIMESPAN_ABOUT, new String[]{timespan.getAbout() + "_XWHEN"});
 				ArrayList<String> labels = new ArrayList<String>();
+				
 				if (timespan.getPrefLabel() != null) {
+					
+					String en = "";
+					String pref = "";
+
 					for (String language : timespan.getPrefLabel().keySet()) {
-						labels.add(timespan.getPrefLabel().get(language) + " (" + language + ")");
+						
+						if(language.equals("en")){
+							en = removeSquareBrackets( timespan.getPrefLabel().get(language) + "");
+						}
+						else if(language.equals( getLocale() )){
+							pref = removeSquareBrackets( timespan.getPrefLabel().get(language) + "");
+						}						
+					}
+					if(pref.length()>0){
+						labels.add(pref);
+					}
+					else if(en.length()>0){
+						labels.add(en);						
+					}
+					else{
+						for (String language : timespan.getPrefLabel().keySet()) {
+							labels.add(removeSquareBrackets(timespan.getPrefLabel().get(language)+ "") + " (" + getLanguageLabel(language) + ")");
+						}						
 					}
 				}
+				
+				
 				addField(when, Field.ENRICHMENT_TIMESPAN_LABEL, StringArrayUtils.toArray(labels));
 				if (timespan.getBegin() != null) {
 					for (Entry<String, List<String>> item : timespan.getBegin().entrySet()) {
@@ -153,17 +202,45 @@ public abstract class FullDocPreparation extends FullDocData {
 		return when;
 	}
 
+	
 	private List<FieldPresentation> extractWhatFields() {
 		List<FieldPresentation> what = new ArrayList<FieldPresentation>();
+		
 		if (document.getConcepts() != null) {
+		
 			for (Concept concept : document.getConcepts()) {
+				
 				addField(what, Field.ENRICHMENT_CONCEPT_ABOUT, new String[]{concept.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
+				
 				if (concept.getPrefLabel() != null) {
+					String en = "";
+					String pref = "";
+					
 					for (String language : concept.getPrefLabel().keySet()) {
-						labels.add(concept.getPrefLabel().get(language) + " (" + language + ")");
+						
+						if(language.equals("en")){
+							en = removeSquareBrackets(concept.getPrefLabel().get(language) + "");
+						}
+						else if(language.equals( getLocale() )){
+							pref = removeSquareBrackets(concept.getPrefLabel().get(language) + "");
+						}
+						
 					}
-				}
+					if(pref.length()>0){
+						labels.add(pref);
+					}
+					else if(en.length()>0){
+						labels.add(en);						
+					}
+					else{
+						// No preferred language and no English available - show all languages together with their labels
+						for (String language : concept.getPrefLabel().keySet()) {
+							labels.add(removeSquareBrackets(concept.getPrefLabel().get(language) + "") + " (" + getLanguageLabel(language) + ")");
+						}						
+					}
+				}			
+
 				addField(what, Field.ENRICHMENT_CONCEPT_LABEL, StringArrayUtils.toArray(labels));
 				addField(what, Field.ENRICHMENT_CONCEPT_BROADER_LABEL, concept.getBroader());
 			}
@@ -171,15 +248,39 @@ public abstract class FullDocPreparation extends FullDocData {
 		return what;
 	}
 
+	
 	private List<FieldPresentation> extractWhoFields() {
 		List<FieldPresentation> who = new ArrayList<FieldPresentation>();
 		if (document.getAgents() != null) {
 			for (Agent agent : document.getAgents()) {
 				addField(who, Field.ENRICHMENT_AGENT_ABOUT, new String[]{agent.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
+				
 				if (agent.getPrefLabel() != null) {
-					for (String language : agent.getPrefLabel().keySet()) {
-						labels.add(agent.getPrefLabel().get(language) + " (" + language + ")");
+				
+					String en = "";
+					String pref = "";
+
+					for (String language : agent.getPrefLabel().keySet()) {						
+						if(language.equals("en")){
+							en = removeSquareBrackets(agent.getPrefLabel().get(language) + "");
+						}
+						else if(language.equals( getLocale() )){
+							pref = removeSquareBrackets(agent.getPrefLabel().get(language) + "");
+						}
+					}
+					
+					if(pref.length()>0){
+						labels.add(pref);
+					}
+					else if(en.length()>0){
+						labels.add(en);						
+					}
+					else{
+						// No preferred language and no English available - show all languages together with their labels
+						for (String language : agent.getPrefLabel().keySet()) {
+							labels.add(removeSquareBrackets(agent.getPrefLabel().get(language) + "") + " (" + getLanguageLabel(language) + ")");
+						}						
 					}
 				}
 				addField(who, Field.ENRICHMENT_AGENT_LABEL, StringArrayUtils.toArray(labels));
@@ -194,11 +295,35 @@ public abstract class FullDocPreparation extends FullDocData {
 			for (Place place : document.getPlaces()) {
 				addField(where, Field.ENRICHMENT_PLACE_ABOUT, new String[]{place.getAbout()});
 				ArrayList<String> labels = new ArrayList<String>();
+				
 				if (place.getPrefLabel() != null) {
+					
+					String en = "";
+					String pref = "";
+					
 					for (String language : place.getPrefLabel().keySet()) {
-						labels.add(place.getPrefLabel().get(language) + " (" + language + ")");
+						if(language.equals("en")){
+							en = removeSquareBrackets(place.getPrefLabel().get(language) + "");
+						}
+						else if(language.equals( getLocale() )){
+							pref = removeSquareBrackets(place.getPrefLabel().get(language) + "");
+						}
+					}
+					
+					if(pref.length()>0){
+						labels.add(pref);
+					}
+					else if(en.length()>0){
+						labels.add(en);						
+					}
+					else{
+						// No preferred language and no English available - show all languages together with their labels
+						for (String language : place.getPrefLabel().keySet()) {
+							labels.add( removeSquareBrackets(place.getPrefLabel().get(language) + "") + " (" + getLanguageLabel(language) + ")");
+						}						
 					}
 				}
+				
 				addField(where, Field.ENRICHMENT_PLACE_LABEL, StringArrayUtils.toArray(labels));
 
 				if (getDocument().isPositionAvailable()) {
