@@ -1300,11 +1300,9 @@ eu.europeana.fulldoc = {
 		$translate_options: $('#microsoft-translate-element').find('option'),
 
 		init: function () {
+			console.log('init auto-translate ' + eu.europeana.vars.languageItem + '  ' + (eu.europeana.vars.languageItem ? eu.europeana.vars.languageItem.length : '0')  )
 			
-			if (
-				eu.europeana.vars.languageItem
-				&& eu.europeana.vars.languageItem.length === 2
-			) {
+			if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem.length === 2) {
 				this.translation_timer = eu.europeana.timer.addCallback({
 					timer: 100,
 					fn: eu.europeana.fulldoc.autoTranslateItem.toggleTranslation,
@@ -1314,6 +1312,9 @@ eu.europeana.fulldoc = {
 		},
 
 		toggleTranslation: function() {
+			
+			console.log('toggleTranslation... ')
+			
 			this.translation_timer_iteration += 1;
 
 			if ( this.translation_timer_iteration > this.translation_timer_limit ) {

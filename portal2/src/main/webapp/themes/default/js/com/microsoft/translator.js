@@ -254,6 +254,9 @@ com.microsoft.translator = function( options ) {
 
 
 		if(arraysText.length>0){
+			
+			console.log('run detection.....');
+			
 			arraysText = '[' + arraysText + ']'
 			js_src_detect  =	'http://api.microsofttranslator.com/V2/Ajax.svc/DetectArray' +
 			'?oncomplete=' + 'com.microsoft.translator.prototype.doneDetect' +
@@ -268,10 +271,12 @@ com.microsoft.translator = function( options ) {
 	    	}
 	    	catch(e) {
 	    		js.console.log(e);
+				console.log('trigger translator-ready 1')
 	    		$(window).trigger('translator-ready');
 	    	}				
 		} 
 		else{
+			console.log('trigger translator-ready 2')
 			$(window).trigger('translator-ready');
 		}
     }
