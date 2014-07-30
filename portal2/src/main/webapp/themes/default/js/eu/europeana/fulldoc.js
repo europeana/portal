@@ -61,7 +61,8 @@ eu.europeana.fulldoc = {
 		//js.console.log(JSON.stringify(carouselData));
 
 	   	$(window).bind('translator-ready', function(data){
-	   		console.log('translator-ready' )
+	   		
+	   		console.log('translator-ready: original ready ' + com.microsoft.translator.originalLanguage )
 	   		
 	   		eu.europeana.fulldoc.autoTranslateItem.init();
 	   	});
@@ -1327,14 +1328,6 @@ eu.europeana.fulldoc = {
 			}
 
 			if ( this.$translate_options.length > 2 ) {
-				
-				if( com.microsoft.translator.originalLanguage == eu.europeana.vars.languageItem){
-					alert('skip the auto translation (already in target language)')
-				}
-				else{
-					alert('eu.europeana.vars.languageItem = ' + eu.europeana.vars.languageItem + '\n\ncom.microsoft.translator.originalLanguage = ' + com.microsoft.translator.originalLanguage )
-				}
-				
 				this.$translate_select.val( eu.europeana.vars.languageItem );
 				this.$translate_select.trigger( 'change' );
 				eu.europeana.timer.removeCallback( this.translation_timer );
