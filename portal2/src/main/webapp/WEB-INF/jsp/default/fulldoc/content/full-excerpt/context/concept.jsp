@@ -48,7 +48,7 @@
         <c:if test="${fn:length(concept.broaderLinks) > 1}">
           <c:set var="msg_key" value="context_concept_Notations_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <c:forEach items="${concept.notationLang}" var="item" varStatus="t">
           ${item}<c:if test="${!t.last}"><br/></c:if>
         </c:forEach>
@@ -61,18 +61,18 @@
         <c:if test="${fn:length(concept.broaderLinks) > 1}">
           <c:set var="msg_key" value="context_concept_Broaders_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.broaderLinks}" />
       </p>
     </c:if>
  --%>
-    <c:if test="${!empty concept.narrowerLinks}">
+    <c:if test="${!empty concept.narrowerLinks} && ${broaderInfo == 1}">
       <p>
         <c:set var="msg_key" value="context_concept_Narrower_t" />
         <c:if test="${fn:length(concept.narrowerLinks) > 1}">
           <c:set var="msg_key" value="context_concept_Narrowers_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.narrowerLinks}" />
       </p>
     </c:if>
@@ -83,7 +83,7 @@
         <c:if test="${fn:length(concept.relatedLinks) > 1}">
           <c:set var="msg_key" value="context_concept_Relateds_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.relatedLinks}" />
       </p>
     </c:if>
@@ -94,7 +94,7 @@
         <c:if test="${fn:length(concept.broadMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_broadMatches_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.broadMatchLinks}" />
       </p>
     </c:if>
@@ -105,7 +105,7 @@
         <c:if test="${fn:length(concept.narrowMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_narrowMatches_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.narrowMatchLinks}" />
       </p>
     </c:if>
@@ -116,7 +116,7 @@
         <c:if test="${fn:length(concept.relatedMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_relatedMatches_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.relatedMatchLinks}" />
       </p>
     </c:if>
@@ -127,7 +127,7 @@
         <c:if test="${fn:length(concept.exactMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_exactMatches_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.exactMatchLinks}" />
       </p>
     </c:if>
@@ -138,7 +138,7 @@
         <c:if test="${fn:length(concept.closeMatchLinks) > 1}">
           <c:set var="msg_key" value="context_concept_closeMatches_t" />
         </c:if>
-        <spring:message code="${msg_key}" />: 
+        <spring:message code="${msg_key}" />:
         <europeana:optionalMapList map="${concept.closeMatchLinks}" />
       </p>
     </c:if>

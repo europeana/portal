@@ -33,7 +33,7 @@
     </c:forEach>
 
     <%--
-      model.metaDataFileds = a collection of all metadata on the object pre-formated
+      model.metaDataFields = a collection of all metadata on the object pre-formated
       for <meta> element output in the <head>
 
       model.formatLabels = a boolean that is triggered via the url query string &format=labels
@@ -45,6 +45,10 @@
       model.additionalFields = a subset collection of meta data pre-formated for html presentation
 
       model.model.enrichmentFields = a subset collection of meta data pre-formated for html presentation
+
+      broaderInfo = whether or not to display broader info about a piece of metadata. should be set to 1 when
+      displaying auto-generated tags and 0 when displaying metadata for the public. this value is tested for
+      in full-excerpt/context/cancept.jsp and in ?
     --%>
 
     <%--
@@ -58,6 +62,7 @@
       regular metadata for public display
     --%>
     <c:if test="${!model.formatLabels && !empty model['fields'] && fn:length(model.fields) > 0}">
+      <c:set var="broaderInfo" value="0" scope="request" />
       <europeana:displayEseDataAsHtml listCollection="${model.fields}" wrapper="div" ugc="false" ess="true"/>
     </c:if>
 
@@ -85,6 +90,7 @@
         <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/schema.jspf" %>
       </c:when>
       <c:otherwise>
+        <c:set var="broaderInfo" value="1" scope="request" />
         <%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/fields-enrichment.jspf" %>
         <%--
         <c:choose>

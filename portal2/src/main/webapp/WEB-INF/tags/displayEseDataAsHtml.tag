@@ -160,7 +160,7 @@
 					<c:otherwise>
 						<c:set var="seo_wrapper" value="p" />
 					</c:otherwise>
-				</c:choose>				
+				</c:choose>
 
 				<${seo_wrapper}>
 
