@@ -119,7 +119,16 @@
         <c:when test="${!model.formatLabels && !empty model['fields'] && fn:length(model.fields) > 0}">
           <ul>
             <c:forEach items="${model.fields}" var="data">
-              <li>${data.fieldValues}</li>
+              <li>fieldName: ${data.fieldName}</li>
+              <li>fieldLabel: ${data.fieldLabel}</li>
+              <li>fieldValues:
+                <ul>
+                <c:forEach items="${data.fieldValues}" var="dataField">
+                  <li>${dataField.value}</li>
+                </c:forEach>
+                </ul>
+                <br/>
+              </li>
             </c:forEach>
           </ul>
         </c:when>
@@ -133,7 +142,16 @@
         <c:when test="${!empty model['fieldsAdditional']}">
           <ul>
             <c:forEach items="${model['fieldsAdditional']}" var="data">
-              <li>${data.fieldValues}</li>
+              <li>fieldName: ${data.fieldName}</li>
+              <li>fieldLabel: ${data.fieldLabel}</li>
+              <li>fieldValues:
+                <ul>
+                <c:forEach items="${data.fieldValues}" var="dataField">
+                  <li>${dataField.value}</li>
+                </c:forEach>
+                </ul>
+                <br/>
+              </li>
             </c:forEach>
           </ul>
         </c:when>
