@@ -85,9 +85,11 @@ public class FieldValue {
 	}
 
 	public String getTranslatedValue() {
+		/*
 		if (field.isTranslatable() && StringUtils.isNotBlank(model.getItemLanguage())) {
 			return model.translationUrlservice.translate(value, model.getItemLanguage());
 		}
+		*/
 		return null;
 	}
 
