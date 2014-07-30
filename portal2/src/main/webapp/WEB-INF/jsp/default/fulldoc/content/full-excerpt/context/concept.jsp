@@ -17,30 +17,26 @@
   </c:if>
 --%>
   <div<c:if test="${inContext == 1}"> class="contextual-body" id="${concept.htmlId}"</c:if>>
+
     <p>
-      <c:url var="searchUrl" value="/search.html">
-        <c:param name="query">skos_concept:"${concept.about}"</c:param>
-      </c:url>
-      <a href="${searchUrl}">
-        <c:forEach items="${concept.labels}" var="item" varStatus="t"
-          >${item}<c:if test="${!t.last}">, </c:if
-        ></c:forEach>
-      </a>
-<%--
-      <a href="${concept.about}" target="_blank" class="icon-external-right"></a>
---%>
+      <c:url var="searchUrl" value="/search.html"><c:param name="query">skos_concept:"${concept.about}"</c:param></c:url>
+      <a href="${searchUrl}"><c:forEach items="${concept.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach></a>
       <c:if test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
         <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>
       </c:if>
     </p>
 
-    <c:if test="${!empty concept.noteLang}">
-      <p>
-        <c:forEach items="${concept.noteLang}" var="item" varStatus="t">
-          ${item}<c:if test="${!t.last}"><br/></c:if>
-        </c:forEach>
-      </p>
-    </c:if>
+    <%--
+      commenting this out because david didn't want bare URLs to show-up in the
+      metadata section. what does this section display anyway?
+      <c:if test="${!empty concept.noteLang}">
+        <p>
+          <c:forEach items="${concept.noteLang}" var="item" varStatus="t">
+            ${item}<c:if test="${!t.last}"><br/></c:if>
+          </c:forEach>
+        </p>
+      </c:if>
+    --%>
 
     <c:if test="${!empty concept.notationLang}">
       <p>

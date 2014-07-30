@@ -165,6 +165,9 @@
 				<${seo_wrapper}>
 
 				<c:choose>
+					<%--
+						display contextual info
+					--%>
 					<c:when test="${model.showContext && !empty value.decorator}">
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
@@ -177,16 +180,19 @@
 							</c:forEach>
 						</c:if>
 					</c:when>
+
 					<c:when test="${value.searchOn}">
 						<a href="${value.searchOn}" target="_top" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							rel="nofollow">${value.value}</a>${separator}
 					</c:when>
+
 					<c:when test="${value.url}">
 						<a href="${value.value}" target="_blank" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							rel="nofollow">${value.value}</a>${separator}
 					</c:when>
+
 					<c:otherwise>
 						<span class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
