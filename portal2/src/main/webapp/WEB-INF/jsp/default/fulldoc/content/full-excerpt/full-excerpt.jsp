@@ -104,5 +104,45 @@
          --%>
       </c:otherwise>
     </c:choose>
+
+
+    <%--
+      data model debug section
+    --%>
+    <c:if test="${!empty model.debug && model.debug}">
+      <hr/>
+      <h2>debug section</h2>
+      <p>this section is only available in debug mode for front-end development so that we have insight into the data model available for this record.</p>
+
+      <h3>regular metadata fields</h3>
+      <c:choose>
+        <c:when test="${!model.formatLabels && !empty model['fields'] && fn:length(model.fields) > 0}">
+          <ul>
+            <c:forEach items="${model.fields}" var="data">
+              <li>${data.fieldValues}</li>
+            </c:forEach>
+          </ul>
+        </c:when>
+        <c:otherwise>
+          no regular metadata fields available
+        </c:otherwise>
+      </c:choose>
+
+      <h3>additional metadata fields</h3>
+      <c:choose>
+        <c:when test="${!empty model['fieldsAdditional']}">
+          <ul>
+            <c:forEach items="${model['fieldsAdditional']}" var="data">
+              <li>${data.fieldValues}</li>
+            </c:forEach>
+          </ul>
+        </c:when>
+        <c:otherwise>
+          no additional fields available
+        </c:otherwise>
+      </c:choose>
+      <hr/>
+    </c:if>
+
   </div>
 </div>
