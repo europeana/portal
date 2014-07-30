@@ -438,7 +438,8 @@ com.microsoft.translator = function( options ) {
 		  }
 		}
     	
-    	com.microsoft.translator.originalLanguage = $('#microsoft-translate-element select option[value=' + top + ']').html();
+    	com.microsoft.translator.originalLanguageCode = top;
+    	com.microsoft.translator.originalLanguage     = $('#microsoft-translate-element select option[value=' + top + ']').html();
     	
 		$(window).trigger('translator-ready');
 

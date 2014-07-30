@@ -62,9 +62,9 @@ eu.europeana.fulldoc = {
 
 	   	$(window).bind('translator-ready', function(data){
 	   		
-	   		console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguage )
+	   		console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguageCode )
 
-	   		if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem != com.microsoft.translator.originalLanguage){
+	   		if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem != com.microsoft.translator.originalLanguageCode){
 	   			eu.europeana.fulldoc.autoTranslateItem.init();	   			
 	   		}
 	   		else{
