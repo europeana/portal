@@ -519,10 +519,12 @@ img.trigger{
 .concept,
 .item-context-data,
 .item-metadata {
-	margin-bottom:	0.75em;
+	margin-bottom:	1em;
 }
 .item-metadata>.bold {
+	/*
 	margin-bottom:	0.5em;
+	*/
 }
 
 .contextual-body{

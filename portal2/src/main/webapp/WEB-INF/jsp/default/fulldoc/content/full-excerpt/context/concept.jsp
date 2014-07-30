@@ -17,13 +17,18 @@
   </c:if>
 --%>
   <div<c:if test="${inContext == 1}"> class="contextual-body" id="${concept.htmlId}"</c:if>>
-
     <p>
       <c:url var="searchUrl" value="/search.html"><c:param name="query">skos_concept:"${concept.about}"</c:param></c:url>
-      <a href="${searchUrl}"><c:forEach items="${concept.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach></a>
-      <c:if test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
-        <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>
-      </c:if>
+      <c:set var="linkMarkup">
+	      <a href="${searchUrl}"><c:forEach items="${concept.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach></a>
+      </c:set>
+      
+      <c:choose>
+      	<c:when test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
+	        ${linkMarkup} <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if><c:if test="${t.last}">;</c:if></c:forEach>  	
+      	</c:when>
+      	<c:otherwise>${linkMarkup};</c:otherwise>
+      </c:choose>
     </p>
 
     <%--

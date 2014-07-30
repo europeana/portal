@@ -109,6 +109,7 @@
     <%--
       data model debug section
     --%>
+    <%--
     <c:if test="${!empty model.debug && model.debug}">
       <hr/>
       <h2>debug section</h2>
@@ -161,6 +162,7 @@
       </c:choose>
       <hr/>
     </c:if>
+    --%>
 
   </div>
 </div>
