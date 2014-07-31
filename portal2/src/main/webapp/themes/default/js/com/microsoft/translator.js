@@ -422,7 +422,7 @@ com.microsoft.translator = function( options ) {
     	if(typeof data.length != 'undefined' && data.length){
     		for(var i=0; i<data.length; i++){
     			if(langs[data[i]]){
-    				langs[data[i]] = langs[data[i]]++;
+    				langs[data[i]] += 1;
     			}
     			else{
     				langs[data[i]] = 1;
