@@ -502,6 +502,10 @@ a.ui-state-hover {
 	background-color: #000;
 }
 
+a.search-help{
+	position: relative;
+	top: -0.3em;
+}
 
 /* query input highlighting */
 
