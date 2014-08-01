@@ -158,11 +158,13 @@
 						<c:set var="seo_wrapper" value="h2" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="seo_wrapper" value="p" />
+						<c:set var="seo_wrapper" value="" />
 					</c:otherwise>
 				</c:choose>
 
-				<${seo_wrapper}>
+				<c:if test="${fn:length(seo_wrapper)}>0">
+					<${seo_wrapper}>
+				</c:if>
 
 				<c:choose>
 					<%--
@@ -172,13 +174,17 @@
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
+						
 						<jsp:include page="${page}" flush="true" />
+						
+						<%--
 						<c:if test="${!empty value.decorator.allRelatedItems}">
 							<c:forEach items="${value.decorator.allRelatedItems}" var="_contextualItem">
 								<c:set var="contextualItem" value="${_contextualItem}" scope="request" />
 								<jsp:include page="${page}" flush="true" />
 							</c:forEach>
 						</c:if>
+						 --%>
 					</c:when>
 
 					<c:when test="${value.searchOn}">
@@ -194,6 +200,7 @@
 					</c:when>
 
 					<c:otherwise>
+					
 						<span class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							<c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:choose>
@@ -224,7 +231,20 @@
 											<a class="europeana canned" href="${CLEAN_URL}"><c:out value="${theVal}" escapeXml="false" /></a><c:out value="${separator}" />
 										</c:when>
 										<c:otherwise>
-											<c:out value="${theVal}" escapeXml="false" /><c:out value="${separator}" />
+										
+											<c:choose>
+												<c:when test="${data.fieldLabel == 'languageDropDownList_t'}">
+													<c:forEach items="${model.portalLanguages}" var="lang">
+														<c:if test="${lang.languageCode == theVal}">
+															${lang.languageName}
+														</c:if>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<c:out value="${theVal}" escapeXml="false" /><c:out value="${separator}" />
+												</c:otherwise>
+											</c:choose>
+										
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>
@@ -235,7 +255,11 @@
 						</span>
 					</c:otherwise>
 				</c:choose>
-				</${seo_wrapper}>
+				
+				<c:if test="${fn:length(seo_wrapper)}>0">
+					</${seo_wrapper}>
+				</c:if>
+				
 
 				<%-- link to external services if field has them --%>
 				<%--

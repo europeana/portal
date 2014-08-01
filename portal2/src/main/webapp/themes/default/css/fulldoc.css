@@ -528,20 +528,20 @@ img.trigger{
 }
 
 .contextual-body{
-	display: inline;
+	XXXdisplay: inline;
 }
 
 .item-metadata > p,
 .contextual-body > p{
 	margin-top:	0;
 	margin-bottom:	0;
-	display: inline;
+	XXXXdisplay: inline;
 }
 
 
 .item-metadata a{
 	word-break:		break-all;
-	display:		inline-block;
+	XXXdisplay:		inline-block;
 } 
 
 .external.item-metadata {
