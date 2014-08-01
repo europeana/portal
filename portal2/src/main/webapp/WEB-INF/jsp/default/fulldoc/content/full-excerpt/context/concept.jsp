@@ -42,7 +42,15 @@
 	      
 	      <c:choose>
 	      	<c:when test="${!empty concept.prefLabelLang && !empty concept.altLabelLang}">
-		     	${linkMarkup} <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if><c:if test="${t.last}">;</c:if></c:forEach>
+		     	${linkMarkup};
+		     	
+		     	<c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">
+			      	<c:url var="labelLinkUrl" value="/search.html"><c:param name="query">what:"${item}"</c:param></c:url>
+		     		<c:set var="labelLink">
+		      			<a href="${labelLinkUrl}">${item}</a>
+	      			</c:set>
+					${labelLink};
+		     	</c:forEach>
 	      	</c:when>
 		      	
 	      	<c:otherwise>${linkMarkup};</c:otherwise>
