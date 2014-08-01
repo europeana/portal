@@ -37,6 +37,17 @@
  * @author Dan Entous <contact@pennlinepublishing.com>
  * @modified 2011-06-08 15:25 GMT+1
 --%>
+
+
+<%-- track desriptions to help with description display --%>
+<c:set var="countDescriptions" value="0"/>
+<c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
+	<c:if test='${"dc:description" == data.fieldName}'>
+		<c:set var="countDescriptions" value="${fn:length(data.fieldValues)}"/>
+	</c:if>
+</c:forEach>
+
+
 <c:forEach items="${listCollection}" var="data" varStatus="fieldStatus">
 
 	<c:set var="item_id" value="" />
@@ -239,6 +250,14 @@
 															${lang.languageName}
 														</c:if>
 													</c:forEach>
+												</c:when>
+												<c:when test="${data.fieldLabel == 'Description_t'}">
+												
+												    <c:out value="${theVal}" escapeXml="false" /><c:out value="${separator}" />
+													<c:if test="${valueStatus.index+1 < countDescriptions}">
+														<br/>
+														<br/>
+													</c:if>				
 												</c:when>
 												<c:otherwise>
 													<c:out value="${theVal}" escapeXml="false" /><c:out value="${separator}" />
