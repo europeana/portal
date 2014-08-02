@@ -226,8 +226,12 @@
 			for(var i=1; i<carouselData.length; i++){
 				if(carouselData[i].external && carouselData[i].external.type=="image"){
 					carouselData[i].image = carouselData[i].external.url; 
+					if(carouselTest && i < carouselTest.length ){
+						carouselTest[i].src = carouselData[i].external.url;
+					}
 				}
 			}
+			
 		</script>
 	</div>
 

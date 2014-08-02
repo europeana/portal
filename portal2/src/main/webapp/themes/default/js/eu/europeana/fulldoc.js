@@ -867,7 +867,10 @@ eu.europeana.fulldoc = {
 					var gallery = this;
 					var external = gallery._options.dataSource[e.index].external;
 					
-					eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);
+					
+					if(typeof external != 'undefined'){
+						eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);						
+					}
 
 					if (eu.europeana.fulldoc.lightboxOb) {
 						eu.europeana.fulldoc.lightboxOb.goTo(e.index);
