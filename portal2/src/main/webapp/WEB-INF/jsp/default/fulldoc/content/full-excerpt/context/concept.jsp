@@ -52,7 +52,7 @@
 	     	</c:forEach>
       	</c:when>
 	      	
-      	<c:otherwise>${linkMarkup};</c:otherwise>
+      	<c:otherwise>${linkMarkup}</c:otherwise>
       </c:choose>
 	</c:if>
 	
