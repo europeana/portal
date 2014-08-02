@@ -17,7 +17,7 @@
   </c:if>
  --%>
  
-   <c:set var="timespanElOpen">
+  <c:set var="timespanElOpen">
   	<li>
   </c:set>
   <c:set var="timespanElClose">
@@ -31,50 +31,68 @@
   <%--
   <div<c:if test="${inContext == 1}"> class="contextual-body" id="${concept.htmlId}"</c:if>>
    --%>
+   
  
   ${timespanElOpen}
  
+    <c:set var="timespanOutput" value=""/>
 
     <c:url var="searchUrl" value="/search.html">
       <c:param name="query">edm_timespan:"${timespan.about}"</c:param>
     </c:url>
-    <a href="${searchUrl}" id="${fn:replace(timespan.about, '/', '.')}">
-      <c:forEach items="${timespan.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>
-    </a>
+    
+    <c:set var="tsSearchUrlOutput"><a href="${searchUrl}" id="${fn:replace(timespan.about, '/', '.')}"
+    ><c:forEach items="${timespan.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach></a></c:set>
+
+	<c:set var="timespanOutput" value="${timespanOutput}%${tsSearchUrlOutput}"/>
 
     <c:if test="${!empty timespan.prefLabelLang && !empty timespan.altLabelLang}">
-      (<c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>)
+		<c:set var="tsLabelOutput">(<c:forEach items="${timespan.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach>)</c:set>
+		<c:set var="timespanOutput" value="${timespanOutput}%${tsLabelOutput}"/>
     </c:if>
 
 
     <c:if test="${!empty timespan.noteLang}">
-      <c:forEach items="${timespan.noteLang}" var="item" varStatus="t">
-        ${item}<c:if test="${!t.last}"><br/></c:if>
-      </c:forEach>
+      <c:set var="tsNoteLang">
+	      <c:forEach items="${timespan.noteLang}" var="item" varStatus="t">
+	        ${item}<c:if test="${!t.last}"><br/></c:if>
+	      </c:forEach>
+	  </c:set>
+	  <c:set var="timespanOutput" value="${timespanOutput}%${tsNoteLang}"/>
     </c:if>
 
     <c:if test="${!empty timespan.isPartOfLinks}">
-      <spring:message code="context_isPartOf_t" />: 
-      <europeana:optionalMapList map="${timespan.isPartOfLinks}" />;
+      <c:set var="tsPartOf">
+	      <spring:message code="context_isPartOf_t" />: 
+	      <europeana:optionalMapList map="${timespan.isPartOfLinks}" />
+      </c:set>
+      <c:set var="timespanOutput" value="${timespanOutput}%${tsPartOf}"/>
     </c:if>
 
     <c:if test="${!empty timespan.beginLang || !empty timespan.endLang}">
-      <c:if test="${!empty timespan.beginLang}">
-        <spring:message code="context_timespan_begin_t" />: 
-        <c:set var="fmtPage" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timeFmt.jsp"/>
-        <c:forEach items="${timespan.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if><jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${label}" /></jsp:include></c:forEach>
-      </c:if>
-
-      <c:if test="${!empty timespan.beginLang && !empty timespan.endLang}">
-        &mdash;
-      </c:if>
-
-      <c:if test="${!empty timespan.endLang}">
-        <spring:message code="context_timespan_end_t" />: 
-        <c:forEach items="${timespan.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if><jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${label}" /></jsp:include><c:if test="${t.last}">;</c:if></c:forEach>
-      </c:if>
+      <c:set var="tsBeginEnd">
+	      <c:if test="${!empty timespan.beginLang}">
+	        <spring:message code="context_timespan_begin_t" />: 
+	        <c:set var="fmtPage" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timeFmt.jsp"/>
+	        <c:forEach items="${timespan.beginLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if><jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${label}" /></jsp:include></c:forEach>
+	      </c:if>
+	      <c:if test="${!empty timespan.beginLang && !empty timespan.endLang}">
+	        &mdash;
+	      </c:if>
+	      <c:if test="${!empty timespan.endLang}">
+	        <spring:message code="context_timespan_end_t" />: 
+	        <c:forEach items="${timespan.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if><jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${label}" /></jsp:include></c:forEach>
+	      </c:if>
+      </c:set>
+      <c:set var="timespanOutput" value="${timespanOutput}%${tsBeginEnd}"/>
     </c:if>
+
+    <c:set var="timespanOutputValues" value="${fn:split(timespanOutput, '%')}"/>
     
+	<c:forEach items="${timespanOutputValues}" var="item" varStatus="status">
+		${item}<c:if test="${!status.last}">;</c:if>
+	</c:forEach>
+	    
   ${timespanElClose}
 
 </c:if>
