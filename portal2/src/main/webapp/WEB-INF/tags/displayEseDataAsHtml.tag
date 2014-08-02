@@ -176,9 +176,10 @@
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
-						
-						<jsp:include page="${page}" flush="true" />
-						
+						<c:set var="contextPageMarkup"><jsp:include page="${page}" flush="false" /></c:set>
+						<c:set var="contextPageMarkupStripped" value="${ fn:replace(fn:replace(fn:replace(contextPageMarkup, ' ',''), '\\\t', ''), '\\\n', '')   }"/>
+					
+						<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">${fn:trim(contextPageMarkup)}${separator}</c:if>	
 						<%--
 						<c:if test="${!empty value.decorator.allRelatedItems}">
 							<c:forEach items="${value.decorator.allRelatedItems}" var="_contextualItem">
@@ -196,7 +197,7 @@
 					</c:when>
 
 					<c:when test="${value.url}">
-						<a href="${value.value}" target="_blank" class="${classAttr}"
+							<a href="${value.value}" target="_blank" class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							rel="nofollow">${value.value}</a>${separator}
 					</c:when>
@@ -229,8 +230,23 @@
 									<c:choose>
 										<c:when test="${fn:length(cannedUrl) > 0}">
 											<c:set var="CLEAN_URL" value="${fn:replace(cannedUrl, 'CANNED_VALUE', fn:replace(theVal, '&', '%26'))}"/>
+											
+											<c:set var="doSeparator" value="false"/>
+											<c:if test="${ valueStatus.index+1 < fn:length(data.fieldValues) }">
+												<c:set var="nextVal" value="${data.fieldValues[valueStatus.index+1]}" />
+												<c:choose>
+													<c:when test="${empty nextVal.decorator}">
+														<c:set var="doSeparator" value="true"/>
+													</c:when>
+													<c:otherwise>
+														<c:if test="${!empty nextVal.decorator.labels }">
+															<c:set var="doSeparator" value="true"/>
+														</c:if>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
 											<c:set var="CLEAN_URL" value="${eufn:cleanSquareBrackets(CLEAN_URL)}"/>
-											<a class="europeana canned" href="${CLEAN_URL}"><c:out value="${theVal}" escapeXml="false" /></a><c:out value="${separator}" />
+											<a class="europeana canned" href="${CLEAN_URL}"><c:out value="${theVal}" escapeXml="false" /></a><c:if test="${doSeparator}">;</c:if>
 										</c:when>
 										<c:otherwise>
 										
