@@ -173,11 +173,11 @@
 						display contextual info
 					--%>
 					<c:when test="${model.showContext && !empty value.decorator}">
+					
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
 						<c:set var="contextPageMarkup"><jsp:include page="${page}" flush="false" /></c:set>
-						<c:set var="contextPageMarkupStripped" value="${ fn:replace(fn:replace(fn:replace(contextPageMarkup, ' ',''), '\\\t', ''), '\\\n', '')   }"/>
 					
 						<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">${fn:trim(contextPageMarkup)}${separator}</c:if>	
 						<%--
@@ -192,8 +192,8 @@
 
 					<c:when test="${value.searchOn}">
 						<a href="${value.searchOn}" target="_top" class="${classAttr}"
-							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
-							rel="nofollow">${value.value}</a>${separator}
+						<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
+						rel="nofollow">${value.value}</a>${separator}
 					</c:when>
 
 					<c:when test="${value.url}">
@@ -203,7 +203,6 @@
 					</c:when>
 
 					<c:otherwise>
-					
 						<span class="${classAttr}"
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							<c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:choose>
@@ -268,7 +267,7 @@
 												</c:when>
 
 												<c:otherwise>
-													<c:out value="${theVal}" escapeXml="false" /><c:out value="${separator}" />
+													<c:out value="${fn:trim(theVal)}" escapeXml="false" /><c:out value="${separator}" />
 												</c:otherwise>
 											</c:choose>
 										

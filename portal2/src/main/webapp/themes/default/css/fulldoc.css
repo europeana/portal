@@ -753,6 +753,9 @@ h1 {
 	padding: 0.5em 0;
 	display: none;
 }
+#fields-enrichment ul ul ul{
+	display: block;
+}
 
 .concept .smaller, h1 .smaller {
 	font-size: 0.8em;

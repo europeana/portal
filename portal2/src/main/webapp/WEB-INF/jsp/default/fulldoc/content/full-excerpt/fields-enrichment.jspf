@@ -56,20 +56,19 @@
 </c:if>
 
 
-
-<c:if test="${fn:length(enrichment_category_who_t_extra)>0}">
+<c:if test="${fn:length(fn:trim(enrichment_category_who_t_extra))>0}">
 	<c:set var="fieldsEnrichmentEmpty" value="false" />		
 </c:if>
 
-<c:if test="${fn:length(enrichment_category_what_t_extra)>0}">
+<c:if test="${fn:length(fn:trim(enrichment_category_what_t_extra))>0}">
 	<c:set var="fieldsEnrichmentEmpty" value="false" />		
 </c:if>
 
-<c:if test="${fn:length(enrichment_category_where_t_extra)>0}">
+<c:if test="${fn:length(fn:trim(enrichment_category_where_t_extra))>0}">
 	<c:set var="fieldsEnrichmentEmpty" value="false" />		
 </c:if>
 
-<c:if test="${fn:length(enrichment_category_when_t_extra)>0}">
+<c:if test="${fn:length(fn:trim(enrichment_category_when_t_extra))>0}">
 	<c:set var="fieldsEnrichmentEmpty" value="false" />		
 </c:if>
 
@@ -87,54 +86,55 @@
         <c:set var="fieldKeys" value="${fn:split('enrichment_category_where_t,enrichment_category_what_t,enrichment_category_who_t,enrichment_category_when_t', ',')}" />
 
         <c:forEach items="${fieldKeys}" var="fieldKey">
-        
-        	<c:set var="outputData" value="null"/>
-        	<c:set var="outputExtraData" value="null"/>
 
+        	<c:set var="outputData" value=""/>
+        	<c:set var="outputExtraData" value=""/>
+        	
         	<c:if test="${fieldKey == 'enrichment_category_what_t'}">
 			   <c:if test="${fn:length(enrichment_category_what_t_extra)>0}">
-	        	<c:set var="outputExtraData" value="${enrichment_category_what_t_extra}"/>
-	        	<c:set var="outputData"      value="${enrichment_category_what_t_data}"/>
-			   </c:if>	        	
+	        	 <c:set var="outputExtraData" value="${enrichment_category_what_t_extra}"/>
+			   </c:if>
+	           <c:set var="outputData"      value="${enrichment_category_what_t_data}"/>
         	</c:if>
 
         	<c:if test="${fieldKey == 'enrichment_category_where_t'}">
 			   <c:if test="${fn:length(enrichment_category_where_t_extra)>0}">
-	        	<c:set var="outputExtraData" value="${enrichment_category_where_t_extra}"/>
-	        	<c:set var="outputData"      value="${enrichment_category_where_t_data}"/>
+	        	 <c:set var="outputExtraData" value="${enrichment_category_where_t_extra}"/>
 			   </c:if>	        	
+	           <c:set var="outputData"      value="${enrichment_category_where_t_data}"/>
         	</c:if>
 
         	<c:if test="${fieldKey == 'enrichment_category_who_t'}">
 			   <c:if test="${fn:length(enrichment_category_who_t_extra)>0}">
-	        	<c:set var="outputExtraData" value="${enrichment_category_who_t_extra}"/>
-	        	<c:set var="outputData"      value="${enrichment_category_who_t_data}"/>
+	        	 <c:set var="outputExtraData" value="${enrichment_category_who_t_extra}"/>
 			   </c:if>	        	
+	           <c:set var="outputData"      value="${enrichment_category_who_t_data}"/>
         	</c:if>
         	
         	
         	<c:if test="${fieldKey == 'enrichment_category_when_t'}">
 			   <c:if test="${fn:length(enrichment_category_when_t_extra)>0}">
-	        	<c:set var="outputExtraData" value="${enrichment_category_when_t_extra}"/>
-	        	<c:set var="outputData"      value="${enrichment_category_when_t_data}"/>
+	        	 <c:set var="outputExtraData" value="${enrichment_category_when_t_extra}"/>
 			   </c:if>	        	
+	           <c:set var="outputData"      value="${enrichment_category_when_t_data}"/>
         	</c:if>
+
+           <c:set var="outputExtraData" value="${fn:trim(outputExtraData)}"/>
+           <c:set var="outputData"      value="${fn:trim(outputData)}"/>
         
-           <c:if test="${ outputData != 'null' || outputExtraData != 'null' }">
+           <c:if test="${ !empty outputData || !empty outputExtraData  }">
         		<li>
         			<h4><a href="" class="nofollow icon"><spring:message code="${fieldKey}"/></a></h4>
-              		<ul>
-	           			<c:if test="${outputData != 'null' }">
+              		<ul class="andy">
+	           			<c:if test="${!empty outputData}">
 	           				${outputData}
 	           			</c:if>
-	           			<c:if test="${outputExtraData != 'null' }">
+	           			<c:if test="${!empty outputExtraData}">
 	           				${outputExtraData}
 	           			</c:if>
               		</ul>
-              		
         		</li>
         	</c:if>
-        
         </c:forEach>
 
       
