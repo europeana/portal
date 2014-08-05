@@ -218,7 +218,9 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.item.uri             = '${model.document.about}';
 			
 
+			<%--
 			<c:if test="${empty model.useBackendItemTranslation || model.useBackendItemTranslation == false}">
+			--%>
 				eu.europeana.vars.languageItem = '${model.user.languageItem}';
 				eu.europeana.vars.languageLabel = '${model.user.languageItem}';
 				
@@ -228,7 +230,9 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 					</c:if>
 				</c:forEach>
 
+			<%--
 			</c:if>
+			--%>
 		</c:if>
 
 
