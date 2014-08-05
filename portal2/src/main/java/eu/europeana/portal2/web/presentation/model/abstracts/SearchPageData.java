@@ -188,8 +188,7 @@ public abstract class SearchPageData extends PortalPageData {
 		
 		
 		
-		
-		if (getUser() != null && queryTranslationsList != null && queryTranslationsList.size() > 0) {
+		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
 			
 			// get the English / group multiple entries			
 			
