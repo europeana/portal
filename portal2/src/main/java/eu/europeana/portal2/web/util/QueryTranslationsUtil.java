@@ -95,7 +95,9 @@ public class QueryTranslationsUtil {
 
 		String portalLanguage = languageContainer.getPortalLanguage();
 		if (StringUtils.isNotBlank(portalLanguage)
-			&& !languageCodes.contains(portalLanguage)) {
+			&& languageCodes.size() > 0
+			&& !languageCodes.contains(portalLanguage)
+			) {
 			languageCodes.add(portalLanguage);
 		}
 
