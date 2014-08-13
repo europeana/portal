@@ -72,7 +72,7 @@ public class SearchController {
 
 	@RequestMapping({"/search.html", "/brief-doc.html"})
 	public ModelAndView searchHtml(
-			@RequestParam(value = "query", required = false, defaultValue = "*:*") String q,
+			@RequestParam(value = "query", required = false, defaultValue = "*:*") String queryString,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "qt", required = false) String[] qt,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
@@ -91,12 +91,13 @@ public class SearchController {
 		model.setRows(fixRowsParameter(rows));
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 
-		q = SolrUtils.rewriteQueryFields(q);
-		model.setQuery(q);
+		queryString = SolrUtils.rewriteQueryFields(queryString);
+		queryString = SolrUtils.normalizeBooleans(queryString);
+		model.setQuery(queryString);
 
 		if (model.isDoTranslation()) {
 			long t0 = new Date().getTime();
-			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, q, qt, request);
+			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, queryString, qt, request);
 			long t1 = new Date().getTime();
 			log.info("Query translation: " + (t1 - t0));
 			model.setLanguages(languageContainer);
@@ -115,7 +116,7 @@ public class SearchController {
 		PageInfo view = PortalPageInfo.SEARCH_HTML;
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
 
-		Query query = new Query(q)
+		Query query = new Query(queryString)
 				.setRefinements(model.getRefinements())
 				.setPageSize(model.getRows())
 				.setStart(model.getStart() - 1) // Solr starts from 0
