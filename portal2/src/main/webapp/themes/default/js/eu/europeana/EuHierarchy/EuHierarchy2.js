@@ -147,17 +147,18 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		if(ob.action === "self.json"){
 			newOb = {
-					"id" : escapeId(ob.object.id),
-					"text" : normaliseText(ob.object.id, ob.object.title, ob.object.type, ob.childrenCount),
+					"id" : escapeId(ob.self.id),
+					"text" : normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
 					"data" : {
-						"id" :			ob.object.id,	/* reference to unescaped id */
-						"index":		ob.object.index,
-						"hasChildren":	ob.object.hasChildren,
+						"id" :			ob.self.id,	/* reference to unescaped id */
+						"index":		ob.self.index,
+						"hasChildren":	ob.self.hasChildren,
 						"hasParent":	ob.hasParent
 					 }					
 			}
 			if(newOb.data.hasChildren){
-				newOb.data.childrenCount = ob.childrenCount;
+				//newOb.data.childrenCount = ob.childrenCount;
+				newOb.data.childrenCount = ob.self.childrenCount;
 			}
 			if(newOb.data.hasParent){
 				newOb.data.parentId = ob.parent.id;
