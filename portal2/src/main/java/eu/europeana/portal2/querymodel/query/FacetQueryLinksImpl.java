@@ -75,6 +75,9 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 
 			// iterating over actual qf values
 			if (queryRefinements != null) {
+				for (String qfTerm : refinements.get(QueryUtil.REFINEMENTS)) {
+					url.addMultiParam("qf", qfTerm);
+				}
 				for (String qfTerm : refinements.get(QueryUtil.FACETS)) {
 					if (!qfTerm.equals(NON_WIKIPEDIA)) {
 						String[] parts = qfTerm.split(":", 2);

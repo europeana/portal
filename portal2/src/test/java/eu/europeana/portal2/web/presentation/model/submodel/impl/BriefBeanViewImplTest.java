@@ -31,7 +31,11 @@ public class BriefBeanViewImplTest {
 
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		urlParams.put("query", new String[]{"*:*"});
-		urlParams.put("qf", new String[]{"DATA_PROVIDER:\"Tyne & Wear Archives & Museums\"", "TYPE:IMAGE", "YEAR:\"-1543\""});
+		urlParams.put("qf",
+			new String[]{
+				"DATA_PROVIDER:\"Tyne & Wear Archives & Museums\"",
+				"TYPE:IMAGE",
+				"YEAR:\"-1543\""});
 		urlParams.put("rows", new String[]{"24"});
 
 		Query query = new Query("*:*")
@@ -78,7 +82,6 @@ public class BriefBeanViewImplTest {
 			"/portal/search.html?rows=24&query=*%3A*"
 			+ "&qf=DATA_PROVIDER%3A%22Tyne+%26+Wear+Archives+%26+Museums%22&qf=TYPE%3AIMAGE",
 			filters.get(3).getRemoveLinkUrl());
-
 	}
 
 }

@@ -19,14 +19,14 @@ import eu.europeana.portal2.web.model.facets.LabelFrequency;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/portal2-test.xml"})
+@ContextConfiguration({"/portal2-test.xml"})
 public class FacetQueryLinksImplTest {
 
 	@Before
 	public void setUp() throws Exception {
 	}
 
-	// @Test
+	@Test
 	public void testGeneralFacets() {
 		List<Facet> facetFields = new ArrayList<Facet>();
 		Facet facet1 = new Facet();
@@ -56,7 +56,7 @@ public class FacetQueryLinksImplTest {
 		facet4.fields.add(new LabelFrequency("1453", 11));
 		facetFields.add(facet4);
 
-		Query query = new Query("*:*");
+		Query query = new Query("*:*").setRefinements("photo");
 		List<FacetQueryLinks> links = FacetQueryLinksImpl.createDecoratedFacets(facetFields, query);
 
 		assertEquals(4, links.size());
@@ -70,12 +70,12 @@ public class FacetQueryLinksImplTest {
 		assertEquals(2, counts.size());
 		FacetCountLink count = counts.get(0);
 		assertEquals(23, count.getCount());
-		assertEquals("/portal/search.html?query=*%3A*&rows=12&qf=COUNTRY%3A%22united+kingdom%22", count.getUrl());
+		assertEquals("/portal/search.html?query=*%3A*&rows=12&qf=photo&qf=COUNTRY%3A%22united+kingdom%22", count.getUrl());
 		assertEquals("&qf=COUNTRY%3A%22united+kingdom%22", count.getParam());
 
 		count = counts.get(1);
 		assertEquals(13, count.getCount());
-		assertEquals("/portal/search.html?query=*%3A*&rows=12&qf=COUNTRY%3A%22the+netherlands%22", count.getUrl());
+		assertEquals("/portal/search.html?query=*%3A*&rows=12&qf=photo&qf=COUNTRY%3A%22the+netherlands%22", count.getUrl());
 		assertEquals("&qf=COUNTRY%3A%22the+netherlands%22", count.getParam());
 
 		// the second facet
@@ -87,14 +87,14 @@ public class FacetQueryLinksImplTest {
 		count = counts.get(0);
 		assertEquals(23, count.getCount());
 		assertEquals(
-			"/portal/search.html?query=*%3A*&rows=12&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-f%2F*",
+			"/portal/search.html?query=*%3A*&rows=12&qf=photo&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-f%2F*",
 			count.getUrl());
 		assertEquals("&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-f%2F*", count.getParam());
 
 		count = counts.get(1);
 		assertEquals(13, count.getCount());
 		assertEquals(
-			"/portal/search.html?query=*%3A*&rows=12&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-r%2F*",
+			"/portal/search.html?query=*%3A*&rows=12&qf=photo&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-r%2F*",
 			count.getUrl());
 		assertEquals("&qf=RIGHTS%3Ahttp%3A%2F%2Fwww.europeana.eu%2Frights%2Frr-r%2F*", count.getParam());
 
@@ -107,9 +107,11 @@ public class FacetQueryLinksImplTest {
 		count = counts.get(0);
 		assertEquals(11, count.getCount());
 		assertEquals(
-			"/portal/search.html?query=*%3A*&rows=12&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22",
+			"/portal/search.html?query=*%3A*&rows=12&qf=photo&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22",
 			count.getUrl());
-		assertEquals("&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22", count.getParam());
+		assertEquals(
+			"&qf=DATA_PROVIDER%3A%22Dario+Fo+%26+Franca+Rame+Archive%2C+CTFR%2C+Milano%2C+Italia%22",
+			count.getParam());
 
 		// the third facet
 		link = links.get(3);
@@ -120,14 +122,14 @@ public class FacetQueryLinksImplTest {
 		count = counts.get(0);
 		assertEquals(11, count.getCount());
 		assertEquals(
-			"/portal/search.html?query=*%3A*&rows=12&qf=YEAR%3A%22-1453%22",
+			"/portal/search.html?query=*%3A*&rows=12&qf=photo&qf=YEAR%3A%22-1453%22",
 			count.getUrl());
 		assertEquals("&qf=YEAR%3A%22-1453%22", count.getParam());
 
 		count = counts.get(1);
 		assertEquals(11, count.getCount());
 		assertEquals(
-			"/portal/search.html?query=*%3A*&rows=12&qf=YEAR%3A1453",
+			"/portal/search.html?query=*%3A*&rows=12&qf=photo&qf=YEAR%3A1453",
 			count.getUrl());
 		assertEquals("&qf=YEAR%3A1453", count.getParam());
 	}
