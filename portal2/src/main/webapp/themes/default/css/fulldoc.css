@@ -99,6 +99,8 @@
 	margin-top: 1.5em;
 }
 
+
+.latLong,
 #geo-map-info.uppercase {
 	text-transform: capitalize;
 }

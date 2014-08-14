@@ -107,7 +107,7 @@
 				</c:if>
 			</c:forEach>
 
-			<span class="bold notranslate  br ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
+			<span class="bold notranslate br ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
 
 			<%-- iterate over possible values for the given label
 				data (FieldValue):
@@ -173,13 +173,40 @@
 						display contextual info
 					--%>
 					<c:when test="${model.showContext && !empty value.decorator}">
-					
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
 						<c:set var="contextPageMarkup"><jsp:include page="${page}" flush="false" /></c:set>
-					
-						<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">${fn:trim(contextPageMarkup)}${separator}</c:if>	
+						<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">${fn:trim(contextPageMarkup)}${separator}</c:if>
+						
+ 						<%-- lat / long --%>
+						<c:set var="fieldsEnrichment"      value="${model.fieldsEnrichment}" />
+						<c:if test="${!empty fieldsEnrichment && fn:length(fieldsEnrichment) > 0}">
+							<c:forEach items="${fieldsEnrichment}" var="fieldEnrichment">
+								<c:if test="${fieldEnrichment.key == 'enrichment_category_where_t'}">
+									<c:if test="${fn:length(fieldEnrichment.value) > 0}">
+										<c:forEach items="${fieldEnrichment.value}" var="val" >
+											<div>
+												<c:forEach items="${val.fieldValues}" var="fieldVal" varStatus="placeStatus">
+													<c:if test="${fieldVal.fieldName == 'enrichment:place_lat_long'}">
+														<c:choose>
+															<c:when test="${placeStatus.index==0}">
+																<span class="translate latLong"><spring:message code="edm_place_latitude_t"/></span>&nbsp;${fieldVal.value};
+															</c:when>
+															<c:when test="${placeStatus.index==1}">
+																<span class="translate latLong"><spring:message code="edm_place_longitude_t"/></span>${fieldVal.value}
+															</c:when>
+														</c:choose>
+													</c:if>
+												</c:forEach>
+											</div>
+										</c:forEach>										
+									</c:if>	
+								</c:if>	
+							</c:forEach>
+						</c:if>
+ 						<%-- end lat / long --%>
+
 						<%--
 						<c:if test="${!empty value.decorator.allRelatedItems}">
 							<c:forEach items="${value.decorator.allRelatedItems}" var="_contextualItem">
@@ -204,6 +231,7 @@
 
 					<c:otherwise>
 						<span class="${classAttr}"
+						
 							<c:if test="${localSemanticAttributes != ''}">${" "}${localSemanticAttributes}</c:if>
 							<c:if test="${localSemanticUrl}">${" href=\""}${value.value}${"\""}</c:if>><c:choose>
 
