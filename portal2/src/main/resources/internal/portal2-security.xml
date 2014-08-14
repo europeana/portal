@@ -14,7 +14,7 @@
 		<intercept-url pattern="/admin/*.html" access="ROLE_GOD" />
 		<intercept-url pattern="/secure/*.html" access="ROLE_GOD" />
 		<intercept-url pattern="/myeuropeana.html" access="ROLE_USER" />
-		<form-login login-page="/myeuropeana" authentication-failure-url="/myeuropeana?error=1#login" />
+		<form-login login-page="/myeuropeana" authentication-failure-url="${portal.name}/myeuropeana?error=1#login" />
 		<logout logout-url="/logout.html" logout-success-url="/" />
 	</http>
 
