@@ -286,7 +286,16 @@
 															<c:set var="codeFound" value="true" />
 														</c:if>
 													</c:forEach>
-													<c:if test="${!codeFound}">${theVal}</c:if>
+													<c:if test="${!codeFound}">
+														<c:choose>
+															<c:when test="${theVal == 'mul'}">
+																<spring:message code="mul_t" />
+															</c:when>
+															<c:otherwise>
+																${theVal}
+															</c:otherwise>
+														</c:choose>
+													</c:if>
 												</c:when>
 												
 												<c:when test="${data.fieldLabel == 'Description_t'}">
