@@ -49,7 +49,7 @@ var dataGen = function(){
 	var parentData = function(path, limit){
 		return {
 	        "id": path.slice(0, path.length-1).join('-'),
-	        "title": search(path.slice(0, path.length-1).join('-'), 'self.json', limit).object.title,
+	        "title": search(path.slice(0, path.length-1).join('-'), 'self.json', limit).self.title,
 	        "type": "TEXT",
 	        "index": path[path.length-2],
 	        "hasChildren": true
@@ -94,15 +94,15 @@ var dataGen = function(){
 			SELF
 		*/
 		if(action==="self.json"){
-			res.object    =  coreData(sData);
+			res.self    =  coreData(sData);
 			
-			if(res.object){
+			if(res.self){
 				res.hasParent = path.length>1;
 				
 				if(res.hasParent){
 					res.parent = parentData(path, limit);
 				}
-				if(res.object.hasChildren){
+				if(res.self.hasChildren){
 					res.childrenCount = sData.data.length;
 				}			
 			}
@@ -166,7 +166,7 @@ var dataGen = function(){
 						var followingSibling         = coreData(parentChildren.children[i]);
 						var siblingData              = search(followingSibling.id, 'self.json', 1);
 						
-						followingSibling.hasChildren = siblingData.object.hasChildren;
+						followingSibling.hasChildren = siblingData.self.hasChildren;
 						
 						if(followingSibling.hasChildren){
 							followingSibling.childrenCount = siblingData.childrenCount;							
@@ -218,7 +218,7 @@ var dataGen = function(){
 
 						//var subSrc = search(parentChildren.children[i].id, 'self.json', 1);
 						
-						precedingSibling.hasChildren = siblingData.object.hasChildren;
+						precedingSibling.hasChildren = siblingData.self.hasChildren;
 						if(precedingSibling.hasChildren){
 							precedingSibling.childrenCount = siblingData.childrenCount;							
 						}
