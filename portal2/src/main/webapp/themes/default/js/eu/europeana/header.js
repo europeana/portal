@@ -513,6 +513,10 @@ eu.europeana.header = {
 		$(window).add('.iframe-wrap').bind('keydown', function(e){
 			var key	= window.event ? e.keyCode : e.which;
 			if(key==27){
+				if( $(".overlaid-content").hasClass('fullscreen') ){
+					eu.europeana.fulldoc.lightboxOb.exitFullscreen(true);
+					return;
+				}
 				$(".overlaid-content").css('visibility', 'hidden');
 				$("#lightbox").remove();	// this is needed to stop ie8 making a black screen following closing of the lightbox.
 			}

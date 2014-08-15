@@ -167,10 +167,11 @@ eu.europeana.lightbox = function(){
 				if(img.attr('src').indexOf(eu.europeana.fulldoc.telDetect) > -1 ){
 					var src = elIframe.attr('src');
 					elIframe.attr('src', src + (src.indexOf('?') > -1 ? '&' : '?' ) + 'hidebackbtn=true');
-					
 					elIframe.load(function(){
+						elIframe.before('<div class="go-fullscreen" onclick="eu.europeana.fulldoc.lightboxOb.fsBtnClick()" style="z-index:5; position:absolute; top:0.75em; left:1em; color:white;"><img src="http://www.theeuropeanlibrary.org/tel4/img/full-scr-transparent.png" style="width:1.5em;" /><span style="position:relative; top:-0.4em; left:0.5em;">' + window.lightboxMsg[0] + '</span></div>');
 						elIframe[0].contentWindow.postMessage('hide-back', '*');	// cross-domain fix
-				    });
+					});
+						
 				}
 				self.cmp.find('#lightbox_info').before(elIframe);
 
@@ -264,6 +265,30 @@ eu.europeana.lightbox = function(){
 		);
 	};
 	
+	var exitFullscreen = function(closing){
+		$('.overlaid-content').removeClass('fullscreen');
+		$('.go-fullscreen img').attr('src', 'http://www.theeuropeanlibrary.org/tel4/img/full-scr-transparent.png');
+		$('.go-fullscreen span').html(window.lightboxMsg[0]);
+		
+		$('#lightbox>.close').show();
+		if(!closing){
+			layout();			
+		}
+	};
+
+	var enterFullscreen = function(){
+		var el = $('iframe#lightbox_image');
+		el.removeAttr('style');
+		el.css('width',  '100%');
+		el.css('height', '100%');
+		
+		$('.go-fullscreen img').attr('src', 'http://www.theeuropeanlibrary.org/tel4/img/exit-full-scr-transparent.png');
+		$('.go-fullscreen span').html(window.lightboxMsg[1]);
+		
+		$('.overlaid-content').addClass('fullscreen');
+		$('#lightbox>.close').hide();
+	};
+
 	var layout = function(){
 		
 		/*	Strategy if self.showingEl = IMG:
@@ -611,6 +636,19 @@ eu.europeana.lightbox = function(){
 			self.cmp.find('#zoomIn').toggleClass('active');
 			self.zoomed = !self.zoomed;
 			layout();
+		},
+
+		"fsBtnClick" : function(){
+			if(!$('.overlaid-content').hasClass('fullscreen')){
+				enterFullscreen();
+			}
+			else{
+				exitFullscreen();
+			}
+		},
+
+		"exitFullscreen" : function(){
+			exitFullscreen();
 		}
 		
 	};

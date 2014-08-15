@@ -3,6 +3,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="europeana" tagdir="/WEB-INF/tags"%>
 
+<script type="text/javascript">
+	window.lightboxMsg = ['<spring:message code="enter_fullscreen_t"/>', '<spring:message code="exit_fullscreen_t"/>'];
+</script>
+
 <div id="lightbox-proxy"><div class="lightbox_content_wrap">
 
 	<a id="nav-prev" class="icon-arrow-4" onClick="eu.europeana.fulldoc.lightboxOb.prev();" ></a>

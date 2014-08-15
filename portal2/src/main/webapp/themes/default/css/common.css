@@ -138,6 +138,28 @@
 	display:			table;
 }
 
+.overlaid-content.fullscreen{
+	display:			block;
+	width:				100%;
+}
+
+.overlaid-content.fullscreen .iframe-wrap{
+	height:				100%;
+	width:				100%;
+	display:            block;
+}
+
+.overlaid-content.fullscreen .iframe-wrap #lightbox{
+	width:				100%;
+	height:				100%;
+}
+
+.overlaid-content.fullscreen .iframe-wrap #lightbox .lightbox_content_wrap{
+	width:				100%;
+	height:				100%;
+}
+
+
 .ajax-overlay{
     position:	absolute;
     width:		100%;
