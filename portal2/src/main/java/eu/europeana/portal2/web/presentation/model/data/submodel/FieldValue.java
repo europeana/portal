@@ -36,6 +36,8 @@ public class FieldValue {
 	private FullBeanDecorator.ContextualEntity entityType = null;
 	private ContextualItemDecorator decorator;
 	private boolean resourceUri = false;
+	private boolean translated = false;
+	private String translatedValue;
 
 	public FieldValue(FullDocData model, Field field, String value) {
 		this.model = model;
@@ -85,12 +87,15 @@ public class FieldValue {
 	}
 
 	public String getTranslatedValue() {
-		/*
-		if (field.isTranslatable() && StringUtils.isNotBlank(model.getItemLanguage())) {
-			return model.translationUrlservice.translate(value, model.getItemLanguage());
+		if (model.isUseBackendItemTranslation()
+			&& field.isTranslatable()
+			&& StringUtils.isNotBlank(model.getItemLanguage())) {
+			if (translated == false) {
+				translatedValue = model.translationUrlservice.translate(value, model.getItemLanguage());
+				translated = true;
+			}
 		}
-		*/
-		return null;
+		return translatedValue;
 	}
 
 	public String getValueClean() {
