@@ -247,8 +247,11 @@
 								</c:when>
 								<c:otherwise>
 									<c:set var="theVal" value="${eufn:cleanField(value.value)}" />
-									<c:if test="${!empty data.translatable
-												&& data.translatable
+									<c:if test="${!empty model.useBackendItemTranslation
+												&& model.useBackendItemTranslation == true
+												&& !empty model.itemLanguage
+												&& !empty data.translatable
+												&& data.translatable == true
 												&& !empty value.translatedValue}">
 										<c:set var="theVal" value="${eufn:cleanField(value.translatedValue)}" />
 									</c:if>
