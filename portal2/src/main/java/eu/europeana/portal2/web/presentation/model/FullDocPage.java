@@ -293,7 +293,7 @@ public class FullDocPage extends FullDocPreparation {
 	public String getThumbnailUrl() throws UnsupportedEncodingException {
 		String thumbnail = "";
 		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
-			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], "");
+			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0].trim(), "");
 		}
 		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
 	}
@@ -301,7 +301,7 @@ public class FullDocPage extends FullDocPreparation {
 	public String getThumbnailUrlUnescaped() throws UnsupportedEncodingException {
 		String thumbnail = "";
 		if (shortcut.get("EdmObject") != null && shortcut.get("EdmObject").length > 0) {
-			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0], "");
+			thumbnail = StringUtils.defaultIfBlank(shortcut.get("EdmObject")[0].trim(), "");
 		}
 		return createImageUrl(thumbnail, getDocument().getEdmType(), "FULL_DOC");
 	}
