@@ -241,14 +241,17 @@ public class ControllerUtil {
 		}
 	}
 
-	public static LanguageContainer createQueryTranslations(UserService userService, String query,
+	public static LanguageContainer createQueryTranslations(
+			UserService userService, String query,
 			String[] qt, HttpServletRequest request) {
-		QueryTranslationsUtil queryTranslator = new QueryTranslationsUtil(userService, request, query, qt);
+		QueryTranslationsUtil queryTranslator = new QueryTranslationsUtil(
+				userService, request, query, qt);
 		queryTranslator.createQueryTranslations();
 		return queryTranslator.getLanguageContainer();
 	}
 
-	public static LanguageContainer createQueryTranslationsFromParams(UserService userService, String query,
+	public static LanguageContainer createQueryTranslationsFromParams(
+			UserService userService, String query,
 			String[] qt, HttpServletRequest request) {
 		QueryTranslationsUtil queryTranslator = new QueryTranslationsUtil(userService, request, query, qt);
 		queryTranslator.createQueryTranslationsFromParams();
