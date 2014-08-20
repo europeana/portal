@@ -180,30 +180,35 @@
 						<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">${fn:trim(contextPageMarkup)}${separator}</c:if>
 						
  						<%-- lat / long --%>
-						<c:set var="fieldsEnrichment"      value="${model.fieldsEnrichment}" />
-						<c:if test="${!empty fieldsEnrichment && fn:length(fieldsEnrichment) > 0}">
-							<c:forEach items="${fieldsEnrichment}" var="fieldEnrichment">
-								<c:if test="${fieldEnrichment.key == 'enrichment_category_where_t'}">
-									<c:if test="${fn:length(fieldEnrichment.value) > 0}">
-										<c:forEach items="${fieldEnrichment.value}" var="val" >
-											<div>
+ 						
+ 					 	<c:if test="${data.fieldName == 'dcterms:spatial'}"> 						
+							<c:set var="fieldsEnrichment"      value="${model.fieldsEnrichment}" />
+							<c:if test="${!empty fieldsEnrichment && fn:length(fieldsEnrichment) > 0}">
+								<c:forEach items="${fieldsEnrichment}" var="fieldEnrichment">
+									<c:if test="${fieldEnrichment.key == 'enrichment_category_where_t'}">
+										<c:if test="${fn:length(fieldEnrichment.value) > 0}">
+											<c:forEach items="${fieldEnrichment.value}" var="val" >
+										
 												<c:forEach items="${val.fieldValues}" var="fieldVal" varStatus="placeStatus">
 													<c:if test="${fieldVal.fieldName == 'enrichment:place_lat_long'}">
-														<c:choose>
-															<c:when test="${placeStatus.index==0}">
-																<span class="translate latLong"><spring:message code="edm_place_latitude_t"/></span>&nbsp;${fieldVal.value};
-															</c:when>
-															<c:when test="${placeStatus.index==1}">
-																<span class="translate latLong"><spring:message code="edm_place_longitude_t"/></span>${fieldVal.value}
-															</c:when>
-														</c:choose>
+														<c:if test="${fieldVal.value != 'null'}">
+															<c:choose>
+																<c:when test="${placeStatus.index==0}">
+																	<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">; </c:if>
+																	<span class="translate latLong"><spring:message code="edm_place_latitude_t"/></span>:&nbsp;${fieldVal.value};
+																</c:when>
+																<c:when test="${placeStatus.index==1}">
+																	<span class="translate latLong"><spring:message code="edm_place_longitude_t"/></span>:&nbsp;${fieldVal.value}
+																</c:when>
+															</c:choose>
+														</c:if>
 													</c:if>
 												</c:forEach>
-											</div>
-										</c:forEach>										
+											</c:forEach>										
+										</c:if>	
 									</c:if>	
-								</c:if>	
-							</c:forEach>
+								</c:forEach>
+							</c:if>
 						</c:if>
  						<%-- end lat / long --%>
 
