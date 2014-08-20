@@ -168,8 +168,10 @@ eu.europeana.lightbox = function(){
 					var src = elIframe.attr('src');
 					elIframe.attr('src', src + (src.indexOf('?') > -1 ? '&' : '?' ) + 'hidebackbtn=true');
 					elIframe.load(function(){
-						elIframe.before('<div class="go-fullscreen" onclick="eu.europeana.fulldoc.lightboxOb.fsBtnClick()" style="z-index:5; position:absolute; top:0.75em; left:1em; color:white;"><img src="http://www.theeuropeanlibrary.org/tel4/img/full-scr-transparent.png" style="width:1.5em;" /><span style="position:relative; top:-0.4em; left:0.5em;">' + window.lightboxMsg[0] + '</span></div>');
-						elIframe[0].contentWindow.postMessage('hide-back', '*');	// cross-domain fix
+						if($('#lightbox .go-fullscreen').length==0){
+							elIframe.before('<div class="go-fullscreen" onclick="eu.europeana.fulldoc.lightboxOb.fsBtnClick()" style="z-index:5; position:absolute; top:0.75em; left:1em; color:white;"><img src="http://www.theeuropeanlibrary.org/tel4/img/full-scr-transparent.png" style="width:1.5em;" /><span style="position:relative; top:-0.4em; left:0.5em;">' + window.lightboxMsg[0] + '</span></div>');
+							elIframe[0].contentWindow.postMessage('hide-back', '*');	// cross-domain fix							
+						}
 					});
 						
 				}
@@ -246,6 +248,7 @@ eu.europeana.lightbox = function(){
 			return;
 		}
 		else if( src.indexOf(eu.europeana.fulldoc.telDetect) > -1 ){
+			console.log('TEL FN 0,0');
 			if(typeof callback != "undefined"){
 				callback(0, 0);
 			}
@@ -290,6 +293,12 @@ eu.europeana.lightbox = function(){
 	};
 
 	var layout = function(){
+		
+
+		if($('.overlaid-content').hasClass('fullscreen')){
+			return;
+		}
+		
 		
 		/*	Strategy if self.showingEl = IMG:
 		 * 

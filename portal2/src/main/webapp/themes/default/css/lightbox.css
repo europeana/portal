@@ -17,6 +17,7 @@ iframe#lightbox_image{
 	padding:		0;
 }
 
+
 #lightbox{
 	background-color:	transparent;
 	border:				1px solid #666;	
@@ -133,6 +134,10 @@ The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the
 .hide_show_meta{
 	height:		1em;
 	text-align:	right;
+}
+
+.go-fullscreen{
+	cursor:	pointer;
 }
 
 a.showMeta,
