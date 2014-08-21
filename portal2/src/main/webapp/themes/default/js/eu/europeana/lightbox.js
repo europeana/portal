@@ -159,7 +159,7 @@ eu.europeana.lightbox = function(){
 			
 			if(img[0].nodeName.toUpperCase() == 'IMG'){
 				
-				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '" scrolling="No">');
+				var elIframe = $('<iframe id="lightbox_image" src="' + img.attr('src') + '" scrolling="no">');
 	
 				img.remove();
 				//elIframe.fitVids();
@@ -169,7 +169,7 @@ eu.europeana.lightbox = function(){
 					elIframe.attr('src', src + (src.indexOf('?') > -1 ? '&' : '?' ) + 'hidebackbtn=true');
 					elIframe.load(function(){
 						if($('#lightbox .go-fullscreen').length==0){
-							elIframe.before('<div class="go-fullscreen" onclick="eu.europeana.fulldoc.lightboxOb.fsBtnClick()" style="z-index:5; position:absolute; top:0.75em; left:1em; color:white;"><img src="http://www.theeuropeanlibrary.org/tel4/img/full-scr-transparent.png" style="width:1.5em;" /><span style="position:relative; top:-0.4em; left:0.5em;">' + window.lightboxMsg[0] + '</span></div>');
+							elIframe.before('<a class="go-fullscreen" onclick="eu.europeana.fulldoc.lightboxOb.fsBtnClick()" style="z-index:5; position:absolute; top:0.75em; left:1em; color:white;"><img src="http://www.theeuropeanlibrary.org/tel4/img/full-scr-transparent.png" style="width:1.5em;" /><span style="position:relative; top:-0.4em; left:0.5em;">' + window.lightboxMsg[0] + '</span></a>');
 							elIframe[0].contentWindow.postMessage('hide-back', '*');	// cross-domain fix							
 						}
 					});
