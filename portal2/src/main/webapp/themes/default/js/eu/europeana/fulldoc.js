@@ -506,6 +506,8 @@ eu.europeana.fulldoc = {
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'text'
 								&&
 								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.telDetect) > -1
+								&&
+								!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)
 							)
 						)
 						&&
@@ -688,6 +690,8 @@ eu.europeana.fulldoc = {
 							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'text'
 							&&
 							carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.url.indexOf(eu.europeana.fulldoc.telDetect) >-1
+							&&
+							!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)
 						)
 				) {
 
@@ -931,7 +935,10 @@ eu.europeana.fulldoc = {
 			}
 			else if(carouselData[i].external.type == 'text'
 					&&
-					carouselData[i].external.url.indexOf(eu.europeana.fulldoc.telDetect) > -1){
+					carouselData[i].external.url.indexOf(eu.europeana.fulldoc.telDetect) > -1
+					&&
+					!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)		
+			){
 				lightboxableCount++;				
 			}
 		}
