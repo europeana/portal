@@ -146,6 +146,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		}
 		
 		if(ob.action === "self.json"){
+			
+			if(ob.self.id == '1_1_2' || ob.self.id == '1-1-2' ){
+				alert('intercept:\n\n ' + JSON.stringify(ob, null, 4))
+			}
+			
 			newOb = {
 					"id" : escapeId(ob.self.id),
 					"text" : normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
@@ -646,26 +651,39 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){
 			
+			alert('1st')
+			
 			var createClass  = 'arrow bottom';
 			var createString = '<div class="' + createClass + '" style="right:' + rightIndent + 'em">';
 			rightIndent++;
 			bottomArrows.append(createString);
 			bottomArrows.css('width', rightIndent + 'em');
 		}
+		console.log('brokenArrowsBottom: start:\n' + vNodes[0].id + '   ' + vNodes[1].id)
 		
 		while(xNode.parent){
 			
 			var origIndex = xNode.data.index;
+			
+			console.log('brokenArrowsBottom: xNode.data.index = ' + xNode.data.index)
+			
 			xNode         = self.treeCmp.jstree('get_node', xNode.parent );
 
 			if( xNode.id != '#'){
-				
+
+
 				var totalChildren = xNode.data.hasChildren ? xNode.data.childrenCount : 0;
 
+				if(typeof totalChildren == 'undefined'){
+					alert('ERR ' + xNode.id + '  ' +  xNode.data.hasChildren + '\n\n' + JSON.stringify( xNode.data ) )
+				}
+				
+				console.log('brokenArrowsBottom: xNode.id ' + xNode.id + ', totalChildren = ' + totalChildren + '\n\nxNode.data:\n\n' + JSON.stringify(xNode.data, null, 2) );
+				
 				if( $('#' + xNode.id + ' > .jstree-children').length ){
 					
 					rightIndent ++;
-					
+				//	alert(origIndex + '   ' + totalChildren +'\n'  +  (origIndex == totalChildren))
 					var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : 'arrow bottom');
 					var createString = '<div class="' + createClass + '" style="right:' + rightIndent + 'em">';
 					
@@ -673,6 +691,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					bottomArrows.css('width', rightIndent + 'em');
 					
 					$('.hierarchy-next').css('margin-left', (rightIndent+1) + 'em');
+				}
+				else{
+					alert('why bother with this check if it is always true???')
 				}
 			}
 		}// end while	
@@ -989,16 +1010,19 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	 * @optional data object to use instead of a real server
 	 * */
 	
-	var init = function(baseUrl, testMode){
+	var init = function(baseUrl){
+	//var init = function(baseUrl, testMode){
 
 		self.timer = new Timer();
 
+		/*
 		if(testMode){
 			useXHR = false;
 			if(typeof dataGen == 'undefined'){
 				alert('Running with testMode = true requires a data object on the page');
 			}
 		}
+		*/
 		// Set UI viewport size
 		
 		var setContainerHeight = function(){
@@ -1083,7 +1107,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 		self.treeCmp.bind("select_node.jstree", function(event, data) {
 			
-			//console.log('selectednode:\n' + JSON.stringify(data.node, null, 2));
+			$('.debug-area').html(JSON.stringify(data.node, null, 2));
 			
 			if(!self.silentClick){
 				if(!self.loadedAll){
@@ -1370,8 +1394,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	// publicly exposed functions
 	
 	return {
-		init : function(baseUrl, testMode){
-			init(baseUrl, testMode);
+		//init : function(baseUrl, testMode){
+		//	init(baseUrl, testMode);
+		//},
+		init : function(baseUrl){
+			init(baseUrl);
 		},
 		nodeLinkClick : function(e){
 			nodeLinkClick(e);

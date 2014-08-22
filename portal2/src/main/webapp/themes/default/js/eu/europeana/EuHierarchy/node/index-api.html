@@ -123,13 +123,18 @@
 				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
 
 				//hierarchy.init((param ? param : 'http://localhost:3000/1-1-2-1/self.json?wskey=api2demo'), true);
-				hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'), true);
+				//hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'), true);
+				hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo') );
 
 				new EuHierarchyTools(hierarchy);
 			});
 		</script>
 	</div>
+
+	<!-- 
 	<script src="EuHierarchyData2.js"></script>
+	 -->
+	
 	<script src="../EuHierarchy2.js"></script>
 	<script src="EuHierarchyTools.js"></script>
 	

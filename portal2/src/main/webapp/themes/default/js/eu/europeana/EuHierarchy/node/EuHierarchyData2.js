@@ -61,13 +61,17 @@ var dataGen = function(){
 		if(!data){
 			return;
 		}
-		return {
-			"id" :			data.id,
-			"title" :		data.title,
-	        "type":			data.type,
-	        "index":		data.index,
-	        "hasChildren":	typeof data.data==='object'					
+		var res = {
+			"id" :				data.id,
+			"title" :			data.title,
+	        "type":				data.type,
+	        "index":			data.index,
+	        "hasChildren":		typeof data.data==='object'
 		}
+		if(res.hasChildren){
+			res.childrenCount = data.data.length;
+		}
+		return res;
 	}
 
 	
@@ -102,9 +106,9 @@ var dataGen = function(){
 				if(res.hasParent){
 					res.parent = parentData(path, limit);
 				}
-				if(res.self.hasChildren){
-					res.childrenCount = sData.data.length;
-				}			
+				//if(res.self.hasChildren){
+				//	res.childrenCount = sData.data.length;
+				//}			
 			}
 		}
 		
@@ -130,10 +134,10 @@ var dataGen = function(){
 					//for(var i=0; i< Math.min(limit, sData.data.length); i++){
 					res.children.push(coreData(sData.data[i]))
 				}
-				res.childrenCount = sData.data.length;			
+				res.childrenCount = sData.data.length;		// redundant?		
 			}
 			else{
-				res.childrenCount = 0;
+				res.childrenCount = 0;		// redundant?
 			}
 		}
 		
@@ -169,7 +173,7 @@ var dataGen = function(){
 						followingSibling.hasChildren = siblingData.self.hasChildren;
 						
 						if(followingSibling.hasChildren){
-							followingSibling.childrenCount = siblingData.childrenCount;							
+							followingSibling.childrenCount = siblingData.self.childrenCount;		
 						}
 						
 						res['following-siblings'].push(followingSibling);
@@ -185,7 +189,7 @@ var dataGen = function(){
 				}			
 			}
 			if(sData.data){
-				res.childrenCount = sData.data.length;					
+				res.childrenCount = sData.data.length;		// redundant?					
 			}
 			
 		}
@@ -220,7 +224,7 @@ var dataGen = function(){
 						
 						precedingSibling.hasChildren = siblingData.self.hasChildren;
 						if(precedingSibling.hasChildren){
-							precedingSibling.childrenCount = siblingData.childrenCount;							
+							precedingSibling.childrenCount = siblingData.self.childrenCount;							
 						}
 						
 						res['preceeding-siblings'].push(precedingSibling);
@@ -238,7 +242,7 @@ var dataGen = function(){
 				res.hasParent = true;
 			}
 			if(sData.data){
-				res.childrenCount = sData.data.length;					
+				res.childrenCount = sData.data.length;		// redundant?			
 			}
 		}
 		return res;
