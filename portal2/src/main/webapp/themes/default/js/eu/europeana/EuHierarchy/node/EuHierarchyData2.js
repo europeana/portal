@@ -245,6 +245,7 @@ var dataGen = function(){
 				res.childrenCount = sData.data.length;		// redundant?			
 			}
 		}
+		//return res.reverse();
 		return res;
 	}
 		

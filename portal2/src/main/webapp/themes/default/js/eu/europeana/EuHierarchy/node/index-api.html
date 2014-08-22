@@ -122,9 +122,9 @@
 				
 				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
 
-				//hierarchy.init((param ? param : 'http://localhost:3000/1-1-2-1/self.json?wskey=api2demo'), true);
-				//hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'), true);
-				hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo') );
+				hierarchy.init(param ? param : 'http://localhost:3000/1-2-3-4/self.json?wskey=api2demo');
+				//hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'));
+				//hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'));
 
 				new EuHierarchyTools(hierarchy);
 			});
