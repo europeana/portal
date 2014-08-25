@@ -212,7 +212,7 @@
 																<c:choose>
 																	<c:when test="${placeStatus.index==0}">
 																		<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">; </c:if>
-																		<span class="translate latLong"><spring:message code="edm_place_latitude_t"/></span>:&nbsp;${fieldVal.value};
+																		<span class="translate latLong lat"><spring:message code="edm_place_latitude_t"/></span>:&nbsp;${fieldVal.value};
 																	</c:when>
 																	<c:when test="${placeStatus.index==1}">
 																		<span class="translate latLong"><spring:message code="edm_place_longitude_t"/></span>:&nbsp;${fieldVal.value}
