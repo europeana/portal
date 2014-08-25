@@ -99,16 +99,17 @@
 	margin-top: 1.5em;
 }
 
-
-.latLong.lat:before{
-	content:"\A"; white-space:pre;
+ul.geo-coordinates,
+ul.geo-coordinates li{
+	list-style: none;
+	margin:     0;
+	padding:    0;
 }
 
 .latLong,
 #geo-map-info.uppercase {
 	text-transform: capitalize;
 }
- 
 
 #translate-container{
 	position:	relative;

@@ -189,43 +189,55 @@
 						<c:set var="inContext" value="1" scope="request" />
 						<c:set var="page" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/${fn:toLowerCase(value.entityType)}.jsp" />
 						<c:set var="contextualItem" value="${value.decorator}" scope="request" />
-						<c:set var="contextPageMarkup"><jsp:include page="${page}" flush="false" /></c:set>
-						<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">${fn:trim(contextPageMarkup)}${separator}</c:if>
+                        <c:set var="contextPageMarkup"><jsp:include page="${page}" flush="false" /></c:set>
+                        <c:if test="${fn:length( fn:replace(contextPageMarkup, ' ','') ) > 0}">${fn:trim(contextPageMarkup)}${separator}</c:if>
 						
  						<%-- lat / long --%>
  						
  					 	<c:if test="${data.fieldName == 'dcterms:spatial'}">
  					 		<c:set var="spatialCount" value="${spatialCount+1}"/>
+ 					 		<c:set var="openedLi"     value="${false}"/>
  					 		
  					 		<%-- if showing the last dc:spatial append the lat and long values --%>
  					 		
 							<c:if test="${spatialCount == spatialTotal}">
 								<c:set var="fieldsEnrichment"      value="${model.fieldsEnrichment}" />
 								<c:if test="${!empty fieldsEnrichment && fn:length(fieldsEnrichment) > 0}">
-									<c:forEach items="${fieldsEnrichment}" var="fieldEnrichment">
-										<c:if test="${fieldEnrichment.key == 'enrichment_category_where_t'}">
-											<c:if test="${fn:length(fieldEnrichment.value) > 0}">
-												<c:forEach items="${fieldEnrichment.value}" var="val" >
-													<c:forEach items="${val.fieldValues}" var="fieldVal" varStatus="placeStatus">
-														<c:if test="${fieldVal.fieldName == 'enrichment:place_lat_long'}">
-															<c:if test="${fieldVal.value != 'null'}">
-																<c:choose>
-																	<c:when test="${placeStatus.index==0}">
-																		<c:if test="${fn:length(    fn:replace(contextPageMarkup, ' ','')   ) > 0}">; </c:if>
-																		<span class="translate latLong lat"><spring:message code="edm_place_latitude_t"/></span>:&nbsp;${fieldVal.value};
-																	</c:when>
-																	<c:when test="${placeStatus.index==1}">
-																		<span class="translate latLong"><spring:message code="edm_place_longitude_t"/></span>:&nbsp;${fieldVal.value}
-																	</c:when>
-																</c:choose>
+									<ul class="geo-coordinates">
+										<c:forEach items="${fieldsEnrichment}" var="fieldEnrichment">
+											<c:if test="${fieldEnrichment.key == 'enrichment_category_where_t'}">
+												<c:if test="${fn:length(fieldEnrichment.value) > 0}">
+													<c:forEach items="${fieldEnrichment.value}" var="val" >
+														<c:forEach items="${val.fieldValues}" var="fieldVal" varStatus="placeStatus">
+															<c:if test="${fieldVal.fieldName == 'enrichment:place_lat_long'}">
+																<c:if test="${fieldVal.value != 'null'}">
+																	<c:choose>
+																		<c:when test="${placeStatus.index==0}">
+																			<c:if test="${openedLi}">
+																				${"</li>"}	<%-- close anything unclosed --%>
+																			</c:if>
+																			<c:set var="openedLi"     value="${true}"/>
+																			${"<li>"}		<%-- open --%>
+																			<span class="translate latLong lat"><spring:message code="edm_place_latitude_t"/></span>:&nbsp;${fieldVal.value};
+																		</c:when>
+																		<c:when test="${placeStatus.index==1}">
+																			<span class="translate latLong"><spring:message code="edm_place_longitude_t"/></span>:&nbsp;${fieldVal.value}
+																			${"</li>"}		<%-- close  --%>
+																			<c:set var="openedLi"     value="${false}"/>
+																		</c:when>
+																	</c:choose>
+																</c:if>
 															</c:if>
-														</c:if>
+														</c:forEach>
 													</c:forEach>
-												</c:forEach>										
+												</c:if>
 											</c:if>
-										</c:if>
-									</c:forEach>
+										</c:forEach>
+									</ul>
 								</c:if>
+							</c:if>
+							<c:if test="${openedLi}">
+								${"</li>"}	<%-- close anything unclosed --%>
 							</c:if>
 						</c:if>
  						<%-- end lat / long --%>
