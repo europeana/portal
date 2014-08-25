@@ -18,7 +18,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	self.initialised           = false;
 	self.container             = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration        = 0;
-	self.scrollDurationDefault = 4000;
+	self.scrollDurationDefault = 3000;
 	self.topPanel              = wrapper.find('.hierarchy-top-panel');
 	self.bottomPanel           = wrapper.find('.hierarchy-bottom-panel');
 	
@@ -152,7 +152,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						"id" :			ob.self.id,	/* reference to unescaped id */
 						"index":		ob.self.index,
 						"hasChildren":	ob.self.hasChildren,
-						"hasParent":	ob.hasParent
+						"hasParent":	ob.self.hasParent
 					 }					
 			}
 			if(newOb.data.hasChildren){
@@ -171,14 +171,14 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						"id" :			ob.id, /* reference to unescaped id */
 						"index":		ob.index,
 						"hasChildren":	ob.hasChildren,
-						"hasParent":	wrapInfo.hasParent
+						"hasParent":	ob.hasParent
 					 }					
 			}
 			if(newOb.data.hasChildren){
 				newOb.data.childrenCount = ob.childrenCount;
 			}
-			if(wrapInfo.hasParent){
-				newOb.data.parentId = wrapInfo.parent.id
+			if(wrapInfo.self.hasParent){
+				newOb.data.parentId = wrapInfo.self.id
 			}
 		}
 		return newOb;
@@ -189,9 +189,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	var loadData = function(url, callback) {
 		
-		if(self.initialised){			
-//			alert('loadData' + url)
-		}
 		log('loadData' + url)
 		
 		$.getJSON( url, null, function( data ) {
@@ -529,6 +526,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	
 	var brokenArrows = function(){
 		
+		console.log('add top arrows........')
+		
 		self.topPanel.find('.top-arrows').remove();
 		
 		var topArrows   = $('<div class="top-arrows"></div>').appendTo(self.topPanel);
@@ -570,6 +569,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		 * 
 		 * 
 		 **/
+		
+		console.log('top arrows - begin with node ' + xNode.id)
+
+		
 		var overrideSpacer = false;
 		if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){
 			overrideSpacer = true;
@@ -578,10 +581,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			overrideSpacer = true;
 		}
 
+		console.log('top arrows - oS= ' + overrideSpacer)
+
 		while(xNode.parent){
 			
 			origIndex = xNode.data.index;				
 			xNode     = self.treeCmp.jstree('get_node', xNode.parent );
+
+			console.log('top arrows - parent:  ' + xNode.id)
+
 			
 			if( xNode.id != '#'){
 				var totalChildren = xNode.data.childrenCount;				
@@ -1281,9 +1289,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					recurseData = data;
 				}
 
+
 				if(recurseData && recurseData.data && recurseData.data.hasParent && recurseData.data.index){
 					var parentUrl = apiServerRoot + recurseData.data.parentId + '/self.json?wskey=' + apiKey;
-					
 					// recurse
 					chainUp(parentUrl, data, callbackWhenDone);							
 				}
@@ -1332,7 +1340,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		chainUp(baseUrl, false, function(ob){
 			data = ob;
 			//log('Initialise tree with model:\n\n' + JSON.stringify(data, null, 2));
-
 
 			var tree = self.treeCmp.jstree({
 				"core" : {
