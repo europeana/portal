@@ -988,7 +988,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			
 			if( navigator.userAgent.match(/Chrome/i)
 					||
-				navigator.userAgent.match(/Opera/i)	){
+				navigator.userAgent.match(/Opera/i)
+					||
+				navigator.userAgent.match(/Safari/i)
+				
+				){
 
 				self.container.css({
 					'height':         (rows * lineHeight)-0.4 + 'em',
