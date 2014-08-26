@@ -1290,9 +1290,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				}
 
 
-				if(recurseData && recurseData.data && recurseData.data.hasParent && recurseData.data.index){
+				if(recurseData && recurseData.data && recurseData.data.hasParent && (typeof recurseData.data.index != 'undefined')  ){
 					var parentUrl = apiServerRoot + recurseData.data.parentId + '/self.json?wskey=' + apiKey;
-					// recurse
 					chainUp(parentUrl, data, callbackWhenDone);							
 				}
 				else{
