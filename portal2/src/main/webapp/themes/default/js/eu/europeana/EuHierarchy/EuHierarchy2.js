@@ -525,9 +525,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	}	
 	
 	var brokenArrows = function(){
-		
-		console.log('add top arrows........')
-		
+				
 		self.topPanel.find('.top-arrows').remove();
 		
 		var topArrows   = $('<div class="top-arrows"></div>').appendTo(self.topPanel);
@@ -570,7 +568,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		 * 
 		 **/
 		
-		console.log('top arrows - begin with node ' + xNode.id)
 
 		
 		var overrideSpacer = false;
@@ -581,14 +578,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			overrideSpacer = true;
 		}
 
-		console.log('top arrows - oS= ' + overrideSpacer)
 
 		while(xNode.parent){
 			
 			origIndex = xNode.data.index;				
 			xNode     = self.treeCmp.jstree('get_node', xNode.parent );
 
-			console.log('top arrows - parent:  ' + xNode.id)
 
 			
 			if( xNode.id != '#'){
@@ -632,21 +627,16 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			bottomArrows.append(createString);
 			bottomArrows.css('width', rightIndent + 'em');
 		}
-		console.log('brokenArrowsBottom: start:\n' + vNodes[0].id + '   ' + vNodes[1].id)
 		
 		while(xNode.parent){
 			
 			var origIndex = xNode.data.index;
-			
-			console.log('brokenArrowsBottom: xNode.data.index = ' + xNode.data.index)
-			
 			xNode         = self.treeCmp.jstree('get_node', xNode.parent );
 
 			if( xNode.id != '#'){
 
 				var totalChildren = xNode.data.hasChildren ? xNode.data.childrenCount : 0;
 				
-				console.log('brokenArrowsBottom: xNode.id ' + xNode.id + ', totalChildren = ' + totalChildren + '\n\nxNode.data:\n\n' + JSON.stringify(xNode.data, null, 2) );
 				
 				if( $('#' + xNode.id + ' > .jstree-children').length ){
 					
@@ -995,10 +985,25 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				return;
 			}
 			
-			self.container.css({
-				'height':         (rows * lineHeight) + 'em',
-				'max-height':     (rows * lineHeight) + 'em'
-			});
+			
+			if( navigator.userAgent.match(/Chrome/i)
+					||
+				navigator.userAgent.match(/Opera/i)	){
+
+				self.container.css({
+					'height':         (rows * lineHeight)-0.4 + 'em',
+					'max-height':     (rows * lineHeight)-0.4 + 'em'
+				});
+
+			}
+			else{
+				self.container.css({
+					'height':         (rows * lineHeight) + 'em',
+					'max-height':     (rows * lineHeight) + 'em'
+				});
+			}
+
+			
 			self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
 						
 			var remainderRemoved = self.container.outerHeight(true);
@@ -1006,8 +1011,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 //			remainderRemoved     = remainderRemoved - (remainderRemoved % rows);
 //			remainderRemoved    += 3;
 //			remainderRemoved    += 5;	// stops trimming bottom pixels	
+/*			
+			var msg = 'container size: ' + rows + ' * ' + lineHeight + ' = ' + (rows * lineHeight) + 'em'
+			msg += '\n\n' + navigator.userAgent
+			alert(msg)
+			console.log( msg );
+*/			
+
 			
-			//console.log('init container height at ' + remainderRemoved)
+			
 			self.container.css({
 				'height':     remainderRemoved + 'px',
 				'max-height': remainderRemoved + 'px'				
