@@ -17,8 +17,17 @@
 	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
 
 	<style>
+	
+	
+		#more-like-this-wrapper{
+			position: relative;		
+		}
+			
 		#more-like-this{
 			height: 200px;
+			padding:       0.5em 1em 3.5em 0em;
+			border:        none;
+			border-radius: 0.5em;
 		}
 		.mlt-title{
 			border-radius:		0 0 0.5em 0.5em;
@@ -34,7 +43,6 @@
 		}
 		
 		.mlt-single-wrapper{
-			margin:             auto;
 			border:             1px solid #E4E4E4 !important;
 			border-radius:      0.5em;			
 			position:			relative;	
@@ -62,6 +70,39 @@
 			vertical-align:     middle;
 			margin-bottom:	2em;
 		}
+		
+		#more-like-this-wrapper .load-all,
+		#more-like-this .load-all{
+			float: left;
+		}
+		
+		#more-like-this .load-all{
+			margin-top: 1.25em
+		}
+		
+		#more-like-this-wrapper .load-all{
+			margin-top: -1.75em;
+			margin-right: 1em;
+		}
+		
+				
+		@media only screen and ( min-width:48em ){
+	
+			#more-like-this{
+				padding:       0em 1em 3.5em 1em;
+				border:        1px solid #d6d6d6;
+			}
+		
+			#more-like-this-wrapper .load-all,
+			#more-like-this .load-all{
+				float: right;
+			}
+		
+			.mlt-single-wrapper{
+				margin:             auto;
+			}
+		}
+		
 	</style>
 
 	<div id="more-like-this-wrapper" style="display:none;">

@@ -984,21 +984,22 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			if(self.loadedAll){
 				return;
 			}
+
 			
-			
+			if(navigator.userAgent.match(/MSIE/i)){
+				self.container.css('margin-left', '1em');
+			}
+
 			if( navigator.userAgent.match(/Chrome/i)
 					||
 				navigator.userAgent.match(/Opera/i)
 					||
-				navigator.userAgent.match(/Safari/i)
-				
-				){
+				navigator.userAgent.match(/Safari/i) ) {
 
 				self.container.css({
 					'height':         (rows * lineHeight)-0.4 + 'em',
 					'max-height':     (rows * lineHeight)-0.4 + 'em'
 				});
-
 			}
 			else{
 				self.container.css({

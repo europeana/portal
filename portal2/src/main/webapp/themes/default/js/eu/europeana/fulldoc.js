@@ -1175,13 +1175,16 @@ eu.europeana.fulldoc = {
 					
 					$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
 					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
-					
+						
 				}; // end initMlt
 				
 				var initMltIfBigEnough = function() {
 					var mobile = js.utils.phoneTest();
 					
 					if (mobile) {
+
+						$('#more-like-this-wrapper').show();
+						
 						if (! $('.mlt-title').find('.ellipsis-inner').length) {
 							mltEllipsis = new Ellipsis($('.mlt-title')).respond();
 							console.log('added ellipsis to phone mode');
@@ -1281,10 +1284,8 @@ eu.europeana.fulldoc = {
 			js.loader.loadScripts(scripts);
 		};
 		
-		if (typeof(hierarchical) != 'undefined') {
-			loadHierarchy('1-1-1/self.json', true);			
-		}
-		else if (typeof(hierarchyTestUrl) != 'undefined') {			
+
+		if (!js.utils.phoneTest() && typeof(hierarchyTestUrl) != 'undefined') {
 			$.getJSON(hierarchyTestUrl, null, function( data ) {	
 				if("object" == typeof data && data.success == true){
 					loadHierarchy(hierarchyTestUrl);

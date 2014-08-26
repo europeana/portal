@@ -40,31 +40,21 @@
            	   		];
 			    </script>
 
-				<c:choose>
-					<c:when test="${model.showHierarchical}">
-						<!-- DEMO -->
-					    <script type="text/javascript">
-							var hierarchical    = true;
-							var hierarchyHeader = '<spring:message code="hierarchy_header_t" />';
-					    </script>
-					</c:when>
-					<c:otherwise>
-						<!-- REAL THING -->
-					    <script type="text/javascript">
-							window.apiServerRoot =  '${model.apiUrl}/v2/record';
-							window.apiKey           =   'api2demo';
-							var hierarchyTestUrl =  window.apiServerRoot + '${model.document.about}/self.json?wskey=' + window.apiKey;
-							var hierarchyHeader  = '<spring:message code="hierarchy_header_t" />';
-		    			</script>
-					    <!--
-					    <script type="text/javascript">
-							window.apiServerRoot =  'http://localhost:3000/';
-							window.apiKey        =   'api2demo';
-							var hierarchyTestUrl =  window.apiServerRoot + '1/self.json?wskey=' + window.apiKey;
-		    			</script>
-		    			-->
-					</c:otherwise>
-				</c:choose>
+
+				<!-- REAL THING -->
+			    <script type="text/javascript">
+					window.apiServerRoot =  '${model.apiUrl}/v2/record';
+					window.apiKey           =   'api2demo';
+					var hierarchyTestUrl =  window.apiServerRoot + '${model.document.about}/self.json?wskey=' + window.apiKey;
+					var hierarchyHeader  = '<spring:message code="hierarchy_header_t" />';
+    			</script>
+			    <!--
+			    <script type="text/javascript">
+					window.apiServerRoot =  'http://localhost:3000/';
+					window.apiKey        =   'api2demo';
+					var hierarchyTestUrl =  window.apiServerRoot + '1/self.json?wskey=' + window.apiKey;
+    			</script>
+    			-->
 							    
 				
 				<!-- END HIERARCHICAL OBJECTS -->
