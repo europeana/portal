@@ -986,7 +986,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 
 			
-			if(navigator.userAgent.match(/MSIE/i)){
+			var ieMatch = (navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/MSIE/));
+			alert('navigator.userAgent = ' + navigator.userAgent + '\n\nieMatch = ' + ieMatch);
+			
+			if( ieMatch ){
+				alert('adding margin')
 				self.container.css('margin-left', '1em');
 			}
 
