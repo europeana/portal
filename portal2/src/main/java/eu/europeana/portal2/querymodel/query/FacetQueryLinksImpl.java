@@ -66,8 +66,10 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			UrlBuilder url = null;
 			try {
 				url = service.getPortalSearch(true, query.getQuery(), String.valueOf(query.getPageSize()));
-				for (String qt : QueryUtil.getQueryTranslationParams(query.getQueryTranslations())) {
-					url.addMultiParam("qt", qt);
+				if (query.getQueryTranslation() != null) {
+					for (String qt : QueryUtil.getQueryTranslationParams(query.getQueryTranslation().getLanguageVersionMap())) {
+						url.addMultiParam("qt", qt);
+					}
 				}
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();

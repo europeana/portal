@@ -1,29 +1,29 @@
 package eu.europeana.portal2.web.presentation.model.submodel;
 
 import java.util.List;
+import java.util.Map;
 
+import eu.europeana.corelib.definitions.solr.model.QueryTranslation;
 import eu.europeana.corelib.utils.model.LanguageVersion;
 
 public class LanguageContainer {
 
-	private List<LanguageVersion> queryTranslations;
 	private List<String> keywordLanguages;
 	private String portalLanguage;
 	private String itemLanguage;
+	private QueryTranslation queryTranslation;
 
 	public LanguageContainer() {}
 
-	public LanguageContainer(List<LanguageVersion> queryTranslations) {
-		super();
-		this.queryTranslations = queryTranslations;
+	public List<LanguageVersion> getQueryLanguageVersions() {
+		if (queryTranslation == null) {
+			return null;
+		}
+		return queryTranslation.getLanguageVersions();
 	}
 
-	public List<LanguageVersion> getQueryTranslations() {
-		return queryTranslations;
-	}
-
-	public void setQueryTranslations(List<LanguageVersion> queryTranslations) {
-		this.queryTranslations = queryTranslations;
+	public void setQueryTranslations(QueryTranslation queryTranslation) {
+		this.queryTranslation = queryTranslation;
 	}
 
 	public List<String> getKeywordLanguages() {
@@ -48,5 +48,21 @@ public class LanguageContainer {
 
 	public void setItemLanguage(String itemLanguage) {
 		this.itemLanguage = itemLanguage;
+	}
+
+	public String getModifiedQuery() {
+		return queryTranslation.getModifiedQuery();
+	}
+
+	public Map<String, List<LanguageVersion>> getLanguageVersionMap() {
+		return queryTranslation.getLanguageVersionMap();
+	}
+
+	public QueryTranslation getQueryTranslation() {
+		return queryTranslation;
+	}
+
+	public void setQueryTranslation(QueryTranslation queryTranslation) {
+		this.queryTranslation = queryTranslation;
 	}
 }

@@ -2,27 +2,24 @@ package eu.europeana.portal2.web.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.web.util.WebUtils;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.RelationalDatabase;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.definitions.solr.model.QueryTranslation;
 import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 
 public class QueryTranslationsUtil {
-
-	Logger log = Logger.getLogger(QueryTranslationsUtil.class.getCanonicalName());
 
 	private UserService userService;
 
@@ -64,13 +61,10 @@ public class QueryTranslationsUtil {
 		}
 	}
 
-	private List<LanguageVersion> translateQuery() {
+	private QueryTranslation translateQuery() {
 		List<String> translatableLanguages = getTranslatableLanguages();
 		if (StringArrayUtils.isNotBlankList(translatableLanguages)) {
-			List<LanguageVersion> translatedQueries = SolrUtils.translateQuery(query, translatableLanguages);
-			if (translatedQueries != null && translatedQueries.size() > 1) {
-				Collections.sort(translatedQueries);
-			}
+			QueryTranslation translatedQueries = SolrUtils.translateQuery(query, translatableLanguages);
 			return translatedQueries;
 		}
 		return null;
@@ -80,13 +74,15 @@ public class QueryTranslationsUtil {
 		return qt.length == 1 && StringUtils.equals(qt[0], "false");
 	}
 
-	private List<LanguageVersion> parseQueryTranslations() {
-		List<LanguageVersion> queryTranslations = new ArrayList<LanguageVersion>();
+	private QueryTranslation parseQueryTranslations() {
+		QueryTranslation translatedQueries = new QueryTranslation();
 		for (String term : qt) {
-			String[] parts = term.split(":", 2);
-			queryTranslations.add(new LanguageVersion(parts[1], parts[0]));
+			String[] parts = term.split(":", 4);
+			String key = parts[0] + ":" + parts[1];
+			translatedQueries.addLanguageVersion(key, new LanguageVersion(parts[3], parts[2]));
 		}
-		return queryTranslations;
+		SolrUtils.translateQuery(query, translatedQueries);
+		return translatedQueries;
 	}
 
 	private List<String> getTranslatableLanguages() {

@@ -27,6 +27,7 @@ import java.util.Vector;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.definitions.solr.model.QueryTranslation;
 import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.service.MicrosoftTranslatorService;
@@ -70,16 +71,7 @@ public abstract class SearchPageData extends PortalPageData {
 	 */
 	private String sort;
 
-	/**
-	 * The translated version of the query
-	 */
-	private List<LanguageVersion> queryTranslations;
-
-	private List<String> keywordLanguages;
-
-	private String portalLanguage;
-
-	private String itemLanguage;
+	private LanguageContainer languageContainer;
 
 	private boolean useBackendItemTranslation = false;
 
@@ -150,12 +142,12 @@ public abstract class SearchPageData extends PortalPageData {
 		this.sort = sort;
 	}
 
-	public List<LanguageVersion> getQueryTranslations() {
-		return queryTranslations;
-	}
-
-	public void setQueryTranslations(List<LanguageVersion> queryTranslations) {
-		this.queryTranslations = queryTranslations;
+	public List<LanguageVersion> getQueryLanguageVersions() {
+		if (languageContainer != null) {
+			return languageContainer.getQueryLanguageVersions();
+		} else {
+			return null;
+		}
 	}
 
 	public String getNoTranslationUrl() {
@@ -170,74 +162,71 @@ public abstract class SearchPageData extends PortalPageData {
 	}
 
 	public String[] getQueryTranslationParams() {
-		List<String> params = QueryUtil.getQueryTranslationParams(getQueryTranslations());
-		return params.toArray(new String[params.size()]);
+		if (getQueryTranslation() != null) {
+			List<String> params = QueryUtil.getQueryTranslationParams(getQueryTranslation().getLanguageVersionMap());
+			return params.toArray(new String[params.size()]);
+		} else {
+			return null;
+		}
 	}
 
 	private boolean shouldSkip(String code, List<LanguageVersion> texts, LanguageVersion englishEntry, LanguageVersion query){
 		boolean result = false;
-		if(!code.equalsIgnoreCase("EN") && texts.size() >1 && englishEntry != null && query.getText().equalsIgnoreCase(englishEntry.getText()) ){	
+		if (!code.equalsIgnoreCase("EN")
+			&& texts.size() > 1
+			&& englishEntry != null
+			&& query.getText().equalsIgnoreCase(englishEntry.getText())) {
 			result = true;
 		}
 		return result;
 	}
-	
+
 	public List<LanguageVersionLink> getQueryTranslationLinks() {
 		List<LanguageVersionLink> links                 = new ArrayList<LanguageVersionLink>();
-		List<LanguageVersion>     queryTranslationsList = getQueryTranslations();
-		
-		
-		
+		List<LanguageVersion>     queryTranslationsList = getQueryLanguageVersions();
+
 		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
-			
-			// get the English / group multiple entries			
-			
+			// get the English / group multiple entries
 			LanguageVersion english = null;
 			Map<String, List<LanguageVersion>> textsByCode = new HashMap<String, List<LanguageVersion>>();
 
 			for (LanguageVersion query : queryTranslationsList) {
-				String code = query.getLanguageCode();				
-				if( code.equalsIgnoreCase("EN") ){
+				String code = query.getLanguageCode();
+				if (code.equalsIgnoreCase("EN")) {
 					english = query;
 				}
-				if(textsByCode.get(code) == null){
+				if (textsByCode.get(code) == null) {
 					textsByCode.put(code, new Vector<LanguageVersion>());
 				}
 				textsByCode.get(code).add(query);
-			}			
-			
-			
+			}
+
 			try {
 				for (LanguageVersion query : queryTranslationsList) {
-					
-					String code = query.getLanguageCode();				
-					
+					String code = query.getLanguageCode();
 					// Add only if the has multiple
 					List <LanguageVersion> textsInThisLang = textsByCode.get(code);
-					
-					if(!shouldSkip(code, textsInThisLang, english, query)){
-						
-						String		queryLink	= createLanguageQueryLink(query.getText());
-						UrlBuilder	url			= getBaseSearchUrl();
-						boolean     doAdd       = false;
-						
+					if (!shouldSkip(code, textsInThisLang, english, query)) {
+						String queryLink = createLanguageQueryLink(query.getText());
+						UrlBuilder url = getBaseSearchUrl();
+						boolean doAdd = false;
+
 						if (queryTranslationsList.size() == 1) {
 							url.addMultiParam("qt", "false");
-							 doAdd = true;
-						}
-						else {
+							doAdd = true;
+						} else {
 							for (LanguageVersion other : queryTranslationsList) {
-								if (!other.equals(query)) {									
-									if(!shouldSkip(other.getLanguageCode(), textsByCode.get(other.getLanguageCode()), english, other)){
-										url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());										
+								if (!other.equals(query)) {
+									if (!shouldSkip(other.getLanguageCode(), textsByCode.get(other.getLanguageCode()), english, other)) {
+										url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());
 										doAdd = true;
 									}
 								}
 							}
 						}
-						if(doAdd){
-							links.add(new LanguageVersionLink(query, queryLink, url.toString()));							
-						}						
+						if (doAdd) {
+							links.add(new LanguageVersionLink(query, queryLink, url.toString()));
+						}
 					}
 				}
 			}
@@ -245,7 +234,6 @@ public abstract class SearchPageData extends PortalPageData {
 				e.printStackTrace();
 			}
 		}
-		
 		return links;
 	}
 
@@ -258,6 +246,7 @@ public abstract class SearchPageData extends PortalPageData {
 
 	private String createLanguageQueryLink(String query)
 			throws UnsupportedEncodingException {
+		query = QueryUtil.createPhraseValue("text", query);
 		UrlBuilder url = europeanaUrlservice.getPortalSearch(true, query, String.valueOf(getRows()));
 		url.addParam("qf", getRefinements());
 		url.addMultiParam("qt", "false");
@@ -265,34 +254,23 @@ public abstract class SearchPageData extends PortalPageData {
 	}
 
 	public void setLanguages(LanguageContainer languageContainer) {
-		queryTranslations = languageContainer.getQueryTranslations();
-		keywordLanguages = languageContainer.getKeywordLanguages();
-		portalLanguage = languageContainer.getPortalLanguage();
-		itemLanguage = languageContainer.getItemLanguage();
+		this.languageContainer = languageContainer;
 	}
 
 	public List<String> getKeywordLanguages() {
-		return keywordLanguages;
-	}
-
-	public void setKeywordLanguages(List<String> keywordLanguages) {
-		this.keywordLanguages = keywordLanguages;
+		return languageContainer.getKeywordLanguages();
 	}
 
 	public String getPortalLanguage() {
-		return portalLanguage;
-	}
-
-	public void setPortalLanguage(String portalLanguage) {
-		this.portalLanguage = portalLanguage;
+		return languageContainer.getPortalLanguage();
 	}
 
 	public String getItemLanguage() {
-		return itemLanguage;
+		return languageContainer.getItemLanguage();
 	}
 
-	public void setItemLanguage(String itemLanguage) {
-		this.itemLanguage = itemLanguage;
+	public QueryTranslation getQueryTranslation() {
+		return languageContainer.getQueryTranslation();
 	}
 
 	public boolean isUseBackendItemTranslation() {
