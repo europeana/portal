@@ -4,6 +4,7 @@ var fs      = require("fs");
 var path    = require("path");
 var port    = process.env.PORT || 3000;
 var dataGen = require('./EuHierarchyData');
+
 var server  = http.createServer(function(request, response) {
 
   var uri        = url.parse(request.url).pathname

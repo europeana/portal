@@ -21,43 +21,44 @@
 				<%@ include file="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/full-excerpt.jsp" %>
 				
 				
-				<c:if test="${model.showHierarchical}">
-					<script type="text/javascript">
-						var hierarchical = true;
-						var waitMessages = [
-		           		    {
-		           		    	"time" : 3,
-		           		    	"msg"  : '<spring:message code="load_wait_message_1" />'
-		           		    },
-		           		    {
-		           		    	"time" : 8,
-		           		    	"msg"  : '<spring:message code="load_wait_message_2" />'
-		           		    },
-		           		    {
-		           		    	"time" : 60,
-		           		    	"msg"  : '<spring:message code="load_wait_message_3" />'
-		           		    }
-		           		];
-					</script>
+				<!-- HIERARCHICAL OBJECTS -->
+				
+			    <script type="text/javascript">
+			    	window.waitMessages = [
+           	   		    {
+           	   		    	"time" : 3,
+           	   		    	"msg"  : '<spring:message code="load_wait_message_1" />'
+           	   		    },
+           	   		    {
+           	   		    	"time" : 8,
+           	   		    	"msg"  : '<spring:message code="load_wait_message_2" />'
+           	   		    },
+           	   		    {
+           	   		    	"time" : 60,
+           	   		    	"msg"  : '<spring:message code="load_wait_message_3" />'
+           	   		    }
+           	   		];
+			    </script>
 
-					<div class="fulldoc-cell">					
-						<div class="hierarchy-objects">
-							<div class="hierarchy-top-panel">
-								<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>
-								
-								<div class="hierarchy-title"><a></a><span class="count"></span></div>
-							</div>
-			
-							<div class="hierarchy-container">
-								<div id="hierarchy"></div>
-							</div>		
-							<div class="hierarchy-bottom-panel">
-								<div class="hierarchy-next"><a>view items below</a><span class="count"></span></div>
-								<div class="expand-collapse"><a class="expand-all">expand all items</a><a class="collapse-all">collapse all items</a></div>
-							</div>
-						</div>
-					</div>					
-				</c:if>
+
+				<!-- REAL THING -->
+			    <script type="text/javascript">
+					window.apiServerRoot =  '${model.apiUrl}/v2/record';
+					window.apiKey           =   'api2demo';
+					var hierarchyTestUrl =  window.apiServerRoot + '${model.document.about}/self.json?wskey=' + window.apiKey;
+					var hierarchyHeader  = '<spring:message code="hierarchy_header_t" />';
+    			</script>
+			    <!--
+			    <script type="text/javascript">
+					window.apiServerRoot =  'http://localhost:3000/';
+					window.apiKey        =   'api2demo';
+					var hierarchyTestUrl =  window.apiServerRoot + '1/self.json?wskey=' + window.apiKey;
+    			</script>
+    			-->
+							    
+				
+				<!-- END HIERARCHICAL OBJECTS -->
+				
 
 				<c:if test="${model.europeanaMlt != null && !empty model.europeanaMlt}">
 					<div class="fulldoc-cell">

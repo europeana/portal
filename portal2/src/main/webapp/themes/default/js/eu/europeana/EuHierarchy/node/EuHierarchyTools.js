@@ -98,6 +98,11 @@ var EuHierarchyTools = function(hierarchy) {
 			console.log('Error: no common parent found for ' + visible[0].id + ' and ' +  visible[1].id);
 		}		
 	});
+	
+	$('.gtd').click(function(){
+		alert(JSON.stringify(self.hierarchy.getTreeData(), null, 2));
+	});
+	
 };
 
 

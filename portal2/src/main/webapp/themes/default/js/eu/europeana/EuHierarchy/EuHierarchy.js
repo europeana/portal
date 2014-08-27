@@ -107,30 +107,31 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		if(ob.data && ob.data.europeana){
 			
+			var iconText = '';
 			if(ob.data.europeana.icon){
 				if(ob.data.europeana.icon.toUpperCase() == 'IMAGE'){
-					ob.text += '<span class="icon icon-image" aria-hidden="true"></span>';
+					iconText = 'icon-image';
 				}
 				else if(ob.data.europeana.icon.toUpperCase() == 'SOUND'){
-					ob.text += '<span class="icon icon-sound" aria-hidden="true"></span>';
+					iconText = 'icon-sound';
 				}
 				else if(ob.data.europeana.icon.toUpperCase() == 'TEXT'){
-					ob.text += '<span class="icon icon-text" aria-hidden="true"></span>';
+					iconText = 'icon-text';
 				}
 				else if(ob.data.europeana.icon.toUpperCase() == 'VIDEO'){
-					ob.text += '<span class="icon icon-video" aria-hidden="true"></span>';
+					iconText = 'icon-video';
 				}
 			}
 			
 			if(ob.data.europeana.url){
 				
 				//var handler = 'onClick="javascript:window.hierarchy.nodeLinkClick(this)"';
-				var handler = 'onClick="javascript:alert(\'Eventually this will link to the object page of this item.\')"';
-				ob.text = '<a href="' + ob.data.europeana.url + '" ' + handler + '>' + ob.text + '</a>';
+				//var handler = 'onClick="javascript:alert(\'Eventually this will link to the object page of this item.\')"';
+				//ob.text = '<a href="' + ob.data.europeana.url + '" ' + handler + '>' + ob.text + '</a>';
 			}
 		}
 		
-		ob.text = "<span>" + ob.text + "</span>";
+		ob.text = '<span class="icon ' + iconText + '">' + ob.text + '&nbsp;&nbsp;</span>';
 
 		return ob;
 	}
@@ -155,7 +156,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		}
 		else{
 			var data = eval(url);
-			
 			
 			// sanity
 			$.each(data, function(i, ob){
@@ -241,14 +241,14 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	var getRange = function(node, backwards, max){
 		
 		if(!node.parent || (typeof node.parent).toLowerCase() != 'string'){ /* prevent jQuery parent function interfering */
-			log('getRange returns empty no parent')
+			console.log('getRange returns empty no parent')
 			return '';
 		}
 		
 		var parent = self.treeCmp.jstree('get_node', node.parent);
 
 		if(!parent.data || (typeof parent.data).toLowerCase() == 'function' ){
-			log('getRange returns empty - no parent data')
+			console.log('getRange returns empty - no parent data')
 			return '';
 		}
 				
@@ -264,7 +264,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			range[child.data.index] = true;
 		});
 
-		//log('range B: ' + JSON.stringify(range))
+		console.log('range B: ' + JSON.stringify(range))
 
 		// convert to array
 		var keys = [];
@@ -276,7 +276,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 		keys = keys.sort(function(a, b){ return b - a });
 
-		//log('keys A: ' + JSON.stringify(keys))
+		console.log('keys A: ' + JSON.stringify(keys))
 
 		if(keys.length > max){
 			keys = backwards ? keys.slice(0, max) : keys.slice(keys.length - max);
@@ -296,7 +296,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 		});
 		
-		//log('consecutiveKeys C: ' + JSON.stringify(consecutiveKeys))
+		console.log('consecutiveKeys C: ' + JSON.stringify(consecutiveKeys))
 
 		var res = '';
 		switch (consecutiveKeys.length){
@@ -310,6 +310,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		  default:
 			  res = '.slice(' + consecutiveKeys[consecutiveKeys.length-1] + ', ' +  (consecutiveKeys[0]+1) + ')';
 		}
+		
+		console.log('getRange() returns ' + res);
 		return res;
 	};
 	
@@ -318,6 +320,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	// @node: jstree object
 	// @ callback: fn
 	var loadFirstChild = function(node, callback){
+
 		if(node.data && node.data.childrenUrl && (!node.children || !node.children.length) ){
 			var firstChildUrl = node.data.childrenUrl + '[0]';
 			loadData(firstChildUrl, function(fcData){
@@ -333,6 +336,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		else if(callback){
 			callback();					
 		}
+
 	};
 
 
@@ -625,7 +629,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		var bottomArrows = $('<div class="bottom-arrows"></div>').prependTo(self.bottomPanel);
 		var xNode        = vNodes[1];
 		var rightIndent  = 2; // CHANGE
-
+		
 		getName = function(){
 			return  $('#' + xNode.id).find('>a>span').html();
 		} 
@@ -761,7 +765,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			"axis" : "y",
 			"onAfter" : function(){
 				if(callback){
+					
+					if (locked) {
+						self.container.css('overflow', 'hidden');
+					}
 					callback();
+					return;
 				}
 			}
 		});

@@ -2,6 +2,102 @@ var dataGen = function(){
 
 	return {
 
+		/*
+		base : function(){
+			return {
+		        	"text" : "Flat Test",
+			        	"id" : "root",
+						"data": {							
+							"childrenUrl":	"dataGen.flatChildren()",
+							"total":		9
+						}
+			        }
+			
+		},
+		
+		flatChildren : function(){
+			
+		    return [
+					{   
+						"id":"one",
+				    	"text": 'Flat Child 1',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        1
+						}
+					},
+					{   
+						"id":"two",
+				    	"text": 'Flat Child 2',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        2
+						}
+					},
+					{   
+						"id":"three",
+				    	"text": 'Flat Child 3',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        3
+						}
+					},
+					{   
+						"id":"four",
+						"text": 'Flat Child 4',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        4
+						}
+					},
+					{   
+						"id":"five",
+						"text": 'Flat Child 5',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        5
+						}
+					},
+					{   
+						"id":"six",
+						"text": 'Flat Child 6',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        6
+						}
+					},
+					{   
+						"id":"seven",
+						"text": 'Flat Child 7',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        7
+						}
+					},
+					{   
+						"id":"eight",
+						"text": 'Flat Child 8',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        8
+						}
+					},
+					{   
+						"id":"nine",
+						"text": 'Flat Child 9',
+						"data": {
+							"parentUrl":	"dataGen.base()",
+							"index":        9
+						}
+					}
+			]
+			
+		},
+		
+		*/
+		
+		
+		/*
 		oldBase : function(){
 			return [
 			        {
@@ -16,7 +112,7 @@ var dataGen = function(){
 			        }
 			]
 		},
-
+		*/
 		base : function(){
 			
 			return {

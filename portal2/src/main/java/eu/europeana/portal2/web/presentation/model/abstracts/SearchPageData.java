@@ -73,6 +73,8 @@ public abstract class SearchPageData extends PortalPageData {
 
 	private LanguageContainer languageContainer;
 
+	private String apiUrl;
+
 	private boolean useBackendItemTranslation = false;
 
 	public void setQuery(String query) {
@@ -280,4 +282,13 @@ public abstract class SearchPageData extends PortalPageData {
 	public void setUseBackendItemTranslation(boolean useBackendItemTranslation) {
 		this.useBackendItemTranslation = useBackendItemTranslation;
 	}
+
+	public String getApiUrl() {
+		return apiUrl;
+	}
+
+	public void setApiUrl(String apiUrl) {
+		this.apiUrl = apiUrl;
+	}
+
 }

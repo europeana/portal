@@ -178,7 +178,9 @@ public class ObjectController {
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 		model.setUseBackendItemTranslation(config.useBackendTranslation());
+		model.setApiUrl(config.getApi2url());		
 		model.setStartTime(t0);
+		
 		if (model.isDoTranslation()) {
 			LanguageContainer languageContainer = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
 			model.setLanguages(languageContainer);

@@ -138,6 +138,8 @@ eu.europeana.fulldoc = {
 				self.initCarousels();
 			}
 		}]);
+		self.initHierarchyOrMLT();
+		self.initGeoLoc();
 	},
 
 	handleEmbedClick : function ( e ) {
@@ -1049,179 +1051,65 @@ eu.europeana.fulldoc = {
 				}
 				initNoCarousel();
 			}
-		});
-
-
-
-		/**
-		 *
-		 * HIERARCHICAL OBJECTS
-		 *
-		 * */
-
-		if (typeof(hierarchical) != 'undefined') {
-			var scripts = [];
-
-			scripts.push({
-				"name" : "scrollTo",
-				"file" : "jquery.scrollTo-1.4.3.1.js",
-				"path" : eu.europeana.vars.branding + '/js/jquery/'
-			});
-
-			scripts.push({
-				"name" : "jstree",
-				"file" : "jstree.js",
-				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
-			});
-
-			scripts.push({
-				"name" : "hoData",
-				"file" : "EuHierarchyData.js",
-				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/',
-			});
-
-			scripts.push({
-				"file" : "EuHierarchy.js",
-				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
-				"dependencies" : ["hoData", "scrollTo", "jstree"],
-				callback : function() {
-					
-					if(js.debug){
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');						
-					}
-					else{
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
-					}
-
-					$(document).ready(function() {
-						window.hierarchy = new EuHierarchy($('#hierarchy'), 8, $('.hierarchy-objects'));
-						window.hierarchy.init("dataGen.base()");
-					});
-
-				}
-			});
-
-			js.loader.loadScripts(scripts);
-		}
-
-		/**
-		 *
-		 * MLT
-		 *
-		 * */
-
-		if (typeof(mlt) != 'undefined') {
-
-			var getLoadAllLink = function() {
-				return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
-			};
-
-			var initMlt = function() {
-
-				if ($('#more-like-this .carousel-wrapper').length) {
-					return;
-				}
-
-				var mltData = [];
-
-
-				$('.mlt-link').each(function(i, ob) {
-					ob = $(ob);
-					mltData[mltData.length] = {
-							"thumb" : ob.find('img').attr('src'),
-							"title" : ob.attr('title'),
-							"link" : ob.attr('href'),
-							"linkTarget" : "_self"
-					}
-				});
-				//console.log('mltData = ' + JSON.stringify(mltData) );
-
-				$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
-				var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
-
-			}; // end initMlt
-
-			var initMltIfBigEnough = function() {
-				var mobile = js.utils.phoneTest();
-
-				if (mobile) {
-					if (! $('.mlt-title').find('.ellipsis-inner').length) {
-						mltEllipsis = new Ellipsis($('.mlt-title')).respond();
-						console.log('added ellipsis to phone mode');
-					}
-				}
-				else {
-					console.log('init mlt');
-					initMlt();
-				}
-				if (mltTotal > 1) {
-					if ($('.load-all').length ==0 ) {
-						$('#more-like-this-wrapper').append(getLoadAllLink());
-					}
-				}
-
-			};
-
-			$(window).euRsz(function() {
-				initMltIfBigEnough();
-			});
-			initMltIfBigEnough();
-		}
-
-		/**
-		 *
-		 * geo-location
-		 *
-		 * */
+		});	// end images loaded
+	},	// end initCarousels
+	
+	/**
+	 *
+	 * geo-location trigger
+	 *
+	 * */
+	
+	initGeoLoc : function(){
+		
 		$(window).bind('init-map', function(e, tgtDiv) {
 			var mapId     = 'geo-map';
 			var mapInfoId = 'geo-map-info';
-
+			
 			if ($('#' + mapId).length) {
 				return;
 			}
 			var longitude = $('#longitude');
 			var latitude  = $('#latitude');
-
+			
 			if (longitude.length && latitude.length) {
-
+				
 				longitude = longitude.val();
 				latitude =  latitude.val();
-
+				
 				if (![latitude, longitude].join(',').match(/^\s*-?\d+\.\d+\,\s?-?\d+\.\d+\s*$/)) {
 					console.log('invalid coordinates (' + latitude + ', ' + longitude + ') - exit map');
 					return;
 				}
-
+				
 				longitude = parseFloat(longitude);
 				latitude =  parseFloat(latitude);
-
+				
 				var path = eu.europeana.vars.branding + '/js/com/leaflet/';
-
+				
 				$.each(
-					['leaflet.min.css',
-					 'leaflet.ie.css',
-					 'Leaflet-MiniMap-master/src/Control.MiniMap.css'],
-					function(i, stylesheet) {
-						$('head').append('<link rel="stylesheet" href="' + path + stylesheet + '" type="text/css"/>');
-					}
+						['leaflet.min.css',
+						 'leaflet.ie.css',
+						 'Leaflet-MiniMap-master/src/Control.MiniMap.css'],
+						 function(i, stylesheet) {
+							$('head').append('<link rel="stylesheet" href="' + path + stylesheet + '" type="text/css"/>');
+						}
 				);
-
+				
 				var initMap = function() {
 					$(tgtDiv).append('<li><div id="' + mapId + '"></div><div id="' + mapInfoId + '"></div></li>');
 					var mqTilesAttr = 'Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />';
-
+					
 					// map quest
 					var mq = new L.TileLayer(
-						'http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png',
-						{
-							minZoom: 4,
-							maxZoom: 18,
-							attribution: mqTilesAttr,
-							subdomains: '1234',
-							type: 'osm'
-						}
+							'http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png',
+							{
+								minZoom: 4,
+								maxZoom: 18,
+								attribution: mqTilesAttr,
+								subdomains: '1234',
+								type: 'osm'
+							}
 					);
 					var map = L.map(mapId, {
 						center: new L.LatLng(latitude, longitude),
@@ -1230,12 +1118,12 @@ eu.europeana.fulldoc = {
 					});
 					map.addLayer(mq);
 					map.invalidateSize();
-
+					
 					L.marker([latitude, longitude]).addTo(map);
-
+					
 					var placeName = '';
-					switch($('input[name="placename"]').length)
-					{
+					
+					switch($('input[name="placename"]').length){
 						case 1:
 							placeName = $('input[name="placename"]').val();
 							break;
@@ -1250,43 +1138,205 @@ eu.europeana.fulldoc = {
 							placeName = uniqueNames.join(', ');
 							break;
 						}
-				}
-
+					}
+					
 					if (!$('input[name="placename"]').length || !$('input[name="placename"]').val().length) {
 						$('#' + mapInfoId).addClass('uppercase');
 					}
 					$('#' + mapInfoId).html(placeName + ' ' + eu.europeana.vars.map.coordinates
-						+ ': ' + latitude  + '&deg; ' + (latitude > 0 ? eu.europeana.vars.map.north : eu.europeana.vars.map.south)
-						+ ', ' + longitude + '&deg; ' + (longitude > 0 ? eu.europeana.vars.map.east : eu.europeana.vars.map.west));
+							+ ': ' + latitude  + '&deg; ' + (latitude > 0 ? eu.europeana.vars.map.north : eu.europeana.vars.map.south)
+							+ ', ' + longitude + '&deg; ' + (longitude > 0 ? eu.europeana.vars.map.east : eu.europeana.vars.map.west));
 				};
-
+				
 				js.loader.loadScripts([
-					{
-						"file" : 'leaflet.js',
-						"path" : path,
-						"name" : "leaflet"
-					},
-					{
-						"file" : 'Leaflet-Pan/L.Control.Pan.js',
-						"path" : path,
-						"name" : "pan",
-						dependencies : ["leaflet"]
-					},
-					{
-						"path" : path,
-						"file" : "Leaflet-MiniMap-master/src/Control.MiniMap.js",
-						dependencies : ["leaflet", "pan"],
-						callback : function() {
-							initMap();
-						}
-					}
-				]);
-
+                   {
+                	   "file" : 'leaflet.js',
+                	   "path" : path,
+                	   "name" : "leaflet"
+                   },
+                   {
+                	   "file" : 'Leaflet-Pan/L.Control.Pan.js',
+                	   "path" : path,
+                	   "name" : "pan",
+                	   dependencies : ["leaflet"]
+                   },
+                   {
+                	   "path" : path,
+                	   "file" : "Leaflet-MiniMap-master/src/Control.MiniMap.js",
+                	   dependencies : ["leaflet", "pan"],
+                	   callback : function() {
+                		   initMap();
+                	   }
+                   }
+                   ]);
 			}
 		});
-
 	},
+	
 
+	initHierarchyOrMLT : function(){
+		
+		var mltInit = function(){
+			
+			if (typeof(mlt) != 'undefined') {
+				
+				var getLoadAllLink = function() {
+					return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
+				};
+				
+				var initMlt = function() {
+					
+					if ($('#more-like-this .carousel-wrapper').length) {
+						return;
+					}
+					$('#more-like-this-wrapper').show();
+					
+					var mltData = [];
+					
+					
+					$('.mlt-link').each(function(i, ob) {
+						ob = $(ob);
+						mltData[mltData.length] = {
+								"thumb" : ob.find('img').attr('src'),
+								"title" : ob.attr('title'),
+								"link" : ob.attr('href'),
+								"linkTarget" : "_self"
+						}
+					});
+					
+					$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
+					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
+						
+				}; // end initMlt
+				
+				var initMltIfBigEnough = function() {
+					var mobile = js.utils.phoneTest();
+					
+					if (mobile) {
+
+						$('#more-like-this-wrapper').show();
+						
+						if (! $('.mlt-title').find('.ellipsis-inner').length) {
+							mltEllipsis = new Ellipsis($('.mlt-title')).respond();
+							console.log('added ellipsis to phone mode');
+						}
+					}
+					else {
+						console.log('init mlt');
+						initMlt();
+					}
+					if (mltTotal > 1) {
+						if ($('.load-all').length ==0 ) {
+							$('#more-like-this-wrapper').append(getLoadAllLink());
+						}
+					}
+				};
+				
+				$(window).euRsz(function() {
+					initMltIfBigEnough();
+				});
+				initMltIfBigEnough();
+			}
+		}	
+			
+		var addHierarchyMarkup = function(demo){
+			$('#main-fulldoc-area').append(
+					'<div class="fulldoc-cell">'
+				+		'<div class="hierarchy-objects">'
+				+			'<div class="hierarchy-top-panel">'
+				+				'<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>'
+				+				'<div class="hierarchy-title"></div>'
+				+			'</div>'
+				+			'<div class="hierarchy-container">'
+				+				'<div id="hierarchy"></div>'
+				+			'</div>'
+				+			'<div class="hierarchy-bottom-panel">'
+				+				'<div class="hierarchy-next"><a>view items below</a></div>'
+				+			'</div>'
+				+		'</div>'
+				+	'</div>'
+			);
+		};
+
+		
+		var loadHierarchy = function(initialiseUrl, demo){
+			
+			$('#more-like-this-wrapper').remove();
+			$('.see-also-header').after('<strong class="hierarchy-header">' + hierarchyHeader + '</strong>');
+			$('.see-also-header').remove();
+
+			var scripts = [];
+
+			scripts.push({
+				"name" : "scrollTo",
+				"file" : "jquery.scrollTo-1.4.3.1.js",
+				"path" : eu.europeana.vars.branding + '/js/jquery/'
+			});
+
+			scripts.push({
+				"name" : "jstree",
+				"file" : "jstree.js",
+				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
+			});
+
+			if(demo == true){
+				scripts.push({
+					"name" : "hoData",
+					"file" : "EuHierarchyData2.js",
+					"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/node/',
+				});				
+			}
+
+			scripts.push({
+				//"file" : (demo == true ? "EuHierarchy.js" : "EuHierarchy2.js"),
+				"file" : "EuHierarchy2.js",
+				"path" : eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/' + js.min_directory,
+				"dependencies" : demo ? ["hoData", "scrollTo", "jstree"] : ["scrollTo", "jstree"],
+				callback : function() {
+					if(js.debug){
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style.css" />');
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');						
+					}
+					else{
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
+					}
+
+					addHierarchyMarkup(demo);
+					
+					$(document).ready(function() {
+						setTimeout(function(){
+							window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
+							window.hierarchy.init(initialiseUrl, demo);
+						}, 500);
+					});
+
+				}
+			});
+			js.loader.loadScripts(scripts);
+		};
+		
+
+		if (!js.utils.phoneTest() && typeof(hierarchyTestUrl) != 'undefined') {
+			$.getJSON(hierarchyTestUrl, null, function( data ) {	
+				if("object" == typeof data && data.success == true){
+					loadHierarchy(hierarchyTestUrl);
+				}
+				else{
+					console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);
+					mltInit();
+				}
+			}).fail(function(){
+				console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
+				mltInit();
+			});
+		}
+		else{
+			mltInit();
+		}
+	},
+	
+	
+	
 	autoTranslateItem: {
 		/**
 		 * @param {object}

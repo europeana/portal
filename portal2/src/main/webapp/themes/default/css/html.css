@@ -1,28 +1,17 @@
 /* html */
-
 html{
 	font-size:		100%;
 	z-index:		1;
 }
 
-body {
+
+body{
+	font-size:	1.2em;
 	z-index: 1;
 	margin: 0 auto;
 	padding: 0;
 	color: #333;
 	background-color: #fff;
-}
-
-form{
-	margin:0;
-	padding:0;
-}
-
-
-/* Basic fonts */
-
-body{
-	font-size:	1.2em;
 }
 
 @media only screen and ( min-width:48em ){
@@ -34,7 +23,7 @@ body{
 
 @media only screen and ( min-width:71em ){
 	body{
-		font-size:	1.063em;
+		font-size:	1em;
 	}
 }
 
@@ -51,6 +40,11 @@ img { border: none; }
 
 input[type="submit"]{
 	cursor:	pointer;
+}
+
+form{
+	margin:0;
+	padding:0;
 }
 
 select, input {

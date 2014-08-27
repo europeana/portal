@@ -25,7 +25,6 @@
 .hierarchy-container,
 .hierarchy-top-panel,
 .hierarchy-bottom-panel{
-	border:		1px solid #dadada;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing:	border-box;
 	box-sizing: border-box;
@@ -36,33 +35,43 @@
 	border-top: none;	
 }
 
+
 .hierarchy-top-panel,
 .hierarchy-bottom-panel{
-	XXXheight: 2em;
 	width: 100%;
 	position: relative;
 }
 
 .hierarchy-top-panel{
 	border-bottom: none;
-	XXXXheight: 4.25em;
+	padding-top: 1em;
 }
 
 .hierarchy-bottom-panel{
 	border-top: none;
-	height:     5em;
+	height:     3em;
 }
 
 .hierarchy-top-panel .hierarchy-title{
-	position:       relative;
-	margin-top:     0.25em;
-
-	margin-left:    1.75em;
-	padding-bottom: 2em;
 	font-size:      1.2em;
-	cursor:         pointer;	
+	position:       relative;
+	margin-left:    1em;
+	padding-bottom: 2em;
+	
+	-webkit-transition: padding-bottom 1s;
+    transition:         padding-bottom 1s;
 }
 
+.hierarchy-top-panel.top .hierarchy-title{
+	padding-bottom:		1em;
+	
+	-webkit-transition: padding-bottom 1s;
+    transition:         padding-bottom 1s;	
+}
+
+.hierarchy-top-panel .hierarchy-title a{
+	cursor:         pointer;	
+}
 
 .hierarchy-bottom-panel	.expand-collapse{
 	position: absolute;
@@ -83,6 +92,23 @@
 .hierarchy-next,
 .hierarchy-prev{
 	line-height: 2em;
+}
+
+.hierarchy-next,
+.hierarchy-prev{
+	line-height:	2em;
+	visibility:		hidden;
+	opacity:		0;
+	transition:		visibility 0s linear 0.25s, opacity 0.25s linear;
+}
+
+
+.hierarchy-next.show,
+.hierarchy-prev.show{
+  visibility:		visible;
+  opacity:			1;
+  transition-delay:	2s;
+  transition:		opacity 1s linear;
 }
 
 .expand-collapse a,
@@ -127,12 +153,14 @@
 
 .transparent {
 	opacity:     		0;
+	
     -webkit-transition: opacity 1s;
     transition:         opacity 1s;
 } 
 
 .opaque {
 	opacity:     		1;
+	
     -webkit-transition: opacity 1s;
     transition:         opacity 1s;
 } 
@@ -237,14 +265,52 @@
 }
 
 
-#hierarchy .icon-image,
-#hierarchy .icon-sound,
-#hierarchy .icon-text,
-#hierarchy .icon-video{
-	font-size:		0.9em;
-	float:			right;
-	margin-right:	1em;
-	max-height:		1.4em;	/* should track line-height & js variable */
+#hierarchy .icon {
+	line-height: 1em;
+	position: relative;
+}
+
+#hierarchy .icon:after{
+	right: -1em;
+	position: absolute;
+	font-size:0.8em;
+}
+
+#hierarchy .icon-video:before {
+	content: "";
+}
+#hierarchy .icon-text:before {
+	content: "";
+}
+#hierarchy .icon-image:before {
+	content: "";
+}
+#hierarchy .icon-audio:before {
+	content: "";
+}
+#hierarchy .icon-sound:before {
+	content: "";
+}
+#hierarchy .icon-3d:before {
+	content: "";
+}
+#hierarchy .icon-video:after {
+	content: "\28";
+}
+#hierarchy .icon-text:after {
+	content: "\29";
+}
+#hierarchy .icon-image:after {
+	content: "\5b";
+}
+#hierarchy .icon-audio:after {
+	content: "\5d";
+}
+#hierarchy .icon-sound:after {
+	content: "\5d";
+}
+#hierarchy .icon-3d:after {
+	content: "\7b";
 }
 
 
@@ -293,11 +359,6 @@
 	background-image:    url(connector-opened-last.png);			
 }
 
-
-#hierarchy > .jstree-container-ul > .jstree-closed.jstree-last > .jstree-icon{
-	background-image:    url(connector-closed-last-root.png);				
-}
-
 #hierarchy > .jstree-container-ul > .jstree-open.jstree-last > .jstree-icon{
 	background-image:    url(connector-opened-last-root.png);				
 }
@@ -311,6 +372,10 @@
 
 #hierarchy.jstree-default .jstree-closed.jstree-last > .jstree-ocl{
 	background-image:    url(connector-closed-last.png);			
+}
+
+#hierarchy > .jstree-container-ul > .jstree-closed.jstree-last > .jstree-icon{
+	background-image:    url(connector-closed-last-root.png);
 }
 
 #hierarchy.jstree-default .jstree-node{
@@ -402,7 +467,7 @@
 
 /* overlay */
 .ajax-overlay{
-	opacity: 1;
+	opacity:		1;
     position:		absolute;
     width:			100%;
     height:			100%;
@@ -410,8 +475,6 @@
     background-position: center center;
     background-repeat:   no-repeat;
     background-color:    rgba(0, 0, 0, 0.5);	
-    
-    
     z-index:		12;
     left:			0;
     top:			0;

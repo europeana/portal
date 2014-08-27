@@ -56,43 +56,13 @@
 	width:			100%;
 }
 
-.see-also-header{
+.see-also-header,
+.hierarchy-header{
 	margin-top:    1.5em;
 	margin-bottom: 0.5em;
 	display: inline-block;
 }
 
-/*
-#mlt .section{
-	padding-top:   1.5em;
-	padding-left:  1em;
-	padding-right: 1em;
-}
-*/
-
-#more-like-this-wrapper{
-	position: relative;		
-}
-
-#more-like-this{
-	padding:       0em 1em 3.5em 1em;
-	border:        1px solid #d6d6d6;
-	border-radius: 0.5em;
-}
-
-#more-like-this-wrapper .load-all,
-#more-like-this .load-all{
-	float: right;
-}
-
-#more-like-this .load-all{
-	margin-top: 1.25em
-}
-
-#more-like-this-wrapper .load-all{
-	margin-top: -1.75em;
-	margin-right: 1em;
-}
 
 #geo-map{
 	height:     25em;
@@ -287,6 +257,7 @@ a.action-link span,
 	padding-top:	1.5em;
 }
 
+#main-fulldoc-area .hierarchy-header,
 #main-fulldoc-area .hierarchy-objects{
 	display:		none;	
 }
@@ -395,9 +366,10 @@ a.action-link span,
 
 
 @media only screen and ( min-width:48em ){
-	
+		
 	.see-also-header,
-	#more-like-this-wrapper{
+	#more-like-this-wrapper,
+	.hierarchy-header{
 		padding-left:2em;		
 	}
 		
@@ -443,8 +415,11 @@ from search.css:
 		float: 			none;
 		width: 			auto;
 		max-width:		none;
-		margin-left:	2em;
-		margin-top:		2em;
+		margin-left:	1em;
+		margin-top:		0em;
+		display:		block;	
+	}
+	#main-fulldoc-area .hierarchy-header{
 		display:		block;	
 	}
 	

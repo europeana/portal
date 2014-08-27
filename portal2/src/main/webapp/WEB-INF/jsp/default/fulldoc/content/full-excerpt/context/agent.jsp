@@ -42,7 +42,7 @@
       <c:set var="sectionContent">
     	  (<c:forEach items="${agent.altLabelLang}" var="item" varStatus="t">${item}<c:if test="${!t.last}">; </c:if></c:forEach>)
       </c:set>
-      <c:set var="agentElContent">${agentElContent} XXX ${sectionContent}</c:set>
+      <c:set var="agentElContent">${agentElContent} ${sectionContent}</c:set>
     </c:if>
   </c:if>
 
@@ -65,13 +65,13 @@
         <c:forEach items="${agent.endLang}" var="label" varStatus="t"><c:if test="${!t.first}">, </c:if>${label}</c:forEach>
       </c:set>
     </c:if>
-    <c:set var="agentElContent">${agentElContent} YYY ${sectionContent}</c:set>
+    <c:set var="agentElContent">${agentElContent} ${sectionContent}</c:set>
   </c:if>
 
 
   <c:if test="${!empty agent.noteLang}">
     <c:set var="sectionContent"><c:forEach items="${agent.noteLang}" var="item" varStatus="t"><c:if test="${!t.first}"><br/></c:if>${item}</c:forEach></c:set>
-    <c:set var="agentElContent">${agentElContent} ZZZ ${sectionContent}</c:set>
+    <c:set var="agentElContent">${agentElContent} ${sectionContent}</c:set>
   </c:if>
 
 
@@ -83,21 +83,21 @@
     </c:if>
     <c:set var="sectionContent"><spring:message code="${msg_key}" />: 
       <c:forEach items="${agent.edmIsRelatedToLang}" var="label" varStatus="t"><c:if test="${!empty label}"><c:if test="${!t.first}">, </c:if>${label}</c:if></c:forEach></c:set>
-    <c:set var="agentElContent">${agentElContent} AAA ${sectionContent}</c:set>
+    <c:set var="agentElContent">${agentElContent} ${sectionContent}</c:set>
   </c:if>
 
   <c:if test="${!empty agent.rdaGr2DateOfBirthLang}">
     <c:set var="sectionContent"><spring:message code="context_agent_dateOfBirth_t" />: 
       <c:forEach items="${agent.rdaGr2DateOfBirthLang}" var="label" varStatus="t">
         <c:if test="${!empty label}"><c:if test="${!t.first}">, </c:if>${label}</c:if></c:forEach></c:set>
-    <c:set var="agentElContent">${agentElContent} BBB ${sectionContent}</c:set>
+    <c:set var="agentElContent">${agentElContent} ${sectionContent}</c:set>
   </c:if>
 
   <c:if test="${!empty agent.rdaGr2DateOfDeathLang}">
     <c:set var="sectionContent"><spring:message code="context_agent_dateOfDeath_t" />: 
       <c:forEach items="${agent.rdaGr2DateOfDeathLang}" var="label" varStatus="t">
         <c:if test="${!empty label}"><c:if test="${!t.first}">, </c:if>${label}</c:if></c:forEach></c:set>
-    <c:set var="agentElContent">${agentElContent} ccc ${sectionContent}</c:set>
+    <c:set var="agentElContent">${agentElContent} ${sectionContent}</c:set>
   </c:if>
 
 <%-- 

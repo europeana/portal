@@ -49,12 +49,8 @@
 
 
 
-<!--[if IE 8]>
-<html  ${xmlns} class="ie ie8" lang="${lang}">
-<![endif]-->
-
-<!--[if IE 9]>
-	<html ${xmlns} class="ie ie9" lang="${lang}" >
+<!--[if IE]>
+	<html ${xmlns} class="ie" lang="${lang}" >
 <![endif]-->
 
 

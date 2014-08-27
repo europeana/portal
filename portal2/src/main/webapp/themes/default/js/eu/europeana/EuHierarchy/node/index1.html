@@ -12,11 +12,11 @@
 	<link rel="stylesheet" href="../../../../css/europeana-font-face.css"/>
  -->	
 	
-	<link rel="stylesheet" href="style.css" />
-	<link rel="stylesheet" href="style-overrides.css" />
-	<script type="text/javascript" src="../../../jquery/jquery-1.8.1.js"></script>	
-	<script type="text/javascript" src="jstree.js"></script>
-	<script type="text/javascript" src="../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
+	<link rel="stylesheet" href="../style.css" />
+	<link rel="stylesheet" href="../style-overrides.css" />
+	<script type="text/javascript" src="../../../../jquery/jquery-1.8.1.js"></script>	
+	<script type="text/javascript" src="../jstree.js"></script>
+	<script type="text/javascript" src="../../../../jquery/jquery.scrollTo-1.4.3.1.js"></script>
 	
 	<style>
 		.loadPoint>a{
@@ -128,8 +128,10 @@
 				hierarchy.init("dataGen.parentTop()")
 				hierarchy.init("dataGen.apocalypse_vol_1()")
 				*/
-
-				hierarchy.init(param ? param : "dataGen.base()");
+	
+				hierarchy.init("dataGen.base()");
+				//hierarchy.init(param ? param : "dataGen.flatChildren()[0]");
+				//hierarchy.init(param ? param : "dataGen.j1_13");
 				//hierarchy.init(param ? param : "dataGen.apocalypse_vol_1()");
 				
 				new EuHierarchyTools(hierarchy);
@@ -137,7 +139,7 @@
 		</script>
 	</div>
 	<script src="EuHierarchyData.js"></script>
-	<script src="EuHierarchy.js"></script>
+	<script src="../EuHierarchy.js"></script>
 	<script src="EuHierarchyTools.js"></script>
 	
 </body>
