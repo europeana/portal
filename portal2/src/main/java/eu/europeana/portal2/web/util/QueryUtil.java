@@ -95,11 +95,13 @@ public class QueryUtil {
 		return display;
 	}
 
-	public static List<String> getQueryTranslationParams(List<LanguageVersion> queryTranslationsList) {
+	public static List<String> getQueryTranslationParams(Map<String, List<LanguageVersion>> queryTranslationMap) {
 		List<String> queryTranslationParams = new ArrayList<String>();
-		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
-			for (LanguageVersion query : queryTranslationsList) {
-				queryTranslationParams.add(String.format("%s:%s", query.getLanguageCode(), query.getText()));
+		if (queryTranslationMap != null && queryTranslationMap.size() > 0) {
+			for (String position : queryTranslationMap.keySet()) {
+				for (LanguageVersion version : queryTranslationMap.get(position)) {
+					queryTranslationParams.add(String.format("%s:%s:%s", position, version.getLanguageCode(), version.getText()));
+				}
 			}
 		}
 		return queryTranslationParams;

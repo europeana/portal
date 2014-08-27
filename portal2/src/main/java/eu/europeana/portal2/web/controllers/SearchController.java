@@ -99,7 +99,7 @@ public class SearchController {
 			long t0 = new Date().getTime();
 			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, queryString, qt, request);
 			long t1 = new Date().getTime();
-			log.info("Query translation: " + (t1 - t0));
+			log.info("Query translation took: " + (t1 - t0));
 			model.setLanguages(languageContainer);
 			log.info("ItemLanguage: " + model.getItemLanguage());
 		}
@@ -124,7 +124,7 @@ public class SearchController {
 				.setParameter("sort", sort)
 				.setProduceFacetUnion(true)
 				.setAllowSpellcheck(false)
-				.setQueryTranslations(model.getQueryTranslations())
+				.setQueryTranslation(model.getQueryTranslation())
 				;
 
 		if (model.isEmbedded()) {

@@ -73,19 +73,19 @@
 		<c:if test="${!empty model.queryTranslationLinks}">
 			<div id="query-translations">
 				<c:set var="hasTranslation" value="false"/>
-		
+
 				<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
 					<c:if test="${fn:length(qt.languageCode) > 0}">
-						<c:set var="hasTranslation" value="true"/>
-						
+						<c:set var="hasTranslation" value="true" />
+
 						<c:set var="langName" value=""/>
-						
+
 						<c:forEach items="${model.portalLanguages}" var="language">
-							<c:if test="${language.languageCode ==  qt.languageCode }">
+							<c:if test="${language.languageCode == qt.languageCode}">
 								<c:set var="langName" value="${language.languageName}"/>
 							</c:if>
 						</c:forEach>
-						
+
 						<div class="query-translation">
 							<a href="${qt.queryLink}">${qt.text}</a> (${langName})
 							<a href="${qt.removeLink}" class="icon-remove-after"></a> &nbsp; 
