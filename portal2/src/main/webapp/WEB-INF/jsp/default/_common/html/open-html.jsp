@@ -47,6 +47,12 @@
   
   <title>${title}</title>
   
+  <c:if test="${fn:length(titleNew) > 0 }">
+  	<script type="text/javascript">
+  		var lbCreatorValue = '${titleNew}';
+  		var lbCreatorName  = '<spring:message code="Creator_t"/>';
+  	</script>
+  </c:if>
   
   
   <%@ include file="/WEB-INF/jsp/default/_common/html/links.jsp" %>

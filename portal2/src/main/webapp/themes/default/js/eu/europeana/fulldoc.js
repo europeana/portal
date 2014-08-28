@@ -372,6 +372,13 @@ eu.europeana.fulldoc = {
 				'&nbsp;' + $('#item-details h1').html()
 			);
 
+			// pick up skos pref label - reused from page title defined in open-html.jsp
+			if(typeof lbCreatorValue != 'undefined'){
+				cmp.find('#lightbox_info ul li.bottom').before(
+					'<li><strong>' + lbCreatorName + ':</strong>&nbsp;' + lbCreatorValue + '</li>'
+				);
+			}
+			
 			// meta
 			$('#item-details .lbN').each(function(i, ob) {
 				var next	 	= $(ob).next('.lbV');
