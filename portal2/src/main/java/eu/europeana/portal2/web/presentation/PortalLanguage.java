@@ -91,7 +91,7 @@ public enum PortalLanguage {
 	UK(true, "&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;", "ukrainian_t", false),
 
 	// UNSUPPORTED LANGUAGES (BUT OCCURS IN FACETS):
-	MUL(false, "Multilingue (mul)",null, false),
+	MUL(false, "Multilingue (mul)", "mul_t", false),
 	AUS(false, "Australian (aus)", null, false),
 	BE(false, "Belarusian (bel)", null, false),
 	CHK(false, "Chuukese (chk)", null, false),

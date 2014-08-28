@@ -20,6 +20,7 @@ package eu.europeana.portal2.web.presentation.model.abstracts;
 import java.util.Map;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
@@ -28,6 +29,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import eu.europeana.corelib.definitions.solr.model.QueryTranslation;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.service.MicrosoftTranslatorService;
@@ -47,8 +49,17 @@ import eu.europeana.portal2.web.util.QueryUtil;
  */
 public abstract class SearchPageData extends PortalPageData {
 
-	public EuropeanaUrlService europeanaUrlservice = EuropeanaUrlServiceImpl.getBeanInstance();
-	public MicrosoftTranslatorService translationUrlservice = MicrosoftTranslatorServiceImpl.getBeanInstance();
+	Logger log = Logger.getLogger(SearchPageData.class.getCanonicalName());
+
+	/**
+	 * The Europeana URL service is responsible for creation of portal URLs
+	 */
+	public EuropeanaUrlService europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
+
+	/**
+	 * The translation service that makes use of Microsoft Translation API
+	 */
+	public MicrosoftTranslatorService translationService = MicrosoftTranslatorServiceImpl.getBeanInstance();
 
 	private String query;
 
@@ -120,10 +131,17 @@ public abstract class SearchPageData extends PortalPageData {
 	}
 
 	/**
-	 * Get the list of available languages
+	 * Get the list of supported languages
 	 */
 	public List<PortalLanguage> getPortalLanguages() {
 		return PortalLanguage.getSupported();
+	}
+
+	/**
+	 * Get the list of all languages
+	 */
+	public List<PortalLanguage> getAllPortalLanguages() {
+		return Arrays.asList(PortalLanguage.values());
 	}
 
 	public int getRows() {
@@ -182,10 +200,24 @@ public abstract class SearchPageData extends PortalPageData {
 	}
 
 	public List<LanguageVersionLink> getQueryTranslationLinks() {
-		List<LanguageVersionLink> links                 = new ArrayList<LanguageVersionLink>();
-		List<LanguageVersion>     queryTranslationsList = getQueryLanguageVersions();
+		List<LanguageVersionLink> links = new ArrayList<LanguageVersionLink>();
+		QueryTranslation queryTranslation = getQueryTranslation();
+		if (queryTranslation == null) {
+			return links;
+		}
+		Map<String, List<LanguageVersion>> languageVersionMap = getQueryTranslation().getLanguageVersionMap();
 
-		if (queryTranslationsList != null && queryTranslationsList.size() > 0) {
+		if (languageVersionMap == null || languageVersionMap.keySet().size() == 0) {
+			log.warn("languageVersionMap is null or empty");
+			return links;
+		}
+		for (String position : languageVersionMap.keySet()) {
+			List<LanguageVersion> queryTranslationsList = languageVersionMap.get(position);
+
+			if (queryTranslationsList == null || queryTranslationsList.size() == 0) {
+				log.warn("queryTranslationsList is null or empty");
+				continue;
+			}
 			// get the English / group multiple entries
 			LanguageVersion english = null;
 			Map<String, List<LanguageVersion>> textsByCode = new HashMap<String, List<LanguageVersion>>();
@@ -208,24 +240,26 @@ public abstract class SearchPageData extends PortalPageData {
 					List <LanguageVersion> textsInThisLang = textsByCode.get(code);
 					if (!shouldSkip(code, textsInThisLang, english, query)) {
 						String queryLink = createLanguageQueryLink(query.getText());
-						UrlBuilder url = getBaseSearchUrl();
+						UrlBuilder removeLink = getBaseSearchUrl();
 						boolean doAdd = false;
+						String param;
 
 						if (queryTranslationsList.size() == 1) {
-							url.addMultiParam("qt", "false");
+							removeLink.addMultiParam("qt", "false");
 							doAdd = true;
 						} else {
 							for (LanguageVersion other : queryTranslationsList) {
 								if (!other.equals(query)) {
 									if (!shouldSkip(other.getLanguageCode(), textsByCode.get(other.getLanguageCode()), english, other)) {
-										url.addMultiParam("qt", other.getLanguageCode() + ":" + other.getText());
+										param = String.format("%s:%s:%s", position, other.getLanguageCode(), other.getText());
+										removeLink.addMultiParam("qt", param);
 										doAdd = true;
 									}
 								}
 							}
 						}
 						if (doAdd) {
-							links.add(new LanguageVersionLink(query, queryLink, url.toString()));
+							links.add(new LanguageVersionLink(query, queryLink, removeLink.toString()));
 						}
 					}
 				}
@@ -239,7 +273,7 @@ public abstract class SearchPageData extends PortalPageData {
 
 	private UrlBuilder getBaseSearchUrl()
 			throws UnsupportedEncodingException {
-		UrlBuilder url = europeanaUrlservice.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
+		UrlBuilder url = europeanaUrlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
 		url.addParam("qf", getRefinements());
 		return url;
 	}
@@ -247,7 +281,7 @@ public abstract class SearchPageData extends PortalPageData {
 	private String createLanguageQueryLink(String query)
 			throws UnsupportedEncodingException {
 		query = QueryUtil.createPhraseValue("text", query);
-		UrlBuilder url = europeanaUrlservice.getPortalSearch(true, query, String.valueOf(getRows()));
+		UrlBuilder url = europeanaUrlService.getPortalSearch(true, query, String.valueOf(getRows()));
 		url.addParam("qf", getRefinements());
 		url.addMultiParam("qt", "false");
 		return url.toString();
@@ -270,7 +304,10 @@ public abstract class SearchPageData extends PortalPageData {
 	}
 
 	public QueryTranslation getQueryTranslation() {
-		return languageContainer.getQueryTranslation();
+		if (languageContainer != null) {
+			return languageContainer.getQueryTranslation();
+		}
+		return null;
 	}
 
 	public boolean isUseBackendItemTranslation() {

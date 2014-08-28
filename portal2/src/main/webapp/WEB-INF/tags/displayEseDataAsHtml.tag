@@ -325,14 +325,7 @@
 														</c:if>
 													</c:forEach>
 													<c:if test="${!codeFound}">
-														<c:choose>
-															<c:when test="${theVal == 'mul'}">
-																<spring:message code="mul_t" />
-															</c:when>
-															<c:otherwise>
-																${theVal}
-															</c:otherwise>
-														</c:choose>
+														${theVal}
 													</c:if>
 												</c:when>
 												
