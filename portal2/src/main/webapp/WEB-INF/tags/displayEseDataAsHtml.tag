@@ -318,21 +318,14 @@
 											<c:choose>
 												<c:when test="${data.fieldLabel == 'languageDropDownList_t'}">
 													<c:set var="codeFound" value="false" />
-													<c:forEach items="${model.portalLanguages}" var="lang">
+													<c:forEach items="${model.allPortalLanguages}" var="lang">
 														<c:if test="${lang.languageCode == theVal}">
 															${lang.languageName}
 															<c:set var="codeFound" value="true" />
 														</c:if>
 													</c:forEach>
 													<c:if test="${!codeFound}">
-														<c:choose>
-															<c:when test="${theVal == 'mul'}">
-																<spring:message code="mul_t" />
-															</c:when>
-															<c:otherwise>
-																${theVal}
-															</c:otherwise>
-														</c:choose>
+														${theVal}
 													</c:if>
 												</c:when>
 												

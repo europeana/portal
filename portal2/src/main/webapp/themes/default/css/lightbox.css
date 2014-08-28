@@ -69,6 +69,10 @@ iframe#lightbox_image{
 	overflow:	hidden;		
 }
 
+#lightbox_info li strong{
+	white-space: nowrap;
+}
+	
 /*
 The commented code causes title/value misalign in chrome.
 

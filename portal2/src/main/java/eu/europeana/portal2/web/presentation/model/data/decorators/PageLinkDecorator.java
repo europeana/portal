@@ -33,7 +33,7 @@ public class PageLinkDecorator extends PageLink {
 	}
 
 	public String getUrl() throws UnsupportedEncodingException {
-		UrlBuilder builder = model.europeanaUrlservice.getPortalSearch(true, model.getQuery(), String.valueOf(model.getRows()));
+		UrlBuilder builder = model.europeanaUrlService.getPortalSearch(true, model.getQuery(), String.valueOf(model.getRows()));
 		builder.addParam("qf", model.getRefinements());
 		builder.addParam("start", getStart());
 		return model.getPortalFormattedUrl(builder).toString();
