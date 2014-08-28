@@ -70,7 +70,7 @@ iframe#lightbox_image{
 }
 
 #lightbox_info li strong{
-	word-wrap:	normal;
+	white-space: nowrap;
 }
 	
 /*
