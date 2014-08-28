@@ -69,7 +69,7 @@ iframe#lightbox_image{
 	overflow:	hidden;		
 }
 
-#lightbox_info li{
+#lightbox_info li strong{
 	word-wrap:	normal;
 }
 	
