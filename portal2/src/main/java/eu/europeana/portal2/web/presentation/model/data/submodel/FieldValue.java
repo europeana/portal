@@ -91,7 +91,7 @@ public class FieldValue {
 			&& field.isTranslatable()
 			&& StringUtils.isNotBlank(model.getItemLanguage())) {
 			if (translated == false) {
-				translatedValue = model.translationUrlservice.translate(value, model.getItemLanguage());
+				translatedValue = model.translationService.translate(value, model.getItemLanguage());
 				translated = true;
 			}
 		}

@@ -166,7 +166,7 @@ public class SearchPage extends SearchPreparation {
 	 * @throws UnsupportedEncodingException
 	 */
 	private String createNavigationUrl(int start) throws UnsupportedEncodingException {
-		UrlBuilder builder = europeanaUrlservice.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
+		UrlBuilder builder = europeanaUrlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
 		builder.addParam("start", start);
 		builder.addParam("qf", getRefinements(), true);
 		builder.addParam("qt", getQueryTranslationParams(), true);
