@@ -90,8 +90,16 @@ public enum PortalLanguage {
 
 	UK(true, "&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;", "ukrainian_t", false),
 
-	// UNSUPPORTED LANGUAGES (BUT OCCURS IN FACETS):
+	// UNSUPPORTED LANGUAGES (BUT OCCUR IN FACETS / FullDoc metadata):
+	
 	MUL(false, "Multilingue (mul)", "mul_t", false),
+	
+	AR(false, "Arabic", "arabic_t", false),
+	FA(false, "Persian", "persian_t", false),
+	HE(false, "Hebrew", "hebrew_t", false),
+	CY(false, "Welsh", "welsh_t", false),
+	
+	
 	AUS(false, "Australian (aus)", null, false),
 	BE(false, "Belarusian (bel)", null, false),
 	CHK(false, "Chuukese (chk)", null, false),

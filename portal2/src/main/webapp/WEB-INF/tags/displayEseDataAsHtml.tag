@@ -318,7 +318,7 @@
 											<c:choose>
 												<c:when test="${data.fieldLabel == 'languageDropDownList_t'}">
 													<c:set var="codeFound" value="false" />
-													<c:forEach items="${model.portalLanguages}" var="lang">
+													<c:forEach items="${model.allPortalLanguages}" var="lang">
 														<c:if test="${lang.languageCode == theVal}">
 															${lang.languageName}
 															<c:set var="codeFound" value="true" />
