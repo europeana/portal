@@ -1277,15 +1277,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 		// END TREE BINDING
 		
-		var chainUp = function(url, data, callbackWhenDone){
+		var chainUp = function(urlOrObject, data, callbackWhenDone){
 						
-			if(!url){
+			if(!urlOrObject){
 				alert('NO URL - exit')
 				callbackWhenDone(data);
 				return;
 			}
-
-			loadData(url, function(newDataIn){
+			
+			var loadCallback = function(newDataIn){
 				var newData = formatNodeData(newDataIn);	// index is present on the inner object for self.json calls - 2nd parameter not needed
 
 				if(!data){
@@ -1317,8 +1317,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					wrapper.find('.hierarchy-title span').removeAttr('class');
 					wrapper.find('.hierarchy-title a').removeAttr('onclick');
 					callbackWhenDone(data);
-				}		
-			});	
+				}
+			}
+			
+			if(typeof urlOrObject == 'object'){
+				loadCallback(urlOrObject)
+			}
+			else{
+				loadData(urlOrObject, loadCallback);				
+			}
 		};
 
 		// misnamed function.
