@@ -1308,12 +1308,12 @@ eu.europeana.fulldoc = {
 						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
 					}
 
-					addHierarchyMarkup(demo);
+					addHierarchyMarkup();//demo);
 					
 					$(document).ready(function() {
 						setTimeout(function(){
 							window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
-							window.hierarchy.init(initialiseUrl, demo);
+							window.hierarchy.init(initialiseUrl);//, demo);
 						}, 500);
 					});
 
@@ -1326,7 +1326,7 @@ eu.europeana.fulldoc = {
 		if (!js.utils.phoneTest() && typeof(hierarchyTestUrl) != 'undefined') {
 			$.getJSON(hierarchyTestUrl, null, function( data ) {	
 				if("object" == typeof data && data.success == true){
-					loadHierarchy(hierarchyTestUrl);
+					loadHierarchy(data);//hierarchyTestUrl);
 				}
 				else{
 					console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);
