@@ -1270,12 +1270,13 @@ eu.europeana.fulldoc = {
 						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
 					}
 
-					addHierarchyMarkup();//demo);
+					addHierarchyMarkup();
 					
 					$(document).ready(function() {
+						$('.item-metadata.hasPart').hide();
 						setTimeout(function(){
 							window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
-							window.hierarchy.init(initialiseUrl);//, demo);
+							window.hierarchy.init(initialiseUrl);
 						}, 500);
 					});
 
