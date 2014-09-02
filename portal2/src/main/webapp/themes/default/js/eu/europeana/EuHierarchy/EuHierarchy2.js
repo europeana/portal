@@ -19,6 +19,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	self.container             = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration        = 0;
 	self.scrollDurationDefault = 3000;
+
 	self.topPanel              = wrapper.find('.hierarchy-top-panel');
 	self.bottomPanel           = wrapper.find('.hierarchy-bottom-panel');
 	
@@ -316,7 +317,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		// Exit if no parent node available
 		
 		if( node.parent == null  ||  typeof node.parent.toLowerCase() != 'string' ){
-			console.log('node.parent = null: node is ' + node.id + ' (returning)');
+			log('node.parent = null: node is ' + node.id + ' (returning)');
 			
 			if(callback){
 				log('exit ZERO')
@@ -1118,6 +1119,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 							self.scrollDuration = self.scrollDurationDefault;
 							self.initialised = true;
 							
+							self.container.removeClass('uninitialised');
+							self.topPanel.removeClass('uninitialised');
+								
 							if(self.pageNodeId == getRootEl().attr('id')){				
 								
 								// we're on the root - remove the link
@@ -1300,7 +1304,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				
 				var recurseData = false;
 				if($.isArray(newData) && newData.length){
-					console.log('ERROR CODE 2 - if you see this please record the what steps were needed to produce this error and what browser was used and let development know.')
+					log('ERROR CODE 2')
 					recurseData = data[0].data;
 				}
 				else{

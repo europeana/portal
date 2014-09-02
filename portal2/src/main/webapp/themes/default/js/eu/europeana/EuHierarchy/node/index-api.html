@@ -68,11 +68,11 @@
 		<br/>
 		
 		<div class="hierarchy-objects">
-			<div class="hierarchy-top-panel">
+			<div class="hierarchy-top-panel uninitialised">
 				<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>
 				<div class="hierarchy-title"></div>
 			</div>
-			<div class="hierarchy-container">
+			<div class="hierarchy-container uninitialised">
 				<div id="hierarchy"></div>
 			</div>
 			<div class="hierarchy-bottom-panel">
@@ -122,7 +122,15 @@
 				
 				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
 
+				/*
+				hierarchy.init(
+						{"action":"self.json","self":{"id":"1-4","title":{"def":["Volume 4 (b1)"]},"type":"text","index":4,"hasChildren":true,"childrenCount":14,"hasParent":true},"parent":{"id":"1","title":{"def":["Book 1"]},"type":"TEXT","index":"1","hasChildren":true},"success":true}		
+				);
+				*/
+				
 				hierarchy.init(param ? param : 'http://localhost:3000/1-4/self.json?wskey=api2demo');
+
+				
 //				hierarchy.init(param ? param : 'http://localhost:3000/1-2-3-4/self.json?wskey=api2demo');
 				//hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'));
 				//hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'));

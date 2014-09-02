@@ -1250,11 +1250,11 @@ eu.europeana.fulldoc = {
 			$('#main-fulldoc-area').append(
 					'<div class="fulldoc-cell">'
 				+		'<div class="hierarchy-objects">'
-				+			'<div class="hierarchy-top-panel">'
+				+			'<div class="hierarchy-top-panel uninitialised">'
 				+				'<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>'
 				+				'<div class="hierarchy-title"></div>'
 				+			'</div>'
-				+			'<div class="hierarchy-container">'
+				+			'<div class="hierarchy-container uninitialised">'
 				+				'<div id="hierarchy"></div>'
 				+			'</div>'
 				+			'<div class="hierarchy-bottom-panel">'
@@ -1308,12 +1308,13 @@ eu.europeana.fulldoc = {
 						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
 					}
 
-					addHierarchyMarkup();//demo);
+					addHierarchyMarkup();
 					
 					$(document).ready(function() {
+						$('.item-metadata.hasPart').hide();
 						setTimeout(function(){
 							window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
-							window.hierarchy.init(initialiseUrl);//, demo);
+							window.hierarchy.init(initialiseUrl);
 						}, 500);
 					});
 

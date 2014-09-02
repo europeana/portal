@@ -83,6 +83,8 @@
 	<%-- #1347 --%>
 
 	<c:set var="item_class" value=""/>
+	<c:if test='${data.fieldLabel=="dcterms_hasPart_t"}'><c:set var="item_class" value=" hasPart"/></c:if>
+
 
 	<%-- If the content is UGC we skip the dc:source display --%>
 	<c:if test="${!('dc:source' == data.fieldName && ugc)}">
@@ -107,8 +109,7 @@
 				</c:if>
 			</c:forEach>
 
-			<span class="bold notranslate br ${lightboxableNameClass}"><spring:message code="${data.fieldLabel}" />:</span>
-
+			<span class="bold notranslate br ${lightboxableNameClass}${hasPartClass}"><spring:message code="${data.fieldLabel}" />:</span>
 			<%-- iterate over possible values for the given label
 				data (FieldValue):
 					- value.value
