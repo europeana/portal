@@ -153,15 +153,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						"id" :			ob.self.id,	/* reference to unescaped id */
 						"index":		ob.self.index,
 						"hasChildren":	ob.self.hasChildren,
-						"hasParent":	ob.self.hasParent
+						"parent":	    ob.self.parent
 					 }					
 			}
 			if(newOb.data.hasChildren){
 				//newOb.data.childrenCount = ob.childrenCount;
 				newOb.data.childrenCount = ob.self.childrenCount;
-			}
-			if(newOb.data.hasParent){
-				newOb.data.parentId = ob.parent.id;
 			}
 		}
 		else{
@@ -172,14 +169,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						"id" :			ob.id, /* reference to unescaped id */
 						"index":		ob.index,
 						"hasChildren":	ob.hasChildren,
-						"hasParent":	ob.hasParent
+						"parent":		wrapInfo.self.id
 					 }					
 			}
 			if(newOb.data.hasChildren){
 				newOb.data.childrenCount = ob.childrenCount;
-			}
-			if(wrapInfo.self.hasParent){
-				newOb.data.parentId = wrapInfo.self.id
 			}
 		}
 		return newOb;
@@ -387,115 +381,150 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				}
 			}
 			
-			//var url = apiServerRoot + node.data.id   + '/following-siblings.json?wskey=' + apiKey + '&limit=' + leftToLoad;
-			var url = apiServerRoot + node.data.id   + '/' + (backwards ? 'preceeding' : 'following') + '-siblings.json?wskey=' + apiKey + '&limit=' + leftToLoad;
-				
-			loadData(url, function(data){
-				
-				var origData = data;
-				data = data[(backwards ? 'preceeding' : 'following') + '-siblings'];
-				
-				log(' - loaded ' + typeof data);
-				
-				if(data && data.length){
-											
-					//$.each(backwards ? data.reverse() : data, function(i, ob) {
-					$.each(data, function(i, ob) {
-	
-						var newId = self.treeCmp.jstree("create_node",
-								parent,
-								formatNodeData(ob, origData),
-								backwards ? "first" : "last",
-								false,
-								true);
-						
-						var newNode = self.treeCmp.jstree('get_node', newId);
-	
-						loadFirstChild(newNode, function(){
-
-							if(i+1==data.length){
-								leftToLoad -= data.length;
-								if(leftToLoad > 0){
-									
-									//alert('recurse 3\n\n' + url);
-		
-									//log('recurse point one')
-									viewPrevOrNext(node, backwards, leftToLoad, true, callback)
-								}
-								else{
-									if(callback){
-										
-										//alert('exit 5\n\n' + url)
-		
-										callback();
-									}
-								}
-							}							
-						});
-					});
-				}
-				else{
-					if(backwards){
-						if(self.treeCmp.jstree( 'is_disabled', parent )){
-							//log('enable node ' + parent);
-							
-							self.treeCmp.jstree("enable_node", parent );
-							leftToLoad --;
-						}						
-						if(leftToLoad > 0){
-							
-							//alert('recurse 2\n\n' + url)
-
-							//log('recurse point three');
-							viewPrevOrNext(parent, backwards, leftToLoad, true, callback);
-						}
-						else{
-							//alert('exit 4')
-
-							if(callback){
-								log('recurse point three EXIT - (going backwards, nothing left to load)');
-								callback();
-							}
-						}
+			// end of siblings 
+			var eosl = function(){
+				if(leftToLoad > 0){
+					var np = self.treeCmp.jstree('get_node', node.parent, false);
+					if(typeof np.data == 'object'){	// prevent jQuery data function interfering
+						viewPrevOrNext(
+								np,
+								backwards,
+								leftToLoad,
+								false,		// @deepen to false to avoid infinite recurse and load parent's siblings 
+								callback);
 					}
 					else{
-						// forwards (with no data) - we 're at the end of this sibling list.
+						log('no more data')
+						if(callback){
+							callback();
+						}
+					}
+				}
+				else{
+					log('EXIT LOAD (leftToLoad hit zero)');
+					if(callback){
+						callback();
+					}
+				}
+			};
+			if(!node.data.parent){
+				eosl();
+			}
+			else{
 
-						if(leftToLoad > 0){
-							var np = self.treeCmp.jstree('get_node', node.parent, false);
-							if(typeof np.data == 'object'){	/* prevent jQuery data function interfering */
+					
+				//var url = apiServerRoot + node.data.id   + '/following-siblings.json?wskey=' + apiKey + '&limit=' + leftToLoad;
+				var url = apiServerRoot + node.data.id   + '/' + (backwards ? 'preceeding' : 'following') + '-siblings.json?wskey=' + apiKey + '&limit=' + leftToLoad;
+					
+				loadData(url, function(data){
+					
+					var origData = data;
+					data = data[(backwards ? 'preceeding' : 'following') + '-siblings'];
+					
+					log(' - loaded ' + typeof data);
+					
+					if(data && data.length){
+												
+						//$.each(backwards ? data.reverse() : data, function(i, ob) {
+						$.each(data, function(i, ob) {
+		
+							var newId = self.treeCmp.jstree("create_node",
+									parent,
+									formatNodeData(ob, origData),
+									backwards ? "first" : "last",
+									false,
+									true);
+							
+							var newNode = self.treeCmp.jstree('get_node', newId);
+		
+							loadFirstChild(newNode, function(){
+	
+								if(i+1==data.length){
+									leftToLoad -= data.length;
+									if(leftToLoad > 0){
+										
+										//alert('recurse 3\n\n' + url);
+			
+										//log('recurse point one')
+										viewPrevOrNext(node, backwards, leftToLoad, true, callback)
+									}
+									else{
+										if(callback){
+											
+											//alert('exit 5\n\n' + url)
+			
+											callback();
+										}
+									}
+								}							
+							});
+						});
+					}
+					else{
+						if(backwards){
+							if(self.treeCmp.jstree( 'is_disabled', parent )){
+								//log('enable node ' + parent);
 								
-								//alert('recurse 1\n\n\(fwd with not data ' + data + ')n\n' + url);
+								self.treeCmp.jstree("enable_node", parent );
+								leftToLoad --;
+							}						
+							if(leftToLoad > 0){
 								
-								viewPrevOrNext(
-										np,
-										backwards,
-										leftToLoad,
-										false,		/* @deepen to false to avoid infinite recurse and load parent's siblings */
-										callback);
+								//alert('recurse 2\n\n' + url)
+	
+								//log('recurse point three');
+								viewPrevOrNext(parent, backwards, leftToLoad, true, callback);
 							}
 							else{
-								log('no more data')
-								
-								//alert('exit 3\n\n' + url);
-
+								//alert('exit 4')
+	
 								if(callback){
+									log('recurse point three EXIT - (going backwards, nothing left to load)');
 									callback();
 								}
 							}
 						}
 						else{
-							log('EXIT LOAD (leftToLoad hit zero)');
-							//alert('exit 2 (ltl hit zero)')
-							if(callback){
-								callback();
+							// forwards (with no data) - we 're at the end of this sibling list.
+							eosl();
+							/*
+							alert('fn eosl')
+							if(leftToLoad > 0){
+								var np = self.treeCmp.jstree('get_node', node.parent, false);
+								if(typeof np.data == 'object'){	// prevent jQuery data function interfering
+									
+									//alert('recurse 1\n\n\(fwd with not data ' + data + ')n\n' + url);
+									
+									viewPrevOrNext(
+											np,
+											backwards,
+											leftToLoad,
+											false,		// @deepen to false to avoid infinite recurse and load parent's siblings 
+											callback);
+								}
+								else{
+									log('no more data')
+									
+									//alert('exit 3\n\n' + url);
+	
+									if(callback){
+										callback();
+									}
+								}
 							}
+							else{
+								log('EXIT LOAD (leftToLoad hit zero)');
+								//alert('exit 2 (ltl hit zero)')
+								if(callback){
+									callback();
+								}
+							}
+							*/
 						}
-						
-					}
-				} // end else (!data.length)
-
-			});	// end loadData()
+					} // end else (!data.length)
+	
+				});	// end loadData()
+			} // end parent check 
 		}// end if parent
 		else{
 			log('no parent');
@@ -516,8 +545,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	};
 	
 	var hideSpinner = function(){
-		self.container.prev('.ajax-overlay').hide();
-		$('<style></style>').appendTo($(document.body)).remove();	// force repaint
+		if(self.initialised){
+			self.container.prev('.ajax-overlay').hide();
+			$('<style></style>').appendTo($(document.body)).remove();	// force repaint
+		}
 	};
 	
 	var nodeLinkClick = function(e){
@@ -957,7 +988,13 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	}
 	
 	// END UI BINDING
-	
+
+	var onInit = function(){
+		self.initialised = true;
+		self.container.removeClass('uninitialised');
+		self.topPanel.removeClass('uninitialised');								
+	};
+
 	
 	/**
 	 * init()
@@ -974,7 +1011,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	 * */
 	
 	var init = function(baseUrl){
-	//var init = function(baseUrl, testMode){
 
 		self.timer = new Timer();
 
@@ -1009,23 +1045,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					'max-height':     (rows * lineHeight) + 'em'
 				});
 			}
-
 			
 			self.treeCmp  .css('padding-bottom', (rows * lineHeight) + 'em');
-						
 			var remainderRemoved = self.container.outerHeight(true);
-//			remainderRemoved     = remainderRemoved - (remainderRemoved % rows);
-//			remainderRemoved     = remainderRemoved - (remainderRemoved % rows);
-//			remainderRemoved    += 3;
-//			remainderRemoved    += 5;	// stops trimming bottom pixels	
-/*			
-			var msg = 'container size: ' + rows + ' * ' + lineHeight + ' = ' + (rows * lineHeight) + 'em'
-			msg += '\n\n' + navigator.userAgent
-			alert(msg)
-			console.log( msg );
-*/			
-
-			
 			
 			self.container.css({
 				'height':     remainderRemoved + 'px',
@@ -1117,19 +1139,23 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 							self.treeCmp.jstree("disable_node", pageNode.parent);							
 							setLoadPoint(self.pageNodeId);
 							self.scrollDuration = self.scrollDurationDefault;
-							self.initialised = true;
-							
-							self.container.removeClass('uninitialised');
-							self.topPanel.removeClass('uninitialised');
-								
+
 							if(self.pageNodeId == getRootEl().attr('id')){				
-								
 								// we're on the root - remove the link
 								wrapper.find('.hierarchy-title a').removeAttr('href');
 								wrapper.find('.hierarchy-title a').wrapInner('<span/>');
 								wrapper.find('.hierarchy-title a span').unwrap().unwrap();
 								self.treeCmp.jstree("open_node", pageNode);					
 							}
+							else{
+								onInit();
+								hideSpinner();
+								//togglePrevNextLinks();
+								$('#' + self.pageNodeId + '>a').focus();
+								self.isLoading = false;
+								self.timer.stop();
+							}
+								
 						});
 					}, 1);
 				});
@@ -1237,17 +1263,23 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			loadFirstChild(fChild, function(newNode){
 	
 				viewPrevOrNext(fChild, false, defaultChunk, true, function(){
-						
+					
+					// the root node is auto-opened - this may be the final act of initialisation
+					if(!self.initialised){
+						onInit();
+					}
+
 					setLoadPoint(node.id);
 					hideSpinner();
 					
 					$('#' + node.id + '>a').focus();
-					setTimeout(function(){
+//					setTimeout(function(){
 						togglePrevNextLinks();
 						self.isLoading = false;
 						self.timer.stop();
 						
-					}, 500);
+//					}, 500);
+										
 				});
 			});
 		});
@@ -1283,8 +1315,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		var chainUp = function(urlOrObject, data, callbackWhenDone){
 						
+
 			if(!urlOrObject){
-				alert('NO URL - exit')
+				log('NO URL - exit')
 				callbackWhenDone(data);
 				return;
 			}
@@ -1312,8 +1345,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				}
 
 
-				if(recurseData && recurseData.data && recurseData.data.hasParent && (typeof recurseData.data.index != 'undefined')  ){
-					var parentUrl = apiServerRoot + recurseData.data.parentId + '/self.json?wskey=' + apiKey;
+				if(recurseData && recurseData.data && recurseData.data.parent && (typeof recurseData.data.index != 'undefined')  ){
+					var parentUrl = apiServerRoot + recurseData.data.parent + '/self.json?wskey=' + apiKey;
 					chainUp(parentUrl, data, callbackWhenDone);							
 				}
 				else{
@@ -1332,37 +1365,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 		};
 
-		// misnamed function.
-		//
-		// used to build tree lines 
-		// starting with a route from the landed node to the root
-		// we work from the root back to the leaf adding in any following siblings of each node
-		// the first child of each sibling is also in order to draw the tree correctly
-		// 
-		// the tree doesn't exist yet - @node refers to a block of data
-		/*
-		preTreeInit = function(node, callback){
-
-			if(node.data.hasChildren){
-				var childInfoUrl = apiServerRoot + node.data.id + '/children.json?wskey=' + apiKey + '&limit=1';
-				
-				loadData(childInfoUrl, function(data){
-					
-					var info = data.children[0];
-					childUrl = apiServerRoot + info.id + '/self.json?wskey=' + apiKey;
-
-					loadData(childUrl, function(data){
-						
-						var newNode = formatNodeData(data);						
-						node.children = [ newNode ];
-						
-						callback(node);
-					});
-					
-				});				
-			}
-		}
-		*/
 		
 		// build initial tree structure
 		chainUp(baseUrl, false, function(ob){
