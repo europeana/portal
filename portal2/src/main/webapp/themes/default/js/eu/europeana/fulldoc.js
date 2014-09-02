@@ -1212,11 +1212,11 @@ eu.europeana.fulldoc = {
 			$('#main-fulldoc-area').append(
 					'<div class="fulldoc-cell">'
 				+		'<div class="hierarchy-objects">'
-				+			'<div class="hierarchy-top-panel">'
+				+			'<div class="hierarchy-top-panel uninitialised">'
 				+				'<div class="hierarchy-prev"><a>view items above</a><span class="count"></span></div>'
 				+				'<div class="hierarchy-title"></div>'
 				+			'</div>'
-				+			'<div class="hierarchy-container">'
+				+			'<div class="hierarchy-container uninitialised">'
 				+				'<div id="hierarchy"></div>'
 				+			'</div>'
 				+			'<div class="hierarchy-bottom-panel">'

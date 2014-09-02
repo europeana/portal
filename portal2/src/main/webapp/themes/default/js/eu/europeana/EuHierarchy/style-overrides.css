@@ -47,6 +47,10 @@
 	padding-top: 1em;
 }
 
+.hierarchy-top-panel.uninitialised{
+	visibility: hidden;
+}
+
 .hierarchy-bottom-panel{
 	border-top: none;
 	height:     3em;
@@ -319,6 +323,10 @@
  	style
 */
 
+.uninitialised #hierarchy.jstree-default .jstree-node{
+	visibility: hidden;
+}
+
 #hierarchy.jstree-default .jstree-node,
 #hierarchy.jstree-default .jstree-anchor{
 	line-height: 1.4em;
@@ -342,11 +350,18 @@
 	background-image:    url(connector-leaf.png);
 	background-position: 0 0;
 	background-size: 1em 1em;
-	
+}
+
+.uninitialised #hierarchy.jstree-default .jstree-leaf > .jstree-ocl{
+	background-image:    none;
 }
 
 #hierarchy.jstree-default .jstree-leaf.jstree-last > .jstree-ocl{
 	background-image:    url(connector-leaf-last.png);
+}
+
+.uninitialised #hierarchy.jstree-default .jstree-leaf.jstree-last > .jstree-ocl{
+	background-image:    none;
 }
 
 #hierarchy.jstree-default .jstree-open > .jstree-ocl{
@@ -355,12 +370,26 @@
 	background-size: 1em 1em;
 }
 
+.uninitialised #hierarchy.jstree-default .jstree-open > .jstree-ocl{
+	background-image:    none;
+}
+
+
 #hierarchy.jstree-default .jstree-open.jstree-last > .jstree-ocl{
 	background-image:    url(connector-opened-last.png);			
 }
 
+.uninitialised #hierarchy.jstree-default .jstree-open.jstree-last > .jstree-ocl{
+	background-image:    none;
+}
+
+
 #hierarchy > .jstree-container-ul > .jstree-open.jstree-last > .jstree-icon{
 	background-image:    url(connector-opened-last-root.png);				
+}
+
+.uninitialised #hierarchy > .jstree-container-ul > .jstree-open.jstree-last > .jstree-icon{
+	background-image:    none;
 }
 
 
@@ -370,19 +399,37 @@
 	background-size: 1em 1em;
 }
 
+.uninitialised #hierarchy.jstree-default .jstree-closed > .jstree-ocl{
+	background-image:    none;
+}
+
+
 #hierarchy.jstree-default .jstree-closed.jstree-last > .jstree-ocl{
 	background-image:    url(connector-closed-last.png);			
+}
+
+.uninitialised #hierarchy.jstree-default .jstree-closed.jstree-last > .jstree-ocl{
+	background-image:    none;
 }
 
 #hierarchy > .jstree-container-ul > .jstree-closed.jstree-last > .jstree-icon{
 	background-image:    url(connector-closed-last-root.png);
 }
 
+.uninitialised #hierarchy > .jstree-container-ul > .jstree-closed.jstree-last > .jstree-icon{
+	background-image:    none;
+}
+
+
 #hierarchy.jstree-default .jstree-node{
 	background-image:    url(connector-vertical.png);			
 	background-position: 0 0;
 	background-size: 1em 1em;
 	background-repeat: repeat-y;
+}
+
+.uninitialised #hierarchy.jstree-default .jstree-node{
+	background-image:    none;
 }
 
 #hierarchy.jstree-default .jstree-last{
@@ -397,6 +444,9 @@
 	
 }
 
+.uninitialised #hierarchy.jstree-default .jstree-anchor > .jstree-themeicon{
+	background-image:    none;
+}
 
 /* wrapping fix */
 
@@ -414,17 +464,21 @@
 	
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing:	border-box;
-	box-sizing: border-box;
-	
-}	
-#hierarchy.jstree-default .jstree-open > .jstree-anchor{
+	box-sizing: border-box;	
+}
 
+#hierarchy.jstree-default .jstree-open > .jstree-anchor{
 	background-image:    url(connector-vertical.png);			
 	background-position: 0 0;
 	background-size: 1em 1em;
 	background-repeat: repeat-y;
-
 }
+
+.uninitialised #hierarchy.jstree-default .jstree-open > .jstree-anchor{
+	background-image:    none;
+}
+
+
 #hierarchy.jstree-default .jstree-anchor > .jstree-themeicon{
 	background-color: white;
 	position: absolute;
@@ -448,6 +502,10 @@
 	background-image:    url(opened.png);			
 	background-position: 0 0;
 	background-size: 1em 1em;
+}
+
+.uninitialised #hierarchy.jstree-default .jstree-node.jstree-open > .jstree-anchor > .jstree-themeicon{
+	background-image:    none;
 }
 
 
