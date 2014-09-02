@@ -208,12 +208,6 @@ public class SearchServiceMockSelenium implements SearchService {
 	}
 
 	@Override
-	public Neo4jBean getParent(String nodeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Neo4jBean> getPreceedingSiblings(String nodeId, int limit) {
 		// TODO Auto-generated method stub
 		return null;
