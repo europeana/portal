@@ -42,6 +42,9 @@ public class BriefBeanImpl implements BriefBean {
 	private Date timestampCreated;
 	private Date timestampUpdated;
 	private String[] edmIsShownAt;
+	private Map<String, List<String>> edmPlaceLabelLangAware;
+	private Map<String, List<String>> edmTimespanLabelLangAware;
+	private Map<String, List<String>> edmAgentLabelLangAware;
 
 	@Override
 	public String getId() {
@@ -329,5 +332,32 @@ public class BriefBeanImpl implements BriefBean {
 	@Override
 	public String[] getEdmIsShownAt() {
 		return edmIsShownAt;
+	}
+
+	@Override
+	public Map<String, List<String>> getEdmPlaceLabelLangAware() {
+		return edmPlaceLabelLangAware;
+	}
+
+	public void setEdmPlaceLabelLangAware(Map<String, List<String>> edmPlaceLabelLangAware) {
+		this.edmPlaceLabelLangAware = edmPlaceLabelLangAware;
+	}
+
+	@Override
+	public Map<String, List<String>> getEdmTimespanLabelLangAware() {
+		return edmTimespanLabelLangAware;
+	}
+
+	public void setEdmTimespanLabelLangAware(Map<String, List<String>> edmTimespanLabelLangAware) {
+		this.edmTimespanLabelLangAware = edmTimespanLabelLangAware;
+	}
+
+	@Override
+	public Map<String, List<String>> getEdmAgentLabelLangAware() {
+		return edmAgentLabelLangAware;
+	}
+
+	public void setEdmAgentLabelLangAware(Map<String, List<String>> edmAgentLabelLangAware) {
+		this.edmAgentLabelLangAware = edmAgentLabelLangAware;
 	}
 }
