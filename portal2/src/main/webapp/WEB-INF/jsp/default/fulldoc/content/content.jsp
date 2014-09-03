@@ -45,8 +45,9 @@
 			    <script type="text/javascript">
 					window.apiServerRoot =  '${model.apiUrl}/v2/record';
 					window.apiKey           =   'api2demo';
-					var hierarchyTestUrl =  window.apiServerRoot + '${model.document.about}/self.json?wskey=' + window.apiKey;
-					var hierarchyHeader  = '<spring:message code="hierarchy_header_t" />';
+					var hierarchyOriginalUrl = '${model.document.about}';
+					var hierarchyTestUrl     =  window.apiServerRoot + '${model.document.about}/self.json?wskey=' + window.apiKey;
+					var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';
     			</script>
 			    <!--
 			    <script type="text/javascript">
