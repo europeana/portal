@@ -154,7 +154,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						
 			newOb = {
 					"id" : escapeId(ob.self.id),
-					"text" : ob.self.index + '. ' + normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
+					"text" : (1 + ob.self.index) + '. ' + normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
 					"data" : {
 						"id" :			ob.self.id,	/* reference to unescaped id */
 						"index":		ob.self.index,
@@ -170,7 +170,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		else{
 			newOb = {
 					"id" : escapeId(ob.id),
-					"text" : ob.index + '. ' + normaliseText(ob.id, ob.title, ob.type, ob.childrenCount),
+					"text" : (1 + ob.index) + '. ' + normaliseText(ob.id, ob.title, ob.type, ob.childrenCount),
 					"data" : {
 						"id" :			ob.id, /* reference to unescaped id */
 						"index":		ob.index,
