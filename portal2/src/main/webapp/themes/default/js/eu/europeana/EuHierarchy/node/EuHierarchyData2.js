@@ -101,14 +101,9 @@ var dataGen = function(){
 			res.self    =  coreData(sData);
 			
 			if(res.self){
-				res.self.hasParent = path.length>1;
-				
-				if(res.self.hasParent){
-					res.parent = parentData(path, limit);
+				if(path.length>1){
+					res.self.parent = parentData(path, limit).id;
 				}
-				//if(res.self.hasChildren){
-				//	res.childrenCount = sData.data.length;
-				//}			
 			}
 		}
 		
@@ -118,10 +113,10 @@ var dataGen = function(){
 
 		else if(action==="children.json"){
 			
-			res.self = { id:id, hasParent : path.length>1 };
+			res.self = { id:id  };
 			
-			if(res.hasParent){
-				res.parent  = parentData(path, limit);
+			if(path.length>1){
+				res.self.parent  = parentData(path, limit).id;
 			}
 			
 			if(sData.data){
@@ -147,12 +142,11 @@ var dataGen = function(){
 
 		else if(action==="following-siblings.json"){
 			
-			res.self = { id:id, hasParent : false };
+			res.self = { id:id };
 			
 			if(path.length>1){
 
-				res.parent          = parentData(path, limit);
-				res.self.hasParent  = true;
+				res.self.parent          = parentData(path, limit).id;
 				
 				var parentPath		= path.slice(0, path.length-1).join('-');
 				//var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json', max);					
@@ -200,12 +194,11 @@ var dataGen = function(){
 
 		else if(action==="preceeding-siblings.json"){
 
-			res.self = { id:id, hasParent : false };
+			res.self = { id:id };
 			
 			if(path.length>1){
 				
-				res.parent          = parentData(path, limit);
-				res.self.hasParent  = true;
+				res.self.parent          = parentData(path, limit).id;
 				
 				var parentChildren	= search(path.slice(0, path.length-1).join('-'), 'children.json');
 				var start 			= false;
@@ -238,10 +231,6 @@ var dataGen = function(){
 						start = true;
 					}
 				}
-
-			}
-			if(sData.data){
-//				res.childrenCount = sData.data.length;		// redundant?			
 			}
 		}
 		//return res.reverse();
