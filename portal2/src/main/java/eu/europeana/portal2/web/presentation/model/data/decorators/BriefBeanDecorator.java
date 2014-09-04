@@ -362,4 +362,19 @@ public class BriefBeanDecorator implements BriefBean {
 	public String[] getEdmIsShownAt() {
 		return briefBean.getEdmIsShownAt();
 	}
+
+	@Override
+	public Map<String, List<String>> getEdmPlaceLabelLangAware() {
+		return briefBean.getEdmPlaceLabelLangAware();
+	}
+
+	@Override
+	public Map<String, List<String>> getEdmTimespanLabelLangAware() {
+		return briefBean.getEdmTimespanLabelLangAware();
+	}
+
+	@Override
+	public Map<String, List<String>> getEdmAgentLabelLangAware() {
+		return briefBean.getEdmAgentLabelLangAware();
+	}
 }

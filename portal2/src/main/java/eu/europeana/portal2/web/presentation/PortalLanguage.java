@@ -98,6 +98,7 @@ public enum PortalLanguage {
 	FA(false, "Persian", "persian_t", false),
 	HE(false, "Hebrew", "hebrew_t", false),
 	CY(false, "Welsh", "welsh_t", false),
+	LA(false, "Latin", "latin_t", false),
 	
 	
 	AUS(false, "Australian (aus)", null, false),
