@@ -317,6 +317,15 @@
 	content: "\7b";
 }
 
+#hierarchy .icon-video:after,
+#hierarchy .icon-text:after,
+#hierarchy .icon-image:after,
+#hierarchy .icon-audio:after,
+#hierarchy .icon-sound:after,
+#hierarchy .icon-3d:after {
+	position:relative;
+	left:0.25em;
+}
 
 
  /*

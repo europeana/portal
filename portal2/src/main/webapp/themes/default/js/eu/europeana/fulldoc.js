@@ -1315,7 +1315,7 @@ eu.europeana.fulldoc = {
 						setTimeout(function(){
 							window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
 							window.hierarchy.init(initialiseUrl);
-						}, 500);
+						}, 1);
 					});
 
 				}

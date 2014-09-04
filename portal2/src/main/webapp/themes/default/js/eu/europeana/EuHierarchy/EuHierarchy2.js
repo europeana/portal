@@ -129,13 +129,19 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		var normaliseText = function(id, title, type, childCount){
 			
-			var text     = title.def[0];
+			var text = title.def[0];
 			
-			text = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
-			 + 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
-			 + 	text
-			 +  (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ' items)')
-			 + '</a>';
+			if(id == hierarchyOriginalUrl){
+				 text += (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ' items)');
+			}
+			else{
+				text = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
+				+ 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
+				+ 	text
+				+  (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ' items)')
+				+ '</a>';				
+			}
+			
 			
 			window.followLink = function(e){
 				e.stopPropagation();
@@ -148,7 +154,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						
 			newOb = {
 					"id" : escapeId(ob.self.id),
-					"text" : normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
+					"text" : (1 + ob.self.index) + '. ' + normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
 					"data" : {
 						"id" :			ob.self.id,	/* reference to unescaped id */
 						"index":		ob.self.index,
@@ -164,7 +170,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		else{
 			newOb = {
 					"id" : escapeId(ob.id),
-					"text" : normaliseText(ob.id, ob.title, ob.type, ob.childrenCount),
+					"text" : (1 + ob.index) + '. ' + normaliseText(ob.id, ob.title, ob.type, ob.childrenCount),
 					"data" : {
 						"id" :			ob.id, /* reference to unescaped id */
 						"index":		ob.index,
@@ -1350,7 +1356,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					chainUp(parentUrl, data, callbackWhenDone);							
 				}
 				else{
-					wrapper.find('.hierarchy-title').html(data.text);
+					wrapper.find('.hierarchy-title').html(data.text.substr(data.text.indexOf('. ')+2, data.text.length));
 					wrapper.find('.hierarchy-title span').removeAttr('class');
 					wrapper.find('.hierarchy-title a').removeAttr('onclick');
 					callbackWhenDone(data);
