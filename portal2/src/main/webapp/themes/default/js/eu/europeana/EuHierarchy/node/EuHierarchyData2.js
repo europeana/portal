@@ -233,6 +233,35 @@ var dataGen = function(){
 				}
 			}
 		}
+		else if(action==="ancestor-self-siblings.json"){
+			
+			res.self    =  coreData(sData);
+
+			var preceding = search(path.join('-'), 'preceeding-siblings.json', 8);
+			res['preceeding-siblings'] = preceding['preceeding-siblings'];
+			var following = search(path.join('-'), 'following-siblings.json', 8);
+			res['following-siblings']  = following['following-siblings'];
+
+			console.log('preceding ' + preceding['preceeding-siblings'].length);
+			console.log('following ' + following['following-siblings'].length);
+			
+			if(path.length>1){
+				res.self.parent = parentData(path, limit).id;
+			}
+			
+			res.ancestors = [];
+			
+			path.pop();
+			
+			while(path.length){
+				res.ancestors.push(
+					search(path.join('-'), 'self.json', 1)
+				);
+				path.pop();
+			}
+		}
+		
+		
 		//return res.reverse();
 		return res;
 	}

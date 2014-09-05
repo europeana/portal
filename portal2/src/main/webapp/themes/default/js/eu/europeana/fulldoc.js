@@ -1182,7 +1182,7 @@ eu.europeana.fulldoc = {
 					var mobile = js.utils.phoneTest();
 					
 					if (mobile) {
-
+						$('.see-also-header').show();
 						$('#more-like-this-wrapper').show();
 						
 						if (! $('.mlt-title').find('.ellipsis-inner').length) {
@@ -1191,6 +1191,7 @@ eu.europeana.fulldoc = {
 						}
 					}
 					else {
+						$('.see-also-header').show();
 						console.log('init mlt');
 						initMlt();
 					}
@@ -1276,7 +1277,7 @@ eu.europeana.fulldoc = {
 						$('.item-metadata.hasPart').hide();
 						setTimeout(function(){
 							window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
-							window.hierarchy.init(initialiseUrl);
+							window.hierarchy.init(initialiseUrl, true, js.debug);
 						}, 1);
 					});
 

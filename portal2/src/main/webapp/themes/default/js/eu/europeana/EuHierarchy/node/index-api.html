@@ -7,10 +7,11 @@
 
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-face.css"/>
-<!-- 
+
+	<!-- 
 	<link rel="stylesheet" href="../../../../../css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="../../../../../css/europeana-font-face.css"/>
- -->	
+	-->	
 	
 	<link rel="stylesheet" href="../style.css" />
 	<link rel="stylesheet" href="../style-overrides.css" />
@@ -121,15 +122,26 @@
 
 				
 				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
+				/*
+				*/
+
+				
+				$.getJSON('http://localhost:3000/1-1-1-4/ancestor-self-siblings.json', null, function( data ) {
+					hierarchy.init(data, true);
+				});
+				
+				/*
+
+				*/
 
 				/*
+				hierarchy.init(param ? param : 'http://localhost:3000/1-1-2-2/self.json?wskey=api2demo');
 				hierarchy.init(
 						{"action":"self.json","self":{"id":"1-4","title":{"def":["Volume 4 (b1)"]},"type":"text","index":4,"hasChildren":true,"childrenCount":14,"hasParent":true},"parent":{"id":"1","title":{"def":["Book 1"]},"type":"TEXT","index":"1","hasChildren":true},"success":true}		
 				);
 				*/
 				
-				hierarchy.init(param ? param : 'http://localhost:3000/1-4/self.json?wskey=api2demo');
-
+				
 				
 //				hierarchy.init(param ? param : 'http://localhost:3000/1-2-3-4/self.json?wskey=api2demo');
 				//hierarchy.init((param ? param : 'http://localhost:3000/1/self.json?wskey=api2demo'));
