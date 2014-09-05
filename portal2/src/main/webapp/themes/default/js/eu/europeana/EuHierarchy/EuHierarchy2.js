@@ -1453,7 +1453,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						data.children = [pData];
 						data          = data.children[0];
 					}
-					if(debug && ((!data.data.childrenCount) || data.data.childrenCount == 0) ){
+					if( ((!data.data.childrenCount) || data.data.childrenCount == 0) ){
 						alert('Sorry to alert you, but fix the data!\n\nAncestors are expected to have a children count greater than zero.\n\nThere is no number after the title in this hierarchy because of this missing data\n(and non-flat hierarchies will break):\n\n' + JSON.stringify(data, null, 4));
 					}
 
