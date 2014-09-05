@@ -130,9 +130,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			return idIn.replace(/\//g, '_').replace(/-/g, '_');
 		}
 		
-		var normaliseText = function(id, title, type, childCount){
+		var normaliseText = function(id, title, type, childCount, index, parent){
 			
-			var text = title.def[0];
+			var text = (parent ? (1 + index + '. ') : '') + title.def[0];
 			
 			if(typeof hierarchyOriginalUrl != 'undefined' && id == hierarchyOriginalUrl){
 				 text += (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ')');
@@ -155,7 +155,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						
 			newOb = {
 					"id" : escapeId(ob.self.id),
-					"text" : (1 + ob.self.index) + '. ' + normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
+					"text" : normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount, ob.self.index, ob.self.parent),
 					"data" : {
 						"id" :			ob.self.id,	/* reference to unescaped id */
 						"index":		ob.self.index,
@@ -169,14 +169,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 		}
 		else{
+			var parent = wrapInfo ? wrapInfo.self.id : null;
 			newOb = {
 					"id" : escapeId(ob.id),
-					"text" : (1 + ob.index) + '. ' + normaliseText(ob.id, ob.title, ob.type, ob.childrenCount),
+					"text" : normaliseText(ob.id, ob.title, ob.type, ob.childrenCount, ob.index, parent),
 					"data" : {
 						"id" :			ob.id, /* reference to unescaped id */
 						"index":		ob.index,
 						"hasChildren":	ob.hasChildren,
-						"parent":		wrapInfo.self.id
+						"parent":		parent
 					 }					
 			}
 			if(newOb.data.hasChildren){
@@ -1115,7 +1116,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			if(toLoadOnInit > 0){
 				viewPrevOrNext(node, false, toLoadOnInit, true, function(){
 					onLoad();
-				});				
+				});
 			}
 			else{
 				onLoad();
@@ -1148,7 +1149,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			setTimeout(function() {
 				
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
-				
+
 				doOnSelect(pageNode, function(){
 					setTimeout(function() {
 						var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
@@ -1158,14 +1159,26 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 							setLoadPoint(self.pageNodeId);
 							self.scrollDuration = self.scrollDurationDefault;
 
-							if(self.pageNodeId == getRootEl().attr('id')){				
+							
+							var root = self.treeCmp.jstree('get_node', getRootEl().attr('id'));
+							
+				//			alert(root.text+'\n\n'+getRootEl().html())
+//							wrapper.find('.hierarchy-title').html(root.text.indexOf('. ') >= 0 ? root.text.substr(root.text.indexOf('. ')+2, root.text.length) : root.text);
+	//						wrapper.find('.hierarchy-title span').removeAttr('class');
+		//					wrapper.find('.hierarchy-title a').removeAttr('onclick');
+							wrapper.find('.hierarchy-title').html(getRootEl().find('span').html());
+
+							if(self.pageNodeId == root.id){				
 								// we're on the root - remove the link
-								wrapper.find('.hierarchy-title a').removeAttr('href');
 								wrapper.find('.hierarchy-title a').wrapInner('<span/>');
-								wrapper.find('.hierarchy-title a span').unwrap().unwrap();
-								self.treeCmp.jstree("open_node", pageNode);					
+								wrapper.find('.hierarchy-title a span').unwrap();
+								self.treeCmp.jstree("open_node", pageNode);
 							}
 							else{
+								
+								var titleText = wrapper.find('.hierarchy-title a').html();
+								
+								wrapper.find('.hierarchy-title a').html(titleText.substr( titleText.indexOf('. ')+2, titleText.length));
 
 								/*
 								var stepBack = 8;
@@ -1193,7 +1206,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 								alert('startNode = ' + startNode.id)
 								doScrollTo('#' + startNode.id);
 								*/
-								
+
+
 								$('#' + self.pageNodeId + '>a').focus();
 								
 								onInit();
@@ -1295,7 +1309,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		 *  
 		 * */
 		self.treeCmp.on("open_node.jstree", function(e, jstreeData) {
-			
 			if(self.loadingAll || self.isLoading){
 				log('return because loading - open_node');
 				return;
@@ -1327,6 +1340,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						self.isLoading = false;
 						self.timer.stop();
 						
+						if(!self.initialised){
+							onInit();
+							
+						}
 //					}, 500);
 										
 				});
@@ -1401,7 +1418,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					wrapper.find('.hierarchy-title span').removeAttr('class');
 					wrapper.find('.hierarchy-title a').removeAttr('onclick');
 					
-					alert(JSON.stringify(data, null, 4))
 					callbackWhenDone(data);
 				}
 			}
@@ -1423,8 +1439,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			if(ob.ancestors){				
 				$.each(ob.ancestors.reverse(), function(i, item){				
 					
-//					alert('ancestor: ' + JSON.stringify(item, null, 4))
-					
 					pData = formatNodeData(item, ob);
 					if(!data){
 						data    = pData;
@@ -1434,13 +1448,27 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						data.state    = {"opened" : true, "disabled" : true };
 						data.children = [pData];
 						data          = data.children[0];
-					}				
+					}
+					if(debug && ((!data.data.childrenCount) || data.data.childrenCount == 0) ){
+						alert('Sorry to alert you, but fix the data!\n\nAncestors are expected to have a children count greater than zero.\n\nThere is no number after the title in this hierarchy because of this missing data\n(and non-flat hierarchies will break):\n\n' + JSON.stringify(data, null, 4));
+					}
+
 				});
+
+				data.children = [];
+				data.state    = {"opened" : true };
+
+				data.children.push( formatNodeData(ob.self, {"self":{ "id" : data.data.id }} )  );
+				self.pageNodeId = data.children[data.children.length-1].id;
+				
+			}
+			else{
+				data = formatNodeData(ob.self);
+				self.pageNodeId = data.id;
+				rootRef = data;
 			}
 			
 			
-			data.children = [];
-			data.state    = {"opened" : true };
 			
 			// preceding
 			if(ob['preceeding-siblings']){
@@ -1449,9 +1477,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				});				
 			}
 			
-			data.children.push( formatNodeData(ob.self, {"self":{ "id" : data.data.id }} )  );
-			self.pageNodeId = data.children[data.children.length-1].id;
-
 			// following
 			if(ob['following-siblings']){
 				$.each(ob['following-siblings'], function(i, item){

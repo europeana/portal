@@ -43,19 +43,20 @@
 
 			    <script type="text/javascript">
 			    
-					window.apiServerRoot =  '${model.apiUrl}/v2/record';
-					window.apiKey           =   'api2demo';
+					window.apiKey            =   'api2demo';
+					window.apiServerRoot     =  '${model.apiUrl}/v2/record';
 					var hierarchyOriginalUrl = '${model.document.about}';
 					var hierarchyTestUrl     =  window.apiServerRoot + '${model.document.about}/ancestor-self-siblings.json?wskey=' + window.apiKey;
 					var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';
-
 	
 					/*
 					window.apiServerRoot =  'http://localhost:3000/';
-					var hierarchyOriginalUrl = '1-1-1/ancestor-self-siblings.json';
+					var hierarchyOriginalUrl = '1-1/ancestor-self-siblings.json';
 					var hierarchyTestUrl     =  window.apiServerRoot + hierarchyOriginalUrl + '?wskey=' + window.apiKey;
 					var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';
+					*/
 
+					/*
 					
 					window.apiServerRoot =  'http://localhost:8080/api/v2/record';
 					var hierarchyOriginalUrl = '/2026024/providedCHO_DY_30_IV_2_2_022_14/ancestor-self-siblings.json';
