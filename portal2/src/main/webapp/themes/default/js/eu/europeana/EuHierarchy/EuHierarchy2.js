@@ -132,18 +132,21 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		
 		var normaliseText = function(id, title, type, childCount, index, parent){
 			
-			var text = (parent ? (1 + index + '. ') : '') + title.def[0];
-			
+			var text           = title.def[0];
+			var childCountText = (typeof childCount == 'undefined' || childCount == 0 ? '' : '<span> (' + childCount + ')<span>');
+				
 			if(typeof hierarchyOriginalUrl != 'undefined' && id == hierarchyOriginalUrl){
-				 text += (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ')');
+				 text = (parent ? (1 + index + '. ') : '') + text + childCountText;
 			}
 			else{
-				text = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
+				text = (parent ? (1 + index + '. ') : '')
+				+ '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
 				+ 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
 				+ 	text
 				+ '</a>'
-				+  (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ')')
+				+  childCountText
 			}
+			
 			window.followLink = function(e){
 				e.stopPropagation();
 			}
@@ -1167,7 +1170,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	//						wrapper.find('.hierarchy-title span').removeAttr('class');
 		//					wrapper.find('.hierarchy-title a').removeAttr('onclick');
 							wrapper.find('.hierarchy-title').html(getRootEl().find('span').html());
-
+							
 							if(self.pageNodeId == root.id){				
 								// we're on the root - remove the link
 								wrapper.find('.hierarchy-title a').wrapInner('<span/>');
@@ -1175,11 +1178,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 								self.treeCmp.jstree("open_node", pageNode);
 							}
 							else{
+							
+								wrapper.find('.hierarchy-title').contents().filter(function() {
+									  return this.nodeType == 3; //Node.TEXT_NODE
+									}).remove();
+									
 								
-								var titleText = wrapper.find('.hierarchy-title a').html();
-								
-								wrapper.find('.hierarchy-title a').html(titleText.substr( titleText.indexOf('. ')+2, titleText.length));
-
 								/*
 								var stepBack = 8;
 								var makeStepBack = function(node){
