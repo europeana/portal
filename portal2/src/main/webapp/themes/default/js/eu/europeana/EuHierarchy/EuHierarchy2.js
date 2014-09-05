@@ -1092,8 +1092,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				self.timer.start();			
 			}			
 			
-			viewPrevOrNext(node, false, toLoadOnInit, true, function(){
-				
+			var onLoad = function(){
 				doScrollTo($('#' + node.id), function(){
 					togglePrevNextLinks();
 					
@@ -1110,8 +1109,19 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					}
 
 					hideSpinner();
-				});
-			});
+				});				
+			}
+			
+			if(toLoadOnInit > 0){
+				viewPrevOrNext(node, false, toLoadOnInit, true, function(){
+					onLoad();
+				});				
+			}
+			else{
+				onLoad();
+			}
+			
+			
 		};
 		
 		// select (invoke by loaded callback below)
