@@ -47,7 +47,6 @@ import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.entity.ProxyImpl;
 import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.solr.exceptions.MongoDBException;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
@@ -283,7 +282,6 @@ public class ObjectController {
 		if (!model.isFormatLabels()
 			&& config.getHierarchyRoots() != null
 			&& config.getHierarchyRoots().contains(fullBean.getAbout())) {
-			log.info("removeHasPartsForRoots");
 			for (Proxy proxy : fullBean.getProxies()) {
 				proxy.setDctermsHasPart(null);
 			}
