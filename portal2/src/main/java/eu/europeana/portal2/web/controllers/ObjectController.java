@@ -283,6 +283,7 @@ public class ObjectController {
 		if (!model.isFormatLabels()
 			&& config.getHierarchyRoots() != null
 			&& config.getHierarchyRoots().contains(fullBean.getAbout())) {
+			log.info("removeHasPartsForRoots");
 			for (Proxy proxy : fullBean.getProxies()) {
 				proxy.setDctermsHasPart(null);
 			}
