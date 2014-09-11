@@ -20,10 +20,10 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 public class LocaleInterceptor extends HandlerInterceptorAdapter {
 
 	public static final String DEFAULT_PARAM_NAME = "locale";
-	
+
 	@Resource
 	public UserService userService;
-	
+
 	private String paramName = DEFAULT_PARAM_NAME;
 
 	public void setParamName(String paramName) {

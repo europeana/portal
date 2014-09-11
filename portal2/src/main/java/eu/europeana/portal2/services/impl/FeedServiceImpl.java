@@ -42,7 +42,7 @@ public class FeedServiceImpl implements FeedService {
 
 	@Resource
 	private Configuration config;
-	
+
 	@Resource(name="portal2_taskScheduler")
 	private  TaskScheduler scheduler;
 
@@ -121,7 +121,7 @@ public class FeedServiceImpl implements FeedService {
 			}
 		}
 	}
-	
+
 	private class UpdateFeedTask implements Runnable {
 		@Override
 		public void run() {
@@ -159,5 +159,5 @@ public class FeedServiceImpl implements FeedService {
 			}
 		}
 	}
-	
+
 }

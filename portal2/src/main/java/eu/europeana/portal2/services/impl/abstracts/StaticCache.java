@@ -49,7 +49,7 @@ import eu.europeana.corelib.web.support.Configuration;
  */
 
 public abstract class StaticCache {
-	
+
 	@Log
 	protected Logger log;
 

@@ -8,8 +8,9 @@ public class RegisterApiData extends SearchPageData {
 	protected boolean failureExists = false;
 	protected boolean success = false;
 
-	private String[] fieldOfWorks = new String[] { "Gallery", "Library", "Archive", "Museum", "Research/Education",
-			"Individual developer", "Commercial company", "Non profit organization/Government" };
+	private String[] fieldOfWorks = new String[]{"Gallery", "Library", "Archive",
+		"Museum", "Research/Education", "Individual developer", "Commercial company",
+		"Non profit organization/Government"};
 
 	private String token;
 	private String email;

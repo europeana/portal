@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public enum Redirect {
+
 	EUROPEANA_CONTRIBUTORS_HTML("/europeana-providers.html" ),
 	THINKVIDEO_HTML("/storyline.html" ),
 	TERMSOFUSE_HTML("/termsofservice.html"),

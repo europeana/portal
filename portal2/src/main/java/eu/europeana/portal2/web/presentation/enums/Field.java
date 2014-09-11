@@ -140,7 +140,7 @@ public enum Field {
 	EDM_ISSUCCESSOROF("edm:isSuccessorOf", null),
 	EDM_REALIZES("edm:realizes", null),
 	EDM_ISNEXTINSEQUENCE("edm:isNextInSequence", "edm_isNextInSequence_t"),
-	
+
 	SKOS_PREFLABEL("skos:prefLabel", null),
 	SKOS_NOTE("skos:note", null),
 

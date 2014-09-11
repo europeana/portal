@@ -36,6 +36,7 @@ import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
  */
 
 public interface BriefBeanView {
+
 	List<? extends BriefBean> getBriefBeans();
 
 	List<FacetQueryLinks> getFacetQueryLinks(); // throws UnsupportedEncodingException;
