@@ -49,7 +49,7 @@ The views of the portal are registered in ``eu.europeana.portal2.web.presentatio
 
     SEARCH_HTML("search.html", "Europeana - Search results", "search/search")
 
-The real important part is the third argument here, which is the path of the template. It will be resolved as ``src/main/webapp/WEB-INF/jsp/[theme]/[template].jsp``, where ``theme`` will be resolved as „default” (since we only have this theme right now), so you will find the jsp page as ``src/main/webapp/WEB-INF/jsp/default/search/search.jsp``.
+The real important part is the third argument here, which is the path of the template. It will be resolved as ``src/main/webapp/WEB-INF/jsp/[theme]/[template].jsp``, where ``theme`` will be resolved as „default” (since we only have this theme right now), so you will find the jsp page as ``src/main/webapp/WEB-INF/jsp/default/search/search.jsp`` (for the configuration see ``viewResolver`` bean in ``portal2-mvc.xml`` Spring configuration file).
 
 Configuration
 ---
@@ -110,4 +110,16 @@ In Configuration:
 
 Services
 ---
-The corelib provides a number of services you need to access resources like the Solr, Mongo, or similar things. If you want to add new service, please add it to the corelib, not to API or portal.
+The corelib provides a number of services you need to access resources like the Solr, Mongo, or similar things. If you want to add new service which possibly will be used in both portal and API, please add it to the corelib. There are some services, which used only by the portal, they exist in eu.europeana.portal2.services package in subpackages. The service should define in an interface, in order to be possible to create concrete implementation, and mock implementation which will be used in unit or user interface tests. The service should be registered as bean in a Spring config file, and can be used in controllers and in other beans with the ``@Resource`` annotation.
+
+portal2-services.xml:
+
+    <bean name="portal2_clickStreamLogService"
+          class="eu.europeana.portal2.services.impl.ClickStreamJsonLogServiceImpl"/>
+
+
+SearchController:
+
+    @Resource
+    private ClickStreamLogService clickStreamLogger;
+
