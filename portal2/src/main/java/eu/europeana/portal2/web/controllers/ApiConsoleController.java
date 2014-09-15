@@ -50,7 +50,7 @@ public class ApiConsoleController {
 	private static final String RECORD = "record";
 
 	@RequestMapping(value = "/api/console.html", produces = MediaType.TEXT_HTML_VALUE)
-	public ModelAndView playground(
+	public ModelAndView console(
 			@RequestParam(value = "function", required = false, defaultValue = "search") String function,
 			@RequestParam(value = "callback", required = false) String callback,
 			@RequestParam(value = "query", required = false) String query,
@@ -71,7 +71,8 @@ public class ApiConsoleController {
 			@RequestParam(value = "yearMax", required = false) String yearMax,
 			@RequestParam(value = "reusability", required = false) String[] reusabilities,
 			@RequestParam(value = "embedded", required = false) String embedded,
-			HttpServletRequest request, Locale locale) {
+			HttpServletRequest request,
+			Locale locale) {
 		log.info("===== /api/console.html =====");
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");

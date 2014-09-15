@@ -5,6 +5,7 @@ package eu.europeana.portal2.web.presentation.model.submodel;
  * @since Feb 20, 2010 8:20:42 PM
  */
 public class PageLink {
+
 	private int start;
 	private int display;
 	private boolean linked;

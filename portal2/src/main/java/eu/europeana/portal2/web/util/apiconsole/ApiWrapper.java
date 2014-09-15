@@ -35,7 +35,7 @@ import eu.europeana.corelib.web.model.ApiResultImpl;
 import eu.europeana.corelib.web.service.impl.JsonApiServiceImpl;
 
 public class ApiWrapper extends JsonApiServiceImpl {
-	
+
 	private final Logger log = Logger.getLogger(ApiWrapper.class);
 
 	private static final String SEARCH_PATH = "/v2/search.json";

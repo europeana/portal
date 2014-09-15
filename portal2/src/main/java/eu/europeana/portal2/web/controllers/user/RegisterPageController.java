@@ -42,7 +42,6 @@ import eu.europeana.portal2.web.util.ControllerUtil;
  * 
  * @author Gerald de Jong <geralddejong@gmail.com>
  */
-
 @Controller
 @RequestMapping("/register.html")
 public class RegisterPageController {

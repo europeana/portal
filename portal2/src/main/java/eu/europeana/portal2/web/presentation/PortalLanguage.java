@@ -91,16 +91,15 @@ public enum PortalLanguage {
 	UK(true, "&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;", "ukrainian_t", false),
 
 	// UNSUPPORTED LANGUAGES (BUT OCCUR IN FACETS / FullDoc metadata):
-	
+
 	MUL(false, "Multilingue (mul)", "mul_t", false),
-	
+
 	AR(false, "Arabic", "arabic_t", false),
 	FA(false, "Persian", "persian_t", false),
 	HE(false, "Hebrew", "hebrew_t", false),
 	CY(false, "Welsh", "welsh_t", false),
 	LA(false, "Latin", "latin_t", false),
-	
-	
+
 	AUS(false, "Australian (aus)", null, false),
 	BE(false, "Belarusian (bel)", null, false),
 	CHK(false, "Chuukese (chk)", null, false),
@@ -111,7 +110,31 @@ public enum PortalLanguage {
 	SR(false, "Serbian (srp)", "serbian_t", false),
 	SWE(false, "Swedish (swe)","swedish_t", false),
 	TR(false, "Turkish (tr)", "turkish_t", false),
-	YI(false, "Yiddish (yi)", "yiddish_t", false);
+	YI(false, "Yiddish (yi)", "yiddish_t", false),
+	JA(false, "Japanese (ja)", "japanese_t", false),
+	ZH(false, "Chinese (zh)", "chinese_t", false),
+	HI(false, "Hindi (hi)", "hindi_t", false),
+	KO(false, "Korean (ko)", "korean_t", false),
+	CU(false, "Old Church Slavonic (cu)", "old_church_slavonic_t", false),
+	SA(false, "Sanskrit (sa)", "sanskrit_t", false),
+	BO(false, "Tibetan (bo)", "tibetan_t", false),
+	KM(false, "Khmer (km)", "khmer_t", false),
+	KA(false, "Georgian (ka)", "georgian_t", false),
+	HY(false, "Armenian (hy)", "armenian_t", false),
+	SQ(false, "Albanian (sq)", "albanian_t", false),
+	AM(false, "Amharic (am)", "amharic_t", false),
+	GEZ(false, "Ge'ez (gez)", "geez_t", false),
+	BR(false, "Breton (br)", "breton_t", false),
+	OTA(false, "Ottoman Turkish (ota)", "ottoman_turkish_t", false),
+	AKK(false, "Akkadian (akk)", "akkadian_t", false),
+	ARC(false, "Aramaic (arc)", "aramaic_t", false),
+	SYC(false, "Syriac (syc)", "syriac_t", false),
+	EGY(false, "Egyptian (egy)", "egyptian_t", false),
+	COP(false, "Coptic (cop)", "coptic_t", false),
+	OC(false, "Occitan (oc)", "occitan_t", false),
+	TH(false, "Thai (th)", "thai_t", false),
+	UR(false, "Urdu (ur)", "urdu_t", false),
+	VI(false, "Vietnamese (vi)", "vietnamese_t", false);
 
 	/*
 		luxemburgish_t=Luxemburgish (ltz)

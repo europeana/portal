@@ -102,7 +102,7 @@ public class ObjectController {
 
 	@Resource
 	private OptOutService optOutService;
-	
+
 	@Resource
 	private SchemaOrgMapping schemaOrgMapping;
 

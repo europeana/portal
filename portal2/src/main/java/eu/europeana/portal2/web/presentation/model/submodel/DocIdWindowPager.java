@@ -9,6 +9,7 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
  * @since Jan 9, 2010 12:47:37 PM
  */
 public interface DocIdWindowPager {
+
 	DocIdWindow getDocIdWindow();
 
 	boolean isNext();

@@ -6,6 +6,7 @@ package eu.europeana.portal2.web.presentation.model.submodel;
  */
 
 public interface PresentationQuery {
+
 	String getUserSubmittedQuery();
 
 	String getQueryForPresentation();

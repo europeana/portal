@@ -24,5 +24,6 @@
 		</authentication-provider>
 	</authentication-manager>
 
-	<beans:bean id="portal2_userDetailsService" class="eu.europeana.portal2.services.impl.UserDetailsServiceImpl" />
+	<beans:bean id="portal2_userDetailsService"
+		class="eu.europeana.portal2.services.impl.UserDetailsServiceImpl" />
 </beans:beans>

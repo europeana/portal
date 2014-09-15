@@ -47,7 +47,6 @@ public abstract class SearchPreparation extends SearchData {
 		setStartPage(getBriefBeanView().getPagination().getPageNumber());
 	}
 
-
 	private void setBreadcrumbs() throws UnsupportedEncodingException {
 		if (!isEmbedded()) {
 			breadcrumbs = briefBeanView.getPagination().getBreadcrumbs();

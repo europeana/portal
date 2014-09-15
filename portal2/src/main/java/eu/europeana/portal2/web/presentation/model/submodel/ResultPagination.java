@@ -9,6 +9,7 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
  * @since Jan 8, 2010 10:51:42 AM todo: documentation
  */
 public interface ResultPagination {
+
 	boolean isPrevious();
 
 	boolean isNext();

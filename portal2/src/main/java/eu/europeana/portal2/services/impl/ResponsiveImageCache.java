@@ -11,8 +11,7 @@ public class ResponsiveImageCache extends StaticCache {
 
 	@Value("#{europeanaProperties['portal.responsive.cache.checkFrequencyInMinute']}")
 	private Integer responsiveCacheCheckFrequencyInMinute;
-	
-	
+
 	public ResponsiveImageCache() {
 		super();
 	}

@@ -22,7 +22,7 @@ public class SchemaOrgMapping {
 
 	private static final String DC_TITLE = "dc:title";
 	private static final String DC_PUBLISHER = "dc:publisher";
-	
+
 	private Map<String, SchemaOrgElement> edm2schemaOrg;
 	private Map<String, String> semanticAttributesMap = new ConcurrentHashMap<String, String>();
 	private Map<String, Boolean> semanticUrlMap = new ConcurrentHashMap<String, Boolean>();

@@ -25,6 +25,7 @@ package eu.europeana.portal2.web.presentation.model.submodel;
  */
 
 public interface PagingWindow {
+
 	Integer getOffset();
 
 	Integer getHitCount();
