@@ -526,9 +526,11 @@
   background-color: transparent;
   background-image: none;
 }
+/*
 .jstree-default > .jstree-container-ul .jstree-loading > .jstree-ocl {
   background: url("throbber.gif") center center no-repeat;
 }
+*/
 .jstree-default.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
 }

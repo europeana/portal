@@ -14,7 +14,7 @@
 		var mltQuery  		= '${  fn:escapeXml(    fn:replace(  model.europeanaMlt.categories[0].query, "\\&", "%26")     	)  }';
 	</script>
 
-	<strong class="see-also-header"><spring:message code="mlt_header_t" /></strong>
+	<strong class="see-also-header" style="display:none;"><spring:message code="mlt_header_t" /></strong>
 
 	<style>
 	

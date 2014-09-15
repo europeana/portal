@@ -43,6 +43,7 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
@@ -178,7 +179,7 @@ public class ObjectController {
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 		model.setUseBackendItemTranslation(config.useBackendTranslation());
-		model.setApiUrl(config.getApi2url());		
+		model.setApiUrl(config.getApi2url());
 		model.setStartTime(t0);
 		
 		if (model.isDoTranslation()) {
@@ -210,12 +211,14 @@ public class ObjectController {
 			}
 		}
 
+
 		if (log.isDebugEnabled()) {
 			long tgetFullBean1 = new Date().getTime();
 			log.debug("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		}
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
+			removeHasPartsForRoots(model, fullBean);
 			long tFullBeanView0 = 0;
 			if (log.isDebugEnabled()) {
 				tFullBeanView0 = new Date().getTime();
@@ -273,6 +276,16 @@ public class ObjectController {
 		}
 
 		return page;
+	}
+
+	private void removeHasPartsForRoots(FullDocPage model, FullBean fullBean) {
+		if (!model.isFormatLabels()
+			&& config.getHierarchyRoots() != null
+			&& config.getHierarchyRoots().contains(fullBean.getAbout())) {
+			for (Proxy proxy : fullBean.getProxies()) {
+				proxy.setDctermsHasPart(null);
+			}
+		}
 	}
 
 	private void initializeSeeAlsoConfiguration() {

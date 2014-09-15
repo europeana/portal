@@ -38,6 +38,7 @@ import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.definitions.solr.model.Term;
 import eu.europeana.corelib.neo4j.entity.Neo4jBean;
+import eu.europeana.corelib.neo4j.entity.Neo4jStructBean;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
 import eu.europeana.corelib.solr.exceptions.SolrTypeException;
 import eu.europeana.corelib.solr.model.ResultSet;
@@ -235,5 +236,11 @@ public class SearchServiceMockSelenium implements SearchService {
 	public long getChildrenCount(String nodeId) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Neo4jStructBean getInitialStruct(String nodeId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

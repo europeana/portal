@@ -1,12 +1,15 @@
 var EuHierarchy = function(cmp, rows, wrapper) {
 
-	var self             = this;
-	var debug            = true;
-	var apiServerRoot    = window.apiServerRoot ? window.apiServerRoot : '';
-	var apiKey			 = window.apiKey;	
-	var rows             = rows;
-	var defaultChunk     = rows * 2;
-	var lineHeight       = 1.4;
+	var self               = this;
+	var debug              = true;
+	var apiServerRoot      = window.apiServerRoot ? window.apiServerRoot : '';
+	var apiKey			   = window.apiKey;	
+	var rows               = rows;
+	var defaultChunk       = rows * 2;
+	var defaultChunkLoaded = rows;
+	var toLoadOnInit       = defaultChunk;
+	
+	var lineHeight         = 1.4;
 	
 	self.treeCmp               = cmp;
 	self.timer                 = null;
@@ -18,7 +21,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	self.initialised           = false;
 	self.container             = self.treeCmp.closest('.hierarchy-container');
 	self.scrollDuration        = 0;
-	self.scrollDurationDefault = 3000;
+	self.scrollDurationDefault = 2400;
 
 	self.topPanel              = wrapper.find('.hierarchy-top-panel');
 	self.bottomPanel           = wrapper.find('.hierarchy-bottom-panel');
@@ -127,34 +130,35 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			return idIn.replace(/\//g, '_').replace(/-/g, '_');
 		}
 		
-		var normaliseText = function(id, title, type, childCount){
+		var normaliseText = function(id, title, type, childCount, index, parent){
 			
-			var text = title.def[0];
-			
-			if(id == hierarchyOriginalUrl){
-				 text += (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ' items)');
+			var text           = title.def[0];
+			var childCountText = (typeof childCount == 'undefined' || childCount == 0 ? '' : '<span> (' + childCount + ')<span>');
+				
+			if(typeof hierarchyOriginalUrl != 'undefined' && id == hierarchyOriginalUrl){
+				 text = (parent ? (1 + index + '. ') : '') + text + childCountText;
 			}
 			else{
-				text = '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
+				text = (parent ? (1 + index + '. ') : '')
+				+ '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
 				+ 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
 				+ 	text
-				+  (typeof childCount == 'undefined' || childCount == 0 ? '' : ' (' + childCount + ' items)')
-				+ '</a>';				
+				+ '</a>'
+				+  childCountText
 			}
-			
 			
 			window.followLink = function(e){
 				e.stopPropagation();
 			}
-			
 			return '<span class="icon' + (type ? '  icon-' + type.toLowerCase() : '') + '">' + text + ' '  +  '</span>';
 		}
+		
 		
 		if(ob.action === "self.json"){
 						
 			newOb = {
 					"id" : escapeId(ob.self.id),
-					"text" : (1 + ob.self.index) + '. ' + normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount),
+					"text" : normaliseText(ob.self.id, ob.self.title, ob.self.type, ob.self.childrenCount, ob.self.index, ob.self.parent),
 					"data" : {
 						"id" :			ob.self.id,	/* reference to unescaped id */
 						"index":		ob.self.index,
@@ -168,14 +172,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 		}
 		else{
+			var parent = wrapInfo ? wrapInfo.self.id : null;
 			newOb = {
 					"id" : escapeId(ob.id),
-					"text" : (1 + ob.index) + '. ' + normaliseText(ob.id, ob.title, ob.type, ob.childrenCount),
+					"text" : normaliseText(ob.id, ob.title, ob.type, ob.childrenCount, ob.index, parent),
 					"data" : {
 						"id" :			ob.id, /* reference to unescaped id */
 						"index":		ob.index,
 						"hasChildren":	ob.hasChildren,
-						"parent":		wrapInfo.self.id
+						"parent":		parent
 					 }					
 			}
 			if(newOb.data.hasChildren){
@@ -320,7 +325,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			log('node.parent = null: node is ' + node.id + ' (returning)');
 			
 			if(callback){
-				log('exit ZERO')
+				//alert('exit ZERO')
 				callback();
 			}			
 			return;
@@ -351,9 +356,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			while(parentLoaded(switchTrackNode)){
 				switchTrackNode = self.treeCmp.jstree('get_node', switchTrackNode.parent);
 			}
-			
-			//log('switchtrack 2: ' + switchTrackNode.text);
-			
 			node = switchTrackNode;			
 		}
 	
@@ -688,7 +690,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					$('.hierarchy-next').css('margin-left', (rightIndent+1) + 'em');
 				}
 				else{
-					alert('why bother with this check if it is always true???')
+//					alert('why bother with this check if it is always true???')
 				}
 			}
 		}// end while	
@@ -998,7 +1000,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	var onInit = function(){
 		self.initialised = true;
 		self.container.removeClass('uninitialised');
-		self.topPanel.removeClass('uninitialised');								
+		self.topPanel.removeClass('uninitialised');
+		defaultChunk = defaultChunkLoaded;
 	};
 
 	
@@ -1016,8 +1019,9 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	 * @optional data object to use instead of a real server
 	 * */
 	
-	var init = function(baseUrl){
+	var init = function(baseUrl, usingStartUpShortcut, debugIn){
 
+		debug = debugIn;
 		self.timer = new Timer();
 
 		// Set UI viewport size
@@ -1027,7 +1031,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			if(self.loadedAll){
 				return;
 			}
-
+			
 			var ieMatch = (navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/MSIE/));
 			
 			if( ieMatch ){
@@ -1092,8 +1096,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				self.timer.start();			
 			}			
 			
-			viewPrevOrNext(node, false, defaultChunk, true, function(){
-				
+			var onLoad = function(){
 				doScrollTo($('#' + node.id), function(){
 					togglePrevNextLinks();
 					
@@ -1110,20 +1113,32 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					}
 
 					hideSpinner();
+				});				
+			}
+			
+			if(toLoadOnInit > 0){
+				viewPrevOrNext(node, false, toLoadOnInit, true, function(){
+					onLoad();
 				});
-			});
+			}
+			else{
+				onLoad();
+			}
+			
+			
 		};
 		
 		// select (invoke by loaded callback below)
 
 		self.treeCmp.bind("select_node.jstree", function(event, data) {
-			
-			$('.debug-area').html(JSON.stringify(data.node, null, 2));
-			
-			if(!self.silentClick){
-				if(!self.loadedAll){
-					doOnSelect(data.node);					
-				}
+			if(debug){
+				$('.debug-area').html(JSON.stringify(data.node, null, 2));
+				
+				if(!self.silentClick){
+					if(!self.loadedAll){
+						doOnSelect(data.node);					
+					}
+				}				
 			}
 			self.silentClick = false;
 		});
@@ -1137,23 +1152,68 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			setTimeout(function() {
 				
 				var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
-							
+
 				doOnSelect(pageNode, function(){
 					setTimeout(function() {
 						var pageNode = self.treeCmp.jstree('get_node', self.pageNodeId);
 						loadFirstChild(pageNode, function(){
+							
 							self.treeCmp.jstree("disable_node", pageNode.parent);							
 							setLoadPoint(self.pageNodeId);
 							self.scrollDuration = self.scrollDurationDefault;
 
-							if(self.pageNodeId == getRootEl().attr('id')){				
+							
+							var root = self.treeCmp.jstree('get_node', getRootEl().attr('id'));
+							
+				//			alert(root.text+'\n\n'+getRootEl().html())
+//							wrapper.find('.hierarchy-title').html(root.text.indexOf('. ') >= 0 ? root.text.substr(root.text.indexOf('. ')+2, root.text.length) : root.text);
+	//						wrapper.find('.hierarchy-title span').removeAttr('class');
+		//					wrapper.find('.hierarchy-title a').removeAttr('onclick');
+							wrapper.find('.hierarchy-title').html(getRootEl().find('span').html());
+							
+							if(self.pageNodeId == root.id){				
 								// we're on the root - remove the link
-								wrapper.find('.hierarchy-title a').removeAttr('href');
 								wrapper.find('.hierarchy-title a').wrapInner('<span/>');
-								wrapper.find('.hierarchy-title a span').unwrap().unwrap();
-								self.treeCmp.jstree("open_node", pageNode);					
+								wrapper.find('.hierarchy-title a span').unwrap();
+								self.treeCmp.jstree("open_node", pageNode);
 							}
 							else{
+							
+								wrapper.find('.hierarchy-title').contents().filter(function() {
+									  return this.nodeType == 3; //Node.TEXT_NODE
+									}).remove();
+									
+								
+								/*
+								var stepBack = 8;
+								var makeStepBack = function(node){
+									if(node.prev('li')){
+										console.log('msb has prev li')
+										stepBack -= 1;
+										node = node.prev('li');
+										
+										return stepBack > 0 ? makeStepBack(node) : node;
+									}
+									else{
+										console.log('msb has closest li')
+
+										if(node.closest('li')){
+											node = node.closest('li');
+											stepBack -= 1;
+											return stepBack > 0 ? makeStepBack(node) : node;
+										}
+									}
+									return node;
+								}
+								
+								var startNode = makeStepBack( $('#' + self.pageNodeId)  );								
+								alert('startNode = ' + startNode.id)
+								doScrollTo('#' + startNode.id);
+								*/
+
+
+								$('#' + self.pageNodeId + '>a').focus();
+								
 								onInit();
 								hideSpinner();
 								//togglePrevNextLinks();
@@ -1245,6 +1305,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 		});
 
+		
 		/* Open Node:
 		 * 
 		 *  - get 1st child
@@ -1252,7 +1313,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		 *  
 		 * */
 		self.treeCmp.on("open_node.jstree", function(e, jstreeData) {
-			
 			if(self.loadingAll || self.isLoading){
 				log('return because loading - open_node');
 				return;
@@ -1284,6 +1344,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 						self.isLoading = false;
 						self.timer.stop();
 						
+						if(!self.initialised){
+							onInit();
+							
+						}
 //					}, 500);
 										
 				});
@@ -1320,8 +1384,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 		// END TREE BINDING
 		
 		var chainUp = function(urlOrObject, data, callbackWhenDone){
-						
-
 			if(!urlOrObject){
 				log('NO URL - exit')
 				callbackWhenDone(data);
@@ -1359,6 +1421,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 					wrapper.find('.hierarchy-title').html(data.text.substr(data.text.indexOf('. ')+2, data.text.length));
 					wrapper.find('.hierarchy-title span').removeAttr('class');
 					wrapper.find('.hierarchy-title a').removeAttr('onclick');
+					
 					callbackWhenDone(data);
 				}
 			}
@@ -1370,22 +1433,92 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 				loadData(urlOrObject, loadCallback);				
 			}
 		};
-
 		
-		// build initial tree structure
-		chainUp(baseUrl, false, function(ob){
-			data = ob;
-			//log('Initialise tree with model:\n\n' + JSON.stringify(data, null, 2));
+		if(usingStartUpShortcut){
+			
+			var ob      = baseUrl;
+			var rootRef = null;
+			var data    = null;
 
+			if(ob.ancestors){				
+				$.each(ob.ancestors.reverse(), function(i, item){				
+					
+					pData = formatNodeData(item, ob);
+					if(!data){
+						data    = pData;
+						rootRef = data;
+					}
+					else{
+						data.state    = {"opened" : true, "disabled" : true };
+						data.children = [pData];
+						data          = data.children[0];
+					}
+					if( ((!data.data.childrenCount) || data.data.childrenCount == 0) ){
+						alert('Sorry to alert you, but fix the data!\n\nAncestors are expected to have a children count greater than zero.\n\nThere is no number after the title in this hierarchy because of this missing data\n(and non-flat hierarchies will break):\n\n' + JSON.stringify(data, null, 4));
+					}
+
+				});
+
+				data.children = [];
+				data.state    = {"opened" : true };
+
+				data.children.push( formatNodeData(ob.self, {"self":{ "id" : data.data.id }} )  );
+				self.pageNodeId = data.children[data.children.length-1].id;
+				
+			}
+			else{
+				data = formatNodeData(ob.self);
+				self.pageNodeId = data.id;
+				rootRef = data;
+			}
+			
+			
+			
+			// preceding
+			if(ob['preceeding-siblings']){
+				$.each(ob['preceeding-siblings'].reverse(), function(i, item){
+					data.children.push( formatNodeData(item, {"self":{ "id" : data.data.id }})  );
+				});				
+			}
+			
+			// following
+			if(ob['following-siblings']){
+				$.each(ob['following-siblings'], function(i, item){
+					data.children.push( formatNodeData(item, {"self":{ "id" : data.data.id }})  );
+					toLoadOnInit --;
+				});				
+			}
+
+
+			console.log('init:\n\n' + JSON.stringify(rootRef, null, 4) );
+			
 			var tree = self.treeCmp.jstree({
 				"core" : {
-					"data" : data,
+					"data" : rootRef, //data,
 					"check_callback" : true
 				},
 				"plugins" : [ "themes", "json_data", "ui"]
 			});
-				
-		});
+			
+		}
+		else{
+			// build initial tree structure
+			
+			chainUp(baseUrl, false, function(ob){
+				data = ob;
+				log('Initialise tree with model:\n\n' + JSON.stringify(data, null, 2));
+
+				var tree = self.treeCmp.jstree({
+					"core" : {
+						"data" : data,
+						"check_callback" : true
+					},
+					"plugins" : [ "themes", "json_data", "ui"]
+				});
+			});			
+		}
+		
+		
 	}; // end init
 
 	
@@ -1393,11 +1526,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 	// publicly exposed functions
 	
 	return {
-		//init : function(baseUrl, testMode){
-		//	init(baseUrl, testMode);
-		//},
-		init : function(baseUrl){
-			init(baseUrl);
+		init : function(baseUrl, usingStartUpShortcut, debug){
+			init(baseUrl, usingStartUpShortcut, debug);
 		},
 		nodeLinkClick : function(e){
 			nodeLinkClick(e);
