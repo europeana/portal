@@ -734,4 +734,13 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		return null;
 	}
+	
+	public String getBingToken() {
+		return bingToken;
+	}
+
+	public void setBingToken(String bingToken) {
+		this.bingToken = bingToken;
+	}
+
 }

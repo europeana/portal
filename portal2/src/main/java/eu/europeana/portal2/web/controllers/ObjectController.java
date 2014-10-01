@@ -60,6 +60,7 @@ import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
+import eu.europeana.portal2.services.BingTokenService;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.ClickStreamLogService.UserAction;
 import eu.europeana.portal2.web.model.mlt.EuropeanaMlt;
@@ -124,6 +125,10 @@ public class ObjectController {
 	public static final Map<String, MltConfiguration> SEE_ALSO_FIELDS = new LinkedHashMap<String, MltConfiguration>();
 	public static final Map<String, MltConfiguration> MLT_FIELDS = new LinkedHashMap<String, MltConfiguration>();
 
+	private BingTokenService tokenService = new BingTokenService();
+	private String bingToken;
+
+	
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
 			@PathVariable String collectionId, 
@@ -164,6 +169,8 @@ public class ObjectController {
 		boolean showSimilarItems = ControllerUtil.getBooleanBundleValue("notranslate_show_similar_items_t", messageSource, locale);
 
 		FullDocPage model = new FullDocPage();
+		
+		model.setBingToken(tokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret()));
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 		model.setFormat(format);

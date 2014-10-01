@@ -338,6 +338,15 @@
 			<artifactId>poi</artifactId>
 			<version>3.9</version>
 		</dependency>
+		
+		<!-- Bing code for translation tokens -->		
+		<dependency>
+			<groupId>com.memetix</groupId>
+			<artifactId>microsoft-translator-java-api</artifactId>
+			<version>0.6.1</version>
+			<type>jar</type>
+		</dependency>
+		
 	</dependencies>
 
 	<repositories>
