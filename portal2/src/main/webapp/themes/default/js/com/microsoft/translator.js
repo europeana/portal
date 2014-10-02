@@ -447,7 +447,8 @@ com.microsoft.translator = function( options ) {
     
     com.microsoft.translator.prototype.translate = function() {
     	
-    	var	options = this.options,
+    	//var	options = this.options,
+    	var	options = com.microsoft.translator.options,
     		js_src  =	'http://api.microsofttranslator.com/V2/Ajax.svc/Translate' +
     					'?oncomplete=' + options.callback +
 						'&appId=' + options.BING_API_KEY +
@@ -456,16 +457,18 @@ com.microsoft.translator = function( options ) {
 						'&text=' + options.text_to_translate +
 						'';
     	
-    	try {
+		$.ajax({
+			url: js_src,
+			dataType: "script",
+			crossDomain: true,
+		})
+		.done(function( data, textStatus, jqXHR ) {
+			eu.europeana.translation_services.completion();
+		})
+		.fail(function( jqXHR, textStatus ) {
+			js.console.log('fail: text= ' + textStatus + '\n\njqXHR: ' + JSON.stringify(jqXHR) );
+		});
     		
-    		js.loader.loadScripts([{
-    			file : js_src,
-    			path : ''
-    		}]);
-    		
-    	} catch(e) {
-    		js.console.log(e);
-    	}
 		
     	/*
         window.mycallback = function(response) { document.getElementById("resultMessage").innerHTML = response; }

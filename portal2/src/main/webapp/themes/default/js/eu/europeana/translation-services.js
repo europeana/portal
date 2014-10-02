@@ -55,6 +55,8 @@ eu.europeana.translation_services = {
 		this.captureOriginalTextNodes();
 		this.setUpCallbacks('microsoft');
 
+		this.returnedCount = 0;
+
 		// Andy: we now dynamically load the ms translate javascript se we can't initialise it here.
 		//this.addTranslatorMicrosoft();
 		//this.containers.$translation_services.append(this.translator_selector_html);
@@ -88,6 +90,33 @@ eu.europeana.translation_services = {
 
 	},
 
+	
+	completion : function(){
+		this.returnedCount ++;
+		
+		if(this.returnedCount == this.text_nodes.length){
+			
+			// reset returned count
+			
+			this.returnedCount		= 0;
+			var incompleteTranslate	= false;
+			
+			for(var i=0; i<this.text_nodes.length; i++){
+				
+				if( jQuery.data(this.text_nodes[i]).waiting ){
+					incompleteTranslate	= true;
+				}
+				
+				// reset waiting data on text nodes for next time
+				jQuery.data(this.text_nodes[i], 'waiting', true);
+			}
+			if(incompleteTranslate){
+				eu.europeana.translation_services.renewToken();
+			}
+		}
+			
+
+	},
 
 	/**
 	 *
@@ -102,19 +131,20 @@ eu.europeana.translation_services = {
 		var self = this,
 			i,
 			ii = this.text_nodes.length;
-
+				
 		for ( i = 0; i < ii; i += 1 ) {
 
 			(function() {
 
 				var x = i;
 				self.source_text[x] = jQuery.trim( self.text_nodes[x].html() );
-
+				jQuery.data(self.text_nodes[x], 'waiting', true);
+				
 				self.translators[translator].callbacks[x] =
-
-					function( response ) {
+					function( response  ) {
 						self.translators[translator].translations[self.to_locale][x] = response;
 						self.applyTranslation( self.text_nodes[x], response );
+						jQuery.data(self.text_nodes[x], 'waiting', false);
 					};
 
 			})();
@@ -143,6 +173,35 @@ eu.europeana.translation_services = {
 
 	},
 
+	renewToken : function(){
+		
+		var value = jQuery('#microsoft-translate-element select').val();
+		jQuery('#microsoft-translate-element select').val(null);
+		jQuery('#microsoft-translate-element select').trigger('change');
+		
+		var js_src = '/' + eu.europeana.vars.portal_name + '/token.json';
+		$.ajax({
+			url: js_src,
+			dataType: "json"
+		})
+		.done(function( data, textStatus, jqXHR ) {
+			
+			var newToken = "Bearer " + encodeURIComponent(data.access_token);
+			
+			eu.europeana.vars.bing_translate_key			= newToken;
+			com.microsoft.translator.options.BING_API_KEY	= newToken;
+			
+			js.console.log('renewed token');
+			
+			jQuery('#microsoft-translate-element select').val(value);
+			jQuery('#microsoft-translate-element select').trigger('change');
+			
+		})
+		.fail(function( jqXHR, textStatus ) {
+			js.console.log('failed to renew token: ' + textStatus);
+		});
+		
+	},
 
 	addTranslatorMicrosoft : function() {
 
@@ -167,11 +226,7 @@ eu.europeana.translation_services = {
 				{ self : self, translator : 'microsoft' },
 				self.handleTranslateRequest
 			);
-
-			// Andy: we can't simulate the click here anymore due to the dynamically-loading refactor
-			//self.links.$show_services.trigger('click');
 		});
-
 	},
 
 
