@@ -151,7 +151,9 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		<c:if test="${model[googleTranslateId]}">
 			eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
 		</c:if>
-		eu.europeana.vars.bing_translate_key = '${model.bingTranslateId}';
+
+		eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+		
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
 		eu.europeana.vars.msg.cite.citation_header	= '${fn:escapeXml(citation_header)}';
@@ -305,7 +307,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 	</c:when>
 </c:choose>
 
-eu.europeana.vars.rows = '${model.rows}';
+eu.europeana.vars.rows      = '${model.rows}';
 
 // for share-this
 var switchTo5x = true;

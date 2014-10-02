@@ -5,19 +5,44 @@ import com.memetix.mst.translate.Translate;
 
 public class BingTokenService {
 
-	public String getToken(String clientId,String clientSecret) {
+	private static Token token;
+	private long TIMEOUT=(1000*60*10)-1000;
+	
+	public String getToken(String clientId, String clientSecret) {
 		try{
-			return Translate.getToken(clientId, clientSecret);			
+			if(token==null || System.currentTimeMillis() - token.getTimestamp()>TIMEOUT){
+				token = new Token();
+				token.setToken(Translate.getToken(clientId, clientSecret));
+				token.setTimestamp(System.currentTimeMillis());
+			}
+			return token.getToken() ;
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			return "";
 		}
 	}
 
-	public static void main(String[] args){
-		final String CLIENT_ID		= "AndyMacLeanTestTranslate";
-		final String CLIENT_SECRET	= "eiaZ+05rRbfhHgmkjxAAgg3zmWV6rYPpJpblgogIZWM=";
-		String token = new BingTokenService().getToken(CLIENT_ID, CLIENT_SECRET);
-		System.err.println("Token:\t" + token);
+	
+	
+	class Token{
+		private long timestamp;
+		private String token;
+		
+		public long getTimestamp() {
+			return timestamp;
+		}
+		public void setTimestamp(long timestamp) {
+			this.timestamp = timestamp;
+		}
+		public String getToken() {
+			return token;
+		}
+		public void setToken(String token) {
+			this.token = token;
+		}
+		
 	}
+
+	
 }

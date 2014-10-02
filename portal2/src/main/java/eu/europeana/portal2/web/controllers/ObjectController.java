@@ -126,7 +126,6 @@ public class ObjectController {
 	public static final Map<String, MltConfiguration> MLT_FIELDS = new LinkedHashMap<String, MltConfiguration>();
 
 	private BingTokenService tokenService = new BingTokenService();
-	private String bingToken;
 
 	
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
@@ -169,7 +168,7 @@ public class ObjectController {
 		boolean showSimilarItems = ControllerUtil.getBooleanBundleValue("notranslate_show_similar_items_t", messageSource, locale);
 
 		FullDocPage model = new FullDocPage();
-		
+
 		model.setBingToken(tokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret()));
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
