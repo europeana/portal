@@ -25,6 +25,9 @@ fnSearchWidget = function($, config){
 
     var resultServerUrl         = 'http://europeana.eu/portal';
 	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
+	//var searchUrl				= searchUrl ? searchUrl : 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
+	//var searchUrl				= searchUrl ? searchUrl : 'http://localhost:8080/portal/api/v2/search.json?wskey=api2demo';
+	
 	var searchUrlWithoutResults = 'http://www.europeana.eu/portal/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
@@ -262,14 +265,47 @@ fnSearchWidget = function($, config){
         
         
         // config supplied: {"qf":["PROVIDER:Athena","PROVIDER:Bildarchiv Foto Marburg","PROVIDER:Progetto ArtPast- CulturaItalia"]}
-        
         if(self.config){
         	if(self.config.qf){
+        		
+//        		console.log('config.query = ' + self.config.query + '\n\n' + JSON.stringify(self.config.qf) )
+//        		alert('config.query = ' + self.config.qf)
+
+        		var dataProviders = [];
+        		var providers = [];
+        		
         		$.each(self.config.qf, function(i, ob){
+        			
         			ob = ob.replace(/[\{\}]/g, '"');
-        			url += param() + 'qf=';
-        			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
+        			
+        			if( ob.indexOf('DATA_PROVIDER') > -1 ){
+        				dataProviders.push(ob);
+        			}
+        			else if( ob.indexOf('PROVIDER') > -1 ){
+        				providers.push(ob);
+        			}
+        			else{
+        				url += param() + 'qf=';        			
+        				url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;        				
+        			}
         		});
+        		
+        		if(dataProviders.length){
+        			var x = dataProviders.join('').replace(/DATA_PROVIDER:/g, ' OR DATA_PROVIDER:').replace(/^ OR DATA_PROVIDER:/, 'DATA_PROVIDER:');
+    				url += param() + 'qf=' + x;
+        		}
+        		if(providers.length){
+        			var x = providers.join('').replace(/PROVIDER:/g, ' OR PROVIDER:').replace(/^ OR PROVIDER:/, 'PROVIDER:');
+        			
+        			if(dataProviders.length){
+        				url +=  ' OR ' + x;        				
+        			}
+        			else{
+        				url += param() + 'qf=' + x;        				
+        			}
+
+        		}
+        		
         	}
         }
         return url;
@@ -769,7 +805,82 @@ var theParams = function(){
 	rootUrl		= rootJsUrl.split('/portal/')[0] + '/portal';
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
-	queryString = decodeURIComponent(queryString);
+
+	
+	var parseQuery = false;
+	
+	if( queryString.match(/&v=\d/) ){
+		
+		// new logic
+		parseQuery = function ( query ) {
+			
+			var Params = new Object ();
+			if(!query){
+				return Params; // return empty object
+			}
+			
+			var Pairs = query.split('&');
+			
+			for ( var i = 0; i < Pairs.length; i++ ) {
+				
+				var KeyVal = Pairs[i].split('=');
+				if(!KeyVal || KeyVal.length != 2 ){
+					continue;
+				}
+				var key =  KeyVal[0] ;
+				var val =  KeyVal[1] ;
+				
+				//val = val.replace(/\+/g, ' ');
+				if(!Params[key]){
+					Params[key] = new Array ();
+				}
+
+				//Params[key].push(encodeURIComponent(val));
+				//alert('push [' + key + '] = ' + val);
+				console.log('push [' + key + '] = ' + val);
+				Params[key].push(val);
+			}
+			//alert(JSON.stringify(Params));
+			return Params;
+		};
+
+	}
+	else{
+		// old logic
+		queryString = decodeURIComponent(queryString);
+
+		parseQuery = function ( query ) {
+			
+			var Params = new Object ();
+			if(!query){
+				return Params; // return empty object
+			}
+			
+			var Pairs = query.split('&');
+			for ( var i = 0; i < Pairs.length; i++ ) {
+				
+				var KeyVal = Pairs[i].split('=');
+				if(!KeyVal || KeyVal.length != 2 ){
+					//console.log("invalid parameter");
+					continue;
+				}
+				var key = unescape( KeyVal[0] );
+				var val = unescape( KeyVal[1] );
+				
+				if(!Params[key]){
+					Params[key] = new Array ();
+				}
+				Params[key].push(val);
+			}
+			
+			return Params;
+		};
+
+	}
+	
+	// funnel 
+	
+	//queryString = decodeURIComponent(queryString);
 	
 	
 	function parseQuery ( query ) {
@@ -780,17 +891,15 @@ var theParams = function(){
 		}
 		
 		var Pairs = query.split('&');
+		
 		for ( var i = 0; i < Pairs.length; i++ ) {
 			
 			var KeyVal = Pairs[i].split('=');
 			if(!KeyVal || KeyVal.length != 2 ){
-				//console.log("invalid parameter");
 				continue;
 			}
-			var key = unescape( KeyVal[0] );
-			var val = unescape( KeyVal[1] );
-			
-			//console.log(key + " = " + val);
+			var key =  KeyVal[0] ;
+			var val =  KeyVal[1] ;
 			
 			//val = val.replace(/\+/g, ' ');
 			if(!Params[key]){
@@ -800,7 +909,7 @@ var theParams = function(){
 			//Params[key].push(encodeURIComponent(val));
 			Params[key].push(val);
 		}
-		
+		//alert(JSON.stringify(Params));
 		return Params;
 	};
 	

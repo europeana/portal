@@ -8,19 +8,11 @@ body{
 }
 
 
-
-#e2ma_signup{
-	padding:0;
-	margin:0;
-	text-align:center;
-}
-
-#load_check{
-	display:	none;
-}
-
+#mc-embedded-subscribe-form{
 	
-input{
+}
+	
+#mc-embedded-subscribe-form input{
 	color:				#333;
 	border:				1px solid #a0a0a0;
 	font-size:			1.2em;
@@ -28,35 +20,65 @@ input{
 }
 
 
-#e2ma_signup input[type=submit]{
-	cursor:			pointer;	
-}
+#mc-embedded-subscribe-form ul{
+	list-style:	none;
+	margin:		0;
+	padding:	0;
 
-#e2ma_signup .cb{
+
+
+	/* override centre */	
 	margin:				1em auto;
 	position:			relative;
 	display:			inline-block;
 	text-align:			left;
+	
 }
 
 
-#id_group_1293,
-#id_group_519437{
-	margin-top:		.5em;
+#mc-embedded-subscribe-form #mce-EMAIL{
+	
 }
 
-input[type=checkbox], label{
-	display:	inline-block;
+
+#mc-embedded-subscribe-form input[type=submit],
+#mc-embedded-subscribe-form input[type=text],
+#mc-embedded-subscribe-form input[type=email],
+#mc-embedded-subscribe-form #label-mce-EMAIL{
+	width:				80%;
+	margin:				0.5em auto 0 auto;
+	position:			relative;
+	display:			block;
 }
+
+#mc-embedded-subscribe-form input[type=checkbox],
+#mc-embedded-subscribe-form label{
+	display:			inline-block;
+}
+
+
+
+#newsletter_signup{
+	padding:0;
+	margin:0;
+	text-align:center;
+}
+
+
+#newsletter_signup input[type=submit]{
+	cursor:			pointer;	
+}
+
 
 label{
 	position:	relative;
 	top:		0.12em;
 }
 
-#e2ma_signup input[type=submit],
-#e2ma_signup input[type=text],
-#e2ma_signup input[type=email]{
+
+#newsletter_signup input[type=submit],
+#newsletter_signup input[type=text],
+#newsletter_signup input[type=email]{
 	width:				80%;
 	margin:				0.5em auto 0 auto;
 	position:			relative;

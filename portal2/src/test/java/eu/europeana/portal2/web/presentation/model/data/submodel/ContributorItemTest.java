@@ -65,7 +65,6 @@ public class ContributorItemTest {
 
 	@Test
 	public void testNameEncoding() {
-
 		assertNotNull(contributorItem);
 		assertNotNull(contributorItem.getDataProviders());
 		assertEquals(8, contributorItem.getDataProviders().size());

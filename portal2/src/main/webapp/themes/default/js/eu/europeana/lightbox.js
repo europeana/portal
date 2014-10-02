@@ -59,6 +59,10 @@ eu.europeana.lightbox = function(){
 						imgIndex ++;
 						subModel[subModel.length] = i;												
 					} 
+					else if(carouselData[i].external.audio_boo){
+						imgIndex ++;
+						subModel[subModel.length] = i;												
+					} 
 					subModelMap[i] = (imgIndex-1); 
 				}
 
@@ -92,6 +96,9 @@ eu.europeana.lightbox = function(){
 					},
 					"next" : function(){
 						nav(1);
+					},
+					"current" : function(){
+						return self.index;
 					},
 					"goTo" : function(i){						
 						self.index = subModelMap[i];
@@ -138,7 +145,7 @@ eu.europeana.lightbox = function(){
 	};
 	
 	var switchTypeIfNeeded = function(){
-		
+				
 		var img = self.cmp.find('#lightbox_image');
 				
 		if(
@@ -397,7 +404,6 @@ eu.europeana.lightbox = function(){
 		if(self.showingEl == 'IFRAME'){
 			img.css('height',		(dim[1]-70) + "px");
 		}
-
 		
 		$("#lightbox").css("visibility", "visible");
 		

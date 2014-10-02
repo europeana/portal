@@ -43,7 +43,7 @@
 
 				<div id="newsletter-wrapper" class="six columns">
 					<script type="text/javascript">
-						window.emma = {
+						window.newsletter = {
 							"iframeUrl"		: "/${model.portalName}/newsletter.html"
 						};
 					</script>
@@ -66,11 +66,12 @@
 					</h3>
 
 					<ul class="footer-links with-icons">
-						<li><span class="icon-logo" id="link-logo-1"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_1_a_target_t"/>" title="<spring:message code="main_menu_explore_1_a_title_t"/>"><spring:message code="main_menu_explore_1_a_text_t"/></a></li>
-						<li><span class="icon-logo" id="link-logo-2"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_2_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_2_a_target_t"/>" title="<spring:message code="main_menu_explore_2_a_title_t"/>"><spring:message code="main_menu_explore_2_a_text_t"/></a></li>
-						<li><span class="icon-logo" id="link-logo-3"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_3_a_target_t"/>" title="<spring:message code="main_menu_explore_3_a_title_t"/>"><spring:message code="main_menu_explore_3_a_text_t"/></a></li>
-						<li><span class="icon-logo" id="link-logo-4"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_4_a_target_t"/>" title="<spring:message code="main_menu_explore_4_a_title_t"/>"><spring:message code="main_menu_explore_4_a_text_t"/></a></li>
-						<li><span class="icon-logo" id="link-logo-5"></span><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_5_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_5_a_target_t"/>" title="<spring:message code="main_menu_explore_5_a_title_t"/>"><spring:message code="main_menu_explore_5_a_text_t"/></a></li>
+						<li><%--<span class="icon-logo" id="link-logo-1"></span>--%><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_1_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_1_a_target_t"/>" title="<spring:message code="main_menu_explore_1_a_title_t"/>"><spring:message code="main_menu_explore_1_a_text_t"/></a></li>
+						<li><%--<span class="icon-logo" id="link-logo-2"></span>--%><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_2_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_2_a_target_t"/>" title="<spring:message code="main_menu_explore_2_a_title_t"/>"><spring:message code="main_menu_explore_2_a_text_t"/></a></li>
+						<li><%--<span class="icon-logo" id="link-logo-3"></span>--%><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_3_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_3_a_target_t"/>" title="<spring:message code="main_menu_explore_3_a_title_t"/>"><spring:message code="main_menu_explore_3_a_text_t"/></a></li>
+						<li><%--<span class="icon-logo" id="link-logo-4"></span>--%><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_4_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_4_a_target_t"/>" title="<spring:message code="main_menu_explore_4_a_title_t"/>"><spring:message code="main_menu_explore_4_a_text_t"/></a></li>
+						<li><%--<span class="icon-logo" id="link-logo-5"></span>--%><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_5_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_5_a_target_t"/>" title="<spring:message code="main_menu_explore_5_a_title_t"/>"><spring:message code="main_menu_explore_5_a_text_t"/></a></li>
+						<li><a class="europeana" href="<spring:message code="notranslate_main_menu_explore_6_a_url_t"/>" target="<spring:message code="notranslate_main_menu_explore_6_a_target_t"/>" title="<spring:message code="main_menu_explore_6_a_title_t"/>"><spring:message code="main_menu_explore_6_a_text_t"/></a></li>
 					</ul>
 
 				</div>
@@ -110,9 +111,15 @@
 <div class="row footer-bottom-links">
 	<div class="twelve columns">
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_api_url_t"/>" target="<spring:message code="footer_menu_api_target_t"/>" title="<spring:message code="footer_menu_api_t"/>"><spring:message code="footer_menu_api_t"/></a>
+		<%-- 
+		<a class="europeana footer-bottom-link" href="<spring:message code="footer_menu_api_url2_t"/>" target="<spring:message code="footer_menu_api_target_t"/>" title="<spring:message code="footer_menu_api_t"/>"><spring:message code="footer_menu_api_t"/></a>
+		--%>
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_tou_url_t"/>" target="<spring:message code="footer_menu_tou_target_t"/>" title="<spring:message code="footer_menu_tou_title_t"/>"><spring:message code="footer_menu_tou_text_t"/></a>
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_contact_us_url_t"/>" target="<spring:message code="footer_menu_contact_us_target_t"/>" title="<spring:message code="footer_menu_contact_us_title_t"/>"><spring:message code="footer_menu_contact_us_text_t"/></a>
 		<a class="europeana footer-bottom-link" href="/${model.portalName}/<spring:message code="footer_menu_sitemap_url_t"/>" target="<spring:message code="footer_menu_sitemap_target_t"/>" title="<spring:message code="footer_menu_sitemap_title_t"/>"><spring:message code="footer_menu_sitemap_text_t"/></a>
 		<span class="footer-funded-by"><spring:message code="FundedBy_t"/><span class="icon-euflag"></span></span>
 	</div>
+	
+		
+
 </div>

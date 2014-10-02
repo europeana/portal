@@ -260,8 +260,9 @@
 	display:	none;
 }
 */
-
+/*
 #e2ma_signup_submit_button,
+*/
 .deans-button-1{
 	background-color:		#0048ff;
 	color:					white !important;
@@ -286,8 +287,10 @@
 		inset 0px 0px 0px rgba(255,255,255,0);
 	
 }
-	
+
+/*
 #e2ma_signup_submit_button,
+*/
 .europeana-button-1{
 	border:					0 !important;
 	padding:				0.5em 0.5em !important;
