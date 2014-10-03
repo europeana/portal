@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -83,6 +82,8 @@ public abstract class SearchPageData extends PortalPageData {
 	private String sort;
 
 	private LanguageContainer languageContainer;
+
+	private boolean languagesRemoved;
 
 	private String apiUrl;
 
@@ -185,7 +186,13 @@ public abstract class SearchPageData extends PortalPageData {
 		if (getQueryTranslation() != null) {
 			List<String> params = QueryUtil.getQueryTranslationParams(getQueryTranslation().getLanguageVersionMap());
 			return params.toArray(new String[params.size()]);
-		} else {
+		}
+		else if (languagesRemoved){
+			List<String> params = new ArrayList<String>();
+			params.add("false");
+			return params.toArray(new String[params.size()]);
+		}
+		else{
 			return null;
 		}
 	}
@@ -293,6 +300,14 @@ public abstract class SearchPageData extends PortalPageData {
 		this.languageContainer = languageContainer;
 	}
 
+	public boolean isLanguagesRemoved() {
+		return languagesRemoved;
+	}
+
+	public void setLanguagesRemoved(boolean languagesRemoved) {
+		this.languagesRemoved = languagesRemoved;
+	}
+	
 	public List<String> getKeywordLanguages() {
 		return languageContainer.getKeywordLanguages();
 	}

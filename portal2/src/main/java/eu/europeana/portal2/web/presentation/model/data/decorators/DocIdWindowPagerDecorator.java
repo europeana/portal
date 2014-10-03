@@ -60,6 +60,11 @@ public class DocIdWindowPagerDecorator implements DocIdWindowPager {
 				Integer.toString(calcStart));
 		builder.addParam("rows", model.getRows(), true);
 		builder.addParam("qt", model.getQueryTranslationParams(), true);
+		
+		if(model.isLanguagesRemoved() && !builder.hasParam("qt")){
+			builder.addParam("qt", "false", true);			
+		}
+		
 		return model.prepareFullDocUrl(builder).toString();
 	}
 

@@ -169,6 +169,11 @@ public class ObjectController {
 
 		FullDocPage model = new FullDocPage();
 
+		// for parameter in "return to search" link
+		if(qt != null && qt.length==1 && qt[0].equals("false")){
+			model.setLanguagesRemoved(true);
+		}
+
 		model.setBingToken(tokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret()));
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);

@@ -102,6 +102,10 @@ public class SearchController {
 			log.info("Query translation took: " + (t1 - t0));
 			model.setLanguages(languageContainer);
 			log.info("ItemLanguage: " + model.getItemLanguage());
+			
+			if(qt != null && qt.length >0 && qt[0].equals("false") ){
+				model.setLanguagesRemoved(true);
+			}
 		}
 
 		if (!sortValues.contains(sort)) {

@@ -23,6 +23,11 @@
 	<c:set var="sectionClass" value=" class=\"provider\"" />
 </c:if>
 
+<c:set var="langRemovedParam" value="" />
+<c:if test="${model.languagesRemoved}">
+	<c:set var="langRemovedParam" value="&qt=false" />
+</c:if>
+
 <li ${sectionClass}>
 	<h3>
 		<a href="" class="${classAttr}" rel="nofollow">

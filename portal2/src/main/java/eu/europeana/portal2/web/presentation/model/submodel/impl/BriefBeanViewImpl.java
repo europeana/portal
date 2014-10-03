@@ -153,6 +153,13 @@ public class BriefBeanViewImpl implements BriefBeanView {
 		Map<String, String[]> otherUrlParams = SearchFilterUtil.getOtherUrlParams(urlParams);
 		EuropeanaUrlService service = ApplicationContextContainer.getBean(EuropeanaUrlService.class);
 
+		boolean translationsRemoved = false;
+
+		String[] qts = urlParams.get("qt");
+		if(qts != null && qts.length == 1 && qts[0].equals("false") ){
+			translationsRemoved = true;
+		}
+		
 		for (SearchParam param : existingValues) {
 			UrlBuilder removeLink = null;
 			UrlBuilder breadcrumbLink = null;
@@ -166,6 +173,14 @@ public class BriefBeanViewImpl implements BriefBeanView {
 			for (String key : otherUrlParams.keySet()) {
 				removeLink.addParam(key, otherUrlParams.get(key));
 				breadcrumbLink.addParam(key, otherUrlParams.get(key));
+			}
+			if(translationsRemoved){
+				if(!breadcrumbLink.hasParam("qt")){
+					breadcrumbLink.addParam("qt", "false");					
+				}
+				if(!removeLink.hasParam("qt")){
+					removeLink.addParam("qt", "false");
+				}
 			}
 
 			boolean addBreadcrumb = true;

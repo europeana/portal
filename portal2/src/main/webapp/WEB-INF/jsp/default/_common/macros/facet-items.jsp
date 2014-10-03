@@ -18,7 +18,7 @@
 	<li>
 		<h4>
 			<input type="checkbox" ${checkedValue} id="cb-${fn:escapeXml(facet_item.value)}" name="cb-${label}"/>
-			<a href="${facet_item.url}"
+			<a href="${facet_item.url}${langRemovedParam}"
 				title="${fn:escapeXml(facet_item.value)}" rel="nofollow">
 				<label for="cb-${fn:escapeXml(facet_item.value)}" style="display:inline">${label} (${facet_item.count})</label>
 			</a>

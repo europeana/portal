@@ -66,6 +66,11 @@
 						<input type="hidden" name="start" id="start" />
 						<input type="hidden" name="rows" id="rows" value="${model.rows}" />
 						<input type="hidden" name="query" value="<c:out value="${model.query}" />" />
+						
+						<c:if test="${model.languagesRemoved}">
+							<input type="hidden" name="qt" id="qt" value="false"/>
+						</c:if>
+						
 						<c:forEach items="${model.refinements}" var="qf">
 							<input type="hidden" name="qf" value="<c:out value="${qf}" />" />
 						</c:forEach>
