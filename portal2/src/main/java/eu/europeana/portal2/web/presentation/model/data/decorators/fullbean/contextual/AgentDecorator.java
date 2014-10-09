@@ -185,4 +185,29 @@ public class AgentDecorator extends ContextualItemDecorator implements Agent {
 	public ContextualEntity getEntityType() {
 		return entityType;
 	}
+
+	@Override
+	public void setRdaGr2PlaceOfDeath(
+			Map<String, List<String>> rdaGr2PlaceOfDeath) {
+		
+		
+	}
+
+	@Override
+	public Map<String, List<String>> getRdaGr2PlaceOfDeath() {
+		
+		return agent.getRdaGr2PlaceOfDeath();
+	}
+
+	@Override
+	public void setRdaGr2PlaceOfBirth(
+			Map<String, List<String>> rdaGr2PlaceOfBirth) {
+		
+	}
+
+	@Override
+	public Map<String, List<String>> getRdaGr2PlaceOfBirth() {
+		// TODO Auto-generated method stub
+		return agent.getRdaGr2PlaceOfBirth();
+	}
 }
