@@ -243,4 +243,10 @@ public class SearchServiceMockSelenium implements SearchService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean isHierarchy(String nodeId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
