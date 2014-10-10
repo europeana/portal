@@ -218,7 +218,7 @@ public class ObjectController {
 		}
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
-			removeHasPartsForRoots(model, fullBean);
+			//removeHasPartsForRoots(model, fullBean);
 			long tFullBeanView0 = 0;
 			if (log.isDebugEnabled()) {
 				tFullBeanView0 = new Date().getTime();
