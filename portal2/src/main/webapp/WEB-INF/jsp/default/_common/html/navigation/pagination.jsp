@@ -52,10 +52,18 @@
 				</li>
 
 				<li class="nav-numbers">
+				
+				
 					<form method="get" action="${query_action}?" class="jump-to-page">
 						<%--
 						<input type="number" id="start-page" value="${model.pageNumber}" min="1" max="${model.numberOfPages}" pattern="[0-9]*" /> of ${model.numberOfPages}
 						 --%>
+
+						<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
+							<c:if test="${fn:length(qt.languageCode) > 0}">
+								<input type="hidden" name="qt" value="0:5:${qt.languageCode}:${qt.text}"/>
+							</c:if>
+						</c:forEach>
 
 						<input type="text" id="start-page" value="${model.pageNumber}" />
 						<span class="of"> <spring:message code="Of_t" /> </span>
