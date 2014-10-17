@@ -1490,7 +1490,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 
 
-			console.log('init:\n\n' + JSON.stringify(rootRef, null, 4) );
+			//console.log('init:\n\n' + JSON.stringify(rootRef, null, 4) );
 			
 			var tree = self.treeCmp.jstree({
 				"core" : {

@@ -248,7 +248,7 @@ eu.europeana.lightbox = function(){
 			return;
 		}
 		else if( src.indexOf(eu.europeana.fulldoc.telDetect) > -1 ){
-			console.log('TEL FN 0,0');
+			
 			if(typeof callback != "undefined"){
 				callback(0, 0);
 			}
