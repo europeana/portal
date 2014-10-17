@@ -181,8 +181,10 @@ fnSearchWidget = function($, config){
 
     
     var doSearch = function(startParam, query){
+    	
     	try{
     		var url = buildUrl(startParam, query);
+    		
 	        if(typeof url != 'undefined' && url.length){
 	        	
 	        	if(self.withResults){
@@ -268,7 +270,10 @@ fnSearchWidget = function($, config){
         		$.each(self.config.qf, function(i, ob){
         			ob = ob.replace(/[\{\}]/g, '"');
         			url += param() + 'qf=';
-        			url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
+
+        			//url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
+        			  url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '' + ob.split(':')[1] + '') : ob;
+        			
         		});
         	}
         }
