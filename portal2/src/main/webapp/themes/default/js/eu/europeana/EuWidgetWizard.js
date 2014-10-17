@@ -1,3 +1,4 @@
+
 /**
  * @author: Andy MacLean
  * 
@@ -27,16 +28,36 @@ var EuWidgetWizard = function(cmpIn, options){
 	self.tabs            = false;
 	self.disabledTabs    = [];
     self.initialisedTabs = {};
-	
+
+    // Kill firefox cache
+    self.cmp.find(":checkbox").attr("autocomplete", "off");
+
     
 	var cleanName = function(name){
 		
-//		return  name.replace(/"/g, '\\\"').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\)\s*/g, "").replace(/\+/g, '%2B').replace(/ /g, '\+').replace(/\%20/g, '\+');
 
+		//var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\)\s*/g, "").replace(/\+/g, '%2B').replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		//var result =  name.replace(/"/g, '\\\"').replace(/ *\(\d*\)\s*/g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
+		//var result =  name.trim().replace(/"/g, '\\\"').replace(/\(\d*\)/g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/\s/g, '\+').replace(/\%20/g, '\+');
 		//var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ {2}/g, '\+\+').replace(/ {1}/g, '\+').replace(/\%20/g, '\+');
+
 		
-		var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
+		//result = encodeURI(result);
+		result = encodeURIComponent(result)
+			.replace(/%2B/g, '+')
+			.replace(/!/g,   '%21')
+			.replace(/'/g, "%27")		// escaped single quote
+
+			.replace(/%5C%22/g, "%22")	// escaped \" to just " - fix for Museo di Chimica "Primo Levi"- Sapienza University Rome (3030)
+
+			.replace(/\(/g, "%28")		// escape brackets
+			.replace(/\)/g, "%29")
+
+			.replace(/%25/g, '%')		// %2B (a plus sign - when a legitimate part of a name) gets converted to %252B above - switch it back here
+
+		// var result = name.replace(/"/g, '\\\%22').replace(/ *\(\d*\) */g, "").replace(/ /g, '\+').replace(/&nbsp;/g, '\+').replace(/\%20/g, '\+');
 		
 		return result;
 	};
@@ -69,6 +90,7 @@ var EuWidgetWizard = function(cmpIn, options){
 	};
 	
 	var output = function(){
+		
 		var result = searchWidgetUrl;
 		var param = function(){
 			return (result.indexOf('?')>-1) ? '&' : '?';
@@ -102,7 +124,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			
 			var debug = '';
 
-			
+			//var providerQuery = '';
 			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider      = $(ob);
@@ -115,6 +137,10 @@ var EuWidgetWizard = function(cmpIn, options){
 
 				if(providerInput.prop('checked')){
 					result += param() + providerParam;
+					
+					//providerQuery += param() + providerParam;
+					
+					
 				}
 				else{
 					var subtractUrl = '';
@@ -123,26 +149,56 @@ var EuWidgetWizard = function(cmpIn, options){
 					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 						var dataProvider      = $(dp);
 						var dataProviderInput = dataProvider.children('a').children('input');
-						var name              = dataProviderInput.next('label').html();
+						var name = dataProvider.children('a').attr('title');
 
 						if(dataProviderInput.prop('checked')){
-							//result += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
-							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+							
+							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
+							
+							//providersQuery += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
+							
 						}
 						else{
-							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + cleanName(name) + '}';
+							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
+							
+							//providersQuery += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
+
 						}
 					});
 					
 					// which is shorter?  Use that!
 					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
+					//providerQuery += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
 				}
-			});
+				
+				
+			}); // end providers loop
+			
+			///////////////////////////////////////////////
+			/*
+			if(providerQuery.length){
+				
+				console.log('providerQuery: ' + providerQuery)
+				
+				providerQuery = providerQuery
+				.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
+				.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
+				.replace(/^ OR /, '&qf=');
+
+				alert(providerQuery);
+				
+				result += providerQuery;
+				
+			}
+			*/
+			///////////////////////////////////////////////
 				
 		}
 		
 		result += param() + 'withResults=' + getWithResults();
 		result += param() + 'theme=' + getTheme();
+
+		result += param() + 'v=2';
 
 		return result;
 	};
@@ -544,8 +600,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			            			self.subItems[self.subItems.length] = {"t" : subText, "e" : subItem };
 			            		});
 			            	}
-							self.text		= el.html().toUpperCase();
-							
+							self.text		= el.html().toUpperCase();							
 							return {
 								"test" : function(s){
 									var re			= new RegExp(s.toUpperCase() + '[A-Za-z\\d\\s]*');
@@ -684,8 +739,13 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		// construct query
 		
-		var query = "&rows=0";
-		try{			
+		var query = "&rows=0&query=*:*";
+		//var query = "&rows=0" + ( $('.default_query').val().length ? '&query=' + $('.default_query').val() : '&query=*:*');
+		try{
+			
+			var providerQuery = '';
+			var dataProviderQuery = '';
+			
 			$('.PROVIDER>li').each(function(i, ob){
 				var provider       = $(ob);
 				var providerInput  = provider.children('a').children('input');
@@ -695,38 +755,76 @@ var EuWidgetWizard = function(cmpIn, options){
 
 
 				
-				if(providerInput.prop('checked') && providerInput.is(':visible') ){
+				//if(providerInput.prop('checked') && ! providerInput.is(':visible') ){
+				//	alert('HIDDEN !!!');
+				//}
+				
+				//if(providerInput.prop('checked') && providerInput.is(':visible') ){				
+				if( providerInput.prop('checked') ){
 					//var name = providerInput.next('label').html();
 					//query += '&qf=PROVIDER:"' + cleanName(name) + '"';
-					query += providerParam
+					
+					//query += providerParam;
+					providerQuery += providerParam;
+
 				}
 				else{
-					//alert('NOT CHECKED ' + providerParam)
 					var subtractUrl    = '';
 					var resultFragment = '';
 					
 					provider.find('.DATA_PROVIDER>li').each(function(j, dp){
 						var dataProvider      = $(dp);
 						var dataProviderInput = dataProvider.children('a').children('input');
-						var name              = dataProviderInput.next('label').html();
+						// var name              = dataProviderInput.next('label').html();
+						var name              = dataProvider.children('a').attr('title');
+						// var dataProviderInput = dataProvider.children('a').children('input');
 
-						if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
+						///if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
+						if(dataProviderInput.prop('checked') ){
 							//query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
-							resultFragment += '&qf=DATA_PROVIDER:"' + cleanName(name) + '"';
+							resultFragment += '&qf=DATA_PROVIDER:"' + name + '"';							
 						}
 						else{
-							subtractUrl += '&qf=-DATA_PROVIDER:"' + cleanName(name) + '"';							
+							subtractUrl += '&qf=-DATA_PROVIDER:"' + name + '"';
 						}
 						
 					});
 					
-					//alert(resultFragment + '\n\n - v- \n\n' + subtractUrl);
 					// which is shorter?  Use that!
-					query += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
+					//query += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
+					
+					//  providerQuery += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
+					dataProviderQuery += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : providerParam + subtractUrl;
 				}
 				
+			}); // end providers loops
+			
+			
+//			  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+			
+			if(providerQuery.length){
+			
+				/*
+				providerQuery = providerQuery
+					.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
+					.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
+					.replace(/^ OR /, '&qf=');
+				
+				//alert(providerQuery);
+				query += providerQuery;
+				*/
+			}
+			
+			query += providerQuery;
+			query += dataProviderQuery;
+			
+//			alert('providerQuery = \n\n' + providerQuery
+	//				 + '\n\n' + 	providerQuery.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
+		//			 + '\n\n' + 	providerQuery.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
+			//);
 
-			});
+			
+			
 			
 			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
 				if($(ob).prop('checked') && $(ob).is(':visible')){
@@ -741,44 +839,65 @@ var EuWidgetWizard = function(cmpIn, options){
 
 		}
 		catch(e){
-			alert("Error in updateAvailableFacets: " + e);
+			console.log("Error in updateAvailableFacets: " + e);
 		}
 		
 		var fnSuccess = function(data){
+			
+			doHide = function(linksIn){
+				$.each(linksIn, function(i, ob){
+					ob = $(ob);
+//					if( ob.attr('title').indexOf('Bodleian') > -1 ){
+	//					alert('GOT IT\n\n\nchecked = ' +    (  ob.find('input').is(':checked') )    );
+		//			}
+					if(! ob.find('input').is(':checked') ){
+						ob.hide();
+
+			//			console.log( 'HIDE: ' + ob.find('label').html() )
+					}
+				});
+			}
+			
         	// countries
 
         	var countryOps = $('ul.COUNTRY li');
-        	countryOps.find('a').hide();
+        	//countryOps.find('a').hide();
+        	doHide(countryOps.find('a'));
 
         	// copyrights
         	
         	var copyrightOps = $('ul.RIGHTS li');
-        	copyrightOps.find('a').hide();
+        	//copyrightOps.find('a:not(:checked)').hide();
+        	doHide(copyrightOps.find('a'));
         	
         	// providers
         	
         	var providerOps = $('ul.PROVIDER li');
         	
-        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
-        		providerOps.find('a').hide();
-        	}
+        	//if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
+        		//providerOps.find('a').hide();
+        		//doHide(providerOps.find('a'));
+        	//}
         	
         	
         	// data providers
         	var dataProviderOps = $('ul.DATA_PROVIDER li');
-        	if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
-        		dataProviderOps.find('a').hide();
-        	}
+        	//if(chosenFacet != 'DATA_PROVIDER' && chosenFacet != 'PROVIDER'){	        		
+        		//dataProviderOps.find('a:not(:checked)').hide();
+        		//doHide(dataProviderOps.find('a'));
+        	//}
         	
         	// types
         	
         	var typeOps = $('ul.TYPE li');
-        	typeOps.find('a').hide();
+        	//typeOps.find('a').hide();
+    		doHide(typeOps.find('a'));
         	
         	// languages
         	
         	var langOps = $('ul.LANGUAGE li');	        	
-        	langOps.find('a').hide();
+        	//langOps.find('a:not(:checked)').hide();
+    		doHide(langOps.find('a'));
         	
         	$.each(data.facets, function(i, facet){
         		
@@ -788,9 +907,19 @@ var EuWidgetWizard = function(cmpIn, options){
     		 	if(facet.name == 'RIGHTS'){
     		 		
         			$.each(facet.fields, function(j, field){
-        				var item  = copyrightOps.find('a[title="&qf=RIGHTS:' + field.label + '*"]');
+        				
+        				var fLabel = encodeURIComponent(field.label);
+        				var item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel + '*"]');
+        				        				
         				if(!item.length){
-        					item  = copyrightOps.find('a[title="&qf=RIGHTS:' + field.label.replace(/\d\.\d\/$/, '*') + '"]');
+        					
+        					//item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d\.\d\/$/, '*') + '"]');
+        					item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d.\d%2F$/, '*') + '"]');
+
+            				if(!item.length){
+            					//item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/\d\.\d\/$/, '*') + '"]');
+            					item  = copyrightOps.find('a[title="&qf=RIGHTS%3A' + fLabel.replace(/%2F\d\.\d%2F$/, '*') + '"]');
+            				}        					
         				}
         				if(item.length){        					
         					var label = $(item).find('label');
@@ -799,20 +928,44 @@ var EuWidgetWizard = function(cmpIn, options){
         						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
         					}
         				}
+        				else{
+        				//	console.log('NO MATCH ' + item + '  ' + fLabel )
+        				}
         			});
     		  	}
     		  	else{
     		  	
     		  		$.each(facet.fields, function(j, field){
-    		  			var item  = ops.find('a[title="' + field.label + '"]');
+    		  			
+    		  			//var item  = ops.find('a[title="' + field.label + '"]');
+    		  			
+    		  			var item  = ops.find('a[title="' + cleanName( field.label )  + '"]');
+    		  			
+    		  			
     		  			var label = $(item).find('>label');
-
+    		  			
     					item.show();
+    					
+						if(item.length && facet.name == 'PROVIDER'){
+							item.closest('.DATA_PROVIDER').prev('a').show();
+							//console.log('PROVIDER (' + item.length + ')' + field.label + ' -> ' + cleanName( field.label ) );
+						}
     					
     					if(label.length ){
     						label.html( label.html().replace(regX, '(' + field.count + ')') );        						
-    					}
-    					
+    					}    					
+
+        				if(!item.length  && (facet.name == 'PROVIDER' ||   facet.name == 'DATA_PROVIDER') ){
+        					console.log('NO RIGHTS - NO MATCH: cleaned ' + cleanName( field.label ) + '  ' + field.label   )
+        					
+//        					NMD: Museo+di+Chimica+%5C%22Primo+Levi%5C%22-+Sapienza+University+Rome  
+  //      					RAW: Museo di Chimica "Primo Levi"- Sapienza University Rome
+    //    					TTL: Museo+di+Chimica+%22Primo+Levi%22-+Sapienza+University+Rome
+
+//        					NO RIGHTS - NO MATCH: cleaned Erfgoed+Brabant  Erfgoed Brabant
+        					
+        				}
+
     				});
     		  	
     		  	}
@@ -821,16 +974,17 @@ var EuWidgetWizard = function(cmpIn, options){
         	hideSpinner();
 		};
 		
-		var postUrl = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params';
+		var postUrl = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo&profile=facets,params';
 		if(postUrl.indexOf('localhost')>-1){
-			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
+			//postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
+			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&profile=facets,params";
 		}
 		
 		try{
 			// IE8 & 9 only Cross domain JSON GET request
 		    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
 		        var xdr = new XDomainRequest(); // Use Microsoft XDR
-		        xdr.open('post', postUrl);
+		        xdr.open('post', postUrl + query);
 		        xdr.onprogress = function () {};
 		        xdr.onload = function () {
 		            var dom  = new ActiveXObject('Microsoft.XMLDOM'),
@@ -854,8 +1008,8 @@ var EuWidgetWizard = function(cmpIn, options){
 			        "dataType":			"json", 
 			        "crossDomain":		true,
 			        "type":				"POST",
-			        "fail":function(){
-			        	alert('fail');
+			        "fail":function(e){
+			        	console.log('Ajax fail: ' + JSON.stringify(e));
 			    		hideSpinner();
 			        },
 			        "success":function(data){
@@ -865,7 +1019,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		    }
 		}		
 		catch(e){
-			console.log("AJAX ERROR " + e);
+			console.log("AJAX ERROR " + JSON.stringify(e));
 		}
 	};
 	
@@ -880,3 +1034,4 @@ var EuWidgetWizard = function(cmpIn, options){
 		}
 	};
 };
+
