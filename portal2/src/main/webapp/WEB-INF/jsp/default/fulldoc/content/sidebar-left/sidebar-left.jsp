@@ -237,11 +237,22 @@
 	<div class="original-context">
 		<%-- Rights --%>
 		<c:set var="rightsToParse" value="${model.rightsOption}" />		
+		
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/macros/rights.jsp" %>
-
+		
 		<c:if test="${model.document.userGeneratedContent}">
 			<span class="icon-ugc"></span><spring:message code="UserGeneratedContent_t" />
 		</c:if>
+		
+		<c:if test="${!empty model.document.licenses}">
+		
+			<c:set var="fmtPage" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timeFmtExpires.jsp"/>
+	        
+			<c:forEach items="${model.document.licenses}" var="license"  varStatus="status">
+				<br/>expires <jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${license.ccDeprecatedOn}" /></jsp:include><c:if test="${!status.last}">,</c:if>
+			</c:forEach>
+		</c:if>
+
 		
 		<%-- Original context link --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
