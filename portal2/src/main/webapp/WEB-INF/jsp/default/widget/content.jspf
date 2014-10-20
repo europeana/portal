@@ -20,7 +20,9 @@
 		margin-bottom:	1.5em;
 	}
 	
-	#wizard-tabs a{
+	#wizard-tabs a,
+	#wizard-tabs a label,
+	#wizard-tabs a input{
 		cursor:			pointer;
 	}
 
@@ -649,7 +651,8 @@
 														
 														<c:if test="${entry.dataProvidersListed}">
 															<c:forEach items="${entry.dataProviders}" var="dataProvider" varStatus="status2">
-																<c:set var="dpName">${fn:replace(dataProvider.name, ' ', '&nbsp;')}</c:set>
+																<%--c:set var="dpName">${fn:replace(dataProvider.name, ' ', '&nbsp;')}</c:set --%>
+																<c:set var="dpName">${dataProvider.name}</c:set>
 																<li><a title="${dpName}" class="data-provider"><input type="checkbox" id="${status1.index}-${status2.index}"/><label>${dpName} (${dataProvider.count})</label></a></li>
 															</c:forEach>
 														</c:if>
