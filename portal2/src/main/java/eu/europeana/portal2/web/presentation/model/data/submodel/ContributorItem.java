@@ -21,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.solr.search.QueryUtils;
 import org.springframework.util.StringUtils;
 
 import eu.europeana.corelib.logging.Logger;

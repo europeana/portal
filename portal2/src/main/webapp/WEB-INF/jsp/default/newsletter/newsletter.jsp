@@ -35,8 +35,48 @@
 		<![endif]-->
 
 	</head>
-	<body class="iframe-newsletter" id="e2ma_signup">
-		<div class="e2ma_signup_form" id="e2ma_signup_form">
+	<body class="iframe-newsletter" id="newsletter_signup">
+	
+	
+	
+	<!-- Begin MailChimp Signup Form -->
+	<div id="mc_embed_signup">
+		<form 	action="http://europeana.us3.list-manage.com/subscribe/post?u=ad318b7566f97eccc895e014e&amp;id=1d4f51a117" 
+				method="post"
+				id="mc-embedded-subscribe-form"
+				name="mc-embedded-subscribe-form"
+				class="validate"
+				target="_blank"
+				onSubmit="return checkForm()">
+				
+			<div class="mc-field-group">
+				<label id="label-mce-EMAIL" for="mce-EMAIL">Email Address </label>
+				<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+			</div>
+			<div class="mc-field-group input-group">
+				<!-- strong>Which newsletter would you like to receive? </strong -->
+				<ul>
+					<li>
+						<input type="radio" value="English" name="LANGUAGE" id="mce-LANGUAGE-0"><label for="mce-LANGUAGE-0">English</label>
+					</li>
+					<li>
+						<input type="radio" value="French" name="LANGUAGE" id="mce-LANGUAGE-1"><label for="mce-LANGUAGE-1">French</label>
+					</li>
+				</ul>
+			</div>
+			<div id="mce-responses" class="clear">
+			<div class="response" id="mce-error-response" style="display:none"></div>
+			<div class="response" id="mce-success-response" style="display:none"></div>
+			</div> <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+			<div style="position: absolute; left: -5000px;"><input type="text" name="b_ad318b7566f97eccc895e014e_1d4f51a117" value=""></div>
+			<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+
+	
+	<!--End mc_embed_signup--> 	
+	
+		<%--div class="e2ma_signup_form" id="e2ma_signup_form">
 		
 			<div class="e2ma_signup_message" id="e2ma_signup_message"></div>
 			
@@ -55,19 +95,20 @@
 					<input type="submit" name="Submit" value="Submit" id="e2ma_signup_submit_button">
 				</form>
 			</div>
-		</div>
+		</div--%>
 
 		<script type="text/javascript">
-			window.emma = {
+		
+			window.newsletter = {
 				"placeholder": "<spring:message code="news_letter_email_hint_t" />",
 				"submitLabel": "<spring:message code="news_letter_signup_button_t" />"
-			};
+			};			
 
 			var checkForm = function(form_obj) {
 
 				//now handle required field validation
 				var why = "";
-				var email = $('#id_email');
+				var email = $('#mce-EMAIL');
 				var filter=/^[a-z0-9_\-\.\+]+@[a-z0-9_\-\.]+\.[a-z]{2,4}$/i;
 
 				if (email.val().length==0) {
@@ -77,7 +118,7 @@
 					why += "Email must be a valid email address.\n";
 				}
 				
-				if (!$('#id_group_1293').is(':checked') && !$('#id_group_519437').is(':checked')) {
+				if (!$('#mce-LANGUAGE-0').is(':checked') && !$('#mce-LANGUAGE-1').is(':checked')) {
 					why += "A language must be specified.\n";
 				}
 
@@ -88,11 +129,17 @@
 				$(".overlaid-content", parent.document).css('visibility', 'hidden');
 				return true;	 
 			};
+			
 			$(document).ready(function(){
-				$('#e2ma_signup_submit_button').attr('title',	"<spring:message code="news_letter_description_t" />" );				
-				$('#e2ma_signup_submit_button').attr('value',	window.emma.submitLabel);
-				$('#id_email').attr('placeholder',				window.emma.placeholder);
-				$('#id_email').attr('title',					window.emma.placeholder);				
+				
+				if('placeholder' in $('#mce-EMAIL')[0]){
+					$('#label-mce-EMAIL').remove();
+					$('#mce-EMAIL').attr('placeholder',		window.newsletter.placeholder);				
+				}
+				
+				$('#mc-embedded-subscribe').attr('title',	"<spring:message code="news_letter_description_t" />" );
+				$('#mc-embedded-subscribe').attr('value',	window.newsletter.submitLabel);
+				$('#mce-EMAIL').attr('title',				window.newsletter.placeholder);
 				
 				$(window).bind('keypress', function(e){
 					if(e.ctrlKey || e.metaKey){
