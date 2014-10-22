@@ -24,25 +24,30 @@
   	<c:set var="titleRoot">${fn:substringBefore(title, '| http')} | </c:set>
   	<c:set var="titleNew"></c:set>
   	<c:set var="titleDef"></c:set>
-   <c:forEach items="${model.fields}" var="data">
-   	<c:if test="${data.fieldName == 'dc:creator'}">
-		<c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
-			<c:if test="${!empty value.decorator && !empty value.decorator.prefLabel}">
-		    	<c:forEach items="${value.decorator.prefLabel}" var="item" varStatus="t">
-		    		<c:if test="${item.key=='def'}">
-		    			<c:set var="titleDef">${fn:replace( fn:replace(item.value, '[', '') , ']', '')}</c:set>
-		    		</c:if>
-		    		<c:if test="${item.key=='en'}">
-		    			<c:set var="titleNew">${fn:replace( fn:replace(item.value, '[', '') , ']', '')}</c:set>
-		    		</c:if>
-		    	</c:forEach>
-			   	<c:if test="${fn:length(titleNew) == 0 && fn:length(titleDef) > 0}">
-			   		<c:set var="titleNew">${titleDef}</c:set>
-			   	</c:if>
-	        </c:if>
-		</c:forEach>
-   	</c:if>
-   </c:forEach>
+  	
+	<c:catch var="noFieldsException"><c:set var="testForFields">${model.fields}</c:set></c:catch>
+
+  	<c:if test="${empty noFieldsException}">
+	    <c:forEach items="${model.fields}" var="data">
+	   	  <c:if test="${data.fieldName == 'dc:creator'}">
+			<c:forEach items="${data.fieldValues}" var="value" varStatus="valueStatus">
+				<c:if test="${!empty value.decorator && !empty value.decorator.prefLabel}">
+			    	<c:forEach items="${value.decorator.prefLabel}" var="item" varStatus="t">
+			    		<c:if test="${item.key=='def'}">
+			    			<c:set var="titleDef">${fn:replace( fn:replace(item.value, '[', '') , ']', '')}</c:set>
+			    		</c:if>
+			    		<c:if test="${item.key=='en'}">
+			    			<c:set var="titleNew">${fn:replace( fn:replace(item.value, '[', '') , ']', '')}</c:set>
+			    		</c:if>
+			    	</c:forEach>
+				   	<c:if test="${fn:length(titleNew) == 0 && fn:length(titleDef) > 0}">
+				   		<c:set var="titleNew">${titleDef}</c:set>
+				   	</c:if>
+		        </c:if>
+			</c:forEach>
+	   	 </c:if>
+	   </c:forEach>
+	</c:if>
   	<c:if test="${fn:length(titleNew) > 0 }">
   		<c:set var="title">${titleRoot}&nbsp;${titleNew}</c:set>
   	</c:if>
