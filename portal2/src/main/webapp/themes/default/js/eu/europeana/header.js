@@ -492,7 +492,7 @@ eu.europeana.header = {
 					'<iframe marginheight="0" '
 						+	'marginwidth="0" '
 						+	'frameborder="0" '
-						+	'src="' + window.emma.iframeUrl + '"/>'
+						+	'src="' + window.newsletter.iframeUrl + '"/>'
 						+ 	'<div class="close"></div>'
 			);
 

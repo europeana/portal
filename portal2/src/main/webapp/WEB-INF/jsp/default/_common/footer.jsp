@@ -43,7 +43,7 @@
 
 				<div id="newsletter-wrapper" class="six columns">
 					<script type="text/javascript">
-						window.emma = {
+						window.newsletter = {
 							"iframeUrl"		: "/${model.portalName}/newsletter.html"
 						};
 					</script>

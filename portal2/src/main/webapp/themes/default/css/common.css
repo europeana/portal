@@ -183,7 +183,7 @@
 
 	padding:			.5em 0 0 0;
 	background-color:	white;
-	height:			14em;
+	height:				12em;
 }
 
 
@@ -259,13 +259,7 @@
 	color:green;
 }
 
-#e2ma_signup_reset_button,
-.e2ma_signup_form_label,
-.e2ma_signup_form_required_footnote{
-	display:	none;
-}
-
-#e2ma_signup_submit_button,
+#mc-embedded-subscribe,
 .deans-button-1{
 	background-color:		#0048ff;
 	color:					white !important;
@@ -291,7 +285,7 @@
 
 }
 
-#e2ma_signup_submit_button,
+#mc-embedded-subscribe,
 .europeana-button-1{
 	border:					0 !important;
 	padding:				0.5em 0.5em !important;
@@ -308,15 +302,15 @@
 	text-decoration:	underline;
 }
 
-#id_email::-webkit-input-placeholder{
+#mce-EMAIL:-webkit-input-placeholder{
 	color: #999;
 }
 
-#id_email:-moz-placeholder{
+#mce-EMAIL:-moz-placeholder{
 	color: #999;
 }
 
-#id_email:-ms-input-placeholder{
+#mce-EMAIL:-ms-input-placeholder{
 	color: #999;
 }
 
@@ -529,7 +523,6 @@
 	}
 
 	#iframe-newsletter{
-		background-color:red !important;
 		margin-top:			0;
 	}
 

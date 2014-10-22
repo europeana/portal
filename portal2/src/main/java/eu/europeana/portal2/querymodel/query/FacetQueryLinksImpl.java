@@ -150,7 +150,6 @@ public class FacetQueryLinksImpl implements FacetQueryLinks {
 			} else {
 				countLink = new FacetCountLinkImpl(item, url.toString(), remove);
 			}
-
 			if (countLink != null) {
 				if (param != null) {
 					countLink.setParam(param.toString().replace('?', '&'));

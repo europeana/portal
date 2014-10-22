@@ -518,6 +518,12 @@ eu.europeana.fulldoc = {
 								&&
 								!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)
 							)
+							|| 
+							(
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.type == 'sound'
+								&&
+								carouselData[eu.europeana.fulldoc.getCarouselIndex()].external.audio_boo
+							)
 						)
 						&&
 						!js.utils.phoneTest();

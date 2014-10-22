@@ -1034,4 +1034,3 @@ var EuWidgetWizard = function(cmpIn, options){
 		}
 	};
 };
-
