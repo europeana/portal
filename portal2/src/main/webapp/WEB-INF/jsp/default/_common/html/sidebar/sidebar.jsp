@@ -68,6 +68,45 @@
 						</a>
 					</h3>
 				</li>
+				
+				<c:if test="${!empty model.queryTranslationLinks}">
+					<li id="qt-facet">
+						<h3>
+							<a class="facet-section icon-arrow-6">
+								Languages
+							</a>
+						</h3>
+
+						<c:set var="hasTranslation" value="false"/>
+		
+						<ul>
+							<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
+								<c:if test="${fn:length(qt.languageCode) > 0}">
+									<c:set var="hasTranslation" value="true" />		
+									<c:set var="langName" value=""/>
+			
+									<c:forEach items="${model.portalLanguages}" var="language">
+										<c:if test="${language.languageCode == qt.languageCode}">
+											<c:set var="langName" value="${language.languageName}"/>
+										</c:if>
+									</c:forEach>
+			
+									<li class="query-translation">
+										<a href="${qt.queryLink}">${qt.text}</a> (${langName})
+										<a href="${qt.removeLink}" class="icon-remove"></a> &nbsp; 
+									</li>
+								</c:if>
+							</c:forEach>
+							<c:if test="${!empty model.noTranslationUrl && hasTranslation}">
+								<li>
+									<br/>
+									<a href="${model.noTranslationUrl}" class="removeAll"><spring:message code="qt_removeAll_t" />&nbsp;<span class="icon-remove"></span></a>
+								</li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+
 			</ul>
 			<!-- /facets -->
 

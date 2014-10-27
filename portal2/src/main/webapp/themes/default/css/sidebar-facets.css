@@ -150,6 +150,7 @@ x:-o-prefocus, #refinements input{
 	word-wrap:		break-word;
 }
 
+#qt-facet .icon-remove,
 #search-filter .icon-remove{
 	float:			right;
 	clear:			both;
