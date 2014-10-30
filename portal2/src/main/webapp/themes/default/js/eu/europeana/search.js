@@ -35,8 +35,8 @@ eu.europeana.search = {
 				headingSelected,
 				fnGetItems
 			);
-
-			if($(ob).hasClass('ugc-li')){
+			
+			if($(ob).hasClass('ugc-li') || $(ob).hasClass('qt-li')){
 				$(ob).bind('keypress', accessibility.keyPress);
 			}
 			else{
@@ -207,20 +207,9 @@ eu.europeana.search = {
 			}]);
 		});
 
-		//if(js.debug){
-			//alert("navigator.userAgent " + navigator.userAgent + "\n\ntest1 = " + (navigator.userAgent.match(/iPhone/i)) + "\ntest2" + navigator.userAgent.match(/CriOS/i)  );
-			//if (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i)){
-		//}
 		if(  (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i) || navigator.userAgent.match(/OS 6(_\d)+ like Mac OS X/i)  ) && ! navigator.userAgent.match(/CriOS/i) ){
 			$('.shares-link').click();
 		}
-
-		/*
-		if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
-			alert("click!");
-		}
-		*/
-
 	},
 
 
