@@ -171,6 +171,16 @@ public abstract class SearchPageData extends PortalPageData {
 		}
 	}
 
+	public String getTranslationUrl() {
+		try {
+			UrlBuilder url = getBaseSearchUrl();
+			return url.toString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public String getNoTranslationUrl() {
 		try {
 			UrlBuilder url = getBaseSearchUrl();

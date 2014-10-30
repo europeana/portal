@@ -51,6 +51,41 @@
 					<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 				</c:forEach>
 
+				<li class="qt-li ${empty cookie.keywordLanguages ? 'disabled' : ''}">
+					<ul>
+						<li>
+							<c:set var="qtHref" value=""/>
+							<c:if test="${!empty cookie.keywordLanguages}">
+								<c:if test="${empty model.queryTranslationLinks}">
+									<c:set var="qtHref">href="${model.translationUrl}"</c:set>
+								</c:if>
+								<c:if test="${!empty model.queryTranslationLinks}">
+									<c:set var="qtHref">href="${model.noTranslationUrl}"</c:set>
+								</c:if>
+							</c:if>
+							
+							<h3>
+								<a 	class="qt-toggle" ${qtHref}>
+									<input	type="checkbox"
+											class="qt-settings-cb"
+											${empty cookie.keywordLanguages ? 'disabled="disabled"' : ''}
+											${empty model.queryTranslationLinks ? '' : 'checked="checked"'} 
+									/><spring:message code="qt_facet_header"/>
+								</a>
+							</h3>
+						</li>
+						
+						<li>
+							<h4>
+								<a	href="/${model.portalName}/${model.myEuropeanaUrl}#language-settings"
+									class="qt-settings-link"
+									title="<spring:message code="qt_setup" />"><spring:message code="qt_setup" /></a>
+							</h4>
+						</li>
+					</ul>
+				</li>
+				
+
 				<li class="ugc-li">
 					<h3>
 						<c:set var="checkedValue" value='checked="checked"' />
@@ -68,44 +103,6 @@
 						</a>
 					</h3>
 				</li>
-				
-				<c:if test="${!empty model.queryTranslationLinks}">
-					<li id="qt-facet">
-						<h3>
-							<a class="facet-section icon-arrow-6">
-								Languages
-							</a>
-						</h3>
-
-						<c:set var="hasTranslation" value="false"/>
-		
-						<ul>
-							<c:forEach items="${model.queryTranslationLinks}" var="qt" varStatus="status">
-								<c:if test="${fn:length(qt.languageCode) > 0}">
-									<c:set var="hasTranslation" value="true" />		
-									<c:set var="langName" value=""/>
-			
-									<c:forEach items="${model.portalLanguages}" var="language">
-										<c:if test="${language.languageCode == qt.languageCode}">
-											<c:set var="langName" value="${language.languageName}"/>
-										</c:if>
-									</c:forEach>
-			
-									<li class="query-translation">
-										<a href="${qt.queryLink}">${qt.text}</a> (${langName})
-										<a href="${qt.removeLink}" class="icon-remove"></a> &nbsp; 
-									</li>
-								</c:if>
-							</c:forEach>
-							<c:if test="${!empty model.noTranslationUrl && hasTranslation}">
-								<li>
-									<br/>
-									<a href="${model.noTranslationUrl}" class="removeAll"><spring:message code="qt_removeAll_t" />&nbsp;<span class="icon-remove"></span></a>
-								</li>
-							</c:if>
-						</ul>
-					</li>
-				</c:if>
 
 			</ul>
 			<!-- /facets -->

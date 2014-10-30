@@ -150,7 +150,6 @@ x:-o-prefocus, #refinements input{
 	word-wrap:		break-word;
 }
 
-#qt-facet .icon-remove,
 #search-filter .icon-remove{
 	float:			right;
 	clear:			both;
@@ -183,6 +182,10 @@ a.facet-ugc{
 	background-repeat:		no-repeat;
 }
 
+#filter-search .qt-li.disabled h3,
+#filter-search .qt-li.disabled input{
+	color: #666;
+}
 
 #filter-search a.facet-section:focus{
 	outline:			1px dotted #4C7ECF;
@@ -255,7 +258,21 @@ a.action-link span,
 #filter-search h4 a {
 	color:			#333;
 }
-	
+
+#filter-search h4 a.qt-settings-link {
+	color:			#2A85E8;
+	display:		inline-block;
+	margin-top:		0.1em;
+	margin-bottom:	0.5em;
+}
+
+#filter-search .qt-li .qt-toggle{
+	color: #333;
+}
+
+#filter-search .qt-li.disabled .qt-toggle{
+	color: #A0A0A0;
+}
 
 
 @media all and (min-width: 48em) {
