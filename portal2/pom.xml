@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-  Copyright 2007-2013 The Europeana Foundation
-
-  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
-  by the European Commission;
-  You may not use this work except in compliance with the Licence.
-  
-  You may obtain a copy of the Licence at:
-  http://joinup.ec.europa.eu/software/page/eupl
-
-  Unless required by applicable law or agreed to in writing, software distributed under 
-  the Licence is distributed on an "AS IS" basis, without warranties or conditions of 
-  any kind, either express or implied.
-  See the Licence for the specific language governing permissions and limitations under 
-  the Licence.
- -->
+<!-- Copyright 2007-2013 The Europeana Foundation Licenced under the EUPL, 
+	Version 1.1 (the "Licence") and subsequent versions as approved by the European 
+	Commission; You may not use this work except in compliance with the Licence. 
+	You may obtain a copy of the Licence at: http://joinup.ec.europa.eu/software/page/eupl 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the Licence is distributed on an "AS IS" basis, without warranties 
+	or conditions of any kind, either express or implied. See the Licence for 
+	the specific language governing permissions and limitations under the Licence. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -62,6 +54,34 @@
 						-DEUROPEANA_PROPERTIES=../../corelib/corelib-definitions/src/main/resources/test-config/europeana-test.properties
 					</argLine>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/main/resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${europeana.properties}</directory>
+									<filtering>true</filtering>
+								</resource>
+								<resource>
+									<directory>${project.parent.basedir}/portal_messages</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -117,9 +137,7 @@
 			</plugin>
 
 			<plugin>
-				<!-- To run:
-					mvn jetty:run -Dorg.mortbay.jetty.webapp.parentLoaderPriority=true
-				-->
+				<!-- To run: mvn jetty:run -Dorg.mortbay.jetty.webapp.parentLoaderPriority=true -->
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
 				<version>6.1.6</version>
@@ -131,12 +149,8 @@
 							<name>EUROPEANA_PROPERTIES</name>
 							<value>${project.basedir}/europeana.properties</value>
 						</systemProperty>
-						<!-- 
-						<systemProperty>
-							<name>RUNTIME_ENVIRONMENT</name>
-							<value>local</value>
-						</systemProperty>
-						-->
+						<!-- <systemProperty> <name>RUNTIME_ENVIRONMENT</name> <value>local</value> 
+							</systemProperty> -->
 					</systemProperties>
 				</configuration>
 			</plugin>
@@ -149,12 +163,24 @@
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-db</artifactId>
 			<version>${version.europeanaCorelib}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-web</artifactId>
 			<version>${version.europeanaCorelib}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -179,6 +205,12 @@
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>${version.springSecurityOauth}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -298,6 +330,13 @@
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
+
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Added logging for jetty in Portal2Starter -->
@@ -328,27 +367,64 @@
 		</dependency>
 
 		<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-math3</artifactId>
-				<version>3.1.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.1.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.9</version>
+
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
-		<!-- Bing code for translation tokens -->		
+
+		<!-- Bing code for translation tokens -->
 		<dependency>
 			<groupId>com.memetix</groupId>
 			<artifactId>microsoft-translator-java-api</artifactId>
 			<version>0.6.1</version>
 			<type>jar</type>
 		</dependency>
-		
-	</dependencies>
 
+		<dependency>
+			<groupId>org.javaswift</groupId>
+			<artifactId>joss</artifactId>
+			<version>0.9.7</version>
+		</dependency>
+		<dependency>
+		<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+					<version>1.9</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>
+                    test
+                </id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                    personal
+                </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>
+			</properties>
+		</profile>
+	</profiles>
 	<repositories>
 		<repository>
 			<id>org.springframework.security</id>

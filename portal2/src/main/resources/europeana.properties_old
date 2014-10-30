@@ -1,0 +1,345 @@
+#
+# Copyright 2007 EDL FOUNDATION
+#
+# Licensed under the EUPL, Version 1.0 or as soon they
+# will be approved by the European Commission - subsequent
+# versions of the EUPL (the "Licence");
+# you may not use this work except in compliance with the
+# Licence.
+# You may obtain a copy of the Licence at:
+#
+# http://ec.europa.eu/idabc/eupl
+#
+# Unless required by applicable law or agreed to in
+# writing, software distributed under the Licence is
+# distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied.
+# See the Licence for the specific language governing
+# permissions and limitations under the Licence.
+#
+
+# mapping file for schema.org elements
+schema.org.mapping = /home/gmamakis/workspace/trunk/portal2/src/test/schema.org.mapping/schema.org.mapping.properties
+
+#
+# database connection settings
+#
+#db.driverClass = org.postgresql.Driver
+#db.jdbcUrl     = jdbc:postgresql://5.22.148.171/ibieph3daengooso8dighiex7he9yi
+#db.user        = eiveicejah6ahh2
+#db.password    = ehooNgei3nie5zieshua4oh7Aiy4eo
+
+db.driverClass = org.postgresql.Driver
+db.jdbcUrl     = jdbc:postgresql:europeana
+db.user        = europeana
+db.password    = culture
+
+#
+# solr connection settings
+#solr.url = http://localhost:8080/solr
+# solr.url = http://europeana-ese2edm.isti.cnr.it:9191/solr
+# solr.url = http://10.101.38.1:9191/solr
+solr.url = http://europeana-ese2edm.isti.cnr.it:9393/solr
+
+
+#test
+#solr.url = http://europeana-ese2edm.isti.cnr.it:9191/solr/search/
+#solr.url = http://mongo.portal2.eanadev.org:9191/solr/search/
+
+#production
+solr.url = http://10.101.28.37:8282/solr/search/
+
+#tmp
+#solr.url = http://sandbox39.isti.cnr.it:9595/solr/search
+
+
+
+#solr.suggestions.url = http://europeana-ese2edm.isti.cnr.it:9191/solr/suggestions/
+
+
+#solr.url = http://sandbox35.isti.cnr.it:9191/solr/search/
+#solr.url = http://sandbox34.isti.cnr.it:9191/solr/search/
+#solr.suggestions.url = http://sandbox34.isti.cnr.it:9191/solr/suggestions/
+
+
+
+
+#preview
+#solr.url = http://solr.portal2.eanadev.org:9191/solr/search/
+
+
+solr.timeout = 60000
+
+
+solr.embedded.url = <your path to>/solr
+solr.embedded.config = <your path to>/solr/solr.xml
+
+solr.facetLimit=750
+solr.username = europeana_rw
+solr.password = sh0uldbn1c32b3c@r3ful
+
+#
+# mongoDB settings
+# mongodb.host = 127.0.0.1
+
+#mongodb.host = sandbox35.isti.cnr.it
+# ANDY: tmp mongo ip
+# mongodb.host = europeana-ese2edm.isti.cnr.it
+# mongodb.host = 10.101.38.1
+
+#test
+#mongodb.host = mongodb-europeana-object-db-primary-avl1-0.node.dc1.consul
+#mongodb.host = 10.101.38.1
+mongodb.host=localhost
+#mongodb.host = sandbox39.isti.cnr.it
+#mongodb.host = mongo.portal2.eanadev.org
+
+#preview
+#mongodb.host = mongo.portal2.eanadev.org
+
+
+
+mongodb.port = 27017
+mongodb.dbname = mongodb-europeana-object-db
+mongodb.vocabularydbname = vocabulary
+#mongodb.username = a9s-brk-usr-gtiezmelbbjvlyjsavmqzygphjxpmiprkc
+#mongodb.password = i7tT5s-xOyD6DO0Y6ooxxspjsSND9m-wZw
+
+mongodb.username = 
+mongodb.password = 
+
+mongodb.apilog.host = record-management.eanadev.org
+mongodb.apilog.port = 33023
+mongodb.apilog.dbname = apilog
+mongodb.apilog.username = 
+mongodb.apilog.password = 
+
+#neo4j.server = http://sandbox05.isti.cnr.it:7474/db/data
+neo4j.index = edmsearch2
+#neo4j.custom = http://sandbox05.isti.cnr.it:7474/europeana/hierarchycount/nodeId
+
+neo4j.server = http://test.neo4j.eanadev.org:7474/db/data/
+neo4j.custom = http://sandbox05.isti.cnr.it:7474
+
+#neo4j.server = http://sandbox05.isti.cnr.it:7474/db/data/
+#neo4j.custom = http://sandbox05.isti.cnr.it:7474
+
+#
+# smtp server settings
+#
+#smtp.host = localhost
+#smtp.username = username
+#smtp.password = password
+
+smtp.host =smtp.kb.nl
+smtp.username =andrew.maclean
+smtp.password =Andy123
+
+#
+# trigger settings
+#
+trigger.startDelay     = 9990
+trigger.repeatInterval = 3000
+
+#
+# various email addresses
+#
+admin.to       = andrew.maclean@kb.nl
+system.from    = andrew.maclean@kb.nl
+register.to    = andrew.maclean@kb.nl
+feedback.to    = andrew.maclean@kb.nl
+exception.to   = andrew.maclean@kb.nl
+feedback.from  = andrew.maclean@kb.nl
+register-api.to= andrew.maclean@kb.nl
+#
+# other
+#
+imageCacheUrl = http://europeanastatic.eu/api/image?
+
+#
+# Resolver Servlet
+#
+displayPageUrl     = http://localhost:8282/portal/
+
+#
+# dashboard
+dashboard.normalized.import.repository=/tmp/dash-import
+dashboard.sandbox.import.repository=/tmp/sandbox-import
+dashboard.documents.import.solrServers=http://localhost:8983/portal/
+dashboard.enrichment.solr=http://localhost:8983/solr
+dashboard.enrichment.root=annocultor/converters/europeana
+
+#
+# Comma-separated list of directories with log files
+# log file names should end with date, e.g. xxx.2010-10-10
+# This is used by the statistics application
+#
+dashboard.statistics.clickstream.log.dirs=dashboard/src/test/resources/test-logs/
+dashboard.statistics.expire.period=24
+dashboard.enrichment.taggerUrl=http://localhost/tagger/
+
+#Cache
+cache.imageRoot=search-server/src/test/cache
+cache.documentRoot=search-server/src/test/cache
+
+#
+# debug mode is meant for fully functional version in development,
+# it may have some optimizations off;
+# e.g. minify for css and js is off,
+# additional exception traces are shown
+# 
+# It should always be set to 'false' on production
+#
+debug = true
+
+
+#
+# define if the portal is indexable by search engines.
+# Should be:
+# true on production
+# false on aceptance
+# true on test (as test isn't accessable from outside, we can use this for testing)
+#
+portal.indexable = false
+
+#
+# Where the static pages can be found
+#
+#static.page.path = /e/portal/portal-full/src/test/staticpages/
+static.page.path = /home/gmamakis/workspace/trunk/staticpages2/
+
+#
+# Where to get messages from and how frequently the cache is flushed
+#
+message.resource=file:/home/gmamakis/workspace/trunk/portal2/src/main/resources/message_keys/messages
+message.cache.seconds=60
+#message.portal2.resource=file:portal2/src/main/resources/message_keys/messages
+
+
+#
+# Where the log4j.xml is that is to be used for logging configuration.
+#
+log4j.xml=classpath:log4j.xml
+
+#
+# This is the name of the webapp used to prefix any urls in the freeMarker templates to images, css, and javascript files.
+#
+portal.name = portal
+#
+# This should refer to http://www.europeana.eu/ on production
+# it is used where we generate locations that we don't serve, e.g. embeddings, sitemap
+#
+portal.server = http://localhost:8282/
+
+#
+# Id's for online services
+#
+portal.google.analytics.id = UA-XXXXXXXX-1
+portal.google.maps.key = ABQIAAAAw5pOymCJNlguY_xAJt8XZBSyXC-ut-A2RKV0fpiiIqeKpeG3JxRwvyCPqRFUaBUJUTUl8LYa0n8ywA
+portal.google.plus.publisher.id = https://plus.google.com/115619270851872228337
+portal.google.translate.key = ABQIAAAAtUKJcajK3ObsidXHHTk6TxRp1QhUE3MIlK2s4XBTJF0Wb_pOPRSsyO8QujGXRrpgP7XAcinwOkudwQ
+portal.addthis.pubid = xa-4b4f08de468caf36
+portal.facebook.appid = 185778248173748
+portal.bing.translate.key = 28A86FF39138EFE1BC1D9E9E90B8AF5FC9A950E6
+
+portal.mediaDownloadLocation = portal-full/src/main/webapp/branding/downloadedMedia/
+portal.mediaStreamingLocation = branding/downloadedMedia/
+
+portal.shownAtProviderOverride	=08901,092
+
+#
+# Where the image annotation tool can be found. If this property is set a
+# link will be created in the actions sidebar of the full-doc view.
+#
+#image.annotation.tool.base.url=/yuma/annotate.jsp
+
+#
+# KML (mapview) result size
+#
+portal.mapview.maxresults=200
+
+#
+# URL to RSS feed of Europeana Blog
+#
+portal.blog.url=http://blog.europeana.eu/feed/
+
+#
+# Caching time in hours of Europeana blog items
+#
+portal.blog.timeout=2
+
+
+#
+# Settings for Pinterest
+# Timeout is in hours
+#
+portal.pinterest.url=http://pinterest.com/europeana/
+portal.pinterest.feedurl=http://pinterest.com/europeana/feed.rss
+portal.pinterest.itemslimit=20
+portal.pinterest.timeout=2
+
+
+#
+# Definitions model file
+#
+definitions.model.file=/models/ESE_3.4.xml
+
+#
+# Labels and image widths
+#
+portal.responsive.widths=200,300,700,200
+#portal.responsive.widths=200,300,700,2000
+portal.responsive.labels=_1,_2,_3,_4
+
+
+portal.responsive.carousel.widths=200,400,800,1200
+portal.responsive.carousel.labels=_1,_2,_3,_4
+
+portal.responsive.cache=/tmp
+
+
+static.page.checkFrequencyInMinute = 5
+portal.responsive.cache.checkFrequencyInMinute = 5
+
+# Minimum completeness level of records which take place on sitemaps
+portal.minCompletenessToPromoteInSitemaps = 5
+
+# Registration needed
+portal.contentchecker = false
+
+
+# see also field translation keys
+portal.seeAlso.field.1 = title=see_also_title_t
+portal.seeAlso.field.2 = who=see_also_who_t
+portal.seeAlso.field.3 = what=see_also_what_t
+portal.seeAlso.field.4 = PROVIDER=see_also_provider_t
+
+
+
+api.rowLimit = 100
+portal.rowLimit = 96
+register-api.to = api@europeana.eu
+api.optOutList = /Users/admin/Documents/PortalWorkspace/opt-out.list.txt
+
+
+api2.url=http://test.portal2.eanadev.org/api
+#api2.url=http://localhost:8081/api
+api2.key=api2demo
+api2.secret=verysecret
+
+
+# "2" suffix
+
+static.page.suffix = 233
+static.page.in.versions = aboutus,sitemap,newcontent
+
+
+portal.sitemap.cache = /tmp
+
+
+#portal.showSimilarItems = false
+
+
+
+
