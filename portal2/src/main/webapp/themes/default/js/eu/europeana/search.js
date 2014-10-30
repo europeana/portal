@@ -55,7 +55,7 @@ eu.europeana.search = {
 		});
 
 		// make facet checkboxes clickable
-		$("#filter-search li input[type='checkbox']").not('.qt-settings-cb').click(function(){
+		$("#filter-search li input[type='checkbox']").click(function(){
 			var label = $("#filter-search li label[for='" + $(this).attr('id') + "']");
 			window.location = label.closest("a").attr("href");
 		});
@@ -207,20 +207,9 @@ eu.europeana.search = {
 			}]);
 		});
 
-		//if(js.debug){
-			//alert("navigator.userAgent " + navigator.userAgent + "\n\ntest1 = " + (navigator.userAgent.match(/iPhone/i)) + "\ntest2" + navigator.userAgent.match(/CriOS/i)  );
-			//if (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i)){
-		//}
 		if(  (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i) || navigator.userAgent.match(/OS 6(_\d)+ like Mac OS X/i)  ) && ! navigator.userAgent.match(/CriOS/i) ){
 			$('.shares-link').click();
 		}
-
-		/*
-		if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
-			alert("click!");
-		}
-		*/
-
 	},
 
 

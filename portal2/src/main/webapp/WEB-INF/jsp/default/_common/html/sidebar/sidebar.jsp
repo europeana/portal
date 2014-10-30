@@ -64,15 +64,17 @@
 								</c:if>
 							</c:if>
 							
+							
 							<h3>
-								<a 	class="qt-toggle" ${qtHref}>
-									<input	type="checkbox"
-											class="qt-settings-cb"
-											${empty cookie.keywordLanguages ? 'disabled="disabled"' : ''}
-											${empty model.queryTranslationLinks ? '' : 'checked="checked"'} 
-									/><spring:message code="qt_facet_header"/>
+								<input	type="checkbox"
+									id="cb-qt"
+									name="cb-qt"
+									${empty cookie.keywordLanguages ? 'disabled="disabled"' : ''}
+									${empty model.queryTranslationLinks ? '' : 'checked="checked"'} 
+								/><a class="qt-toggle" ${qtHref}><label for="cb-qt"><spring:message code="qt_facet_header"/></label>
 								</a>
 							</h3>
+							 
 						</li>
 						
 						<li>
@@ -95,11 +97,10 @@
 							</c:when>
 						</c:choose>
 
-						<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"/>
-
-						<a  href="${model.UGCUrl}"
-							title="${model.UGCUrl}" rel="nofollow">
-							<label for="cb-ugc" style="display:inline"> &nbsp;<spring:message code="IncludeUGC_t" /></label>
+						<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"
+						/><a  href="${model.UGCUrl}"
+							title="${model.UGCUrl}"
+							rel="nofollow"><label for="cb-ugc"><spring:message code="IncludeUGC_t" /></label>
 						</a>
 					</h3>
 				</li>

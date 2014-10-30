@@ -182,10 +182,7 @@ a.facet-ugc{
 	background-repeat:		no-repeat;
 }
 
-#filter-search .qt-li.disabled h3,
-#filter-search .qt-li.disabled input{
-	color: #666;
-}
+
 
 #filter-search a.facet-section:focus{
 	outline:			1px dotted #4C7ECF;
@@ -194,14 +191,38 @@ a.facet-ugc{
 	text-decoration:	underline;
 }
 
-
-.ugc-li label{
-	color:	#333;
+.qt-li  input,
+.ugc-li input{
+	cursor: pointer;
 } 
 
+.qt-li  label,
+.ugc-li label{
+	color:			#333;
+	cursor:			pointer;
+	padding-left:	0.25em;
+	margin-left:	1em;
+	display:		block;
+}
+
+.qt-li.disabled label,
+.qt-li.disabled input{
+	cursor: default;
+} 
+
+
+#filter-search .qt-li.disabled h3,
+#filter-search .qt-li.disabled input,
+#filter-search .qt-li.disabled label{
+	color: #666;
+}
+
+
+#cb-qt,
 #cb-ugc{
 	margin-left:	0;
 	padding-left:	0;
+	position:		absolute;
 }
 
 a.action-link {
@@ -259,6 +280,8 @@ a.action-link span,
 	color:			#333;
 }
 
+
+
 #filter-search h4 a.qt-settings-link {
 	color:			#2A85E8;
 	display:		inline-block;
@@ -266,9 +289,6 @@ a.action-link span,
 	margin-bottom:	0.5em;
 }
 
-#filter-search .qt-li .qt-toggle{
-	color: #333;
-}
 
 #filter-search .qt-li.disabled .qt-toggle{
 	color: #A0A0A0;
