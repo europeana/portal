@@ -51,17 +51,25 @@
 					<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 				</c:forEach>
 
-				<li class="qt-li ${empty cookie.keywordLanguages ? 'disabled' : ''}">
+
+				<c:set var="qtEnabled" value="${!empty cookie.keywordLanguages}"/>
+				<c:if test="${model.user != null && !empty model.user.languageSearch}">
+					<c:set var="qtEnabled" value="true"/>
+				</c:if>
+
+				<li class="qt-li ${qtEnabled ? '' : 'disabled'}">
 					<ul>
 						<li>
 							<c:set var="qtHref" value=""/>
-							<c:if test="${!empty cookie.keywordLanguages}">
-								<c:if test="${empty model.queryTranslationLinks}">
-									<c:set var="qtHref">href="${model.translationUrl}"</c:set>
-								</c:if>
-								<c:if test="${!empty model.queryTranslationLinks}">
-									<c:set var="qtHref">href="${model.noTranslationUrl}"</c:set>
-								</c:if>
+							<c:if test="${qtEnabled}">
+								<c:choose>
+									<c:when test="${empty model.queryTranslationLinks}">
+										<c:set var="qtHref">href="${model.translationUrl}"</c:set>
+									</c:when>
+									<c:otherwise>
+										<c:set var="qtHref">href="${model.noTranslationUrl}"</c:set>
+									</c:otherwise>
+								</c:choose>
 							</c:if>
 							
 							
@@ -69,7 +77,7 @@
 								<input	type="checkbox"
 									id="cb-qt"
 									name="cb-qt"
-									${empty cookie.keywordLanguages ? 'disabled="disabled"' : ''}
+									${qtEnabled ? '' : 'disabled="disabled"'}
 									${empty model.queryTranslationLinks ? '' : 'checked="checked"'} 
 								/><a class="qt-toggle" ${qtHref}><label for="cb-qt"><spring:message code="qt_facet_header"/></label>
 								</a>
