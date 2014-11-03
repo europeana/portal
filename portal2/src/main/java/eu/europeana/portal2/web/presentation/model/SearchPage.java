@@ -312,7 +312,7 @@ public class SearchPage extends SearchPreparation {
 			}
 		}
 		StringBuilder url = new StringBuilder();
-		url.append("/").append(getPortalName()).append("/").append(pageName).append("?").append(queryForPresentation);
+		url.append("/").append("/").append(pageName).append("?").append(queryForPresentation);
 
 		UrlBuilder builder = new UrlBuilder(url.toString());
 		builder.addParam("start", getStart(), true);
@@ -328,13 +328,13 @@ public class SearchPage extends SearchPreparation {
 
 	@Override
 	public UrlBuilder createSearchUrl(String searchTerm, String[] qf, String start) throws UnsupportedEncodingException {
-		return createSearchUrl(getPortalName(), SearchPageEnum.SEARCH_HTML, searchTerm, qf, start);
+		return createSearchUrl("", SearchPageEnum.SEARCH_HTML, searchTerm, qf, start);
 	}
 
 	public static UrlBuilder createSearchUrl(String portalname, SearchPageEnum returnTo, String searchTerm,
 			String[] qf, String start) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
+		sb.append("/").append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
 		url.addParam("query", searchTerm, true);
 		if (qf != null) {

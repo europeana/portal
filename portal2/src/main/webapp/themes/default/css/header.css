@@ -76,12 +76,12 @@
 }
 
 .logo{
-	background-image:	url('/portal/themes/default/images/europeana-logo-2.png');
+	background-image:	url('/themes/default/images/europeana-logo-2.png');
 }
 
 
 .logo-t-and-c{
-	background-image:	url('/portal/themes/default/images/europeana-logo-tc.png');
+	background-image:	url('/themes/default/images/europeana-logo-tc.png');
 }
 
 
@@ -135,7 +135,7 @@
 	*/
 
 	.logo-t-and-c{
-		background-image:	url('/portal/themes/default/images/europeana-logo-tc.png');
+		background-image:	url('/themes/default/images/europeana-logo-tc.png');
 	}
 
 	#logo{

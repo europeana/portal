@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%-- query action --%>
-<c:set var="query_action" value="/${model.portalName}/search.html"/>
+<c:set var="query_action" value="/search.html"/>
 
 <%-- query value --%>
 <c:set var="query_value" value=""/>

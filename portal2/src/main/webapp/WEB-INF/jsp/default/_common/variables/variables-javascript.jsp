@@ -110,9 +110,9 @@ js.console = js.empty_console;
 	js.min_directory = 'min/';
 </c:if>
 
-eu.europeana.vars.portal_name = '${model.portalName}';
+eu.europeana.vars.portal_name = '';
 eu.europeana.vars.page_name = '${model.pageName}';
-eu.europeana.vars.branding = '/${branding}';
+eu.europeana.vars.branding = '${branding}'
 eu.europeana.vars.browser_locale = '${model.browserLanguage}';
 eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
@@ -160,7 +160,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.cite.close			= '${fn:escapeXml(close)}';
 		eu.europeana.vars.galleria = {};
 		eu.europeana.vars.collectionId = '${collectionId}';
-
+		
 
 		<% pageContext.setAttribute("newLineChar1", "\r"); %>
 		<% pageContext.setAttribute("newLineChar2", "\n"); %>

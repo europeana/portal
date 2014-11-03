@@ -49,7 +49,7 @@
 								</c:choose>
 	
 								<%-- Place Image --%>
-								<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
+								<a href="/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
 									<c:set var="objectPresent" value="" />
 									<c:catch var="exception">
 										<c:if test="${tag.europeanaObject && !empty tag.europeanaObject}"></c:if>

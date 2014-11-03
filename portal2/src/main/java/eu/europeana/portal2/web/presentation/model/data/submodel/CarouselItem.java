@@ -40,7 +40,7 @@ public class CarouselItem {
 	public String getUrl() {
 		if (!isExternalLink()) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("/").append(model.getPortalName());
+			//sb.append("/").append(model.getPortalName());
 			if (!StringUtils.startsWith(url, "/")) {
 				sb.append("/");
 			}

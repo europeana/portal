@@ -497,18 +497,18 @@
 
 	<c:when test="${!empty model.debug && model.debug}">
 		<script type="text/javascript">
-			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
+			var searchWidgetUrl = "${model.portalServer}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
 		</script>
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
+			var searchWidgetUrl = "${model.portalServer}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
 		</script>
 	</c:otherwise>
 </c:choose>
 	
 <script type="text/javascript">
-	var rootUrl 		= "${model.portalServer}${model.portalName}";
+	var rootUrl 		= "${model.portalServer}";
 	var searchUrl		= 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
 </script>
 
@@ -551,7 +551,7 @@
 							height="100%"
 							frameborder="0"
 							webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
-							<a class="help-link europeana" href="/portal/usingeuropeana_searchwidget.html"><spring:message code="wizard_tab1_help_link_text_t"/></a>
+							<a class="help-link europeana" href="/usingeuropeana_searchwidget.html"><spring:message code="wizard_tab1_help_link_text_t"/></a>
 						</div>					
 					</c:if>
 					

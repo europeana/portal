@@ -8,7 +8,7 @@
 <c:set var="AboutUsCurrent" value="" />
 <c:set var="ThoughtLabCurrent" value="" />
 
-<c:set var="branding" value="${model.portalName}/themes/${model.theme}" />
+<c:set var="branding" value="/themes/${model.theme}" />
 
 <c:if test="${!empty model.locale}"><c:set var="locale" value="${model.locale}" /></c:if>
 
@@ -40,12 +40,12 @@
 <%-- a css class holder for the <div id="query> so that it can accommodate for the spacing issue --%>
 <c:set var="menu_user_exists" value="" />
 
-<c:set var="query_action" value="/${model.portalName}/search.html" />
-<c:if test="${'timeline.html' == model.pageName}"><c:set var="query_action" value="/${model.portalName}/timeline.html" /></c:if>
-<c:if test="${'map.html' == model.pageName}"><c:set var="query_action" value="/${model.portalName}/map.html" /></c:if>
+<c:set var="query_action" value="/search.html" />
+<c:if test="${'timeline.html' == model.pageName}"><c:set var="query_action" value="/timeline.html" /></c:if>
+<c:if test="${'map.html' == model.pageName}"><c:set var="query_action" value="/map.html" /></c:if>
 
 <c:set var="language_menu_action" value="${model.currentUrl}" />
-<c:if test="${empty model.currentUrl}"><c:set var="language_menu_action" value="${model.portalName}/search.html" /></c:if>
+<c:if test="${empty model.currentUrl}"><c:set var="language_menu_action" value="/search.html" /></c:if>
 
 <c:set var="header_class" value=' class="notranslate"' />
 <c:if test="${empty model.embedded && !empty model.user}"><c:set var="header_class" value=' class="notranslate user-bar-added"' /></c:if>

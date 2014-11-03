@@ -209,10 +209,8 @@ public class ObjectController {
 			String newRecordId = resolveNewRecordId(collectionId, recordId);
 			if (StringUtils.isNotBlank(newRecordId)) {
 				StringBuilder location = new StringBuilder();
-				if (!config.getPortalName().startsWith("/")) {
-					location.append("/");
-				}
-				location.append(config.getPortalName()).append("/record").append(newRecordId).append(".html");
+				
+				location.append("/record").append(newRecordId).append(".html");
 				response.setStatus(301);
 				response.setHeader("Location", location.toString());
 				return null;

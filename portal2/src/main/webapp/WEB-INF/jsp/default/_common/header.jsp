@@ -30,7 +30,7 @@
 				</c:choose>
 
 				<${logoWrapperTag} title="<spring:message code="AltLogoEuropeana_t" />">
-					<a	href="/${model.portalName}/"
+					<a	href="/"
 						title="<spring:message code="AltLogoEuropeana_t" />">
 						
 						<span class="${logoClass}">&nbsp;</span>

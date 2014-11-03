@@ -166,7 +166,7 @@ public class StaticPageController {
 			StringBuilder sb = new StringBuilder();
 			if (!redirect.getRedirect().startsWith("http")) {
 				sb.append(config.getPortalServer());
-				sb.append(config.getPortalName());
+				
 			}
 			sb.append(redirect.getRedirect());
 			response.setStatus(301);

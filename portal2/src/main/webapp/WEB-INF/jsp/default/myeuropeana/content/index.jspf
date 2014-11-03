@@ -8,7 +8,7 @@
 	<ul id="panel-links" class="columns three" role="menu">
 		<c:choose>
 			<c:when test="${!empty model.user}">
-				<li><a href="/${model.portalName}/logout.html"><spring:message code="LogOut_t" /></a></li>
+				<li><a href="/logout.html"><spring:message code="LogOut_t" /></a></li>
 				<li data-settings-panel="user-information" data-settings-panel-text="<spring:message code="UserInformation_t" />"><a href="#user-information"><spring:message code="UserInformation_t" /></a></li>
 				<c:if test="${model.doTranslation}">
 					<li data-settings-panel="language-settings" data-settings-panel-text="<spring:message code="LanguageSettings_t" />"><a href="#language-settings"><spring:message code="LanguageSettings_t" /></a></li>

@@ -56,7 +56,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 				message.append("request: ").append(ControllerUtil.formatFullRequestUrl(request)).append("\n");
 				message.append("stackTrace: ").append(stackTrace).append("\n");
 				// model.put("cacheUrl", imageCacheUrl);
-				message.append("portalName: ").append(config.getPortalName()).append("\n");
+				message.append("portalName: ").append("\n");
 				message.append("agent: ").append(request.getHeader("User-Agent")).append("\n");
 				message.append("referer: ").append(request.getHeader("referer")).append("\n");
 				message.append("date: ").append(new DateTime()).append("\n");
@@ -86,7 +86,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, config.getDefaultTheme()));
 		model.setLocale(RequestContextUtils.getLocaleResolver(request).resolveLocale(request));
 		model.setPortalUrl(config.getPortalUrl());
-		model.setPortalName(config.getPortalName());
+		model.setPortalName("");
 		model.setDebug(config.getDebugMode());
 
 		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);

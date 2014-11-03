@@ -8,7 +8,7 @@
 'use strict';
 
 // Fix for expired document (no js) following language form submission when there's a hash in the url (force another redirect)
-if(window.location.href.indexOf('portal/myeuropeana?lang=')>0){
+if(window.location.href.indexOf('myeuropeana?lang=')>0){
 	window.location.href = window.location.href.split('?')[0];
 }
 

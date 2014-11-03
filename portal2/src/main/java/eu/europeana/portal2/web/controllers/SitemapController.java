@@ -427,7 +427,7 @@ public class SitemapController {
 			throws EuropeanaQueryException {
 		setSitemapCacheDir();
 
-		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
+		String portalServer = new StringBuilder(config.getPortalServer()).toString();
 
 		// sitemap index - collections overview
 		if (solrOutdated() || contributorEntries == null) {
@@ -507,7 +507,7 @@ public class SitemapController {
 
 	private String getPortalUrl() {
 		if (portalUrl == null) {
-			portalUrl = config.getCannonicalPortalServer() + config.getPortalName();
+			portalUrl = config.getCannonicalPortalServer();
 			if (!portalUrl.endsWith("/")) {
 				portalUrl = portalUrl + "/";
 			}

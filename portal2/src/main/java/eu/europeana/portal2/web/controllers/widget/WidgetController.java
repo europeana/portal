@@ -123,7 +123,7 @@ public class WidgetController {
 	public ModelAndView editWidget(HttpServletRequest request, Locale locale) {
 		SearchWidgetEditorPage model = new SearchWidgetEditorPage();
 
-		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
+		String portalServer = new StringBuilder(config.getPortalServer()).toString();
 		String providerQueryFormat = String.format("%s/search.html?query=*:*&qf=PROVIDER:", portalServer) + "%s";
 
 		if (solrOutdated() || contributorEntries == null) {
