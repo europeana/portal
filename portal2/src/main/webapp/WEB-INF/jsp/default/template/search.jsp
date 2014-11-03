@@ -2,7 +2,7 @@
 <%@ taglib uri="http://htmlcompressor.googlecode.com/taglib/compressor" prefix="compress" %>
 
 <%-- 
-	/portal/template.html?id=search
+	/template.html?id=search
 --%>
 
 <c:set var="isSearchWidget" value="true"/>

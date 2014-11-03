@@ -480,7 +480,7 @@ public class SitemapController {
 	public ModelAndView handleSitemap(HttpServletRequest request) {
 
 		List<SitemapEntry> records = new ArrayList<SitemapEntry>();
-		records.add(new SitemapEntry("http://www.europeana.eu/portal/europeana-providers.html", null, null, 10));
+		records.add(new SitemapEntry("http://www.europeana.eu/europeana-providers.html", null, null, 10));
 
 		SitemapPage<SitemapEntry> model = new SitemapPage<SitemapEntry>();
 		model.setResults(records);

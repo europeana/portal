@@ -17,7 +17,7 @@
 /*
 @media all and (-webkit-min-device-pixel-ratio: 2) {
 	.footer{
-		background-image:	url('/portal/themes/default/images/dust.png');
+		background-image:	url('/themes/default/images/dust.png');
 	}
 }
 */
@@ -34,7 +34,7 @@
 @media only screen and ( min-width:48em ){
 	
 	.footer{
-		background-image:	url('/portal/themes/default/images/dust.png');
+		background-image:	url('/themes/default/images/dust.png');
 		border:				none;
 	}
 	

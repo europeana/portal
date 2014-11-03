@@ -155,7 +155,7 @@ body{
 /*	override header.css							*/
 
 .logo{
-	background-image:	url('/portal/themes/default/images/europeana-logo-2.png');
+	background-image:	url('/themes/default/images/europeana-logo-2.png');
 	width:				206px;
 	height:				120px;
 	margin-top:			0;
@@ -203,7 +203,7 @@ table{
 	-webkit-border-radius:	0.5em 0.5em 0.5em 0.5em;
 	border-radius:			0.5em 0.5em 0.5em 0.5em;
 	
-	behavior: url(/portal/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
+	behavior: url(/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 	font-size:	0.75em;
 }
 
@@ -217,7 +217,7 @@ table tr{
 	border-radius:			0;
 	font-size:				1em;
 	
-	behavior: url(/portal/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
+	behavior: url(/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 }
 
 .menu-cell,
@@ -269,7 +269,7 @@ tr td.menu-cell:first-child, tr td.query-cell{
 
 .submit-cell{
 	border-radius:			0 10px 10px 0;
-	behavior: url(/portal/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);	
+	behavior: url(/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);	
 }
 
 
@@ -281,7 +281,7 @@ tr td.menu-cell:first-child, tr td.query-cell{
 	-moz-border-radius:		0.5em 0 0 0.5em;
 	-webkit-border-radius:	0.5em 0 0 0.5em;
 	border-radius:			0.5em 0 0 0.5em;
-	behavior: url(/portal/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
+	behavior: url(/themes/default/css/behaviour/PIE-1.0.0/PIE.htc);
 }
 
 

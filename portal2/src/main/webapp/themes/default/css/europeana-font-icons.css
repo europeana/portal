@@ -7,11 +7,11 @@
 		url('/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype');
 	*/
 	
-	src: url('/portal/themes/default/images/europeana-font-files/europeana.eot');
-	src: url('/portal/themes/default/images/europeana-font-files/europeana.eot?#iefix') format('embedded-opentype'),
-		url('/portal/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
-		url('/portal/themes/default/images/europeana-font-files/europeana.ttf') format('truetype'),
-		url('/portal/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg');
+	src: url('/themes/default/images/europeana-font-files/europeana.eot');
+	src: url('/themes/default/images/europeana-font-files/europeana.eot?#iefix') format('embedded-opentype'),
+		url('/themes/default/images/europeana-font-files/europeana.woff') format('woff'),
+		url('/themes/default/images/europeana-font-files/europeana.ttf') format('truetype'),
+		url('/themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg');
 		
 		
 		

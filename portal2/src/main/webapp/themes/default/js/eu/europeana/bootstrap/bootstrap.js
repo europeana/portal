@@ -151,7 +151,7 @@ var europeana_bootstrap = function(){
 		{
 			name: 'jquery.cookie',
 			file: 'jquery.cookie' + js.min_suffix + '.js' + js.cache_helper,
-			path: '/portal/themes/common/js/com/github/carhartl/' + js.min_directory,
+			path: '/themes/common/js/com/github/carhartl/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		},
 

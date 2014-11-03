@@ -76,10 +76,10 @@
 
 
 .search-widget-container .logo{	
-	background-image:	url('/portal/themes/default/images/search-widget/black-logo.png');	
+	background-image:	url('/themes/default/images/search-widget/black-logo.png');	
 }
 .search-widget-container.dark .logo{	
-	background-image:	url('/portal/themes/default/images/search-widget/white-logo.png');	
+	background-image:	url('/themes/default/images/search-widget/white-logo.png');	
 }
 
 /*

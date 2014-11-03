@@ -13,7 +13,7 @@
 
 .search-widget-container #footer-logo{	
 	background-repeat:	no-repeat;
-	background-image:	url('/portal/themes/default/images/search-widget/powered-by-europeana-black.png');
+	background-image:	url('/themes/default/images/search-widget/powered-by-europeana-black.png');
 	height:				2em;	
 	display:			block;
 	position:			relative;
@@ -27,7 +27,7 @@
 }
 
 .search-widget-container.dark #footer-logo{	
-	background-image:	url('/portal/themes/default/images/search-widget/powered-by-europeana-white.png');	
+	background-image:	url('/themes/default/images/search-widget/powered-by-europeana-white.png');	
 }
 
 

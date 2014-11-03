@@ -1194,7 +1194,7 @@ eu.europeana.fulldoc = {
 			if (typeof(mlt) != 'undefined') {
 				
 				var getLoadAllLink = function() {
-					return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
+					return '<a class="load-all" href="/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
 				};
 				
 				var initMlt = function() {

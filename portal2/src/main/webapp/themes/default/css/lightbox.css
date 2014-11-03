@@ -183,7 +183,7 @@ a.hideMeta{
 }
 
 #zoomIn{
-	background-image:	url('/portal/themes/default/images/icons/lightbox-enlarge.png');
+	background-image:	url('/themes/default/images/icons/lightbox-enlarge.png');
 	position:			absolute;
 	
 	margin-right:		0.5em;
@@ -199,5 +199,5 @@ a.hideMeta{
 }
 
 #zoomIn.active{
-	background-image:	url('/portal/themes/default/images/icons/lightbox-enlittle.png');
+	background-image:	url('/themes/default/images/icons/lightbox-enlittle.png');
 }
