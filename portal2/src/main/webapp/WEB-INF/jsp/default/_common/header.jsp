@@ -36,7 +36,7 @@
 						<span class="${logoClass}">&nbsp;</span>
 						<c:if test="${!empty logoBg}">
 							<style type="text/css">
-								.${logoWrapperTag} .${logoClass} { background-image:url(/themes/default/images/europeana-logo-2.png); }
+								.${logoWrapperTag} .${logoClass} { background-image:url(themes/default/images/europeana-logo-2.png); }
 							</style>
 						</c:if>
 					</a>

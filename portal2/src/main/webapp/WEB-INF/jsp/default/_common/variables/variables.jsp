@@ -8,7 +8,7 @@
 <c:set var="AboutUsCurrent" value="" />
 <c:set var="ThoughtLabCurrent" value="" />
 
-<c:set var="branding" value="/themes/${model.theme}" />
+<c:set var="branding" value="themes/${model.theme}" />
 
 <c:if test="${!empty model.locale}"><c:set var="locale" value="${model.locale}" /></c:if>
 

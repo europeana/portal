@@ -16,7 +16,7 @@
 	}
 
 	a.grid-view, a.list-view, a.timeline, a.mapview, a.wikipedia {
-		background-image: url('/themes/default/images/icons/sprite.png');
+		background-image: url('themes/default/images/icons/sprite.png');
 		background-repeat: no-repeat;
 		margin-right: 5px;
 		margin-top: 5px;

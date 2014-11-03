@@ -963,7 +963,7 @@ eu.europeana.fulldoc = {
 
 	initCarousels: function() {
 	
-		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
+		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleriathemes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",

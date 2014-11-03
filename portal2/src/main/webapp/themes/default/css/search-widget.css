@@ -99,7 +99,7 @@
 		}
 		
 		.transparent {
-			background-image: url('/themes/default/images/icons/transparent-grid.png');
+			background-image: url('themes/default/images/icons/transparent-grid.png');
 		}
 		
 		.transparent td {

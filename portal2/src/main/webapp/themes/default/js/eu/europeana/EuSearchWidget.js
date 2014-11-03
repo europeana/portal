@@ -28,8 +28,8 @@ fnSearchWidget = function($, config){
 	var searchUrlWithoutResults = 'http://www.europeana.eu/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
-	var cssUrl                  = rootUrl +  '/themes/default/css/';
-	var responsiveContainersUrl = rootUrl +  '/themes/default/js/eu/europeana/responsive-containers.js';
+	var cssUrl                  = rootUrl +  'themes/default/css/';
+	var responsiveContainersUrl = rootUrl +  'themes/default/js/eu/europeana/responsive-containers.js';
     
     var defaultRows             = 6;
     var pagination              = [];
