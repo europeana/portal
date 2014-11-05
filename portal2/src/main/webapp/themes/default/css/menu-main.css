@@ -34,7 +34,7 @@
 @media only screen and ( min-width:48em ){
 	
 	.footer{
-		background-image:	"../images/dust.png";
+		background-image:	url("../images/dust.png");
 		border:				none;
 	}
 	

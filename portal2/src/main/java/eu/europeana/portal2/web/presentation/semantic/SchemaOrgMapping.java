@@ -2,6 +2,7 @@ package eu.europeana.portal2.web.presentation.semantic;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import eu.europeana.corelib.web.support.Configuration;
@@ -29,6 +31,7 @@ public class SchemaOrgMapping {
 
 	@Autowired
 	public SchemaOrgMapping(Configuration config) {
+		Logger.getLogger(this.getClass()).info(new File(config.getSchemaOrgMappingFile()).getAbsolutePath());
 		edm2schemaOrg = readFromProperty(config.getSchemaOrgMappingFile());
 	}
 

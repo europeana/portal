@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,7 +74,10 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 		}
 
 		if (dir == null) {
-			directory = (responsiveCache != null) ? responsiveCache : staticPagePath + CACHEDIR;
+			ClassLoader c=getClass().getClassLoader();
+			URLClassLoader urlC = (URLClassLoader)c;
+			URL[] urls = urlC.getURLs();
+			directory = (responsiveCache != null) ? responsiveCache : urls[0].getPath()+staticPagePath + CACHEDIR;
 			if (!directory.endsWith("/")) {
 				directory += "/";
 			}
@@ -162,10 +166,16 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 	private BufferedImage readOriginalImage(String location, boolean isURL) {
 		BufferedImage originalImage = null;
 		try {
+			ClassLoader c=getClass().getClassLoader();
+			URLClassLoader urlC = (URLClassLoader)c;
+			URL[] urls = urlC.getURLs();
 			if (isURL) {
+				log.info("Location :" +location);
 				originalImage = ImageIO.read(new URL(location));
 			} else {
-				originalImage = ImageIO.read(new File(staticPagePath, location));
+				File s = new File(urls[0].getPath()+staticPagePath, location);
+				log.info("The file is located at: " +s.getAbsolutePath());
+				originalImage = ImageIO.read(s);
 			}
 		} catch (MalformedURLException e) {
 			log.error(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);

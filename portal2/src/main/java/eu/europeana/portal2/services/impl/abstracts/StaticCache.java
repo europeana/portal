@@ -210,6 +210,11 @@ public abstract class StaticCache {
 	private Map<String, Page> pageMap() {
 		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(
 				new Date(), -getCheckFrequency()));
+		ClassLoader c=getClass().getClassLoader();
+		URLClassLoader urlC = (URLClassLoader)c;
+		URL[] urls = urlC.getURLs();
+		String newPath = urls[0].getPath()+staticPagePath;
+		System.out.println("PageMap called with path :" +newPath);
 		if (pageMapCache.isEmpty() || getLastCheck() == null
 				|| getLastCheck().before(timeout)) {
 			if (staticPagePath == null) {
@@ -217,7 +222,7 @@ public abstract class StaticCache {
 				throw new RuntimeException(staticPagePath + " is not set!");
 			}
 			
-			File root = new File(staticPagePath);
+			File root = new File(newPath);
 			if (!root.isDirectory()) {
 				log.error("staticPagePath: " + staticPagePath
 						+ " is not a directory!");

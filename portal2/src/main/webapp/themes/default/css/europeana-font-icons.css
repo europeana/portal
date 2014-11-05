@@ -13,11 +13,11 @@
 /* 		url('themes/default/images/europeana-font-files/europeana.ttf') format('truetype'), */
 /* 		url('themes/default/images/europeana-font-files/europeana.svg#europeana') format('svg'); */
 		
-		src: "../images/europeana-font-files/europeana.eot";
-	src: "../images/europeana-font-files/europeana.eot?#iefix" format('embedded-opentype'),
-		"../images/europeana-font-files/europeana.woff" format('woff'),
-		"../images/europeana-font-files/europeana.ttf" format('truetype'),
-		"../images/europeana-font-files/europeana.svg#europeana" format('svg');
+		src: url("../images/europeana-font-files/europeana.eot");
+	src: url("../images/europeana-font-files/europeana.eot?#iefix") format('embedded-opentype'),
+		url("../images/europeana-font-files/europeana.woff") format('woff'),
+		url("../images/europeana-font-files/europeana.ttf") format('truetype'),
+		url("../images/europeana-font-files/europeana.svg#europeana") format('svg');
 		
 	font-weight: normal;
 	font-style: normal;
