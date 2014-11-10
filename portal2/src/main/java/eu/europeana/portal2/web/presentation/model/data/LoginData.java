@@ -1,8 +1,8 @@
 package eu.europeana.portal2.web.presentation.model.data;
 
-import eu.europeana.portal2.web.presentation.model.KeywordLanguagesLimitAwareData;
+import eu.europeana.portal2.web.presentation.model.PrevSearchAwareData;
 
-public abstract class LoginData extends KeywordLanguagesLimitAwareData {
+public abstract class LoginData extends PrevSearchAwareData {
 
 	protected boolean failureFormat = false;
 	protected boolean failureExists = false;
@@ -78,4 +78,5 @@ public abstract class LoginData extends KeywordLanguagesLimitAwareData {
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+	
 }
