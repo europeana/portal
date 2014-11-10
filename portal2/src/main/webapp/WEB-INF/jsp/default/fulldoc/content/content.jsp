@@ -41,41 +41,21 @@
 			    </script>
 
 
-			    <script type="text/javascript">
-			    
-			    
-					window.apiKey            =   'api2demo';
-					window.apiServerRoot     =  '${model.apiUrl}/v2/record';
-					var hierarchyOriginalUrl = '${model.document.about}';
-					var hierarchyTestUrl     =  window.apiServerRoot + '${model.document.about}/ancestor-self-siblings.json?wskey=' + window.apiKey;
-					var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';
-	
-					/*
-					window.apiServerRoot =  'http://localhost:3000/';
-					var hierarchyOriginalUrl = '1-1/ancestor-self-siblings.json';
-					var hierarchyTestUrl     =  window.apiServerRoot + hierarchyOriginalUrl + '?wskey=' + window.apiKey;
-					var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';
-					*/
-
-					/*
-					
-					window.apiServerRoot =  'http://localhost:8080/api/v2/record';
-					var hierarchyOriginalUrl = '/2026024/providedCHO_DY_30_IV_2_2_022_14/ancestor-self-siblings.json';
-					var hierarchyTestUrl     =  window.apiServerRoot + hierarchyOriginalUrl + '?wskey=' + window.apiKey;
-					var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';
-
-					// http://localhost:8080/api/v2/record/2026024/providedCHO_DY_30_IV_2_2_022_14/ancestor-self-siblings.json?wskey=api2demo
-					*/
-					
-					
-    			</script>
-			    <!--
-			    <script type="text/javascript">
-					window.apiServerRoot =  'http://localhost:3000/';
-					window.apiKey        =   'api2demo';
-					var hierarchyTestUrl =  window.apiServerRoot + '1/self.json?wskey=' + window.apiKey;
-    			</script>
-    			-->
+				<c:if test="${model.showHierarchical}">
+				    <script type="text/javascript">
+				    
+				    	var showHierarchical	 = ${model.showHierarchical};
+						
+				    	alert('showHierarchical ' + showHierarchical);
+						
+						window.apiKey            =   'api2demo';
+						window.apiServerRoot     =  '${model.apiUrl}/v2/record';
+						var hierarchyOriginalUrl = '${model.document.about}';
+						var hierarchyTestUrl     =  window.apiServerRoot + '${model.document.about}/ancestor-self-siblings.json?wskey=' + window.apiKey;
+						var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';
+						
+	    			</script>
+    			</c:if>
 							    
 				
 				<!-- END HIERARCHICAL OBJECTS -->
