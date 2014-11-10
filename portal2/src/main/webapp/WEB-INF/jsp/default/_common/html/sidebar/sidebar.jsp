@@ -51,6 +51,51 @@
 					<%@ include file="/WEB-INF/jsp/default/_common/macros/facet-sections.jsp" %>
 				</c:forEach>
 
+
+				<c:set var="qtEnabled" value="${!empty cookie.keywordLanguages}"/>
+				<c:if test="${model.user != null && !empty model.user.languageSearch}">
+					<c:set var="qtEnabled" value="true"/>
+				</c:if>
+
+				<li class="qt-li ${qtEnabled ? '' : 'disabled'}">
+					<ul>
+						<li>
+							<c:set var="qtHref" value=""/>
+							<c:if test="${qtEnabled}">
+								<c:choose>
+									<c:when test="${empty model.queryTranslationLinks}">
+										<c:set var="qtHref">href="${model.translationUrl}"</c:set>
+									</c:when>
+									<c:otherwise>
+										<c:set var="qtHref">href="${model.noTranslationUrl}"</c:set>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+							
+							
+							<h3>
+								<input	type="checkbox"
+									id="cb-qt"
+									name="cb-qt"
+									${qtEnabled ? '' : 'disabled="disabled"'}
+									${empty model.queryTranslationLinks ? '' : 'checked="checked"'} 
+								/><a class="qt-toggle" ${qtHref}><label for="cb-qt"><spring:message code="qt_facet_header"/></label>
+								</a>
+							</h3>
+							 
+						</li>
+						
+						<li>
+							<h4>
+								<a	href="/${model.portalName}/${model.myEuropeanaUrl}#language-settings"
+									class="qt-settings-link"
+									title="<spring:message code="qt_setup" />"><spring:message code="qt_setup" /></a>
+							</h4>
+						</li>
+					</ul>
+				</li>
+				
+
 				<li class="ugc-li">
 					<h3>
 						<c:set var="checkedValue" value='checked="checked"' />
@@ -60,14 +105,14 @@
 							</c:when>
 						</c:choose>
 
-						<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"/>
-
-						<a  href="${model.UGCUrl}"
-							title="${model.UGCUrl}" rel="nofollow">
-							<label for="cb-ugc" style="display:inline"> &nbsp;<spring:message code="IncludeUGC_t" /></label>
+						<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"
+						/><a  href="${model.UGCUrl}"
+							title="${model.UGCUrl}"
+							rel="nofollow"><label for="cb-ugc"><spring:message code="IncludeUGC_t" /></label>
 						</a>
 					</h3>
 				</li>
+
 			</ul>
 			<!-- /facets -->
 
