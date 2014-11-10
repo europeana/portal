@@ -1,3 +1,5 @@
+
+
 package eu.europeana.portal2.web.interceptor;
 
 import java.util.Locale;
@@ -35,12 +37,10 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, 
-			Object handler)
-					throws IllegalStateException {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IllegalStateException {
 
-		String localeName = request.getParameter(this.paramName);
+		String localeName	= request.getParameter(this.paramName);
+		User user			= ControllerUtil.getUser(userService);
 
 		if (StringUtils.isNotBlank(localeName)
 			&& !(localeName.contains("*"))) {
@@ -54,7 +54,6 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 			Locale locale = (Locale) localeEditor.getValue();
 			localeResolver.setLocale(request, response, locale);
 			
-			User user = ControllerUtil.getUser(userService);
 			if (user != null) {
 				try {
 					userService.updateUserLanguagePortal(user.getId(), localeName);
@@ -64,6 +63,17 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 
+		if(user != null && user.getLanguagePortal() != null ){
+			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+			if (localeResolver == null) {
+				throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
+			}
+			localeResolver.setLocale(request, response, new Locale(user.getLanguagePortal()));
+		}
+
+
 		return true;
 	}
 }
+
+
