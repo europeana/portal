@@ -43,6 +43,7 @@
 
 			    <script type="text/javascript">
 			    
+			    
 					window.apiKey            =   'api2demo';
 					window.apiServerRoot     =  '${model.apiUrl}/v2/record';
 					var hierarchyOriginalUrl = '${model.document.about}';
