@@ -95,7 +95,8 @@ public class SearchController {
 		queryString = SolrUtils.normalizeBooleans(queryString);
 		model.setQuery(queryString);
 
-		if (model.isDoTranslation()) {
+        if (model.isDoTranslation() && queryString.length() > 0 && !queryString.equals("*:*")) {
+
 			long t0 = new Date().getTime();
 			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, queryString, qt, request);
 			long t1 = new Date().getTime();
