@@ -36,7 +36,8 @@ eu.europeana.search = {
 				fnGetItems
 			);
 			
-			if($(ob).hasClass('ugc-li') || $(ob).hasClass('qt-li')){
+			//if($(ob).hasClass('ugc-li') || $(ob).hasClass('qt-li')){
+			if($(ob).hasClass('ugc-li') ){
 				$(ob).bind('keypress', accessibility.keyPress);
 			}
 			else{
@@ -55,8 +56,8 @@ eu.europeana.search = {
 		});
 
 		// make facet checkboxes clickable
-		$("#filter-search li input[type='checkbox']").click(function(){
-			var label = $("#filter-search li label[for='" + $(this).attr('id') + "']");
+		$("#facets-actions li input[type='checkbox']").click(function(){
+			var label = $("#facets-actions li label[for='" + $(this).attr('id') + "']");
 			window.location = label.closest("a").attr("href");
 		});
 

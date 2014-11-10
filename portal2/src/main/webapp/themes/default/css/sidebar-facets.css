@@ -211,9 +211,7 @@ a.facet-ugc{
 } 
 
 
-#filter-search .qt-li.disabled h3,
-#filter-search .qt-li.disabled input,
-#filter-search .qt-li.disabled label{
+#facets-actions .qt-li.disabled *{
 	color: #666;
 }
 
@@ -271,26 +269,30 @@ a.action-link span,
 	display:block;
 }
 
-#filter-search h4 {
+#facets-actions h4 {
 	font-size:		100%;
 	font-weight:	normal;
 }
 
-#filter-search h4 a {
+#facets-actions .qt-li h4{
+	display:	inline-block;
+	margin-top:	1em;
+}
+
+#facets-actions  h4 a{
 	color:			#333;
 }
 
 
 
-#filter-search h4 a.qt-settings-link {
+#facets-actions  h4 a.qt-settings-link {
 	color:			#2A85E8;
 	display:		inline-block;
 	margin-top:		0.1em;
 	margin-bottom:	0.5em;
 }
 
-
-#filter-search .qt-li.disabled .qt-toggle{
+#facets-actions .qt-li.disabled .qt-toggle{
 	color: #A0A0A0;
 }
 

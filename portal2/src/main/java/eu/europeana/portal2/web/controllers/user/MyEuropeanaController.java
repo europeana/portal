@@ -92,15 +92,23 @@ public class MyEuropeanaController {
 
 	@RequestMapping(value={"/myeuropeana"}, method=RequestMethod.GET)
 	public ModelAndView myEuropeanaIndexHandler(
+		@RequestParam(value = "query", required = false, defaultValue="") String returnToQuery,
+		@RequestParam(value = "qf", required = false) String[] returnToFacets,
+		
 		HttpServletRequest request,
 		Locale locale
 			) throws Exception {
+
 
 		User user = ControllerUtil.getUser(userService);
 
 		if (user != null) {
 			MyEuropeanaPage model = new MyEuropeanaPage();
 			model.setUser(user);
+
+			model.setReturnToQuery(returnToQuery);
+			model.setReturnToFacets(returnToFacets);
+
 			List<SavedItem> savedItems = new ArrayList<SavedItem>(user.getSavedItems());
 			Collections.sort(savedItems);
 			model.setSavedItems(savedItems);
@@ -119,6 +127,10 @@ public class MyEuropeanaController {
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 		} else {
 			LoginPage model = new LoginPage();
+			
+			model.setReturnToQuery(returnToQuery);
+			model.setReturnToFacets(returnToFacets);
+			
 			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
 
 			model.setErrorMessage("1".equals(request.getParameter("error")) ? INVALID_CREDENTIALS : null);
