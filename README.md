@@ -2,23 +2,23 @@
 
 # Europeana: catalyst for change in the world of cultural heritage
 
+## What does it do?
+
+Europeana is an internet portal that acts as an interface to millions of books, paintings, films, museum objects and archival records that have been digitised throughout Europe. The portal provides the front-end for accessing these digital objects.
+
 ## Full Documentation
 
 See the [Wiki](https://github.com/europeana/portal/wiki) for full documentation, examples, operational details and other information.
 
-The is JavaDoc will be generated once the upcoming code overhaul is complete.
+The JavaDoc will be generated once the upcoming code overhaul is complete.
 
 ## Communication
 
 - [GitHub Issues](https://github.com/europeana/portal/issues)
 
-## What does it do?
-
-Europeana is an internet portal that acts as an interface to millions of books, paintings, films, museum objects and archival records that have been digitised throughout Europe. The portal provides the front-end for accessing these digital objects.
-
 ## Build
 
-To build (requires the [CoreLib](https://github.com/europeana/corelib) dependency:
+To build (requires the [CoreLib](https://github.com/europeana/corelib) dependency):
 
 ```
 $ git clone https://github.com/europeana/portal.git
