@@ -183,6 +183,7 @@ a.facet-ugc{
 }
 
 
+
 #filter-search a.facet-section:focus{
 	outline:			1px dotted #4C7ECF;
 }
@@ -190,14 +191,36 @@ a.facet-ugc{
 	text-decoration:	underline;
 }
 
-
-.ugc-li label{
-	color:	#333;
+.qt-li  input,
+.ugc-li input{
+	cursor: pointer;
 } 
 
+.qt-li  label,
+.ugc-li label{
+	color:			#333;
+	cursor:			pointer;
+	padding-left:	0.25em;
+	margin-left:	1em;
+	display:		block;
+}
+
+.qt-li.disabled label,
+.qt-li.disabled input{
+	cursor: default;
+} 
+
+
+#facets-actions .qt-li.disabled *{
+	color: #666;
+}
+
+
+#cb-qt,
 #cb-ugc{
 	margin-left:	0;
 	padding-left:	0;
+	position:		absolute;
 }
 
 a.action-link {
@@ -246,15 +269,32 @@ a.action-link span,
 	display:block;
 }
 
-#filter-search h4 {
+#facets-actions h4 {
 	font-size:		100%;
 	font-weight:	normal;
 }
 
-#filter-search h4 a {
+#facets-actions .qt-li h4{
+	display:	inline-block;
+	margin-top:	1em;
+}
+
+#facets-actions  h4 a{
 	color:			#333;
 }
-	
+
+
+
+#facets-actions  h4 a.qt-settings-link {
+	color:			#2A85E8;
+	display:		inline-block;
+	margin-top:		0.1em;
+	margin-bottom:	0.5em;
+}
+
+#facets-actions .qt-li.disabled .qt-toggle{
+	color: #A0A0A0;
+}
 
 
 @media all and (min-width: 48em) {
