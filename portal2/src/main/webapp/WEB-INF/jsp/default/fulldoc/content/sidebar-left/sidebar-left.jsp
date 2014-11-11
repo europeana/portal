@@ -387,6 +387,15 @@
 			
 		</c:if>
 
+                <!--DISPLAY TAGS HERE-->
+                <c:if test="${!empty model.user}">
+                    <c:forEach items="${model.user.socialTags}" var="item">
+                        <c:if test="${model.document.about == item.europeanaUri}">
+                            <div class="item-metadata">${item.tag}</div>  
+                        </c:if>
+                    </c:forEach>
+                </c:if>    
+                    
 		<div id="translate-container">
 			<span class="icon-translate"></span>
 				<!-- translate services -->
