@@ -35,9 +35,14 @@ eu.europeana.fulldoc = {
 
 		js.utils.fixSearchRowLinks($('#navigation a').first());
 
-		$('#item-save-tag')	.bind('submit', this.handleSaveTagSubmit );
-		$('#item-embed')	.bind('click', this.handleEmbedClick );
-
+		$('#item-save-tag')		.bind('submit', this.handleSaveTagSubmit );
+		$('#item-embed')		.bind('click', this.handleEmbedClick );
+		
+		$('body').on('click', '.tag .icon-remove', function(e) {
+			eu.europeana.fulldoc.handleDeleteTag(e);
+		});
+						
+		
 		// "View item at" link
 		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
 			function(e) {
@@ -58,7 +63,6 @@ eu.europeana.fulldoc = {
 			com.google.analytics.europeanaEventTrack("Click-link " + $(e.target).attr('href'), "Search-Also-For");
 		});
 
-		//js.console.log(JSON.stringify(carouselData));
 
 	   	$(window).bind('translator-ready', function(data){
 	   		
@@ -157,6 +161,38 @@ eu.europeana.fulldoc = {
 		});
 	},
 
+	handleDeleteTag : function(e){
+		
+		// tag deletion
+
+		e.preventDefault();
+		
+		var displayAjaxFeedback = function( html ) {
+			eu.europeana.ajax.methods.addFeedbackContent( html );
+			eu.europeana.ajax.methods.showFeedbackContainer();
+		};
+
+		eu.europeana.ajax.methods.user_panel(
+			'remove',
+			{
+				modificationAction : 'social_tag',
+				id :$(e.target).data('id')
+			},
+			{
+				count : $('.tags .tag').length -1,
+				success : function() {
+					displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.saved_tag_removed) );
+					$(e.target).parent().remove();
+					$('#saved-tags-count').html(parseInt($('#saved-tags-count').html())-1);
+				},
+				failure : function() {
+					var text = eu.europeana.vars.msg.error_occurred + '<br/>' + eu.europeana.vars.msg.item_not_removed;
+					displayAjaxFeedback( $('<span>', {'class':'error'}).text(text) );
+				}
+			}
+		);
+	},
+	
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
 		if ($('#item-tag').val() < 1) {
@@ -166,7 +202,7 @@ eu.europeana.fulldoc = {
 		var ajax_feedback = {
 			saved_tags_count : 0,
 			$saved_tags : $('#saved-tags-count'),
-			success : function() {
+			success : function( data ) {
 				var html =
 					'<span id="save-tag-feedback">' +
 						eu.europeana.vars.msg.saved_tag +
@@ -175,6 +211,53 @@ eu.europeana.fulldoc = {
 				eu.europeana.ajax.methods.showFeedbackContainer();
 				ajax_feedback.saved_tags_count = parseInt( ajax_feedback.$saved_tags.html(), 10 );
 				ajax_feedback.$saved_tags.html( ajax_feedback.saved_tags_count + 1 );
+				
+			
+				var existingIds		= [];
+				var insertBefore	= null;
+				var tagText			= $('#item-tag').val();
+				
+				$('.tag .icon-remove').each(function(i, ob){
+					
+					existingIds.push(parseInt($(ob).data('id')));
+					
+					var itemTagText = $(ob).parent().find('.text').html();
+					
+					console.log('itemTagText = ' + itemTagText);
+					
+					if( !insertBefore &&  tagText < itemTagText ){
+						insertBefore = $(ob).parent();
+					}
+					
+				});
+				data.reply.tags = data.reply.tags.filter(function(val){
+					return existingIds.indexOf(val) == -1;
+				});
+				
+				if(data.reply.tags.length==1){
+					
+					// create new tag element
+					
+					if(tagText.length>20){
+						tagText = tagText.substr(0, 20) + '&hellip;';
+					}
+					
+					var newTag = '<span class="tag"><span class="text">' + tagText + '</span><span class="icon-remove" data-id="' + data.reply.tags[0] + '">&nbsp;</span></span>'
+
+					// insert new tag
+					
+					if(insertBefore){
+						insertBefore.before(newTag);
+					}
+					else{
+						$('.tags').append(newTag);
+					}
+					
+					// clear input
+					
+					$('#item-tag').val('');
+				}
+				
 			},
 			failure : function() {
 				var html =
