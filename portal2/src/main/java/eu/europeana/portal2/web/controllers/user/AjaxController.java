@@ -77,7 +77,7 @@ public class AjaxController {
 			handleAjaxException(model, e, response);
 		}
 		if(isSocialTag){
-			return createResponsePageSocialTags(model);			
+			return createResponsePageSocialTags(model, getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request)  );
 		}
 		else{
 			return createResponsePage(model);			
@@ -300,8 +300,10 @@ public class AjaxController {
 	private static ModelAndView createResponsePage(AjaxPage model) {
 		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX);
 	}
-	
-	private static ModelAndView createResponsePageSocialTags(AjaxPage model) {
-		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_TAGS);
-	}
+
+    private static ModelAndView createResponsePageSocialTags(AjaxPage model, String eUri) {
+        model.setDocument(eUri);
+        return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_TAGS);
+    }
+
 }
