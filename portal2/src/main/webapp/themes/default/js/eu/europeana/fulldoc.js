@@ -203,6 +203,8 @@ eu.europeana.fulldoc = {
 			saved_tags_count : 0,
 			$saved_tags : $('#saved-tags-count'),
 			success : function( data ) {
+				
+console.log('new tag success handler');
 				var html =
 					'<span id="save-tag-feedback">' +
 						eu.europeana.vars.msg.saved_tag +
@@ -217,6 +219,8 @@ eu.europeana.fulldoc = {
 				var insertBefore	= null;
 				var tagText			= $('#item-tag').val();
 				
+console.log('tags present ' + $('.tag .icon-remove').length  );
+
 				$('.tag .icon-remove').each(function(i, ob){
 					
 					existingIds.push(parseInt($(ob).data('id')));
@@ -228,11 +232,12 @@ eu.europeana.fulldoc = {
 					if( !insertBefore &&  tagText < itemTagText ){
 						insertBefore = $(ob).parent();
 					}
-					
 				});
 				data.reply.tags = data.reply.tags.filter(function(val){
 					return existingIds.indexOf(val) == -1;
 				});
+				
+console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 				
 				if(data.reply.tags.length==1){
 					
@@ -257,7 +262,20 @@ eu.europeana.fulldoc = {
 					
 					$('#item-tag').val('');
 				}
-				
+				else{
+					
+	console.log('too many tags - filter did not work');
+	console.log(' - data.reply.tags = ' + JSON.stringify(data.reply.tags));
+	console.log(' - existingIds = ' + JSON.stringify(existingIds));
+
+					if(data.reply.tags.length > 0){
+						
+						console.log(	typeof data.reply.tags[0]	+ ' ---> ' +  typeof existingIds[0]     );
+					}
+
+
+				}
+
 			},
 			failure : function() {
 				var html =
