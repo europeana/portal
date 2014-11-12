@@ -66,18 +66,29 @@ public class AjaxController {
 	public ModelAndView handleAjaxSaveRequest(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		AjaxPage model = new AjaxPage();
+		
+		boolean isSocialTag = false;
 		try {
 			if (!hasJavascriptInjection(request)) {
-				processAjaxSaveRequest(model, request);
+				isSocialTag = processAjaxSaveRequest(model, request);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			handleAjaxException(model, e, response);
 		}
-		return createResponsePage(model);
+		if(isSocialTag){
+			return createResponsePageSocialTags(model);			
+		}
+		else{
+			return createResponsePage(model);			
+		}
 	}
 
-	private void processAjaxSaveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
-		User user = ControllerUtil.getUser(userService);
+	private boolean processAjaxSaveRequest(AjaxPage model, HttpServletRequest request) throws Exception {
+		
+		User	user		= ControllerUtil.getUser(userService);
+		boolean	isSocialTag	= false;
+		
 		String modAction = request.getParameter("modificationAction");
 		if (StringUtils.isBlank(modAction)) {
 			String message = "Expected 'modificationAction' parameter!";
@@ -94,6 +105,7 @@ public class AjaxController {
 			user = saveSearch(request, user);
 			break;
 		case SOCIAL_TAG:
+			isSocialTag = true;
 			user = saveSocialTag(request, user);
 			break;
 		case API_KEY:
@@ -117,6 +129,8 @@ public class AjaxController {
 
 		model.setUser(user);
 		model.setSuccess(true);
+		
+		return isSocialTag;
 	}
 
 	private User saveItem(HttpServletRequest request, User user)
@@ -285,5 +299,9 @@ public class AjaxController {
 
 	private static ModelAndView createResponsePage(AjaxPage model) {
 		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX);
+	}
+	
+	private static ModelAndView createResponsePageSocialTags(AjaxPage model) {
+		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.AJAX_TAGS);
 	}
 }

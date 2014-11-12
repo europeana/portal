@@ -387,15 +387,27 @@
 			
 		</c:if>
 
-                <!--DISPLAY TAGS HERE-->
-                <c:if test="${!empty model.user}">
-                    <c:forEach items="${model.user.socialTags}" var="item">
-                        <c:if test="${model.document.about == item.europeanaUri}">
-                            <div class="item-metadata">${item.tag}</div>  
-                        </c:if>
-                    </c:forEach>
-                </c:if>    
-                    
+
+        <!--DISPLAY TAGS HERE-->
+        <c:if test="${!empty model.user}">
+        	<div class="tags">
+             <c:forEach items="${model.user.socialTagsOrdered}" var="item">
+                 <c:if test="${model.document.about == item.europeanaUri}">
+                 
+                 	<c:set var="tagDisplayText" value="${item.tag}"/>
+                 	<c:if test="${fn:length(tagDisplayText)>20}">
+                 		<c:set var="tagDisplayText" value="${fn:substring(item.tag, 0, 20)}&hellip;"/>
+                 	</c:if>
+                 
+                    <span class="tag"><span class="text">${tagDisplayText}</span><span class="icon-remove" data-id="${item.id}">&nbsp;</span></span>  
+                 
+                 </c:if>
+             </c:forEach>
+        	</div>
+        </c:if>    
+
+
+
 		<div id="translate-container">
 			<span class="icon-translate"></span>
 				<!-- translate services -->

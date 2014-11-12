@@ -123,7 +123,7 @@ eu.europeana.ajax = function( options ) {
 		
 		if ( 'success' == ajax_status && msg.reply.success ) {
 		
-			ajax_feedback.success();
+			ajax_feedback.success(msg);
 			
 		} else {
 			
