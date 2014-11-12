@@ -151,7 +151,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		<c:if test="${model[googleTranslateId]}">
 			eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
 		</c:if>
-
+	
 		eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
 		
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
@@ -212,13 +212,16 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		};
 
 		<c:if test="${!empty model.user}">
-			eu.europeana.vars.msg.error_occurred   = '${fn:escapeXml(error_occurred)}';
-			eu.europeana.vars.msg.saved_item       = '${fn:escapeXml(saved_item)}';
-			eu.europeana.vars.msg.save_item_failed = '${fn:escapeXml(save_item_failed)}';
-			eu.europeana.vars.msg.saved_tag        = '${fn:escapeXml(saved_tag)}';
-			eu.europeana.vars.msg.save_tag_failed  = '${fn:escapeXml(save_tag_failed)}';
-			eu.europeana.vars.item.uri             = '${model.document.about}';
-
+			eu.europeana.vars.msg.error_occurred	= '${fn:escapeXml(error_occurred)}';
+			eu.europeana.vars.msg.saved_item		= '${fn:escapeXml(saved_item)}';
+			eu.europeana.vars.msg.save_item_failed	= '${fn:escapeXml(save_item_failed)}';
+			eu.europeana.vars.msg.saved_tag			= '${fn:escapeXml(saved_tag)}';
+			eu.europeana.vars.msg.save_tag_failed	= '${fn:escapeXml(save_tag_failed)}';
+			eu.europeana.vars.item.uri				= '${model.document.about}';
+			
+			eu.europeana.vars.msg.item_not_removed	= '${fn:escapeXml(item_not_removed)}';
+			eu.europeana.vars.msg.saved_tag_removed	= '${fn:escapeXml(saved_tag_removed)}';
+			
 			<c:if test="${empty model.useBackendItemTranslation || model.useBackendItemTranslation == false}">
 				eu.europeana.vars.languageItem = '${model.user.languageItem}';
 				eu.europeana.vars.languageLabel = '${model.user.languageItem}';
