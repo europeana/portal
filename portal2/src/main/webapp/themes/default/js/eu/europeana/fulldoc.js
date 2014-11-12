@@ -66,13 +66,13 @@ eu.europeana.fulldoc = {
 
 	   	$(window).bind('translator-ready', function(data){
 	   		
-	   		console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguageCode )
+	   		js.console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguageCode )
 
 	   		if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem != com.microsoft.translator.originalLanguageCode){
 	   			eu.europeana.fulldoc.autoTranslateItem.init();	   			
 	   		}
 	   		else{
-		   		console.log('skipped translation ' + (eu.europeana.vars.languageItem ? eu.europeana.vars.languageItem  + ' already the language in use' : ' - no user language set'));
+		   		js.console.log('skipped translation ' + (eu.europeana.vars.languageItem ? eu.europeana.vars.languageItem  + ' already the language in use' : ' - no user language set'));
 	   		}
 	   		
 	   	});
@@ -204,7 +204,6 @@ eu.europeana.fulldoc = {
 			$saved_tags : $('#saved-tags-count'),
 			success : function( data ) {
 				
-console.log('new tag success handler');
 				var html =
 					'<span id="save-tag-feedback">' +
 						eu.europeana.vars.msg.saved_tag +
@@ -218,16 +217,12 @@ console.log('new tag success handler');
 				var existingIds		= [];
 				var insertBefore	= null;
 				var tagText			= $('#item-tag').val();
-				
-console.log('tags present ' + $('.tag .icon-remove').length  );
 
 				$('.tag .icon-remove').each(function(i, ob){
 					
 					existingIds.push(parseInt($(ob).data('id')));
 					
 					var itemTagText = $(ob).parent().find('.text').html();
-					
-					console.log('itemTagText = ' + itemTagText);
 					
 					if( !insertBefore &&  tagText < itemTagText ){
 						insertBefore = $(ob).parent();
@@ -236,8 +231,6 @@ console.log('tags present ' + $('.tag .icon-remove').length  );
 				data.reply.tags = data.reply.tags.filter(function(val){
 					return existingIds.indexOf(val) == -1;
 				});
-				
-console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 				
 				if(data.reply.tags.length==1){
 					
@@ -262,20 +255,6 @@ console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 					
 					$('#item-tag').val('');
 				}
-				else{
-					
-	console.log('too many tags - filter did not work');
-	console.log(' - data.reply.tags = ' + JSON.stringify(data.reply.tags));
-	console.log(' - existingIds = ' + JSON.stringify(existingIds));
-
-					if(data.reply.tags.length > 0){
-						
-						console.log(	typeof data.reply.tags[0]	+ ' ---> ' +  typeof existingIds[0]     );
-					}
-
-
-				}
-
 			},
 			failure : function() {
 				var html =
@@ -575,7 +554,6 @@ console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 
 		eu.europeana.fulldoc.triggerClick);
 
-		js.console.log("bound all triggers");
 	},
 
 	triggerClick : function(e) {
@@ -1192,7 +1170,7 @@ console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 				latitude =  latitude.val();
 				
 				if (![latitude, longitude].join(',').match(/^\s*-?\d+\.\d+\,\s?-?\d+\.\d+\s*$/)) {
-					console.log('invalid coordinates (' + latitude + ', ' + longitude + ') - exit map');
+					js.console.log('invalid coordinates (' + latitude + ', ' + longitude + ') - exit map');
 					return;
 				}
 				
@@ -1332,12 +1310,12 @@ console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 						
 						if (! $('.mlt-title').find('.ellipsis-inner').length) {
 							mltEllipsis = new Ellipsis($('.mlt-title')).respond();
-							console.log('added ellipsis to phone mode');
+							js.console.log('added ellipsis to phone mode');
 						}
 					}
 					else {
 						$('.see-also-header').show();
-						console.log('init mlt');
+						js.console.log('init mlt');
 						initMlt();
 					}
 					if (mltTotal > 1) {
@@ -1438,11 +1416,11 @@ console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 					loadHierarchy(data);//hierarchyTestUrl);
 				}
 				else{
-					console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);
+					js.console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);
 					mltInit();
 				}
 			}).fail(function(){
-				console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
+				js.console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
 				mltInit();
 			});
 		}
@@ -1501,7 +1479,7 @@ console.log('post filter = data.reply.tags.length ' + data.reply.tags.length );
 
 			if ( this.translation_timer_iteration > this.translation_timer_limit ) {
 				eu.europeana.timer.removeCallback( this.translation_timer );
-				console.log('autoTranslateItem: could not auto translate; no translation services available');
+				js.console.log('autoTranslateItem: could not auto translate; no translation services available');
 			}
 
 			if ( !this.$translate_select || this.$translate_select.length < 1 ) {
