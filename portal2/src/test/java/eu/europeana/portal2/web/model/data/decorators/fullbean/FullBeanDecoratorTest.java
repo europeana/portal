@@ -82,7 +82,7 @@ public class FullBeanDecoratorTest {
 		assertEquals(0, decorator.getEuropeanaCompleteness());
 		assertNull(decorator.getId());
 		assertEquals(
-			"http://www.europeana.eu/portal/record/2026110/Partage_Plus_ProvidedCHO_Museum_of_Applied_Arts__Budapest_7339.html",
+			"http://europeana.eu/portal/record/2026110/Partage_Plus_ProvidedCHO_Museum_of_Applied_Arts__Budapest_7339.html",
 			decorator.getEdmLandingPage());
 		assertArrayEquals(new String[]{"2026110_Ag_EU_PartagePlus_1023"},
 			decorator.getEuropeanaCollectionName());
