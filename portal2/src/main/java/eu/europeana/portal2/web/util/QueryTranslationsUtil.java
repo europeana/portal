@@ -25,6 +25,7 @@ public class QueryTranslationsUtil {
 
 	private static final String PORTAL_LANGUAGE_COOKIE = "portalLanguage";
 	private static final String SEARCH_LANGUAGES_COOKIE = "keywordLanguages";
+	private static final String SEARCH_LANGUAGES_COOKIE_APPLIED = "keywordLanguagesApplied";
 
 	private HttpServletRequest request;
 	private String query;
@@ -113,13 +114,26 @@ public class QueryTranslationsUtil {
 		}
 	}
 
+	public boolean getKeywordLanguagesApplied(HttpServletRequest request) {
+		boolean result = false;
+		Cookie cookieApplied = WebUtils.getCookie(request, SEARCH_LANGUAGES_COOKIE_APPLIED);
+		if (cookieApplied != null) {
+			if(cookieApplied.getValue().equals("true")){
+				result = true;
+			}
+		}
+		return result;
+	}
+	
 	private List<String> getKeywordLanguages(User user) {
 		List<String> languageCodes = new ArrayList<String>();
 		String rawLanguageCodes = null;
 		if (user != null) {
 			rawLanguageCodes = StringUtils.join(
 					user.getLanguageSearch(), RelationalDatabase.SEARCH_LANGUAGES_SEPARATOR);
-		} else {
+		}
+		else {
+			
 			Cookie cookie = WebUtils.getCookie(request, SEARCH_LANGUAGES_COOKIE);
 			if (cookie != null) {
 				rawLanguageCodes = cookie.getValue();
