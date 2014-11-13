@@ -56,6 +56,7 @@ public enum PortalPageInfo implements PageInfo {
 
 	// general views
 	AJAX(null, "ajax/ajax"),
+	AJAX_TAGS(null, "ajax/ajaxTags"),
 	AJAX_SUGGESTION(null, "ajax/suggestions"),
 
 	CONTACT("contact.html", "Europeana - Contact/Feedback", "contact/contact"),

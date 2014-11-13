@@ -23,7 +23,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.SavedItem;
 import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 
-public class MyEuropeanaPage extends KeywordLanguagesLimitAwareData {
+public class MyEuropeanaPage extends PrevSearchAwareData {
 
 	List<SavedItem> savedItems;
 	List<SavedSearch> savedSearches;
