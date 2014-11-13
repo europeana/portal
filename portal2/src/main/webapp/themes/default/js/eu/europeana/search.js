@@ -6,6 +6,16 @@ eu.europeana.search = {
 	facet_sections : [],
 	init : function() {
 
+
+		$('#cb-qt').click(function(){
+			if($(this).is(':checked')){
+				$.cookie('keywordLanguagesApplied', 'true', { expires : 1 });
+			}
+			else{
+				$.cookie('keywordLanguagesApplied', 'false', { expires : 1 });
+			}
+		})
+		
 		// fix firefox' habit of creating invalid form states by remembering old checked values on refresh & page back
 		$('#filter-search li ul li input:checkbox').each(function(i, ob){
 			if( ob.checked && !ob.getAttribute("checked")){
