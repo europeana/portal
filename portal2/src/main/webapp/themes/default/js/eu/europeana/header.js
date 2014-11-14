@@ -268,6 +268,19 @@ eu.europeana.header = {
 		});
 
 		$("#query-search").bind("submit", function(){
+			
+			if(eu.europeana.vars.page_name == 'myeuropeana/index'){
+				
+				// remove any "returnToFacets" fields if the search term has changed
+				
+				if($('.return-to-facet').length){
+					if($('#query-input').val() != $('#query-input').attr('valueForBackButton')){
+						$('.return-to-facet').remove();
+					}					
+				}
+			}
+			
+			
 			menu.submit();
 			return true;
 		});

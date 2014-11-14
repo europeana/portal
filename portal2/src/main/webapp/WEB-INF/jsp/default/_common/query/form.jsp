@@ -6,10 +6,15 @@
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
 
 <%-- query value --%>
+
 <c:set var="query_value" value=""/>
 <c:if test="${not empty model.query}">
 	<c:set var="query_value" value="${model.query}"/>
 </c:if>
+<c:if test="${model.pageName == 'myeuropeana/index' && fn:length(model.returnToQuery)>0 }">
+	<c:set var="query_value" value="${model.returnToQuery}"/>	
+</c:if>
+
 
 <%-- form --%>
 	<form id="query-search" action="${query_action}" method="get">
@@ -54,8 +59,8 @@
 							id="query-input"
 							maxlength="175"
 							title="<spring:message code="SearchTerm_t" />"
-							value="<c:out value="${model.query}"/>"
-							valueForBackButton="<c:out value="${model.query}"/>" />
+							value="<c:out value="${query_value}"/>"
+							valueForBackButton="<c:out value="${query_value}"/>" />
 				</td>
 				<td class="submit-cell hide-cell-on-phones">
 					<button	class="icon-mag deans-button-1"
@@ -69,6 +74,17 @@
 				</td>
 			</tr>
 		</table>
+
+		
+		<c:if test="${model.pageName == 'myeuropeana/index'}">
+			
+			<c:if test="${!empty model.returnToFacets && fn:length(model.returnToFacets) > 0}">
+				<c:forEach items="${model.returnToFacets}" var="facet">
+					<input type="hidden" name="qf" class="return-to-facet" value="${fn:escapeXml(facet)}" />
+				</c:forEach>
+			</c:if>
+			
+		</c:if>
 
 
 		<%-- embedded search --%>
