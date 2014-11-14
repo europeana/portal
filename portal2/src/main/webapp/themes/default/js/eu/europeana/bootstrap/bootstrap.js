@@ -25,7 +25,7 @@ var europeana_bootstrap = function(){
 
 		var script = document.createElement('script');
 				
-		script.src = eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
+		script.src = '/' + eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
 		//alert('loader src = ' + script.src  );
 
 		if ( 'onload' in document || 'addEventListener' in window ) {
@@ -55,60 +55,60 @@ var europeana_bootstrap = function(){
 		{
 			name  : 'jquery',
 			file : 'jquery-1.8.1.min.js',
-			path : eu.europeana.vars.branding + '/js/jquery/min/'
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/min/'
 		},
 
 		{
 			name : 'jquery-ui',
 			file : 'jquery-ui-1.9.0.custom.min.js',
-			path : eu.europeana.vars.branding + '/js/jquery/min/',
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/min/',
 			dependencies : [ 'jquery' ]
 		},
 
 		{
 			name : 'utils',
 			file : 'utils' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery-ui' ]
 		},
 
 		{
 			name : 'timer',
 			file : 'timer' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils', 'jquery-ui' ]
 		},
 
 		{
 			name : 'analytics',
 			file : 'analytics' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/com/google/analytics/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		},
 
 		{
 			name : 'ajax',
 			file : 'ajax' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		},
 
 		{
 			name : 'EuAccessibility',
 			file : 'EuAccessibility' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
 		},
 
 		{
 			name : 'EuMenu',
 			file : 'EuMenu' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils', 'EuAccessibility' ]
 		},
 
 		{
 			name : 'header',			file : 'header' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'ajax', 'utils' ],
 			callback : function(){
 				eu.europeana.header.init();
@@ -117,48 +117,48 @@ var europeana_bootstrap = function(){
 
 		{
 			name : 'orientation-fix',	file : 'ios-orientationchange-fix' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory
+			path : '/' +eu.europeana.vars.branding + '/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/' + js.min_directory
 		},
 
 		{
 			name : 'touchswipe',
 			file : 'touch-swipe' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'utils', 'jquery' ]
 		},
 		/*
 		{
 			name : 'scrollTo',
 			file : 'jquery.scrollTo-1.4.3.1.js',
-			path : eu.europeana.vars.branding + '/js/jquery/',
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/',
 			dependencies : [ 'jquery' ]
 		},
 		*/
 		{
 			name : 'ellipsis',
 			file : 'ellipsis' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		},
 
 		{
 			name: 'euresponsive',
 			file: 'euresponsive' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path: '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery', 'utils' ]
 		},
 
 		{
 			name: 'jquery.cookie',
 			file: 'jquery.cookie' + js.min_suffix + '.js' + js.cache_helper,
-			path: 'themes/common/js/com/github/carhartl/' + js.min_directory,
+			path: '/themes/common/js/com/github/carhartl/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		},
 
 		{
 			name: 'multilang',
 			file: 'multilang' + js.min_suffix + '.js' + js.cache_helper,
-			path: eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path: '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		}
 	];
@@ -177,7 +177,7 @@ var europeana_bootstrap = function(){
 			*/
 			file : 'EuAccordionTabs' + js.min_suffix + '.js' + js.cache_helper,
 			dependencies : ['jquery'],
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 		});
 
 		scripts.push({
@@ -201,7 +201,7 @@ var europeana_bootstrap = function(){
 
 		scripts.push({
 			file : 'mediaelement-and-player.min.js',
-			path : eu.europeana.vars.branding + '/js/com/mediaelement/build/',
+			path : '/' +eu.europeana.vars.branding + '/js/com/mediaelement/build/',
 			dependencies : [ 'jquery' ]
 			/*  ,callback: setupPlayer  */
 		});
@@ -213,7 +213,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'contact',
 			file : 'contact' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
 		loadScripts(scripts);
@@ -222,7 +222,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'embed',
 			file : 'embed' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
 		loadScripts(scripts);
@@ -230,7 +230,7 @@ var europeana_bootstrap = function(){
 	else if(eu.europeana.vars.page_name == 'europeana-providers.html'){
 		scripts.push({
 			file : 'providers' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery', 'utils' ],
 			callback : function(){
 				eu_europeana_providers.init();
@@ -244,7 +244,7 @@ var europeana_bootstrap = function(){
 	else if(eu.europeana.vars.page_name == 'forgotPassword.html'){
 		scripts.push({
 			file : 'forgot-password' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
 		loadScripts(scripts);
@@ -260,7 +260,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name: 'imagesloaded',
 			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		});
 
@@ -268,7 +268,7 @@ var europeana_bootstrap = function(){
 			name : 'galleria',
 //			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
 			file : 'galleria-1.3.2' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/galleria/',
+			path : '/' +eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
 
@@ -276,28 +276,28 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'scrollTo',
 			file : 'jquery.scrollTo-1.4.3.1.js',
-			path : eu.europeana.vars.branding + '/js/jquery/',
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/',
 			dependencies : [ 'jquery' ]
 		});
 
 		scripts.push({
 			name : 'touchwipe',
 			file : 'jquery.touchwipe.1.1.1' + js.min_suffix + '.js',
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		});
 
 		scripts.push({
 			name: 'EuCarousel',
 			file : 'EuCarousel' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery', 'scrollTo', 'touchwipe', 'imagesloaded', 'ellipsis'  ]
 		});
 
 		scripts.push({
 			name : 'fulldoc',
 			file : 'fulldoc' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils', 'galleria', 'EuMenu', 'EuCarousel' ]
 		});
 
@@ -316,7 +316,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name: 'imagesloaded',
 			file : 'jquery.imagesloaded.min.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		});
 
@@ -324,7 +324,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils', 'EuAccessibility' ]
 		});
 
@@ -332,14 +332,14 @@ var europeana_bootstrap = function(){
 			name : 'galleria',
 //			file : 'galleria-1.2.8' + js.min_suffix + '.js' + js.cache_helper,
 			file : 'galleria-1.3.2' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/galleria/',
+			path : '/' +eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
 /*
 		scripts.push({
 			name : 'galleria',
 			file : 'galleria-1.3.2' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/galleria/',
+			path : '/' +eu.europeana.vars.branding + '/js/galleria/',
 			dependencies : [ 'jquery', 'touchswipe'  ]
 		});
 */
@@ -347,14 +347,14 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'scrollTo',
 			file : 'jquery.scrollTo-1.4.3.1.js',
-			path : eu.europeana.vars.branding + '/js/jquery/',
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/',
 			dependencies : [ 'jquery' ]
 		});
 
 		scripts.push({
 			name : 'touchwipe',
 			file : 'jquery.touchwipe.1.1.1' + js.min_suffix + '.js',
-			path : eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/jquery/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		});
 
@@ -362,14 +362,14 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'EuCarousel',
 			file : 'EuCarousel.js',
-			path : eu.europeana.vars.branding + '/js/eu/europeana/',
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/',
 			dependencies : [ 'jquery', 'scrollTo', 'touchwipe', 'imagesloaded', 'ellipsis'  ]
 		});
 
 		scripts.push({
 			name : 'index',
 			file : 'index' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : ['collapsible', 'utils', 'galleria', 'EuMenu', 'EuCarousel']
 		});
 
@@ -379,7 +379,7 @@ var europeana_bootstrap = function(){
 
 		scripts.push({
 			file : 'login' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
 
@@ -391,12 +391,12 @@ var europeana_bootstrap = function(){
 			scripts.push({
 				name : 'excanvas',
 				file : 'excanvas.js' + js.cache_helper,
-				path : eu.europeana.vars.branding + '/js/sti/e4D-javascript/lib/'
+				path : '/' +eu.europeana.vars.branding + '/js/sti/e4D-javascript/lib/'
 			});
 			scripts.push({
 				name : 'map',
 				file : 'map' + js.min_suffix + '.js' + js.cache_helper,
-				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+				path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'utils', 'excanvas' ]
 			});
 		}
@@ -404,7 +404,7 @@ var europeana_bootstrap = function(){
 			scripts.push({
 				name : 'map',
 				file : 'map' + js.min_suffix + '.js' + js.cache_helper,
-				path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+				path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 				dependencies : [ 'utils' ]
 			});
 		}
@@ -414,7 +414,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'myeuropeana',
 			file : 'myeuropeana' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
 
@@ -424,7 +424,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'myeuropeana',
 			file : 'myeuropeana-index' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils', 'timer' ]
 		});
 		loadScripts(scripts);
@@ -436,7 +436,7 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'register-success',
 			file : 'register-success' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
 		});
 		loadScripts(scripts);
 	}
@@ -452,19 +452,19 @@ var europeana_bootstrap = function(){
 		scripts.push({
 			name : 'collapsible',
 			file : 'collapsible' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils', 'EuAccessibility' ]
 		});
 
 		scripts.push({
 			name : 'EuPagination',
 			file : 'EuPagination' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory
 		});
 
 		scripts.push({
 			file : 'search' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'ajax', 'utils', 'collapsible', 'ellipsis', 'EuMenu', 'EuPagination' ],
 			callback: function(){
 				eu.europeana.search.init();
@@ -476,7 +476,7 @@ var europeana_bootstrap = function(){
 	else if (eu.europeana.vars.page_name == 'staticpage.html') {
 		//scripts.push({
 			//file : 'addthis' + js.min_suffix + '.js' + js.cache_helper,
-			//path : eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
+			//path : '/' +eu.europeana.vars.branding + '/js/com/addthis/' + js.min_directory,
 			//dependencies : [ 'utils' ]
 		//});
 		loadScripts(scripts);
@@ -484,7 +484,7 @@ var europeana_bootstrap = function(){
 	else if (eu.europeana.vars.page_name == 'timeline.html') {
 		scripts.push({
 			file : 'timeline' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
 		loadScripts(scripts);
@@ -492,7 +492,7 @@ var europeana_bootstrap = function(){
 	else if (eu.europeana.vars.page_name == 'search-widget.html') {
 		scripts.push({
 			file : 'search-widget' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'utils' ]
 		});
 		loadScripts(scripts);
@@ -500,7 +500,7 @@ var europeana_bootstrap = function(){
 	else if (eu.europeana.vars.page_name == 'admin.html') {
 		scripts.push({
 			file : 'admin' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery', 'utils' ],
 			callback : function() {
 				eu.europeana.admin.init();
@@ -511,7 +511,7 @@ var europeana_bootstrap = function(){
 	else if (eu.europeana.vars.page_name == 'api/console.html') {
 		scripts.push({
 			file : 'api-console' + js.min_suffix + '.js' + js.cache_helper,
-			path : eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
+			path : '/' +eu.europeana.vars.branding + '/js/eu/europeana/' + js.min_directory,
 			dependencies : [ 'jquery', 'utils' ],
 			callback : function() {
 				eu.europeana.apiconsole.init();
