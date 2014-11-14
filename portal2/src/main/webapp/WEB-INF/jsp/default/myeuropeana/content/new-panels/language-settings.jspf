@@ -79,20 +79,6 @@
 				</c:otherwise>
 			</c:choose>
 	</fieldset>
-	
-	<c:if test="${!empty model.returnToQuery && fn:length(model.returnToQuery) > 0}">
-		<script type="text/javascript">
-			var returnToQuery = '${model.returnToQuery}';
-			
-			<c:if test="${!empty model.returnToFacets && fn:length(model.returnToFacets) > 0}">
-				var returnToFacets = [];
-				<c:forEach items="${model.returnToFacets}" var="facet">
-					returnToFacets.push('${fn:escapeXml(facet)}');
-				</c:forEach>
-			</c:if>
-
-		</script>
-	</c:if>
 
 	<input type="submit" name="submit" value="<spring:message code="save_settings_button_t" />" class="deans-button-1 europeana-button-1" />
 

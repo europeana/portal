@@ -398,21 +398,6 @@
 				this.addCookieValue();
 			}
 			this.initial_value = portalLanguage.$portal_language.val();
-			
-			if(typeof returnToQuery != 'undefined'){
-				$('#query-input').val(returnToQuery);				
-			}
-			if(typeof returnToFacets != 'undefined'){
-				$.each(returnToFacets, function(i, ob){
-					$('#query-search').append('<input type="hidden" name="qf" class="return-to-facet" value="' + ob + '" />');
-				});
-				
-				// remove these facets if keyword changes
-				
-				$('#query-input').keypress(function(){
-					$('.return-to-facet').remove();
-				});
-			}
 		},
 
 		saveToCookie: function() {
