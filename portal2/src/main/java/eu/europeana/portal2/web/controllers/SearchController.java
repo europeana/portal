@@ -108,6 +108,9 @@ public class SearchController {
 			if (new QueryTranslationsUtil().getKeywordLanguagesApplied(request) ){
 				userSetNoQT = false;
 			}
+			else{
+				userSetNoQT = true;
+			}
 		}
 
 		SearchPage model = new SearchPage();
@@ -133,6 +136,9 @@ public class SearchController {
 				model.setLanguagesRemoved(true);
 			}
 		}
+        if(userSetNoQT){
+			model.setLanguagesRemoved(true);
+        }
 
 		if (!sortValues.contains(sort)) {
 			sort = DEFAULT_SORT;
