@@ -17,7 +17,7 @@
     <c:if test="${!empty model.document.licenses}">
       <c:set var="fmtPage" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timeFmtExpires.jsp"/>
       <c:forEach items="${model.document.licenses}" var="license"  varStatus="status">
-        <span style="display:block; margin-left:1.4em;">expires <jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${license.ccDeprecatedOn}" /></jsp:include><c:if test="${!status.last}">,</c:if></span>
+        <span  class="rights-text">expires <jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${license.ccDeprecatedOn}" /></jsp:include><c:if test="${!status.last}">,</c:if></span>
       </c:forEach>
     </c:if>
 	  
