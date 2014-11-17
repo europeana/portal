@@ -285,6 +285,9 @@ public class FullDocPage extends FullDocPreparation {
 				if (rightsOption == null && rightsOp.length > 2){
 					rightsOption = RightsValue.safeValueByUrl(rightsOp[2], getPortalUrl());
 				}
+                if(document.getLicenses()!=null){
+                    rightsOption= RightsValue.safeValueByUrl(document.getLicenses().get(0).getOdrlInheritFrom(), getPortalUrl());
+                }
 			}
 		}
 		return rightsOption;
