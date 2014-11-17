@@ -102,7 +102,7 @@ public class SearchController {
 			catch(Exception e){
 				// do nothing
 			}
-			userSetNoQT = !user.getLanguageSearchApplied();
+			userSetNoQT = user.getLanguageSearchApplied() != null && !user.getLanguageSearchApplied();
 		}
 		else{
 			if (new QueryTranslationsUtil().getKeywordLanguagesApplied(request) ){
