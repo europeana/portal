@@ -17,6 +17,8 @@
 
 package eu.europeana.portal2.web.presentation.model.data.submodel;
 
+import java.util.Date;
+
 import eu.europeana.corelib.definitions.model.RightsOption;
 
 public class RightsValue {
@@ -27,19 +29,22 @@ public class RightsValue {
 	private RightsOption right;
 
 	private String url;
+	private Date expiryDate;
 	
+
 	private String portalUrl;
 
-	public RightsValue(RightsOption right, String url, String portalUrl) {
+	public RightsValue(RightsOption right, String url, String portalUrl, Date expiryDate) {
 		this.right = right;
 		this.url = url;
 		this.portalUrl = portalUrl;
+		this.expiryDate = expiryDate;
 	}
 
-	public static final RightsValue safeValueByUrl(String url, String portalUrl) {
+	public static final RightsValue safeValueByUrl(String url, String portalUrl, Date expiryDate) {
 		RightsOption right = RightsOption.safeValueByUrl(url);
 		if (right != null) {
-			return new RightsValue(right, url, portalUrl);
+			return new RightsValue(right, url, portalUrl, expiryDate);
 		}
 		return null;
 	}
@@ -95,6 +100,14 @@ public class RightsValue {
 		return right == RightsOption.NOC || right == RightsOption.CC_ZERO;
 	}
 
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	
 	@Override
 	public String toString() {
 		return "RightsValue [RIGHTS_URL_IDENTIFIER_SHORT=" + RIGHTS_URL_IDENTIFIER_SHORT 
@@ -102,6 +115,7 @@ public class RightsValue {
 				+ ", rightsIcon=" + right.getRightsIcon()
 				+ ", showExternalIcon=" + right.getShowExternalIcon()
 				+ ", rightUrl=" + right.getUrl()
+				+ ", expiryDate=" + expiryDate
 				+ ", url=" + url + "]";
 	}
 }

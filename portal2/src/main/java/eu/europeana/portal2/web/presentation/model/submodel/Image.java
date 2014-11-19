@@ -43,7 +43,7 @@ public class Image implements SortableImage {
 	public Image(String thumbnail, String full, String type, String edmField, String rights) {
 		this(thumbnail, full, type, edmField);
 		this.rights       = rights;
-		this.rightsValue = RightsValue.safeValueByUrl(rights, "");
+		this.rightsValue = RightsValue.safeValueByUrl(rights, "", null);
 	}
 
 	public String getThumbnail() {
@@ -96,7 +96,7 @@ public class Image implements SortableImage {
 
 	public void setRights(String rights) {
 		this.rights = rights;
-		this.rightsValue = RightsValue.safeValueByUrl(rights, "");
+		this.rightsValue = RightsValue.safeValueByUrl(rights, "",null);
 	}
 
 	public String getAbout() {
