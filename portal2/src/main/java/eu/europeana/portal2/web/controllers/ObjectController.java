@@ -190,6 +190,7 @@ public class ObjectController {
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 		model.setUseBackendItemTranslation(config.useBackendTranslation());
+		model.setUseAutomatedFrontendTranslation(config.useAutomatedFrontendTranslation());
 		model.setApiUrl(config.getApi2url());
 		model.setStartTime(t0);
 		

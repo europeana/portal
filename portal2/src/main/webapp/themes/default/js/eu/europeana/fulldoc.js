@@ -64,18 +64,20 @@ eu.europeana.fulldoc = {
 		});
 
 
-	   	$(window).bind('translator-ready', function(data){
-	   		
-	   		js.console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguageCode )
-
-	   		if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem != com.microsoft.translator.originalLanguageCode){
-	   			eu.europeana.fulldoc.autoTranslateItem.init();	   			
-	   		}
-	   		else{
-		   		js.console.log('skipped translation ' + (eu.europeana.vars.languageItem ? eu.europeana.vars.languageItem  + ' already the language in use' : ' - no user language set'));
-	   		}
-	   		
-	   	});
+		if(eu.europeana.vars.useAutomatedFrontendTranslation){
+			$(window).bind('translator-ready', function(data){
+				
+				js.console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguageCode )
+				
+				if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem != com.microsoft.translator.originalLanguageCode){
+					eu.europeana.fulldoc.autoTranslateItem.init();
+				}
+				else{
+					js.console.log('skipped translation ' + (eu.europeana.vars.languageItem ? eu.europeana.vars.languageItem  + ' already the language in use' : ' - no user language set'));
+				}
+				
+			});			
+		}
 
 	},
 

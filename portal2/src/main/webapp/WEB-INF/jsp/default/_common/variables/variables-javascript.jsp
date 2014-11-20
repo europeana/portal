@@ -212,6 +212,9 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		};
 
 		<c:if test="${!empty model.user}">
+		
+			eu.europeana.vars.useAutomatedFrontendTranslation = '${model.useAutomatedFrontendTranslation}';
+		
 			eu.europeana.vars.msg.error_occurred	= '${fn:escapeXml(error_occurred)}';
 			eu.europeana.vars.msg.saved_item		= '${fn:escapeXml(saved_item)}';
 			eu.europeana.vars.msg.save_item_failed	= '${fn:escapeXml(save_item_failed)}';
@@ -222,16 +225,14 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.msg.item_not_removed	= '${fn:escapeXml(item_not_removed)}';
 			eu.europeana.vars.msg.saved_tag_removed	= '${fn:escapeXml(saved_tag_removed)}';
 			
-			<c:if test="${empty model.useBackendItemTranslation || model.useBackendItemTranslation == false}">
-				eu.europeana.vars.languageItem = '${model.user.languageItem}';
-				eu.europeana.vars.languageLabel = '${model.user.languageItem}';
-				
-				<c:forEach items="${model.portalLanguages}" var="language">
-					<c:if test="${language.languageCode == model.user.languageItem}">
-						eu.europeana.vars.languageLabel = '${language.languageName}';
-					</c:if>
-				</c:forEach>
-			</c:if>
+			eu.europeana.vars.languageItem = '${model.user.languageItem}';
+			eu.europeana.vars.languageLabel = '${model.user.languageItem}';
+			
+			<c:forEach items="${model.portalLanguages}" var="language">
+				<c:if test="${language.languageCode == model.user.languageItem}">
+					eu.europeana.vars.languageLabel = '${language.languageName}';
+				</c:if>
+			</c:forEach>
 		</c:if>
 
 		<c:set var="soundCloudAwareCollections">
