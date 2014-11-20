@@ -1413,7 +1413,7 @@ eu.europeana.fulldoc = {
 		if (!js.utils.phoneTest() && typeof(hierarchyTestUrl) != 'undefined') {
 			$.getJSON(hierarchyTestUrl, null, function( data ) {	
 				if("object" == typeof data && data.success == true){
-					loadHierarchy(data);//hierarchyTestUrl);
+					loadHierarchy(data);
 				}
 				else{
 					js.console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);

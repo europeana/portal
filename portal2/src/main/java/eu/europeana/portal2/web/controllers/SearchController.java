@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.logging.Log;
@@ -34,6 +35,7 @@ import eu.europeana.portal2.web.presentation.model.SearchPage;
 import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.QueryTranslationsUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
 
 @Controller
@@ -75,6 +77,7 @@ public class SearchController {
 			@RequestParam(value = "query", required = false, defaultValue = "*:*") String queryString,
 			@RequestParam(value = "qf", required = false) String[] qf,
 			@RequestParam(value = "qt", required = false) String[] qt,
+			@RequestParam(value = "qtApplied", required = false) Boolean qtApplied,
 			@RequestParam(value = "start", required = false, defaultValue = "1") int start,
 			@RequestParam(value = "rows", required = false, defaultValue = "24") int rows,
 			@RequestParam(value = "sort", required = false, defaultValue = "") String sort,
@@ -83,6 +86,32 @@ public class SearchController {
 
 		Map<String, String[]> params = RequestUtils.getParameterMap(request);
 		qt = ControllerUtil.fixParameter(qt, "qt", params);
+
+		boolean userSetNoQT = false;
+		
+		if(ControllerUtil.getUser(userService) != null){
+			User user = ControllerUtil.getUser(userService);
+			try{
+				if( qtApplied != null){
+					if(user.getLanguageSearchApplied() != qtApplied){
+						user.setLanguageSearchApplied( qtApplied );
+						userService.updateUserLanguageSearchApplied(user.getId(), qtApplied);
+					}
+				}
+			}
+			catch(Exception e){
+				// do nothing
+			}
+			userSetNoQT = user.getLanguageSearchApplied() != null && !user.getLanguageSearchApplied();
+		}
+		else{
+			if (new QueryTranslationsUtil().getKeywordLanguagesApplied(request) ){
+				userSetNoQT = false;
+			}
+			else{
+				userSetNoQT = true;
+			}
+		}
 
 		SearchPage model = new SearchPage();
 		model.setRequest(request);
@@ -94,9 +123,8 @@ public class SearchController {
 		queryString = SolrUtils.rewriteQueryFields(queryString);
 		queryString = SolrUtils.normalizeBooleans(queryString);
 		model.setQuery(queryString);
-
-        if (model.isDoTranslation() && queryString.length() > 0 && !queryString.equals("*:*")) {
-
+		
+        if (model.isDoTranslation() && queryString.length() > 0 && !queryString.equals("*:*") &&  !userSetNoQT ) {
 			long t0 = new Date().getTime();
 			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, queryString, qt, request);
 			long t1 = new Date().getTime();
@@ -108,6 +136,9 @@ public class SearchController {
 				model.setLanguagesRemoved(true);
 			}
 		}
+        if(userSetNoQT){
+			model.setLanguagesRemoved(true);
+        }
 
 		if (!sortValues.contains(sort)) {
 			sort = DEFAULT_SORT;

@@ -31,6 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.entity.Agent;
 import eu.europeana.corelib.definitions.solr.entity.Concept;
+import eu.europeana.corelib.definitions.solr.entity.License;
 import eu.europeana.corelib.definitions.solr.entity.Place;
 import eu.europeana.corelib.definitions.solr.entity.Timespan;
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
@@ -278,13 +279,23 @@ public class FullDocPage extends FullDocPreparation {
 			// ANDY: avoid null pointer here but edm rights aren't being mapped properly. 
 			if(shortcut.get("EdmRights") != null){
 				String[] rightsOp = shortcut.get("EdmRights");
-				rightsOption = RightsValue.safeValueByUrl(rightsOp[0], getPortalUrl());
+				rightsOption = RightsValue.safeValueByUrl(rightsOp[0], getPortalUrl(),null);
 				if (rightsOption == null && rightsOp.length > 1){
-					rightsOption = RightsValue.safeValueByUrl(rightsOp[1], getPortalUrl());
+					rightsOption = RightsValue.safeValueByUrl(rightsOp[1], getPortalUrl(),null);
 				}
 				if (rightsOption == null && rightsOp.length > 2){
-					rightsOption = RightsValue.safeValueByUrl(rightsOp[2], getPortalUrl());
+					rightsOption = RightsValue.safeValueByUrl(rightsOp[2], getPortalUrl(),null);
 				}
+				if(document.getLicenses()!=null){
+					for(License lic:document.getLicenses()){
+						if(StringUtils.equals(lic.getAbout(), rightsOp[0])){
+							rightsOption = RightsValue.safeValueByUrl(lic.getOdrlInheritFrom(), getPortalUrl(), lic.getCcDeprecatedOn());
+						}
+					}
+				}
+//                if(document.getLicenses()!=null && document.getLicenses().size()>0 ){
+//                    rightsOption= RightsValue.safeValueByUrl(document.getLicenses().get(0).getOdrlInheritFrom(), getPortalUrl());
+//                }
 			}
 		}
 		return rightsOption;
@@ -351,7 +362,9 @@ public class FullDocPage extends FullDocPreparation {
 				Image img = createImage(imageUrl, imageType);
 				if (img != null) {
 					img.setEdmField(images.get(imageUrl));
-					img.setRights(getDocument().getWebResourceEdmRightsByUrl(imageUrl));
+					List<License> licenses = (List<License>) getDocument().getLicenses();
+					img.setRights(findRights(getDocument().getWebResourceEdmRightsByUrl(imageUrl),licenses));
+					//img.setRights(getDocument().getWebResourceEdmRightsByUrl(imageUrl));
 					img.setMediaService(MediaServiceType.findInstance(imageUrl));
 					copyWebResouceFields(imageUrl, img);
 				}
@@ -361,6 +374,20 @@ public class FullDocPage extends FullDocPreparation {
 		}
 
 		return imagesToShow;
+	}
+
+	private String findRights(String webResourceEdmRightsByUrl,
+			List<License> licenses) {
+		String rights = webResourceEdmRightsByUrl;
+		if(licenses!=null){
+			for(License lic:licenses){
+				if(StringUtils.equals(lic.getAbout(), rights)){
+					rights = lic.getOdrlInheritFrom();
+					break;
+				}
+			}
+		}
+		return rights;
 	}
 
 	private Image createImage(String imageUrl, String imageType) {
@@ -436,9 +463,8 @@ public class FullDocPage extends FullDocPreparation {
 			for (String imageField : IMAGE_FIELDS.keySet()) {
 				if (shortcut.get(imageField) != null && shortcut.get(imageField).length > 0) {
 					for (String imageUrl : shortcut.get(imageField)) {
-						if (StringUtils.isNotBlank(imageUrl)) {// && !isShownAt.contains(image)) {
+						if (StringUtils.isNotBlank(imageUrl)) {
 							if (!imageUrl.equals(getIsShownBy())) {
-								// ImagePrimitive imagePrimitive = new ImagePrimitive()
 								if (!allImages.containsKey(imageUrl)) {
 									allImages.put(imageUrl, IMAGE_FIELDS.get(imageField));
 								}
