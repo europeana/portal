@@ -842,7 +842,9 @@ eu.europeana.fulldoc = {
 			$('#carousel-1-img-measure img').css('cursor', 'pointer');
 		}
 		else{
-			eu.europeana.fulldoc.triggerPanel.css('display', 'none');
+			if(eu.europeana.fulldoc.triggerPanel){
+				eu.europeana.fulldoc.triggerPanel.css('display', 'none');				
+			}
 			$('#carousel-1-img-measure img').css('cursor', 'default');
 		}
 	},
@@ -970,8 +972,10 @@ eu.europeana.fulldoc = {
 					var gallery = this;
 					var external = gallery._options.dataSource[e.index].external;
 					
-					
-					if(typeof external != 'undefined'){
+					if(typeof external == 'undefined'){
+						eu.europeana.fulldoc.showExternalTrigger(false);
+					}
+					else{
 						eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);						
 					}
 
