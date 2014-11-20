@@ -924,6 +924,9 @@ var window = this,
                 complete: (function( elems ) {
                     return function() {
                         complete();
+                        // Europeana change
+                    	$('.galleria-image-nav-left').add('.galleria-image-nav-right').removeClass('disabled-for-transition');
+                    	// End Europeana change
                         elems.css({
                             left: 0
                         });
@@ -1283,7 +1286,6 @@ Galleria = window.Galleria = function() {
 
             carousel.next.bind( 'click', function(e) {
                 e.preventDefault();
-
                 if ( self._options.carouselSteps === 'auto' ) {
 
                     for ( i = carousel.current; i < carousel.hooks.length; i++ ) {
@@ -2882,6 +2884,7 @@ Galleria.prototype = {
                 this.finger.setup();
             });
             this.$('stage').bind('click', function(e) {
+            	
                 var data = self.getData();
                 if ( !data ) {
                     return;
@@ -2992,6 +2995,14 @@ Galleria.prototype = {
         // bind image navigation arrows
         this.$( 'image-nav-right, image-nav-left' ).bind( 'click', function(e) {
 
+            // Europeana change
+        	if($(e.target).hasClass('disabled-for-transition')){
+        		return;
+        	}
+        	$('.galleria-image-nav-left').add('.galleria-image-nav-right').addClass('disabled-for-transition');
+            // End Europeana change
+
+        	
             // tune the clicknext option
             if ( options.clicknext ) {
                 e.stopPropagation();
@@ -6990,3 +7001,4 @@ $.fn.galleria = function( options ) {
 // phew
 
 }( jQuery ) );
+
