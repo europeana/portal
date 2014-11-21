@@ -363,6 +363,42 @@ a.action-link span,
 	display:	block;
 }
 
+.tags{
+	margin: 1em 0 1em 0;
+}
+
+.tag{
+	float:				left;
+	margin:				0.25em 0.25em 0 0;
+	background-color:	#DCDCDC;
+	white-space:		nowrap;
+	border-radius:		0 0.5em 0.5em 0;
+	display:			table-row;	
+}
+
+.tags:after {
+   content:		" "; /* clearfix */
+   visibility:	hidden;
+   display:		block;
+   height:		0;
+   clear:		both;
+}
+
+.tag .text{
+	padding:			0.2em;
+	display:			table-cell;	
+}
+
+.tag .icon-remove{
+	border-radius:		0 0.5em 0.5em 0;
+	background-color:	#F1F1EE;
+	color:				#F22F24;
+	cursor:				pointer;
+	display:			table-cell;
+	padding:			0.1em 0 0 0.2em;
+	text-align:			center;
+	vertical-align:		middle;	
+}
 
 
 @media only screen and ( min-width:48em ){

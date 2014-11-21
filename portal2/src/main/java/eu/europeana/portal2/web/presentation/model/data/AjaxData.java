@@ -7,6 +7,16 @@ public class AjaxData extends SearchPageData {
 	protected boolean success;
 
 	private String exception;
+	
+	private String document;
+	
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
 
 	public void setException(String exception) {
 		this.exception = exception;

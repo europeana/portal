@@ -46,5 +46,74 @@
 				</li>
 			</c:if>
 		</c:forEach>
+		
+		
+		
+		<c:set var="qtEnabled" value="${!empty cookie.keywordLanguages}"/>
+		<c:set var="qtChecked" value="false" />
+
+		<c:choose>
+			<c:when test="${model.user != null}">
+				<c:if test="${!empty model.user.languageSearch}">
+					<c:set var="qtEnabled" value="true"/>
+				</c:if>
+				<c:if test="${model.user.languageSearchApplied}">
+					<c:set var="qtChecked" value="true" />
+				</c:if>
+			</c:when>
+		
+			<c:otherwise>
+				<c:if test="${ cookie.keywordLanguagesApplied != null}">
+					<c:if test="${cookie.keywordLanguagesApplied.value == 'true'}">
+						<c:set var="qtEnabled" value="true"/>
+						<c:set var="qtChecked" value="true"/>
+					</c:if>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+
+
+		<li class="qt-li ${qtEnabled ? '' : 'disabled'}">
+
+			<c:set var="qtHref" value=""/>
+			<c:if test="${qtEnabled}">
+				<c:choose>
+					<c:when test="${empty model.queryTranslationLinks}">
+						<c:set var="qtHref">href="${model.translationUrl}&qtApplied=true"</c:set>
+					</c:when>
+					<c:otherwise>
+						<c:set var="qtHref">href="${model.noTranslationUrl}&qtApplied=false"</c:set>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+			
+			
+			<h4>
+				<input	type="checkbox"
+					id="cb-qt"
+					name="cb-qt"
+					${qtEnabled ? '' : 'disabled="disabled"'}
+					${qtChecked ? 'checked="checked"' : ''  } 
+				/><a class="qt-toggle" ${qtHref}><label for="cb-qt"><spring:message code="qt_facet_header"/></label>
+				</a>
+				
+			</h4>
+			 
+		</li>
+		
+		<li>
+			<h4>
+				<c:set var="refinementStr" value="" />
+				<c:forEach var="refinement" items="${model.refinements}">
+					<c:set var="refinementStr" value="${refinementStr}&qf=${refinement}" />
+				</c:forEach>
+		
+				<a	href="/${model.portalName}/${model.myEuropeanaUrl}?query=${fn:escapeXml(model.query)}${fn:escapeXml(refinementStr)}#language-settings"
+					class="qt-settings-link"
+					title="<spring:message code="qt_setup" />"><spring:message code="qt_setup" /></a>
+			</h4>
+		</li>
 	</ul>
+	
+	
 </c:if>

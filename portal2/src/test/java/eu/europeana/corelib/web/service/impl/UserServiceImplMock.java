@@ -167,4 +167,8 @@ public class UserServiceImplMock implements UserService {
 		return null;
 	}
 
+	@Override
+	public User updateUserLanguageSearchApplied(Long userId, Boolean languageSearchApplied) throws DatabaseException {
+		return null;
+	}
 }

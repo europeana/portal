@@ -35,9 +35,14 @@ eu.europeana.fulldoc = {
 
 		js.utils.fixSearchRowLinks($('#navigation a').first());
 
-		$('#item-save-tag')	.bind('submit', this.handleSaveTagSubmit );
-		$('#item-embed')	.bind('click', this.handleEmbedClick );
-
+		$('#item-save-tag')		.bind('submit', this.handleSaveTagSubmit );
+		$('#item-embed')		.bind('click', this.handleEmbedClick );
+		
+		$('body').on('click', '.tag .icon-remove', function(e) {
+			eu.europeana.fulldoc.handleDeleteTag(e);
+		});
+						
+		
 		// "View item at" link
 		$('#urlRefIsShownAt, #urlRefIsShownBy').bind('click',
 			function(e) {
@@ -58,20 +63,21 @@ eu.europeana.fulldoc = {
 			com.google.analytics.europeanaEventTrack("Click-link " + $(e.target).attr('href'), "Search-Also-For");
 		});
 
-		//js.console.log(JSON.stringify(carouselData));
 
-	   	$(window).bind('translator-ready', function(data){
-	   		
-	   		console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguageCode )
-
-	   		if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem != com.microsoft.translator.originalLanguageCode){
-	   			eu.europeana.fulldoc.autoTranslateItem.init();	   			
-	   		}
-	   		else{
-		   		console.log('skipped translation ' + (eu.europeana.vars.languageItem ? eu.europeana.vars.languageItem  + ' already the language in use' : ' - no user language set'));
-	   		}
-	   		
-	   	});
+		if(eu.europeana.vars.useAutomatedFrontendTranslation){
+			$(window).bind('translator-ready', function(data){
+				
+				js.console.log('translator-ready: original language was ' + com.microsoft.translator.originalLanguageCode )
+				
+				if(eu.europeana.vars.languageItem && eu.europeana.vars.languageItem != com.microsoft.translator.originalLanguageCode){
+					eu.europeana.fulldoc.autoTranslateItem.init();
+				}
+				else{
+					js.console.log('skipped translation ' + (eu.europeana.vars.languageItem ? eu.europeana.vars.languageItem  + ' already the language in use' : ' - no user language set'));
+				}
+				
+			});			
+		}
 
 	},
 
@@ -157,6 +163,38 @@ eu.europeana.fulldoc = {
 		});
 	},
 
+	handleDeleteTag : function(e){
+		
+		// tag deletion
+
+		e.preventDefault();
+		
+		var displayAjaxFeedback = function( html ) {
+			eu.europeana.ajax.methods.addFeedbackContent( html );
+			eu.europeana.ajax.methods.showFeedbackContainer();
+		};
+
+		eu.europeana.ajax.methods.user_panel(
+			'remove',
+			{
+				modificationAction : 'social_tag',
+				id :$(e.target).data('id')
+			},
+			{
+				count : $('.tags .tag').length -1,
+				success : function() {
+					displayAjaxFeedback( $('<span>').text(eu.europeana.vars.msg.saved_tag_removed) );
+					$(e.target).parent().remove();
+					$('#saved-tags-count').html(parseInt($('#saved-tags-count').html())-1);
+				},
+				failure : function() {
+					var text = eu.europeana.vars.msg.error_occurred + '<br/>' + eu.europeana.vars.msg.item_not_removed;
+					displayAjaxFeedback( $('<span>', {'class':'error'}).text(text) );
+				}
+			}
+		);
+	},
+	
 	handleSaveTagSubmit : function( e ) {
 		e.preventDefault();
 		if ($('#item-tag').val() < 1) {
@@ -166,7 +204,8 @@ eu.europeana.fulldoc = {
 		var ajax_feedback = {
 			saved_tags_count : 0,
 			$saved_tags : $('#saved-tags-count'),
-			success : function() {
+			success : function( data ) {
+				
 				var html =
 					'<span id="save-tag-feedback">' +
 						eu.europeana.vars.msg.saved_tag +
@@ -175,6 +214,49 @@ eu.europeana.fulldoc = {
 				eu.europeana.ajax.methods.showFeedbackContainer();
 				ajax_feedback.saved_tags_count = parseInt( ajax_feedback.$saved_tags.html(), 10 );
 				ajax_feedback.$saved_tags.html( ajax_feedback.saved_tags_count + 1 );
+				
+			
+				var existingIds		= [];
+				var insertBefore	= null;
+				var tagText			= $('#item-tag').val();
+
+				$('.tag .icon-remove').each(function(i, ob){
+					
+					existingIds.push(parseInt($(ob).data('id')));
+					
+					var itemTagText = $(ob).parent().find('.text').html();
+					
+					if( !insertBefore &&  tagText < itemTagText ){
+						insertBefore = $(ob).parent();
+					}
+				});
+				data.reply.tags = data.reply.tags.filter(function(val){
+					return existingIds.indexOf(val) == -1;
+				});
+				
+				if(data.reply.tags.length==1){
+					
+					// create new tag element
+					
+					if(tagText.length>20){
+						tagText = tagText.substr(0, 20) + '&hellip;';
+					}
+					
+					var newTag = '<span class="tag"><span class="text">' + tagText + '</span><span class="icon-remove" data-id="' + data.reply.tags[0] + '">&nbsp;</span></span>'
+
+					// insert new tag
+					
+					if(insertBefore){
+						insertBefore.before(newTag);
+					}
+					else{
+						$('.tags').append(newTag);
+					}
+					
+					// clear input
+					
+					$('#item-tag').val('');
+				}
 			},
 			failure : function() {
 				var html =
@@ -474,7 +556,6 @@ eu.europeana.fulldoc = {
 
 		eu.europeana.fulldoc.triggerClick);
 
-		js.console.log("bound all triggers");
 	},
 
 	triggerClick : function(e) {
@@ -761,7 +842,9 @@ eu.europeana.fulldoc = {
 			$('#carousel-1-img-measure img').css('cursor', 'pointer');
 		}
 		else{
-			eu.europeana.fulldoc.triggerPanel.css('display', 'none');
+			if(eu.europeana.fulldoc.triggerPanel){
+				eu.europeana.fulldoc.triggerPanel.css('display', 'none');				
+			}
 			$('#carousel-1-img-measure img').css('cursor', 'default');
 		}
 	},
@@ -889,8 +972,10 @@ eu.europeana.fulldoc = {
 					var gallery = this;
 					var external = gallery._options.dataSource[e.index].external;
 					
-					
-					if(typeof external != 'undefined'){
+					if(typeof external == 'undefined'){
+						eu.europeana.fulldoc.showExternalTrigger(false);
+					}
+					else{
 						eu.europeana.fulldoc.initTriggerPanel(external.type, e.index, gallery);						
 					}
 
@@ -1091,7 +1176,7 @@ eu.europeana.fulldoc = {
 				latitude =  latitude.val();
 				
 				if (![latitude, longitude].join(',').match(/^\s*-?\d+\.\d+\,\s?-?\d+\.\d+\s*$/)) {
-					console.log('invalid coordinates (' + latitude + ', ' + longitude + ') - exit map');
+					js.console.log('invalid coordinates (' + latitude + ', ' + longitude + ') - exit map');
 					return;
 				}
 				
@@ -1231,12 +1316,12 @@ eu.europeana.fulldoc = {
 						
 						if (! $('.mlt-title').find('.ellipsis-inner').length) {
 							mltEllipsis = new Ellipsis($('.mlt-title')).respond();
-							console.log('added ellipsis to phone mode');
+							js.console.log('added ellipsis to phone mode');
 						}
 					}
 					else {
 						$('.see-also-header').show();
-						console.log('init mlt');
+						js.console.log('init mlt');
 						initMlt();
 					}
 					if (mltTotal > 1) {
@@ -1334,14 +1419,14 @@ eu.europeana.fulldoc = {
 		if (!js.utils.phoneTest() && typeof(hierarchyTestUrl) != 'undefined') {
 			$.getJSON(hierarchyTestUrl, null, function( data ) {	
 				if("object" == typeof data && data.success == true){
-					loadHierarchy(data);//hierarchyTestUrl);
+					loadHierarchy(data);
 				}
 				else{
-					console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);
+					js.console.log(  typeof data + '   failed hierarchy test (not an object):\n  ' + hierarchyTestUrl);
 					mltInit();
 				}
 			}).fail(function(){
-				console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
+				js.console.log('failed hierarchy test (error):\n  ' + hierarchyTestUrl);
 				mltInit();
 			});
 		}
@@ -1400,7 +1485,7 @@ eu.europeana.fulldoc = {
 
 			if ( this.translation_timer_iteration > this.translation_timer_limit ) {
 				eu.europeana.timer.removeCallback( this.translation_timer );
-				console.log('autoTranslateItem: could not auto translate; no translation services available');
+				js.console.log('autoTranslateItem: could not auto translate; no translation services available');
 			}
 
 			if ( !this.$translate_select || this.$translate_select.length < 1 ) {

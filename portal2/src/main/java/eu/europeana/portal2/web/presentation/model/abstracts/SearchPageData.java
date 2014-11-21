@@ -88,6 +88,8 @@ public abstract class SearchPageData extends PortalPageData {
 	private String apiUrl;
 
 	private boolean useBackendItemTranslation = false;
+	private boolean useAutomatedFrontendTranslation = false;
+
 
 	public void setQuery(String query) {
 		this.query = query;
@@ -171,6 +173,16 @@ public abstract class SearchPageData extends PortalPageData {
 		}
 	}
 
+	public String getTranslationUrl() {
+		try {
+			UrlBuilder url = getBaseSearchUrl();
+			return url.toString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public String getNoTranslationUrl() {
 		try {
 			UrlBuilder url = getBaseSearchUrl();
@@ -335,6 +347,15 @@ public abstract class SearchPageData extends PortalPageData {
 		this.useBackendItemTranslation = useBackendItemTranslation;
 	}
 
+	public boolean isUseAutomatedFrontendTranslation() {
+		return useAutomatedFrontendTranslation;
+	}
+	
+	public void setUseAutomatedFrontendTranslation(
+			boolean useAutomatedFrontendTranslation) {
+		this.useAutomatedFrontendTranslation = useAutomatedFrontendTranslation;
+	}
+	
 	public String getApiUrl() {
 		return apiUrl;
 	}

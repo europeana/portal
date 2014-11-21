@@ -79,5 +79,8 @@
 				</c:otherwise>
 			</c:choose>
 	</fieldset>
+
 	<input type="submit" name="submit" value="<spring:message code="save_settings_button_t" />" class="deans-button-1 europeana-button-1" />
+
 </form>
+

@@ -304,7 +304,6 @@
 			if ( eu.europeana.vars.user ) {
 				panelMenu.default_panel = 'user-information';
 			}
-
 			panelMenu.addHashListener();
 			panelMenu.checkHash();
 		},
@@ -398,7 +397,6 @@
 			if ( !eu.europeana.vars.user ) {
 				this.addCookieValue();
 			}
-
 			this.initial_value = portalLanguage.$portal_language.val();
 		},
 

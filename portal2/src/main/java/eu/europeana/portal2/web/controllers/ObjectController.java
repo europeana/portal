@@ -162,7 +162,7 @@ public class ObjectController {
 		qf = ControllerUtil.fixParameter(qf, "qf", params);
 		qt = ControllerUtil.fixParameter(qt, "qt", params);
 		boolean showContext = ControllerUtil.getBooleanValue(context);
-		boolean showHierarchical = ControllerUtil.getBooleanValue(ho);
+		
 		queryString = ControllerUtil.rewriteQueryFields(queryString);
 		boolean showEuropeanaMlt = ControllerUtil.getBooleanBundleValue("notranslate_show_mlt", messageSource, locale);
 		boolean showSimilarItems = ControllerUtil.getBooleanBundleValue("notranslate_show_similar_items_t", messageSource, locale);
@@ -186,10 +186,11 @@ public class ObjectController {
 		model.setRows(rows);
 		model.setShowEuropeanaMlt(showEuropeanaMlt);
 		model.setShowContext(showContext);
-		model.setShowHierarchical(showHierarchical);
+		
 		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 		model.setUseBackendItemTranslation(config.useBackendTranslation());
+		model.setUseAutomatedFrontendTranslation(config.useAutomatedFrontendTranslation());
 		model.setApiUrl(config.getApi2url());
 		model.setStartTime(t0);
 		
@@ -206,7 +207,10 @@ public class ObjectController {
 		long tgetFullBean0 = new Date().getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, showSimilarItems);
 		if (fullBean == null) {
+			
 			String newRecordId = resolveNewRecordId(collectionId, recordId);
+			boolean showHierarchical = searchService.isHierarchy(newRecordId);
+			model.setShowHierarchical(showHierarchical);
 			if (StringUtils.isNotBlank(newRecordId)) {
 				StringBuilder location = new StringBuilder();
 				if (!config.getPortalName().startsWith("/")) {

@@ -33,9 +33,9 @@ public class RightsValueTest {
 	 * Setting up the RightsValue objects
 	 */
 	public void setup() {
-		cczero = RightsValue.safeValueByUrl(cczeroUrl, portalUrl);
-		orphan = RightsValue.safeValueByUrl(orphanUrl, portalUrl);
-		ooc = RightsValue.safeValueByUrl(oocUrl, portalUrl);
+		cczero = RightsValue.safeValueByUrl(cczeroUrl, portalUrl, null);
+		orphan = RightsValue.safeValueByUrl(orphanUrl, portalUrl, null);
+		ooc = RightsValue.safeValueByUrl(oocUrl, portalUrl, null);
 	}
 
 	@Test

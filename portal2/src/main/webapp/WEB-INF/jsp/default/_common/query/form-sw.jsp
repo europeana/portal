@@ -4,11 +4,6 @@
 <%-- query action --%>
 <c:set var="query_action" value="/${model.portalName}/search.html"/>
 
-<%-- query value --%>
-<c:set var="query_value" value=""/>
-<c:if test="${not empty model.query}">
-	<c:set var="query_value" value="${model.query}"/>
-</c:if>
 
 <%-- form --%>
 	<form id="query-search" action="${query_action}" method="get">

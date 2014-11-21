@@ -60,14 +60,14 @@
 							</c:when>
 						</c:choose>
 
-						<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"/>
-
-						<a  href="${model.UGCUrl}"
-							title="${model.UGCUrl}" rel="nofollow">
-							<label for="cb-ugc" style="display:inline"> &nbsp;<spring:message code="IncludeUGC_t" /></label>
+						<input type="checkbox" ${checkedValue} id="cb-ugc" name="cb-ugc"
+						/><a  href="${model.UGCUrl}"
+							title="${model.UGCUrl}"
+							rel="nofollow"><label for="cb-ugc"><spring:message code="IncludeUGC_t" /></label>
 						</a>
 					</h3>
 				</li>
+
 			</ul>
 			<!-- /facets -->
 

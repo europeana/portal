@@ -6,6 +6,16 @@ eu.europeana.search = {
 	facet_sections : [],
 	init : function() {
 
+
+		$('#cb-qt').click(function(){
+			if($(this).is(':checked')){
+				$.cookie('keywordLanguagesApplied', 'true', { expires : 1 });
+			}
+			else{
+				$.cookie('keywordLanguagesApplied', 'false', { expires : 1 });
+			}
+		})
+		
 		// fix firefox' habit of creating invalid form states by remembering old checked values on refresh & page back
 		$('#filter-search li ul li input:checkbox').each(function(i, ob){
 			if( ob.checked && !ob.getAttribute("checked")){
@@ -35,8 +45,9 @@ eu.europeana.search = {
 				headingSelected,
 				fnGetItems
 			);
-
-			if($(ob).hasClass('ugc-li')){
+			
+			//if($(ob).hasClass('ugc-li') || $(ob).hasClass('qt-li')){
+			if($(ob).hasClass('ugc-li') ){
 				$(ob).bind('keypress', accessibility.keyPress);
 			}
 			else{
@@ -55,8 +66,8 @@ eu.europeana.search = {
 		});
 
 		// make facet checkboxes clickable
-		$("#filter-search li input[type='checkbox']").click(function(){
-			var label = $("#filter-search li label[for='" + $(this).attr('id') + "']");
+		$("#facets-actions li input[type='checkbox']").click(function(){
+			var label = $("#facets-actions li label[for='" + $(this).attr('id') + "']");
 			window.location = label.closest("a").attr("href");
 		});
 
@@ -207,20 +218,9 @@ eu.europeana.search = {
 			}]);
 		});
 
-		//if(js.debug){
-			//alert("navigator.userAgent " + navigator.userAgent + "\n\ntest1 = " + (navigator.userAgent.match(/iPhone/i)) + "\ntest2" + navigator.userAgent.match(/CriOS/i)  );
-			//if (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i)){
-		//}
 		if(  (navigator.userAgent.match(/OS 5(_\d)+ like Mac OS X/i) || navigator.userAgent.match(/OS 6(_\d)+ like Mac OS X/i)  ) && ! navigator.userAgent.match(/CriOS/i) ){
 			$('.shares-link').click();
 		}
-
-		/*
-		if( navigator.userAgent.match(/iPhone/i) && ! navigator.userAgent.match(/CriOS/i) ){
-			alert("click!");
-		}
-		*/
-
 	},
 
 

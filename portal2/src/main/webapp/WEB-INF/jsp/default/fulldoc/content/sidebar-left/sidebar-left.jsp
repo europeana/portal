@@ -245,16 +245,6 @@
 			<span class="icon-ugc"></span><spring:message code="UserGeneratedContent_t" />
 		</c:if>
 		
-		<c:if test="${!empty model.document.licenses}">
-		
-			<c:set var="fmtPage" value="/WEB-INF/jsp/default/fulldoc/content/full-excerpt/context/timeFmtExpires.jsp"/>
-	        
-			<c:forEach items="${model.document.licenses}" var="license"  varStatus="status">
-				<span style="display:block; margin-left:1.4em;">expires <jsp:include page="${fmtPage}" flush="true"><jsp:param name="date" value="${license.ccDeprecatedOn}" /></jsp:include><c:if test="${!status.last}">,</c:if></span>
-			</c:forEach>
-		</c:if>
-
-		
 		<%-- Original context link --%>
 		<%@ include file="/WEB-INF/jsp/default/fulldoc/content/sidebar-left/original-context.jsp" %>
 		
@@ -386,6 +376,27 @@
 			</form>
 			
 		</c:if>
+
+
+        <!--DISPLAY TAGS HERE-->
+        <c:if test="${!empty model.user}">
+        	<div class="tags">
+             <c:forEach items="${model.user.socialTagsOrdered}" var="item">
+                 <c:if test="${model.document.about == item.europeanaUri}">
+                 
+                 	<c:set var="tagDisplayText" value="${item.tag}"/>
+                 	<c:if test="${fn:length(tagDisplayText)>20}">
+                 		<c:set var="tagDisplayText" value="${fn:substring(item.tag, 0, 20)}&hellip;"/>
+                 	</c:if>
+                 
+                    <span class="tag"><span class="text">${tagDisplayText}</span><span class="icon-remove" data-id="${item.id}">&nbsp;</span></span>  
+                 
+                 </c:if>
+             </c:forEach>
+        	</div>
+        </c:if>    
+
+
 
 		<div id="translate-container">
 			<span class="icon-translate"></span>
