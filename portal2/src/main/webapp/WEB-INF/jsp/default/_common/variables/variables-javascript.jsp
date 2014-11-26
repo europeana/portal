@@ -112,7 +112,7 @@ js.console = js.empty_console;
 
 eu.europeana.vars.portal_name = '';
 eu.europeana.vars.page_name = '${model.pageName}';
-eu.europeana.vars.branding = '${branding}'
+eu.europeana.vars.branding = '/${branding}'
 eu.europeana.vars.browser_locale = '${model.browserLanguage}';
 eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
