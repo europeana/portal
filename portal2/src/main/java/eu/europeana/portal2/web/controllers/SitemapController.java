@@ -714,7 +714,7 @@ public class SitemapController {
 			Query query = new Query("*:*")
 					.addRefinement(queryString)
 					.addRefinement("id3hash:" + id3hashValue)
-					.setPageSize(20000)
+//					.setPageSize(20000)
 					.setParameter("fl", "europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object");
 
 			if (isPlaceSitemap) {
