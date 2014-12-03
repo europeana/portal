@@ -33,14 +33,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.ThumbnailService;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.DocType;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.edm.exceptions.SolrTypeException;
+import eu.europeana.corelib.edm.service.SearchService;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;

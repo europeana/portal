@@ -30,9 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.exception.ProblemType;
+import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.impl.ResponsiveImageCache;

@@ -26,8 +26,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.DocType;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;

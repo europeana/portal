@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.DocType;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 
 public class BriefBeanImpl implements BriefBean {
 

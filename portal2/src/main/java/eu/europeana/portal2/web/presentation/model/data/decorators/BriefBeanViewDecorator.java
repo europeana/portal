@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;

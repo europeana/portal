@@ -30,10 +30,10 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
-import eu.europeana.corelib.definitions.solr.entity.Agent;
-import eu.europeana.corelib.definitions.solr.entity.Concept;
-import eu.europeana.corelib.definitions.solr.entity.Place;
-import eu.europeana.corelib.definitions.solr.entity.Timespan;
+import eu.europeana.corelib.definitions.edm.entity.Agent;
+import eu.europeana.corelib.definitions.edm.entity.Concept;
+import eu.europeana.corelib.definitions.edm.entity.Place;
+import eu.europeana.corelib.definitions.edm.entity.Timespan;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;

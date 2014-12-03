@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
 import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.model.ApiResult;
