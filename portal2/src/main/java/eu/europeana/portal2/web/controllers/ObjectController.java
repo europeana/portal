@@ -166,6 +166,7 @@ public class ObjectController {
 		queryString = ControllerUtil.rewriteQueryFields(queryString);
 		boolean showEuropeanaMlt = ControllerUtil.getBooleanBundleValue("notranslate_show_mlt", messageSource, locale);
 		boolean showSimilarItems = ControllerUtil.getBooleanBundleValue("notranslate_show_similar_items_t", messageSource, locale);
+        boolean showHierarchical = searchService.isHierarchy("/" + collectionId + "/" +recordId);
 
 		FullDocPage model = new FullDocPage();
 
@@ -199,17 +200,20 @@ public class ObjectController {
 			model.setLanguages(languageContainer);
 		}
 
+        model.setShowHierarchical(showHierarchical);
 		model.setShowSimilarItems(showSimilarItems);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setEdmSchemaMappings(schemaOrgMapping);
 		model.setBingTranslateId(config.getBingTranslateId());
 
+        log.debug("Record: " + "/" + collectionId + "/" +recordId  + (showHierarchical ? " is" : " is NOT") + " hierarchical");            
+		
 		long tgetFullBean0 = new Date().getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId, showSimilarItems);
 		if (fullBean == null) {
 			
 			String newRecordId = resolveNewRecordId(collectionId, recordId);
-			boolean showHierarchical = searchService.isHierarchy(newRecordId);
+			showHierarchical = searchService.isHierarchy(newRecordId);
 			model.setShowHierarchical(showHierarchical);
 			if (StringUtils.isNotBlank(newRecordId)) {
 				StringBuilder location = new StringBuilder();
