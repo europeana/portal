@@ -40,8 +40,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.edm.utils.SolrUtils;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.FragmentInfo;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;

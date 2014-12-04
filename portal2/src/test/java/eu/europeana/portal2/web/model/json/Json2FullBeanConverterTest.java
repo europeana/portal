@@ -14,8 +14,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
 import eu.europeana.corelib.definitions.solr.DocType;
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -1,6 +1,5 @@
 package eu.europeana.portal2.services;
 
-import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 
 

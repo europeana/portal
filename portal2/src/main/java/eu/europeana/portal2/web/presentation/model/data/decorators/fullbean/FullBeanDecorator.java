@@ -1,6 +1,6 @@
 package eu.europeana.portal2.web.presentation.model.data.decorators.fullbean;
 
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
 
 public class FullBeanDecorator extends ShortcutWrapper {
 

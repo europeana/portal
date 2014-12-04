@@ -14,7 +14,7 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.RelationalDatabase;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.model.QueryTranslation;
-import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.edm.utils.SolrUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;

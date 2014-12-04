@@ -21,8 +21,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
 import eu.europeana.portal2.web.presentation.model.data.FullDocData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanDecorator;
 import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;

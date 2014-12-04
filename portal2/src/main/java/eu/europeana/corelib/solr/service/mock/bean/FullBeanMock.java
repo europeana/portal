@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.corelib.definitions.solr.entity.WebResource;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.entity.WebResource;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
 import eu.europeana.corelib.solr.entity.EuropeanaAggregationImpl;

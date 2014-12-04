@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.edm.utils.SolrUtils;
 
 /**
  * Testing MltSuggestion class

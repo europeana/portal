@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import eu.europeana.corelib.definitions.solr.entity.Concept;
+import eu.europeana.corelib.definitions.edm.entity.Concept;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanWrapper.ContextualEntity;
 
