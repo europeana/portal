@@ -608,15 +608,19 @@ h1 {
 
 
 .rights-badge{
-	float:			left;
+	display:		table-row;
 	width:			100%;
 	color:			#333 !important;
 	font-size:		1.5em;
 }
 
+
+.rights-badge span.rights-cell{
+	display: table-cell;
+}
+
 .rights-badge span.rights-icon{
-	float:			left;
-	margin-right:	0.25em;	
+	padding-right:	0.25em;
 	color:			#888;
 }
 
@@ -627,12 +631,18 @@ h1 {
 	*/
 }
 
-.rights-badge span.rights-text{
+.rights-badge .rights-text{
 	font-size:	0.75em;
 	color:		#888;
 	position:   relative;
 	top:        -0.27em;
+	left:       0.1em;
 }
+
+.rights-badge span.rights-expiry{
+	white-space:	nowrap;
+}
+
 
 /* additional-actions */
 
@@ -697,9 +707,11 @@ h1 {
 
 #additional-info .original-context {
 	margin-top:		1em;
+	/*
 	word-wrap:		break-word;
 	word-break:		break-all;
 	white-space:	normal;
+	*/
 }
 
 #additional-info .original-context-inner{
