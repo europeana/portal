@@ -25,14 +25,14 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
 
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.Facet;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
+import eu.europeana.corelib.edm.exceptions.SolrTypeException;
+import eu.europeana.corelib.edm.service.SearchService;
+import eu.europeana.corelib.edm.utils.SolrUtils;
 import eu.europeana.corelib.solr.model.ResultSet;
-import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
