@@ -241,6 +241,23 @@
 		handleKeywordLanguagesClick: function() {
 			keywords.adjustLanguagesCount( $(this) );
 			keywords.checkDisabledState();
+			
+			if(keywords.languages_count){
+				$.cookie('keywordLanguagesApplied', 'true', { expires : 1 });
+			}
+			else{
+				$.cookie('keywordLanguagesApplied', 'false', { expires : 1 });
+			}
+
+			/*
+			  
+			 
+			 maclean
+			  
+			$('#cb-qt').click(function(){
+			})
+*/
+			
 		},
 
 		init: function() {
