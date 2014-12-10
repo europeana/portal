@@ -553,13 +553,13 @@ img.trigger{
 .contextual-body > p{
 	margin-top:	0;
 	margin-bottom:	0;
-	XXXXdisplay: inline;
 }
 
 
-.item-metadata a{
+.item-metadata a,
+.item-metadata span{
 	word-break:		break-all;
-	XXXdisplay:		inline-block;
+	display:		inline-block;
 } 
 
 .external.item-metadata {
