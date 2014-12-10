@@ -237,7 +237,6 @@ public class SitemapController {
    * @param prefix The id3hash of the record
    * @param index An integer indicating which set of 50,000 records are to be put into the sitemap;
    *        multiplied by MAX_URLS_PER_SITEMAP to indicate the start parameter in the Solr query
-   * @param images If the image element should be included in the sitemap
    * @param places If the places element should be included in the sitemap
    * @param response The {@link HttpServletResponse}
    * @throws IOException
@@ -355,7 +354,6 @@ public class SitemapController {
    * @param index An integer indicating which set of 50,000 records are to be put into the sitemap;
    *        multiplied by MAX_URLS_PER_SITEMAP to indicate the start parameter in the Solr query
    * @param model The model, used for interaction with the BriefBean
-   * @param isImageSitemap If the image element should be included in the sitemap
    * @param isPlaceSitemap If the places element should be included in the sitemap
    * @return StringBuilder containing the XML content of the sitemap
    */
