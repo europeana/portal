@@ -101,9 +101,9 @@ public class SitemapController {
   private static final int MAX_URLS_PER_SITEMAP = 45000; // Strictly speaking it's 50,000, but
                                                          // taking a 10% margin for safety
 
-  private static final String SITEMAP_INDEX_PARAMS = "images-%s-places-%s";
+  private static final String SITEMAP_INDEX_PARAMS = "places-%s";
   private static final String SITEMAP_INDEX = "europeana-sitemap-index-hashed-";
-  private static final String SITEMAP_HASHED_PARAMS = "prefix-%s-index-%s-images-%s-places-%s";
+  private static final String SITEMAP_HASHED_PARAMS = "prefix-%s-index-%s-places-%s";
   private static final String SITEMAP_HASHED = "europeana-sitemap-hashed-";
   private static final String SITEMAP_VIDEO = "europeana-video-sitemap-";
   private static final String XML = ".xml";
@@ -152,17 +152,14 @@ public class SitemapController {
    * id3hash (the first 3 letters of the record), and further split into files of maximum
    * MAX_URLS_PER_SITEMAP if these groups exceed 50,000 URLs.
    * 
-   * @param images If the image element should be included in the sitemap
    * @param places If the places element should be included in the sitemap
    * @param response The {@link HttpServletResponse}
    * @throws IOException For any file-related exceptions
    */
   @RequestMapping("/europeana-sitemap-index-hashed.xml")
-  public void handleSitemapIndexHashed(@RequestParam(value = "images", required = false,
-      defaultValue = "false") String images, @RequestParam(value = "places", required = false,
+  public void handleSitemapIndexHashed(@RequestParam(value = "places", required = false,
       defaultValue = "false") String places, HttpServletResponse response) throws IOException {
 
-    boolean isImageSitemap = StringUtils.contains(images, "true");
     boolean isPlaceSitemap = StringUtils.contains(places, "true");
 
     // Initialise the sitemap directory
@@ -174,7 +171,7 @@ public class SitemapController {
       return;
     }
 
-    String params = String.format(SITEMAP_INDEX_PARAMS, isImageSitemap, isPlaceSitemap);
+    String params = String.format(SITEMAP_INDEX_PARAMS, isPlaceSitemap);
     File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + params + XML);
 
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
@@ -192,7 +189,7 @@ public class SitemapController {
       // Kick off a new thread
       try {
         PerReqSitemap sitemap =
-            new PerReqSitemap(PerReqSitemap.INDEXED_HASHED, null, images, places);
+            new PerReqSitemap(PerReqSitemap.INDEXED_HASHED, null, places);
         Thread t = new Thread(sitemap);
         t.start();
         while (StringUtils.equals(sitemap.getState(), PerReqSitemap.IDLE)
@@ -247,12 +244,10 @@ public class SitemapController {
    */
   @RequestMapping("/europeana-sitemap-hashed.xml")
   public void handleSitemap(@RequestParam(value = "prefix", required = true) String prefix,
-      @RequestParam(value = "index", required = true) String index, @RequestParam(value = "images",
-          required = false, defaultValue = "false") String images, @RequestParam(value = "places",
+      @RequestParam(value = "index", required = true) String index, @RequestParam(value = "places",
           required = false, defaultValue = "false") String places, HttpServletResponse response)
       throws IOException {
 
-    boolean isImageSitemap = StringUtils.contains(images, "true");
     boolean isPlaceSitemap = StringUtils.contains(places, "true");
 
     // Initialise the sitemap directory
@@ -264,7 +259,7 @@ public class SitemapController {
       return;
     }
     String params =
-        String.format(SITEMAP_HASHED_PARAMS, prefix, index, isImageSitemap, isPlaceSitemap);
+        String.format(SITEMAP_HASHED_PARAMS, prefix, index, isPlaceSitemap);
     // Store these sitemaps in a subdirectory based on the first letter of the id3hash
     File subDir = new File(sitemapCacheDir.getAbsolutePath(), prefix.substring(0, 1));
     if (!subDir.exists()) {
@@ -285,7 +280,7 @@ public class SitemapController {
 
       response.setCharacterEncoding("UTF-8");
       long t = new Date().getTime();
-      StringBuilder fullXML = createSitemapHashedContent(prefix, index, model, images, places);
+      StringBuilder fullXML = createSitemapHashedContent(prefix, index, model, places);
       if (log.isInfoEnabled()) {
         log.info(String.format("Generated XML size: %s chars, it took: %s ms", fullXML.length(),
             (new Date().getTime() - t)));
@@ -365,9 +360,9 @@ public class SitemapController {
    * @return StringBuilder containing the XML content of the sitemap
    */
   private StringBuilder createSitemapHashedContent(String prefix, String index, SearchPage model,
-      String isImageSitemap, String isPlaceSitemap) {
+      String isPlaceSitemap) {
     PerReqSitemap sitemap =
-        new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isImageSitemap, isPlaceSitemap,
+        new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isPlaceSitemap,
             prefix, index);
     Thread t = new Thread(sitemap);
     t.start();
@@ -811,7 +806,6 @@ public class SitemapController {
 
       String urlPath = "europeana-sitemap-hashed.xml?prefix=";
       String paramIndex = "&index=";
-      String paramImages = "&images=";
       String paramPlaces = "&places=";
       // ?q=*:*&rows=0&facet=on&facet.field=id3hash&facet.limit=1000000&facet.sort=lexical
       Query query =
@@ -839,8 +833,7 @@ public class SitemapController {
                 StringBuilder sb = new StringBuilder();
                 sb.append(getPortalUrl()).append(urlPath).append(value.getName())
                     .append(paramIndex).append(String.format("%03d", urlPostfix));
-                sb.append(paramImages).append(StringUtils.contains(args[0], "true"));
-                sb.append(paramPlaces).append(StringUtils.contains(args[1], "true"));
+                sb.append(paramPlaces).append(StringUtils.contains(args[0], "true"));
                 s.append("<sitemap>").append(LOC_OPENING)
                     .append(StringEscapeUtils.escapeXml(sb.toString())).append(LOC_CLOSING)
                     .append("</sitemap>").append(LN);
@@ -871,17 +864,15 @@ public class SitemapController {
      * the Solr id3hash and the postfix generated by splitting it into 45,000 URL chunks.
      */
     private void createSitemapContent() {
-      String isImageSitemapString = args[0];
-      String isPlaceSitemapString = args[1];
-      String id3hashValue = args[2];
-      String index = args[3];
+      String isPlaceSitemapString = args[0];
+      String id3hashValue = args[1];
+      String index = args[2];
 
       state = STARTED;
       StringBuilder fullXML = new StringBuilder();
 
       fullXML.append(XML_HEADER).append(LN);
       fullXML.append(URLSET_HEADER).append(LN);
-      boolean isImageSitemap = StringUtils.contains(isImageSitemapString, "true");
       boolean isPlaceSitemap = StringUtils.contains(isPlaceSitemapString, "true");
       String queryString = solrCompletenessClause(config.getMinCompletenessToPromoteInSitemaps());
       // ?q=*:*&fq=COMPLETENESS:[0%20TO%20*]&fq=id3hash:<HASH>&start=<START>&rows=45000&fl=europeana_id,COMPLETENESS,title,TYPE,provider_aggregation_edm_object
@@ -930,21 +921,6 @@ public class SitemapController {
 
           fullXML.append(LOC_OPENING).append(entry.getLoc(isPlaceSitemap)).append(LOC_CLOSING)
               .append(LN);
-
-          if (isImageSitemap && doc.getType() == DocType.IMAGE) {
-            String image = "";
-            try {
-              image = URLEncoder.encode(entry.getImage(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-            }
-            fullXML.append("<image:image>").append(LN);
-            fullXML.append("<image:loc>")
-                .append(config.getImageCacheUrl() + "uri=" + image + "&amp;size=FULL_DOC")
-                .append("</image:loc>").append(LN);
-            fullXML.append("<image:title>").append(StringEscapeUtils.escapeXml(entry.getTitle()))
-                .append("</image:title>").append(LN);
-            fullXML.append("</image:image>").append(LN);
-          }
 
           if (isPlaceSitemap) {
             fullXML.append("<geo:geo><geo:format>kml</geo:format></geo:geo>").append(LN);
