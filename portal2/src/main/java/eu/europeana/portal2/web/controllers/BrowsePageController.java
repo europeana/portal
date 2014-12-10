@@ -63,7 +63,7 @@ public class BrowsePageController {
 				pageInfo = PortalPageInfo.SITEMAP_BROWSE_LANDING;
 				Query query = new Query(
 						SitemapController
-								.solrQueryClauseToIncludeRecordsToPromoteInSitemaps(minCompletenessToPromoteInSitemaps))
+								.solrCompletenessClause(minCompletenessToPromoteInSitemaps))
 						.setRefinements("id6hash:" + prefix + "*").setPageSize(1000);
 
 				BriefBeanView briefBeanView = null;
