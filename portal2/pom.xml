@@ -150,7 +150,12 @@
 			<artifactId>corelib-db</artifactId>
 			<version>2.1-SNAPSHOT</version>
 		</dependency>
-
+        <dependency>
+            <!-- will also include SOLR, DEF, UTILS -->
+            <groupId>eu.europeana.corelib</groupId>
+            <artifactId>corelib-search</artifactId>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
 		<dependency>
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-web</artifactId>
