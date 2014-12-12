@@ -51,7 +51,6 @@ public abstract class FullDocPreparation extends FullDocData {
 	private List<FieldPresentation> fieldsLightbox;
 	private List<FieldPresentation> fieldsAdditional;
 	private Map<String, List<FieldPresentation>> fieldsEnrichment;
-    protected String bingToken;
 
 	/**
 	 * Returns the fieldsLightbox for the show more section where values exist

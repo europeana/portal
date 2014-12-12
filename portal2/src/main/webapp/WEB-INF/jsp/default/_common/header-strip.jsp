@@ -27,24 +27,25 @@
 						<c:if test="${!empty model.user.savedItems}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedItems_t" />:
-							<a id="saved-items-count" href="/${myEuropeanaUrl}#saved-items">${fn:length(model.user.savedItems)}</a>
+							<a id="saved-items-count" href="${myEuropeanaUrl}#saved-items">${fn:length(model.user.savedItems)}</a>
 						</c:if>
 
 						<c:if test="${!empty model.user.savedSearches}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedSearches_t" />:
-							<a id="saved-searches-count" href="/${myEuropeanaUrl}#saved-searches">${fn:length(model.user.savedSearches)}</a>
+							<a id="saved-searches-count" href="${myEuropeanaUrl}#saved-searches">${fn:length(model.user.savedSearches)}</a>
 						</c:if>
 
 						<c:if test="${!empty model.user.socialTags}">
 							&nbsp;|&nbsp;
 							<spring:message code="SavedTags_t" />:
-							<a id="saved-tags-count" href="/${myEuropeanaUrl}#saved-tags">${fn:length(model.user.socialTags)}</a>
+							<a id="saved-tags-count" href="${myEuropeanaUrl}#saved-tags">${fn:length(model.user.socialTags)}</a>
 						</c:if>
 
 						&nbsp;|&nbsp;
 
-						<a href="/logout.html"><spring:message code="LogOut_t" /></a>
+						<a href="logout.html"><spring:message code="LogOut_t" /></a>
+						
 
 					</span>
 				</c:otherwise>

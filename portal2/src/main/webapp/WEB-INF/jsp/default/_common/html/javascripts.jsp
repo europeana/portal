@@ -3,13 +3,6 @@
 
 
 <c:if test="${empty param.noJs}">
-
-
-			<script type="text/javascript">
-				alert('branding = ${branding}' )
-			</script>
-
-
 	<c:choose>
 		<c:when test="${!empty model.debug && !model.debug}">
 			<script src="${branding}/js/eu/europeana/bootstrap/min/bootstrap.min.js"></script>

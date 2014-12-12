@@ -16,7 +16,7 @@
 				&& model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl != null
 				&& !model.embedded}">
 				<li>
-					<a class="europeana" href="${model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl}" rel="nofollow"><spring:message code="ReturnToSearchResults_t" /></a>
+					<a class="europeana" href="${webRoot}${model.fullBeanView.docIdWindowPager.pagerReturnToPreviousPageUrl}" rel="nofollow"><spring:message code="ReturnToSearchResults_t" /></a>
 				</li>
 			</c:if>
 
