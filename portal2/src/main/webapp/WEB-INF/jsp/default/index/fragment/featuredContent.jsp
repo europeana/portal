@@ -77,7 +77,7 @@
                --%>class='icon-external-right europeana'><%--
                --%><spring:message code="featured-partner-visit_text_t"/>&nbsp;<%--
                --%><spring:message code="${model.featuredPartner.anchorTitle}"/><%--
-               --%><a class='new-content-link europeana' target='<spring:message code="notranslate_featured-partner-view_target_t" />' href='/${model.portalName}/<spring:message code="notranslate_featured-partner-view_link_t" />'><spring:message code="featured-partner-view_text_t"/></a><%--
+               --%><a class='new-content-link europeana' target='<spring:message code="notranslate_featured-partner-view_target_t" />' href='<spring:message code="notranslate_featured-partner-view_link_t" />'><spring:message code="featured-partner-view_text_t"/></a><%--
                --%></a><%--
              --%></li><%--
            --%></ul><%--

@@ -44,7 +44,7 @@
 				<div id="newsletter-wrapper" class="six columns">
 					<script type="text/javascript">
 						window.newsletter = {
-							"iframeUrl"		: "newsletter.html"
+							"iframeUrl"		:  "${homeUrl}/newsletter.html"
 						};
 					</script>
 
