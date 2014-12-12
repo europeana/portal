@@ -76,12 +76,12 @@
 }
 
 .logo{
-	background-image:	url('/portal/themes/default/images/europeana-logo-2.png');
+	background-image:	url('../images/europeana-logo-2.png');
 }
 
 
 .logo-t-and-c{
-	background-image:	url('/portal/themes/default/images/europeana-logo-tc.png');
+	background-image:	url('../images/europeana-logo-tc.png');
 }
 
 
@@ -119,15 +119,6 @@
 		height:				123px;
 	}
 
-	/*
-	.logo{
-		top:				0.25em;
-	}
-
-	.logo{
-		background-image:	url('/portal/themes/default/images/europeana-logo-2.png');
-	}
-	*/
 
 	.logo-t-and-c{
 		background-image:	url('/portal/themes/default/images/europeana-logo-tc.png');
@@ -169,14 +160,6 @@
 	}
 
 }
-/*
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi)  and ( min-width:48em ){
-	.logo{
-		background-color:red;
-		background-image:	url('/portal/themes/default/images/europeana-logo-retina-2.png');
-	}
-}
-*/
 
 
 /* end outer layout */

@@ -13,7 +13,7 @@
 
 .search-widget-container #footer-logo{	
 	background-repeat:	no-repeat;
-	background-image:	url('/portal/themes/default/images/search-widget/powered-by-europeana-black.png');
+	background-image:	url('themes/default/images/search-widget/powered-by-europeana-black.png');
 	height:				2em;	
 	display:			block;
 	position:			relative;
@@ -27,7 +27,7 @@
 }
 
 .search-widget-container.dark #footer-logo{	
-	background-image:	url('/portal/themes/default/images/search-widget/powered-by-europeana-white.png');	
+	background-image:	url('themes/default/images/search-widget/powered-by-europeana-white.png');	
 }
 
 
@@ -167,102 +167,6 @@
 	display:			table;
 }
 
-/*
-
-.iframe-wrap{
-	display:		table-cell;
-	vertical-align:	middle;
-	position:		relative;
-	z-index:		100;
-}
-
-.iframe-wrap iframe{
-	box-shadow:			0 0 90px 5px #000000;
-	border:				1px solid #666666;
-	
-	padding:			.5em 0 0 0;
-	background-color:	white;
-	height:			14em;
-}
-
-
-#newsletter-trigger{
-	font-size:		1em;
-	display:		block;
-	margin:			1em auto;
-	position:		relative;
-	width:			80%;
-	cursor:			pointer;	
-}
-
-
-@media only screen and ( min-width:48em ){
-	
-	#newsletter-trigger{
-		margin:			1em auto;
-		width:			auto;	
-	}
-		
-}
-
-
-.iframe-wrap .close {
-    background-image:	url("/portal/themes/default/images/icons/close-lightbox.png");
-    position:			absolute;
-    
-	cursor:				pointer;
-    height:				35px;
-    width:				35px;
-
-    margin-left:		-1em;
-    margin-top:			-1em;
-
-	display:			inline-block;
-
-}
-
-.iframe-wrap #lightbox .close{
-    top:				-1.4em;
-    right:				-1.4em;
-
-    margin-left:		0;
-    margin-top:			0;
-
-}
-
-
-#newsletter-wrapper{
-	position:	relative;
-	margin-top:		2em;
-}
-
-#newsletter-wrapper span{
-	margin-top:		1.5em;	
-	margin-bottom:	1em;	
-}
-
-#newsletter-wrapper span{
-	display:		block;
-	text-align:		center;
-	margin-left:	auto;
-	margin-right:	auto;
-}
-
-
-
-.icon-share{
-	color:green;
-}
-
-#e2ma_signup_reset_button,
-.e2ma_signup_form_label,
-.e2ma_signup_form_required_footnote{
-	display:	none;
-}
-*/
-/*
-#e2ma_signup_submit_button,
-*/
 .deans-button-1{
 	background-color:		#0048ff;
 	color:					white !important;

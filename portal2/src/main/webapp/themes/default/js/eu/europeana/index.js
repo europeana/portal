@@ -327,7 +327,7 @@
     			eu.europeana.vars.suppresResize = true;
     			
 				$.ajax({
-					url: '/portal/indexFragment.json?fragment=blog',
+					url: 'indexFragment.json?fragment=blog',
 					dataType: 'json',
 					success: function(data){
 						$("#section-blog .collapse-content").html(data.markup);
@@ -352,7 +352,7 @@
 			fireFirstOpen:		function(){
 				eu.europeana.vars.suppresResize = true;
 				$.ajax({
-					url: '/portal/indexFragment.json?fragment=featuredContent',
+					url: 'indexFragment.json?fragment=featuredContent',
 					dataType: 'json',
 					success: function(data){
 						$("#section-featured-content .collapse-content").html(data.markup);
@@ -392,7 +392,7 @@
 			fireFirstOpen:			function(){
 				eu.europeana.vars.suppresResize = false;
 				$.ajax({
-						url: '/portal/indexFragment.json?fragment=pinterest',
+						url: 'indexFragment.json?fragment=pinterest',
 						dataType: 'json',
 						success: function(data){
 							$("#section-pinterest .collapse-content").html('<div class="carousel-wrapper"><div id="pinterest-carousel"></div></div>');

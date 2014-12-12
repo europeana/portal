@@ -23,9 +23,9 @@ fnSearchWidget = function($, config){
     // move wskey and URLs to an external .jsp generated file, in order to 
     // 1) generate URLs dinamically
 
-    var resultServerUrl         = 'http://europeana.eu/portal';
+    var resultServerUrl         = 'http://europeana.eu/';
 	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
-	var searchUrlWithoutResults = 'http://www.europeana.eu/portal/search.html';
+	var searchUrlWithoutResults = 'http://www.europeana.eu/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
 	var cssUrl                  = rootUrl +  '/themes/default/css/';
@@ -146,7 +146,6 @@ fnSearchWidget = function($, config){
 //        	container.attr('data-squery', 'max-width:48em=mobile min-width:48em=desktop min-width:71em=min71em max-width:30em=max30em                        min-width:22em=min22em min-width:55em=min55em max-width:55em=max55em');
         	container.attr('data-squery', 'max-width:55em=max55em max-width:48em=mobile max-width:30em=max30em min-width:22em=min22em min-width:48em=desktop min-width:55em=min55em min-width:71em=min71em');
 
-        	
             // load style - as single files if in debug mode
             if(js.debug){
     			$.each(['html-sw', 'common-sw', 'header-sw', 'menu-main', 'responsive-grid-sw', 'eu-menu', 'ellipsis', 'europeana-font-icons-widget', 'europeana-font-face', 'search-sw', 'search-pagination-sw', 'sidebar-facets-sw', 'styling-sw'], function(i, ob){
@@ -771,7 +770,8 @@ var theParams = function(){
 	}
 	
 	rootJsUrl	= thisScript.src.split('EuSearchWidget')[0];
-	rootUrl		= rootJsUrl.split('/portal/')[0] + '/portal';
+	//rootUrl		= rootJsUrl.split('/portal/')[0] + '/portal';
+	rootUrl		= 'http://' + rootJsUrl.replace('http://', '').split('/')[0] + (rootJsUrl.indexOf('/portal') ? '/portal' : '');
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
 	queryString = decodeURIComponent(queryString);

@@ -9,7 +9,7 @@ e.g., total possible is 12 items, yet they may only fill 7 items, thus the colle
 marcoms can provide a local european.eu link within the portal or an external http:// link,
 this if statement is currently used to determine if the item.anchorUrl should have /${model.portalName}/ appended
 or not, something similar could be determined in the backend instead
-<#if !"${url}"?contains('http://')> <#assign url>/${model.portalName}/${url}</#assign> </#if>
+<#if !"${url}"?contains('http://')> <#assign url>/${url}</#assign> </#if>
 
 x = ordinal nr
 ${item.url} = a local/external interpretation of the notranslate_carousel-item-x-a_url
@@ -34,7 +34,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			<c:forEach var="item" items="${model.carouselItems}">
 
 				carouselData[carouselData.length] = {
-					image:				"/${model.portalName}${item.responsiveImages['_1']}",
+					image:				"${item.responsiveImages['_1']}",
 					title:				"<spring:message code="${item.anchorTitle}" />",
 					description:		"<spring:message code="${item.description}" />",
 					linkDescription:	"<spring:message code="${item.linkDescription}" />",
@@ -58,7 +58,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			<c:forEach var="item" items="${model.carouselItems}">
 				<a href="${item.url}">
 					<img
-							src		= "/${model.portalName}${item.responsiveImages['_1']}"
+							src		= "${item.responsiveImages['_1']}"
 							title	= "<spring:message code="${item.anchorTitle}" />"
 							alt		= "<spring:message code="${item.imgAlt}" />"
 							class	= "hidden"

@@ -16,7 +16,7 @@
 	<%--
 	<c:if test="${not model.embedded} && ${model.showDidYouMean}">
 		<spring:message code="Didyoumean_t"/>:
-		<a href="/${model.portalName}/search.html?query=${model.briefBeanView.spellCheck.collatedResult}">${model.briefBeanView.spellCheck.collatedResult}</a>
+		<a href="/search.html?query=${model.briefBeanView.spellCheck.collatedResult}">${model.briefBeanView.spellCheck.collatedResult}</a>
 	</c:if>
 	--%>
 </div>
@@ -24,13 +24,13 @@
 <c:if test="${empty isSearchWidget}">
 	<div id="query-info" class="hide-cell-on-phones">
 
-		<c:set var="helpHref" value="/${model.portalName}/usingeuropeana.html"/>
+		<c:set var="helpHref" value="/usingeuropeana.html"/>
 		<c:choose>
 			<c:when test="${model.pageName == 'login.html' || model.pageName == 'myeuropeana/index'}">
-				<c:set var="helpHref" value="/${model.portalName}/usingeuropeana_myeuropeana.html"/>
+				<c:set var="helpHref" value="/usingeuropeana_myeuropeana.html"/>
 			</c:when>
 			<c:when test="${model.pageName == 'full-doc.html' || model.pageName == 'search.html'}">
-				<c:set var="helpHref" value="/${model.portalName}/usingeuropeana_results.html"/>
+				<c:set var="helpHref" value="/usingeuropeana_results.html"/>
 			</c:when>
 		</c:choose>
 

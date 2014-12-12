@@ -247,7 +247,7 @@
     right: 10px;
     z-index: 2;
     display: none;
-    background: url('/portal/themes/default/js/galleria/themes/europeanax/classic-loader.gif') no-repeat 2px 2px;
+    background: url(classic-loader.gif) no-repeat 2px 2px;
 }
 
 
@@ -602,19 +602,3 @@
 	}
 }
 
-/*
-@media only screen and ( min-width:767px ){
-	
-	.galleria-info {
-	    top:				1em;
-	    left:				1em;
-	    
-	    right:				auto;
-	    max-width:			50%;
-	}
-	
-	.galleria-info-description{
-		display:	block !important;
-	}
-}
-*/

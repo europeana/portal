@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:set var="view" value="" />
 <c:set var="query" value="" />
 <c:set var="langActionUrl" value="" />
@@ -8,7 +10,37 @@
 <c:set var="AboutUsCurrent" value="" />
 <c:set var="ThoughtLabCurrent" value="" />
 
-<c:set var="branding" value="${model.portalName}/themes/${model.theme}" />
+<c:set var="webRoot" value="" />
+
+<c:choose>
+
+	<c:when test="${model.pageName == 'widget/editor.html'}">
+		<c:set var="webRoot" value="../" />		
+	</c:when>
+
+	<c:when test="${model.pageName == 'full-doc.html'}">
+		<c:set var="webRoot" value="../../" />
+	</c:when>
+
+	<c:when test="${model.pageName == 'myeuropeana.html'}">
+	
+	</c:when>
+	
+	<c:otherwise>
+		<c:set var="webRoot" value="" />			
+	</c:otherwise>
+	
+</c:choose>
+
+<c:set var="branding"		value="${webRoot}themes/${model.theme}" />
+<c:set var="myEuropeanaUrl"	value="${webRoot}myeuropeana.html" />
+
+
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="homeUrl" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
+
+
+
 
 <c:if test="${!empty model.locale}"><c:set var="locale" value="${model.locale}" /></c:if>
 
@@ -40,12 +72,12 @@
 <%-- a css class holder for the <div id="query> so that it can accommodate for the spacing issue --%>
 <c:set var="menu_user_exists" value="" />
 
-<c:set var="query_action" value="/${model.portalName}/search.html" />
-<c:if test="${'timeline.html' == model.pageName}"><c:set var="query_action" value="/${model.portalName}/timeline.html" /></c:if>
-<c:if test="${'map.html' == model.pageName}"><c:set var="query_action" value="/${model.portalName}/map.html" /></c:if>
+<c:set var="query_action" value="/search.html" />
+<c:if test="${'timeline.html' == model.pageName}"><c:set var="query_action" value="/timeline.html" /></c:if>
+<c:if test="${'map.html' == model.pageName}"><c:set var="query_action" value="/map.html" /></c:if>
 
 <c:set var="language_menu_action" value="${model.currentUrl}" />
-<c:if test="${empty model.currentUrl}"><c:set var="language_menu_action" value="${model.portalName}/search.html" /></c:if>
+<c:if test="${empty model.currentUrl}"><c:set var="language_menu_action" value="/search.html" /></c:if>
 
 <c:set var="header_class" value=' class="notranslate"' />
 <c:if test="${empty model.embedded && !empty model.user}"><c:set var="header_class" value=' class="notranslate user-bar-added"' /></c:if>

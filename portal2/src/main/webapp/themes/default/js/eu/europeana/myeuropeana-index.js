@@ -14,7 +14,6 @@
 	 */
 	itemLanguage = {
 		$translate_item: $('#translate-item'),
-		$item_language: $('#item-language'),
 
 		/**
 		 * @returns {bool}
@@ -30,7 +29,7 @@
 			var value = '';
 
 			if ( this.$translate_item.prop('checked') ) {
-				value = this.$item_language.val();
+				value = $('#item-language').val();
 			}
 
 			return value;
@@ -40,6 +39,37 @@
 			if ( !eu.europeana.vars.user ) {
 				return;
 			}
+			
+			var callbackCount	= 0;
+			var langCodes		= [];
+    		var msSrc			=	'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguagesForTranslate' +
+									'?oncomplete=msCallback' +
+									'&appId=' + eu.europeana.vars.bing_translate_key;
+
+    		window.msCallback = function(data){
+    			switch(callbackCount){
+    				case 0: {
+    	    			langCodes = data;
+    	    			msSrc  =	'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguageNames' +
+    								'?oncomplete=msCallback'  +
+    								'&appId=' + eu.europeana.vars.bing_translate_key +
+    								'&locale=en' +
+    								'&languageCodes=' + JSON.stringify(data);
+    	    			callbackCount ++;
+    	    			js.loader.loadScripts([{ file : msSrc, path : ''}]);    					
+    					break;
+    				}
+    				case 1: {
+    	    			$('#translate-item').parent().after('&nbsp;<select id="item-language" name="item-language" />');
+    	    			$(langCodes).each(function(i, ob){
+    	    				$('#item-language').append($('<option>').text(data[i]).attr('value', ob));
+    	    			});
+    	    			$('#item-language').val(eu.europeana.vars.languageItem);
+    					break;
+    				}
+    			}
+			};
+			js.loader.loadScripts([{file : msSrc, path : ''}]);
 		}
 	},
 
@@ -211,6 +241,13 @@
 		handleKeywordLanguagesClick: function() {
 			keywords.adjustLanguagesCount( $(this) );
 			keywords.checkDisabledState();
+			
+			if(keywords.languages_count){
+				$.cookie('keywordLanguagesApplied', 'true', { expires : 1 });
+			}
+			else{
+				$.cookie('keywordLanguagesApplied', 'false', { expires : 1 });
+			}			
 		},
 
 		init: function() {
@@ -635,5 +672,6 @@
 	portalLanguage.init();
 	userPanels.init();
 	languageSettings.init();
+
 
 }( jQuery, eu ));

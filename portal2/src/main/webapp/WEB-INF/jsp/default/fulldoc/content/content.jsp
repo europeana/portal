@@ -46,8 +46,6 @@
 				    
 				    	var showHierarchical	 = ${model.showHierarchical};
 						
-				    	alert('showHierarchical ' + showHierarchical);
-						
 						window.apiKey            =   'api2demo';
 						window.apiServerRoot     =  '${model.apiUrl}/v2/record';
 						var hierarchyOriginalUrl = '${model.document.about}';

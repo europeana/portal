@@ -110,9 +110,19 @@ js.console = js.empty_console;
 	js.min_directory = 'min/';
 </c:if>
 
-eu.europeana.vars.portal_name = '${model.portalName}';
+eu.europeana.vars.portal_name = '';
 eu.europeana.vars.page_name = '${model.pageName}';
-eu.europeana.vars.branding = '/${branding}';
+
+eu.europeana.vars.branding = '${branding}';	
+eu.europeana.vars.homeUrl  = '${homeUrl}';
+/*
+if(eu.europeana.vars.page_name == 'widget/editor.html'){
+	eu.europeana.vars.branding = '../${branding}';
+}
+else{
+}
+*/
+
 eu.europeana.vars.browser_locale = '${model.browserLanguage}';
 eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
@@ -260,9 +270,12 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.save_settings_failure = '${save_settings_failure}';
 		eu.europeana.vars.keyword_languages_limit = ${model.keywordLanguagesLimit};
 		eu.europeana.vars.keyword_languages_separator = '${model.keywordLanguagesSeparator}';
+		eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				eu.europeana.vars.user = true;
+				eu.europeana.vars.languageItem			   = '${model.user.languageItem}';
 				eu.europeana.vars.msg.error_occurred       = '${fn:escapeXml(error_occurred)}';
 				eu.europeana.vars.msg.item_not_removed     = '${fn:escapeXml(item_not_removed)}';
 				eu.europeana.vars.msg.saved_search_removed = '${fn:escapeXml(saved_search_removed)}';

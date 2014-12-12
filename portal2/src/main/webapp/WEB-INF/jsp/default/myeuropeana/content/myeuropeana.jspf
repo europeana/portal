@@ -16,5 +16,5 @@
     <%--@ include file="/WEB-INF/jsp/default/myeuropeana/content/user-panels/remote-search-widget.jspf" --%>
 
   </div>
-  <a href="/${model.portalName}/logout.html" class="mobile-logout deans-button-1 europeana-button-1"><spring:message code="LogOut_t" /></a>
+  <a href="/logout.html" class="mobile-logout deans-button-1 europeana-button-1"><spring:message code="LogOut_t" /></a>
 </div>

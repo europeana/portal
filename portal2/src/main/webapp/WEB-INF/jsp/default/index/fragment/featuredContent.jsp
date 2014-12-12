@@ -5,22 +5,22 @@
          --%><c:if test="${!empty model.featuredItem}"><%--
            --%><div class='fi-block-spacer'><%--
              --%><h4 class='show-on-phones'><%--
-               --%><a  href  = '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
+               --%><a  href  = '<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
                  --%>title  = '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
                  --%>target  = '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
                  --%>class  = 'europeana withRowParam'><%--
                  --%><spring:message code="${model.featuredItem.heading}" /><%--  
                --%></a><%--
              --%></h4><%--
-             --%><a  href=  '/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
+             --%><a  href=  '<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
              --%>title=  '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
              --%>target=  '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
              --%>class=  'image  withRowParam'><%--
              --%><c:set var="altText"><spring:message code="${model.featuredItem.imgAlt}" /></c:set><%-- 
-             --%><img class='responsive_half' src='/${model.portalName}${model.featuredItem.responsiveImages["_1"]}' alt='${fn:escapeXml(altText)}'/><%--
+             --%><img class='responsive_half' src='${model.featuredItem.responsiveImages["_1"]}' alt='${fn:escapeXml(altText)}'/><%--
              --%></a><%--
              --%><h4 class='hide-on-phones'><%--
-               --%><a href='/${model.portalName}<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
+               --%><a href='<spring:message code="${model.featuredItem.anchorUrl}" />'<%--
                --%>title  = '<spring:message code="${model.featuredItem.anchorTitle}" />'<%--
                --%>target  = '<spring:message code="${model.featuredItem.anchorTarget}" />'<%--
                --%>class  = 'europeana withRowParam'><%--
@@ -44,24 +44,24 @@
          --%></div><%--
        --%><div class='fi-block-spacer'><%--
          --%><h4 class='show-on-phones'><%--
-           --%><a  href  = '/${model.portalName}<spring:message code="${model.featuredPartner.anchorUrl}" />'<%--
+           --%><a  href  = '<spring:message code="${model.featuredPartner.anchorUrl}" />'<%--
              --%>title  = '<spring:message  code="${model.featuredPartner.anchorTitle}" />'<%--
              --%>target  = '<spring:message  code="${model.featuredPartner.anchorTarget}" />'<%--
              --%>class  = 'europeana'><%--
              --%><spring:message code="${model.featuredPartner.heading}" /><%--  
            --%></a><%--
          --%></h4><%--
-         --%><a  href=  '/${model.portalName}<spring:message code="${model.featuredPartner.anchorUrl}" />'<%--
+         --%><a  href=  '<spring:message code="${model.featuredPartner.anchorUrl}" />'<%--
            --%>title=  '<spring:message code="${model.featuredPartner.anchorTitle}" />'<%--
            --%>target=  '<spring:message code="${model.featuredPartner.anchorTarget}" />'<%--
            --%>class=  'image withRowParam'><%--
 			--%><c:set var="altText"><spring:message code="${model.featuredPartner.imgAlt}" /></c:set><%--
-           --%><img class='responsive_half' src='/${model.portalName}${model.featuredPartner.responsiveImages["_1"]}'<%--
+           --%><img class='responsive_half' src='${model.featuredPartner.responsiveImages["_1"]}'<%--
            --%>alt='${fn:escapeXml(altText)}'<%--
            --%>/><%--
          --%></a><%--
          --%><h4 class='hide-on-phones'><%--
-           --%><a  href  = '/${model.portalName}<spring:message  code="${model.featuredPartner.anchorUrl}" />'<%--
+           --%><a  href  = '<spring:message  code="${model.featuredPartner.anchorUrl}" />'<%--
              --%>title  = '<spring:message  code="${model.featuredPartner.anchorTitle}" />'<%--
              --%>target  = '<spring:message  code="${model.featuredPartner.anchorTarget}" />'<%--
              --%>class  = 'europeana  withRowParam'><%--

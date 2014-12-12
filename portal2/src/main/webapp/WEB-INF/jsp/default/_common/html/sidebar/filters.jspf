@@ -107,10 +107,10 @@
 				<c:forEach var="refinement" items="${model.refinements}">
 					<c:set var="refinementStr" value="${refinementStr}&qf=${refinement}" />
 				</c:forEach>
-		
-				<a	href="/${model.portalName}/${model.myEuropeanaUrl}?query=${fn:escapeXml(model.query)}${fn:escapeXml(refinementStr)}#language-settings"
+				<a	href="${myEuropeanaUrl}?query=${fn:escapeXml(model.query)}${fn:escapeXml(refinementStr)}#language-settings"
 					class="qt-settings-link"
 					title="<spring:message code="qt_setup" />"><spring:message code="qt_setup" /></a>
+					
 			</h4>
 		</li>
 	</ul>

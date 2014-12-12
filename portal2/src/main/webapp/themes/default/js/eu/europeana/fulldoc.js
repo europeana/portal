@@ -843,7 +843,7 @@ eu.europeana.fulldoc = {
 		}
 		else{
 			if(eu.europeana.fulldoc.triggerPanel){
-				eu.europeana.fulldoc.triggerPanel.css('display', 'none');				
+				eu.europeana.fulldoc.triggerPanel.css('display', 'none');
 			}
 			$('#carousel-1-img-measure img').css('cursor', 'default');
 		}
@@ -1048,7 +1048,6 @@ eu.europeana.fulldoc = {
 
 	initCarousels: function() {
 	
-		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",
@@ -1279,7 +1278,7 @@ eu.europeana.fulldoc = {
 			if (typeof(mlt) != 'undefined') {
 				
 				var getLoadAllLink = function() {
-					return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
+					return '<a class="load-all" href="/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
 				};
 				
 				var initMlt = function() {
