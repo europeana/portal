@@ -20,7 +20,7 @@
 			<c:set var="titleBidi"> title="${title}"</c:set>
 		</c:if>
 
-		<a href="${cell.fullDocUrl}&rows=${model.rows}" ${targetArg} ${titleBidi}>
+		<a href="${homeUrl}${cell.fullDocUrl}&rows=${model.rows}" ${targetArg} ${titleBidi}>
 			<div class="ellipsis">
 				<c:choose>
 					<c:when test="${!empty cell.titleBidi}">${title}</c:when>

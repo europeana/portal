@@ -7,7 +7,6 @@
  */
 'use strict';
 
-alert(1	);
 // Fix for expired document (no js) following language form submission when there's a hash in the url (force another redirect)
 if(window.location.href.indexOf('myeuropeana?lang=')>0){
 	window.location.href = window.location.href.split('?')[0];
@@ -23,7 +22,7 @@ var europeana_bootstrap = function(){
 	// loads the loader which then loads the scripts
 	function loadScripts(scripts){
 
-		alert('bootstrap - eu.europeana.vars.branding = ' + eu.europeana.vars.branding );
+//		alert('bootstrap - eu.europeana.vars.branding = ' + eu.europeana.vars.branding );
 
 
 		var script = document.createElement('script');

@@ -24,13 +24,13 @@
 <c:if test="${empty isSearchWidget}">
 	<div id="query-info" class="hide-cell-on-phones">
 
-		<c:set var="helpHref" value="/usingeuropeana.html"/>
+		<c:set var="helpHref" value="${homeUrl}/usingeuropeana.html"/>
 		<c:choose>
 			<c:when test="${model.pageName == 'login.html' || model.pageName == 'myeuropeana/index'}">
-				<c:set var="helpHref" value="/usingeuropeana_myeuropeana.html"/>
+				<c:set var="helpHref" value="${homeUrl}/usingeuropeana_myeuropeana.html"/>
 			</c:when>
 			<c:when test="${model.pageName == 'full-doc.html' || model.pageName == 'search.html'}">
-				<c:set var="helpHref" value="/usingeuropeana_results.html"/>
+				<c:set var="helpHref" value="${homeUrl}/usingeuropeana_results.html"/>
 			</c:when>
 		</c:choose>
 

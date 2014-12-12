@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%-- query action --%>
-<c:set var="query_action" value="search.html"/>
+<c:set var="query_action" value="${homeUrl}/search.html"/>
 
 <%-- query value --%>
 

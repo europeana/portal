@@ -33,7 +33,7 @@
 </c:choose>
 
 <c:set var="branding"		value="${webRoot}themes/${model.theme}" />
-<c:set var="myEuropeanaUrl"	value="${webRoot}myeuropeana.html" />
+<c:set var="myEuropeanaUrl"	value="${webRoot}myeuropeana" />
 
 
 <c:set var="req" value="${pageContext.request}" />

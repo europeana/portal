@@ -110,11 +110,9 @@ js.console = js.empty_console;
 	js.min_directory = 'min/';
 </c:if>
 
-eu.europeana.vars.portal_name = '';
 eu.europeana.vars.page_name = '${model.pageName}';
-
-eu.europeana.vars.branding = '${branding}';	
-eu.europeana.vars.homeUrl  = '${homeUrl}';
+eu.europeana.vars.branding  = '${branding}';	
+eu.europeana.vars.homeUrl   = '${homeUrl}';
 /*
 if(eu.europeana.vars.page_name == 'widget/editor.html'){
 	eu.europeana.vars.branding = '../${branding}';
