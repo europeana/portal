@@ -45,7 +45,7 @@ public class BriefBeanImpl implements BriefBean {
 	private Map<String, List<String>> edmPlaceLabelLangAware;
 	private Map<String, List<String>> edmTimespanLabelLangAware;
 	private Map<String, List<String>> edmAgentLabelLangAware;
-
+	private boolean edmPreviewNoDistribute;
 	@Override
 	public String getId() {
 		return id;
@@ -359,5 +359,10 @@ public class BriefBeanImpl implements BriefBean {
 
 	public void setEdmAgentLabelLangAware(Map<String, List<String>> edmAgentLabelLangAware) {
 		this.edmAgentLabelLangAware = edmAgentLabelLangAware;
+	}
+
+	@Override
+	public Boolean getPreviewNoDistribute() {
+		return this.edmPreviewNoDistribute;
 	}
 }

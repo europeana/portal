@@ -377,4 +377,9 @@ public class BriefBeanDecorator implements BriefBean {
 	public Map<String, List<String>> getEdmAgentLabelLangAware() {
 		return briefBean.getEdmAgentLabelLangAware();
 	}
+
+	@Override
+	public Boolean getPreviewNoDistribute() {
+		return briefBean.getPreviewNoDistribute();
+	}
 }

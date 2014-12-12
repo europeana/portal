@@ -53,6 +53,7 @@ import eu.europeana.corelib.logging.Log;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.search.model.ResultSet;
+import eu.europeana.corelib.search.utils.SearchUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.service.MltStopwordsService;
@@ -213,10 +214,8 @@ public class ObjectController {
 			model.setShowHierarchical(showHierarchical);
 			if (StringUtils.isNotBlank(newRecordId)) {
 				StringBuilder location = new StringBuilder();
-				if (!config.getPortalName().startsWith("/")) {
-					location.append("/");
-				}
-				location.append(config.getPortalName()).append("/record").append(newRecordId).append(".html");
+				
+				location.append("/record").append(newRecordId).append(".html");
 				response.setStatus(301);
 				response.setHeader("Location", location.toString());
 				return null;
@@ -558,7 +557,7 @@ public class ObjectController {
 							if (suggestion.getQuery().startsWith("http://")) {
 								suggestion.makeEscapedQuery(suggestion.getQuery());
 							} else {
-								suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+								suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 							}
 							seeAlsoCollector.add(suggestion);
 							countPerField++; id++;
@@ -594,7 +593,7 @@ public class ObjectController {
 							if (suggestion.getQuery().startsWith("http://")) {
 								suggestion.makeEscapedQuery(suggestion.getQuery());
 							} else {
-								suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+								suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 							}
 							mltCollector.add(suggestion);
 							countPerField++; id++;

@@ -120,8 +120,8 @@ public class SearchController {
 		model.setRows(fixRowsParameter(rows));
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 
-		queryString = SolrUtils.rewriteQueryFields(queryString);
-		queryString = SolrUtils.normalizeBooleans(queryString);
+		queryString = eu.europeana.corelib.search.utils.SearchUtils.rewriteQueryFields(queryString);
+		queryString = eu.europeana.corelib.search.utils.SearchUtils.normalizeBooleans(queryString);
 		model.setQuery(queryString);
 		
         if (model.isDoTranslation() && queryString.length() > 0 && !queryString.equals("*:*") &&  !userSetNoQT ) {

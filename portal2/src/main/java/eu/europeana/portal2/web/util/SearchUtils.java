@@ -95,11 +95,11 @@ public class SearchUtils {
 		return briefBeanView;
 	}
 
-	public static UrlBuilder createSearchUrl(String portalname, SearchPageEnum returnTo, 
+	public static UrlBuilder createSearchUrl(SearchPageEnum returnTo, 
 			String searchTerm, String[] qf, String start)
 					throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
+		sb.append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
 		if (searchTerm != null) {
 			url.addParam("query", searchTerm, true);

@@ -427,7 +427,7 @@ public class SitemapController {
 			throws EuropeanaQueryException {
 		setSitemapCacheDir();
 
-		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
+		String portalServer = new StringBuilder(config.getPortalServer()).toString();
 
 		// sitemap index - collections overview
 		if (solrOutdated() || contributorEntries == null) {
@@ -480,7 +480,7 @@ public class SitemapController {
 	public ModelAndView handleSitemap(HttpServletRequest request) {
 
 		List<SitemapEntry> records = new ArrayList<SitemapEntry>();
-		records.add(new SitemapEntry("http://www.europeana.eu/portal/europeana-providers.html", null, null, 10));
+		records.add(new SitemapEntry("http://www.europeana.eu/europeana-providers.html", null, null, 10));
 
 		SitemapPage<SitemapEntry> model = new SitemapPage<SitemapEntry>();
 		model.setResults(records);
@@ -507,7 +507,7 @@ public class SitemapController {
 
 	private String getPortalUrl() {
 		if (portalUrl == null) {
-			portalUrl = config.getCannonicalPortalServer() + config.getPortalName();
+			portalUrl = config.getCannonicalPortalServer();
 			if (!portalUrl.endsWith("/")) {
 				portalUrl = portalUrl + "/";
 			}

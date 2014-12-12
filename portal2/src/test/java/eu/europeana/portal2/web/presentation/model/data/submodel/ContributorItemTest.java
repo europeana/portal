@@ -33,7 +33,7 @@ public class ContributorItemTest {
 
 	@Before
 	public void setUp() throws Exception {
-		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
+		String portalServer = new StringBuilder(config.getPortalServer()).toString();
 		String providerQueryFormat = String.format("%s/search.html?query=*:*&qf=PROVIDER:", portalServer) + "%s";
 		String queryString = null;
 		try {

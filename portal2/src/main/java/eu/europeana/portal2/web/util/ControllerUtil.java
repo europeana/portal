@@ -287,7 +287,7 @@ public class ControllerUtil {
 
 	public static String rewriteQueryFields(String queryString) {
 		if (!StringUtils.isBlank(queryString)) {
-			queryString = SolrUtils.rewriteQueryFields(queryString);
+			queryString = eu.europeana.corelib.search.utils.SearchUtils.rewriteQueryFields(queryString);
 		}
 		return queryString;
 	}
