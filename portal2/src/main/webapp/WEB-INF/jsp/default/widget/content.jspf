@@ -562,8 +562,9 @@
 							width="100%"
 							height="100%"
 							frameborder="0"
-							webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
-							<a class="help-link europeana" href="/portal/usingeuropeana_searchwidget.html"><spring:message code="wizard_tab1_help_link_text_t"/></a>
+							webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+							
+							<a class="help-link europeana" href="${homeUrl}/usingeuropeana_searchwidget.html"><spring:message code="wizard_tab1_help_link_text_t"/></a>
 						</div>					
 					</c:if>
 					
