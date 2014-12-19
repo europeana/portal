@@ -61,7 +61,11 @@
 					}
 					case 1: {
 						$('#translate-item').parent().after('&nbsp;<select id="item-language" name="item-language" />');
+						
 						$(langCodes).each(function(i, ob){
+							if(ob.length > 2){
+								return true;
+							}
 							$('#item-language').append($('<option>').text(data[i]).attr('value', ob));
 						});
 						$('#item-language').val(eu.europeana.vars.languageItem);
