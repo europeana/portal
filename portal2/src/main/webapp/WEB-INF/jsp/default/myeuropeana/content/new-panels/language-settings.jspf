@@ -50,6 +50,8 @@
 		<h3><spring:message code="translate_items_t" /></h3>
 			<c:choose>
 				<c:when test="${!empty model.user}">
+				
+					<%-- 
 					<c:choose>
 						<c:when test="${!empty model.user.languageItem}">
 							<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" checked /> <spring:message code="translate_items_select_t" /></label>&nbsp;
@@ -66,7 +68,9 @@
 							</select>
 						</c:otherwise>
 					</c:choose>
+					--%>
 					<input type="hidden" name="action" value="translate-item" />
+					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" ${empty model.user.languageItem ? '' : ' checked="checked"'} /> <spring:message code="translate_items_select_t" /></label>&nbsp;
 				</c:when>
 				<c:otherwise>
 					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span></label>&nbsp;
