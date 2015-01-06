@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.springframework.http.MediaType;
@@ -21,8 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.edm.exceptions.SolrTypeException;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.search.model.ResultSet;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -36,9 +35,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class DataHierarchy {
 
-	@Log
-	private Logger log;
-
+	Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	private SearchService searchService;
 

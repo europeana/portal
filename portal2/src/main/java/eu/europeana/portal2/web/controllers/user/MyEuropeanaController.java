@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,8 +26,6 @@ import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.corelib.web.support.Configuration;
@@ -35,7 +34,6 @@ import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.presentation.model.MyEuropeanaPage;
-import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -46,9 +44,8 @@ public class MyEuropeanaController {
 	private static final String REQUEST_NEW_PASSWORD = "request-new-myeuropeana-password";
 	private static final String INVALID_CREDENTIALS = "invalid_credentials_t";
 
-	@Log
-	private Logger log;
-
+	Logger log = Logger.getLogger(this.getClass());
+	
 	@Resource
 	private UserService userService;
 

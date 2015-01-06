@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +33,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
@@ -48,8 +47,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
  */
 public class ClickStreamLogServiceImpl implements ClickStreamLogService {
 
-	@Log
-	private Logger log;
+	private Logger log = Logger.getLogger(ClickStreamLogServiceImpl.class.getName());
 
 	public static String VERSION = "2.0";
 
