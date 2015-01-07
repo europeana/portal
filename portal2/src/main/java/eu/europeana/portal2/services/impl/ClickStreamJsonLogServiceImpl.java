@@ -28,6 +28,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -37,8 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -58,9 +57,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
  */
 public class ClickStreamJsonLogServiceImpl implements ClickStreamLogService {
 
-	@Log
-	private static Logger log;
-
+static Logger log = Logger.getLogger(ClickStreamJsonLogServiceImpl.class);	
 	public static String VERSION = "2.0";
 
 	@Resource

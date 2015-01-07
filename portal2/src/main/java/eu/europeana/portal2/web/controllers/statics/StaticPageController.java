@@ -54,6 +54,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class StaticPageController {
 
+	Logger log = Logger.getLogger(this.getClass());
 	public static final String AFFIX_TEMPLATE_VAR_FOR_LEFT = "left";
 
 	private static final String AFFIX_TEMPLATE_VAR_FOR_HEADER = "header";
@@ -62,8 +63,6 @@ public class StaticPageController {
 
 	private static final String AFFIX_TEMPLATE_VAR_FOR_TITLE = "title";
 
-	@Log
-	private Logger log;
 
 	@Resource
 	private Configuration config;
@@ -156,7 +155,6 @@ public class StaticPageController {
 
 	private ModelAndView doFetchStaticPage(String pageName, HttpServletResponse response, StaticPage model,
 			Locale locale) {
-		log.info("=========== fetchStaticPage ==============");
 		log.info("pageName: " + pageName);
 		staticPageCache.setStaticPagePath(config.getStaticPagePath());
 
@@ -166,7 +164,7 @@ public class StaticPageController {
 			StringBuilder sb = new StringBuilder();
 			if (!redirect.getRedirect().startsWith("http")) {
 				sb.append(config.getPortalServer());
-				sb.append(config.getPortalName());
+				
 			}
 			sb.append(redirect.getRedirect());
 			response.setStatus(301);
@@ -204,14 +202,12 @@ public class StaticPageController {
 
 	@RequestMapping("/page-not-found.html")
 	public ModelAndView pageNotFoundHandler() throws Exception {
-		log.info("====== page-not-found.html ======");
 		throw new EuropeanaQueryException(ProblemType.PAGE_NOT_FOUND);
 	}
 
 	@RequestMapping("/error.html")
 	public ModelAndView errorPageHandler(HttpServletRequest request, Locale locale)
 			throws Exception {
-		log.info("====== error.html ======");
 		PortalPageInfo pageType = PortalPageInfo.ERROR;
 
 		clickStreamLogger.logStaticPageView(request, pageType);

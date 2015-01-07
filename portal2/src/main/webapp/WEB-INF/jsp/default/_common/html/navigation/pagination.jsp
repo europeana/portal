@@ -40,14 +40,14 @@
 				<%-- first arrow --%>
 				<li class="nav-first">
 					<c:if test="${!model.briefBeanView.pagination.first || isSearchWidget}" >
-						<a href="${model.firstPageUrl}" title="<spring:message code="AltFirstPage_t" />">&lt;&lt; &nbsp;</a>
+						<a href="${homeUrl}${model.firstPageUrl}" title="<spring:message code="AltFirstPage_t" />">&lt;&lt; &nbsp;</a>
 					</c:if>
 				</li>
 
 				<%-- previous arrow --%>
 				<li class="nav-prev">
 					<c:if test="${model.briefBeanView.pagination.previous || isSearchWidget}">
-						<a href="${model.previousPageUrl}" title="<spring:message code="AltPreviousPage_t" />">&nbsp; &lt; &nbsp; </a>
+						<a href="${homeUrl}${model.previousPageUrl}" title="<spring:message code="AltPreviousPage_t" />">&nbsp; &lt; &nbsp; </a>
 					</c:if>
 				</li>
 
@@ -90,14 +90,14 @@
 				<%-- next arrow --%>
 				<li class="nav-next">
 					<c:if test="${model.briefBeanView.pagination.next || isSearchWidget}">
-						<a href="${model.nextPageUrl}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; &nbsp;</a>
+						<a href="${homeUrl}${model.nextPageUrl}" title="<spring:message code="AltNextPage_t" />"> &nbsp; &gt; &nbsp;</a>
 					</c:if>
 				</li>
 
 				<%-- last arrow --%>
 				<li class="nav-last">
 					<c:if test="${!model.briefBeanView.pagination.last || isSearchWidget}">
-						<a href="${model.lastPageUrl}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt;&gt;</a>
+						<a href="${homeUrl}${model.lastPageUrl}" title="<spring:message code="AltLastPage_t" />">&nbsp; &gt;&gt;</a>
 					</c:if>
 				</li>
 			</ul>

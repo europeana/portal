@@ -22,7 +22,7 @@
 
 				<#if true> 
 	
-					<a href='/${model.portalName}/${item.getEuropeanaUri()?replace("http://www.europeana.eu/resolve/", "")}.html?bt=savedItem'><strong><@stringLimiter "${item.title}" "50"/></strong></a>
+					<a href='/${item.getEuropeanaUri()?replace("http://www.europeana.eu/resolve/", "")}.html?bt=savedItem'><strong><@stringLimiter "${item.title}" "50"/></strong></a>
 					<p><@spring.message 'Creator_t'/>: <em>${item.author}</em></p>
 					<p><@spring.message 'DateSaved_t'/>: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em></p>
 

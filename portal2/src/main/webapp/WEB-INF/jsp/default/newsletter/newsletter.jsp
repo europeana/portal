@@ -8,9 +8,9 @@
 
 <html>
 	<head>
-		<link rel="stylesheet" href="/${branding}/css/europeana-font-face.css" />
+		<link rel="stylesheet" href="${branding}/css/europeana-font-face.css" />
 		
-		<script type="text/javascript" src="/${branding}/js/jquery/min/jquery-1.8.1.min.js"></script>
+		<script type="text/javascript" src="${homeUrl}/${branding}/js/jquery/min/jquery-1.8.1.min.js"></script>
 		<script type="text/javascript">
 			window.js={};
 		</script>

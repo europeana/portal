@@ -23,9 +23,9 @@ fnSearchWidget = function($, config){
     // move wskey and URLs to an external .jsp generated file, in order to 
     // 1) generate URLs dinamically
 
-    var resultServerUrl         = 'http://europeana.eu/portal';
+    var resultServerUrl         = 'http://europeana.eu/';
 	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
-	var searchUrlWithoutResults = 'http://www.europeana.eu/portal/search.html';
+	var searchUrlWithoutResults = 'http://www.europeana.eu/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
 	var cssUrl                  = rootUrl +  '/themes/default/css/';

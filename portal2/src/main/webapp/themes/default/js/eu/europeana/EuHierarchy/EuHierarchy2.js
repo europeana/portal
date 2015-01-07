@@ -140,7 +140,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 			else{
 				text = (parent ? (1 + index + '. ') : '')
-				+ '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
+				+ '<a href="' + (typeof eu != 'undefined' ? eu.europeana.vars.homeUrl : '') + '/record' + id + '.html"'
 				+ 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
 				+ 	text
 				+ '</a>'

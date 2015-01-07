@@ -66,22 +66,66 @@
 			</plugin>
 
 			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/main/resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${europeana.properties}</directory>
+									<filtering>true</filtering>
+								</resource>
+								<resource>
+									<directory>${project.parent.basedir}/portal_messages</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>exec-maven-plugin</artifactId> -->
+			<!-- <version>1.2</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>java</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- <configuration> -->
+			<!-- <mainClass>eu.europeana.Portal2Starter</mainClass> -->
+			<!-- <classpathScope>test</classpathScope> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2</version>
 				<executions>
 					<execution>
+						<id>portal-static</id>
+						<phase>compile</phase>
 						<goals>
-							<goal>java</goal>
+							<goal>exec</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>eu.europeana.Portal2Starter</mainClass>
-					<classpathScope>test</classpathScope>
+					<executable>src/main/resources/bundle</executable>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -151,18 +195,35 @@
 			<artifactId>corelib-db</artifactId>
 			<version>2.1-SNAPSHOT</version>
 		</dependency>
-
+		<dependency>
+			<!-- will also include SOLR, DEF, UTILS -->
+			<groupId>eu.europeana.corelib</groupId>
+			<artifactId>corelib-search</artifactId>
+			<version>2.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-web</artifactId>
 			<version>2.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>eu.europeana.corelib</groupId>
-			<artifactId>corelib-logging</artifactId>
-			<version>2.1-SNAPSHOT</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>redis.clients</groupId> -->
+<!-- 			<artifactId>jedis</artifactId> -->
+<!-- 			<version>2.6.1</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -180,6 +241,12 @@
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>${version.springSecurityOauth}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -299,6 +366,13 @@
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
+
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Added logging for jetty in Portal2Starter -->
@@ -314,7 +388,11 @@
 			<artifactId>hsqldb</artifactId>
 			<version>1.8.0.7</version>
 		</dependency>
-
+		<!-- <dependency> -->
+		<!-- <groupId>javax.validation</groupId> -->
+		<!-- <artifactId>validation-api</artifactId> -->
+		<!-- <version>1.1.0.Final</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -329,15 +407,22 @@
 		</dependency>
 
 		<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-math3</artifactId>
-				<version>3.1.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.1.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.9</version>
+
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<!-- Bing code for translation tokens -->		
@@ -347,9 +432,40 @@
 			<version>0.6.1</version>
 			<type>jar</type>
 		</dependency>
-		
-	</dependencies>
 
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.javaswift</groupId> -->
+<!-- 			<artifactId>joss</artifactId> -->
+<!-- 			<version>0.9.7</version> -->
+<!-- 		</dependency> -->
+
+		<dependency>
+			<artifactId>commons-codec</artifactId>
+			<groupId>commons-codec</groupId>
+			<version>1.9</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>
+                    test
+                </id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                    personal
+                </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>
+			</properties>
+		</profile>
+	</profiles>
 	<repositories>
 		<repository>
 			<id>org.springframework.security</id>

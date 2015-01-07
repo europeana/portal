@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
@@ -38,9 +39,7 @@ import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.edm.exceptions.SolrTypeException;
-import eu.europeana.corelib.edm.service.SearchService;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -76,9 +75,8 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class SitemapController {
 
-  @Log
-  private Logger log;
 
+	Logger log = Logger.getLogger(this.getClass());
   @Resource
   private Configuration config;
 
@@ -538,7 +536,7 @@ public class SitemapController {
     setSitemapCacheDir();
 
     String portalServer =
-        new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
+        new StringBuilder(config.getPortalServer()).toString();
 
     // sitemap index - collections overview
     if (solrOutdated() || contributorEntries == null) {
@@ -550,7 +548,7 @@ public class SitemapController {
           try {
             String query =
                 StringEscapeUtils.escapeXml(String.format(
-                    "%s/search.html?query=*:*&qf=PROVIDER:%s", portalServer,
+                    "search.html?query=*:*&qf=PROVIDER:%s", 
                     convertProviderToUrlParameter(provider.getName())));
             ContributorItem contributorItem =
                 new ContributorItem(query, provider.getName(), provider.getCount(), portalServer);
@@ -602,7 +600,7 @@ public class SitemapController {
   public ModelAndView handleSitemap(HttpServletRequest request) {
 
     List<SitemapEntry> records = new ArrayList<SitemapEntry>();
-    records.add(new SitemapEntry("http://www.europeana.eu/portal/europeana-providers.html", null,
+    records.add(new SitemapEntry("http://www.europeana.eu/europeana-providers.html", null,
         null, 10));
 
     SitemapPage<SitemapEntry> model = new SitemapPage<SitemapEntry>();
@@ -644,7 +642,7 @@ public class SitemapController {
    */
   private String getPortalUrl() {
     if (portalUrl == null) {
-      portalUrl = config.getCannonicalPortalServer() + config.getPortalName();
+      portalUrl = config.getCannonicalPortalServer();
       if (!portalUrl.endsWith("/")) {
         portalUrl = portalUrl + "/";
       }

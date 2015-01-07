@@ -31,7 +31,7 @@ eu.europeana.ajax = function( options ) {
 		
 		properties = {
 			
-			ajax_url_prefix : '/' + eu.europeana.vars.portal_name + '/'
+			ajax_url_prefix : eu.europeana.vars.homeUrl + '/'
 			
 		};
 	

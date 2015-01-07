@@ -20,8 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonSyntaxException;
 
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.model.ApiResult;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -40,9 +38,7 @@ import eu.europeana.portal2.web.util.apiconsole.ApiWrapper;
 @Controller
 public class ApiConsoleController {
 
-	@Log
-	private Logger log;
-
+	
 	@Resource
 	private Configuration config;
 
@@ -73,7 +69,6 @@ public class ApiConsoleController {
 			@RequestParam(value = "embedded", required = false) String embedded,
 			HttpServletRequest request,
 			Locale locale) {
-		log.info("===== /api/console.html =====");
 		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
 		String[] _qf = (String[]) request.getParameterMap().get("qf");
 		if (_qf != null && _qf.length != refinements.length) {
@@ -210,7 +205,7 @@ public class ApiConsoleController {
 				try {
 					niceJsonString = JsonFormatter.format(rawJsonString);
 				} catch (JsonSyntaxException e) {
-					log.error("JSON formatting exception: " + e.getMessage());
+					org.apache.log4j.Logger.getLogger(this.getClass()).error("JSON formatting exception: " + e.getMessage());
 				}
 			}
 

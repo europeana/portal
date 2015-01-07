@@ -57,9 +57,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class IndexPageController {
 
-	@Log
-	private Logger log;
-
+	
 	@Resource
 	private ClickStreamLogService clickStreamLogger;
 
@@ -148,7 +146,6 @@ public class IndexPageController {
 							} catch (NoSuchMessageException e) {
 								keepFetchingLanguages = false;
 							} catch (ArrayIndexOutOfBoundsException e) {
-								log.error("misconfigured language: " + key + " - expected format \"code,url\"");
 								keepFetchingLanguages = false;
 							}
 							j++;

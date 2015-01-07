@@ -1,0 +1,12 @@
+---
+applications:
+- name: portal-test2
+  memory: 4096M
+  instances: 1
+  host: portal-test2
+  domain: de.a9sapp.eu
+  path: target/portal.war
+  buildpack: https://github.com/europeana/java-buildpack.git
+  services:
+    - postgresql
+    - europeana-object-db

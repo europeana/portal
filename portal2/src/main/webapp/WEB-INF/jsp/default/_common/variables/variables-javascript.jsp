@@ -110,9 +110,17 @@ js.console = js.empty_console;
 	js.min_directory = 'min/';
 </c:if>
 
-eu.europeana.vars.portal_name = '${model.portalName}';
 eu.europeana.vars.page_name = '${model.pageName}';
-eu.europeana.vars.branding = '/${branding}';
+eu.europeana.vars.branding  = '${branding}';	
+eu.europeana.vars.homeUrl   = '${homeUrl}';
+/*
+if(eu.europeana.vars.page_name == 'widget/editor.html'){
+	eu.europeana.vars.branding = '../${branding}';
+}
+else{
+}
+*/
+
 eu.europeana.vars.browser_locale = '${model.browserLanguage}';
 eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';

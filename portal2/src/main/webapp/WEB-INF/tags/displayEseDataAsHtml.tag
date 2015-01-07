@@ -50,31 +50,31 @@
 
 	<c:choose>
 		<c:when test='${"dc:subject"       == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=what%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
+			<c:set var="cannedUrl" value="/search.html?query=what%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
 		</c:when>
 
 		<c:when test='${"dc:type"          == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=what%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
+			<c:set var="cannedUrl" value="/search.html?query=what%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
 		</c:when>
 
 		<c:when test='${"dc:contributor"   == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a(CANNED_VALUE)&rows=${model.rows}"/>
+			<c:set var="cannedUrl" value="/search.html?query=who%3a(CANNED_VALUE)&rows=${model.rows}"/>
 		</c:when>
 
 		<c:when test='${"dc:creator"       == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=who%3a(CANNED_VALUE)&rows=${model.rows}"/>
+			<c:set var="cannedUrl" value="/search.html?query=who%3a(CANNED_VALUE)&rows=${model.rows}"/>
 		</c:when>
 
 		<c:when test='${"dc:coverage"      == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?query=where%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
+			<c:set var="cannedUrl" value="/search.html?query=where%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
 		</c:when>
 
 		<c:when test='${"dc:provider"     == data.fieldName || "edm:provider"     == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?qf=PROVIDER%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
+			<c:set var="cannedUrl" value="/search.html?qf=PROVIDER%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
 		</c:when>
 
 		<c:when test='${"dc:dataProvider" == data.fieldName || "edm:dataProvider" == data.fieldName}'>
-			<c:set var="cannedUrl" value="/${model.portalName}/search.html?qf=DATA_PROVIDER%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
+			<c:set var="cannedUrl" value="/search.html?qf=DATA_PROVIDER%3a%22CANNED_VALUE%22&rows=${model.rows}"/>
 		</c:when>
 
 		<c:otherwise><c:set var="cannedUrl" value="" /></c:otherwise>

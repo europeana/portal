@@ -30,9 +30,9 @@ import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.Facet;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.edm.exceptions.SolrTypeException;
-import eu.europeana.corelib.edm.service.SearchService;
 import eu.europeana.corelib.edm.utils.SolrUtils;
-import eu.europeana.corelib.solr.model.ResultSet;
+import eu.europeana.corelib.search.SearchService;
+import eu.europeana.corelib.search.model.ResultSet;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
@@ -60,7 +60,7 @@ public class SearchUtils {
 
 		List<FacetField> facetFields = resultSet.getFacetFields();
 		if (resultSet.getQueryFacets() != null) {
-			List<FacetField> allQueryFacetsMap = SolrUtils.extractQueryFacets(resultSet.getQueryFacets());
+			List<FacetField> allQueryFacetsMap = eu.europeana.corelib.search.utils.SearchUtils.extractQueryFacets(resultSet.getQueryFacets());
 			if (allQueryFacetsMap != null && !allQueryFacetsMap.isEmpty()) {
 				facetFields.addAll(allQueryFacetsMap);
 			}
@@ -95,11 +95,11 @@ public class SearchUtils {
 		return briefBeanView;
 	}
 
-	public static UrlBuilder createSearchUrl(String portalname, SearchPageEnum returnTo, 
+	public static UrlBuilder createSearchUrl(SearchPageEnum returnTo, 
 			String searchTerm, String[] qf, String start)
 					throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
+		sb.append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
 		if (searchTerm != null) {
 			url.addParam("query", searchTerm, true);
