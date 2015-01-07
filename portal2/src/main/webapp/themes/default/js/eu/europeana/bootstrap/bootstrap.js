@@ -155,7 +155,7 @@ var europeana_bootstrap = function(){
 			XXXXpath:  (eu.europeana.vars.page_name == 'widget/editor.html' ? '../' : '') + 'themes/common/js/com/github/carhartl/' + js.min_directory,
 			
 			
-			path:  eu.europeana.vars.homeUrl + '/themes/common/js/com/github/carhartl/' + js.min_directory,
+			path:  eu.europeana.vars.homeUrl + 'themes/common/js/com/github/carhartl/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		},
 

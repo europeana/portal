@@ -93,9 +93,9 @@ public class ControllerUtil {
 		if (StringUtils.isBlank(model.getPageTitle())) {
 			model.setPageTitle(view.getPageTitle());
 		}
-
+		log.info("In controllerutil : " + "/"+model.getTheme() + "/" + view.getTemplate());
 		// create page
-		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
+		ModelAndView page = new ModelAndView("/"+model.getTheme() + "/" + view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;
 	}
@@ -105,7 +105,7 @@ public class ControllerUtil {
 	}
 
 	public static ModelAndView createModelAndViewFragment(PortalPageData model, FragmentInfo view) {
-		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
+		ModelAndView page = new ModelAndView("/"+model.getTheme() + "/" + view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;
 	}

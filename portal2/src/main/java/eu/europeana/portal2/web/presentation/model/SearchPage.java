@@ -21,10 +21,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.web.exception.InvalidUrlException;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
@@ -54,7 +56,7 @@ public class SearchPage extends SearchPreparation {
 		// url.removeDefault("start", "1");
 		// url.removeDefault("startPage", "1");
 		url.removeDefault("embedded", "false");
-
+	
 		return url;
 	}
 
@@ -167,9 +169,11 @@ public class SearchPage extends SearchPreparation {
 	 */
 	private String createNavigationUrl(int start) throws UnsupportedEncodingException {
 		UrlBuilder builder = europeanaUrlService.getPortalSearch(true, getQuery(), String.valueOf(getRows()));
+		
 		builder.addParam("start", start);
 		builder.addParam("qf", getRefinements(), true);
 		builder.addParam("qt", getQueryTranslationParams(), true);
+		Logger.getAnonymousLogger().info(getPortalFormattedUrl(builder).toString());
 		return getPortalFormattedUrl(builder).toString();
 	}
 

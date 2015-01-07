@@ -436,7 +436,7 @@ public class SitemapController {
 				for (Count provider : providers) {
 					try {
 						String query = StringEscapeUtils.escapeXml(String.format(
-								"%s/search.html?query=*:*&qf=PROVIDER:%s", portalServer,
+								"search.html?query=*:*&qf=PROVIDER:%s", 
 								convertProviderToUrlParameter(provider.getName())));
 						ContributorItem contributorItem = new ContributorItem(query, provider.getName(),
 								provider.getCount(), portalServer);
