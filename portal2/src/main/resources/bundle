@@ -5,4 +5,5 @@ then
 else
     git clone https://github.com/europeana/portal_translations.git
 fi
-cp -r portal_translations src/main/resources
+cp -r portal_translations/static_pages src/main/resources/portal_translations
+cp -r portal_translations/message_keys src/main/resources/portal_translations
