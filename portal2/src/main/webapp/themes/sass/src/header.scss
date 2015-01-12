@@ -75,15 +75,14 @@
 	background-size:	contain;
 }
 
-.logo{
-	background-image:	url('../images/europeana-logo-2.png');
-}
 
+.logo{
+	background-image:	url(web_server() + 'themes/default/images/europeana-logo-2.png');
+}
 
 .logo-t-and-c{
-	background-image:	url('../images/europeana-logo-tc.png');
+	background-image:	url(web_server() + 'themes/default/images/europeana-logo-tc.png');
 }
-
 
 #query-translations{
 	margin-top: 1em;

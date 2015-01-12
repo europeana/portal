@@ -34,6 +34,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.europeanaCorelib>2.1-SNAPSHOT</version.europeanaCorelib>
+		
+		<europeana.server>http://www.europeana.eu/portal/</europeana.server>
 	</properties>
 
 	<scm>
@@ -106,13 +108,24 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2</version>
 				<executions>
+
+					<!-- SASSIFY -->					
 					<execution>
-						<id>portal-static</id>
-						<phase>compile</phase>
+						<id>sassify</id>
+						<phase>prepare-package</phase>
 						<goals>
-							<goal>exec</goal>
+							<goal>java</goal>
 						</goals>
+						<configuration>
+							<mainClass>eu.europeana.portal2.web.presentation.ThemeSassCompiler</mainClass>
+							<arguments>
+	                             <argument>${europeana.server}</argument>
+	                        </arguments>
+						</configuration>
 					</execution>
+
+					
+					
 				</executions>
 				<configuration>
 					<executable>src/main/resources/bundle</executable>
@@ -326,6 +339,14 @@
 			<version>7.2.2.v20101205</version>
 		</dependency>
 
+		<!-- Added for sass -->
+
+		<dependency>
+		    <groupId>com.darrinholst</groupId>
+		    <artifactId>sass-java</artifactId>
+		    <version>3.4.4</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
@@ -446,20 +467,22 @@
 		<profile>
 			<id>
                     test
-                </id>
+            </id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://test.portal2.eanadev.org/portal/</europeana.server>
 			</properties>
 		</profile>
 		<profile>
 			<id>
                     personal
-                </id>
+            </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>
+				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>				
+			    <europeana.server>http://localhost:8080/portal/</europeana.server>
 			</properties>
 		</profile>
 	</profiles>
@@ -469,6 +492,12 @@
 			<name>Spring Security</name>
 			<url>http://maven.springframework.org/snapshot</url>
 		</repository>
+		
+		<repository>
+            <id>sass-java</id>
+            <url>http://sass-java.googlecode.com/svn/repo/</url>
+        </repository>
+		
 	</repositories>
 </project>
 
