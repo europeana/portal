@@ -17,14 +17,16 @@ public class EuropeanaSassCompiler {
     private SassCompilingFilter filter;
 
     public static void main(String[] args){
+    	/*
     	try{
     		new EuropeanaSassCompiler().go();    		
     	}
     	catch(Exception e){
     		e.printStackTrace();
     	}
+    	*/
     }
-
+    /*
     public void go() throws Exception {
     	
         FilterConfig filterConfig = new FilterConfig() {
@@ -38,12 +40,9 @@ public class EuropeanaSassCompiler {
 					
 					public String getRealPath(String arg0) {
 						
-						System.err.println("get the root: " + new java.io.File("").getAbsolutePath() );
-						/*
-						/Users/admin/Documents/PortalWorkspace/javaSass/sass-java
-						 
-						/Users/admin/Documents/PortalWorkspace/javaSass/sass-java
-						*/
+						System.err.println("E Sass Compiler TEST");
+						
+						
 						return new java.io.File("").getAbsolutePath() + "/src/test/sample-webapp/WEB-INF/sass";
 					}
 
@@ -162,5 +161,5 @@ public class EuropeanaSassCompiler {
         	//do nothing
         }
     }
-
+	*/
 }
