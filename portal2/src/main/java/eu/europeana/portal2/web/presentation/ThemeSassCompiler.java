@@ -34,7 +34,9 @@ public class ThemeSassCompiler {
 	}
 	
 	public void compile(String server){
-		File config = new File(new java.io.File("").getAbsolutePath() + sassLocation, "config.rb");
+		File config = new File(
+				(new java.io.File("").getAbsolutePath() + sassLocation).replace("/portal2/portal2", "/portal2"),
+				"config.rb");
 		setConfigLocation(config);
 		new ScriptingContainer().runScriptlet(buildInitializationScript(server));
         new ScriptingContainer().runScriptlet(buildCompileScript());
@@ -61,15 +63,10 @@ public class ThemeSassCompiler {
 
         script.println("require 'rubygems'                                                         ");
         script.println("require 'compass'                                                          ");
-        //script.println("frameworks = Dir.new(Compass::Frameworks::DEFAULT_FRAMEWORKS_PATH).path    ");
-        //script.println("Compass::Frameworks.register_directory(File.join(frameworks, 'compass'))   ");
-       	//script.println("Compass::Frameworks.register_directory(File.join(frameworks, 'blueprint')) ");
-        
         script.println("Compass.add_project_configuration '" + getConfigLocation() + "'            ");
         script.println("Compass::Configuration.add_configuration_property(:webserver, \"For when absolute paths are needed\") do ");
         script.println("  \"" + server + "\" ");
         script.println("end ");
-        
         script.println("Compass.configure_sass_plugin!                                             ");
         script.flush();
 

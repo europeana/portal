@@ -1,128 +1,130 @@
+@import "variables";
 
-	#header {
-		margin-top: 24px;
-	}
+#header {
+	margin-top: 24px;
+}
 
-	#noscript-msg {
-		position: fixed;
-		z-index: 2000;
-		top: 0;
-		left: 0;
-		padding: 5px;
-		width: 100%;
-		color: #000;
-		background-color: #FFCC00;
-		text-align: center;
-	}
+#noscript-msg {
+	position: fixed;
+	z-index: 2000;
+	top: 0;
+	left: 0;
+	padding: 5px;
+	width: 100%;
+	color: #000;
+	background-color: #FFCC00;
+	text-align: center;
+}
 
-	#noscript-msg a:link, #noscript-msg a:visited {
-		color: blue;
-	}
+#noscript-msg a:link, #noscript-msg a:visited {
+	color: blue;
+}
 
-	#refine-search,
-	#close-refine-search {
-		display: none;
-	}
+#refine-search,
+#close-refine-search {
+	display: none;
+}
 
-	#refine-search-form {
-		display: block;
-		top: 0;
-		height: auto;
-	}
+#refine-search-form {
+	display: block;
+	top: 0;
+	height: auto;
+}
 
 
 /* carousel */
 
-	.carousel-container {
-		overflow: auto;
-		opacity: 1;
-		filter: alpha(opacity=0);
-	}
+.carousel-container {
+	overflow: auto;
+	opacity: 1;
+	filter: alpha(opacity=0);
+}
 
 
 /* translation-services */
 
-	#translate-item { display: none; }
+#translate-item { display: none; }
 
 
 /* citation */
 
-	#citation-link { display: none; }
-	#citation { display: block; overflow: auto; }
+#citation-link { display: none; }
+#citation { display: block; overflow: auto; }
 
 
 /* full-excerpt */
-	#item-description, #item-subject, .item-moreless {
-    	display: block;
-    	height: auto;
-    	overflow: auto;
-    }
+#item-description, #item-subject, .item-moreless {
+  	display: block;
+  	height: auto;
+  	overflow: auto;
+}
 
 /* explore further */
 
-	#similar-content,
-   	#related-content,
-   	#mapview
-   	{ display: block; }
+#similar-content,
+#related-content,
+#mapview{
+	display: block;
+}
 
 
 /* fields-enrichment */
 
-	#fields-enrichment ul {
-		display: block;
-	}
+#fields-enrichment ul {
+	display: block;
+}
 
 /* contributors */
 
-	.data-providers {
-		display: block;
-	}
+.data-providers {
+	display: block;
+}
 
 /* search-widget */
 
-	#widget-help {
-		display: block;
-	}
+#widget-help {
+	display: block;
+}
 
 
 /* my europeana login */
 
-	#login,
-	#register,
-	#register-api,
-    #request-password,
-    #login-response {
-    	display: block;
-    }
+#login,
+#register,
+#register-api,
+#request-password,
+#login-response {
+  	display: block;
+}
 
-    #login-boxes {
-    	width: 686px;
-    	margin: auto;
-    	overflow: auto;
-    }
+#login-boxes {
+	width: 686px;
+	margin: auto;
+	overflow: auto;
+}
 
-    #login { margin-right: 20px; }
+#login { margin-right: 20px; }
 
-    #login-response {
-    	clear: left;
-    	width: auto;
-    	padding-top: 15px;
-    }
+#login-response {
+	clear: left;
+	width: auto;
+	padding-top: 15px;
+}
 
-	#myeuropeana input[type=submit] {
-		display: block;
-	}
+#myeuropeana input[type=submit] {
+	display: block;
+}
 
 /* contact */
 
-	#contact-details{
-		height: auto;
-	}
+#contact-details{
+	height: auto;
+}
 
-	#thank-you {
-		display: block;
-		position: relative;
-	}
+#thank-you {
+	display: block;
+	position: relative;
+}
 
 
 .noscript {

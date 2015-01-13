@@ -157,8 +157,6 @@
 								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
 								<cssSourceInclude>eu-carousel.css</cssSourceInclude>
-
-								<!-- cssSourceInclude>tabbed-navigation.css</cssSourceInclude  -->
 							</cssSourceIncludes>
 						</configuration>
 						<goals>
@@ -194,7 +192,6 @@
 							<cssTargetDir>min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>search.css</cssSourceInclude>
-								<cssSourceInclude>search-navigation.css</cssSourceInclude>
 								<cssSourceInclude>search-pagination.css</cssSourceInclude>
 								<cssSourceInclude>sidebar-facets.css</cssSourceInclude>
 							</cssSourceIncludes>

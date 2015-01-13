@@ -1,3 +1,5 @@
+@import "variables";
+
 /* header */
 
 #header-strip{
@@ -77,11 +79,12 @@
 
 
 .logo{
-	background-image:	url(web_server() + 'themes/default/images/europeana-logo-2.png');
+	background-image:	url($web_server + 'themes/default/images/europeana-logo-2.png');
 }
 
+
 .logo-t-and-c{
-	background-image:	url(web_server() + 'themes/default/images/europeana-logo-tc.png');
+	background-image:	url($web_server + 'themes/default/images/europeana-logo-tc.png');
 }
 
 #query-translations{
@@ -120,7 +123,7 @@
 
 
 	.logo-t-and-c{
-		background-image:	url('/portal/themes/default/images/europeana-logo-tc.png');
+		background-image:	url($web_server + 'themes/default/images/europeana-logo-tc.png');
 	}
 
 	#logo{

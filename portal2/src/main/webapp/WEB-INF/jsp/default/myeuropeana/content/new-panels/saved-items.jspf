@@ -37,7 +37,7 @@
 
 				<%-- Place Image --%>
 				<div class="image-container">
-					<a href='/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
+					<a href='record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}">
 						<c:set var="imageWritten" value="" />
 						<c:catch var="exception">
 							<c:if test="${item.europeanaObject && !empty item.europeanaObject}"></c:if>
@@ -53,7 +53,7 @@
 				</div>
 
 				<%-- Item Info --%>
-				<a href='/record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold">${eufn:abbreviate(item.title, 50)}</a><br/>
+				<a href='record${fn:replace(item.europeanaUri, "http://www.europeana.eu/resolve/", "")}.html?bt=savedItem' title="${item.title}" class="bold">${eufn:abbreviate(item.title, 50)}</a><br/>
 				<spring:message code="Creator_t" />: <em>${item.author}</em><br/>
 				<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${item.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
 				<%-- Delete Saved Item button --%>

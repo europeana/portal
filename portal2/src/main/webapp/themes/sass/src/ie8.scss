@@ -1,3 +1,5 @@
+@import "variables";
+
 
 /*	css for index.html							*/
 
@@ -699,7 +701,6 @@ ul.featured-partner-links li{
 	display:	inline;
 }
 
-/*	override search-navigation.css				*/
 
 .nav-numbers{	
 	font-size:	1em;
@@ -1013,13 +1014,6 @@ a.action-link span{
 .external-services-container .service {
 	display: block;
 }
-
-/*	override tabbed-navigation.css				*/
-/*
-.tab-navigation li {
-	margin-right: 		1em;
-}
-*/
 
 
 /*	css for my-europeana.html						*/

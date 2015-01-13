@@ -1,73 +1,75 @@
+@import "variables";
+
 /* icons */
 
-	.navigation-icons {
-		float: left;
-		margin: 0 10px 0 0;
-		padding: 0;
-	}
-	
-	.navigation-icons li {
-		list-style: none;
-		float:left;
-	}
-	
-	.navigation-icons a {
-		display: block;
-	}
+.navigation-icons {
+	float: left;
+	margin: 0 10px 0 0;
+	padding: 0;
+}
 
-	a.grid-view, a.list-view, a.timeline, a.mapview, a.wikipedia {
-		background-image: url(themes/default/images/icons/sprite.png);
-		background-repeat: no-repeat;
-		margin-right: 5px;
-		margin-top: 5px;
-	}
+.navigation-icons li {
+	list-style: none;
+	float:left;
+}
 	
-	a.grid-view {
-		width: 22px;
-		height: 16px;
-		background-position: 0 -398px;
-	}
-	
-	a.grid-view:hover, a.grid-view.active {
-		background-position: 0 -372px;
-	}	
-	
-	a.list-view {
-		width: 25px;
-		height: 16px;
-		background-position: 0 -346px;
-	}
-	
-	a.list-view:hover, a.list-view.active {
-		background-position: 0 -320px;
-	}
-	
-	a.timeline {
-		width: 21px;
-		height: 17px;
-		background-position: 0 -293px;
-	}
-	
-	a.timeline:hover, a.timeline.active {
-		background-position: 0 -266px;
-	}
-	
-	a.mapview {
-		width: 19px;
-		height: 17px;
-		background-position: 0 -239px;
-	}
-	
-	a.mapview:hover, a.mapview.active {
-		background-position: 0 -212px;
-	}
+.navigation-icons a {
+	display: block;
+}
 
-	a.wikipedia {
-		width: 25px;
-		height: 17px;
-		background-position: -33px -1441px;
-	}
+a.grid-view, a.list-view, a.timeline, a.mapview, a.wikipedia {
+	background-image: url(themes/default/images/icons/sprite.png);
+	background-repeat: no-repeat;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+
+a.grid-view {
+	width: 22px;
+	height: 16px;
+	background-position: 0 -398px;
+}
+
+a.grid-view:hover, a.grid-view.active {
+	background-position: 0 -372px;
+}	
+
+a.list-view {
+	width: 25px;
+	height: 16px;
+	background-position: 0 -346px;
+}
+
+a.list-view:hover, a.list-view.active {
+	background-position: 0 -320px;
+}
 	
-	a.wikipedia:hover, a.wikipedia.active {
-		background-position: 0 -1441px;
-	}
+a.timeline {
+	width: 21px;
+	height: 17px;
+	background-position: 0 -293px;
+}
+
+a.timeline:hover, a.timeline.active {
+	background-position: 0 -266px;
+}
+
+a.mapview {
+	width: 19px;
+	height: 17px;
+	background-position: 0 -239px;
+}
+
+a.mapview:hover, a.mapview.active {
+	background-position: 0 -212px;
+}
+
+a.wikipedia {
+	width: 25px;
+	height: 17px;
+	background-position: -33px -1441px;
+}
+
+a.wikipedia:hover, a.wikipedia.active {
+	background-position: 0 -1441px;
+}

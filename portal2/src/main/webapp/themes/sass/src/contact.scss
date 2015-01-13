@@ -1,3 +1,4 @@
+@import "variables";
 
 h4{
 	font-size: 100%;
@@ -16,6 +17,9 @@ h4:not(.no-underline) {
 
 #feedback, #email{
 	width:			100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 
 /*

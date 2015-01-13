@@ -36,4 +36,4 @@
 		</table>
 	</c:otherwise>
 </c:choose>
-<p><a class="europeana" href="/<spring:message code="myeuropeana_api_1_a_url_t"/>" target="<spring:message code="myeuropeana_api_1_a_target_t"/>" title="<spring:message code="myeuropeana_api_1_a_title_t"/>"><spring:message code="myeuropeana_api_1_a_text_t"/></a></p>
+<p><a class="europeana" href="<spring:message code="myeuropeana_api_1_a_url_t"/>" target="<spring:message code="myeuropeana_api_1_a_target_t"/>" title="<spring:message code="myeuropeana_api_1_a_title_t"/>"><spring:message code="myeuropeana_api_1_a_text_t"/></a></p>

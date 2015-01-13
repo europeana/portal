@@ -1,44 +1,46 @@
+@import "variables";
+
 /* contributors */
 	
-	
-	#contributors {
-		margin: 20px 0 20px 0;
-	}
 
-	#contributors .outer-list{
-		margin-top:	1em;
-		display:	none;
-	}
+#contributors {
+	margin: 20px 0 20px 0;
+}
 
-	#content-main.with-sidebar #contributors {
-		margin: 0 0 20px 0;
-	}
+#contributors .outer-list{
+	margin-top:	1em;
+	display:	none;
+}
 
-	
-	#contributors ul {
-		margin: 0;
-		padding: 0;
-	}
-	
-	
-	#contributors li,
-	#contributors ul{
-		list-style: none;
-		line-height: 1.5;
-	}
+#content-main.with-sidebar #contributors {
+	margin: 0 0 20px 0;
+}
+
+
+#contributors ul {
+	margin: 0;
+	padding: 0;
+}
 	
 	
-	#contributors .data-providers {
-		margin-bottom: 20px;
-	}
+#contributors li,
+#contributors ul{
+	list-style: none;
+	line-height: 1.5;
+}
+
+
+#contributors .data-providers {
+	margin-bottom: 20px;
+}
 	
-	#contributors .data-providers li {
-		list-style:		none;
-		margin-left:	1.5em;
-	}
-	
-	.data-providers {
-		display: none;
-	}
+#contributors .data-providers li {
+	list-style:		none;
+	margin-left:	1.5em;
+}
+
+.data-providers {
+	display: none;
+}
 	
 	
