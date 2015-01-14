@@ -196,7 +196,6 @@ var EuCarousel = function(cmp, data){
 		$('.carousel-item').click(function(e){
 			//e.preventDefault();
 			//e.stopPropagation();
-			//alert('clicked item');
 		});
 
 
@@ -210,7 +209,6 @@ var EuCarousel = function(cmp, data){
 		});
 
 		right.click(function(e){
-			//alert('right');
 			if(!animating){
 				log('go right....');
 				goRight();
