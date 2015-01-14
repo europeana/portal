@@ -12,6 +12,7 @@ var EuCarousel = function(cmp, data){
 	var inView = 0;
 	var total = data.length;
 	var animating = false;
+	var pathCorrection = '../..';
 	
 	var anchor = function(){
 		animating = true;
@@ -169,7 +170,7 @@ var EuCarousel = function(cmp, data){
 		right = $('<a class="carousel-right icon-arrow-2"></a>').appendTo(cmp);
 
 		$.each(data, function(i, ob){
-			items.append('<a class="carousel-item" href="' + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
+			items.append('<a class="carousel-item" href="' + pathCorrection + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
 		});
 		
 		$('.carousel-item .info').each(function(i, ob){

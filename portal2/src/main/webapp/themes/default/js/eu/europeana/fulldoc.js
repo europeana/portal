@@ -1278,7 +1278,7 @@ eu.europeana.fulldoc = {
 			if (typeof(mlt) != 'undefined') {
 				
 				var getLoadAllLink = function() {
-					return '<a class="load-all" href="/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
+					return '<a class="load-all" href="' + eu.europeana.vars.homeUrl + 'search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
 				};
 				
 				var initMlt = function() {
@@ -1296,6 +1296,7 @@ eu.europeana.fulldoc = {
 						mltData[mltData.length] = {
 								"thumb" : ob.find('img').attr('src'),
 								"title" : ob.attr('title'),
+								/* "link" : '../..' + ob.attr('href'),  */
 								"link" : ob.attr('href'),
 								"linkTarget" : "_self"
 						}

@@ -47,6 +47,12 @@
 <c:set var="req" value="${pageContext.request}" />
 <c:set var="homeUrl" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}/" />
 
+<c:if test="${model.pageName == 'exception.html'}"><c:set var="branding" value="../../themes/${model.theme}" /></c:if>
+
+<%--
+<script>alert("pageName = ${model.pageName}\n\nhoem = ${homeUrl}\n\n  branding = ${branding}\n\n webRoot ${webRoot}")</script>
+--%>
+
 
 <c:if test="${!empty model.locale}"><c:set var="locale" value="${model.locale}" /></c:if>
 

@@ -124,12 +124,20 @@
 						</configuration>
 					</execution>
 
-					
+
+					<!-- PULL LATEST STATIC RESOURCES -->					
+					<execution>
+						<id>portal-static</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>src/main/resources/bundle</executable>
+						</configuration>
+					</execution>
 					
 				</executions>
-				<configuration>
-					<executable>src/main/resources/bundle</executable>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

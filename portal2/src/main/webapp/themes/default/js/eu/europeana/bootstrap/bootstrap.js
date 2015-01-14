@@ -22,12 +22,8 @@ var europeana_bootstrap = function(){
 	// loads the loader which then loads the scripts
 	function loadScripts(scripts){
 
-//		alert('bootstrap - eu.europeana.vars.branding = ' + eu.europeana.vars.branding );
-
-
 		var script = document.createElement('script');
 		script.src = eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
-		//alert('loader src = ' + script.src  );
 
 		if ( 'onload' in document || 'addEventListener' in window ) {
 			script.onload = function(){
@@ -151,10 +147,6 @@ var europeana_bootstrap = function(){
 		{
 			name: 'jquery.cookie',
 			file: 'jquery.cookie' + js.min_suffix + '.js' + js.cache_helper,
-
-			XXXXpath:  (eu.europeana.vars.page_name == 'widget/editor.html' ? '../' : '') + 'themes/common/js/com/github/carhartl/' + js.min_directory,
-			
-			
 			path:  eu.europeana.vars.homeUrl + 'themes/common/js/com/github/carhartl/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		},
