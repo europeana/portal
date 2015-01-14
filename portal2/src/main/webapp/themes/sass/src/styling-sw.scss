@@ -4,13 +4,13 @@
     position:	absolute;
     width:		100%;
     height:		100%;
-    background:	black url(themes/default/images/spinner.gif) center center no-repeat;
+    background:	black url($web_server + 'themes/default/images/spinner.gif') center center no-repeat;
     opacity:	.5;
     z-index:	12;
 }
 
 .search-widget-container.dark #overlay{
-    background:	#555 url(themes/default/images/spinner.gif) center center no-repeat;
+    background:	#555 url($web_server + 'themes/default/images/spinner.gif') center center no-repeat;
 }
 
 .search-widget-container{
