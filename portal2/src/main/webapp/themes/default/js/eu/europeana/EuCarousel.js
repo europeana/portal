@@ -3,7 +3,7 @@ log = function(msg){
 	//console.log(msg);
 }
 
-var EuCarousel = function(cmp, data){
+var EuCarousel = function(cmp, data, pathCorrection){
 	var position = 1;
 	var left, right, items;
 	var cmp = $(cmp);
@@ -12,7 +12,7 @@ var EuCarousel = function(cmp, data){
 	var inView = 0;
 	var total = data.length;
 	var animating = false;
-	var pathCorrection = '../..';
+	var pathCorrection = pathCorrection ? pathCorrection : '';
 	
 	var anchor = function(){
 		animating = true;

@@ -1303,7 +1303,7 @@ eu.europeana.fulldoc = {
 					});
 					
 					$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
-					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
+					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData, '../..');
 						
 				}; // end initMlt
 				
