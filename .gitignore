@@ -1,4 +1,5 @@
 # Eclipse project files
+.gitignore
 .classpath
 .project
 .settings/
@@ -35,3 +36,6 @@ logfile
 
 # Mac OS X
 .DS_Store
+/portal2/nb-configuration.xml
+/portal2/src/main/webapp/META-INF/context.xml
+/target/
