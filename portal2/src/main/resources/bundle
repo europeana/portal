@@ -11,4 +11,3 @@ if [ -d "src/main/resources/portal_translations/gettext_src" ]
 then
 rm -r src/main/resources/portal_translations/gettext_src
 fi
-rm 
