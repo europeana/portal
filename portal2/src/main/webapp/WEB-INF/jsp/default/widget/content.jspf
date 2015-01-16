@@ -900,10 +900,10 @@
 				<div class="content-inner">
 				
 					<div class="theme-select">
-						<img src="/portal/themes/default/images/sw-theme-1.png" data-index="1" class="active"/>
-						<img src="/portal/themes/default/images/sw-theme-2.png" data-index="2" />
-						<img src="/portal/themes/default/images/sw-theme-3.png" data-index="3" />
-						<img src="/portal/themes/default/images/sw-theme-4.png" data-index="4" />
+						<img src="${homeUrl}themes/default/images/sw-theme-1.png" data-index="1" class="active"/>
+						<img src="${homeUrl}themes/default/images/sw-theme-2.png" data-index="2" />
+						<img src="${homeUrl}themes/default/images/sw-theme-3.png" data-index="3" />
+						<img src="${homeUrl}themes/default/images/sw-theme-4.png" data-index="4" />
 					</div>
 
 					<div class="tab-footer">

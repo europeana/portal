@@ -53,7 +53,6 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				
 			</c:forEach>
 		</script>
-
 		<div id="carousel-1">
 			<c:forEach var="item" items="${model.carouselItems}">
 				<a href="${item.url}">
