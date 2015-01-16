@@ -12,6 +12,7 @@ public class ThemeSassCompiler {
 
     private File configLocation;
 	private static final String sassLocation = "/portal2/src/main/webapp/themes/sass";
+	private static final String cssLocation =  "portal2/src/main/webapp/themes/default/css";
 	
 	/**
 	 * 
@@ -33,10 +34,30 @@ public class ThemeSassCompiler {
 		}
 	}
 	
+	private void deleteFolder(File folder){
+		File[] css = folder.listFiles();
+		
+		System.out.println(folder.getAbsolutePath() + " - exists? " + folder.exists() );
+		if(css != null){
+			for(File f : css){
+				if(f.isDirectory()) {
+					deleteFolder(f);
+				}
+				else{
+					f.delete();
+				}
+			}			
+		}
+	}
+	
 	public void compile(String server){
+		
+		deleteFolder(new File(cssLocation));
+		
 		File config = new File(
 				(new java.io.File("").getAbsolutePath() + sassLocation).replace("/portal2/portal2", "/portal2"),
 				"config.rb");
+		
 		setConfigLocation(config);
 		new ScriptingContainer().runScriptlet(buildInitializationScript(server));
         new ScriptingContainer().runScriptlet(buildCompileScript());
@@ -48,7 +69,10 @@ public class ThemeSassCompiler {
 
         script.println("Dir.chdir(File.dirname('" + getConfigLocation() + "')) do ");
 
+        //script.println("  Compass.add_configuration {:force => true}              ");
         script.println("  Compass.compiler.run                                    ");
+        
+        
         //script.println("  Compass.sass_compiler.run                               ");
 
         script.println("end                                                       ");
