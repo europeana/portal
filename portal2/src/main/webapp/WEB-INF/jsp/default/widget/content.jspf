@@ -530,7 +530,7 @@
 	var searchUrl		= 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
 	--%>
 		var rootUrl 		= "${homeUrl}";
-		var searchUrl		= 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
+		var searchUrl		= "${api2.url}/v2/search.json?wskey=${api2.key}";
 </script>
 
 

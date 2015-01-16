@@ -183,10 +183,7 @@ var EuWidgetWizard = function(cmpIn, options){
 				providerQuery = providerQuery
 				.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
 				.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
-				.replace(/^ OR /, '&qf=');
-
-				alert(providerQuery);
-				
+				.replace(/^ OR /, '&qf=');				
 				result += providerQuery;
 				
 			}
@@ -800,7 +797,6 @@ var EuWidgetWizard = function(cmpIn, options){
 			}); // end providers loops
 			
 			
-//			  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 			
 			if(providerQuery.length){
 			
@@ -829,7 +825,7 @@ var EuWidgetWizard = function(cmpIn, options){
 			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
 				if($(ob).prop('checked') && $(ob).is(':visible')){
 					if($(ob).attr('title')){
-						query += $(ob).attr('title').replace(/\"/g, "");						
+						query += $(ob).attr('title').replace(/\"/g, "");
 					}
 					else{
 						//console.log('missing title for ' + $(ob).next('label').html() );

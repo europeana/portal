@@ -23,12 +23,12 @@ fnSearchWidget = function($, config){
     // move wskey and URLs to an external .jsp generated file, in order to 
     // 1) generate URLs dinamically
 
-    var resultServerUrl         = 'http://europeana.eu/';
+    var resultServerUrl         = 'http://europeana.eu';
 	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
 	var searchUrlWithoutResults = 'http://www.europeana.eu/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
-	var cssUrl                  = rootUrl +  '/themes/default/css/';
+	var cssUrl                  = rootUrl +  (js.debug ? '/themes/default/css/' : '/themes/default/css-min/');
 	var responsiveContainersUrl = rootUrl +  '/themes/default/js/eu/europeana/responsive-containers.js';
     
     var defaultRows             = 6;
@@ -154,7 +154,7 @@ fnSearchWidget = function($, config){
     			});
             }
             else{
-            	$('head').append('<link rel="stylesheet" href="' + cssUrl + 'min/search-widget-all.css" type="text/css" />');
+            	$('head').append('<link rel="stylesheet" href="' + cssUrl + 'search-widget-all.css" type="text/css" />');
             }
             if(self.theme){
             	container.removeClass('dark');            	
@@ -771,7 +771,7 @@ var theParams = function(){
 	}
 	
 	rootJsUrl	= thisScript.src.split('EuSearchWidget')[0];
-	rootUrl		= eu.europeana.vars.homeUrl;
+	rootUrl		= rootJsUrl.split('/themes')[0];
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
 	queryString = decodeURIComponent(queryString);
