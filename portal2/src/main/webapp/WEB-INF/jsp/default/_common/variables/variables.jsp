@@ -45,7 +45,8 @@
 <c:set var="myEuropeanaUrl"	value="${webRoot}myeuropeana" />
 
 <c:set var="req" value="${pageContext.request}" />
-<c:set var="homeUrl" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}/" />
+<c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
+<c:set var="homeUrl"   value="${homeUrlNS}/" />
 
 <c:if test="${model.pageName == 'exception.html'}"><c:set var="branding" value="../../themes/${model.theme}" /></c:if>
 

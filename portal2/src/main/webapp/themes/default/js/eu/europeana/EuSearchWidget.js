@@ -771,7 +771,7 @@ var theParams = function(){
 	}
 	
 	rootJsUrl	= thisScript.src.split('EuSearchWidget')[0];
-	rootUrl		= rootJsUrl.split('/portal/')[0] + '/portal';
+	rootUrl		= eu.europeana.vars.homeUrl;
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
 	queryString = decodeURIComponent(queryString);

@@ -36,8 +36,6 @@ public class ThemeSassCompiler {
 	
 	private void deleteFolder(File folder){
 		File[] css = folder.listFiles();
-		
-		System.out.println(folder.getAbsolutePath() + " - exists? " + folder.exists() );
 		if(css != null){
 			for(File f : css){
 				if(f.isDirectory()) {
@@ -68,13 +66,7 @@ public class ThemeSassCompiler {
         PrintWriter script = new PrintWriter(raw);
 
         script.println("Dir.chdir(File.dirname('" + getConfigLocation() + "')) do ");
-
-        //script.println("  Compass.add_configuration {:force => true}              ");
         script.println("  Compass.compiler.run                                    ");
-        
-        
-        //script.println("  Compass.sass_compiler.run                               ");
-
         script.println("end                                                       ");
         script.flush();
 
