@@ -162,8 +162,12 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
 		</c:if>
 	
-		eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
-		
+		eu.europeana.vars.bing_translate_key =  '';
+		<c:catch var="noTokenException"><c:set var="testForToken">${model.bingToken}</c:set></c:catch>
+	  	<c:if test="${empty noTokenException}">
+		  	eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+	  	</c:if>
+
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
 		eu.europeana.vars.msg.cite.citation_header	= '${fn:escapeXml(citation_header)}';
@@ -270,7 +274,12 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.save_settings_failure = '${save_settings_failure}';
 		eu.europeana.vars.keyword_languages_limit = ${model.keywordLanguagesLimit};
 		eu.europeana.vars.keyword_languages_separator = '${model.keywordLanguagesSeparator}';
-		eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+		
+		eu.europeana.vars.bing_translate_key =  '';
+		<c:catch var="noTokenException"><c:set var="testForToken">${model.bingToken}</c:set></c:catch>
+	  	<c:if test="${empty noTokenException}">
+			eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+	  	</c:if>
 
 		<c:choose>
 			<c:when test="${!empty model.user}">
