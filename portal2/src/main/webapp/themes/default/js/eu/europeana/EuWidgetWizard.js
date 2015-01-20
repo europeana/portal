@@ -970,7 +970,7 @@ var EuWidgetWizard = function(cmpIn, options){
         	hideSpinner();
 		};
 		
-		var postUrl = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo&profile=facets,params';
+		var postUrl = window.location.href.split('portal/')[0] + 'api/v2/search.json?wskey=api2demo&profile=facets,params';
 		if(postUrl.indexOf('localhost')>-1){
 			//postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
 			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&profile=facets,params";
