@@ -9,23 +9,16 @@ fnSearchWidget = function($, config){
     var showFacets       = false;
     
     if( typeof config != 'undefined' ){
-    	//console.log("config supplied: " + JSON.stringify(config) );
     	self.config      = config;
         self.withResults = self.config.withResults == 'true';
         self.theme       = self.config.theme;
-        
-        //console.log('init theme: ' + self.theme);
     }
     
     
     var addKeywordTemplate      = false;
-    // TODO:
-    // move wskey and URLs to an external .jsp generated file, in order to 
-    // 1) generate URLs dinamically
-
-    var resultServerUrl         = 'http://europeana.eu';
-	var searchUrl				= searchUrl ? searchUrl : 'http://www.europeana.eu/api/v2/search.json?wskey=api2demo';
-	var searchUrlWithoutResults = 'http://www.europeana.eu/search.html';
+    var resultServerUrl         = config.rootUrl;
+	var searchUrl				= config.apiUrl;
+	var searchUrlWithoutResults = resultServerUrl + '/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
 	var cssUrl                  = rootUrl +  (js.debug ? '/themes/default/css/' : '/themes/default/css-min/');
@@ -170,9 +163,7 @@ fnSearchWidget = function($, config){
            	$.getScript(responsiveContainersUrl, function() {});
         	
            	if(config.query && self.withResults){
-           		
            		setTimeout(doSearch, 200);
-//           		$('#query-search').submit();
            	}
            	
         });
@@ -222,18 +213,13 @@ fnSearchWidget = function($, config){
 
         var term = self.q.val();
         if (!term) {
-            //return '';
         	term = '*:*';
         }
         
         var url = '';
-		var param = function(urlIn){
-			return ((urlIn ? urlIn : url).indexOf('?')>-1) ? '&' : '?';
-		};
-
         if(self.withResults){
-        	url = query ? searchUrl + param(searchUrl) + query : searchUrl + param(searchUrl) + 'query=' + term;        	
-        	url += "&profile=portal,params&callback=searchWidget.showRes";
+        	url = query ? searchUrl + '&' + query : searchUrl + '&query=' + term;        	
+        	url += "&callback=searchWidget.showRes";
         	url += '&rows=' + (self.resMenu1.getActive() ? self.resMenu1.getActive() : defaultRows);
         	url += '&start=' + (startParam ? startParam : 1);
         	
@@ -244,11 +230,10 @@ fnSearchWidget = function($, config){
         	}
         }
         else{
-        	url = searchUrlWithoutResults + param(searchUrlWithoutResults) + 'query=' + term + '&bt=searchwidget2';
+        	url = searchUrlWithoutResults + '?query=' + term + '&bt=searchwidget2';
         }
                 
         // params
-
         
         // refinements & facets read from hidden inputs
 
@@ -258,7 +243,7 @@ fnSearchWidget = function($, config){
             	if(urlFragment.indexOf(':')>0){
             		urlFragment = urlFragment.split(':')[0] + ':' + '"' + encodeURI(urlFragment.split(':')[1] + '"');
             	}
-            	url += param() + urlFragment;
+            	url += '&' + urlFragment;
             });        	
         }
         
@@ -269,7 +254,7 @@ fnSearchWidget = function($, config){
         	if(self.config.qf){
         		$.each(self.config.qf, function(i, ob){
         			ob = ob.replace(/[\{\}]/g, '"');
-        			url += param() + 'qf=';
+        			url += '&qf=';
 
         			//url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
         			  url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '' + ob.split(':')[1] + '') : ob;
@@ -774,17 +759,16 @@ var theParams = function(){
 	rootUrl		= rootJsUrl.split('/themes')[0];
 	
 	var queryString = thisScript.src.replace(/^[^\?]+\??/,'');
-	queryString = decodeURIComponent(queryString);
-	
-	
+		
 	function parseQuery ( query ) {
 		
-		var Params = new Object ();
+		var Params = new Object();
 		if(!query){
 			return Params; // return empty object
 		}
 		
 		var Pairs = query.split('&');
+		
 		for ( var i = 0; i < Pairs.length; i++ ) {
 			
 			var KeyVal = Pairs[i].split('=');
@@ -792,8 +776,10 @@ var theParams = function(){
 				//console.log("invalid parameter");
 				continue;
 			}
-			var key = unescape( KeyVal[0] );
-			var val = unescape( KeyVal[1] );
+			//var key = unescape( KeyVal[0] );
+			//var val = unescape( KeyVal[1] );
+			var key = unescape( decodeURIComponent(KeyVal[0]) );
+			var val = unescape( decodeURIComponent(KeyVal[1]) );
 			
 			//console.log(key + " = " + val);
 			
@@ -805,6 +791,8 @@ var theParams = function(){
 			//Params[key].push(encodeURIComponent(val));
 			Params[key].push(val);
 		}
+		Params['rootUrl'] = [rootUrl];
+		
 		
 		return Params;
 	};

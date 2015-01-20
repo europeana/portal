@@ -194,9 +194,9 @@ var EuWidgetWizard = function(cmpIn, options){
 		
 		result += param() + 'withResults=' + getWithResults();
 		result += param() + 'theme=' + getTheme();
-
+		result += param() + 'apiUrl=' + encodeURIComponent(searchUrl);
 		result += param() + 'v=2';
-
+		
 		return result;
 	};
 	
@@ -752,10 +752,6 @@ var EuWidgetWizard = function(cmpIn, options){
 
 
 				
-				//if(providerInput.prop('checked') && ! providerInput.is(':visible') ){
-				//	alert('HIDDEN !!!');
-				//}
-				
 				//if(providerInput.prop('checked') && providerInput.is(':visible') ){				
 				if( providerInput.prop('checked') ){
 					//var name = providerInput.next('label').html();
@@ -805,21 +801,12 @@ var EuWidgetWizard = function(cmpIn, options){
 					.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
 					.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
 					.replace(/^ OR /, '&qf=');
-				
-				//alert(providerQuery);
 				query += providerQuery;
 				*/
 			}
 			
 			query += providerQuery;
 			query += dataProviderQuery;
-			
-//			alert('providerQuery = \n\n' + providerQuery
-	//				 + '\n\n' + 	providerQuery.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
-		//			 + '\n\n' + 	providerQuery.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
-			//);
-
-			
 			
 			
 			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
@@ -843,13 +830,8 @@ var EuWidgetWizard = function(cmpIn, options){
 			doHide = function(linksIn){
 				$.each(linksIn, function(i, ob){
 					ob = $(ob);
-//					if( ob.attr('title').indexOf('Bodleian') > -1 ){
-	//					alert('GOT IT\n\n\nchecked = ' +    (  ob.find('input').is(':checked') )    );
-		//			}
 					if(! ob.find('input').is(':checked') ){
 						ob.hide();
-
-			//			console.log( 'HIDE: ' + ob.find('label').html() )
 					}
 				});
 			}
@@ -970,17 +952,21 @@ var EuWidgetWizard = function(cmpIn, options){
         	hideSpinner();
 		};
 		
-		var postUrl = window.location.href.split('portal/')[0] + 'api/v2/search.json?wskey=api2demo&profile=facets,params';
+		/*
+		var postUrl = window.location.href.split('portal/')[0];
 		if(postUrl.indexOf('localhost')>-1){
-			//postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
-			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&profile=facets,params";
+			postUrl = "http://test.portal2.eanadev.org/";
 		}
-		
+		else{
+			postUrl = postUrl.split('/widget')[0] + '/'
+		}
+		postUrl = postUrl + 'api/v2/search.json?wskey=api2demo&profile=facets,params';
+		*/
 		try{
 			// IE8 & 9 only Cross domain JSON GET request
 		    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
 		        var xdr = new XDomainRequest(); // Use Microsoft XDR
-		        xdr.open('post', postUrl + query);
+		        xdr.open('post', searchUrl + query);
 		        xdr.onprogress = function () {};
 		        xdr.onload = function () {
 		            var dom  = new ActiveXObject('Microsoft.XMLDOM'),
@@ -1000,7 +986,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		    } 
 		    else{
 				$.ajax({
-					"url":				postUrl + query,
+					"url":				searchUrl + query,
 			        "dataType":			"json", 
 			        "crossDomain":		true,
 			        "type":				"POST",
