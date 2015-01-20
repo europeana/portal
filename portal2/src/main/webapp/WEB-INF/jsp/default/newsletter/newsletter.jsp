@@ -20,8 +20,8 @@
 				<link rel="stylesheet" href="themes/default/css/newsletter.css" />
 			</c:when>
 			<c:otherwise>				
-				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
-				<link rel="stylesheet" href="themes/default/css/min/newsletter.min.css" />
+				<link rel="stylesheet" href="themes/default/css-min/common.min.css" />
+				<link rel="stylesheet" href="themes/default/css-min/newsletter.min.css" />
 			</c:otherwise>
 		</c:choose>
 		
