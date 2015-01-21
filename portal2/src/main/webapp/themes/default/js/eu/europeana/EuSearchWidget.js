@@ -17,7 +17,7 @@ fnSearchWidget = function($, config){
     
     var addKeywordTemplate      = false;
     var resultServerUrl         = config.rootUrl;
-	var searchUrl				= config.apiUrl;
+	var searchUrl				= typeof config.apiUrl == 'undefined' ? 'http://api-test.de.a9sapp.eu/v2/search.json?wskey=api2demo&profile=facets,params&v=2' : config.apiUrl;
 	var searchUrlWithoutResults = resultServerUrl + '/search.html';
 	
 	var markupUrl               = rootUrl +  '/template.html?id=search&showFacets=' + showFacets;
