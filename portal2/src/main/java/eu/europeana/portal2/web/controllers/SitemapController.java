@@ -689,7 +689,7 @@ public class SitemapController {
             redisProvider.getJedis().del(key);
           }
           if (log.isInfoEnabled()) {
-            log.info("Deleted all sitemaps from cache");
+            log.info("Deleted " + keys.size() + " sitemaps from cache");
           }
         }
         return !actualSolrUpdate.equals(lastSolrUpdate);
