@@ -92,6 +92,8 @@ var EuWidgetWizard = function(cmpIn, options){
 	var output = function(){
 		
 		var result = searchWidgetUrl;
+		
+		
 		var param = function(){
 			return (result.indexOf('?')>-1) ? '&' : '?';
 		};
@@ -170,38 +172,22 @@ var EuWidgetWizard = function(cmpIn, options){
 					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
 					//providerQuery += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
 				}
-				
-				
 			}); // end providers loop
-			
-			///////////////////////////////////////////////
-			/*
-			if(providerQuery.length){
-				
-				console.log('providerQuery: ' + providerQuery)
-				
-				providerQuery = providerQuery
-				.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
-				.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
-				.replace(/^ OR /, '&qf=');				
-				result += providerQuery;
-				
-			}
-			*/
-			///////////////////////////////////////////////
+
 				
 		}
 		
 		result += param() + 'withResults=' + getWithResults();
 		result += param() + 'theme=' + getTheme();
-		result += param() + 'apiUrl=' + encodeURIComponent(searchUrl);
+		result += param() + 'apiUrl=' + encodeURIComponent(searchUrl + '&profile=portal,params');
 		result += param() + 'v=2';
 		
 		return result;
 	};
 	
-	var setCopy = function(copyIn){
-		var copy = '&lt;script type="text/javascript" src="' + (copyIn ? copyIn : output()) + '"&gt;&lt;/script&gt;';
+	var setCopy = function(){
+		
+		var copy = '&lt;script type="text/javascript" src="' + output() + '"&gt;&lt;/script&gt;';
 		$('#output').html(copy);
 		selectElementContents($('#output')[0]);
 	}
@@ -653,6 +639,7 @@ var EuWidgetWizard = function(cmpIn, options){
 
 				// this tab re-inits
 
+				
 				var src = output();
 				
 				$('.preview-window').html('');
@@ -952,21 +939,11 @@ var EuWidgetWizard = function(cmpIn, options){
         	hideSpinner();
 		};
 		
-		/*
-		var postUrl = window.location.href.split('portal/')[0];
-		if(postUrl.indexOf('localhost')>-1){
-			postUrl = "http://test.portal2.eanadev.org/";
-		}
-		else{
-			postUrl = postUrl.split('/widget')[0] + '/'
-		}
-		postUrl = postUrl + 'api/v2/search.json?wskey=api2demo&profile=facets,params';
-		*/
 		try{
 			// IE8 & 9 only Cross domain JSON GET request
 		    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
 		        var xdr = new XDomainRequest(); // Use Microsoft XDR
-		        xdr.open('post', searchUrl + query);
+		        xdr.open('post', searchUrl + '&profile=facets,params' + query);
 		        xdr.onprogress = function () {};
 		        xdr.onload = function () {
 		            var dom  = new ActiveXObject('Microsoft.XMLDOM'),
@@ -986,7 +963,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		    } 
 		    else{
 				$.ajax({
-					"url":				searchUrl + query,
+					"url":				searchUrl + '&profile=facets,params' + query,
 			        "dataType":			"json", 
 			        "crossDomain":		true,
 			        "type":				"POST",

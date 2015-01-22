@@ -500,24 +500,11 @@
 
 	<c:when test="${!empty model.debug && model.debug}">
 		<script type="text/javascript">
-		<%-- 
-			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
-			var searchWidgetUrl = "${homeUrl}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
-		--%>
-		
-		var searchWidgetUrl = "${searchUrl}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
-		
-		
-		
+			var searchWidgetUrl = "${searchUrl}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
 		</script>
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-		<%-- 
-			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
-			var searchWidgetUrl = "${homeUrl}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
-		--%>
-			
 			var searchWidgetUrl = "${searchUrl}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
 
 		</script>
@@ -525,13 +512,8 @@
 </c:choose>
 	
 <script type="text/javascript">
-	<%-- 
-	var rootUrl 		= "${model.portalServer}${model.portalName}";
-	var searchUrl		= 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
-	--%>
 		var rootUrl 		= "${homeUrl}";
-		var searchUrl		= "${model.apiUrl}/v2/search.json?wskey=${model.apiKey}&profile=facets,params";
-
+		var searchUrl		= "${model.apiUrl}/v2/search.json?wskey=${model.apiKey}";
 </script>
 
 
