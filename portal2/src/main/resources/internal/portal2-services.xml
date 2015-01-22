@@ -35,4 +35,11 @@
 	<bean name="portal2_responsiveImageCache" class="eu.europeana.portal2.services.impl.ResponsiveImageCache" />
 
 	<bean id="portal2_schemaOrgMapping" class="eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping" />
+	
+	<bean id="portal2_jedis" class="eu.europeana.portal2.web.util.keyvalue.RedisProvider">
+		<constructor-arg value="#{europeanaProperties['redis.host']}" type="java.lang.String"/>
+		<constructor-arg value="#{europeanaProperties['redis.port']}" type="int"/>
+		<constructor-arg value="#{europeanaProperties['redis.password']}" type="java.lang.String"/>
+	</bean>
+	
 </beans>
