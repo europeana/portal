@@ -30,8 +30,20 @@ portal2/src/main/webapp/themes/default/js/galleria/themes/europeanax/min/
 portal2/src/main/webapp/themes/default/js/js/min/
 portal2/src/main/webapp/themes/default/js/scottjehl-iOS-Orientationchange-Fix-99c9c99/min/
 
+
+portal2/src/main/webapp/themes/default/js/galleria/themes/css-min/
+portal2/src/main/webapp/themes/default/js/galleria/themes/europeanax/css-min/
+portal2/src/main/webapp/themes/default/js/eu/europeana/css-min/
+portal2/src/main/webapp/themes/default/css-min/
+portal2/src/main/webapp/themes/default/css/
+
+
 # Postgres logfile
 logfile
 
 # Mac OS X
 .DS_Store
+
+# Copied transations
+
+portal2/src/main/resources/portal_translations/
