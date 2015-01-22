@@ -61,6 +61,7 @@
 					<c:set var="qtChecked" value="true" />
 				</c:if>
 			</c:when>
+				
 		
 			<c:otherwise>
 				<c:if test="${ cookie.keywordLanguagesApplied != null}">
@@ -78,7 +79,7 @@
 			<c:set var="qtHref" value=""/>
 			<c:if test="${qtEnabled}">
 				<c:choose>
-					<c:when test="${empty model.queryTranslationLinks}">
+					<c:when test="${model.queryLanguageVersions == null}">
 						<c:set var="qtHref">href="${model.translationUrl}&qtApplied=true"</c:set>
 					</c:when>
 					<c:otherwise>
