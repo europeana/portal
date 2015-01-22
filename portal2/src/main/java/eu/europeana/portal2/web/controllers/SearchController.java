@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -95,11 +97,13 @@ public class SearchController {
 						userService.updateUserLanguageSearchApplied(user.getId(), qtApplied);
 					}
 				}
+				userSetNoQT = user.getLanguageSearchApplied() != null && !user.getLanguageSearchApplied();
 			}
 			catch(Exception e){
+				log.error("Error updating user: " + e.getMessage());
+				e.printStackTrace();
 				// do nothing
 			}
-			userSetNoQT = user.getLanguageSearchApplied() != null && !user.getLanguageSearchApplied();
 		}
 		else{
 			if (new QueryTranslationsUtil().getKeywordLanguagesApplied(request) ){
@@ -121,9 +125,16 @@ public class SearchController {
 		queryString = eu.europeana.corelib.search.utils.SearchUtils.normalizeBooleans(queryString);
 		model.setQuery(queryString);
 		
+		//JOptionPane.showMessageDialog(new JPanel(), "queryString = " + queryString);
+		
         if (model.isDoTranslation() && queryString.length() > 0 && !queryString.equals("*:*") &&  !userSetNoQT ) {
 			long t0 = new Date().getTime();
+			
+			//String translatableTerm = queryString.indexOf(":") > 0 ? queryString.substring( queryString.indexOf(":")+1, queryString.length()-1 ) : queryString;
+			//LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, translatableTerm, qt, request);
+			
 			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, queryString, qt, request);
+			
 			long t1 = new Date().getTime();
 			log.info("Query translation took: " + (t1 - t0));
 			model.setLanguages(languageContainer);
