@@ -4,29 +4,108 @@
 
 <div class="row">
 
+	<c:set var="content_header"><spring:message code="contact_header"/></c:set>
+	<c:set var="contact_address_1"><spring:message code="contact_address_1"/></c:set>
+	<c:set var="contact_address_2"><spring:message code="contact_address_2"/></c:set>
+	<c:set var="contact_address_3"><spring:message code="contact_address_3"/></c:set>
+	<c:set var="contact_address_4"><spring:message code="contact_address_4"/></c:set>
+	<c:set var="contact_address_5"><spring:message code="contact_address_5"/></c:set>
+	<c:set var="contact_address_6"><spring:message code="contact_address_6"/></c:set>
+	
+	<c:set var="contact_person_1_name"><spring:message		code="contact_person_1_name"/></c:set>
+	<c:set var="contact_person_1_job_title"><spring:message code="contact_person_1_job_title"/></c:set>
+	<c:set var="contact_person_1_phone"><spring:message		code="contact_person_1_phone"/></c:set>
+	<c:set var="contact_person_1_email"><spring:message		code="contact_person_1_email"/></c:set>
+	
+	<c:set var="contact_person_2_name"><spring:message		code="contact_person_2_name"/></c:set>
+	<c:set var="contact_person_2_job_title"><spring:message code="contact_person_2_job_title"/></c:set>
+	<c:set var="contact_person_2_phone"><spring:message		code="contact_person_2_phone"/></c:set>
+	<c:set var="contact_person_2_email"><spring:message		code="contact_person_2_email"/></c:set>
+
 	<div class="six columns">
 		<div class="contact-wrap">
 			<h2><spring:message code="Contacts_t" /></h2>
 			<h4 class="no-underline">Europeana.eu</h4>
+
 			<p>
-				c/o the Koninklijke Bibliotheek<br/>
-				National Library of the Netherlands<br/>
-				PO Box 90407<br/>
-				2509 LK The Hague
+				<c:if test="${fn:length(content_header)>0}">
+					${content_header}
+					<br/>
+					<br/>
+				</c:if>
+				<c:if test="${fn:length(contact_address_1)>0}">
+					${contact_address_1}
+					<br/>
+				</c:if>
+				
+				<c:if test="${fn:length(contact_address_2)>0}">
+					${contact_address_2}
+					<br/>
+				</c:if>
+				<c:if test="${fn:length(contact_address_3)>0}">
+					${contact_address_3}
+					<br/>
+				</c:if>
+				<c:if test="${fn:length(contact_address_4)>0}">
+					${contact_address_4}
+					<br/>
+				</c:if>
+				<c:if test="${fn:length(contact_address_5)>0}">
+					${contact_address_5}
+					<br/>
+				</c:if>
+				<c:if test="${fn:length(contact_address_6)>0}">
+					${contact_address_6}
+					<br/>
+				</c:if>
 			</p>
+
 
 			<h4>To be added to the press list or for general communications</h4>
-			<p>
-				<span class="addr" title="Eleanor Kenny">Eleanor.Kenny [@] bl [.] uk</span><br/>
-				Head of Communications
-			</p>
 
-			<p>
-				<span class="addr" title="Susan Muthalaly">susan.muthalaly [@] europeana [.] eu</span><br/>
-				PR & Editorial Officer<br/>
-				+31 (0) 703140685<br/>
-			</p>
+			<c:if test="${fn:length(contact_person_1_name)>0}">
+				<p>
+					<c:if test="${fn:length(contact_person_1_email)>0}">
+						<a href="mailto:${contact_person_1_email}">${contact_person_1_name}</a>
+						<br/>
+					</c:if>
+					<c:if test="${fn:length(contact_person_1_email)<1}">
+						${contact_person_1_name}
+						<br/>
+					</c:if>
+					<c:if test="${fn:length(contact_person_1_job_title)>0}">
+						${contact_person_1_job_title}
+						<br/>
+					</c:if>
+					<c:if test="${fn:length(contact_person_1_phone)>0}">
+						${contact_person_1_phone}
+						<br/>
+					</c:if>
+				</p>
+			</c:if>
+			
+			<c:if test="${fn:length(contact_person_2_name)>0}">
+				<p>
+					<c:if test="${fn:length(contact_person_2_email)>0}">
+						<a href="mailto:${contact_person_2_email}">${contact_person_2_name}</a>
+						<br/>
+					</c:if>
+					<c:if test="${fn:length(contact_person_2_email)<1}">
+						${contact_person_2_name}
+						<br/>
+					</c:if>
+					<c:if test="${fn:length(contact_person_2_job_title)>0}">
+						${contact_person_2_job_title}
+						<br/>
+					</c:if>
+					<c:if test="${fn:length(contact_person_2_phone)>0}">
+						${contact_person_2_phone}
+						<br/>
+					</c:if>
+				</p>
+			</c:if>
 
+			
 			<h4>To contribute content to Europeana</h4>
 			<p>
 				See the <a href="http://pro.europeana.eu/web/guest/provide-data">content providers</a> page on our project site
