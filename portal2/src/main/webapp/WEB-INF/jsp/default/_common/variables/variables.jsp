@@ -31,11 +31,15 @@
   <c:if test="${model.pageName == 'full-doc.html'}">
     <c:set var="webRoot" value="../../" />
   </c:if>
-    
+  
   <c:if test="${model.pageName == 'staticpage.html'}">
     <c:if test="${termsAndConditions}">
       <c:set var="webRoot" value="../" />
     </c:if>
+  </c:if>
+
+  <c:if test="${model.pageName == 'exception.html'}">
+    <c:set var="webRoot" value="" />
   </c:if>
     
 </c:if>
@@ -48,7 +52,9 @@
 <c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
 <c:set var="homeUrl"   value="${homeUrlNS}/" />
 
+<%--
 <c:if test="${model.pageName == 'exception.html'}"><c:set var="branding" value="../../themes/${model.theme}" /></c:if>
+ --%>
 
 
 <c:if test="${!empty model.locale}"><c:set var="locale" value="${model.locale}" /></c:if>
