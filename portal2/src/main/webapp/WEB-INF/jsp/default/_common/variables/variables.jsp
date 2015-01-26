@@ -45,12 +45,13 @@
 </c:if>
  
  
-<c:set var="branding"		value="${webRoot}themes/${model.theme}" />
 <c:set var="myEuropeanaUrl"	value="${webRoot}myeuropeana" />
 
 <c:set var="req" value="${pageContext.request}" />
 <c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
 <c:set var="homeUrl"   value="${homeUrlNS}/" />
+
+<c:set var="branding"		value="${homeUrl}themes/${model.theme}" />
 
 <%--
 <c:if test="${model.pageName == 'exception.html'}"><c:set var="branding" value="../../themes/${model.theme}" /></c:if>
