@@ -394,7 +394,7 @@ eu.europeana.header = {
 						request.field = filter;
 					}
 					
-					$.getJSON( eu.europeana.vars.homeUrl + '/suggestions.json', request, function(data) {
+					$.getJSON( eu.europeana.vars.homeUrl + 'suggestions.json', request, function(data) {
 						
 						//create array for response objects
 						var suggestions = [];
