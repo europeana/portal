@@ -23,7 +23,7 @@
                         --%>title='${entry.title}'<%--
                         --%>target='_self'<%--
                         --%>class='image'><%--
-                        --%><img class='responsive_half' src='${homeUrl}${entry.images[0].responsiveFileNames["_1"]}' alt='${entry.title}' title='${homeUrl}${entry.images[0].responsiveFileNames['_1']}'/><%--
+                        --%><img class='responsive_half' src='${homeUrl}${entry.images[0].responsiveFileNames["_1"]}' alt='${entry.title}' title='${entry.title}'/><%--
                      --%></a><%--
       
                      --%><h4 class='hide-on-phones'><%--
