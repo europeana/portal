@@ -113,6 +113,7 @@ js.console = js.empty_console;
 eu.europeana.vars.page_name = '${model.pageName}';
 eu.europeana.vars.branding  = '${branding}';
 eu.europeana.vars.homeUrl   = '${homeUrl}';
+eu.europeana.vars.homeUrlNS = '${homeUrlNS}';
 /*
 if(eu.europeana.vars.page_name == 'widget/editor.html'){
 	eu.europeana.vars.branding = '../${branding}';
