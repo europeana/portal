@@ -433,6 +433,20 @@
 			<groupId>commons-codec</groupId>
 			<version>1.9</version>
 		</dependency>
+		
+		
+		<dependency>
+			<groupId>org.jruby</groupId>
+			<artifactId>jruby-complete</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.compass-style</groupId>
+			<artifactId>compass-gems</artifactId>
+			<version>0.12.2</version>
+		</dependency>
+		
 	</dependencies>
 	<profiles>
 		<profile>
