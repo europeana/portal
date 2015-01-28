@@ -51,6 +51,13 @@
 <c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
 <c:set var="homeUrl"   value="${homeUrlNS}/" />
 
+<script>
+	alert("req.requestURL = ${req.requestURL}"
+	+ "\nreq.requestURI = ${req.requestURI}"		
+	+ "\nreq.contextPath = ${req.contextPath}"		
+	);
+</script>
+
 <c:set var="branding"		value="${homeUrl}themes/${model.theme}" />
 
 <%--
