@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collections"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -58,6 +60,18 @@ String fwd_sp = (String)request.getAttribute("javax.servlet.forward.servlet_path
 String fwd_pi = (String)request.getAttribute("javax.servlet.forward.path_info");
 String fwd_qs = (String)request.getAttribute("javax.servlet.forward.query_string");
 
+String headerDebug = "HEADER INFO:";
+
+for (String name : (ArrayList<String>)Collections.list(request.getHeaderNames())) {
+	ArrayList<String> hList = Collections.list(request.getHeaders(name));
+	String debug2 = "";
+	for(String s : hList){
+		debug2 += s;
+	}
+	headerDebug += "\n" + name + "=" + debug2;
+}
+
+
 %>
 <script>
 	alert('req.requestURL = ${req.requestURL}'
@@ -65,8 +79,17 @@ String fwd_qs = (String)request.getAttribute("javax.servlet.forward.query_string
 	+ '\nreq.contextPath = ${req.contextPath}'		
 	+ '\nreq.contextPath = ${req.contextPath}'		
 	+ '\nfwd uri  = ${fwd_ru}'			
+	+ '\n\n  ${pageContext.request.requestURL}'
 	);
+	
 </script>
+
+<c:if test="${fn:length(headerDebug)>0}">
+
+	<script>
+		alert("headerDebug: ${headerDebug}");
+	</script>
+</c:if>
 
 <c:if test="${fn:length(fwd_ru)>0}">
 	<c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
@@ -80,8 +103,9 @@ String fwd_qs = (String)request.getAttribute("javax.servlet.forward.query_string
 				+ 'fwd_pi = ${fwd_pi}'
 				+ 'fwd_qs = ${fwd_qs}');
 	</script>
-	
 </c:if>
+
+
 
 <c:set var="branding"		value="${homeUrl}themes/${model.theme}" />
 
