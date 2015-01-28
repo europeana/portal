@@ -51,12 +51,27 @@
 <c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
 <c:set var="homeUrl"   value="${homeUrlNS}/" />
 
+<%
+String s = (String)request.getAttribute("javax.servlet.forward.request_uri");
+%>
 <script>
-	alert("req.requestURL = ${req.requestURL}"
-	+ "\nreq.requestURI = ${req.requestURI}"		
-	+ "\nreq.contextPath = ${req.contextPath}"		
+	alert('req.requestURL = ${req.requestURL}'
+	+ '\nreq.requestURI = ${req.requestURI}'		
+	+ '\nreq.contextPath = ${req.contextPath}'		
+	+ '\nreq.contextPath = ${req.contextPath}'		
+	+ '\nfwd uri  = ${s}'			
 	);
 </script>
+
+<c:if test="${fn:length(s)>0}">
+	<c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
+	<c:set var="homeUrl"   value="${homeUrlNS}/" />
+	
+	<script>
+		alert('fwd detected - change homeUrl to: ${s}');
+	</script>
+	
+</c:if>
 
 <c:set var="branding"		value="${homeUrl}themes/${model.theme}" />
 
