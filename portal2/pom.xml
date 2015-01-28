@@ -327,9 +327,23 @@
 		<dependency>
 		    <groupId>com.darrinholst</groupId>
 		    <artifactId>sass-java</artifactId>
-		    <version>3.4.4</version>
+		    <version>3.4.4.2</version>
+		</dependency>
+ 		
+ 		<!-- 
+		<dependency>
+			<groupId>org.jruby</groupId>
+			<artifactId>jruby-complete</artifactId>
+			<version>1.7.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.compass-style</groupId>
+			<artifactId>compass-gems</artifactId>
+			<version>0.12.2</version>
+		</dependency>
+ 		 -->
+		
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jsp-2.1-glassfish</artifactId>
@@ -432,19 +446,6 @@
 			<artifactId>commons-codec</artifactId>
 			<groupId>commons-codec</groupId>
 			<version>1.9</version>
-		</dependency>
-		
-		
-		<dependency>
-			<groupId>org.jruby</groupId>
-			<artifactId>jruby-complete</artifactId>
-			<version>1.7.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.compass-style</groupId>
-			<artifactId>compass-gems</artifactId>
-			<version>0.12.2</version>
 		</dependency>
 		
 	</dependencies>
