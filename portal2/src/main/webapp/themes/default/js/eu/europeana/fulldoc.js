@@ -1076,12 +1076,14 @@ eu.europeana.fulldoc = {
 				if ($("#carousel-1-img-measure").width() > 0) {
 
 					if (carouselData[0].external) {
-						if (carouselData[0].external.type == '3d') {
+						/*
+						if (false && carouselData[0].external.type == '3d') {
 							$('#carousel-1-img-measure img').css('cursor', 'pointer');
 						}
 						else {
-							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 						}
+						*/
+						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 					}
 					else {
 						// init trigger panel here for non-lightboxable stuff

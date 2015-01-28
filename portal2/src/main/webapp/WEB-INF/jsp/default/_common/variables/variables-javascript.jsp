@@ -222,6 +222,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 					'sound'		:	'<spring:message code="play_t" />',
 					'video'		:	'<spring:message code="play_t" />',
 					'text'		:	'<spring:message code="read_t" />',
+					'3d'		:	'<spring:message code="view_t" />'
 				}
 			}
 		};
