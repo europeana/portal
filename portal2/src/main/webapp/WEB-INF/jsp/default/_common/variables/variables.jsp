@@ -17,14 +17,15 @@
 	<c:set var="termsAndConditions">${false}</c:set>
 </c:if>
 
-<c:set var="webRoot" value="" />
+ <%--
+  The resulting array has count of at least 1 and we want to navigate backwards only if there is at least one slash. 
+	if begin and end are the same the foreach will be called 
+	--%>
 <c:set var = "slashCountArray" value="${fn:split(model.pageName,'/')}"/>
 <c:set var = "slashCount" value="${fn:length(slashCountArray)}"/>
 
 
 <c:if  test="${slashCountArray[0] != 'myeuropeana'}">
-  <%-- The resulting array has count of at least 1 and we want to navigate backwards only if there is at least one slash. 
-		if begin and end are the same the foreach will be called --%>
 	
   <c:forEach begin="2" end="${slashCount}">
     <c:set var="webRoot">${webRoot}../</c:set>
@@ -47,17 +48,18 @@
 </c:if>
  
  
-<c:set var="myEuropeanaUrl"	value="${webRoot}myeuropeana" />
-
 <c:set var="req" value="${pageContext.request}" />
 
 <%--
 <c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
 <c:set var="homeUrl"   value="${homeUrlNS}/" />
 --%>
-<c:set var="homeUrlNS"  value="${model.portalServer}${req.contextPath}" />
+
+
+<c:set var="homeUrlNS"  value="${model.portalServer}" />
 <c:set var="homeUrl"    value="${homeUrlNS}/" />
 
+<c:set var="myEuropeanaUrl"	value="${homeUrl}myeuropeana" />
 <c:set var="branding"		value="${homeUrl}themes/${model.theme}" />
 
 <%--

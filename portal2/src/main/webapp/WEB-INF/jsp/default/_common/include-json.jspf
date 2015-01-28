@@ -4,7 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="req" value="${pageContext.request}" />
 
-<c:set var="homeUrl"  value="${model.portalServer}${req.contextPath}" />
-
+<c:set var="homeUrl"  value="${model.portalServer}" />
+<c:set var="webRoot"  value="${fn:replace(homeUrl, \"/portal\", \"\")}" />
