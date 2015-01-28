@@ -52,23 +52,33 @@
 <c:set var="homeUrl"   value="${homeUrlNS}/" />
 
 <%
-String s = (String)request.getAttribute("javax.servlet.forward.request_uri");
+String fwd_ru = (String)request.getAttribute("javax.servlet.forward.request_uri");
+String fwd_cp = (String)request.getAttribute("javax.servlet.forward.context_path");
+String fwd_sp = (String)request.getAttribute("javax.servlet.forward.servlet_path");
+String fwd_pi = (String)request.getAttribute("javax.servlet.forward.path_info");
+String fwd_qs = (String)request.getAttribute("javax.servlet.forward.query_string");
+
 %>
 <script>
 	alert('req.requestURL = ${req.requestURL}'
 	+ '\nreq.requestURI = ${req.requestURI}'		
 	+ '\nreq.contextPath = ${req.contextPath}'		
 	+ '\nreq.contextPath = ${req.contextPath}'		
-	+ '\nfwd uri  = ${s}'			
+	+ '\nfwd uri  = ${fwd_ru}'			
 	);
 </script>
 
-<c:if test="${fn:length(s)>0}">
+<c:if test="${fn:length(fwd_ru)>0}">
 	<c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
 	<c:set var="homeUrl"   value="${homeUrlNS}/" />
 	
 	<script>
-		alert('fwd detected - change homeUrl to: ${s}');
+		alert('fwd detected - calculate homeUrl from these'
+				+ 'fwd_ru = ${fwd_ru}'
+				+ 'fwd_cp = ${fwd_cp}'
+				+ 'fwd_sp = ${fwd_sp}'
+				+ 'fwd_pi = ${fwd_pi}'
+				+ 'fwd_qs = ${fwd_qs}');
 	</script>
 	
 </c:if>
