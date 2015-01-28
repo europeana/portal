@@ -20,7 +20,11 @@
 			<c:set var="titleBidi"> title="${title}"</c:set>
 		</c:if>
         <c:set var="req" value="${pageContext.request}" />
+        <%--
 		<c:set var="searchUrl" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
+         --%>
+		<c:set var="searchUrl" value="${homeUrlNS}" />
+		
 		<a href="${searchUrl}${cell.fullDocUrl}&rows=${model.rows}" ${targetArg} ${titleBidi}>
 			<div class="ellipsis">
 				<c:choose>
