@@ -42,38 +42,39 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 		String localeName	= request.getParameter(this.paramName);
 		User user			= ControllerUtil.getUser(userService);
 
-		if (StringUtils.isNotBlank(localeName)
-			&& !(localeName.contains("*"))) {
+		if(request.getRequestURI().endsWith(".jpg") || request.getRequestURI().endsWith(".jpeg")){
+			// do nothing
+		}
+		else{
+			if (StringUtils.isNotBlank(localeName)
+					&& !(localeName.contains("*"))) {
 
-			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-			if (localeResolver == null) {
-				throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
-			}
-			LocaleEditor localeEditor = new LocaleEditor();
-			localeEditor.setAsText(localeName);
-			Locale locale = (Locale) localeEditor.getValue();
-			localeResolver.setLocale(request, response, locale);
-			
-			if (user != null) {
-				try {
-					userService.updateUserLanguagePortal(user.getId(), localeName);
-				} catch (DatabaseException e) {
-					// ignore for now
+					LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+					if (localeResolver == null) {
+						throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
+					}
+					LocaleEditor localeEditor = new LocaleEditor();
+					localeEditor.setAsText(localeName);
+					Locale locale = (Locale) localeEditor.getValue();
+					localeResolver.setLocale(request, response, locale);
+					
+					if (user != null) {
+						try {
+							userService.updateUserLanguagePortal(user.getId(), localeName);
+						} catch (DatabaseException e) {
+							// ignore for now
+						}
+					}
 				}
-			}
+
+				if(user != null && user.getLanguagePortal() != null ){
+					LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+					if (localeResolver == null) {
+						throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
+					}
+					localeResolver.setLocale(request, response, new Locale(user.getLanguagePortal()));
+				}			
 		}
-
-		if(user != null && user.getLanguagePortal() != null ){
-			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-			if (localeResolver == null) {
-				throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
-			}
-			localeResolver.setLocale(request, response, new Locale(user.getLanguagePortal()));
-		}
-
-
 		return true;
 	}
 }
-
-

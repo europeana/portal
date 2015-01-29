@@ -30,10 +30,12 @@ import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.corelib.web.support.Configuration;
+import eu.europeana.portal2.services.BingTokenService;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.presentation.model.MyEuropeanaPage;
+import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -62,6 +64,8 @@ public class MyEuropeanaController {
 	@Resource
 	private ClickStreamLogService clickStreamLogger;
 
+	private BingTokenService bingTokenService = new BingTokenService();
+	
 	@RequestMapping("/myeuropeana.html")
 	public ModelAndView myEuropeanaHandler(
 			HttpServletRequest request, Locale locale) throws Exception {
@@ -101,7 +105,8 @@ public class MyEuropeanaController {
 
 
 		User user = ControllerUtil.getUser(userService);
-
+		String bingToken = bingTokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret());
+		
 		if (user != null) {
 			MyEuropeanaPage model = new MyEuropeanaPage();
 			model.setUser(user);
@@ -122,6 +127,8 @@ public class MyEuropeanaController {
 			model.setSocialTags(socialTags);
 
 			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
+			
+			model.setBingToken(bingToken);
 
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.MY_EUROPEANA);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
@@ -134,6 +141,9 @@ public class MyEuropeanaController {
 			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
 
 			model.setErrorMessage("1".equals(request.getParameter("error")) ? INVALID_CREDENTIALS : null);
+			
+			model.setBingToken(bingToken);
+			
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_INDEX);
 		}

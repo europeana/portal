@@ -224,6 +224,9 @@ com.microsoft.translator = function( options ) {
 		
 		for ( i = 0; i < ii; i += 1 ) {
 			
+			if(options.language_codes.available[i].length>2){
+				continue;
+			}
 			html += '<option value="' + options.language_codes.available[i] + '">' + response[i] + '</option>';
 				
 		}
