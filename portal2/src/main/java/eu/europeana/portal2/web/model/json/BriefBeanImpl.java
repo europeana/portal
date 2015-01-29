@@ -23,6 +23,7 @@ public class BriefBeanImpl implements BriefBean {
 	private String[] title;
 	private String[] dcCreator;
 	private String[] dcContributor;
+        private String[] dcLanguage;
 	private String[] edmPlace;
 	private List<Map<String, String>> edmPlacePrefLabel;
 	private List<String> edmPlaceLatitude;
@@ -265,6 +266,15 @@ public class BriefBeanImpl implements BriefBean {
 	public void setDctermsHasPart(String[] dctermsHasPart) {
 		this.dctermsHasPart = dctermsHasPart;
 	}
+
+	public void setDcLanguage(String[] dcLanguage) {
+		this.dcLanguage = dcLanguage;
+	}
+        
+        @Override
+        public String[] getDcLanguage() {
+                return dcLanguage;
+        }
 
 	@Override
 	public String[] getDctermsSpatial() {
