@@ -34,6 +34,7 @@ import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.presentation.model.MyEuropeanaPage;
+import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -62,7 +63,6 @@ public class MyEuropeanaController {
 	private ClickStreamLogService clickStreamLogger;
 
 	private BingTokenService bingTokenService = new BingTokenService();
-
 	
 	@RequestMapping("/myeuropeana.html")
 	public ModelAndView myEuropeanaHandler(
@@ -105,7 +105,6 @@ public class MyEuropeanaController {
 		User user = ControllerUtil.getUser(userService);
 
 		String bingToken = bingTokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret());
-		
 		if (user != null) {
 			MyEuropeanaPage model = new MyEuropeanaPage();
 			model.setUser(user);
@@ -126,6 +125,8 @@ public class MyEuropeanaController {
 			model.setSocialTags(socialTags);
 
 			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
+			
+			model.setBingToken(bingToken);
 
 			model.setBingToken(bingToken);
 			

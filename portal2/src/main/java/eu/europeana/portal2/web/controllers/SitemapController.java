@@ -75,7 +75,6 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class SitemapController {
 
-
 	Logger log = Logger.getLogger(this.getClass());
   @Resource
   private Configuration config;

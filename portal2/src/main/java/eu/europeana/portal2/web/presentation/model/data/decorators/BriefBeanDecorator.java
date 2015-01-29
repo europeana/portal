@@ -309,6 +309,11 @@ public class BriefBeanDecorator implements BriefBean {
 		return briefBean.getDctermsHasPart();
 	}
 
+        @Override
+        public String[] getDcLanguage() {
+                return briefBean.getDcLanguage();
+        }
+
 	@Override
 	public String[] getDctermsSpatial() {
 		return returnNullIfEmpty(briefBean.getDctermsSpatial());

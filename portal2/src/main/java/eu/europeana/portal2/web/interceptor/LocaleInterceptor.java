@@ -46,6 +46,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 			String localeName	= request.getParameter(this.paramName);
 			User user			= ControllerUtil.getUser(userService);
 
+
 			if (StringUtils.isNotBlank(localeName)
 				&& !(localeName.contains("*"))) {
 
@@ -74,9 +75,8 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 				}
 				localeResolver.setLocale(request, response, new Locale(user.getLanguagePortal()));
 			}			
+
 		}
 		return true;
 	}
 }
-
-

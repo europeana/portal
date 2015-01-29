@@ -276,7 +276,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.save_settings_failure = '${save_settings_failure}';
 		eu.europeana.vars.keyword_languages_limit = ${model.keywordLanguagesLimit};
 		eu.europeana.vars.keyword_languages_separator = '${model.keywordLanguagesSeparator}';
-		
+
 		eu.europeana.vars.bing_translate_key =  '';
 		<c:catch var="noTokenException"><c:set var="testForToken">${model.bingToken}</c:set></c:catch>
 	  	<c:if test="${empty noTokenException}">
