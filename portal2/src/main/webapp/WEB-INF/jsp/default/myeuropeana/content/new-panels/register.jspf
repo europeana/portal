@@ -10,7 +10,7 @@
 	<p><spring:message code="AnEmailHasBeenSentTo_t" />: <b>${model.email}</b>.
 	<spring:message code="PleaseFollowTheLinkProvided_t" />.</p>
 </c:if>
-<form action="${model.currentUrl}#register" method="post" class="login-box">
+<form action="${myEuropeanaUrl}#register" method="post" class="login-box">
 	<fieldset>
 		<label>
 			<spring:message code="EmailAddress_t" />
