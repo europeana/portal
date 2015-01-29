@@ -35,3 +35,10 @@ logfile
 
 # Mac OS X
 .DS_Store
+
+# sass-cache
+portal2/src/main/webapp/themes/sass/.sass-cache/*
+
+# generated css
+portal2/src/main/webapp/themes/default/css/*
+
