@@ -1,0 +1,168 @@
+@import "variables";
+
+#submit-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.api-submit {
+  border: 1px solid #A0A0A0;
+  color: #333333;
+  font-size: 1.2em;
+  padding: 0.3em;
+}
+
+.api-submit.bold{
+	font-weight:    bold;
+	text-transform: uppercase;
+}
+
+#api-form fieldset {
+  /*
+  border: 1px solid #ccc;
+  margin-top: 1em;
+  */
+}
+
+#api-form fieldset legend {
+  font-weight: bold;
+}
+
+#api-form p.section {
+  margin-bottom: 0.5em;
+}
+
+#api-result #request-url,
+#api-result #response,
+#api-result #request-status,
+#api-result .request-http-headers {
+  font-family: sans-serif;
+  font-size: 0.8em;
+  
+	white-space: normal; 
+	word-wrap: break-word;
+  
+}
+
+#request-url, #response, #request-status, .request-http-headers {
+  background: none repeat scroll 0 0 #F0F4F5;
+  border: 1px solid #999999;
+  margin-bottom: 1em;
+  padding: 0.75em;
+}
+
+.request-http-headers-title, .request-http-headers {
+  display: none;
+}
+
+#show-http-headers {
+	text-align: right;
+}
+
+h2 {
+  font-family: sans-serif;
+  margin: 0 0 0.5em;
+}
+
+fieldset {
+	/*
+  padding: 1em;
+  */
+}
+
+#search-panel input[type=text],
+#record-panel input[type=text],
+#suggestions-panel input[type=text]
+{
+	border:			1px solid #E4E4E4;
+	border-radius:	0.2em;
+	font-size:		1em;
+	padding:		0.1em;
+	width:			100%;
+	
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
+  
+}
+
+#search-panel input[type=text]:focus,
+#record-panel input[type=text]:focus,
+#suggestions-panel input[type=text]:focus{
+	border:			1px solid orange;
+}
+
+#api-query,
+#api-qf{
+	margin-bottom: 1em;
+}
+
+#search-panel h4,
+#search-panel h5{
+	font-weight:	bold;
+}
+
+#search-panel .field-label{
+	display:	block;
+}
+
+#search-panel h4,
+#search-panel h5,
+#search-panel .field-label{
+	margin-bottom:	1em;
+}
+
+
+p.global-radios {
+  padding-bottom: 2em !important;
+}
+
+.section {
+  padding-bottom: 1em;
+}
+
+.section input[type=radio], .section label {
+  float: left;
+}
+
+.api-form-inner {
+  padding: 1em 1em 1em 0;
+}
+
+.api-result-inner {
+  padding: 1em 0 1em 1em;
+}
+
+#search-panel .input-group {
+	text-align: center;
+	margin-bottom: 2em;
+}
+
+#search-panel .input-group input {
+  width:	45%;
+  padding:	0.1em;
+}
+
+#api-yearMin,
+#api-latMin,
+#api-longMin{
+	float: left;
+}
+
+#api-yearMax,
+#api-latMax,
+#api-longMax{
+	float: right;
+}
+
+#search-panel span.api-latlong {
+  width: 90px;
+  display: block;
+  float: left;
+}
+
+.api-help {
+  font-size: 0.8em;
+  position: relative;
+  top: -1.5em;
+}

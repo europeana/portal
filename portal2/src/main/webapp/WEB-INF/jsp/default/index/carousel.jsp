@@ -34,7 +34,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 			<c:forEach var="item" items="${model.carouselItems}">
 
 				carouselData[carouselData.length] = {
-					image:				"${item.responsiveImages['_1']}",
+					image:				"${homeUrlNS}${item.responsiveImages['_1']}",
 					title:				"<spring:message code="${item.anchorTitle}" />",
 					description:		"<spring:message code="${item.description}" />",
 					linkDescription:	"<spring:message code="${item.linkDescription}" />",
@@ -53,12 +53,11 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				
 			</c:forEach>
 		</script>
-
 		<div id="carousel-1">
 			<c:forEach var="item" items="${model.carouselItems}">
 				<a href="${item.url}">
 					<img
-							src		= "${item.responsiveImages['_1']}"
+							src		= "${homeUrlNS}${item.responsiveImages['_1']}"
 							title	= "<spring:message code="${item.anchorTitle}" />"
 							alt		= "<spring:message code="${item.imgAlt}" />"
 							class	= "hidden"
@@ -66,6 +65,7 @@ ${item.imgHeight} = notranslate_carousel-item-x_img_height
 				</a>
 			</c:forEach>
 		</div>
+		
 		<div id="carousel-1-external-info"></div>
 	</c:if>
 

@@ -10,7 +10,7 @@
 	<head>
 		<link rel="stylesheet" href="${branding}/css/europeana-font-face.css" />
 		
-		<script type="text/javascript" src="${homeUrl}/${branding}/js/jquery/min/jquery-1.8.1.min.js"></script>
+		<script type="text/javascript" src="${branding}/js/jquery/min/jquery-1.8.1.min.js"></script>
 		<script type="text/javascript">
 			window.js={};
 		</script>
@@ -20,8 +20,8 @@
 				<link rel="stylesheet" href="themes/default/css/newsletter.css" />
 			</c:when>
 			<c:otherwise>				
-				<link rel="stylesheet" href="themes/default/css/min/common.min.css" />
-				<link rel="stylesheet" href="themes/default/css/min/newsletter.min.css" />
+				<link rel="stylesheet" href="themes/default/css-min/common.min.css" />
+				<link rel="stylesheet" href="themes/default/css-min/newsletter.min.css" />
 			</c:otherwise>
 		</c:choose>
 		

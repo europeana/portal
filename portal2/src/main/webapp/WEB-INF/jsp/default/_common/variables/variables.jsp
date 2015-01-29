@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collections"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -10,52 +12,59 @@
 <c:set var="AboutUsCurrent" value="" />
 <c:set var="ThoughtLabCurrent" value="" />
 
-<c:set var="webRoot" value="" />
+<c:catch var="termsAndConditionsException"><c:set var="termsAndConditions">${model.tc}</c:set></c:catch>
+<c:if test="${!empty termsAndConditionsException}">
+	<c:set var="termsAndConditions">${false}</c:set>
+</c:if>
 
-
+ <%--
+  The resulting array has count of at least 1 and we want to navigate backwards only if there is at least one slash. 
+	if begin and end are the same the foreach will be called 
+	--%>
 <c:set var = "slashCountArray" value="${fn:split(model.pageName,'/')}"/>
-
 <c:set var = "slashCount" value="${fn:length(slashCountArray)}"/>
+
+
 <c:if  test="${slashCountArray[0] != 'myeuropeana'}">
-<%-- The resulting array has count of at least 1 and we want to navigate backwards only if there is at least one slash. 
-if begin and end are the same the foreach will be called --%>
-<c:forEach begin="2" end="${slashCount}">
+	
+  <c:forEach begin="2" end="${slashCount}">
     <c:set var="webRoot">${webRoot}../</c:set>
-</c:forEach>
-    <c:if test="${model.pageName == 'full-doc.html'}">
-        <c:set var="webRoot" value="../../" />
+  </c:forEach>
+    
+  <c:if test="${model.pageName == 'full-doc.html'}">
+    <c:set var="webRoot" value="../../" />
+  </c:if>
+  
+  <c:if test="${model.pageName == 'staticpage.html'}">
+    <c:if test="${termsAndConditions}">
+      <c:set var="webRoot" value="../" />
     </c:if>
- </c:if>
-<%--
-<c:choose>
-	<c:when test="${model.pageName == 'widget/editor.html'}">
-		<c:set var="webRoot" value="../" />		
-	</c:when>
-    <c:when test="${model.pageName == 'api/console.html'}">
-        <c:set var="webRoot" value="../" />     
-    </c:when>
-	<c:when test="${model.pageName == 'full-doc.html'}">
-		<c:set var="webRoot" value="../../" />
-	</c:when>
+  </c:if>
 
-	<c:when test="${model.pageName == 'myeuropeana.html'}">
-	
-	</c:when>
-	
-	<c:otherwise>
-		<c:set var="webRoot" value="" />			
-	</c:otherwise>
-	
-</c:choose>
---%>
-<c:set var="branding"		value="${webRoot}themes/${model.theme}" />
-<c:set var="myEuropeanaUrl"	value="${webRoot}myeuropeana" />
-
-
+  <c:if test="${model.pageName == 'exception.html'}">
+    <c:set var="webRoot" value="" />
+  </c:if>
+    
+</c:if>
+ 
+ 
 <c:set var="req" value="${pageContext.request}" />
-<c:set var="homeUrl" value="${webRoot}" />
+
+<%--
+<c:set var="homeUrlNS" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
+<c:set var="homeUrl"   value="${homeUrlNS}/" />
+--%>
 
 
+<c:set var="homeUrlNS"  value="${model.portalServer}" />
+<c:set var="homeUrl"    value="${homeUrlNS}/" />
+
+<c:set var="myEuropeanaUrl"	value="${homeUrl}myeuropeana" />
+<c:set var="branding"		value="${homeUrl}themes/${model.theme}" />
+
+<%--
+<c:if test="${model.pageName == 'exception.html'}"><c:set var="branding" value="../../themes/${model.theme}" /></c:if>
+ --%>
 
 
 <c:if test="${!empty model.locale}"><c:set var="locale" value="${model.locale}" /></c:if>

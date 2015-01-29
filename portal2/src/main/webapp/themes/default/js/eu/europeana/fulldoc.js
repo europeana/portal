@@ -1076,12 +1076,14 @@ eu.europeana.fulldoc = {
 				if ($("#carousel-1-img-measure").width() > 0) {
 
 					if (carouselData[0].external) {
-						if (carouselData[0].external.type == '3d') {
+						/*
+						if (false && carouselData[0].external.type == '3d') {
 							$('#carousel-1-img-measure img').css('cursor', 'pointer');
 						}
 						else {
-							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 						}
+						*/
+						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 					}
 					else {
 						// init trigger panel here for non-lightboxable stuff
@@ -1278,7 +1280,7 @@ eu.europeana.fulldoc = {
 			if (typeof(mlt) != 'undefined') {
 				
 				var getLoadAllLink = function() {
-					return '<a class="load-all" href="/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
+					return '<a class="load-all" href="' + eu.europeana.vars.homeUrl + 'search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
 				};
 				
 				var initMlt = function() {
@@ -1296,13 +1298,14 @@ eu.europeana.fulldoc = {
 						mltData[mltData.length] = {
 								"thumb" : ob.find('img').attr('src'),
 								"title" : ob.attr('title'),
+								/* "link" : '../..' + ob.attr('href'),  */
 								"link" : ob.attr('href'),
 								"linkTarget" : "_self"
 						}
 					});
 					
 					$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
-					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
+					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData, '../..');
 						
 				}; // end initMlt
 				

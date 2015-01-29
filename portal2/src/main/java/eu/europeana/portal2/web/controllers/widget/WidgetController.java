@@ -180,6 +180,10 @@ Logger log = Logger.getLogger(this.getClass());
 		}
 
 		model.setProviders(contributorEntries);
+		model.setApiUrl(config.getApi2url());
+		model.setApiKey(config.getApi2key());
+		model.setApiSecret(config.getApi2secret());
+
 		try {
 			model.setBriefBeanView(briefBeanView);
 		} catch (UnsupportedEncodingException e) {

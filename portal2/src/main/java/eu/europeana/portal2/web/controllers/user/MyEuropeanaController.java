@@ -34,7 +34,6 @@ import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.LoginPage;
 import eu.europeana.portal2.web.presentation.model.MyEuropeanaPage;
-import eu.europeana.portal2.web.presentation.model.abstracts.SearchPageData;
 import eu.europeana.portal2.web.util.ControllerUtil;
 
 @Controller
@@ -157,14 +156,19 @@ public class MyEuropeanaController {
 	) throws Exception {
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
+		
+		String bingToken = bingTokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret());
+		
 		model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
-
 		model.setEmail(email);
+		model.setBingToken(bingToken);
+		
 		log.info("requestedAction: " + requestedAction);
 
 		if (email != null) {
-			String baseUrl = config.getPortalUrl();
-
+			
+			String baseUrl = getRootURL(request);
+			
 			// Register for My Europeana
 			if (REGISTER_FOR_MYEUROPEANA.equals(requestedAction)) {
 				if (!ControllerUtil.validEmailAddress(email)) {
@@ -255,6 +259,24 @@ public class MyEuropeanaController {
 		return search;
 	}
 
+	private String getRootURL(HttpServletRequest req) {
+
+	    String scheme = req.getScheme();
+	    String serverName = req.getServerName();
+	    int serverPort = req.getServerPort();
+	    String contextPath = req.getContextPath();
+	    
+	    // Reconstruct original requesting URL
+	    StringBuffer url =  new StringBuffer();
+	    url.append(scheme).append("://").append(serverName);
+
+	    if ((serverPort != 80) && (serverPort != 443)) {
+	        url.append(":").append(serverPort);
+	    }
+	    url.append(contextPath);
+	    return url.toString();
+	}
+	
 	private boolean emailExists(String email) {
 		User user = userService.findByEmail(email);
 		return (user != null && !StringUtils.isBlank(user.getPassword()));

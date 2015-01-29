@@ -112,11 +112,7 @@ eu.europeana.header = {
 			setTabIndex('#cb-ugc');
 			
 			setTabIndex('#share-subscribe .icon-share');
-			
-			// controls not initiated yet... .we have a problem
-			//alert( $('#at15s_inner a').length  )
-			//setTabIndex('#at15s_inner a');
-			
+						
 			setTabIndex('.nav-top .eu-menu');
 			setTabIndex('.nav-top .eu-menu .item a');
 			
@@ -142,7 +138,6 @@ eu.europeana.header = {
 		}
 		
 		else if(eu.europeana.vars.page_name == 'myeuropeana.html'){
-			
 		//	alert("my e");
 		}
 		else if(eu.europeana.vars.page_name == 'login.html'){
@@ -399,7 +394,7 @@ eu.europeana.header = {
 						request.field = filter;
 					}
 					
-					$.getJSON( eu.europeana.vars.homeUrl + '/suggestions.json', request, function(data) {
+					$.getJSON( eu.europeana.vars.homeUrl + 'suggestions.json', request, function(data) {
 						
 						//create array for response objects
 						var suggestions = [];

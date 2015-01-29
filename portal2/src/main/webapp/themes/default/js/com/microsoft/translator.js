@@ -255,8 +255,6 @@ com.microsoft.translator = function( options ) {
 
 		if(arraysText.length>0){
 			
-			console.log('run detection.....');
-			
 			arraysText = '[' + arraysText + ']'
 			js_src_detect  =	'http://api.microsofttranslator.com/V2/Ajax.svc/DetectArray' +
 			'?oncomplete=' + 'com.microsoft.translator.prototype.doneDetect' +

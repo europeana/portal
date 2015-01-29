@@ -85,8 +85,8 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		model.setLocale(RequestContextUtils.getLocaleResolver(request).resolveLocale(request));
 		model.setPortalUrl(config.getPortalUrl());
 		//model.setPortalName(config.getPortalName());
+		model.setPortalServer(config.getPortalServer());
 		model.setDebug(config.getDebugMode());
-
 		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);
 	}
 }

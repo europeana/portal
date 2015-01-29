@@ -112,6 +112,7 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 
 			File outputfile = new File(filePath);
 			BufferedImage responsiveImage = null;
+						
 			if (!outputfile.exists()) {
 				log.info(String.format("new file is %s, url: %s, location: %s, ", filePath, fileUrl, location));
 				if (originalImage == null) {
@@ -164,7 +165,8 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 			if (isURL) {
 				originalImage = ImageIO.read(new URL(location));
 			} else {
-				originalImage = ImageIO.read(new File(staticPagePath, location));
+				//originalImage = ImageIO.read(new File(staticPagePath, location));
+				originalImage = ImageIO.read(getClass().getClassLoader().getResource(staticPagePath + location));
 			}
 		} catch (MalformedURLException e) {
 			log.severe(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
