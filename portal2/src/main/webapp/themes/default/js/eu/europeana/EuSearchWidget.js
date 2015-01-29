@@ -256,12 +256,14 @@ fnSearchWidget = function($, config){
         			ob = ob.replace(/[\{\}]/g, '"');
         			url += '&qf=';
 
-        			//url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '"' + ob.split(':')[1] + '"') : ob;
-        			  url += (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '' + ob.split(':')[1] + '') : ob;
-        			
+        			 var urlBit = (ob.indexOf(' ')>-1) ? (ob.split(':')[0] + ':' + '' + ob.split(':')[1] + '') : ob;
+        			 urlBit = urlBit.replace(/\&/g, '%26');
+
+        			 url += urlBit;
         		});
         	}
         }
+
         return url;
     };
 

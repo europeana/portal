@@ -155,13 +155,13 @@ var EuWidgetWizard = function(cmpIn, options){
 
 						if(dataProviderInput.prop('checked')){
 							
-							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
+							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName( name ) + '}';
 							
 							//providersQuery += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
 							
 						}
 						else{
-							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
+							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + cleanName( name ) + '}';
 							
 							//providersQuery += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
 
@@ -181,7 +181,6 @@ var EuWidgetWizard = function(cmpIn, options){
 		result += param() + 'theme=' + getTheme();
 		result += param() + 'apiUrl=' + encodeURIComponent(searchUrl + '&profile=portal,params');
 		result += param() + 'v=2';
-		
 		return result;
 	};
 	
@@ -737,7 +736,6 @@ var EuWidgetWizard = function(cmpIn, options){
 				var name           = providerInput.next('label').html();
 				var providerParam  = '&qf=PROVIDER:"' + cleanName(name) + '"';
 
-
 				
 				//if(providerInput.prop('checked') && providerInput.is(':visible') ){				
 				if( providerInput.prop('checked') ){
@@ -761,11 +759,10 @@ var EuWidgetWizard = function(cmpIn, options){
 
 						///if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
 						if(dataProviderInput.prop('checked') ){
-							//query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
-							resultFragment += '&qf=DATA_PROVIDER:"' + name + '"';							
+							resultFragment += '&qf=DATA_PROVIDER:"' + cleanName(name) + '"';
 						}
 						else{
-							subtractUrl += '&qf=-DATA_PROVIDER:"' + name + '"';
+							subtractUrl += '&qf=-DATA_PROVIDER:"' + cleanName(name) + '"';
 						}
 						
 					});
