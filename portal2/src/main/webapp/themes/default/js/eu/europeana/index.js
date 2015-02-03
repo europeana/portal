@@ -397,22 +397,22 @@
 						success: function(data){
 							$("#section-pinterest .collapse-content").html('<div class="carousel-wrapper"><div id="pinterest-carousel"></div></div>');
 
-							var pinterestCarousel = new EuCarousel($('#pinterest-carousel'), data.data);
-							
-							$('#pinterest-carousel a.carousel-item').click(function(){
-								var clicked	= this;
-								$('#pinterest-carousel a').each(function(i, ob){
-									if(ob == clicked){
-										com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", data.data[i].link);
-									}
+							if(data.data && data.data.length>0){
+								var pinterestCarousel = new EuCarousel($('#pinterest-carousel'), data.data);
+								$('#pinterest-carousel a.carousel-item').click(function(){
+									var clicked	= this;
+									$('#pinterest-carousel a').each(function(i, ob){
+										if(ob == clicked){
+											com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", data.data[i].link);
+										}
+									});
 								});
-							});
-							
-		            	   	$(window).bind('collapsibleExpanded', function(data){
-		            	   		console.log('collapsibleExpanded, data =  ' + data)
-		            	   		pinterestCarousel.resize();
-		            	   	} );        		
-
+								
+			            	   	$(window).bind('collapsibleExpanded', function(data){
+			            	   		console.log('collapsibleExpanded, data =  ' + data)
+			            	   		pinterestCarousel.resize();
+			            	   	} );        		
+							}
 						},
 						error: function(x, status, e){
 							js.console.log("error = " + JSON.stringify(e));
