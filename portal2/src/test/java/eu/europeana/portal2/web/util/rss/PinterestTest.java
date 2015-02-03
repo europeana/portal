@@ -35,7 +35,7 @@ public class PinterestTest {
 	// private List<FeedEntry> pinterestEntries;
 	// private Calendar pinterestAge;
 
-	private String pintFeedUrl = "http://pinterest.com/europeana/feed.rss";
+	private String pintFeedUrl = "https://pinterest.com/europeana/feed.rss";
 	private Integer pintItemLimit = 20;
 	private RSSFeedParser parser;
 

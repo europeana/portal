@@ -19,7 +19,7 @@
   
       <c:set var="sectionContent" value=""/>
   
-      <c:url var="searchUrl" value="/search.html"><c:param name="query">skos_concept:"${concept.about}"</c:param></c:url>
+      <c:url var="searchUrl" value="${model.portalServer}/search.html"><c:param name="query">skos_concept:"${concept.about}"</c:param></c:url>
       <c:set var="linkMarkup">
         <a href="${searchUrl}" class="europeana"><c:forEach items="${concept.labels}" var="item" varStatus="t">${item}<c:if test="${!t.last}">, </c:if></c:forEach></a>
       </c:set>
