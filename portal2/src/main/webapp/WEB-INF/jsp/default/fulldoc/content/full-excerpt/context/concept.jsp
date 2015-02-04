@@ -30,7 +30,7 @@
       	 <c:set var="sectionContent" value="${linkMarkup};"/>
          
          <c:forEach items="${concept.altLabelLang}" var="item" varStatus="t">
-            <c:url var="labelLinkUrl" value="/search.html"><c:param name="query">what:"${item}"</c:param></c:url>
+            <c:url var="labelLinkUrl" value="${model.portalServer}/search.html"><c:param name="query">what:"${item}"</c:param></c:url>
             <c:set var="labelLink">
               <a href="${labelLinkUrl}">${item}</a>
             </c:set>
