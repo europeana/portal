@@ -78,9 +78,19 @@ public class ContactPageController {
 			@ModelAttribute("model") @Valid ContactPage form, 
 			BindingResult result,
 			HttpServletRequest request, Locale locale) throws Exception {
+		
+		System.err.println("CONTACT FEEDBACK");
+		
+		
 		if (result.hasErrors()) {
+			System.err.println("RESULT HAS ERRORS");
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND_FAILURE);
+			
+
 		} else {
+			
+			System.err.println("RESULT HAS NO ERRORS - SEND EMAIL");
+
 			emailService.sendFeedback(form.getEmail(), form.getFeedbackText());
 			form.setSubmitMessage("Your feedback was successfully sent. Thank you!");
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND);
