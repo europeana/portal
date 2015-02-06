@@ -495,7 +495,11 @@
 
 <c:set var="req" value="${pageContext.request}" />
 <c:set var="searchUrl" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
-		
+
+<c:if test="${fn:substring(searchUrl, fn:length(searchUrl)-1, fn:length(searchUrl)) == '/'}" >
+	<c:set var="searchUrl" value="${fn:substring(searchUrl, 0, fn:length(searchUrl)-1)}" />
+</c:if>
+
 <c:choose>
 
 	<c:when test="${!empty model.debug && model.debug}">
