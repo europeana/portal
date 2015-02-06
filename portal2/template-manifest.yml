@@ -1,10 +1,10 @@
 ---
 applications:
-- name: portal-test2
+- name: appname
   memory: 4096M
   instances: 1
-  host: portal-test2
-  domain: de.a9sapp.eu
+  host: appname
+  domain: domain.com
   path: target/portal.war
   buildpack: https://github.com/europeana/java-buildpack.git
   services:
