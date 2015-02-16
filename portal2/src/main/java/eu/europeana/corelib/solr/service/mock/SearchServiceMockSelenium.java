@@ -46,6 +46,7 @@ import eu.europeana.corelib.solr.service.SearchService;
 import eu.europeana.corelib.solr.service.mock.bean.BriefBeanMock;
 import eu.europeana.corelib.solr.service.mock.bean.FullBeanMock;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
@@ -249,4 +250,9 @@ public class SearchServiceMockSelenium implements SearchService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+    @Override
+    public Integer search(Integer integer, String s, String s2, Boolean aBoolean, Boolean aBoolean2, String s3, String s4, Boolean aBoolean3, String s5, Boolean aBoolean4, String s6) {
+        throw new NotImplementedException();
+    }
 }
