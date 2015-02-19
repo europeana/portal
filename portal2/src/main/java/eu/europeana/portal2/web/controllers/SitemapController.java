@@ -850,7 +850,7 @@ public class SitemapController {
             title = doc.getTitle()[0];
           }
           SitemapEntry entry =
-              new SitemapEntry(urlService.getCanonicalPortalRecord(bean.getId()).toString(),
+              new SitemapEntry(urlService.getPortalRecord(false, bean.getId()).toString(),
                   doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
           fullXML.append(URL_OPENING).append(LN);
 
