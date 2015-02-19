@@ -135,16 +135,16 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.pinterest.item = {};
 		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
 		eu.europeana.vars.galleria = {};
-		<c:choose>
 			eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			<%--
+		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
 			</c:when>
 			<c:otherwise>
 				eu.europeana.vars.galleria.css = '../../galleria.europeanax.css';
 			</c:otherwise>
-			--%>
 		</c:choose>
+			--%>
 
 	</c:when>
 
