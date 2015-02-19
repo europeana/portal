@@ -131,6 +131,9 @@ public class RegisterApiPageController {
 		}
 
 		String baseUrl = config.getPortalUrl();
+		if(baseUrl.endsWith("/")){
+			baseUrl = baseUrl.substring(0, baseUrl.length()-1);
+		}
 
 		log.info("requestedAction: " + model.getRequestedAction());
 		// Register for API
@@ -145,7 +148,6 @@ public class RegisterApiPageController {
 					Token token = tokenService.create(model.getEmail());
 					String url = baseUrl + "/api/registration.html";
 					
-					url = url.replace("//", "/");
 					
 					log.info("token: " + token);
 					log.info("registerUri: " + url);
