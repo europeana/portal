@@ -10,3 +10,4 @@ applications:
   services:
     - postgresql
     - europeana-object-db
+    - redis
