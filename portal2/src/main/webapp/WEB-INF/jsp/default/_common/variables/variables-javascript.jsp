@@ -135,16 +135,15 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.pinterest.item = {};
 		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
 		eu.europeana.vars.galleria = {};
-		eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
-		<%--
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
+				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = '../../css-min/galleria.europeanax.min.css';
+				eu.europeana.vars.galleria.css = '../../css-min/galleria.europeanax.css';
 			</c:otherwise>
 		</c:choose>
-		--%>
+
 	</c:when>
 
 	<c:when test="${model.pageName == 'full-doc.html'}">
@@ -190,7 +189,7 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = '../../css-min/galleria.europeanax.min.css';
+				eu.europeana.vars.galleria.css = '../../css-min/galleria.europeanax.css';
 			</c:otherwise>
 		</c:choose>
 
