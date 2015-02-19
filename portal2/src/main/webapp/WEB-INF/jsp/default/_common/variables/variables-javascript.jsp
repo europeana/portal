@@ -136,12 +136,14 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
 		eu.europeana.vars.galleria = {};
 		<c:choose>
+			eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+			<%--
 			<c:when test="${!empty model.debug && model.debug}">
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = '../../css-min/galleria.europeanax.css';
+				eu.europeana.vars.galleria.css = '../../galleria.europeanax.css';
 			</c:otherwise>
+			--%>
 		</c:choose>
 
 	</c:when>
@@ -184,15 +186,16 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 
 		eu.europeana.vars.dcIdentifier = '${fn:escapeXml(dcIdentifier)}';
 
+		eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+		<%--
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
 				eu.europeana.vars.galleria.css = '../../css-min/galleria.europeanax.css';
 			</c:otherwise>
 		</c:choose>
-
+		--%>
 		<c:choose>
 			<c:when test="${!empty model.showSimilarItems && model.showSimilarItems}">
 				eu.europeana.vars.isShowSimilarItems = true;
