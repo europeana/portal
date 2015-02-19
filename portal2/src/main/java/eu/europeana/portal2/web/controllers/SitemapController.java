@@ -619,7 +619,7 @@ public class SitemapController {
    */
   private String getPortalUrl() {
     if (portalUrl == null) {
-      portalUrl = config.getCannonicalPortalServer();
+      portalUrl = config.getPortalServer();
       if (!portalUrl.endsWith("/")) {
         portalUrl = portalUrl + "/";
       }
