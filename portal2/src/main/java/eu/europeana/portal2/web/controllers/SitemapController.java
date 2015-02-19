@@ -1,9 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -14,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Resource;
@@ -52,6 +50,7 @@ import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanDeco
 import eu.europeana.portal2.web.presentation.model.data.submodel.ContributorItem;
 import eu.europeana.portal2.web.presentation.model.data.submodel.SitemapEntry;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import eu.europeana.portal2.web.util.keyvalue.RedisProvider;
 
 /**
  * This class generates the XML sitemap files (the list of pages of a web site accessible to
@@ -75,7 +74,8 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class SitemapController {
 
-	Logger log = Logger.getLogger(this.getClass());
+  Logger log = Logger.getLogger(this.getClass());
+
   @Resource
   private Configuration config;
 
@@ -93,6 +93,9 @@ public class SitemapController {
 
   @Resource
   private EuropeanaUrlService urlService;
+
+  @Resource
+  private RedisProvider redisProvider;
 
   private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
   private static final int MAX_URLS_PER_SITEMAP = 45000; // Strictly speaking it's 50,000, but
@@ -122,8 +125,6 @@ public class SitemapController {
 
   private static final String PREFIX_PATTERN = "^[0-9A-Za-z_]{3}$";
   private static String portalUrl;
-  private static String sitemapCacheName;
-  private static File sitemapCacheDir;
   private static Date lastSolrUpdate;
   private volatile static Calendar lastCheck;
   private static Map<String, Boolean> sitemapsBeingProcessed =
@@ -159,24 +160,19 @@ public class SitemapController {
 
     boolean isPlaceSitemap = StringUtils.contains(places, "true");
 
-    // Initialise the sitemap directory
-    setSitemapCacheDir();
-
-    // Return a 404 if the sitemap directory cannot be used
-    if (sitemapCacheDir == null) {
+    // Return a 404 if the sitemap cache cannot be used
+    if (!redisProvider.getJedis().isConnected()) {
       response.setStatus(404);
       return;
     }
 
     String params = String.format(SITEMAP_INDEX_PARAMS, isPlaceSitemap);
-    File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_INDEX + params + XML);
-
+    String cacheFile = SITEMAP_INDEX + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated() || !cacheFile.exists()) && !sitemapsBeingProcessed.containsKey(params)) {
+    if ((solrOutdated() || !redisProvider.getJedis().exists(cacheFile))
+        && !sitemapsBeingProcessed.containsKey(params)) {
       boolean success = false;
-      FileWriter fstream = new FileWriter(cacheFile);
-      BufferedWriter fout = new BufferedWriter(fstream);
       ServletOutputStream out = response.getOutputStream();
 
       if (log.isInfoEnabled()) {
@@ -185,8 +181,7 @@ public class SitemapController {
 
       // Kick off a new thread
       try {
-        PerReqSitemap sitemap =
-            new PerReqSitemap(PerReqSitemap.INDEXED_HASHED, null, places);
+        PerReqSitemap sitemap = new PerReqSitemap(PerReqSitemap.INDEXED_HASHED, null, places);
         Thread t = new Thread(sitemap);
         t.start();
         while (StringUtils.equals(sitemap.getState(), PerReqSitemap.IDLE)
@@ -196,17 +191,15 @@ public class SitemapController {
         out.print(sitemap.getSitemap().toString());
         out.flush();
 
-        fout.write(sitemap.getSitemap().toString());
-        fout.flush();
+        redisProvider.getJedis().set(cacheFile, sitemap.getSitemap().toString());
         success = true;
       } catch (Exception e) {
         success = false;
-        log.error("Exception during generation of " + cacheFile + ": " + e.getLocalizedMessage(), e);
-      } finally {
-        fout.close();
+        // log.error("Exception during generation of " + cacheFile + ": " + e.getLocalizedMessage(),
+        // e);
       }
       if (!success) {
-        cacheFile.delete();
+        redisProvider.getJedis().del(cacheFile);
       }
     } else {
       // Sitemap is being generated, grab some coffee...
@@ -220,7 +213,7 @@ public class SitemapController {
         } while (sitemapsBeingProcessed.containsKey(params));
       }
       // Read the sitemap from file
-      readCachedFile(response.getOutputStream(), cacheFile);
+      readCachedSitemap(response.getOutputStream(), cacheFile);
     }
   }
 
@@ -246,26 +239,19 @@ public class SitemapController {
 
     boolean isPlaceSitemap = StringUtils.contains(places, "true");
 
-    // Initialise the sitemap directory
-    setSitemapCacheDir();
-
-    // Return a 404 if the sitemap directory cannot be used
-    if (sitemapCacheDir == null || prefix.length() > 3 || !prefix.matches(PREFIX_PATTERN)) {
+    // Return a 404 if the sitemap cache cannot be used
+    if (!redisProvider.getJedis().isConnected() || prefix.length() > 3
+        || !prefix.matches(PREFIX_PATTERN)) {
       response.setStatus(404);
       return;
     }
-    String params =
-        String.format(SITEMAP_HASHED_PARAMS, prefix, index, isPlaceSitemap);
-    // Store these sitemaps in a subdirectory based on the first letter of the id3hash
-    File subDir = new File(sitemapCacheDir.getAbsolutePath(), prefix.substring(0, 1));
-    if (!subDir.exists()) {
-      subDir.mkdirs();
-    }
-    File cacheFile = new File(subDir, SITEMAP_HASHED + params + XML);
-
+    String params = String.format(SITEMAP_HASHED_PARAMS, prefix, index, isPlaceSitemap);
+    String cacheFile = SITEMAP_HASHED + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated() || !cacheFile.exists()) && !sitemapsBeingProcessed.containsKey(params)) {
+    if ((solrOutdated()) || !redisProvider.getJedis().exists(cacheFile)
+        && !sitemapsBeingProcessed.containsKey(params)) {
+
       if (log.isInfoEnabled()) {
         log.info(String.format("Generating %s", cacheFile));
       }
@@ -283,7 +269,6 @@ public class SitemapController {
       }
 
       // Generate response
-      BufferedWriter fout = null;
       try {
         ServletOutputStream out = response.getOutputStream();
         out.print(fullXML.toString());
@@ -296,12 +281,9 @@ public class SitemapController {
             e.getLocalizedMessage(), cacheFile), e);
       }
 
-      // Also write to disk
+      // Also write to cache
       try {
-        FileWriter fstream = new FileWriter(cacheFile);
-        fout = new BufferedWriter(fstream);
-        fout.write(fullXML.toString());
-        fout.flush();
+        redisProvider.getJedis().set(cacheFile, fullXML.toString());
         if (success == 1) {
           success = 2;
         }
@@ -310,14 +292,10 @@ public class SitemapController {
         log.error(String.format(
             "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
             e.getLocalizedMessage(), cacheFile), e);
-      } finally {
-        if (fout != null) {
-          fout.close();
-        }
       }
 
-      if (success != 2 || cacheFile.getTotalSpace() == 0) {
-        cacheFile.delete();
+      if (success != 2 || StringUtils.isEmpty(fullXML.toString())) {
+        redisProvider.getJedis().del(cacheFile);
       }
       if (log.isInfoEnabled()) {
         log.info(Thread.currentThread().getName() + " served by generation");
@@ -325,7 +303,7 @@ public class SitemapController {
       sitemapsBeingProcessed.remove(params);
     } else {
       // Sitemap is being generated, grab some coffee...
-      if (sitemapsBeingProcessed.containsKey(params) || !cacheFile.exists()) {
+      if (sitemapsBeingProcessed.containsKey(params) || !redisProvider.getJedis().exists(cacheFile)) {
         do {
           try {
             Thread.sleep(1000);
@@ -334,13 +312,14 @@ public class SitemapController {
                 "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
                 e.getLocalizedMessage(), cacheFile), e);
           }
-        } while (sitemapsBeingProcessed.containsKey(params) || !cacheFile.exists());
+        } while (sitemapsBeingProcessed.containsKey(params)
+            || !redisProvider.getJedis().exists(cacheFile));
       }
-      // Read the sitemap from file
+      // Read the sitemap from cache
       if (log.isInfoEnabled()) {
-        log.info(cacheFile.getName() + " is served from cache");
+        log.info(cacheFile + " is served from cache");
       }
-      readCachedFile(response.getOutputStream(), cacheFile);
+      readCachedSitemap(response.getOutputStream(), cacheFile);
     }
   }
 
@@ -357,8 +336,7 @@ public class SitemapController {
   private StringBuilder createSitemapHashedContent(String prefix, String index, SearchPage model,
       String isPlaceSitemap) {
     PerReqSitemap sitemap =
-        new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isPlaceSitemap,
-            prefix, index);
+        new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isPlaceSitemap, prefix, index);
     Thread t = new Thread(sitemap);
     t.start();
     while (StringUtils.equals(sitemap.getState(), PerReqSitemap.IDLE)
@@ -387,13 +365,15 @@ public class SitemapController {
    * @throws IOException
    */
   // TODO: Complete this method, or remove/deprecate it
+  // FIXME: Not yet updated for Redis (still writing to file)
   // @RequestMapping("/europeana-video-sitemap.xml")
   public void handleVideoSitemap(
       @RequestParam(value = "volume", required = true) String volumeString,
       HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException,
       IOException {
-    setSitemapCacheDir();
-    if (sitemapCacheDir == null) {
+
+    // Return a 404 if the sitemap cache cannot be used
+    if (!redisProvider.getJedis().isConnected()) {
       response.setStatus(404);
       return;
     }
@@ -401,8 +381,9 @@ public class SitemapController {
     String params =
         request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-")
             : "";
-    File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_VIDEO + params + XML);
-    if (solrOutdated() || !cacheFile.exists()) {
+    String cacheFile = SITEMAP_VIDEO + params + XML;
+
+    if (solrOutdated() || !redisProvider.getJedis().exists(cacheFile)) {
 
       int volume = -1;
       response.setCharacterEncoding("UTF-8");
@@ -501,7 +482,7 @@ public class SitemapController {
         fout.close();
       }
     } else {
-      readCachedFile(response.getOutputStream(), cacheFile);
+      readCachedSitemap(response.getOutputStream(), cacheFile);
     }
   }
 
@@ -532,10 +513,8 @@ public class SitemapController {
   @RequestMapping("/europeana-providers.html")
   public ModelAndView handleListOfContributors(HttpServletRequest request, Locale locale)
       throws EuropeanaQueryException {
-    setSitemapCacheDir();
 
-    String portalServer =
-        new StringBuilder(config.getPortalServer()).toString();
+    String portalServer = new StringBuilder(config.getPortalServer()).toString();
 
     // sitemap index - collections overview
     if (solrOutdated() || contributorEntries == null) {
@@ -546,8 +525,7 @@ public class SitemapController {
         for (Count provider : providers) {
           try {
             String query =
-                StringEscapeUtils.escapeXml(String.format(
-                    "search.html?query=*:*&qf=PROVIDER:%s", 
+                StringEscapeUtils.escapeXml(String.format("search.html?query=*:*&qf=PROVIDER:%s",
                     convertProviderToUrlParameter(provider.getName())));
             ContributorItem contributorItem =
                 new ContributorItem(query, provider.getName(), provider.getCount(), portalServer);
@@ -599,8 +577,8 @@ public class SitemapController {
   public ModelAndView handleSitemap(HttpServletRequest request) {
 
     List<SitemapEntry> records = new ArrayList<SitemapEntry>();
-    records.add(new SitemapEntry("http://www.europeana.eu/europeana-providers.html", null,
-        null, 10));
+    records
+        .add(new SitemapEntry("http://www.europeana.eu/europeana-providers.html", null, null, 10));
 
     SitemapPage<SitemapEntry> model = new SitemapPage<SitemapEntry>();
     model.setResults(records);
@@ -641,7 +619,7 @@ public class SitemapController {
    */
   private String getPortalUrl() {
     if (portalUrl == null) {
-      portalUrl = config.getCannonicalPortalServer();
+      portalUrl = config.getPortalServer();
       if (!portalUrl.endsWith("/")) {
         portalUrl = portalUrl + "/";
       }
@@ -650,51 +628,17 @@ public class SitemapController {
   }
 
   /**
-   * Set sitemap directory, and create it in the filesystem if it does not exist. The sitemap
-   * directory is picked up from the 'portal.sitemap.cache' key in the properties file
-   */
-  private void setSitemapCacheDir() {
-    if (sitemapCacheDir == null) {
-      sitemapCacheName = config.getSitemapCache();
-      if (sitemapCacheName != null) {
-        if (!sitemapCacheName.endsWith("/")) {
-          sitemapCacheName += "/";
-        }
-        sitemapCacheDir = new File(sitemapCacheName);
-        if (!sitemapCacheDir.exists()) {
-          sitemapCacheDir.mkdir();
-        }
-      }
-    }
-  }
-
-  /**
-   * Read a cached (sitemap) file, and copy its content to the output stream
+   * Read a cached sitemap, and copy its content to the output stream
    * 
    * @param out
    * @param cacheFile
    */
-  private void readCachedFile(ServletOutputStream out, File cacheFile) {
-    BufferedReader br = null;
+  private void readCachedSitemap(ServletOutputStream out, String cacheFile) {
     try {
-      String sCurrentLine;
-      br = new BufferedReader(new FileReader(cacheFile));
-      while ((sCurrentLine = br.readLine()) != null) {
-        out.println(sCurrentLine);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        if (br != null)
-          br.close();
-      } catch (IOException ex) {
-        ex.printStackTrace();
-      }
-    }
-    try {
+      out.println(redisProvider.getJedis().get(cacheFile));
       out.flush();
     } catch (IOException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
@@ -739,22 +683,18 @@ public class SitemapController {
         return true;
       } else {
         if (!actualSolrUpdate.equals(lastSolrUpdate)) {
-          deleteCachedFiles();
+          Set<String> keys = redisProvider.getJedis().keys("*");
+          for (String key : keys) {
+            redisProvider.getJedis().del(key);
+          }
+          if (log.isInfoEnabled()) {
+            log.info("Deleted " + keys.size() + " sitemaps from cache");
+          }
         }
         return !actualSolrUpdate.equals(lastSolrUpdate);
       }
     } else {
       return false;
-    }
-  }
-
-  /**
-   * Deletes all the cached files in the Sitemap directory
-   */
-  private void deleteCachedFiles() {
-    setSitemapCacheDir();
-    for (File file : sitemapCacheDir.listFiles()) {
-      file.delete();
     }
   }
 
@@ -910,7 +850,7 @@ public class SitemapController {
             title = doc.getTitle()[0];
           }
           SitemapEntry entry =
-              new SitemapEntry(urlService.getCanonicalPortalRecord(bean.getId()).toString(),
+              new SitemapEntry(urlService.getPortalRecord(false, bean.getId()).toString(),
                   doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
           fullXML.append(URL_OPENING).append(LN);
 

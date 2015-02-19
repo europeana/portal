@@ -1,11 +1,10 @@
 package eu.europeana.portal2.web.presentation;
 
 import java.io.File;
-
-import org.jruby.embed.ScriptingContainer;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import org.jruby.embed.ScriptingContainer;
 
 
 public class ThemeSassCompiler {
@@ -74,6 +73,11 @@ public class ThemeSassCompiler {
     }
 
     private String buildInitializationScript(String server) {
+    	
+    	if(!server.endsWith("/")){
+    		server += "/";
+    	}
+    	
         StringWriter raw = new StringWriter();
         PrintWriter script = new PrintWriter(raw);
 

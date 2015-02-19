@@ -219,11 +219,11 @@
 			</exclusions>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>redis.clients</groupId> -->
-		<!-- <artifactId>jedis</artifactId> -->
-		<!-- <version>2.6.1</version> -->
-		<!-- </dependency> -->
+		<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+		<version>2.6.1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -459,7 +459,7 @@
 			</activation>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
-				<europeana.server>http://test.portal2.eanadev.org/portal/</europeana.server>
+				<europeana.server>http://portal-test2.de.a9sapp.eu/</europeana.server>
 			</properties>
 		</profile>
 		<profile>
