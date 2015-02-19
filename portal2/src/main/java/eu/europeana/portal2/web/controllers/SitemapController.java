@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -75,8 +74,8 @@ import eu.europeana.portal2.web.util.keyvalue.RedisProvider;
 @Controller
 public class SitemapController {
 
-
   Logger log = Logger.getLogger(this.getClass());
+
   @Resource
   private Configuration config;
 
@@ -126,8 +125,6 @@ public class SitemapController {
 
   private static final String PREFIX_PATTERN = "^[0-9A-Za-z_]{3}$";
   private static String portalUrl;
-  private static String sitemapCacheName;
-  private static File sitemapCacheDir;
   private static Date lastSolrUpdate;
   private volatile static Calendar lastCheck;
   private static Map<String, Boolean> sitemapsBeingProcessed =
@@ -374,8 +371,9 @@ public class SitemapController {
       @RequestParam(value = "volume", required = true) String volumeString,
       HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException,
       IOException {
-    // setSitemapCacheDir();
-    if (sitemapCacheDir == null) {
+
+    // Return a 404 if the sitemap cache cannot be used
+    if (!redisProvider.getJedis().isConnected()) {
       response.setStatus(404);
       return;
     }
@@ -383,8 +381,9 @@ public class SitemapController {
     String params =
         request.getQueryString() != null ? request.getQueryString().replaceAll("[^a-z0-9A-F]", "-")
             : "";
-    File cacheFile = new File(sitemapCacheDir.getAbsolutePath(), SITEMAP_VIDEO + params + XML);
-    if (solrOutdated() || !cacheFile.exists()) {
+    String cacheFile = SITEMAP_VIDEO + params + XML;
+
+    if (solrOutdated() || !redisProvider.getJedis().exists(cacheFile)) {
 
       int volume = -1;
       response.setCharacterEncoding("UTF-8");
@@ -483,7 +482,7 @@ public class SitemapController {
         fout.close();
       }
     } else {
-      // readCachedFile(response.getOutputStream(), cacheFile);
+      readCachedSitemap(response.getOutputStream(), cacheFile);
     }
   }
 

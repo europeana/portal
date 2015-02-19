@@ -123,7 +123,7 @@
 					<p class="success">${model.submitMessage}</p>
 				</c:when>
 				<c:otherwise>
-					<form action="" method="post">
+					<form action="${model.portalServer}/contact.html" method="post">
 						<fieldset>
 							<legend>feedback form</legend>
 							<p>

@@ -30,7 +30,7 @@
  
     <c:set var="timespanOutput" value=""/>
 
-    <c:url var="searchUrl" value="/search.html">
+    <c:url var="searchUrl" value="${model.portalServer}/search.html">
       <c:param name="query">edm_timespan:"${timespan.about}"</c:param>
     </c:url>
     

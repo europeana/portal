@@ -1,4 +1,5 @@
 # Eclipse project files
+.gitignore
 .classpath
 .project
 .settings/
@@ -45,5 +46,14 @@ logfile
 .DS_Store
 
 # Copied transations
-
 portal2/src/main/resources/portal_translations/
+
+# sass-cache
+portal2/src/main/webapp/themes/sass/.sass-cache/*
+
+# generated css
+portal2/src/main/webapp/themes/default/css/*
+
+/portal2/nb-configuration.xml
+/portal2/src/main/webapp/META-INF/context.xml
+/target/

@@ -495,7 +495,17 @@
 
 <c:set var="req" value="${pageContext.request}" />
 <c:set var="searchUrl" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
-		
+<c:set var="apiUrl" value="${model.apiUrl}" />
+
+
+<c:if test="${fn:substring(searchUrl, fn:length(searchUrl)-1, fn:length(searchUrl)) == '/'}" >
+	<c:set var="searchUrl" value="${fn:substring(searchUrl, 0, fn:length(searchUrl)-1)}" />
+</c:if>
+
+<c:if test="${fn:substring(apiUrl, fn:length(apiUrl)-1, fn:length(apiUrl)) == '/'}" >
+	<c:set var="apiUrl" value="${fn:substring(apiUrl, 0, fn:length(apiUrl)-1)}" />
+</c:if>
+
 <c:choose>
 
 	<c:when test="${!empty model.debug && model.debug}">
@@ -513,7 +523,7 @@
 	
 <script type="text/javascript">
 		var rootUrl 		= "${homeUrl}";
-		var searchUrl		= "${model.apiUrl}/v2/search.json?wskey=${model.apiKey}";
+		var searchUrl		= "${apiUrl}/v2/search.json?wskey=${model.apiKey}";
 </script>
 
 
