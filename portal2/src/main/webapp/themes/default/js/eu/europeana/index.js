@@ -34,10 +34,17 @@
 	var initCarousels = function(){
 		
 		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
+		/*
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",
 			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory
+		}]);
+		*/
+		js.loader.loadScripts([{
+			"name" : "galleria-theme",
+			"file" : "galleria.europeanax.js",
+			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/'
 		}]);
 
 
