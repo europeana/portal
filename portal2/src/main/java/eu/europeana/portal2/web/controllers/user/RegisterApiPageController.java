@@ -144,6 +144,9 @@ public class RegisterApiPageController {
 					log.info("Sending API registration email");
 					Token token = tokenService.create(model.getEmail());
 					String url = baseUrl + "/api/registration.html";
+					
+					url = url.replace("//", "/");
+					
 					log.info("token: " + token);
 					log.info("registerUri: " + url);
 					try {
