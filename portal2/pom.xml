@@ -459,7 +459,7 @@
 			</activation>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
-				<europeana.server>http://test.portal2.eanadev.org/portal/</europeana.server>
+				<europeana.server>http://green-web.de.a9sapp.eu/portal</europeana.server>
 			</properties>
 		</profile>
 		<profile>
