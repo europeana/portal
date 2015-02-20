@@ -1051,7 +1051,7 @@ eu.europeana.fulldoc = {
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",
-			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory
+			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/'
 		}]);
 		
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken) {
@@ -1399,7 +1399,7 @@ eu.europeana.fulldoc = {
 						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');						
 					}
 					else{
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/css-min/hierarchy.css" />');
 					}
 
 					addHierarchyMarkup();

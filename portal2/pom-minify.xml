@@ -64,7 +64,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
 							<cssSourceDir>/themes/default/js/eu/europeana/EuHierarchy</cssSourceDir>
 							<cssFinalFile>hierarchy.css</cssFinalFile>
-							<cssTargetDir>../css-min</cssTargetDir>
+							<cssTargetDir>css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>style.css</cssSourceInclude>
 								<cssSourceInclude>style-overrides.css</cssSourceInclude>
