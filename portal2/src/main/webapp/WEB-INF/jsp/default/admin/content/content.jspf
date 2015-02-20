@@ -51,7 +51,7 @@
     <td><fmt:formatDate value="${user.registrationDate}" type="DATE" pattern="yyyy-MM-dd" /></td>
     <td>${user.role}</td>
     <td>
-      <c:url var="removeUser" value="/admin/removeUser.html">
+      <c:url var="removeUser" value="${homeUrlNS}/admin/removeUser.html">
         <c:param name="id" value="${user.id}" />
       </c:url>
       <a href="${removeUser}"><spring:message code="admin_RemoveUser_t" /></a>
@@ -82,11 +82,11 @@
          --%>
         <tbody>
           <c:forEach items="${user.apiKeys}" var="apiKey">
-            <c:url var="removeApiKey" value="/admin/removeApiKey.html">
+            <c:url var="removeApiKey" value="${homeUrlNS}/admin/removeApiKey.html">
               <c:param name="userId" value="${user.id}" />
               <c:param name="apiKey" value="${apiKey.id}" />
             </c:url>
-            <c:url var="limitApiKey" value="/admin/limitApiKey.html">
+            <c:url var="limitApiKey" value="${homeUrlNS}/admin/limitApiKey.html">
               <c:param name="userId" value="${user.id}" />
               <c:param name="apiKey" value="${apiKey.id}" />
             </c:url>
@@ -117,7 +117,7 @@
             <span>${page}</span>
           </c:when>
           <c:otherwise>
-            <a href="<c:url value="/admin.html?page=${page}" />">${page}</a>
+            <a href="<c:url value="${homeUrlNS}/admin.html?page=${page}" />">${page}</a>
           </c:otherwise>
         </c:choose>
       </c:forEach>
