@@ -1433,7 +1433,7 @@
 						<phase>process-resources</phase>
 						<configuration>
 						
-							<outputDirectory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/min</outputDirectory>
+							<outputDirectory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/css-min</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</directory>
