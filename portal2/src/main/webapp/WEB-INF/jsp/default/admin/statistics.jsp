@@ -500,7 +500,7 @@ table {
     </c:choose>
 
     <p>
-      <c:url var="adminPage" value="/admin.html" />
+      <c:url var="adminPage" value="${homeUrlNS}/admin.html" />
       <a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
     </p>
 
