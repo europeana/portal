@@ -254,7 +254,6 @@
 						</goals>
 					</execution>
 
-					<!-- 
 					<execution>
 						<id>minify-galleria.europeanax.css</id>
 						<phase>process-resources</phase>
@@ -271,7 +270,6 @@
 							<goal>minify</goal>
 						</goals>
 					</execution>
-					 -->
 
 					<execution>
 						<id>minify-ie.css</id>
