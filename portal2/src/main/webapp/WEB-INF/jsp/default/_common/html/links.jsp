@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="shortcut icon" href="${model.metaCanonicalUrl}/favicon.ico" />
+<link rel="shortcut icon" href="${homeUrlNS}/favicon.ico" />
 <link rel="canonical" href="${model.metaCanonicalUrl}" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://api.europeana.eu/api/opensearch.xml" title="Europeana Search" />
 <link rel="publisher" href="<spring:message code="europeana-google-url" />">
