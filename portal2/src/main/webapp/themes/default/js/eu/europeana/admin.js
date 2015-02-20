@@ -11,7 +11,7 @@ eu.europeana.admin = {
 			}
 			eu.europeana.admin.total++;
 			$.ajax({
-				url: '/admin/limitInfo.json',
+				url: eu.europeana.vars.homeUrlNS + '/admin/limitInfo.json',
 				data: {'apiKey': apiKey},
 				dataType: 'json',
 				beforeSend: function (jqXHR, settings) {
