@@ -69,10 +69,7 @@ $(document).ready(function(){
 });
 
 $(window).euRsz(function(){
-	console.log('call resize here ' + eu.europeana.apiconsole.resizeUnderway)
-	
 	if(!eu.europeana.apiconsole.resizeUnderway){
 		updateParent();		
 	}
-	
 });

@@ -1047,13 +1047,21 @@ eu.europeana.fulldoc = {
 
 
 	initCarousels: function() {
-	
+
+		/*
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",
 			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory
 		}]);
-		
+		*/
+
+		js.loader.loadScripts([{
+			"name" : "galleria-theme",
+			"file" : "galleria.europeanax.js",
+			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/'
+		}]);
+
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken) {
 
 			// this is where we go when there is no carosuel data or when the carousel images didn't load
