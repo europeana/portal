@@ -1051,7 +1051,7 @@ eu.europeana.fulldoc = {
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",
-			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/'
+			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory
 		}]);
 		
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken) {
