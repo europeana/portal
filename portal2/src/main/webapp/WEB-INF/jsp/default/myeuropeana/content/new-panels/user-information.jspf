@@ -20,8 +20,9 @@ ${model.user.email}</p>
 	${model.user.lastName}</p>
 </c:if>
 
+
 <c:if test="${model.user.role == 'ROLE_GOD' || model.user.role == 'ROLE_ADMINISTRATOR'}">
-	<p><c:url var="adminPage" value="/admin.html" />
+	<p><c:url var="adminPage" value="${homeUrlNS}/admin.html" />
 	<a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a></p>
 </c:if>
 
