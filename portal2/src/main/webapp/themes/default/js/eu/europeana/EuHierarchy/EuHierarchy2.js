@@ -1220,6 +1220,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 								self.timer.stop();
 								
 								// fix for offest on startup
+								console.log('scroll to ' + self.pageNodeId + ' (' + $('#' + self.pageNodeId).length + ')');
 								doScrollTo('#' + self.pageNodeId);
 
 							}
