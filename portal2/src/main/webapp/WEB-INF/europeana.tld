@@ -33,6 +33,11 @@
 		<function-signature>java.lang.String encode(java.lang.String)</function-signature>
 	</function>
 	<function>
+		<name>decode</name>
+		<function-class>eu.europeana.portal2.web.tags.Functions</function-class>
+		<function-signature>java.lang.String decode(java.lang.String)</function-signature>
+	</function>
+	<function>
 		<name>abbreviate</name>
 		<function-class>eu.europeana.portal2.web.tags.Functions</function-class>
 		<function-signature>java.lang.String abbreviate(java.lang.String, int)</function-signature>
