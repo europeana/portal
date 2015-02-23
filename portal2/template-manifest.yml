@@ -8,6 +8,7 @@ applications:
   path: target/portal.war
   buildpack: https://github.com/europeana/java-buildpack.git
   services:
+    - syslog
     - postgresql
     - europeana-object-db
     - redis
