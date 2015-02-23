@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import redis.clients.jedis.Jedis;
 import eu.europeana.corelib.db.service.ThumbnailService;
 import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.DocType;
@@ -160,9 +161,11 @@ public class SitemapController {
 
     boolean isPlaceSitemap = StringUtils.contains(places, "true");
 
+    Jedis jedis = redisProvider.getJedis();
     // Return a 404 if the sitemap cache cannot be used
-    if (!redisProvider.getJedis().isConnected()) {
+    if (!jedis.isConnected()) {
       response.setStatus(404);
+      redisProvider.returnJedis(jedis);
       return;
     }
 
@@ -170,7 +173,7 @@ public class SitemapController {
     String cacheFile = SITEMAP_INDEX + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated() || !redisProvider.getJedis().exists(cacheFile))
+    if ((solrOutdated() || !jedis.exists(cacheFile))
         && !sitemapsBeingProcessed.containsKey(params)) {
       boolean success = false;
       ServletOutputStream out = response.getOutputStream();
@@ -191,7 +194,7 @@ public class SitemapController {
         out.print(sitemap.getSitemap().toString());
         out.flush();
 
-        redisProvider.getJedis().set(cacheFile, sitemap.getSitemap().toString());
+        jedis.set(cacheFile, sitemap.getSitemap().toString());
         success = true;
       } catch (Exception e) {
         success = false;
@@ -199,7 +202,7 @@ public class SitemapController {
         // e);
       }
       if (!success) {
-        redisProvider.getJedis().del(cacheFile);
+        jedis.del(cacheFile);
       }
     } else {
       // Sitemap is being generated, grab some coffee...
@@ -213,8 +216,9 @@ public class SitemapController {
         } while (sitemapsBeingProcessed.containsKey(params));
       }
       // Read the sitemap from file
-      readCachedSitemap(response.getOutputStream(), cacheFile);
+      readCachedSitemap(response.getOutputStream(), jedis, cacheFile);
     }
+    redisProvider.returnJedis(jedis);
   }
 
   /**
@@ -239,17 +243,19 @@ public class SitemapController {
 
     boolean isPlaceSitemap = StringUtils.contains(places, "true");
 
+    Jedis jedis = redisProvider.getJedis();
     // Return a 404 if the sitemap cache cannot be used
-    if (!redisProvider.getJedis().isConnected() || prefix.length() > 3
+    if (!jedis.isConnected() || prefix.length() > 3
         || !prefix.matches(PREFIX_PATTERN)) {
       response.setStatus(404);
+      redisProvider.returnJedis(jedis);
       return;
     }
     String params = String.format(SITEMAP_HASHED_PARAMS, prefix, index, isPlaceSitemap);
     String cacheFile = SITEMAP_HASHED + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated()) || !redisProvider.getJedis().exists(cacheFile)
+    if ((solrOutdated()) || !jedis.exists(cacheFile)
         && !sitemapsBeingProcessed.containsKey(params)) {
 
       if (log.isInfoEnabled()) {
@@ -283,7 +289,7 @@ public class SitemapController {
 
       // Also write to cache
       try {
-        redisProvider.getJedis().set(cacheFile, fullXML.toString());
+        jedis.set(cacheFile, fullXML.toString());
         if (success == 1) {
           success = 2;
         }
@@ -295,7 +301,7 @@ public class SitemapController {
       }
 
       if (success != 2 || StringUtils.isEmpty(fullXML.toString())) {
-        redisProvider.getJedis().del(cacheFile);
+        jedis.del(cacheFile);
       }
       if (log.isInfoEnabled()) {
         log.info(Thread.currentThread().getName() + " served by generation");
@@ -303,7 +309,7 @@ public class SitemapController {
       sitemapsBeingProcessed.remove(params);
     } else {
       // Sitemap is being generated, grab some coffee...
-      if (sitemapsBeingProcessed.containsKey(params) || !redisProvider.getJedis().exists(cacheFile)) {
+      if (sitemapsBeingProcessed.containsKey(params) || !jedis.exists(cacheFile)) {
         do {
           try {
             Thread.sleep(1000);
@@ -313,14 +319,15 @@ public class SitemapController {
                 e.getLocalizedMessage(), cacheFile), e);
           }
         } while (sitemapsBeingProcessed.containsKey(params)
-            || !redisProvider.getJedis().exists(cacheFile));
+            || !jedis.exists(cacheFile));
       }
       // Read the sitemap from cache
       if (log.isInfoEnabled()) {
         log.info(cacheFile + " is served from cache");
       }
-      readCachedSitemap(response.getOutputStream(), cacheFile);
+      readCachedSitemap(response.getOutputStream(), jedis, cacheFile);
     }
+    redisProvider.returnJedis(jedis);
   }
 
   /**
@@ -372,9 +379,11 @@ public class SitemapController {
       HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException,
       IOException {
 
+	Jedis jedis = redisProvider.getJedis();
     // Return a 404 if the sitemap cache cannot be used
-    if (!redisProvider.getJedis().isConnected()) {
+    if (!jedis.isConnected()) {
       response.setStatus(404);
+      redisProvider.returnJedis(jedis);
       return;
     }
 
@@ -383,7 +392,7 @@ public class SitemapController {
             : "";
     String cacheFile = SITEMAP_VIDEO + params + XML;
 
-    if (solrOutdated() || !redisProvider.getJedis().exists(cacheFile)) {
+    if (solrOutdated() || !jedis.exists(cacheFile)) {
 
       int volume = -1;
       response.setCharacterEncoding("UTF-8");
@@ -482,8 +491,9 @@ public class SitemapController {
         fout.close();
       }
     } else {
-      readCachedSitemap(response.getOutputStream(), cacheFile);
+      readCachedSitemap(response.getOutputStream(), jedis, cacheFile);
     }
+    redisProvider.returnJedis(jedis);
   }
 
   /**
@@ -633,9 +643,9 @@ public class SitemapController {
    * @param out
    * @param cacheFile
    */
-  private void readCachedSitemap(ServletOutputStream out, String cacheFile) {
+  private void readCachedSitemap(ServletOutputStream out, Jedis jedis, String cacheFile) {
     try {
-      out.println(redisProvider.getJedis().get(cacheFile));
+      out.println(jedis.get(cacheFile));
       out.flush();
     } catch (IOException e) {
       // TODO Auto-generated catch block
@@ -683,13 +693,16 @@ public class SitemapController {
         return true;
       } else {
         if (!actualSolrUpdate.equals(lastSolrUpdate)) {
-          Set<String> keys = redisProvider.getJedis().keys("*");
+            Jedis jedis = redisProvider.getJedis();
+
+          Set<String> keys = jedis.keys("*");
           for (String key : keys) {
-            redisProvider.getJedis().del(key);
+            jedis.del(key);
           }
           if (log.isInfoEnabled()) {
             log.info("Deleted " + keys.size() + " sitemaps from cache");
           }
+          redisProvider.returnJedis(jedis);
         }
         return !actualSolrUpdate.equals(lastSolrUpdate);
       }
