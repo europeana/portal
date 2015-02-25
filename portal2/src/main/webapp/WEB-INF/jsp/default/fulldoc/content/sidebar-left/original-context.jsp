@@ -28,12 +28,5 @@
 
 <c:if test="${not empty model['urlRef']}">
 	<div class="clear original-context-inner"><spring:message code="ViewItemAt_t" /></div>
-	<%--
-	<a about="${model.document.cannonicalUrl}" id="${urlRefId}" class="${classes}" href="../../redirect.html?shownAt=${eufn:encode(model.urlRef)}&amp;provider=${eufn:encode(provider)}&amp;id=${model.document.about}" ${href_attributes}>${provider}</a>
-	--%>
-	<%--
-	The decode-then-encode behavious was added for links that originally contained 2 hash symbols and had the 2nd one encoded to get past MINT checks  
-	--%>	 
-	<a about="${model.document.cannonicalUrl}" id="${urlRefId}" class="${classes}" href="../../redirect.html?shownAt=${eufn:encode(eufn:decode(model.urlRef))}&amp;provider=${eufn:encode(provider)}&amp;id=${model.document.about}" ${href_attributes}>${provider}</a>
-	
+	<a about="${model.document.cannonicalUrl}" id="${urlRefId}" class="${classes}" href="../../redirect.html?shownAt=${eufn:encode(model.urlRef)}&amp;provider=${eufn:encode(provider)}&amp;id=${model.document.about}" ${href_attributes}>${provider}</a>	
 </c:if>
