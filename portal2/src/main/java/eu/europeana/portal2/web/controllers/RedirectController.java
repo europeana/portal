@@ -38,7 +38,7 @@ public class RedirectController {
 			throws Exception {
 
 		if (!StringUtils.isEmpty(uri) && !uri.contains("full-doc")) {
-				response.sendRedirect(urlService.getCanonicalPortalRecord(urlService.extractEuropeanaId(uri)).toString());
+				response.sendRedirect(urlService.getPortalRecord(false, urlService.extractEuropeanaId(uri)).toString());
 		} else {
 			response.sendRedirect(urlService.getPortalHome(false).toString());
 		}
