@@ -215,7 +215,7 @@ public class ObjectController {
 			if (StringUtils.isNotBlank(newRecordId)) {
 				StringBuilder location = new StringBuilder();
 
-				location.append("/record").append(newRecordId).append(".html");
+				location.append("/portal/record").append(newRecordId).append(".html");
 				response.setStatus(301);
 				response.setHeader("Location", location.toString());
 				return null;
