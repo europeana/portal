@@ -59,6 +59,7 @@ import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.portal2.services.BingTokenService;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.ClickStreamLogService.UserAction;
@@ -89,7 +90,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class ObjectController {
 
-	Logger log = Logger.getLogger(this.getClass());
+	java.util.logging.Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	private SearchService searchService;
 
@@ -114,6 +115,9 @@ public class ObjectController {
 	@Resource
 	private ReloadableResourceBundleMessageSource messageSource;
 
+	@Resource
+	private EuropeanaUrlService europeanaUrlService;
+	
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
@@ -123,7 +127,7 @@ public class ObjectController {
 	public static final Map<String, MltConfiguration> MLT_FIELDS = new LinkedHashMap<String, MltConfiguration>();
 
 	private BingTokenService tokenService = new BingTokenService();
-
+	
 	
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
@@ -215,7 +219,7 @@ public class ObjectController {
 			if (StringUtils.isNotBlank(newRecordId)) {
 				StringBuilder location = new StringBuilder();
 
-				location.append("/portal/record").append(newRecordId).append(".html");
+				location.append(europeanaUrlService.getPortalHome(false)+"/record").append(newRecordId).append(".html");
 				response.setStatus(301);
 				response.setHeader("Location", location.toString());
 				return null;
@@ -526,13 +530,14 @@ public class ObjectController {
 	}
 
 	private ResultSet<? extends BriefBean> searchMltItem(String queryTerm) {
-		Query query = new Query(queryTerm)
+		javax.management.Query query = new Query(queryTerm)
 			.setPageSize(12)
 			.setStart(0) // Solr starts from 0
 			.setAllowSpellcheck(false)
 			.setAllowFacets(false)
 		;
 		try {
+			log.info("Query was: " + query.toString());
 			ResultSet<? extends BriefBean> resultSet = searchService.search(BriefBean.class, query);
 			return resultSet;
 		} catch (SolrTypeException e) {
