@@ -538,8 +538,8 @@ public class ObjectController {
 			}
 			String query = mltCollector.getQuery(field, MLT_FIELDS.get(field)
 					.getWeight());
-			if (!(query.startsWith("http://") || query.startsWith("https://") || query
-					.startsWith("ftp://"))) {
+			if (!(query.startsWith("http") || query.startsWith("https") || query
+					.startsWith("ftp"))) {
 				queryList.add(query);
 			}
 		}
