@@ -90,7 +90,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class ObjectController {
 
-	java.util.logging.Logger log = Logger.getLogger(this.getClass());
+	Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	private SearchService searchService;
 
@@ -530,7 +530,7 @@ public class ObjectController {
 	}
 
 	private ResultSet<? extends BriefBean> searchMltItem(String queryTerm) {
-		javax.management.Query query = new Query(queryTerm)
+		Query query = new Query(queryTerm)
 			.setPageSize(12)
 			.setStart(0) // Solr starts from 0
 			.setAllowSpellcheck(false)
