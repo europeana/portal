@@ -540,6 +540,7 @@ public class ObjectController {
 					.getWeight());
 			if (!(query.startsWith("http") || query.startsWith("https") || query
 					.startsWith("ftp"))) {
+				System.out.println(query);
 				queryList.add(query);
 			}
 		}
