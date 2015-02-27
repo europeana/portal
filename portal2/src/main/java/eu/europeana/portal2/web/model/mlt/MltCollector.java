@@ -30,7 +30,7 @@ import eu.europeana.corelib.logging.Logger;
 /**
  * Collector of MltSuggestion objects
  * 
- * You can add, and retrieve individual objects, get the objects belongs to a 
+ * You can add, and retrieve individual objects, get the objects belongs to a
  * given field, and get the list of Solr facet queries.
  */
 public class MltCollector {
@@ -42,6 +42,7 @@ public class MltCollector {
 
 	/**
 	 * Adds an object to the collection
+	 * 
 	 * @param suggestion
 	 */
 	public void add(MltSuggestion suggestion) {
@@ -56,6 +57,7 @@ public class MltCollector {
 
 	/**
 	 * Returns the field names
+	 * 
 	 * @return
 	 */
 	public Set<String> getFields() {
@@ -64,8 +66,9 @@ public class MltCollector {
 
 	/**
 	 * Gets the list of objects belonged to the same field
+	 * 
 	 * @param field
-	 *   The name of the field
+	 *            The name of the field
 	 * @return
 	 */
 	public List<MltSuggestion> get(String field) {
@@ -84,11 +87,18 @@ public class MltCollector {
 		if (fieldIndex.containsKey(field)) {
 			List<String> suggestions4field = new ArrayList<String>();
 			for (int i : fieldIndex.get(field)) {
-				MltSuggestion suggestion = suggestions.get(i);
-				suggestions4field.add(suggestion.getSolrEscapedQuery());
+				if (!(suggestions.get(i).getEscapedQuery().startsWith("http")
+						|| suggestions.get(i).getEscapedQuery()
+								.startsWith("https") || suggestions.get(i)
+						.getEscapedQuery().startsWith("ftp"))) {
+					MltSuggestion suggestion = suggestions.get(i);
+
+					suggestions4field.add(suggestion.getSolrEscapedQuery());
+				}
 			}
 			if (suggestions4field.size() > 0) {
-				query = String.format("%s:(%s)^%s", field, StringUtils.join(suggestions4field, " OR "), weight);
+				query = String.format("%s:(%s)^%s", field,
+						StringUtils.join(suggestions4field, " OR "), weight);
 			}
 		}
 		return query;
@@ -96,6 +106,7 @@ public class MltCollector {
 
 	/**
 	 * Retrieve an object by its id
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -108,6 +119,7 @@ public class MltCollector {
 
 	/**
 	 * Get the list of Solr queries in tagged form
+	 * 
 	 * @return
 	 */
 	public List<String> getQueries() {
@@ -116,6 +128,7 @@ public class MltCollector {
 
 	/**
 	 * Get the list of Solr queries
+	 * 
 	 * @return
 	 */
 	public List<String> getQueries(boolean tagged) {

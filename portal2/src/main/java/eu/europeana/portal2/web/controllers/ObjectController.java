@@ -538,11 +538,7 @@ public class ObjectController {
 			}
 			String query = mltCollector.getQuery(field, MLT_FIELDS.get(field)
 					.getWeight());
-			if (!(query.startsWith("http") || query.startsWith("https") || query
-					.startsWith("ftp"))) {
-				System.out.println(query);
-				queryList.add(query);
-			}
+			queryList.add(query);
 		}
 
 		String query = String.format("(%s) NOT europeana_id:\"%s\"",
