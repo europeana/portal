@@ -87,16 +87,11 @@ public class MltCollector {
 		if (fieldIndex.containsKey(field)) {
 			List<String> suggestions4field = new ArrayList<String>();
 			for (int i : fieldIndex.get(field)) {
-				if (!(suggestions.get(i).getSolrEscapedQuery().startsWith("\"http")
-						|| suggestions.get(i).getSolrEscapedQuery()
-								.startsWith("\"https") || suggestions.get(i)
-						.getSolrEscapedQuery().startsWith("\"ftp"))) {
-					MltSuggestion suggestion = suggestions.get(i);
-					log.info("Queries are: " + suggestion.getSolrEscapedQuery());
-					suggestions4field.add(suggestion.getSolrEscapedQuery());
-				}
+
+				MltSuggestion suggestion = suggestions.get(i);
+				suggestions4field.add(suggestion.getSolrEscapedQuery());
 			}
-			if (suggestions4field.size() > 0 ) {
+			if (suggestions4field.size() > 0) {
 				query = String.format("%s:(%s)^%s", field,
 						StringUtils.join(suggestions4field, " OR "), weight);
 			}
