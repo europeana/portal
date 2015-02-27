@@ -538,7 +538,9 @@ public class ObjectController {
 			}
 			String query = mltCollector.getQuery(field, MLT_FIELDS.get(field)
 					.getWeight());
-			queryList.add(query);
+			if(StringUtils.isNotBlank(query)){
+				queryList.add(query);
+			}
 		}
 
 		String query = String.format("(%s) NOT europeana_id:\"%s\"",

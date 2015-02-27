@@ -92,11 +92,11 @@ public class MltCollector {
 								.startsWith("\"https") || suggestions.get(i)
 						.getSolrEscapedQuery().startsWith("\"ftp"))) {
 					MltSuggestion suggestion = suggestions.get(i);
-					System.out.println(suggestion.getSolrEscapedQuery());
+					log.info("Queries are: " + suggestion.getSolrEscapedQuery());
 					suggestions4field.add(suggestion.getSolrEscapedQuery());
 				}
 			}
-			if (suggestions4field.size() > 0) {
+			if (suggestions4field.size() > 0 ) {
 				query = String.format("%s:(%s)^%s", field,
 						StringUtils.join(suggestions4field, " OR "), weight);
 			}
