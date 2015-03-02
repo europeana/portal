@@ -31,6 +31,7 @@ import eu.europeana.corelib.definitions.solr.DocType;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 
@@ -42,6 +43,7 @@ public class BriefBeanDecorator implements BriefBean {
 	private UrlAwareData<?> model;
 	private int index = 1;
 	private String fullDocUrl;
+	
 
 	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefBean, int index) {
 		this(model, briefBean);
@@ -160,11 +162,11 @@ public class BriefBeanDecorator implements BriefBean {
 		return StringEscapeUtils.escapeXml(StringUtils.join(briefBean.getTitle(), ' '));
 	}
 
-	public String getThumbnail() {
-		return getThumbnail("BRIEF_DOC"); 
+	public String getThumbnail(String imageUri) {
+		return getThumbnail("BRIEF_DOC",imageUri); 
 	}
 
-	private String getThumbnail(String size) {
+	private String getThumbnail(String size, String imageUri) {
 		try {
 			String tn = "";
 			if (briefBean.getEdmObject() != null 
@@ -173,7 +175,7 @@ public class BriefBeanDecorator implements BriefBean {
 				tn = briefBean.getEdmObject()[0].trim();
 			}
 			UrlBuilder url = null;
-			url = new UrlBuilder("http://europeanastatic.eu/api/image");
+			url = new UrlBuilder(imageUri);
 			url.addParam("uri", tn, true);
 			url.addParam("size", size, true);
 			url.addParam("type", getType().toString(), true);
@@ -184,8 +186,8 @@ public class BriefBeanDecorator implements BriefBean {
 		}
 	}
 
-	public String getThumbnailJSON() {
-		return StringUtils.replace(getThumbnail(), "&amp;", "&");
+	public String getThumbnailJSON(String imageUri) {
+		return StringUtils.replace(getThumbnail(imageUri), "&amp;", "&");
 	}
 
 	public String getIcon() {
