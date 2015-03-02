@@ -561,7 +561,8 @@ public class ObjectController {
 						}
 					}
 				}
-				String thumbnail = doc.getThumbnail(config.getImageCacheUrl());
+				doc.setImageUri(config.getImageCacheUrl());
+				String thumbnail = doc.getThumbnail();
 				category.addUrl(new EuropeanaMltLink(bean.getId(), title, doc
 						.getFullDocUrl(), thumbnail));
 			}

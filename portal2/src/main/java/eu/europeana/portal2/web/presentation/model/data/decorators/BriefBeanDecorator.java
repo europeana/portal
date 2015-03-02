@@ -43,7 +43,7 @@ public class BriefBeanDecorator implements BriefBean {
 	private UrlAwareData<?> model;
 	private int index = 1;
 	private String fullDocUrl;
-	
+	private String imageUri;
 
 	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefBean, int index) {
 		this(model, briefBean);
@@ -161,12 +161,15 @@ public class BriefBeanDecorator implements BriefBean {
 	public String getTitleXML() {
 		return StringEscapeUtils.escapeXml(StringUtils.join(briefBean.getTitle(), ' '));
 	}
-
-	public String getThumbnail(String imageUri) {
-		return getThumbnail("BRIEF_DOC",imageUri); 
+	public String getThumbnail() {
+		return getThumbnail("BRIEF_DOC"); 
 	}
-
-	private String getThumbnail(String size, String imageUri) {
+	
+	public void setImageUri(String imageUri){
+		this.imageUri = imageUri;
+	}
+	
+	private String getThumbnail(String size) {
 		try {
 			String tn = "";
 			if (briefBean.getEdmObject() != null 
@@ -186,8 +189,8 @@ public class BriefBeanDecorator implements BriefBean {
 		}
 	}
 
-	public String getThumbnailJSON(String imageUri) {
-		return StringUtils.replace(getThumbnail(imageUri), "&amp;", "&");
+	public String getThumbnailJSON() {
+		return StringUtils.replace(getThumbnail(), "&amp;", "&");
 	}
 
 	public String getIcon() {

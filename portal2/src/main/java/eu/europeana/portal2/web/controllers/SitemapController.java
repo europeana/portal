@@ -434,9 +434,10 @@ public class SitemapController {
         if (resultSet != null) {
           for (BriefBean bean : resultSet) {
             BriefBeanDecorator doc = new BriefBeanDecorator(model, bean);
+            doc.setImageUri(config.getImageCacheUrl());
             SitemapEntry entry =
                 new SitemapEntry(urlService.getCanonicalPortalRecord(bean.getId()).toString(),
-                    doc.getThumbnail(config.getImageCacheUrl()), doc.getTitle()[0], doc.getEuropeanaCompleteness());
+                    doc.getThumbnail(), doc.getTitle()[0], doc.getEuropeanaCompleteness());
             out.println(URL_OPENING);
             out.println(LOC_OPENING + entry.getLoc() + LOC_CLOSING);
 
@@ -862,9 +863,10 @@ public class SitemapController {
           if (doc.getTitle() != null) {
             title = doc.getTitle()[0];
           }
+          doc.setImageUri(config.getImageCacheUrl());
           SitemapEntry entry =
               new SitemapEntry(urlService.getPortalRecord(false, bean.getId()).toString(),
-                  doc.getThumbnail(config.getImageCacheUrl()), title, doc.getEuropeanaCompleteness());
+                  doc.getThumbnail(), title, doc.getEuropeanaCompleteness());
           fullXML.append(URL_OPENING).append(LN);
 
           fullXML.append(LOC_OPENING).append(entry.getLoc(isPlaceSitemap)).append(LOC_CLOSING)
