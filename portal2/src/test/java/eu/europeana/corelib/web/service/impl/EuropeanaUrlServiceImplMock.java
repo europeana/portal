@@ -128,7 +128,7 @@ public class EuropeanaUrlServiceImplMock implements EuropeanaUrlService {
 
 	@Override
 	public UrlBuilder getThumbnailUrl(String thumbnail, DocType type) {
-		UrlBuilder url = new UrlBuilder(URL_IMAGE_SITE);
+		UrlBuilder url = new UrlBuilder("http://europeanastatic.eu/api/image");
 		try {
 			url.addParam("uri", URLEncoder.encode(thumbnail.trim(), ENC_UTF8));
 		} catch (UnsupportedEncodingException e) {
