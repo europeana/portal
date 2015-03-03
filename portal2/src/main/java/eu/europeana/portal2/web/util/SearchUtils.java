@@ -37,6 +37,7 @@ import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.utils.NavigationUtils;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.ModelUtils;
+import eu.europeana.portal2.web.model.json.BriefBeanImpl;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 import eu.europeana.portal2.web.presentation.model.submodel.ResultPagination;
@@ -67,7 +68,7 @@ public class SearchUtils {
 		}
 
 		briefBeanView.setBriefBeans(resultSet.getResults());
-
+		
 		if (StringUtils.containsIgnoreCase(profile, "facets") || StringUtils.containsIgnoreCase(profile, "portal")) {
 			briefBeanView.makeQueryLinks(ModelUtils.conventFacetList(facetFields), query);
 		}

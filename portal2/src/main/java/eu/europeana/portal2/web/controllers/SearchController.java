@@ -113,6 +113,7 @@ public class SearchController {
 		}
 
 		SearchPage model = new SearchPage();
+		model.setImageUri(config.getImageCacheUrl());
 		model.setRequest(request);
 		model.setRefinements(ControllerUtil.fixParameter(qf, "qf", params));
 		model.setStart(fixStartParameter(start));

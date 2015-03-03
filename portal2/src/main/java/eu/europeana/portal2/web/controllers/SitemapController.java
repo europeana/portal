@@ -265,7 +265,7 @@ public class SitemapController {
       sitemapsBeingProcessed.put(params, true);
       int success = 0;
       SearchPage model = new SearchPage();
-
+      model.setImageUri(config.getImageCacheUrl());
       response.setCharacterEncoding("UTF-8");
       long t = new Date().getTime();
       StringBuilder fullXML = createSitemapHashedContent(prefix, index, model, places);
@@ -342,6 +342,7 @@ public class SitemapController {
    */
   private StringBuilder createSitemapHashedContent(String prefix, String index, SearchPage model,
       String isPlaceSitemap) {
+	  model.setImageUri(config.getImageCacheUrl());
     PerReqSitemap sitemap =
         new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isPlaceSitemap, prefix, index);
     Thread t = new Thread(sitemap);
@@ -403,7 +404,7 @@ public class SitemapController {
       BufferedWriter fout = new BufferedWriter(fstream);
 
       SearchPage model = new SearchPage();
-
+      model.setImageUri(config.getImageCacheUrl());
       try {
         volume = Integer.parseInt(volumeString);
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";

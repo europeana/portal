@@ -53,6 +53,7 @@ public class TimelineController {
 		}
 
 		SearchPage model = new SearchPage();
+		model.setImageUri(config.getImageCacheUrl());
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
 		model.setQuery(query);
@@ -72,6 +73,7 @@ public class TimelineController {
 			@RequestParam(value = "rows", required = false, defaultValue = "1000") int rows,
 			HttpServletRequest request) throws Exception {
 		SearchPage model = new SearchPage();
+		model.setImageUri(config.getImageCacheUrl());
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
 
 		Map<String, String[]> params = RequestUtils.getParameterMap(request);

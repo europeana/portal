@@ -95,6 +95,7 @@ Logger log = Logger.getLogger(this.getClass());
 		ModelAndView page = null;
 		if (id.equals("search")) {
 			SearchPage model = new SearchPage();
+			model.setImageUri(config.getImageCacheUrl());
 			model.setRequest(request);
 
 			model.setRefinements(new String[] {});

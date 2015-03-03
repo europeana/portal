@@ -62,6 +62,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	private Map<String, String> facetLogs;
 	private BriefBean matchDoc;
 	private SpellCheck spellcheck;
+	private String imageUri;
 
 	public BriefBeanViewImpl() {};
 
@@ -212,5 +213,11 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	@Override
 	public List<SearchFilter> getSearchFilters() {
 		return searchFilters;
+	}
+
+	@Override
+	public void setImageUri(String imageUri) {
+		this.imageUri = imageUri;
+		
 	}
 }
