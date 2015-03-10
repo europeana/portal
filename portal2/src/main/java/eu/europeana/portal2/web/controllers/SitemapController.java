@@ -244,89 +244,41 @@ public class SitemapController {
     boolean isPlaceSitemap = StringUtils.contains(places, "true");
 
     Jedis jedis = redisProvider.getJedis();
-    // Return a 404 if the sitemap cache cannot be used
-    if (!jedis.isConnected() || prefix.length() > 3
-        || !prefix.matches(PREFIX_PATTERN)) {
-      response.setStatus(404);
-      redisProvider.returnJedis(jedis);
-      return;
-    }
+
     String params = String.format(SITEMAP_HASHED_PARAMS, prefix, index, isPlaceSitemap);
     String cacheFile = SITEMAP_HASHED + params + XML;
-    // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
-    // created)
-    if ((solrOutdated()) || !jedis.exists(cacheFile)
-        && !sitemapsBeingProcessed.containsKey(params)) {
-
-      if (log.isInfoEnabled()) {
-        log.info(String.format("Generating %s", cacheFile));
+  
+    if (log.isInfoEnabled()) {
+        log.info("Flushing ALL sitemaps from the cache");
       }
 
-      sitemapsBeingProcessed.put(params, true);
-      int success = 0;
-      SearchPage model = new SearchPage();
-      model.setImageUri(config.getImageCacheUrl());
-      response.setCharacterEncoding("UTF-8");
-      long t = new Date().getTime();
-      StringBuilder fullXML = createSitemapHashedContent(prefix, index, model, places);
-      if (log.isInfoEnabled()) {
-        log.info(String.format("Generated XML size: %s chars, it took: %s ms", fullXML.length(),
-            (new Date().getTime() - t)));
-      }
+    response.setCharacterEncoding("UTF-8");
+    StringBuilder s = new StringBuilder();
+    s.append(XML_HEADER).append(LN);
+    s.append(URLSET_HEADER).append(LN);
+    s.append(URL_OPENING);
 
+    String msg = jedis.flushDB();
+
+    s.append("Flushed ALL sitemaps: ").append(msg);
+    s.append(URL_CLOSING);
+    s.append("</urlset>").append(LN);;
+      
       // Generate response
       try {
         ServletOutputStream out = response.getOutputStream();
-        out.print(fullXML.toString());
+        out.print(s.toString());
         out.flush();
-        success = 1;
       } catch (Exception e) {
-        success = 0;
         log.error(String.format(
             "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
             e.getLocalizedMessage(), cacheFile), e);
       }
 
-      // Also write to cache
-      try {
-        jedis.set(cacheFile, fullXML.toString());
-        if (success == 1) {
-          success = 2;
-        }
-      } catch (Exception e) {
-        success = 0;
-        log.error(String.format(
-            "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
-            e.getLocalizedMessage(), cacheFile), e);
-      }
-
-      if (success != 2 || StringUtils.isEmpty(fullXML.toString())) {
-        jedis.del(cacheFile);
-      }
       if (log.isInfoEnabled()) {
-        log.info(Thread.currentThread().getName() + " served by generation");
+        log.info("ALL sitemaps have been flushed from the cache");
       }
-      sitemapsBeingProcessed.remove(params);
-    } else {
-      // Sitemap is being generated, grab some coffee...
-      if (sitemapsBeingProcessed.containsKey(params) || !jedis.exists(cacheFile)) {
-        do {
-          try {
-            Thread.sleep(1000);
-          } catch (InterruptedException e) {
-            log.error(String.format(
-                "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
-                e.getLocalizedMessage(), cacheFile), e);
-          }
-        } while (sitemapsBeingProcessed.containsKey(params)
-            || !jedis.exists(cacheFile));
-      }
-      // Read the sitemap from cache
-      if (log.isInfoEnabled()) {
-        log.info(cacheFile + " is served from cache");
-      }
-      readCachedSitemap(response.getOutputStream(), jedis, cacheFile);
-    }
+      
     redisProvider.returnJedis(jedis);
   }
 
