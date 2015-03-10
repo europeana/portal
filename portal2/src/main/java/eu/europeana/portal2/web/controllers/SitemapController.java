@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Resource;
@@ -101,6 +100,7 @@ public class SitemapController {
   private static final int VIDEO_SITEMAP_VOLUME_SIZE = 25000;
   private static final int MAX_URLS_PER_SITEMAP = 45000; // Strictly speaking it's 50,000, but
                                                          // taking a 10% margin for safety
+  private static final int ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
 
   private static final String SITEMAP_INDEX_PARAMS = "places-%s";
   private static final String SITEMAP_INDEX = "europeana-sitemap-index-hashed-";
@@ -194,7 +194,7 @@ public class SitemapController {
         out.print(sitemap.getSitemap().toString());
         out.flush();
 
-        jedis.set(cacheFile, sitemap.getSitemap().toString());
+        jedis.setex(cacheFile, ONE_WEEK_IN_SECONDS, sitemap.getSitemap().toString());
         success = true;
       } catch (Exception e) {
         success = false;
@@ -289,7 +289,7 @@ public class SitemapController {
 
       // Also write to cache
       try {
-        jedis.set(cacheFile, fullXML.toString());
+        jedis.setex(cacheFile, ONE_WEEK_IN_SECONDS, fullXML.toString());
         if (success == 1) {
           success = 2;
         }
@@ -697,12 +697,11 @@ public class SitemapController {
         if (!actualSolrUpdate.equals(lastSolrUpdate)) {
             Jedis jedis = redisProvider.getJedis();
 
-          Set<String> keys = jedis.keys("*");
-          for (String key : keys) {
-            jedis.del(key);
-          }
+            Long size = jedis.dbSize();
+            jedis.flushDB();
+            
           if (log.isInfoEnabled()) {
-            log.info("Deleted " + keys.size() + " sitemaps from cache");
+            log.info("Deleted " + size + " sitemaps from cache");
           }
           redisProvider.returnJedis(jedis);
         }
