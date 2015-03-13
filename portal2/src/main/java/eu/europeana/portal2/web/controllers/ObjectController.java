@@ -284,10 +284,15 @@ public class ObjectController {
 			// more like this
 			if (model.isShowSimilarItems()) {
 				List<? extends BriefBean> similarItems;
-				if (fullBean.getSimilarItems() == null) {
-					similarItems = getMoreLikeThis(collectionId, recordId);
-				} else {
-					similarItems = fullBean.getSimilarItems();
+				try{
+					if (fullBean.getSimilarItems() == null) {
+						similarItems = getMoreLikeThis(collectionId, recordId);
+					} else {
+						similarItems = fullBean.getSimilarItems();
+					}					
+				}
+				catch(Exception e){
+					// do nothing - if Solr is down we still serve the page and don't block google from indexing us - see issue #1973
 				}
 				model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
 			}
