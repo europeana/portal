@@ -283,7 +283,7 @@ public class ObjectController {
 
 			// more like this
 			if (model.isShowSimilarItems()) {
-				List<? extends BriefBean> similarItems;
+				List<? extends BriefBean> similarItems = null;
 				try{
 					if (fullBean.getSimilarItems() == null) {
 						similarItems = getMoreLikeThis(collectionId, recordId);
