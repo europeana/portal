@@ -290,11 +290,11 @@ public class ObjectController {
 					} else {
 						similarItems = fullBean.getSimilarItems();
 					}					
+					model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
 				}
 				catch(Exception e){
 					// do nothing - if Solr is down we still serve the page and don't block google from indexing us - see issue #1973
 				}
-				model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
 			}
 
 			long tSeeAlso0 = 0;
