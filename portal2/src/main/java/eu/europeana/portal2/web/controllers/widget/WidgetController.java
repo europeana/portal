@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,7 @@ import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.edm.exceptions.SolrTypeException;
-import eu.europeana.corelib.edm.service.SearchService;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
@@ -56,9 +55,7 @@ import eu.europeana.portal2.web.util.SearchUtils;
 @Controller
 public class WidgetController {
 
-	@Log
-	private Logger log;
-
+Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	private Configuration config;
 
@@ -98,6 +95,7 @@ public class WidgetController {
 		ModelAndView page = null;
 		if (id.equals("search")) {
 			SearchPage model = new SearchPage();
+			model.setImageUri(config.getImageCacheUrl());
 			model.setRequest(request);
 
 			model.setRefinements(new String[] {});
@@ -123,7 +121,7 @@ public class WidgetController {
 	public ModelAndView editWidget(HttpServletRequest request, Locale locale) {
 		SearchWidgetEditorPage model = new SearchWidgetEditorPage();
 
-		String portalServer = new StringBuilder(config.getPortalServer()).append(config.getPortalName()).toString();
+		String portalServer = new StringBuilder(config.getPortalServer()).toString();
 		String providerQueryFormat = String.format("%s/search.html?query=*:*&qf=PROVIDER:", portalServer) + "%s";
 
 		if (solrOutdated() || contributorEntries == null) {
@@ -183,6 +181,10 @@ public class WidgetController {
 		}
 
 		model.setProviders(contributorEntries);
+		model.setApiUrl(config.getApi2url());
+		model.setApiKey(config.getApi2key());
+		model.setApiSecret(config.getApi2secret());
+
 		try {
 			model.setBriefBeanView(briefBeanView);
 		} catch (UnsupportedEncodingException e) {

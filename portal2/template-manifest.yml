@@ -1,0 +1,14 @@
+---
+applications:
+- name: appname
+  memory: 4096M
+  instances: 1
+  host: appname
+  domain: domain.com
+  path: target/portal.war
+  buildpack: https://github.com/europeana/java-buildpack.git
+  services:
+    - syslog
+    - postgresql
+    - europeana-object-db
+    - redis

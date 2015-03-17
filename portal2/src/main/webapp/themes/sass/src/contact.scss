@@ -1,0 +1,88 @@
+@import "variables";
+
+h4{
+	font-size: 100%;
+	color: #666;
+}
+
+h4:not(.no-underline) {
+	border-bottom: 1px solid #eaeaea;
+}
+
+/* feedback */
+#feedback {
+	padding-bottom:	1em;
+}
+
+
+#feedback, #email{
+	width:			100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+/*
+#feedback input[type='text']:hover,
+#feedback input[type='text']:focus,
+#feedback textarea:hover,
+#feedback textarea:focus {
+	background-color: #f5f5f5;
+}
+*/
+	
+.contact-wrap{
+	padding-top:	2em;
+}
+
+.feedback-wrap{
+	padding-top:	2em;
+	padding-bottom:	2em;
+}
+
+.feedback-wrap input[type="submit"]{
+	display:	block;
+	margin:		auto;
+	width:		100%;
+	font-size:	1.2em;
+}
+
+@media only screen and ( min-width:48em ){
+	.contact-wrap,
+	.feedback-wrap{
+		padding-top:	1em;
+		padding-bottom:	1em;
+	}
+	
+	.contact-wrap{
+		padding-right:	1em;
+	}
+	
+	.feedback-wrap{
+		padding-left:	1em;
+		padding-bottom:	0;
+	}
+	
+	.feedback-wrap input[type="submit"]{
+		margin:		0;
+		width:		auto;
+		font-size:	1em;
+	}
+}
+
+
+#feedback{
+	height: 7em;
+}
+
+
+/* thank-you */
+
+#thank-you {
+	display: none;
+	position:absolute;
+	top: 0;
+	left: 0;
+	width: 435px;
+	background-color: #fff;
+}

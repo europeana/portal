@@ -23,6 +23,7 @@ public class BriefBeanImpl implements BriefBean {
 	private String[] title;
 	private String[] dcCreator;
 	private String[] dcContributor;
+        private String[] dcLanguage;
 	private String[] edmPlace;
 	private List<Map<String, String>> edmPlacePrefLabel;
 	private List<String> edmPlaceLatitude;
@@ -45,7 +46,7 @@ public class BriefBeanImpl implements BriefBean {
 	private Map<String, List<String>> edmPlaceLabelLangAware;
 	private Map<String, List<String>> edmTimespanLabelLangAware;
 	private Map<String, List<String>> edmAgentLabelLangAware;
-
+	private boolean edmPreviewNoDistribute;
 	@Override
 	public String getId() {
 		return id;
@@ -266,6 +267,15 @@ public class BriefBeanImpl implements BriefBean {
 		this.dctermsHasPart = dctermsHasPart;
 	}
 
+	public void setDcLanguage(String[] dcLanguage) {
+		this.dcLanguage = dcLanguage;
+	}
+        
+        @Override
+        public String[] getDcLanguage() {
+                return dcLanguage;
+        }
+
 	@Override
 	public String[] getDctermsSpatial() {
 		return dctermsSpatial;
@@ -359,5 +369,10 @@ public class BriefBeanImpl implements BriefBean {
 
 	public void setEdmAgentLabelLangAware(Map<String, List<String>> edmAgentLabelLangAware) {
 		this.edmAgentLabelLangAware = edmAgentLabelLangAware;
+	}
+
+	@Override
+	public Boolean getPreviewNoDistribute() {
+		return this.edmPreviewNoDistribute;
 	}
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,8 +26,6 @@ import eu.europeana.corelib.definitions.db.entity.relational.SavedSearch;
 import eu.europeana.corelib.definitions.db.entity.relational.SocialTag;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.corelib.web.support.Configuration;
@@ -46,9 +45,8 @@ public class MyEuropeanaController {
 	private static final String REQUEST_NEW_PASSWORD = "request-new-myeuropeana-password";
 	private static final String INVALID_CREDENTIALS = "invalid_credentials_t";
 
-	@Log
-	private Logger log;
-
+	Logger log = Logger.getLogger(this.getClass());
+	
 	@Resource
 	private UserService userService;
 
@@ -65,7 +63,6 @@ public class MyEuropeanaController {
 	private ClickStreamLogService clickStreamLogger;
 
 	private BingTokenService bingTokenService = new BingTokenService();
-
 	
 	@RequestMapping("/myeuropeana.html")
 	public ModelAndView myEuropeanaHandler(
@@ -108,7 +105,6 @@ public class MyEuropeanaController {
 		User user = ControllerUtil.getUser(userService);
 
 		String bingToken = bingTokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret());
-		
 		if (user != null) {
 			MyEuropeanaPage model = new MyEuropeanaPage();
 			model.setUser(user);
@@ -129,6 +125,8 @@ public class MyEuropeanaController {
 			model.setSocialTags(socialTags);
 
 			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
+			
+			model.setBingToken(bingToken);
 
 			model.setBingToken(bingToken);
 			
@@ -159,14 +157,19 @@ public class MyEuropeanaController {
 	) throws Exception {
 		log.info("===== login.html =======");
 		LoginPage model = new LoginPage();
+		
+		String bingToken = bingTokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret());
+		
 		model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
-
 		model.setEmail(email);
+		model.setBingToken(bingToken);
+		
 		log.info("requestedAction: " + requestedAction);
 
 		if (email != null) {
-			String baseUrl = config.getPortalUrl();
-
+			
+			String baseUrl = getRootURL(request);
+			
 			// Register for My Europeana
 			if (REGISTER_FOR_MYEUROPEANA.equals(requestedAction)) {
 				if (!ControllerUtil.validEmailAddress(email)) {
@@ -257,6 +260,24 @@ public class MyEuropeanaController {
 		return search;
 	}
 
+	private String getRootURL(HttpServletRequest req) {
+
+	    String scheme = req.getScheme();
+	    String serverName = req.getServerName();
+	    int serverPort = req.getServerPort();
+	    String contextPath = req.getContextPath();
+	    
+	    // Reconstruct original requesting URL
+	    StringBuffer url =  new StringBuffer();
+	    url.append(scheme).append("://").append(serverName);
+
+	    if ((serverPort != 80) && (serverPort != 443)) {
+	        url.append(":").append(serverPort);
+	    }
+	    url.append(contextPath);
+	    return url.toString();
+	}
+	
 	private boolean emailExists(String email) {
 		User user = userService.findByEmail(email);
 		return (user != null && !StringUtils.isBlank(user.getPassword()));

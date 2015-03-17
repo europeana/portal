@@ -20,12 +20,16 @@ package eu.europeana.portal2.services.impl.abstracts;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+//import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -37,8 +41,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Value;
 
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
+//import redis.clients.jedis.Jedis;
+//import redis.clients.jedis.JedisPool;
 import eu.europeana.corelib.web.support.Configuration;
 
 /**
@@ -50,8 +54,7 @@ import eu.europeana.corelib.web.support.Configuration;
 
 public abstract class StaticCache {
 
-	@Log
-	protected Logger log;
+	protected Logger log = Logger.getLogger(this.getClass().getName());
 
 	private static final String DOT = ".";
 
@@ -123,16 +126,19 @@ public abstract class StaticCache {
 					String defautFileName = fileName.replace(DOT, "_" + Locale.ENGLISH.getLanguage() + DOT);
 					page = pageMap().get(defautFileName);
 					if (page == null) {
-						log.warn(String.format("filename %s (%s,  %s) is not existing", fileName, lingualFileName, defautFileName));
+						log.warning(String.format(
+								"filename %s (%s,  %s) is not existing",
+								fileName, lingualFileName, defautFileName));
 						return null;
 					}
 				}
 				return page;
 			} else {
-				log.warn("checkForDot: false for " + fileName);
+				log.warning("checkForDot: false for " + fileName);
 			}
 		} else {
-			log.warn("fileName " + fileName + " does not match the pattern " + fileNamePattern.pattern());
+			log.warning("fileName " + fileName + " does not match the pattern "
+					+ fileNamePattern.pattern());
 		}
 		return null;
 	}
@@ -146,18 +152,26 @@ public abstract class StaticCache {
 	}
 
 	private Map<String, Page> pageMap() {
-		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(new Date(), -getCheckFrequency()));
-		if (pageMapCache.isEmpty()
-			|| getLastCheck() == null
-			|| getLastCheck().before(timeout)) {
+		Calendar timeout = DateUtils.toCalendar(DateUtils.addMinutes(
+				new Date(), -getCheckFrequency()));
+		ClassLoader c = getClass().getClassLoader();
+		URLClassLoader urlC = (URLClassLoader) c;
+		URL[] urls = urlC.getURLs();
+		String newPath = urls[0].getPath() + staticPagePath;
+
+		if (pageMapCache.isEmpty() || getLastCheck() == null
+				|| getLastCheck().before(timeout)) {
 			if (staticPagePath == null) {
-				log.error("staticPagePath is not set!");
+				log.severe("staticPagePath is not set!");
 				throw new RuntimeException(staticPagePath + " is not set!");
 			}
-			File root = new File(staticPagePath);
+
+			File root = new File(newPath);
 			if (!root.isDirectory()) {
-				log.error("staticPagePath: " + staticPagePath + " is not a directory!");
-				throw new RuntimeException(staticPagePath + " is not a directory!");
+				log.severe("staticPagePath: " + staticPagePath
+						+ " is not a directory!");
+				throw new RuntimeException(staticPagePath
+						+ " is not a directory!");
 			}
 			if (!pageMapCache.isEmpty()) {
 				pageMapCache.clear();
@@ -180,15 +194,12 @@ public abstract class StaticCache {
 			if (file.isDirectory()) {
 				addToPageMap(root, file);
 			} else {
-				String baseFileName = file.getPath().substring(root.getPath().length()).replace('\\', '/');
+				String baseFileName = file.getPath()
+						.substring(root.getPath().length()).replace('\\', '/');
 				if (checkForDot(baseFileName)) {
 					pageMapCache.put(baseFileName, new Page(file));
 				} else {
-					/*
-					if (!baseFileName.endsWith(".svn-base") && !baseFileName.endsWith(".js")) {
-						log.warning(String.format("Skip registering file to static cache: %s", file.getAbsolutePath()));
-					}
-					*/
+
 				}
 			}
 		}
@@ -206,9 +217,10 @@ public abstract class StaticCache {
 		private synchronized String getContent() {
 			if (!fetched) {
 				try {
-					content = StringUtils.join(FileUtils.readLines(file, "UTF-8"), '\n');
+					content = StringUtils.join(
+							FileUtils.readLines(file, "UTF-8"), '\n');
 				} catch (Exception e) {
-					log.error("Unable to read static page " + file);
+					log.severe("Unable to read static page " + file);
 				} finally {
 					fetched = true;
 				}
@@ -218,7 +230,8 @@ public abstract class StaticCache {
 
 		private synchronized void writeBinaryContent(OutputStream out)
 				throws IOException {
-			IOUtils.copy(new AutoCloseInputStream(new FileInputStream(file)), out);
+			IOUtils.copy(new AutoCloseInputStream(new FileInputStream(file)),
+					out);
 		}
 	}
 }

@@ -711,7 +711,7 @@ public class FullDocPage extends FullDocPreparation {
 	@Override
 	public UrlBuilder createSearchUrl(String searchTerm, String[] qf, String start) 
 			throws UnsupportedEncodingException {
-		return SearchUtils.createSearchUrl(getPortalName(), returnTo, searchTerm, qf, start);
+		return SearchUtils.createSearchUrl(returnTo, searchTerm, qf, start);
 	}
 
 	public String getReturnTo() {
@@ -760,5 +760,4 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		return null;
 	}
-
 }

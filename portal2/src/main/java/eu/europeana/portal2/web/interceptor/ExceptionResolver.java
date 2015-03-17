@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,8 +13,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
@@ -28,8 +27,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 	@Resource
 	private EmailService emailService;
 
-	@Log
-	private Logger log;
+	Logger log = Logger.getLogger(this.getClass());
 
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object object,
@@ -56,7 +54,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 				message.append("request: ").append(ControllerUtil.formatFullRequestUrl(request)).append("\n");
 				message.append("stackTrace: ").append(stackTrace).append("\n");
 				// model.put("cacheUrl", imageCacheUrl);
-				message.append("portalName: ").append(config.getPortalName()).append("\n");
+				//message.append("portalName: ").append(config.getPortalName()).append("\n");
 				message.append("agent: ").append(request.getHeader("User-Agent")).append("\n");
 				message.append("referer: ").append(request.getHeader("referer")).append("\n");
 				message.append("date: ").append(new DateTime()).append("\n");
@@ -86,9 +84,9 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		model.setTheme(ControllerUtil.getSessionManagedTheme(request, config.getDefaultTheme()));
 		model.setLocale(RequestContextUtils.getLocaleResolver(request).resolveLocale(request));
 		model.setPortalUrl(config.getPortalUrl());
-		model.setPortalName(config.getPortalName());
+		//model.setPortalName(config.getPortalName());
+		model.setPortalServer(config.getPortalServer());
 		model.setDebug(config.getDebugMode());
-
 		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.EXCEPTION);
 	}
 }

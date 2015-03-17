@@ -50,4 +50,6 @@ public interface BriefBeanView {
 	SpellCheck getSpellCheck();
 
 	List<SearchFilter> getSearchFilters();
+	
+	void setImageUri(String imageUri);
 }

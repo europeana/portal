@@ -63,7 +63,9 @@
 			<c:choose>
 				<c:when test="${!empty model.user}">
 					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" ${empty model.user.languageItem ? '' : ' checked="checked"'} /> <spring:message code="translate_items_select_t" /></label>&nbsp;							
+
 					<input type="hidden" name="action" value="translate-item" />
+					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" ${empty model.user.languageItem ? '' : ' checked="checked"'} /> <spring:message code="translate_items_select_t" /></label>&nbsp;
 				</c:when>
 				<c:otherwise>
 					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span></label>&nbsp;

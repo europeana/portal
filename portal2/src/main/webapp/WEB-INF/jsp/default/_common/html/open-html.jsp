@@ -69,5 +69,5 @@
 <body class="locale-${model.locale}">
 
 <c:if test="${model.pageName == 'index.html'}">
-  <c:if test="${not empty model.announceMsg}">${model.announceMsg}</c:if>
+  <c:if test="${not empty model.announceMsg}"><div id="announce-msg">${model.announceMsg}</div></c:if>
 </c:if>

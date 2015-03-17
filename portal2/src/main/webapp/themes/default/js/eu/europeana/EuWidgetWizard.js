@@ -92,6 +92,8 @@ var EuWidgetWizard = function(cmpIn, options){
 	var output = function(){
 		
 		var result = searchWidgetUrl;
+		
+		
 		var param = function(){
 			return (result.indexOf('?')>-1) ? '&' : '?';
 		};
@@ -153,13 +155,13 @@ var EuWidgetWizard = function(cmpIn, options){
 
 						if(dataProviderInput.prop('checked')){
 							
-							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
+							resultFragment += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + cleanName( name ) + '}';
 							
 							//providersQuery += param() + 'qf=' + 'DATA_PROVIDER' + ':{' + name + '}';
 							
 						}
 						else{
-							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
+							subtractUrl += '&qf=-' + 'DATA_PROVIDER' + ':{' + cleanName( name ) + '}';
 							
 							//providersQuery += '&qf=-' + 'DATA_PROVIDER' + ':{' + name + '}';
 
@@ -170,41 +172,21 @@ var EuWidgetWizard = function(cmpIn, options){
 					result += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
 					//providerQuery += resultFragment.length < (providerParam.length + subtractUrl.length) ? resultFragment : param() + providerParam + subtractUrl;
 				}
-				
-				
 			}); // end providers loop
-			
-			///////////////////////////////////////////////
-			/*
-			if(providerQuery.length){
-				
-				console.log('providerQuery: ' + providerQuery)
-				
-				providerQuery = providerQuery
-				.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
-				.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
-				.replace(/^ OR /, '&qf=');
 
-				alert(providerQuery);
-				
-				result += providerQuery;
-				
-			}
-			*/
-			///////////////////////////////////////////////
 				
 		}
 		
 		result += param() + 'withResults=' + getWithResults();
 		result += param() + 'theme=' + getTheme();
-
+		result += param() + 'apiUrl=' + encodeURIComponent(searchUrl + '&profile=portal,params');
 		result += param() + 'v=2';
-
 		return result;
 	};
 	
-	var setCopy = function(copyIn){
-		var copy = '&lt;script type="text/javascript" src="' + (copyIn ? copyIn : output()) + '"&gt;&lt;/script&gt;';
+	var setCopy = function(){
+		
+		var copy = '&lt;script type="text/javascript" src="' + output() + '"&gt;&lt;/script&gt;';
 		$('#output').html(copy);
 		selectElementContents($('#output')[0]);
 	}
@@ -656,6 +638,7 @@ var EuWidgetWizard = function(cmpIn, options){
 
 				// this tab re-inits
 
+				
 				var src = output();
 				
 				$('.preview-window').html('');
@@ -753,11 +736,6 @@ var EuWidgetWizard = function(cmpIn, options){
 				var name           = providerInput.next('label').html();
 				var providerParam  = '&qf=PROVIDER:"' + cleanName(name) + '"';
 
-
-				
-				//if(providerInput.prop('checked') && ! providerInput.is(':visible') ){
-				//	alert('HIDDEN !!!');
-				//}
 				
 				//if(providerInput.prop('checked') && providerInput.is(':visible') ){				
 				if( providerInput.prop('checked') ){
@@ -781,11 +759,10 @@ var EuWidgetWizard = function(cmpIn, options){
 
 						///if(dataProviderInput.prop('checked') && dataProviderInput.is(':visible')){
 						if(dataProviderInput.prop('checked') ){
-							//query += '&qf=' + 'DATA_PROVIDER:"' + cleanName(name) + '"';
-							resultFragment += '&qf=DATA_PROVIDER:"' + name + '"';							
+							resultFragment += '&qf=DATA_PROVIDER:"' + cleanName(name) + '"';
 						}
 						else{
-							subtractUrl += '&qf=-DATA_PROVIDER:"' + name + '"';
+							subtractUrl += '&qf=-DATA_PROVIDER:"' + cleanName(name) + '"';
 						}
 						
 					});
@@ -800,7 +777,6 @@ var EuWidgetWizard = function(cmpIn, options){
 			}); // end providers loops
 			
 			
-//			  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 			
 			if(providerQuery.length){
 			
@@ -809,8 +785,6 @@ var EuWidgetWizard = function(cmpIn, options){
 					.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
 					.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
 					.replace(/^ OR /, '&qf=');
-				
-				//alert(providerQuery);
 				query += providerQuery;
 				*/
 			}
@@ -818,18 +792,11 @@ var EuWidgetWizard = function(cmpIn, options){
 			query += providerQuery;
 			query += dataProviderQuery;
 			
-//			alert('providerQuery = \n\n' + providerQuery
-	//				 + '\n\n' + 	providerQuery.replace(/\&qf=PROVIDER:/g, ' OR PROVIDER:')
-		//			 + '\n\n' + 	providerQuery.replace(/\&qf=DATA_PROVIDER:/g, ' OR DATA_PROVIDER:')
-			//);
-
-			
-			
 			
 			$('ul.TYPE a input').add('ul.COUNTRY a input').add('ul.RIGHTS a input').add('ul.LANGUAGE a input').each(function(i, ob){
 				if($(ob).prop('checked') && $(ob).is(':visible')){
 					if($(ob).attr('title')){
-						query += $(ob).attr('title').replace(/\"/g, "");						
+						query += $(ob).attr('title').replace(/\"/g, "");
 					}
 					else{
 						//console.log('missing title for ' + $(ob).next('label').html() );
@@ -847,13 +814,8 @@ var EuWidgetWizard = function(cmpIn, options){
 			doHide = function(linksIn){
 				$.each(linksIn, function(i, ob){
 					ob = $(ob);
-//					if( ob.attr('title').indexOf('Bodleian') > -1 ){
-	//					alert('GOT IT\n\n\nchecked = ' +    (  ob.find('input').is(':checked') )    );
-		//			}
 					if(! ob.find('input').is(':checked') ){
 						ob.hide();
-
-			//			console.log( 'HIDE: ' + ob.find('label').html() )
 					}
 				});
 			}
@@ -974,17 +936,11 @@ var EuWidgetWizard = function(cmpIn, options){
         	hideSpinner();
 		};
 		
-		var postUrl = window.location.href.split('/portal')[0] + '/api/v2/search.json?wskey=api2demo&profile=facets,params';
-		if(postUrl.indexOf('localhost')>-1){
-			//postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&query=*:*&profile=facets,params";
-			postUrl = "http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo&profile=facets,params";
-		}
-		
 		try{
 			// IE8 & 9 only Cross domain JSON GET request
 		    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
 		        var xdr = new XDomainRequest(); // Use Microsoft XDR
-		        xdr.open('post', postUrl + query);
+		        xdr.open('post', searchUrl + '&profile=facets,params' + query);
 		        xdr.onprogress = function () {};
 		        xdr.onload = function () {
 		            var dom  = new ActiveXObject('Microsoft.XMLDOM'),
@@ -1004,7 +960,7 @@ var EuWidgetWizard = function(cmpIn, options){
 		    } 
 		    else{
 				$.ajax({
-					"url":				postUrl + query,
+					"url":				searchUrl + '&profile=facets,params' + query,
 			        "dataType":			"json", 
 			        "crossDomain":		true,
 			        "type":				"POST",

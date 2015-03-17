@@ -1,0 +1,205 @@
+@import "variables";
+
+#lightbox-proxy{
+	display:	none;	
+}
+
+#lightbox_image{
+	display:		inline-block;
+	vertical-align:	middle;
+}
+
+iframe#lightbox_image{
+	padding: 0;
+}
+
+.lightbox_content_wrap{
+	border:			none;
+	margin:			0;
+	padding:		0;
+}
+
+
+#lightbox{
+	background-color:	transparent;
+	border:				1px solid #666;	
+	display:			inline-block;
+	font-size:			0.9em;
+
+	position:			relative;
+
+	box-shadow:			0 0 90px 5px #000;
+	-moz-box-shadow:	0 0 90px 5px #000;
+	-webkit-box-shadow:	0 0 90px #000;	
+	
+	z-index:			10000;
+}
+
+#lightbox_info{
+	background-color:	#555;
+	color:				#FFFFFF;
+	overflow-x:			hidden;
+	overflow-y:			auto;
+	padding:			0;
+	text-align:			left;
+	vertical-align:		top;
+}
+
+#lightbox_info ul{
+	display:			table;
+	height:				100%;
+	list-style-type:	none;
+	margin:				0;
+	padding:			1em;
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
+	
+	
+	table-layout:		fixed;	/* chrome fix overflowing table */
+	width:				100%;
+	max-width:			100%;
+}
+
+#lightbox_info ul.collapsed{
+	padding-top:		0;
+}
+
+#lightbox_info li{
+	display:	table-row;
+	word-wrap:	break-word;	/* chrome fix overflowing table */
+	overflow:	hidden;		
+}
+
+#lightbox_info li strong{
+	white-space: nowrap;
+}
+	
+/*
+The commented code causes title/value misalign in chrome.
+
+The solution (below using :after) may not work in ie8.  TODO ie8 fallback in the ie css file
+
+#lightbox_info li strong{
+	display:		inline-block;
+	margin-top:		0.5em;
+}
+*/
+
+#lightbox_info li:after{
+	display:		block;
+	content:		"\a";
+	white-space:	pre;
+	font-size:		0.25em;
+}
+
+#lightbox_info li.bottom{
+	height:		100%;
+	display:	table-cell;
+	vertical-align:	bottom;
+}
+
+#lightbox_info a:hover{
+	border-bottom:	1px dotted #fff;
+}
+
+
+#lightbox_info  a.rights-badge{
+	border-bottom:	none;
+	display:		inline-block;
+	margin-bottom:	0;
+	/*	padding:		1em 0 0.25em;	*/
+	font-size:		1em;	/* override fulldoc */
+}
+
+#lightbox_info  a.rights-badge:hover .rights-text{
+	border-bottom:		1px dotted #fff;
+}
+
+#lightbox_info a{
+	color:	#fff;
+	text-decoration:	none;	
+}
+
+
+
+
+
+/* full doc override */
+#lightbox_info a.external.item-metadata{
+	display:	inline;
+}
+
+#lightbox_info .icon-share,
+#lightbox_info .icon-share .action-title,
+#lightbox_info a span{
+	color:	#fff;
+}
+
+
+.hide_show_meta{
+	height:		1em;
+	text-align:	right;
+}
+
+.go-fullscreen{
+	cursor:	pointer;
+}
+
+a.showMeta,
+a.hideMeta{
+	cursor:			pointer;
+	line-height:	2em;
+}
+
+
+#nav-next,
+#nav-prev{
+	color:			white;
+	cursor:			pointer;
+	display:		none;
+	font-size:		4em;
+	
+	position:		absolute;
+	text-shadow:	0 0 2px #000000;
+	top:			50%;
+	margin-top:		-1em;
+	
+	
+	filter: Shadow(Color=#000, Direction=45, Strength=2),
+			Shadow(Color=#000, Direction=135, Strength=2),
+			Shadow(Color=#000, Direction=225, Strength=2),
+			Shadow(Color=#000, Direction=315, Strength=2);
+	background-clip:	text;
+		
+}
+
+#nav-prev{
+	left:	0px;
+	right:	auto;
+}
+
+#nav-next{
+	left:	auto;
+	right:	0px;
+}
+
+#zoomIn{
+	background-image:	url(../images/icons/lightbox-enlarge.png);
+	position:			absolute;
+	
+	margin-right:		0.5em;
+	margin-top:			0.5em;
+
+	right:				0px;
+	top:				0;
+	
+	cursor:				pointer;
+	height:				35px;
+	width:				35px;
+	z-index:			1;
+}
+
+#zoomIn.active{
+	background-image:	url(../images/icons/lightbox-enlittle.png);
+}

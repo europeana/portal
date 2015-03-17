@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.edm.exceptions.SolrTypeException;
-import eu.europeana.corelib.edm.service.SearchService;
-import eu.europeana.corelib.edm.utils.SolrUtils;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
@@ -41,8 +39,7 @@ import eu.europeana.portal2.web.util.SearchUtils;
 @Controller
 public class SearchController {
 
-	@Log
-	private Logger log;
+	Logger log = Logger.getLogger(this.getClass());
 
 	@Resource
 	private SearchService searchService;
@@ -98,11 +95,13 @@ public class SearchController {
 						userService.updateUserLanguageSearchApplied(user.getId(), qtApplied);
 					}
 				}
+				userSetNoQT = user.getLanguageSearchApplied() != null && !user.getLanguageSearchApplied();
 			}
 			catch(Exception e){
+				log.error("Error updating user: " + e.getMessage());
+				e.printStackTrace();
 				// do nothing
 			}
-			userSetNoQT = user.getLanguageSearchApplied() != null && !user.getLanguageSearchApplied();
 		}
 		else{
 			if (new QueryTranslationsUtil().getKeywordLanguagesApplied(request) ){
@@ -114,19 +113,22 @@ public class SearchController {
 		}
 
 		SearchPage model = new SearchPage();
+		model.setImageUri(config.getImageCacheUrl());
 		model.setRequest(request);
 		model.setRefinements(ControllerUtil.fixParameter(qf, "qf", params));
 		model.setStart(fixStartParameter(start));
 		model.setRows(fixRowsParameter(rows));
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
 
-		queryString = SolrUtils.rewriteQueryFields(queryString);
-		queryString = SolrUtils.normalizeBooleans(queryString);
+		queryString = eu.europeana.corelib.search.utils.SearchUtils.rewriteQueryFields(queryString);
+		queryString = eu.europeana.corelib.search.utils.SearchUtils.normalizeBooleans(queryString);
 		model.setQuery(queryString);
 		
         if (model.isDoTranslation() && queryString.length() > 0 && !queryString.equals("*:*") &&  !userSetNoQT ) {
 			long t0 = new Date().getTime();
+			
 			LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, queryString, qt, request);
+			
 			long t1 = new Date().getTime();
 			log.info("Query translation took: " + (t1 - t0));
 			model.setLanguages(languageContainer);

@@ -18,6 +18,8 @@
 package eu.europeana.portal2.web.util.rss;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -84,7 +87,11 @@ public class RSSFeedParser {
 			List<FeedEntry> feeds = new ArrayList<FeedEntry>();
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder();
-			Document doc = builder.parse(url.openStream());
+			
+			InputStream is = url.openStream();
+			log.info("URL: " + url.toString());
+			Document doc = builder.parse(is);
+
 			NodeList nodes = doc.getElementsByTagName("item");
 			for (int i = 0; i < Math.min(nodes.getLength(), itemLimit); i++) {
 				Element element = (Element) nodes.item(i);

@@ -34,10 +34,17 @@
 	var initCarousels = function(){
 		
 		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
+		/*
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",
 			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory
+		}]);
+		*/
+		js.loader.loadScripts([{
+			"name" : "galleria-theme",
+			"file" : "galleria.europeanax.js",
+			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/'
 		}]);
 
 
@@ -327,7 +334,7 @@
     			eu.europeana.vars.suppresResize = true;
     			
 				$.ajax({
-					url: '/portal/indexFragment.json?fragment=blog',
+					url: 'indexFragment.json?fragment=blog',
 					dataType: 'json',
 					success: function(data){
 						$("#section-blog .collapse-content").html(data.markup);
@@ -352,7 +359,7 @@
 			fireFirstOpen:		function(){
 				eu.europeana.vars.suppresResize = true;
 				$.ajax({
-					url: '/portal/indexFragment.json?fragment=featuredContent',
+					url: 'indexFragment.json?fragment=featuredContent',
 					dataType: 'json',
 					success: function(data){
 						$("#section-featured-content .collapse-content").html(data.markup);
@@ -392,27 +399,27 @@
 			fireFirstOpen:			function(){
 				eu.europeana.vars.suppresResize = false;
 				$.ajax({
-						url: '/portal/indexFragment.json?fragment=pinterest',
+						url: 'indexFragment.json?fragment=pinterest',
 						dataType: 'json',
 						success: function(data){
 							$("#section-pinterest .collapse-content").html('<div class="carousel-wrapper"><div id="pinterest-carousel"></div></div>');
 
-							var pinterestCarousel = new EuCarousel($('#pinterest-carousel'), data.data);
-							
-							$('#pinterest-carousel a.carousel-item').click(function(){
-								var clicked	= this;
-								$('#pinterest-carousel a').each(function(i, ob){
-									if(ob == clicked){
-										com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", data.data[i].link);
-									}
+							if(data.data && data.data.length>0){
+								var pinterestCarousel = new EuCarousel($('#pinterest-carousel'), data.data);
+								$('#pinterest-carousel a.carousel-item').click(function(){
+									var clicked	= this;
+									$('#pinterest-carousel a').each(function(i, ob){
+										if(ob == clicked){
+											com.google.analytics.europeanaEventTrack("Pinterest Activity", "pinterest item", data.data[i].link);
+										}
+									});
 								});
-							});
-							
-		            	   	$(window).bind('collapsibleExpanded', function(data){
-		            	   		console.log('collapsibleExpanded, data =  ' + data)
-		            	   		pinterestCarousel.resize();
-		            	   	} );        		
-
+								
+			            	   	$(window).bind('collapsibleExpanded', function(data){
+			            	   		console.log('collapsibleExpanded, data =  ' + data)
+			            	   		pinterestCarousel.resize();
+			            	   	} );        		
+							}
 						},
 						error: function(x, status, e){
 							js.console.log("error = " + JSON.stringify(e));

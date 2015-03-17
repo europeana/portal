@@ -66,7 +66,7 @@
 	    position:	absolute;
 	    width:		100%;
 	    height:		100%;
-	    background:	black url(/portal/themes/default/images/spinner.gif) center center no-repeat;
+	    background:	black url(${homeUrl}themes/default/images/spinner.gif) center center no-repeat;
 	    opacity:	.5;
 	    z-index:	12;
 	    left:		0;
@@ -493,23 +493,43 @@
 </style>
 
 
+<c:set var="req" value="${pageContext.request}" />
+<%--
+<c:set var="searchUrl" value="${fn:replace(req.requestURL, fn:substring(req.requestURI, 0, fn:length(req.requestURI)), req.contextPath)}" />
+ --%>
+<c:set var="searchUrl" value="${model.portalServer}" />
+
+
+
+<c:set var="apiUrl" value="${model.apiUrl}" />
+
+
+<c:if test="${fn:substring(searchUrl, fn:length(searchUrl)-1, fn:length(searchUrl)) == '/'}" >
+	<c:set var="searchUrl" value="${fn:substring(searchUrl, 0, fn:length(searchUrl)-1)}" />
+</c:if>
+
+<c:if test="${fn:substring(apiUrl, fn:length(apiUrl)-1, fn:length(apiUrl)) == '/'}" >
+	<c:set var="apiUrl" value="${fn:substring(apiUrl, 0, fn:length(apiUrl)-1)}" />
+</c:if>
+
 <c:choose>
 
 	<c:when test="${!empty model.debug && model.debug}">
 		<script type="text/javascript">
-			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
+			var searchWidgetUrl = "${searchUrl}/themes/default/js/eu/europeana/EuSearchWidget.js?sw=true";
 		</script>
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-			var searchWidgetUrl = "${model.portalServer}${model.portalName}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
+			var searchWidgetUrl = "${searchUrl}/themes/default/js/eu/europeana/min/EuSearchWidget.min.js?sw=true";
+
 		</script>
 	</c:otherwise>
 </c:choose>
 	
 <script type="text/javascript">
-	var rootUrl 		= "${model.portalServer}${model.portalName}";
-	var searchUrl		= 'http://test.portal2.eanadev.org/api/v2/search.json?wskey=api2demo';
+		var rootUrl 		= "${homeUrl}";
+		var searchUrl		= "${apiUrl}/v2/search.json?wskey=${model.apiKey}";
 </script>
 
 
@@ -550,8 +570,9 @@
 							width="100%"
 							height="100%"
 							frameborder="0"
-							webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
-							<a class="help-link europeana" href="/portal/usingeuropeana_searchwidget.html"><spring:message code="wizard_tab1_help_link_text_t"/></a>
+							webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+							
+							<a class="help-link europeana" href="${homeUrl}/usingeuropeana_searchwidget.html"><spring:message code="wizard_tab1_help_link_text_t"/></a>
 						</div>					
 					</c:if>
 					
@@ -878,10 +899,10 @@
 				<div class="content-inner">
 				
 					<div class="theme-select">
-						<img src="/portal/themes/default/images/sw-theme-1.png" data-index="1" class="active"/>
-						<img src="/portal/themes/default/images/sw-theme-2.png" data-index="2" />
-						<img src="/portal/themes/default/images/sw-theme-3.png" data-index="3" />
-						<img src="/portal/themes/default/images/sw-theme-4.png" data-index="4" />
+						<img src="${homeUrl}themes/default/images/sw-theme-1.png" data-index="1" class="active"/>
+						<img src="${homeUrl}themes/default/images/sw-theme-2.png" data-index="2" />
+						<img src="${homeUrl}themes/default/images/sw-theme-3.png" data-index="3" />
+						<img src="${homeUrl}themes/default/images/sw-theme-4.png" data-index="4" />
 					</div>
 
 					<div class="tab-footer">
@@ -953,4 +974,4 @@
 		</div>
 
 	</div>
-
+</div>

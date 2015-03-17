@@ -49,7 +49,7 @@
 								</c:choose>
 	
 								<%-- Place Image --%>
-								<a href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
+								<a href="/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">
 									<c:set var="objectPresent" value="" />
 									<c:catch var="exception">
 										<c:if test="${tag.europeanaObject && !empty tag.europeanaObject}"></c:if>
@@ -67,7 +67,7 @@
 	
 								<%-- item info --%>
 								<%-- !tag.europeanaId.orphan> --%>
-								<a class="bold" href="/${model.portalName}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>
+								<a class="bold" href="/${webRoot}/record/${fn:replace(tag.europeanaUri, 'http://www.europeana.eu/resolve/', '')}.html">${tag.title}</a><br/>
 								<spring:message code="DateSaved_t" />: <em><fmt:formatDate value="${tag.dateSaved}" type="both" timeStyle="long" dateStyle="long" /></em><br/>
 								<%-- delete tag button --%>
 								<button id="${tag.id}" class="remove-saved-tag submit-button deans-button-1 europeana-button-1"><spring:message code="Delete_t" /></button>

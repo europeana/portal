@@ -1,0 +1,425 @@
+@import "variables";
+
+#carousel-1 .galleria-info{
+	display:	none;
+}
+
+#carousel-1-external-info{
+	margin-bottom:	1em;
+	position:		relative;
+	top:			-6px;
+	z-index:		10;
+}
+
+#carousel-1 .galleria-image img{
+	cursor: pointer;
+}
+	
+@media only screen and ( min-width:48em ){
+	#carousel-1{
+		margin-bottom:	0;
+		margin-top:		1em;
+	}
+	
+	#carousel-1-external-info{
+		display:	none;
+	}
+	
+	#carousel-1 .galleria-info{
+		display:	block;
+	}
+	
+}
+	
+	
+.carousel-row{
+	position:	relative;
+}
+
+.carousel-row>div{
+	vertical-align: top;
+}
+
+.carousel-wrap{
+	display:	block;
+}
+
+.social-shares{
+	text-align:		right;
+	position:		absolute;
+	bottom:			0;
+	right:			0;
+	margin-right:	1em;	
+	height:			3em;
+}
+
+.social-shares span.label{
+	position:	relative;
+	bottom:		0.5em;
+}
+
+.social-shares	.icon-facebook{
+	color:	#3B5998;
+	font-size:		2em;
+}
+
+
+.social-shares	.icon-twitter{
+	color:	#4099FF;
+	font-size:		2em;
+}
+
+.social-shares	.icon-pinterest-2{
+	color:	#E00002;
+	font-size:		2em;
+}
+
+.social-shares	.icon-mail{
+	font-size:		2em;
+}
+
+.social-shares	.icon-share{
+	color:	green;
+	font-size:		2em;
+}
+
+
+#carousel-3{
+   	height:		200px;
+   	max-height:	100%;
+}
+
+
+
+/* main content gutters */
+
+.carousel-spacer{
+	margin-right:	0;
+	margin-top:		1.5em;
+}
+
+
+.fi-block-spacer{
+	margin-top:		2em;
+	margin-bottom:	2em;
+}
+
+#partner-section-heading{
+	margin-top:		0;
+	margin-bottom:	0;
+}
+
+
+
+.fi-block-spacer h4{
+	margin-bottom:	1em;
+	text-align:		center;
+}
+
+.fi-block-spacer h4 a{
+	text-align:		center;
+}
+
+.fi-block-spacer img{
+	display:		block;
+	margin:			auto;
+	margin-bottom:	1em;
+}
+
+.fi-block-spacer a:focus img{
+	outline:	1px dashed #4C7ECF;	/* blue like buttons */
+	outline:	1px dashed #9DC425;	/* green like links */
+	outline:	1px dotted #9DC425;	/* green like links */
+}
+
+
+@media only screen and ( min-width:48em ){
+	
+	#section-blog .six:first-child .fi-block-spacer{
+		padding-right:	2em;
+	}
+	
+	#section-blog .six:last-child .fi-block-spacer{
+		padding-left:	2em;
+	}
+	
+	.featured-partner-links{
+		word-wrap:		break-word;
+	}
+	
+	#section-featured-content .six:first-child .fi-block-spacer{
+		padding-right:	2em;
+	}
+	
+	#section-featured-content .six:last-child .fi-block-spacer{
+		padding-left:	2em;
+	}
+	
+	.fi-block-spacer h4{
+		text-align:		left;
+	}
+			
+	.fi-block-spacer h4 a{
+		text-align:		left;
+		display:		inline;
+	}
+		
+	.fi-block-spacer img{
+		float:			left;
+		margin-right:	1em;
+		margin-bottom:	2em;
+		width:			35%;	
+		max-width:		35%;	
+	}
+}
+
+
+
+/* collapsible section headings */
+
+.collapse-header-text, .icon-pinterest{
+	/*
+	padding-top:	1em !important;
+	padding-bottom:	1em !important;
+	*/
+	margin-top:		1em;
+	margin-bottom:	1em;	
+}
+
+
+#section-featured-partner,
+#collapse-header-3,
+#collapse-header-2,
+#collapse-header-1,
+.collapse-content{
+	border-top:		1px solid #E4E4E4;
+}
+
+#collapse-header-3 span,
+#collapse-header-2 span,
+#collapse-header-1 span{
+	cursor:	pointer;
+}
+
+
+#collapse-header-3 a:focus span{
+	border-bottom:	1px dotted #910101;
+}
+
+#featured-partner-header-wrapper{
+	border-bottom:	1px solid #E4E4E4;
+}
+
+#section-pinterest .icon-pinterest{
+	cursor:	pointer;
+}
+
+/*
+
+TODO: this commented rule needs copied to ie8.css
+
+.featured-text .new-content-link{
+	display:	block;
+}
+
+*/
+
+.featured-text .new-content-link:before{
+    content:		"\a";
+    white-space:	pre;
+}
+
+ul.featured-partner-links{
+	margin-left:	0;
+	padding-left:	0;
+}
+
+ul.featured-partner-links li{
+	list-style:			none outside none;
+	padding-top:		0.5em;
+	padding-bottom:		0.5em;
+}
+
+/* move content down from heder within collapsibel sections */
+#carousel-3,
+#section-featured-content div.featured-content{
+	margin-top:		1em;
+	margin-bottom:	1em;
+}
+
+.featured-frame{
+	text-align:			center;
+	background-color:	#DFDFDF;
+}
+
+
+
+/* Dynamic content classes */
+h3 a span{
+	color:#181818;	
+}
+
+
+.feed-image{
+	text-align:			center;
+	vertical-align:		middle;
+}
+
+.feed-image img{
+	display:	block;	/* inline image has small margin at bottom */
+	margin:		auto;	/* required to centre block */
+}
+
+
+a.icon-rss.feed-link:focus{
+	text-decoration:	underline !important;
+	border:				solid 1px #fff;			/* border not visible, but used as a hack to force firefox to remove the text-decoration following a blur. */
+}
+
+a.icon-rss.feed-link{
+	text-decoration:	none !important;
+	color:				orange !important;
+	border:				none;
+	box-sizing:			border-box;
+}
+
+/*
+.icon-rss:before{
+	color: 	orange !important;
+}
+*/
+
+
+@media only screen and ( min-width:48em ){
+	
+	#collapse-header-3 span,
+	#collapse-header-2 span,
+	#collapse-header-1 span{
+		cursor:	default;
+	}
+		
+	
+	ul.featured-partner-links{
+		margin-top:		2em;
+	}
+	
+	ul.featured-partner-links li{
+		padding-top:		0em;
+		padding-bottom:		0em;
+	}
+}
+
+/* End dynamic content classes */
+
+
+/* blog-feed */
+
+
+.feed-link {
+	float:			right;
+	margin-right:	0.5em;
+	padding-top:	1em;
+	padding-bottom:	1em;
+}
+
+.collapse-content{
+	clear:	both;	
+}
+
+@media only screen and ( min-width:48em ){
+	.feed-link {
+		float:			left;
+		margin-left:	0.4em;				
+		padding-top:	0.5em;
+		padding-bottom:	0.5em;
+	}
+
+	.collapse-header-text,
+	.icon-pinterest{
+	/*
+		padding-top:	0.5em !important;
+		padding-bottom:	0.5em !important;
+		*/
+		margin-top:		0.5em;
+		margin-bottom:	0.5em;
+	}
+}
+
+
+/* featured content */
+
+.featured-text{
+	margin-left:	0;
+}
+
+h3.featured-text{
+	font-size:		inherit;	
+}
+
+p.featured-text{
+	/*
+	max-height:		5.92em;*/	/*		4 x 1.48		*/
+	overflow:		hidden;
+}
+
+
+/* pinterest */
+
+.rssBody ul {
+	list-style: none;
+}
+.rssBody ul, .rssRow, .rssRow h3, .rssRow p {
+	margin: 0;
+	padding: 0;
+}
+
+.rssBody li {
+	width:			100%;
+	height:			auto;
+	float:			left;
+	margin-bottom:	12px;
+}
+
+
+.rssRow div {
+	color: #666;
+	margin: 0.2em 0 0.4em 0;
+}
+
+
+.icon-pinterest{
+	color:			#910101;
+	margin-left:	0.3em;
+}
+
+.icon-pinterest:focus{
+	outline:	solid 4px red;
+}
+
+.pinterest-button{
+	position:	relative;
+    top:		2px;
+    left:		1px;
+}
+
+.pinterest-header{
+	border-bottom:1px solid #CACACA;
+	padding-bottom:2px;
+}
+
+.rssRow h3{
+	border-top:	none;
+}
+
+
+li.rssRow p{
+	border-top:	1px solid #CACACA;
+	padding-top:	10px;
+	padding-bottom:	10px;
+}
+
+.rssRow img{
+	padding-top:	8px;
+	padding-bottom:	10px;
+	display:		block;    
+}

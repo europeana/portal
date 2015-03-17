@@ -56,12 +56,9 @@ public abstract class SearchPageData extends PortalPageData {
 	 */
 	public EuropeanaUrlService europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
 
-	
     protected String bingToken;
 
-
-	
-	/**
+    /**
 	 * The translation service that makes use of Microsoft Translation API
 	 */
 	public MicrosoftTranslatorService translationService = MicrosoftTranslatorServiceImpl.getBeanInstance();
@@ -92,6 +89,8 @@ public abstract class SearchPageData extends PortalPageData {
 	private boolean languagesRemoved;
 
 	private String apiUrl;
+	private String apiKey;
+	private String apiSecret;
 
 	private boolean useBackendItemTranslation = false;
 	private boolean useAutomatedFrontendTranslation = false;
@@ -368,6 +367,22 @@ public abstract class SearchPageData extends PortalPageData {
 
 	public void setApiUrl(String apiUrl) {
 		this.apiUrl = apiUrl;
+	}
+
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
+
+	public String getApiSecret() {
+		return apiSecret;
+	}
+
+	public void setApiSecret(String apiSecret) {
+		this.apiSecret = apiSecret;
 	}
 
 	public String getBingToken() {

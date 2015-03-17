@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-  Copyright 2007-2013 The Europeana Foundation
-
-  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
-  by the European Commission;
-  You may not use this work except in compliance with the Licence.
-  
-  You may obtain a copy of the Licence at:
-  http://joinup.ec.europa.eu/software/page/eupl
-
-  Unless required by applicable law or agreed to in writing, software distributed under 
-  the Licence is distributed on an "AS IS" basis, without warranties or conditions of 
-  any kind, either express or implied.
-  See the Licence for the specific language governing permissions and limitations under 
-  the Licence.
- -->
+<!-- Copyright 2007-2013 The Europeana Foundation Licenced under the EUPL, 
+	Version 1.1 (the "Licence") and subsequent versions as approved by the European 
+	Commission; You may not use this work except in compliance with the Licence. 
+	You may obtain a copy of the Licence at: http://joinup.ec.europa.eu/software/page/eupl 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the Licence is distributed on an "AS IS" basis, without warranties 
+	or conditions of any kind, either express or implied. See the Licence for 
+	the specific language governing permissions and limitations under the Licence. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -42,6 +34,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.europeanaCorelib>2.1-SNAPSHOT</version.europeanaCorelib>
+
+		<europeana.server>http://www.europeana.eu/portal/</europeana.server>
 	</properties>
 
 	<scm>
@@ -66,22 +60,85 @@
 			</plugin>
 
 			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/main/resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${europeana.properties}</directory>
+									<filtering>true</filtering>
+								</resource>
+								<resource>
+									<directory>${project.parent.basedir}/portal_messages</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>exec-maven-plugin</artifactId> -->
+			<!-- <version>1.2</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>java</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- <configuration> -->
+			<!-- <mainClass>eu.europeana.Portal2Starter</mainClass> -->
+			<!-- <classpathScope>test</classpathScope> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2</version>
 				<executions>
+
+					<!-- SASSIFY -->
 					<execution>
+						<id>sassify</id>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>java</goal>
 						</goals>
+						<configuration>
+							<mainClass>eu.europeana.portal2.web.presentation.ThemeSassCompiler</mainClass>
+							<arguments>
+								<argument>${europeana.server}</argument>
+							</arguments>
+						</configuration>
 					</execution>
-				</executions>
-				<configuration>
-					<mainClass>eu.europeana.Portal2Starter</mainClass>
-					<classpathScope>test</classpathScope>
-				</configuration>
-			</plugin>
 
+
+					<!-- PULL LATEST STATIC RESOURCES -->
+					<execution>
+						<id>portal-static</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>src/main/resources/bundle</executable>
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -118,27 +175,14 @@
 			</plugin>
 
 			<plugin>
-				<!-- To run:
-					mvn jetty:run -Dorg.mortbay.jetty.webapp.parentLoaderPriority=true
-				-->
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.6</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.6</version>
 				<configuration>
-					<webAppSourceDirectory>${project.basedir}/src/main/webapp</webAppSourceDirectory>
-					<contextPath>portal</contextPath>
-					<systemProperties>
-						<systemProperty>
-							<name>EUROPEANA_PROPERTIES</name>
-							<value>${project.basedir}/europeana.properties</value>
-						</systemProperty>
-						<!-- 
-						<systemProperty>
-							<name>RUNTIME_ENVIRONMENT</name>
-							<value>local</value>
-						</systemProperty>
-						-->
-					</systemProperties>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -151,17 +195,34 @@
 			<artifactId>corelib-db</artifactId>
 			<version>2.1-SNAPSHOT</version>
 		</dependency>
-
+		<dependency>
+			<!-- will also include SOLR, DEF, UTILS -->
+			<groupId>eu.europeana.corelib</groupId>
+			<artifactId>corelib-search</artifactId>
+			<version>2.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-web</artifactId>
 			<version>2.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
-			<groupId>eu.europeana.corelib</groupId>
-			<artifactId>corelib-logging</artifactId>
-			<version>2.1-SNAPSHOT</version>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.6.1</version>
 		</dependency>
 
 		<dependency>
@@ -180,6 +241,12 @@
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>${version.springSecurityOauth}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -255,24 +322,17 @@
 			<version>2.4.6</version>
 		</dependency>
 
-		<!-- Added for jetty-server -->
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>7.2.2.v20101205</version>
-		</dependency>
+		<!-- Added for sass -->
 
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<version>7.2.2.v20101205</version>
+			<groupId>com.darrinholst</groupId>
+			<artifactId>sass-java</artifactId>
+			<version>3.4.4.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-jsp-2.1</artifactId>
-			<version>7.2.2.v20101205</version>
-		</dependency>
+		<!-- <dependency> <groupId>org.jruby</groupId> <artifactId>jruby-complete</artifactId> 
+			<version>1.7.3</version> </dependency> <dependency> <groupId>org.compass-style</groupId> 
+			<artifactId>compass-gems</artifactId> <version>0.12.2</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
@@ -299,6 +359,13 @@
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
+
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Added logging for jetty in Portal2Starter -->
@@ -314,7 +381,11 @@
 			<artifactId>hsqldb</artifactId>
 			<version>1.8.0.7</version>
 		</dependency>
-
+		<!-- <dependency> -->
+		<!-- <groupId>javax.validation</groupId> -->
+		<!-- <artifactId>validation-api</artifactId> -->
+		<!-- <version>1.1.0.Final</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -329,33 +400,116 @@
 		</dependency>
 
 		<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-math3</artifactId>
-				<version>3.1.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.1.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.9</version>
+
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-codec</artifactId>
+					<groupId>commons-codec</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
-		<!-- Bing code for translation tokens -->		
+
+		<!-- Bing code for translation tokens -->
 		<dependency>
 			<groupId>com.memetix</groupId>
 			<artifactId>microsoft-translator-java-api</artifactId>
 			<version>0.6.1</version>
 			<type>jar</type>
 		</dependency>
-		
-	</dependencies>
 
+		<!-- <dependency> -->
+		<!-- <groupId>org.javaswift</groupId> -->
+		<!-- <artifactId>joss</artifactId> -->
+		<!-- <version>0.9.7</version> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<artifactId>commons-codec</artifactId>
+			<groupId>commons-codec</groupId>
+			<version>1.9</version>
+		</dependency>
+
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>
+				production
+            </id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://europeana.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                alpha
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://alpha-web.de.a9sapp.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                beta
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://beta-web.de.a9sapp.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                blue
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://blue-web.de.a9sapp.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                green
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://green-web.de.a9sapp.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                personal
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>
+				<europeana.server>http://localhost:8080/portal/</europeana.server>
+			</properties>
+		</profile>
+	</profiles>
 	<repositories>
 		<repository>
 			<id>org.springframework.security</id>
 			<name>Spring Security</name>
 			<url>http://maven.springframework.org/snapshot</url>
 		</repository>
+
+		<repository>
+			<id>sass-java</id>
+			<url>http://sass-java.googlecode.com/svn/repo/</url>
+		</repository>
+
 	</repositories>
 </project>
 

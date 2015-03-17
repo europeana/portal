@@ -1,5 +1,7 @@
 package eu.europeana.portal2.services.impl;
 
+import java.util.logging.Logger;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,15 +14,12 @@ import eu.europeana.corelib.db.service.ApiKeyService;
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.security.Portal2ClientDetails;
 import eu.europeana.portal2.web.security.Portal2UserDetails;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Log
-	private Logger log;
+	Logger log = Logger.getLogger(this.getClass().getName());
 
 	@Resource
 	private ApiKeyService apiKeyService;
@@ -46,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					return new Portal2ClientDetails(apiKey);
 				}
 			} catch (DatabaseException e) {
-				log.error("DatabaseException: " + e.getMessage(),e);
+				log.severe("DatabaseException: " + e.getMessage());
 			}
 		}
 		throw new UsernameNotFoundException(key);

@@ -61,6 +61,7 @@
 					<c:set var="qtChecked" value="true" />
 				</c:if>
 			</c:when>
+				
 		
 			<c:otherwise>
 				<c:if test="${ cookie.keywordLanguagesApplied != null}">
@@ -78,7 +79,7 @@
 			<c:set var="qtHref" value=""/>
 			<c:if test="${qtEnabled}">
 				<c:choose>
-					<c:when test="${empty model.queryTranslationLinks}">
+					<c:when test="${model.queryLanguageVersions == null}">
 						<c:set var="qtHref">href="${model.translationUrl}&qtApplied=true"</c:set>
 					</c:when>
 					<c:otherwise>
@@ -107,10 +108,10 @@
 				<c:forEach var="refinement" items="${model.refinements}">
 					<c:set var="refinementStr" value="${refinementStr}&qf=${refinement}" />
 				</c:forEach>
-		
-				<a	href="/${model.portalName}/${model.myEuropeanaUrl}?query=${fn:escapeXml(model.query)}${fn:escapeXml(refinementStr)}#language-settings"
+				<a	href="${myEuropeanaUrl}?query=${fn:escapeXml(model.query)}${fn:escapeXml(refinementStr)}#language-settings"
 					class="qt-settings-link"
 					title="<spring:message code="qt_setup" />"><spring:message code="qt_setup" /></a>
+					
 			</h4>
 		</li>
 	</ul>

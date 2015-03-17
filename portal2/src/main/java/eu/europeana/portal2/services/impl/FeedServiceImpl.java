@@ -20,6 +20,7 @@ package eu.europeana.portal2.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -27,8 +28,6 @@ import javax.annotation.Resource;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.TaskScheduler;
 
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.FeedService;
 import eu.europeana.portal2.services.ResponsiveImageService;
@@ -37,9 +36,7 @@ import eu.europeana.portal2.web.util.rss.RSSFeedParser;
 
 public class FeedServiceImpl implements FeedService {
 
-	@Log
-	private Logger log;
-
+	Logger log = Logger.getLogger(FeedServiceImpl.class.getName());
 	@Resource
 	private Configuration config;
 
@@ -90,9 +87,7 @@ public class FeedServiceImpl implements FeedService {
 	private class FirstRunTask implements Runnable {
 		@Override
 		public void run() {
-			if (log.isTraceEnabled()) {
-				log.trace("FIRST RUN SCHEDULER TASK: running...");
-			}
+			
 			if (updateFeedTask == null) {
 				if (feedEntries.isEmpty()) {
 					executor.execute(new UpdateFeedTask());
@@ -109,25 +104,19 @@ public class FeedServiceImpl implements FeedService {
 			}
 			if ((updateFeedTask != null) && (updatePinterestTask != null)) {
 				if (firstRunTask.cancel(true)) {
-					if (log.isTraceEnabled()) {
-						log.trace("FIRST RUN SCHEDULER TASK: my job is done, terminating myself...");
-					}
+					
 				} else {
-					log.warn("FIRST RUN SCHEDULER TASK: self-termination failed...");
+					
 				}
 			}
-			if (log.isTraceEnabled()) {
-				log.trace("FIRST RUN SCHEDULER TASK: finished...");
-			}
+			
 		}
 	}
 
 	private class UpdateFeedTask implements Runnable {
 		@Override
 		public void run() {
-			if (log.isTraceEnabled()) {
-				log.trace("BLOG RSS FEED: updating...");
-			}
+			
 			RSSFeedParser parser = new RSSFeedParser(config.getBlogUrl(), 3);
 			parser.setStaticPagePath(config.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
@@ -135,18 +124,14 @@ public class FeedServiceImpl implements FeedService {
 				feedEntries.clear();
 				feedEntries.addAll(newEntries);
 			}
-			if (log.isTraceEnabled()) {
-				log.trace("BLOG RSS FEED: finished...");
-			}
+			
 		}
 	}
 
 	private class UpdatePinterestTask implements Runnable {
 		@Override
 		public void run() {
-			if (log.isTraceEnabled()) {
-				log.trace("PINTEREST: updating...");
-			}
+			
 			RSSFeedParser parser = new RSSFeedParser(config.getPintFeedUrl(), config.getPintItemLimit());
 			parser.setStaticPagePath(config.getStaticPagePath());
 			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
@@ -154,9 +139,7 @@ public class FeedServiceImpl implements FeedService {
 				pinterestEntries.clear();
 				pinterestEntries.addAll(newEntries);
 			}
-			if (log.isTraceEnabled()) {
-				log.trace("PINTEREST: finished...");
-			}
+			
 		}
 	}
 

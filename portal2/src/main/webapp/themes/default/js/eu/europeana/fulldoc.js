@@ -843,7 +843,7 @@ eu.europeana.fulldoc = {
 		}
 		else{
 			if(eu.europeana.fulldoc.triggerPanel){
-				eu.europeana.fulldoc.triggerPanel.css('display', 'none');				
+				eu.europeana.fulldoc.triggerPanel.css('display', 'none');
 			}
 			$('#carousel-1-img-measure img').css('cursor', 'default');
 		}
@@ -1047,14 +1047,21 @@ eu.europeana.fulldoc = {
 
 
 	initCarousels: function() {
-	
-		//Galleria.loadTheme(eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory + 'galleria.europeanax'  + js.min_suffix + '.js');
+
+		/*
 		js.loader.loadScripts([{
 			"name" : "galleria-theme",
 			"file" : "galleria.europeanax"  + js.min_suffix + ".js",
 			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/' + js.min_directory
 		}]);
-		
+		*/
+
+		js.loader.loadScripts([{
+			"name" : "galleria-theme",
+			"file" : "galleria.europeanax.js",
+			"path" : eu.europeana.vars.branding + '/js/galleria/themes/europeanax/'
+		}]);
+
 		$("#carousel-1-img-measure img").imagesLoaded( function($images, $proper, $broken) {
 
 			// this is where we go when there is no carosuel data or when the carousel images didn't load
@@ -1077,12 +1084,14 @@ eu.europeana.fulldoc = {
 				if ($("#carousel-1-img-measure").width() > 0) {
 
 					if (carouselData[0].external) {
-						if (carouselData[0].external.type == '3d') {
+						/*
+						if (false && carouselData[0].external.type == '3d') {
 							$('#carousel-1-img-measure img').css('cursor', 'pointer');
 						}
 						else {
-							eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 						}
+						*/
+						eu.europeana.fulldoc.initTriggerPanel( carouselData[0].external.type);
 					}
 					else {
 						// init trigger panel here for non-lightboxable stuff
@@ -1279,7 +1288,7 @@ eu.europeana.fulldoc = {
 			if (typeof(mlt) != 'undefined') {
 				
 				var getLoadAllLink = function() {
-					return '<a class="load-all" href="/portal/search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
+					return '<a class="load-all" href="' + eu.europeana.vars.homeUrl + 'search.html?query=' + mltQuery + '&rows=' + eu.europeana.vars.rows + '">' + labelLoadAll + '</a>';
 				};
 				
 				var initMlt = function() {
@@ -1297,13 +1306,14 @@ eu.europeana.fulldoc = {
 						mltData[mltData.length] = {
 								"thumb" : ob.find('img').attr('src'),
 								"title" : ob.attr('title'),
+								/* "link" : '../..' + ob.attr('href'),  */
 								"link" : ob.attr('href'),
 								"linkTarget" : "_self"
 						}
 					});
 					
 					$('#more-like-this').html('<div class="carousel-wrapper"><div id="mlt-carousel"></div></div>');
-					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData);
+					var mltCarousel = new EuCarousel($('#mlt-carousel'), mltData, '../..');
 						
 				}; // end initMlt
 				
@@ -1397,7 +1407,7 @@ eu.europeana.fulldoc = {
 						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/style-overrides.css" />');						
 					}
 					else{
-						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/min/hierarchy.min.css" />');
+						$('head').append('<link rel="stylesheet" href="' + eu.europeana.vars.branding + '/js/eu/europeana/EuHierarchy/css-min/hierarchy.css" />');
 					}
 
 					addHierarchyMarkup();
