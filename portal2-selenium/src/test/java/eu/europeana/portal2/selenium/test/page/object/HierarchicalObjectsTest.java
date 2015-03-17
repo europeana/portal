@@ -30,7 +30,7 @@ public class HierarchicalObjectsTest extends TestSetup {
 		page = ObjectPage.openPage(webDriver, "ho=true");		
 	}
 	
-	@Test
+	// @Test
 	public void openNodeTest() {
 		
 		new WebDriverWait(webDriver, 15).until(new ExpectedCondition() {

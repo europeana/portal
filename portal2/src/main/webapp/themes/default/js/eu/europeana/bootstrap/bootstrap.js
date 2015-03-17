@@ -8,10 +8,9 @@
 'use strict';
 
 // Fix for expired document (no js) following language form submission when there's a hash in the url (force another redirect)
-if(window.location.href.indexOf('portal/myeuropeana?lang=')>0){
+if(window.location.href.indexOf('myeuropeana?lang=')>0){
 	window.location.href = window.location.href.split('?')[0];
 }
-
 var europeana_bootstrap = function(){
 
 	if ( !window.eu ) { throw new Error( 'window.eu was not defined before bootstrap' ); }
@@ -24,9 +23,7 @@ var europeana_bootstrap = function(){
 	function loadScripts(scripts){
 
 		var script = document.createElement('script');
-				
 		script.src = eu.europeana.vars.branding + '/js/js/' + js.min_directory + 'loader' + js.min_suffix + '.js' + js.cache_helper;
-		//alert('loader src = ' + script.src  );
 
 		if ( 'onload' in document || 'addEventListener' in window ) {
 			script.onload = function(){
@@ -48,7 +45,6 @@ var europeana_bootstrap = function(){
 			js.loader.loadScripts( scripts );
 		}
 	}
-
 
 	// array of scripts needed for all pages
 	var scripts = [
@@ -151,7 +147,7 @@ var europeana_bootstrap = function(){
 		{
 			name: 'jquery.cookie',
 			file: 'jquery.cookie' + js.min_suffix + '.js' + js.cache_helper,
-			path: '/portal/themes/common/js/com/github/carhartl/' + js.min_directory,
+			path:  eu.europeana.vars.homeUrl + 'themes/common/js/com/github/carhartl/' + js.min_directory,
 			dependencies : [ 'jquery' ]
 		},
 

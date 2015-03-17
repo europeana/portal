@@ -6,7 +6,7 @@
 <div class="row">
   <div id="login-boxes" class="twelve columns">
     <div class="login-box">
-      <c:url var="action" value="/api/registration.html" />
+      <c:url var="action" value="${homeUrl}api/registration.html" />
       <sf:form modelAttribute="model" action="${action}" method="POST">
       
         <h2><spring:message code="RegisterAPI_t" /></h2>

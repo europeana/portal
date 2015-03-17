@@ -20,6 +20,13 @@ The JavaDoc will be generated once the upcoming code overhaul is complete.
 
 To build (requires the [CoreLib](https://github.com/europeana/corelib) dependency):
 
+cp portal2/template-manifest.yml portal2/manifest.yml
+
+Remember to copy properties/test/template-europeana.properties into
+properties/test/europeana.properties if you are doing a deploy!
+
+
+
 ```
 $ git clone https://github.com/europeana/portal.git
 $ cd portal/

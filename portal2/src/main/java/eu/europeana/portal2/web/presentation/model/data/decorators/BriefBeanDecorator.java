@@ -26,11 +26,12 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.DocType;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.service.impl.EuropeanaUrlServiceImpl;
+import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;
 
@@ -42,6 +43,7 @@ public class BriefBeanDecorator implements BriefBean {
 	private UrlAwareData<?> model;
 	private int index = 1;
 	private String fullDocUrl;
+	private String imageUri;
 
 	public BriefBeanDecorator(UrlAwareData<?> model, BriefBean briefBean, int index) {
 		this(model, briefBean);
@@ -159,11 +161,14 @@ public class BriefBeanDecorator implements BriefBean {
 	public String getTitleXML() {
 		return StringEscapeUtils.escapeXml(StringUtils.join(briefBean.getTitle(), ' '));
 	}
-
 	public String getThumbnail() {
 		return getThumbnail("BRIEF_DOC"); 
 	}
-
+	
+	public void setImageUri(String imageUri){
+		this.imageUri = imageUri;
+	}
+	
 	private String getThumbnail(String size) {
 		try {
 			String tn = "";
@@ -173,7 +178,7 @@ public class BriefBeanDecorator implements BriefBean {
 				tn = briefBean.getEdmObject()[0].trim();
 			}
 			UrlBuilder url = null;
-			url = new UrlBuilder("http://europeanastatic.eu/api/image");
+			url = new UrlBuilder(imageUri);
 			url.addParam("uri", tn, true);
 			url.addParam("size", size, true);
 			url.addParam("type", getType().toString(), true);
@@ -382,5 +387,9 @@ public class BriefBeanDecorator implements BriefBean {
 	public Map<String, List<String>> getEdmAgentLabelLangAware() {
 		return briefBean.getEdmAgentLabelLangAware();
 	}
-    
+
+	@Override
+	public Boolean getPreviewNoDistribute() {
+		return briefBean.getPreviewNoDistribute();
+	}
 }

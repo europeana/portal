@@ -6,7 +6,8 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.edm.utils.SolrUtils;
+import eu.europeana.corelib.search.utils.SearchUtils;
 
 /**
  * Testing MltSuggestion class
@@ -27,7 +28,7 @@ public class MltSuggestionTest {
 		assertNull(suggestion.getEscapedQuery());
 		assertNull(suggestion.getTaggedEscapedQuery());
 
-		suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+		suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 
 		assertNotNull(suggestion.getEscapedQuery());
 		assertNotNull(suggestion.getTaggedEscapedQuery());
@@ -49,7 +50,7 @@ public class MltSuggestionTest {
 		assertNull(suggestion.getEscapedQuery());
 		assertNull(suggestion.getTaggedEscapedQuery());
 
-		suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+		suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 
 		assertNotNull(suggestion.getEscapedQuery());
 		assertNotNull(suggestion.getTaggedEscapedQuery());
@@ -70,7 +71,7 @@ public class MltSuggestionTest {
 		assertNull(suggestion.getEscapedQuery());
 		assertNull(suggestion.getTaggedEscapedQuery());
 
-		suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+		suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 
 		assertNotNull(suggestion.getEscapedQuery());
 		assertNotNull(suggestion.getTaggedEscapedQuery());

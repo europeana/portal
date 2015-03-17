@@ -140,7 +140,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 			}
 			else{
 				text = (parent ? (1 + index + '. ') : '')
-				+ '<a href="/' + (typeof eu != 'undefined' ? eu.europeana.vars.portal_name : '') + '/record' + id + '.html"'
+				+ '<a href="' + (typeof eu != 'undefined' ? eu.europeana.vars.homeUrlNS : '') + '/record' + id + '.html"'
 				+ 		' onclick="var e = arguments[0] || window.event; followLink(e);">' 
 				+ 	text
 				+ '</a>'
@@ -1165,7 +1165,6 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 							
 							var root = self.treeCmp.jstree('get_node', getRootEl().attr('id'));
 							
-				//			alert(root.text+'\n\n'+getRootEl().html())
 //							wrapper.find('.hierarchy-title').html(root.text.indexOf('. ') >= 0 ? root.text.substr(root.text.indexOf('. ')+2, root.text.length) : root.text);
 	//						wrapper.find('.hierarchy-title span').removeAttr('class');
 		//					wrapper.find('.hierarchy-title a').removeAttr('onclick');
@@ -1213,21 +1212,25 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
 
 								$('#' + self.pageNodeId + '>a').focus();
-								
 								onInit();
 								hideSpinner();
 								//togglePrevNextLinks();
 								$('#' + self.pageNodeId + '>a').focus();
 								self.isLoading = false;
 								self.timer.stop();
+								
+								// fix for offest on startup
+								setTimeout(function(){
+									console.log('scroll to ' + self.pageNodeId + ' (' + $('#' + self.pageNodeId).length + ')');
+									doScrollTo('#' + self.pageNodeId);									
+								}, 800);
 							}
 								
 						});
 					}, 1);
 				});
 			}, 1);
-		});
-
+		}); // end loaded.jstree binding
 		
 		// arrow down		
 		self.treeCmp.bind('keydown.jstree', function(e) {

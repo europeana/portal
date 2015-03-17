@@ -2,7 +2,7 @@
 
 <div class="login-box">
 
-	<form action="/${model.portalName}/${model.pageName}#register" method="post" id="register">
+	<form action="/${model.pageName}#register" method="post" id="register">
 	
 		<h2><spring:message code="Register_t" /></h2>
 		

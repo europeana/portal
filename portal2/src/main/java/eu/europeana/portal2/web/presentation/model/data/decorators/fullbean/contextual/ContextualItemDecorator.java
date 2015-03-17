@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
-import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
+import eu.europeana.corelib.definitions.edm.entity.ContextualClass;
 import eu.europeana.corelib.logging.Logger;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanLinker;
 import eu.europeana.portal2.web.presentation.model.data.decorators.fullbean.FullBeanWrapper.ContextualEntity;

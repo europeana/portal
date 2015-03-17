@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -55,8 +56,9 @@ public abstract class SearchPageData extends PortalPageData {
 	 */
 	public EuropeanaUrlService europeanaUrlService = EuropeanaUrlServiceImpl.getBeanInstance();
 
-	protected String bingToken;
-	/**
+    protected String bingToken;
+
+    /**
 	 * The translation service that makes use of Microsoft Translation API
 	 */
 	public MicrosoftTranslatorService translationService = MicrosoftTranslatorServiceImpl.getBeanInstance();
@@ -87,8 +89,12 @@ public abstract class SearchPageData extends PortalPageData {
 	private boolean languagesRemoved;
 
 	private String apiUrl;
+	private String apiKey;
+	private String apiSecret;
 
 	private boolean useBackendItemTranslation = false;
+	private boolean useAutomatedFrontendTranslation = false;
+
 
 	public void setQuery(String query) {
 		this.query = query;
@@ -346,6 +352,15 @@ public abstract class SearchPageData extends PortalPageData {
 		this.useBackendItemTranslation = useBackendItemTranslation;
 	}
 
+	public boolean isUseAutomatedFrontendTranslation() {
+		return useAutomatedFrontendTranslation;
+	}
+	
+	public void setUseAutomatedFrontendTranslation(
+			boolean useAutomatedFrontendTranslation) {
+		this.useAutomatedFrontendTranslation = useAutomatedFrontendTranslation;
+	}
+	
 	public String getApiUrl() {
 		return apiUrl;
 	}
@@ -354,11 +369,28 @@ public abstract class SearchPageData extends PortalPageData {
 		this.apiUrl = apiUrl;
 	}
 
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
+
+	public String getApiSecret() {
+		return apiSecret;
+	}
+
+	public void setApiSecret(String apiSecret) {
+		this.apiSecret = apiSecret;
+	}
+
 	public String getBingToken() {
 		return bingToken;
 	}
-	
+
 	public void setBingToken(String bingToken) {
 		this.bingToken = bingToken;
 	}
+
 }

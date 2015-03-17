@@ -1,0 +1,13 @@
+#!/bin/bash
+#if [ -d "portal_translations" ]
+#then
+#    git pull
+#else
+#    git clone https://github.com/europeana/portal_translations.git
+#fi
+cp -r portal_translations/static_pages src/main/resources/portal_translations
+cp -r portal_translations/message_keys src/main/resources/portal_translations
+if [ -d "src/main/resources/portal_translations/gettext_src" ]
+then
+rm -r src/main/resources/portal_translations/gettext_src
+fi

@@ -28,14 +28,14 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.definitions.edm.entity.Agent;
+import eu.europeana.corelib.definitions.edm.entity.Concept;
+import eu.europeana.corelib.definitions.edm.entity.License;
+import eu.europeana.corelib.definitions.edm.entity.Place;
+import eu.europeana.corelib.definitions.edm.entity.Timespan;
+import eu.europeana.corelib.definitions.edm.entity.WebResource;
 import eu.europeana.corelib.definitions.solr.DocType;
-import eu.europeana.corelib.definitions.solr.entity.Agent;
-import eu.europeana.corelib.definitions.solr.entity.Concept;
-import eu.europeana.corelib.definitions.solr.entity.License;
-import eu.europeana.corelib.definitions.solr.entity.Place;
-import eu.europeana.corelib.definitions.solr.entity.Timespan;
-import eu.europeana.corelib.definitions.solr.entity.WebResource;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.utils.CollectionUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.web.model.mediaservice.MediaServiceType;
@@ -711,7 +711,7 @@ public class FullDocPage extends FullDocPreparation {
 	@Override
 	public UrlBuilder createSearchUrl(String searchTerm, String[] qf, String start) 
 			throws UnsupportedEncodingException {
-		return SearchUtils.createSearchUrl(getPortalName(), returnTo, searchTerm, qf, start);
+		return SearchUtils.createSearchUrl(returnTo, searchTerm, qf, start);
 	}
 
 	public String getReturnTo() {
@@ -760,5 +760,4 @@ public class FullDocPage extends FullDocPreparation {
 		}
 		return null;
 	}
-	
 }

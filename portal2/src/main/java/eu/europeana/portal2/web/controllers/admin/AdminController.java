@@ -50,8 +50,6 @@ import eu.europeana.portal2.web.util.MsExcelUtils;
 @Controller
 public class AdminController {
 
-	@Log
-	private Logger log;
 
 	@Resource
 	private UserService userService;
@@ -97,7 +95,6 @@ public class AdminController {
 	public ModelAndView adminHandler(
 			@RequestParam(value = "page", required = false, defaultValue = "1") int pageNr
 			) throws Exception {
-		log.info("==== admin.html ====");
 
 		int offset = ((pageNr - 1) * LIMIT);
 		AdminPage model = new AdminPage();
@@ -129,7 +126,6 @@ public class AdminController {
 		}
 
 		long t = (new Date().getTime() - t0);
-		log.info("get users took " + t);
 		model.setUsers(users);
 		model.setUsage(usage);
 		List<Integer> pageNumbers = new ArrayList<Integer>();
@@ -161,7 +157,6 @@ public class AdminController {
 	public String removeUserHandler(
 			@RequestParam(value = "id", required = true) long id
 			) throws Exception {
-		log.info("==== admin.html ====");
 
 		User user = userService.findByID(id);
 		userService.remove(user);
@@ -185,8 +180,7 @@ public class AdminController {
 			@RequestParam(value = "userId", required = true) long userId,
 			@RequestParam(value = "apiKey", required = true) String apiKey
 			) throws Exception {
-		log.info("==== admin/removeApiKey.html ====");
-		log.info(String.format("%s, %s", userId, apiKey));
+		Logger.getLogger(this.getClass().getName()).info(String.format("%s, %s", userId, apiKey));
 
 		apiKeyService.removeApiKey(userId, apiKey);
 
@@ -204,7 +198,6 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/export/users.csv", produces = MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String exportUsersHandler(HttpServletResponse response) throws Exception {
-		log.info("==== admin/exportUsers.html ====");
 		response.setHeader("Content-Type", "text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename=\"users_with_apikeys.csv\"");
 
@@ -241,7 +234,6 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/export/users.xls")
 	public ModelAndView exportUsersInExcelHandler(HttpServletResponse response) throws Exception {
-		log.info("==== admin/exportUsers.xls ====");
 
 		Map<Long, User> users = new LinkedHashMap<Long, User>();
 		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(true);

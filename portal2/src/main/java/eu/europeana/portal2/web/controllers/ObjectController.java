@@ -30,7 +30,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.util.URLUtil;
+import org.hibernate.validator.internal.constraintvalidators.URLValidator;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -40,19 +44,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
+import eu.europeana.corelib.definitions.edm.entity.Proxy;
 import eu.europeana.corelib.definitions.exception.ProblemType;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.definitions.solr.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
-import eu.europeana.corelib.solr.exceptions.MongoDBException;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.model.ResultSet;
-import eu.europeana.corelib.solr.service.SearchService;
-import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.edm.exceptions.MongoDBException;
+import eu.europeana.corelib.edm.exceptions.SolrTypeException;
+import eu.europeana.corelib.search.SearchService;
+import eu.europeana.corelib.search.model.ResultSet;
+import eu.europeana.corelib.search.utils.SearchUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.service.MltStopwordsService;
@@ -60,6 +62,7 @@ import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.portal2.services.BingTokenService;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.ClickStreamLogService.UserAction;
@@ -90,9 +93,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class ObjectController {
 
-	@Log
-	private Logger log;
-
+	Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	private SearchService searchService;
 
@@ -102,8 +103,8 @@ public class ObjectController {
 	@Resource
 	private ClickStreamLogService clickStreamLogger;
 
-	@Resource
-	private OptOutService optOutService;
+	// @Resource
+	// private OptOutService optOutService;
 
 	@Resource
 	private SchemaOrgMapping schemaOrgMapping;
@@ -117,6 +118,9 @@ public class ObjectController {
 	@Resource
 	private ReloadableResourceBundleMessageSource messageSource;
 
+	@Resource
+	private EuropeanaUrlService europeanaUrlService;
+
 	public static final String V1_PATH = "/v1/record/";
 	public static final String SRW_EXT = ".srw";
 	public static final String JSON_EXT = ".json";
@@ -127,10 +131,9 @@ public class ObjectController {
 
 	private BingTokenService tokenService = new BingTokenService();
 
-	
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.html", produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView record(
-			@PathVariable String collectionId, 
+			@PathVariable String collectionId,
 			@PathVariable String recordId,
 			@RequestParam(value = "format", required = false) String format,
 			@RequestParam(value = "embedded", required = false) String embedded,
@@ -143,8 +146,7 @@ public class ObjectController {
 			@RequestParam(value = "mlt", required = false, defaultValue = "false") String mlt,
 			@RequestParam(value = "context", required = false, defaultValue = "true") String context,
 			@RequestParam(value = "ho", required = false, defaultValue = "false") String ho,
-			HttpServletRequest request, 
-			HttpServletResponse response, 
+			HttpServletRequest request, HttpServletResponse response,
 			Locale locale) throws EuropeanaQueryException {
 
 		long t0 = new Date().getTime();
@@ -157,25 +159,31 @@ public class ObjectController {
 			initializeMltConfiguration();
 		}
 
-		// workaround of a Spring issue (https://jira.springsource.org/browse/SPR-7963)
+		// workaround of a Spring issue
+		// (https://jira.springsource.org/browse/SPR-7963)
 		Map<String, String[]> params = RequestUtils.getParameterMap(request);
 		qf = ControllerUtil.fixParameter(qf, "qf", params);
 		qt = ControllerUtil.fixParameter(qt, "qt", params);
 		boolean showContext = ControllerUtil.getBooleanValue(context);
-		
+
 		queryString = ControllerUtil.rewriteQueryFields(queryString);
-		boolean showEuropeanaMlt = ControllerUtil.getBooleanBundleValue("notranslate_show_mlt", messageSource, locale);
-		boolean showSimilarItems = ControllerUtil.getBooleanBundleValue("notranslate_show_similar_items_t", messageSource, locale);
-        boolean showHierarchical = searchService.isHierarchy("/" + collectionId + "/" +recordId);
+		boolean showEuropeanaMlt = ControllerUtil.getBooleanBundleValue(
+				"notranslate_show_mlt", messageSource, locale);
+		boolean showSimilarItems = ControllerUtil.getBooleanBundleValue(
+				"notranslate_show_similar_items_t", messageSource, locale);
+		boolean showHierarchical = searchService.isHierarchy("/" + collectionId
+				+ "/" + recordId);
 
 		FullDocPage model = new FullDocPage();
 
 		// for parameter in "return to search" link
-		if(qt != null && qt.length==1 && qt[0].equals("false")){
+		if (qt != null && qt.length == 1 && qt[0].equals("false")) {
 			model.setLanguagesRemoved(true);
 		}
 
-		model.setBingToken(tokenService.getToken(config.getBingTranslateClientId(), config.getBingTranslateClientSecret()));
+		model.setBingToken(tokenService.getToken(
+				config.getBingTranslateClientId(),
+				config.getBingTranslateClientSecret()));
 		model.setCollectionId(collectionId);
 		model.setRecordId(recordId);
 		model.setFormat(format);
@@ -187,85 +195,106 @@ public class ObjectController {
 		model.setRows(rows);
 		model.setShowEuropeanaMlt(showEuropeanaMlt);
 		model.setShowContext(showContext);
-		
-		model.setSoundCloudAwareCollections(config.getSoundCloudAwareCollections());
-		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
+
+		model.setSoundCloudAwareCollections(config
+				.getSoundCloudAwareCollections());
+		model.setDoTranslation(ControllerUtil.getBooleanBundleValue(
+				"notranslate_do_translations", messageSource, locale));
 		model.setUseBackendItemTranslation(config.useBackendTranslation());
+		model.setUseAutomatedFrontendTranslation(config
+				.useAutomatedFrontendTranslation());
 		model.setApiUrl(config.getApi2url());
 		model.setStartTime(t0);
-		
+
 		if (model.isDoTranslation()) {
-			LanguageContainer languageContainer = ControllerUtil.createQueryTranslationsFromParams(userService, queryString, qt, request);
+			LanguageContainer languageContainer = ControllerUtil
+					.createQueryTranslationsFromParams(userService,
+							queryString, qt, request);
 			model.setLanguages(languageContainer);
 		}
 
-        model.setShowHierarchical(showHierarchical);
+		model.setShowHierarchical(showHierarchical);
 		model.setShowSimilarItems(showSimilarItems);
 		model.setShownAtProviderOverride(config.getShownAtProviderOverride());
 		model.setEdmSchemaMappings(schemaOrgMapping);
 		model.setBingTranslateId(config.getBingTranslateId());
 
-        log.debug("Record: " + "/" + collectionId + "/" +recordId  + (showHierarchical ? " is" : " is NOT") + " hierarchical");            
-		
+		log.debug("Record: " + "/" + collectionId + "/" + recordId
+				+ (showHierarchical ? " is" : " is NOT") + " hierarchical");
+
 		long tgetFullBean0 = new Date().getTime();
-		FullBean fullBean = getFullBean(collectionId, recordId, showSimilarItems);
+		FullBean fullBean = getFullBean(collectionId, recordId,
+				showSimilarItems);
 		if (fullBean == null) {
-			
+
 			String newRecordId = resolveNewRecordId(collectionId, recordId);
 			showHierarchical = searchService.isHierarchy(newRecordId);
 			model.setShowHierarchical(showHierarchical);
 			if (StringUtils.isNotBlank(newRecordId)) {
 				StringBuilder location = new StringBuilder();
-				if (!config.getPortalName().startsWith("/")) {
-					location.append("/");
-				}
-				location.append(config.getPortalName()).append("/record").append(newRecordId).append(".html");
+
+				location.append(
+						europeanaUrlService.getPortalHome(false) + "/record")
+						.append(newRecordId).append(".html");
 				response.setStatus(301);
 				response.setHeader("Location", location.toString());
 				return null;
 			} else {
-				log.error("REQUESTED RECORD NOT FOUND: " + EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId));
+				log.error("REQUESTED RECORD NOT FOUND: "
+						+ EuropeanaUriUtils.createResolveEuropeanaId(
+								collectionId, recordId));
 				throw new EuropeanaQueryException(ProblemType.RECORD_NOT_FOUND);
 			}
 		}
-
 
 		if (log.isDebugEnabled()) {
 			long tgetFullBean1 = new Date().getTime();
 			log.debug("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
 		}
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.FULLDOC_HTML);
+		ModelAndView page = ControllerUtil.createModelAndViewPage(model,
+				locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
-			//removeHasPartsForRoots(model, fullBean);
+			// removeHasPartsForRoots(model, fullBean);
 			long tFullBeanView0 = 0;
 			if (log.isDebugEnabled()) {
 				tFullBeanView0 = new Date().getTime();
 			}
 
-			model.setOptedOut(optOutService.check(fullBean.getAbout()));
+			model.setOptedOut(fullBean.getAggregations().get(0)
+					.getEdmPreviewNoDistribute() != null ? fullBean
+					.getAggregations().get(0).getEdmPreviewNoDistribute()
+					: false);
 			Query query = new Query(queryString)
-				.setRefinements(qf)
-				.setValueReplacements(RightReusabilityCategorizer.mapValueReplacements(qf))
-				.setAllowFacets(false)
-				.setAllowSpellcheck(false);
+					.setRefinements(qf)
+					.setValueReplacements(
+							RightReusabilityCategorizer
+									.mapValueReplacements(qf))
+					.setAllowFacets(false).setAllowSpellcheck(false);
 
 			// full bean view
-			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean, RequestUtils.getParameterMap(request), query, searchService);
+			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean,
+					RequestUtils.getParameterMap(request), query, searchService);
 			model.setFullBeanView(fullBeanView);
 			if (log.isDebugEnabled()) {
 				long tFullBeanView1 = new Date().getTime();
-				log.debug("fullBeanView takes: " + (tFullBeanView1 - tFullBeanView0));
+				log.debug("fullBeanView takes: "
+						+ (tFullBeanView1 - tFullBeanView0));
 			}
 
 			// more like this
 			if (model.isShowSimilarItems()) {
-				List<? extends BriefBean> similarItems;
-				if (fullBean.getSimilarItems() == null) {
-					similarItems = getMoreLikeThis(collectionId, recordId);
-				} else {
-					similarItems = fullBean.getSimilarItems();
+				List<? extends BriefBean> similarItems = null;
+				try{
+					if (fullBean.getSimilarItems() == null) {
+						similarItems = getMoreLikeThis(collectionId, recordId);
+					} else {
+						similarItems = fullBean.getSimilarItems();
+					}					
+					model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
 				}
-				model.setMoreLikeThis(prepareMoreLikeThis(similarItems, model));
+				catch(Exception e){
+					// do nothing - if Solr is down we still serve the page and don't block google from indexing us - see issue #1973
+				}
 			}
 
 			long tSeeAlso0 = 0;
@@ -274,18 +303,22 @@ public class ObjectController {
 			}
 			if (showEuropeanaMlt) {
 				model.setMltCollector(createMltCollector(model.getShortcut()));
-				model.setEuropeanaMlt(createEuropeanaMlt(model, fullBean.getAbout()));
+				model.setEuropeanaMlt(createEuropeanaMlt(model,
+						fullBean.getAbout()));
 			} else {
-				model.setSeeAlsoCollector(createSeeAlsoCollector(model.getShortcut()));
-				model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model.getSeeAlsoCollector()));
+				model.setSeeAlsoCollector(createSeeAlsoCollector(model
+						.getShortcut()));
+				model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model
+						.getSeeAlsoCollector()));
 			}
 			if (log.isDebugEnabled()) {
 				long tSeeAlso1 = new Date().getTime();
 				log.debug("Similarity takes: " + (tSeeAlso1 - tSeeAlso0));
 			}
 
-			clickStreamLogger.logFullResultView(request, UserAction.FULL_RESULT_HMTL, fullBeanView, page, fullBeanView
-					.getFullDoc().getAbout());
+			clickStreamLogger.logFullResultView(request,
+					UserAction.FULL_RESULT_HMTL, fullBeanView, page,
+					fullBeanView.getFullDoc().getAbout());
 		}
 
 		if (log.isDebugEnabled()) {
@@ -297,9 +330,8 @@ public class ObjectController {
 	}
 
 	private void removeHasPartsForRoots(FullDocPage model, FullBean fullBean) {
-		if (!model.isFormatLabels()
-			&& config.getHierarchyRoots() != null
-			&& config.getHierarchyRoots().contains(fullBean.getAbout())) {
+		if (!model.isFormatLabels() && config.getHierarchyRoots() != null
+				&& config.getHierarchyRoots().contains(fullBean.getAbout())) {
 			for (Proxy proxy : fullBean.getProxies()) {
 				proxy.setDctermsHasPart(null);
 			}
@@ -308,32 +340,41 @@ public class ObjectController {
 
 	private void initializeSeeAlsoConfiguration() {
 		initializeSmilarityConfiguration(SEE_ALSO_FIELDS);
-		SEE_ALSO_FIELDS.put("what",
-				new MltConfiguration("what", "mlt_what_t", config.getWeightWhat(),
-					"DcType", "DcSubject", "ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel"));
+		SEE_ALSO_FIELDS.put("what", new MltConfiguration("what", "mlt_what_t",
+				config.getWeightWhat(), "DcType", "DcSubject",
+				"ConceptPrefLabel", "ConceptBroader", "ConceptAltLabel"));
 	}
 
 	private void initializeMltConfiguration() {
 		initializeSmilarityConfiguration(MLT_FIELDS);
-		MLT_FIELDS.put("what",
-				new MltConfiguration("what", "mlt_what_t", config.getWeightWhat(),
-					"DcType", "DcSubject", "ConceptBroader"));
-		MLT_FIELDS.put("skos_concept",
-			new MltConfiguration("skos_concept", "mlt_what_t", config.getWeightWhat(), "ConceptAbout"));
+		MLT_FIELDS.put(
+				"what",
+				new MltConfiguration("what", "mlt_what_t", config
+						.getWeightWhat(), "DcType", "DcSubject",
+						"ConceptBroader"));
+		MLT_FIELDS.put("skos_concept", new MltConfiguration("skos_concept",
+				"mlt_what_t", config.getWeightWhat(), "ConceptAbout"));
 	}
 
-	private void initializeSmilarityConfiguration(Map<String, MltConfiguration> map) {
+	private void initializeSmilarityConfiguration(
+			Map<String, MltConfiguration> map) {
 		// proxy_dc_title, proxy_dcterms_alternative
 		map.put("title",
-			new MltConfiguration("title", "mlt_title_t", config.getWeightTitle(), "DcTitle", "DctermsAlternative"));
-		// proxy_dc_creator, ag_skos_prefLabel -- missing: ag_skos_altLabel, ag_foaf_name
+				new MltConfiguration("title", "mlt_title_t", config
+						.getWeightTitle(), "DcTitle", "DctermsAlternative"));
+		// proxy_dc_creator, ag_skos_prefLabel -- missing: ag_skos_altLabel,
+		// ag_foaf_name
 		map.put("who",
-			new MltConfiguration("who", "mlt_who_t", config.getWeightWho(), "DcCreator", "AgentPrefLabel"));
-		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel, cc_skos_broaderLabel, cc_skos_altLabel
-		map.put("DATA_PROVIDER",
-			new MltConfiguration("DATA_PROVIDER", "mlt_provider_t", config.getWeightDataProvider(), "DataProvider"));
-		map.put("PROVIDER",
-			new MltConfiguration("PROVIDER", "mlt_data_provider_t", config.getWeightProvider(), "EdmProvider"));
+				new MltConfiguration("who", "mlt_who_t", config.getWeightWho(),
+						"DcCreator", "AgentPrefLabel"));
+		// proxy_dc_type, proxy_dc_subject, cc_skos_prefLabel,
+		// cc_skos_broaderLabel, cc_skos_altLabel
+		map.put("DATA_PROVIDER", new MltConfiguration("DATA_PROVIDER",
+				"mlt_provider_t", config.getWeightDataProvider(),
+				"DataProvider"));
+		map.put("PROVIDER", new MltConfiguration("PROVIDER",
+				"mlt_data_provider_t", config.getWeightProvider(),
+				"EdmProvider"));
 	}
 
 	/**
@@ -348,12 +389,12 @@ public class ObjectController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.json", produces = MediaType.TEXT_HTML_VALUE)
-	public String redirectJson(
-			@PathVariable String collectionId, 
-			@PathVariable String recordId,
-			HttpServletRequest request) throws Exception {
+	public String redirectJson(@PathVariable String collectionId,
+			@PathVariable String recordId, HttpServletRequest request)
+			throws Exception {
 		StringBuilder sb = new StringBuilder(config.getApi2url());
-		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(JSON_EXT);
+		sb.append(V1_PATH).append(collectionId).append("/").append(recordId)
+				.append(JSON_EXT);
 		if (!StringUtils.isBlank(request.getQueryString())) {
 			sb.append("?").append(request.getQueryString());
 		}
@@ -372,12 +413,12 @@ public class ObjectController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/record/{collectionId}/{recordId}.srw", produces = MediaType.TEXT_HTML_VALUE)
-	public String redirectSrw(
-			@PathVariable String collectionId, 
-			@PathVariable String recordId,
-			HttpServletRequest request)	throws Exception {
+	public String redirectSrw(@PathVariable String collectionId,
+			@PathVariable String recordId, HttpServletRequest request)
+			throws Exception {
 		StringBuilder sb = new StringBuilder(config.getApi2url());
-		sb.append(V1_PATH).append(collectionId).append("/").append(recordId).append(SRW_EXT);
+		sb.append(V1_PATH).append(collectionId).append("/").append(recordId)
+				.append(SRW_EXT);
 		if (!StringUtils.isBlank(request.getQueryString())) {
 			sb.append("?").append(request.getQueryString());
 		}
@@ -391,38 +432,45 @@ public class ObjectController {
 	 * @param recordId
 	 * @return
 	 */
-	private FullBean getFullBean(String collectionId, String recordId, boolean showSimilarItems) {
+	private FullBean getFullBean(String collectionId, String recordId,
+			boolean showSimilarItems) {
 		FullBean fullBean = null;
-		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
+		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(
+				collectionId, recordId);
 		try {
 			fullBean = searchService.findById(europeanaId, showSimilarItems);
 		} catch (MongoDBException e) {
 			System.out.println("here should be a log.error");
-			log.error(String.format("MongoDB Exception during getting the full bean for ID %s: %s", europeanaId,
-					e.getMessage()));
+			log.error(String
+					.format("MongoDB Exception during getting the full bean for ID %s: %s",
+							europeanaId, e.getMessage()));
 		} catch (NullPointerException e) {
 			System.out.println("here should be a log.error");
-			log.error(String.format("Exception during getting the full bean for ID %s: %s", europeanaId,
-					e.getStackTrace()[0]));
+			log.error(String.format(
+					"Exception during getting the full bean for ID %s: %s",
+					europeanaId, e.getStackTrace()[0]));
 		}
 		return fullBean;
 	}
 
 	private String resolveNewRecordId(String collectionId, String recordId) {
 		String newRecordId = null;
-		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
+		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(
+				collectionId, recordId);
 		try {
 			newRecordId = searchService.resolveId(europeanaId);
 		} catch (NullPointerException e) {
 			System.out.println("here should be a log.error");
-			log.error(String.format("Exception during getting the full bean for ID %s: %s", europeanaId,
-					e.getStackTrace()[0]));
+			log.error(String.format(
+					"Exception during getting the full bean for ID %s: %s",
+					europeanaId, e.getStackTrace()[0]));
 		}
 		return newRecordId;
 	}
 
 	private List<BriefBean> getMoreLikeThis(String collectionId, String recordId) {
-		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(collectionId, recordId);
+		String europeanaId = EuropeanaUriUtils.createResolveEuropeanaId(
+				collectionId, recordId);
 		List<BriefBean> result = null;
 		try {
 			result = searchService.findMoreLikeThis(europeanaId);
@@ -433,7 +481,8 @@ public class ObjectController {
 		return result;
 	}
 
-	private List<BriefBeanDecorator> prepareMoreLikeThis(List<? extends BriefBean> result, UrlAwareData<?> model) {
+	private List<BriefBeanDecorator> prepareMoreLikeThis(
+			List<? extends BriefBean> result, UrlAwareData<?> model) {
 		List<BriefBeanDecorator> moreLikeThis = new ArrayList<BriefBeanDecorator>();
 		if (result != null) {
 			for (BriefBean bean : result) {
@@ -444,7 +493,6 @@ public class ObjectController {
 		return moreLikeThis;
 	}
 
-	
 	/**
 	 * Create see also suggestions
 	 * 
@@ -452,16 +500,16 @@ public class ObjectController {
 	 *            The full bean
 	 * @return The object contains the see also suggestions
 	 */
-	private SeeAlsoSuggestions createSeeAlsoSuggestions(SeeAlsoCollector seeAlsoCollector) {
+	private SeeAlsoSuggestions createSeeAlsoSuggestions(
+			SeeAlsoCollector seeAlsoCollector) {
 
 		SeeAlsoSuggestions seeAlsoSuggestions = new SeeAlsoSuggestions(
-			config.getSeeAlsoTranslations(),
-			config.getSeeAlsoAggregations(),
-			seeAlsoCollector
-		);
+				config.getSeeAlsoTranslations(),
+				config.getSeeAlsoAggregations(), seeAlsoCollector);
 
 		try {
-			Map<String, Integer> seeAlsoResponse = searchService.seeAlso(seeAlsoCollector.getQueries());
+			Map<String, Integer> seeAlsoResponse = searchService
+					.seeAlso(seeAlsoCollector.getQueries());
 			if (seeAlsoResponse != null) {
 				for (Entry<String, Integer> entry : seeAlsoResponse.entrySet()) {
 					String query = entry.getKey();
@@ -472,13 +520,15 @@ public class ObjectController {
 				}
 			}
 		} catch (Exception e) {
-			log.error("See also error: " + e.getClass().getCanonicalName() + " " + e.getMessage(),e);
+			log.error("See also error: " + e.getClass().getCanonicalName()
+					+ " " + e.getMessage(), e);
 		}
 
 		return seeAlsoSuggestions;
 	}
 
-	private EuropeanaMlt createEuropeanaMlt(FullDocPage model, String europeanaId) {
+	private EuropeanaMlt createEuropeanaMlt(FullDocPage model,
+			String europeanaId) {
 		MltCollector mltCollector = model.getMltCollector();
 		config.getSeeAlsoTranslations();
 		long tSeeAlso0 = new Date().getTime();
@@ -487,17 +537,21 @@ public class ObjectController {
 		List<String> queryList = new ArrayList<String>();
 		for (String field : MLT_FIELDS.keySet()) {
 			if ((field.equals("PROVIDER") && hasDataProvider)
-				|| mltCollector.get(field) == null
-				|| mltCollector.get(field).size() == 0)
-			{
+					|| mltCollector.get(field) == null
+					|| mltCollector.get(field).size() == 0) {
 				continue;
 			}
-			String query = mltCollector.getQuery(field, MLT_FIELDS.get(field).getWeight());
-			queryList.add(query);
+			String query = mltCollector.getQuery(field, MLT_FIELDS.get(field)
+					.getWeight());
+			if(StringUtils.isNotBlank(query)){
+				queryList.add(query);
+			}
 		}
 
-		String query = String.format("(%s) NOT europeana_id:\"%s\"", StringUtils.join(queryList, " OR "), europeanaId);
-		EuropeanaMltCategory category = new EuropeanaMltCategory("all", "all", "mlt_similar_t", query);
+		String query = String.format("(%s) NOT europeana_id:\"%s\"",
+				StringUtils.join(queryList, " OR "), europeanaId);
+		EuropeanaMltCategory category = new EuropeanaMltCategory("all", "all",
+				"mlt_similar_t", query);
 
 		ResultSet<? extends BriefBean> results = searchMltItem(query);
 		for (BriefBean bean : results.getResults()) {
@@ -512,8 +566,10 @@ public class ObjectController {
 						}
 					}
 				}
+				doc.setImageUri(config.getImageCacheUrl());
 				String thumbnail = doc.getThumbnail();
-				category.addUrl(new EuropeanaMltLink(bean.getId(), title, doc.getFullDocUrl(), thumbnail));
+				category.addUrl(new EuropeanaMltLink(bean.getId(), title, doc
+						.getFullDocUrl(), thumbnail));
 			}
 		}
 		category.addResultSize(results.getResultSize());
@@ -528,14 +584,15 @@ public class ObjectController {
 	}
 
 	private ResultSet<? extends BriefBean> searchMltItem(String queryTerm) {
-		Query query = new Query(queryTerm)
-			.setPageSize(12)
-			.setStart(0) // Solr starts from 0
-			.setAllowSpellcheck(false)
-			.setAllowFacets(false)
-		;
+		Query query = new Query(queryTerm).setPageSize(12).setStart(0) // Solr
+																		// starts
+																		// from
+																		// 0
+				.setAllowSpellcheck(false).setAllowFacets(false);
 		try {
-			ResultSet<? extends BriefBean> resultSet = searchService.search(BriefBean.class, query);
+			log.info("Query was: " + query.toString());
+			ResultSet<? extends BriefBean> resultSet = searchService.search(
+					BriefBean.class, query);
 			return resultSet;
 		} catch (SolrTypeException e) {
 			// TODO Auto-generated catch block
@@ -548,23 +605,26 @@ public class ObjectController {
 		SeeAlsoCollector seeAlsoCollector = new SeeAlsoCollector();
 		int countPerField = 0, id = 0;
 		for (String metaField : SEE_ALSO_FIELDS.keySet()) {
-			for (String edmField : SEE_ALSO_FIELDS.get(metaField).getEdmFields()) {
+			for (String edmField : SEE_ALSO_FIELDS.get(metaField)
+					.getEdmFields()) {
 				String[] values = shortcut.get(edmField);
 				if (values != null) {
 					countPerField = 0;
 					for (String value : values) {
-						if (!StringUtils.isBlank(value)
-							&& value.length() < 500 
-							&& countPerField < MAX_COUNT_PER_FIELD)
-						{
-							SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(metaField, value, id);
+						if (!StringUtils.isBlank(value) && value.length() < 500
+								&& countPerField < MAX_COUNT_PER_FIELD) {
+							SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(
+									metaField, value, id);
 							if (suggestion.getQuery().startsWith("http://")) {
-								suggestion.makeEscapedQuery(suggestion.getQuery());
+								suggestion.makeEscapedQuery(suggestion
+										.getQuery());
 							} else {
-								suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+								suggestion.makeEscapedQuery(SearchUtils
+										.escapeQuery(suggestion.getQuery()));
 							}
 							seeAlsoCollector.add(suggestion);
-							countPerField++; id++;
+							countPerField++;
+							id++;
 						}
 					}
 				}
@@ -583,24 +643,28 @@ public class ObjectController {
 					countPerField = 0;
 					for (String value : values) {
 						if (StringUtils.isNotBlank(value)
-							&& value.length() < 500
-							&& countPerField < MAX_COUNT_PER_FIELD
-							&& !mltStopwordsService.check(value)
-						)
-						{
+								&& value.length() < 500
+								&& countPerField < MAX_COUNT_PER_FIELD
+								&& !mltStopwordsService.check(value)) {
 							boolean clear = true;
-							if (StringUtils.equals(metaField, "PROVIDER") ||
-							    StringUtils.equals(metaField, "DATA_PROVIDER")) {
+							if (StringUtils.equals(metaField, "PROVIDER")
+									|| StringUtils.equals(metaField,
+											"DATA_PROVIDER")) {
 								clear = false;
 							}
-							MltSuggestion suggestion = new MltSuggestion(metaField, StringUtils.trim(value), id, clear);
+							MltSuggestion suggestion = new MltSuggestion(
+									metaField, StringUtils.trim(value), id,
+									clear);
 							if (suggestion.getQuery().startsWith("http://")) {
-								suggestion.makeEscapedQuery(suggestion.getQuery());
+								suggestion.makeEscapedQuery(suggestion
+										.getQuery());
 							} else {
-								suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+								suggestion.makeEscapedQuery(SearchUtils
+										.escapeQuery(suggestion.getQuery()));
 							}
 							mltCollector.add(suggestion);
-							countPerField++; id++;
+							countPerField++;
+							id++;
 						}
 					}
 				}

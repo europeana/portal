@@ -28,7 +28,7 @@
   	<c:set var="placeElClose"></span></c:set>
   </c:if>
   
-  <c:url var="searchUrl" value="/search.html">
+  <c:url var="searchUrl" value="${model.portalServer}/search.html">
     <c:param name="query">edm_place:"${place.about}"</c:param>
   </c:url>
       

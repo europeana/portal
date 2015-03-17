@@ -36,7 +36,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>common.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>html.css</cssSourceInclude>
 								<cssSourceInclude>common.css</cssSourceInclude>
@@ -64,7 +64,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
 							<cssSourceDir>/themes/default/js/eu/europeana/EuHierarchy</cssSourceDir>
 							<cssFinalFile>hierarchy.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>style.css</cssSourceInclude>
 								<cssSourceInclude>style-overrides.css</cssSourceInclude>
@@ -84,7 +84,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>search-widget-all.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>html-sw.css</cssSourceInclude>
 								<cssSourceInclude>common-sw.css</cssSourceInclude>
@@ -115,7 +115,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>newsletter.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>newsletter.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -132,7 +132,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>europeana-font-face.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -149,7 +149,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>fulldoc.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>fulldoc.css</cssSourceInclude>
 								<cssSourceInclude>lightbox.css</cssSourceInclude>
@@ -157,8 +157,6 @@
 								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
 								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
 								<cssSourceInclude>eu-carousel.css</cssSourceInclude>
-
-								<!-- cssSourceInclude>tabbed-navigation.css</cssSourceInclude  -->
 							</cssSourceIncludes>
 						</configuration>
 						<goals>
@@ -173,7 +171,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>myeuropeana.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>myeuropeana.css</cssSourceInclude>
 								<cssSourceInclude>eu-accordion-tabs.css</cssSourceInclude>
@@ -191,10 +189,9 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>search.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>search.css</cssSourceInclude>
-								<cssSourceInclude>search-navigation.css</cssSourceInclude>
 								<cssSourceInclude>search-pagination.css</cssSourceInclude>
 								<cssSourceInclude>sidebar-facets.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -213,7 +210,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>announce.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>announce.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -230,7 +227,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>contact.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>contact.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -247,7 +244,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>embed.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>embed.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -264,7 +261,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/galleria/themes/europeanax</webappTargetDir>
 							<cssSourceDir>/themes/default/js/galleria/themes/europeanax</cssSourceDir>
 							<cssFinalFile>galleria.europeanax.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>galleria.europeanax.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -281,7 +278,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>ie.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>ie.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -298,7 +295,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>ie7.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>ie7.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -315,7 +312,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>ie8.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>ie8.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -332,7 +329,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>ie9.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>ie9.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -349,7 +346,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>index.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>index.css</cssSourceInclude>
 								<cssSourceInclude>eu-carousel.css</cssSourceInclude>
@@ -367,7 +364,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>login.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>login.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -384,7 +381,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>myeuropeana-index.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>myeuropeana-index.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -401,7 +398,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>noscript.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>noscript.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -418,7 +415,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>providers.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>providers.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -435,7 +432,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>register.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>register.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -452,7 +449,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>api-console.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>api-console.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -469,7 +466,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>api-console-embedded.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>api-console-embedded.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -486,7 +483,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>search-embed.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>search-embed.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -503,7 +500,7 @@
 							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
 							<cssSourceDir>/themes/default/css</cssSourceDir>
 							<cssFinalFile>staticpages.css</cssFinalFile>
-							<cssTargetDir>min</cssTargetDir>
+							<cssTargetDir>../css-min</cssTargetDir>
 							<cssSourceIncludes>
 								<cssSourceInclude>staticpages.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -1434,7 +1431,7 @@
 						<phase>process-resources</phase>
 						<configuration>
 						
-							<outputDirectory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/min</outputDirectory>
+							<outputDirectory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/css-min</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</directory>

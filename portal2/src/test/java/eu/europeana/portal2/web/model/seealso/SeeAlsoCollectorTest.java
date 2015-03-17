@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.search.utils.SearchUtils;
 
 public class SeeAlsoCollectorTest {
 
@@ -29,7 +29,7 @@ public class SeeAlsoCollectorTest {
 		seeAlsoCollector = new SeeAlsoCollector();
 		for (String[] raw : testData) {
 			SeeAlsoSuggestion suggestion = new SeeAlsoSuggestion(raw[0], raw[1], Integer.parseInt(raw[2]));
-			suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+			suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 			seeAlsoCollector.add(suggestion);
 		}
 	}

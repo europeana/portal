@@ -26,7 +26,7 @@
 
 	<repositories>
 		<repository>
-			<id>darrinholst-maven</id>
+			<id>sass-java</id>
 			<url>http://sass-java.googlecode.com/svn/repo/</url>
 		</repository>
 	</repositories>

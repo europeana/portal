@@ -110,9 +110,18 @@ js.console = js.empty_console;
 	js.min_directory = 'min/';
 </c:if>
 
-eu.europeana.vars.portal_name = '${model.portalName}';
 eu.europeana.vars.page_name = '${model.pageName}';
-eu.europeana.vars.branding = '/${branding}';
+eu.europeana.vars.branding  = '${branding}';
+eu.europeana.vars.homeUrl   = '${homeUrl}';
+eu.europeana.vars.homeUrlNS = '${homeUrlNS}';
+/*
+if(eu.europeana.vars.page_name == 'widget/editor.html'){
+	eu.europeana.vars.branding = '../${branding}';
+}
+else{
+}
+*/
+
 eu.europeana.vars.browser_locale = '${model.browserLanguage}';
 eu.europeana.vars.gaId = '${model.googleAnalyticsId}';
 eu.europeana.vars.locale = '${model.locale}';
@@ -126,14 +135,17 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.pinterest.item = {};
 		eu.europeana.vars.pinterest.europeana = '${model.pinterestUrl}';
 		eu.europeana.vars.galleria = {};
+			eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+			<%--
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.min.css';
+				eu.europeana.vars.galleria.css = '../../galleria.europeanax.css';
 			</c:otherwise>
 		</c:choose>
+			--%>
+
 	</c:when>
 
 	<c:when test="${model.pageName == 'full-doc.html'}">
@@ -152,8 +164,12 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.google_translate_key = '${model.googleTranslateId}';
 		</c:if>
 	
-		eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
-		
+		eu.europeana.vars.bing_translate_key =  '';
+		<c:catch var="noTokenException"><c:set var="testForToken">${model.bingToken}</c:set></c:catch>
+	  	<c:if test="${empty noTokenException}">
+		  	eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+	  	</c:if>
+
 		eu.europeana.vars.msg.cite.citation = '${citation_tab_citation}';
 		eu.europeana.vars.msg.cite.footnote = '${citation_tab_footnote}';
 		eu.europeana.vars.msg.cite.citation_header	= '${fn:escapeXml(citation_header)}';
@@ -170,15 +186,16 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 
 		eu.europeana.vars.dcIdentifier = '${fn:escapeXml(dcIdentifier)}';
 
+		eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
+		<%--
 		<c:choose>
 			<c:when test="${!empty model.debug && model.debug}">
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.css';
 			</c:when>
 			<c:otherwise>
-				eu.europeana.vars.galleria.css = 'galleria.europeanax.min.css';
+				eu.europeana.vars.galleria.css = '../../css-min/galleria.europeanax.css';
 			</c:otherwise>
 		</c:choose>
-
+		--%>
 		<c:choose>
 			<c:when test="${!empty model.showSimilarItems && model.showSimilarItems}">
 				eu.europeana.vars.isShowSimilarItems = true;
@@ -207,11 +224,15 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 					'sound'		:	'<spring:message code="play_t" />',
 					'video'		:	'<spring:message code="play_t" />',
 					'text'		:	'<spring:message code="read_t" />',
+					'3d'		:	'<spring:message code="view_t" />'
 				}
 			}
 		};
 
 		<c:if test="${!empty model.user}">
+		
+			eu.europeana.vars.useAutomatedFrontendTranslation = '${model.useAutomatedFrontendTranslation}';
+		
 			eu.europeana.vars.msg.error_occurred	= '${fn:escapeXml(error_occurred)}';
 			eu.europeana.vars.msg.saved_item		= '${fn:escapeXml(saved_item)}';
 			eu.europeana.vars.msg.save_item_failed	= '${fn:escapeXml(save_item_failed)}';
@@ -222,16 +243,14 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 			eu.europeana.vars.msg.item_not_removed	= '${fn:escapeXml(item_not_removed)}';
 			eu.europeana.vars.msg.saved_tag_removed	= '${fn:escapeXml(saved_tag_removed)}';
 			
-			<c:if test="${empty model.useBackendItemTranslation || model.useBackendItemTranslation == false}">
-				eu.europeana.vars.languageItem = '${model.user.languageItem}';
-				eu.europeana.vars.languageLabel = '${model.user.languageItem}';
-				
-				<c:forEach items="${model.portalLanguages}" var="language">
-					<c:if test="${language.languageCode == model.user.languageItem}">
-						eu.europeana.vars.languageLabel = '${language.languageName}';
-					</c:if>
-				</c:forEach>
-			</c:if>
+			eu.europeana.vars.languageItem = '${model.user.languageItem}';
+			eu.europeana.vars.languageLabel = '${model.user.languageItem}';
+			
+			<c:forEach items="${model.portalLanguages}" var="language">
+				<c:if test="${language.languageCode == model.user.languageItem}">
+					eu.europeana.vars.languageLabel = '${language.languageName}';
+				</c:if>
+			</c:forEach>
 		</c:if>
 
 		<c:set var="soundCloudAwareCollections">
@@ -259,11 +278,17 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.save_settings_failure = '${save_settings_failure}';
 		eu.europeana.vars.keyword_languages_limit = ${model.keywordLanguagesLimit};
 		eu.europeana.vars.keyword_languages_separator = '${model.keywordLanguagesSeparator}';
-		eu.europeana.vars.bing_translate_key = 'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+
+		eu.europeana.vars.bing_translate_key =  '';
+		<c:catch var="noTokenException"><c:set var="testForToken">${model.bingToken}</c:set></c:catch>
+	  	<c:if test="${empty noTokenException}">
+			eu.europeana.vars.bing_translate_key =  'Bearer ' + encodeURIComponent(${model.bingToken}.access_token);
+	  	</c:if>
+
 		<c:choose>
 			<c:when test="${!empty model.user}">
 				eu.europeana.vars.user = true;
-				eu.europeana.vars.languageItem = '${model.user.languageItem}';
+				eu.europeana.vars.languageItem			   = '${model.user.languageItem}';
 				eu.europeana.vars.msg.error_occurred       = '${fn:escapeXml(error_occurred)}';
 				eu.europeana.vars.msg.item_not_removed     = '${fn:escapeXml(item_not_removed)}';
 				eu.europeana.vars.msg.saved_search_removed = '${fn:escapeXml(saved_search_removed)}';
@@ -307,8 +332,8 @@ eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 		eu.europeana.vars.msg.close = '${fn:escapeXml(close)}';
 		eu.europeana.vars.msg.search_saved = '${fn:escapeXml(search_saved)}';
 		eu.europeana.vars.msg.search_save_failed = '${fn:escapeXml(search_save_failed)}';
-		eu.europeana.vars.msg.result_count = ${model.briefBeanView.pagination.numFound};
-		eu.europeana.vars.msg.start = ${model.briefBeanView.pagination.start};
+		eu.europeana.vars.msg.result_count = ${empty model.briefBeanView.pagination.numFound ? 0 : model.briefBeanView.pagination.numFound};
+		eu.europeana.vars.msg.start = ${empty model.briefBeanView.pagination.start ? 0 : model.briefBeanView.pagination.start};
 	</c:when>
 </c:choose>
 

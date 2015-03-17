@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.model.mlt.EuropeanaMlt;
 import eu.europeana.portal2.web.model.mlt.MltCollector;

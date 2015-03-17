@@ -21,10 +21,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import eu.europeana.corelib.web.exception.InvalidUrlException;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.PortalLanguage;
@@ -170,6 +172,7 @@ public class SearchPage extends SearchPreparation {
 		builder.addParam("start", start);
 		builder.addParam("qf", getRefinements(), true);
 		builder.addParam("qt", getQueryTranslationParams(), true);
+		
 		return getPortalFormattedUrl(builder).toString();
 	}
 
@@ -312,7 +315,7 @@ public class SearchPage extends SearchPreparation {
 			}
 		}
 		StringBuilder url = new StringBuilder();
-		url.append("/").append(getPortalName()).append("/").append(pageName).append("?").append(queryForPresentation);
+		url.append("/").append(pageName).append("?").append(queryForPresentation);
 
 		UrlBuilder builder = new UrlBuilder(url.toString());
 		builder.addParam("start", getStart(), true);
@@ -328,13 +331,13 @@ public class SearchPage extends SearchPreparation {
 
 	@Override
 	public UrlBuilder createSearchUrl(String searchTerm, String[] qf, String start) throws UnsupportedEncodingException {
-		return createSearchUrl(getPortalName(), SearchPageEnum.SEARCH_HTML, searchTerm, qf, start);
+		return createSearchUrl( SearchPageEnum.SEARCH_HTML, searchTerm, qf, start);
 	}
 
-	public static UrlBuilder createSearchUrl(String portalname, SearchPageEnum returnTo, String searchTerm,
+	public static UrlBuilder createSearchUrl( SearchPageEnum returnTo, String searchTerm,
 			String[] qf, String start) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/").append(portalname).append("/").append(returnTo.getPageInfo().getPageName());
+		sb.append("/").append(returnTo.getPageInfo().getPageName());
 		UrlBuilder url = new UrlBuilder(sb.toString());
 		url.addParam("query", searchTerm, true);
 		if (qf != null) {

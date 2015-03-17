@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.definitions.solr.entity.Proxy;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
+import eu.europeana.corelib.definitions.edm.entity.Proxy;
 import eu.europeana.corelib.definitions.solr.model.Query;
+import eu.europeana.corelib.edm.exceptions.SolrTypeException;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.search.SearchService;
 import eu.europeana.portal2.web.presentation.model.submodel.DocIdWindowPager;
 import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 

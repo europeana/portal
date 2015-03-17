@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.DocType;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 
 public class BriefBeanImpl implements BriefBean {
 
@@ -46,7 +46,7 @@ public class BriefBeanImpl implements BriefBean {
 	private Map<String, List<String>> edmPlaceLabelLangAware;
 	private Map<String, List<String>> edmTimespanLabelLangAware;
 	private Map<String, List<String>> edmAgentLabelLangAware;
-
+	private boolean edmPreviewNoDistribute;
 	@Override
 	public String getId() {
 		return id;
@@ -369,5 +369,10 @@ public class BriefBeanImpl implements BriefBean {
 
 	public void setEdmAgentLabelLangAware(Map<String, List<String>> edmAgentLabelLangAware) {
 		this.edmAgentLabelLangAware = edmAgentLabelLangAware;
+	}
+
+	@Override
+	public Boolean getPreviewNoDistribute() {
+		return this.edmPreviewNoDistribute;
 	}
 }

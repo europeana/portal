@@ -3,7 +3,7 @@ log = function(msg){
 	//console.log(msg);
 }
 
-var EuCarousel = function(cmp, data){
+var EuCarousel = function(cmp, data, pathCorrection){
 	var position = 1;
 	var left, right, items;
 	var cmp = $(cmp);
@@ -12,6 +12,7 @@ var EuCarousel = function(cmp, data){
 	var inView = 0;
 	var total = data.length;
 	var animating = false;
+	var pathCorrection = pathCorrection ? pathCorrection : '';
 	
 	var anchor = function(){
 		animating = true;
@@ -169,7 +170,7 @@ var EuCarousel = function(cmp, data){
 		right = $('<a class="carousel-right icon-arrow-2"></a>').appendTo(cmp);
 
 		$.each(data, function(i, ob){
-			items.append('<a class="carousel-item" href="' + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
+			items.append('<a class="carousel-item" href="' + pathCorrection + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
 		});
 		
 		$('.carousel-item .info').each(function(i, ob){
@@ -195,7 +196,6 @@ var EuCarousel = function(cmp, data){
 		$('.carousel-item').click(function(e){
 			//e.preventDefault();
 			//e.stopPropagation();
-			//alert('clicked item');
 		});
 
 
@@ -209,7 +209,6 @@ var EuCarousel = function(cmp, data){
 		});
 
 		right.click(function(e){
-			//alert('right');
 			if(!animating){
 				log('go right....');
 				goRight();

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -53,6 +53,7 @@ public class TimelineController {
 		}
 
 		SearchPage model = new SearchPage();
+		model.setImageUri(config.getImageCacheUrl());
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
 		model.setEmbedded(StringUtils.equalsIgnoreCase(embedded, "true"));
 		model.setQuery(query);
@@ -72,6 +73,7 @@ public class TimelineController {
 			@RequestParam(value = "rows", required = false, defaultValue = "1000") int rows,
 			HttpServletRequest request) throws Exception {
 		SearchPage model = new SearchPage();
+		model.setImageUri(config.getImageCacheUrl());
 		model.setCurrentSearch(SearchPageEnum.TIMELINE);
 
 		Map<String, String[]> params = RequestUtils.getParameterMap(request);

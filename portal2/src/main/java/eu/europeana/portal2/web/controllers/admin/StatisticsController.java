@@ -43,8 +43,6 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class StatisticsController {
 
-	@Log
-	private Logger log;
 
 	@Resource
 	private ApiKeyService apiKeyService;
@@ -79,7 +77,6 @@ public class StatisticsController {
 			@RequestParam(value = "apiKey", required = false, defaultValue = "") String apiKey,
 			@RequestParam(value = "dir", required = false, defaultValue = "") String direction,
 			Locale locale) throws Exception {
-		log.info("==== admin/statistics.html ====");
 		StatisticsPage model = new StatisticsPage();
 		if (StringUtils.isBlank(type) || !TYPES.contains(type)) {
 			type = "dates";
@@ -422,7 +419,7 @@ public class StatisticsController {
 		try {
 			apiKey = apiKeyService.findByID(wskey);
 		} catch (DatabaseException e) {
-			log.error("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
+			Logger.getLogger(this.getClass()).error("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
 		}
 		if (apiKey != null) {
 			User user = apiKey.getUser();

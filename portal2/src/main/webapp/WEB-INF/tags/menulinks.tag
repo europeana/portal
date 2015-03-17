@@ -50,6 +50,6 @@
 <c:set var="msg_text"><spring:message code="${menu}-${ordinal}_a_text_t" /></c:set>
 <c:set var="url"><spring:message code="notranslate_${menu}-${ordinal}_a_url_t" /></c:set>
 <c:if test='${!fn:contains(url, "http://")}'>
-  <c:set var="url">/${model.portalName}/${url}</c:set>
+  <c:set var="url">${url}</c:set>
 </c:if>
 <a href="${url}" target="${msg_notranslate}" title="${msg_title}" <c:if test="${fn:length(className) > 0}">class="${className}"</c:if>>${msg_text}</a>
