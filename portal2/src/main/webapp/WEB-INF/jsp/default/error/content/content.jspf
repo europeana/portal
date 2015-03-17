@@ -39,7 +39,7 @@
     <c:when test="${model.problem == 'TOKEN_EXPIRED' || model.problem == 'UNKNOWN_TOKEN'}">
       <div>
         <spring:message code="ErrorTokenError_t" />
-        <a href="/${model.portalName}/login.html"><spring:message code="ErrorTokenErrorLinkText_t" /></a>&nbsp;<spring:message code="ErrorTokenErrorTail_t" />
+        <a href="/login.html"><spring:message code="ErrorTokenErrorLinkText_t" /></a>&nbsp;<spring:message code="ErrorTokenErrorTail_t" />
       </div>
     </c:when>
     <c:when test="${model.problem == 'MALFORMED_URL'}">

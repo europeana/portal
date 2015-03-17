@@ -1,0 +1,29 @@
+@import "variables";
+
+#api-result{
+	float:left;	
+	width: 100%;	
+}
+
+.api-result-inner{
+	margin-left: 300px;
+}
+
+.left-col{
+	float:       left;
+	margin-left: -100%;
+	width:       300px;
+}
+
+
+
+.api-submit{
+	background-color: #fff;
+	border:           3px solid #000;
+	border-radius:    0;
+	color: #000;
+	width: 100%;
+}
+
+
+

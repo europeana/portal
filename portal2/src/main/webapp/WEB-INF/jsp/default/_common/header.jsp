@@ -30,15 +30,17 @@
 				</c:choose>
 
 				<${logoWrapperTag} title="<spring:message code="AltLogoEuropeana_t" />">
-					<a	href="/${model.portalName}/"
+					<a	href="${homeUrl}"
 						title="<spring:message code="AltLogoEuropeana_t" />">
 						
 						<span class="${logoClass}">&nbsp;</span>
+						 <%-- localised logos not implemented yet
 						<c:if test="${!empty logoBg}">
 							<style type="text/css">
-								.${logoWrapperTag} .${logoClass} { background-image:url(/portal/themes/default/images/europeana-logo-2.png); }
+								.${logoWrapperTag} .${logoClass} { background-image:url(themes/default/images/europeana-logo-2.png); }
 							</style>
 						</c:if>
+						--%>
 					</a>
 				</${logoWrapperTag}>
 

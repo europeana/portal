@@ -8,7 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.edm.utils.SolrUtils;
+import eu.europeana.corelib.search.utils.SearchUtils;
 
 public class MltCollectorTest {
 
@@ -21,10 +22,10 @@ public class MltCollectorTest {
 	public void setup() {
 		collector = new MltCollector();
 		MltSuggestion suggestion = new MltSuggestion("what", "Natural history", 0);
-		suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+		suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 		collector.add(suggestion);
 		suggestion = new MltSuggestion("DATA_PROVIDER", "University of California Libraries (archive.org)", 1, false);
-		suggestion.makeEscapedQuery(SolrUtils.escapeQuery(suggestion.getQuery()));
+		suggestion.makeEscapedQuery(SearchUtils.escapeQuery(suggestion.getQuery()));
 		collector.add(suggestion);
 	}
 

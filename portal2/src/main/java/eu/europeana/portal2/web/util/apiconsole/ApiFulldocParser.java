@@ -21,19 +21,17 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 
-import eu.europeana.corelib.definitions.solr.beans.FullBean;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.definitions.edm.beans.FullBean;
 import eu.europeana.corelib.web.model.ApiResult;
 import eu.europeana.portal2.web.model.json.Json2FullBeanConverter;
 
 public class ApiFulldocParser extends ApiWrapper {
 
-	@Log
-	private Logger log;
+	Logger log = Logger.getLogger(this.getClass());
 
 	public ApiFulldocParser(String apiUrl, String api2key, String api2secret, HttpSession session) {
 		super(apiUrl, api2key, api2secret, session);

@@ -14,7 +14,7 @@ import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.RelationalDatabase;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.solr.model.QueryTranslation;
-import eu.europeana.corelib.solr.utils.SolrUtils;
+import eu.europeana.corelib.edm.utils.SolrUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.model.LanguageVersion;
 import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
@@ -65,7 +65,7 @@ public class QueryTranslationsUtil {
 	private QueryTranslation translateQuery() {
 		List<String> translatableLanguages = getTranslatableLanguages();
 		if (StringArrayUtils.isNotBlankList(translatableLanguages)) {
-			QueryTranslation translatedQueries = SolrUtils.translateQuery(query, translatableLanguages);
+			QueryTranslation translatedQueries = eu.europeana.corelib.search.utils.SearchUtils.translateQuery(query, translatableLanguages);
 			return translatedQueries;
 		}
 		return null;
@@ -82,7 +82,7 @@ public class QueryTranslationsUtil {
 			String key = parts[0] + ":" + parts[1];
 			translatedQueries.addLanguageVersion(key, new LanguageVersion(parts[3], parts[2]));
 		}
-		SolrUtils.translateQuery(query, translatedQueries);
+		eu.europeana.corelib.search.utils.SearchUtils.translateQuery(query, translatedQueries);
 		return translatedQueries;
 	}
 

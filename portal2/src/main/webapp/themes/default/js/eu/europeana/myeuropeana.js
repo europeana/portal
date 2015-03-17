@@ -11,7 +11,6 @@
 js.utils.registerNamespace( 'eu.europeana.myeuropeana' );
 
 eu.europeana.myeuropeana = {
-
 	init : function() {
 		this.loadComponents();
 		this.addUserBarListeners();

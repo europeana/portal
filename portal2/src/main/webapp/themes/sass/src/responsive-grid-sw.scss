@@ -1,0 +1,241 @@
+@import "variables";
+
+/* CSS for responsive grid, based on Foundation v2.2 */
+
+.search-widget-container .container{padding:0 0.5em;}
+
+.search-widget-container [class*="column"]+[class*="column"]:last-child{float:right;}
+
+.search-widget-container img,
+.search-widget-container object,
+.search-widget-container embed{
+	max-width:100%;
+	height:auto;
+}
+
+.search-widget-container img{
+	-ms-interpolation-mode:bicubic;
+}
+
+.search-widget-container .row:before,
+.search-widget-container .row:after{
+	content:"";
+	display:table;
+}
+.search-widget-container .row:after{
+	clear:both;
+}
+.search-widget-container .row{
+	zoom:1;
+}
+
+
+/* Mobile first */
+
+.search-widget-container .container                                        {min-width:0; margin-left:0; margin-right:0; background-color: #fff;}
+
+.search-widget-container .row                                              {width:100%; min-width:0; margin-left:0; margin-right:0;}
+.search-widget-container .row .row .column, .row .row .columns             {padding:0;}
+.search-widget-container .column, .columns                                 {width:auto; float:none; margin-left:0; margin-right:0;}
+.search-widget-container .column:last-child, .columns:last-child           {margin-right:0; float:none;}
+.search-widget-container [class*="column"]+[class*="column"]:last-child    {float: none;}
+.search-widget-container [class*="column"]:before,[class*="column"]:after  {content:""; display:table;}
+.search-widget-container [class*="column"]:after                           {clear:both;}
+    
+.search-widget-container .offset-by-one,
+.search-widget-container .offset-by-two,
+.search-widget-container .offset-by-three,
+.search-widget-container .offset-by-four,
+.search-widget-container .offset-by-five,
+.search-widget-container .offset-by-six,
+.search-widget-container .offset-by-seven,
+.search-widget-container .offset-by-eight,
+.search-widget-container .offset-by-nine,
+.search-widget-container .offset-by-ten,
+.search-widget-container .offset-by-eleven,
+.search-widget-container .centered{
+	margin-left:0;
+}
+    
+.search-widget-container .push-one,
+.search-widget-container .push-two,
+.search-widget-container .push-three,
+.search-widget-container .push-four,
+.search-widget-container .push-five,
+.search-widget-container .push-six,
+.search-widget-container .push-seven,
+.search-widget-container .push-eight,
+.search-widget-container .push-nine,
+.search-widget-container .push-ten,
+.search-widget-container .push-eleven{
+	left:auto;
+}
+
+.search-widget-container .pull-one,
+.search-widget-container .pull-two,
+.search-widget-container .pull-three,
+.search-widget-container .pull-four,
+.search-widget-container .pull-five,
+.search-widget-container .pull-six,
+.search-widget-container .pull-seven,
+.search-widget-container .pull-eight,
+.search-widget-container .pull-nine,
+.search-widget-container .pull-ten,
+.search-widget-container .pull-eleven{
+	right:auto;
+}
+
+/* reset 
+.search-widget-container .hide-on-phones       {display:block  !important;}
+.search-widget-container .hide-ilb-on-phones   {display:block  !important;}
+.search-widget-container .hide-cell-on-phones  {display:block  !important;}
+
+.search-widget-container .show-on-phones       {display:block !important;}
+.search-widget-container .show-ilb-on-phones   {display:block !important;}
+.search-widget-container .show-cell-on-phones  {display:block !important;}        
+ end reset */
+
+.search-widget-container .hide-on-phones       {display:none  !important;}
+.search-widget-container .hide-ilb-on-phones   {display:none  !important;}
+.search-widget-container .hide-cell-on-phones  {display:none  !important;}
+
+.search-widget-container .show-on-phones       {display:block !important;}
+.search-widget-container .show-ilb-on-phones   {display:inline-block !important;}
+.search-widget-container .show-cell-on-phones  {display:table-cell !important;}        
+
+
+.search-widget-container .left{
+    float:    left;
+}
+.search-widget-container .right{
+    float:    right;
+}
+.search-widget-container .hidden{
+    display:none;
+}
+.search-widget-container .no-show{
+    visibility:hidden;
+}
+
+.search-widget-container #content{
+    padding-bottom:    1em;
+}
+
+/* full-doc special grid styling */
+.search-widget-container .three-cols-fulldoc-sidebar{
+    width:          100%;
+    display:        block;
+    min-width:      240px;    /* >= carousel-1 min-width (see fulldoc.css) plus 20 */
+}
+
+.search-widget-container .nine-cols-fulldoc{
+    width:         100%;
+    display:       block;
+}
+
+/* grid styling */
+/* @media only screen and ( min-width:    48em ) */
+
+
+    .search-widget-container.desktop .row{
+        width:     100%;
+        max-width: 1140px;
+        margin:    0 auto;
+    }
+
+    .search-widget-container.desktop .row .row{min-width:0;}
+
+    .search-widget-container.desktop .column,
+    .search-widget-container.desktop .columns{margin:0; float:left !important; min-height:1px; position:relative;}
+
+    .search-widget-container.desktop .row .one    {width:8.33334%        !important;}
+    .search-widget-container.desktop .row .two    {width:16.66667%    !important;}
+    .search-widget-container.desktop .row .three  {width:25%            !important;}
+    .search-widget-container.desktop .row .four   {width:33.33334%    !important;}
+    .search-widget-container.desktop .row .five   {width:41.66667%    !important;}
+    .search-widget-container.desktop .row .six    {width:50%            !important;}
+    .search-widget-container.desktop .row .seven  {width:58.33334%    !important;}
+    .search-widget-container.desktop .row .eight  {width:66.66667%    !important;}
+    .search-widget-container.desktop .row .nine   {width:75%            !important;}
+    .search-widget-container.desktop .row .ten    {width:83.33334%    !important;}
+    .search-widget-container.desktop .row .eleven {width:91.66667%    !important;}
+    .search-widget-container.desktop .row .twelve {width:100%            !important;}
+
+    .search-widget-container.desktop .row .offset-by-one     {margin-left:8.33334%    !important;}
+    .search-widget-container.desktop .row .offset-by-two     {margin-left:16.66667%    !important;}
+    .search-widget-container.desktop .row .offset-by-three   {margin-left:25%        !important;}
+    .search-widget-container.desktop .row .offset-by-four    {margin-left:33.33334%    !important;}
+    .search-widget-container.desktop .row .offset-by-five    {margin-left:41.66667%    !important;}
+    .search-widget-container.desktop .row .offset-by-six     {margin-left:50%        !important;}
+    .search-widget-container.desktop .row .offset-by-seven   {margin-left:58.33334%    !important;}
+    .search-widget-container.desktop .row .offset-by-eight   {margin-left:66.66667%    !important;}
+    .search-widget-container.desktop .row .offset-by-nine    {margin-left:75%        !important;}
+    .search-widget-container.desktop .row .offset-by-ten     {margin-left:83.33334%    !important;}
+    .search-widget-container.desktop .row .offset-by-eleven  {margin-left:91.66667%    !important;}
+
+    .search-widget-container.desktop .row .centered        {float:none !important; margin:0 auto !important}
+
+    .search-widget-container.desktop .push-one      {left:8.33334%;}
+    .search-widget-container.desktop .push-two      {left:16.66667%;}
+    .search-widget-container.desktop .push-three    {left:25%;}
+    .search-widget-container.desktop .push-four     {left:33.33334%;}
+    .search-widget-container.desktop .push-five     {left:41.66667%;}
+    .search-widget-container.desktop .push-six      {left:50%;}
+    .search-widget-container.desktop .push-seven    {left:58.33334%;}
+    .search-widget-container.desktop .push-eight    {left:66.66667%;}
+    .search-widget-container.desktop .push-nine     {left:75%;}
+    .search-widget-container.desktop .push-ten      {left:83.33334%;}
+    .search-widget-container.desktop .push-eleven   {left:91.66667%;}
+
+    .search-widget-container.desktop .pull-one    {right:8.33334%;}
+    .search-widget-container.desktop .pull-two    {right:16.66667%;}
+    .search-widget-container.desktop .pull-three  {right:25%;}
+    .search-widget-container.desktop .pull-four   {right:33.33334%;}
+    .search-widget-container.desktop .pull-five   {right:41.66667%;}
+    .search-widget-container.desktop .pull-six    {right:50%;}
+    .search-widget-container.desktop .pull-seven  {right:58.33334%;}
+    .search-widget-container.desktop .pull-eight  {right:66.66667%;}
+    .search-widget-container.desktop .pull-nine   {right:75%;}
+    .search-widget-container.desktop .pull-ten    {right:83.33334%;}
+    .search-widget-container.desktop .pull-eleven {right:91.66667%;}
+    
+    .search-widget-container.desktop .container>.row{
+        box-sizing:         border-box;
+        -moz-box-sizing:    border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .search-widget-container.desktop .container>.row{
+        padding-left:1em;
+        padding-right:1em;
+    }
+
+    .search-widget-container.desktop .container{
+        background-color:    #fff;
+    }
+
+    .search-widget-container.desktop .container>.row:not(.footer){
+        background-color:   #fff;    
+    }
+    
+    .search-widget-container.desktop .three-cols-fulldoc-sidebar{
+        width:        1px;
+        display:    table-cell;    
+    }
+    
+    .search-widget-container.desktop .nine-cols-fulldoc{
+        width:            100%;
+        display:        table-cell;
+        vertical-align:    top;
+    }
+    
+    .search-widget-container.desktop .hide-on-phones        {display:block         !important;}    
+    .search-widget-container.desktop .hide-ilb-on-phones    {display:inline-block  !important;}    
+    .search-widget-container.desktop .hide-cell-on-phones   {display:table-cell    !important;}    
+
+    .search-widget-container.desktop .show-on-phones        {display:none !important;}    
+    .search-widget-container.desktop .show-ilb-on-phones    {display:none !important;}
+    .search-widget-container.desktop .show-cell-on-phones   {display:none !important;}
+
+
+

@@ -40,8 +40,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.edm.utils.SolrUtils;
 import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.utils.SolrUtils;
 import eu.europeana.corelib.web.model.FragmentInfo;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.model.PageInfo;
@@ -95,7 +95,7 @@ public class ControllerUtil {
 		}
 
 		// create page
-		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
+		ModelAndView page = new ModelAndView("/"+model.getTheme() + "/" + view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;
 	}
@@ -105,7 +105,7 @@ public class ControllerUtil {
 	}
 
 	public static ModelAndView createModelAndViewFragment(PortalPageData model, FragmentInfo view) {
-		ModelAndView page = new ModelAndView(model.getTheme() + "/" + view.getTemplate());
+		ModelAndView page = new ModelAndView("/"+model.getTheme() + "/" + view.getTemplate());
 		page.addObject(PageData.PARAM_MODEL, model);
 		return page;
 	}
@@ -287,7 +287,7 @@ public class ControllerUtil {
 
 	public static String rewriteQueryFields(String queryString) {
 		if (!StringUtils.isBlank(queryString)) {
-			queryString = SolrUtils.rewriteQueryFields(queryString);
+			queryString = eu.europeana.corelib.search.utils.SearchUtils.rewriteQueryFields(queryString);
 		}
 		return queryString;
 	}

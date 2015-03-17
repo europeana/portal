@@ -179,7 +179,7 @@ eu.europeana.translation_services = {
 		jQuery('#microsoft-translate-element select').val(null);
 		jQuery('#microsoft-translate-element select').trigger('change');
 		
-		var js_src = '/' + eu.europeana.vars.portal_name + '/token.json';
+		var js_src = eu.europeana.vars.homeUrl + '/token.json';
 		$.ajax({
 			url: js_src,
 			dataType: "json"

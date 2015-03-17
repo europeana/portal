@@ -21,6 +21,10 @@ public class Functions {
 	public static String encode(String text) {
 		return eu.europeana.corelib.utils.EuropeanaUriUtils.encode(text);
 	}
+	
+	public static String decode(String text) {
+		return eu.europeana.corelib.utils.EuropeanaUriUtils.decode(text);
+	}
 
 	public static String abbreviate(String str, int maxWidth) {
 		return StringUtils.abbreviate(str, maxWidth);

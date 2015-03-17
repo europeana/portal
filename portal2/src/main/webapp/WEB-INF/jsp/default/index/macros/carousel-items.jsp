@@ -46,11 +46,11 @@
 <c:set var="url"><spring:message code="notranslate_carousel-item-${ord1}_a_url_t" /></c:set>
 
 <c:if test='${!fn:contains(url, "http://"}'>
-	<c:set var="url">/${model.portalName}/${url}</c:set>
+	<c:set var="url">/${url}</c:set>
 </c:if>
 
 <a href="${url}" title="<spring:message code="carousel-item-${ord1}_a_title_t" />" target="<spring:message code="notranslate_carousel-item-${ord1}_a_target_t" />">
-	<img src="/${model.portalName}spring:message code="notranslate_carousel-item-${ord1}_img_url_t" />" width="<spring:message code="notranslate_carousel-item-${ord1}_img_width_t" />" alt="<spring:message code="carousel-item-${ord1}_img_alt_t" />"/>
+	<img src="spring:message code="notranslate_carousel-item-${ord1}_img_url_t" />" width="<spring:message code="notranslate_carousel-item-${ord1}_img_width_t" />" alt="<spring:message code="carousel-item-${ord1}_img_alt_t" />"/>
 </a>
 
  --%>

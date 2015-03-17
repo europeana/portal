@@ -1,6 +1,7 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,8 @@ public class ContactPageController {
 	@Resource
 	private ClickStreamLogService clickStreamLogger;
 
+	private static Logger log = Logger.getAnonymousLogger();
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setValidator(new ContactPageValidator());
@@ -78,9 +81,20 @@ public class ContactPageController {
 			@ModelAttribute("model") @Valid ContactPage form, 
 			BindingResult result,
 			HttpServletRequest request, Locale locale) throws Exception {
+		
+		
+		log.info("CONTACT FEEDBACK");
+		
+		
 		if (result.hasErrors()) {
+			log.info("RESULT HAS ERRORS");
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND_FAILURE);
+			
+
 		} else {
+			
+			log.info("RESULT HAS NO ERRORS - SEND EMAIL");
+
 			emailService.sendFeedback(form.getEmail(), form.getFeedbackText());
 			form.setSubmitMessage("Your feedback was successfully sent. Thank you!");
 			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND);

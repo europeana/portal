@@ -8,18 +8,17 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.edm.exceptions.SolrTypeException;
+import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.utils.RequestUtils;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -33,8 +32,7 @@ import eu.europeana.portal2.web.util.SearchUtils;
 @Controller
 public class BrowsePageController {
 
-	@Log
-	private Logger log;
+Logger log = Logger.getLogger(this.getClass());
 
 	@Resource
 	private SearchService searchService;
@@ -48,7 +46,6 @@ public class BrowsePageController {
 	@RequestMapping("/browse-all.html")
 	public ModelAndView browseAll(@RequestParam(value = "prefix", required = false) String prefix,
 			HttpServletRequest request) throws Exception {
-		log.info("=========== browse-all.html ===========");
 
 		SitemapPage<BriefBeanDecorator> model = new SitemapPage<BriefBeanDecorator>();
 
@@ -69,7 +66,7 @@ public class BrowsePageController {
 				BriefBeanView briefBeanView = null;
 				Class<? extends BriefBean> clazz = BriefBean.class;
 				Map<String, String[]> params = RequestUtils.getParameterMap(request); 
-
+				String contextPath = request.getContextPath();
 				try {
 					briefBeanView = SearchUtils.createResults(searchService, clazz, "portal", query, 0, 1000, params);
 					List<BriefBeanDecorator> beans = new ArrayList<BriefBeanDecorator>();

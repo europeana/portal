@@ -7,7 +7,7 @@
 
 
   <div class="twelve columns" id="register-form">
-    <c:url var="action" value="/api/registration.html" />
+    <c:url var="action" value="${homeUrlNS}/api/registration.html" />
     <sf:form modelAttribute="model" method="POST" action="${action}">
       <sf:hidden path="token" />
       <sf:input type="hidden" path="requestedAction" value="RegisterAPI" />

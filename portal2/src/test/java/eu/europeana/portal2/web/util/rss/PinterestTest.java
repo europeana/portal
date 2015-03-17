@@ -35,7 +35,7 @@ public class PinterestTest {
 	// private List<FeedEntry> pinterestEntries;
 	// private Calendar pinterestAge;
 
-	private String pintFeedUrl = "http://pinterest.com/europeana/feed.rss";
+	private String pintFeedUrl = "https://pinterest.com/europeana/feed.rss";
 	private Integer pintItemLimit = 20;
 	private RSSFeedParser parser;
 
@@ -49,17 +49,25 @@ public class PinterestTest {
 	 */
 	@Test
 	public void testImageExtraction() {
-		
-		List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
-		if ((newEntries != null) && (newEntries.size() > 0)) {
-			for (FeedEntry entry : newEntries) {
-				for (RSSImage image : entry.getImages()) {
-					assertNotNull(image.getSrc());
-					assertTrue(image.getSrc().length() > 0);
-					// System.out.println(image.getTitle());
-				}
+		boolean error = false;
+		try{
+			List<FeedEntry> newEntries = parser.readFeed(responsiveImageService);
+			if(newEntries == null){
+				error = true;				
 			}
+			else if (newEntries.size() > 0) {
+				for (FeedEntry entry : newEntries) {
+					for (RSSImage image : entry.getImages()) {
+						assertNotNull(image.getSrc());
+						assertTrue(image.getSrc().length() > 0);
+					}
+				}
+			}			
 		}
+		catch(Exception e){
+			error = true;
+		}
+		assertTrue("Feed should be read without Exception being thrown", !error);
 	}
 
 	/**

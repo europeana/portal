@@ -19,7 +19,7 @@ package eu.europeana.portal2.web.presentation.model.submodel;
 
 import java.util.List;
 
-import eu.europeana.corelib.definitions.solr.beans.IdBean;
+import eu.europeana.corelib.definitions.edm.beans.IdBean;
 
 /**
  * It returns such properties as

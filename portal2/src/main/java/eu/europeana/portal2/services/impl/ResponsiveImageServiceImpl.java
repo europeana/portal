@@ -8,13 +8,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.utils.ImageUtils;
 import eu.europeana.portal2.services.ResponsiveImageService;
 
@@ -22,8 +21,8 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 
 	final private static String CACHEDIR = "/sp/rss-blog-cache/";
 
-	@Log
-	private Logger log;
+	Logger log = Logger.getLogger(ResponsiveImageService.class.getName());
+	
 
 	@Value("#{europeanaProperties['static.page.path']}")
 	private String staticPagePath;
@@ -113,12 +112,13 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 
 			File outputfile = new File(filePath);
 			BufferedImage responsiveImage = null;
+						
 			if (!outputfile.exists()) {
 				log.info(String.format("new file is %s, url: %s, location: %s, ", filePath, fileUrl, location));
 				if (originalImage == null) {
 					originalImage = readOriginalImage(location, isURL);
 					if (originalImage == null) {
-						log.warn(String.format("The original image (%s) is not readable", location));
+						log.warning(String.format("The original image (%s) is not readable", location));
 						return responsiveImages;
 					}
 				}
@@ -128,7 +128,7 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 					responsiveImage = ImageUtils.scale(originalImage, widths[i], height);
 					// responsive = ImageUtils.compress(responsive, 0.8f);
 				} catch (IOException e) {
-					log.error("IOException during scaling image: " + e.getLocalizedMessage(), e);
+					log.severe("IOException during scaling image: " + e.getLocalizedMessage());
 				}
 
 				if (responsiveImage == null) {
@@ -142,7 +142,7 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 				try {
 					created = outputfile.createNewFile();
 				} catch (IOException e) {
-					log.error("IOException during create new file: " + e.getLocalizedMessage(), e);
+					log.severe("IOException during create new file: " + e.getLocalizedMessage());
 				}
 
 				if (created) {
@@ -150,7 +150,7 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 						// compressAndShow
 						ImageIO.write(responsiveImage, extension, outputfile);
 					} catch (IOException e) {
-						log.error("IOException during writing new file: " + e.getLocalizedMessage(), e);
+						log.severe("IOException during writing new file: " + e.getLocalizedMessage());
 					}
 					log.info("created " + outputfile);
 				}
@@ -165,16 +165,17 @@ public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 			if (isURL) {
 				originalImage = ImageIO.read(new URL(location));
 			} else {
-				originalImage = ImageIO.read(new File(staticPagePath, location));
+				//originalImage = ImageIO.read(new File(staticPagePath, location));
+				originalImage = ImageIO.read(getClass().getClassLoader().getResource(staticPagePath + location));
 			}
 		} catch (MalformedURLException e) {
-			log.error(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
+			log.severe(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
 		} catch (IOException e) {
-			log.error(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()), e);
+			log.severe(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()));
 		} catch (IllegalArgumentException e) {
-			log.error(String.format("IllegalArgumentException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()), e);
+			log.severe(String.format("IllegalArgumentException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
 		} catch (CMMException e) {
-			log.error(String.format("Invalid image format in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
+			log.severe(String.format("Invalid image format in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
 		}
 		return originalImage;
 	}

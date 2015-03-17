@@ -14,18 +14,14 @@ import static com.sass_lang.SassCompilingFilter.*;
 
 public class EuropeanaSassCompiler {
 	
-    //private static final String SOME_OTHER_DIRECTORY = "someOtherDirectory";
-    //private static final String ONLY_RUN_KEY = "unit_test_environment";
-	
-	
-    //private static final String CSS_LOCATION = "css";
-    //private static final String SASS_LOCATION = "WEB-INF/sass";
+    private static final String sassLocation = "/src/test/sample-webapp/WEB-INF/sass";
 
-    FilterConfig filterConfig;
-
-
-    private SassCompilingFilter filter;
-
+    /**
+     * Instantiates a SassCompilingFilter filter and invokes it.
+     * 
+     * Invoked by the exec:maven plugin
+     * 
+     * */ 
     public static void main(String[] args){
     	try{
     		new EuropeanaSassCompiler().go();    		
@@ -34,10 +30,11 @@ public class EuropeanaSassCompiler {
     		e.printStackTrace();
     	}
     }
-
+	
+    
     public void go() throws Exception {
     	
-    	filterConfig = new FilterConfig() {
+    	FilterConfig filterConfig = new FilterConfig() {
     		Map<String,String> vec = new HashMap<String,String>();
     		{
     			vec.put(CONFIG_LOCATION_PARAM, "config.rb");
@@ -48,14 +45,9 @@ public class EuropeanaSassCompiler {
 					
 					public String getRealPath(String arg0) {
 						
-						System.err.println("get the root: " + new java.io.File("").getAbsolutePath() );
-						
-						/*
-						/Users/admin/Documents/PortalWorkspace/javaSass/sass-java
-						*/
-						
-						
-						return "/Users/admin/Documents/PortalWorkspace/javaSass/sass-java/src/test/sample-webapp/WEB-INF/sass";
+						System.err.println("E Sass Compiler MAIN");
+
+						return new java.io.File("").getAbsolutePath() + sassLocation;
 					}
 
 					public void setAttribute(String arg0, Object arg1) {
@@ -164,8 +156,7 @@ public class EuropeanaSassCompiler {
 			}
 		};
     	
-
-        filter = new SassCompilingFilter();
+		SassCompilingFilter filter = new SassCompilingFilter();
         filter.init(filterConfig);
         
         try{

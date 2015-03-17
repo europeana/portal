@@ -40,7 +40,7 @@
 					<c:forEach items="${model.fullBeanView.children}" var="child">
 						<li>
 							<c:set var="relItemQuery" value='europeana_uri:"${model.document.id}"' />
-							<a  href='/${model.portalName}/${fn:replace(child.id, "http://www.europeana.eu/resolve/", "")}.html?query=${relItemQuery}&amp;startPage=1&amp;pageId=brd'
+							<a  href='/${fn:replace(child.id, "http://www.europeana.eu/resolve/", "")}.html?query=${relItemQuery}&amp;startPage=1&amp;pageId=brd'
 								rel="rdfs:seeAlso" resource="${child.id}"
 								title="${child.title}">
 								<img src="${child.thumbnail}"
