@@ -22,8 +22,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.web.utils.UrlBuilder;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
 import eu.europeana.portal2.web.presentation.model.data.decorators.BriefBeanViewDecorator;
@@ -31,6 +31,11 @@ import eu.europeana.portal2.web.presentation.model.submodel.BriefBeanView;
 
 public abstract class SearchPreparation extends SearchData {
 
+	private String imageUri;
+	
+	public void setImageUri(String imageUri){
+		this.imageUri = imageUri;
+	}
 	/**
 	 * pack into decorator class
 	 * 
@@ -41,6 +46,7 @@ public abstract class SearchPreparation extends SearchData {
 	@SuppressWarnings("unchecked")
 	public void setBriefBeanView(BriefBeanView view) throws UnsupportedEncodingException {
 		briefBeanView = new BriefBeanViewDecorator(this, view);
+		briefBeanView.setImageUri(imageUri);
 		setResults((List<BriefBean>) briefBeanView.getBriefBeans());
 		setBreadcrumbs();
 		setStart(view.getPagination().getStart());

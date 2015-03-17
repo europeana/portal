@@ -1,0 +1,118 @@
+@import "variables";
+
+/* styling */
+/* menu-main */
+	
+#menu-main h1, #menu-main h2{
+	font-size: 100%;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+	
+#menu-main ul {
+   	opacity: 0; /* Set initial state to transparent */
+   	-moz-transition-property: opacity;
+	-moz-transition-duration: 0.25s;
+	-moz-transition-timing-function: linear;
+	-webkit-transition-property: opacity;
+	-webkit-transition-duration: 0.25s;
+	-webkit-transition-timing-function: linear;
+	-o-transition-property: opacity;
+	-o-transition-duration: 0.25s;
+	-o-transition-timing-function: linear;
+}
+	
+#menu-main li:hover ul { /* Display the dropdown on hover */
+	opacity:1; /* Fade to opaque */
+	-moz-transition-property: opacity;
+	-moz-transition-duration: 0.25s;
+	-moz-transition-timing-function: linear;
+	-webkit-transition-property: opacity;
+	-webkit-transition-duration: 0.25s;
+	-webkit-transition-timing-function: linear;
+	-o-transition-property: opacity;
+	-o-transition-duration: 0.25s;
+	-o-transition-timing-function: linear;
+}
+
+#menu-main li:hover a { /* These create persistent hover states, meaning the top-most link stays 'hovered' even when your cursor has moved down the list. */
+	color: #fff;
+	background-color: #000;
+}
+
+#menu-main li:hover a.dropdown {
+   	background-position: right -189px;
+}
+
+#menu-main li:hover ul a { /* The persistent hover state does however create a global style for links even before they're hovered. Here we undo these effects. */
+	color: #333;
+	background-color: #f5f5f5;
+}
+
+a.highlighted-dropdown {
+	color : #fff;
+	background-color : #000;
+	background-position : right -189px;
+}
+   
+   
+
+
+/* menu-footer */
+
+#menu-footer h1, #menu-footer h2 {
+	font-size: 100%;
+	font-weight: normal;
+}
+	
+
+/* .menu-tab */
+
+a.menu-tab, a.menu-sub-tab {
+	padding: 2px 9px 4px 9px;
+	color: #333;
+    background-color: #f5f5f5;
+       
+    -moz-box-shadow: 0 2px 3px #fbfbfb;
+    -webkit-box-shadow: 0 2px 3px #fbfbfb;
+    box-shadow: 0 2px 3px #fbfbfb;
+    
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+	
+a.menu-tab:hover {
+	color: #fff;
+	background-color: #000;
+}
+
+a.dropdown {
+   	padding-right: 24px;
+   	background-image: url(themes/default/images/icons/sprite.png);
+   	background-repeat: no-repeat;
+   	background-position: right -173px;
+}
+
+a.menu-tab.active {
+	color: #fff;
+	background-color: #000;
+}
+	
+
+/* .menu-sub-tab */
+
+a.menu-sub-tab {
+    margin-top: 2px;
+    min-width: 75px;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+a.menu-sub-tab:hover { /* Set styles for dropdown when items are hovered */
+	text-decoration: underline;
+}

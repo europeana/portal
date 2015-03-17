@@ -6,7 +6,7 @@
 		<h4>${title}</h4>
 	</c:if>
 	
-	<a href="${cell.fullDocUrl}" title="${cell.title}" style="float: left; margin-right: 10px;"><img src="${cell.thumbnail}" /></a>
+	<a href="${homeUrl}${cell.fullDocUrl}" title="${cell.title}" style="float: left; margin-right: 10px;"><img src="${cell.thumbnail}" /></a>
 	
 	<c:if test="${!empty cell.creator}">
 		<span class="creator">${fn:substring(cell.creatorXML, 0, providerNameMaxLength)}</span><br />

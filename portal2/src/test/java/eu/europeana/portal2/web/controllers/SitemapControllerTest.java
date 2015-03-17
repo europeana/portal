@@ -7,10 +7,10 @@ import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.edm.exceptions.SolrTypeException;
+import eu.europeana.corelib.search.SearchService;
 
 public class SitemapControllerTest {
 

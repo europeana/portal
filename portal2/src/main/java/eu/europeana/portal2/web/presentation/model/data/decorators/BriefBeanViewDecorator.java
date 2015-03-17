@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.portal2.querymodel.query.FacetQueryLinks;
 import eu.europeana.portal2.web.model.spellcheck.SpellCheck;
 import eu.europeana.portal2.web.presentation.model.data.SearchData;
@@ -40,6 +40,7 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 
 	private SearchData model;
 	private BriefBeanView view;
+	private String imageUri;
 
 	private List<FacetQueryLinks> facets = null;
 
@@ -56,7 +57,9 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 			beans = new ArrayList<BriefBeanDecorator>();
 			int index = model.getStart();
 			for (BriefBean briefDoc : view.getBriefBeans()) {
-				beans.add(new BriefBeanDecorator(model, briefDoc, index++));
+				BriefBeanDecorator dec = new BriefBeanDecorator(model, briefDoc, index++);
+				dec.setImageUri(imageUri);
+				beans.add(dec);
 			}
 		}
 		return beans;
@@ -112,5 +115,11 @@ public class BriefBeanViewDecorator implements BriefBeanView {
 	@Override
 	public List<SearchFilter> getSearchFilters() {
 		return view.getSearchFilters();
+	}
+
+	@Override
+	public void setImageUri(String imageUri) {
+		this.imageUri = imageUri;
+		
 	}
 }

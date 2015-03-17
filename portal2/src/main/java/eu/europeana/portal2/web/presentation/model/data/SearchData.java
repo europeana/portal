@@ -20,8 +20,8 @@ package eu.europeana.portal2.web.presentation.model.data;
 import java.util.List;
 
 import eu.europeana.corelib.definitions.ApplicationContextContainer;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.model.web.BreadCrumb;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.portal2.web.presentation.SearchPageEnum;
 import eu.europeana.portal2.web.presentation.model.abstracts.UrlAwareData;

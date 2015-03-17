@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
 
 import eu.europeana.corelib.definitions.ApplicationContextContainer;
-import eu.europeana.corelib.definitions.solr.beans.BriefBean;
+import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.solr.model.Query;
 import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.utils.UrlBuilder;
@@ -62,6 +62,7 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	private Map<String, String> facetLogs;
 	private BriefBean matchDoc;
 	private SpellCheck spellcheck;
+	private String imageUri;
 
 	public BriefBeanViewImpl() {};
 
@@ -212,5 +213,11 @@ public class BriefBeanViewImpl implements BriefBeanView {
 	@Override
 	public List<SearchFilter> getSearchFilters() {
 		return searchFilters;
+	}
+
+	@Override
+	public void setImageUri(String imageUri) {
+		this.imageUri = imageUri;
+		
 	}
 }

@@ -111,7 +111,7 @@ public class RightsOptionTest {
 		assertEquals("CC0", RightsOption.CC_ZERO.getRightsText());
 		assertEquals("CC BY-SA", RightsOption.CC_BY_SA.getRightsText());
 		assertEquals("Unknown copyright status", RightsOption.EU_U.getRightsText());
-		assertEquals("Out of copyright - non commercial reuse", RightsOption.OOC_NC.getRightsText());
+		assertEquals("Out of copyright - non commercial re-use", RightsOption.OOC_NC.getRightsText());
 	}
 
 	/**

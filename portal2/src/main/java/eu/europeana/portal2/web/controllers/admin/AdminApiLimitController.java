@@ -32,9 +32,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @RequestMapping("/admin/limitApiKey.html")
 public class AdminApiLimitController {
 
-	@Log
-	private Logger log;
-
+	
 	@Resource
 	private UserService userService;
 
@@ -52,7 +50,6 @@ public class AdminApiLimitController {
 			@RequestParam(value = "apiKey", required = true) String apiKeyId,
 			@ModelAttribute("model") LimitApiKeyPage model, 
 			HttpServletRequest request) throws Exception {
-		log.info("==== /admin/limitApiKey.html ====");
 
 		ApiKey apiKey = apiKeyService.findByID(apiKeyId);
 		model.setApiKey(apiKey.getId());
@@ -66,7 +63,6 @@ public class AdminApiLimitController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String limitApiKeyHandler(@ModelAttribute("model") LimitApiKeyPage model) throws Exception {
-		log.info("==== admin.html ====");
 
 		ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 		apiKey.setUsageLimit(model.getUsageLimit());

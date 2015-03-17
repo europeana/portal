@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -29,9 +30,7 @@ import eu.europeana.corelib.definitions.db.entity.relational.ApiKey;
 import eu.europeana.corelib.definitions.db.entity.relational.Token;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.exception.ProblemType;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
 import eu.europeana.corelib.web.exception.EmailServiceException;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.service.EmailService;
@@ -50,9 +49,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @RequestMapping("/api/registration.html")
 public class RegisterApiPageController {
 
-	@Log
-	private Logger log;
-
+	Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	private UserService userService;
 
@@ -134,6 +131,9 @@ public class RegisterApiPageController {
 		}
 
 		String baseUrl = config.getPortalUrl();
+		if(baseUrl.endsWith("/")){
+			baseUrl = baseUrl.substring(0, baseUrl.length()-1);
+		}
 
 		log.info("requestedAction: " + model.getRequestedAction());
 		// Register for API
@@ -147,6 +147,8 @@ public class RegisterApiPageController {
 					log.info("Sending API registration email");
 					Token token = tokenService.create(model.getEmail());
 					String url = baseUrl + "/api/registration.html";
+					
+					
 					log.info("token: " + token);
 					log.info("registerUri: " + url);
 					try {

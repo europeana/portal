@@ -16,13 +16,28 @@
 	<fieldset>
 		<c:set var="portal_languages_count" value="${fn:length(model.portalLanguages)}" />
 		<c:set var="portal_languages_column" value="${portal_languages_count/4}" />
-		<c:set var="translate_keywords_count" value="0" />
+		<c:set var="portal_languages_column" value="${portal_languages_column+(1-(portal_languages_column%1))%1}" />
+
+		
+		<c:set var="divOpen"><div class="column three"></div></c:set>
+		<c:set var="divOpen" value="${fn:replace(divOpen, '</div>', '')}"/>
+		
+		<c:set var="divClose" value="</div>" />
 		<h3><spring:message code="translate_keywords_t" /></h3>
+		
 			<div id="keyword-languages">
-				<c:forEach items="${model.portalLanguages}" var="language">
-					<c:if test="${translate_keywords_count == 0}">
-						<div class="column three">
+				
+				<c:set var="openedDiv" value="false" />
+				
+				<c:forEach items="${model.portalLanguages}" var="language" varStatus="status">
+					<c:if test="${ (status.index)  % portal_languages_column == 0 }">
+						<c:if test="${openedDiv}">
+							${divClose}
+						</c:if>
+						${divOpen}
+						<c:set var="openedDiv" value="true" />
 					</c:if>
+					
 					<c:set var="checked" value="" />
 					<c:forEach items="${model.user.languageSearch}" var="item">
 						<c:if test="${item == language.languageCode}">
@@ -30,16 +45,13 @@
 						</c:if>
 					</c:forEach>
 					<label><input type="checkbox" name="tki" value="${language.languageCode}" ${checked} /> ${language.languageName}</label>
-					<c:set var="translate_keywords_count" value="${translate_keywords_count + 1}"/>
-					<c:if test="${translate_keywords_count ge portal_languages_column}">
-						</div>
-						<c:set var="translate_keywords_count" value="0" />
-					</c:if>
 				</c:forEach>
-				<c:if test="${translate_keywords_count < portal_languages_column}">
-					</div>
+				
+				<c:if test="${openedDiv}">
+					${divClose}
 				</c:if>
 			</div>
+			
 			<p><spring:message code="maximum_6_languages_t" /></p>
 			<p><input type="reset" value="<spring:message code="ClearSelection_t" />" id="clear-selection" /></p>
 			<input type="hidden" name="action" value="translate-keywords" />
@@ -50,23 +62,10 @@
 		<h3><spring:message code="translate_items_t" /></h3>
 			<c:choose>
 				<c:when test="${!empty model.user}">
-					<c:choose>
-						<c:when test="${!empty model.user.languageItem}">
-							<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" checked /> <spring:message code="translate_items_select_t" /></label>&nbsp;
-							<select id="item-language" name="item-language">
-								<c:set var="selected_language_code" value="${model.user.languageItem}" />
-								<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
-							</select>
-						</c:when>
-						<c:otherwise>
-							<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" /> <spring:message code="translate_items_select_t" /></label>&nbsp;
-							<select id="item-language" name="item-language">
-								<c:set var="selected_language_code" value="${model.locale}" />
-								<%@ include file="/WEB-INF/jsp/default/_common/menus/languages-as-options.jspf" %>
-							</select>
-						</c:otherwise>
-					</c:choose>
+					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" ${empty model.user.languageItem ? '' : ' checked="checked"'} /> <spring:message code="translate_items_select_t" /></label>&nbsp;							
+
 					<input type="hidden" name="action" value="translate-item" />
+					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" ${empty model.user.languageItem ? '' : ' checked="checked"'} /> <spring:message code="translate_items_select_t" /></label>&nbsp;
 				</c:when>
 				<c:otherwise>
 					<label class="display-inline"><input type="checkbox" name="translate-item" id="translate-item" value="yes" disabled/> <span class="disabled"><spring:message code="translate_items_select_t" /></span></label>&nbsp;

@@ -22,6 +22,7 @@ Odd things you need to know, to get a portal running
 * You need to setup postgres, details is in the
 trunk/README_FIRST.markdown
 
+* Some site specific config files are distributed as template-foo, this should be copied to foo after initial download 
 
 
 Checkout the projects

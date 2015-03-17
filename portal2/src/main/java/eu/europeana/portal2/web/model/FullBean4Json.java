@@ -19,7 +19,7 @@ package eu.europeana.portal2.web.model;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
 
 /**
- * @see eu.europeana.corelib.definitions.solr.beans.FullBean
+ * @see eu.europeana.corelib.definitions.edm.beans.FullBean
  */
 public class FullBean4Json extends FullBeanImpl {
 

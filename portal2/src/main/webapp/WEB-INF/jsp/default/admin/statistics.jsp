@@ -108,16 +108,16 @@ table {
 <div class="container">
   <%@ include file="/WEB-INF/jsp/default/_common/header.jsp" %>
   <div class="row">
-    <c:url var="byDate" value="/admin/statistics.html">
+    <c:url var="byDate" value="${homeUrlNS}/admin/statistics.html">
       <c:param name="type">dates</c:param>
     </c:url>
-    <c:url var="byMonth" value="/admin/statistics.html">
+    <c:url var="byMonth" value="${homeUrlNS}/admin/statistics.html">
       <c:param name="type">months</c:param>
     </c:url>
-    <c:url var="byUser" value="/admin/statistics.html">
+    <c:url var="byUser" value="${homeUrlNS}/admin/statistics.html">
       <c:param name="type">apiKeys</c:param>
     </c:url>
-    <c:url var="byRecordType" value="/admin/statistics.html">
+    <c:url var="byRecordType" value="${homeUrlNS}/admin/statistics.html">
       <c:param name="type">recordTypes</c:param>
     </c:url>
 
@@ -500,7 +500,7 @@ table {
     </c:choose>
 
     <p>
-      <c:url var="adminPage" value="/admin.html" />
+      <c:url var="adminPage" value="${homeUrlNS}/admin.html" />
       <a href="${adminPage}"><spring:message code="myeuropeana_AdminSection_t" /></a>
     </p>
 

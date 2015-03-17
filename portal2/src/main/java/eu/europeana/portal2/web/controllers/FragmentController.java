@@ -32,8 +32,6 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class FragmentController {
 
-	@Log
-	private Logger log;
 
 	@Resource
 	private AbstractMessageSource messageSource;
@@ -106,7 +104,6 @@ public class FragmentController {
 			}
 			featuredItemAge = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-			log.info("featuredItemAge: " + sdf.format(featuredItemAge.getTime()));
 		}
 		if (featuredItems.size() > 0) {
 			int index = 0;
@@ -147,7 +144,6 @@ public class FragmentController {
 			}
 			featuredPartnersAge = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-			log.info("featuredPartnersAge: " + sdf.format(featuredPartnersAge.getTime()));
 		}
 		if (featuredPartners.size() > 0) {
 			int index = 0;

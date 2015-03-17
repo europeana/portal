@@ -224,6 +224,9 @@ com.microsoft.translator = function( options ) {
 		
 		for ( i = 0; i < ii; i += 1 ) {
 			
+			if(options.language_codes.available[i].length>2){
+				continue;
+			}
 			html += '<option value="' + options.language_codes.available[i] + '">' + response[i] + '</option>';
 				
 		}
@@ -254,8 +257,6 @@ com.microsoft.translator = function( options ) {
 
 
 		if(arraysText.length>0){
-			
-			console.log('run detection.....');
 			
 			arraysText = '[' + arraysText + ']'
 			js_src_detect  =	'http://api.microsofttranslator.com/V2/Ajax.svc/DetectArray' +

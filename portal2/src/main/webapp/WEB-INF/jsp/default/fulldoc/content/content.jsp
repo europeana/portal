@@ -46,10 +46,10 @@
 				    
 				    	var showHierarchical	 = ${model.showHierarchical};
 						
-				    	alert('showHierarchical ' + showHierarchical);
-						
 						window.apiKey            =   'api2demo';
-						window.apiServerRoot     =  '${model.apiUrl}/v2/record';
+						window.apiServerRoot     =  '${model.apiUrl}';
+						window.apiServerRoot    += window.apiServerRoot.indexOf("/", window.apiServerRoot.length - 1) == -1 ? '/v2/record' : 'v2/record';
+
 						var hierarchyOriginalUrl = '${model.document.about}';
 						var hierarchyTestUrl     =  window.apiServerRoot + '${model.document.about}/ancestor-self-siblings.json?wskey=' + window.apiKey;
 						var hierarchyHeader      = '<spring:message code="hierarchy_header_t" />';

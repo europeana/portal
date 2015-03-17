@@ -1,0 +1,239 @@
+@import "variables";
+
+
+/* pagination for search results */
+
+.search-results-navigation {
+	clear:				both;
+	position:			relative;
+	border-bottom:		1px solid #E4E4E4;
+}
+
+.nav-numbers{
+	text-align:		center;
+	white-space:	nowrap;
+	font-size:		0.75em;
+}
+
+.nav-numbers input{	
+	font-size:	1em;
+	border:		1px solid #E4E4E4;
+	text-align:	center;
+}
+
+
+
+.result-pagination{
+	float:			none;	
+	margin:			0;
+	width:			100%;
+	padding-left:	0;
+	display:		table;
+	table-layout:	fixed;
+	font-size:		1.5em;
+	clear:			both;
+	position:		relative;
+	z-index:		1;	
+}
+
+.result-pagination li{
+	list-style: 	none;
+	display:		table-cell;
+	vertical-align:	top;
+}
+
+.jump-to-page{
+	margin-top:	2em;
+}
+
+
+#start-page {
+	outline: medium none !important;
+	width: 4em;
+	text-align:center;
+}
+
+.result-pagination a:focus{
+    border-bottom: 1px dotted #4C7ECF;
+}
+
+.nav .eu-menu{
+	display:		inline-block;
+	border:			1px solid #e4e4e4;
+	margin-left:	0.5em;
+	padding-left:	0.25em;
+	padding-right:	0.25em;
+	z-index:		2;
+}
+
+/* override glow on selected menu item */
+.nav .eu-menu.selected span.open-menu,
+.nav .eu-menu.selected .item.active{
+	text-shadow:	none !important;
+}
+
+
+
+/* end copied */
+
+
+
+.nav{
+	padding:			.25em 0;
+	
+	box-sizing:			border-box;
+	-moz-box-sizing:	border-box;
+	-webkit-box-sizing:	border-box;
+
+	display:			inline-table;
+	width:				100%;	/* needed for safari */
+}
+
+
+.nav>div{
+	display:	block;
+	text-align:	center;
+	width:		100%;
+}
+
+
+
+.nav>div.menu, .nav>div.pagination{
+	white-space:	nowrap;
+}
+
+
+
+.nav .of{
+	display:none;
+}
+
+.nav .of-bracket{
+	color:#333 !important;	/* fix for strange iphone bug (wanting to color this as a link) */
+}
+
+.nav .of-bracket:before{
+	content:'(';
+}
+
+.nav .of-bracket:after{
+	content:')';
+}
+
+.nav .of-value{
+	display:	block;
+}
+
+.nav .spaced:before{
+	content:'';
+}
+
+.nav .spaced:after{
+	content:'';
+}
+
+
+
+
+/* data showing / hiding rules */
+
+@media only screen and (min-width: 22em) {
+	.nav .of-bracket:before{
+		content:'';
+	}
+
+	.nav .of-bracket:after{
+		content:'';
+	}
+
+	.nav .of,
+	.nav .of-value{
+		display:inline;
+	}	
+}
+
+
+@media only screen and (min-width: 48em) {
+	
+	.nav .spaced:before{
+		content:' ';
+	}
+	
+	.nav .spaced:after{
+		content:' ';
+	}
+	
+	.result-pagination li{
+		vertical-align:	middle;
+	}
+	
+	.jump-to-page{
+		margin-top:	0;
+	}
+}
+
+
+@media only screen and (max-width: 55em) {
+	.nav>div.show-on-22{
+		display:none;
+	}
+}
+
+/* Desktop general */
+@media only screen and (min-width: 55em) {
+
+	.show-on-22{display:table-cell !important;}
+	
+	.result-pagination{
+		float:		right;
+		width:		auto;	
+		font-size:	1em;
+		width:		auto;
+	}
+
+/*
+.nav>div.menu, .nav>div.pagination{
+	width:			1px;
+	white-space:	nowrap;
+	zzzzzdisplay:		table-cell;
+}
+*/
+
+	/* flex-box rules */
+	.nav>div{
+		display:		table-cell;
+		vertical-align:	middle;
+	}
+
+	.nav>.menu, .nav>.pagination{
+		width:1px;
+	}
+
+	.nav>.count{
+		width:		100%;
+		text-align:	center;
+	}
+
+	.nav-numbers{	
+		font-size:	1em;
+		width:		auto;
+	}
+
+	.nav>.menu{
+		text-align:	left;
+	}
+
+	.nav>.pagination{
+		text-align:	right;
+	}
+
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+

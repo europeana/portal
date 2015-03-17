@@ -43,7 +43,7 @@ public final class EuropeanaRightsConverter {
 		EUROPEANA_RIGHTS_MAP.put("rr-r", "Europeana - Rights Reserved - Restricted Access");
 		EUROPEANA_RIGHTS_MAP.put("pd", "Public Domain");
 		EUROPEANA_RIGHTS_MAP.put("unknown", "Europeana - Unknown copyright status");
-		EUROPEANA_RIGHTS_MAP.put("out-of-copyright-non-commercial", "Out of copyright - non commercial reuse");
+		EUROPEANA_RIGHTS_MAP.put("out-of-copyright-non-commercial", "Out of copyright - non commercial re-use");
 	}
 
 	/**

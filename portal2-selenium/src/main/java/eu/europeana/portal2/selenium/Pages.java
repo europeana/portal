@@ -15,8 +15,10 @@ public class Pages {
 			Preferences prefs = new IniPreferences(ini);
 
 			//url = prefs.node("server").get("url", "http://preview.europeana.eu/");
-			url = prefs.node("server").get("url", "http://test.portal2.eanadev.org");
+			//url = prefs.node("server").get("url", "http://test.portal2.eanadev.org");
+			url = prefs.node("server").get("url", "http://localhost:8080");
 			appSuffix = prefs.node("server").get("application", "/portal");
+			
 		} catch (Exception e) {
 			url = "http://test.portal2.eanadev.org";
 			//url = "http://preview.europeana.eu";
@@ -28,5 +30,5 @@ public class Pages {
 	public final static String INDEX  = url + appSuffix;
 	public final static String SEARCH = INDEX + "/search.html";
 	public final static String OBJECT = INDEX + "/record/09102/_SMS_MM_M777.html";
-
+	public final static String MYEU   = INDEX + "/myeuropeana";
 }

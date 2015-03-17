@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,11 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.definitions.solr.model.Term;
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.solr.exceptions.EuropeanaQueryException;
-import eu.europeana.corelib.solr.exceptions.SolrTypeException;
-import eu.europeana.corelib.solr.service.SearchService;
+import eu.europeana.corelib.edm.exceptions.EuropeanaQueryException;
+import eu.europeana.corelib.edm.exceptions.SolrTypeException;
+import eu.europeana.corelib.search.SearchService;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.SuggestionsPage;
@@ -25,8 +24,7 @@ import eu.europeana.portal2.web.util.ControllerUtil;
 @Controller
 public class SuggestionController {
 
-	@Log
-	private Logger log;
+	Logger log = Logger.getLogger(this.getClass());
 
 	@Resource
 	private SearchService searchService;
