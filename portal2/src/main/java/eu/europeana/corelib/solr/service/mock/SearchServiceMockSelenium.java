@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import eu.europeana.corelib.search.model.metainfo.WebResourceMetaInfo;
+
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField.Count;
@@ -249,4 +252,14 @@ public class SearchServiceMockSelenium implements SearchService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+    @Override
+    public Integer search(Integer integer, String s, String s2, Boolean aBoolean, Boolean aBoolean2, String s3, String s4, Boolean aBoolean3, String s5, Boolean aBoolean4, String s6) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public WebResourceMetaInfo getMetaInfo(String s) {
+        throw new NotImplementedException();
+    }
 }
