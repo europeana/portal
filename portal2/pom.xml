@@ -225,6 +225,18 @@
 			<version>2.6.1</version>
 		</dependency>
 
+        <dependency>
+            <groupId>eu.europeana.corelib</groupId>
+            <artifactId>corelib-media-storage</artifactId>
+            <version>${version.europeanaCorelib}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.europeana.corelib</groupId>
+            <artifactId>corelib-storage</artifactId>
+            <version>${version.europeanaCorelib}</version>
+        </dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -444,11 +456,8 @@
 			<id>
 				production
             </id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.properties>${project.parent.basedir}/properties/production</europeana.properties>
 				<europeana.server>http://europeana.eu/portal</europeana.server>
 			</properties>
 		</profile>
@@ -492,6 +501,9 @@
 			<id>
                 personal
             </id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>
 				<europeana.server>http://localhost:8080/portal/</europeana.server>
