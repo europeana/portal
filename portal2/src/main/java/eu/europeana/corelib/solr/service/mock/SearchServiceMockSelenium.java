@@ -44,7 +44,7 @@ import eu.europeana.corelib.neo4j.entity.Neo4jStructBean;
 import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.search.model.ResultSet;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
-import eu.europeana.corelib.solr.model.metainfo.WebResourceMetaInfo;
+import eu.europeana.corelib.edm.model.metainfo.WebResourceMetaInfo;
 import eu.europeana.corelib.solr.service.mock.bean.BriefBeanMock;
 import eu.europeana.corelib.solr.service.mock.bean.FullBeanMock;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
