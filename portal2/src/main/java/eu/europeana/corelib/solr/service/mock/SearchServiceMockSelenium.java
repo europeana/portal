@@ -44,7 +44,6 @@ import eu.europeana.corelib.neo4j.entity.Neo4jStructBean;
 import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.search.model.ResultSet;
 import eu.europeana.corelib.solr.entity.AggregationImpl;
-import eu.europeana.corelib.edm.model.metainfo.WebResourceMetaInfo;
 import eu.europeana.corelib.solr.service.mock.bean.BriefBeanMock;
 import eu.europeana.corelib.solr.service.mock.bean.FullBeanMock;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
@@ -254,11 +253,6 @@ public class SearchServiceMockSelenium implements SearchService {
 
     @Override
     public Integer search(Integer integer, String s, String s2, Boolean aBoolean, Boolean aBoolean2, String s3, String s4, Boolean aBoolean3, String s5, Boolean aBoolean4, String s6) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public WebResourceMetaInfo getMetaInfo(String s) {
         throw new NotImplementedException();
     }
 }
