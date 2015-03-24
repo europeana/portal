@@ -250,4 +250,9 @@ public class SearchServiceMockSelenium implements SearchService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+    @Override
+    public Integer search(Integer integer, String s, String s2, Boolean aBoolean, Boolean aBoolean2, String s3, String s4, Boolean aBoolean3, String s5, Boolean aBoolean4, String s6) {
+        return null;
+    }
 }
