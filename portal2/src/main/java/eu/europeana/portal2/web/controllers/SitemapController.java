@@ -362,6 +362,58 @@ public class SitemapController {
   }
 
   /**
+   * Flush _ALL_ sitemaps from the cache
+   * 
+   * @param flush boolean for confirmation of flush
+   * @param response The {@link HttpServletResponse}
+   * @throws IOException
+   */
+  @RequestMapping("/europeana-sitemap-flush-cache")
+  public void flushCache(@RequestParam(value = "flush", defaultValue = "false") boolean flush, HttpServletResponse response)
+      throws IOException {
+
+    response.setCharacterEncoding("UTF-8");
+    StringBuilder sb = new StringBuilder();
+    sb.append("<html><body>");
+    sb.append("<h1>Cache flush</h1>");
+
+    sb.append("Flush action: ").append(flush).append("</br>");
+    
+    if (flush)
+    {
+      // Really flush the cache
+      Jedis jedis = redisProvider.getJedis();
+
+      if (log.isInfoEnabled()) {
+          log.info("Flushing ALL sitemaps from the cache: ");
+        }
+      
+      String msg = jedis.flushDB();
+
+      if (log.isInfoEnabled()) {
+        log.info("ALL sitemaps have been flushed from the cache");
+      }
+
+      sb.append("Flushed ALL sitemaps: ").append(msg).append("</br>");
+      
+      redisProvider.returnJedis(jedis);
+    }
+      
+    sb.append("</body></html>");
+
+      // Generate response
+      try {
+        ServletOutputStream out = response.getOutputStream();
+        out.print(sb.toString());
+        out.flush();
+      } catch (Exception e) {
+        log.error(String.format(
+            "Exception thrown while flushing sitemap cache: %s",
+            e.getLocalizedMessage()), e);
+      }    
+  }
+  
+  /**
    * NOTE: This is a draft method for creating a video sitemap
    * (https://support.google.com/webmasters/answer/80472?hl=en). The RequestMapping has been
    * disabled to ensure this is not publically accessible.
