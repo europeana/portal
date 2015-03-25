@@ -173,8 +173,7 @@ public class SitemapController {
     String cacheFile = SITEMAP_INDEX + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated() || !jedis.exists(cacheFile))
-        && !sitemapsBeingProcessed.containsKey(params)) {
+    if ((solrOutdated() || !jedis.exists(cacheFile)) && !sitemapsBeingProcessed.containsKey(params)) {
       boolean success = false;
       ServletOutputStream out = response.getOutputStream();
 
@@ -245,8 +244,7 @@ public class SitemapController {
 
     Jedis jedis = redisProvider.getJedis();
     // Return a 404 if the sitemap cache cannot be used
-    if (!jedis.isConnected() || prefix.length() > 3
-        || !prefix.matches(PREFIX_PATTERN)) {
+    if (!jedis.isConnected() || prefix.length() > 3 || !prefix.matches(PREFIX_PATTERN)) {
       response.setStatus(404);
       redisProvider.returnJedis(jedis);
       return;
@@ -255,8 +253,7 @@ public class SitemapController {
     String cacheFile = SITEMAP_HASHED + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated()) || !jedis.exists(cacheFile)
-        && !sitemapsBeingProcessed.containsKey(params)) {
+    if ((solrOutdated()) || !jedis.exists(cacheFile) && !sitemapsBeingProcessed.containsKey(params)) {
 
       if (log.isInfoEnabled()) {
         log.info(String.format("Generating %s", cacheFile));
@@ -318,8 +315,7 @@ public class SitemapController {
                 "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
                 e.getLocalizedMessage(), cacheFile), e);
           }
-        } while (sitemapsBeingProcessed.containsKey(params)
-            || !jedis.exists(cacheFile));
+        } while (sitemapsBeingProcessed.containsKey(params) || !jedis.exists(cacheFile));
       }
       // Read the sitemap from cache
       if (log.isInfoEnabled()) {
@@ -342,7 +338,7 @@ public class SitemapController {
    */
   private StringBuilder createSitemapHashedContent(String prefix, String index, SearchPage model,
       String isPlaceSitemap) {
-	  model.setImageUri(config.getImageCacheUrl());
+    model.setImageUri(config.getImageCacheUrl());
     PerReqSitemap sitemap =
         new PerReqSitemap(PerReqSitemap.SITEMAP_HASHED, model, isPlaceSitemap, prefix, index);
     Thread t = new Thread(sitemap);
@@ -362,15 +358,19 @@ public class SitemapController {
   }
 
   /**
-   * Flush _ALL_ sitemaps from the cache
+   * Flush (all, or a single) sitemap(s) from the cache
    * 
-   * @param flush boolean for confirmation of flush
+   * @param flush boolean for confirmation of flush (true required for flushing, anything else won't flush)
+   * @param prefix The prefix of the sitemap if a single one is to be flushed
+   * @param index The index of the sitemap to flush; if this isn't supplied, '000' is used
    * @param response The {@link HttpServletResponse}
    * @throws IOException
    */
   @RequestMapping("/europeana-sitemap-flush-cache")
-  public void flushCache(@RequestParam(value = "flush", defaultValue = "false") boolean flush, HttpServletResponse response)
-      throws IOException {
+  public void flushCache(@RequestParam(value = "flush", defaultValue = "false") boolean flush,
+      @RequestParam(value = "prefix", required = false) String prefix,
+      @RequestParam(value = "index", required = false) String index,
+      HttpServletResponse response) throws IOException {
 
     response.setCharacterEncoding("UTF-8");
     StringBuilder sb = new StringBuilder();
@@ -378,41 +378,62 @@ public class SitemapController {
     sb.append("<h1>Cache flush</h1>");
 
     sb.append("Flush action: ").append(flush).append("</br>");
-    
-    if (flush)
-    {
+
+    if (flush) {
       // Really flush the cache
       Jedis jedis = redisProvider.getJedis();
 
-      if (log.isInfoEnabled()) {
+      if (prefix == null) {
+        if (log.isInfoEnabled()) {
           log.info("Flushing ALL sitemaps from the cache: ");
         }
-      
-      String msg = jedis.flushDB();
 
-      if (log.isInfoEnabled()) {
-        log.info("ALL sitemaps have been flushed from the cache");
-      }
+        String msg = jedis.flushDB();
 
-      sb.append("Flushed ALL sitemaps: ").append(msg).append("</br>");
-      
+          if (log.isInfoEnabled()) {
+            log.info("ALL sitemaps have been flushed from the cache");
+          }
+          
+          sb.append("Flushed ALL sitemaps: ").append(msg).append("</br>");
+        }
+      else {
+        // If index is not supplied, assume we want to delete the first one
+        if (index == null)
+          index = "000";
+        
+        String sitemap = SITEMAP_HASHED + String.format(SITEMAP_HASHED_PARAMS, prefix, index, false) + XML;
+        if (log.isInfoEnabled()) {
+          log.info(String.format("Flushing sitemap %s from the cache", sitemap));
+        }
+        
+        Long count = jedis.del(sitemap);
+
+          if (log.isInfoEnabled()) {
+            log.info("Number of sitemaps flushed from the cache:" + count);
+          }
+          
+          sb.append("Flushing sitemap: ").append(sitemap).append("</br>");
+          sb.append("Number of sitemaps flushed from the cache: ")
+              .append(count).append("</br>");
+        }
+
       redisProvider.returnJedis(jedis);
     }
-      
+
     sb.append("</body></html>");
 
-      // Generate response
-      try {
-        ServletOutputStream out = response.getOutputStream();
-        out.print(sb.toString());
-        out.flush();
-      } catch (Exception e) {
-        log.error(String.format(
-            "Exception thrown while flushing sitemap cache: %s",
-            e.getLocalizedMessage()), e);
-      }    
+    // Generate response
+    try {
+      ServletOutputStream out = response.getOutputStream();
+      out.print(sb.toString());
+      out.flush();
+    } catch (Exception e) {
+      log.error(
+          String.format("Exception thrown while flushing sitemap cache: %s",
+              e.getLocalizedMessage()), e);
+    }
   }
-  
+
   /**
    * NOTE: This is a draft method for creating a video sitemap
    * (https://support.google.com/webmasters/answer/80472?hl=en). The RequestMapping has been
@@ -432,7 +453,7 @@ public class SitemapController {
       HttpServletRequest request, HttpServletResponse response) throws EuropeanaQueryException,
       IOException {
 
-	Jedis jedis = redisProvider.getJedis();
+    Jedis jedis = redisProvider.getJedis();
     // Return a 404 if the sitemap cache cannot be used
     if (!jedis.isConnected()) {
       response.setStatus(404);
@@ -747,11 +768,11 @@ public class SitemapController {
         return true;
       } else {
         if (!actualSolrUpdate.equals(lastSolrUpdate)) {
-            Jedis jedis = redisProvider.getJedis();
+          Jedis jedis = redisProvider.getJedis();
 
-            Long size = jedis.dbSize();
-            jedis.flushDB();
-            
+          Long size = jedis.dbSize();
+          jedis.flushDB();
+
           if (log.isInfoEnabled()) {
             log.info("Deleted " + size + " sitemaps from cache");
           }
