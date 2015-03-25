@@ -3,7 +3,7 @@ log = function(msg){
 	//console.log(msg);
 }
 
-var EuCarousel = function(cmp, data, pathCorrection){
+var EuCarousel = function(cmp, data){
 	var position = 1;
 	var left, right, items;
 	var cmp = $(cmp);
@@ -12,8 +12,6 @@ var EuCarousel = function(cmp, data, pathCorrection){
 	var inView = 0;
 	var total = data.length;
 	var animating = false;
-	var pathCorrection = pathCorrection ? pathCorrection : '';
-	
 	var anchor = function(){
 		animating = true;
 		cmp.css('overflow-x', 'hidden');
@@ -170,7 +168,7 @@ var EuCarousel = function(cmp, data, pathCorrection){
 		right = $('<a class="carousel-right icon-arrow-2"></a>').appendTo(cmp);
 
 		$.each(data, function(i, ob){
-			items.append('<a class="carousel-item" href="' + pathCorrection + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
+			items.append('<a class="carousel-item" href="' + ob.link + '" target="' + (ob.linkTarget) + '"><img src="' + ob.thumb + '"/><span class="info">' + ob.title + '</span></a>');
 		});
 		
 		$('.carousel-item .info').each(function(i, ob){

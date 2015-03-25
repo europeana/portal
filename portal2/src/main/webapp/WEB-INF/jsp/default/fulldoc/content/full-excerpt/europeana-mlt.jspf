@@ -107,14 +107,14 @@
 				<c:choose>
 					<c:when test="${status.first}">
 						<div class="mlt-single-wrapper">
-							<a href="${doc.fullDocUrl}" class="mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
+							<a href="${model.portalUrlNS}${doc.fullDocUrl}" class="mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
 							<div class="mlt-title">
 								${doc.title}
 							</div>
 						</div>
 					</c:when>
 					<c:otherwise>
-						<a href="${doc.fullDocUrl}" class="hidden mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
+						<a href="${model.portalUrlNS}${model.portalUrl}${doc.fullDocUrl}" class="hidden mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
