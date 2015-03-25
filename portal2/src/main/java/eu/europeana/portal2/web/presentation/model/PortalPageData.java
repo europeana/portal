@@ -114,6 +114,10 @@ public abstract class PortalPageData extends PageData {
 	public String getPortalUrl() {
 		return portalUrl;
 	}
+	
+	public String getPortalUrlNS() {
+		return portalUrl.substring(0, portalUrl.length()-1);
+	}
 
 	public void setPortalUrl(String portalUrl) {
 		this.portalUrl = portalUrl;
