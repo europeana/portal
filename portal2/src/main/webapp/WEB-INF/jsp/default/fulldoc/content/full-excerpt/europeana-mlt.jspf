@@ -114,7 +114,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<a href="${model.portalUrlNS}${model.portalUrl}${doc.fullDocUrl}" class="hidden mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
+						<a href="${model.portalUrlNS}${doc.fullDocUrl}" class="hidden mlt-link" title="${doc.title}"><img src="${doc.thumbnail}" /></a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
