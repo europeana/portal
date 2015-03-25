@@ -60,7 +60,11 @@ public class LoginPageController {
 		log.info("requestedAction: " + requestedAction);
 
 		if (email != null) {
-			String baseUrl = config.getPortalUrl();
+			//String baseUrl = config.getPortalUrl();
+			String baseUrl = config.getPortalServer();
+			if(baseUrl.endsWith("/")){
+				baseUrl = baseUrl.substring(0, baseUrl.length()-1);
+			}
 
 			// Register
 			if (REGISTER.equals(requestedAction)) {

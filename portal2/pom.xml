@@ -34,7 +34,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.europeanaCorelib>2.1-SNAPSHOT</version.europeanaCorelib>
-		
+
 		<europeana.server>http://www.europeana.eu/portal/</europeana.server>
 	</properties>
 
@@ -109,7 +109,7 @@
 				<version>1.2</version>
 				<executions>
 
-					<!-- SASSIFY -->					
+					<!-- SASSIFY -->
 					<execution>
 						<id>sassify</id>
 						<phase>prepare-package</phase>
@@ -119,13 +119,13 @@
 						<configuration>
 							<mainClass>eu.europeana.portal2.web.presentation.ThemeSassCompiler</mainClass>
 							<arguments>
-	                             <argument>${europeana.server}</argument>
-	                        </arguments>
+								<argument>${europeana.server}</argument>
+							</arguments>
 						</configuration>
 					</execution>
 
 
-					<!-- PULL LATEST STATIC RESOURCES -->					
+					<!-- PULL LATEST STATIC RESOURCES -->
 					<execution>
 						<id>portal-static</id>
 						<phase>compile</phase>
@@ -136,7 +136,7 @@
 							<executable>src/main/resources/bundle</executable>
 						</configuration>
 					</execution>
-					
+
 				</executions>
 			</plugin>
 			<plugin>
@@ -220,10 +220,22 @@
 		</dependency>
 
 		<dependency>
-		<groupId>redis.clients</groupId>
-		<artifactId>jedis</artifactId>
-		<version>2.6.1</version>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.6.1</version>
 		</dependency>
+
+        <dependency>
+            <groupId>eu.europeana.corelib</groupId>
+            <artifactId>corelib-media-storage</artifactId>
+            <version>${version.europeanaCorelib}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.europeana.corelib</groupId>
+            <artifactId>corelib-storage</artifactId>
+            <version>${version.europeanaCorelib}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -325,25 +337,15 @@
 		<!-- Added for sass -->
 
 		<dependency>
-		    <groupId>com.darrinholst</groupId>
-		    <artifactId>sass-java</artifactId>
-		    <version>3.4.4.2</version>
-		</dependency>
- 		
- 		<!-- 
-		<dependency>
-			<groupId>org.jruby</groupId>
-			<artifactId>jruby-complete</artifactId>
-			<version>1.7.3</version>
+			<groupId>com.darrinholst</groupId>
+			<artifactId>sass-java</artifactId>
+			<version>3.4.4.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.compass-style</groupId>
-			<artifactId>compass-gems</artifactId>
-			<version>0.12.2</version>
-		</dependency>
- 		 -->
-		
+		<!-- <dependency> <groupId>org.jruby</groupId> <artifactId>jruby-complete</artifactId> 
+			<version>1.7.3</version> </dependency> <dependency> <groupId>org.compass-style</groupId> 
+			<artifactId>compass-gems</artifactId> <version>0.12.2</version> </dependency> -->
+
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jsp-2.1-glassfish</artifactId>
@@ -447,16 +449,49 @@
 			<groupId>commons-codec</groupId>
 			<version>1.9</version>
 		</dependency>
-		
+
 	</dependencies>
 	<profiles>
 		<profile>
 			<id>
-                    test
+				production
             </id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/production</europeana.properties>
+				<europeana.server>http://europeana.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                alpha
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://alpha-web.de.a9sapp.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                beta
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://beta-web.de.a9sapp.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                blue
+            </id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.server>http://blue-web.de.a9sapp.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+                green
+            </id>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
 				<europeana.server>http://green-web.de.a9sapp.eu/portal</europeana.server>
@@ -464,11 +499,14 @@
 		</profile>
 		<profile>
 			<id>
-                    personal
+                personal
             </id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>				
-			    <europeana.server>http://localhost:8080/portal/</europeana.server>
+				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>
+				<europeana.server>http://localhost:8080/portal/</europeana.server>
 			</properties>
 		</profile>
 	</profiles>
@@ -478,12 +516,12 @@
 			<name>Spring Security</name>
 			<url>http://maven.springframework.org/snapshot</url>
 		</repository>
-		
+
 		<repository>
-            <id>sass-java</id>
-            <url>http://sass-java.googlecode.com/svn/repo/</url>
-        </repository>
-		
+			<id>sass-java</id>
+			<url>http://sass-java.googlecode.com/svn/repo/</url>
+		</repository>
+
 	</repositories>
 </project>
 
