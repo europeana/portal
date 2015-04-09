@@ -56,6 +56,34 @@ eu.europeana.header = {
 	                NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
 	              });
 	              
+	              $('.thumb-frame').click(function(e){
+	            	  
+	                var $cmp   = $(e.target);
+	                var url    = $cmp.closest('.li').find('a').attr('href');
+	                var facets = $.url(url).param('qf')
+	                
+	                console.log('facets= ' + JSON.stringify(facets));
+	                
+	                NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
+	                
+	                if(!confirm('follow link?')){
+	                	e.preventDefault();
+	                }
+	              });
+	              
+	              $('#facets-actions li a').click(function(e){
+	            	  
+                      var url = ($(e.target)[0].nodeName.toUpperCase() == 'A' ? $(e.target) : $(e.target).closest('a')).attr('href');
+  	                  var facets = $.url(url).param('qf')
+  	                  
+	                  console.log('facets= ' + JSON.stringify(facets));
+	            	  
+	            	  NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
+	            	  
+	                  if(!confirm('follow link?')){
+	                  	e.preventDefault();
+	                  }
+	              });
 	              
 	              /*
 					400 BAD REQUEST
