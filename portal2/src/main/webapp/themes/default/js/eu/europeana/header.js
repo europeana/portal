@@ -44,7 +44,7 @@ eu.europeana.header = {
 		        */
 
 		        if(eu.europeana.vars.page_name == 'search.html'){
-		        	NOFLogging.query_results(
+		        	NOFLogging.queryResults(
 	        			eu.europeana.vars.query,
 	        			$('.thumb-frame>a').map(function(){
 	        				return $(this).attr('href').split('/record')[1].split('.html?')[0]
