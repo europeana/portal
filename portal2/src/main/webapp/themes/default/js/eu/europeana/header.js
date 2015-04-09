@@ -17,8 +17,8 @@ eu.europeana.header = {
 		console.log('init904');
 	
 		
-		  var NOFLogging_ready = NOFLogging_ready || [];
-		  NOFLogging_ready.push(function(){
+		  window.NOFLogging_ready = window.NOFLogging_ready || [];
+		  window.NOFLogging_ready.push(function(){
 			
 			console.log('execute function in ready');
 
@@ -39,6 +39,17 @@ eu.europeana.header = {
 		           }
 		        };
 		        NOFLogging.query("test query", query_properties);
+		        
+		        // event binding
+
+		        $('.thumb-frame').click(function(e){
+		          var $cmp = $(e.target);
+		          var url = $cmp.closest('.li').find('a').attr('href');
+		          url = url.split('/record')[1];
+		          url = url.split('.html?')[0];
+		          NOFLogging.query(eu.europeana.vars.query, url);
+		        });
+		        
 		    });
 		});
 		  
@@ -56,7 +67,6 @@ eu.europeana.header = {
 	      entry.parentNode.insertBefore(script, entry);
 		})();
 
-		console.log('done init904: NOFLogging = ' + NOFLogging);
 		
 	},
 	init : function() {
