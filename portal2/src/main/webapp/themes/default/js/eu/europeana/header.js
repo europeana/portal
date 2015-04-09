@@ -45,31 +45,21 @@ eu.europeana.header = {
             
 
             if(eu.europeana.vars.page_name == 'search.html'){
-            	
-	              $('.thumb-frame').click(function(e){
-	                var $cmp   = $(e.target);
-	                var url    = $cmp.closest('.li').find('a').attr('href');
-	                var facets = $.url(url).param('qf')
-	                
-	                console.log('facets= ' + JSON.stringify(facets));
-	                
-	                NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
-	              });
-	              
+
 	              $('.thumb-frame').click(function(e){
 	            	  
-	                var $cmp   = $(e.target);
-	                var url    = $cmp.closest('.li').find('a').attr('href');
-	                var facets = $.url(url).param('qf')
-	                
-	                console.log('facets= ' + JSON.stringify(facets));
-	                
-	                NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
-	                
-	                if(!confirm('follow link?')){
-	                	e.preventDefault();
-	                }
+		                var url    = $(e.target).closest('.li').find('a').attr('href');
+		                var facets = $.url(url).param('qf')
+		                
+		                console.log('facets= ' + JSON.stringify(facets));
+		                
+		                NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
+		                
+		                if(!confirm('follow link?')){
+		                	e.preventDefault();
+		                }
 	              });
+
 	              
 	              $('#facets-actions li a').click(function(e){
 	            	  
