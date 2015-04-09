@@ -13,6 +13,9 @@ js.utils.registerNamespace( 'eu.europeana.header' );
 
 eu.europeana.header = {
 	
+	init904 :function(){
+		console.log('init904');
+	},
 	init : function() {
 
 		/* general utilities */
@@ -51,6 +54,8 @@ eu.europeana.header = {
 		// setup tabs
 		this.setupTabbing();
 		this.setDefaultFocus();
+		
+		this.init904();
 	},
 	
 	
