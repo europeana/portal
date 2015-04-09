@@ -16,46 +16,12 @@ eu.europeana.header = {
 	init904 :function(){
 		console.log('init904');
 	
-		(function() {
-	      var script = document.createElement('script');
-	      script.async = true;
-	      
-	      script.onload = function(){
-
-	  		  console.log('noflogging loaded');
-
-			  var NOFLogging_ready = NOFLogging_ready || [];
-			  NOFLogging_ready.push(function(){
-			    var config = {
-			        api_url: 'http://analytics.904labs.com',
-			        project_key: 'c6k2l3csHzhHlRMIEEyVPCEERcSDSozQDf1IPk0rfhg',
-			        log_mouse_movements: false,
-			        log_mouse_clicks: false,
-			        post_events_queue_on_browser_close: true,
-			        log_browser_close: true,
-			        debug: false
-			    };
-			    NOFLogging.init(config, function(){
-			        console.log('ready for action');
-			        var query_properties = {
-			           filters: {
-			               collections: ['newspapers']
-			           }
-			        };
-			        NOFLogging.query("test query", query_properties);
-			    });
-			});
-			  
-	      }
-	      
-	      script.src = 'http://analytics.904labs.com/static/jssdk/noflogging-0.2.min.js';
-	      var entry = document.getElementsByTagName('script')[0];
-	      entry.parentNode.insertBefore(script, entry);
-		})();
-
-		/*
+		
 		  var NOFLogging_ready = NOFLogging_ready || [];
 		  NOFLogging_ready.push(function(){
+			
+			console.log('execute function in ready');
+
 		    var config = {
 		        api_url: 'http://analytics.904labs.com',
 		        project_key: 'c6k2l3csHzhHlRMIEEyVPCEERcSDSozQDf1IPk0rfhg',
@@ -75,8 +41,21 @@ eu.europeana.header = {
 		        NOFLogging.query("test query", query_properties);
 		    });
 		});
-		*/
 		  
+		
+		(function() {
+	      var script = document.createElement('script');
+	      script.async = true;
+	      
+	      script.onload = function(){
+	  		  console.log('noflogging loaded');
+	      }
+	      
+	      script.src = 'http://analytics.904labs.com/static/jssdk/noflogging-0.2.min.js';
+	      var entry = document.getElementsByTagName('script')[0];
+	      entry.parentNode.insertBefore(script, entry);
+		})();
+
 		console.log('done init904: NOFLogging = ' + NOFLogging);
 		
 	},
