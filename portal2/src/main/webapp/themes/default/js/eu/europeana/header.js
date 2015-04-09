@@ -33,15 +33,35 @@ eu.europeana.header = {
 		    };
 		    NOFLogging.init(config, function(){
 		        console.log('ready for action');
+		        
+		        /*
 		        var query_properties = {
 		           filters: {
 		               collections: ['newspapers']
 		           }
 		        };
 		        NOFLogging.query("test query", query_properties);
+		        */
+
+		        if(eu.europeana.vars.page_name == 'search.html'){
+		        	NOFLogging.query_results(
+	        			eu.europeana.vars.query,
+	        			$('.thumb-frame>a').map(function(){
+	        				return $(this).attr('href').split('/record')[1].split('.html?')[0]
+	        			}).get(),
+	        			eu.europeana.vars.msg.result_count,
+	        			$('.thumb-frame').length
+		        	);
+		        }
 		        
 		        // event binding
-
+		        /*
+		         * NOFLogging.query
+		         * 		- any search term change or facet change
+		         * NOFLogging.query_results
+		          * 	- query, array of results, total-no-res, no-res-vis-on-page, optional-time-taken-to-load-page
+		         * */
+		        
 		        $('.thumb-frame').click(function(e){
 		          var $cmp = $(e.target);
 		          var url = $cmp.closest('.li').find('a').attr('href');
