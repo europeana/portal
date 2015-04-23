@@ -443,7 +443,7 @@
 		<profile>
 			<id>
 				production
-            </id>
+            		</id>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/production</europeana.properties>
 				<europeana.server>http://europeana.eu/portal</europeana.server>
@@ -451,8 +451,17 @@
 		</profile>
 		<profile>
 			<id>
-                alpha
-            </id>
+				botter
+            		</id>
+			<properties>
+				<europeana.properties>${project.parent.basedir}/properties/botter</europeana.properties>
+				<europeana.server>http://europeana.eu/portal</europeana.server>
+			</properties>
+		</profile>
+		<profile>
+			<id>
+        			alpha
+            		</id>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
 				<europeana.server>http://alpha-web.de.a9sapp.eu/portal</europeana.server>
@@ -460,8 +469,8 @@
 		</profile>
 		<profile>
 			<id>
-                beta
-            </id>
+                		beta
+            		</id>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
 				<europeana.server>http://beta-web.de.a9sapp.eu/portal</europeana.server>
@@ -469,8 +478,8 @@
 		</profile>
 		<profile>
 			<id>
-                blue
-            </id>
+                		blue
+	            	</id>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
 				<europeana.server>http://blue-web.de.a9sapp.eu/portal</europeana.server>
@@ -478,8 +487,8 @@
 		</profile>
 		<profile>
 			<id>
-                green
-            </id>
+		                green
+            		</id>
 			<properties>
 				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
 				<europeana.server>http://green-web.de.a9sapp.eu/portal</europeana.server>
@@ -487,8 +496,8 @@
 		</profile>
 		<profile>
 			<id>
-                personal
-            </id>
+                		personal
+            		</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
