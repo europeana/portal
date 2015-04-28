@@ -20,8 +20,6 @@ eu.europeana.header = {
     window.NOFLogging_ready = window.NOFLogging_ready || [];
     window.NOFLogging_ready.push(function(){
       
-    console.log('execute function in ready');
-
     var config = {
       api_url: 'http://analytics.904labs.com',
       project_key: 'c6k2l3csHzhHlRMIEEyVPCEERcSDSozQDf1IPk0rfhg',
@@ -43,36 +41,72 @@ eu.europeana.header = {
             NOFLogging.query("test query", query_properties);
             */
             
+            var queryNOF = function(newUrl){
+
+                var facets     = $.url(newUrl).param('qf');
+                var data       = {};
+                
+                if(facets){
+                	facets = (facets instanceof Array) ? facets : [facets];
+                	
+                    var fd = {};
+
+                    for(var i=0; i<facets.length; i++){
+                    	
+                        var fs    = facets[i].replace(/http:\/\//g, '').split(':');
+                        var fName = fs[0];
+                        var fVal  = fs.length > 1 ? fs[1] : '';
+                        
+                        if(fVal.length == 0){
+                        	fVal = fName;
+                        	fName = 'refinements';
+                        }
+                        if(fName=='RIGHTS'){
+                        	fVal = 'http://' + fVal;
+                        }
+                        if(fd[fs[0]]){
+                            fd[fName].push(fVal);
+                        }
+                        else{
+                            fd[fName] = [fVal];
+                        }
+                    }
+                    data.facets = fd;
+                }
+  		    	console.log('queryNOF: ' + '\n\t' + newUrl + '\n\t' + JSON.stringify(data));
+                NOFLogging.query(window.location.href, data);
+            }
+            
+            var checkFollow = function(e){
+                if(js.debug && !confirm('follow link?')){
+                  	e.preventDefault();
+                  }
+            }
 
             if(eu.europeana.vars.page_name == 'search.html'){
-
-	              $('.thumb-frame').click(function(e){
+            	
+	              $('.thumb-frame').add('.thumb-frame + a').click(function(e){
 	            	  
-		                var url    = $(e.target).closest('.li').find('a').attr('href');
-		                var facets = $.url(url).param('qf')
-		                
-		                console.log('facets= ' + JSON.stringify(facets));
-		                
-		                NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
-		                
-		                if(!confirm('follow link?')){
-		                	e.preventDefault();
-		                }
+		              var url = $(e.target).closest('.li').find('a').attr('href');
+		              queryNOF(url);
+
+		              checkFollow(e);
 	              });
-
 	              
-	              $('#facets-actions li a').click(function(e){
+	              $('#facets-actions li a label').add('#facets-actions li input[type=checkbox]').click(function(e){
 	            	  
-                      var url = ($(e.target)[0].nodeName.toUpperCase() == 'A' ? $(e.target) : $(e.target).closest('a')).attr('href');
-  	                  var facets = $.url(url).param('qf')
-  	                  
-	                  console.log('facets= ' + JSON.stringify(facets));
+                      var url = ($(e.target)[0].nodeName.toUpperCase() == 'LABEL' ? $(e.target).closest('a') : $(e.target).next('a')).attr('href');
+                      queryNOF(url);
 	            	  
-	            	  NOFLogging.query(eu.europeana.vars.query, { filters:facets  } );
+	                  checkFollow(e);
+	              });
+	              
+	              $('#refine-search-form').submit(function(e){
 	            	  
-	                  if(!confirm('follow link?')){
-	                  	e.preventDefault();
-	                  }
+	            	  var urlExt = '&qf=' + encodeURIComponent($('#refine-search-form #newKeyword').val());
+	                  queryNOF(window.location.href + urlExt);
+	            	  
+	                  checkFollow(e);
 	              });
 	              
 	              /*
