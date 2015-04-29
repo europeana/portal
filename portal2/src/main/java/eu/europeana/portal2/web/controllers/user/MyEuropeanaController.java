@@ -47,6 +47,15 @@ public class MyEuropeanaController {
 
 	Logger log = Logger.getLogger(this.getClass());
 	
+	public static void main(String[] args){
+		String s = "http://some/sit.com/";
+		
+		if(s.endsWith("/")){
+			s = s.substring(0, s.length()-1);
+		}
+		System.err.println(s);
+	}
+	
 	@Resource
 	private UserService userService;
 
@@ -168,7 +177,10 @@ public class MyEuropeanaController {
 
 		if (email != null) {
 			
-			String baseUrl = getRootURL(request);
+			String baseUrl = config.getPortalServer();
+			if(baseUrl.endsWith("/")){
+				baseUrl = baseUrl.substring(0, baseUrl.length()-1);
+			}
 			
 			// Register for My Europeana
 			if (REGISTER_FOR_MYEUROPEANA.equals(requestedAction)) {
@@ -260,6 +272,7 @@ public class MyEuropeanaController {
 		return search;
 	}
 
+	/*
 	private String getRootURL(HttpServletRequest req) {
 
 	    String scheme = req.getScheme();
@@ -275,8 +288,10 @@ public class MyEuropeanaController {
 	        url.append(":").append(serverPort);
 	    }
 	    url.append(contextPath);
+	    
 	    return url.toString();
 	}
+	*/
 	
 	private boolean emailExists(String email) {
 		User user = userService.findByEmail(email);
