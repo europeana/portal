@@ -32,61 +32,134 @@ eu.europeana.header = {
         NOFLogging.init(config, function(){
             console.log('ready for action');
             
-            /*
-            var query_properties = {
-               filters: {
-                   collections: ['newspapers']
-               }
-            };
-            NOFLogging.query("test query", query_properties);
-            */
-            
+            /* Wrapper function for NOFLogging.query
+             * 
+             * @newUrl - requested search page url that facet data can be extracted from 
+             * 
+             * */
             var queryNOF = function(newUrl){
 
-                var facets     = $.url(newUrl).param('qf');
-                var data       = {};
-                
-                if(facets){
-                	facets = (facets instanceof Array) ? facets : [facets];
+            	var purl       = $.url(newUrl);
+            	var queryParam = purl.param('query');
+            	
+                if(queryParam){
                 	
-                    var fd = {};
+                	var facets     = purl.param('qf');
+                	var rowsParam  = purl.param('rows');
+                	
+                	var data       = { "NTW" : (window.history.length == 1)};
 
-                    for(var i=0; i<facets.length; i++){
-                    	
-                        var fs    = facets[i].replace(/http:\/\//g, '').split(':');
-                        var fName = fs[0];
-                        var fVal  = fs.length > 1 ? fs[1] : '';
-                        
-                        if(fVal.length == 0){
-                        	fVal = fName;
-                        	fName = 'refinements';
-                        }
-                        if(fName=='RIGHTS'){
-                        	fVal = 'http://' + fVal;
-                        }
-                        if(fd[fs[0]]){
-                            fd[fName].push(fVal);
-                        }
-                        else{
-                            fd[fName] = [fVal];
-                        }
-                    }
-                    data.facets = fd;
+                	if(rowsParam){
+                		data.rows = rowsParam;
+                	}
+                	
+                	if(facets){
+                		facets = (facets instanceof Array) ? facets : [facets];
+                		
+                		var fd = {};
+                		
+                		for(var i=0; i<facets.length; i++){
+                			
+                			var fs    = facets[i].replace(/http:\/\//g, '').split(':');
+                			var fName = fs[0];
+                			var fVal  = fs.length > 1 ? fs[1] : '';
+                			
+                			if(fVal.length == 0){
+                				fVal = fName;
+                				fName = 'refinements';
+                			}
+                			if(fName=='RIGHTS'){
+                				fVal = 'http://' + fVal;
+                			}
+                			if(fd[fs[0]]){
+                				fd[fName].push(fVal);
+                			}
+                			else{
+                				fd[fName] = [fVal];
+                			}
+                		}
+                		data.facets = fd;
+                	}
+                	console.log('queryNOF: ' + '\n\t@newUrl: ' + newUrl + '\n\tdata: ' + JSON.stringify(data));
+                	NOFLogging.query(queryParam, data);
                 }
-  		    	console.log('queryNOF: ' + '\n\t' + newUrl + '\n\t' + JSON.stringify(data));
-                NOFLogging.query(window.location.href, data);
+                else{
+                	console.log('no q param in ' + newUrl)
+                }
             }
             
+            /*
+             * Utility to remain on current page following links
+             * */
             var checkFollow = function(e){
                 if(js.debug && !confirm('follow link?')){
+                	console.log('block ev');
                   	e.preventDefault();
                   }
             }
-
+            
+            /*
+             * NOF binding for all pages
+             * 
+             * */
+            $('#query-search').submit(function(e){
+          	    var urlExt = 'http://x.com/?query=' + encodeURIComponent($('#query-search #query-input').val());
+                queryNOF(urlExt);
+          	  
+                checkFollow(e);
+            });
+            
             if(eu.europeana.vars.page_name == 'search.html'){
-            	
+
+            	  /*
+            	   * Log results for this page
+            	   * */
+            	  var objectIds = [];
+            	  
+	              $('.thumb-frame>a').each(function(){
+	            	  var url = $(this).attr('href');
+	            	  url =  /\/record\/([^;]+).html/.exec(url)[1]
+	            	  objectIds.push(url);
+	              });
+	              
+	              NOFLogging.queryResults(
+  		            objectIds,
+  		            eu.europeana.vars.msg.result_count,
+  		            $('.thumb-frame').length
+  		          );
+
+	              return;
+	              
+            	 /*
+            	  * Extra NOF binding for search page
+            	  * 
+            	  * */
+
+	  			$('.nav-next a').add('.nav-prev a').add('.nav-first a').add('.nav-last a').click(function(e){
+			    	  
+			    	  var url   = $(e.target).attr('href');
+			    	  var start = $.url(url).param('start');
+			    	  
+			          var cPage = Math.ceil(eu.europeana.vars.msg.start / eu.europeana.vars.rows);
+			          var nPage = Math.ceil(start / eu.europeana.vars.rows);
+			          
+			          NOFLogging.paginate(nPage, cPage);
+			      });
+
+				$('.jump-to-page').submit(function(e){
+					
+			        var cPage = Math.ceil(eu.europeana.vars.msg.start / eu.europeana.vars.rows);
+					var nPage = $(e.target).find('#start-page').val();
+
+					if(nPage && typeof parseInt(nPage) == 'number'){
+				        NOFLogging.paginate(cPage, nPage);
+					}
+					e.preventDefault();
+				});
+
+
+	              
 	              $('.thumb-frame').add('.thumb-frame + a').click(function(e){
-	            	  
 		              var url = $(e.target).closest('.li').find('a').attr('href');
 		              queryNOF(url);
 
@@ -94,38 +167,29 @@ eu.europeana.header = {
 	              });
 	              
 	              $('#facets-actions li a label').add('#facets-actions li input[type=checkbox]').click(function(e){
-	            	  
                       var url = ($(e.target)[0].nodeName.toUpperCase() == 'LABEL' ? $(e.target).closest('a') : $(e.target).next('a')).attr('href');
                       queryNOF(url);
-	            	  
+
+                      e.stopPropagation();
 	                  checkFollow(e);
 	              });
-	              
+
+	              $('#search-filter a').add('#search-filter a span').click(function(e){
+                      var url = ($(e.target)[0].nodeName.toUpperCase() == 'SPAN' ? $(e.target).closest('a') : $(e.target)).attr('href');
+                      queryNOF(url);
+                      
+                      e.stopPropagation();
+	                  checkFollow(e);
+	              });
+
+  
 	              $('#refine-search-form').submit(function(e){
-	            	  
 	            	  var urlExt = '&qf=' + encodeURIComponent($('#refine-search-form #newKeyword').val());
 	                  queryNOF(window.location.href + urlExt);
 	            	  
 	                  checkFollow(e);
 	              });
 	              
-	              /*
-					400 BAD REQUEST
-					{
-					  "error": "Missing 'state.query'",
-					  "status": "error"
-					}
-	              */ 
-	              /*
-	              NOFLogging.queryResults(
-		            // eu.europeana.vars.query,
-		            $('.thumb-frame>a').map(function(){
-		              return $(this).attr('href').split('/record')[1].split('.html?')[0];  // extract record ids
-		            }).get(),
-		            eu.europeana.vars.msg.result_count,
-		            $('.thumb-frame').length
-		          );
-	              */ 
             }
 
             /*
@@ -145,7 +209,7 @@ eu.europeana.header = {
 			js.loader.loadScripts([{
 				file : 'noflogging-0.2.min.js',
 				path : 'http://analytics.904labs.com/static/jssdk/'
-			}]);
+			}]);			
 		}
 	}]);
 
@@ -206,9 +270,9 @@ eu.europeana.header = {
     this.setupTabbing();
     this.setDefaultFocus();
     
-    if(window.location.href.indexOf('904=true')>-1){
+    //if(window.location.href.indexOf('904=true')>-1){
     	this.init904();    	
-    }
+    //}
   },
   
   
