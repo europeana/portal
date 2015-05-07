@@ -47,14 +47,6 @@ public class MyEuropeanaController {
 
 	Logger log = Logger.getLogger(this.getClass());
 	
-	public static void main(String[] args){
-		String s = "http://some/sit.com/";
-		
-		if(s.endsWith("/")){
-			s = s.substring(0, s.length()-1);
-		}
-		System.err.println(s);
-	}
 	
 	@Resource
 	private UserService userService;
