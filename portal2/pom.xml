@@ -475,7 +475,7 @@
                 beta
             </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.properties>${project.parent.basedir}/properties/beta</europeana.properties>
 				<europeana.server>http://beta-web.de.a9sapp.eu/portal</europeana.server>
 			</properties>
 		</profile>
