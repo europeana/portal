@@ -392,4 +392,24 @@ public class BriefBeanDecorator implements BriefBean {
 	public Boolean getPreviewNoDistribute() {
 		return briefBean.getPreviewNoDistribute();
 	}
+        
+        @Override
+        public Map<String,List<String>>getDcTitleLangAware(){
+            return briefBean.getDcTitleLangAware();
+        }
+        
+        @Override
+        public Map<String,List<String>> getDcCreatorLangAware(){
+            return briefBean.getDcCreatorLangAware();
+        }
+        
+        @Override
+        public Map<String,List<String>> getDcContributorLangAware(){
+            return briefBean.getDcContributorLangAware();
+        }
+        
+        @Override
+        public Map<String,List<String>> getDcLanguageLangAware(){
+            return briefBean.getDcLanguageLangAware();
+        }
 }
