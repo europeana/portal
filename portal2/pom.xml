@@ -1702,11 +1702,6 @@
 			<version>2.6.1</version>
 		</dependency>
 
-        <dependency>
-            <groupId>eu.europeana.corelib</groupId>
-            <artifactId>corelib-media-storage</artifactId>
-            <version>${version.europeanaCorelib}</version>
-        </dependency>
 
         <dependency>
             <groupId>eu.europeana.corelib</groupId>
