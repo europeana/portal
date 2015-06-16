@@ -50,9 +50,12 @@ public class ThemeSassCompiler {
 	public void compile(String server){
 		
 		deleteFolder(new File(cssLocation));
-		
+		String path = new java.io.File("").getAbsolutePath();
+		if (!path.endsWith("portal")){
+			path=path+"/portal";	
+		}
 		File config = new File(
-				(new java.io.File("").getAbsolutePath() + sassLocation).replace("/portal2/portal2", "/portal2"),
+				(path+ sassLocation).replace("/portal2/portal2", "/portal2"),
 				"config.rb");
 		
 		setConfigLocation(config);
