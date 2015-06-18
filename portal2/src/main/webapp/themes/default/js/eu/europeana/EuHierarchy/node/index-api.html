@@ -63,6 +63,7 @@
 		
 		<a class="gcp"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[gcp]</a>
 		<a class="gtd"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[gtd]</a>
+		<a class="tr-ul"         style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[trul]</a>
 		
 		<br/>
 		<input id="chunk" type="number" tab-index="1" style="float:right; margin-bottom: 0.75em; margin-top: 0.75em;">
@@ -92,8 +93,8 @@
 		</div>
 		
 		<!-- 
-		 -->
 		<img src="https://bigfiles.assembla.com/spaces/europeana/documents/download/dRFgfOLv0r44oGacwqjQYw"/>
+		 -->
 
 		
 		<script type="text/javascript">
@@ -123,22 +124,30 @@
 				
 				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
 				/*
-				*/
-
-				
 				$.getJSON('http://localhost:3000/1-1-2-1/ancestor-self-siblings.json', null, function( data ) {
 					hierarchy.init(data, true);
 				});
+				*/
 				
+				$.getJSON('http://localhost:3000/1-3-8/ancestor-self-siblings.json', null, function( data ) {
+					hierarchy.init(data, true);
+				});
+				
+				
+				// fails to load 1st child of several siblings
 				/*
-
+				$.getJSON('http://localhost:3000/1-2-2/ancestor-self-siblings.json', null, function( data ) {
+					hierarchy.init(data, true);
+				});
 				*/
 
+				
+				
 				/*
 				hierarchy.init(param ? param : 'http://localhost:3000/1-1-2-2/self.json?wskey=api2demo');
 				hierarchy.init(
 						{"action":"self.json","self":{"id":"1-4","title":{"def":["Volume 4 (b1)"]},"type":"text","index":4,"hasChildren":true,"childrenCount":14,"hasParent":true},"parent":{"id":"1","title":{"def":["Book 1"]},"type":"TEXT","index":"1","hasChildren":true},"success":true}		
-				);
+				
 				*/
 				
 				
@@ -161,5 +170,6 @@
 	
 </body>
 </html>
+
 
 

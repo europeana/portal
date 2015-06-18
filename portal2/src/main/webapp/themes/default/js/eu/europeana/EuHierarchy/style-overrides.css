@@ -361,6 +361,10 @@
 	background-size: 1em 1em;
 }
 
+#hierarchy.jstree-default .jstree-leaf.ol-ul > .jstree-ocl{
+	background-image:    url(connector-leaf-ol-ul.png);
+}
+
 .uninitialised #hierarchy.jstree-default .jstree-leaf > .jstree-ocl{
 	background-image:    none;
 }
@@ -379,13 +383,21 @@
 	background-size: 1em 1em;
 }
 
+#hierarchy.jstree-default .jstree-open.ul > .jstree-ocl{
+	background-image:    url(connector-opened-fake-rel.png);
+}
+
 .uninitialised #hierarchy.jstree-default .jstree-open > .jstree-ocl{
 	background-image:    none;
 }
 
 
 #hierarchy.jstree-default .jstree-open.jstree-last > .jstree-ocl{
-	background-image:    url(connector-opened-last.png);			
+	background-image:    url(connector-opened-last.png);
+}
+
+#hierarchy.jstree-default .jstree-open.jstree-last.ul > .jstree-ocl{
+	background-image:    url(connector-opened-last-fake-rel.png);
 }
 
 .uninitialised #hierarchy.jstree-default .jstree-open.jstree-last > .jstree-ocl{
@@ -408,6 +420,22 @@
 	background-size: 1em 1em;
 }
 
+#hierarchy.jstree-default .jstree-closed.ol-ul > .jstree-ocl{
+	background-image:    url(connector-closed-ol-ul.png);
+}
+
+
+#hierarchy.jstree-default .jstree-closed.ul > .jstree-ocl{
+	background-image:    url(connector-closed-fake-rel.png);
+}
+
+/*
+!#hierarchy.jstree-default .jstree-closed  + .jstree-closed.ul > .jstree-ocl{
+	background-image:    url(connector-closed-last.png);
+}
+*/
+
+
 .uninitialised #hierarchy.jstree-default .jstree-closed > .jstree-ocl{
 	background-image:    none;
 }
@@ -415,6 +443,10 @@
 
 #hierarchy.jstree-default .jstree-closed.jstree-last > .jstree-ocl{
 	background-image:    url(connector-closed-last.png);			
+}
+
+#hierarchy.jstree-default .jstree-closed.jstree-last.ul > .jstree-ocl{
+	background-image:    url(connector-closed-last-fake-rel.png);	
 }
 
 .uninitialised #hierarchy.jstree-default .jstree-closed.jstree-last > .jstree-ocl{
@@ -437,6 +469,19 @@
 	background-repeat: repeat-y;
 }
 
+
+#hierarchy.jstree-default .jstree-open.ol-ul > .jstree-ocl{
+	background-image:    url(connector-opened-ol-ul.png);
+}
+
+#hierarchy.jstree-default .jstree-node.ol-ul{
+	background-image:    none;
+}
+
+#hierarchy.jstree-default .jstree-node.ul{
+	background-image:    url(connector-vertical-fake-rel.png);			
+}
+
 .uninitialised #hierarchy.jstree-default .jstree-node{
 	background-image:    none;
 }
@@ -448,9 +493,17 @@
 #hierarchy.jstree-default .jstree-anchor > .jstree-themeicon{
 	background-image:    url(connector-horizontal.png);			
 	background-position: 0 0;
-	background-size: 1em 1em;
-	background-repeat: repeat-y;
-	
+	background-size:	1em 1em;
+	background-repeat:	repeat-y;
+}
+
+
+#hierarchy.jstree-default .jstree-leaf.ul .jstree-anchor > .jstree-themeicon{
+	background-image:    url(connector-horizontal-fake-rel.png);
+}
+
+#hierarchy.jstree-default .jstree-closed.ul .jstree-anchor > .jstree-themeicon{
+	background-image:    url(connector-horizontal-fake-rel.png);
 }
 
 .uninitialised #hierarchy.jstree-default .jstree-anchor > .jstree-themeicon{
@@ -547,4 +600,18 @@
     top:			0;
     border-radius:	8px 8px 8px 8px;
 }
+
+
+
+#hierarchy.jstree-default .jstree-node.jstree-leaf.ul{
+	background-image: none;
+}
+
+
+
+#hierarchy.jstree-default .jstree-node.jstree-leaf.ul .jstree-ocl,
+#hierarchy.jstree-default .jstree-node.jstree-leaf.jstree-last.ul .jstree-ocl{
+	background-image:    url(connector-fake-rel.png);
+}
+
 
