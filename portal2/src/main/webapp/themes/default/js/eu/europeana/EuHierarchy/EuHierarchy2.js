@@ -664,46 +664,33 @@ var EuHierarchy = function(cmp, rows, wrapper) {
         var bottomArrows = $('<div class="bottom-arrows"></div>').prependTo(self.bottomPanel);
         var xNode        = vNodes[1];
         var rightIndent  = 2;
-        var lastWasUnordered = false;
+        var unordered    = $('#' + xNode.id).hasClass('ul');
         
         if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){          
             var createClass  = 'arrow bottom';
-            var createString = '<div title="' + xNode.id + ' ' + $('#' + vNodes[1].id).hasClass('ul') + '" class="' + createClass + '" style="right:' + rightIndent + 'em">';
+            var createString = '<div title="' + unordered + ' ' + $('#' + vNodes[1].id).hasClass('ul') + '" class="' + createClass + '" style="right:' + rightIndent + 'em">';
             rightIndent++;
             bottomArrows.append(createString);
             bottomArrows.css('width', rightIndent + 'em');
         }
         
         while(xNode.parent){
-            
             var origIndex = xNode.data.index;
             xNode         = self.treeCmp.jstree('get_node', xNode.parent );
-
             if( xNode.id != '#'){
-
                 var totalChildren = xNode.data.hasChildren ? xNode.data.childrenCount : 0;
-                
-                
                 if( $('#' + xNode.id + ' > .jstree-children').length ){
-                    
                     rightIndent ++;
                     var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : 'arrow bottom');
-                    
-                        createClass  = lastWasUnordered ? 'arrow-spacer' : createClass;
-                                
-                    var createString = '<div title="' + xNode.id + ' ' + $('#' + xNode.id).hasClass('ul') + '" class="' + createClass + '" style="right:' + rightIndent + 'em">';
+                    var createString = '<div title="' + unordered + '" class="' + createClass + '" style="right:' + rightIndent + 'em">';
                     
                     bottomArrows.append(createString);
                     bottomArrows.css('width', rightIndent + 'em');
                     
                     $('.hierarchy-next').css('margin-left', (rightIndent+1) + 'em');
                 }
-                else{
-//                  alert('why bother with this check if it is always true???')
-                }
-                lastWasUnordered = $('#' + xNode.id).hasClass('ul');
+                unordered = $('#' + xNode.id).hasClass('ul');
             }
-            
         }// end while   
     } // end function
 
