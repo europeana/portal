@@ -637,10 +637,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
                     
                     rightIndent ++;
                     
-                    var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : 'arrow top');
+                    var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : (unordered ? 'arrow top-ul' : 'arrow top'));
 
                     if(overrideSpacer){
-                        createClass    = 'arrow top';
+                        createClass    = unordered ? 'arrow top-ul' : 'arrow top';
                         overrideSpacer = false;
                     }
                     
@@ -681,7 +681,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
                 var totalChildren = xNode.data.hasChildren ? xNode.data.childrenCount : 0;
                 if( $('#' + xNode.id + ' > .jstree-children').length ){
                     rightIndent ++;
-                    var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : 'arrow bottom');
+                    var createClass  = (origIndex == totalChildren ? 'arrow-spacer' : (unordered ? 'arrow bottom-ul' : 'arrow bottom') );
                     var createString = '<div title="' + unordered + '" class="' + createClass + '" style="right:' + rightIndent + 'em">';
                     
                     bottomArrows.append(createString);
@@ -735,6 +735,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
     
     var doScrollTo = function(el, callback) {
+        
+        addTransitionClasses();
         
         if (typeof el == 'undefined') {
             log('doScrollTo error - undefined @el');

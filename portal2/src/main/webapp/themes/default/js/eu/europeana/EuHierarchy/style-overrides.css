@@ -217,8 +217,16 @@
 .hierarchy-objects  .arrow.top{		
 	background-image:    url(broken-arrow-top-1.png);
 }
+.hierarchy-objects  .arrow.top-ul{		
+	background-image:    url(broken-arrow-top-ul.png);
+}
+
 .hierarchy-objects  .arrow.bottom{	
 	background-image:    url(broken-arrow-bottom-1.png);
+}
+.hierarchy-objects  .arrow.bottom-ul{
+	background-image:    url(broken-arrow-bottom-ul.png);
+	background-color:red;
 }
 
 .hierarchy-objects    .arrow-spacer{
