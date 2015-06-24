@@ -88,6 +88,24 @@ var EuHierarchyTools = function(hierarchy) {
         self.hierarchy.addTransitionClasses();
     });
     
+    $('.off-bel').click(function(){
+        var bottom = self.hierarchy.getVisibleNodes()[1];
+        
+        var next = $('#' + bottom.id).next();
+        
+        if(next.length==0){
+            
+            var closestLi = $('#' + bottom.id).parent().closest('li');
+            console.log('no length - closest li =   ' + closestLi + '   ' + closestLi.length );
+
+            if(closestLi.length > 0){
+                console.log('parent li = ' + closestLi.attr('id'))
+            }
+            next = closestLi.next();
+        }
+        console.log('bottom.id ' + bottom.id + ', next =  ' + next.attr('id') );
+    });
+    
     $('.gcp').click(function(){ 
         
         var visible = self.hierarchy.getVisibleNodes();

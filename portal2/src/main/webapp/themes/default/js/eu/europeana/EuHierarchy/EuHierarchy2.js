@@ -287,7 +287,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
             var childInfoUrl = apiServerRoot + node.data.id + '/children.json?wskey=' + apiKey + '&limit=1';
             
             loadData(childInfoUrl, function(data){
-                
+
+                console.log('error coming: data = ' + JSON.stringify(data) );
                 var info = data.children[0];                    
                 childUrl = apiServerRoot + info.id + '/self.json?wskey=' + apiKey;
 
@@ -423,12 +424,12 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
                     
                 //var url = apiServerRoot + node.data.id   + '/following-siblings.json?wskey=' + apiKey + '&limit=' + leftToLoad;
-                var url = apiServerRoot + node.data.id   + '/' + (backwards ? 'preceeding' : 'following') + '-siblings.json?wskey=' + apiKey + '&limit=' + leftToLoad;
+                var url = apiServerRoot + node.data.id   + '/' + (backwards ? 'preceding' : 'following') + '-siblings.json?wskey=' + apiKey + '&limit=' + leftToLoad;
                     
                 loadData(url, function(data){
                     
                     var origData = data;
-                    data = data[(backwards ? 'preceeding' : 'following') + '-siblings'];
+                    data = data[(backwards ? 'preceding' : 'following') + '-siblings'];
                     
                     log(' - loaded ' + typeof data);
                     
@@ -1448,8 +1449,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
             
             
             // preceding
-            if(ob['preceeding-siblings']){
-                $.each(ob['preceeding-siblings'], function(i, item){
+            if(ob['preceding-siblings']){
+                $.each(ob['preceding-siblings'], function(i, item){
                     data.children.unshift( formatNodeData(item, {"self":{ "id" : data.data.id }})  );
                 });             
             }
