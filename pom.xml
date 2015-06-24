@@ -16,27 +16,23 @@
   the Licence.
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>portal</artifactId>
-    <version>${version.europeanaApi2}</version>
-    <packaging>pom</packaging>
-    <name>Europeana Portal parent</name>
-    <url>http://www.europeana.eu</url>
+	<artifactId>portal</artifactId>
+	<version>${version.europeanaApi2}</version>
+	<packaging>pom</packaging>
+	<name>Europeana Portal parent</name>
+	<url>http://www.europeana.eu</url>
 
-    <parent>
-        <artifactId>corelib</artifactId>
-        <groupId>eu.europeana</groupId>
-        <version>2.1-SNAPSHOT</version>
-        <relativePath>../corelib/pom.xml</relativePath>
-    </parent>
+	<parent>
+		<artifactId>corelib</artifactId>
+		<groupId>eu.europeana</groupId>
+		<version>2.1-SNAPSHOT</version>
+		<relativePath>../corelib/pom.xml</relativePath>
+	</parent>
 
-    <properties>
-        <project.root>${basedir}</project.root>
-    </properties>
-
-    <modules>
-        <module>portal2</module>
-    </modules>
+	<modules>
+		<module>portal2</module>
+	</modules>
 </project>
