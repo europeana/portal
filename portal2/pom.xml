@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2007-2013 The Europeana Foundation Licenced under the EUPL, 
 	Version 1.1 (the "Licence") and subsequent versions as approved by the European 
@@ -78,7 +77,7 @@
 									<filtering>true</filtering>
 								</resource>
 								<resource>
-									<directory>${project.parent.basedir}/portal_messages</directory>
+									<directory>${project.root}/portal_messages</directory>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -1701,12 +1700,6 @@
 
         <dependency>
             <groupId>eu.europeana.corelib</groupId>
-            <artifactId>corelib-media-storage</artifactId>
-            <version>${version.europeanaCorelib}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>eu.europeana.corelib</groupId>
             <artifactId>corelib-storage</artifactId>
             <version>${version.europeanaCorelib}</version>
         </dependency>
@@ -1931,7 +1924,7 @@
 				production
             </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/production</europeana.properties>
+				<europeana.properties>${project.root}/properties/production</europeana.properties>
 				<europeana.server>http://europeana.eu/portal</europeana.server>
 			</properties>
 		</profile>
@@ -1940,7 +1933,7 @@
                 alpha
             </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.properties>${project.root}/properties/test</europeana.properties>
 				<europeana.server>http://alpha-web.de.a9sapp.eu/portal</europeana.server>
 			</properties>
 		</profile>
@@ -1949,7 +1942,7 @@
                 beta
             </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/beta</europeana.properties>
+				<europeana.properties>${project.root}/properties/beta</europeana.properties>
 				<europeana.server>http://beta-web.de.a9sapp.eu/portal</europeana.server>
 			</properties>
 		</profile>
@@ -1958,7 +1951,7 @@
                 blue
             </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.properties>${project.root}/properties/test</europeana.properties>
 				<europeana.server>http://blue-web.de.a9sapp.eu/portal</europeana.server>
 			</properties>
 		</profile>
@@ -1967,7 +1960,7 @@
                 green
             </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.properties>${project.root}/properties/test</europeana.properties>
 				<europeana.server>http://green-web.de.a9sapp.eu/portal</europeana.server>
 			</properties>
 		</profile>
@@ -1979,7 +1972,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/personal</europeana.properties>
+				<europeana.properties>${project.root}/properties/personal</europeana.properties>
 				<europeana.server>http://localhost:8080/portal/</europeana.server>
 			</properties>
 		</profile>
