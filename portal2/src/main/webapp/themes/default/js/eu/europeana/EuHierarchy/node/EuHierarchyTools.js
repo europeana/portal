@@ -89,8 +89,9 @@ var EuHierarchyTools = function(hierarchy) {
     });
     
     $('.off-bel').click(function(){
-        var bottom = self.hierarchy.getVisibleNodes()[1];
+        var node = self.hierarchy.getVisibleNodes()[1];
         
+        /*
         var next = $('#' + bottom.id).next();
         
         if(next.length==0){
@@ -104,6 +105,22 @@ var EuHierarchyTools = function(hierarchy) {
             next = closestLi.next();
         }
         console.log('bottom.id ' + bottom.id + ', next =  ' + next.attr('id') );
+        */
+        
+        var next = $('#' + node.id).next();        
+        while(next.length==0){
+            
+            var closestLi = $('#' + node.id).parent().closest('li');
+
+            if(closestLi.length == 0){
+                break;
+            }
+            node = closestLi;
+            next = closestLi.next();
+        }
+        console.log('next =  ' + next.attr('id') );
+        
+        
     });
     
     $('.gcp').click(function(){ 

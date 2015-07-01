@@ -117,24 +117,43 @@
 			
 			$(document).ready(function(){
 
-			    window.apiKey        = 'api2demo';
-			    window.apiServerRoot = 'http://delta-api.de.a9sapp.eu/v2/record';
 			    //		/2022002/10796_76FC2677_F914_46F1_9A1B_D19450FE141E/self.json?wskey=api2demo&limit=1600
-					  
 			            
 				var href = window.location.href;
 				var param = href.indexOf('?base=') > -1 ? href.split('?base=')[1].replace('%28', '(').replace('%29', ')') : false;
 
 				console.log('param = ' + param);
 
-				
-				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
 
 				//http://delta-api.de.a9sapp.eu/v2/record//2022002/10796_76FC2677_F914_46F1_9A1B_D19450FE141E/self.json?wskey=api2demo&limit=1600
-				        
-				$.getJSON('http://delta-api.de.a9sapp.eu/v2/record/2022002/10796_76FC2677_F914_46F1_9A1B_D19450FE141E/ancestor-self-siblings.json?wskey=api2demo', null, function( data ) {
-					hierarchy.init(data, true);
-				});
+
+				if(true){				    
+	   			    window.apiKey        = 'api2demo';
+				    window.apiServerRoot = 'http://delta-api.de.a9sapp.eu/v2/record';
+
+					window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
+
+					$.getJSON('http://delta-api.de.a9sapp.eu/v2/record/2022002/10796_76FC2677_F914_46F1_9A1B_D19450FE141E/ancestor-self-siblings.json?wskey=api2demo', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+				}
+				else{
+					window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
+				    
+					
+					/*
+					$.getJSON('http://localhost:3000/1-15-14-14-14/ancestor-self-siblings.json', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+					$.getJSON('http://localhost:3000/1-3-4-9/ancestor-self-siblings.json', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+					*/
+					$.getJSON('http://localhost:3000/1-1-2-1/ancestor-self-siblings.json', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+
+				}
 				
 				
 				/*

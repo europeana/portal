@@ -288,7 +288,7 @@ var EuHierarchy = function(cmp, rows, wrapper) {
             
             loadData(childInfoUrl, function(data){
 
-                console.log('error coming: data = ' + JSON.stringify(data) );
+//                console.log('error coming: data = ' + JSON.stringify(data) );
                 var info = data.children[0];                    
                 childUrl = apiServerRoot + info.id + '/self.json?wskey=' + apiKey;
 
@@ -662,10 +662,25 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
         self.bottomPanel.find('.bottom-arrows').remove();
         
+        var getNextLi = function(node){
+            var next = $('#' + node.id).next();        
+            while(next.length==0){
+                var closestLi = $('#' + node.id).parent().closest('li');
+                if(closestLi.length == 0){
+                    break;
+                }
+                node = closestLi;
+                next = closestLi.next();
+            }
+            return next;
+        }
+        
+        
         var bottomArrows = $('<div class="bottom-arrows"></div>').prependTo(self.bottomPanel);
         var xNode        = vNodes[1];
         var rightIndent  = 2;
-        var unordered    = $('#' + xNode.id).hasClass('ul');
+        //var unordered    = $('#' + xNode.id).hasClass('ul');
+        var unordered    = getNextLi(xNode).hasClass('ul');
         
         if( (xNode.id != '#') && $('#' + xNode.id).hasClass('jstree-open')  ){          
             var createClass  = 'arrow bottom';
@@ -690,7 +705,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
                     
                     $('.hierarchy-next').css('margin-left', (rightIndent+1) + 'em');
                 }
-                unordered = $('#' + xNode.id).hasClass('ul');
+                //unordered = $('#' + xNode.id).hasClass('ul');
+                unordered = getNextLi(xNode).hasClass('ul');
             }
         }// end while   
     } // end function
@@ -1294,15 +1310,13 @@ var EuHierarchy = function(cmp, rows, wrapper) {
             if(self.loadingAll || self.isLoading){
                 log('return because loading - open_node');
                 return;
-            }           
+            }
             self.isLoading = true;
             self.timer.start();
             showSpinner();
-
             
             var node   = jstreeData.node;
             var fChild = self.treeCmp.jstree('get_node', node.children[0]);
-            
             
             loadFirstChild(fChild, function(newNode){
     
@@ -1352,7 +1366,8 @@ var EuHierarchy = function(cmp, rows, wrapper) {
                 
                 setLoadPoint(data.node.id);
                 hideSpinner();
-                
+                addTransitionClasses();
+               
                 $('#' + data.node.id + '>a').focus();
                 setTimeout(function(){
                     togglePrevNextLinks();  //  delay needed for animations to finish

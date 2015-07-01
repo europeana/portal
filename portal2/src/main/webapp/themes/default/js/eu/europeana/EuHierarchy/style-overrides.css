@@ -538,10 +538,14 @@
 }
 
 #hierarchy.jstree-default .jstree-open > .jstree-anchor{
-	background-image:    url(connector-vertical.png);			
+	background-image:    url(connector-vertical.png);
 	background-position: 0 0;
 	background-size: 1em 1em;
 	background-repeat: repeat-y;
+}
+
+#hierarchy.jstree-default .jstree-open.ul > .jstree-anchor{
+	background-image:    url(connector-vertical-fake-rel.png);
 }
 
 .uninitialised #hierarchy.jstree-default .jstree-open > .jstree-anchor{
