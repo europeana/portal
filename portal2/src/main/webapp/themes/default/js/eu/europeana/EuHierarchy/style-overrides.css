@@ -573,9 +573,13 @@
 
 
 #hierarchy.jstree-default .jstree-node.jstree-open > .jstree-anchor > .jstree-themeicon{
-	background-image:    url(opened.png);			
+	background-image:    url(opened.png);
 	background-position: 0 0;
 	background-size: 1em 1em;
+}
+
+#hierarchy.jstree-default .jstree-node.jstree-open.ul > .jstree-anchor > .jstree-themeicon{
+	background-image:    url(opened-fake-rel.png);
 }
 
 .uninitialised #hierarchy.jstree-default .jstree-node.jstree-open > .jstree-anchor > .jstree-themeicon{
