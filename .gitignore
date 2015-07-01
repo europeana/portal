@@ -1,14 +1,15 @@
 # Eclipse project files
-.gitignore
 .classpath
 .project
 .settings/
 .externalToolBuilders/
 
-.idea/*
+#IntelliJ project files
+.idea
+*.iml
+
 # Maven
-*/target
-*/target/**
+target
 
 # Portal specific
 europeana.properties
@@ -57,6 +58,3 @@ portal2/src/main/webapp/themes/default/css/*
 
 /portal2/nb-configuration.xml
 /portal2/src/main/webapp/META-INF/context.xml
-/target/
-
-*.iml
