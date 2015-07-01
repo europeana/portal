@@ -44,8 +44,9 @@ eu.europeana.header = {
 
                     var purl = $.url(newUrl);
                     var queryParam = purl.param('query');
+                    var qf         = purl.param('qf');
 
-                    if(queryParam){
+                    if(qf || queryParam){
 
                         var facets = purl.param('qf');
                         var rowsParam = purl.param('rows');
@@ -85,7 +86,7 @@ eu.europeana.header = {
                             }
                             data.facets = fd;
                         }
-                        NOFLogging.query(queryParam, data);
+                        NOFLogging.query(queryParam ? queryParam : '*:*', data);
                     }
                 }
 
@@ -226,6 +227,7 @@ eu.europeana.header = {
 
                     $('#search-filter a').add('#search-filter a span').click(function(e){
 
+                        
                         var url = ($(e.target)[0].nodeName.toUpperCase() == 'SPAN' ? $(e.target).closest('a') : $(e.target)).attr('href');
                         queryNOF(url);
 
