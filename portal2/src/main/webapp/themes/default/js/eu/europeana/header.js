@@ -116,15 +116,9 @@ eu.europeana.header = {
                         NOFLogging.setState(state);
                     });
                     
-                    $('#saved-searches a').click(function(){
+                    $('#saved-searches a').click(function(e){
                         var href = $(this).attr('href');
                         queryNOF(href, true);
-                    });
-                    
-                    $('#saved-items a').click(function(){
-                        var href = $(this).attr('href');
-                        href = href.split('record/')[1].split('.html')[0];
-                        NOFLogging.logEvent('clicked_saved_result', { url:href, rank: 0 } );
                     });
                 }
                 if(eu.europeana.vars.page_name == 'full-doc.html'){
