@@ -1158,11 +1158,11 @@ var EuHierarchy = function(cmp, rows, wrapper) {
         self.treeCmp.bind("create_node.jstree", function(event, nodeIn) {
             node = self.treeCmp.jstree('get_node', nodeIn.node.id);
             if(node.data.relBefore){
-                node.li_attr.class = 'ol';
+                node.li_attr['class'] = 'ol';
             }
             else{
                 addTransitionClasses();
-                node.li_attr.class = 'ul';
+                node.li_attr['class'] = 'ul';
                 $('#' + node.id).addClass('ul');  // needed for last leaf nodes
             }
         });
@@ -1491,10 +1491,10 @@ var EuHierarchy = function(cmp, rows, wrapper) {
             
             var addListTypeClasses = function(node){
                 if(node.data.relBefore){
-                    node.li_attr.class = 'ol';
+                    node.li_attr['class'] = 'ol';
                 }
                 else{
-                    node.li_attr.class = 'ul';
+                    node.li_attr['class'] = 'ul';
                     $('#' + node.id).addClass('ul');  // needed for last leaf nodes
                 }
                 for(var i=0; i<node.children.length; i++){
@@ -1592,4 +1592,3 @@ var EuHierarchy = function(cmp, rows, wrapper) {
 
     }
 };
-
