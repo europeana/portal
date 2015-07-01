@@ -5,13 +5,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Hierarchical Objects Test Page</title>
 
+	<!-- 
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="http://test.portal2.eanadev.org/portal/themes/default/css/europeana-font-face.css"/>
 
-	<!-- 
+	-->	
 	<link rel="stylesheet" href="../../../../../css/europeana-font-icons.css"/>
 	<link rel="stylesheet" href="../../../../../css/europeana-font-face.css"/>
-	-->	
 	
 	<link rel="stylesheet" href="../style.css" />
 	<link rel="stylesheet" href="../style-overrides.css" />
@@ -63,6 +63,8 @@
 		
 		<a class="gcp"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[gcp]</a>
 		<a class="gtd"           style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[gtd]</a>
+		<a class="tr-ul"         style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[trul]</a>
+		<a class="off-bel"       style="font-weight:bold; cursor:pointer; float:right; margin-left: 1em;">[offscreen below]</a>
 		
 		<br/>
 		<input id="chunk" type="number" tab-index="1" style="float:right; margin-bottom: 0.75em; margin-top: 0.75em;">
@@ -92,8 +94,8 @@
 		</div>
 		
 		<!-- 
-		 -->
 		<img src="https://bigfiles.assembla.com/spaces/europeana/documents/download/dRFgfOLv0r44oGacwqjQYw"/>
+		 -->
 
 		
 		<script type="text/javascript">
@@ -114,31 +116,76 @@
        		];
 			
 			$(document).ready(function(){
-				
+
+			    //		/2022002/10796_76FC2677_F914_46F1_9A1B_D19450FE141E/self.json?wskey=api2demo&limit=1600
+			            
 				var href = window.location.href;
 				var param = href.indexOf('?base=') > -1 ? href.split('?base=')[1].replace('%28', '(').replace('%29', ')') : false;
 
 				console.log('param = ' + param);
 
-				
-				window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
-				/*
-				*/
 
+				//http://delta-api.de.a9sapp.eu/v2/record//2022002/10796_76FC2677_F914_46F1_9A1B_D19450FE141E/self.json?wskey=api2demo&limit=1600
+
+				if(true){				    
+	   			    window.apiKey        = 'api2demo';
+				    window.apiServerRoot = 'http://delta-api.de.a9sapp.eu/v2/record';
+
+					window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
+
+					$.getJSON('http://delta-api.de.a9sapp.eu/v2/record/2022002/10796_76FC2677_F914_46F1_9A1B_D19450FE141E/ancestor-self-siblings.json?wskey=api2demo', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+				}
+				else{
+					window.hierarchy = new EuHierarchy($('#hierarchy'), 16, $('.hierarchy-objects'));
+				    
+					
+					/*
+					$.getJSON('http://localhost:3000/1-15-14-14-14/ancestor-self-siblings.json', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+					$.getJSON('http://localhost:3000/1-3-4-9/ancestor-self-siblings.json', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+					*/
+					$.getJSON('http://localhost:3000/1-1-2-1/ancestor-self-siblings.json', null, function( data ) {
+						hierarchy.init(data, true);
+					});
+
+				}
+				
+				
+				/*
+				$.getJSON('http://localhost:3000/1-3-4-9/ancestor-self-siblings.json', null, function( data ) {
+					hierarchy.init(data, true);
+				});
 				
 				$.getJSON('http://localhost:3000/1-1-2-1/ancestor-self-siblings.json', null, function( data ) {
 					hierarchy.init(data, true);
 				});
+				*/
 				
 				/*
-
+				
+				$.getJSON('http://localhost:3000/1-3-6/ancestor-self-siblings.json', null, function( data ) {
+					hierarchy.init(data, true);
+				});
+				
+				// fails to load 1st child of several siblings
+				
+				$.getJSON('http://localhost:3000/1-2-2/ancestor-self-siblings.json', null, function( data ) {
+					hierarchy.init(data, true);
+				});
 				*/
 
+				
+				
 				/*
 				hierarchy.init(param ? param : 'http://localhost:3000/1-1-2-2/self.json?wskey=api2demo');
 				hierarchy.init(
 						{"action":"self.json","self":{"id":"1-4","title":{"def":["Volume 4 (b1)"]},"type":"text","index":4,"hasChildren":true,"childrenCount":14,"hasParent":true},"parent":{"id":"1","title":{"def":["Book 1"]},"type":"TEXT","index":"1","hasChildren":true},"success":true}		
-				);
+				
 				*/
 				
 				
@@ -161,5 +208,6 @@
 	
 </body>
 </html>
+
 
 
