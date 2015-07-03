@@ -15,8 +15,6 @@ eu.europeana.header = {
 
     init904 : function(){
 
-        console.log('will init904');
-
         window.NOFLogging_ready = window.NOFLogging_ready || [];
         window.NOFLogging_ready.push(function(){
 
@@ -30,9 +28,6 @@ eu.europeana.header = {
                 debug : false
             };
             NOFLogging.init(config, function(){
-
-                console.log('ready for action');
-
                 /*
                  * Wrapper function for NOFLogging.query
                  * 
@@ -211,7 +206,7 @@ eu.europeana.header = {
                             NOFLogging.paginate(parseInt(nPage), cPage);
                         }
                         else{
-                            console.log('not a number = ' + nPage);
+                            js.console.log('not a number = ' + nPage);
                         }
                     });
 
@@ -376,7 +371,11 @@ eu.europeana.header = {
         this.setupTabbing();
         this.setDefaultFocus();
 
-        if(js.debug = true){
+        if(typeof eu.europeana.vars.NOF == 'undefined'){
+            js.console.log('do not init904');
+        }
+        else{
+            js.console.log('init904');
             this.init904();
         }
     },
