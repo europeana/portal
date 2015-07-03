@@ -40,7 +40,7 @@ eu.europeana.header = {
                  * extracted from
                  * 
                  */
-                var queryNOF = function(newUrl){
+                var queryNOF = function(newUrl, saved){
 
                     var purl = $.url(newUrl);
                     var queryParam = purl.param('query');
@@ -57,6 +57,10 @@ eu.europeana.header = {
 
                         if(rowsParam){
                             data.rows = rowsParam;
+                        }
+
+                        if(saved){
+                            data.saved_search = true;
                         }
 
                         if(facets){
@@ -110,6 +114,11 @@ eu.europeana.header = {
                             return $(ob).val();
                         }).get();
                         NOFLogging.setState(state);
+                    });
+                    
+                    $('#saved-searches a').click(function(e){
+                        var href = $(this).attr('href');
+                        queryNOF(href, true);
                     });
                 }
                 if(eu.europeana.vars.page_name == 'full-doc.html'){
