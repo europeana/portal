@@ -198,7 +198,7 @@ var dataGen = function(){
             PRECEDING
         */
 
-        else if(action==="preceeding-siblings.json"){
+        else if(action==="preceding-siblings.json"){
 
             res.self = { id:id };
             
@@ -211,7 +211,7 @@ var dataGen = function(){
                 var added           = 0;
                 
                 if(parentChildren.children.length>1){
-                    res['preceeding-siblings'] = [];
+                    res['preceding-siblings'] = [];
                 }           
                 for(var i=parentChildren.children.length-1; i>=0; i--){
                     
@@ -226,7 +226,7 @@ var dataGen = function(){
                             precedingSibling.childrenCount = siblingData.self.childrenCount;                            
                         }
                         
-                        res['preceeding-siblings'].push(precedingSibling);
+                        res['preceding-siblings'].push(precedingSibling);
 
                         added ++;
                         if(added==limit){
@@ -243,14 +243,14 @@ var dataGen = function(){
             
             res.self    =  coreData(sData);
 
-            var preceding = search(path.join('-'), 'preceeding-siblings.json', 8);
-            res['preceeding-siblings'] = preceding['preceeding-siblings'];
+            var preceding = search(path.join('-'), 'preceding-siblings.json', 8);
+            res['preceding-siblings'] = preceding['preceding-siblings'];
             var following = search(path.join('-'), 'following-siblings.json', 8);
             res['following-siblings']  = following['following-siblings'];
 
-            console.log('typeof preceding ' + typeof preceding['preceeding-siblings']);
+            console.log('typeof preceding ' + typeof preceding['preceding-siblings']);
 
-            console.log('preceding ' + (typeof preceding['preceeding-siblings'] == 'undefined' ? 'null' : preceding['preceeding-siblings'].length ) );
+            console.log('preceding ' + (typeof preceding['preceding-siblings'] == 'undefined' ? 'null' : preceding['preceding-siblings'].length ) );
             console.log('following ' + (typeof following['following-siblings'] == 'undefined' ? 'null' : following['following-siblings'].length ) );
             
             if(path.length>1){

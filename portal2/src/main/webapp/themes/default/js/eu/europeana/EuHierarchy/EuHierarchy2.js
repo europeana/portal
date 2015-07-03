@@ -1466,15 +1466,15 @@ var EuHierarchy = function(cmp, rows, wrapper) {
             // preceding
             if(ob['preceding-siblings']){
                 $.each(ob['preceding-siblings'], function(i, item){
-                    data.children.unshift( formatNodeData(item, {"self":{ "id" : data.data.id }})  );
+                    //data.children.unshift( formatNodeData(item, {"self":{ "id" : data.data.id }})  );
                 });             
             }
             
             // following
             if(ob['following-siblings']){
                 $.each(ob['following-siblings'], function(i, item){
-                    data.children.push( formatNodeData(item, {"self":{ "id" : data.data.id }})  );
-                    toLoadOnInit --;
+                    //data.children.push( formatNodeData(item, {"self":{ "id" : data.data.id }})  );
+                    //toLoadOnInit --;
                 });             
             }
 
