@@ -38,7 +38,7 @@ public abstract class PortalPageData extends PageData {
 
 	private boolean doTranslation = false;
 
-	private boolean isNofEnabled = false;
+	private boolean nofEnabled = false;
 	
 	public String getTheme() {
 		return theme;
@@ -166,10 +166,10 @@ public abstract class PortalPageData extends PageData {
 	}
 	
 	public boolean isNofEnabled() {
-		return isNofEnabled;
+		return nofEnabled;
 	}
 	
-	public void setIsNofEnabled(boolean isNofEnabled) {
-		this.isNofEnabled = isNofEnabled;
+	public void setIsNofEnabled(boolean nofEnabled) {
+		this.nofEnabled = nofEnabled;
 	}
 }
