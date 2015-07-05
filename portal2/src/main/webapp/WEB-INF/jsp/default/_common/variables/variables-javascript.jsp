@@ -130,19 +130,19 @@ eu.europeana.vars.addthis_pubid = '${search_addthis_pubid}';
 eu.europeana.vars.query = '${fn:escapeXml(model.query)}';
 
 
-eu.europeana.vars.NOF = {};
-
-<c:if test="${!empty model.user}">
-	eu.europeana.vars.NOF.user = true;
-	eu.europeana.vars.NOF.username = '${model.user.userName}';
-	eu.europeana.vars.NOF.portal_language  = '${model.locale}';
-	
-	<c:if test="${!empty model.user.languageSearch}">
-		<c:if test="${model.user.languageSearchApplied}">
-			eu.europeana.vars.NOF.portal_translate_keywords = [<c:forEach items="${model.user.languageSearch}" var="item" varStatus="status">'${item}'<c:if test="${!status.last}">,</c:if></c:forEach>];
-		</c:if>
+<c:if test="${model.isNofEnabled}">
+	eu.europeana.vars.NOF = {};
+	<c:if test="${!empty model.user}">
+		eu.europeana.vars.NOF.user = true;
+		eu.europeana.vars.NOF.username = '${model.user.userName}';
+		eu.europeana.vars.NOF.portal_language  = '${model.locale}';
+		
+		<c:if test="${!empty model.user.languageSearch}">
+			<c:if test="${model.user.languageSearchApplied}">
+				eu.europeana.vars.NOF.portal_translate_keywords = [<c:forEach items="${model.user.languageSearch}" var="item" varStatus="status">'${item}'<c:if test="${!status.last}">,</c:if></c:forEach>];
+			</c:if>
+		</c:if>	
 	</c:if>
-	
 </c:if>
 
 

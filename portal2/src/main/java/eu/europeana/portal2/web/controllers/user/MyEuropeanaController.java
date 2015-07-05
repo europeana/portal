@@ -72,7 +72,8 @@ public class MyEuropeanaController {
 
 		User user = ControllerUtil.getUser(userService);
 		model.setUser(user);
-
+		model.setIsNofEnabled(config.isNofEnabled());
+		
 		List<SavedItem> savedItems = new ArrayList<SavedItem>(user.getSavedItems());
 		Collections.sort(savedItems);
 		model.setSavedItems(savedItems);
@@ -109,7 +110,8 @@ public class MyEuropeanaController {
 		if (user != null) {
 			MyEuropeanaPage model = new MyEuropeanaPage();
 			model.setUser(user);
-
+			model.setIsNofEnabled(config.isNofEnabled());
+			
 			model.setReturnToQuery(returnToQuery);
 			model.setReturnToFacets(returnToFacets);
 
@@ -138,6 +140,7 @@ public class MyEuropeanaController {
 			
 			model.setReturnToQuery(returnToQuery);
 			model.setReturnToFacets(returnToFacets);
+			model.setIsNofEnabled(config.isNofEnabled());
 			
 			model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
 
@@ -164,6 +167,7 @@ public class MyEuropeanaController {
 		model.setKeywordLanguagesLimit(config.getKeywordLanguagesLimit());
 		model.setEmail(email);
 		model.setBingToken(bingToken);
+		model.setIsNofEnabled(config.isNofEnabled());
 		
 		log.info("requestedAction: " + requestedAction);
 
