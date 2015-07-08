@@ -1,7 +1,6 @@
 package eu.europeana.portal2.web.controllers.user;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.service.EmailService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -45,7 +45,7 @@ public class ContactPageController {
 	@Resource
 	private ClickStreamLogService clickStreamLogger;
 
-	private static Logger log = Logger.getAnonymousLogger();
+	private Logger log = Logger.getLogger(this.getClass());
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
