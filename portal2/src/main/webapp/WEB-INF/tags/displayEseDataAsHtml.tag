@@ -96,7 +96,16 @@
 			<c:set var="semanticUrl" value="${data.semanticUrl}" />
 		</c:if>
 
-		<<c:out value="${wrapper}" />${' '}${item_id} class="item-metadata${item_class}">
+        <c:set var="breakables" scope="request">dc_identifier_t,dc_source_t,dcterms_isPartOf_t</c:set>
+        <c:set var="breakable_class" value="" />
+
+        <c:forEach items="${breakables}" var="breakable">
+            <c:if test="${breakable == data.fieldLabel}">
+                <c:set var="breakable_class" value=" breakable" />
+            </c:if>
+        </c:forEach>
+
+		<<c:out value="${wrapper}" />${' '}${item_id} class="item-metadata${item_class} ${breakable_class}">
 			<%-- field's label --%>
 			<c:set var="lightboxables" scope="request">Creator_t,europeana_dataProvider_t,Provider_t</c:set>
 			<c:set var="lightboxableNameClass" value="" />

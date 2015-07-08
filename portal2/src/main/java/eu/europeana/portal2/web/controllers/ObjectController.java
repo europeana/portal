@@ -201,8 +201,8 @@ public class ObjectController {
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue(
 				"notranslate_do_translations", messageSource, locale));
 		model.setUseBackendItemTranslation(config.useBackendTranslation());
-		model.setUseAutomatedFrontendTranslation(config
-				.useAutomatedFrontendTranslation());
+		model.setUseAutomatedFrontendTranslation(config.useAutomatedFrontendTranslation());
+		model.setIsNofEnabled(config.isNofEnabled());
 		model.setApiUrl(config.getApi2url());
 		model.setStartTime(t0);
 

@@ -9,370 +9,413 @@ import eu.europeana.corelib.definitions.solr.DocType;
 
 public class BriefBeanImpl implements BriefBean {
 
-	private String id;
-	private String fullDocUrl;
-	private Date timestamp;
-	private String[] provider;
-	private String[] edmDataProvider;
-	private String[] edmObject;
-	private int europeanaCompleteness;
-	private String[] docType;
-	private String[] language;
-	private String[] year;
-	private String[] rights;
-	private String[] title;
-	private String[] dcCreator;
-	private String[] dcContributor;
-        private String[] dcLanguage;
-	private String[] edmPlace;
-	private List<Map<String, String>> edmPlacePrefLabel;
-	private List<String> edmPlaceLatitude;
-	private List<String> edmPlaceLongitude;
-	private String[] edmTimespan;
-	private List<Map<String, String>> edmTimespanLabel;
-	private String[] edmTimespanBegin;
-	private String[] edmTimespanEnd;
-	private String[] edmAgentTerm;
-	private List<Map<String, String>> edmAgentLabel;
-	private String[] dctermsHasPart;
-	private String[] dctermsSpatial;
+    private String id;
+    private String fullDocUrl;
+    private Date timestamp;
+    private String[] provider;
+    private String[] edmDataProvider;
+    private String[] edmObject;
+    private int europeanaCompleteness;
+    private String[] docType;
+    private String[] language;
+    private String[] year;
+    private String[] rights;
+    private String[] title;
+    private String[] dcCreator;
+    private String[] dcContributor;
+    private String[] dcLanguage;
+    private String[] edmPlace;
+    private List<Map<String, String>> edmPlacePrefLabel;
+    private List<String> edmPlaceLatitude;
+    private List<String> edmPlaceLongitude;
+    private String[] edmTimespan;
+    private List<Map<String, String>> edmTimespanLabel;
+    private String[] edmTimespanBegin;
+    private String[] edmTimespanEnd;
+    private String[] edmAgentTerm;
+    private List<Map<String, String>> edmAgentLabel;
+    private String[] dctermsHasPart;
+    private String[] dctermsSpatial;
 //	private DocType type;
-	private boolean isOptedOut;
-	private String[] edmPreview;
-	private float score;
-	private Date timestampCreated;
-	private Date timestampUpdated;
-	private String[] edmIsShownAt;
-	private Map<String, List<String>> edmPlaceLabelLangAware;
-	private Map<String, List<String>> edmTimespanLabelLangAware;
-	private Map<String, List<String>> edmAgentLabelLangAware;
-	private boolean edmPreviewNoDistribute;
-	@Override
-	public String getId() {
-		return id;
-	}
+    private boolean isOptedOut;
+    private String[] edmPreview;
+    private float score;
+    private Date timestampCreated;
+    private Date timestampUpdated;
+    private String[] edmIsShownAt;
+    private Map<String, List<String>> edmPlaceLabelLangAware;
+    private Map<String, List<String>> edmTimespanLabelLangAware;
+    private Map<String, List<String>> edmAgentLabelLangAware;
+    private Map<String, List<String>> dcTitleLangAware;
+    private Map<String, List<String>> dcCreatorLangAware;
+    private Map<String, List<String>> dcContributorLangAware;
+    private Map<String, List<String>> dcLanguageLangAware;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    private boolean edmPreviewNoDistribute;
 
-	public String getFullDocUrl() {
-		return fullDocUrl;
-	}
+    @Override
+    public String getId() {
+        return id;
+    }
 
-	public void setFullDocUrl(String fullDocUrl) {
-		this.fullDocUrl = fullDocUrl;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@Override
-	public Date getTimestamp() {
-		return timestamp;
-	}
+    public String getFullDocUrl() {
+        return fullDocUrl;
+    }
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
+    public void setFullDocUrl(String fullDocUrl) {
+        this.fullDocUrl = fullDocUrl;
+    }
 
-	@Override
-	public String[] getProvider() {
-		return provider;
-	}
+    @Override
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-	public void setProvider(String[] provider) {
-		this.provider = provider;
-	}
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
 
-	public String[] getEdmDataProvider() {
-		return edmDataProvider;
-	}
+    @Override
+    public String[] getProvider() {
+        return provider;
+    }
 
-	public void setEdmDataProvider(String[] edmDataProvider) {
-		this.edmDataProvider = edmDataProvider;
-	}
+    public void setProvider(String[] provider) {
+        this.provider = provider;
+    }
 
-	@Override
-	public String[] getEdmObject() {
-		return edmObject;
-	}
+    public String[] getEdmDataProvider() {
+        return edmDataProvider;
+    }
 
-	public void setEdmObject(String[] edmObject) {
-		this.edmObject = edmObject;
-	}
+    public void setEdmDataProvider(String[] edmDataProvider) {
+        this.edmDataProvider = edmDataProvider;
+    }
 
-	@Override
-	public int getEuropeanaCompleteness() {
-		return europeanaCompleteness;
-	}
+    @Override
+    public String[] getEdmObject() {
+        return edmObject;
+    }
 
-	public void setEuropeanaCompleteness(int europeanaCompleteness) {
-		this.europeanaCompleteness = europeanaCompleteness;
-	}
+    public void setEdmObject(String[] edmObject) {
+        this.edmObject = edmObject;
+    }
 
-	public String[] getDocType() {
-		return docType;
-	}
+    @Override
+    public int getEuropeanaCompleteness() {
+        return europeanaCompleteness;
+    }
 
-	public void setDocType(String[] docType) {
-		this.docType = docType;
-	}
+    public void setEuropeanaCompleteness(int europeanaCompleteness) {
+        this.europeanaCompleteness = europeanaCompleteness;
+    }
 
-	@Override
-	public String[] getLanguage() {
-		return language;
-	}
+    public String[] getDocType() {
+        return docType;
+    }
 
-	public void setLanguage(String[] language) {
-		this.language = language;
-	}
+    public void setDocType(String[] docType) {
+        this.docType = docType;
+    }
 
-	@Override
-	public String[] getYear() {
-		return year;
-	}
+    @Override
+    public String[] getLanguage() {
+        return language;
+    }
 
-	public void setYear(String[] year) {
-		this.year = year;
-	}
+    public void setLanguage(String[] language) {
+        this.language = language;
+    }
 
-	@Override
-	public String[] getRights() {
-		return rights;
-	}
+    @Override
+    public String[] getYear() {
+        return year;
+    }
 
-	public void setRights(String[] rights) {
-		this.rights = rights;
-	}
+    public void setYear(String[] year) {
+        this.year = year;
+    }
 
-	@Override
-	public String[] getTitle() {
-		return title;
-	}
+    @Override
+    public String[] getRights() {
+        return rights;
+    }
 
-	public void setTitle(String[] title) {
-		this.title = title;
-	}
+    public void setRights(String[] rights) {
+        this.rights = rights;
+    }
 
-	@Override
-	public String[] getDcCreator() {
-		return dcCreator;
-	}
+    @Override
+    public String[] getTitle() {
+        return title;
+    }
 
-	public void setDcCreator(String[] dcCreator) {
-		this.dcCreator = dcCreator;
-	}
+    public void setTitle(String[] title) {
+        this.title = title;
+    }
 
-	@Override
-	public String[] getDcContributor() {
-		return dcContributor;
-	}
+    @Override
+    public String[] getDcCreator() {
+        return dcCreator;
+    }
 
-	public void setDcContributor(String[] dcContributor) {
-		this.dcContributor = dcContributor;
-	}
+    public void setDcCreator(String[] dcCreator) {
+        this.dcCreator = dcCreator;
+    }
 
-	@Override
-	public String[] getEdmPlace() {
-		return edmPlace;
-	}
+    @Override
+    public String[] getDcContributor() {
+        return dcContributor;
+    }
 
-	public void setEdmPlace(String[] edmPlace) {
-		this.edmPlace = edmPlace;
-	}
+    public void setDcContributor(String[] dcContributor) {
+        this.dcContributor = dcContributor;
+    }
 
-	public List<Map<String, String>> getEdmPlacePrefLabel() {
-		return edmPlacePrefLabel;
-	}
+    @Override
+    public String[] getEdmPlace() {
+        return edmPlace;
+    }
 
-	public void setEdmPlacePrefLabel(List<Map<String, String>> edmPlacePrefLabel) {
-		this.edmPlacePrefLabel = edmPlacePrefLabel;
-	}
+    public void setEdmPlace(String[] edmPlace) {
+        this.edmPlace = edmPlace;
+    }
 
-	@Override
-	public List<String> getEdmPlaceLatitude() {
-		return edmPlaceLatitude;
-	}
+    public List<Map<String, String>> getEdmPlacePrefLabel() {
+        return edmPlacePrefLabel;
+    }
 
-	public void setEdmPlaceLatitude(List<String> edmPlaceLatitude) {
-		this.edmPlaceLatitude = edmPlaceLatitude;
-	}
+    public void setEdmPlacePrefLabel(List<Map<String, String>> edmPlacePrefLabel) {
+        this.edmPlacePrefLabel = edmPlacePrefLabel;
+    }
 
-	@Override
-	public List<String> getEdmPlaceLongitude() {
-		return edmPlaceLongitude;
-	}
+    @Override
+    public List<String> getEdmPlaceLatitude() {
+        return edmPlaceLatitude;
+    }
 
-	public void setEdmPlaceLongitude(List<String> edmPlaceLongitude) {
-		this.edmPlaceLongitude = edmPlaceLongitude;
-	}
+    public void setEdmPlaceLatitude(List<String> edmPlaceLatitude) {
+        this.edmPlaceLatitude = edmPlaceLatitude;
+    }
 
-	@Override
-	public String[] getEdmTimespan() {
-		return edmTimespan;
-	}
+    @Override
+    public List<String> getEdmPlaceLongitude() {
+        return edmPlaceLongitude;
+    }
 
-	public void setEdmTimespan(String[] edmTimespan) {
-		this.edmTimespan = edmTimespan;
-	}
+    public void setEdmPlaceLongitude(List<String> edmPlaceLongitude) {
+        this.edmPlaceLongitude = edmPlaceLongitude;
+    }
 
-	@Override
-	public List<Map<String, String>> getEdmTimespanLabel() {
-		return edmTimespanLabel;
-	}
+    @Override
+    public String[] getEdmTimespan() {
+        return edmTimespan;
+    }
 
-	public void setEdmTimespanLabel(List<Map<String, String>> edmTimespanLabel) {
-		this.edmTimespanLabel = edmTimespanLabel;
-	}
+    public void setEdmTimespan(String[] edmTimespan) {
+        this.edmTimespan = edmTimespan;
+    }
 
-	@Override
-	public String[] getEdmTimespanBegin() {
-		return edmTimespanBegin;
-	}
+    @Override
+    public List<Map<String, String>> getEdmTimespanLabel() {
+        return edmTimespanLabel;
+    }
 
-	public void setEdmTimespanBegin(String[] edmTimespanBegin) {
-		this.edmTimespanBegin = edmTimespanBegin;
-	}
+    public void setEdmTimespanLabel(List<Map<String, String>> edmTimespanLabel) {
+        this.edmTimespanLabel = edmTimespanLabel;
+    }
 
-	@Override
-	public String[] getEdmTimespanEnd() {
-		return edmTimespanEnd;
-	}
+    @Override
+    public String[] getEdmTimespanBegin() {
+        return edmTimespanBegin;
+    }
 
-	public void setEdmTimespanEnd(String[] edmTimespanEnd) {
-		this.edmTimespanEnd = edmTimespanEnd;
-	}
+    public void setEdmTimespanBegin(String[] edmTimespanBegin) {
+        this.edmTimespanBegin = edmTimespanBegin;
+    }
 
-	public String[] getEdmAgentTerm() {
-		return edmAgentTerm;
-	}
+    @Override
+    public String[] getEdmTimespanEnd() {
+        return edmTimespanEnd;
+    }
 
-	public void setEdmAgentTerm(String[] edmAgentTerm) {
-		this.edmAgentTerm = edmAgentTerm;
-	}
+    public void setEdmTimespanEnd(String[] edmTimespanEnd) {
+        this.edmTimespanEnd = edmTimespanEnd;
+    }
 
-	@Override
-	public List<Map<String, String>> getEdmAgentLabel() {
-		return edmAgentLabel;
-	}
+    public String[] getEdmAgentTerm() {
+        return edmAgentTerm;
+    }
 
-	public void setEdmAgentLabel(List<Map<String, String>> edmAgentLabel) {
-		this.edmAgentLabel = edmAgentLabel;
-	}
+    public void setEdmAgentTerm(String[] edmAgentTerm) {
+        this.edmAgentTerm = edmAgentTerm;
+    }
 
-	@Override
-	public String[] getDctermsHasPart() {
-		return dctermsHasPart;
-	}
+    @Override
+    public List<Map<String, String>> getEdmAgentLabel() {
+        return edmAgentLabel;
+    }
 
-	public void setDctermsHasPart(String[] dctermsHasPart) {
-		this.dctermsHasPart = dctermsHasPart;
-	}
+    public void setEdmAgentLabel(List<Map<String, String>> edmAgentLabel) {
+        this.edmAgentLabel = edmAgentLabel;
+    }
 
-	public void setDcLanguage(String[] dcLanguage) {
-		this.dcLanguage = dcLanguage;
-	}
-        
-        @Override
-        public String[] getDcLanguage() {
-                return dcLanguage;
-        }
+    @Override
+    public String[] getDctermsHasPart() {
+        return dctermsHasPart;
+    }
 
-	@Override
-	public String[] getDctermsSpatial() {
-		return dctermsSpatial;
-	}
+    public void setDctermsHasPart(String[] dctermsHasPart) {
+        this.dctermsHasPart = dctermsHasPart;
+    }
 
-	public void setDctermsSpatial(String[] dctermsSpatial) {
-		this.dctermsSpatial = dctermsSpatial;
-	}
+    public void setDcLanguage(String[] dcLanguage) {
+        this.dcLanguage = dcLanguage;
+    }
 
-	@Override
-	public DocType getType() {
-		return DocType.safeValueOf(docType);
-	}
+    @Override
+    public String[] getDcLanguage() {
+        return dcLanguage;
+    }
 
-	public void setType(DocType type) {
+    @Override
+    public String[] getDctermsSpatial() {
+        return dctermsSpatial;
+    }
+
+    public void setDctermsSpatial(String[] dctermsSpatial) {
+        this.dctermsSpatial = dctermsSpatial;
+    }
+
+    @Override
+    public DocType getType() {
+        return DocType.safeValueOf(docType);
+    }
+
+    public void setType(DocType type) {
 //		this.type = type;
-		this.docType = new String[]{type.name()};
-	}
+        this.docType = new String[]{type.name()};
+    }
 
-	@Override
-	public String[] getEdmAgent() {
-		return (this.edmAgentTerm != null ? this.edmAgentTerm.clone() : null);
-	}
+    @Override
+    public String[] getEdmAgent() {
+        return (this.edmAgentTerm != null ? this.edmAgentTerm.clone() : null);
+    }
 
-	@Override
-	public String[] getDataProvider() {
-		return (this.edmDataProvider != null ? this.edmDataProvider.clone() : null);
-	}
+    @Override
+    public String[] getDataProvider() {
+        return (this.edmDataProvider != null ? this.edmDataProvider.clone() : null);
+    }
 
-	@Override
-	public List<Map<String, String>> getEdmPlaceLabel() {
-		return edmPlacePrefLabel;
-	}
+    @Override
+    public List<Map<String, String>> getEdmPlaceLabel() {
+        return edmPlacePrefLabel;
+    }
 
-	@Override
-	public Boolean isOptedOut() {
-		return isOptedOut;
-	}
+    @Override
+    public Boolean isOptedOut() {
+        return isOptedOut;
+    }
 
-	public void setOptedOut(boolean isOptedOut) {
-		this.isOptedOut = isOptedOut;
-	}
+    public void setOptedOut(boolean isOptedOut) {
+        this.isOptedOut = isOptedOut;
+    }
 
-	@Override
-	public String[] getEdmPreview() {
-		return this.edmPreview;
-	}
+    @Override
+    public String[] getEdmPreview() {
+        return this.edmPreview;
+    }
 
-	@Override
-	public float getScore() {
-		return this.score;
-	}
+    @Override
+    public float getScore() {
+        return this.score;
+    }
 
-	@Override
-	public Date getTimestampCreated() {
-		return this.timestampCreated;
-	}
+    @Override
+    public Date getTimestampCreated() {
+        return this.timestampCreated;
+    }
 
-	@Override
-	public Date getTimestampUpdated() {
-		return this.timestampUpdated;
-	}
+    @Override
+    public Date getTimestampUpdated() {
+        return this.timestampUpdated;
+    }
 
-	@Override
-	public String[] getEdmIsShownAt() {
-		return edmIsShownAt;
-	}
+    @Override
+    public String[] getEdmIsShownAt() {
+        return edmIsShownAt;
+    }
 
-	@Override
-	public Map<String, List<String>> getEdmPlaceLabelLangAware() {
-		return edmPlaceLabelLangAware;
-	}
+    @Override
+    public Map<String, List<String>> getEdmPlaceLabelLangAware() {
+        return edmPlaceLabelLangAware;
+    }
 
-	public void setEdmPlaceLabelLangAware(Map<String, List<String>> edmPlaceLabelLangAware) {
-		this.edmPlaceLabelLangAware = edmPlaceLabelLangAware;
-	}
+    public void setEdmPlaceLabelLangAware(Map<String, List<String>> edmPlaceLabelLangAware) {
+        this.edmPlaceLabelLangAware = edmPlaceLabelLangAware;
+    }
 
-	@Override
-	public Map<String, List<String>> getEdmTimespanLabelLangAware() {
-		return edmTimespanLabelLangAware;
-	}
+    @Override
+    public Map<String, List<String>> getEdmTimespanLabelLangAware() {
+        return edmTimespanLabelLangAware;
+    }
 
-	public void setEdmTimespanLabelLangAware(Map<String, List<String>> edmTimespanLabelLangAware) {
-		this.edmTimespanLabelLangAware = edmTimespanLabelLangAware;
-	}
+    public void setEdmTimespanLabelLangAware(Map<String, List<String>> edmTimespanLabelLangAware) {
+        this.edmTimespanLabelLangAware = edmTimespanLabelLangAware;
+    }
 
-	@Override
-	public Map<String, List<String>> getEdmAgentLabelLangAware() {
-		return edmAgentLabelLangAware;
-	}
+    @Override
+    public Map<String, List<String>> getEdmAgentLabelLangAware() {
+        return edmAgentLabelLangAware;
+    }
 
-	public void setEdmAgentLabelLangAware(Map<String, List<String>> edmAgentLabelLangAware) {
-		this.edmAgentLabelLangAware = edmAgentLabelLangAware;
-	}
+    public void setEdmAgentLabelLangAware(Map<String, List<String>> edmAgentLabelLangAware) {
+        this.edmAgentLabelLangAware = edmAgentLabelLangAware;
+    }
 
-	@Override
-	public Boolean getPreviewNoDistribute() {
-		return this.edmPreviewNoDistribute;
-	}
+    @Override
+    public Boolean getPreviewNoDistribute() {
+        return this.edmPreviewNoDistribute;
+    }
+    
+    @Override
+    public Map<String, List<String>> getDcTitleLangAware() {
+        return dcTitleLangAware;
+    }
+
+    public void setDcTitleLangAware(Map<String, List<String>> dcTitleLangAware) {
+        this.dcTitleLangAware = dcTitleLangAware;
+    }
+
+    @Override
+    public Map<String, List<String>> getDcCreatorLangAware() {
+        return dcCreatorLangAware;
+    }
+    
+    
+    public void setDcCreatorLangAware(Map<String, List<String>> dcCreatorLangAware) {
+        this.dcCreatorLangAware = dcCreatorLangAware;
+    }
+
+    @Override
+    public Map<String, List<String>> getDcContributorLangAware() {
+        return dcContributorLangAware;
+    }
+
+    public void setDcContributorLangAware(Map<String, List<String>> dcContributorLangAware) {
+        this.dcContributorLangAware = dcContributorLangAware;
+    }
+
+    @Override
+    public Map<String, List<String>> getDcLanguageLangAware() {
+        return dcLanguageLangAware;
+    }
+
+    public void setDcLanguageLangAware(Map<String, List<String>> dcLanguageLangAware) {
+        this.dcLanguageLangAware = dcLanguageLangAware;
+    }
 }

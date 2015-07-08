@@ -119,6 +119,7 @@ public class SearchController {
 		model.setStart(fixStartParameter(start));
 		model.setRows(fixRowsParameter(rows));
 		model.setDoTranslation(ControllerUtil.getBooleanBundleValue("notranslate_do_translations", messageSource, locale));
+		model.setIsNofEnabled(config.isNofEnabled());
 
 		queryString = eu.europeana.corelib.search.utils.SearchUtils.rewriteQueryFields(queryString);
 		queryString = eu.europeana.corelib.search.utils.SearchUtils.normalizeBooleans(queryString);
