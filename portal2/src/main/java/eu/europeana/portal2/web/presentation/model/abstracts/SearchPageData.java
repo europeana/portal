@@ -87,6 +87,7 @@ public abstract class SearchPageData extends PortalPageData {
 	private LanguageContainer languageContainer;
 
 	private boolean languagesRemoved;
+    private boolean nofEnabled = false;
 
 	private String apiUrl;
 	private String apiKey;
@@ -177,6 +178,17 @@ public abstract class SearchPageData extends PortalPageData {
 			return null;
 		}
 	}
+
+
+	
+    public void setIsNofEnabled(boolean nofEnabled){
+        this.nofEnabled = nofEnabled;
+	}
+	
+	public boolean getIsNofEnabled(){
+	        return nofEnabled;
+	}
+	
 
 	public String getTranslationUrl() {
 		try {

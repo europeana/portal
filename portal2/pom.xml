@@ -65,7 +65,6 @@
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<!-- here the phase you need -->
 						<phase>validate</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -112,7 +111,7 @@
 					<!-- SASSIFY -->
 					<execution>
 						<id>sassify</id>
-						<phase>prepare-package</phase>
+						<phase>process-classes</phase>
 						<goals>
 							<goal>java</goal>
 						</goals>
@@ -139,6 +138,1480 @@
 
 				</executions>
 			</plugin>
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- start pom merge -->
+			
+			<plugin><!-- START MINIFY-MAVEN-PLUGIN -->
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>1.5.2</version>
+
+				<executions>
+					<!-- @see WEB-INF/jsp/default/_common/html/css/debug-css.jsp -->
+					<!-- @see WEB-INF/jsp/default/_common/html/css/production-css.jsp -->
+					<!-- COMBINED CSS FILES -->
+					<execution>
+						<id>minify-common.css</id>
+						<!-- 
+						<phase>process-resources</phase>
+						 -->
+						<phase>prepare-package</phase>
+						
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>common.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>html.css</cssSourceInclude>
+								<cssSourceInclude>common.css</cssSourceInclude>
+								<cssSourceInclude>ajax.css</cssSourceInclude>
+								<cssSourceInclude>header.css</cssSourceInclude>
+								<cssSourceInclude>menu-main.css</cssSourceInclude>
+								<cssSourceInclude>responsive-grid.css</cssSourceInclude>
+								<cssSourceInclude>eu-menu.css</cssSourceInclude>
+								<cssSourceInclude>ellipsis.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-icons.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<!-- hierarchy.css -->
+
+					<execution>
+						<id>minify-hierarchy.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<cssSourceDir>/themes/default/js/eu/europeana/EuHierarchy</cssSourceDir>
+							<cssFinalFile>hierarchy.css</cssFinalFile>
+							<cssTargetDir>css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>style.css</cssSourceInclude>
+								<cssSourceInclude>style-overrides.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					
+					<!-- widget.css (as common.css but with absolute font-icon paths + search.css) -->
+
+					<execution>
+						<id>minify-search-widget.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>search-widget-all.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>html-sw.css</cssSourceInclude>
+								<cssSourceInclude>common-sw.css</cssSourceInclude>
+								<cssSourceInclude>header-sw.css</cssSourceInclude>
+								<cssSourceInclude>menu-main.css</cssSourceInclude>
+								<cssSourceInclude>responsive-grid-sw.css</cssSourceInclude>
+								<cssSourceInclude>eu-menu.css</cssSourceInclude>
+								<cssSourceInclude>ellipsis.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-icons-widget.css</cssSourceInclude>
+								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
+								<cssSourceInclude>search-sw.css</cssSourceInclude>
+								<cssSourceInclude>search-pagination-sw.css</cssSourceInclude>
+								<cssSourceInclude>sidebar-facets-sw.css</cssSourceInclude>
+								<cssSourceInclude>styling-sw.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+
+					<!-- separate file for newsletter -->
+					<execution>
+						<id>minify-newsletter.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>newsletter.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>newsletter.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-europeana-font-face.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>europeana-font-face.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>europeana-font-face.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-fulldoc.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>fulldoc.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>fulldoc.css</cssSourceInclude>
+								<cssSourceInclude>lightbox.css</cssSourceInclude>
+								<cssSourceInclude>eu-accordion-tabs.css</cssSourceInclude>
+								<cssSourceInclude>fulldoc-ess.css</cssSourceInclude>
+								<cssSourceInclude>fulldoc-explore-further.css</cssSourceInclude>
+								<cssSourceInclude>eu-carousel.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-myeuropeana.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>myeuropeana.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>myeuropeana.css</cssSourceInclude>
+								<cssSourceInclude>eu-accordion-tabs.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-search.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>search.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>search.css</cssSourceInclude>
+								<cssSourceInclude>search-pagination.css</cssSourceInclude>
+								<cssSourceInclude>sidebar-facets.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					<!-- END COMBINED CSS FILES -->
+
+					<!-- INDIVIDUAL CSS FILES -->
+					<execution>
+						<id>minify-announce.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>announce.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>announce.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-contact.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>contact.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>contact.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-embed.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>embed.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>embed.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-galleria.europeanax.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/galleria/themes/europeanax</webappTargetDir>
+							<cssSourceDir>/themes/default/js/galleria/themes/europeanax</cssSourceDir>
+							<cssFinalFile>galleria.europeanax.css</cssFinalFile>
+							<cssTargetDir>css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>galleria.europeanax.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-ie.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-ie7.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie7.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie7.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-ie8.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie8.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie8.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-ie9.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>ie9.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>ie9.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-index.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>index.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>index.css</cssSourceInclude>
+								<cssSourceInclude>eu-carousel.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-login.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>login.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>login.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-myeuropeana-index.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>myeuropeana-index.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>myeuropeana-index.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-noscript.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>noscript.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>noscript.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-providers.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>providers.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>providers.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-register.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>register.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>register.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-api-console.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>api-console.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>api-console.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-api-console-embedded.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>api-console-embedded.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>api-console-embedded.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-search-embed.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>search-embed.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>search-embed.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-staticpages.css</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/css</webappTargetDir>
+							<cssSourceDir>/themes/default/css</cssSourceDir>
+							<cssFinalFile>staticpages.css</cssFinalFile>
+							<cssTargetDir>../css-min</cssTargetDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>staticpages.css</cssSourceInclude>
+							</cssSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					<!-- END INDIVIDUAL CSS FILES -->
+
+					<!-- @see WEB-INF/jsp/default/_common/html/css/debug-css.jsp -->
+					<!-- @see WEB-INF/jsp/default/_common/html/css/production-css.jsp -->
+					<!-- INDIVIDUAL JS FILES -->
+					<execution>
+						<id>minify-accordion-tabs.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuAccordionTabs.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuAccordionTabs.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-admin.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>admin.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>admin.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-addthis.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/addthis</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/addthis</jsSourceDir>
+							<jsFinalFile>addthis.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>addthis.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-ajax.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>ajax.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>ajax.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-analytics.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/google/analytics</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/google/analytics</jsSourceDir>
+							<jsFinalFile>analytics.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>analytics.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-api-console.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>api-console.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>api-console.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-bootstrap.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/bootstrap</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana/bootstrap</jsSourceDir>
+							<jsFinalFile>bootstrap.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>bootstrap.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-citation.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>citation.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>citation.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-collapsible.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>collapsible.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>collapsible.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-collapsible-widget.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>collapsible_widget.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>collapsible_widget.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-contact.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>contact.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>contact.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-ellipsis.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>ellipsis.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>ellipsis.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-touchwipe.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/jquery</webappTargetDir>
+							<jsSourceDir>/themes/default/js/jquery</jsSourceDir>
+							<jsFinalFile>jquery.touchwipe.1.1.1.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>jquery.touchwipe.1.1.1.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-eucarousel.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuCarousel.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuCarousel.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+<!--
+					<execution>
+						<id>minify-emma.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/e2ma/</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/e2ma</jsSourceDir>
+							<jsFinalFile>emma.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>emma.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+ -->
+
+					<execution>
+						<id>minify-embed.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>embed.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>embed.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-eu-pagination.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuPagination.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuPagination.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-EuAccessibility.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuAccessibility.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuAccessibility.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-EuHierarchy.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana/EuHierarchy</jsSourceDir>
+							<jsFinalFile>EuHierarchy.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuHierarchy.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-EuHierarchy2.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana/EuHierarchy</jsSourceDir>
+							<jsFinalFile>EuHierarchy2.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuHierarchy2.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-EuMenu.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuMenu.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuMenu.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-euresponsive.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>euresponsive.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>euresponsive.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-external-search-services.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>external-search-services.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>external-search-services.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-forgot-password.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>forgot-password.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>forgot-password.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-fulldoc.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>fulldoc.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>fulldoc.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-fulldoc-embed.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>fulldoc-embed.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>fulldoc-embed.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-lightbox.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>lightbox.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>lightbox.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-galleria.europeanax.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/galleria/themes/europeanax</webappTargetDir>
+							<jsSourceDir>/themes/default/js/galleria/themes/europeanax</jsSourceDir>
+							<jsFinalFile>galleria.europeanax.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>galleria.europeanax.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-header.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>header.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>header.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-image-checker.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>image-checker.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>image-checker.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-index.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>index.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>index.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-ios-orientationchange-fix.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/scottjehl-iOS-Orientationchange-Fix-99c9c99</webappTargetDir>
+							<jsSourceDir>/themes/default/js/scottjehl-iOS-Orientationchange-Fix-99c9c99</jsSourceDir>
+							<jsFinalFile>ios-orientationchange-fix.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>ios-orientationchange-fix.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-jquery.cookie.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/common/js/com/github/carhartl</webappTargetDir>
+							<jsSourceDir>/themes/common/js/com/github/carhartl</jsSourceDir>
+							<jsFinalFile>jquery.cookie.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>jquery.cookie.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-js.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/js</webappTargetDir>
+							<jsSourceDir>/themes/default/js/js</jsSourceDir>
+							<jsFinalFile>js.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>js.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-jstree.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana/EuHierarchy</jsSourceDir>
+							<jsFinalFile>jstree.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>jstree.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-loader.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/js</webappTargetDir>
+							<jsSourceDir>/themes/default/js/js</jsSourceDir>
+							<jsFinalFile>loader.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>loader.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-login.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>login.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>login.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-map.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>map.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>map.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-multilang.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>multilang.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>multilang.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-myeuropeana.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>myeuropeana.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>myeuropeana.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-myeuropeana-index.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>myeuropeana-index.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>myeuropeana-index.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-providers.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>providers.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>providers.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-register-success.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>register-success.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>register-success.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-search.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>search.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>search.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-search-widget.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuSearchWidget.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuSearchWidget.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-timer.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>timer.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>timer.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-translation-services.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>translation-services.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>translation-services.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-translator-google.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/google/translator</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/google/translator</jsSourceDir>
+							<jsFinalFile>translator.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>translator.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-translator-microsoft.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/microsoft</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/microsoft</jsSourceDir>
+							<jsFinalFile>translator.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>translator.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-translator-widget.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/com/microsoft</webappTargetDir>
+							<jsSourceDir>/themes/default/js/com/microsoft</jsSourceDir>
+							<jsFinalFile>translator-widget.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>translator-widget.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-utils.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>utils.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>utils.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-widget-wizard.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/eu/europeana</webappTargetDir>
+							<jsSourceDir>/themes/default/js/eu/europeana</jsSourceDir>
+							<jsFinalFile>EuWidgetWizard.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>EuWidgetWizard.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>minify-window-open.js</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<webappTargetDir>${basedir}/src/main/webapp/themes/default/js/js</webappTargetDir>
+							<jsSourceDir>/themes/default/js/js</jsSourceDir>
+							<jsFinalFile>window-open.js</jsFinalFile>
+							<jsTargetDir>min</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>window-open.js</jsSourceInclude>
+							</jsSourceIncludes>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					<!-- END INIDVIDUAL JS FILES -->
+				</executions>
+			</plugin>
+			<!-- END MINIFY-MAVEN-PLUGIN -->
+
+			<plugin>
+              <artifactId>maven-resources-plugin</artifactId>
+              <version>2.3</version>
+              <executions>
+
+					<execution>
+						<id>minify-hierarchy-images</id>
+						<phase>prepare-package</phase>
+						<configuration>
+						
+							<outputDirectory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy/css-min</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/webapp/themes/default/js/eu/europeana/EuHierarchy</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.png</include>
+										<include>**/*.gif</include>
+									</includes>
+									<excludes>
+										<exclude>**/*.css</exclude>
+										<exclude>**/*.js</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+						
+						<goals>
+			                <goal>copy-resources</goal>
+						</goals>
+					</execution>
+
+
+              </executions>
+          </plugin>
+
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>This pom will create minified assets in ${basedir}/src/main/webapp/themes/default/css/min/</echo>
+								<echo>and min directories within the sub-directories of ${basedir}/src/main/webapp/themes/default/js/</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			
+			<!-- end pom merge -->
+			
+			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -224,12 +1697,6 @@
 			<artifactId>jedis</artifactId>
 			<version>2.6.1</version>
 		</dependency>
-
-        <dependency>
-            <groupId>eu.europeana.corelib</groupId>
-            <artifactId>corelib-media-storage</artifactId>
-            <version>${version.europeanaCorelib}</version>
-        </dependency>
 
         <dependency>
             <groupId>eu.europeana.corelib</groupId>
@@ -475,7 +1942,7 @@
                 beta
             </id>
 			<properties>
-				<europeana.properties>${project.parent.basedir}/properties/test</europeana.properties>
+				<europeana.properties>${project.parent.basedir}/properties/beta</europeana.properties>
 				<europeana.server>http://beta-web.de.a9sapp.eu/portal</europeana.server>
 			</properties>
 		</profile>
