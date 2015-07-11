@@ -65,7 +65,6 @@
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<!-- here the phase you need -->
 						<phase>validate</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -112,9 +111,6 @@
 					<!-- SASSIFY -->
 					<execution>
 						<id>sassify</id>
-						<!-- 
-						<phase>prepare-package</phase>
-						 -->
 						<phase>process-classes</phase>
 						<goals>
 							<goal>java</goal>
@@ -142,13 +138,6 @@
 
 				</executions>
 			</plugin>
-			
-			
-			
-			
-			
-			
-			
 			
 			<!-- start pom merge -->
 			
@@ -1702,7 +1691,6 @@
 			<version>2.6.1</version>
 		</dependency>
 
-
         <dependency>
             <groupId>eu.europeana.corelib</groupId>
             <artifactId>corelib-storage</artifactId>
@@ -1996,4 +1984,3 @@
 
 	</repositories>
 </project>
-

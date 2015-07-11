@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,6 +21,7 @@ import eu.europeana.portal2.web.model.facets.LabelFrequency;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/portal2-test.xml"})
+@Ignore // disabled as portal project is deprecated
 public class FacetQueryLinksImplTest {
 
 	@Before

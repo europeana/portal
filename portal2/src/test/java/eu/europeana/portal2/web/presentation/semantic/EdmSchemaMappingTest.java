@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,6 +22,7 @@ import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/portal2-test.xml"})
+@Ignore // disabled as portal project is deprecated
 public class EdmSchemaMappingTest {
 
 	@Resource

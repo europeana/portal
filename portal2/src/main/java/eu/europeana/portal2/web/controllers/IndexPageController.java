@@ -80,6 +80,7 @@ public class IndexPageController {
 		// update dynamic items
 		updateCarousel(model, locale);
 		model.setAnnounceMsg(getAnnounceMessage(locale));
+		model.setIsNofEnabled(config.isNofEnabled());
 
 		// fill model
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
