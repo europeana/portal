@@ -338,22 +338,19 @@ public abstract class SearchPageData extends PortalPageData {
 	}
 	
 	public List<String> getKeywordLanguages() {
-		return languageContainer.getKeywordLanguages();
+		return languageContainer != null ? languageContainer.getKeywordLanguages() : null;
 	}
 
 	public String getPortalLanguage() {
-		return languageContainer.getPortalLanguage();
+		return languageContainer != null ? languageContainer.getPortalLanguage() : null;
 	}
 
 	public String getItemLanguage() {
-		return languageContainer.getItemLanguage();
+		return languageContainer != null ? languageContainer.getItemLanguage() : null;
 	}
 
 	public QueryTranslation getQueryTranslation() {
-		if (languageContainer != null) {
-			return languageContainer.getQueryTranslation();
-		}
-		return null;
+		return languageContainer != null ? languageContainer.getQueryTranslation() : null;
 	}
 
 	public boolean isUseBackendItemTranslation() {
