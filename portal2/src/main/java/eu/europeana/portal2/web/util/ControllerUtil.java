@@ -17,6 +17,26 @@
 
 package eu.europeana.portal2.web.util;
 
+import eu.europeana.corelib.db.service.UserService;
+import eu.europeana.corelib.definitions.db.entity.relational.User;
+import eu.europeana.corelib.logging.Logger;
+import eu.europeana.corelib.web.model.FragmentInfo;
+import eu.europeana.corelib.web.model.PageData;
+import eu.europeana.corelib.web.model.PageInfo;
+import eu.europeana.portal2.web.presentation.ThemeChecker;
+import eu.europeana.portal2.web.presentation.model.PortalPageData;
+import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
+import eu.europeana.portal2.web.security.Portal2UserDetails;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.BatchUpdateException;
@@ -26,29 +46,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.AbstractMessageSource;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContextUtils;
-
-import eu.europeana.corelib.db.service.UserService;
-import eu.europeana.corelib.definitions.db.entity.relational.User;
-import eu.europeana.corelib.edm.utils.SolrUtils;
-import eu.europeana.corelib.logging.Logger;
-import eu.europeana.corelib.web.model.FragmentInfo;
-import eu.europeana.corelib.web.model.PageData;
-import eu.europeana.corelib.web.model.PageInfo;
-import eu.europeana.portal2.web.presentation.ThemeChecker;
-import eu.europeana.portal2.web.presentation.model.PortalPageData;
-import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
-import eu.europeana.portal2.web.security.Portal2UserDetails;
 
 /**
  * Utility methods for controllers
@@ -266,7 +263,7 @@ public class ControllerUtil {
 		return springArray;
 	}
 
-	public static boolean getBooleanBundleValue(String key, AbstractMessageSource messageSource, Locale locale) {
+	public static boolean getBooleanBundleValue(String key, MessageSource messageSource, Locale locale) {
 		boolean booleanValue = false;
 		try {
 			String stringValue = messageSource.getMessage(key, null, locale);

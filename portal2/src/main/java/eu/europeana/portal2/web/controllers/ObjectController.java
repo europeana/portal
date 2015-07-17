@@ -17,32 +17,6 @@
 
 package eu.europeana.portal2.web.controllers;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.client.utils.URIUtils;
-import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.util.URLUtil;
-import org.hibernate.validator.internal.constraintvalidators.URLValidator;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.edm.beans.BriefBean;
 import eu.europeana.corelib.definitions.edm.beans.FullBean;
@@ -58,20 +32,14 @@ import eu.europeana.corelib.search.utils.SearchUtils;
 import eu.europeana.corelib.utils.EuropeanaUriUtils;
 import eu.europeana.corelib.utils.StringArrayUtils;
 import eu.europeana.corelib.utils.service.MltStopwordsService;
-import eu.europeana.corelib.utils.service.OptOutService;
 import eu.europeana.corelib.web.model.rights.RightReusabilityCategorizer;
+import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.corelib.web.utils.RequestUtils;
-import eu.europeana.corelib.web.service.EuropeanaUrlService;
 import eu.europeana.portal2.services.BingTokenService;
 import eu.europeana.portal2.services.ClickStreamLogService;
 import eu.europeana.portal2.services.ClickStreamLogService.UserAction;
-import eu.europeana.portal2.web.model.mlt.EuropeanaMlt;
-import eu.europeana.portal2.web.model.mlt.EuropeanaMltCategory;
-import eu.europeana.portal2.web.model.mlt.EuropeanaMltLink;
-import eu.europeana.portal2.web.model.mlt.MltCollector;
-import eu.europeana.portal2.web.model.mlt.MltConfiguration;
-import eu.europeana.portal2.web.model.mlt.MltSuggestion;
+import eu.europeana.portal2.web.model.mlt.*;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoCollector;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestion;
 import eu.europeana.portal2.web.model.seealso.SeeAlsoSuggestions;
@@ -86,6 +54,22 @@ import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 import eu.europeana.portal2.web.presentation.model.submodel.impl.FullBeanViewImpl;
 import eu.europeana.portal2.web.presentation.semantic.SchemaOrgMapping;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
@@ -116,7 +100,7 @@ public class ObjectController {
 	private UserService userService;
 
 	@Resource
-	private ReloadableResourceBundleMessageSource messageSource;
+	private MessageSource messageSource;
 
 	@Resource
 	private EuropeanaUrlService europeanaUrlService;
