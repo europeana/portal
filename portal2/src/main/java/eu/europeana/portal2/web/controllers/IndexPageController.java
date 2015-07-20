@@ -17,27 +17,6 @@
 
 package eu.europeana.portal2.web.controllers;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.AbstractMessageSource;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import eu.europeana.corelib.logging.Log;
-import eu.europeana.corelib.logging.Logger;
 import eu.europeana.corelib.web.model.PageInfo;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.services.ClickStreamLogService;
@@ -46,6 +25,17 @@ import eu.europeana.portal2.web.presentation.PortalPageInfo;
 import eu.europeana.portal2.web.presentation.model.IndexPage;
 import eu.europeana.portal2.web.presentation.model.data.submodel.CarouselItem;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * Where people arrive.
@@ -62,7 +52,7 @@ public class IndexPageController {
 	private ClickStreamLogService clickStreamLogger;
 
 	@Resource
-	private AbstractMessageSource messageSource;
+	private MessageSource messageSource;
 
 	@Resource
 	private Configuration config;
