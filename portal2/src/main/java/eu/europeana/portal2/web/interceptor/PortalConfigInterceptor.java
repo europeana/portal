@@ -1,25 +1,23 @@
 package eu.europeana.portal2.web.interceptor;
 
-import java.util.Locale;
-
-import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.AbstractMessageSource;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.support.RequestContextUtils;
-
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.web.model.PageData;
 import eu.europeana.corelib.web.support.Configuration;
 import eu.europeana.portal2.web.presentation.model.PortalPageData;
 import eu.europeana.portal2.web.util.ControllerUtil;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 
@@ -27,7 +25,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 	private UserService userService;
 
 	@Resource
-	private AbstractMessageSource messageSource;
+	private MessageSource messageSource;
 
 	@Resource
 	private Configuration configuration;
