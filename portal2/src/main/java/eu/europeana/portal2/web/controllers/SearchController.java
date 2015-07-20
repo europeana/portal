@@ -1,22 +1,5 @@
 package eu.europeana.portal2.web.controllers;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.log4j.Logger;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
 import eu.europeana.corelib.db.service.UserService;
 import eu.europeana.corelib.definitions.db.entity.relational.User;
 import eu.europeana.corelib.definitions.edm.beans.BriefBean;
@@ -35,6 +18,17 @@ import eu.europeana.portal2.web.presentation.model.submodel.LanguageContainer;
 import eu.europeana.portal2.web.util.ControllerUtil;
 import eu.europeana.portal2.web.util.QueryTranslationsUtil;
 import eu.europeana.portal2.web.util.SearchUtils;
+import org.apache.log4j.Logger;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 public class SearchController {
@@ -57,7 +51,7 @@ public class SearchController {
 	private UserService userService;
 
 	@Resource
-	private ReloadableResourceBundleMessageSource messageSource;
+	private MessageSource messageSource;
 
 	/**
 	 * Possible sort options
