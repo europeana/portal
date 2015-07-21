@@ -3,6 +3,7 @@ package eu.europeana.portal2.web.presentation;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.logging.Logger;
 
 import org.jruby.embed.ScriptingContainer;
 
@@ -14,7 +15,12 @@ public class ThemeSassCompiler {
 	private static final String cssLocation =  "portal2/src/main/webapp/themes/default/css";
 
 	public ThemeSassCompiler(){
-		deleteFolder(new File(cssLocation));
+		String path = new java.io.File("").getAbsolutePath();
+		if (!path.endsWith("portal")){
+			path=path+"/portal";
+		}
+		String finalPath = path+"/"+cssLocation;
+		deleteFolder(new File(finalPath));
 	}
 
 	/**
@@ -26,7 +32,7 @@ public class ThemeSassCompiler {
 	 * */ 
 	public static void main(String[] args) throws Exception{
 		
-		if(args == null || args.length==0){
+		if(args == null || args.length == 0){
 			throw new Exception("Expected arg not present in ThemeSassCompiler");
 		}
 		try{
@@ -48,6 +54,8 @@ public class ThemeSassCompiler {
 					f.delete();
 				}
 			}			
+		} else {
+			Logger.getLogger(ThemeSassCompiler.class.getName()).info("Css not found for path!: " + folder.getAbsolutePath());
 		}
 	}
 	
