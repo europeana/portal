@@ -19,7 +19,7 @@ public class ThemeSassCompiler {
 		if (!path.endsWith("portal")){
 			path=path+"/portal";
 		}
-		String finalPath = path+cssLocation;
+		String finalPath = path+"/"+cssLocation;
 		deleteFolder(new File(finalPath));
 	}
 
@@ -32,7 +32,7 @@ public class ThemeSassCompiler {
 	 * */ 
 	public static void main(String[] args) throws Exception{
 		
-		if(args == null || args.length==0){
+		if(args == null || args.length == 0){
 			throw new Exception("Expected arg not present in ThemeSassCompiler");
 		}
 		try{
