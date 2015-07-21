@@ -15,7 +15,12 @@ public class ThemeSassCompiler {
 	private static final String cssLocation =  "portal2/src/main/webapp/themes/default/css";
 
 	public ThemeSassCompiler(){
-		deleteFolder(new File(cssLocation));
+		String path = new java.io.File("").getAbsolutePath();
+		if (!path.endsWith("portal")){
+			path=path+"/portal";
+		}
+		String finalPath = path+cssLocation;
+		deleteFolder(new File(finalPath));
 	}
 
 	/**
