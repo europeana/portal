@@ -3,6 +3,7 @@ package eu.europeana.portal2.web.presentation;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.logging.Logger;
 
 import org.jruby.embed.ScriptingContainer;
 
@@ -48,6 +49,8 @@ public class ThemeSassCompiler {
 					f.delete();
 				}
 			}			
+		} else {
+			Logger.getLogger(ThemeSassCompiler.class.getName()).info("Css not found for path!");
 		}
 	}
 	
