@@ -12,7 +12,11 @@ public class ThemeSassCompiler {
     private File configLocation;
 	private static final String sassLocation = "/portal2/src/main/webapp/themes/sass";
 	private static final String cssLocation =  "portal2/src/main/webapp/themes/default/css";
-	
+
+	public ThemeSassCompiler(){
+		deleteFolder(new File(cssLocation));
+	}
+
 	/**
 	 * 
 	 * Invoked by the exec:maven plugin
@@ -49,7 +53,7 @@ public class ThemeSassCompiler {
 	
 	public void compile(String server){
 		
-		deleteFolder(new File(cssLocation));
+
 		String path = new java.io.File("").getAbsolutePath();
 		if (!path.endsWith("portal")){
 			path=path+"/portal";	
