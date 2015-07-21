@@ -50,7 +50,7 @@ public class ThemeSassCompiler {
 				}
 			}			
 		} else {
-			Logger.getLogger(ThemeSassCompiler.class.getName()).info("Css not found for path!");
+			Logger.getLogger(ThemeSassCompiler.class.getName()).info("Css not found for path!: " + folder.getAbsolutePath());
 		}
 	}
 	
