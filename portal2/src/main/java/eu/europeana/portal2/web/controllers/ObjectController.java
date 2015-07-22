@@ -432,7 +432,7 @@ public class ObjectController {
 			System.out.println("here should be a log.error");
 			log.error(String.format(
 					"Exception during getting the full bean for ID %s: %s",
-					europeanaId, e.getStackTrace()[0]));
+					europeanaId, e.getMessage()),e);
 		}
 		return fullBean;
 	}
@@ -447,7 +447,7 @@ public class ObjectController {
 			System.out.println("here should be a log.error");
 			log.error(String.format(
 					"Exception during getting the full bean for ID %s: %s",
-					europeanaId, e.getStackTrace()[0]));
+					europeanaId, e.getMessage()),e);
 		}
 		return newRecordId;
 	}
