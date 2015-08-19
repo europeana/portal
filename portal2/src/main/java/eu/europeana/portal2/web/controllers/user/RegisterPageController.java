@@ -105,8 +105,8 @@ Logger log = Logger.getLogger(this.getClass());
 		User user = userService.findByEmail(token.getEmail());
 		if (user == null) {
 			user = userService.create(model.getToken(), model.getUserName(), model.getPassword());
-		} else {
-			user = userService.registerApiUserForMyEuropeana(user.getId(), model.getUserName(), model.getPassword());
+//		} else {
+//			user = userService.registerApiUserForMyEuropeana(user.getId(), model.getUserName(), model.getPassword());
 		}
 		sendNotificationEmail(user);
 

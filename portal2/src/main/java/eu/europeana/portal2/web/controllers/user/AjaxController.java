@@ -164,7 +164,7 @@ public class AjaxController {
 			throws UnsupportedEncodingException, DatabaseException {
 		String key = URLDecoder.decode(getStringParameter("apikey", FieldSize.TAG, request), "utf-8");
 		String appName = URLDecoder.decode(getStringParameter("appName", FieldSize.TAG, request), "utf-8");
-		apiKeyService.updateApplicationName(user.getId(), key, appName);
+		apiKeyService.updateApplicationName(key, appName);
 	}
 
 	private User saveItemLanguage(HttpServletRequest request, User user)

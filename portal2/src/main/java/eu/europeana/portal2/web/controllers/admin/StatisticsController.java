@@ -14,6 +14,7 @@ import java.util.TreeMap;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import eu.europeana.corelib.db.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.http.MediaType;
@@ -49,6 +50,9 @@ public class StatisticsController {
 
 	@Resource
 	private ApiLogService apiLogService;
+
+	@Resource
+	private UserService userService;
 
 	private static final List<String> TYPES = Arrays
 			.asList(new String[] { "dates", "months", "recordTypes", "apiKeys", "month", "recordType", "apiKey",
@@ -422,7 +426,7 @@ public class StatisticsController {
 			Logger.getLogger(this.getClass()).error("Database exception during retrieving apiKey: " + e.getLocalizedMessage());
 		}
 		if (apiKey != null) {
-			User user = apiKey.getUser();
+			User user = userService.findByEmail(apiKey.getEmail());
 			if (user != null) {
 				if (!StringUtils.isBlank(user.getLastName()) && !StringUtils.isBlank(user.getFirstName())) {
 					userName.append(user.getLastName()).append(", ").append(user.getFirstName());
@@ -430,8 +434,6 @@ public class StatisticsController {
 					userName.append(user.getEmail());
 				}
 			}
-		} else {
-			// log.warning("No API key object found for wskey: " + wskey);
 		}
 
 		if (userName.length() == 0) {

@@ -56,11 +56,6 @@ public class UserServiceImplMock implements UserService {
 	}
 
 	@Override
-	public User findByApiKey(String apiKey) {
-		return null;
-	}
-
-	@Override
 	public User findByName(String userName) {
 		return null;
 	}
@@ -117,12 +112,6 @@ public class UserServiceImplMock implements UserService {
 	@Override
 	public void removeSocialTag(Long userId, String objectId, String tag)
 			throws DatabaseException {
-	}
-
-	@Override
-	public User registerApiUserForMyEuropeana(Long userId, String userName,
-			String password) throws DatabaseException {
-		return null;
 	}
 
 	@Override

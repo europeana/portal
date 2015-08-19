@@ -102,7 +102,7 @@ public class RegisterApiPageController {
 			}
 			model.setToken(token.getToken());
 			model.setEmail(token.getEmail());
-			String apiKey = null;
+			String apiKey;
 			do {
 				apiKey = generatePassPhrase(9);
 			} while (!isUnique(apiKey));
@@ -171,11 +171,10 @@ public class RegisterApiPageController {
 					model.getWebsite(), model.getAddress(), model.getPhone(), model.getFieldOfWork());
 				ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 
-				log.info("User: " + apiKey.getUser());
 				log.info("ApiKey: " + apiKey);
 				tokenService.remove(tokenService.findByID(token));
 				log.info("token is removed: " + model.getToken());
-				sendNotificationEmails(apiKey.getUser(), apiKey, locale);
+				sendNotificationEmails(userService.findByEmail(apiKey.getEmail()), apiKey, locale);
 				target = PortalPageInfo.API_REGISTER_SUCCESS;
 			}
 		}
@@ -188,7 +187,9 @@ public class RegisterApiPageController {
 		log.info("Sending emails about the successfull API registration");
 		try {
 			emailService.sendRegisterApiNotifyUser(apiKey, locale);
-			emailService.sendRegisterApiNotifyAdmin(user);
+			if (user != null) {
+				emailService.sendRegisterApiNotifyAdmin(user);
+			}
 		} catch (Exception e) {
 			log.error("Unable to send email to sys: " + e.getLocalizedMessage(),e);
 		}

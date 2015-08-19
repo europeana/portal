@@ -68,7 +68,7 @@ public class EuropeanaUrlServiceImplMock implements EuropeanaUrlService {
 	}
 
 	@Override
-	public UrlBuilder getApi2Redirect(long uid, String showAt, String provider,
+	public UrlBuilder getApi2Redirect(String uid, String showAt, String provider,
 			String europeanaId, String profile) {
 		return null;
 	}
@@ -131,7 +131,7 @@ public class EuropeanaUrlServiceImplMock implements EuropeanaUrlService {
 		UrlBuilder url = new UrlBuilder("http://europeanastatic.eu/api/image");
 		try {
 			url.addParam("uri", URLEncoder.encode(thumbnail.trim(), ENC_UTF8));
-		} catch (UnsupportedEncodingException e) {
+		} catch (UnsupportedEncodingException ignored) {
 		}
 		url.addParam("size", ThumbSize.LARGE.toString());
 		url.addParam("type", type.toString());

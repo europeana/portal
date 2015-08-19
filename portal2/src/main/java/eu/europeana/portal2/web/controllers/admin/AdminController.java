@@ -102,25 +102,25 @@ public class AdminController {
 
 		long t0 = new Date().getTime();
 
-		Map<String, Map<String, Long>> usage = new HashMap<String, Map<String, Long>>();
+		Map<String, Map<String, Long>> usage = new HashMap<>();
 		usage.put(ACTUAL, new HashMap<String, Long>());
 		usage.put(TOTAL, new HashMap<String, Long>());
 
-		List<User> users = new ArrayList<User>();
+		List<User> users = new ArrayList<>();
 		long count = apiKeyService.count();
 		model.setApiKeyCount(count);
 
 		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(false, offset, LIMIT);
 		for (ApiKey apiKey : apiKeys) {
-			User user = apiKey.getUser();
-			if (!users.contains(user)) {
+			User user = userService.findByEmail(apiKey.getEmail());
+			if ((user != null) && !users.contains(user)) {
 				users.add(user);
 			}
 		}
 
 		// Requests API key statistics
 		for (User user : users) {
-			for (ApiKey apiKey : user.getApiKeys()) {
+			for (ApiKey apiKey : apiKeyService.findByEmail(user.getEmail())) {
 				getUsageByApiKey(usage, apiKey.getId());
 			}
 		}
@@ -128,14 +128,13 @@ public class AdminController {
 		long t = (new Date().getTime() - t0);
 		model.setUsers(users);
 		model.setUsage(usage);
-		List<Integer> pageNumbers = new ArrayList<Integer>();
+		List<Integer> pageNumbers = new ArrayList<>();
 		for (int i = 1; ((i - 1) * LIMIT) + 1 < count; i++) {
 			pageNumbers.add(i);
 		}
 		model.setPageNumbers(pageNumbers);
 
-		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.ADMIN);
-		return page;
+		return ControllerUtil.createModelAndViewPage(model, PortalPageInfo.ADMIN);
 	}
 
 	@RequestMapping("/admin/limitInfo.json")
@@ -182,7 +181,7 @@ public class AdminController {
 			) throws Exception {
 		Logger.getLogger(this.getClass().getName()).info(String.format("%s, %s", userId, apiKey));
 
-		apiKeyService.removeApiKey(userId, apiKey);
+		apiKeyService.removeApiKey(apiKey);
 
 		return "redirect:/admin.html";
 	}
@@ -204,8 +203,8 @@ public class AdminController {
 		Map<Long, User> users = new LinkedHashMap<Long, User>();
 		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(true);
 		for (ApiKey apiKey : apiKeys) {
-			User user = apiKey.getUser();
-			if (!users.containsKey(user.getId())) {
+			User user = userService.findByEmail(apiKey.getEmail());
+			if ((user != null) && !users.containsKey(user.getId())) {
 				users.put(user.getId(), user);
 			}
 		}
@@ -235,18 +234,18 @@ public class AdminController {
 	@RequestMapping(value = "/admin/export/users.xls")
 	public ModelAndView exportUsersInExcelHandler(HttpServletResponse response) throws Exception {
 
-		Map<Long, User> users = new LinkedHashMap<Long, User>();
+		Map<Long, User> users = new LinkedHashMap<>();
 		List<ApiKey> apiKeys = apiKeyService.findAllSortByDate(true);
 		for (ApiKey apiKey : apiKeys) {
-			User user = apiKey.getUser();
-			if (!users.containsKey(user.getId())) {
+			User user = userService.findByEmail(apiKey.getEmail());
+			if ((user != null) && !users.containsKey(user.getId())) {
 				users.put(user.getId(), user);
 			}
 		}
 
 		String title = "API users";
 
-		List<List<String>> data = new ArrayList<List<String>>();
+		List<List<String>> data = new ArrayList<>();
 		int count = 1;
 		for (User user : users.values()) {
 			data.addAll(serializeUser(count++, user));
@@ -285,8 +284,9 @@ public class AdminController {
 	 */
 	private List<List<String>> serializeUser(int count, User user) {
 
-		List<List<String>> rows = new LinkedList<List<String>>();
-		List<String> fields = new LinkedList<String>();
+		List<List<String>> rows = new LinkedList<>();
+		List<String> fields = new LinkedList<>();
+		List<ApiKey> apiKeys = apiKeyService.findByEmail(user.getEmail());
 
 		fields.add(String.valueOf(count));
 		fields.add(user.getId().toString());
@@ -304,13 +304,13 @@ public class AdminController {
 		fields.add(user.getPhone());
 		fields.add(user.getWebsite());
 		fields.add(user.getFieldOfWork());
-		fields.add(String.valueOf(user.getApiKeys().size()));
+		fields.add(String.valueOf(apiKeys.size()));
 
 		int i = 0;
-		for (ApiKey key : user.getApiKeys()) {
+		for (ApiKey key : apiKeys) {
 			long[] usage = getUsageByApiKey(key.getId());
 			if (i > 0) {
-				fields = new LinkedList<String>();
+				fields = new LinkedList<>();
 				for (int j = 0; j < 13; j++) {
 					fields.add("");
 				}
