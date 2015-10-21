@@ -10,166 +10,176 @@ import eu.europeana.corelib.web.model.PageData;
 
 public abstract class PortalPageData extends PageData {
 
-	private HttpServletRequest request;
+    private HttpServletRequest request;
 
-	private String theme = "default";
+    private String theme = "default";
 
-	private String googlePlusPublisherId;
+    private String googlePlusPublisherId;
 
-	private List<String> messages = null;
+    private List<String> messages = null;
 
-	private boolean useCache = true;
+    private boolean useCache = true;
 
-	private boolean debug = false;
+    private boolean debug = false;
 
-	private boolean minify = false;
+    private boolean minify = false;
 
-	private Locale locale;
+    private Locale locale;
 
-	private String browserLanguage;
+    private String browserLanguage;
 
-	private String[] localeMessages;
+    private String[] localeMessages;
 
-	private String portalUrl;
+    private String portalUrl;
 
-	private String blogFeedUrl;
+    private String blogFeedUrl;
 
-	private String myEuropeanaUrl;
+    private String myEuropeanaUrl;
 
-	private boolean doTranslation = false;
+    private boolean doTranslation = false;
 
-	private boolean nofEnabled = false;
-	
-	public String getTheme() {
-		return theme;
-	}
+    private boolean nofEnabled = false;
 
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
+    private boolean isError = false;
 
-	public void setGooglePlusPublisherId(String googlePlusPublisherId) {
-		this.googlePlusPublisherId = googlePlusPublisherId;
-	}
+    public String getTheme() {
+        return theme;
+    }
 
-	public String getGooglePlusPublisherId() {
-		return googlePlusPublisherId;
-	}
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 
-	public void addMessage(String message) {
-		if (messages == null) {
-			messages = new ArrayList<String>();
-		}
-		messages.add(message);
-	}
+    public void setGooglePlusPublisherId(String googlePlusPublisherId) {
+        this.googlePlusPublisherId = googlePlusPublisherId;
+    }
 
-	public List<String> getMessages() {
-		return messages;
-	}
+    public String getGooglePlusPublisherId() {
+        return googlePlusPublisherId;
+    }
 
-	public boolean isUseCache() {
-		return useCache;
-	}
+    public void addMessage(String message) {
+        if (messages == null) {
+            messages = new ArrayList<String>();
+        }
+        messages.add(message);
+    }
 
-	public void setUseCache(boolean useCache) {
-		this.useCache = useCache;
-	}
+    public List<String> getMessages() {
+        return messages;
+    }
 
-	public HttpServletRequest getRequest() {
-		return request;
-	}
+    public boolean isUseCache() {
+        return useCache;
+    }
 
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+    public void setUseCache(boolean useCache) {
+        this.useCache = useCache;
+    }
 
-	@Override
-	public boolean isDebug() {
-		return debug;
-	}
+    public HttpServletRequest getRequest() {
+        return request;
+    }
 
-	@Override
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
-	@Override
-	public boolean isMinify() {
-		return minify;
-	}
+    @Override
+    public boolean isDebug() {
+        return debug;
+    }
 
-	@Override
-	public void setMinify(boolean minify) {
-		this.minify = minify;
-	}
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
 
-	@Override
-	public Locale getLocale() {
-		return locale;
-	}
+    @Override
+    public boolean isMinify() {
+        return minify;
+    }
 
-	@Override
-	public void setLocale(Locale locale) {
-		this.locale = locale;
-	}
+    @Override
+    public void setMinify(boolean minify) {
+        this.minify = minify;
+    }
 
-	public String getPortalUrl() {
-		return portalUrl;
-	}
-	
-	public String getPortalUrlNS() {
-		return portalUrl.substring(0, portalUrl.length()-1);
-	}
+    @Override
+    public Locale getLocale() {
+        return locale;
+    }
 
-	public void setPortalUrl(String portalUrl) {
-		this.portalUrl = portalUrl;
-	}
+    @Override
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
 
-	public String getBlogFeedUrl() {
-		return blogFeedUrl;
-	}
+    public String getPortalUrl() {
+        return portalUrl;
+    }
 
-	public void setBlogFeedUrl(String blogFeedUrl) {
-		this.blogFeedUrl = blogFeedUrl;
-	}
+    public String getPortalUrlNS() {
+        return portalUrl.substring(0, portalUrl.length()-1);
+    }
 
-	public String[] getLocaleMessages() {
-		return localeMessages;
-	}
+    public void setPortalUrl(String portalUrl) {
+        this.portalUrl = portalUrl;
+    }
 
-	public void setLocaleMessages(String[] localeMessage) {
-		this.localeMessages = localeMessage;
-	}
-	
-	public String getBrowserLanguage() {
-		return browserLanguage;
-	}
-	
-	public void setBrowserLanguage(String browserLanguage) {
-		this.browserLanguage = browserLanguage;
-	}
+    public String getBlogFeedUrl() {
+        return blogFeedUrl;
+    }
 
-	public String getMyEuropeanaUrl() {
-		return myEuropeanaUrl;
-	}
+    public void setBlogFeedUrl(String blogFeedUrl) {
+        this.blogFeedUrl = blogFeedUrl;
+    }
 
-	public void setMyEuropeanaUrl(String myEuropeanaUrl) {
-		this.myEuropeanaUrl = myEuropeanaUrl;
-	}
+    public String[] getLocaleMessages() {
+        return localeMessages;
+    }
 
-	public boolean isDoTranslation() {
-		return doTranslation;
-	}
+    public void setLocaleMessages(String[] localeMessage) {
+        this.localeMessages = localeMessage;
+    }
 
-	public void setDoTranslation(boolean doTranslation) {
-		this.doTranslation = doTranslation;
-	}
-	
-	public boolean isNofEnabled() {
-		return nofEnabled;
-	}
-	
-	public void setIsNofEnabled(boolean nofEnabled) {
-		this.nofEnabled = nofEnabled;
-	}
+    public String getBrowserLanguage() {
+        return browserLanguage;
+    }
+
+    public void setBrowserLanguage(String browserLanguage) {
+        this.browserLanguage = browserLanguage;
+    }
+
+    public String getMyEuropeanaUrl() {
+        return myEuropeanaUrl;
+    }
+
+    public void setMyEuropeanaUrl(String myEuropeanaUrl) {
+        this.myEuropeanaUrl = myEuropeanaUrl;
+    }
+
+    public boolean isDoTranslation() {
+        return doTranslation;
+    }
+
+    public void setDoTranslation(boolean doTranslation) {
+        this.doTranslation = doTranslation;
+    }
+
+    public boolean isNofEnabled() {
+        return nofEnabled;
+    }
+
+    public void setIsNofEnabled(boolean nofEnabled) {
+        this.nofEnabled = nofEnabled;
+    }
+
+    public boolean getIsError(){
+        return isError;
+    }
+
+    public void setIsError(boolean isError){
+        this.isError = isError;
+    }
 }
