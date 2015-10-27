@@ -51,7 +51,7 @@ public class ThemeSassCompiler {
 		
 		deleteFolder(new File(cssLocation));
 		String path = new java.io.File("").getAbsolutePath();
-		if (!path.endsWith("portal")){
+		if (!path.endsWith("/portal")){
 			path=path+"/portal";	
 		}
 		File config = new File(
