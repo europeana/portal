@@ -71,8 +71,8 @@ Logger log = Logger.getLogger(this.getClass());
 			@ModelAttribute("model") RegisterPage model, 
 			HttpServletRequest request,
 			Locale locale) throws EuropeanaQueryException, DatabaseException {
-		log.info("================= /register.html GET ==================");
-		log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
+	//	log.info("================= /register.html GET ==================");
+	//	log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
 		Token token = tokenService.findByID(tokenKey);
 		// when token is null, show useful message
 		if (token == null) {
@@ -80,7 +80,7 @@ Logger log = Logger.getLogger(this.getClass());
 		}
 		model.setToken(token.getToken());
 		model.setEmail(token.getEmail());
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
 	}
 
@@ -90,10 +90,10 @@ Logger log = Logger.getLogger(this.getClass());
 			BindingResult result,
 			HttpServletRequest request, Locale locale) throws EuropeanaQueryException,
 			DatabaseException {
-		log.info("================= /register.html POST ==================");
+		//log.info("================= /register.html POST ==================");
 		if (result.hasErrors()) {
-			log.info("The registration form has errors");
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_FAILURE);
+		///	log.info("The registration form has errors");
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_FAILURE);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTER);
 		}
 
@@ -110,7 +110,7 @@ Logger log = Logger.getLogger(this.getClass());
 		}
 		sendNotificationEmail(user);
 
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_SUCCESS);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_SUCCESS);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_REGISTERED);
 	}
 

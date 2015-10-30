@@ -79,13 +79,13 @@ Logger log = Logger.getLogger(this.getClass());
 		}
 		Token token = tokenService.findByID(tokenKey);
 		if (token == null) {
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.ERROR_TOKEN_EXPIRED);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.ERROR_TOKEN_EXPIRED);
 			// FIXME: This is forwarding to a non-existing view???
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_TOKEN);
 		}
 		model.setToken(token.getToken());
 		model.setEmail(token.getEmail());
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CHANGE_PASSWORD_SUCCES);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CHANGE_PASSWORD_SUCCES);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
 	}
 
@@ -98,7 +98,7 @@ Logger log = Logger.getLogger(this.getClass());
 		log.info("=========== change-password.html POST =================");
 		if (result.hasErrors()) {
 			log.error("The change password form has errors");
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CHANGE_PASSWORD_FAILURE);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CHANGE_PASSWORD_FAILURE);
 			return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGE);
 		}
 
@@ -106,7 +106,7 @@ Logger log = Logger.getLogger(this.getClass());
 		Token token = tokenService.findByID(model.getToken());
 		if (token == null) {
 			log.error("Expected to find token.");
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_FAILURE);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_FAILURE);
 			throw new RuntimeException("Expected to find token.");
 		}
 
@@ -127,7 +127,7 @@ Logger log = Logger.getLogger(this.getClass());
 		// userService.store(user);
 		sendNotificationEmail(user);
 
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_SUCCESS);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_SUCCESS);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_PASS_CHANGED);
 	}
 

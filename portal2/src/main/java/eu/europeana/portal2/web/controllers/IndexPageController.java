@@ -76,7 +76,7 @@ public class IndexPageController {
 		// model.setRandomTerms(proposedSearchTermSampler.pickRandomItems(locale));
 		PageInfo view = PortalPageInfo.INDEX;
 		final ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, view);
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.INDEXPAGE, page);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.INDEXPAGE, page);
 		return page;
 	}
 

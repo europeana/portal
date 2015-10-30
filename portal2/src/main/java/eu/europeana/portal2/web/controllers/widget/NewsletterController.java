@@ -33,7 +33,7 @@ public class NewsletterController {
 		EmptyModelPage model = new EmptyModelPage();
 
 		model.setUser(ControllerUtil.getUser(userService));
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.NEWSLETTER);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.NEWSLETTER);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.NEWSLETTER);
 	}
 }

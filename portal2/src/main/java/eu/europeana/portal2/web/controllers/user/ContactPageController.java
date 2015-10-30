@@ -88,7 +88,7 @@ public class ContactPageController {
 		
 		if (result.hasErrors()) {
 			log.info("RESULT HAS ERRORS");
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND_FAILURE);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND_FAILURE);
 			
 
 		} else {
@@ -97,9 +97,9 @@ public class ContactPageController {
 
 			emailService.sendFeedback(form.getEmail(), form.getFeedbackText());
 			form.setSubmitMessage("Your feedback was successfully sent. Thank you!");
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.FEEDBACK_SEND);
 		}
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CONTACT_PAGE);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.CONTACT_PAGE);
 		return ControllerUtil.createModelAndViewPage(form, locale, PortalPageInfo.CONTACT);
 	}
 }

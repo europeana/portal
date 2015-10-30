@@ -102,7 +102,7 @@ public class StaticPageController {
 			response.setStatus(404);
 		}
 
-		clickStreamLogger.logStaticPageView(request, PortalPageInfo.STATICPAGE);
+	//	clickStreamLogger.logStaticPageView(request, PortalPageInfo.STATICPAGE);
 		return page;
 	}
 
@@ -121,7 +121,7 @@ public class StaticPageController {
 			response.setStatus(404);
 		}
 
-		clickStreamLogger.logStaticPageView(request, PortalPageInfo.STATICPAGE);
+		//clickStreamLogger.logStaticPageView(request, PortalPageInfo.STATICPAGE);
 		return page;
 	}
 
@@ -210,7 +210,7 @@ public class StaticPageController {
 			throws Exception {
 		PortalPageInfo pageType = PortalPageInfo.ERROR;
 
-		clickStreamLogger.logStaticPageView(request, pageType);
+//		clickStreamLogger.logStaticPageView(request, pageType);
 		EmptyModelPage model = new EmptyModelPage();
 		model.setProblem(ProblemType.UNKNOWN);
 

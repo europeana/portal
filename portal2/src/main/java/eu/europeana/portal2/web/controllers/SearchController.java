@@ -197,7 +197,7 @@ public class SearchController {
           //  e.printStackTrace();
         }
 
-        clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
+     //   clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
         return page;
     }
 

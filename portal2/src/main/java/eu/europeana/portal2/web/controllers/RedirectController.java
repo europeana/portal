@@ -63,9 +63,9 @@ public class RedirectController {
 			throw new IllegalArgumentException(MessageFormat.format(
 					"Expected to find '{0}' or '{1}' in the request URL", EuropeanaUrlService.PARAM_REDIRECT_SHOWNAT, EuropeanaUrlService.PARAM_REDIRECT_SHOWNBY));
 		}
-		String logString = MessageFormat.format("outlink={0}, provider={2}, europeana_id={1}", redirect, europeanaId,
-				provider);
-		clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.REDIRECT_OUTLINK, logString);
+		//String logString = MessageFormat.format("outlink={0}, provider={2}, europeana_id={1}", redirect, europeanaId,
+	//			provider);
+		//clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.REDIRECT_OUTLINK, logString);
 		return "redirect:" + redirect;
 	}
 }

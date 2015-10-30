@@ -136,7 +136,7 @@ public class AjaxController {
 		String uri;
 		uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 		user = userService.createSavedItem(user.getId(), uri);
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_ITEM);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_ITEM);
 		return user;
 	}
 
@@ -146,7 +146,7 @@ public class AjaxController {
 		String queryString = URLDecoder.decode(getStringParameter("queryString", FieldSize.QUERY_STRING, request),
 				"utf-8");
 		user = userService.createSavedSearch(user.getId(), query, queryString);
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_SEARCH);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SAVE_SEARCH);
 		return user;
 	}
 
@@ -156,7 +156,7 @@ public class AjaxController {
 		uri = getStringParameter("europeanaUri", FieldSize.EUROPEANA_URI, request);
 		String tag = URLDecoder.decode(getStringParameter("tag", FieldSize.TAG, request), "utf-8");
 		user = userService.createSocialTag(user.getId(), uri, tag);
-		clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
+	//	clickStreamLogger.logCustomUserAction(request, ClickStreamLogService.UserAction.SAVE_SOCIAL_TAG, "tag=" + tag);
 		return user;
 	}
 
@@ -203,15 +203,15 @@ public class AjaxController {
 		switch (findModifiable(modAction)) {
 		case SAVED_ITEM:
 			userService.removeSavedItem(user.getId(), id);
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_ITEM);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_ITEM);
 			break;
 		case SAVED_SEARCH:
 			userService.removeSavedSearch(user.getId(), id);
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_SEARCH);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SAVED_SEARCH);
 			break;
 		case SOCIAL_TAG:
 			userService.removeSocialTag(user.getId(), id);
-			clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SOCIAL_TAG);
+		//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REMOVE_SOCIAL_TAG);
 			break;
 		default:
 			throw new IllegalArgumentException("Unhandled removable");

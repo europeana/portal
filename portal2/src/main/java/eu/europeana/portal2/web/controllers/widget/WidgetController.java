@@ -176,7 +176,7 @@ Logger log = Logger.getLogger(this.getClass());
 					}
 				}
 			} catch (SolrTypeException e1) {
-				e1.printStackTrace();
+
 			}
 		}
 
@@ -188,7 +188,7 @@ Logger log = Logger.getLogger(this.getClass());
 		try {
 			model.setBriefBeanView(briefBeanView);
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+
 		}
 		model.setEnableRefinedSearch(briefBeanView.getPagination().getNumFound() > 0);
 
@@ -238,9 +238,9 @@ Logger log = Logger.getLogger(this.getClass());
 			lastCheck = Calendar.getInstance();
 			Date actualSolrUpdate = null;
 			try {
-				log.info("start checking Solr update time");
+			//	log.info("start checking Solr update time");
 				actualSolrUpdate = searchService.getLastSolrUpdate();
-				log.info("Solr update time checked");
+				//log.info("Solr update time checked");
 			} catch (SolrServerException e) {
 				log.error("SolrServerException " + e.getLocalizedMessage());
 			} catch (IOException e) {

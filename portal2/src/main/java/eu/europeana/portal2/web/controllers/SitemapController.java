@@ -178,8 +178,8 @@ public class SitemapController {
       boolean success = false;
       ServletOutputStream out = response.getOutputStream();
 
-      if (log.isInfoEnabled()) {
-        log.info(String.format("Generating %s", cacheFile));
+      if (log.isDebugEnabled()) {
+        log.debug(String.format("Generating %s", cacheFile));
       }
 
       // Kick off a new thread
@@ -574,7 +574,7 @@ public class SitemapController {
 
     ModelAndView page =
         ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.PROVIDERS);
-    clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SITE_MAP_XML, page);
+   // clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SITE_MAP_XML, page);
     return page;
   }
 
@@ -597,7 +597,7 @@ public class SitemapController {
     model.setShowImages(false);
 
     ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.SITEMAP);
-    clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SITE_MAP_XML, page);
+    //clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.SITE_MAP_XML, page);
     return page;
   }
 
@@ -650,8 +650,7 @@ public class SitemapController {
       out.println(jedis.get(cacheFile));
       out.flush();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+
     }
   }
 

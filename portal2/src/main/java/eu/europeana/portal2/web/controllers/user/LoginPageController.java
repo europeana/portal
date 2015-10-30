@@ -123,13 +123,13 @@ public class LoginPageController {
 		// page.addObject("register", register);
 		model.setErrorMessage("1".equals(request.getParameter("error")) ? "Invalid Credentials" : null);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGIN);
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN, page);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGIN, page);
 		return page;
 	}
 
 	@RequestMapping("/logout-success.html")
 	public String logoutSuccessHandler(HttpServletRequest request) throws Exception {
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGOUT);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGOUT);
 		return "redirect:/login.html";
 	}
 
@@ -137,7 +137,7 @@ public class LoginPageController {
 	public ModelAndView logoutHandler(HttpServletRequest request, Locale locale)
 			throws Exception {
 		EmptyModelPage model = new EmptyModelPage();
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGOUT);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.LOGOUT);
 		return ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.MYEU_LOGOUT);
 	}
 

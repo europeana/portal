@@ -31,8 +31,7 @@ public class ImageController {
 			image.getWidth();
 			return image.getImage();
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 		return null;
 	}

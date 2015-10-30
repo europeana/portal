@@ -48,7 +48,7 @@ public class SuggestionController {
 			try {
 				suggestions = searchService.suggestions(term, size, field);
 			} catch (SolrTypeException e) {
-				log.error("SolrTypeException: " + e.getMessage(),e);
+				log.error("SolrTypeException: " + e.getMessage());
 			}
 		}
 

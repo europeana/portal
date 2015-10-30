@@ -94,7 +94,7 @@ public class RegisterApiPageController {
 			// request API form
 			page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REQUEST);
 		} else {
-			log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
+		//	log.info("Received get request, putting token into registration form model attribute: " + tokenKey);
 			Token token = tokenService.findByID(tokenKey);
 			// when token is null, show useful message
 			if (token == null) {
@@ -110,7 +110,7 @@ public class RegisterApiPageController {
 			model.setPrivateKey(generatePassPhrase(9));
 			page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.API_REGISTER_FORM);
 		}
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API);
 		return page;
 	}
 
@@ -121,7 +121,7 @@ public class RegisterApiPageController {
 			HttpServletRequest request,
 			Locale locale)
 					throws EuropeanaQueryException, DatabaseException {
-		log.info("================= /api/registration.html POST ==================");
+	//	log.info("================= /api/registration.html POST ==================");
 
 		if (result.hasErrors()) {
 			log.info("The registration form has errors " + model.getFirstName());
@@ -144,13 +144,13 @@ public class RegisterApiPageController {
 				if (!ControllerUtil.validEmailAddress(model.getEmail())) {
 					model.setFailureFormat(true);
 				} else {
-					log.info("Sending API registration email");
+				//	log.info("Sending API registration email");
 					Token token = tokenService.create(model.getEmail());
 					String url = baseUrl + "/api/registration.html";
 					
 					
-					log.info("token: " + token);
-					log.info("registerUri: " + url);
+				//	log.info("token: " + token);
+				//	log.info("registerUri: " + url);
 					try {
 						emailService.sendApiToken(token, url);
 					} catch (EmailServiceException e) {
@@ -161,9 +161,9 @@ public class RegisterApiPageController {
 					target = PortalPageInfo.API_REQUEST;
 				}
 			} else {
-				log.info("Creating API user");
+				//log.info("Creating API user");
 				String token = model.getToken();
-				log.info("token: " + token);
+			//	log.info("token: " + token);
 				apiKeyService.createApiKey(token, model.getEmail(), model.getApiKey(), model.getPrivateKey(),
 					DEFAULT_USAGE_LIMIT, model.getApplicationName(), 
 					model.getEmail(), // use email for username
@@ -171,10 +171,10 @@ public class RegisterApiPageController {
 					model.getWebsite(), model.getAddress(), model.getPhone(), model.getFieldOfWork());
 				ApiKey apiKey = apiKeyService.findByID(model.getApiKey());
 
-				log.info("User: " + apiKey.getUser());
-				log.info("ApiKey: " + apiKey);
+				//log.info("User: " + apiKey.getUser());
+				//log.info("ApiKey: " + apiKey);
 				tokenService.remove(tokenService.findByID(token));
-				log.info("token is removed: " + model.getToken());
+			//	log.info("token is removed: " + model.getToken());
 				sendNotificationEmails(apiKey.getUser(), apiKey, locale);
 				target = PortalPageInfo.API_REGISTER_SUCCESS;
 			}
@@ -185,7 +185,7 @@ public class RegisterApiPageController {
 	}
 
 	private void sendNotificationEmails(User user, ApiKey apiKey, Locale locale) {
-		log.info("Sending emails about the successfull API registration");
+	//	log.info("Sending emails about the successfull API registration");
 		try {
 			emailService.sendRegisterApiNotifyUser(apiKey, locale);
 			emailService.sendRegisterApiNotifyAdmin(user);

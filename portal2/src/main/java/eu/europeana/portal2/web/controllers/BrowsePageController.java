@@ -88,7 +88,7 @@ Logger log = Logger.getLogger(this.getClass());
 		makePageObject(model, prefix);
 		
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, pageInfo);
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.BROWSE_ALL, page);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.BROWSE_ALL, page);
 		return page;
 	}
 

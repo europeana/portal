@@ -120,7 +120,7 @@ public class DataHierarchy {
 					}
 				}
 			} catch (SolrTypeException e1) {
-				e1.printStackTrace();
+
 			}
 		}
 

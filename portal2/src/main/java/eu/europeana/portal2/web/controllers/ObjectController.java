@@ -203,8 +203,7 @@ public class ObjectController {
 		model.setEdmSchemaMappings(schemaOrgMapping);
 		model.setBingTranslateId(config.getBingTranslateId());
 
-		log.debug("Record: " + "/" + collectionId + "/" + recordId
-				+ (showHierarchical ? " is" : " is NOT") + " hierarchical");
+
 
 		long tgetFullBean0 = new Date().getTime();
 		FullBean fullBean = getFullBean(collectionId, recordId,
@@ -231,18 +230,12 @@ public class ObjectController {
 			}
 		}
 
-		if (log.isDebugEnabled()) {
-			long tgetFullBean1 = new Date().getTime();
-			log.debug("fullBean takes: " + (tgetFullBean1 - tgetFullBean0));
-		}
+
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model,
 				locale, PortalPageInfo.FULLDOC_HTML);
 		if (fullBean != null) {
 			// removeHasPartsForRoots(model, fullBean);
-			long tFullBeanView0 = 0;
-			if (log.isDebugEnabled()) {
-				tFullBeanView0 = new Date().getTime();
-			}
+
 
 			model.setOptedOut(fullBean.getAggregations().get(0)
 					.getEdmPreviewNoDistribute() != null ? fullBean
@@ -259,11 +252,7 @@ public class ObjectController {
 			FullBeanView fullBeanView = new FullBeanViewImpl(fullBean,
 					RequestUtils.getParameterMap(request), query, searchService);
 			model.setFullBeanView(fullBeanView);
-			if (log.isDebugEnabled()) {
-				long tFullBeanView1 = new Date().getTime();
-				log.debug("fullBeanView takes: "
-						+ (tFullBeanView1 - tFullBeanView0));
-			}
+
 
 			// more like this
 			if (model.isShowSimilarItems()) {
@@ -281,10 +270,7 @@ public class ObjectController {
 				}
 			}
 
-			long tSeeAlso0 = 0;
-			if (log.isDebugEnabled()) {
-				tSeeAlso0 = new Date().getTime();
-			}
+
 			if (showEuropeanaMlt) {
 				model.setMltCollector(createMltCollector(model.getShortcut()));
 				model.setEuropeanaMlt(createEuropeanaMlt(model,
@@ -295,32 +281,15 @@ public class ObjectController {
 				model.setSeeAlsoSuggestions(createSeeAlsoSuggestions(model
 						.getSeeAlsoCollector()));
 			}
-			if (log.isDebugEnabled()) {
-				long tSeeAlso1 = new Date().getTime();
-				log.debug("Similarity takes: " + (tSeeAlso1 - tSeeAlso0));
-			}
 
-			clickStreamLogger.logFullResultView(request,
-					UserAction.FULL_RESULT_HMTL, fullBeanView, page,
-					fullBeanView.getFullDoc().getAbout());
+
 		}
 
-		if (log.isDebugEnabled()) {
-			long t1 = new Date().getTime();
-			log.debug("object page takes: " + (t1 - t0));
-		}
 
 		return page;
 	}
 
-	private void removeHasPartsForRoots(FullDocPage model, FullBean fullBean) {
-		if (!model.isFormatLabels() && config.getHierarchyRoots() != null
-				&& config.getHierarchyRoots().contains(fullBean.getAbout())) {
-			for (Proxy proxy : fullBean.getProxies()) {
-				proxy.setDctermsHasPart(null);
-			}
-		}
-	}
+
 
 	private void initializeSeeAlsoConfiguration() {
 		initializeSmilarityConfiguration(SEE_ALSO_FIELDS);
@@ -578,7 +547,7 @@ public class ObjectController {
 					BriefBean.class, query);
 			return resultSet;
 		} catch (SolrTypeException e) {
-			log.error(e);
+			log.error(e.getMessage());
 		}
 		return null;
 	}

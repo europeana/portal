@@ -208,7 +208,7 @@ public class Json2FullBeanConverter {
 				if (!handledFields.contains(field)) {
 					String message = String.format("'%s': %s  is not fit for %s", 
 						field, value.getClass().getName(), setter.getParameterTypes()[0].getCanonicalName());
-					System.out.println(message);
+				//	System.out.println(message);
 					log.warn(message);
 				}
 			}
@@ -279,16 +279,16 @@ public class Json2FullBeanConverter {
 		try {
 			setter.invoke(bean, value);
 		} catch (IllegalArgumentException e) {
-			System.out.println("ERROR: " + e.getMessage());
+	//		System.out.println("ERROR: " + e.getMessage());
 			log.error(e.getMessage());
 			// log.error("Object: " + bean);
-			System.out.println("Setter: " + setter);
-			log.error("Setter: " + setter);
-			System.out.println("Value: " + value + " " + value.getClass().getName());
-			log.error("Value: " + value);
+		//	System.out.println("Setter: " + setter);
+		//	log.error("Setter: " + setter);
+		//	System.out.println("Value: " + value + " " + value.getClass().getName());
+		//	log.error("Value: " + value);
 			//log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
-			log.error(e.getMessage() + ": " + setter.getParameterTypes()[0].getCanonicalName());
-			log.error(e.getMessage() + ": " + value.getClass().getName());
+		//	log.error(e.getMessage() + ": " + setter.getParameterTypes()[0].getCanonicalName());
+			//log.error(e.getMessage() + ": " + value.getClass().getName());
 		} catch (IllegalAccessException e) {
 			log.error(e.getMessage() + ". Object: " + bean + ", Setter: " + setter + " Value: " + value);
 		} catch (InvocationTargetException e) {

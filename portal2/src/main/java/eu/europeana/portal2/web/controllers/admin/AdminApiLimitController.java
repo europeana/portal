@@ -55,7 +55,7 @@ public class AdminApiLimitController {
 		model.setApiKey(apiKey.getId());
 		model.setUsageLimit(apiKey.getUsageLimit());
 
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API);
+	//	clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.REGISTER_API);
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.ADMIN_LIMIT_APIKEY);
 
 		return page;

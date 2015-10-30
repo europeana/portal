@@ -63,7 +63,7 @@ public class TimelineController {
 		model.setRefineKeyword(StringUtils.trimToNull(rq));
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, locale, PortalPageInfo.TIMELINE);
-		clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.TIMELINE, page);
+		//clickStreamLogger.logUserAction(request, ClickStreamLogService.UserAction.TIMELINE, page);
 		return page;
 	}
 
@@ -86,8 +86,8 @@ public class TimelineController {
 		String[] filters = (params.containsKey("qf")) ? (String[]) ArrayUtils.addAll((String[]) params.get("qf"),
 				defaultFilters) : defaultFilters;
 
-		// TODO: handle rq
-		 // Solr starts from 0
+
+
 		Query query = new Query(q).setRefinements(filters).setPageSize(rows).setStart(start - 1)
 				.setParameter("f.YEAR.facet.mincount", "1");
 
@@ -97,7 +97,7 @@ public class TimelineController {
 		model.setQuery(briefBeanView.getPagination().getPresentationQuery().getUserSubmittedQuery());
 
 		ModelAndView page = ControllerUtil.createModelAndViewPage(model, PortalPageInfo.TIMELINE_JSON);
-		clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
+		//clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);
 		return page;
 	}
 }
