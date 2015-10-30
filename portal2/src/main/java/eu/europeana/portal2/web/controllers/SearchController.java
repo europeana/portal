@@ -95,7 +95,7 @@ public class SearchController {
             }
             catch(Exception e){
                 log.error("Error updating user: " + e.getMessage());
-                e.printStackTrace();
+              //  e.printStackTrace();
                 // do nothing
             }
         }
@@ -127,9 +127,9 @@ public class SearchController {
             LanguageContainer languageContainer = ControllerUtil.createQueryTranslations(userService, queryString, qt, request);
 
             long t1 = new Date().getTime();
-            log.info("Query translation took: " + (t1 - t0));
+           // log.info("Query translation took: " + (t1 - t0));
             model.setLanguages(languageContainer);
-            log.info("ItemLanguage: " + model.getItemLanguage());
+            //log.info("ItemLanguage: " + model.getItemLanguage());
 
             if(qt != null && qt.length >0 && qt[0].equals("false") ){
                 model.setLanguagesRemoved(true);
@@ -191,10 +191,10 @@ public class SearchController {
                 model.setIsError(true);
             }
             // return new ApiError("search.json", e.getMessage());
-            e.printStackTrace();
+        //    e.printStackTrace();
         } catch (Exception e) {
             log.error("Exception: " + e.getMessage());
-            e.printStackTrace();
+          //  e.printStackTrace();
         }
 
         clickStreamLogger.logBriefResultView(request, briefBeanView, query, page);

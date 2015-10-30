@@ -424,15 +424,15 @@ public class ObjectController {
 		try {
 			fullBean = searchService.findById(europeanaId, showSimilarItems);
 		} catch (MongoDBException e) {
-			System.out.println("here should be a log.error");
+		//	System.out.println("here should be a log.error");
 			log.error(String
 					.format("MongoDB Exception during getting the full bean for ID %s: %s",
 							europeanaId, e.getMessage()));
 		} catch (NullPointerException e) {
-			System.out.println("here should be a log.error");
+		//	System.out.println("here should be a log.error");
 			log.error(String.format(
 					"Exception during getting the full bean for ID %s: %s",
-					europeanaId, e.getMessage()),e);
+					europeanaId, e.getMessage()));
 		}
 		return fullBean;
 	}
@@ -444,10 +444,10 @@ public class ObjectController {
 		try {
 			newRecordId = searchService.resolveId(europeanaId);
 		} catch (NullPointerException e) {
-			System.out.println("here should be a log.error");
+			//System.out.println("here should be a log.error");
 			log.error(String.format(
 					"Exception during getting the full bean for ID %s: %s",
-					europeanaId, e.getMessage()),e);
+					europeanaId, e.getMessage()));
 		}
 		return newRecordId;
 	}
@@ -460,7 +460,7 @@ public class ObjectController {
 			result = searchService.findMoreLikeThis(europeanaId);
 		} catch (SolrServerException e) {
 			log.error("Solr Server Exception: " + e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return result;
 	}
@@ -505,7 +505,7 @@ public class ObjectController {
 			}
 		} catch (Exception e) {
 			log.error("See also error: " + e.getClass().getCanonicalName()
-					+ " " + e.getMessage(), e);
+					+ " " + e.getMessage());
 		}
 
 		return seeAlsoSuggestions;
@@ -561,8 +561,7 @@ public class ObjectController {
 			mlt.addCategory(category);
 		}
 
-		long tSeeAlso1 = new Date().getTime();
-		log.info("createEuropeanaMlt takes: " + (tSeeAlso1 - tSeeAlso0));
+
 
 		return mlt;
 	}
@@ -574,13 +573,12 @@ public class ObjectController {
 																		// 0
 				.setAllowSpellcheck(false).setAllowFacets(false);
 		try {
-			log.info("Query was: " + query.toString());
+
 			ResultSet<? extends BriefBean> resultSet = searchService.search(
 					BriefBean.class, query);
 			return resultSet;
 		} catch (SolrTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e);
 		}
 		return null;
 	}
