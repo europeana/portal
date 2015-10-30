@@ -105,7 +105,7 @@ public class FullBeanViewImpl implements FullBeanView {
 		try {
 			pager = DocIdWindowPagerImpl.fetchPager(httpParameters, query, searchService, clazz);
 		} catch (SolrTypeException e) {
-			log.error("SolrTypeException: " + e.getLocalizedMessage(),e);
+			log.error("SolrTypeException: " + e.getLocalizedMessage());
 		}
 		return pager;
 	}
