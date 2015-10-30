@@ -40,75 +40,75 @@ import eu.europeana.portal2.web.presentation.model.submodel.FullBeanView;
 /**
  * Do not ever touch this class! It is persisted to XML and serves as document
  * cache.
- * 
+ *
  * @author Borys Omelayenko
  * @author Serkan Demirel <serkan@blackbuilt.nl>
  */
 public class FullBeanViewImpl implements FullBeanView {
-	private static final long serialVersionUID = -4971453940874288310L;
+    private static final long serialVersionUID = -4971453940874288310L;
 
-	private final Logger log = Logger.getLogger(FullBeanViewImpl.class);
+    private final Logger log = Logger.getLogger(FullBeanViewImpl.class);
 
-	// Do not ever touch these fields as they are persisted as document cache
-	private FullBean fullDoc;
-	private DocIdWindowPager docIdWindowPager;
-	private List<? extends BriefBean> relatedItems;
+    // Do not ever touch these fields as they are persisted as document cache
+    private FullBean fullDoc;
+    private DocIdWindowPager docIdWindowPager;
+    private List<? extends BriefBean> relatedItems;
 
-	// hierarchical view
-	private List<? extends BriefBean> parents;
-	private List<? extends BriefBean> children;
+    // hierarchical view
+    private List<? extends BriefBean> parents;
+    private List<? extends BriefBean> children;
 
-	public FullBeanViewImpl(FullBean fullDoc, Map<String, String[]> httpParameters,
-			Query query, SearchService searchService) {
-		this.fullDoc = fullDoc;
-		// this.relatedItems = fullDoc.getRelatedItems();
-		this.parents = findParents();
-		this.children = findChildren();
+    public FullBeanViewImpl(FullBean fullDoc, Map<String, String[]> httpParameters,
+                            Query query, SearchService searchService) {
+        this.fullDoc = fullDoc;
+        // this.relatedItems = fullDoc.getRelatedItems();
+        this.parents = findParents();
+        this.children = findChildren();
 
-		Class<? extends BriefBean> clazz = BriefBean.class;
-		this.docIdWindowPager = createPager(httpParameters, query, searchService, clazz);
-	}
+        Class<? extends BriefBean> clazz = BriefBean.class;
+        this.docIdWindowPager = createPager(httpParameters, query, searchService, clazz);
+    }
 
-	private List<? extends BriefBean> findParents() {
-		List<String> items = new ArrayList<String>();
-		if (fullDoc != null) {
-			for (Proxy proxy : fullDoc.getProxies()) {
-				if (proxy.getDctermsIsPartOf() == null) {
-					continue;
-				}
-				for (Entry<String, List<String>> item : proxy.getDctermsIsPartOf().entrySet()) {
-					items.addAll(item.getValue());
-				}
-			}
-		}
-		return new ArrayList<BriefBean>();
-	}
+    private List<? extends BriefBean> findParents() {
+        List<String> items = new ArrayList<String>();
+        if (fullDoc != null) {
+            for (Proxy proxy : fullDoc.getProxies()) {
+                if (proxy.getDctermsIsPartOf() == null) {
+                    continue;
+                }
+                for (Entry<String, List<String>> item : proxy.getDctermsIsPartOf().entrySet()) {
+                    items.addAll(item.getValue());
+                }
+            }
+        }
+        return new ArrayList<BriefBean>();
+    }
 
-	private List<? extends BriefBean> findChildren() {
-		List<String> items = new ArrayList<String>();
-		if (fullDoc != null) {
-			for (Proxy proxy : fullDoc.getProxies()) {
-				if (proxy.getDctermsHasPart() == null) {
-					continue;
-				}
-				for (Entry<String, List<String>> item : proxy.getDctermsHasPart().entrySet()) {
-					items.addAll(item.getValue());
-				}
-			}
-		}
-		return new ArrayList<BriefBean>();
-	}
+    private List<? extends BriefBean> findChildren() {
+        List<String> items = new ArrayList<String>();
+        if (fullDoc != null) {
+            for (Proxy proxy : fullDoc.getProxies()) {
+                if (proxy.getDctermsHasPart() == null) {
+                    continue;
+                }
+                for (Entry<String, List<String>> item : proxy.getDctermsHasPart().entrySet()) {
+                    items.addAll(item.getValue());
+                }
+            }
+        }
+        return new ArrayList<BriefBean>();
+    }
 
-	public DocIdWindowPager createPager(Map<String, String[]> httpParameters,
-			Query query, SearchService searchService, Class<? extends BriefBean> clazz) {
-		DocIdWindowPager pager = null;
-		try {
-			pager = DocIdWindowPagerImpl.fetchPager(httpParameters, query, searchService, clazz);
-		} catch (SolrTypeException e) {
-			log.error("SolrTypeException: " + e.getLocalizedMessage());
-		}
-		return pager;
-	}
+    public DocIdWindowPager createPager(Map<String, String[]> httpParameters,
+                                        Query query, SearchService searchService, Class<? extends BriefBean> clazz) {
+        DocIdWindowPager pager = null;
+        try {
+            pager = DocIdWindowPagerImpl.fetchPager(httpParameters, query, searchService, clazz);
+        } catch (SolrTypeException e) {
+            log.error("SolrTypeException: " + e.getLocalizedMessage());
+        }
+        return pager;
+    }
 
 	/*
     private void createPager(BeanQueryModelFactory factory, Map<String, String[]> params) throws SolrServerException, EuropeanaQueryException {
@@ -124,43 +124,43 @@ public class FullBeanViewImpl implements FullBeanView {
     }
     */
 
-	@Override
-	public DocIdWindowPager getDocIdWindowPager() throws Exception,
-			UnsupportedEncodingException {
-		return docIdWindowPager;
-	}
+    @Override
+    public DocIdWindowPager getDocIdWindowPager() throws Exception,
+            UnsupportedEncodingException {
+        return docIdWindowPager;
+    }
 
-	@Override
-	public List<? extends BriefBean> getRelatedItems() {
-		return relatedItems;
-	}
+    @Override
+    public List<? extends BriefBean> getRelatedItems() {
+        return relatedItems;
+    }
 
-	@Override
-	public List<? extends BriefBean> getChildren() {
-		return children;
-	}
+    @Override
+    public List<? extends BriefBean> getChildren() {
+        return children;
+    }
 
-	@Override
-	public BriefBean getParent() {
-		// TODO: one or more parents?
-		if (parents != null && parents.size() > 0) {
-			return parents.get(0);
-		}
-		return null;
-	}
+    @Override
+    public BriefBean getParent() {
+        // TODO: one or more parents?
+        if (parents != null && parents.size() > 0) {
+            return parents.get(0);
+        }
+        return null;
+    }
 
-	@Override
-	public List<? extends BriefBean> getParents() {
-		return parents;
-	}
+    @Override
+    public List<? extends BriefBean> getParents() {
+        return parents;
+    }
 
-	@Override
-	public FullBean getFullDoc() {
-		return fullDoc;
-	}
+    @Override
+    public FullBean getFullDoc() {
+        return fullDoc;
+    }
 
 	/*
-	public FullBeanViewImpl(BeanQueryModelFactory factory, SolrQuery solrQuery,
+    public FullBeanViewImpl(BeanQueryModelFactory factory, SolrQuery solrQuery,
 			QueryResponse solrResponse, Map<String, String[]> params)
 			throws EuropeanaQueryException, SolrServerException {
 		fullDoc = createFullDoc(factory, solrResponse, params);
