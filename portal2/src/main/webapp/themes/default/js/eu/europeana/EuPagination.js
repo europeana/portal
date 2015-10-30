@@ -6,7 +6,7 @@ var EuPagination = function(cmpIn, options){
     self.options   = options ? options : {};
     self.ajax      = self.options.ajax ? self.options.ajax : false;
 
-    // dom 
+    // dom
     self.first     = null;
     self.previous  = null;
     self.next      = null;
@@ -96,7 +96,12 @@ var EuPagination = function(cmpIn, options){
     }
 
     var getMaxPages = function() {
-        return parseInt(self.records / self.rows) + (self.records % self.rows ? 1 : 0);
+        var res = parseInt(self.records / self.rows) + (self.records % self.rows ? 1 : 0);
+
+        res = Math.min(res, parseInt(999/self.rows));
+
+        console.log('getMaxPages returns ' + res);
+        return res
     };
 
     var validateJumpToPage = function(e) {
@@ -130,7 +135,7 @@ var EuPagination = function(cmpIn, options){
             var val = parseInt( $this.val() + String.fromCharCode(key) );
 
             if(typeof $this[0].selectionStart != 'undefined' && typeof $this[0].selectionEnd != 'undefined' && $this[0].selectionStart != $this[0].selectionEnd){
-                val = parseInt(    $this.val().substr(0, $this[0].selectionStart -1)    + String.fromCharCode(key) + $this.val().substr($this[0].selectionEnd, $this.val().length )    );      
+                val = parseInt(    $this.val().substr(0, $this[0].selectionStart -1)    + String.fromCharCode(key) + $this.val().substr($this[0].selectionEnd, $this.val().length )    );
             }
 
             var overwrite;
@@ -160,10 +165,10 @@ var EuPagination = function(cmpIn, options){
             self.setData(records, rows, start)
         },
         "getMaxPages": function() {
-        	return getMaxPages();
+          return getMaxPages();
         },
         "getMaxStart": function() {
-        	return getMaxStart();
+          return getMaxStart();
         }
     };
 };
