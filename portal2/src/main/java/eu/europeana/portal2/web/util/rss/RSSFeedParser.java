@@ -83,14 +83,15 @@ public class RSSFeedParser {
 	}
 
 	public List<FeedEntry> readFeed(ResponsiveImageService responsiveImageService) {
+		InputStream is;
 		try {
 			List<FeedEntry> feeds = new ArrayList<FeedEntry>();
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder();
 			
-			InputStream is = url.openStream();
+			is = url.openStream();
 			log.info("URL: " + url.toString());
-			Document doc = builder.parse(is);
+			Document doc = builder.parse( url.openStream());
 
 			NodeList nodes = doc.getElementsByTagName("item");
 			for (int i = 0; i < Math.min(nodes.getLength(), itemLimit); i++) {
@@ -137,6 +138,7 @@ public class RSSFeedParser {
 				}
 				feeds.add(message);
 			}
+			is.close();
 			return feeds;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -147,6 +149,8 @@ public class RSSFeedParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+
 		return null;
 	}
 

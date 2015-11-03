@@ -19,203 +19,204 @@ import eu.europeana.portal2.services.ResponsiveImageService;
 
 public class ResponsiveImageServiceImpl implements ResponsiveImageService {
 
-	final private static String CACHEDIR = "/sp/rss-blog-cache/";
+    final private static String CACHEDIR = "/sp/rss-blog-cache/";
 
-	Logger log = Logger.getLogger(ResponsiveImageService.class.getName());
-	
+    private final static Logger log = Logger.getLogger(ResponsiveImageService.class.getName());
 
-	@Value("#{europeanaProperties['static.page.path']}")
-	private String staticPagePath;
 
-	@Value("#{europeanaProperties['portal.responsive.widths']}")
-	private String responsiveImageWidthString;
+    @Value("#{europeanaProperties['static.page.path']}")
+    private String staticPagePath;
 
-	@Value("#{europeanaProperties['portal.responsive.labels']}")
-	private String responsiveImageLabelString;
+    @Value("#{europeanaProperties['portal.responsive.widths']}")
+    private String responsiveImageWidthString;
 
-	@Value("#{europeanaProperties['portal.responsive.carousel.widths']}")
-	private String responsiveCarouselImageWidthString;
+    @Value("#{europeanaProperties['portal.responsive.labels']}")
+    private String responsiveImageLabelString;
 
-	@Value("#{europeanaProperties['portal.responsive.carousel.labels']}")
-	private String responsiveCarouselImageLabelString;
+    @Value("#{europeanaProperties['portal.responsive.carousel.widths']}")
+    private String responsiveCarouselImageWidthString;
 
-	@Value("#{europeanaProperties['portal.responsive.cache']}")
-	private String responsiveCache;
+    @Value("#{europeanaProperties['portal.responsive.carousel.labels']}")
+    private String responsiveCarouselImageLabelString;
 
-	private Integer[] responsiveCarouselImageWidths;
-	private String[] responsiveCarouselImageLabels;
-	private String[] responsiveImageLabels;
-	private Integer[] responsiveImageWidths;
+    @Value("#{europeanaProperties['portal.responsive.cache']}")
+    private String responsiveCache;
 
-	private static String directory;
-	private static File dir;
+    private Integer[] responsiveCarouselImageWidths;
+    private String[] responsiveCarouselImageLabels;
+    private String[] responsiveImageLabels;
+    private Integer[] responsiveImageWidths;
 
-	public ResponsiveImageServiceImpl(){}
+    private static String directory;
+    private static File dir;
 
-	/* (non-Javadoc)
-	 * @see eu.europeana.portal2.services.impl.ResponsiveImageService#createResponsiveImage(java.lang.String)
-	 */
-	@Override
-	public Map<String, String> createResponsiveImage(String location) {
-		return createResponsiveImage(location, true, false);
-	}
+    public ResponsiveImageServiceImpl() {
+    }
 
-	/* (non-Javadoc)
-	 * @see eu.europeana.portal2.services.impl.ResponsiveImageService#createResponsiveImage(java.lang.String, boolean, boolean)
-	 */
-	@Override
-	public Map<String, String> createResponsiveImage(String location, boolean isURL, boolean useCarousel) {
-		Map<String, String> responsiveImages = new HashMap<String, String>();
+    /* (non-Javadoc)
+     * @see eu.europeana.portal2.services.impl.ResponsiveImageService#createResponsiveImage(java.lang.String)
+     */
+    @Override
+    public Map<String, String> createResponsiveImage(String location) {
+        return createResponsiveImage(location, true, false);
+    }
 
-		if (staticPagePath.endsWith("/")) {
-			staticPagePath = staticPagePath.substring(0, staticPagePath.length() - 1);
-		}
+    /* (non-Javadoc)
+     * @see eu.europeana.portal2.services.impl.ResponsiveImageService#createResponsiveImage(java.lang.String, boolean, boolean)
+     */
+    @Override
+    public Map<String, String> createResponsiveImage(String location, boolean isURL, boolean useCarousel) {
+        Map<String, String> responsiveImages = new HashMap<String, String>();
 
-		if (dir == null) {
-			directory = (responsiveCache != null) ? responsiveCache : staticPagePath + CACHEDIR;
-			if (!directory.endsWith("/")) {
-				directory += "/";
-			}
-			dir = new File(directory);
-			if (!dir.exists()) {
-				dir.mkdir();
-			}
-		}
+        if (staticPagePath.endsWith("/")) {
+            staticPagePath = staticPagePath.substring(0, staticPagePath.length() - 1);
+        }
 
-		String extension = location.substring(location.lastIndexOf(".") + 1);
-		String nameWithoutExt = location.substring(0, location.lastIndexOf("."));
-		String toFS = nameWithoutExt.replace("http://", "").replace("/", "-").replace(":", "-").replace(".", "-");
-		if (toFS.startsWith("-")) {
-			toFS = toFS.substring(1);
-		}
-		if (toFS.endsWith("-")) {
-			toFS = toFS.substring(0, toFS.length()-1);
-		}
+        if (dir == null) {
+            directory = (responsiveCache != null) ? responsiveCache : staticPagePath + CACHEDIR;
+            if (!directory.endsWith("/")) {
+                directory += "/";
+            }
+            dir = new File(directory);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+        }
 
-		Integer[] widths;
-		String[] labels;
-		if (useCarousel) {
-			widths = getResponsiveCarouselImageWidths();
-			labels = getResponsiveCarouselImageLabels();
-		} else {
-			widths = getResponsiveImageWidths();
-			labels = getResponsiveImageLabels();
-		}
+        String extension = location.substring(location.lastIndexOf(".") + 1);
+        String nameWithoutExt = location.substring(0, location.lastIndexOf("."));
+        String toFS = nameWithoutExt.replace("http://", "").replace("/", "-").replace(":", "-").replace(".", "-");
+        if (toFS.startsWith("-")) {
+            toFS = toFS.substring(1);
+        }
+        if (toFS.endsWith("-")) {
+            toFS = toFS.substring(0, toFS.length() - 1);
+        }
 
-		BufferedImage originalImage = null;
-		for (int i = 0, l = widths.length; i<l; i++){
-			String fileName = toFS + labels[i] + "." + extension;
+        Integer[] widths;
+        String[] labels;
+        if (useCarousel) {
+            widths = getResponsiveCarouselImageWidths();
+            labels = getResponsiveCarouselImageLabels();
+        } else {
+            widths = getResponsiveImageWidths();
+            labels = getResponsiveImageLabels();
+        }
 
-			// work out new image name 
-			String fileUrl = "/sp/rss-blog-cache/" + fileName;
-			String filePath = directory + fileName;
+        BufferedImage originalImage = null;
+        for (int i = 0, l = widths.length; i < l; i++) {
+            String fileName = toFS + labels[i] + "." + extension;
 
-			File outputfile = new File(filePath);
-			BufferedImage responsiveImage = null;
-						
-			if (!outputfile.exists()) {
-				log.info(String.format("new file is %s, url: %s, location: %s, ", filePath, fileUrl, location));
-				if (originalImage == null) {
-					originalImage = readOriginalImage(location, isURL);
-					if (originalImage == null) {
-						log.warning(String.format("The original image (%s) is not readable", location));
-						return responsiveImages;
-					}
-				}
+            // work out new image name
+            String fileUrl = "/sp/rss-blog-cache/" + fileName;
+            String filePath = directory + fileName;
 
-				try {
-					int height = (widths[i] * originalImage.getHeight()) / originalImage.getWidth();
-					responsiveImage = ImageUtils.scale(originalImage, widths[i], height);
-					// responsive = ImageUtils.compress(responsive, 0.8f);
-				} catch (IOException e) {
-					log.severe("IOException during scaling image: " + e.getLocalizedMessage());
-				}
+            File outputfile = new File(filePath);
+            BufferedImage responsiveImage = null;
 
-				if (responsiveImage == null) {
-					continue;
-				}
-			}
-			responsiveImages.put(labels[i], fileUrl);
+            if (!outputfile.exists()) {
+                log.info(String.format("new file is %s, url: %s, location: %s, ", filePath, fileUrl, location));
+                if (originalImage == null) {
+                    originalImage = readOriginalImage(location, isURL);
+                    if (originalImage == null) {
+                        log.warning(String.format("The original image (%s) is not readable", location));
+                        return responsiveImages;
+                    }
+                }
 
-			if (!outputfile.exists()) {
-				boolean created = false;
-				try {
-					created = outputfile.createNewFile();
-				} catch (IOException e) {
-					log.severe("IOException during create new file: " + e.getLocalizedMessage());
-				}
+                try {
+                    int height = (widths[i] * originalImage.getHeight()) / originalImage.getWidth();
+                    responsiveImage = ImageUtils.scale(originalImage, widths[i], height);
+                    // responsive = ImageUtils.compress(responsive, 0.8f);
+                } catch (IOException e) {
+                    log.severe("IOException during scaling image: " + e.getLocalizedMessage());
+                }
 
-				if (created) {
-					try {
-						// compressAndShow
-						ImageIO.write(responsiveImage, extension, outputfile);
-					} catch (IOException e) {
-						log.severe("IOException during writing new file: " + e.getLocalizedMessage());
-					}
-					log.info("created " + outputfile);
-				}
-			}
-		}
-		return responsiveImages;
-	}
+                if (responsiveImage == null) {
+                    continue;
+                }
+            }
+            responsiveImages.put(labels[i], fileUrl);
 
-	private BufferedImage readOriginalImage(String location, boolean isURL) {
-		BufferedImage originalImage = null;
-		try {
-			if (isURL) {
-				originalImage = ImageIO.read(new URL(location));
-			} else {
-				//originalImage = ImageIO.read(new File(staticPagePath, location));
-				originalImage = ImageIO.read(getClass().getClassLoader().getResource(staticPagePath + location));
-			}
-		} catch (MalformedURLException e) {
-			log.severe(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
-		} catch (IOException e) {
-			log.severe(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()));
-		} catch (IllegalArgumentException e) {
-			log.severe(String.format("IllegalArgumentException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
-		} catch (CMMException e) {
-			log.severe(String.format("Invalid image format in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
-		}
-		return originalImage;
-	}
+            if (!outputfile.exists()) {
+                boolean created = false;
+                try {
+                    created = outputfile.createNewFile();
+                } catch (IOException e) {
+                    log.severe("IOException during create new file: " + e.getLocalizedMessage());
+                }
 
-	private Integer[] getResponsiveCarouselImageWidths() {
-		if (responsiveCarouselImageWidths == null) {
-			String[] imageWidths = responsiveCarouselImageWidthString.split(",");
-			responsiveCarouselImageWidths = new Integer[imageWidths.length];
+                if (created) {
+                    try {
+                        // compressAndShow
+                        ImageIO.write(responsiveImage, extension, outputfile);
+                    } catch (IOException e) {
+                        log.severe("IOException during writing new file: " + e.getLocalizedMessage());
+                    }
+                    log.info("created " + outputfile);
+                }
+            }
+        }
+        return responsiveImages;
+    }
 
-			for (int i = 0, len = imageWidths.length; i < len; i++) {
-				responsiveCarouselImageWidths[i] = Integer.parseInt(imageWidths[i]);
-			}
-		}
+    private BufferedImage readOriginalImage(String location, boolean isURL) {
+        BufferedImage originalImage = null;
+        try {
+            if (isURL) {
+                originalImage = ImageIO.read(new URL(location));
+            } else {
+                //originalImage = ImageIO.read(new File(staticPagePath, location));
+                originalImage = ImageIO.read(getClass().getClassLoader().getResource(staticPagePath + location));
+            }
+        } catch (MalformedURLException e) {
+            log.severe(String.format("MalformedURLException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
+        } catch (IOException e) {
+            log.severe(String.format("IOException during reading in location %s (is url? %b):  %s", location, isURL, e.getLocalizedMessage()));
+        } catch (IllegalArgumentException e) {
+            log.severe(String.format("IllegalArgumentException during reading in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
+        } catch (CMMException e) {
+            log.severe(String.format("Invalid image format in location %s (is url? %b): %s", location, isURL, e.getLocalizedMessage()));
+        }
+        return originalImage;
+    }
 
-		return responsiveCarouselImageWidths;
-	}
+    private Integer[] getResponsiveCarouselImageWidths() {
+        if (responsiveCarouselImageWidths == null) {
+            String[] imageWidths = responsiveCarouselImageWidthString.split(",");
+            responsiveCarouselImageWidths = new Integer[imageWidths.length];
 
-	private String[] getResponsiveCarouselImageLabels() {
-		if (responsiveCarouselImageLabels == null) {
-			responsiveCarouselImageLabels = responsiveCarouselImageLabelString.split(",");
-		}
-		return responsiveCarouselImageLabels;
-	}
+            for (int i = 0, len = imageWidths.length; i < len; i++) {
+                responsiveCarouselImageWidths[i] = Integer.parseInt(imageWidths[i]);
+            }
+        }
 
-	private String[] getResponsiveImageLabels() {
-		if (responsiveImageLabels == null) {
-			responsiveImageLabels = responsiveImageLabelString.split(",");
-		}
-		return responsiveImageLabels;
-	}
+        return responsiveCarouselImageWidths;
+    }
 
-	private Integer[] getResponsiveImageWidths() {
-		if (responsiveImageWidths == null) {
-			String[] imageWidths = responsiveImageWidthString.split(",");
-			responsiveImageWidths = new Integer[imageWidths.length];
+    private String[] getResponsiveCarouselImageLabels() {
+        if (responsiveCarouselImageLabels == null) {
+            responsiveCarouselImageLabels = responsiveCarouselImageLabelString.split(",");
+        }
+        return responsiveCarouselImageLabels;
+    }
 
-			for (int i = 0, len = imageWidths.length; i < len; i++) {
-				responsiveImageWidths[i] = Integer.parseInt(imageWidths[i]);
-			}
-		}
-		return responsiveImageWidths;
-	}
+    private String[] getResponsiveImageLabels() {
+        if (responsiveImageLabels == null) {
+            responsiveImageLabels = responsiveImageLabelString.split(",");
+        }
+        return responsiveImageLabels;
+    }
+
+    private Integer[] getResponsiveImageWidths() {
+        if (responsiveImageWidths == null) {
+            String[] imageWidths = responsiveImageWidthString.split(",");
+            responsiveImageWidths = new Integer[imageWidths.length];
+
+            for (int i = 0, len = imageWidths.length; i < len; i++) {
+                responsiveImageWidths[i] = Integer.parseInt(imageWidths[i]);
+            }
+        }
+        return responsiveImageWidths;
+    }
 }
