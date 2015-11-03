@@ -74,7 +74,7 @@ import eu.europeana.portal2.web.util.keyvalue.RedisProvider;
 @Controller
 public class SitemapController {
 
-  Logger log = Logger.getLogger(this.getClass());
+  private final Logger log = Logger.getLogger(this.getClass());
 
   @Resource
   private Configuration config;
@@ -173,7 +173,7 @@ public class SitemapController {
     String cacheFile = SITEMAP_INDEX + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated() || !jedis.exists(cacheFile))
+    if (( !jedis.exists(cacheFile))
         && !sitemapsBeingProcessed.containsKey(params)) {
       boolean success = false;
       ServletOutputStream out = response.getOutputStream();
@@ -255,7 +255,7 @@ public class SitemapController {
     String cacheFile = SITEMAP_HASHED + params + XML;
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
-    if ((solrOutdated()) || !jedis.exists(cacheFile)
+    if ( !jedis.exists(cacheFile)
         && !sitemapsBeingProcessed.containsKey(params)) {
 
       if (log.isInfoEnabled()) {
@@ -284,7 +284,7 @@ public class SitemapController {
         success = 0;
         log.error(String.format(
             "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
-            e.getLocalizedMessage(), cacheFile), e);
+            e.getLocalizedMessage(), cacheFile));
       }
 
       // Also write to cache
@@ -297,7 +297,7 @@ public class SitemapController {
         success = 0;
         log.error(String.format(
             "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
-            e.getLocalizedMessage(), cacheFile), e);
+            e.getLocalizedMessage(), cacheFile));
       }
 
       if (success != 2 || StringUtils.isEmpty(fullXML.toString())) {
@@ -316,7 +316,7 @@ public class SitemapController {
           } catch (InterruptedException e) {
             log.error(String.format(
                 "Exception during outputing europeana-sitemap-hashed.xml: %s. File: %s",
-                e.getLocalizedMessage(), cacheFile), e);
+                e.getLocalizedMessage(), cacheFile));
           }
         } while (sitemapsBeingProcessed.containsKey(params)
             || !jedis.exists(cacheFile));
@@ -353,8 +353,7 @@ public class SitemapController {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
         log.error(
-            "Interrupted Exception during waiting for sitemap creation. " + e.getLocalizedMessage(),
-            e);
+            "Interrupted Exception during waiting for sitemap creation. " + e.getLocalizedMessage());
       }
     }
 
@@ -393,7 +392,7 @@ public class SitemapController {
             : "";
     String cacheFile = SITEMAP_VIDEO + params + XML;
 
-    if (solrOutdated() || !jedis.exists(cacheFile)) {
+    if (!jedis.exists(cacheFile)) {
 
       int volume = -1;
       response.setCharacterEncoding("UTF-8");
@@ -529,7 +528,7 @@ public class SitemapController {
     String portalServer = new StringBuilder(config.getPortalServer()).toString();
 
     // sitemap index - collections overview
-    if (solrOutdated() || contributorEntries == null) {
+    if ( contributorEntries == null) {
       contributorEntries = new ArrayList<ContributorItem>();
       List<Count> providers;
       try {
