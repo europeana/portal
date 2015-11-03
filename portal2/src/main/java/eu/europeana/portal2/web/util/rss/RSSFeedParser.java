@@ -91,7 +91,7 @@ public class RSSFeedParser {
 			
 			is = url.openStream();
 			log.info("URL: " + url.toString());
-			Document doc = builder.parse( url.openStream());
+			Document doc = builder.parse(is);
 
 			NodeList nodes = doc.getElementsByTagName("item");
 			for (int i = 0; i < Math.min(nodes.getLength(), itemLimit); i++) {
