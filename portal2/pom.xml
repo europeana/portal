@@ -21,7 +21,7 @@
 	<parent>
 		<artifactId>portal</artifactId>
 		<groupId>eu.europeana</groupId>
-		<version>${version.europeanaApi2}</version>
+		<version>2.2.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -33,7 +33,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<version.europeanaCorelib>2.1-SNAPSHOT</version.europeanaCorelib>
+		<version.europeanaCorelib>2.2-SNAPSHOT</version.europeanaCorelib>
 
 		<europeana.server>http://www.europeana.eu/portal/</europeana.server>
 	</properties>
@@ -1666,13 +1666,13 @@
 			<!-- will also include SOLR, DEF, UTILS -->
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-db</artifactId>
-			<version>2.1-SNAPSHOT</version>
+			<version>2.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<!-- will also include SOLR, DEF, UTILS -->
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-search</artifactId>
-			<version>2.1-SNAPSHOT</version>
+			<version>2.2-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-codec</artifactId>
@@ -1683,7 +1683,7 @@
 		<dependency>
 			<groupId>eu.europeana.corelib</groupId>
 			<artifactId>corelib-web</artifactId>
-			<version>2.1-SNAPSHOT</version>
+			<version>2.2-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-codec</artifactId>
