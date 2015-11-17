@@ -138,7 +138,7 @@ public class SitemapController {
     }*/
 
 
-    String cacheFile = SITEMAP_INDEX  + XML;
+    String cacheFile = "europeana-sitemap-index-hashed.xml";
     // Generate the requested sitemap if it's outdated / doesn't exist (and is not currently being
     // created)
     if (( swiftProvider.getObjectApi().getWithoutBody(cacheFile)==null)) {
@@ -179,7 +179,7 @@ public class SitemapController {
 
 
 
-    String cacheFile = SITEMAP_HASHED + XML + "?from=" +from +"&to=" + to;
+    String cacheFile = "europeana-sitemap-hashed.xml" + "?from=" +from +"&to=" + to;
 
     if ( swiftProvider.getObjectApi().getWithoutBody(cacheFile)==null) {
 
