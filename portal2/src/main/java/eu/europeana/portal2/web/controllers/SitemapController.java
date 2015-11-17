@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import eu.europeana.corelib.web.swift.SwiftProvider;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -333,10 +334,13 @@ public class SitemapController {
    */
   private void readCachedSitemap(ServletOutputStream out, SwiftProvider swiftProvider, String cacheFile) {
     try {
-      String s = swiftProvider.getObjectApi().get(cacheFile).getPayload().getRawContent().toString();
 
+      StringWriter writer = new StringWriter();
+      InputStream in = swiftProvider.getObjectApi().get(cacheFile).getPayload().openStream();
 
-      out.println(s);
+      IOUtils.copy(in,writer);
+      out.println(writer.toString());
+      in.close();
       out.flush();
     } catch (IOException e) {
 
