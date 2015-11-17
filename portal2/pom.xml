@@ -1666,7 +1666,7 @@
       <!-- will also include SOLR, DEF, UTILS -->
       <groupId>eu.europeana.corelib</groupId>
       <artifactId>corelib-db</artifactId>
-      <version>2.2-SNAPSHOT</version>
+      <version>${version.europeanaCorelib}</version>
     </dependency>
     <dependency>
       <!-- will also include SOLR, DEF, UTILS -->
@@ -1683,7 +1683,7 @@
     <dependency>
       <groupId>eu.europeana.corelib</groupId>
       <artifactId>corelib-web</artifactId>
-      <version>2.2-SNAPSHOT</version>
+      <version>${version.europeanaCorelib}</version>
       <exclusions>
         <exclusion>
           <artifactId>commons-codec</artifactId>
