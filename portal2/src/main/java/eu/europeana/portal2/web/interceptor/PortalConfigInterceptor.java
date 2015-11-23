@@ -42,6 +42,7 @@ public class PortalConfigInterceptor extends HandlerInterceptorAdapter {
 			model.setGooglePlusPublisherId(StringUtils.trimToEmpty(configuration.getPortalGooglePlusPublisherId()));
 			model.setTheme(ControllerUtil.getSessionManagedTheme(request, configuration.getDefaultTheme()));
 			model.setLocale(locale);
+			model.setPortalServer(configuration.getPortalServer());
 			// model.setMinify(false);
 			User user = ControllerUtil.getUser(userService);
 			model.setUser(user);
